@@ -4,12 +4,14 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Calendar } from "react-native-calendar-events";
 import { isActionOf } from "typesafe-actions";
+import { Locales } from "../../../locales/locales";
 import {
   customEmailChannelSetEnabled,
   preferenceFingerprintIsEnabledSaveSuccess,
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferredCalendarSaveSuccess,
+  preferredLanguageSaveSuccess,
   serviceAlertDisplayedOnceSuccess
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
@@ -18,6 +20,7 @@ import { GlobalState } from "./types";
 export type PersistedPreferencesState = Readonly<{
   isFingerprintEnabled?: boolean;
   preferredCalendar?: Calendar;
+  preferredLanguage?: Locales;
   wasServiceAlertDisplayedOnce?: boolean;
   isPagoPATestEnabled: boolean;
   isExperimentalFeaturesEnabled: boolean;
@@ -29,11 +32,15 @@ export type PersistedPreferencesState = Readonly<{
 const initialPreferencesState: PersistedPreferencesState = {
   isFingerprintEnabled: undefined,
   preferredCalendar: undefined,
+  preferredLanguage: undefined,
   wasServiceAlertDisplayedOnce: false,
   isPagoPATestEnabled: false,
   isExperimentalFeaturesEnabled: false,
   isCustomEmailChannelEnabled: pot.none
 };
+
+export const preferredLanguageSelector = (state: GlobalState) =>
+  state.persistedPreferences.preferredLanguage;
 
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
@@ -49,6 +56,12 @@ export default function preferencesReducer(
     return {
       ...state,
       preferredCalendar: action.payload.preferredCalendar
+    };
+  }
+  if (isActionOf(preferredLanguageSaveSuccess, action)) {
+    return {
+      ...state,
+      preferredLanguage: action.payload.preferredLanguage
     };
   }
   if (isActionOf(serviceAlertDisplayedOnceSuccess, action)) {

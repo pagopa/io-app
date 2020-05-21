@@ -10,6 +10,7 @@ import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ROUTES from "./routes";
+import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
 
 /**
  * A navigator for all the screens of the Profile section
@@ -36,6 +37,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.PROFILE_PREFERENCES_CALENDAR]: {
       screen: CalendarsPreferencesScreen
+    },
+    [ROUTES.PROFILE_PREFERENCES_LANGUAGE]: {
+      screen: LanguagesPreferencesScreen
     },
     [ROUTES.PROFILE_FISCAL_CODE]: {
       screen: FiscalCodeScreen

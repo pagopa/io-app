@@ -27,7 +27,8 @@ import {
   navigateToEmailForwardingPreferenceScreen,
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen,
-  navigateToFingerprintPreferenceScreen
+  navigateToFingerprintPreferenceScreen,
+  navigateToLanguagePreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
@@ -163,10 +164,15 @@ class PreferencesScreen extends React.Component<Props, State> {
     const maybeSpidEmail = this.props.optionSpidEmail;
     const maybePhoneNumber = this.props.optionMobilePhone;
 
-    const languages = this.props.languages
-      .filter(_ => _.length > 0)
-      .map(_ => translateLocale(_[0]))
-      .getOrElse(I18n.t("global.remoteStates.notAvailable"));
+    const languages = fromNullable(this.props.preferredLanguage).foldL(
+      () => {
+        return this.props.languages
+          .filter(_ => _.length > 0)
+          .map(_ => translateLocale(_[0]))
+          .getOrElse(I18n.t("global.remoteStates.notAvailable"));
+      },
+      language => I18n.t(`locales.${language}`, { defaultValue: language })
+    );
 
     const showModal = (title: TranslationKeys, body: TranslationKeys) => {
       this.props.showModal(
@@ -268,12 +274,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
               subTitle={languages}
-              onPress={() =>
-                showModal(
-                  "profile.preferences.language.contextualHelpTitle",
-                  "profile.preferences.language.contextualHelpContent"
-                )
-              }
+              onPress={() => this.props.navigateToLanguagePreferenceScreen()}
             />
 
             <EdgeBorderComponent />
@@ -286,6 +287,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 
 function mapStateToProps(state: GlobalState) {
   return {
+    preferredLanguage: state.persistedPreferences.preferredLanguage,
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
     optionEmail: profileEmailSelector(state),
@@ -308,6 +310,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToEmailForwardingPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
     dispatch(navigateToCalendarPreferenceScreen()),
+  navigateToLanguagePreferenceScreen: () =>
+    dispatch(navigateToLanguagePreferenceScreen()),
   navigateToEmailReadScreen: () => dispatch(navigateToEmailReadScreen()),
   navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen())
 });

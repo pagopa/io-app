@@ -32,7 +32,7 @@ type TranslateT = {
 interface TypedI18n {
   readonly t: TranslateT;
   readonly translate: TranslateT;
-  readonly locale: locales.Locales;
+  locale: locales.Locales;
   readonly currentLocale: () => locales.Locales;
   readonly toNumber: typeof I18n.toNumber;
   readonly toCurrency: typeof I18n.toCurrency;
