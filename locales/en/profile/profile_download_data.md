@@ -1,30 +1,34 @@
-L’elenco delle tue informazioni comprende:
+The list of your information includes:
 
-- Il tuo codice fiscale;
-- L’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;
-- Il testo dei Messaggi da te ricevuti;
-- Le tue preferenze di notifica.
-
-
-Le informazioni saranno scaricate in formato **YAML**, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.
-
-La procedura di scaricamento dati è protetta da una password, che ti verrà inviata insieme al link per lo scaricamento tramite messaggio in app. 
-Dopo la creazione, la copia dei tuoi dati sarà accessibile per 15 giorni. 
+- Your fiscal code;
+- The email address you indicated and, if necessary, confirmation of its validation;
+- The text of the messages you received;
+- Your notification preferences.
 
 
-**Informazioni sul trattamento dei tuoi dati**
+The information will be downloaded in ** YAML ** format, a standard format that in computer science allows the exchange of data between different applications.
 
-Ai sensi del GDPR, ti confermiamo che trattiamo i tuoi dati personali all’interno dell’App Io.
-In particolare,  trattiamo i tuoi dati identificativi e di contatto per finalità di identificazione e autenticazione, registrazione delle preferenze e invio di messaggi strettamente legati al funzionamento dell’App, nonché di assistenza e debug e attività volte ad assicurare la sicurezza. Inoltre, come responsabili del trattamento degli Enti Erogatori, per consentirti di usufruire dei Servizi, trattiamo oltre ai tuoi dati identificativi e di contatto, anche i dati contenuti ndei messaggi.
-
-Alcuni dei dati da noi trattati sono raccolti dal tuo provider Spid al momento della tua registrazione ovvero, qualora tu ti sia registrato tramite CIE, dal Ministero dell’Interno.
-
- I tuoi dati sono trattati anche per tramite di fornitori terzi, situati in paesi al di fuori dello SEE. Utilizziamo per i trasferimenti extra UE le garanzie previste dagli art. 44 e seguenti del GDPR. In particolare, utilizziamo fornitori certificati Privacy Shield e, in ogni caso, laddove necessario, abbiamo vincolato tali fornitori al rispetto delle condizioni contrattuali tipo approvate dalla Commissione. 
-
-Conserviamo i tuoi dati per un tempo limitato. In particolare, I dati relativi ai Messaggi inviati per conto degli Enti Erogatori sono cancellati dopo 3 anni dalla loro ricezione e i tuoi dati identificativi sono conservati per 10 anni dalla tua cancellazione. 
-
-Hai diritto a richiedere la esercitare il tuo diritto di limitazione e opposizione del trattamento e a chiedere la rettifica del tuo indirizzo email. Potrai inoltre rivolgerti al Garante per la protezione dei dati personali.
-Con riferimento ai dati dei Servizi offerti dagli Enti Erogatori, tutti i diritti dovranno essere esercitati presso di loro.
+The data download procedure is protected by a password, which will be sent to you together with the download link via message in the app.
+After creation, the copy of your data will be accessible for 15 days.
 
 
-Maggiori informazioni sono disponibili nella nostra [Informativa Privacy](ioit://PROFILE_PRIVACY) che è accessibile in ogni momento nella sezione Profilo/Privacy e Condizioni d’uso.
+**Information on the processing of your data**
+
+Pursuant to the GDPR, we confirm that we process your personal data within the Io App.
+In particular, we process your identification and contact data for identification and authentication purposes, recording preferences and sending messages strictly related to the functioning of the App, as well as assistance and debugging and activities aimed at ensuring security. In addition, as data processors of the Dispensing Bodies, in order to allow you to use the Services, we also process the data contained in the messages in addition to your identification and contact data.
+
+Some of the data we process are collected by your Spid provider at the time of your registration or, if you have registered via CIE, by the Ministry of the Interior.
+
+ Your data is also processed through third party suppliers, located in countries outside the EEA. We use the guarantees provided for in art. 44 and following of the GDPR. In particular, we use Privacy Shield certified suppliers and, in any case, where necessary, we have bound these suppliers to compliance with the standard contractual conditions approved by the Commission.
+
+We keep your data for a limited time. In particular, the data relating to the Messages sent on behalf of the Dispensing Bodies are deleted after 3 years from their receipt and your identification data are kept for 10 years from your cancellation.
+
+You have the right to request the exercise of your right to limit and oppose the treatment and to request the correction of your email address. You can also contact the Guarantor for the protection of personal data.
+With reference to the data of the Services offered by the Providers, all rights must be exercised with them.
+
+
+More information is available in our [Privacy Policy](ioit://PROFILE_PRIVACY) which is accessible at all times in the Profile / Privacy and Terms of Use section.
+Invia commenti
+Cronologia
+Salvate
+Community

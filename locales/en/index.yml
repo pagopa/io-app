@@ -150,11 +150,11 @@ profile:
           confirmSubtitle: After processing, you will receive an email confirming the deletion.
         error: An error occurred while submit your deletion request, please retry!
       exportData:
-        cta: Richiedi copia dei tuoi dati
+        cta: Request a copy of your data
         title: Access your data
         description: Receive a copy of the data associated with your IO profile
         info:
-          title: Puoi scaricare le informazioni relative al tuo profilo IO in qualsiasi momento.
+          title: You can download your IO profile information at any time.
           body: !include profile/profile_download_data.md
         alert:
           requestTitle: Are you sure you want to export all your data?
