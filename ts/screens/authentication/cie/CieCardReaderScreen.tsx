@@ -1,8 +1,3 @@
-/**
- * A screen to guide the user to proper read the CIE
- * TODO: isolate cie event listener as saga
- * TODO: when 100% is reached, the animation end
- */
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -58,8 +53,9 @@ type State = {
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 const VIBRATION = 100 as Millisecond;
+
 /**
- *  This screen shown while reading the card
+ * A screen to guide the user to proper read the CIE
  */
 class CieCardReaderScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
