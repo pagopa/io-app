@@ -146,7 +146,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 function mapStateToProps(state: GlobalState) {
   const userDataProcessing = userDataProcessingSelector(state);
-  // is
   const isLoading =
     pot.isLoading(userDataProcessing.DOWNLOAD) ||
     pot.isUpdating(userDataProcessing.DOWNLOAD);
