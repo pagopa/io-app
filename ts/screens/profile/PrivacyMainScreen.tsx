@@ -37,7 +37,8 @@ type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps>;
 
 type State = {
-  requestingInfo: boolean;
+  // flag to know if we are loading data from an user choice
+  requestProcess: boolean;
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -75,7 +76,7 @@ const needValidatedEmailSubtitle = I18n.t(
 class PrivacyMainScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { requestingInfo: false };
+    this.state = { requestProcess: false };
   }
 
   public componentDidMount() {
@@ -154,10 +155,10 @@ class PrivacyMainScreen extends React.Component<Props, State> {
         if (pot.isError(currentState)) {
           showToast(errorMessage);
         } else if (
-          this.state.requestingInfo &&
+          this.state.requestProcess &&
           pot.isNone(prevProps.userDataProcessing[choice])
         ) {
-          this.setState({ requestingInfo: false }, () => {
+          this.setState({ requestProcess: false }, () => {
             this.handleUserDataRequestAlert(choice);
           });
         }
@@ -225,7 +226,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                 "profile.main.privacy.removeAccount.description"
               )}
               onPress={() =>
-                this.setState({ requestingInfo: true }, () =>
+                this.setState({ requestProcess: true }, () =>
                   this.handleDownloadOrDeletePress(
                     UserDataProcessingChoiceEnum.DELETE
                   )
@@ -244,7 +245,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               title={I18n.t("profile.main.privacy.exportData.title")}
               subTitle={I18n.t("profile.main.privacy.exportData.description")}
               onPress={() =>
-                this.setState({ requestingInfo: true }, () =>
+                this.setState({ requestProcess: true }, () =>
                   this.handleDownloadOrDeletePress(
                     UserDataProcessingChoiceEnum.DOWNLOAD
                   )
@@ -266,7 +267,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
       <ContentComponent
         loadingCaption={I18n.t("profile.main.privacy.loading")}
         loadingOpacity={0.9}
-        isLoading={this.props.isLoading && this.state.requestingInfo}
+        isLoading={this.props.isLoading && this.state.requestProcess}
       />
     );
   }
