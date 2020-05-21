@@ -21,6 +21,6 @@ module.exports.writeVersion = function(contents, version) {
     throw "CFBundleShortVersionString not found";
   }
   infoObj.CFBundleShortVersionString = version;
-  infoObj.CFBundleVersion = infoObj.CFBundleVersion + 1;
+  infoObj.CFBundleVersion = parseInt(infoObj.CFBundleVersion, 10) + 1;
   return plist.build(infoObj);
 };
