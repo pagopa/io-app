@@ -1,9 +1,3 @@
-/**
- * A screen to show the app Terms of Service. If the user accepted an old version
- * of ToS and a new version is available, an alert is displayed to highlight the user
- * has to accept the new version of ToS.
- * This screen is used also as Privacy screen From Profile section.
- */
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
@@ -38,10 +32,9 @@ type Props = ReduxProps &
   OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
+
 type State = {
-  isLoading: boolean;
   isMarkdownLoaded: boolean;
-  hasError: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -55,13 +48,13 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A screen to show the ToS to the user.
+ * A screen to explain how profile data export works.
+ * Here user can ask to download his data
  */
 class DownloadProfileDataScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    // it start with loading webview
-    this.state = { isLoading: false, hasError: false, isMarkdownLoaded: false };
+    this.state = { isMarkdownLoaded: false };
   }
 
   public componentDidUpdate(prevProps: Props) {
@@ -77,7 +70,7 @@ class DownloadProfileDataScreen extends React.PureComponent<Props, State> {
         showToast(I18n.t("profile.main.privacy.exportData.error"));
         return;
       }
-      // success
+      // success, go back!
       this.props.navigation.goBack();
     }
   }
@@ -136,7 +129,7 @@ class DownloadProfileDataScreen extends React.PureComponent<Props, State> {
         )}
       </BaseScreenComponent>
     ));
-    return <ContainerComponent isLoading={this.state.isLoading} />;
+    return <ContainerComponent isLoading={this.props.isLoading} />;
   }
 }
 
@@ -153,12 +146,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 function mapStateToProps(state: GlobalState) {
   const userDataProcessing = userDataProcessingSelector(state);
-
-  // the state returns to pot.none to every get - we want to see the loader only during the load of the requests,
-  // not when the request is confirmed by the user
+  // is
   const isLoading =
-    pot.isNone(userDataProcessing.DOWNLOAD) &&
-    pot.isLoading(userDataProcessing.DOWNLOAD);
+    pot.isLoading(userDataProcessing.DOWNLOAD) ||
+    pot.isUpdating(userDataProcessing.DOWNLOAD);
   return {
     userDataProcessing,
     isLoading
