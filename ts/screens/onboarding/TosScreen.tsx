@@ -159,7 +159,6 @@ class TosScreen extends React.PureComponent<Props, State> {
   public render() {
     const { dispatch } = this.props;
 
-
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
         goBack={this.props.isOnbardingCompleted || this.handleGoBack}
