@@ -20,6 +20,7 @@ module.exports.writeVersion = function(contents, version) {
     );
     throw "CFBundleShortVersionString not found";
   }
+  //TODO: rc
   infoObj.CFBundleShortVersionString = version;
   infoObj.CFBundleVersion = parseInt(infoObj.CFBundleVersion, 10) + 1;
   return plist.build(infoObj);

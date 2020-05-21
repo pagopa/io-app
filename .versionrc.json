@@ -12,6 +12,14 @@
     {
       "filename": "ios/ItaliaApp/Info.plist",
       "updater": "scripts/changelog/plist_updater.js"
+    },
+    {
+      "filename": "ios/ItaliaAppTests/Info.plist",
+      "updater": "scripts/changelog/plist_updater.js"
+    },
+    {
+      "filename": "ios/ItaliaApp.xcodeproj/project.pbxproj",
+      "updater": "scripts/changelog/pbxproj_updater.js"
     }
   ]
 }
