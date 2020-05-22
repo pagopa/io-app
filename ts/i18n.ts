@@ -15,10 +15,15 @@ I18n.translations = {
   it: locales.localeIT
 };
 
+export const availableTransations: ReadonlyArray<locales.Locales> = Object.keys(
+  I18n.translations
+)
+  .map(k => k as locales.Locales)
+  .sort();
+
 export function setLocale(lang: locales.Locales) {
-  /* tslint:disable */
+  // tslint:disable-next-line:no-object-mutation
   I18n.locale = lang;
-  /* tslint:enable */
 }
 
 type TranslateT = {

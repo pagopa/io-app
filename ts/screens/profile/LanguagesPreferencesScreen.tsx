@@ -4,21 +4,19 @@ import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Locales } from "../../../locales/locales";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import I18n from "../../i18n";
+import I18n, { availableTransations } from "../../i18n";
 import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPreferences";
 import { Dispatch } from "../../store/actions/types";
+import { preferredLanguageSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-
-const SUPPORTED_LANGUAGES: ReadonlyArray<Locales> = ["it", "en"];
+import { getLocalePrimary } from "../../utils/locale";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -27,33 +25,32 @@ type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
 
-type State = {
-  isLoading: boolean;
-};
-
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
   body: "profile.preferences.language.contextualHelpContent"
 };
 
+const iconSize = 12;
+
 /**
  * Allows the user to select one of the device available Calendars
  */
-class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
+class LanguagesPreferencesScreen extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      isLoading: false
-    };
   }
 
-  private onLanguageSelected = (language: Locales) => {
-    const { preferredLanguage } = this.props;
-    const isAlreadyPreferred = fromNullable(preferredLanguage).fold(
-      false,
+  private isAlreadyPreferred = (language: Locales) => {
+    // if the preferred Lanuage is not set, we check if language is the same in use
+    return this.props.preferredLanguage.fold(
+      getLocalePrimary(I18n.locale).fold(false, l => l === language),
       l => l === language
     );
-    if (!isAlreadyPreferred) {
+  };
+
+  private onLanguageSelected = (language: Locales) => {
+    // TODO show an alert to confirm the language change
+    if (!this.isAlreadyPreferred(language)) {
       this.props.preferredLanguageSaveSuccess(language);
       this.showModal();
     }
@@ -68,49 +65,41 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { isLoading } = this.state;
-    const { preferredLanguage } = this.props;
     return (
-      <LoadingSpinnerOverlay isLoading={isLoading}>
-        <TopScreenComponent
-          contextualHelpMarkdown={contextualHelpMarkdown}
-          headerTitle={I18n.t("profile.preferences.title")}
-          goBack={this.props.navigation.goBack}
+      <TopScreenComponent
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        headerTitle={I18n.t("profile.preferences.title")}
+        goBack={this.props.navigation.goBack}
+      >
+        <ScreenContent
+          title={I18n.t("profile.preferences.list.preferred_language.title")}
+          subtitle={I18n.t(
+            "profile.preferences.list.preferred_language.subtitle"
+          )}
         >
-          <ScreenContent
-            title={I18n.t("profile.preferences.list.preferred_language.title")}
-            subtitle={I18n.t(
-              "profile.preferences.list.preferred_language.subtitle"
-            )}
-          >
-            <List withContentLateralPadding={true}>
-              {SUPPORTED_LANGUAGES.map((lang, index) => {
-                const isSelectedLanguage = fromNullable(preferredLanguage).fold(
-                  false,
-                  l => l === lang
-                );
-                RTron.log(isSelectedLanguage, preferredLanguage, lang);
-                return (
-                  <ListItemComponent
-                    key={index}
-                    title={I18n.t(`locales.${lang}`, { defaultValue: lang })}
-                    hideIcon={!isSelectedLanguage}
-                    iconSize={12}
-                    iconName={isSelectedLanguage ? "io-tick-big" : undefined}
-                    onPress={() => this.onLanguageSelected(lang)}
-                  />
-                );
-              })}
-            </List>
-          </ScreenContent>
-        </TopScreenComponent>
-      </LoadingSpinnerOverlay>
+          <List withContentLateralPadding={true}>
+            {availableTransations.map((lang, index) => {
+              const isSelectedLanguage = this.isAlreadyPreferred(lang);
+              return (
+                <ListItemComponent
+                  key={index}
+                  title={I18n.t(`locales.${lang}`, { defaultValue: lang })}
+                  hideIcon={!isSelectedLanguage}
+                  iconSize={iconSize}
+                  iconName={isSelectedLanguage ? "io-tick-big" : undefined}
+                  onPress={() => this.onLanguageSelected(lang)}
+                />
+              );
+            })}
+          </List>
+        </ScreenContent>
+      </TopScreenComponent>
     );
   }
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  preferredLanguage: state.persistedPreferences.preferredLanguage
+  preferredLanguage: preferredLanguageSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

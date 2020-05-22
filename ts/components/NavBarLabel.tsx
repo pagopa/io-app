@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
 const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
   const { options, routeName, preferredLanguage } = props;
-  const locale: Locales = fromNullable(preferredLanguage).fold("en", l => l);
+  const locale: Locales = preferredLanguage.fold("en", l => l);
   return (
     <Text
       style={[

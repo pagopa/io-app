@@ -1,6 +1,7 @@
 /**
  * A reducer for persisted preferences.
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Calendar } from "react-native-calendar-events";
 import { isActionOf } from "typesafe-actions";
@@ -38,9 +39,6 @@ const initialPreferencesState: PersistedPreferencesState = {
   isExperimentalFeaturesEnabled: false,
   isCustomEmailChannelEnabled: pot.none
 };
-
-export const preferredLanguageSelector = (state: GlobalState) =>
-  state.persistedPreferences.preferredLanguage;
 
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
@@ -109,3 +107,6 @@ export const preferredCalendarSelector = (state: GlobalState) =>
 
 export const isFingerprintEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isFingerprintEnabled;
+
+export const preferredLanguageSelector = (state: GlobalState) =>
+  fromNullable(state.persistedPreferences.preferredLanguage);
