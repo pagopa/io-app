@@ -24,7 +24,7 @@ const identificationStartMock = identificationStart(
   undefined,
   undefined,
   undefined,
-  false
+  undefined
 );
 
 describe("Identification reducer", () => {
