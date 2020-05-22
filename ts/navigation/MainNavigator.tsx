@@ -6,7 +6,7 @@
  */
 
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   createBottomTabNavigator,
   NavigationRoute,
@@ -20,7 +20,6 @@ import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
 import WalletTabIcon from "../components/WalletTabIcon";
-import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
