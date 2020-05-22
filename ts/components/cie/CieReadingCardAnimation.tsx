@@ -271,7 +271,6 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     const { readingState } = this.props;
     return (
       <View style={styles.imgContainer}>
-
         <View style={styles.flexStart}>
           <ProgressCircle
             percent={

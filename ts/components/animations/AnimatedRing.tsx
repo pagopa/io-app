@@ -20,7 +20,7 @@ interface Props {
 
 /**
  * Create a ring whise opacity (from 1 to 0) and scale in animated
- * -No more used- 
+ * -No more used-
  */
 export default class AnimatedRing extends React.Component<Props> {
   private idTimeout?: number;
