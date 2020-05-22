@@ -18,7 +18,9 @@ type OwnProps = Readonly<{
   footerContent?: React.ReactNode;
 }>;
 
-type Props = OwnProps & React.ComponentProps<typeof BaseScreenComponent> & React.ComponentProps<typeof ScreenContent> ;
+type Props = OwnProps &
+  React.ComponentProps<typeof BaseScreenComponent> &
+  React.ComponentProps<typeof ScreenContent>;
 
 const styles = StyleSheet.create({
   headerContents: {

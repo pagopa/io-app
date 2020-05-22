@@ -141,8 +141,8 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
   };
 
   private customOnboardingGoBack = async () => {
-        await this.resetAppBrightness();
-        this.goBack();
+    await this.resetAppBrightness();
+    this.goBack();
   };
 
   public render() {
