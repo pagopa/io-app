@@ -87,7 +87,7 @@ class RootContainer extends React.PureComponent<Props> {
     AppState.addEventListener("change", this.handleApplicationActivity);
 
     fromNullable(preferredLanguage).map(l => {
-      I18n.locale = l;
+      I18n.locale = l; // tslint:disalble-line:no-object-mutation
     });
     // Hide splash screen
     SplashScreen.hide();

@@ -210,10 +210,10 @@ profile:
       digitalDomicile: Domicilio digitale
       preferred_calendar:
         title: Calendario preferito
-        subtitle: In quale lingua vuoi usare l'applicazione?
         not_selected: Non Selezionato
       preferred_language:
         title: Lingua preferita
+        subtitle: In quale lingua vuoi usare l'applicazione?
         not_selected: Non Selezionato
     empty:
       default: Nessuna preferenza impostata

@@ -7,11 +7,11 @@ import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesS
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
+import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ROUTES from "./routes";
-import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
 
 /**
  * A navigator for all the screens of the Profile section
