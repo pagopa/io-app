@@ -21,6 +21,7 @@ import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
   isProfileFirstOnBoarding,
   profileSelector
@@ -156,16 +157,15 @@ class TosScreen extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const { navigation, dispatch } = this.props;
-    const isProfile = navigation.getParam("isProfile", false);
+    const { dispatch } = this.props;
 
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
-        goBack={isProfile || this.handleGoBack}
+        goBack={this.props.isOnbardingCompleted || this.handleGoBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["privacy"]}
         headerTitle={
-          isProfile
+          this.props.isOnbardingCompleted
             ? I18n.t("profile.main.privacy.privacyPolicy.title")
             : I18n.t("onboarding.tos.headerTitle")
         }
@@ -190,7 +190,7 @@ class TosScreen extends React.PureComponent<Props, State> {
         )}
         {this.state.hasError === false &&
           this.state.isLoading === false &&
-          isProfile === false && (
+          this.props.isOnbardingCompleted === false && (
             <FooterWithButtons
               type={"TwoButtonsInlineThird"}
               leftButton={{
@@ -238,6 +238,7 @@ class TosScreen extends React.PureComponent<Props, State> {
 function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
+    isOnbardingCompleted: isOnboardingCompletedSelector(state),
     isLoading: pot.isUpdating(potProfile),
     hasAcceptedOldTosVersion: pot.getOrElse(
       pot.map(
