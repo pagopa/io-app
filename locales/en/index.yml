@@ -212,6 +212,9 @@ profile:
       preferred_language:
         title: Favourite language
         subtitle: In which language do you want to use the application?
+        alert: 
+          title: Do you want to change the language to 
+          subtitle: You'll need to reopen the application to make this happen
         not_selected: Not selected
     empty:
       default: No preference set
