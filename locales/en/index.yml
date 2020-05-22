@@ -151,8 +151,12 @@ profile:
           confirmSubtitle: After processing, you will receive an email confirming the deletion.
         error: An error occurred while submit your deletion request, please retry!
       exportData:
+        cta: Request a copy of your data
         title: Access your data
         description: Receive a copy of the data associated with your IO profile
+        info:
+          title: You can download your IO profile information at any time.
+          body: !include profile/profile_download_data.md
         alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
@@ -448,22 +452,16 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Activation
-    continue: Continue
     accept: Accept
     error: Loading error
-  pin:
+  unlockCode:
     headerTitle: Activation
     contentTitle: Choose an unlock code
+    contentSubtitle: insert a code of 6 digits
     contentTitleConfirm: Insert your code again
-    pinInfo: This code will be requested each time you open the app and when you need
-      to view sensitive data or make dispositive transactions. It must be composed
-      of 6 digits. Remember it carefully. You can change it at any time by entering
-      with SPID.
-    pinInfoSelected: This code will be requested each time you open the app and when
-      you need to view sensitive data or make dispositive transactions.
-    continue: Continue
+    contentTitleConfirmSubtitle: insert again the code of 6 digits
+    pinInfo: This code will be requested each time you open the app and when you need to view sensitive data or make dispositive transactions. You can change it at any time by authenticating yourself.
     reset: Change the code
-    confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
     contextualHelpTitle: What your unlock code is
     contextualHelpContent: !include onboarding/onboarding_pin.md
@@ -477,26 +475,9 @@ onboarding:
       enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
         fingerprint: your fingerprint
-        faceId: FaceID
-        touchId: TouchID
+        faceId: Face ID
+        touchId: Touch ID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
-pin_login:
-  pin:
-    pinInfo: Enter the unlock code
-    reset:
-      button: Did you forget the unlock code?
-      button_short: Reset unlock code
-      tip: To reset your unlock code you will have to login again with your SPID account.
-      tip_short: You will have to login again.
-    confirmValid: Correct unlock code
-    confirmInvalid: Invalid unlock code
-  unlock_screen:
-    help:
-      title: Access with unlock code
-      content: !include onboarding/onboarding_pin.md
-  forgetPin:
-    confirmTitle: Did you forget the unlock code?
-    confirmMsg: To be able to choose a new unlock code you will need to log in again with SPID.
 forms:
   validators:
     required: Required value
@@ -1023,15 +1004,17 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  messageFingerPrint: "Use the fingerprint or enter the unlock code"
-  messageFaceID: "Use FaceID or enter the unlock code"
-  messageEnterPin: "Enter the unlock code"
+  title: Unlock the app
+  titleValidation: Confirm the procedure
+  subtitleCode: enter the unlock code
+  subtitleCodeFingerprint: use the fingerprint or the unlock code
+  subtitleCodeFaceId: use the Face ID or enter the unlock code
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint
     title: Biometric identification
     popup:
-      reason: Identification
+      reason: Identification by touch ID failed
       title: Identification required
       sensorDescription: Touch sensor
       fallbackLabel: Use the unlock code
@@ -1041,6 +1024,23 @@ identification:
     remainingAttemptSingle: You have {{attempts}} attempt left.
     tooManyAttempts: Too many attempts.
     waitMessage: "Try again in:"
+  unlockCode:
+    reset:
+      button: Did you forget the
+      code: unlock code
+      button_short: Reset unlock code
+      tip: To reset your unlock code you will have to log in again.
+      tip_short: You will have to login again.
+    confirmValid: Correct unlock code
+    confirmInvalid: Invalid unlock code
+  unlock_screen:
+    help:
+      title: Access with unlock code
+      content: !include onboarding/onboarding_pin.md
+  forgetCode:
+    confirmTitle: Did you forget the unlock code?
+    confirmMsg: To be able to choose a new unlock code you will need to log in again.
+    confirmMsgWithTask: To be able to choose a new unlock code you will need to cancel the current procedure and log in again.
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
   removeRequest:

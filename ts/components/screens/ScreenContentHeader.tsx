@@ -92,6 +92,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
           <ScreenHeader
             heading={<H3 style={dark && styles.white}>{this.props.title}</H3>}
             icon={icon}
+            iconFont={iconFont}
             dark={dark}
             iconFont={iconFont}
           />

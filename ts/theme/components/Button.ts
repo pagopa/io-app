@@ -15,6 +15,7 @@ declare module "native-base" {
       darkGray?: boolean;
       alert?: boolean;
       lightText?: boolean;
+      unNamed?: boolean;
     }
   }
 }
@@ -91,6 +92,16 @@ export default (): Theme => {
         color: variables.colorWhite
       },
       backgroundColor: variables.lighterGray
+    },
+
+    ".unNamed": {
+      "NativeBase.Text": {
+        color: variables.textMessageDetailLinkColor
+      },
+      "UIComponent.IconFont": {
+        color: variables.textMessageDetailLinkColor
+      },
+      backgroundColor: variables.lightestGray
     },
 
     ".light": {
