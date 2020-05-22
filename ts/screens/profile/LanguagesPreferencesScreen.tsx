@@ -33,7 +33,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const iconSize = 12;
 
 /**
- * Allows the user to select one of the device available Calendars
+ * Allows the user to select one of the available Languages as preferred
  */
 class LanguagesPreferencesScreen extends React.PureComponent<Props> {
   private isAlreadyPreferred = (language: Locales) => {
