@@ -15,6 +15,7 @@ export const identificationRequest = createAction(
   "IDENTIFICATION_REQUEST",
   resolve => (
     canResetPin: boolean = true,
+    isValidatingTask: boolean = false,
     identificationGenericData?: IdentificationGenericData,
     identificationCancelData?: IdentificationCancelData,
     identificationSuccessData?: IdentificationSuccessData,
@@ -22,6 +23,7 @@ export const identificationRequest = createAction(
   ) =>
     resolve({
       canResetPin,
+      isValidatingTask,
       identificationGenericData,
       identificationCancelData,
       identificationSuccessData,
@@ -37,6 +39,7 @@ export const identificationStart = createAction(
   resolve => (
     pin: PinString,
     canResetPin: boolean = true,
+    isValidatingTask: boolean = false,
     identificationGenericData?: IdentificationGenericData,
     identificationCancelData?: IdentificationCancelData,
     identificationSuccessData?: IdentificationSuccessData,
@@ -45,6 +48,7 @@ export const identificationStart = createAction(
     resolve({
       pin,
       canResetPin,
+      isValidatingTask,
       identificationGenericData,
       identificationCancelData,
       identificationSuccessData,
