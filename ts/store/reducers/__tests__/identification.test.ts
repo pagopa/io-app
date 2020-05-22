@@ -18,14 +18,7 @@ import reducer, {
   maxAttempts
 } from "../identification";
 
-const identificationStartMock = identificationStart(
-  "111111" as PinString,
-  true,
-  undefined,
-  undefined,
-  undefined,
-  undefined
-);
+const identificationStartMock = identificationStart("111111" as PinString);
 
 describe("Identification reducer", () => {
   it("should return the initial state", () => {
