@@ -1,7 +1,6 @@
 import { List } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Locales, TranslationKeys } from "../../../locales/locales";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -18,12 +17,9 @@ import { preferredLanguageSelector } from "../../store/reducers/persistedPrefere
 import { GlobalState } from "../../store/reducers/types";
 import { getLocalePrimary } from "../../utils/locale";
 
-type OwnProps = NavigationInjectedProps;
-
 type Props = LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  OwnProps;
+  ReturnType<typeof mapStateToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -85,7 +81,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props> {
       <TopScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
         headerTitle={I18n.t("profile.preferences.title")}
-        goBack={this.props.navigation.goBack}
+        goBack={true}
       >
         <ScreenContent
           title={I18n.t("profile.preferences.list.preferred_language.title")}

@@ -42,7 +42,6 @@ import {
   isProfileEmailValidatedSelector,
   profileEmailSelector,
   profileMobilePhoneSelector,
-  profileSelector,
   profileSpidEmailSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
@@ -272,7 +271,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
               subTitle={language}
-              onPress={() => this.props.navigateToLanguagePreferenceScreen()}
+              onPress={this.props.navigateToLanguagePreferenceScreen}
             />
 
             <EdgeBorderComponent />
@@ -287,7 +286,6 @@ function mapStateToProps(state: GlobalState) {
   return {
     preferredLanguage: preferredLanguageSelector(state),
     languages: fromNullable(state.preferences.languages),
-    potProfile: pot.toOption(profileSelector(state)),
     optionEmail: profileEmailSelector(state),
     optionSpidEmail: profileSpidEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
