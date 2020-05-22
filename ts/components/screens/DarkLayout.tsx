@@ -3,45 +3,22 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import {
-  ImageSourcePropType,
-  RefreshControlProps,
-  StyleProp,
-  ViewStyle
-} from "react-native";
 import { StyleSheet } from "react-native";
-import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../../theme/variables";
-import { FAQsCategoriesType } from "../../utils/faq";
 import AnimatedScreenContent from "./AnimatedScreenContent";
-import {
-  ContextualHelpProps,
-  ContextualHelpPropsMarkdown
-} from "./BaseScreenComponent";
+import BaseScreenComponent from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
-import TopScreenComponent from "./TopScreenComponent";
 
-type Props = Readonly<{
-  allowGoBack?: boolean;
-  headerBody?: React.ReactNode;
-  title?: string;
-  icon?: ImageSourcePropType;
-  iconFont?: IconProps;
-  hideHeader?: boolean;
-  contentStyle?: StyleProp<ViewStyle>;
-  appLogo?: boolean;
-  bounces?: boolean;
-  topContent?: React.ReactNode;
+type OwnProps = Readonly<{
   hasDynamicSubHeader?: boolean;
+  topContent?: React.ReactNode;
+  hideHeader?: boolean;
   dynamicSubHeader?: React.ReactNode;
   topContentHeight?: number;
   footerContent?: React.ReactNode;
-  contextualHelp?: ContextualHelpProps;
-  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  contentRefreshControl?: React.ReactElement<RefreshControlProps>;
-  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
-  customGoBack?: React.ReactNode;
 }>;
+
+type Props = OwnProps & React.ComponentProps<typeof BaseScreenComponent> & React.ComponentProps<typeof ScreenContent> ;
 
 const styles = StyleSheet.create({
   headerContents: {
@@ -64,9 +41,8 @@ export default class DarkLayout extends React.Component<Props> {
   }
   public render() {
     return (
-      <TopScreenComponent
-        goBack={this.props.allowGoBack}
-        customGoBack={this.props.customGoBack}
+      <BaseScreenComponent
+        goBack={this.props.goBack}
         headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}
@@ -112,7 +88,7 @@ export default class DarkLayout extends React.Component<Props> {
         {this.props.footerContent && (
           <View footer={true}>{this.props.footerContent}</View>
         )}
-      </TopScreenComponent>
+      </BaseScreenComponent>
     );
   }
 }

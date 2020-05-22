@@ -13,7 +13,6 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import DarkLayout from "../../components/screens/DarkLayout";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H5 from "../../components/ui/H5";
-import IconFont from "../../components/ui/IconFont";
 import {
   BottomTopAnimation,
   LightModalContextInterface
@@ -141,23 +140,16 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
     return true;
   };
 
-  private customOnboardingGoBack = (
-    <IconFont
-      name={"io-back"}
-      style={{ color: customVariables.colorWhite }}
-      onPress={async () => {
+  private customOnboardingGoBack = async () => {
         await this.resetAppBrightness();
         this.goBack();
-      }}
-    />
-  );
+  };
 
   public render() {
     return (
       <React.Fragment>
         <DarkLayout
-          allowGoBack={true}
-          customGoBack={this.customOnboardingGoBack}
+          goBack={this.customOnboardingGoBack}
           headerBody={
             <TouchableDefaultOpacity onPress={this.goBack}>
               <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>

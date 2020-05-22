@@ -1,13 +1,3 @@
-/**
- * Layout for the wallet section of the app.
- * This is comprised by a customizable header part
- * (with optionally a card displayed on the bottom
- * of this header), and a customized content on
- * the bottom part of the screen. Both are
- * wrapped in a ScrollView, and optionally a
- * footer with a button for starting a new payment
- */
-
 import { Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -80,6 +70,15 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Layout for the wallet section of the app.
+ * This is comprised by a customizable header part
+ * (with optionally a card displayed on the bottom
+ * of this header), and a customized content on
+ * the bottom part of the screen. Both are
+ * wrapped in a ScrollView, and optionally a
+ * footer with a button for starting a new payment
+ */
 export default class WalletLayout extends React.Component<Props> {
   private dynamicSubHeader() {
     return (
@@ -109,7 +108,7 @@ export default class WalletLayout extends React.Component<Props> {
     return (
       <DarkLayout
         bounces={false}
-        allowGoBack={allowGoBack}
+        goBack={allowGoBack}
         title={title ? title : I18n.t("wallet.wallet")}
         iconFont={{ name: "io-pagopa" }}
         appLogo={appLogo}
