@@ -299,23 +299,22 @@ class Pinpad extends React.PureComponent<Props, State> {
     this.setState({ value: "" });
   }, 100);
 
-
   private renderCodeInsertionStatus = () => {
     return (
       <Text
         alignCenter={true}
         bold={true}
         white={this.props.buttonType === "primary"}
-        primary={this.props.buttonType === 'light'}
+        primary={this.props.buttonType === "light"}
       >
         {this.props.codeInsertionStatus}
       </Text>
-    )
+    );
   };
 
   public render() {
     const placeholderPositions = range(0, this.state.pinLength - 1);
-    
+
     return (
       <React.Fragment>
         <View style={styles.placeholderContainer}>

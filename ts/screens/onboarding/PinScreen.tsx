@@ -200,8 +200,10 @@ class PinScreen extends React.PureComponent<Props, State> {
         />
       );
     } else {
-
-      const codeInsertionStatus = this.state.pinState.state === "PinConfirmError" ? I18n.t("onboarding.unlockCode.confirmInvalid") : undefined
+      const codeInsertionStatus =
+        this.state.pinState.state === "PinConfirmError"
+          ? I18n.t("onboarding.unlockCode.confirmInvalid")
+          : undefined;
       /**
        * The component that allows the user to CONFIRM the unlock code.
        */

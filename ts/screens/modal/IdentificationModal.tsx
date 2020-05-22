@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -35,7 +36,6 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { authenticateConfig } from "../../utils/biometric";
-import { fromNullable } from 'fp-ts/lib/Option';
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -319,9 +319,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   };
 
   private getCodeInsertionStatus = () => {
-
-    if(this.state.identificationByPinState === 'unstarted'){
-      return undefined
+    if (this.state.identificationByPinState === "unstarted") {
+      return undefined;
     }
 
     const remainingAttempts = this.props.identificationFailState.fold(
@@ -334,16 +333,22 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     const wrongCodeString = I18n.t("identification.fail.wrongCode");
 
-    const remainingAttemptsString = fromNullable(remainingAttempts).fold('', attempts => I18n.t(
-      attempts > 1
-        ? "identification.fail.remainingAttempts"
-        : "identification.fail.remainingAttemptSingle",
-      { attempts }
-    ))
+    const remainingAttemptsString = fromNullable(remainingAttempts).fold(
+      "",
+      attempts =>
+        I18n.t(
+          attempts > 1
+            ? "identification.fail.remainingAttempts"
+            : "identification.fail.remainingAttemptSingle",
+          { attempts }
+        )
+    );
 
-    return !remainingAttempts ? wrongCodeString : `${wrongCodeString}. ${remainingAttemptsString}`
-  }
- 
+    return !remainingAttempts
+      ? wrongCodeString
+      : `${wrongCodeString}. ${remainingAttemptsString}`;
+  };
+
   public render() {
     const { identificationProgressState, isFingerprintEnabled } = this.props;
 
