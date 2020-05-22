@@ -216,7 +216,7 @@ profile:
         subtitle: In quale lingua vuoi usare l'applicazione?
         alert: 
           title: Vuoi cambiare la lingua in  
-          subtitle: Dovrai riavviare l'applicazione per far avvenire il cambiamento
+          subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
     empty:
       default: Nessuna preferenza impostata
