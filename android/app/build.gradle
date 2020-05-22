@@ -116,7 +116,7 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode System.getenv('CIRCLE_BUILD_NUM') ? ("100" + System.getenv('CIRCLE_BUILD_NUM')).toInteger() : 1
+        versionCode 40000
         versionName "1.3.3"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
