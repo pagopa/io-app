@@ -167,9 +167,9 @@ class PreferencesScreen extends React.Component<Props, State> {
     const maybeSpidEmail = this.props.optionSpidEmail;
     const maybePhoneNumber = this.props.optionMobilePhone;
 
-    const languages = this.props.preferredLanguage.foldL(
-      () => I18n.t(`locales.${I18n.locale}`, { defaultValue: I18n.locale }),
-      language => I18n.t(`locales.${language}`, { defaultValue: language })
+    const language = this.props.preferredLanguage.fold(
+      translateLocale(I18n.locale),
+      l => translateLocale(l)
     );
 
     const showModal = (title: TranslationKeys, body: TranslationKeys) => {
@@ -271,7 +271,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
-              subTitle={languages}
+              subTitle={language}
               onPress={() => this.props.navigateToLanguagePreferenceScreen()}
             />
 
