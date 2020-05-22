@@ -36,16 +36,13 @@ const iconSize = 12;
  * Allows the user to select one of the device available Calendars
  */
 class LanguagesPreferencesScreen extends React.PureComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   private isAlreadyPreferred = (language: Locales) => {
     // if the preferred Lanuage is not set, we check if language is the same in use
-    return this.props.preferredLanguage.fold(
-      getLocalePrimary(I18n.locale).fold(false, l => l === language),
-      l => l === language
-    );
+    return this.props.preferredLanguage
+      .map(l => l === language)
+      .getOrElse(
+        getLocalePrimary(I18n.locale).fold(false, l => l === language)
+      );
   };
 
   private onLanguageSelected = (language: Locales) => {
