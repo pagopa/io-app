@@ -1,4 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -91,6 +92,7 @@ const renderErrorTransactionMessage = (
  */
 class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private instabugLogAndOpenReport = () => {
+    Instabug.appendTags(["payment-support"]);
     pot.map(this.props.profile, p => {
       instabugLog(
         getPaymentHistoryDetails(this.props.navigation.getParam("payment"), p),

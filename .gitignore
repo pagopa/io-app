@@ -36,6 +36,7 @@ Pods/
 build/
 .idea
 .gradle
+.history
 local.properties
 *.iml
 Google Play Android Developer-04750d2c0cf8.json

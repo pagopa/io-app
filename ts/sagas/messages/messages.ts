@@ -6,7 +6,7 @@ import { Either, left, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { call, Effect, put, select } from "redux-saga/effects";
 
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { BackendClient } from "../../api/backend";
 import { loadMessage as loadMessageAction } from "../../store/actions/messages";
@@ -21,7 +21,9 @@ import { readablePrivacyReport } from "../../utils/reporters";
 export function* loadMessage(
   getMessage: ReturnType<typeof BackendClient>["getMessage"],
   meta: CreatedMessageWithoutContent
-): IterableIterator<Effect | Either<Error, CreatedMessageWithContent>> {
+): IterableIterator<
+  Effect | Either<Error, CreatedMessageWithContentAndAttachments>
+> {
   // Load the messages already in the redux store
   const cachedMessage: ReturnType<
     ReturnType<typeof messageStateByIdSelector>
@@ -62,7 +64,9 @@ export function* loadMessage(
 export function* fetchMessage(
   getMessage: ReturnType<typeof BackendClient>["getMessage"],
   meta: CreatedMessageWithoutContent
-): IterableIterator<Effect | Either<Error, CreatedMessageWithContent>> {
+): IterableIterator<
+  Effect | Either<Error, CreatedMessageWithContentAndAttachments>
+> {
   try {
     const response: SagaCallReturnType<typeof getMessage> = yield call(
       getMessage,
