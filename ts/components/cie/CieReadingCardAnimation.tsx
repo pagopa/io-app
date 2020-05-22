@@ -1,11 +1,9 @@
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
 import { Animated, Easing, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import { ReadingState } from "../../screens/authentication/cie/CieCardReaderScreen";
 import customVariables from "../../theme/variables";
-import AnimatedRing from "../animations/AnimatedRing";
 import StyledIconFont from "../ui/IconFont";
 
 type Props = Readonly<{
@@ -26,15 +24,6 @@ const progressThreshold = 60;
 const CARD_ICON_SIZE = 70;
 const PHONE_ICON_SIZE = 120;
 const slidingAmplitude = 25;
-
-// Setting for 'radar' animation
-const ringSettings = {
-  dimension: imgDimension,
-  // Three different animation start delays (one is 0), one for each ring
-  delayX1: 700 as Millisecond,
-  delayX2: 1400 as Millisecond,
-  duration: 2100 as Millisecond
-};
 
 const styles = StyleSheet.create({
   imgContainer: {
@@ -80,6 +69,12 @@ const AnimatedStyledIconFont: typeof StyledIconFont = Animated.createAnimatedCom
   StyledIconFont
 );
 
+/**
+ * A component to render the animation displayed during the reading of the CIE card.
+ * there are 2 animations:
+ * - a card and a phone icons sliding to suggest the user to place the card on the bottom part of the phone
+ * - a circle representing the progress of the reading
+ */
 export default class CieReadingCardAnimation extends React.PureComponent<
   Props,
   State
@@ -101,7 +96,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     this.createProrgessiveAnimation();
 
     // tslint:disable-next-line: no-object-mutation
-    this.slidingCardAnimatedValue = new Animated.Value(0);
+    this.slidingCardAnimatedValue = new Animated.Value(slidingAmplitude);
     this.createSlidingCardAnimation();
   }
 
@@ -142,6 +137,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     this.progressAnimation.start(({ finished }) => {
       if (finished) {
         // loop
+        this.progressAnimatedValue.removeAllListeners();
         this.createProrgessiveAnimation();
         this.startProgressiveAnimation();
       }
@@ -173,32 +169,31 @@ export default class CieReadingCardAnimation extends React.PureComponent<
    */
 
   private createSlidingCardAnimation() {
-    // decrease from slidingAmplitude to 0
     const firstAnim = Animated.timing(this.slidingCardAnimatedValue, {
       toValue: 0,
-      easing: Easing.ease,
-      duration: 1500
+      easing: Easing.sin,
+      duration: 1000,
+      useNativeDriver: true
     });
 
-    // increase value from 0 to slidingAmplitude
     const secondAnim = Animated.timing(this.slidingCardAnimatedValue, {
       toValue: slidingAmplitude,
       easing: Easing.ease,
-      duration: 1000
+      duration: 1000,
+      useNativeDriver: true
     });
 
-    // wait
-    const thirdhAnim = Animated.timing(this.slidingCardAnimatedValue, {
+    const thirdAnim = Animated.timing(this.slidingCardAnimatedValue, {
       toValue: slidingAmplitude,
-      easing: Easing.linear,
-      duration: 1500
+      duration: 1000,
+      useNativeDriver: true
     });
 
     // tslint:disable-next-line: no-object-mutation
     this.slidingCardAnimation = Animated.sequence([
       firstAnim,
       secondAnim,
-      thirdhAnim
+      thirdAnim
     ]);
     this.addSlidingCardAnimationListener();
   }
@@ -214,6 +209,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     this.slidingCardAnimation.start(({ finished }) => {
       if (finished) {
         // loop
+        this.slidingCardAnimatedValue.removeAllListeners();
         this.createSlidingCardAnimation();
         this.startSlidingCardAnimation();
       }
@@ -271,34 +267,10 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     this.stopSlidingCardAnimation();
   }
 
-  private AnimatedRings = (
-    <View style={styles.rings}>
-      <AnimatedRing
-        dimension={ringSettings.dimension}
-        startAnimationAfter={0 as Millisecond}
-        duration={ringSettings.duration}
-        boxDimension={boxDimension}
-      />
-      <AnimatedRing
-        dimension={ringSettings.dimension}
-        startAnimationAfter={ringSettings.delayX1}
-        duration={ringSettings.duration}
-        boxDimension={boxDimension}
-      />
-      <AnimatedRing
-        dimension={ringSettings.dimension}
-        startAnimationAfter={ringSettings.delayX2}
-        duration={ringSettings.duration}
-        boxDimension={boxDimension}
-      />
-    </View>
-  );
-
   public render() {
     const { readingState } = this.props;
     return (
       <View style={styles.imgContainer}>
-        {readingState === ReadingState.waiting_card && this.AnimatedRings}
 
         <View style={styles.flexStart}>
           <ProgressCircle
