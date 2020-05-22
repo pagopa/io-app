@@ -15,6 +15,12 @@ I18n.translations = {
   it: locales.localeIT
 };
 
+export function setLocale(lang: locales.Locales) {
+  /* tslint:disable */
+  I18n.locale = lang;
+  /* tslint:enable */
+}
+
 type TranslateT = {
   // allow unsafe translations only when a defaultValue gets passed
   (scope: string, options: { defaultValue: string }): string;
@@ -32,7 +38,7 @@ type TranslateT = {
 interface TypedI18n {
   readonly t: TranslateT;
   readonly translate: TranslateT;
-  locale: locales.Locales;
+  readonly locale: locales.Locales;
   readonly currentLocale: () => locales.Locales;
   readonly toNumber: typeof I18n.toNumber;
   readonly toCurrency: typeof I18n.toCurrency;

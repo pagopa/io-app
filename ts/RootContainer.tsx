@@ -33,7 +33,7 @@ import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
 import { fromNullable } from "fp-ts/lib/Option";
-import I18n from "./i18n";
+import { setLocale } from "./i18n";
 import { serverInfoDataSelector } from "./store/reducers/backendInfo";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 // Check min version app supported
@@ -87,7 +87,7 @@ class RootContainer extends React.PureComponent<Props> {
     AppState.addEventListener("change", this.handleApplicationActivity);
 
     fromNullable(preferredLanguage).map(l => {
-      I18n.locale = l; // tslint:disalble-line:no-object-mutation
+      setLocale(l);
     });
     // Hide splash screen
     SplashScreen.hide();
