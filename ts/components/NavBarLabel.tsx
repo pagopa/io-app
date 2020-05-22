@@ -1,4 +1,3 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import * as React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
