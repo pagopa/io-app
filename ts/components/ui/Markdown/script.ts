@@ -30,7 +30,7 @@ document.body.onclick = function(e) {
   }
 };
 
-true
+true;
 `;
 
 // Script to notify the height of the body to the react WebView component
