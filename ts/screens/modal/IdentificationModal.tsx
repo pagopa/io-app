@@ -35,6 +35,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { authenticateConfig } from "../../utils/biometric";
+import { fromNullable } from 'fp-ts/lib/Option';
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -67,29 +68,6 @@ const checkPinInterval = 100 as Millisecond;
 
 // the threshold of attempts after which it is necessary to activate the timer check
 const checkTimerThreshold = maxAttempts - freeAttempts;
-
-const renderIdentificationByPinState = (
-  identificationByPinState: IdentificationByPinState,
-  isValidatingTask: boolean
-) => {
-  if (identificationByPinState === "failure") {
-    return (
-      <React.Fragment>
-        <TextWithIcon>
-          <IconFont
-            name={"io-close"}
-            color={!isValidatingTask ? variables.colorWhite : undefined}
-          />
-          <Text white={!isValidatingTask}>
-            {I18n.t("identification.unlockCode.confirmInvalid")}
-          </Text>
-        </TextWithIcon>
-      </React.Fragment>
-    );
-  }
-
-  return null;
-};
 
 const renderIdentificationByBiometryState = (
   identificationByBiometryState: IdentificationByPinState
@@ -340,6 +318,32 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   };
 
+  private getCodeInsertionStatus = () => {
+
+    if(this.state.identificationByPinState === 'unstarted'){
+      return undefined
+    }
+
+    const remainingAttempts = this.props.identificationFailState.fold(
+      undefined,
+      failState =>
+        failState.remainingAttempts <= maxAttempts - freeAttempts
+          ? failState.remainingAttempts
+          : undefined
+    );
+
+    const wrongCodeString = I18n.t("identification.fail.wrongCode");
+
+    const remainingAttemptsString = fromNullable(remainingAttempts).fold('', attempts => I18n.t(
+      attempts > 1
+        ? "identification.fail.remainingAttempts"
+        : "identification.fail.remainingAttemptSingle",
+      { attempts }
+    ))
+
+    return !remainingAttempts ? wrongCodeString : `${wrongCodeString}. ${remainingAttemptsString}`
+  }
+ 
   public render() {
     const { identificationProgressState, isFingerprintEnabled } = this.props;
 
@@ -356,7 +360,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     } = identificationProgressState;
 
     const {
-      identificationByPinState,
       identificationByBiometryState,
       biometryType,
       countdown
@@ -438,6 +441,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               onPinResetHandler={this.props.onPinResetHandler}
               isValidatingTask={isValidatingTask}
               isFingerprintEnabled={isFingerprintEnabled}
+              codeInsertionStatus={this.getCodeInsertionStatus()}
               biometryType={biometryType}
               onFingerPrintReq={() =>
                 this.onFingerprintRequest(this.onIdentificationSuccessHandler)
@@ -465,10 +469,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               }
               remainingAttempts={displayRemainingAttempts}
             />
-            {renderIdentificationByPinState(
-              identificationByPinState,
-              isValidatingTask
-            )}
             {renderIdentificationByBiometryState(identificationByBiometryState)}
 
             <View spacer={true} large={true} />

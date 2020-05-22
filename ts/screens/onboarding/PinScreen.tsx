@@ -200,6 +200,8 @@ class PinScreen extends React.PureComponent<Props, State> {
         />
       );
     } else {
+
+      const codeInsertionStatus = this.state.pinState.state === "PinConfirmError" ? I18n.t("onboarding.unlockCode.confirmInvalid") : undefined
       /**
        * The component that allows the user to CONFIRM the unlock code.
        */
@@ -213,9 +215,8 @@ class PinScreen extends React.PureComponent<Props, State> {
             ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
             buttonType={"light"}
             onDeleteLastDigit={this.onPinConfirmRemoveLastDigit}
+            codeInsertionStatus={codeInsertionStatus}
           />
-
-          {this.renderCodeInputConfirmValidation()}
         </React.Fragment>
       );
     }
