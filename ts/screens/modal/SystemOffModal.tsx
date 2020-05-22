@@ -7,11 +7,11 @@ import { Container, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import BaseScreenComponent from "./components/screens/BaseScreenComponent";
-import I18n from "./i18n";
-import { backendServicesStatusSelector } from "./store/reducers/backendStatus";
-import { GlobalState } from "./store/reducers/types";
-import customVariables from "./theme/variables";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import I18n from "../../i18n";
+import { backendServicesStatusSelector } from "../../store/reducers/backendStatus";
+import { GlobalState } from "../../store/reducers/types";
+import customVariables from "../../theme/variables";
 
 type Props = ReturnType<typeof mapStateToProps>;
 const styles = StyleSheet.create({
@@ -50,7 +50,7 @@ class SystemOffModal extends React.PureComponent<Props> {
               <React.Fragment>
                 <Image
                   style={styles.image}
-                  source={require("../img/servicesStatus/error-detail-icon.png")}
+                  source={require("../../../img/servicesStatus/error-detail-icon.png")}
                 />
                 <View spacer={true} extralarge={true} />
               </React.Fragment>

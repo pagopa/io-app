@@ -54,9 +54,11 @@ const userDataProcessingReducer = (
       };
 
     case getType(upsertUserDataProcessing.request): {
+      const maybeValue = state[action.payload];
+      const prevValue = pot.isSome(maybeValue) ? maybeValue.value : undefined;
       return {
         ...state,
-        [action.payload]: pot.toLoading({ ...state[action.payload] })
+        [action.payload]: pot.toUpdating(state[action.payload], prevValue)
       };
     }
     case getType(upsertUserDataProcessing.success): {
