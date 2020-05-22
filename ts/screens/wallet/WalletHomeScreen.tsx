@@ -1,8 +1,8 @@
-import { fromNullable, none } from "fp-ts/lib/Option";
+import { fromNullable, fromPredicate, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, RefreshControl, StyleSheet } from "react-native";
+import { BackHandler, Image, RefreshControl, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
   NavigationEventSubscription,
@@ -25,6 +25,7 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
+  navigateBack,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
@@ -37,6 +38,7 @@ import {
 } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
+import { navSelector } from "../../store/reducers/navigationHistory";
 import {
   paymentsHistorySelector,
   PaymentsHistoryState
@@ -53,10 +55,12 @@ import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
+import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
+  keyFrom?: string;
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -142,7 +146,31 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     return this.props.navigation.getParam("newMethodAdded");
   }
 
+  get navigationKeyFrom() {
+    return this.props.navigation.getParam("keyFrom");
+  }
+
   private navListener?: NavigationEventSubscription;
+
+  private handleBackPress = () => {
+    fromPredicate((cond: boolean) => cond)(this.newMethodAdded).foldL(
+      () => {
+        this.props.navigateBack();
+      },
+      _ => {
+        fromNullable(this.navigationKeyFrom).foldL(
+          () => {
+            this.props.navigation.setParams({ newMethodAdded: false });
+            this.props.navigateToWalletList();
+          },
+          k => {
+            this.props.navigateBack(k);
+          }
+        );
+      }
+    );
+    return true;
+  };
 
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
@@ -157,12 +185,14 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         customVariables.brandDarkGray
       );
     }); // tslint:disable-line no-object-mutation
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
   public componentWillUnmount() {
     if (this.navListener) {
       this.navListener.remove();
     }
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
   private cardHeader(isError: boolean = false) {
@@ -176,7 +206,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {!isError && (
           <View>
             <AddPaymentMethodButton
-              onPress={this.props.navigateToWalletAddPaymentMethod}
+              onPress={() =>
+                this.props.navigateToWalletAddPaymentMethod(
+                  getCurrentRouteKey(this.props.nav)
+                )
+              }
             />
           </View>
         )}
@@ -221,7 +255,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             <ButtonDefaultOpacity
               block={true}
               whiteBordered={true}
-              onPress={this.props.navigateToWalletAddPaymentMethod}
+              onPress={() =>
+                this.props.navigateToWalletAddPaymentMethod(
+                  getCurrentRouteKey(this.props.nav)
+                )
+              }
               activeOpacity={1}
             >
               <Text bold={true}>
@@ -366,9 +404,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       <IconFont
         name={"io-close"}
         style={styles.end}
-        onPress={() =>
-          this.props.navigation.setParams({ newMethodAdded: false })
-        }
+        onPress={this.handleBackPress}
       />
       <IconFont
         name={"io-complete"}
@@ -471,13 +507,14 @@ const mapStateToProps = (state: GlobalState) => {
     areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     readTransactions: transactionsReadSelector(state),
+    nav: navSelector(state),
     isPagoPaVersionSupported
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletAddPaymentMethod: () =>
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
+  navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
+    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
   navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
@@ -489,6 +526,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
+  navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),
   loadWallets: () => dispatch(fetchWalletsRequest())
