@@ -149,6 +149,7 @@ export default class AnimatedScreenContent extends React.Component<
             <ScreenContentHeader
               title={this.props.title}
               icon={this.props.icon}
+              iconFont={this.props.iconFont}
               dark={this.props.dark}
             />
           )}

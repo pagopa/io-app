@@ -147,11 +147,15 @@ profile:
           requestTitle: Sei sicuro di voler richiedere la cancellazione del tuo account?
           requestSubtitle: Per usare IO dovrai registrarti nuovamente. La cancellazione non riguarda i dati trattati per conto degli Enti Erogatori.
           oldRequest: Abbiamo già preso in carico una richiesta di eliminazione del tuo profilo.
-          confirmSubtitle: Al termine dell'elaborazione, riceverai una email di conferma dell\'avvenuta eliminazione.
+          confirmSubtitle: Al termine dell'elaborazione, riceverai una email di conferma dell'avvenuta eliminazione.
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
       exportData:
+        cta: Richiedi copia dei tuoi dati
         title: Accedi ai tuoi dati
         description: Ricevi una copia dei dati associati al tuo profilo IO
+        info:
+          title: Puoi scaricare le informazioni relative al tuo profilo IO in qualsiasi momento.
+          body: !include profile/profile_download_data.md
         alert:
           requestTitle: Vuoi davvero esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
@@ -467,24 +471,16 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Attivazione
-    continue: Continua
     accept: Accetta
     error: Errore nel caricamento
-  pin:
+  unlockCode:
     headerTitle: Attivazione
     contentTitle: Scegli un codice di sblocco
-    contentTitleConfirm: Digita ancora il codice di sblocco
-    pinInfo:
-      Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando
-      dovrai visualizzare dati sensibili o compiere operazioni dispositive. Deve essere
-      composto di 6 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento
-      entrando con SPID.
-    pinInfoSelected:
-      Questo codice ti verrà richiesto ogni volta che aprirai l’app
-      e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive.
-    continue: Continua
+    contentSubtitle: inserisci un codice di 6 cifre
+    contentTitleConfirm: Ripeti il codice di sblocco
+    contentTitleConfirmSubtitle: inserisci di nuovo il codice di 6 cifre
+    pinInfo: Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive. Potrai cambiarlo in ogni momento dopo l'autenticazione.
     reset: Modifica il codice
-    confirmValid: grazie, puoi continuare
     confirmInvalid: i due codici non coincidono
     contextualHelpTitle: Qual è il tuo codice di sblocco
     contextualHelpContent: !include onboarding/onboarding_pin.md
@@ -498,28 +494,9 @@ onboarding:
       enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
         fingerprint: la tua impronta digitale
-        faceId: FaceID
-        touchId: TouchID
+        faceId: Face ID
+        touchId: Touch ID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
-pin_login:
-  pin:
-    pinInfo: Inserisci il codice di sblocco
-    reset:
-      button: Codice di sblocco dimenticato?
-      button_short: Reimposta il codice di sblocco
-      tip:
-        Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente con la tua identità
-        SPID.
-      tip_short: Dovrai effettuare di nuovo l'accesso.
-    confirmValid: Codice di sblocco corretto
-    confirmInvalid: codice di sblocco non valido
-  unlock_screen:
-    help:
-      title: Accesso con codice di sblocco
-      content: !include onboarding/onboarding_pin.md
-  forgetPin:
-    confirmTitle: Hai dimenticato il codice di sblocco?
-    confirmMsg: Per poter scegliere un nuovo codice di sblocco dovrai fare di nuovo accesso con SPID.
 forms:
   validators:
     required: Valore richiesto
@@ -893,9 +870,9 @@ messages:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
       expiredAlert:
-          block1: La ricetta è scaduta alle ore
-          block2: del
-      
+        block1: La ricetta è scaduta alle ore
+        block2: del
+
     pay: Paga € {{amount}}
     paid: Pagato
     reminder: Promemoria
@@ -1052,15 +1029,17 @@ serviceDetail:
   disabled: disabilitato
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
-  messageFingerPrint: "Appoggia l'impronta o inserisci il codice di sblocco"
-  messageFaceID: "Usa FaceID o inserisci il codice di sblocco"
-  messageEnterPin: "Inserisci il codice di sblocco"
+  title: Sblocca l'app
+  titleValidation: Conferma l'operazione
+  subtitleCode: inserisci il codice di sblocco
+  subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
+  subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale
     title: Identificazione Biometrica
     popup:
-      reason: Identificazione
+      reason: Identificazione tramite touch ID non riuscita
       title: Identificazione richiesta
       sensorDescription: Tocca il sensore
       fallbackLabel: Usa il codice di sblocco
@@ -1070,6 +1049,23 @@ identification:
     remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
     tooManyAttempts: Troppi tentativi di inserimento errati.
     waitMessage: "Riprova tra:"
+  unlockCode:
+    reset:
+      button: Hai dimenticato il
+      code: codice di sblocco
+      button_short: Reimposta il codice di sblocco
+      tip: Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente.
+      tip_short: Dovrai effettuare di nuovo l'accesso.
+    confirmValid: Codice di sblocco corretto
+    confirmInvalid: codice di sblocco non valido
+  unlock_screen:
+    help:
+      title: Accesso con codice di sblocco
+      content: !include onboarding/onboarding_pin.md
+  forgetCode:
+    confirmTitle: Hai dimenticato il codice di sblocco?
+    confirmMsg: Per poter scegliere un nuovo codice di sblocco dovrai accedere nuovamente.
+    confirmMsgWithTask: Per poter scegliere un nuovo codice di sblocco dovrai annullare l'operazione corrente e accedere nuovamente.
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
   removeRequest:

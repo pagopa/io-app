@@ -226,6 +226,10 @@ const navigation = createBottomTabNavigator(
       }
     }),
     tabBarOptions: {
+      /**
+       * Add the hidden on keyboard show option when https://www.pivotaltracker.com/story/show/172715822
+       * see https://github.com/react-navigation/react-navigation/issues/7415#issuecomment-485027123
+       */
       activeTintColor: variables.brandPrimary,
       inactiveTintColor: variables.brandDarkGray,
       style: [styles.tabBarStyle, styles.upsideShadow]
