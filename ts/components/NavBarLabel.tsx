@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
@@ -29,13 +30,14 @@ const ROUTE_LABEL: RouteLabelMap = {
   SERVICES_NAVIGATOR: "global.navigator.services",
   PROFILE_NAVIGATOR: "global.navigator.profile"
 };
+const fallbackLabel = "unknown"; // fallback label
 
 const getLabel = (routeName: string, locale: Locales): string => {
-  const fallbackLabel = "unknown"; // fallback label
   // "routeName as Routes" is assumed to be safe as explained @https://github.com/pagopa/io-app/pull/193#discussion_r192347234
   // adding fallback anyway -- better safe than sorry
-  const label = ROUTE_LABEL[routeName as Routes];
-  return label === undefined ? fallbackLabel : I18n.t(label, { locale });
+  return fromNullable(ROUTE_LABEL[routeName as Routes]).fold(fallbackLabel, l =>
+    I18n.t(l, { locale })
+  );
 };
 
 const styles = StyleSheet.create({
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
 
 const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
   const { options, routeName, preferredLanguage } = props;
-  const locale: Locales = preferredLanguage.fold("en", l => l);
+  const locale: Locales = preferredLanguage.fold(I18n.locale, l => l);
   return (
     <Text
       style={[

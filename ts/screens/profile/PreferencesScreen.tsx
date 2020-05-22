@@ -31,7 +31,10 @@ import {
   navigateToLanguagePreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
+import {
+  isCustomEmailChannelEnabledSelector,
+  preferredLanguageSelector
+} from "../../store/reducers/persistedPreferences";
 import {
   hasProfileEmailSelector,
   isEmailEnabledSelector,
@@ -164,13 +167,8 @@ class PreferencesScreen extends React.Component<Props, State> {
     const maybeSpidEmail = this.props.optionSpidEmail;
     const maybePhoneNumber = this.props.optionMobilePhone;
 
-    const languages = fromNullable(this.props.preferredLanguage).foldL(
-      () => {
-        return this.props.languages
-          .filter(_ => _.length > 0)
-          .map(_ => translateLocale(_[0]))
-          .getOrElse(I18n.t("global.remoteStates.notAvailable"));
-      },
+    const languages = this.props.preferredLanguage.foldL(
+      () => I18n.t(`locales.${I18n.locale}`, { defaultValue: I18n.locale }),
       language => I18n.t(`locales.${language}`, { defaultValue: language })
     );
 
@@ -287,7 +285,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 
 function mapStateToProps(state: GlobalState) {
   return {
-    preferredLanguage: state.persistedPreferences.preferredLanguage,
+    preferredLanguage: preferredLanguageSelector(state),
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
     optionEmail: profileEmailSelector(state),
