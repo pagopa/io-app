@@ -161,7 +161,7 @@ platform :ios do
     ensure_git_status_clean
 
     # Increment the build number
-    build_number = increment_build_number
+    build_number = get_build_number
 
     # Get the current version from the project
     version_number = get_version_number
