@@ -38,6 +38,7 @@ import {
 } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
+import { navSelector } from "../../store/reducers/navigationHistory";
 import {
   paymentsHistorySelector,
   PaymentsHistoryState
@@ -54,6 +55,7 @@ import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
+import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type NavigationParams = Readonly<{
@@ -204,7 +206,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {!isError && (
           <View>
             <AddPaymentMethodButton
-              onPress={this.props.navigateToWalletAddPaymentMethod}
+              onPress={() =>
+                this.props.navigateToWalletAddPaymentMethod(
+                  getCurrentRouteKey(this.props.nav)
+                )
+              }
             />
           </View>
         )}
@@ -249,7 +255,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             <ButtonDefaultOpacity
               block={true}
               whiteBordered={true}
-              onPress={this.props.navigateToWalletAddPaymentMethod}
+              onPress={() =>
+                this.props.navigateToWalletAddPaymentMethod(
+                  getCurrentRouteKey(this.props.nav)
+                )
+              }
               activeOpacity={1}
             >
               <Text bold={true}>
@@ -497,13 +507,14 @@ const mapStateToProps = (state: GlobalState) => {
     areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     readTransactions: transactionsReadSelector(state),
+    nav: navSelector(state),
     isPagoPaVersionSupported
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletAddPaymentMethod: () =>
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
+  navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
+    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
   navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
