@@ -9,18 +9,18 @@ import { connect } from "react-redux";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation from "../../../components/cie/CieReadingCardAnimation";
 import { withConditionalView } from "../../../components/helpers/withConditionalView";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import StyledIconFont from "../../../components/ui/IconFont";
+import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
-import StyledIconFont from '../../../components/ui/IconFont';
-import { SUCCESS_ICON_HEIGHT } from '../../../utils/constants';
-import { withLightModalContext } from '../../../components/helpers/withLightModalContext';
-import { LightModalContextInterface } from '../../../components/ui/LightModal';
+import { SUCCESS_ICON_HEIGHT } from "../../../utils/constants";
 
 type NavigationParams = {
   ciePin: string;
@@ -28,12 +28,14 @@ type NavigationParams = {
 };
 
 type Props = NavigationScreenProps<NavigationParams> &
-  ReturnType<typeof mapStateToProps> & LightModalContextInterface;
+  ReturnType<typeof mapStateToProps> &
+  LightModalContextInterface;
 
 const styles = StyleSheet.create({
   padded: {
     paddingHorizontal: customVariables.contentPadding
-  }
+  },
+  center: { alignSelf: "center" }
 });
 
 export enum ReadingState {
@@ -187,7 +189,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           content: this.state.errorMessage
         });
         break;
-      
+
       // waiting_card state
       default:
         this.setState({
@@ -207,22 +209,29 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private modal = (
-    <TopScreenComponent customRightIcon={{iconName: 'io-close', onPress: this.props.hideModal}}>
+    <TopScreenComponent
+      customRightIcon={{ iconName: "io-close", onPress: this.props.hideModal }}
+    >
       <Content>
-            <View>
-              <StyledIconFont
-                name={"io-complete"}
-                color={customVariables.brandHighlight}
-                size={SUCCESS_ICON_HEIGHT}
-                style={{alignSelf: 'center'}}
-              />
-              <View spacer={true}/>
-              <Text alignCenter={true}>{I18n.t("global.buttons.ok2")}{I18n.t("global.symbols.exclamation")}</Text>
-              <Text bold={true} alignCenter={true}>{I18n.t("authentication.cie.card.cieCardValid")}</Text>
-            </View>
-          </Content>
+        <View>
+          <StyledIconFont
+            name={"io-complete"}
+            color={customVariables.brandHighlight}
+            size={SUCCESS_ICON_HEIGHT}
+            style={styles.center}
+          />
+          <View spacer={true} />
+          <Text alignCenter={true}>
+            {I18n.t("global.buttons.ok2")}
+            {I18n.t("global.symbols.exclamation")}
+          </Text>
+          <Text bold={true} alignCenter={true}>
+            {I18n.t("authentication.cie.card.cieCardValid")}
+          </Text>
+        </View>
+      </Content>
     </TopScreenComponent>
-  ); 
+  );
 
   private handleCieSuccess = (cieConsentUri: string) => {
     this.props.showModal(this.modal);
@@ -256,23 +265,23 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         goBack={true}
         headerTitle={I18n.t("authentication.cie.card.headerTitle")}
       >
-          <ScreenContentHeader title={this.state.title} />
-          <Content bounces={false} noPadded={true}>
-            <Text style={styles.padded}>{this.state.subtitle}</Text>
-            <CieReadingCardAnimation readingState={this.state.readingState} />
-            {this.state.content && (
-              <Text style={styles.padded}>{this.state.content}</Text>
-            )}
+        <ScreenContentHeader title={this.state.title} />
+        <Content bounces={false} noPadded={true}>
+          <Text style={styles.padded}>{this.state.subtitle}</Text>
+          <CieReadingCardAnimation readingState={this.state.readingState} />
+          {this.state.content && (
+            <Text style={styles.padded}>{this.state.content}</Text>
+          )}
         </Content>
 
-            <FooterWithButtons
-              type={"SingleButton"}
-              leftButton={{
-                onPress: this.props.navigation.goBack,
-                cancel: true,
-                title: I18n.t("global.buttons.cancel")
-              }}
-            />
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={{
+            onPress: this.props.navigation.goBack,
+            cancel: true,
+            title: I18n.t("global.buttons.cancel")
+          }}
+        />
       </TopScreenComponent>
     );
   }

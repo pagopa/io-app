@@ -6,7 +6,7 @@ import ProgressCircle from "react-native-progress-circle";
 import { ReadingState } from "../../screens/authentication/cie/CieCardReaderScreen";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";
-import StyledIconFont from '../ui/IconFont';
+import StyledIconFont from "../ui/IconFont";
 
 type Props = Readonly<{
   readingState: ReadingState;
@@ -22,6 +22,9 @@ const imgDimension = 180;
 const boxDimension = 245;
 const progressThreshold = 60;
 
+// Slided animated icons params
+const CARD_ICON_SIZE = 70;
+const PHONE_ICON_SIZE = 120;
 const slidingAmplitude = 25;
 
 // Setting for 'radar' animation
@@ -55,25 +58,27 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   flexStart: {
-    justifyContent: "flex-start",
+    justifyContent: "flex-start"
   },
   cardIcon: {
-    position:'absolute',
-    paddingBottom: 20, 
+    position: "absolute",
+    paddingBottom: 20
   },
   phoneIcon: {
-    position: 'absolute', 
-    backgroundColor: 'white',
-    alignSelf: 'flex-end'
+    position: "absolute",
+    backgroundColor: "white",
+    alignSelf: "flex-end"
   },
-  slidingContentContainer:{
-    height: imgDimension, 
-    width: imgDimension - customVariables.contentPadding, 
-    justifyContent: 'center'
+  slidingContentContainer: {
+    height: imgDimension,
+    width: imgDimension - customVariables.contentPadding,
+    justifyContent: "center"
   }
 });
 
-const AnimatedStyledIconFont: typeof StyledIconFont = Animated.createAnimatedComponent(StyledIconFont);
+const AnimatedStyledIconFont: typeof StyledIconFont = Animated.createAnimatedComponent(
+  StyledIconFont
+);
 
 export default class CieReadingCardAnimation extends React.PureComponent<
   Props,
@@ -84,7 +89,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
 
   private progressAnimatedValue: Animated.Value;
   private slidingCardAnimatedValue: Animated.Value;
-  
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -152,15 +157,17 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     });
   };
 
+
+
   private stopProgressiveAnimation = () => {
     if (
-      this.slidingCardAnimation === undefined ||
-      this.slidingCardAnimatedValue === undefined
+      this.progressAnimation === undefined ||
+      this.progressAnimatedValue === undefined
     ) {
       return;
     }
-    this.slidingCardAnimation.stop();
-    this.slidingCardAnimatedValue.removeAllListeners();
+    this.progressAnimation.stop();
+    this.progressAnimatedValue.removeAllListeners();
   };
 
   /**
@@ -182,7 +189,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
       duration: 1000
     });
 
-    //wait
+    // wait
     const thirdhAnim = Animated.timing(this.slidingCardAnimatedValue, {
       toValue: slidingAmplitude,
       easing: Easing.linear,
@@ -190,7 +197,11 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     });
 
     // tslint:disable-next-line: no-object-mutation
-    this.slidingCardAnimation = Animated.sequence([firstAnim,secondAnim, thirdhAnim]);
+    this.slidingCardAnimation = Animated.sequence([
+      firstAnim,
+      secondAnim,
+      thirdhAnim
+    ]);
     this.addSlidingCardAnimationListener();
   }
 
@@ -231,7 +242,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     this.slidingCardAnimatedValue.removeAllListeners();
   };
 
-  public componentDidMount(){
+  public componentDidMount() {
     this.startSlidingCardAnimation();
   }
 
@@ -242,17 +253,17 @@ export default class CieReadingCardAnimation extends React.PureComponent<
       this.props.readingState === ReadingState.reading
     ) {
       this.stopSlidingCardAnimation();
-      this.setState({slidingCardAnimationValue: slidingAmplitude}) //TODO it could be a small animation from slidingCardAnimationValue current value to slidingAmplitude 
+      this.setState({ slidingCardAnimationValue: slidingAmplitude }); // TODO it could be a small animation from slidingCardAnimationValue current value to slidingAmplitude
       this.startProgressiveAnimation();
     }
     // If we are not reading the card, stop the animation
     if (
-      this.progressAnimation !== undefined && this.slidingCardAnimation &&
+      this.progressAnimation !== undefined &&
+      this.slidingCardAnimation &&
       prevProps.readingState === ReadingState.reading &&
       this.props.readingState !== ReadingState.reading
     ) {
       this.progressAnimation.stop();
-      //this.slidingCardAnimation.start();
       this.startSlidingCardAnimation();
     }
   }
@@ -286,12 +297,10 @@ export default class CieReadingCardAnimation extends React.PureComponent<
   );
 
   public render() {
-    const {readingState} = this.props;
+    const { readingState } = this.props;
     return (
       <View style={styles.imgContainer}>
-        {readingState === ReadingState.waiting_card && (
-         this.AnimatedRings
-        )}
+        {readingState === ReadingState.waiting_card && this.AnimatedRings}
 
         <View style={styles.flexStart}>
           <ProgressCircle
@@ -310,23 +319,28 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             shadowColor={customVariables.brandLightGray}
             bgColor={customVariables.colorWhite}
           >
-
             <View style={styles.slidingContentContainer}>
-              <AnimatedStyledIconFont 
-                name={'io-cie-card'} 
-                color={customVariables.brandHighlight} 
-                size={70} 
-                style={[{
-                  paddingLeft: this.state.slidingCardAnimationValue,
-                  }, styles.cardIcon]}
-              /> 
-              <AnimatedStyledIconFont 
-                name={'io-cie-phone'} 
-                color={customVariables.brandHighlight} 
-                size={120} 
-                style={[{
-                  paddingRight: this.state.slidingCardAnimationValue
-                }, styles.phoneIcon]}
+              <AnimatedStyledIconFont
+                name={"io-cie-card"}
+                color={customVariables.brandHighlight}
+                size={CARD_ICON_SIZE}
+                style={[
+                  {
+                    paddingLeft: this.state.slidingCardAnimationValue
+                  },
+                  styles.cardIcon
+                ]}
+              />
+              <AnimatedStyledIconFont
+                name={"io-cie-phone"}
+                color={customVariables.brandHighlight}
+                size={PHONE_ICON_SIZE}
+                style={[
+                  {
+                    paddingRight: this.state.slidingCardAnimationValue
+                  },
+                  styles.phoneIcon
+                ]}
               />
             </View>
           </ProgressCircle>

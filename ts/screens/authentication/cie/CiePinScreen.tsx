@@ -62,7 +62,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
     });
   };
 
-  // THe modal content send a request to Viminale backend and returns the url 
+  // THe modal content send a request to Viminale backend and returns the url
   // required to complete the authentication once the CIE card is properly read
   private showModal = () => {
     this.props.requestNfcEnabledCheck();
