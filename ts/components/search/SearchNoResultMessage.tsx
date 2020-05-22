@@ -1,6 +1,7 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { MIN_CHARACTER_SEARCH_TEXT } from "./SearchButton";
@@ -14,6 +15,12 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSizeBase,
     padding: customVariables.contentPadding,
     textAlign: "center"
+  },
+  invalidSearchBarText: {
+    height: hp("15%")
+  },
+  noResultsFound: {
+    height: hp("15%")
   }
 });
 
@@ -26,9 +33,21 @@ type ErrorSearchType = "InvalidSearchBarText" | "NoResultsFound";
 export const renderIconErrorSearch = (errorType: ErrorSearchType) => {
   switch (errorType) {
     case "InvalidSearchBarText":
-      return require("../../../img/search/search-icon.png");
+      return (
+        <Image
+          style={styles.invalidSearchBarText}
+          resizeMode="contain"
+          source={require("../../../img/search/search-icon.png")}
+        />
+      );
     case "NoResultsFound":
-      return require("../../../img/search/beer-mug.png");
+      return (
+        <Image
+          style={styles.noResultsFound}
+          resizeMode="contain"
+          source={require("../../../img/search/beer-mug.png")}
+        />
+      );
   }
 };
 
@@ -59,10 +78,9 @@ export class SearchNoResultMessage extends React.PureComponent<Props> {
     return (
       <View style={styles.contentWrapper}>
         <View spacer={true} extralarge={true} />
-        <View spacer={true} extralarge={true} />
 
-        <Image source={renderIconErrorSearch(errorType)} />
-        <View spacer={true} />
+        {renderIconErrorSearch(errorType)}
+        {/* <View spacer={true} /> */}
 
         <Text style={styles.message}>
           {renderMessageErrorSearch(errorType)}

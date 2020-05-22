@@ -50,13 +50,8 @@ type MessageData = {
  * If data are available, the user can start a call or send and email to the service
  */
 class MessageDetailData extends React.PureComponent<Props> {
-  private dateFormat = formatDateAsLocal(
-    this.props.message.created_at,
-    true,
-    true
-  );
-  private date = format(this.props.message.created_at, this.dateFormat);
-  private time = format(this.props.message.created_at, "hh:mm");
+  private date = formatDateAsLocal(this.props.message.created_at);
+  private time = format(this.props.message.created_at, "HH.mm");
 
   get data(): MessageData {
     const serviceDetail = pot.toOption(this.props.serviceDetail);

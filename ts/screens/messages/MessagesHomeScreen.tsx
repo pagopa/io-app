@@ -37,7 +37,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import { HEADER_HEIGHT } from "../../utils/constants";
+import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
+const AnimatedScreenContentHeader: typeof ScreenContentHeader = Animated.createAnimatedComponent(
   ScreenContentHeader
 );
 
@@ -143,7 +143,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <React.Fragment>
             <AnimatedScreenContentHeader
               title={I18n.t("messages.contentTitle")}
-              icon={require("../../../img/icons/message-icon.png")}
+              iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
               dynamicHeight={this.getHeaderHeight()}
             />
             {this.renderTabs()}

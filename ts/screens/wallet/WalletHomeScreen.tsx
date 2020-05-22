@@ -426,6 +426,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       <WalletLayout
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
+        appLogo={true}
         hasDynamicSubHeader={true}
         topContent={headerContent}
         footerContent={footerContent}

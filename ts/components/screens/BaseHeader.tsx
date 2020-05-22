@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -181,16 +182,26 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   };
 
   private renderLeft = () => {
-    const { isSearchEnabled, appLogo, primary } = this.props;
+    const {
+      isSearchEnabled,
+      appLogo,
+      primary,
+      dark,
+      isPagoPATestEnabled
+    } = this.props;
+
+    const iconColor = isPagoPATestEnabled
+      ? variables.brandHighlight
+      : primary || dark
+        ? variables.colorWhite
+        : variables.brandPrimary;
+
     return (
       !isSearchEnabled &&
       (appLogo ? (
         <Left>
           <View>
-            <IconFont
-              name="io-logo"
-              color={primary ? "white" : variables.brandPrimary}
-            />
+            <IconFont name={"io-logo"} color={iconColor} />
           </View>
         </Left>
       ) : (
@@ -201,7 +212,8 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isSearchEnabled: isSearchEnabledSelector(state)
+  isSearchEnabled: isSearchEnabledSelector(state),
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

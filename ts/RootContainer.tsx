@@ -12,8 +12,10 @@ import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { shouldDisplayVersionInfoOverlay } from "./config";
-import IdentificationModal from "./IdentificationModal";
 import Navigation from "./navigation";
+import IdentificationModal from "./screens/modal/IdentificationModal";
+import SystemOffModal from "./screens/modal/SystemOffModal";
+import UpdateAppModal from "./screens/modal/UpdateAppModal";
 import {
   applicationChangeState,
   ApplicationState
@@ -22,8 +24,6 @@ import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
 import { isBackendServicesStatusOffSelector } from "./store/reducers/backendStatus";
 import { GlobalState } from "./store/reducers/types";
-import SystemOffModal from "./SystemOffModal";
-import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
 import { fromNullable } from "fp-ts/lib/Option";

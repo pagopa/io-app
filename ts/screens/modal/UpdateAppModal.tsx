@@ -10,12 +10,12 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
-import BaseScreenComponent from "./components/screens/BaseScreenComponent";
-import { ScreenContentHeader } from "./components/screens/ScreenContentHeader";
-import FooterWithButtons from "./components/ui/FooterWithButtons";
-import I18n from "./i18n";
-import customVariables from "./theme/variables";
-import { storeUrl } from "./utils/appVersion";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import I18n from "../../i18n";
+import customVariables from "../../theme/variables";
+import { storeUrl } from "../../utils/appVersion";
 
 const timeoutErrorMsg: Millisecond = 5000 as Millisecond;
 
@@ -150,7 +150,7 @@ class UpdateAppModal extends React.PureComponent<never, State> {
             <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
             <Image
               style={styles.img}
-              source={require("../img/icons/update-icon.png")}
+              source={require("../../../img/icons/update-icon.png")}
             />
             {this.state.hasError && (
               <Text style={styles.textDanger}>

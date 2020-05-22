@@ -64,6 +64,7 @@ const customVariables = Object.assign(materialVariables, {
 
   lightGray: "#909DA8",
   lighterGray: "#C1C9D2",
+  lightestGray: "#E0E3E6",
 
   cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",
@@ -79,7 +80,6 @@ const customVariables = Object.assign(materialVariables, {
   toastColor: "#C1f4f2",
   badgeYellow: "#ffc824",
 
-  alertColor: "#00CDD2",
   headerIconDark: "#798593",
   headerIconLight: "#E4E7EA",
 

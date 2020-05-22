@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
 });
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
-const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
+const AnimatedScreenContentHeader: typeof ScreenContentHeader = Animated.createAnimatedComponent(
   ScreenContentHeader
 );
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -593,7 +593,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               <React.Fragment>
                 <AnimatedScreenContentHeader
                   title={I18n.t("services.title")}
-                  icon={require("../../../img/icons/services-icon.png")}
+                  iconFont={{ name: "io-home-servizi" }}
                   dynamicHeight={this.getHeaderHeight()}
                 />
                 {this.renderInnerContent()}
