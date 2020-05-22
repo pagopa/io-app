@@ -7,7 +7,6 @@ import {
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
 import ROUTES from "../../navigation/routes";
-import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 import FingerprintScreen from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
