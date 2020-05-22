@@ -214,7 +214,10 @@ profile:
       preferred_language:
         title: Lingua preferita
         subtitle: In quale lingua vuoi usare l'applicazione?
-        not_selected: Non Selezionato
+        alert: 
+          title: Vuoi cambiare la lingua in  
+          subtitle: Dovrai riavviare l'applicazione per far avvenire il cambiamento
+        not_selected: Non selezionato
     empty:
       default: Nessuna preferenza impostata
     unavailable:

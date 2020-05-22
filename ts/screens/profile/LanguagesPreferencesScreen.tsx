@@ -1,9 +1,9 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { List } from "native-base";
 import * as React from "react";
+import { Alert } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { Locales } from "../../../locales/locales";
+import { Locales, TranslationKeys } from "../../../locales/locales";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
@@ -46,10 +46,29 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props> {
   };
 
   private onLanguageSelected = (language: Locales) => {
-    // TODO show an alert to confirm the language change
     if (!this.isAlreadyPreferred(language)) {
-      this.props.preferredLanguageSaveSuccess(language);
-      this.showModal();
+      Alert.alert(
+        I18n.t("profile.preferences.list.preferred_language.alert.title") +
+          " " +
+          I18n.t(`locales.${language}` as TranslationKeys) +
+          "?",
+        I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.confirm"),
+            style: "default",
+            onPress: () => {
+              this.props.preferredLanguageSaveSuccess(language);
+              this.showModal();
+            }
+          }
+        ],
+        { cancelable: false }
+      );
     }
   };
 
