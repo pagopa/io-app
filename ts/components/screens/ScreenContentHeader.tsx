@@ -94,7 +94,6 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
             icon={icon}
             iconFont={iconFont}
             dark={dark}
-            iconFont={iconFont}
           />
           {subtitle && (
             <View style={styles.subheaderContainer}>

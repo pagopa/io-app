@@ -186,10 +186,6 @@ export default (): Theme => {
       paddingRight: 8
     },
 
-    "UIComponent.IconFont": {
-      color: variables.colorWhite
-    },
-
     justifyContent: "center",
     paddingHorizontal: 16,
 
