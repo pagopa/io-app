@@ -157,8 +157,6 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     });
   };
 
-
-
   private stopProgressiveAnimation = () => {
     if (
       this.progressAnimation === undefined ||
