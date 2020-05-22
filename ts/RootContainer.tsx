@@ -86,6 +86,10 @@ class RootContainer extends React.PureComponent<Props> {
     this.handleApplicationActivity(AppState.currentState);
     AppState.addEventListener("change", this.handleApplicationActivity);
 
+    /**
+     * If preferred language is set in the Persisted Store it sets the app global Locale
+     * otherwise it continues using the default locale set from the SO
+     */
     preferredLanguage.map(l => {
       setLocale(l);
     });

@@ -48,6 +48,11 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * This Component is used to Render the Labels of the bottom navbar of the app
+ * translated in the preferred locale if it was selected
+ * @param props
+ */
 const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
   const { options, routeName, preferredLanguage } = props;
   const locale: Locales = preferredLanguage.fold(I18n.locale, l => l);

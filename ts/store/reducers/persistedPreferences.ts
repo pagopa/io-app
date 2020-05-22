@@ -108,5 +108,6 @@ export const preferredCalendarSelector = (state: GlobalState) =>
 export const isFingerprintEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isFingerprintEnabled;
 
+// returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = (state: GlobalState) =>
   fromNullable(state.persistedPreferences.preferredLanguage);
