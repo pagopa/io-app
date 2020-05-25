@@ -53,10 +53,12 @@ import {
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
+import RequestBonus from "../../tmp-bonus-vacanze/components/RequestBonus";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { Bonus } from "../../tmp-bonus-vacanze/utils";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -131,6 +133,14 @@ const styles = StyleSheet.create({
     fontSize: 13
   }
 });
+
+const BONUS: Bonus = {
+  type: "Bonus Vacanze",
+  code: "ABCDE123XYZ",
+  max_amount: 500,
+  tax_benefit: 300,
+  activated_at: new Date("2020-07-04T12:20:00.000Z")
+};
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -488,7 +498,20 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet", "wallet_methods"]}
       >
-        {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
+        {this.newMethodAdded ? (
+          this.newMethodAddedContent
+        ) : (
+          <React.Fragment>
+            {this.props.isBonusEnabled && (
+              <RequestBonus
+                onButtonPress={() => this.props.navigateToRequestBonus()}
+                bonus={this.props.currentActiveBonus}
+                onBonusPress={this.props.navigateToBonusDetail}
+              />
+            )}
+            {transactionContent}
+          </React.Fragment>
+        )}
       </WalletLayout>
     );
   }
@@ -500,6 +523,8 @@ const mapStateToProps = (state: GlobalState) => {
     .getOrElse(true);
 
   return {
+    isBonusEnabled: true,
+    currentActiveBonus: pot.some(BONUS),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
     potTransactions: latestTransactionsSelector(state),
@@ -526,6 +551,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
+  navigateToBonusDetail: (bonus: any) => dispatch(navigateBack()),
+  navigateToRequestBonus: () => dispatch(navigateBack()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),

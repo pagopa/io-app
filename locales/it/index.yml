@@ -812,6 +812,9 @@ wallet:
   walletCardTransaction:
     contextualHelpTitle: Transazioni effettuate con questo metodo
     contextualHelpContent: !include wallet/wallet_card_transaction.md
+  bonus:
+    request: Richiedi un nuovo bonus
+    latestBonus: I tuoi buoni attivi
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
