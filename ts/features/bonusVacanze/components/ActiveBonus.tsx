@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
+import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
 import { Bonus } from "../utils";
@@ -75,7 +76,7 @@ class ActiveBonus extends React.PureComponent<Props> {
       >
         <View style={styles.spaced}>
           <Text small={true} dark={true}>
-            Buono Attivo
+            {I18n.t("bonus.active")}
           </Text>
           <Text bold={true} style={styles.text12}>
             {this.props.bonus.max_amount + " €"}

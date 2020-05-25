@@ -787,6 +787,8 @@ wallet:
 bonus:
   request: Request a new bonus
   latestBonus: Your active bonuses
+  active: Active bonus
+  inactive: Inactive bonus
 saveCard:
   saveCard: Save the card
   header: Do you whant to save this card?

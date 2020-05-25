@@ -815,6 +815,8 @@ wallet:
 bonus:
   request: Richiedi un nuovo bonus
   latestBonus: I tuoi buoni attivi
+  active: Bonus attivo
+  inactive: Bonus non attivo
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
