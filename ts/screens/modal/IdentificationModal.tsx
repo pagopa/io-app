@@ -323,30 +323,20 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       return undefined;
     }
 
-    const remainingAttempts = this.props.identificationFailState.fold(
-      undefined,
-      failState =>
-        failState.remainingAttempts <= maxAttempts - freeAttempts
-          ? failState.remainingAttempts
-          : undefined
-    );
-
     const wrongCodeString = I18n.t("identification.fail.wrongCode");
-
-    const remainingAttemptsString = fromNullable(remainingAttempts).fold(
-      "",
-      attempts =>
-        I18n.t(
-          attempts > 1
-            ? "identification.fail.remainingAttempts"
-            : "identification.fail.remainingAttemptSingle",
-          { attempts }
-        )
-    );
-
-    return !remainingAttempts
-      ? wrongCodeString
-      : `${wrongCodeString}. ${remainingAttemptsString}`;
+    return this.props.identificationFailState
+      .filter(fs => fs.remainingAttempts <= maxAttempts - freeAttempts)
+      .map(
+        // here if the user finished his free attempts
+        fd =>
+          `${wrongCodeString}. ${I18n.t(
+            fd.remainingAttempts > 1
+              ? "identification.fail.remainingAttempts"
+              : "identification.fail.remainingAttemptSingle",
+            { attempts: fd.remainingAttempts }
+          )}`
+      )
+      .getOrElse(wrongCodeString);
   };
 
   public render() {
