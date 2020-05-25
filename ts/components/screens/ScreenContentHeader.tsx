@@ -6,6 +6,7 @@
 import { H3, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
+import { IconProps } from "react-native-vector-icons/Icon";
 import variables from "../../theme/variables";
 import {
   HEADER_ANIMATION_DURATION,
@@ -16,6 +17,7 @@ import ScreenHeader from "../ScreenHeader";
 type Props = Readonly<{
   title?: string;
   icon?: ImageSourcePropType;
+  iconFont?: IconProps;
   subtitle?: string;
   dark?: boolean;
   dynamicHeight?: Animated.AnimatedInterpolation;
@@ -75,7 +77,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
   }
 
   public render() {
-    const { subtitle, dark, icon } = this.props;
+    const { subtitle, dark, icon, iconFont } = this.props;
 
     return (
       <View style={dark && styles.darkGrayBg}>
@@ -90,6 +92,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
           <ScreenHeader
             heading={<H3 style={dark && styles.white}>{this.props.title}</H3>}
             icon={icon}
+            iconFont={iconFont}
             dark={dark}
           />
           {subtitle && (

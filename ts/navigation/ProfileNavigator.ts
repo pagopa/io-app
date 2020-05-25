@@ -4,8 +4,10 @@ import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
 import BiometricRecognitionScreen from "../screens/profile/BiometricRecognitionScreen";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
+import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
+import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
@@ -37,6 +39,9 @@ const ProfileNavigator = createStackNavigator(
     [ROUTES.PROFILE_PREFERENCES_CALENDAR]: {
       screen: CalendarsPreferencesScreen
     },
+    [ROUTES.PROFILE_PREFERENCES_LANGUAGE]: {
+      screen: LanguagesPreferencesScreen
+    },
     [ROUTES.PROFILE_FISCAL_CODE]: {
       screen: FiscalCodeScreen
     },
@@ -45,6 +50,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.INSERT_EMAIL_SCREEN]: {
       screen: EmailInsertScreen
+    },
+    [ROUTES.PROFILE_DOWNLOAD_DATA]: {
+      screen: DownloadProfileDataScreen
     }
   },
   {

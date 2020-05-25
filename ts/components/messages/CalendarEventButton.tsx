@@ -36,6 +36,7 @@ import { LightModalContextInterface } from "../ui/LightModal";
 type OwnProps = {
   message: CreatedMessageWithContent;
   small?: boolean;
+  medium?: boolean;
   disabled?: boolean;
 };
 
@@ -61,6 +62,9 @@ const reminderText = I18n.t(
 const styles = StyleSheet.create({
   button: {
     flex: 1
+  },
+  oneThird: {
+    flex: 5
   }
 });
 
@@ -87,26 +91,12 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
       });
       return;
     }
-    const maybeInCalendar = await isEventInCalendar(calendarEvent.eventId);
-    maybeInCalendar.fold(
-      _ =>
-        this.setState({
-          isEventInDeviceCalendar: false
-        }),
-      isEventInDeviceCalendar => {
-        if (isEventInDeviceCalendar) {
-          // The event is in the store and also in the device calendar
-          // Update the state to display and handle the reminder button correctly
-          this.setState({
-            isEventInDeviceCalendar
-          });
-        } else {
-          // The event is in the store but not in the device calendar.
-          // Remove it from store too
-          this.props.removeCalendarEvent(calendarEvent);
-        }
-      }
-    );
+    const mayBeInCalendar = await isEventInCalendar(
+      calendarEvent.eventId
+    ).run();
+    this.setState({
+      isEventInDeviceCalendar: mayBeInCalendar.fold(_ => false, s => s)
+    });
   };
 
   public async componentDidMount() {
@@ -205,8 +195,8 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
     searchEventInCalendar(dueDate, title)
       .then(mayBeEventId =>
         mayBeEventId.foldL(
-          async () => {
-            await saveCalendarEvent(
+          () => {
+            saveCalendarEvent(
               calendar,
               message,
               dueDate,
@@ -323,7 +313,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const { small, disabled } = this.props;
+    const { small, disabled, medium } = this.props;
     const iconName = this.state.isEventInDeviceCalendar
       ? "io-tick-big"
       : "io-plus";
@@ -332,9 +322,9 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         disabled={disabled}
         onPress={this.onPressHandler}
         xsmall={small}
-        small={!small}
+        small={medium}
         bordered={!disabled}
-        style={styles.button}
+        style={this.props.small ? styles.oneThird : styles.button}
       >
         <IconFont name={iconName} />
         <Text>{reminderText}</Text>

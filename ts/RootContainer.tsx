@@ -18,8 +18,10 @@ import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { shouldDisplayVersionInfoOverlay } from "./config";
-import IdentificationModal from "./IdentificationModal";
 import Navigation from "./navigation";
+import IdentificationModal from "./screens/modal/IdentificationModal";
+import SystemOffModal from "./screens/modal/SystemOffModal";
+import UpdateAppModal from "./screens/modal/UpdateAppModal";
 import {
   applicationChangeState,
   ApplicationState
@@ -28,12 +30,12 @@ import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
 import { isBackendServicesStatusOffSelector } from "./store/reducers/backendStatus";
 import { GlobalState } from "./store/reducers/types";
-import SystemOffModal from "./SystemOffModal";
-import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
 import { fromNullable } from "fp-ts/lib/Option";
+import { setLocale } from "./i18n";
 import { serverInfoDataSelector } from "./store/reducers/backendInfo";
+import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 // Check min version app supported
 import { isUpdateNeeded } from "./utils/appVersion";
 
@@ -68,6 +70,8 @@ class RootContainer extends React.PureComponent<Props> {
   };
 
   public componentDidMount() {
+    const { preferredLanguage } = this.props;
+
     initialiseInstabug();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
@@ -81,6 +85,14 @@ class RootContainer extends React.PureComponent<Props> {
     // boot: send the status of the application
     this.handleApplicationActivity(AppState.currentState);
     AppState.addEventListener("change", this.handleApplicationActivity);
+
+    /**
+     * If preferred language is set in the Persisted Store it sets the app global Locale
+     * otherwise it continues using the default locale set from the SO
+     */
+    preferredLanguage.map(l => {
+      setLocale(l);
+    });
     // Hide splash screen
     SplashScreen.hide();
   }
@@ -154,6 +166,7 @@ class RootContainer extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  preferredLanguage: preferredLanguageSelector(state),
   deepLinkState: state.deepLink,
   isDebugModeEnabled: state.debug.isDebugModeEnabled,
   isBackendServicesStatusOff: isBackendServicesStatusOffSelector(state),
