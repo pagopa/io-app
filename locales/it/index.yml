@@ -147,11 +147,15 @@ profile:
           requestTitle: Sei sicuro di voler richiedere la cancellazione del tuo account?
           requestSubtitle: Per usare IO dovrai registrarti nuovamente. La cancellazione non riguarda i dati trattati per conto degli Enti Erogatori.
           oldRequest: Abbiamo già preso in carico una richiesta di eliminazione del tuo profilo.
-          confirmSubtitle: Al termine dell'elaborazione, riceverai una email di conferma dell\'avvenuta eliminazione.
+          confirmSubtitle: Al termine dell'elaborazione, riceverai una email di conferma dell'avvenuta eliminazione.
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
       exportData:
+        cta: Richiedi copia dei tuoi dati
         title: Accedi ai tuoi dati
         description: Ricevi una copia dei dati associati al tuo profilo IO
+        info:
+          title: Puoi scaricare le informazioni relative al tuo profilo IO in qualsiasi momento.
+          body: !include profile/profile_download_data.md
         alert:
           requestTitle: Vuoi davvero esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
@@ -207,6 +211,13 @@ profile:
       preferred_calendar:
         title: Calendario preferito
         not_selected: Non Selezionato
+      preferred_language:
+        title: Lingua preferita
+        subtitle: In quale lingua vuoi usare l'applicazione?
+        alert: 
+          title: Vuoi cambiare la lingua in  
+          subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
+        not_selected: Non selezionato
     empty:
       default: Nessuna preferenza impostata
     unavailable:
