@@ -117,7 +117,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
             leftButton={{
               primary: true,
               onPress: this.handleOnContinue,
-              title: I18n.t("onboarding.pin.continue")
+              title: I18n.t("global.buttons.continue")
             }}
           />
         )}

@@ -1,26 +1,27 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, View } from "native-base";
+import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Col, Grid } from "react-native-easy-grid";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { ServiceMetadataState } from "../../store/reducers/content";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
-import { messageNeedsCTABar } from "../../utils/messages";
-import { logosForService } from "../../utils/services";
-import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import H4 from "../ui/H4";
-import H6 from "../ui/H6";
-import { MultiImage } from "../ui/MultiImage";
-import MessageCTABar from "./MessageCTABar";
+import customVariables from "../../theme/variables";
+import { paymentExpirationInfo } from "../../utils/messages";
+import OrganizationHeader from "../OrganizationHeader";
+import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
+import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
+import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
+import MessageDetailCTABar from "./MessageDetailCTABar";
 import MessageDetailData from "./MessageDetailData";
+import MessageDueDateBar from "./MessageDueDateBar";
 import MessageMarkdown from "./MessageMarkdown";
 
 type Props = Readonly<{
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   paymentsByRptId: PaymentByRptIdState;
   potServiceDetail: pot.Pot<ServicePublic, Error>;
   potServiceMetadata: ServiceMetadataState;
@@ -32,8 +33,8 @@ type State = Readonly<{
 }>;
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    padding: variables.contentPadding
+  padded: {
+    paddingHorizontal: variables.contentPadding
   },
   serviceContainer: {
     marginBottom: variables.contentPadding
@@ -70,17 +71,13 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     height: variables.lineHeightBase
   },
-  serviceCol: {
-    width: 60
-  },
-  serviceMultiImage: {
-    width: 60,
-    height: 60
+  reducedText: {
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
 /**
- * A component to render the message detail.
+ * A component to render the message detail. It has 2 main styles: traditional message and medical prescription
  */
 export default class MessageDetailComponent extends React.PureComponent<
   Props,
@@ -95,94 +92,148 @@ export default class MessageDetailComponent extends React.PureComponent<
     this.setState({ isContentLoadCompleted: true });
   };
 
+  get maybeMedicalData() {
+    return fromNullable(this.props.message.content.prescription_data);
+  }
+
+  get attachments() {
+    return fromNullable(this.props.message.content.attachments);
+  }
+
+  get paymentExpirationInfo() {
+    return paymentExpirationInfo(this.props.message);
+  }
+
+  get service() {
+    const { potServiceDetail } = this.props;
+    return fromNullable(
+      pot.isNone(potServiceDetail)
+        ? ({
+            organization_name: I18n.t("messages.errorLoading.senderInfo"),
+            department_name: I18n.t("messages.errorLoading.departmentInfo"),
+            service_name: I18n.t("messages.errorLoading.serviceInfo")
+          } as ServicePublic)
+        : pot.toUndefined(potServiceDetail)
+    );
+  }
+
+  get payment() {
+    const { message, paymentsByRptId } = this.props;
+    return this.service.fold(undefined, service => {
+      if (message.content.payment_data !== undefined) {
+        return paymentsByRptId[
+          `${service.organization_fiscal_code}${
+            message.content.payment_data.notice_number
+          }`
+        ];
+      }
+      return undefined;
+    });
+  }
+
+  private getTitle = () => {
+    return this.maybeMedicalData.fold(
+      <H3>{this.props.message.content.subject}</H3>,
+      _ => (
+        <React.Fragment>
+          <H3>{I18n.t("messages.medical.prescription")}</H3>
+          <Text style={styles.reducedText}>
+            {I18n.t("messages.medical.memo")}
+          </Text>
+        </React.Fragment>
+      )
+    );
+  };
+
   public render() {
     const {
       message,
       potServiceDetail,
       potServiceMetadata,
-      paymentsByRptId,
       onServiceLinkPress
     } = this.props;
-
-    const service =
-      potServiceDetail !== undefined
-        ? pot.isNone(potServiceDetail)
-          ? ({
-              organization_name: I18n.t("messages.errorLoading.senderInfo"),
-              department_name: I18n.t("messages.errorLoading.departmentInfo"),
-              service_name: I18n.t("messages.errorLoading.serviceInfo")
-            } as ServicePublic)
-          : pot.toUndefined(potServiceDetail)
-        : undefined;
-
-    const payment =
-      message.content.payment_data !== undefined && service !== undefined
-        ? paymentsByRptId[
-            `${service.organization_fiscal_code}${
-              message.content.payment_data.notice_number
-            }`
-          ]
-        : undefined;
+    const { maybeMedicalData, service, payment } = this;
 
     return (
-      <Content noPadded={true}>
-        <View style={styles.headerContainer}>
-          {/** TODO: update header */}
-          {/* Service */}
-          {service && (
-            <Grid style={styles.serviceContainer}>
-              <Col>
-                <H4>{service.organization_name}</H4>
-                <TouchableDefaultOpacity onPress={onServiceLinkPress}>
-                  <H6>{service.service_name}</H6>
-                </TouchableDefaultOpacity>
-              </Col>
-              {service.service_id && (
-                <Col style={styles.serviceCol}>
-                  <TouchableDefaultOpacity onPress={onServiceLinkPress}>
-                    <MultiImage
-                      style={styles.serviceMultiImage}
-                      source={logosForService(service)}
-                    />
-                  </TouchableDefaultOpacity>
-                </Col>
+      <React.Fragment>
+        <Content noPadded={true}>
+          {/** Header */}
+          <View style={styles.padded}>
+            <View spacer={true} />
+            {service !== undefined &&
+              service.isSome() && (
+                <React.Fragment>
+                  {service && <OrganizationHeader service={service.value} />}
+                  <View spacer={true} large={true} />
+                </React.Fragment>
               )}
-            </Grid>
-          )}
-
-          {/* Subject */}
-          <View style={styles.subjectContainer}>
-            <H1>{message.content.subject}</H1>
+            {/* Subject */}
+            {this.getTitle()}
+            <View spacer={true} />
           </View>
-        </View>
 
-        {this.state.isContentLoadCompleted &&
-          messageNeedsCTABar(message) && (
-            <MessageCTABar
+          {maybeMedicalData.fold(undefined, md => (
+            <MedicalPrescriptionIdentifiersComponent prescriptionData={md} />
+          ))}
+
+          {this.maybeMedicalData.fold(
+            <MessageDueDateBar
               message={message}
-              service={service}
+              service={service.toUndefined()}
               payment={payment}
-            />
+            />,
+            _ => (
+              <MedicalPrescriptionDueDateBar
+                message={message}
+                service={service.toUndefined()}
+              />
+            )
           )}
 
-        <MessageMarkdown
-          webViewStyle={styles.webview}
-          onLoadEnd={this.onMarkdownLoadEnd}
-        >
-          {message.content.markdown}
-        </MessageMarkdown>
+          <MessageMarkdown
+            webViewStyle={styles.webview}
+            onLoadEnd={this.onMarkdownLoadEnd}
+          >
+            {message.content.markdown}
+          </MessageMarkdown>
 
-        {this.state.isContentLoadCompleted && (
-          <MessageDetailData
-            message={message}
-            serviceDetail={potServiceDetail}
-            serviceMetadata={potServiceMetadata}
-            goToServiceDetail={onServiceLinkPress}
-          />
-        )}
+          <View spacer={true} large={true} />
+          {this.attachments.isSome() &&
+            this.state.isContentLoadCompleted && (
+              <React.Fragment>
+                <MedicalPrescriptionAttachments
+                  prescriptionData={this.maybeMedicalData.toUndefined()}
+                  attachments={this.attachments.value}
+                  organizationName={this.service
+                    .map(s => s.organization_name)
+                    .toUndefined()}
+                />
+                <View spacer={true} large={true} />
+              </React.Fragment>
+            )}
+
+          {this.state.isContentLoadCompleted && (
+            <React.Fragment>
+              <MessageDetailData
+                message={message}
+                serviceDetail={potServiceDetail}
+                serviceMetadata={potServiceMetadata}
+                goToServiceDetail={onServiceLinkPress}
+              />
+            </React.Fragment>
+          )}
+        </Content>
         <View spacer={true} large={true} />
         <View spacer={true} small={true} />
-      </Content>
+        {this.maybeMedicalData.fold(
+          <MessageDetailCTABar
+            message={message}
+            service={service.toUndefined()}
+            payment={this.payment}
+          />,
+          _ => undefined
+        )}
+      </React.Fragment>
     );
   }
 }

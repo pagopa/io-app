@@ -8,11 +8,14 @@ declare module "native-base" {
   namespace NativeBase {
     interface Button extends TouchableOpacityProperties, BsStyle {
       white?: boolean;
+      whiteBordered?: boolean;
       cancel?: boolean;
       xsmall?: boolean;
       gray?: boolean;
       darkGray?: boolean;
+      alert?: boolean;
       lightText?: boolean;
+      unNamed?: boolean;
     }
   }
 }
@@ -61,6 +64,16 @@ export default (): Theme => {
       }
     },
 
+    ".alert": {
+      "NativeBase.Text": {
+        color: variables.colorWhite
+      },
+      "UIComponent.IconFont": {
+        color: variables.colorWhite
+      },
+      backgroundColor: variables.calendarExpirableColor
+    },
+
     ".darkGray": {
       "NativeBase.Text": {
         color: variables.colorWhite
@@ -73,12 +86,22 @@ export default (): Theme => {
 
     ".gray": {
       "NativeBase.Text": {
-        color: variables.brandHighlight
+        color: variables.colorWhite
       },
       "UIComponent.IconFont": {
-        color: variables.brandHighlight
+        color: variables.colorWhite
       },
-      backgroundColor: variables.brandGray
+      backgroundColor: variables.lighterGray
+    },
+
+    ".unNamed": {
+      "NativeBase.Text": {
+        color: variables.textMessageDetailLinkColor
+      },
+      "UIComponent.IconFont": {
+        color: variables.textMessageDetailLinkColor
+      },
+      backgroundColor: variables.lightestGray
     },
 
     ".light": {
@@ -122,6 +145,18 @@ export default (): Theme => {
     },
 
     ".white": { backgroundColor: variables.colorWhite },
+
+    ".whiteBordered": {
+      backgroundColor: "transparent",
+      borderColor: variables.colorWhite,
+      borderWidth: 1,
+      "NativeBase.Text": {
+        color: variables.colorWhite
+      },
+      "UIComponent.IconFont": {
+        color: variables.colorWhite
+      }
+    },
 
     ".cancel": {
       backgroundColor: variables.brandDarkGray,
