@@ -2,7 +2,7 @@
  * This screen shows the list of available payment methods
  * (credit cards for now)
  */
-import { none } from "fp-ts/lib/Option";
+import { none, fromPredicate } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Left, Right, Text, View } from "native-base";
 import * as React from "react";
@@ -87,11 +87,14 @@ class WalletsScreen extends React.Component<Props> {
         wallet={item}
         isFavorite={isFavorite}
         onSetFavorite={(willBeFavorite: boolean) =>
-          willBeFavorite
-            ? this.props.setFavoriteWallet(item.idWallet)
-            : this.props.wallets.length > 0
-              ? Alert.alert(I18n.t("wallet.alert.favourite"))
-              : undefined
+          fromPredicate(wbf => wbf === true)(willBeFavorite).foldL(
+            () => {
+              if (this.props.wallets.length > 0) {
+                Alert.alert(I18n.t("wallet.alert.favourite"));
+              }
+            },
+            () => this.props.setFavoriteWallet(item.idWallet)
+          )
         }
         onDelete={() => this.props.deleteWallet(item.idWallet)}
         mainAction={this.props.navigateToWalletTransactionsScreen}
