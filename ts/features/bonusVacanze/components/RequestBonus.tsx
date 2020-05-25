@@ -22,9 +22,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "transparent"
   },
-  activeBonus: {
-    paddingBottom: 15
-  },
   subHeaderContent: {
     flexDirection: "row",
     alignItems: "baseline",
@@ -47,19 +44,18 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
     <Content>
       {pot.isSome(bonus) &&
         bonus.value && (
-          <View style={styles.activeBonus}>
-            <View>
-              <View style={styles.subHeaderContent}>
-                <H5 style={styles.brandDarkGray}>
-                  {I18n.t("wallet.bonus.latestBonus")}
-                </H5>
-                <Text>{I18n.t("wallet.amount")}</Text>
-              </View>
+          <View>
+            <View style={styles.subHeaderContent}>
+              <H5 style={styles.brandDarkGray}>
+                {I18n.t("bonus.latestBonus")}
+              </H5>
+              <Text>{I18n.t("wallet.amount")}</Text>
             </View>
             <View spacer={true} />
             <ActiveBonus bonus={bonus.value} onPress={onBonusPress} />
           </View>
         )}
+      <View spacer={true} />
       <View style={styles.container}>
         <ButtonDefaultOpacity
           block={true}
@@ -67,7 +63,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
           onPress={onButtonPress}
           activeOpacity={1}
         >
-          <Text bold={true}>{I18n.t("wallet.bonus.request")}</Text>
+          <Text bold={true}>{I18n.t("bonus.request")}</Text>
         </ButtonDefaultOpacity>
       </View>
     </Content>

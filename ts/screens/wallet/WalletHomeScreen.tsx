@@ -502,6 +502,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           this.newMethodAddedContent
         ) : (
           <React.Fragment>
+            {/* Item displays only if the flag is enabled */}
             {this.props.isBonusEnabled && (
               <RequestBonus
                 onButtonPress={() => this.props.navigateToRequestBonus()}
