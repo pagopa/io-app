@@ -524,7 +524,7 @@ const mapStateToProps = (state: GlobalState) => {
     .getOrElse(true);
 
   return {
-    isBonusEnabled: false,
+    isBonusEnabled: true,
     currentActiveBonus: pot.some(BONUS),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
@@ -552,7 +552,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  navigateToBonusDetail: (bonus: any) => dispatch(navigateBack()),
+  // TODO add bonus detail as function parameter when adding the navigate to bonus detail
+  navigateToBonusDetail: () => dispatch(navigateBack()),
   navigateToRequestBonus: () => dispatch(navigateBack()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
