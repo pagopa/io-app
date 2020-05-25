@@ -1,10 +1,10 @@
 import { Text } from "native-base";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
-import IconFont from "../../components/ui/IconFont";
-import customVariables from "../../theme/variables";
-import { formatDateAsLocal } from "../../utils/dates";
+import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
+import IconFont from "../../../components/ui/IconFont";
+import customVariables from "../../../theme/variables";
+import { formatDateAsLocal } from "../../../utils/dates";
 import { Bonus } from "../utils";
 
 type Props = {

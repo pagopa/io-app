@@ -23,6 +23,8 @@ import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethod
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
+import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
+import { Bonus } from "../../features/bonusVacanze/utils";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -53,12 +55,10 @@ import {
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
-import RequestBonus from "../../tmp-bonus-vacanze/components/RequestBonus";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { Bonus } from "../../tmp-bonus-vacanze/utils";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;

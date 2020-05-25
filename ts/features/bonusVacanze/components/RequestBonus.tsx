@@ -2,10 +2,10 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import H5 from "../../components/ui/H5";
-import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import H5 from "../../../components/ui/H5";
+import I18n from "../../../i18n";
+import customVariables from "../../../theme/variables";
 import { Bonus } from "../utils";
 import ActiveBonus from "./ActiveBonus";
 
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   activeBonus: {
-    paddingTop: 15,
     paddingBottom: 15
   },
   subHeaderContent: {
@@ -57,6 +56,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
                 <Text>{I18n.t("wallet.amount")}</Text>
               </View>
             </View>
+            <View spacer={true} />
             <ActiveBonus bonus={bonus.value} onPress={onBonusPress} />
           </View>
         )}
