@@ -22,6 +22,7 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import customVariables from "../../../theme/variables";
 import variables from "../../../theme/variables";
 import { ComponentProps } from "../../../types/react";
 import { openAppSettings } from "../../../utils/appSettings";
@@ -47,7 +48,7 @@ const getScannerHeight = () => {
   const footerHeight = variables.btnHeight * 2 + variables.spacerHeight;
   const availableHeight =
     screenHeight - variables.appHeaderHeight - footerHeight;
-  const minScannerHeight = (availableHeight * 2) / 3;
+  const minScannerHeight = (availableHeight * 7) / 12;
   return minScannerHeight >= screenWidth ? screenWidth : minScannerHeight;
 };
 
@@ -70,6 +71,9 @@ const styles = StyleSheet.create({
   notAuthorizedContainer: {
     padding: variables.contentPadding,
     height: screenHeight // it prevents CameraBottomContent is displayed if we haven't camera permissions
+  },
+  white: {
+    backgroundColor: customVariables.colorWhite
   }
 });
 
@@ -217,7 +221,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   };
 
   private CameraBottomContent = (
-    <React.Fragment>
+    <View style={styles.white}>
       <View spacer={true} />
       <Text alignCenter={true} style={styles.padded}>
         <Text bold={true}>{I18n.t("wallet.QRtoPay.info.block1")}</Text>
@@ -226,7 +230,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         <Text>{` ${I18n.t("wallet.QRtoPay.info.block4")}`}</Text>
       </Text>
       <View spacer={true} extralarge={true} />
-    </React.Fragment>
+    </View>
   );
 
   private CameraNotAuthorizedView = (
@@ -278,9 +282,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                   state={this.state.scanningState}
                 />
               }
-              bottomContent={this.CameraBottomContent}
               // "captureAudio" enable/disable microphone permission
-              cameraProps={{ ratio: "1:1", captureAudio: false }}
+              cameraProps={{ captureAudio: false }}
               // "checkAndroid6Permissions" property enables permission checking for
               // Android versions greater than 6.0 (23+).
               checkAndroid6Permissions={true}
@@ -299,6 +302,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               notAuthorizedView={this.CameraNotAuthorizedView}
             />
           )}
+          {this.CameraBottomContent}
         </Content>
         {this.renderFooterButtons()}
       </BaseScreenComponent>
