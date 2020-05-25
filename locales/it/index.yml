@@ -494,7 +494,7 @@ onboarding:
     contentTitleConfirmSubtitle: inserisci di nuovo il codice di 6 cifre
     pinInfo: Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive. Potrai cambiarlo in ogni momento dopo l'autenticazione.
     reset: Modifica il codice
-    confirmInvalid: i due codici non coincidono
+    confirmInvalid: I due codici non coincidono
     contextualHelpTitle: Qual è il tuo codice di sblocco
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
@@ -1064,7 +1064,6 @@ identification:
       tip: Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente.
       tip_short: Dovrai effettuare di nuovo l'accesso.
     confirmValid: Codice di sblocco corretto
-    confirmInvalid: codice di sblocco non valido
   unlock_screen:
     help:
       title: Accesso con codice di sblocco
