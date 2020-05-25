@@ -150,8 +150,12 @@ profile:
           confirmSubtitle: After processing, you will receive an email confirming the deletion.
         error: An error occurred while submit your deletion request, please retry!
       exportData:
+        cta: Request a copy of your data
         title: Access your data
         description: Receive a copy of the data associated with your IO profile
+        info:
+          title: You can download your IO profile information at any time.
+          body: !include profile/profile_download_data.md
         alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
@@ -204,6 +208,13 @@ profile:
       digitalDomicile: Digital domicile
       preferred_calendar:
         title: Default Calendar
+        not_selected: Not selected
+      preferred_language:
+        title: Favourite language
+        subtitle: In which language do you want to use the application?
+        alert: 
+          title: Do you want to change the language to 
+          subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
     empty:
       default: No preference set
@@ -457,7 +468,7 @@ onboarding:
     contentTitleConfirmSubtitle: insert again the code of 6 digits
     pinInfo: This code will be requested each time you open the app and when you need to view sensitive data or make dispositive transactions. You can change it at any time by authenticating yourself.
     reset: Change the code
-    confirmInvalid: the two pins do not match
+    confirmInvalid: The two pins do not match
     contextualHelpTitle: What your unlock code is
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
@@ -1015,7 +1026,6 @@ identification:
       tip: To reset your unlock code you will have to log in again.
       tip_short: You will have to login again.
     confirmValid: Correct unlock code
-    confirmInvalid: Invalid unlock code
   unlock_screen:
     help:
       title: Access with unlock code

@@ -1,6 +1,5 @@
 import { range } from "fp-ts/lib/Array";
 import { left, right } from "fp-ts/lib/Either";
-import { fromNullable } from "fp-ts/lib/Option";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { debounce, shuffle } from "lodash";
 import { Text, View } from "native-base";
@@ -21,6 +20,7 @@ interface Props {
   clearOnInvalid?: boolean;
   shufflePad?: boolean;
   isFingerprintEnabled?: any;
+  codeInsertionStatus?: string;
   isValidatingTask?: boolean;
   biometryType?: any;
   compareWithCode?: string;
@@ -46,10 +46,6 @@ interface State {
 const styles = StyleSheet.create({
   placeholderContainer: {
     flexDirection: "row",
-    justifyContent: "center"
-  },
-  text: {
-    alignSelf: "center",
     justifyContent: "center"
   },
   mediumText: {
@@ -303,32 +299,21 @@ class Pinpad extends React.PureComponent<Props, State> {
     this.setState({ value: "" });
   }, 100);
 
-  private renderRemainingAttempts = (remainingAttempts: number) => {
-    const wrongCode = I18n.t("identification.fail.wrongCode");
-    const remainingAttemptsString = I18n.t(
-      remainingAttempts > 1
-        ? "identification.fail.remainingAttempts"
-        : "identification.fail.remainingAttemptSingle",
-      { attempts: remainingAttempts }
-    );
-
+  private renderCodeInsertionStatus = () => {
     return (
       <Text
-        style={styles.text}
+        alignCenter={true}
         bold={true}
         white={this.props.buttonType === "primary"}
-        primary={this.props.buttonType !== "primary"}
+        primary={this.props.buttonType === "light"}
       >
-        {`${wrongCode}. ${remainingAttemptsString}`}
+        {this.props.codeInsertionStatus}
       </Text>
     );
   };
 
   public render() {
     const placeholderPositions = range(0, this.state.pinLength - 1);
-    const remainingAttemptsMessage = fromNullable(
-      this.props.remainingAttempts
-    ).fold(null, x => this.renderRemainingAttempts(x));
 
     return (
       <React.Fragment>
@@ -336,13 +321,13 @@ class Pinpad extends React.PureComponent<Props, State> {
           {placeholderPositions.map(this.renderPlaceholder)}
         </View>
         <View spacer={true} />
-        {remainingAttemptsMessage}
+        {this.renderCodeInsertionStatus()}
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
             <Text
               white={this.props.buttonType === "primary"}
               onPress={this.confirmResetAlert}
-              style={styles.text}
+              alignCenter={true}
             >
               {`${I18n.t("identification.unlockCode.reset.button")} `}
               <Text

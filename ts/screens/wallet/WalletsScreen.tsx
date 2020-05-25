@@ -35,6 +35,7 @@ import {
   fetchWalletsRequest,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
+import { navSelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import {
   getFavoriteWalletId,
@@ -42,6 +43,7 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
+import { getCurrentRouteKey } from "../../utils/navigation";
 import { showToast } from "../../utils/showToast";
 
 const styles = StyleSheet.create({
@@ -107,7 +109,11 @@ class WalletsScreen extends React.Component<Props> {
           </Left>
           <Right>
             <AddPaymentMethodButton
-              onPress={this.props.navigateToWalletAddPaymentMethod}
+              onPress={() =>
+                this.props.navigateToWalletAddPaymentMethod(
+                  getCurrentRouteKey(this.props.nav)
+                )
+              }
             />
           </Right>
         </View>
@@ -159,7 +165,8 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     wallets: pot.getOrElse(potWallets, []),
     isLoading: pot.isLoading(potWallets),
-    favoriteWallet: getFavoriteWalletId(state)
+    favoriteWallet: getFavoriteWalletId(state),
+    nav: navSelector(state)
   };
 };
 
@@ -169,8 +176,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
-  navigateToWalletAddPaymentMethod: () =>
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
+  navigateToWalletAddPaymentMethod: (key?: string) =>
+    dispatch(
+      navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom: key })
+    ),
   deleteWallet: (walletId: number) =>
     dispatch(
       deleteWalletRequest({
