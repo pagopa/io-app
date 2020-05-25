@@ -524,7 +524,7 @@ const mapStateToProps = (state: GlobalState) => {
     .getOrElse(true);
 
   return {
-    isBonusEnabled: true,
+    isBonusEnabled: false,
     currentActiveBonus: pot.some(BONUS),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
