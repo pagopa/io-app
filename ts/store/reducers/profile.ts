@@ -138,7 +138,7 @@ const reducer = (
         if (
           !currentProfile.has_profile &&
           newProfile.has_profile &&
-          newProfile.version === 0
+          isProfileFirstOnBoarding(newProfile)
         ) {
           return pot.some({
             ...currentProfile,
