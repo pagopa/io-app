@@ -79,7 +79,7 @@ class ActiveBonus extends React.PureComponent<Props> {
             {I18n.t("bonus.active")}
           </Text>
           <Text bold={true} style={styles.text12}>
-            {this.props.bonus.max_amount + " €"}
+            {this.props.bonus.max_amount}
           </Text>
         </View>
         <View style={styles.viewStyle}>
