@@ -211,6 +211,13 @@ profile:
       preferred_calendar:
         title: Calendario preferito
         not_selected: Non Selezionato
+      preferred_language:
+        title: Lingua preferita
+        subtitle: In quale lingua vuoi usare l'applicazione?
+        alert: 
+          title: Vuoi cambiare la lingua in  
+          subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
+        not_selected: Non selezionato
     empty:
       default: Nessuna preferenza impostata
     unavailable:
