@@ -779,9 +779,9 @@ wallet:
       block4: i dati identificativi (IUV e codice ente/azienda).
     setManually: Inserisci i dati manualmente
     enroll_cta:
-      block1: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. 
+      block1: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato.
       block2: Vai nel menu impostazioni di questo dispositivo
-      block3: e configuralo per abilitare la lettuare del QR Code.
+      block3: e configuralo per abilitare la lettura del QR Code.
     cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
       message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR Code"

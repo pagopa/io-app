@@ -1,5 +1,6 @@
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Dimensions, StyleSheet } from "react-native";
@@ -38,7 +39,7 @@ const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
 // Delay for reactivating the QR scanner after a scan
-const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
+const QRCODE_SCANNER_REACTIVATION = 5000 as Millisecond;
 
 // Qr scanner height is based on screen height to prevent the
 // user has to scroll to read the bottom content (4 lines text on iPhone 6)
@@ -122,7 +123,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           scanningState: "SCANNING"
         });
       }
-    }, QRCODE_SCANNER_REACTIVATION_TIME_MS);
+    }, QRCODE_SCANNER_REACTIVATION);
   };
 
   // Gets called by the QR Code reader on new QR Code reads
