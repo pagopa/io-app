@@ -1235,3 +1235,7 @@ faq:
   57:
     title: "Did you have problems during a payment?"
     content: !include faq/faq57.md
+bonus:
+  bonusVacanza:
+    checkBonusEligibility:
+      loading: Checking bonus eligibility
