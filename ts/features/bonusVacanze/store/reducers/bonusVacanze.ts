@@ -3,14 +3,20 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BonusList } from "../../types/bonusList";
-import { availableBonusesLoad } from "../actions/bonusVacanze";
+import { EligibilityCheck } from "../../types/eligibility";
+import {
+  availableBonusesLoad,
+  startBonusEligibility
+} from "../actions/bonusVacanze";
 
 export type BonusState = Readonly<{
   availableBonuses: pot.Pot<BonusList, Error>;
+  eligibilityCheck: pot.Pot<EligibilityCheck, Error>;
 }>;
 
 const INITIAL_STATE: BonusState = {
-  availableBonuses: pot.none
+  availableBonuses: pot.none,
+  eligibilityCheck: pot.none
 };
 
 const reducer = (
@@ -18,6 +24,7 @@ const reducer = (
   action: Action
 ): BonusState => {
   switch (action.type) {
+    // available bonuses
     case getType(availableBonusesLoad.request):
       return {
         ...state,
@@ -29,6 +36,22 @@ const reducer = (
       return {
         ...state,
         availableBonuses: pot.toError(state.availableBonuses, action.payload)
+      };
+    // eligibility check
+    case getType(startBonusEligibility.request):
+      return {
+        ...state,
+        eligibilityCheck: pot.toLoading(state.eligibilityCheck)
+      };
+    case getType(startBonusEligibility.success):
+      return {
+        ...state,
+        eligibilityCheck: pot.some(action.payload)
+      };
+    case getType(startBonusEligibility.failure):
+      return {
+        ...state,
+        eligibilityCheck: pot.toError(state.eligibilityCheck, action.payload)
       };
   }
   return state;
