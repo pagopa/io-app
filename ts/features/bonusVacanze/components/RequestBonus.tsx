@@ -6,7 +6,7 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import H5 from "../../../components/ui/H5";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { Bonus } from "../utils";
+import { Bonus } from "../mock/mockData";
 import ActiveBonus from "./ActiveBonus";
 
 type OwnProps = {

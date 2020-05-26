@@ -8,3 +8,11 @@ export type Bonus = {
   tax_benefit: number;
   activated_at: Date;
 };
+
+export const mockedBonus: Bonus = {
+  type: "Bonus Vacanze",
+  code: "ABCDE123XYZ",
+  max_amount: 500,
+  tax_benefit: 300,
+  activated_at: new Date("2020-07-04T12:20:00.000Z")
+};

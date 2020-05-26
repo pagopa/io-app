@@ -23,8 +23,9 @@ import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethod
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
+import { bonusVacanzeEnabled } from "../../config";
 import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
-import { Bonus } from "../../features/bonusVacanze/utils";
+import { mockedBonus } from "../../features/bonusVacanze/mock/mockData";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -133,14 +134,6 @@ const styles = StyleSheet.create({
     fontSize: 13
   }
 });
-
-const BONUS: Bonus = {
-  type: "Bonus Vacanze",
-  code: "ABCDE123XYZ",
-  max_amount: 500,
-  tax_benefit: 300,
-  activated_at: new Date("2020-07-04T12:20:00.000Z")
-};
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -503,7 +496,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         ) : (
           <React.Fragment>
             {/* Item displays only if the flag is enabled */}
-            {this.props.isBonusEnabled && (
+            {bonusVacanzeEnabled && (
               <RequestBonus
                 onButtonPress={() => this.props.navigateToRequestBonus()}
                 bonus={this.props.currentActiveBonus}
@@ -524,8 +517,7 @@ const mapStateToProps = (state: GlobalState) => {
     .getOrElse(true);
 
   return {
-    isBonusEnabled: true,
-    currentActiveBonus: pot.some(BONUS),
+    currentActiveBonus: pot.some(mockedBonus),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
     potTransactions: latestTransactionsSelector(state),

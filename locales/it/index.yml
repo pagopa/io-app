@@ -814,7 +814,7 @@ wallet:
     contextualHelpContent: !include wallet/wallet_card_transaction.md
 bonus:
   request: Richiedi un nuovo bonus
-  latestBonus: I tuoi buoni attivi
+  latestBonus: I tuoi bonus attivi
   active: Bonus attivo
   inactive: Bonus non attivo
 saveCard:
