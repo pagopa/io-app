@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   paymentOutcome: {
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: 'center'
   },
   text11: {
     paddingLeft: 8
@@ -70,7 +71,7 @@ export const PaymentSummaryComponent = (props: Props) => {
     </React.Fragment>
   );
 
-  const tt = props.paymentStatus && (
+  const paymentStatus = props.paymentStatus && (
     <React.Fragment>
       <View style={styles.paymentOutcome}>
         <BadgeComponent color={props.paymentStatus.color} />
@@ -98,7 +99,7 @@ export const PaymentSummaryComponent = (props: Props) => {
       <ItemSeparatorComponent noPadded={true} />
       <View spacer={true} large={true} />
 
-      {tt}
+      {paymentStatus}
 
       <View style={styles.row}>
         <View style={styles.column}>

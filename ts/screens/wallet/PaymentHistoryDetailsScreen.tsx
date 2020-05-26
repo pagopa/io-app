@@ -52,9 +52,14 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1
   },
-  row: { flexDirection: "row", justifyContent: "space-between" },
+  row: { 
+    flexDirection: "row", 
+    justifyContent: "space-between",
+    alignItems: 'center'
+  },
   bigText: {
-    fontSize: 20
+    fontSize: 20,
+    lineHeight: 22
   },
   padded: { paddingHorizontal: customVariables.contentPadding }
 });
