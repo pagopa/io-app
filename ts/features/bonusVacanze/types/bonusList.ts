@@ -21,5 +21,8 @@ const BonusListR = t.interface({
   items: t.readonlyArray(BonusItem, "array of Bonus")
 });
 const BonusListRO = t.partial({});
-const BonusList = t.intersection([BonusListR, BonusListRO], "BonusList");
-export type BonusList = t.TypeOf<typeof BonusList>;
+export const BonusListT = t.intersection(
+  [BonusListR, BonusListRO],
+  "BonusList"
+);
+export type BonusList = t.TypeOf<typeof BonusListT>;

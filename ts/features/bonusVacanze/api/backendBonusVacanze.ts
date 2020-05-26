@@ -6,7 +6,7 @@ import {
 } from "italia-ts-commons/lib/requests";
 
 import { defaultRetryingFetch } from "../../../utils/fetch";
-import { BonusList } from "../types/bonusList";
+import { BonusList, BonusListT } from "../types/bonusList";
 
 type GetBonusListT = IGetApiRequestType<
   {},
@@ -32,7 +32,7 @@ export function BackendBonusVacanze(
     url: () => `/bonus`,
     query: _ => ({}),
     headers: () => ({}),
-    response_decoder: basicResponseDecoder(BonusList)
+    response_decoder: basicResponseDecoder(BonusListT)
   };
 
   return {
