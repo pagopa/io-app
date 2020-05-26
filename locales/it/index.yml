@@ -1273,3 +1273,7 @@ faq:
   57:
     title: "Hai avuto problemi durante un pagamento?"
     content: !include faq/faq57.md
+bonus:
+  bonusVacanza:
+    checkBonusEligibility:
+      loading: Verifico l'idoneità per l'accesso al bonus 
