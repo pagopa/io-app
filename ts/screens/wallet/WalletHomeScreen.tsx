@@ -60,11 +60,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import {
-  availableBonusListLoad,
-  availableBonusesLoad,
-  startBonusEligibility
-} from "../../features/bonusVacanze/store/actions/bonusVacanze";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
