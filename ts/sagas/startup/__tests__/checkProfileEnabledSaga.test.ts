@@ -44,7 +44,7 @@ describe("checkProfileEnabledSaga", () => {
   };
 
   it("should do nothing if profile is enabled", () => {
-    return expectSaga(checkProfileEnabledSaga, profile)
+    return expectSaga(checkProfileEnabledSaga, updatedProfile)
       .not.put.like({ action: { type: getType(profileUpsert.request) } })
       .run();
   });
@@ -52,7 +52,9 @@ describe("checkProfileEnabledSaga", () => {
   it("should create the API profile when the API profile does not exist", () => {
     return expectSaga(checkProfileEnabledSaga, {
       ...profile,
-      has_profile: false
+      is_inbox_enabled: false,
+      is_webhook_enabled: false,
+      email: undefined
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
@@ -96,7 +98,9 @@ describe("checkProfileEnabledSaga", () => {
   it("should restart the app if the profile update fails", () => {
     return expectSaga(checkProfileEnabledSaga, {
       ...profile,
-      has_profile: false
+      is_inbox_enabled: false,
+      is_webhook_enabled: false,
+      email: undefined
     })
       .put(upsertAction)
       .put(startApplicationInitialization())
