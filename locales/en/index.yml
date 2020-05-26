@@ -1237,6 +1237,8 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    validity: Valid between
+    taxBenefit: Tax benefit
     checkBonusEligibility:
       loading: Checking bonus eligibility
   request: Request a new bonus

@@ -14,5 +14,5 @@ export const mockedBonus: Bonus = {
   code: "ABCDE123XYZ",
   max_amount: 500,
   tax_benefit: 300,
-  activated_at: new Date("2020-07-04T12:20:00.000Z")
+  activated_at: new Date("2020-06-04T12:20:00.000Z")
 };

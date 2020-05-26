@@ -1,3 +1,4 @@
+import { fromPredicate } from "fp-ts/lib/Option";
 import { Text } from "native-base";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
@@ -9,11 +10,13 @@ import { formatDateAsLocal } from "../../../utils/dates";
 import { Bonus } from "../mock/mockData";
 
 type Props = {
-  bonus: any;
+  bonus: Bonus;
   onPress: (bonus: Bonus) => void;
 };
 
 const ICON_WIDTH = 24;
+const LAST_BONUS_DATE = new Date(2020, 11, 31);
+const FIRST_BONUS_DATE = new Date(2020, 6, 1);
 
 const styles = StyleSheet.create({
   smallSpacer: {
@@ -69,19 +72,46 @@ const styles = StyleSheet.create({
  * in the store
  */
 const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
+  const isBonusActiveBeforeValidDate = fromPredicate(
+    (bonusDate: Date) => bonusDate < FIRST_BONUS_DATE
+  )(props.bonus.activated_at).fold(false, _ => true);
+
+  /**
+   * The bonus validity is displayed as follows:
+   * - if activation date is before 01/07/2020 -> 01/07/2020 - 31/12/2020
+   * - if activation date is later than 01/07/2020 -> activation_date - 31/12/2020
+   */
+  const bonusValidity = isBonusActiveBeforeValidDate
+    ? `${formatDateAsLocal(FIRST_BONUS_DATE, true)} - ${formatDateAsLocal(
+        LAST_BONUS_DATE,
+        true
+      )}`
+    : `${formatDateAsLocal(
+        props.bonus.activated_at,
+        true
+      )} - ${formatDateAsLocal(LAST_BONUS_DATE, true)}`;
+
   return (
     <TouchableDefaultOpacity onPress={() => props.onPress(props.bonus)}>
       <View style={styles.spaced}>
-        <Text small={true} dark={true}>
-          {I18n.t("bonus.active")}
-        </Text>
+        <Text small={true}>{`${I18n.t(
+          "bonus.bonusVacanza.validity"
+        )} ${bonusValidity}`}</Text>
         <Text bold={true} style={styles.text12}>
           {props.bonus.max_amount}
         </Text>
       </View>
       <View style={styles.viewStyle}>
-        <Text xsmall={true}>
+        <Text xsmall={true} dark={true}>
           {formatDateAsLocal(props.bonus.activated_at, true, true)}
+        </Text>
+      </View>
+      <View style={styles.spaced}>
+        <Text small={true} dark={true}>
+          {I18n.t("bonus.bonusVacanza.taxBenefit")}
+        </Text>
+        <Text bold={true} style={styles.text12}>
+          {props.bonus.tax_benefit}
         </Text>
       </View>
       <View style={styles.smallSpacer} />
