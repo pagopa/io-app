@@ -2,7 +2,7 @@ import { getExpireStatus } from "../dates";
 
 describe("getExpireStatus", () => {
   it("should be VALID", () => {
-    const future = new Date(Date.now() + 1000 * 60 * 61 * 24); // 1 day and a minute in the future
+    const future = new Date(Date.now() + 1000 * 60 * 61 * 24 * 7); // 7 days and a minute in the future
     expect(getExpireStatus(future)).toBe("VALID");
   });
 
