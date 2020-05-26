@@ -545,7 +545,6 @@ payment:
       dateAndTime: Data e ora
       paymentAmount: Importo pagamento
       transactionCosts: Costi di transazione
-      totalPaid: Totale pagato
       transactionCode: Codice identificativo della transazione
       help: Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli
     list:

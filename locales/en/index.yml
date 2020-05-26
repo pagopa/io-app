@@ -524,7 +524,6 @@ payment:
       dateAndTime: Date and time
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
-      totalPaid: Total paid
       transactionCode: Transaction identification code
       help: If you have encountered a problem with this payment, write to us for more information and details
     list:
