@@ -3,13 +3,14 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BonusList } from "../../types/bonusList";
-import { bonusListLoad } from "../actions/bonusVacanze";
+import { availableBonusListLoad } from "../actions/bonusVacanze";
+
 export type BonusState = Readonly<{
-  bonuses: pot.Pot<BonusList, Error>;
+  availableBonuses: pot.Pot<BonusList, Error>;
 }>;
 
 const INITIAL_STATE: BonusState = {
-  bonuses: pot.none
+  availableBonuses: pot.none
 };
 
 const reducer = (
@@ -17,18 +18,25 @@ const reducer = (
   action: Action
 ): BonusState => {
   switch (action.type) {
-    case getType(bonusListLoad.request):
-      return { ...state, bonuses: pot.toLoading(state.bonuses) };
-    case getType(bonusListLoad.success):
-      return { ...state, bonuses: pot.some(action.payload) };
-    case getType(bonusListLoad.failure):
-      return { ...state, bonuses: pot.toError(state.bonuses, action.payload) };
+    case getType(availableBonusListLoad.request):
+      return {
+        ...state,
+        availableBonuses: pot.toLoading(state.availableBonuses)
+      };
+    case getType(availableBonusListLoad.success):
+      return { ...state, availableBonuses: pot.some(action.payload) };
+    case getType(availableBonusListLoad.failure):
+      return {
+        ...state,
+        availableBonuses: pot.toError(state.availableBonuses, action.payload)
+      };
   }
   return state;
 };
 
 // Selectors
-export const bonuses = (state: GlobalState): pot.Pot<BonusList, Error> =>
-  state.bonus.bonuses;
+export const availableBonuses = (
+  state: GlobalState
+): pot.Pot<BonusList, Error> => state.bonus.availableBonuses;
 
 export default reducer;
