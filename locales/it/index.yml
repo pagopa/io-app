@@ -1269,13 +1269,13 @@ faq:
     title: "Hai avuto problemi durante un pagamento?"
     content: !include faq/faq57.md
 bonus:
-  bonusVacanza:
-    checkBonusEligibility:
-      loading: Verifico l'idoneità per l'accesso al bonus 
   request: Richiedi un nuovo bonus
   latestBonus: I tuoi bonus attivi
   active: Bonus attivo
   inactive: Bonus non attivo
+  bonusVacanza:
+    checkBonusEligibility:
+      loading: Verifico l'idoneità per l'accesso al bonus
     iseeNotAvailable:
       title: ISEE not trovato
       subtitle: Non è disponibile nessun ISEE per l'utente
