@@ -25,6 +25,9 @@ import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { shouldDisplayDonationsFeature } from "../../config";
+import { bonusVacanzeEnabled } from "../../config";
+import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
+import { mockedBonus } from "../../features/bonusVacanze/mock/mockData";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -511,7 +514,21 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet", "wallet_methods"]}
       >
-        {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
+        {this.newMethodAdded ? (
+          this.newMethodAddedContent
+        ) : (
+          <React.Fragment>
+            {/* Display this item only if the flag is enabled */}
+            {bonusVacanzeEnabled && (
+              <RequestBonus
+                onButtonPress={this.props.navigateToRequestBonus}
+                bonus={this.props.currentActiveBonus}
+                onBonusPress={this.props.navigateToBonusDetail}
+              />
+            )}
+            {transactionContent}
+          </React.Fragment>
+        )}
       </WalletLayout>
     );
   }
@@ -523,6 +540,7 @@ const mapStateToProps = (state: GlobalState) => {
     .getOrElse(true);
 
   return {
+    currentActiveBonus: pot.some(mockedBonus),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
     potTransactions: latestTransactionsSelector(state),
@@ -549,6 +567,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
+  // TODO add bonus detail as function parameter when adding the navigate to bonus detail
+  navigateToBonusDetail: () => dispatch(navigateBack()),
+  navigateToRequestBonus: () => dispatch(navigateBack()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),

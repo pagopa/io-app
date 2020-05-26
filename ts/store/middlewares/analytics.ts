@@ -139,9 +139,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         SPID_URL: action.payload.url
       });
 
-    case getType(profileFirstLogin):
-      return mp.track(action.type, action.payload);
-
     // dispatch to mixpanel when the email is validated
     case getType(profileEmailValidationChanged):
       return mp.track(action.type, { isEmailValidated: action.payload });
@@ -343,6 +340,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
 
+    //  profile First time Login
+    case getType(profileFirstLogin):
     // other
     case getType(updateNotificationsInstallationToken):
       return mp.track(action.type);
