@@ -29,6 +29,7 @@ import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import { EmptyListComponent } from "./EmptyListComponent";
+import { AnimatedProps } from "./MessageList";
 import MessageListItem from "./MessageListItem";
 
 // Used to calculate the cell item layouts.
@@ -173,7 +174,7 @@ type OwnProps = {
   nextDeadlineId: Option<string>;
 };
 
-type Props = OwnProps & SelectedSectionListProps;
+type Props = OwnProps & SelectedSectionListProps & AnimatedProps;
 
 type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
@@ -463,6 +464,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       // Before call other items check if the last section is showed
       this.loadMoreData();
     }
+    if (this.props.animated) {
+      this.props.animated.onScroll(e);
+    }
   };
 
   public render() {
@@ -471,7 +475,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       servicesById,
       paymentsByRptId,
       isContinuosScrollEnabled,
-      lastDeadlineId
+      lastDeadlineId,
+      animated
     } = this.props;
     const { isLoadingProgress } = this.state;
 
@@ -537,6 +542,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             sections.length === 0 && lastDeadlineId.isNone()
               ? ListEmptySectionsComponent
               : ListEmptyComponent
+          }
+          scrollEventThrottle={
+            animated ? animated.scrollEventThrottle : undefined
           }
         />
         {isLoadingProgress &&
