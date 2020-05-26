@@ -60,7 +60,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { bonusListLoad } from "../../features/bonusVacanze/store/actions/bonusVacanze";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -547,7 +546,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   // TODO add bonus detail as function parameter when adding the navigate to bonus detail
   navigateToBonusDetail: () => dispatch(navigateBack()),
-  navigateToRequestBonus: () => dispatch(bonusListLoad.request()),
+  navigateToRequestBonus: () => dispatch(navigateBack()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),
