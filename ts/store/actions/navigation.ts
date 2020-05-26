@@ -144,6 +144,11 @@ export const navigateToCalendarPreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
   });
 
+export const navigateToLanguagePreferenceScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PREFERENCES_LANGUAGE
+  });
+
 /**
  * Wallet & Payments
  */

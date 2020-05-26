@@ -210,6 +210,13 @@ profile:
       preferred_calendar:
         title: Default Calendar
         not_selected: Not selected
+      preferred_language:
+        title: Favourite language
+        subtitle: In which language do you want to use the application?
+        alert: 
+          title: Do you want to change the language to 
+          subtitle: You'll need to restart the application to make this happen
+        not_selected: Not selected
     empty:
       default: No preference set
     unavailable:
@@ -466,7 +473,7 @@ onboarding:
     contentTitleConfirmSubtitle: insert again the code of 6 digits
     pinInfo: This code will be requested each time you open the app and when you need to view sensitive data or make dispositive transactions. You can change it at any time by authenticating yourself.
     reset: Change the code
-    confirmInvalid: the two pins do not match
+    confirmInvalid: The two pins do not match
     contextualHelpTitle: What your unlock code is
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
@@ -1023,7 +1030,6 @@ identification:
       tip: To reset your unlock code you will have to log in again.
       tip_short: You will have to login again.
     confirmValid: Correct unlock code
-    confirmInvalid: Invalid unlock code
   unlock_screen:
     help:
       title: Access with unlock code
@@ -1234,3 +1240,11 @@ faq:
   57:
     title: "Did you have problems during a payment?"
     content: !include faq/faq57.md
+bonus:
+  bonusVacanza:
+    checkBonusEligibility:
+      loading: Checking bonus eligibility
+  request: Request a new bonus
+  latestBonus: Your active bonuses
+  active: Active bonus
+  inactive: Inactive bonus
