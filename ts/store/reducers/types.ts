@@ -1,6 +1,7 @@
 import { NavigationState } from "react-navigation";
 import { PersistPartial } from "redux-persist";
 
+import { BonusState } from "../../features/bonusVacanze/store/reducers/bonusVacanze";
 import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
@@ -59,6 +60,7 @@ export type GlobalState = Readonly<{
   userMetadata: UserMetadataState;
   emailValidation: EmailValidationState;
   cie: CieState;
+  bonus: BonusState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;
