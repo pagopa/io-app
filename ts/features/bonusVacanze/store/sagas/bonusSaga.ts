@@ -8,7 +8,9 @@ import { availableBonusListLoad } from "../actions/bonusVacanze";
 
 // handle bonus list loading
 function* loadAvailableBonusesSaga(
-  getBonusList: ReturnType<typeof BackendBonusVacanze>["getBonusList"]
+  getAvailableBonuses: ReturnType<
+    typeof BackendBonusVacanze
+  >["getAvailableBonuses"]
 ): SagaIterator {
   try {
     const bonusListReponse: SagaCallReturnType<
@@ -35,6 +37,6 @@ export function* watchBonusSaga(): SagaIterator {
   yield takeLatest(
     availableBonusListLoad.request,
     loadAvailableBonusesSaga,
-    backendBonusVacanze.getBonusList
+    backendBonusVacanze.getAvailableBonuses
   );
 }

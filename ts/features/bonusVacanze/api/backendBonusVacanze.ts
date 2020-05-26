@@ -27,7 +27,7 @@ export function BackendBonusVacanze(
     fetchApi
   };
 
-  const getBonusListT: GetBonusListT = {
+  const getAvailableBonusesT: GetBonusListT = {
     method: "get",
     url: () => `/bonus`,
     query: _ => ({}),
@@ -36,6 +36,6 @@ export function BackendBonusVacanze(
   };
 
   return {
-    getBonusList: createFetchRequestForApi(getBonusListT, options)
+    getAvailableBonuses: createFetchRequestForApi(getAvailableBonusesT, options)
   };
 }
