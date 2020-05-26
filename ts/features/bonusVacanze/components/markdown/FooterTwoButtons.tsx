@@ -22,7 +22,7 @@ type MyProps = OnCancelProps & OnRightProps;
  * A preset for {@link MarkdownBaseView} that compose the code used in {@link FooterSingleButton}
  * @param props
  */
-export const FooterTwoButton: React.FunctionComponent<MyProps> = props => {
+export const FooterTwoButtons: React.FunctionComponent<MyProps> = props => {
   return (
     <FooterWithButtons
       type={"TwoButtonsInlineHalf"}

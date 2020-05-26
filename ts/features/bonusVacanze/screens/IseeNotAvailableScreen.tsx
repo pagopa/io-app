@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { RTron } from "../../../boot/configureStoreAndPersistor";
 import I18n from "../../../i18n";
-import { FooterTwoButton } from "../components/markdown/FooterTwoButton";
+import { FooterTwoButtons } from "../components/markdown/FooterTwoButtons";
 import { MarkdownBaseScreen } from "../components/markdown/MarkdownBaseScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -18,7 +18,7 @@ const gotoInps = I18n.t("bonus.bonusVacanza.iseeNotAvailable.goToINPSWebsite");
  * It provides two CTA:
  * - Cancel: exit from the bonus request workflow
  * - Go to INPS website
- * The screen is tied to the business logic and is composed using {@link MarkdownBaseScreen} and {@link FooterTwoButton}
+ * The screen is tied to the business logic and is composed using {@link MarkdownBaseScreen} and {@link FooterTwoButtons}
  * @param props
  * @constructor
  */
@@ -30,7 +30,7 @@ const IseeNotAvailableScreen: React.FunctionComponent<Props> = props => {
       subtitle={subtitle}
       markDown={markdownBody}
     >
-      <FooterTwoButton
+      <FooterTwoButtons
         onCancel={props.onCancel}
         onRight={props.onGoToINPSWebsite}
         title={gotoInps}
