@@ -1,3 +1,4 @@
+import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
@@ -61,5 +62,14 @@ const reducer = (
 export const availableBonuses = (
   state: GlobalState
 ): pot.Pot<BonusList, Error> => state.bonus.availableBonuses;
+
+// if is some the eligibility result is available
+export const eligibilityResult = (
+  state: GlobalState
+): Option<EligibilityCheck> =>
+  // TODO this check is weak
+  pot.toOption(
+    pot.filter(state.bonus.eligibilityCheck, ec => ec.members !== undefined)
+  );
 
 export default reducer;
