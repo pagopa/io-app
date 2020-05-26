@@ -1271,5 +1271,4 @@ faq:
 bonus:
   bonusVacanza:
     checkBonusEligibility:
-      loading: Verifico richiesta del bonus
-
+      loading: Verifico l'idoneità per l'accesso al bonus 
