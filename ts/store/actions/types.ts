@@ -8,6 +8,7 @@ import {
   StoreEnhancer as ReduxStoreEnhancer
 } from "redux";
 
+import { BonusActions } from "../../features/bonusVacanze/store/actions/bonusVacanze";
 import { GlobalState } from "../reducers/types";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
@@ -39,7 +40,6 @@ import { ServicesActions } from "./services";
 import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
-import { BonusActions } from "../../features/bonusVacanze/store/actions/bonusVacanze";
 
 export type Action =
   | AnalyticsActions
