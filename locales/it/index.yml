@@ -812,11 +812,6 @@ wallet:
   walletCardTransaction:
     contextualHelpTitle: Transazioni effettuate con questo metodo
     contextualHelpContent: !include wallet/wallet_card_transaction.md
-bonus:
-  request: Richiedi un nuovo bonus
-  latestBonus: I tuoi bonus attivi
-  active: Bonus attivo
-  inactive: Bonus non attivo
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -1277,3 +1272,7 @@ bonus:
   bonusVacanza:
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus 
+  request: Richiedi un nuovo bonus
+  latestBonus: I tuoi bonus attivi
+  active: Bonus attivo
+  inactive: Bonus non attivo

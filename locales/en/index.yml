@@ -784,11 +784,6 @@ wallet:
   walletCardTransaction:
     contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
-bonus:
-  request: Request a new bonus
-  latestBonus: Your active bonuses
-  active: Active bonus
-  inactive: Inactive bonus
 saveCard:
   saveCard: Save the card
   header: Do you whant to save this card?
@@ -1244,3 +1239,7 @@ bonus:
   bonusVacanza:
     checkBonusEligibility:
       loading: Checking bonus eligibility
+  request: Request a new bonus
+  latestBonus: Your active bonuses
+  active: Active bonus
+  inactive: Inactive bonus

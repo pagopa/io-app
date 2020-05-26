@@ -68,43 +68,39 @@ const styles = StyleSheet.create({
  * Component to display the current active bonus if it is present
  * in the store
  */
-class ActiveBonus extends React.PureComponent<Props> {
-  public render() {
-    return (
-      <TouchableDefaultOpacity
-        onPress={() => this.props.onPress(this.props.bonus)}
-      >
-        <View style={styles.spaced}>
-          <Text small={true} dark={true}>
-            {I18n.t("bonus.active")}
-          </Text>
-          <Text bold={true} style={styles.text12}>
-            {this.props.bonus.max_amount}
+const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
+  return (
+    <TouchableDefaultOpacity onPress={() => props.onPress(props.bonus)}>
+      <View style={styles.spaced}>
+        <Text small={true} dark={true}>
+          {I18n.t("bonus.active")}
+        </Text>
+        <Text bold={true} style={styles.text12}>
+          {props.bonus.max_amount}
+        </Text>
+      </View>
+      <View style={styles.viewStyle}>
+        <Text xsmall={true}>
+          {formatDateAsLocal(props.bonus.activated_at, true, true)}
+        </Text>
+      </View>
+      <View style={styles.smallSpacer} />
+      <View style={styles.text3Line}>
+        <View style={styles.text3Container}>
+          <Text numberOfLines={2} style={styles.text3}>
+            {props.bonus.type}
           </Text>
         </View>
-        <View style={styles.viewStyle}>
-          <Text xsmall={true}>
-            {formatDateAsLocal(this.props.bonus.activated_at, true, true)}
-          </Text>
+        <View style={styles.icon}>
+          <IconFont
+            name="io-right"
+            size={ICON_WIDTH}
+            color={customVariables.contentPrimaryBackground}
+          />
         </View>
-        <View style={styles.smallSpacer} />
-        <View style={styles.text3Line}>
-          <View style={styles.text3Container}>
-            <Text numberOfLines={2} style={styles.text3}>
-              {this.props.bonus.type}
-            </Text>
-          </View>
-          <View style={styles.icon}>
-            <IconFont
-              name="io-right"
-              size={ICON_WIDTH}
-              color={customVariables.contentPrimaryBackground}
-            />
-          </View>
-        </View>
-      </TouchableDefaultOpacity>
-    );
-  }
-}
+      </View>
+    </TouchableDefaultOpacity>
+  );
+};
 
 export default ActiveBonus;
