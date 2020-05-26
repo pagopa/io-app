@@ -1281,3 +1281,7 @@ bonus:
       subtitle: Non è disponibile nessun ISEE per l'utente
       text: !include bonus/bonusVacanze/iseeNotAvailable.md
       goToINPSWebsite: Vai al sito INPS
+    iseeNotEligible:
+      title: ISEE not idoneo
+      subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
+      text: !include bonus/bonusVacanze/iseeNotEligible.md
