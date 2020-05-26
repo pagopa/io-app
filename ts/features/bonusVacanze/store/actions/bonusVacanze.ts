@@ -1,5 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { BonusList } from "../../api/backendBonusVacanze";
+import { BonusList } from "../../types/bonusList";
 
 export const bonusListLoad = createAsyncAction(
   "BONUS_LIST_REQUEST",

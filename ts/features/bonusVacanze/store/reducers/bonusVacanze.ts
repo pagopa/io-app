@@ -2,8 +2,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { BonusList } from "../../api/backendBonusVacanze";
 import { bonusListLoad } from "../actions/bonusVacanze";
+import { BonusList } from "../../types/bonusList";
 export type BonusState = Readonly<{
   bonuses: pot.Pot<BonusList, Error>;
 }>;
