@@ -32,7 +32,6 @@ import {
 } from "../../store/reducers/identification";
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { authenticateConfig } from "../../utils/biometric";
 
