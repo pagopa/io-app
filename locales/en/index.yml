@@ -1239,3 +1239,7 @@ bonus:
   bonusVacanza:
     checkBonusEligibility:
       loading: Checking bonus eligibility
+  request: Request a new bonus
+  latestBonus: Your active bonuses
+  active: Active bonus
+  inactive: Inactive bonus

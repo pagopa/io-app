@@ -1272,3 +1272,7 @@ bonus:
   bonusVacanza:
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus 
+  request: Richiedi un nuovo bonus
+  latestBonus: I tuoi bonus attivi
+  active: Bonus attivo
+  inactive: Bonus non attivo
