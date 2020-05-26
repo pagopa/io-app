@@ -3,7 +3,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BonusList } from "../../types/bonusList";
-import { availableBonusListLoad } from "../actions/bonusVacanze";
+import { availableBonusesLoad } from "../actions/bonusVacanze";
 
 export type BonusState = Readonly<{
   availableBonuses: pot.Pot<BonusList, Error>;
@@ -18,14 +18,14 @@ const reducer = (
   action: Action
 ): BonusState => {
   switch (action.type) {
-    case getType(availableBonusListLoad.request):
+    case getType(availableBonusesLoad.request):
       return {
         ...state,
         availableBonuses: pot.toLoading(state.availableBonuses)
       };
-    case getType(availableBonusListLoad.success):
+    case getType(availableBonusesLoad.success):
       return { ...state, availableBonuses: pot.some(action.payload) };
-    case getType(availableBonusListLoad.failure):
+    case getType(availableBonusesLoad.failure):
       return {
         ...state,
         availableBonuses: pot.toError(state.availableBonuses, action.payload)

@@ -29,7 +29,7 @@ export function BackendBonusVacanze(
 
   const getAvailableBonusesT: GetBonusListT = {
     method: "get",
-    url: () => `/bonus`,
+    url: () => `/bonus/vacanze`,
     query: _ => ({}),
     headers: () => ({}),
     response_decoder: basicResponseDecoder(BonusListT)

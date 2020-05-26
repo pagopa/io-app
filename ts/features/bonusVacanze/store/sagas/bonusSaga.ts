@@ -4,7 +4,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { apiUrlPrefix } from "../../../../config";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
-import { availableBonusListLoad } from "../actions/bonusVacanze";
+import { availableBonusesLoad } from "../actions/bonusVacanze";
 
 // handle bonus list loading
 function* loadAvailableBonusesSaga(
@@ -18,7 +18,7 @@ function* loadAvailableBonusesSaga(
     > = yield call(getAvailableBonuses, {});
     if (bonusListReponse.isRight()) {
       if (bonusListReponse.value.status === 200) {
-        yield put(availableBonusListLoad.success(bonusListReponse.value.value));
+        yield put(availableBonusesLoad.success(bonusListReponse.value.value));
         return;
       }
       throw Error(`response status ${bonusListReponse.value.status}`);
@@ -26,7 +26,7 @@ function* loadAvailableBonusesSaga(
       throw Error(readableReport(bonusListReponse.value));
     }
   } catch (e) {
-    yield put(availableBonusListLoad.failure(e));
+    yield put(availableBonusesLoad.failure(e));
   }
 }
 
@@ -35,7 +35,7 @@ export function* watchBonusSaga(): SagaIterator {
   const backendBonusVacanze = BackendBonusVacanze(apiUrlPrefix);
   // bonus list loading
   yield takeLatest(
-    availableBonusListLoad.request,
+    availableBonusesLoad.request,
     loadAvailableBonusesSaga,
     backendBonusVacanze.getAvailableBonuses
   );
