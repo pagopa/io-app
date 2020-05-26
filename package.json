@@ -51,7 +51,7 @@
     "react-native-background-timer": "2.1.1",
     "react-native-barcode-builder": "^1.0.5",
     "react-native-calendar-events": "1.7.1",
-    "react-native-camera": "3.4.0",
+    "react-native-camera": "^3.4.0",
     "react-native-config": "1.0.0",
     "react-native-device-info": "5.5.3",
     "react-native-exception-handler": "2.10.0",
