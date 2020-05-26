@@ -56,9 +56,6 @@ function* startBonusEligibilitySaga(
     if (startEligibilityResult.isRight()) {
       // check started
       if (startEligibilityResult.value.status === 202) {
-        yield put(
-          startBonusEligibility.success(startEligibilityResult.value.value)
-        );
         // start polling to know about the check result
         const startPolling = new Date().getTime();
         // TODO: handle cancel request (stop polling)
