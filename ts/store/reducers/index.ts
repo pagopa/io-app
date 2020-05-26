@@ -11,6 +11,7 @@ import { logoutFailure, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
+import bonusReducer from "./../../features/bonusVacanze/store/reducers/bonusVacanze";
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
@@ -89,6 +90,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   instabug: instabugUnreadMessagesReducer,
   search: searchReducer,
   cie: cieReducer,
+  bonus: bonusReducer,
 
   //
   // persisted state
