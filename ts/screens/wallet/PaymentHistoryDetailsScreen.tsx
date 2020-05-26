@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1
   },
-  row: { 
-    flexDirection: "row", 
+  row: {
+    flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: 'center'
+    alignItems: "center"
   },
   bigText: {
     fontSize: 20,

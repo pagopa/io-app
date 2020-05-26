@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   paymentOutcome: {
     flexDirection: "row",
-    alignItems: 'center'
+    alignItems: "center"
   },
   text11: {
     paddingLeft: 8
