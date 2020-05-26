@@ -1,5 +1,5 @@
 import { View } from "native-base";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -28,6 +28,8 @@ const styles = StyleSheet.create({
  */
 export const MarkdownBaseScreen: React.FunctionComponent<Props> = props => {
   const [isMarkdownLoaded, setMarkdownLoaded] = useState(false);
+
+  useEffect(() => setMarkdownLoaded(false), [props.markDown]);
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={props.title}>
