@@ -1,4 +1,3 @@
-//
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "redux-saga/effects";
@@ -7,6 +6,7 @@ import { SagaCallReturnType } from "../../../../types/utils";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import { bonusListLoad } from "../actions/bonusVacanze";
 
+// handle bonus list loading
 function* loadBonusListSaga(
   getBonusList: ReturnType<typeof BackendBonusVacanze>["getBonusList"]
 ): SagaIterator {
@@ -28,8 +28,10 @@ function* loadBonusListSaga(
   }
 }
 
+// Saga that listen to all bonus requests
 export function* watchBonusSaga(): SagaIterator {
   const backendBonusVacanze = BackendBonusVacanze(apiUrlPrefix);
+  // bonus list loading
   yield takeLatest(
     bonusListLoad.request,
     loadBonusListSaga,
