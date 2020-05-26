@@ -68,29 +68,6 @@ const checkPinInterval = 100 as Millisecond;
 // the threshold of attempts after which it is necessary to activate the timer check
 const checkTimerThreshold = maxAttempts - freeAttempts;
 
-const renderIdentificationByPinState = (
-  identificationByPinState: IdentificationByPinState,
-  isValidatingTask: boolean
-) => {
-  if (identificationByPinState === "failure") {
-    return (
-      <React.Fragment>
-        <TextWithIcon>
-          <IconFont
-            name={"io-close"}
-            color={!isValidatingTask ? variables.colorWhite : undefined}
-          />
-          <Text white={!isValidatingTask}>
-            {I18n.t("identification.unlockCode.confirmInvalid")}
-          </Text>
-        </TextWithIcon>
-      </React.Fragment>
-    );
-  }
-
-  return null;
-};
-
 const renderIdentificationByBiometryState = (
   identificationByBiometryState: IdentificationByPinState
 ) => {
@@ -340,6 +317,27 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   };
 
+  private getCodeInsertionStatus = () => {
+    if (this.state.identificationByPinState === "unstarted") {
+      return undefined;
+    }
+
+    const wrongCodeString = I18n.t("identification.fail.wrongCode");
+    return this.props.identificationFailState
+      .filter(fs => fs.remainingAttempts <= maxAttempts - freeAttempts)
+      .map(
+        // here if the user finished his free attempts
+        fd =>
+          `${wrongCodeString}. ${I18n.t(
+            fd.remainingAttempts > 1
+              ? "identification.fail.remainingAttempts"
+              : "identification.fail.remainingAttemptSingle",
+            { attempts: fd.remainingAttempts }
+          )}`
+      )
+      .getOrElse(wrongCodeString);
+  };
+
   public render() {
     const { identificationProgressState, isFingerprintEnabled } = this.props;
 
@@ -356,7 +354,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     } = identificationProgressState;
 
     const {
-      identificationByPinState,
       identificationByBiometryState,
       biometryType,
       countdown
@@ -438,6 +435,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               onPinResetHandler={this.props.onPinResetHandler}
               isValidatingTask={isValidatingTask}
               isFingerprintEnabled={isFingerprintEnabled}
+              codeInsertionStatus={this.getCodeInsertionStatus()}
               biometryType={biometryType}
               onFingerPrintReq={() =>
                 this.onFingerprintRequest(this.onIdentificationSuccessHandler)
@@ -465,10 +463,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               }
               remainingAttempts={displayRemainingAttempts}
             />
-            {renderIdentificationByPinState(
-              identificationByPinState,
-              isValidatingTask
-            )}
             {renderIdentificationByBiometryState(identificationByBiometryState)}
 
             <View spacer={true} large={true} />
