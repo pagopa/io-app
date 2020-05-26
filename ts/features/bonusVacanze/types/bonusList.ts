@@ -1,3 +1,7 @@
+/**
+ * TEMPORARY TYPE DEFINITION
+ * this type must be replaced with the one auto-generated from spec
+ */
 import * as t from "io-ts";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import { Timestamp } from "../../../../definitions/backend/Timestamp";
