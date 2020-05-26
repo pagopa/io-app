@@ -2,13 +2,13 @@
  * Generic utilities for messages
  */
 
+import { isToday } from "date-fns";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
 import { getExpireStatus } from "./dates";
 import { isTextIncludedCaseInsensitive } from "./strings";
-import { isToday } from 'date-fns';
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -122,10 +122,11 @@ export const isExpiring = (
   messagePaymentExpirationInfo.expireStatus === "EXPIRING";
 
 export const isExpiringToday = (
-    messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-  ) =>
-    isExpirable(messagePaymentExpirationInfo) &&
-    messagePaymentExpirationInfo.expireStatus === "EXPIRING" && isToday(messagePaymentExpirationInfo.dueDate);
+  messagePaymentExpirationInfo: MessagePaymentExpirationInfo
+) =>
+  isExpirable(messagePaymentExpirationInfo) &&
+  messagePaymentExpirationInfo.expireStatus === "EXPIRING" &&
+  isToday(messagePaymentExpirationInfo.dueDate);
 
 export const isExpired = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo
