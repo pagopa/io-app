@@ -7,7 +7,7 @@ import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import { availableBonusListLoad } from "../actions/bonusVacanze";
 
 // handle bonus list loading
-function* loadBonusListSaga(
+function* loadAvailableBonusesSaga(
   getBonusList: ReturnType<typeof BackendBonusVacanze>["getBonusList"]
 ): SagaIterator {
   try {
@@ -34,7 +34,7 @@ export function* watchBonusSaga(): SagaIterator {
   // bonus list loading
   yield takeLatest(
     availableBonusListLoad.request,
-    loadBonusListSaga,
+    loadAvailableBonusesSaga,
     backendBonusVacanze.getBonusList
   );
 }
