@@ -1239,6 +1239,10 @@ bonus:
   bonusVacanza:
     checkBonusEligibility:
       loading: Checking bonus eligibility
+  request: Request a new bonus
+  latestBonus: Your active bonuses
+  active: Active bonus
+  inactive: Inactive bonus
     iseeNotAvailable:
       title: ISEE not available
       subtitle: ISEE not found for the user
