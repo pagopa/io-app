@@ -8,6 +8,7 @@ import { CreatedMessageWithContentAndAttachments } from "../../definitions/backe
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
 import { getExpireStatus } from "./dates";
 import { isTextIncludedCaseInsensitive } from "./strings";
+import { isToday } from 'date-fns';
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -50,6 +51,7 @@ type MessagePaymentUnexpirable = {
     CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >["amount"];
 };
+
 export type ExpireStatus = "VALID" | "EXPIRING" | "EXPIRED";
 type MessagePaymentExpirable = {
   kind: "EXPIRABLE";
@@ -118,6 +120,12 @@ export const isExpiring = (
 ) =>
   isExpirable(messagePaymentExpirationInfo) &&
   messagePaymentExpirationInfo.expireStatus === "EXPIRING";
+
+export const isExpiringToday = (
+    messagePaymentExpirationInfo: MessagePaymentExpirationInfo
+  ) =>
+    isExpirable(messagePaymentExpirationInfo) &&
+    messagePaymentExpirationInfo.expireStatus === "EXPIRING" && isToday(messagePaymentExpirationInfo.dueDate);
 
 export const isExpired = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo
