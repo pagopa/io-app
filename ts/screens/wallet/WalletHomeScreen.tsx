@@ -551,7 +551,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   // TODO add bonus detail as function parameter when adding the navigate to bonus detail
   navigateToBonusDetail: () => dispatch(navigateBack()),
-  navigateToRequestBonus: () => dispatch(startBonusEligibility.request()),
+  navigateToRequestBonus: () => dispatch(navigateBack()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),
