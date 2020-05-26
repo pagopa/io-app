@@ -1,10 +1,10 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { BonusList } from "../../types/bonusList";
 
-export const bonusListLoad = createAsyncAction(
-  "BONUS_LIST_REQUEST",
-  "BONUS_LIST_SUCCESS",
-  "BONUS_LIST_FAILURE"
+export const availableBonusListLoad = createAsyncAction(
+  "BONUS_AVAILABLE_LIST_REQUEST",
+  "BONUS_AVAILABLE_SUCCESS",
+  "BONUS_AVAILABLE_FAILURE"
 )<void, BonusList, Error>();
 
-export type BonusActions = ActionType<typeof bonusListLoad>;
+export type BonusActions = ActionType<typeof availableBonusListLoad>;
