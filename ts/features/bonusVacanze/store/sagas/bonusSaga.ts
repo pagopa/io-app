@@ -14,8 +14,8 @@ function* loadAvailableBonusesSaga(
 ): SagaIterator {
   try {
     const bonusListReponse: SagaCallReturnType<
-      typeof getBonusList
-    > = yield call(getBonusList, {});
+      typeof getAvailableBonuses
+    > = yield call(getAvailableBonuses, {});
     if (bonusListReponse.isRight()) {
       if (bonusListReponse.value.status === 200) {
         yield put(availableBonusListLoad.success(bonusListReponse.value.value));
