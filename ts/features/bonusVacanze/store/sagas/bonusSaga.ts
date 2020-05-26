@@ -17,7 +17,7 @@ const pollingTimeThreshold = (20 * 1000) as Millisecond;
 // handle start bonus eligibility check
 function* checkBonusEligibilitySaga(
   eligibilityCheck: ReturnType<typeof BackendBonusVacanze>["eligibilityCheck"]
-): Iterator<Effect, boolean, SagaCallReturnType<typeof eligibilityCheck>> {
+): SagaIterator {
   try {
     const eligibilityCheckResult: SagaCallReturnType<
       typeof eligibilityCheck
