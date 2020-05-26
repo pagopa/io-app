@@ -9,7 +9,7 @@ import { formatDateAsLocal } from "../../../utils/dates";
 import { Bonus } from "../mock/mockData";
 
 type Props = {
-  bonus: any;
+  bonus: Bonus;
   onPress: (bonus: Bonus) => void;
 };
 
