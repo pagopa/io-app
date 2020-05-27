@@ -1239,7 +1239,7 @@ bonus:
     checkBonusEligibility:
       loading: Checking bonus eligibility
   bonusList:
-    title: Bonus disponibili
+    title: Available bonuses
     contentTitle: Select one of the available bonus
   request: Request a new bonus
   latestBonus: Your active bonuses

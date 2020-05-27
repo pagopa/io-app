@@ -78,7 +78,7 @@ const WalletNavigator = createStackNavigator(
     },
 
     // Navigator section for Bonus section
-    [ROUTES.AVAILABLE_BONUS_LIST]: {
+    [ROUTES.BONUS_AVAILABLE_LIST]: {
       screen: AvailableBonusScreen
     }
   },
