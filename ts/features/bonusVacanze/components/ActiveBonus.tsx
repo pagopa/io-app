@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
 const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
   const isBonusActiveBeforeValidDate = fromPredicate(
     (bonusDate: Date) => bonusDate < FIRST_BONUS_DATE
-  )(props.bonus.activated_at).fold(false, _ => true);
+  )(props.bonus.updated_at).fold(false, _ => true);
 
   /**
    * The bonus validity is displayed as follows:
@@ -86,10 +86,10 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
         LAST_BONUS_DATE,
         true
       )}`
-    : `${formatDateAsLocal(
-        props.bonus.activated_at,
+    : `${formatDateAsLocal(props.bonus.updated_at, true)} - ${formatDateAsLocal(
+        LAST_BONUS_DATE,
         true
-      )} - ${formatDateAsLocal(LAST_BONUS_DATE, true)}`;
+      )}`;
 
   return (
     <TouchableDefaultOpacity onPress={() => props.onPress(props.bonus)}>
