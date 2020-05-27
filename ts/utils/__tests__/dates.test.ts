@@ -1,4 +1,4 @@
-import { getExpireStatus } from "../dates";
+import { formatDateAsLocal, getExpireStatus } from "../dates";
 
 describe("getExpireStatus", () => {
   it("should be VALID", () => {
@@ -14,5 +14,21 @@ describe("getExpireStatus", () => {
   it("should be EXPIRED", () => {
     const remote = new Date(Date.now() - 1000 * 60); // 1 sec ago
     expect(getExpireStatus(remote)).toBe("EXPIRED");
+  });
+});
+
+describe("formatDateAsLocal", () => {
+  it("should return the date wihtout the year if it is within the current year", () => {
+    const now = new Date();
+    const futureDate = new Date(new Date().setMonth(now.getMonth() + 3));
+
+    // if now is before or within September, then the future date will be within the same year of now
+    if (now.getMonth() + 1 <= 9) {
+      // format DD/MM or MM/DD pdepending on locales
+      expect(formatDateAsLocal(futureDate).length).toBe(5);
+    } else {
+      // format DD/MM/YY or MM/DD/YY pdepending on locales
+      expect(formatDateAsLocal(futureDate).length).toBe(8);
+    }
   });
 });
