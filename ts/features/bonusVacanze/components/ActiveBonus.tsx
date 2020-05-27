@@ -1,12 +1,12 @@
-import { fromPredicate } from "fp-ts/lib/Option";
-import { Text } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
+import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { BonusVacanzaMock } from "../mock/mockData";
 
 type Props = {
@@ -15,8 +15,6 @@ type Props = {
 };
 
 const ICON_WIDTH = 24;
-const LAST_BONUS_DATE = new Date(2020, 11, 31);
-const FIRST_BONUS_DATE = new Date(2020, 6, 1);
 
 const styles = StyleSheet.create({
   smallSpacer: {
@@ -30,18 +28,6 @@ const styles = StyleSheet.create({
   },
   brandDarkGray: {
     color: customVariables.brandDarkGray
-  },
-  badgeContainer: {
-    flex: 0,
-    paddingRight: 8,
-    alignSelf: "flex-start",
-    paddingTop: 6.5
-  },
-  viewStyle: {
-    flexDirection: "row"
-  },
-  text11: {
-    color: customVariables.brandDarkestGray
   },
   text3: {
     fontSize: 18,
@@ -72,46 +58,28 @@ const styles = StyleSheet.create({
  * in the store
  */
 const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
-  const isBonusActiveBeforeValidDate = fromPredicate(
-    (bonusDate: Date) => bonusDate < FIRST_BONUS_DATE
-  )(props.bonus.updated_at).fold(false, _ => true);
-
-  /**
-   * The bonus validity is displayed as follows:
-   * - if activation date is before 01/07/2020 -> 01/07/2020 - 31/12/2020
-   * - if activation date is later than 01/07/2020 -> activation_date - 31/12/2020
-   */
-  const bonusValidity = isBonusActiveBeforeValidDate
-    ? `${formatDateAsLocal(FIRST_BONUS_DATE, true)} - ${formatDateAsLocal(
-        LAST_BONUS_DATE,
-        true
-      )}`
-    : `${formatDateAsLocal(props.bonus.updated_at, true)} - ${formatDateAsLocal(
-        LAST_BONUS_DATE,
-        true
-      )}`;
+  const bonusValidityInterval = `${formatDateAsLocal(
+    props.bonus.valid_from,
+    true
+  )} - ${formatDateAsLocal(props.bonus.valid_to, true)}`;
 
   return (
     <TouchableDefaultOpacity onPress={() => props.onPress(props.bonus)}>
       <View style={styles.spaced}>
         <Text small={true}>{`${I18n.t(
           "bonus.bonusVacanza.validity"
-        )} ${bonusValidity}`}</Text>
+        )} ${bonusValidityInterval}`}</Text>
         <Text bold={true} style={styles.text12}>
-          {props.bonus.max_amount}
+          {formatNumberCentsToAmount(props.bonus.max_amount)}
         </Text>
       </View>
-      <View style={styles.viewStyle}>
-        <Text xsmall={true}>
-          {formatDateAsLocal(props.bonus.updated_at, true, true)}
-        </Text>
-      </View>
+      <View small={true} />
       <View style={styles.spaced}>
         <Text small={true} dark={true}>
           {I18n.t("bonus.bonusVacanza.taxBenefit")}
         </Text>
         <Text bold={true} style={styles.text12}>
-          {props.bonus.tax_benefit}
+          {formatNumberCentsToAmount(props.bonus.tax_benefit)}
         </Text>
       </View>
       <View style={styles.smallSpacer} />
