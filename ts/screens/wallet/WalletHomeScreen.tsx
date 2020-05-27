@@ -26,17 +26,18 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled } from "../../config";
 import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
 import {
-  mockedBonus,
-  mockedAvailableBonusItem
+  mockedAvailableBonusItem,
+  mockedBonus
 } from "../../features/bonusVacanze/mock/mockData";
+import { BonusItem } from "../../features/bonusVacanze/types/bonusList";
 import I18n from "../../i18n";
 import {
   navigateBack,
+  navigateToBonusRequestInformation,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
-  navigateToWalletList,
-  navigateToBonusRequestInformation
+  navigateToWalletList
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -64,7 +65,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { BonusItem } from "../../features/bonusVacanze/types/bonusList";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
