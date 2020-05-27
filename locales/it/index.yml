@@ -1269,6 +1269,8 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    validity: Valido nel periodo
+    taxBenefit: Beneficio fiscale
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus 
   bonusList:
