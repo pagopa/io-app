@@ -60,9 +60,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { checkBonusEligibility } from "../../features/bonusVacanze/store/actions/bonusVacanze";
-import { isPollingExceeded } from "../../features/bonusVacanze/store/reducers/bonusVacanze";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -445,7 +442,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   }
 
   public render(): React.ReactNode {
-    RTron.log("isPollingExceeded", this.props.isPollingExceeded);
     const { potWallets, potTransactions, historyPayments } = this.props;
 
     const wallets = pot.getOrElse(potWallets, []);
@@ -522,7 +518,6 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     currentActiveBonus: pot.some(mockedBonus),
-    isPollingExceeded: isPollingExceeded(state),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
     potTransactions: latestTransactionsSelector(state),
@@ -551,7 +546,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   // TODO add bonus detail as function parameter when adding the navigate to bonus detail
   navigateToBonusDetail: () => dispatch(navigateBack()),
-  navigateToRequestBonus: () => dispatch(checkBonusEligibility.request()),
+  navigateToRequestBonus: () => dispatch(navigateBack()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),

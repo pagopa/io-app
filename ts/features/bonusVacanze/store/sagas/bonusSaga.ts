@@ -13,7 +13,7 @@ import {
 
 const checkEligibilityResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
-const pollingTimeThreshold = (3 * 1000) as Millisecond;
+const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
 // handle start bonus eligibility check
 function* checkBonusEligibilitySaga(
