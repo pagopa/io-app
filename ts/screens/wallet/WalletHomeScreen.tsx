@@ -25,16 +25,11 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled } from "../../config";
 import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
-import {
-  mockedAvailableBonusItem,
-  mockedBonus
-} from "../../features/bonusVacanze/mock/mockData";
-import { BonusItem } from "../../features/bonusVacanze/types/bonusList";
+import { mockedBonus } from "../../features/bonusVacanze/mock/mockData";
 import I18n from "../../i18n";
 import {
   navigateBack,
   navigateToAvailableBonusScreen,
-  navigateToBonusRequestInformation,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
