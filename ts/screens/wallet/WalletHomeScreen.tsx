@@ -518,7 +518,6 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     currentActiveBonus: pot.some(mockedBonus),
-
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
     potTransactions: latestTransactionsSelector(state),
