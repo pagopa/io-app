@@ -1238,6 +1238,9 @@ bonus:
   bonusVacanza:
     checkBonusEligibility:
       loading: Checking bonus eligibility
+  bonusList:
+    title: Available bonuses
+    contentTitle: Select one of the available bonus
   request: Request a new bonus
   latestBonus: Your active bonuses
   active: Active bonus
