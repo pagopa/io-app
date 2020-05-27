@@ -26,6 +26,7 @@ import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScr
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import { InferNavigationParams } from "../../types/react";
+import BonusInformationScreen from "../../features/bonusVacanze/screens/BonusInformationScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -295,5 +296,21 @@ export const navigateToCieCardReaderScreen = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_CARD_READER_SCREEN,
+    params
+  });
+
+/**
+ * BONUS
+ */
+export const navigateToAvailableBonusScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.AVAILABLE_BONUS_LIST
+  });
+
+export const navigateToBonusRequestInformation = (
+  params?: InferNavigationParams<typeof BonusInformationScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.BONUS_REQUEST_INFORMATION,
     params
   });

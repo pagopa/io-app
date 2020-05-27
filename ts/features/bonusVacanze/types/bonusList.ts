@@ -16,9 +16,9 @@ const BonusItemR = t.interface({
 const BonusItemO = t.partial({
   cover: t.string
 });
-export const BonusItem = t.intersection([BonusItemR, BonusItemO], "BonusItem");
+export const BonusItemT = t.intersection([BonusItemR, BonusItemO], "BonusItem");
 const BonusListR = t.interface({
-  items: t.readonlyArray(BonusItem, "array of Bonus")
+  items: t.readonlyArray(BonusItemT, "array of Bonus")
 });
 const BonusListRO = t.partial({});
 export const BonusListT = t.intersection(
@@ -26,3 +26,4 @@ export const BonusListT = t.intersection(
   "BonusList"
 );
 export type BonusList = t.TypeOf<typeof BonusListT>;
+export type BonusItem = t.TypeOf<typeof BonusItemT>;

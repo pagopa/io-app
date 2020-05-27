@@ -1270,7 +1270,12 @@ faq:
 bonus:
   bonusVacanza:
     checkBonusEligibility:
-      loading: Verifico l'idoneità per l'accesso al bonus 
+      loading: Verifico l'idoneità per l'accesso al bonus
+    cta:
+      requestBonus: Richiedi il bonus
+  bonusList:
+    title: Bonus disponibili
+    contentTitle: Seleziona uno dei bonus disponibili
   request: Richiedi un nuovo bonus
   latestBonus: I tuoi bonus attivi
   active: Bonus attivo

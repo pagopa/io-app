@@ -1,4 +1,5 @@
 import { createStackNavigator } from "react-navigation";
+import BonusInformationScreen from "../features/bonusVacanze/screens/BonusInformationScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
@@ -74,6 +75,11 @@ const WalletNavigator = createStackNavigator(
     },
     [ROUTES.PAYMENT_HISTORY_DETAIL_INFO]: {
       screen: PaymentHistoryDetailsScreen
+    },
+
+    // Navigator section for Bonus section
+    [ROUTES.BONUS_REQUEST_INFORMATION]: {
+      screen: BonusInformationScreen
     }
   },
   {

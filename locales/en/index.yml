@@ -1238,6 +1238,11 @@ bonus:
   bonusVacanza:
     checkBonusEligibility:
       loading: Checking bonus eligibility
+    cta:
+      requestBonus: Request the bonus
+  bonusList:
+    title: Bonus disponibili
+    contentTitle: Select one of the available bonus
   request: Request a new bonus
   latestBonus: Your active bonuses
   active: Active bonus
