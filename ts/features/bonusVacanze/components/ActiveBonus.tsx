@@ -7,11 +7,11 @@ import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
-import { Bonus } from "../mock/mockData";
+import { BonusVacanzaMock } from "../mock/mockData";
 
 type Props = {
-  bonus: Bonus;
-  onPress: (bonus: Bonus) => void;
+  bonus: BonusVacanzaMock;
+  onPress: (bonus: BonusVacanzaMock) => void;
 };
 
 const ICON_WIDTH = 24;
@@ -102,8 +102,8 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
         </Text>
       </View>
       <View style={styles.viewStyle}>
-        <Text xsmall={true} dark={true}>
-          {formatDateAsLocal(props.bonus.activated_at, true, true)}
+        <Text xsmall={true}>
+          {formatDateAsLocal(props.bonus.updated_at, true, true)}
         </Text>
       </View>
       <View style={styles.spaced}>
@@ -118,7 +118,8 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
       <View style={styles.text3Line}>
         <View style={styles.text3Container}>
           <Text numberOfLines={2} style={styles.text3}>
-            {props.bonus.type}
+            {/*TODO replace this hardcoded string*/}
+            {"Bonus Vacanze"}
           </Text>
         </View>
         <View style={styles.icon}>

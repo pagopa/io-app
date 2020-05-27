@@ -524,7 +524,6 @@ payment:
       dateAndTime: Date and time
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
-      totalPaid: Total paid
       transactionCode: Transaction identification code
       help: If you have encountered a problem with this payment, write to us for more information and details
     list:
@@ -1241,6 +1240,9 @@ bonus:
     taxBenefit: Tax benefit
     checkBonusEligibility:
       loading: Checking bonus eligibility
+  bonusList:
+    title: Available bonuses
+    contentTitle: Select one of the available bonus
   request: Request a new bonus
   latestBonus: Your active bonuses
   active: Active bonus

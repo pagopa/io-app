@@ -545,7 +545,6 @@ payment:
       dateAndTime: Data e ora
       paymentAmount: Importo pagamento
       transactionCosts: Costi di transazione
-      totalPaid: Totale pagato
       transactionCode: Codice identificativo della transazione
       help: Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli
     list:
@@ -1274,6 +1273,9 @@ bonus:
     taxBenefit: Beneficio fiscale
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus 
+  bonusList:
+    title: Bonus disponibili
+    contentTitle: Seleziona uno dei bonus disponibili
   request: Richiedi un nuovo bonus
   latestBonus: I tuoi bonus attivi
   active: Bonus attivo
