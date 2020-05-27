@@ -8,8 +8,10 @@ import { startTimer } from "../../../../utils/timer";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import {
   availableBonusesLoad,
-  checkBonusEligibility
+  checkBonusEligibility,
+  eligibilityRequestProgress
 } from "../actions/bonusVacanze";
+import { EligibilityRequestProgressEnum } from "../reducers/bonusVacanze";
 
 const checkEligibilityResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
@@ -64,6 +66,10 @@ function* startBonusEligibilitySaga(
         startEligibilityResult.value.status === 202 ||
         startEligibilityResult.value.status === 409
       ) {
+        // request is pending
+        yield put(
+          eligibilityRequestProgress(EligibilityRequestProgressEnum.PENDING)
+        );
         if (startEligibilityResult.value.status === 202) {
           yield put(
             checkBonusEligibility.success(startEligibilityResult.value.value)
@@ -71,6 +77,12 @@ function* startBonusEligibilitySaga(
         }
         // start polling to know about the check result
         const startPolling = new Date().getTime();
+        // request is pending
+        yield put(
+          eligibilityRequestProgress(
+            EligibilityRequestProgressEnum.POLLING_STARTED
+          )
+        );
         // TODO: handle cancel request (stop polling)
         while (true) {
           const eligibilityCheckResult: boolean = yield call(
@@ -79,6 +91,11 @@ function* startBonusEligibilitySaga(
           );
           // we got the response, stop polling
           if (eligibilityCheckResult === true) {
+            yield put(
+              eligibilityRequestProgress(
+                EligibilityRequestProgressEnum.COMPLETE
+              )
+            );
             return;
           }
           // sleep
@@ -87,9 +104,10 @@ function* startBonusEligibilitySaga(
           const now = new Date().getTime();
           if (now - startPolling >= pollingTimeThreshold) {
             yield put(
-              checkBonusEligibility.failure(new Error("polling time exceeded"))
+              eligibilityRequestProgress(
+                EligibilityRequestProgressEnum.POLLING_EXCEEDED
+              )
             );
-
             return;
           }
         }
@@ -99,6 +117,7 @@ function* startBonusEligibilitySaga(
       throw Error(readableReport(startEligibilityResult.value));
     }
   } catch (e) {
+    yield put(eligibilityRequestProgress(EligibilityRequestProgressEnum.ERROR));
     yield put(checkBonusEligibility.failure(e));
   }
 }

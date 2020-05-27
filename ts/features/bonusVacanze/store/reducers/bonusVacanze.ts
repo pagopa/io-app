@@ -1,4 +1,4 @@
-import { fromPredicate, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
@@ -7,17 +7,30 @@ import { BonusList } from "../../types/bonusList";
 import { EligibilityCheck } from "../../types/eligibility";
 import {
   availableBonusesLoad,
-  checkBonusEligibility
+  checkBonusEligibility,
+  eligibilityRequestProgress
 } from "../actions/bonusVacanze";
+
+export enum EligibilityRequestProgressEnum {
+  "PENDING" = "PENDING", // running
+  "ERROR" = "ERROR", // generic error / network error
+  "POLLING_STARTED" = "POLLING_STARTED",
+  "POLLING_EXCEEDED" = "POLLING_EXCEEDED", // stop polling when threshold is exceeded
+  "POLLING_ABORTED" = "POLLING_ABORTED", // canceled by the user
+  "COMPLETE" = "COMPLETE" // we got the isee result
+}
 
 export type BonusState = Readonly<{
   availableBonuses: pot.Pot<BonusList, Error>;
-  eligibility: pot.Pot<EligibilityCheck, Error>;
+  eligibility: {
+    check: pot.Pot<EligibilityCheck, Error>;
+    requestProgess?: EligibilityRequestProgressEnum;
+  };
 }>;
 
 const INITIAL_STATE: BonusState = {
   availableBonuses: pot.none,
-  eligibility: pot.none
+  eligibility: { check: pot.none }
 };
 
 const reducer = (
@@ -38,22 +51,38 @@ const reducer = (
         ...state,
         availableBonuses: pot.toError(state.availableBonuses, action.payload)
       };
-    // eligibility start
-    // eligibility check
+    // eligibility
+    case getType(eligibilityRequestProgress):
+      return {
+        ...state,
+        eligibility: {
+          ...state.eligibility,
+          requestProgess: action.payload
+        }
+      };
     case getType(checkBonusEligibility.request):
       return {
         ...state,
-        eligibility: pot.toLoading(state.eligibility)
+        eligibility: {
+          ...state.eligibility,
+          check: pot.toLoading(state.eligibility.check)
+        }
       };
     case getType(checkBonusEligibility.success):
       return {
         ...state,
-        eligibility: pot.some(action.payload)
+        eligibility: {
+          ...state.eligibility,
+          check: pot.some(action.payload)
+        }
       };
     case getType(checkBonusEligibility.failure):
       return {
         ...state,
-        eligibility: pot.toError(state.eligibility, action.payload)
+        eligibility: {
+          ...state.eligibility,
+          check: pot.toError(state.eligibility.check, action.payload)
+        }
       };
   }
   return state;
@@ -65,14 +94,13 @@ export const availableBonuses = (
 ): pot.Pot<BonusList, Error> => state.bonus.availableBonuses;
 
 // if is some the eligibility result is available
-export const eligibilityResult = (
+export const eligibilityCheck = (
   state: GlobalState
-): Option<EligibilityCheck> => pot.toOption(state.bonus.eligibility);
+): Option<EligibilityCheck> => pot.toOption(state.bonus.eligibility.check);
 
-// return true if the polling exceeded the time threshold and we hadn't no response
-export const isPollingExceeded = (state: GlobalState): boolean => {
-  const el = state.bonus.eligibility;
-  return pot.isSome(el) && pot.isError(el);
-};
+export const eligibilityCheckRequestProgress = (
+  state: GlobalState
+): Option<EligibilityRequestProgressEnum> =>
+  fromNullable(state.bonus.eligibility.requestProgess);
 
 export default reducer;
