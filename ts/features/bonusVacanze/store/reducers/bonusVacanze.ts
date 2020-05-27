@@ -1,29 +1,23 @@
-import { Option } from "fp-ts/lib/Option";
+import { fromPredicate, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BonusList } from "../../types/bonusList";
-import { EligibilityCheck, EligibilityId } from "../../types/eligibility";
+import { EligibilityCheck } from "../../types/eligibility";
 import {
   availableBonusesLoad,
-  checkBonusEligibility,
-  startBonusEligibility
+  checkBonusEligibility
 } from "../actions/bonusVacanze";
-
-type Eligibility = {
-  id: pot.Pot<EligibilityId, Error>;
-  check: pot.Pot<EligibilityCheck, Error>;
-};
 
 export type BonusState = Readonly<{
   availableBonuses: pot.Pot<BonusList, Error>;
-  eligibility: Eligibility;
+  eligibility: pot.Pot<EligibilityCheck, Error>;
 }>;
 
 const INITIAL_STATE: BonusState = {
   availableBonuses: pot.none,
-  eligibility: { id: pot.none, check: pot.none }
+  eligibility: pot.none
 };
 
 const reducer = (
@@ -45,60 +39,21 @@ const reducer = (
         availableBonuses: pot.toError(state.availableBonuses, action.payload)
       };
     // eligibility start
-    case getType(startBonusEligibility.request):
-      const eligibility = {
-        ...state.eligibility,
-        id: pot.toLoading(state.eligibility.id)
-      };
-      return {
-        ...state,
-        eligibility
-      };
-    case getType(startBonusEligibility.success):
-      const eligibilityS = {
-        ...state.eligibility,
-        id: pot.some(action.payload)
-      };
-      return {
-        ...state,
-        eligibility: eligibilityS
-      };
-    case getType(startBonusEligibility.failure):
-      const eligibilityF = {
-        ...state.eligibility,
-        id: pot.toError(state.eligibility.id, action.payload)
-      };
-      return {
-        ...state,
-        eligibility: eligibilityF
-      };
     // eligibility check
     case getType(checkBonusEligibility.request):
-      const eligibilityC = {
-        ...state.eligibility,
-        check: pot.toLoading(state.eligibility.check)
-      };
       return {
         ...state,
-        eligibility: eligibilityC
+        eligibility: pot.toLoading(state.eligibility)
       };
     case getType(checkBonusEligibility.success):
-      const eligibilityCS = {
-        ...state.eligibility,
-        check: pot.some(action.payload)
-      };
       return {
         ...state,
-        eligibility: eligibilityCS
+        eligibility: pot.some(action.payload)
       };
     case getType(checkBonusEligibility.failure):
-      const eligibilityCF = {
-        ...state.eligibility,
-        check: pot.toError(state.eligibility.check, action.payload)
-      };
       return {
         ...state,
-        eligibility: eligibilityCF
+        eligibility: pot.toError(state.eligibility, action.payload)
       };
   }
   return state;
@@ -112,11 +67,12 @@ export const availableBonuses = (
 // if is some the eligibility result is available
 export const eligibilityResult = (
   state: GlobalState
-): Option<EligibilityCheck> => pot.toOption(state.bonus.eligibility.check);
+): Option<EligibilityCheck> => pot.toOption(state.bonus.eligibility);
 
-// return true either if start or check is loading
-export const isEligibilityCheckLoading = (state: GlobalState): boolean =>
-  pot.isLoading(state.bonus.eligibility.check) ||
-  pot.isLoading(state.bonus.eligibility.id);
+// return true if the polling exceeded the time threshold and we hadn't no response
+export const isPollingExceeded = (state: GlobalState): boolean => {
+  const el = state.bonus.eligibility;
+  return pot.isSome(el) && pot.isError(el);
+};
 
 export default reducer;

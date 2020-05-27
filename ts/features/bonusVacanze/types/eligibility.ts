@@ -8,9 +8,9 @@ import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { enumType } from "italia-ts-commons/lib/types";
 
 export enum EligibilityCheckStatusEnum {
-  "NO_DATA" = "NO_DATA",
+  "USER_NOT_FOUND" = "USER_NOT_FOUND",
   "INELIGIBLE" = "INELIGIBLE",
-  "NOT_FOUND" = "NOT_FOUND",
+  "ISEE_NOT_FOUND" = "ISEE_NOT_FOUND",
   "ELIGIBLE" = "ELIGIBLE"
 }
 

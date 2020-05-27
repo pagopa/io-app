@@ -8,13 +8,12 @@ import { startTimer } from "../../../../utils/timer";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import {
   availableBonusesLoad,
-  checkBonusEligibility,
-  startBonusEligibility
+  checkBonusEligibility
 } from "../actions/bonusVacanze";
 
 const checkEligibilityResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
-const pollingTimeThreshold = (20 * 1000) as Millisecond;
+const pollingTimeThreshold = (3 * 1000) as Millisecond;
 
 // handle start bonus eligibility check
 function* checkBonusEligibilitySaga(
@@ -65,18 +64,11 @@ function* startBonusEligibilitySaga(
         startEligibilityResult.value.status === 202 ||
         startEligibilityResult.value.status === 409
       ) {
-        // we got the id
         if (startEligibilityResult.value.status === 202) {
           yield put(
-            startBonusEligibility.success(startEligibilityResult.value.value)
-          );
-        } else {
-          // 409
-          yield put(
-            startBonusEligibility.failure(new Error("conflict 409, pending"))
+            checkBonusEligibility.success(startEligibilityResult.value.value)
           );
         }
-        yield put(checkBonusEligibility.request());
         // start polling to know about the check result
         const startPolling = new Date().getTime();
         // TODO: handle cancel request (stop polling)
@@ -94,6 +86,10 @@ function* startBonusEligibilitySaga(
           // check if the time threshold was exceeded, if yes abort
           const now = new Date().getTime();
           if (now - startPolling >= pollingTimeThreshold) {
+            yield put(
+              checkBonusEligibility.failure(new Error("polling time exceeded"))
+            );
+
             return;
           }
         }
@@ -103,7 +99,7 @@ function* startBonusEligibilitySaga(
       throw Error(readableReport(startEligibilityResult.value));
     }
   } catch (e) {
-    yield put(startBonusEligibility.failure(e));
+    yield put(checkBonusEligibility.failure(e));
   }
 }
 
@@ -143,7 +139,7 @@ export function* watchBonusSaga(): SagaIterator {
 
   // start bonus eligibility check and polling for result
   yield takeLatest(
-    startBonusEligibility.request,
+    checkBonusEligibility.request,
     startBonusEligibilitySaga,
     backendBonusVacanze.postEligibilityCheck,
     backendBonusVacanze.getEligibilityCheck
