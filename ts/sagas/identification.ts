@@ -38,6 +38,7 @@ type ResultAction =
   | ActionType<typeof identificationPinReset>
   | ActionType<typeof identificationForceLogout>
   | ActionType<typeof identificationSuccess>;
+
 // Wait the identification and return the result
 function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
   const resultAction: ResultAction = yield take([
@@ -58,7 +59,7 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
       > = yield select(paymentsCurrentStateSelector);
       if (paymentState.kind === "ACTIVATED") {
         yield put(runDeleteActivePaymentSaga());
-        // we try to wait untinl the payment deactivation is completed. If the request to backend fails for any reason, we proceed anyway with session invalidation
+        // we try to wait until the payment deactivation is completed. If the request to backend fails for any reason, we proceed anyway with session invalidation
         yield take([
           paymentDeletePayment.failure,
           paymentDeletePayment.success

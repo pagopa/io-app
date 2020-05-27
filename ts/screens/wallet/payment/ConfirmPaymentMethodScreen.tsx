@@ -334,10 +334,10 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         buttonIndex => {
           if (buttonIndex === 0) {
             // on cancel:
-            // navigate to entrypoint of payment or wallet home
-            dispatch(backToEntrypointPayment());
             // delete the active payment from pagoPA
             dispatch(runDeleteActivePaymentSaga());
+            // navigate to entrypoint of payment or wallet home
+            dispatch(backToEntrypointPayment());
             // reset the payment state
             dispatch(paymentInitializeState());
             showToast(

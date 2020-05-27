@@ -242,3 +242,8 @@ const reducer = (
 };
 
 export default reducer;
+
+// Selectors
+
+export const paymentIdSelector = (state: GlobalState) =>
+  state.wallet.payment.paymentId;

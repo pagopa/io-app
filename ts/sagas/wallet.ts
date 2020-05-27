@@ -84,6 +84,7 @@ import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 import ROUTES from "../navigation/routes";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
+import { paymentIdSelector } from "../store/reducers/wallet/payment";
 import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
 import { SessionManager } from "../utils/SessionManager";
 import { paymentsDeleteUncompletedSaga } from "./payments";
@@ -463,10 +464,11 @@ function* pollTransactionSaga(
  * This is a best effort operation as the result is actually ignored.
  */
 function* deleteActivePaymentSaga() {
-  const potPaymentId: GlobalState["wallet"]["payment"]["paymentId"] = yield select<
-    GlobalState
-  >(_ => _.wallet.payment.paymentId);
+  const potPaymentId: ReturnType<typeof paymentIdSelector> = yield select(
+    paymentIdSelector
+  );
   const maybePaymentId = pot.toOption(potPaymentId);
+
   if (maybePaymentId.isSome()) {
     yield put(
       paymentDeletePayment.request({ paymentId: maybePaymentId.value })
@@ -692,6 +694,7 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  // if store include a not completed payment, proceed removing it and ask to cancel the process
   yield fork(paymentsDeleteUncompletedSaga);
 }
 
