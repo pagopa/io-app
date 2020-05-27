@@ -2,10 +2,17 @@
  * This is just a temporary file to define utility types to develop Bonus section
  */
 
+/**
+ * - ACTIVE      The bonus has been successfully activated by this user
+ * - CANCELLED   The bonus activation was cancelled on purpose and can be resumed
+ * - FAILED      The bonus activation failed as the user is currently ineligible
+ * - CONSUMED    The bonus is comsumed by this user or any member of the family
+ *              and cannot be activated anymore
+ */
+
 export enum BonusStatusEnum {
-  "ACTIVABLE" = "ACTIVABLE",
   "ACTIVE" = "ACTIVE",
-  "ABORTED" = "ABORTED",
+  "CANCELLED" = "CANCELLED",
   "FAILED" = "FAILED",
   "CONSUMED" = "CONSUMED"
 }
@@ -29,7 +36,7 @@ const pngBase64 =
 export const mockedBonus: BonusVacanzaMock = {
   id: "XYZ",
   code: "ABCDE123XYZ",
-  status: BonusStatusEnum.ACTIVE, // could be ACTIVABLE, ACTIVE, ABORTED, FAILED, CONSUMED
+  status: BonusStatusEnum.ACTIVE,
   qrCode: {
     mime_type: "image/png",
     base64_content: pngBase64
