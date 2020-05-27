@@ -1284,3 +1284,6 @@ bonus:
       title: ISEE not idoneo
       subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
       text: !include bonus/bonusVacanze/iseeNotEligible.md
+    activateBonus:
+      title: Attiva il bonus
+      description: Puoi attivare un bonus di {{amount}} €
