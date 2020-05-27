@@ -75,7 +75,7 @@ class BonusInformationScreen extends React.PureComponent<Props, State> {
             <Markdown
               onLoadEnd={() => this.setState({ isMarkdownLoaded: true })}
             >
-              {/* TODO Replace with correct text */
+              {/* TODO Replace with correct text of bonus */
               I18n.t("profile.main.privacy.exportData.info.body")}
             </Markdown>
             {this.state.isMarkdownLoaded && <EdgeBorderComponent />}
