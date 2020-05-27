@@ -25,14 +25,18 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled } from "../../config";
 import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
-import { mockedBonus } from "../../features/bonusVacanze/mock/mockData";
+import {
+  mockedBonus,
+  mockedAvailableBonusItem
+} from "../../features/bonusVacanze/mock/mockData";
 import I18n from "../../i18n";
 import {
   navigateBack,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
-  navigateToWalletList
+  navigateToWalletList,
+  navigateToBonusRequestInformation
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -60,6 +64,7 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { BonusItem } from "../../features/bonusVacanze/types/bonusList";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -544,8 +549,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  // TODO add bonus detail as function parameter when adding the navigate to bonus detail
-  navigateToBonusDetail: () => dispatch(navigateBack()),
+  // TODO replace the bonus item with correct bonus detail as function parameter when adding the navigate to bonus detail
+  navigateToBonusDetail: () =>
+    dispatch(
+      navigateToBonusRequestInformation({
+        bonusItem: mockedAvailableBonusItem as BonusItem
+      })
+    ),
   navigateToRequestBonus: () => dispatch(navigateBack()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
