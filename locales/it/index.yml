@@ -1268,10 +1268,19 @@ faq:
     title: "Hai avuto problemi durante un pagamento?"
     content: !include faq/faq57.md
 bonus:
-  bonusVacanza:
-    checkBonusEligibility:
-      loading: Verifico l'idoneità per l'accesso al bonus 
   request: Richiedi un nuovo bonus
   latestBonus: I tuoi bonus attivi
   active: Bonus attivo
   inactive: Bonus non attivo
+  bonusVacanza:
+    checkBonusEligibility:
+      loading: Verifico l'idoneità per l'accesso al bonus
+    iseeNotAvailable:
+      title: ISEE not trovato
+      subtitle: Non è disponibile nessun ISEE per l'utente
+      text: !include bonus/bonusVacanze/iseeNotAvailable.md
+      goToINPSWebsite: Vai al sito INPS
+    iseeNotEligible:
+      title: ISEE not idoneo
+      subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
+      text: !include bonus/bonusVacanze/iseeNotEligible.md
