@@ -57,6 +57,10 @@ function* startBonusEligibilitySaga(
   >["getEligibilityCheck"]
 ): SagaIterator {
   try {
+    // request is pending
+    yield put(
+      eligibilityRequestProgress(EligibilityRequestProgressEnum.PENDING)
+    );
     const startEligibilityResult: SagaCallReturnType<
       typeof postEligibilityCheck
     > = yield call(postEligibilityCheck, {});
@@ -66,10 +70,6 @@ function* startBonusEligibilitySaga(
         startEligibilityResult.value.status === 202 ||
         startEligibilityResult.value.status === 409
       ) {
-        // request is pending
-        yield put(
-          eligibilityRequestProgress(EligibilityRequestProgressEnum.PENDING)
-        );
         if (startEligibilityResult.value.status === 202) {
           yield put(
             checkBonusEligibility.success(startEligibilityResult.value.value)
