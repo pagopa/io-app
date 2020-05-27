@@ -16,9 +16,10 @@ import variables from "../../../theme/variables";
 import ActiveBonus from "../components/ActiveBonus";
 import AvailableBonusItem from "../components/AvailableBonusItem";
 import { mockedBonus } from "../mock/mockData";
-import { availableBonusListLoad } from "../store/actions/bonusVacanze";
+import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonuses } from "../store/reducers/bonusVacanze";
-import { BonusItem } from "../types/bonusList";
+import { BonusItem, ID_TYPE_BONUS_VACANZE } from "../types/bonusList";
+import { isBonusActive } from "../utils/bonus";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -47,8 +48,8 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   private renderListItem = (info: ListRenderItemInfo<BonusItem>) => {
     const { activeBonus } = this.props;
     const item = info.item;
-    return pot.isSome(activeBonus) &&
-      activeBonus.value.type.toLowerCase() === item.name.toLowerCase() ? (
+    return item.id_type === ID_TYPE_BONUS_VACANZE &&
+      pot.getOrElse(pot.map(activeBonus, b => isBonusActive(b)), false) ? (
       <ActiveBonus
         bonus={activeBonus.value}
         onPress={this.props.navigateToBonusDetail}
@@ -84,7 +85,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
               scrollEnabled={false}
               data={availableBonusesList.items}
               renderItem={this.renderListItem}
-              keyExtractor={item => item.id.toString()}
+              keyExtractor={item => item.id_type.toString()}
               ItemSeparatorComponent={() => (
                 <ItemSeparatorComponent noPadded={true} />
               )}
@@ -108,7 +109,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
-  loadAvailableBonuses: () => dispatch(availableBonusListLoad.request()),
+  loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
   // TODO Add the param to navigate to proper bonus by name (?)
   navigateToBonusRequest: () => dispatch(navigateBack()),
   // TODO Add the param to bonus detail if a bonus is already active
