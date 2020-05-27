@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
 const NOTICE_ICON_SIZE = 24;
 
 /**
- * This screen shows the transaction details once the payment has been verified 
+ * This screen shows the transaction details once the payment has been verified
  * (to check if it is valid and if the amount has been updated)
  */
 class TransactionSummaryScreen extends React.Component<Props> {
