@@ -21,6 +21,7 @@ import {
   isExpired,
   isExpiring,
   isExpiringToday,
+  isExpiringTomorrow,
   paymentExpirationInfo
 } from "../../utils/messages";
 import CalendarIconComponent from "./CalendarIconComponent";
@@ -83,6 +84,12 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     );
   }
 
+  get isPaymentExpiringTomorrow(): boolean {
+    return this.paymentExpirationInfo.fold(false, info =>
+      isExpiringTomorrow(info)
+    );
+  }
+
   get dueDate(): Option<Date> {
     return fromNullable(this.props.message.content.due_date);
   }
@@ -131,18 +138,29 @@ class MessageDueDateBar extends React.PureComponent<Props> {
       );
     }
 
-    if (this.isPaymentExpiring) {
+    if (this.isPaymentExpiringTomorrow) {
       return (
         <React.Fragment>
-          {I18n.t("messages.cta.payment.expiringAlert")}
-          <Text bold={true} white={true}>{` ${formatDateAsLocal(
-            dueDate
-          )}`}</Text>
+          {I18n.t("messages.cta.payment.expiringAlertTomorrow")}
+          <Text bold={true} white={true}>{` ${time}`}</Text>
         </React.Fragment>
       );
     }
 
-    const date = formatDateAsLocal(dueDate, true, true);
+    const date = formatDateAsLocal(dueDate);
+
+    if (this.isPaymentExpiring) {
+      return (
+        <React.Fragment>
+          {I18n.t("messages.cta.payment.expiringAlert")}
+          <Text bold={true} white={true}>{` ${date} `}</Text>
+          <Text white={true}>
+            {I18n.t("messages.cta.payment.addMemo.block2")}
+          </Text>
+          <Text bold={true} white={true}>{` ${time}`}</Text>
+        </React.Fragment>
+      );
+    }
 
     if (this.isPaymentExpired) {
       return (

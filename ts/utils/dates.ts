@@ -28,6 +28,7 @@ export function formatDateAsReminder(
 /**
  *
  * It provides the format of the date depending on the system locale (DD/MM or MM/DD as default)
+ * If the date is not in the current year, the date includes the year too
  * @param date
  * @param includeYear: true if the year should be included (DD/MM/YY or MM/DD/YY)
  * @param extendedYear
@@ -37,11 +38,14 @@ export function formatDateAsLocal(
   includeYear: boolean = false,
   extendedYear: boolean = false
 ): ReturnType<typeof dateFnsFormat> {
+  const now = new Date();
+  const isCurrentYear = date.getFullYear() === now.getFullYear();
+
   return extendedYear
     ? format(date, I18n.t("global.dateFormats.dayMonth")) +
         "/" +
         format(date, "YYYY")
-    : includeYear
+    : includeYear || !isCurrentYear
       ? format(date, I18n.t("global.dateFormats.dayMonth")) +
         "/" +
         format(date, "YY")

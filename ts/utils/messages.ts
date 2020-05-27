@@ -2,7 +2,7 @@
  * Generic utilities for messages
  */
 
-import { isToday } from "date-fns";
+import { isToday, isTomorrow } from "date-fns";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
@@ -127,6 +127,13 @@ export const isExpiringToday = (
   isExpirable(messagePaymentExpirationInfo) &&
   messagePaymentExpirationInfo.expireStatus === "EXPIRING" &&
   isToday(messagePaymentExpirationInfo.dueDate);
+
+export const isExpiringTomorrow = (
+  messagePaymentExpirationInfo: MessagePaymentExpirationInfo
+) =>
+  isExpirable(messagePaymentExpirationInfo) &&
+  messagePaymentExpirationInfo.expireStatus === "EXPIRING" &&
+  isTomorrow(messagePaymentExpirationInfo.dueDate);
 
 export const isExpired = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo

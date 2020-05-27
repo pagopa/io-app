@@ -833,6 +833,7 @@ messages:
           block1: Add a reminder for the 
           block2: at
       expiringAlertToday: This prescription expires today at
+      expiringAlertTomorrow: This prescription expires tomorrow at
       expiringAlert: This prescription expires on
       expiredAlert: 
         block1: The notice expired at 
