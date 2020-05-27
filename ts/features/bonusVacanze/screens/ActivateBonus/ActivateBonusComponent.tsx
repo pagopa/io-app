@@ -1,5 +1,3 @@
-import { string } from "io-ts";
-import * as t from "io-ts";
 import { List, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
@@ -9,13 +7,7 @@ import ScreenContent from "../../../../components/screens/ScreenContent";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
 import { FooterTwoButtons } from "../../components/markdown/FooterTwoButtons";
-
-// TODO: temp definition, remove after merge with https://github.com/pagopa/io-app/pull/1849/
-const FamilyMember = t.interface({
-  name: string,
-  surname: string
-});
-export type FamilyMember = t.TypeOf<typeof FamilyMember>;
+import { FamilyMember } from "../../types/eligibility";
 
 type Props = {
   familyMembers: ReadonlyArray<FamilyMember>;

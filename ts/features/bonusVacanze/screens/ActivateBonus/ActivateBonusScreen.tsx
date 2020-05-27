@@ -1,8 +1,10 @@
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { RTron } from "../../../../boot/configureStoreAndPersistor";
 import { GlobalState } from "../../../../store/reducers/types";
+import { FamilyMember } from "../../types/eligibility";
 import { ActivateBonusComponent } from "./ActivateBonusComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -38,15 +40,24 @@ const mapDispatchToProps = (_: Dispatch) => ({
   }
 });
 
+// TODO: remove this mock data after the linking with redux
+const mockFamiluMembers: ReadonlyArray<FamilyMember> = [
+  {
+    name: "Chiara" as NonEmptyString,
+    surname: "D'Anassimandro" as NonEmptyString
+  },
+  {
+    name: "Giovanni" as NonEmptyString,
+    surname: "Filippi" as NonEmptyString
+  },
+  { name: "Piero" as NonEmptyString, surname: "Filippi" as NonEmptyString }
+];
+
 const mapStateToProps = (_: GlobalState) => ({
   // TODO: link with the right reducer
   bonusAmount: 500,
   // TODO: link with the right reducer
-  familyMembers: [
-    { name: "Chiara", surname: "D'Anassimandro" },
-    { name: "Giovanni", surname: "Filippi" },
-    { name: "Piero", surname: "Filippi" }
-  ]
+  familyMembers: mockFamiluMembers
 });
 
 export default connect(
