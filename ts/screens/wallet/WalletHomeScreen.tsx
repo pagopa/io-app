@@ -33,6 +33,7 @@ import { BonusItem } from "../../features/bonusVacanze/types/bonusList";
 import I18n from "../../i18n";
 import {
   navigateBack,
+  navigateToAvailableBonusScreen,
   navigateToBonusRequestInformation,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
@@ -503,7 +504,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             {/* Display this item only if the flag is enabled */}
             {bonusVacanzeEnabled && (
               <RequestBonus
-                onButtonPress={this.props.navigateToRequestBonus}
+                onButtonPress={this.props.navigateToBonusList}
                 bonus={this.props.currentActiveBonus}
                 onBonusPress={this.props.navigateToBonusDetail}
               />
@@ -549,14 +550,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  // TODO replace the bonus item with correct bonus detail as function parameter when adding the navigate to bonus detail
-  navigateToBonusDetail: () =>
-    dispatch(
-      navigateToBonusRequestInformation({
-        bonusItem: mockedAvailableBonusItem as BonusItem
-      })
-    ),
-  navigateToRequestBonus: () => dispatch(navigateBack()),
+  // TODO add bonus detail as function parameter when adding the navigate to bonus detail
+  navigateToBonusDetail: () => dispatch(navigateBack()),
+  navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),

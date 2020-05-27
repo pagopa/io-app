@@ -304,7 +304,7 @@ export const navigateToCieCardReaderScreen = (
  */
 export const navigateToAvailableBonusScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.AVAILABLE_BONUS_LIST
+    routeName: ROUTES.BONUS_AVAILABLE_LIST
   });
 
 export const navigateToBonusRequestInformation = (
