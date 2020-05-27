@@ -4,20 +4,26 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BonusList } from "../../types/bonusList";
-import { EligibilityCheck } from "../../types/eligibility";
+import { EligibilityCheck, EligibilityId } from "../../types/eligibility";
 import {
   availableBonusesLoad,
+  checkBonusEligibility,
   startBonusEligibility
 } from "../actions/bonusVacanze";
 
+type Eligibility = {
+  id: pot.Pot<EligibilityId, Error>;
+  check: pot.Pot<EligibilityCheck, Error>;
+};
+
 export type BonusState = Readonly<{
   availableBonuses: pot.Pot<BonusList, Error>;
-  eligibilityCheck: pot.Pot<EligibilityCheck, Error>;
+  eligibility: Eligibility;
 }>;
 
 const INITIAL_STATE: BonusState = {
   availableBonuses: pot.none,
-  eligibilityCheck: pot.none
+  eligibility: { id: pot.none, check: pot.none }
 };
 
 const reducer = (
@@ -38,21 +44,61 @@ const reducer = (
         ...state,
         availableBonuses: pot.toError(state.availableBonuses, action.payload)
       };
-    // eligibility check
+    // eligibility start
     case getType(startBonusEligibility.request):
+      const eligibility = {
+        ...state.eligibility,
+        id: pot.toLoading(state.eligibility.id)
+      };
       return {
         ...state,
-        eligibilityCheck: pot.toLoading(state.eligibilityCheck)
+        eligibility
       };
     case getType(startBonusEligibility.success):
+      const eligibilityS = {
+        ...state.eligibility,
+        id: pot.some(action.payload)
+      };
       return {
         ...state,
-        eligibilityCheck: pot.some(action.payload)
+        eligibility: eligibilityS
       };
     case getType(startBonusEligibility.failure):
+      const eligibilityF = {
+        ...state.eligibility,
+        id: pot.toError(state.eligibility.id, action.payload)
+      };
       return {
         ...state,
-        eligibilityCheck: pot.toError(state.eligibilityCheck, action.payload)
+        eligibility: eligibilityF
+      };
+    // eligibility check
+    case getType(checkBonusEligibility.request):
+      const eligibilityC = {
+        ...state.eligibility,
+        check: pot.toLoading(state.eligibility.check)
+      };
+      return {
+        ...state,
+        eligibility: eligibilityC
+      };
+    case getType(checkBonusEligibility.success):
+      const eligibilityCS = {
+        ...state.eligibility,
+        check: pot.some(action.payload)
+      };
+      return {
+        ...state,
+        eligibility: eligibilityCS
+      };
+    case getType(checkBonusEligibility.failure):
+      const eligibilityCF = {
+        ...state.eligibility,
+        check: pot.toError(state.eligibility.check, action.payload)
+      };
+      return {
+        ...state,
+        eligibility: eligibilityCF
       };
   }
   return state;
@@ -66,10 +112,11 @@ export const availableBonuses = (
 // if is some the eligibility result is available
 export const eligibilityResult = (
   state: GlobalState
-): Option<EligibilityCheck> =>
-  // TODO this check is weak
-  pot.toOption(
-    pot.filter(state.bonus.eligibilityCheck, ec => ec.members !== undefined)
-  );
+): Option<EligibilityCheck> => pot.toOption(state.bonus.eligibility.check);
+
+// return true either if start or check is loading
+export const isEligibilityCheckLoading = (state: GlobalState): boolean =>
+  pot.isLoading(state.bonus.eligibility.check) ||
+  pot.isLoading(state.bonus.eligibility.id);
 
 export default reducer;

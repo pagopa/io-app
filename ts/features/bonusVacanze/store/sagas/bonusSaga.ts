@@ -8,25 +8,29 @@ import { startTimer } from "../../../../utils/timer";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import {
   availableBonusesLoad,
+  checkBonusEligibility,
   startBonusEligibility
 } from "../actions/bonusVacanze";
 
 const checkEligibilityResultPolling = 1000 as Millisecond;
+// stop polling when elapsed time from the beginning exceeds this threshold
 const pollingTimeThreshold = (20 * 1000) as Millisecond;
 
 // handle start bonus eligibility check
 function* checkBonusEligibilitySaga(
-  eligibilityCheck: ReturnType<typeof BackendBonusVacanze>["eligibilityCheck"]
+  getEligibilityCheck: ReturnType<
+    typeof BackendBonusVacanze
+  >["getEligibilityCheck"]
 ): SagaIterator {
   try {
     const eligibilityCheckResult: SagaCallReturnType<
-      typeof eligibilityCheck
-    > = yield call(eligibilityCheck, {});
+      typeof getEligibilityCheck
+    > = yield call(getEligibilityCheck, {});
     if (eligibilityCheckResult.isRight()) {
       // we got the check result
       if (eligibilityCheckResult.value.status === 200) {
         yield put(
-          startBonusEligibility.success(eligibilityCheckResult.value.value)
+          checkBonusEligibility.success(eligibilityCheckResult.value.value)
         );
         return true;
       }
@@ -36,7 +40,7 @@ function* checkBonusEligibilitySaga(
       throw Error(readableReport(eligibilityCheckResult.value));
     }
   } catch (e) {
-    yield put(startBonusEligibility.failure(e));
+    yield put(checkBonusEligibility.failure(e));
     return false;
   }
 }
@@ -44,25 +48,42 @@ function* checkBonusEligibilitySaga(
 // handle start bonus eligibility check
 // tslint:disable-next-line: cognitive-complexity
 function* startBonusEligibilitySaga(
-  startEligibilityCheck: ReturnType<
+  postEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze
-  >["startEligibilityCheck"],
-  eligibilityCheck: ReturnType<typeof BackendBonusVacanze>["eligibilityCheck"]
+  >["postEligibilityCheck"],
+  getEligibilityCheck: ReturnType<
+    typeof BackendBonusVacanze
+  >["getEligibilityCheck"]
 ): SagaIterator {
   try {
     const startEligibilityResult: SagaCallReturnType<
-      typeof startEligibilityCheck
-    > = yield call(startEligibilityCheck, {});
+      typeof postEligibilityCheck
+    > = yield call(postEligibilityCheck, {});
     if (startEligibilityResult.isRight()) {
-      // check started
-      if (startEligibilityResult.value.status === 202) {
+      // request accepted | pending request
+      if (
+        startEligibilityResult.value.status === 202 ||
+        startEligibilityResult.value.status === 409
+      ) {
+        // we got the id
+        if (startEligibilityResult.value.status === 202) {
+          yield put(
+            startBonusEligibility.success(startEligibilityResult.value.value)
+          );
+        } else {
+          // 409
+          yield put(
+            startBonusEligibility.failure(new Error("conflict 409, pending"))
+          );
+        }
+        yield put(checkBonusEligibility.request());
         // start polling to know about the check result
         const startPolling = new Date().getTime();
         // TODO: handle cancel request (stop polling)
         while (true) {
           const eligibilityCheckResult: boolean = yield call(
             checkBonusEligibilitySaga,
-            eligibilityCheck
+            getEligibilityCheck
           );
           // we got the response, stop polling
           if (eligibilityCheckResult === true) {
@@ -124,7 +145,7 @@ export function* watchBonusSaga(): SagaIterator {
   yield takeLatest(
     startBonusEligibility.request,
     startBonusEligibilitySaga,
-    backendBonusVacanze.startEligibilityCheck,
-    backendBonusVacanze.eligibilityCheck
+    backendBonusVacanze.postEligibilityCheck,
+    backendBonusVacanze.getEligibilityCheck
   );
 }

@@ -27,9 +27,10 @@ const FamilyMember = t.interface({
 });
 export type FamilyMember = t.TypeOf<typeof FamilyMember>;
 
-const EligibilityCheckR = t.interface({
+export const EligibilityIdT = t.interface({
   id: NonEmptyString
 });
+export type EligibilityId = t.TypeOf<typeof EligibilityIdT>;
 
 const EligibilityCheckO = t.partial({
   status: EligibilityCheckStatus,
@@ -39,7 +40,7 @@ const EligibilityCheckO = t.partial({
 });
 
 export const EligibilityCheckT = t.intersection(
-  [EligibilityCheckR, EligibilityCheckO],
+  [EligibilityIdT, EligibilityCheckO],
   "EligibilityCheck"
 );
 
