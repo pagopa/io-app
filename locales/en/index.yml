@@ -1235,6 +1235,9 @@ faq:
     title: "Did you have problems during a payment?"
     content: !include faq/faq57.md
 bonus:
+  bonusList:
+    title: Available bonuses
+    contentTitle: Select one of the available bonus
   request: Request a new bonus
   latestBonus: Your active bonuses
   active: Active bonus
