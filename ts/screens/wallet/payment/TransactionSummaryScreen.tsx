@@ -69,16 +69,26 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-  lighterGray: { color: customVariables.lighterGray },
-  row: { flexDirection: "row", justifyContent: "space-between" },
-  title: { fontSize: 20 }
+  lighterGray: {
+    color: customVariables.lighterGray
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  title: {
+    fontSize: 20
+  },
+  noticeIcon: {
+    paddingLeft: 10
+  }
 });
 
+const NOTICE_ICON_SIZE = 24;
+
 /**
- * This screen shows the transaction details.
- * It should occur after the transaction identification by qr scanner or manual procedure.
- *
- * TODO: integrate contextual help https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
+ * This screen shows the transaction details once the payment has been verified 
+ * (to check if it is valid and if the amount has been updated)
  */
 class TransactionSummaryScreen extends React.Component<Props> {
   public componentDidMount() {
@@ -223,7 +233,10 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
     const currentAmount: string = pot.getOrElse(
       pot.map(potVerifica, (verifica: PaymentRequestsGetResponse) =>
-        formatNumberAmount(centsToAmount(verifica.importoSingoloVersamento))
+        formatNumberAmount(
+          centsToAmount(verifica.importoSingoloVersamento),
+          true
+        )
       ),
       "-"
     );
@@ -271,9 +284,9 @@ class TransactionSummaryScreen extends React.Component<Props> {
               </Text>
               {isAmountUpdated && (
                 <IconFont
-                  style={{ paddingLeft: 10 }}
+                  style={styles.noticeIcon}
                   name={"io-notice"}
-                  size={24}
+                  size={NOTICE_ICON_SIZE}
                   color={customVariables.colorWhite}
                 />
               )}
