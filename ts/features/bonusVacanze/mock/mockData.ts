@@ -28,6 +28,8 @@ export type BonusVacanzaMock = {
   max_amount: number;
   tax_benefit: number;
   updated_at: Date;
+  valid_from: Date;
+  valid_to: Date;
 };
 
 const pngBase64 =
@@ -43,7 +45,9 @@ export const mockedBonus: BonusVacanzaMock = {
   },
   max_amount: 50000,
   tax_benefit: 3000,
-  updated_at: new Date("2020-07-04T12:20:00.000Z")
+  updated_at: new Date("2020-07-04T12:20:00.000Z"),
+  valid_from: new Date("2020-07-01T12:20:00.000Z"),
+  valid_to: new Date("2020-12-31T12:20:00.000Z")
 };
 
 export const mockedAvailableBonusItem = {
