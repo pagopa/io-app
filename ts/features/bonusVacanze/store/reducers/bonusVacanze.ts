@@ -1,10 +1,15 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BonusList } from "../../types/bonusList";
-import { EligibilityCheck, EligibilityId } from "../../types/eligibility";
+import {
+  EligibilityCheck,
+  EligibilityCheckStatusEnum,
+  EligibilityId
+} from "../../types/eligibility";
 import {
   availableBonusesLoad,
   checkBonusEligibility,
@@ -112,5 +117,54 @@ export const eligibilityCheckRequestProgress = (
   state: GlobalState
 ): Option<EligibilityRequestProgressEnum> =>
   fromNullable(state.bonus.eligibility.requestProgess);
+
+export enum EligibilityOutcome {
+  "LOADING" = "LOADING",
+  "ELIGIBLE" = "ELIGIBLE",
+  "INELIGIBLE" = "INELIGIBLE",
+  "ISEE_NOT_FOUND" = "ISEE_NOT_FOUND",
+  "ASYNC_ELIGIBILITY" = "ASYNC_ELIGIBILITY"
+}
+
+const fromEligibilityCheckStatusEnumtoEligibilityOutcome = new Map([
+  [EligibilityCheckStatusEnum.ELIGIBLE, EligibilityOutcome.ELIGIBLE],
+  [EligibilityCheckStatusEnum.INELIGIBLE, EligibilityOutcome.INELIGIBLE],
+  [EligibilityCheckStatusEnum.ISEE_NOT_FOUND, EligibilityOutcome.ISEE_NOT_FOUND]
+]);
+
+export const calculateEligibility = (
+  value: Option<EligibilityCheck>
+): Option<EligibilityOutcome> => {
+  return value.map(val =>
+    fromNullable(
+      fromEligibilityCheckStatusEnumtoEligibilityOutcome.get(val.status)
+    ).getOrElse(EligibilityOutcome.LOADING)
+  );
+};
+
+export const eligibilityOutcome = createSelector(
+  eligibilityCheckRequestProgress,
+  eligibilityCheck,
+  (progress, value) => {
+    const pollingExceeded = progress
+      .filter(
+        eligibilityProgress =>
+          eligibilityProgress ===
+          EligibilityRequestProgressEnum.POLLING_EXCEEDED
+      )
+      .map(_ => EligibilityOutcome.ASYNC_ELIGIBILITY);
+
+    return pollingExceeded
+      .orElse(() =>
+        progress
+          .filter(
+            eligibilityProgress =>
+              eligibilityProgress === EligibilityRequestProgressEnum.COMPLETE
+          )
+          .chain(_ => calculateEligibility(value))
+      )
+      .getOrElse(EligibilityOutcome.LOADING);
+  }
+);
 
 export default reducer;
