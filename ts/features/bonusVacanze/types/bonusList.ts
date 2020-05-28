@@ -6,8 +6,6 @@ import * as t from "io-ts";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import { Timestamp } from "../../../../definitions/backend/Timestamp";
 
-export const ID_TYPE_BONUS_VACANZE = 1;
-
 const BonusItemR = t.interface({
   id_type: NonNegativeInteger,
   name: t.string,

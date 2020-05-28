@@ -13,6 +13,7 @@ import {
 import { ProblemJson } from "../../../../definitions/backend/ProblemJson";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import { BonusList, BonusListT } from "../types/bonusList";
+import { BonusVacanze, BonusVacanzeT } from "../types/bonusVacanze";
 import {
   EligibilityCheck,
   EligibilityCheckT,
@@ -102,6 +103,21 @@ function postEligibilityCheckDecoder<A, O>(type: t.Type<A, O>) {
   );
 }
 
+type BonusVacanzeR = IGetApiRequestType<
+  { readonly id_bonus: string },
+  never,
+  never,
+  BasicResponseType<BonusVacanze>
+>;
+
+const getBonusVacanzeFromIdT: BonusVacanzeR = {
+  method: "get",
+  url: params => `/bonus/vacanze/activations/${params.id_bonus}`,
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(BonusVacanzeT)
+};
+
 const startEligibilityCheckT: StartEligibilityCheckT = {
   method: "post",
   url: () => `/bonus/vacanze/eligibility`,
@@ -148,6 +164,10 @@ export function BackendBonusVacanze(
       startEligibilityCheckT,
       options
     ),
-    getEligibilityCheck: createFetchRequestForApi(eligibilityCheckT, options)
+    getEligibilityCheck: createFetchRequestForApi(eligibilityCheckT, options),
+    getBonusVacanzeFromId: createFetchRequestForApi(
+      getBonusVacanzeFromIdT,
+      options
+    )
   };
 }
