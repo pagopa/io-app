@@ -4,7 +4,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { BonusList } from "../../types/bonusList";
-import { EligibilityCheck } from "../../types/eligibility";
+import { EligibilityCheck, EligibilityId } from "../../types/eligibility";
 import { EligibilityRequestProgressEnum } from "../reducers/bonusVacanze";
 
 export const eligibilityRequestProgress = createStandardAction(
@@ -23,7 +23,12 @@ export const checkBonusEligibility = createAsyncAction(
   "BONUS_CHECK_ELIGIBILITY_FAILURE"
 )<void, EligibilityCheck, Error>();
 
+export const eligibilityRequestId = createStandardAction(
+  "BONUS_CHECK_ELIGIBILITY_REQUEST_ID"
+)<EligibilityId>();
+
 export type BonusActions =
   | ActionType<typeof availableBonusesLoad>
   | ActionType<typeof eligibilityRequestProgress>
+  | ActionType<typeof eligibilityRequestId>
   | ActionType<typeof checkBonusEligibility>;

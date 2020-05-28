@@ -33,7 +33,7 @@ type EligibilityCheckT = IGetApiRequestType<
   never,
   // tslint:disable-next-line: max-union-size
   | IResponseType<200, EligibilityCheck>
-  | IResponseType<202, EligibilityCheck>
+  | IResponseType<202, EligibilityId>
   | IResponseType<401, undefined>
   | IResponseType<404, undefined>
   | IResponseType<500, ProblemJson>
