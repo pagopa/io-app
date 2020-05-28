@@ -72,6 +72,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (_: GlobalState) => ({
   // TODO: link with the right reducer
   bonusAmount: 500,
+  // TODO: link with the right reducer (placeholder atm, no graphical representation)
+  taxBenefit: 5000,
   // TODO: link with the right reducer
   familyMembers: mockedIseeFamilyMembers
 });
