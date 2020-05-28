@@ -7,16 +7,16 @@ import BONUSVACANZE_ROUTES from "./routes";
 
 const BonusVacanzeNavigator = createStackNavigator(
   {
-    [BONUSVACANZE_ROUTES.ELIGIBILITY_CHECK]: {
+    [BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK]: {
       screen: CheckBonusEligibilityScreen
     },
-    [BONUSVACANZE_ROUTES.ELIGIBILITY_ISEE_NOT_AVAILABLE]: {
+    [BONUSVACANZE_ROUTES.ELIGIBILITY.ISEE_NOT_AVAILABLE]: {
       screen: IseeNotAvailableScreen
     },
-    [BONUSVACANZE_ROUTES.ELIGIBILITY_ISEE_NOT_ELIGIBLE]: {
+    [BONUSVACANZE_ROUTES.ELIGIBILITY.ISEE_NOT_ELIGIBLE]: {
       screen: IseeNotEligibleScreen
     },
-    [BONUSVACANZE_ROUTES.ELIGIBILITY_ACTIVATE_BONUS]: {
+    [BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATE_BONUS]: {
       screen: ActivateBonusScreen
     }
   },
