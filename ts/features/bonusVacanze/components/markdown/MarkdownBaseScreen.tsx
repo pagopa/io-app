@@ -8,10 +8,16 @@ import ScreenContent from "../../../../components/screens/ScreenContent";
 import Markdown from "../../../../components/ui/Markdown";
 import themeVariables from "../../../../theme/variables";
 
+/**
+ * TODO Rename the title prop in the BaseScreenComponent to navigationTitle
+ * https://www.pivotaltracker.com/story/show/173056117
+ */
 type Props = {
   markDown: string;
-  title: string;
-  subtitle: string;
+  navigationTitle?: string;
+  title?: string;
+  subtitle?: string;
+  hideHeader?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -32,11 +38,12 @@ export const MarkdownBaseScreen: React.FunctionComponent<Props> = props => {
   useEffect(() => setMarkdownLoaded(false), [props.markDown]);
 
   return (
-    <BaseScreenComponent goBack={true} headerTitle={props.title}>
+    <BaseScreenComponent goBack={true} headerTitle={props.navigationTitle}>
       <ScreenContent
         title={props.title}
         subtitle={props.subtitle}
         bounces={false}
+        hideHeader={props.hideHeader}
       >
         <View style={styles.markdownContainer}>
           <Markdown onLoadEnd={() => setMarkdownLoaded(true)}>

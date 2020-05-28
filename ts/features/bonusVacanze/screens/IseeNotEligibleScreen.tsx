@@ -24,6 +24,7 @@ const subtitle = I18n.t("bonus.bonusVacanza.iseeNotEligible.subtitle");
 const IseeNotEligibleScreen: React.FunctionComponent<Props> = props => {
   return (
     <MarkdownBaseScreen
+      navigationTitle={title}
       title={title}
       subtitle={subtitle}
       markDown={markdownBody}

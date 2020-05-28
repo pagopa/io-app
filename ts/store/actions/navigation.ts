@@ -305,3 +305,8 @@ export const navigateToAvailableBonusScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.BONUS_AVAILABLE_LIST
   });
+
+export const navigateToBonusTosScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.BONUS_TOS_SCREEN
+  });

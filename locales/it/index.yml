@@ -1268,13 +1268,6 @@ faq:
     title: "Hai avuto problemi durante un pagamento?"
     content: !include faq/faq57.md
 bonus:
-  request: Richiedi un nuovo bonus
-  latestBonus: I tuoi bonus attivi
-  active: Bonus attivo
-  inactive: Bonus non attivo
-  bonusList:
-    title: Bonus disponibili
-    contentTitle: Seleziona uno dei bonus disponibili
   bonusVacanza:
     validity: Valido nel periodo
     taxBenefit: Beneficio fiscale
@@ -1289,4 +1282,13 @@ bonus:
       title: ISEE not idoneo
       subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
       text: !include bonus/bonusVacanze/iseeNotEligible.md
-  
+  bonusList:
+    title: Bonus disponibili
+    contentTitle: Seleziona uno dei bonus disponibili
+  request: Richiedi un nuovo bonus
+  latestBonus: I tuoi bonus attivi
+  active: Bonus attivo
+  inactive: Bonus non attivo
+  tos:
+    title: Termini di servizio
+    content: !include bonus/bonusVacanze/bonus_tos.md
