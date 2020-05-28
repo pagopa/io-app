@@ -26,6 +26,7 @@ const gotoInps = I18n.t("bonus.bonusVacanza.iseeNotAvailable.goToINPSWebsite");
 const IseeNotAvailableScreen: React.FunctionComponent<Props> = props => {
   return (
     <MarkdownBaseScreen
+      navigationTitle={title}
       title={title}
       subtitle={subtitle}
       markDown={markdownBody}
