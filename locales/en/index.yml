@@ -1239,12 +1239,12 @@ bonus:
   latestBonus: Your active bonuses
   active: Active bonus
   inactive: Inactive bonus
-  validity: Valid between
-  taxBenefit: Tax benefit
   bonusList:
     title: Available bonuses
     contentTitle: Select one of the available bonus
   bonusVacanza:
+    validity: Valid between
+    taxBenefit: Tax benefit
     checkBonusEligibility:
       loading: Checking bonus eligibility
     iseeNotAvailable:

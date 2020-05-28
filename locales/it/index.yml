@@ -1272,12 +1272,12 @@ bonus:
   latestBonus: I tuoi bonus attivi
   active: Bonus attivo
   inactive: Bonus non attivo
-  validity: Valido nel periodo
-  taxBenefit: Beneficio fiscale
   bonusList:
     title: Bonus disponibili
     contentTitle: Seleziona uno dei bonus disponibili
   bonusVacanza:
+    validity: Valido nel periodo
+    taxBenefit: Beneficio fiscale
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     iseeNotAvailable:
