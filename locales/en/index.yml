@@ -1235,6 +1235,13 @@ faq:
     title: "Did you have problems during a payment?"
     content: !include faq/faq57.md
 bonus:
+  bonusList:
+    title: Available bonuses
+    contentTitle: Select one of the available bonus
+  request: Request a new bonus
+  latestBonus: Your active bonuses
+  active: Active bonus
+  inactive: Inactive bonus
   bonusVacanza:
     validity: Valid between
     taxBenefit: Tax benefit
@@ -1245,10 +1252,10 @@ bonus:
       subtitle: ISEE not found for the user
       text: !include bonus/bonusVacanze/iseeNotAvailable.md
       goToINPSWebsite: Go to INPS Website
-  bonusList:
-    title: Available bonuses
-    contentTitle: Select one of the available bonus
-  request: Request a new bonus
-  latestBonus: Your active bonuses
-  active: Active bonus
-  inactive: Inactive bonus
+    iseeNotEligible:
+      title: ISEE not eligible
+      subtitle: The ISEE submitted does not meet the requirements
+      text: !include bonus/bonusVacanze/iseeNotEligible.md
+    activateBonus:
+      title: Activate the bonus
+      description: You can activate a {{amount}} € bonus
