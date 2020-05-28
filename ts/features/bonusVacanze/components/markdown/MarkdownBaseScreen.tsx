@@ -8,6 +8,10 @@ import ScreenContent from "../../../../components/screens/ScreenContent";
 import Markdown from "../../../../components/ui/Markdown";
 import themeVariables from "../../../../theme/variables";
 
+/**
+ * TODO Rename the title prop in the BaseScreenComponent to navigationTitle
+ * https://www.pivotaltracker.com/story/show/173056117
+ */
 type Props = {
   markDown: string;
   navigationTitle: string;
