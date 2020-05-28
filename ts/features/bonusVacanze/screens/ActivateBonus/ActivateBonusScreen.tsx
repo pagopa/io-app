@@ -1,4 +1,4 @@
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -74,13 +74,19 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mockFamiluMembers: ReadonlyArray<FamilyMember> = [
   {
     name: "Chiara" as NonEmptyString,
-    surname: "D'Anassimandro" as NonEmptyString
+    surname: "D'Anassimandro" as NonEmptyString,
+    fiscal_code: "CHDJFM74KL244K" as FiscalCode
   },
   {
     name: "Giovanni" as NonEmptyString,
-    surname: "Filippi" as NonEmptyString
+    surname: "Filippi" as NonEmptyString,
+    fiscal_code: "CHDJFM74KL244K" as FiscalCode
   },
-  { name: "Piero" as NonEmptyString, surname: "Filippi" as NonEmptyString }
+  {
+    name: "Piero" as NonEmptyString,
+    surname: "Filippi" as NonEmptyString,
+    fiscal_code: "CHDJFM74KL244K" as FiscalCode
+  }
 ];
 
 const mapStateToProps = (_: GlobalState) => ({
