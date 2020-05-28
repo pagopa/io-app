@@ -1240,6 +1240,11 @@ bonus:
     taxBenefit: Tax benefit
     checkBonusEligibility:
       loading: Checking bonus eligibility
+    iseeNotAvailable:
+      title: ISEE not available
+      subtitle: ISEE not found for the user
+      text: !include bonus/bonusVacanze/iseeNotAvailable.md
+      goToINPSWebsite: Go to INPS Website
   bonusList:
     title: Available bonuses
     contentTitle: Select one of the available bonus
