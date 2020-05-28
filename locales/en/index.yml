@@ -1245,6 +1245,10 @@ bonus:
       subtitle: ISEE not found for the user
       text: !include bonus/bonusVacanze/iseeNotAvailable.md
       goToINPSWebsite: Go to INPS Website
+    iseeNotEligible:
+      title: ISEE not eligible
+      subtitle: The ISEE submitted does not meet the requirements
+      text: !include bonus/bonusVacanze/iseeNotEligible.md
   bonusList:
     title: Available bonuses
     contentTitle: Select one of the available bonus
