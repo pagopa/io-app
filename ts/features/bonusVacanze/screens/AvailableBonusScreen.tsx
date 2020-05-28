@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
@@ -19,8 +20,7 @@ import { mockedBonus } from "../mock/mockData";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../store/reducers/availableBonuses";
 import { BonusItem, ID_TYPE_BONUS_VACANZE } from "../types/bonusList";
-import { isBonusActive, ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
-import { fromNullable } from "fp-ts/lib/Option";
+import { ID_BONUS_VACANZE_TYPE, isBonusActive } from "../utils/bonus";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
