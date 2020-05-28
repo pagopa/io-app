@@ -2,6 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import { BonusVacanze } from "../../types/bonusVacanze";
 import { loadBonusVacanzeFromId } from "../actions/bonusVacanze";
 import availableBonusesReducer, {
@@ -40,5 +41,11 @@ const reducer = combineReducers<BonusState, Action>({
   eligibility: eligibilityReducer,
   bonusVacanze: bonusReducer
 });
+
+// Selector
+// Selectors
+export const bonusVacanzeSelector = (
+  state: GlobalState
+): pot.Pot<BonusVacanze, Error> => state.bonus.bonusVacanze;
 
 export default reducer;
