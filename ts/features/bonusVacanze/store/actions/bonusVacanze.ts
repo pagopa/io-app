@@ -6,7 +6,7 @@ import {
 import { BonusList } from "../../types/bonusList";
 import { BonusVacanze } from "../../types/bonusVacanze";
 import { EligibilityCheck, EligibilityId } from "../../types/eligibility";
-import { EligibilityRequestProgressEnum } from "../reducers/bonusVacanze";
+import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
 export const eligibilityRequestProgress = createStandardAction(
   "BONUS_CHECK_ELIGIBILITY_REQUEST_PROGRESS"
