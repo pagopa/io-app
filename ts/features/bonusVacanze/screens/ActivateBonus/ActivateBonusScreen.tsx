@@ -26,6 +26,7 @@ const ActivateBonusScreen: React.FunctionComponent<Props> = props => {
       onCancel={props.onCancel}
       onRequestBonus={props.onActivateBonus}
       bonusAmount={props.bonusVacanze.max_amount}
+      taxBenefit={props.bonusVacanze.tax_benefit}
       familyMembers={props.familyMembers}
     />
   );

@@ -1284,7 +1284,7 @@ bonus:
       text: !include bonus/bonusVacanze/iseeNotEligible.md
     activateBonus:
       title: Attiva il bonus
-      description: Puoi attivare un bonus di {{amount}} €
+      description: Puoi attivare un bonus di {{amount}}. Il tuo sconto sulle tasse è pari a {{taxBenefit}}
   bonusList:
     title: Bonus disponibili
     contentTitle: Seleziona uno dei bonus disponibili
