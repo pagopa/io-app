@@ -545,7 +545,6 @@ payment:
       dateAndTime: Data e ora
       paymentAmount: Importo pagamento
       transactionCosts: Costi di transazione
-      totalPaid: Totale pagato
       transactionCode: Codice identificativo della transazione
       help: Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli
     list:
@@ -1273,6 +1272,8 @@ bonus:
   latestBonus: I tuoi bonus attivi
   active: Bonus attivo
   inactive: Bonus non attivo
+  validity: Valido nel periodo
+  taxBenefit: Beneficio fiscale
   bonusVacanza:
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
@@ -1285,3 +1286,10 @@ bonus:
       title: ISEE not idoneo
       subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
       text: !include bonus/bonusVacanze/iseeNotEligible.md
+  bonusList:
+    title: Bonus disponibili
+    contentTitle: Seleziona uno dei bonus disponibili
+  request: Richiedi un nuovo bonus
+  latestBonus: I tuoi bonus attivi
+  active: Bonus attivo
+  inactive: Bonus non attivo

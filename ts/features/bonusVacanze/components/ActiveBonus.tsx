@@ -1,16 +1,17 @@
-import { Text } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
-import { Bonus } from "../mock/mockData";
+import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { BonusVacanzaMock } from "../mock/mockData";
 
 type Props = {
-  bonus: any;
-  onPress: (bonus: Bonus) => void;
+  bonus: BonusVacanzaMock;
+  onPress: (bonus: BonusVacanzaMock) => void;
 };
 
 const ICON_WIDTH = 24;
@@ -27,18 +28,6 @@ const styles = StyleSheet.create({
   },
   brandDarkGray: {
     color: customVariables.brandDarkGray
-  },
-  badgeContainer: {
-    flex: 0,
-    paddingRight: 8,
-    alignSelf: "flex-start",
-    paddingTop: 6.5
-  },
-  viewStyle: {
-    flexDirection: "row"
-  },
-  text11: {
-    color: customVariables.brandDarkestGray
   },
   text3: {
     fontSize: 18,
@@ -69,26 +58,36 @@ const styles = StyleSheet.create({
  * in the store
  */
 const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
+  const bonusValidityInterval = `${formatDateAsLocal(
+    props.bonus.valid_from,
+    true
+  )} - ${formatDateAsLocal(props.bonus.valid_to, true)}`;
+
   return (
     <TouchableDefaultOpacity onPress={() => props.onPress(props.bonus)}>
       <View style={styles.spaced}>
-        <Text small={true} dark={true}>
-          {I18n.t("bonus.active")}
-        </Text>
+        <Text small={true}>{`${I18n.t(
+          "bonus.bonusVacanza.validity"
+        )} ${bonusValidityInterval}`}</Text>
         <Text bold={true} style={styles.text12}>
-          {props.bonus.max_amount}
+          {formatNumberCentsToAmount(props.bonus.max_amount)}
         </Text>
       </View>
-      <View style={styles.viewStyle}>
-        <Text xsmall={true}>
-          {formatDateAsLocal(props.bonus.activated_at, true, true)}
+      <View small={true} />
+      <View style={styles.spaced}>
+        <Text small={true} dark={true}>
+          {I18n.t("bonus.bonusVacanza.taxBenefit")}
+        </Text>
+        <Text bold={true} style={styles.text12}>
+          {formatNumberCentsToAmount(props.bonus.tax_benefit)}
         </Text>
       </View>
       <View style={styles.smallSpacer} />
       <View style={styles.text3Line}>
         <View style={styles.text3Container}>
           <Text numberOfLines={2} style={styles.text3}>
-            {props.bonus.type}
+            {/*TODO replace this hardcoded string*/}
+            {"Bonus Vacanze"}
           </Text>
         </View>
         <View style={styles.icon}>
