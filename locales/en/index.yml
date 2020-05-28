@@ -1241,6 +1241,9 @@ bonus:
   inactive: Inactive bonus
   validity: Valid between
   taxBenefit: Tax benefit
+  bonusList:
+    title: Available bonuses
+    contentTitle: Select one of the available bonus
   bonusVacanza:
     checkBonusEligibility:
       loading: Checking bonus eligibility

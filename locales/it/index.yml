@@ -1274,6 +1274,9 @@ bonus:
   inactive: Bonus non attivo
   validity: Valido nel periodo
   taxBenefit: Beneficio fiscale
+  bonusList:
+    title: Bonus disponibili
+    contentTitle: Seleziona uno dei bonus disponibili
   bonusVacanza:
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
@@ -1286,10 +1289,4 @@ bonus:
       title: ISEE not idoneo
       subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
       text: !include bonus/bonusVacanze/iseeNotEligible.md
-  bonusList:
-    title: Bonus disponibili
-    contentTitle: Seleziona uno dei bonus disponibili
-  request: Richiedi un nuovo bonus
-  latestBonus: I tuoi bonus attivi
-  active: Bonus attivo
-  inactive: Bonus non attivo
+  
