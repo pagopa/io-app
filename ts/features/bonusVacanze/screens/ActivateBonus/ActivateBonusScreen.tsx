@@ -3,6 +3,9 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { RTron } from "../../../../boot/configureStoreAndPersistor";
+import { shufflePinPadOnPayment } from "../../../../config";
+import I18n from "../../../../i18n";
+import { identificationRequest } from "../../../../store/actions/identification";
 import { GlobalState } from "../../../../store/reducers/types";
 import { FamilyMember } from "../../types/eligibility";
 import { ActivateBonusComponent } from "./ActivateBonusComponent";
@@ -29,15 +32,42 @@ const ActivateBonusScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({
+/**
+ * Verify the identification using pin / biometric
+ * @param dispatch
+ */
+const requestIdentification = (dispatch: Dispatch) => {
+  dispatch(
+    identificationRequest(
+      false,
+      true,
+      {
+        message: I18n.t("bonus.bonusVacanza.activateBonus.title")
+      },
+      {
+        label: I18n.t("global.buttons.cancel"),
+        onCancel: () => undefined
+      },
+      {
+        onSuccess: onIdentificationSuccess
+      },
+      shufflePinPadOnPayment
+    )
+  );
+};
+
+const onIdentificationSuccess = () => {
+  // TODO: link with the business logic that dispatch the activation to backend
+  RTron.log("IdentificationSuccess");
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: link with the right dispatch action
   onCancel: () => {
     RTron.log("CANCEL");
   },
-  // TODO: link with the right dispatch action
-  onActivateBonus: () => {
-    RTron.log("BONUS REQUEST");
-  }
+  // When the user choose to activate the bonus, verify the identification
+  onActivateBonus: () => requestIdentification(dispatch)
 });
 
 // TODO: remove this mock data after the linking with redux
