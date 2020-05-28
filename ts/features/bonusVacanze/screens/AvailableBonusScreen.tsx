@@ -19,7 +19,7 @@ import AvailableBonusItem from "../components/AvailableBonusItem";
 import { mockedBonus } from "../mock/mockData";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../store/reducers/availableBonuses";
-import { BonusItem, ID_TYPE_BONUS_VACANZE } from "../types/bonusList";
+import { BonusItem } from "../types/bonusList";
 import { ID_BONUS_VACANZE_TYPE, isBonusActive } from "../utils/bonus";
 
 export type Props = ReturnType<typeof mapStateToProps> &
@@ -62,7 +62,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       "valid_to",
       _ => _
     ).fold(undefined, _ => _);
-    return item.id_type === ID_TYPE_BONUS_VACANZE &&
+    return item.id_type === ID_BONUS_VACANZE_TYPE &&
       pot.getOrElse(pot.map(activeBonus, b => isBonusActive(b)), false) ? (
       <ActiveBonus
         validFrom={validFrom}
