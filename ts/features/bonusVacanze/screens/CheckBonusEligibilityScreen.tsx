@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { RTron } from "../../../boot/configureStoreAndPersistor";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
-import { GenericLoadingErrorScreen } from "../components/GenericLoadingErrorScreen";
+import { BaseLoadingErrorScreen } from "../components/loadingErrorScreen/BaseLoadingErrorScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -14,15 +14,16 @@ const loadingCaption = I18n.t(
 );
 /**
  * This screen is used during the check of the eligibility of the bonus.
- * This component link the generic {@link GenericLoadingErrorScreen} with the application flow using the {@link connect}
+ * This component link the generic {@link BaseLoadingErrorScreen} with the application flow using the {@link connect}
  * of redux.
  * @param props
  * @constructor
  */
 const CheckBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   return (
-    <GenericLoadingErrorScreen
+    <BaseLoadingErrorScreen
       {...props}
+      navigationTitle={loadingCaption}
       loadingCaption={loadingCaption}
       loadingOpacity={1}
     />
