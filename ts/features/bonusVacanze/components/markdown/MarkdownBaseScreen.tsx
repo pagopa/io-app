@@ -14,7 +14,7 @@ import themeVariables from "../../../../theme/variables";
  */
 type Props = {
   markDown: string;
-  navigationTitle: string;
+  navigationTitle?: string;
   title?: string;
   subtitle?: string;
   hideHeader?: boolean;
