@@ -11,7 +11,7 @@ import themeVariables from "../../../../theme/variables";
 type Props = {
   markDown: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
 };
 
 const styles = StyleSheet.create({
