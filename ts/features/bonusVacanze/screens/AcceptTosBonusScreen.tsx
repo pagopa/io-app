@@ -14,8 +14,9 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 const AcceptTosBonusScreen: React.FunctionComponent<Props> = props => {
   return (
     <MarkdownBaseScreen
-      title={I18n.t("bonus.tos.title")}
+      navigationTitle={I18n.t("bonus.tos.title")}
       markDown={I18n.t("bonus.tos.content")}
+      hideHeader={true}
     >
       <FooterTwoButtons
         onCancel={props.navigateBack}

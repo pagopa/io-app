@@ -10,8 +10,10 @@ import themeVariables from "../../../../theme/variables";
 
 type Props = {
   markDown: string;
-  title: string;
+  navigationTitle: string;
+  title?: string;
   subtitle?: string;
+  hideHeader?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -32,11 +34,12 @@ export const MarkdownBaseScreen: React.FunctionComponent<Props> = props => {
   useEffect(() => setMarkdownLoaded(false), [props.markDown]);
 
   return (
-    <BaseScreenComponent goBack={true} headerTitle={props.title}>
+    <BaseScreenComponent goBack={true} headerTitle={props.navigationTitle}>
       <ScreenContent
         title={props.title}
         subtitle={props.subtitle}
         bounces={false}
+        hideHeader={props.hideHeader}
       >
         <View style={styles.markdownContainer}>
           <Markdown onLoadEnd={() => setMarkdownLoaded(true)}>
