@@ -1,8 +1,8 @@
 import * as t from "io-ts";
-import { NonEmptyString, FiscalCode } from "italia-ts-commons/lib/strings";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
-import { Timestamp } from "../../../../definitions/backend/Timestamp";
+import { FiscalCode } from "italia-ts-commons/lib/strings";
 import { enumType } from "italia-ts-commons/lib/types";
+import { Timestamp } from "../../../../definitions/backend/Timestamp";
 
 export enum BonusStatusEnum {
   "ACTIVE" = "ACTIVE",

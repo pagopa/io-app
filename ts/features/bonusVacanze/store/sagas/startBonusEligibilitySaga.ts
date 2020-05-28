@@ -10,7 +10,7 @@ import {
   eligibilityRequestId,
   eligibilityRequestProgress
 } from "../actions/bonusVacanze";
-import { EligibilityRequestProgressEnum } from "../reducers/bonusVacanze";
+import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
 const checkEligibilityResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold

@@ -17,9 +17,10 @@ import ActiveBonus from "../components/ActiveBonus";
 import AvailableBonusItem from "../components/AvailableBonusItem";
 import { mockedBonus } from "../mock/mockData";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
-import { availableBonuses } from "../store/reducers/bonusVacanze";
+import { availableBonusesSelector } from "../store/reducers/availableBonuses";
 import { BonusItem, ID_TYPE_BONUS_VACANZE } from "../types/bonusList";
-import { isBonusActive } from "../utils/bonus";
+import { isBonusActive, ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
+import { fromNullable } from "fp-ts/lib/Option";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -48,9 +49,21 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   private renderListItem = (info: ListRenderItemInfo<BonusItem>) => {
     const { activeBonus } = this.props;
     const item = info.item;
+    const validFrom = fromNullable(
+      this.props.availableBonusesList.items.find(
+        bi => bi.id_type === ID_BONUS_VACANZE_TYPE
+      )
+    ).fold(undefined, i => i.valid_from);
+    const validTo = fromNullable(
+      this.props.availableBonusesList.items.find(
+        bi => bi.id_type === ID_BONUS_VACANZE_TYPE
+      )
+    ).fold(undefined, i => i.valid_to);
     return item.id_type === ID_TYPE_BONUS_VACANZE &&
       pot.getOrElse(pot.map(activeBonus, b => isBonusActive(b)), false) ? (
       <ActiveBonus
+        validFrom={validFrom}
+        validTo={validTo}
         bonus={activeBonus.value}
         onPress={this.props.navigateToBonusDetail}
       />
@@ -98,7 +111,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potAvailableBonuses = availableBonuses(state);
+  const potAvailableBonuses = availableBonusesSelector(state);
   return {
     activeBonus: pot.some(mockedBonus),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
