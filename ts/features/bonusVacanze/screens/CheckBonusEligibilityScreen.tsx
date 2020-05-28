@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -5,6 +6,7 @@ import { RTron } from "../../../boot/configureStoreAndPersistor";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { BaseLoadingErrorScreen } from "../components/loadingErrorScreen/BaseLoadingErrorScreen";
+import { checkBonusEligibility } from "../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -20,6 +22,11 @@ const loadingCaption = I18n.t(
  * @constructor
  */
 const CheckBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
+  useEffect(() => {
+    RTron.log("mount");
+    props.checkEligibility();
+  }, []);
+
   return (
     <BaseLoadingErrorScreen
       {...props}
@@ -30,7 +37,8 @@ const CheckBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  checkEligibility: () => dispatch(checkBonusEligibility.request()),
   // TODO: link with the right dispatch action
   onCancel: () => {
     RTron.log("CANCEL");
