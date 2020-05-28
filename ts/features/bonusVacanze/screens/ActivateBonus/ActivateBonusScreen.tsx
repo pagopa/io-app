@@ -6,7 +6,7 @@ import { shufflePinPadOnPayment } from "../../../../config";
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { GlobalState } from "../../../../store/reducers/types";
-import { mockedIseeFamilyMembers } from "../../mock/mockData";
+import { mockedBonus, mockedIseeFamilyMembers } from "../../mock/mockData";
 import { ActivateBonusComponent } from "./ActivateBonusComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -25,7 +25,7 @@ const ActivateBonusScreen: React.FunctionComponent<Props> = props => {
     <ActivateBonusComponent
       onCancel={props.onCancel}
       onRequestBonus={props.onActivateBonus}
-      bonusAmount={props.bonusAmount}
+      bonusAmount={props.bonusVacanze.max_amount}
       familyMembers={props.familyMembers}
     />
   );
@@ -71,9 +71,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (_: GlobalState) => ({
   // TODO: link with the right reducer
-  bonusAmount: 500,
-  // TODO: link with the right reducer (placeholder atm, no graphical representation)
-  taxBenefit: 5000,
+  bonusVacanze: mockedBonus,
   // TODO: link with the right reducer
   familyMembers: mockedIseeFamilyMembers
 });
