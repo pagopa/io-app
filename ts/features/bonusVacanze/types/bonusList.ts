@@ -6,8 +6,10 @@ import * as t from "io-ts";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import { Timestamp } from "../../../../definitions/backend/Timestamp";
 
+export const ID_TYPE_BONUS_VACANZE = 1;
+
 const BonusItemR = t.interface({
-  id: NonNegativeInteger,
+  id_type: NonNegativeInteger,
   name: t.string,
   description: t.string,
   valid_from: Timestamp,
@@ -16,9 +18,9 @@ const BonusItemR = t.interface({
 const BonusItemO = t.partial({
   cover: t.string
 });
-export const BonusItem = t.intersection([BonusItemR, BonusItemO], "BonusItem");
+export const BonusItemT = t.intersection([BonusItemR, BonusItemO], "BonusItem");
 const BonusListR = t.interface({
-  items: t.readonlyArray(BonusItem, "array of Bonus")
+  items: t.readonlyArray(BonusItemT, "array of Bonus")
 });
 const BonusListRO = t.partial({});
 export const BonusListT = t.intersection(
@@ -26,3 +28,4 @@ export const BonusListT = t.intersection(
   "BonusList"
 );
 export type BonusList = t.TypeOf<typeof BonusListT>;
+export type BonusItem = t.TypeOf<typeof BonusItemT>;

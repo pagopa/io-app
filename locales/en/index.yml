@@ -524,7 +524,6 @@ payment:
       dateAndTime: Date and time
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
-      totalPaid: Total paid
       transactionCode: Transaction identification code
       help: If you have encountered a problem with this payment, write to us for more information and details
     list:
@@ -1236,11 +1235,9 @@ faq:
     title: "Did you have problems during a payment?"
     content: !include faq/faq57.md
 bonus:
-  request: Request a new bonus
-  latestBonus: Your active bonuses
-  active: Active bonus
-  inactive: Inactive bonus
   bonusVacanza:
+    validity: Valid between
+    taxBenefit: Tax benefit
     checkBonusEligibility:
       loading: Checking bonus eligibility
     iseeNotAvailable:
@@ -1248,3 +1245,10 @@ bonus:
       subtitle: ISEE not found for the user
       text: !include bonus/bonusVacanze/iseeNotAvailable.md
       goToINPSWebsite: Go to INPS Website
+  bonusList:
+    title: Available bonuses
+    contentTitle: Select one of the available bonus
+  request: Request a new bonus
+  latestBonus: Your active bonuses
+  active: Active bonus
+  inactive: Inactive bonus

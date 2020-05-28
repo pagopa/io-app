@@ -545,7 +545,6 @@ payment:
       dateAndTime: Data e ora
       paymentAmount: Importo pagamento
       transactionCosts: Costi di transazione
-      totalPaid: Totale pagato
       transactionCode: Codice identificativo della transazione
       help: Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli
     list:
@@ -1269,11 +1268,9 @@ faq:
     title: "Hai avuto problemi durante un pagamento?"
     content: !include faq/faq57.md
 bonus:
-  request: Richiedi un nuovo bonus
-  latestBonus: I tuoi bonus attivi
-  active: Bonus attivo
-  inactive: Bonus non attivo
   bonusVacanza:
+    validity: Valido nel periodo
+    taxBenefit: Beneficio fiscale
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     iseeNotAvailable:
@@ -1281,3 +1278,11 @@ bonus:
       subtitle: Non è disponibile nessun ISEE per l'utente
       text: !include bonus/bonusVacanze/iseeNotAvailable.md
       goToINPSWebsite: Vai al sito INPS
+  bonusList:
+    title: Bonus disponibili
+    contentTitle: Seleziona uno dei bonus disponibili
+  request: Richiedi un nuovo bonus
+  latestBonus: I tuoi bonus attivi
+  active: Bonus attivo
+  inactive: Bonus non attivo
+
