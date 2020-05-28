@@ -4,10 +4,11 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BonusList } from "../../types/bonusList";
-import { EligibilityCheck } from "../../types/eligibility";
+import { EligibilityCheck, EligibilityId } from "../../types/eligibility";
 import {
   availableBonusesLoad,
   checkBonusEligibility,
+  eligibilityRequestId,
   eligibilityRequestProgress
 } from "../actions/bonusVacanze";
 
@@ -23,8 +24,9 @@ export enum EligibilityRequestProgressEnum {
 export type BonusState = Readonly<{
   availableBonuses: pot.Pot<BonusList, Error>;
   eligibility: {
-    check: pot.Pot<EligibilityCheck, Error>;
-    requestProgess?: EligibilityRequestProgressEnum;
+    check: pot.Pot<EligibilityCheck, Error>; // the result of ISEE check
+    requestProgess?: EligibilityRequestProgressEnum; // represent an internal status of the request (cause the app could do polling)
+    request?: EligibilityId; // the id related to the check (we could have only this if the check isn't ready and still in progress)
   };
 }>;
 
@@ -52,6 +54,14 @@ const reducer = (
         availableBonuses: pot.toError(state.availableBonuses, action.payload)
       };
     // eligibility
+    case getType(eligibilityRequestId):
+      return {
+        ...state,
+        eligibility: {
+          ...state.eligibility,
+          request: action.payload
+        }
+      };
     case getType(eligibilityRequestProgress):
       return {
         ...state,

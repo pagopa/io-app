@@ -1276,6 +1276,8 @@ bonus:
   active: Bonus attivo
   inactive: Bonus non attivo
   bonusVacanza:
+    validity: Valido nel periodo
+    taxBenefit: Beneficio fiscale
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     iseeNotAvailable:
