@@ -6,6 +6,7 @@ import ListItemComponent from "../../../../components/screens/ListItemComponent"
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { FooterTwoButtons } from "../../components/markdown/FooterTwoButtons";
 import { FamilyMember } from "../../types/eligibility";
 
@@ -67,7 +68,7 @@ const renderFamilyMembersList = (
  */
 export const ActivateBonusComponent: React.FunctionComponent<Props> = props => {
   const description = I18n.t("bonus.bonusVacanza.activateBonus.description", {
-    amount: props.bonusAmount
+    amount: formatNumberCentsToAmount(props.bonusAmount, true)
   });
 
   return (

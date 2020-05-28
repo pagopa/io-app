@@ -1,4 +1,3 @@
-import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -7,7 +6,7 @@ import { shufflePinPadOnPayment } from "../../../../config";
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { GlobalState } from "../../../../store/reducers/types";
-import { FamilyMember } from "../../types/eligibility";
+import { mockedIseeFamilyMembers } from "../../mock/mockData";
 import { ActivateBonusComponent } from "./ActivateBonusComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -70,30 +69,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onActivateBonus: () => requestIdentification(dispatch)
 });
 
-// TODO: remove this mock data after the linking with redux
-const mockFamiluMembers: ReadonlyArray<FamilyMember> = [
-  {
-    name: "Chiara" as NonEmptyString,
-    surname: "D'Anassimandro" as NonEmptyString,
-    fiscal_code: "CHDJFM74KL244K" as FiscalCode
-  },
-  {
-    name: "Giovanni" as NonEmptyString,
-    surname: "Filippi" as NonEmptyString,
-    fiscal_code: "CHDJFM74KL244K" as FiscalCode
-  },
-  {
-    name: "Piero" as NonEmptyString,
-    surname: "Filippi" as NonEmptyString,
-    fiscal_code: "CHDJFM74KL244K" as FiscalCode
-  }
-];
-
 const mapStateToProps = (_: GlobalState) => ({
   // TODO: link with the right reducer
   bonusAmount: 500,
+  // TODO: link with the right reducer (placeholder atm, no graphical representation)
+  taxBenefit: 5000,
   // TODO: link with the right reducer
-  familyMembers: mockFamiluMembers
+  familyMembers: mockedIseeFamilyMembers
 });
 
 export default connect(

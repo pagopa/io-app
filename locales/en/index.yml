@@ -1249,6 +1249,9 @@ bonus:
       title: ISEE not eligible
       subtitle: The ISEE submitted does not meet the requirements
       text: !include bonus/bonusVacanze/iseeNotEligible.md
+    activateBonus:
+      title: Activate the bonus
+      description: You can activate a {{amount}} € bonus
   bonusList:
     title: Available bonuses
     contentTitle: Select one of the available bonus
@@ -1259,6 +1262,4 @@ bonus:
   tos:
     title: Terms of service
     content: !include bonus/bonusVacanze/bonus_tos.md
-  activateBonus:
-    title: Activate the bonus
-    description: You can activate a {{amount}} € bonus
+
