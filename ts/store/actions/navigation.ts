@@ -27,6 +27,7 @@ import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScr
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import { InferNavigationParams } from "../../types/react";
+import ActiveBonusScreen from "../../features/bonusVacanze/screens/ActiveBonusScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -318,4 +319,12 @@ export const navigateToBonusRequestInformation = (
 export const navigateToBonusTosScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.BONUS_TOS_SCREEN
+  });
+
+export const navigateToBonusActiveDetailScreen = (
+  params?: InferNavigationParams<typeof ActiveBonusScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.BONUS_ACTIVE_DETAIL_SCREEN,
+    params
   });

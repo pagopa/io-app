@@ -23,6 +23,7 @@ import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
 import ROUTES from "./routes";
+import ActiveBonusScreen from "../features/bonusVacanze/screens/ActiveBonusScreen";
 
 const baseRouteConfigMap = {
   [ROUTES.WALLET_HOME]: {
@@ -90,6 +91,9 @@ const bonusVacanzeConfigMap = {
   },
   [ROUTES.BONUS_TOS_SCREEN]: {
     screen: AcceptTosBonusScreen
+  },
+  [ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: {
+    screen: ActiveBonusScreen
   }
 };
 

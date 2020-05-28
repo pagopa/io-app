@@ -25,7 +25,10 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled } from "../../config";
 import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
-import { mockedBonus } from "../../features/bonusVacanze/mock/mockData";
+import {
+  mockedBonus,
+  BonusVacanzaMock
+} from "../../features/bonusVacanze/mock/mockData";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -33,7 +36,8 @@ import {
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
-  navigateToWalletList
+  navigateToWalletList,
+  navigateToBonusActiveDetailScreen
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -504,7 +508,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
               <RequestBonus
                 onButtonPress={this.props.navigateToBonusList}
                 bonus={this.props.currentActiveBonus}
-                onBonusPress={this.props.navigateToBonusDetail}
+                onBonusPress={() =>
+                  this.props.navigateToBonusDetail(
+                    this.props.currentActiveBonus.value
+                  )
+                }
               />
             )}
             {transactionContent}
@@ -549,7 +557,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     );
   },
   // TODO add bonus detail as function parameter when adding the navigate to bonus detail
-  navigateToBonusDetail: () => dispatch(navigateBack()),
+  navigateToBonusDetail: (bonus: BonusVacanzaMock) =>
+    dispatch(navigateToBonusActiveDetailScreen({ bonus })),
   navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
