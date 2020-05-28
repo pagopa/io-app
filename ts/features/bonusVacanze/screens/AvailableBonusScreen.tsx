@@ -14,6 +14,7 @@ import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
+import { maybeInnerProperty } from "../../../utils/options";
 import ActiveBonus from "../components/ActiveBonus";
 import AvailableBonusItem from "../components/AvailableBonusItem";
 import { mockedBonus } from "../mock/mockData";
@@ -49,16 +50,19 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   private renderListItem = (info: ListRenderItemInfo<BonusItem>) => {
     const { activeBonus } = this.props;
     const item = info.item;
-    const validFrom = fromNullable(
-      this.props.availableBonusesList.items.find(
-        bi => bi.id_type === ID_BONUS_VACANZE_TYPE
-      )
-    ).fold(undefined, i => i.valid_from);
-    const validTo = fromNullable(
-      this.props.availableBonusesList.items.find(
-        bi => bi.id_type === ID_BONUS_VACANZE_TYPE
-      )
-    ).fold(undefined, i => i.valid_to);
+    const bonusVacanzeCategory = this.props.availableBonusesList.items.find(
+      bi => bi.id_type === ID_BONUS_VACANZE_TYPE
+    );
+    const validFrom = maybeInnerProperty(
+      bonusVacanzeCategory,
+      "valid_from",
+      _ => _
+    ).fold(undefined, _ => _);
+    const validTo = maybeInnerProperty(
+      bonusVacanzeCategory,
+      "valid_to",
+      _ => _
+    ).fold(undefined, _ => _);
     return item.id_type === ID_TYPE_BONUS_VACANZE &&
       pot.getOrElse(pot.map(activeBonus, b => isBonusActive(b)), false) ? (
       <ActiveBonus
