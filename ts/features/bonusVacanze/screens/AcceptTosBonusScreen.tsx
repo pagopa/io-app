@@ -16,6 +16,10 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 type State = {
   isMarkdownLoaded: boolean;
 };
+
+/**
+ * Component to show the TOS for the bonus activation flow
+ */
 class AcceptTosBonusScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
