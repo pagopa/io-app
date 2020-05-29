@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
 import I18n from "../../../i18n";
 import { FooterSingleButton } from "../components/markdown/FooterSingleButton";
 import { MarkdownBaseScreen } from "../components/markdown/MarkdownBaseScreen";
@@ -36,9 +35,7 @@ const IseeNotEligibleScreen: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (_: Dispatch) => ({
   // TODO: link with the right dispatch action
-  onCancel: () => {
-    RTron.log("CANCEL");
-  }
+  onCancel: () => undefined
 });
 
 export default connect(mapDispatchToProps)(IseeNotEligibleScreen);

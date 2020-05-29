@@ -1,10 +1,11 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
-import { call, put } from "redux-saga/effects";
+import { all, call, put } from "redux-saga/effects";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { startTimer } from "../../../../utils/timer";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
+import { EligibilityCheckStatusEnum } from "../../types/eligibility";
 import {
   checkBonusEligibility,
   eligibilityRequestId,
@@ -15,6 +16,21 @@ import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 const checkEligibilityResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
+
+const eligibilityResultToEnum = (
+  responseStatus: EligibilityCheckStatusEnum
+) => {
+  switch (responseStatus) {
+    case EligibilityCheckStatusEnum.ISEE_NOT_FOUND:
+      return EligibilityRequestProgressEnum.ISEE_NOT_FOUND;
+    case EligibilityCheckStatusEnum.INELIGIBLE:
+      return EligibilityRequestProgressEnum.INELIGIBLE;
+    case EligibilityCheckStatusEnum.ELIGIBLE:
+      return EligibilityRequestProgressEnum.ELIGIBLE;
+    default:
+      return EligibilityRequestProgressEnum.UNDEFINED;
+  }
+};
 
 // handle start bonus eligibility check
 function* checkBonusEligibilitySaga(
@@ -29,9 +45,17 @@ function* checkBonusEligibilitySaga(
     if (eligibilityCheckResult.isRight()) {
       // we got the check result
       if (eligibilityCheckResult.value.status === 200) {
-        yield put(
-          checkBonusEligibility.success(eligibilityCheckResult.value.value)
-        );
+        yield all([
+          put(
+            checkBonusEligibility.success(eligibilityCheckResult.value.value)
+          ),
+          put(
+            eligibilityRequestProgress(
+              eligibilityResultToEnum(eligibilityCheckResult.value.value.status)
+            )
+          )
+        ]);
+
         return true;
       }
       return false;
@@ -40,7 +64,12 @@ function* checkBonusEligibilitySaga(
       throw Error(readableReport(eligibilityCheckResult.value));
     }
   } catch (e) {
-    yield put(checkBonusEligibility.failure(e));
+    yield all([
+      // TODO: atm the error of this call are hidden by the pooling phase.
+      //  What to do when an error occurs here?
+      // put(eligibilityRequestProgress(EligibilityRequestProgressEnum.ERROR)),
+      put(checkBonusEligibility.failure(e))
+    ]);
     return false;
   }
 }
@@ -58,7 +87,7 @@ export function* startBonusEligibilitySaga(
   try {
     // request is pending
     yield put(
-      eligibilityRequestProgress(EligibilityRequestProgressEnum.PENDING)
+      eligibilityRequestProgress(EligibilityRequestProgressEnum.PROGRESS)
     );
     const startEligibilityResult: SagaCallReturnType<
       typeof postEligibilityCheck
@@ -75,12 +104,6 @@ export function* startBonusEligibilitySaga(
         }
         // start polling to know about the check result
         const startPolling = new Date().getTime();
-        // request is pending
-        yield put(
-          eligibilityRequestProgress(
-            EligibilityRequestProgressEnum.POLLING_STARTED
-          )
-        );
         // TODO: handle cancel request (stop polling)
         while (true) {
           const eligibilityCheckResult: boolean = yield call(
@@ -89,11 +112,6 @@ export function* startBonusEligibilitySaga(
           );
           // we got the response, stop polling
           if (eligibilityCheckResult === true) {
-            yield put(
-              eligibilityRequestProgress(
-                EligibilityRequestProgressEnum.COMPLETE
-              )
-            );
             return;
           }
           // sleep
@@ -102,9 +120,7 @@ export function* startBonusEligibilitySaga(
           const now = new Date().getTime();
           if (now - startPolling >= pollingTimeThreshold) {
             yield put(
-              eligibilityRequestProgress(
-                EligibilityRequestProgressEnum.POLLING_EXCEEDED
-              )
+              eligibilityRequestProgress(EligibilityRequestProgressEnum.TIMEOUT)
             );
             return;
           }
@@ -115,7 +131,9 @@ export function* startBonusEligibilitySaga(
       throw Error(readableReport(startEligibilityResult.value));
     }
   } catch (e) {
-    yield put(eligibilityRequestProgress(EligibilityRequestProgressEnum.ERROR));
-    yield put(checkBonusEligibility.failure(e));
+    yield all([
+      put(eligibilityRequestProgress(EligibilityRequestProgressEnum.ERROR)),
+      put(checkBonusEligibility.failure(e))
+    ]);
   }
 }

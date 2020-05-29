@@ -1,12 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { RTron } from "../../../../boot/configureStoreAndPersistor";
 import { shufflePinPadOnPayment } from "../../../../config";
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { GlobalState } from "../../../../store/reducers/types";
-import { mockedElegibilityCheck } from "../../mock/mockData";
+import { eligibilityCheckResults } from "../../store/reducers/eligibility";
 import { ActivateBonusComponent } from "./ActivateBonusComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -58,24 +57,30 @@ const requestIdentification = (dispatch: Dispatch) => {
 
 const onIdentificationSuccess = () => {
   // TODO: link with the business logic that dispatch the activation to backend
-  RTron.log("IdentificationSuccess");
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: link with the right dispatch action
-  onCancel: () => {
-    RTron.log("CANCEL");
-  },
+  onCancel: () => undefined,
   // When the user choose to activate the bonus, verify the identification
   onActivateBonus: () => requestIdentification(dispatch)
 });
 
-const mapStateToProps = (_: GlobalState) => ({
+const mapStateToProps = (state: GlobalState) => ({
   // TODO: link with the right reducer
-  bonusAmount: mockedElegibilityCheck.max_amount,
-  taxBenefit: mockedElegibilityCheck.max_tax_benefit,
+  bonusAmount: eligibilityCheckResults(state).fold(
+    0,
+    results => results.max_amount as number
+  ),
+  taxBenefit: eligibilityCheckResults(state).fold(
+    0,
+    results => results.max_tax_benefit as number
+  ),
   // TODO: link with the right reducer
-  familyMembers: mockedElegibilityCheck.family_members
+  familyMembers: eligibilityCheckResults(state).fold(
+    [],
+    results => results.family_members
+  )
 });
 
 export default connect(

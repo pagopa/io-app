@@ -1,4 +1,7 @@
 import { createStackNavigator } from "react-navigation";
+import { bonusVacanzeEnabled } from "../config";
+import BonusVacanzeNavigator from "../features/bonusVacanze/navigation/navigator";
+import BONUSVACANZE_ROUTES from "../features/bonusVacanze/navigation/routes";
 import AcceptTosBonusScreen from "../features/bonusVacanze/screens/AcceptTosBonusScreen";
 import AvailableBonusScreen from "../features/bonusVacanze/screens/AvailableBonusScreen";
 import BonusInformationScreen from "../features/bonusVacanze/screens/BonusInformationScreen";
@@ -21,82 +24,89 @@ import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
 import ROUTES from "./routes";
 
+const baseRouteConfigMap = {
+  [ROUTES.WALLET_HOME]: {
+    screen: WalletHomeScreen
+  },
+  [ROUTES.WALLET_LIST]: {
+    screen: WalletsScreen
+  },
+  [ROUTES.WALLET_ADD_PAYMENT_METHOD]: {
+    screen: AddPaymentMethodScreen
+  },
+  [ROUTES.WALLET_TRANSACTION_DETAILS]: {
+    screen: TransactionDetailsScreen
+  },
+  [ROUTES.WALLET_CARD_TRANSACTIONS]: {
+    screen: TransactionsScreen
+  },
+  [ROUTES.WALLET_ADD_CARD]: {
+    screen: AddCardScreen
+  },
+  [ROUTES.WALLET_CONFIRM_CARD_DETAILS]: {
+    screen: ConfirmCardDetailsScreen
+  },
+  [ROUTES.PAYMENT_SCAN_QR_CODE]: {
+    screen: ScanQrCodeScreen
+  },
+  [ROUTES.PAYMENT_MANUAL_DATA_INSERTION]: {
+    screen: ManualDataInsertionScreen
+  },
+  [ROUTES.PAYMENT_TRANSACTION_SUMMARY]: {
+    screen: TransactionSummaryScreen
+  },
+  [ROUTES.PAYMENT_TRANSACTION_SUCCESS]: {
+    screen: TransactionSuccessScreen
+  },
+  [ROUTES.PAYMENT_TRANSACTION_ERROR]: {
+    screen: TransactionErrorScreen
+  },
+  [ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD]: {
+    screen: ConfirmPaymentMethodScreen
+  },
+  [ROUTES.PAYMENT_PICK_PSP]: {
+    screen: PickPspScreen
+  },
+  [ROUTES.PAYMENT_PICK_PAYMENT_METHOD]: {
+    screen: PickPaymentMethodScreen
+  },
+  [ROUTES.PAYMENTS_HISTORY_SCREEN]: {
+    screen: PaymentsHistoryScreen
+  },
+  [ROUTES.PAYMENT_HISTORY_DETAIL_INFO]: {
+    screen: PaymentHistoryDetailsScreen
+  }
+};
+
+const bonusVacanzeConfigMap = {
+  [BONUSVACANZE_ROUTES.MAIN]: {
+    screen: BonusVacanzeNavigator
+  },
+  [ROUTES.BONUS_REQUEST_INFORMATION]: {
+    screen: BonusInformationScreen
+  },
+  [ROUTES.BONUS_AVAILABLE_LIST]: {
+    screen: AvailableBonusScreen
+  },
+  [ROUTES.BONUS_TOS_SCREEN]: {
+    screen: AcceptTosBonusScreen
+  }
+};
+
+const routeConfig = bonusVacanzeEnabled
+  ? { ...baseRouteConfigMap, ...bonusVacanzeConfigMap }
+  : baseRouteConfigMap;
+
 /**
  * TODO: migrate WALLET_TRANSACTION_SUMMARY on a new navigator for screens which does not visualize the footer menu.
  *   @https://www.pivotaltracker.com/n/projects/2048617/stories/158221096
  */
-const WalletNavigator = createStackNavigator(
-  {
-    [ROUTES.WALLET_HOME]: {
-      screen: WalletHomeScreen
-    },
-    [ROUTES.WALLET_LIST]: {
-      screen: WalletsScreen
-    },
-    [ROUTES.WALLET_ADD_PAYMENT_METHOD]: {
-      screen: AddPaymentMethodScreen
-    },
-    [ROUTES.WALLET_TRANSACTION_DETAILS]: {
-      screen: TransactionDetailsScreen
-    },
-    [ROUTES.WALLET_CARD_TRANSACTIONS]: {
-      screen: TransactionsScreen
-    },
-    [ROUTES.WALLET_ADD_CARD]: {
-      screen: AddCardScreen
-    },
-    [ROUTES.WALLET_CONFIRM_CARD_DETAILS]: {
-      screen: ConfirmCardDetailsScreen
-    },
-    [ROUTES.PAYMENT_SCAN_QR_CODE]: {
-      screen: ScanQrCodeScreen
-    },
-    [ROUTES.PAYMENT_MANUAL_DATA_INSERTION]: {
-      screen: ManualDataInsertionScreen
-    },
-    [ROUTES.PAYMENT_TRANSACTION_SUMMARY]: {
-      screen: TransactionSummaryScreen
-    },
-    [ROUTES.PAYMENT_TRANSACTION_SUCCESS]: {
-      screen: TransactionSuccessScreen
-    },
-    [ROUTES.PAYMENT_TRANSACTION_ERROR]: {
-      screen: TransactionErrorScreen
-    },
-    [ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD]: {
-      screen: ConfirmPaymentMethodScreen
-    },
-    [ROUTES.PAYMENT_PICK_PSP]: {
-      screen: PickPspScreen
-    },
-    [ROUTES.PAYMENT_PICK_PAYMENT_METHOD]: {
-      screen: PickPaymentMethodScreen
-    },
-    [ROUTES.PAYMENTS_HISTORY_SCREEN]: {
-      screen: PaymentsHistoryScreen
-    },
-    [ROUTES.PAYMENT_HISTORY_DETAIL_INFO]: {
-      screen: PaymentHistoryDetailsScreen
-    },
-
-    // Navigator section for Bonus section
-    [ROUTES.BONUS_REQUEST_INFORMATION]: {
-      screen: BonusInformationScreen
-    },
-    [ROUTES.BONUS_AVAILABLE_LIST]: {
-      screen: AvailableBonusScreen
-    },
-    [ROUTES.BONUS_TOS_SCREEN]: {
-      screen: AcceptTosBonusScreen
-    }
-  },
-  {
-    // Let each screen handle the header and navigation
-    headerMode: "none",
-    defaultNavigationOptions: {
-      gesturesEnabled: false
-    }
+const WalletNavigator = createStackNavigator(routeConfig, {
+  // Let each screen handle the header and navigation
+  headerMode: "none",
+  defaultNavigationOptions: {
+    gesturesEnabled: false
   }
-);
+});
 
 export default WalletNavigator;
