@@ -68,7 +68,7 @@ const reducer = (
 // Selectors
 
 // if is some the eligibility result is available
-export const eligibilityCheck = (
+export const eligibilityCheckResults = (
   state: GlobalState
 ): Option<EligibilityCheck> => pot.toOption(state.bonus.eligibility.check);
 
