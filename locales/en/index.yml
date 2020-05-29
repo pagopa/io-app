@@ -1236,8 +1236,12 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    status: Status
+    name: Bonus Vacanza
     validity: Valid between
     taxBenefit: Tax benefit
+    amount: Amount
+    applicant: Applicant FC
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:

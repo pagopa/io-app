@@ -25,11 +25,18 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled } from "../../config";
 import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
-import { mockedBonus } from "../../features/bonusVacanze/mock/mockData";
+import {
+  availableBonusesLoad,
+  loadBonusVacanzeFromId
+} from "../../features/bonusVacanze/store/actions/bonusVacanze";
+import { availableBonusesSelector } from "../../features/bonusVacanze/store/reducers/availableBonuses";
+import { bonusVacanzeActivationSelector } from "../../features/bonusVacanze/store/reducers/bonusVacanze";
+import { BonusVacanze } from "../../features/bonusVacanze/types/bonusVacanze";
 import I18n from "../../i18n";
 import {
   navigateBack,
   navigateToAvailableBonusScreen,
+  navigateToBonusActiveDetailScreen,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
@@ -189,6 +196,10 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         customVariables.brandDarkGray
       );
     }); // tslint:disable-line no-object-mutation
+    if (bonusVacanzeEnabled) {
+      this.props.loadAvailableBonuses();
+      this.props.loadBonusVacanzeFromId("FAKE_ID");
+    }
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
@@ -504,6 +515,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
               <RequestBonus
                 onButtonPress={this.props.navigateToBonusList}
                 bonus={this.props.currentActiveBonus}
+                availableBonusesList={this.props.availableBonusesList}
                 onBonusPress={this.props.navigateToBonusDetail}
               />
             )}
@@ -520,8 +532,10 @@ const mapStateToProps = (state: GlobalState) => {
     .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
     .getOrElse(true);
 
+  const potAvailableBonuses = availableBonusesSelector(state);
   return {
-    currentActiveBonus: pot.some(mockedBonus),
+    currentActiveBonus: bonusVacanzeActivationSelector(state),
+    availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
     potTransactions: latestTransactionsSelector(state),
@@ -548,8 +562,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  // TODO add bonus detail as function parameter when adding the navigate to bonus detail
-  navigateToBonusDetail: () => dispatch(navigateBack()),
+  loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
+  loadBonusVacanzeFromId: (id: string) =>
+    dispatch(loadBonusVacanzeFromId.request(id)),
+  navigateToBonusDetail: (
+    bonus: BonusVacanze,
+    validFrom?: Date,
+    validTo?: Date
+  ) =>
+    dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo })),
   navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
