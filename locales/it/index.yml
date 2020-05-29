@@ -1269,9 +1269,12 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    status: Stato
+    name: Bonus Vacanza
     validity: Valido nel periodo
     taxBenefit: Beneficio fiscale
-    applicant: Codice fiscale richiedente
+    amount: Importo totale
+    applicant: CF richiedente
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:

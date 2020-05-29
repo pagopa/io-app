@@ -1,4 +1,3 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -6,7 +5,6 @@ import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { formatDateAsLocal } from "../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { BonusVacanze } from "../types/bonusVacanze";
 import { validityInterval } from "../utils/bonus";
