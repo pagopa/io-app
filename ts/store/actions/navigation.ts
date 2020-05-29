@@ -6,6 +6,7 @@ import {
   StackActions
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
+import ActiveBonusScreen from "../../features/bonusVacanze/screens/ActiveBonusScreen";
 import BonusInformationScreen from "../../features/bonusVacanze/screens/BonusInformationScreen";
 import ROUTES from "../../navigation/routes";
 import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
@@ -27,7 +28,6 @@ import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScr
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import { InferNavigationParams } from "../../types/react";
-import ActiveBonusScreen from "../../features/bonusVacanze/screens/ActiveBonusScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState

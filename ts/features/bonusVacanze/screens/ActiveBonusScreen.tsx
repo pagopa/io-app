@@ -64,26 +64,25 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const validTo = props.navigation.getParam("validTo");
 
   React.useEffect(() => {
-    async function readBase64Svg() {
-      const barCodeContents = await new Promise<QRCodeContents>((res, _) => {
-        const qrCodes: BonusVacanze["qr_code"] = [...bonus.qr_code];
-        const content = qrCodes.reduce<QRCodeContents>(
-          (acc: QRCodeContents, curr: BonusVacanze["qr_code"][0]) => {
-            return {
-              ...acc,
-              [curr.mime_type]: Buffer.from(
-                curr.base64_content,
-                "base64"
-              ).toString("ascii")
-            };
-          },
-          {}
-        );
-        res(content);
-      });
-      setQRCode(barCodeContents);
-    }
-    readBase64Svg();
+    // tslint:disable-next-line:no-floating-promises
+    new Promise<QRCodeContents>((res, _) => {
+      const qrCodes: BonusVacanze["qr_code"] = [...bonus.qr_code];
+      const content = qrCodes.reduce<QRCodeContents>(
+        (acc: QRCodeContents, curr: BonusVacanze["qr_code"][0]) => {
+          return {
+            ...acc,
+            [curr.mime_type]: Buffer.from(
+              curr.base64_content,
+              "base64"
+            ).toString("ascii")
+          };
+        },
+        {}
+      );
+      res(content);
+    }).then(content => {
+      setQRCode(content);
+    });
   }, []);
 
   const bonusValidityInterval = validityInterval(validFrom, validTo);

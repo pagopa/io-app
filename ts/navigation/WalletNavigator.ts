@@ -3,6 +3,7 @@ import { bonusVacanzeEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonusVacanze/navigation/routes";
 import AcceptTosBonusScreen from "../features/bonusVacanze/screens/AcceptTosBonusScreen";
+import ActiveBonusScreen from "../features/bonusVacanze/screens/ActiveBonusScreen";
 import AvailableBonusScreen from "../features/bonusVacanze/screens/AvailableBonusScreen";
 import BonusInformationScreen from "../features/bonusVacanze/screens/BonusInformationScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
@@ -23,7 +24,6 @@ import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
 import ROUTES from "./routes";
-import ActiveBonusScreen from "../features/bonusVacanze/screens/ActiveBonusScreen";
 
 const baseRouteConfigMap = {
   [ROUTES.WALLET_HOME]: {
