@@ -319,4 +319,3 @@ export const navigateToBonusTosScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.BONUS_TOS_SCREEN
   });
-
