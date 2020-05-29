@@ -316,7 +316,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     );
   }
 
-  private helpMessage = (alignCenter: boolean = false): React.ReactNode => (
+  private paymentsIssueBanner = (
+    alignCenter: boolean = false
+  ): React.ReactNode => (
     <React.Fragment>
       <View spacer={true} large={true} />
       <Text xsmall={true} style={alignCenter ? styles.centered : undefined}>
@@ -333,14 +335,13 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     </React.Fragment>
   );
 
-  private transactionError(potPayments: PaymentsHistoryState) {
+  private transactionError() {
     return (
       <Content
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
       >
-        {this.helpMessage()}
-        {potPayments.length > 0 && this.helpMessage()}
+        {this.paymentsIssueBanner()}
         <View spacer={true} large={true} />
         <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
           {I18n.t("wallet.transactionsLoadFailure")}
@@ -366,7 +367,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     return (
       <Content scrollEnabled={false} noPadded={true}>
         <View style={styles.emptyListWrapper}>
-          {potPayments.length > 0 && this.helpMessage(true)}
+          {potPayments.length > 0 && this.paymentsIssueBanner(true)}
           <Text style={styles.emptyListContentTitle}>
             {I18n.t("wallet.noTransactionsInWalletHome")}
           </Text>
@@ -391,7 +392,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         title={I18n.t("wallet.latestTransactions")}
         amount={I18n.t("wallet.amount")}
         transactions={potTransactions}
-        helpMessage={potPayments.length > 0 ? this.helpMessage() : undefined}
+        helpMessage={
+          potPayments.length > 0 ? this.paymentsIssueBanner() : undefined
+        }
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
@@ -461,7 +464,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           : this.withoutCardsHeader(hasNotSupportedWalletsOnly);
 
     const transactionContent = pot.isError(potTransactions)
-      ? this.transactionError(historyPayments)
+      ? this.transactionError()
       : this.transactionList(potTransactions, historyPayments);
 
     const footerContent =
