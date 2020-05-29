@@ -4,6 +4,7 @@ import BonusVacanzeNavigator from "../features/bonusVacanze/navigation/navigator
 import BONUSVACANZE_ROUTES from "../features/bonusVacanze/navigation/routes";
 import AcceptTosBonusScreen from "../features/bonusVacanze/screens/AcceptTosBonusScreen";
 import AvailableBonusScreen from "../features/bonusVacanze/screens/AvailableBonusScreen";
+import BonusInformationScreen from "../features/bonusVacanze/screens/BonusInformationScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
@@ -80,6 +81,9 @@ const baseRouteConfigMap = {
 const bonusVacanzeConfigMap = {
   [BONUSVACANZE_ROUTES.MAIN]: {
     screen: BonusVacanzeNavigator
+  },
+  [ROUTES.BONUS_REQUEST_INFORMATION]: {
+    screen: BonusInformationScreen
   },
   [ROUTES.BONUS_AVAILABLE_LIST]: {
     screen: AvailableBonusScreen

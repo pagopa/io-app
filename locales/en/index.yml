@@ -1240,6 +1240,8 @@ bonus:
     taxBenefit: Tax benefit
     checkBonusEligibility:
       loading: Checking bonus eligibility
+    cta:
+      requestBonus: Request
     iseeNotAvailable:
       title: ISEE not available
       subtitle: ISEE not found for the user

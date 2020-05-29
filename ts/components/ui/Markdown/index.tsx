@@ -342,9 +342,14 @@ class Markdown extends React.PureComponent<Props, State> {
     if (this.props.onLoadEnd) {
       this.props.onLoadEnd();
     }
-    if (this.webViewRef.current) {
-      this.webViewRef.current.injectJavaScript(NOTIFY_BODY_HEIGHT_SCRIPT);
-    }
+
+    setTimeout(() => {
+      // to avoid yellow box warning
+      // it's ugly but it works https://github.com/react-native-community/react-native-webview/issues/341#issuecomment-466639820
+      if (this.webViewRef.current) {
+        this.webViewRef.current.injectJavaScript(NOTIFY_BODY_HEIGHT_SCRIPT);
+      }
+    }, 100);
   };
 
   // A function that handles message sent by the WebView component
