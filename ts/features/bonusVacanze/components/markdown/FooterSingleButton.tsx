@@ -1,22 +1,13 @@
 import * as React from "react";
-import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import I18n from "../../../../i18n";
+import { cancelButtonProps } from "./ButtonConfigurations";
 
 export type OnCancelProps = {
   onCancel: () => void;
 };
 
-export const cancelButtonProps = (props: OnCancelProps): BlockButtonProps => {
-  return {
-    bordered: true,
-    title: I18n.t("global.buttons.cancel"),
-    onPress: props.onCancel
-  };
-};
-
 /**
- * A preset for {@link MarkdownBaseView}
+ * A preset for {@link MarkdownBaseView} with a single cancel button
  * @param props
  */
 export const FooterSingleButton: React.FunctionComponent<
@@ -25,7 +16,7 @@ export const FooterSingleButton: React.FunctionComponent<
   return (
     <FooterWithButtons
       type={"SingleButton"}
-      leftButton={cancelButtonProps(props)}
+      leftButton={cancelButtonProps(props.onCancel)}
     />
   );
 };

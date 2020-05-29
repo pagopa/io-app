@@ -1,8 +1,9 @@
 import { createStackNavigator } from "react-navigation";
-import ActivateBonusScreen from "../screens/ActivateBonus/ActivateBonusScreen";
-import CheckBonusEligibilityScreen from "../screens/CheckBonusEligibilityScreen";
-import IseeNotAvailableScreen from "../screens/IseeNotAvailableScreen";
-import IseeNotEligibleScreen from "../screens/IseeNotEligibleScreen";
+import ActivateBonusScreen from "../screens/eligibility/ActivateBonus/ActivateBonusScreen";
+import AsyncEligibilityCheckInfoScreen from "../screens/eligibility/AsyncEligibilityCheckInfoScreen";
+import CheckBonusEligibilityScreen from "../screens/eligibility/CheckBonusEligibilityScreen";
+import IseeNotAvailableScreen from "../screens/eligibility/IseeNotAvailableScreen";
+import IseeNotEligibleScreen from "../screens/eligibility/IseeNotEligibleScreen";
 import BONUSVACANZE_ROUTES from "./routes";
 
 const BonusVacanzeNavigator = createStackNavigator(
@@ -18,6 +19,9 @@ const BonusVacanzeNavigator = createStackNavigator(
     },
     [BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATE_BONUS]: {
       screen: ActivateBonusScreen
+    },
+    [BONUSVACANZE_ROUTES.ELIGIBILITY.TIMEOUT]: {
+      screen: AsyncEligibilityCheckInfoScreen
     }
   },
   {

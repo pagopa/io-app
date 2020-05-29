@@ -20,3 +20,8 @@ export const navigateToActivateBonus = () =>
   NavigationActions.navigate({
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATE_BONUS
   });
+
+export const navigateToAsyncEligibility = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.TIMEOUT
+  });

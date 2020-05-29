@@ -2,9 +2,9 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import I18n from "../../../i18n";
-import { FooterTwoButtons } from "../components/markdown/FooterTwoButtons";
-import { MarkdownBaseScreen } from "../components/markdown/MarkdownBaseScreen";
+import I18n from "../../../../i18n";
+import { FooterTwoButtons } from "../../components/markdown/FooterTwoButtons";
+import { MarkdownBaseScreen } from "../../components/markdown/MarkdownBaseScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 

@@ -3,19 +3,20 @@ import * as React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Action, Dispatch } from "redux";
-import I18n from "../../../i18n";
-import { GlobalState } from "../../../store/reducers/types";
-import { BaseLoadingErrorScreen } from "../components/loadingErrorScreen/BaseLoadingErrorScreen";
+import { RTron } from "../../../../boot/configureStoreAndPersistor";
+import I18n from "../../../../i18n";
+import { GlobalState } from "../../../../store/reducers/types";
+import { BaseLoadingErrorScreen } from "../../components/loadingErrorScreen/BaseLoadingErrorScreen";
 import {
   navigateToActivateBonus,
   navigateToIseeNotAvailable,
   navigateToIseeNotEligible
-} from "../navigation/action";
-import { checkBonusEligibility } from "../store/actions/bonusVacanze";
+} from "../../navigation/action";
+import { checkBonusEligibility } from "../../store/actions/bonusVacanze";
 import {
   eligibilityCheckRequestProgress,
   EligibilityRequestProgressEnum
-} from "../store/reducers/eligibility";
+} from "../../store/reducers/eligibility";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -45,6 +46,8 @@ const handleEligibilityProgress = (props: Props) => {
  */
 const CheckBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   useEffect(() => {
+    RTron.log("MOUNT");
+    // TODO: remove from here, all the stack is loaded at the start
     props.checkEligibility();
   }, []);
 
