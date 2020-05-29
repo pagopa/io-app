@@ -6,7 +6,7 @@ import { shufflePinPadOnPayment } from "../../../../config";
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { GlobalState } from "../../../../store/reducers/types";
-import { mockedIseeFamilyMembers } from "../../mock/mockData";
+import { mockedElegibilityCheck } from "../../mock/mockData";
 import { ActivateBonusComponent } from "./ActivateBonusComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -72,10 +72,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (_: GlobalState) => ({
   // TODO: link with the right reducer
-  bonusAmount: 500,
-  taxBenefit: 5000,
+  bonusAmount: mockedElegibilityCheck.max_amount,
+  taxBenefit: mockedElegibilityCheck.max_tax_benefit,
   // TODO: link with the right reducer
-  familyMembers: mockedIseeFamilyMembers
+  familyMembers: mockedElegibilityCheck.family_members
 });
 
 export default connect(
