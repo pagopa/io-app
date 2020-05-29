@@ -1,8 +1,12 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { List, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
+import ListItemComponent from "../../../components/screens/ListItemComponent";
 import ScreenContent from "../../../components/screens/ScreenContent";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
@@ -11,14 +15,19 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
-import { BonusStatusEnum, BonusVacanzaMock } from "../mock/mockData";
 import { mockedIseeFamilyMembers } from "../mock/mockData";
+import { BonusStatusEnum, BonusVacanze } from "../types/bonusVacanze";
 import { FamilyMember } from "../types/eligibility";
-import ListItemComponent from "../../../components/screens/ListItemComponent";
-import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
+import { validityInterval } from "../utils/bonus";
+
+type QRCodeContents = {
+  [key: string]: string;
+};
 
 type NavigationParams = Readonly<{
-  bonus: BonusVacanzaMock;
+  bonus: BonusVacanze;
+  validFrom?: Date;
+  validTo?: Date;
 }>;
 
 type Props = NavigationInjectedProps<NavigationParams>;
@@ -43,12 +52,44 @@ const styles = StyleSheet.create({
   }
 });
 
+const renderQRCode = (base64: string) =>
+  fromNullable(base64).fold(null, s => (
+    <SvgXml xml={s} height="100%" width="100%" />
+  ));
+
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
+  const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
+
   const bonus = props.navigation.getParam("bonus");
-  const bonusValidityInterval = `${formatDateAsLocal(
-    bonus.valid_from,
-    true
-  )} - ${formatDateAsLocal(bonus.valid_to, true)}`;
+  const validFrom = props.navigation.getParam("validFrom");
+  const validTo = props.navigation.getParam("validTo");
+
+  React.useEffect(() => {
+    async function readBase64Svg() {
+      const barCodeContents = await new Promise<QRCodeContents>((res, _) => {
+        const attchs: ReadonlyArray<BonusVacanze["qr_code"]> = [
+          { ...bonus.qr_code }
+        ];
+        const content = attchs.reduce<QRCodeContents>(
+          (acc: QRCodeContents, curr: BonusVacanze["qr_code"]) => {
+            return {
+              ...acc,
+              [curr.mime_type]: Buffer.from(
+                curr.base64_content,
+                "base64"
+              ).toString("ascii")
+            };
+          },
+          {}
+        );
+        res(content);
+      });
+      setQRCode(barCodeContents);
+    }
+    readBase64Svg();
+  }, []);
+
+  const bonusValidityInterval = validityInterval(validFrom, validTo);
 
   const status =
     bonus.status === BonusStatusEnum.ACTIVE
@@ -61,12 +102,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         title={I18n.t("bonus.latestBonus")}
         subtitle={`${status} ${formatDateAsLocal(bonus.updated_at, true)}`}
       >
-        <Image
-          style={styles.image}
-          source={{
-            uri: `data:image/png;base64,${bonus.qrCode.base64_content}`
-          }}
-        />
+        <View style={styles.image}>
+          {renderQRCode(qrCode[bonus.qr_code.mime_type])}
+        </View>
         <Text style={styles.code}>{bonus.code}</Text>
         <View spacer={true} />
         <View style={styles.paddedContent}>
@@ -78,7 +116,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           <View style={styles.rowBlock}>
             <Text bold={true}>{I18n.t("bonus.bonusVacanza.taxBenefit")}</Text>
-            <Text>{formatNumberAmount(centsToAmount(bonus.tax_benefit))}</Text>
+            <Text>
+              {formatNumberAmount(centsToAmount(bonus.max_tax_benefit))}
+            </Text>
           </View>
           <View style={styles.rowBlock}>
             <Text bold={true}>{I18n.t("bonus.bonusVacanza.validity")}</Text>
