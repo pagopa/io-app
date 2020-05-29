@@ -1241,7 +1241,7 @@ bonus:
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:
-      requestBonus: Request the bonus
+      requestBonus: Request
     iseeNotAvailable:
       title: ISEE not available
       subtitle: ISEE not found for the user
@@ -1252,7 +1252,7 @@ bonus:
       subtitle: The ISEE submitted does not meet the requirements
       text: !include bonus/bonusVacanze/iseeNotEligible.md
   bonusList:
-    title: Bonus disponibili
+    title: Available bonuses
     contentTitle: Select one of the available bonus
   request: Request a new bonus
   latestBonus: Your active bonuses

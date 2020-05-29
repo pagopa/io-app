@@ -1274,7 +1274,7 @@ bonus:
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:
-      requestBonus: Richiedi il bonus
+      requestBonus: Richiedi
     iseeNotAvailable:
       title: ISEE not trovato
       subtitle: Non è disponibile nessun ISEE per l'utente
