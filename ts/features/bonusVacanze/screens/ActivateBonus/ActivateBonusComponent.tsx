@@ -13,6 +13,7 @@ import { FamilyMember } from "../../types/eligibility";
 type Props = {
   familyMembers: ReadonlyArray<FamilyMember>;
   bonusAmount: number;
+  taxBenefit: number;
   onCancel: () => void;
   onRequestBonus: () => void;
 };
@@ -68,7 +69,8 @@ const renderFamilyMembersList = (
  */
 export const ActivateBonusComponent: React.FunctionComponent<Props> = props => {
   const description = I18n.t("bonus.bonusVacanza.activateBonus.description", {
-    amount: formatNumberCentsToAmount(props.bonusAmount, true)
+    amount: formatNumberCentsToAmount(props.bonusAmount, true),
+    taxBenefit: formatNumberCentsToAmount(props.taxBenefit, true)
   });
 
   return (

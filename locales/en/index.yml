@@ -1251,7 +1251,7 @@ bonus:
       text: !include bonus/bonusVacanze/iseeNotEligible.md
     activateBonus:
       title: Activate the bonus
-      description: You can activate a {{amount}} € bonus
+      description: You can activate a {{amount}} bonus. Your tax discount is equal to {{taxBenefit}}
   bonusList:
     title: Available bonuses
     contentTitle: Select one of the available bonus
