@@ -19,10 +19,12 @@ export const BonusVacanzeT = t.interface({
   id: t.string,
   applicant_fiscal_code: FiscalCode,
   code: t.string,
-  qr_code: t.interface({
-    mime_type: t.string,
-    base64_content: t.string
-  }),
+  qr_code: t.readonlyArray(
+    t.interface({
+      mime_type: t.string,
+      base64_content: t.string
+    })
+  ),
   max_amount: NonNegativeInteger,
   max_tax_benefit: NonNegativeInteger,
   updated_at: Timestamp,
