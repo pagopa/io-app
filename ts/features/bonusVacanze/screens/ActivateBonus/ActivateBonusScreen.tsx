@@ -25,8 +25,8 @@ const ActivateBonusScreen: React.FunctionComponent<Props> = props => {
     <ActivateBonusComponent
       onCancel={props.onCancel}
       onRequestBonus={props.onActivateBonus}
-      bonusAmount={props.bonusVacanze.max_amount}
-      taxBenefit={props.bonusVacanze.tax_benefit}
+      bonusAmount={props.bonusAmount}
+      taxBenefit={props.taxBenefit}
       familyMembers={props.familyMembers}
     />
   );
@@ -72,7 +72,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (_: GlobalState) => ({
   // TODO: link with the right reducer
-  bonusVacanze: mockedBonus,
+  bonusAmount: 500,
+  taxBenefit: 5000,
   // TODO: link with the right reducer
   familyMembers: mockedIseeFamilyMembers
 });
