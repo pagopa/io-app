@@ -15,10 +15,8 @@ import {
 import { checkBonusEligibility } from "../store/actions/bonusVacanze";
 import {
   eligibilityCheckRequestProgress,
-  eligibilityOutcome,
-  EligibilityOutcome,
   EligibilityRequestProgressEnum
-} from "../store/reducers/bonusVacanze";
+} from "../store/reducers/eligibility";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -28,9 +26,9 @@ const loadingCaption = I18n.t(
 );
 
 const validResults = new Map([
-  [EligibilityOutcome.ELIGIBLE, navigateToActivateBonus],
-  [EligibilityOutcome.INELIGIBLE, navigateToIseeNotEligible],
-  [EligibilityOutcome.ISEE_NOT_FOUND, navigateToIseeNotAvailable]
+  [EligibilityRequestProgressEnum.ELIGIBLE, navigateToActivateBonus],
+  [EligibilityRequestProgressEnum.INELIGIBLE, navigateToIseeNotEligible],
+  [EligibilityRequestProgressEnum.ISEE_NOT_FOUND, navigateToIseeNotAvailable]
 ]);
 
 const handleEligibilityProgress = (props: Props) => {
@@ -88,7 +86,9 @@ const mapStateToProps = (globalState: GlobalState) => ({
     true,
     progress => progress !== EligibilityRequestProgressEnum.ERROR
   ),
-  eligibilityOutcome: eligibilityOutcome(globalState)
+  eligibilityOutcome: eligibilityCheckRequestProgress(globalState).getOrElse(
+    EligibilityRequestProgressEnum.UNDEFINED
+  )
 });
 
 export default connect(

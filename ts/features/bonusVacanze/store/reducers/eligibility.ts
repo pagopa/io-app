@@ -11,12 +11,13 @@ import {
 } from "../actions/bonusVacanze";
 
 export enum EligibilityRequestProgressEnum {
-  "PENDING" = "PENDING", // running
-  "ERROR" = "ERROR", // generic error / network error
-  "POLLING_STARTED" = "POLLING_STARTED",
-  "POLLING_EXCEEDED" = "POLLING_EXCEEDED", // stop polling when threshold is exceeded
-  "POLLING_ABORTED" = "POLLING_ABORTED", // canceled by the user
-  "COMPLETE" = "COMPLETE" // we got the isee result
+  "UNDEFINED" = "UNDEFINED",
+  "PROGRESS" = "PROGRESS", // The request is started
+  "ELIGIBLE" = "ELIGIBLE", // possible outcome
+  "INELIGIBLE" = "INELIGIBLE", // possible outcome
+  "ISEE_NOT_FOUND" = "ISEE_NOT_FOUND", // possible outcome
+  "TIMEOUT" = "TIMEOUT", // too long to complete the request
+  "ERROR" = "ERROR" // generic error / network error
 }
 
 export type EligibilityState = Readonly<{
