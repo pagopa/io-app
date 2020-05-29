@@ -341,7 +341,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
       >
-        {this.paymentsIssueBanner()}
+        {this.renderHelpMessage()}
         <View spacer={true} large={true} />
         <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
           {I18n.t("wallet.transactionsLoadFailure")}
