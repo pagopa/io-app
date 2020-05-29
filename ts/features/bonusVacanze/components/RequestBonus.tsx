@@ -6,13 +6,13 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import H5 from "../../../components/ui/H5";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { BonusVacanzaMock } from "../mock/mockData";
+import { BonusVacanze } from "../types/bonusVacanze";
 import ActiveBonus from "./ActiveBonus";
 
 type OwnProps = {
   onButtonPress: () => void;
-  onBonusPress: (bonus: BonusVacanzaMock) => void;
-  bonus: pot.Pot<BonusVacanzaMock, Error>;
+  onBonusPress: (bonus: BonusVacanze) => void;
+  bonus: pot.Pot<BonusVacanze, Error>;
 };
 
 const styles = StyleSheet.create({

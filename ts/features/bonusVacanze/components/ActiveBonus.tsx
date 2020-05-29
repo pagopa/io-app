@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -7,11 +8,13 @@ import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
-import { BonusVacanzaMock } from "../mock/mockData";
+import { BonusVacanze } from "../types/bonusVacanze";
 
 type Props = {
-  bonus: BonusVacanzaMock;
-  onPress: (bonus: BonusVacanzaMock) => void;
+  bonus: BonusVacanze;
+  validFrom?: Date;
+  validTo?: Date;
+  onPress: (bonus: BonusVacanze) => void;
 };
 
 const ICON_WIDTH = 24;
@@ -58,28 +61,34 @@ const styles = StyleSheet.create({
  * in the store
  */
 const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
-  const bonusValidityInterval = `${formatDateAsLocal(
-    props.bonus.valid_from,
-    true
-  )} - ${formatDateAsLocal(props.bonus.valid_to, true)}`;
+  const bonusValidityInterval = fromNullable(props.validFrom)
+    .map(vf => formatDateAsLocal(vf, true))
+    .chain(vfs =>
+      fromNullable(props.validTo)
+        .map(vt => formatDateAsLocal(vt, true))
+        .map(vts => `${vfs} - ${vts}`)
+    )
+    .fold(undefined, _ => _);
 
   return (
     <TouchableDefaultOpacity onPress={() => props.onPress(props.bonus)}>
-      <View style={styles.spaced}>
-        <Text small={true}>{`${I18n.t(
-          "bonus.bonusVacanza.validity"
-        )} ${bonusValidityInterval}`}</Text>
-        <Text bold={true} style={styles.text12}>
-          {formatNumberCentsToAmount(props.bonus.max_amount)}
-        </Text>
-      </View>
+      {bonusValidityInterval && (
+        <View style={styles.spaced}>
+          <Text small={true}>{`${I18n.t(
+            "bonus.bonusVacanza.validity"
+          )} ${bonusValidityInterval}`}</Text>
+          <Text bold={true} style={styles.text12}>
+            {formatNumberCentsToAmount(props.bonus.max_amount)}
+          </Text>
+        </View>
+      )}
       <View small={true} />
       <View style={styles.spaced}>
         <Text small={true} dark={true}>
           {I18n.t("bonus.bonusVacanza.taxBenefit")}
         </Text>
         <Text bold={true} style={styles.text12}>
-          {formatNumberCentsToAmount(props.bonus.tax_benefit)}
+          {formatNumberCentsToAmount(props.bonus.max_tax_benefit)}
         </Text>
       </View>
       <View style={styles.smallSpacer} />
