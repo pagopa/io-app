@@ -1285,7 +1285,7 @@ bonus:
       subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
       text: !include bonus/bonusVacanze/iseeNotEligible.md
     activateBonus:
-      title: Attiva il bonus
+      title: Attiva
       description: Puoi attivare un bonus di {{amount}}. Il tuo sconto sulle tasse è pari a {{taxBenefit}}
   bonusList:
     title: Bonus disponibili
