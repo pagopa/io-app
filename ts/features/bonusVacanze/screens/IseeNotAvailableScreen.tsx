@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
+
 import I18n from "../../../i18n";
 import { FooterTwoButtons } from "../components/markdown/FooterTwoButtons";
 import { MarkdownBaseScreen } from "../components/markdown/MarkdownBaseScreen";
@@ -42,13 +42,9 @@ const IseeNotAvailableScreen: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (_: Dispatch) => ({
   // TODO: link with the right dispatch action
-  onCancel: () => {
-    RTron.log("CANCEL");
-  },
+  onCancel: () => undefined,
   // TODO: link with the right dispatch action
-  onGoToINPSWebsite: () => {
-    RTron.log("GOTO INPS");
-  }
+  onGoToINPSWebsite: () => undefined
 });
 
 export default connect(mapDispatchToProps)(IseeNotAvailableScreen);

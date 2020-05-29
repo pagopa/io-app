@@ -3,7 +3,6 @@ import * as React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Action, Dispatch } from "redux";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { BaseLoadingErrorScreen } from "../components/loadingErrorScreen/BaseLoadingErrorScreen";
@@ -32,7 +31,6 @@ const validResults = new Map([
 ]);
 
 const handleEligibilityProgress = (props: Props) => {
-  RTron.log("change OUTCOME", props.eligibilityOutcome);
   fromNullable(validResults.get(props.eligibilityOutcome)).map(
     nextNavigationAction => props.onNavigate(nextNavigationAction())
   );
@@ -47,7 +45,6 @@ const handleEligibilityProgress = (props: Props) => {
  */
 const CheckBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   useEffect(() => {
-    RTron.log("mount");
     props.checkEligibility();
   }, []);
 
@@ -71,9 +68,7 @@ const CheckBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   checkEligibility: () => dispatch(checkBonusEligibility.request()),
   // TODO: link with the right dispatch action, will dispatch the cancel request
-  onCancel: () => {
-    RTron.log("CANCEL");
-  },
+  onCancel: () => undefined,
   onRetry: () => {
     dispatch(checkBonusEligibility.request());
   },

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { RTron } from "../../../../boot/configureStoreAndPersistor";
 import { shufflePinPadOnPayment } from "../../../../config";
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
@@ -58,14 +57,11 @@ const requestIdentification = (dispatch: Dispatch) => {
 
 const onIdentificationSuccess = () => {
   // TODO: link with the business logic that dispatch the activation to backend
-  RTron.log("IdentificationSuccess");
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: link with the right dispatch action
-  onCancel: () => {
-    RTron.log("CANCEL");
-  },
+  onCancel: () => undefined,
   // When the user choose to activate the bonus, verify the identification
   onActivateBonus: () => requestIdentification(dispatch)
 });
