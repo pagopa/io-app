@@ -6,7 +6,7 @@ import { shufflePinPadOnPayment } from "../../../../config";
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { GlobalState } from "../../../../store/reducers/types";
-import { mockedBonus, mockedIseeFamilyMembers } from "../../mock/mockData";
+import { mockedIseeFamilyMembers } from "../../mock/mockData";
 import { ActivateBonusComponent } from "./ActivateBonusComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
