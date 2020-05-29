@@ -316,7 +316,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     );
   }
 
-  private paymentsIssueBanner = (
+  private renderHelpMessage = (
     alignCenter: boolean = false
   ): React.ReactNode => (
     <React.Fragment>
@@ -367,7 +367,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     return (
       <Content scrollEnabled={false} noPadded={true}>
         <View style={styles.emptyListWrapper}>
-          {potPayments.length > 0 && this.paymentsIssueBanner(true)}
+          {potPayments.length > 0 && this.renderHelpMessage(true)}
           <Text style={styles.emptyListContentTitle}>
             {I18n.t("wallet.noTransactionsInWalletHome")}
           </Text>
@@ -393,7 +393,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         amount={I18n.t("wallet.amount")}
         transactions={potTransactions}
         helpMessage={
-          potPayments.length > 0 ? this.paymentsIssueBanner() : undefined
+          potPayments.length > 0 ? this.renderHelpMessage() : undefined
         }
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
