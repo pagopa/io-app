@@ -1,7 +1,7 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
-import { call, put } from "redux-saga/effects";
+import { call, put, all } from "redux-saga/effects";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { startTimer } from "../../../../utils/timer";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
@@ -45,15 +45,17 @@ function* checkBonusEligibilitySaga(
     if (eligibilityCheckResult.isRight()) {
       // we got the check result
       if (eligibilityCheckResult.value.status === 200) {
-        yield put(
-          eligibilityRequestProgress(
-            eligibilityResultToEnum(eligibilityCheckResult.value.value.status)
+        yield all([
+          put(
+            checkBonusEligibility.success(eligibilityCheckResult.value.value)
+          ),
+          put(
+            eligibilityRequestProgress(
+              eligibilityResultToEnum(eligibilityCheckResult.value.value.status)
+            )
           )
-        );
+        ]);
 
-        yield put(
-          checkBonusEligibility.success(eligibilityCheckResult.value.value)
-        );
         return true;
       }
       return false;
@@ -62,7 +64,12 @@ function* checkBonusEligibilitySaga(
       throw Error(readableReport(eligibilityCheckResult.value));
     }
   } catch (e) {
-    yield put(checkBonusEligibility.failure(e));
+    yield all([
+      // TODO: atm the error of this call are hidden by the pooling phase.
+      //  What to do when an error occurs here?
+      // put(eligibilityRequestProgress(EligibilityRequestProgressEnum.ERROR)),
+      put(checkBonusEligibility.failure(e))
+    ]);
     return false;
   }
 }
@@ -124,7 +131,9 @@ export function* startBonusEligibilitySaga(
       throw Error(readableReport(startEligibilityResult.value));
     }
   } catch (e) {
-    yield put(eligibilityRequestProgress(EligibilityRequestProgressEnum.ERROR));
-    yield put(checkBonusEligibility.failure(e));
+    yield all([
+      put(eligibilityRequestProgress(EligibilityRequestProgressEnum.ERROR)),
+      put(checkBonusEligibility.failure(e))
+    ]);
   }
 }
