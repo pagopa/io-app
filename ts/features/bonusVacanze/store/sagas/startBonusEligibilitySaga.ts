@@ -1,7 +1,7 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
-import { call, put, all } from "redux-saga/effects";
+import { all, call, put } from "redux-saga/effects";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { startTimer } from "../../../../utils/timer";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
