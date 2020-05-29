@@ -1271,7 +1271,7 @@ bonus:
   bonusVacanza:
     validity: Valido nel periodo
     taxBenefit: Beneficio fiscale
-    familyMembers: "Il bonus è vaildo per il seguente nucleo familiare:"
+    applicant: Codice fiscale richiedente
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:

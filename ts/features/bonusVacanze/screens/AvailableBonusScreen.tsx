@@ -22,7 +22,7 @@ import ActiveBonus from "../components/ActiveBonus";
 import AvailableBonusItem from "../components/AvailableBonusItem";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../store/reducers/availableBonuses";
-import { bonusVacanzeSelector } from "../store/reducers/bonusVacanze";
+import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanze";
 import { BonusItem } from "../types/bonusList";
 import { BonusVacanze } from "../types/bonusVacanze";
 import { ID_BONUS_VACANZE_TYPE, isBonusActive } from "../utils/bonus";
@@ -124,7 +124,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 const mapStateToProps = (state: GlobalState) => {
   const potAvailableBonuses = availableBonusesSelector(state);
   return {
-    activeBonus: bonusVacanzeSelector(state),
+    activeBonus: bonusVacanzeActivationSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
     isLoading: pot.isLoading(potAvailableBonuses),
     isError: pot.isError(potAvailableBonuses)

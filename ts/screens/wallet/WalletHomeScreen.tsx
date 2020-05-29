@@ -25,7 +25,12 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled } from "../../config";
 import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
-import { mockedBonus } from "../../features/bonusVacanze/mock/mockData";
+import {
+  availableBonusesLoad,
+  loadBonusVacanzeFromId
+} from "../../features/bonusVacanze/store/actions/bonusVacanze";
+import { availableBonusesSelector } from "../../features/bonusVacanze/store/reducers/availableBonuses";
+import { bonusVacanzeActivationSelector } from "../../features/bonusVacanze/store/reducers/bonusVacanze";
 import { BonusVacanze } from "../../features/bonusVacanze/types/bonusVacanze";
 import I18n from "../../i18n";
 import {
@@ -63,12 +68,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { availableBonusesSelector } from "../../features/bonusVacanze/store/reducers/availableBonuses";
-import {
-  availableBonusesLoad,
-  loadBonusVacanzeFromId
-} from "../../features/bonusVacanze/store/actions/bonusVacanze";
-import { bonusVacanzeSelector } from "../../features/bonusVacanze/store/reducers/bonusVacanze";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -535,7 +534,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   const potAvailableBonuses = availableBonusesSelector(state);
   return {
-    currentActiveBonus: bonusVacanzeSelector(state),
+    currentActiveBonus: bonusVacanzeActivationSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),

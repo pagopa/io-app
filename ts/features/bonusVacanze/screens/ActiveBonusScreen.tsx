@@ -1,12 +1,11 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { List, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
-import ListItemComponent from "../../../components/screens/ListItemComponent";
 import ScreenContent from "../../../components/screens/ScreenContent";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
@@ -15,9 +14,7 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
-import { mockedIseeFamilyMembers } from "../mock/mockData";
 import { BonusStatusEnum, BonusVacanze } from "../types/bonusVacanze";
-import { FamilyMember } from "../types/eligibility";
 import { validityInterval } from "../utils/bonus";
 
 type QRCodeContents = {
@@ -29,6 +26,8 @@ type NavigationParams = Readonly<{
   validFrom?: Date;
   validTo?: Date;
 }>;
+
+const QR_CODE_MIME_TYPE = "svg+xml";
 
 type Props = NavigationInjectedProps<NavigationParams>;
 
@@ -67,11 +66,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   React.useEffect(() => {
     async function readBase64Svg() {
       const barCodeContents = await new Promise<QRCodeContents>((res, _) => {
-        const attchs: ReadonlyArray<BonusVacanze["qr_code"]> = [
-          { ...bonus.qr_code }
-        ];
-        const content = attchs.reduce<QRCodeContents>(
-          (acc: QRCodeContents, curr: BonusVacanze["qr_code"]) => {
+        const qrCodes: BonusVacanze["qr_code"] = [...bonus.qr_code];
+        const content = qrCodes.reduce<QRCodeContents>(
+          (acc: QRCodeContents, curr: BonusVacanze["qr_code"][0]) => {
             return {
               ...acc,
               [curr.mime_type]: Buffer.from(
@@ -103,7 +100,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         subtitle={`${status} ${formatDateAsLocal(bonus.updated_at, true)}`}
       >
         <View style={styles.image}>
-          {renderQRCode(qrCode[bonus.qr_code.mime_type])}
+          {renderQRCode(qrCode[QR_CODE_MIME_TYPE])}
         </View>
         <Text style={styles.code}>{bonus.code}</Text>
         <View spacer={true} />
@@ -125,23 +122,10 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             <Text>{bonusValidityInterval}</Text>
           </View>
           <View spacer={true} />
-          <Text bold={true}>{I18n.t("bonus.bonusVacanza.familyMembers")}</Text>
-          <List>
-            {mockedIseeFamilyMembers
-              .map(
-                (familyMember: FamilyMember) =>
-                  `${familyMember.name} ${familyMember.surname} ${
-                    familyMember.fiscal_code
-                  }`
-              )
-              .map((displayName: string) => (
-                <ListItemComponent
-                  key={displayName}
-                  title={displayName}
-                  hideIcon={true}
-                />
-              ))}
-          </List>
+          <View style={styles.rowBlock}>
+            <Text bold={true}>{I18n.t("bonus.bonusVacanza.applicant")}</Text>
+            <Text>{bonus.applicant_fiscal_code}</Text>
+          </View>
         </View>
         <EdgeBorderComponent />
       </ScreenContent>

@@ -1238,7 +1238,7 @@ bonus:
   bonusVacanza:
     validity: Valid between
     taxBenefit: Tax benefit
-    familyMembers: "The bonus is valid for the following family members:"
+    applicant: Applicant fiscal code
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:
