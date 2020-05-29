@@ -11,19 +11,19 @@ import availableBonusesReducer, {
 import eligibilityReducer, { EligibilityState } from "./eligibility";
 
 // type alias
-type BonusVacanzeState = pot.Pot<BonusVacanze, Error>;
+type BonusVacanzeActivationState = pot.Pot<BonusVacanze, Error>;
 
 export type BonusState = Readonly<{
   availableBonuses: AvailableBonusesState;
   eligibility: EligibilityState;
-  bonusVacanze: BonusVacanzeState;
+  bonusVacanzeActivation: BonusVacanzeActivationState;
 }>;
 
 // bonus reducer
-const bonusReducer = (
-  state: BonusVacanzeState = pot.none,
+const bonusVacanzeActivationReducer = (
+  state: BonusVacanzeActivationState = pot.none,
   action: Action
-): BonusVacanzeState => {
+): BonusVacanzeActivationState => {
   switch (action.type) {
     // available bonuses
     case getType(loadBonusVacanzeFromId.request):
@@ -39,13 +39,12 @@ const bonusReducer = (
 const reducer = combineReducers<BonusState, Action>({
   availableBonuses: availableBonusesReducer,
   eligibility: eligibilityReducer,
-  bonusVacanze: bonusReducer
+  bonusVacanzeActivation: bonusVacanzeActivationReducer
 });
 
-// Selector
 // Selectors
-export const bonusVacanzeSelector = (
+export const bonusVacanzeActivationSelector = (
   state: GlobalState
-): pot.Pot<BonusVacanze, Error> => state.bonus.bonusVacanze;
+): pot.Pot<BonusVacanze, Error> => state.bonus.bonusVacanzeActivation;
 
 export default reducer;
