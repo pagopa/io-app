@@ -546,7 +546,6 @@ payment:
       dateAndTime: Data e ora
       paymentAmount: Importo pagamento
       transactionCosts: Costi di transazione
-      totalPaid: Totale pagato
       transactionCode: Codice identificativo della transazione
       help: Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli
     list:
@@ -1271,9 +1270,29 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    validity: Valido nel periodo
+    taxBenefit: Beneficio fiscale
     checkBonusEligibility:
-      loading: Verifico l'idoneità per l'accesso al bonus 
+      loading: Verifico l'idoneità per l'accesso al bonus
+    iseeNotAvailable:
+      title: ISEE not trovato
+      subtitle: Non è disponibile nessun ISEE per l'utente
+      text: !include bonus/bonusVacanze/iseeNotAvailable.md
+      goToINPSWebsite: Vai al sito INPS
+    iseeNotEligible:
+      title: ISEE not idoneo
+      subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
+      text: !include bonus/bonusVacanze/iseeNotEligible.md
+    activateBonus:
+      title: Attiva il bonus
+      description: Puoi attivare un bonus di {{amount}}. Il tuo sconto sulle tasse è pari a {{taxBenefit}}
+  bonusList:
+    title: Bonus disponibili
+    contentTitle: Seleziona uno dei bonus disponibili
   request: Richiedi un nuovo bonus
   latestBonus: I tuoi bonus attivi
   active: Bonus attivo
   inactive: Bonus non attivo
+  tos:
+    title: Termini di servizio
+    content: !include bonus/bonusVacanze/bonus_tos.md

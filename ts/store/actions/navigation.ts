@@ -297,3 +297,16 @@ export const navigateToCieCardReaderScreen = (
     routeName: ROUTES.CIE_CARD_READER_SCREEN,
     params
   });
+
+/**
+ * BONUS
+ */
+export const navigateToAvailableBonusScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.BONUS_AVAILABLE_LIST
+  });
+
+export const navigateToBonusTosScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.BONUS_TOS_SCREEN
+  });

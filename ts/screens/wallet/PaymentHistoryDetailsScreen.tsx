@@ -1,8 +1,3 @@
-/**
- * Wallet home screen, with a list of recent transactions,
- * a "pay notice" button and payment methods info/button to
- * add new ones
- */
 import { fromNullable } from "fp-ts/lib/Option";
 import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -19,14 +14,18 @@ import {
   TypeLogs
 } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import CopyButtonComponent from "../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
-import { BadgeComponent } from "../../components/screens/BadgeComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import {
   getIuv,
   getPaymentHistoryInfo
 } from "../../components/wallet/PaymentsHistoryList";
+import {
+  paymentStatusType,
+  PaymentSummaryComponent
+} from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
 import {
@@ -37,7 +36,6 @@ import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
-import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
 import { maybeInnerProperty } from "../../utils/options";
 import { getPaymentHistoryDetails } from "../../utils/payment";
@@ -47,101 +45,23 @@ type NavigationParams = Readonly<{
   payment: PaymentHistory;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams> &
+type Props = NavigationInjectedProps<NavigationParams> &
   ReturnType<typeof mapStateToProps>;
 
-type Props = OwnProps;
-
 const styles = StyleSheet.create({
-  whiteContent: {
-    backgroundColor: customVariables.colorWhite,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderWidth: 1,
-    borderColor: customVariables.colorWhite,
-    flex: 1,
-    paddingTop: 10,
-    paddingLeft: 10,
-    paddingRight: 10
-  },
-  box: {
-    marginTop: 2,
-    marginBottom: 10,
-    flexDirection: "column",
-    justifyContent: "flex-start"
-  },
-  boxHelp: {
-    justifyContent: "center",
-    alignItems: "center"
+  flex: {
+    flex: 1
   },
   row: {
     flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  text2: {
-    color: customVariables.brandDarkestGray,
-    fontWeight: "700"
-  },
-  textHelp: {
-    textAlign: "center",
-    lineHeight: 17
-  },
-  textBig: { fontSize: 18 },
-  textBold: { fontWeight: "700" },
-  copyButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 0,
-    paddingBottom: 0,
-    height: 30,
-    backgroundColor: customVariables.colorWhite,
-    borderWidth: 1,
-    borderColor: customVariables.brandPrimary
-  },
-  copyButtonText: {
-    paddingRight: 15,
-    paddingBottom: 0,
-    paddingLeft: 15,
-    fontSize: 14,
-    lineHeight: 20,
-    color: customVariables.brandPrimary
-  },
-  helpButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
-    flex: 5,
-    paddingTop: 0,
-    paddingBottom: 0,
-    height: 40,
-    backgroundColor: customVariables.colorWhite,
-    borderWidth: 1,
-    borderColor: customVariables.brandPrimary
-  },
-  helpButtonIcon: {
-    lineHeight: 24,
-    color: customVariables.brandPrimary
-  },
-  paymentOutcome: {
-    justifyContent: "flex-start",
-    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center"
   },
-  helpButtonText: {
-    paddingRight: 10,
-    paddingBottom: 0,
-    paddingLeft: 10,
-    fontSize: 14,
-    lineHeight: 20,
-    color: customVariables.brandPrimary
+  bigText: {
+    fontSize: 20,
+    lineHeight: 22
   },
-
-  text11: {
-    fontSize: 14,
-    paddingLeft: 8,
-    lineHeight: 18,
-    color: customVariables.brandDarkestGray
-  }
+  padded: { paddingHorizontal: customVariables.contentPadding }
 });
 
 const notAvailable = I18n.t("global.remoteStates.notAvailable");
@@ -176,19 +96,6 @@ const renderErrorTransactionMessage = (
  * Payment Details
  */
 class PaymentHistoryDetailsScreen extends React.Component<Props> {
-  private goBack = () => this.props.navigation.goBack();
-
-  private copyButton = (text: string) => (
-    <ButtonDefaultOpacity
-      onPress={() => clipboardSetStringWithFeedback(text)}
-      style={styles.copyButton}
-    >
-      <Text style={styles.copyButtonText}>
-        {I18n.t("payment.details.info.buttons.copy")}
-      </Text>
-    </ButtonDefaultOpacity>
-  );
-
   private instabugLogAndOpenReport = () => {
     Instabug.appendTags(["payment-support"]);
     pot.map(this.props.profile, p => {
@@ -200,33 +107,28 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     openInstabugBugReport();
   };
 
-  private helpButton = () => (
-    <ButtonDefaultOpacity
-      onPress={this.instabugLogAndOpenReport}
-      style={styles.helpButton}
-    >
-      <IconFont name={"io-messaggi"} style={styles.helpButtonIcon} />
-      <Text style={styles.helpButtonText}>
-        {I18n.t("payment.details.info.buttons.help")}
-      </Text>
-    </ButtonDefaultOpacity>
-  );
-  public render(): React.ReactNode {
+  private getData = () => {
     const payment = this.props.navigation.getParam("payment");
+
     const paymentCheckout = isPaymentDoneSuccessfully(payment);
     const paymentInfo = getPaymentHistoryInfo(payment, paymentCheckout);
-    const paymentOutcomeDescription = paymentInfo.text11;
-    const paymentOutcomeColor = paymentInfo.color;
+    const paymentStatus: paymentStatusType = {
+      color: paymentInfo.color,
+      description: paymentInfo.text11
+    };
     const errorDetail = fromNullable(
       renderErrorTransactionMessage(payment.failure)
     );
-    const paymentOutCome = isPaymentDoneSuccessfully(payment);
-    const datetime: string = `${formatDateAsLocal(
+
+    const paymentOutcome = isPaymentDoneSuccessfully(payment);
+
+    const dateTime: string = `${formatDateAsLocal(
       new Date(payment.started_at),
       true,
       true
     )} - ${new Date(payment.started_at).toLocaleTimeString()}`;
-    const causaleVersamento = maybeInnerProperty<
+
+    const reason = maybeInnerProperty<
       PaymentRequestsGetResponse,
       "causaleVersamento",
       string
@@ -234,17 +136,21 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       notAvailable,
       cv => cv
     );
-    const creditore = maybeInnerProperty<Transaction, "merchant", string>(
+
+    const recipient = maybeInnerProperty<Transaction, "merchant", string>(
       payment.transaction,
       "merchant",
       m => m
     ).fold(notAvailable, c => c);
+
     const iuv = getIuv(payment.data);
+
     const amount = maybeInnerProperty<Transaction, "amount", number>(
       payment.transaction,
       "amount",
       m => m.amount
     );
+
     const grandTotal = maybeInnerProperty<Transaction, "grandTotal", number>(
       payment.transaction,
       "grandTotal",
@@ -255,135 +161,163 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       "id",
       m => m
     ).fold(notAvailable, id => `${id}`);
+
+    return {
+      recipient,
+      reason,
+      iuv,
+      paymentOutcome,
+      paymentInfo,
+      paymentStatus,
+      dateTime,
+      amount,
+      grandTotal,
+      errorDetail,
+      idTransaction
+    };
+  };
+
+  private standardRow = (label: string, value: string) => (
+    <View style={styles.row}>
+      <Text small={true} style={styles.flex}>
+        {label}
+      </Text>
+      <Text bold={true} dark={true}>
+        {value}
+      </Text>
+    </View>
+  );
+
+  private renderSeparator = () => (
+    <React.Fragment>
+      <View spacer={true} large={true} />
+      <ItemSeparatorComponent noPadded={true} />
+      <View spacer={true} large={true} />
+    </React.Fragment>
+  );
+
+  private renderHelper = () => {
+    return (
+      <View>
+        <Text small={true} alignCenter={true} style={styles.padded}>
+          {I18n.t("payment.details.info.help")}
+        </Text>
+        <View spacer={true} />
+        <ButtonDefaultOpacity
+          onPress={this.instabugLogAndOpenReport}
+          bordered={true}
+          block={true}
+        >
+          <IconFont name={"io-messaggi"} />
+          <Text>{I18n.t("payment.details.info.buttons.help")}</Text>
+        </ButtonDefaultOpacity>
+      </View>
+    );
+  };
+
+  public render(): React.ReactNode {
+    const data = this.getData();
+
     return (
       <BaseScreenComponent
-        goBack={this.goBack}
+        goBack={this.props.navigation.goBack}
         showInstabugChat={false}
         dark={true}
         headerTitle={I18n.t("payment.details.info.title")}
       >
-        <SlidedContentComponent>
-          <View style={styles.whiteContent}>
-            <View style={styles.box}>
-              <Text>{I18n.t("payment.details.info.title")}</Text>
-            </View>
-            <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} />
-            <View style={styles.paymentOutcome}>
-              <BadgeComponent color={paymentOutcomeColor} />
-              <Text style={styles.text11}>{paymentOutcomeDescription}</Text>
-            </View>
-            <View style={styles.box}>
-              {paymentOutCome.isSome() && paymentOutCome.value ? (
-                <React.Fragment>
-                  <View style={styles.box}>
-                    <Text small={true}>
-                      {I18n.t("payment.details.info.enteCreditore")}
-                    </Text>
-                    <Text style={styles.text2}>{creditore}</Text>
-                  </View>
-                  <View style={styles.box}>
-                    <Text small={true}>
-                      {I18n.t("payment.details.info.causaleVersamento")}
-                    </Text>
-                    <Text style={styles.text2}>{causaleVersamento}</Text>
-                  </View>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <View style={styles.box}>
-                    <Text small={true}>{I18n.t("payment.IUV")}</Text>
-                    <Text style={styles.text2}>{iuv}</Text>
-                  </View>
-                  {errorDetail.isSome() && (
-                    <View key={"error"} style={styles.box}>
-                      <Text small={true}>{I18n.t("payment.errorDetails")}</Text>
-                      <Text style={styles.text2}>{errorDetail.value}</Text>
-                    </View>
-                  )}
-                </React.Fragment>
+        <SlidedContentComponent hasFlatBottom={true}>
+          {data.paymentOutcome.isSome() && data.paymentOutcome.value ? (
+            <PaymentSummaryComponent
+              title={I18n.t("payment.details.info.title")}
+              recipient={data.recipient}
+              description={data.reason}
+              paymentStatus={data.paymentStatus}
+            />
+          ) : (
+            <React.Fragment>
+              <PaymentSummaryComponent
+                title={I18n.t("payment.details.info.title")}
+                iuv={data.iuv}
+                paymentStatus={data.paymentStatus}
+              />
+              {data.errorDetail.isSome() && (
+                <View key={"error"}>
+                  <Text small={true}>{I18n.t("payment.errorDetails")}</Text>
+                  <Text bold={true} dark={true}>
+                    {data.errorDetail.value}
+                  </Text>
+                </View>
               )}
+            </React.Fragment>
+          )}
 
-              <View style={styles.row}>
-                <Text small={true}>
-                  {I18n.t("payment.details.info.dateAndTime")}
-                </Text>
-                <Text style={styles.text2}>{datetime}</Text>
-              </View>
-            </View>
-            <ItemSeparatorComponent noPadded={true} />
-            {paymentOutCome.isSome() &&
-              paymentOutCome.value &&
-              amount.isSome() &&
-              grandTotal.isSome() && (
-                <React.Fragment>
-                  <View style={styles.box}>
-                    <View style={styles.row}>
-                      <Text small={true}>
-                        {I18n.t("payment.details.info.paymentAmount")}
-                      </Text>
-                      <Text style={styles.text2}>
-                        {formatNumberCentsToAmount(amount.value, true)}
-                      </Text>
-                    </View>
+          <View spacer={true} xsmall={true} />
+          <View spacer={true} large={true} />
+          {this.standardRow(
+            I18n.t("payment.details.info.dateAndTime"),
+            data.dateTime
+          )}
 
-                    <View style={styles.row}>
-                      <Text small={true}>
-                        {I18n.t("payment.details.info.transactionCosts")}
-                      </Text>
-                      <Text style={styles.text2}>
-                        {formatNumberCentsToAmount(
-                          grandTotal.value - amount.value,
-                          true
-                        )}
-                      </Text>
-                    </View>
-                    <View spacer={true} />
-                    <View style={styles.row}>
-                      <Text
-                        small={true}
-                        style={[styles.textBig, styles.textBold]}
-                      >
-                        {I18n.t("payment.details.info.totalPaid")}
-                      </Text>
-                      <Text style={[styles.text2, styles.textBig]}>
-                        {formatNumberCentsToAmount(grandTotal.value, true)}
-                      </Text>
-                    </View>
-                  </View>
+          {this.renderSeparator()}
 
-                  <ItemSeparatorComponent noPadded={true} />
+          {data.paymentOutcome.isSome() &&
+            data.paymentOutcome.value &&
+            data.amount.isSome() &&
+            data.grandTotal.isSome() && (
+              <React.Fragment>
+                {/** amount */}
+                {this.standardRow(
+                  I18n.t("wallet.firstTransactionSummary.amount"),
+                  formatNumberCentsToAmount(data.amount.value, true)
+                )}
 
+                {/** fee */}
+                {this.standardRow(
+                  I18n.t("wallet.firstTransactionSummary.fee"),
+                  formatNumberCentsToAmount(
+                    data.grandTotal.value - data.amount.value,
+                    true
+                  )
+                )}
+
+                <View spacer={true} />
+
+                {/** total amount */}
+                <View style={styles.row}>
+                  <Text
+                    style={[styles.bigText, styles.flex]}
+                    bold={true}
+                    dark={true}
+                    small={true}
+                  >
+                    {I18n.t("wallet.firstTransactionSummary.total")}
+                  </Text>
+                  <Text style={styles.bigText} bold={true} dark={true}>
+                    {formatNumberCentsToAmount(data.grandTotal.value, true)}
+                  </Text>
+                </View>
+
+                {this.renderSeparator()}
+
+                {/** Transaction id */}
+                <View>
+                  <Text>
+                    {I18n.t("wallet.firstTransactionSummary.idTransaction")}
+                  </Text>
                   <View style={styles.row}>
-                    <View style={styles.box}>
-                      <Text small={true}>
-                        {I18n.t("payment.details.info.transactionCode")}
-                      </Text>
-                      <Text style={styles.text2}>{idTransaction}</Text>
-                    </View>
-                    <View
-                      style={[
-                        styles.box,
-                        {
-                          justifyContent: "center",
-                          alignItems: "center"
-                        }
-                      ]}
-                    >
-                      {this.copyButton(`${idTransaction}`)}
-                    </View>
+                    <Text bold={true} dark={true}>
+                      {data.idTransaction}
+                    </Text>
+                    <CopyButtonComponent
+                      textToCopy={data.idTransaction.toString()}
+                    />
                   </View>
-                </React.Fragment>
-              )}
-            <View spacer={true} />
-            <View style={[styles.box, styles.boxHelp]}>
-              <Text small={true} style={styles.textHelp}>
-                {I18n.t("payment.details.info.help")}
-              </Text>
-              <View spacer={true} />
-              <View style={styles.row}>{this.helpButton()}</View>
-            </View>
-          </View>
+                </View>
+                <View spacer={true} extralarge={true} />
+              </React.Fragment>
+            )}
+
+          {this.renderHelper()}
         </SlidedContentComponent>
       </BaseScreenComponent>
     );

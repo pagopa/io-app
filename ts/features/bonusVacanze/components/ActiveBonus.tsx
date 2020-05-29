@@ -1,16 +1,20 @@
-import { Text } from "native-base";
+import { fromNullable } from "fp-ts/lib/Option";
+import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
-import { Bonus } from "../mock/mockData";
+import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { BonusVacanze } from "../types/bonusVacanze";
 
 type Props = {
-  bonus: any;
-  onPress: (bonus: Bonus) => void;
+  bonus: BonusVacanze;
+  validFrom?: Date;
+  validTo?: Date;
+  onPress: (bonus: BonusVacanze) => void;
 };
 
 const ICON_WIDTH = 24;
@@ -27,18 +31,6 @@ const styles = StyleSheet.create({
   },
   brandDarkGray: {
     color: customVariables.brandDarkGray
-  },
-  badgeContainer: {
-    flex: 0,
-    paddingRight: 8,
-    alignSelf: "flex-start",
-    paddingTop: 6.5
-  },
-  viewStyle: {
-    flexDirection: "row"
-  },
-  text11: {
-    color: customVariables.brandDarkestGray
   },
   text3: {
     fontSize: 18,
@@ -69,26 +61,42 @@ const styles = StyleSheet.create({
  * in the store
  */
 const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
+  const bonusValidityInterval = fromNullable(props.validFrom)
+    .map(vf => formatDateAsLocal(vf, true))
+    .chain(vfs =>
+      fromNullable(props.validTo)
+        .map(vt => formatDateAsLocal(vt, true))
+        .map(vts => `${vfs} - ${vts}`)
+    )
+    .fold(undefined, _ => _);
+
   return (
     <TouchableDefaultOpacity onPress={() => props.onPress(props.bonus)}>
+      {bonusValidityInterval && (
+        <View style={styles.spaced}>
+          <Text small={true}>{`${I18n.t(
+            "bonus.bonusVacanza.validity"
+          )} ${bonusValidityInterval}`}</Text>
+          <Text bold={true} style={styles.text12}>
+            {formatNumberCentsToAmount(props.bonus.max_amount)}
+          </Text>
+        </View>
+      )}
+      <View small={true} />
       <View style={styles.spaced}>
         <Text small={true} dark={true}>
-          {I18n.t("bonus.active")}
+          {I18n.t("bonus.bonusVacanza.taxBenefit")}
         </Text>
         <Text bold={true} style={styles.text12}>
-          {props.bonus.max_amount}
-        </Text>
-      </View>
-      <View style={styles.viewStyle}>
-        <Text xsmall={true}>
-          {formatDateAsLocal(props.bonus.activated_at, true, true)}
+          {formatNumberCentsToAmount(props.bonus.max_tax_benefit)}
         </Text>
       </View>
       <View style={styles.smallSpacer} />
       <View style={styles.text3Line}>
         <View style={styles.text3Container}>
           <Text numberOfLines={2} style={styles.text3}>
-            {props.bonus.type}
+            {/*TODO replace this hardcoded string*/}
+            {"Bonus Vacanze"}
           </Text>
         </View>
         <View style={styles.icon}>

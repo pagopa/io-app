@@ -13,6 +13,7 @@ const loadingCaption = I18n.t(
   "bonus.bonusVacanza.checkBonusEligibility.loading"
 );
 /**
+ * This screen is used during the check of the eligibility of the bonus.
  * This component link the generic {@link GenericLoadingErrorScreen} with the application flow using the {@link connect}
  * of redux.
  * @param props

@@ -219,8 +219,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
   private handleWillBlur = () => this.setState({ isFocused: false });
 
-  private scannerRef = React.createRef<QRCodeScanner>();
-
   private getFooterButtons = () => {
     const primaryButtonProps = {
       buttonFontSize: customVariables.btnFontSize - 1,
@@ -268,7 +266,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               onRead={(reading: { data: string }) =>
                 this.onQrCodeData(reading.data)
               }
-              ref={this.scannerRef}
+              ref={this.qrCodeScanner}
               containerStyle={styles.cameraContainer as any}
               showMarker={true}
               cameraStyle={styles.camera as any}
@@ -297,7 +295,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 </View>
               }
               // "captureAudio" enable/disable microphone permission
-              cameraProps={{ ratio: "1:1", captureAudio: false }}
+              cameraProps={{ captureAudio: false }}
               // "checkAndroid6Permissions" property enables permission checking for
               // Android versions greater than 6.0 (23+).
               checkAndroid6Permissions={true}
