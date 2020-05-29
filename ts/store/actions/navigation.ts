@@ -314,3 +314,9 @@ export const navigateToBonusRequestInformation = (
     routeName: ROUTES.BONUS_REQUEST_INFORMATION,
     params
   });
+
+export const navigateToBonusTosScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.BONUS_TOS_SCREEN
+  });
+

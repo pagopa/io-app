@@ -1,4 +1,5 @@
 import { createStackNavigator } from "react-navigation";
+import AcceptTosBonusScreen from "../features/bonusVacanze/screens/AcceptTosBonusScreen";
 import AvailableBonusScreen from "../features/bonusVacanze/screens/AvailableBonusScreen";
 import BonusInformationScreen from "../features/bonusVacanze/screens/BonusInformationScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
@@ -84,6 +85,9 @@ const WalletNavigator = createStackNavigator(
     },
     [ROUTES.BONUS_AVAILABLE_LIST]: {
       screen: AvailableBonusScreen
+    },
+    [ROUTES.BONUS_TOS_SCREEN]: {
+      screen: AcceptTosBonusScreen
     }
   },
   {

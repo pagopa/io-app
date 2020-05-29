@@ -1275,6 +1275,15 @@ bonus:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:
       requestBonus: Richiedi il bonus
+    iseeNotAvailable:
+      title: ISEE not trovato
+      subtitle: Non è disponibile nessun ISEE per l'utente
+      text: !include bonus/bonusVacanze/iseeNotAvailable.md
+      goToINPSWebsite: Vai al sito INPS
+    iseeNotEligible:
+      title: ISEE not idoneo
+      subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
+      text: !include bonus/bonusVacanze/iseeNotEligible.md
   bonusList:
     title: Bonus disponibili
     contentTitle: Seleziona uno dei bonus disponibili
@@ -1282,3 +1291,6 @@ bonus:
   latestBonus: I tuoi bonus attivi
   active: Bonus attivo
   inactive: Bonus non attivo
+  tos:
+    title: Termini di servizio
+    content: !include bonus/bonusVacanze/bonus_tos.md

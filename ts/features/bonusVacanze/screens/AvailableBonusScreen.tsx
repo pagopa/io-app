@@ -16,13 +16,14 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
+import { maybeInnerProperty } from "../../../utils/options";
 import ActiveBonus from "../components/ActiveBonus";
 import AvailableBonusItem from "../components/AvailableBonusItem";
 import { mockedBonus } from "../mock/mockData";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
-import { availableBonuses } from "../store/reducers/bonusVacanze";
-import { BonusItem, ID_TYPE_BONUS_VACANZE } from "../types/bonusList";
-import { isBonusActive } from "../utils/bonus";
+import { availableBonusesSelector } from "../store/reducers/availableBonuses";
+import { BonusItem } from "../types/bonusList";
+import { ID_BONUS_VACANZE_TYPE, isBonusActive } from "../utils/bonus";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -51,9 +52,24 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   private renderListItem = (info: ListRenderItemInfo<BonusItem>) => {
     const { activeBonus } = this.props;
     const item = info.item;
-    return item.id_type === ID_TYPE_BONUS_VACANZE &&
+    const bonusVacanzeCategory = this.props.availableBonusesList.items.find(
+      bi => bi.id_type === ID_BONUS_VACANZE_TYPE
+    );
+    const validFrom = maybeInnerProperty(
+      bonusVacanzeCategory,
+      "valid_from",
+      _ => _
+    ).fold(undefined, _ => _);
+    const validTo = maybeInnerProperty(
+      bonusVacanzeCategory,
+      "valid_to",
+      _ => _
+    ).fold(undefined, _ => _);
+    return item.id_type === ID_BONUS_VACANZE_TYPE &&
       pot.getOrElse(pot.map(activeBonus, b => isBonusActive(b)), false) ? (
       <ActiveBonus
+        validFrom={validFrom}
+        validTo={validTo}
         bonus={activeBonus.value}
         onPress={this.props.navigateToBonusDetail}
       />
@@ -101,7 +117,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potAvailableBonuses = availableBonuses(state);
+  const potAvailableBonuses = availableBonusesSelector(state);
   return {
     activeBonus: pot.some(mockedBonus),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
