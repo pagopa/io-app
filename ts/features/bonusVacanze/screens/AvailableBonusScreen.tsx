@@ -9,7 +9,10 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import I18n from "../../../i18n";
-import { navigateBack } from "../../../store/actions/navigation";
+import {
+  navigateBack,
+  navigateToBonusRequestInformation
+} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
@@ -73,7 +76,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     ) : (
       <AvailableBonusItem
         bonusItem={item}
-        onPress={this.props.navigateToBonusRequest}
+        onPress={() => this.props.navigateToBonusRequest(item)}
       />
     );
   };
@@ -127,7 +130,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
   loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
   // TODO Add the param to navigate to proper bonus by name (?)
-  navigateToBonusRequest: () => dispatch(navigateBack()),
+  navigateToBonusRequest: (bonusItem: BonusItem) =>
+    dispatch(navigateToBonusRequestInformation({ bonusItem })),
   // TODO Add the param to bonus detail if a bonus is already active
   navigateToBonusDetail: () => dispatch(navigateBack())
 });
