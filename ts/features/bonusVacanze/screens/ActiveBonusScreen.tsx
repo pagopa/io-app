@@ -4,17 +4,20 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
-import CopyButtonComponent from "../../../components/CopyButtonComponent";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import ScreenContent from "../../../components/screens/ScreenContent";
+import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
+import { shareBase64Content } from "../../../utils/share";
+import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
-import { BonusStatusEnum, BonusVacanze } from "../types/bonusVacanze";
+import { BonusStatusEnum, BonusVacanze } from "../types/bonusVacanzeActivation";
 import { validityInterval } from "../utils/bonus";
 
 type QRCodeContents = {
@@ -28,6 +31,7 @@ type NavigationParams = Readonly<{
 }>;
 
 const QR_CODE_MIME_TYPE = "svg+xml";
+const PNG_IMAGE_TYPE = "image/png";
 
 type Props = NavigationInjectedProps<NavigationParams>;
 
@@ -48,6 +52,9 @@ const styles = StyleSheet.create({
   paddedContent: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
+  },
+  helpButton: {
+    alignSelf: "center"
   }
 });
 
@@ -78,19 +85,34 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     });
   };
 
+  const shareQR = async (content: string, code: string) => {
+    const shared = await shareBase64Content(content, code).run();
+    if (shared.isLeft()) {
+      showToast(I18n.t("global.genericError"));
+    }
+  };
+
   React.useEffect(() => {
     async function readBase64Svg() {
       return new Promise<QRCodeContents>((res, _) => {
         const qrCodes: BonusVacanze["qr_code"] = [...bonus.qr_code];
         const content = qrCodes.reduce<QRCodeContents>(
           (acc: QRCodeContents, curr: BonusVacanze["qr_code"][0]) => {
-            return {
-              ...acc,
-              [curr.mime_type]: Buffer.from(
-                curr.base64_content,
-                "base64"
-              ).toString("ascii")
-            };
+            // for svg we need to convert base64 content to ascii to be rendered
+            if (curr.mime_type === QR_CODE_MIME_TYPE) {
+              return {
+                ...acc,
+                [curr.mime_type]: Buffer.from(
+                  curr.base64_content,
+                  "base64"
+                ).toString("ascii")
+              };
+            } else {
+              return {
+                ...acc,
+                [curr.mime_type]: curr.base64_content
+              };
+            }
           },
           {}
         );
@@ -112,7 +134,20 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           {renderQRCode(qrCode[QR_CODE_MIME_TYPE])}
         </View>
         <Text style={styles.code}>{bonus.code}</Text>
-        <CopyButtonComponent textToCopy={bonus.code} />
+        <ButtonDefaultOpacity
+          style={styles.helpButton}
+          transparent={true}
+          onPress={() =>
+            shareQR(
+              qrCode[PNG_IMAGE_TYPE],
+              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonus.code}`
+            )
+          }
+          activeOpacity={1}
+        >
+          <IconFont name="io-share" color={variables.brandPrimary} />
+        </ButtonDefaultOpacity>
+
         <View spacer={true} />
         <View style={styles.paddedContent}>
           {renderRow(I18n.t("bonus.bonusVacanza.status"), status)}

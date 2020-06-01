@@ -7,7 +7,7 @@ import {
   NonNegativeNumber
 } from "italia-ts-commons/lib/numbers";
 import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
-import { BonusStatusEnum, BonusVacanze } from "../types/bonusVacanze";
+import { BonusStatusEnum, BonusVacanze } from "../types/bonusVacanzeActivation";
 import {
   EligibilityCheck,
   EligibilityCheckStatusEnum
