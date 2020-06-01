@@ -3,7 +3,7 @@ import BONUSVACANZE_ROUTES from "./routes";
 
 export const navigateToBonusEligibilityLoading = () =>
   NavigationActions.navigate({
-    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK_LOADING
   });
 
 export const navigateToIseeNotEligible = () =>
@@ -24,4 +24,9 @@ export const navigateToActivateBonus = () =>
 export const navigateToTimeoutEligibilityCheck = () =>
   NavigationActions.navigate({
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.TIMEOUT
+  });
+
+export const navigateToActivationLoading = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_LOADING
   });

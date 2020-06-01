@@ -1296,6 +1296,8 @@ bonus:
       timeout:
         title: Verifica richiesta
         description: La verifica dell'idoneità per l'accesso al bonus è stata registrata. Riceverai un messaggio quando l'esito della tua richiesta sarà disponibile.
+      activate:
+        loading: Attivo il bonus
   bonusList:
     title: Bonus disponibili
     contentTitle: Seleziona uno dei bonus disponibili
