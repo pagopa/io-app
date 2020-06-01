@@ -3,7 +3,6 @@ import * as React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Action, Dispatch } from "redux";
-import { RTron } from "../../../../boot/configureStoreAndPersistor";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BaseLoadingErrorScreen } from "../../components/loadingErrorScreen/BaseLoadingErrorScreen";
@@ -46,7 +45,6 @@ const handleEligibilityProgress = (props: Props) => {
  */
 const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   useEffect(() => {
-    RTron.log("MOUNT");
     // TODO: remove from here, all the stack is loaded at the start
     props.checkEligibility();
   }, []);
