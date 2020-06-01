@@ -22,10 +22,14 @@ import ActiveBonus from "../components/ActiveBonus";
 import AvailableBonusItem from "../components/AvailableBonusItem";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../store/reducers/availableBonuses";
-import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeActivation";
+import {
+  bonusVacanzeActivationSelector,
+  canBonusVacanzeBeRequestedSelector
+} from "../store/reducers/bonusVacanzeActivation";
 import { BonusItem } from "../types/bonusList";
 import { BonusVacanze } from "../types/bonusVacanzeActivation";
 import { ID_BONUS_VACANZE_TYPE, isBonusActive } from "../utils/bonus";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -65,7 +69,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     ).fold(undefined, _ => _);
     return item.id_type === ID_BONUS_VACANZE_TYPE &&
       pot.isSome(activeBonus) &&
-      pot.getOrElse(pot.map(activeBonus, b => isBonusActive(b)), false) ? (
+      !this.props.canBonusBeRequested ? (
       <ActiveBonus
         validFrom={validFrom}
         validTo={validTo}
@@ -125,6 +129,7 @@ const mapStateToProps = (state: GlobalState) => {
   const potAvailableBonuses = availableBonusesSelector(state);
   return {
     activeBonus: bonusVacanzeActivationSelector(state),
+    canBonusBeRequested: canBonusVacanzeBeRequestedSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
     isLoading: pot.isLoading(potAvailableBonuses),
     isError: pot.isError(potAvailableBonuses)

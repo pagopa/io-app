@@ -30,19 +30,19 @@ const bonus: BonusVacanze = {
 describe("canBonusVacanzeBeRequestedSelector selector", () => {
   it("should return true when bonus doen't exist", () => {
     expect(
-      canBonusVacanzeBeRequestedSelector().resultFunc(pot.none)
+      canBonusVacanzeBeRequestedSelector.resultFunc(pot.none)
     ).toBeTruthy();
   });
 
   it("should return false when bonus exists and is active", () => {
     expect(
-      canBonusVacanzeBeRequestedSelector().resultFunc(pot.some(bonus))
+      canBonusVacanzeBeRequestedSelector.resultFunc(pot.some(bonus))
     ).toBeFalsy();
   });
 
   it("should return false when bonus exists and is consumed", () => {
     expect(
-      canBonusVacanzeBeRequestedSelector().resultFunc(
+      canBonusVacanzeBeRequestedSelector.resultFunc(
         pot.some({ ...bonus, status: BonusStatusEnum.CONSUMED })
       )
     ).toBeFalsy();
@@ -50,7 +50,7 @@ describe("canBonusVacanzeBeRequestedSelector selector", () => {
 
   it("should return true when bonus exists and is voided", () => {
     expect(
-      canBonusVacanzeBeRequestedSelector().resultFunc(
+      canBonusVacanzeBeRequestedSelector.resultFunc(
         pot.some({ ...bonus, status: BonusStatusEnum.VOIDED })
       )
     ).toBeTruthy();
@@ -58,7 +58,7 @@ describe("canBonusVacanzeBeRequestedSelector selector", () => {
 
   it("should return true when bonus exists and is failed", () => {
     expect(
-      canBonusVacanzeBeRequestedSelector().resultFunc(
+      canBonusVacanzeBeRequestedSelector.resultFunc(
         pot.some({ ...bonus, status: BonusStatusEnum.FAILED })
       )
     ).toBeTruthy();

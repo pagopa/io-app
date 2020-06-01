@@ -56,20 +56,20 @@ export const bonusVacanzeActivationSelector = (
 * - doesn't exists (pot.none)
 * - exists but its state is VOIDED or FAILED
 */
-export const canBonusVacanzeBeRequestedSelector = () =>
-  createSelector<GlobalState, pot.Pot<BonusVacanze, Error>, boolean>(
-    bonusVacanzeActivationSelector,
-    bv => {
-      return pot.getOrElse(
-        pot.map(
-          bv,
-          v =>
-            v.status === BonusStatusEnum.VOIDED ||
-            v.status === BonusStatusEnum.FAILED
-        ),
-        true
-      );
-    }
+export const canBonusVacanzeBeRequestedSelector = createSelector<
+  GlobalState,
+  pot.Pot<BonusVacanze, Error>,
+  boolean
+>(bonusVacanzeActivationSelector, bv => {
+  return pot.getOrElse(
+    pot.map(
+      bv,
+      v =>
+        v.status === BonusStatusEnum.VOIDED ||
+        v.status === BonusStatusEnum.FAILED
+    ),
+    true
   );
+});
 
 export default reducer;

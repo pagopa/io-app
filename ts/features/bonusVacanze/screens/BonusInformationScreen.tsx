@@ -10,7 +10,10 @@ import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderCompo
 import ScreenContent from "../../../components/screens/ScreenContent";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
-import { navigateBack } from "../../../store/actions/navigation";
+import {
+  navigateBack,
+  navigateToBonusTosScreen
+} from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
 import themeVariables from "../../../theme/variables";
 import { FooterTwoButtons } from "../components/markdown/FooterTwoButtons";
@@ -80,8 +83,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO add bonus request action or just navigate to TOS screen (?)
-  requestBonusActivation: () => null,
+  requestBonusActivation: () => dispatch(navigateToBonusTosScreen()),
   navigateBack: () => dispatch(navigateBack())
 });
 

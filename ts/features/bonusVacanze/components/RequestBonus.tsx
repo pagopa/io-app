@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
 const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
   const { onButtonPress, bonus, onBonusPress, availableBonusesList } = props;
 
+  const [loading, setLoading] = React.useState(true);
+
   const bonusVacanzeCategory = availableBonusesList.items.find(
     bi => bi.id_type === ID_BONUS_VACANZE_TYPE
   );
@@ -59,9 +61,17 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
     _ => _
   ).fold(undefined, _ => _);
 
+  React.useEffect(
+    () => {
+      setLoading(pot.isLoading(props.bonus));
+    },
+    [props.bonus]
+  );
+
   return (
     <Content>
-      {pot.isSome(bonus) &&
+      {!loading &&
+        pot.isSome(bonus) &&
         bonus.value && (
           <View>
             <View style={styles.subHeaderContent}>

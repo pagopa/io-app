@@ -30,7 +30,10 @@ import {
   loadBonusVacanzeFromId
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../../features/bonusVacanze/store/reducers/availableBonuses";
-import { bonusVacanzeActivationSelector } from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
+import {
+  bonusVacanzeActivationSelector,
+  canBonusVacanzeBeRequestedSelector
+} from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
 import { BonusVacanze } from "../../features/bonusVacanze/types/bonusVacanzeActivation";
 import I18n from "../../i18n";
 import {
@@ -488,6 +491,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         onRefresh={() => {
           this.props.loadTransactions(this.props.transactionsLoadedLength);
           this.props.loadWallets();
+          this.props.loadBonusVacanzeFromId("FAKE_ID");
         }}
         refreshing={false}
         tintColor={"transparent"} // iOS
@@ -514,7 +518,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             {bonusVacanzeEnabled && (
               <RequestBonus
                 onButtonPress={this.props.navigateToBonusList}
-                bonus={this.props.currentActiveBonus}
+                bonus={
+                  this.props.canBonusBeRequested
+                    ? pot.none
+                    : this.props.currentActiveBonus
+                }
                 availableBonusesList={this.props.availableBonusesList}
                 onBonusPress={this.props.navigateToBonusDetail}
               />
@@ -535,6 +543,7 @@ const mapStateToProps = (state: GlobalState) => {
   const potAvailableBonuses = availableBonusesSelector(state);
   return {
     currentActiveBonus: bonusVacanzeActivationSelector(state),
+    canBonusBeRequested: canBonusVacanzeBeRequestedSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
