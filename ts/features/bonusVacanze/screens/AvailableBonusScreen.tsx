@@ -28,8 +28,7 @@ import {
 } from "../store/reducers/bonusVacanzeActivation";
 import { BonusItem } from "../types/bonusList";
 import { BonusVacanze } from "../types/bonusVacanzeActivation";
-import { ID_BONUS_VACANZE_TYPE, isBonusActive } from "../utils/bonus";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
+import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
