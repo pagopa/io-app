@@ -6,13 +6,17 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import H5 from "../../../components/ui/H5";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
+import { maybeInnerProperty } from "../../../utils/options";
+import { BonusList } from "../types/bonusList";
 import { BonusVacanze } from "../types/bonusVacanze";
+import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 import ActiveBonus from "./ActiveBonus";
 
 type OwnProps = {
   onButtonPress: () => void;
-  onBonusPress: (bonus: BonusVacanze) => void;
+  onBonusPress: (bonus: BonusVacanze, validFrom?: Date, validTo?: Date) => void;
   bonus: pot.Pot<BonusVacanze, Error>;
+  availableBonusesList: BonusList;
 };
 
 const styles = StyleSheet.create({
@@ -39,7 +43,22 @@ const styles = StyleSheet.create({
  * @param props
  */
 const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
-  const { onButtonPress, bonus, onBonusPress } = props;
+  const { onButtonPress, bonus, onBonusPress, availableBonusesList } = props;
+
+  const bonusVacanzeCategory = availableBonusesList.items.find(
+    bi => bi.id_type === ID_BONUS_VACANZE_TYPE
+  );
+  const validFrom = maybeInnerProperty(
+    bonusVacanzeCategory,
+    "valid_from",
+    _ => _
+  ).fold(undefined, _ => _);
+  const validTo = maybeInnerProperty(
+    bonusVacanzeCategory,
+    "valid_to",
+    _ => _
+  ).fold(undefined, _ => _);
+
   return (
     <Content>
       {pot.isSome(bonus) &&
@@ -52,7 +71,12 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
               <Text>{I18n.t("wallet.amount")}</Text>
             </View>
             <View spacer={true} />
-            <ActiveBonus bonus={bonus.value} onPress={onBonusPress} />
+            <ActiveBonus
+              bonus={bonus.value}
+              onPress={onBonusPress}
+              validFrom={validFrom}
+              validTo={validTo}
+            />
           </View>
         )}
       <View spacer={true} />

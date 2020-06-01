@@ -1,4 +1,3 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -6,15 +5,15 @@ import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { formatDateAsLocal } from "../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { BonusVacanze } from "../types/bonusVacanze";
+import { validityInterval } from "../utils/bonus";
 
 type Props = {
   bonus: BonusVacanze;
   validFrom?: Date;
   validTo?: Date;
-  onPress: (bonus: BonusVacanze) => void;
+  onPress: (bonus: BonusVacanze, validFrom?: Date, validTo?: Date) => void;
 };
 
 const ICON_WIDTH = 24;
@@ -38,7 +37,8 @@ const styles = StyleSheet.create({
   },
   text12: {
     lineHeight: 18,
-    marginBottom: -4
+    marginBottom: -4,
+    justifyContent: "flex-end"
   },
   icon: {
     width: 64,
@@ -61,27 +61,25 @@ const styles = StyleSheet.create({
  * in the store
  */
 const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
-  const bonusValidityInterval = fromNullable(props.validFrom)
-    .map(vf => formatDateAsLocal(vf, true))
-    .chain(vfs =>
-      fromNullable(props.validTo)
-        .map(vt => formatDateAsLocal(vt, true))
-        .map(vts => `${vfs} - ${vts}`)
-    )
-    .fold(undefined, _ => _);
+  const bonusValidityInterval = validityInterval(
+    props.validFrom,
+    props.validTo
+  );
 
   return (
-    <TouchableDefaultOpacity onPress={() => props.onPress(props.bonus)}>
-      {bonusValidityInterval && (
-        <View style={styles.spaced}>
+    <TouchableDefaultOpacity
+      onPress={() => props.onPress(props.bonus, props.validFrom, props.validTo)}
+    >
+      <View style={styles.spaced}>
+        {bonusValidityInterval && (
           <Text small={true}>{`${I18n.t(
             "bonus.bonusVacanza.validity"
           )} ${bonusValidityInterval}`}</Text>
-          <Text bold={true} style={styles.text12}>
-            {formatNumberCentsToAmount(props.bonus.max_amount)}
-          </Text>
-        </View>
-      )}
+        )}
+        <Text bold={true} style={styles.text12}>
+          {formatNumberCentsToAmount(props.bonus.max_amount)}
+        </Text>
+      </View>
       <View small={true} />
       <View style={styles.spaced}>
         <Text small={true} dark={true}>
