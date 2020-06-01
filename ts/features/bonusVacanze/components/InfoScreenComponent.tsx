@@ -3,8 +3,8 @@ import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "./markdown/ButtonConfigurations";
 import themeVariables from "../../../theme/variables";
+import { confirmButtonProps } from "./markdown/ButtonConfigurations";
 
 /**
  * TODO Rename the title prop in the BaseScreenComponent to navigationTitle
