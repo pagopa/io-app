@@ -8,11 +8,6 @@ export const ID_BONUS_VACANZE_TYPE = 1;
 export const isBonusActive = (bonus: BonusVacanze) =>
   bonus.status === BonusStatusEnum.ACTIVE;
 
-// return true if the bonus can be activable
-export const isBonusActivable = (bonus: BonusVacanze) =>
-  bonus.status === BonusStatusEnum.CANCELLED ||
-  bonus.status === BonusStatusEnum.FAILED;
-
 export const validityInterval = (
   bonusValidityFrom?: Date,
   bonusValidityTo?: Date
