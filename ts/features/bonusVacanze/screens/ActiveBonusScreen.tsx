@@ -2,7 +2,6 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import Share from "react-native-share";
 import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -12,6 +11,7 @@ import ScreenContent from "../../../components/screens/ScreenContent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
+import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,
@@ -31,6 +31,7 @@ type NavigationParams = Readonly<{
 }>;
 
 const QR_CODE_MIME_TYPE = "svg+xml";
+const PNG_IMAGE_TYPE = "image/png";
 
 type Props = NavigationInjectedProps<NavigationParams>;
 
@@ -85,14 +86,10 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const shareQR = async (content: string, code: string) => {
-    await Share.open({
-      url: `data:image/png;base64,${content}`,
-      message: `${I18n.t("bonus.bonusVacanza.shareMessage")} ${code}`
-    }).catch(error => {
-      if (error && JSON.stringify(error) !== JSON.stringify({})) {
-        showToast(I18n.t("global.genericError"));
-      }
-    });
+    const shared = await shareBase64Content(content, code).run();
+    if (shared.isLeft()) {
+      showToast(I18n.t("global.genericError"));
+    }
   };
 
   React.useEffect(() => {
@@ -101,6 +98,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         const qrCodes: BonusVacanze["qr_code"] = [...bonus.qr_code];
         const content = qrCodes.reduce<QRCodeContents>(
           (acc: QRCodeContents, curr: BonusVacanze["qr_code"][0]) => {
+            // for svg we need to convert base64 content to ascii to be rendered
             if (curr.mime_type === QR_CODE_MIME_TYPE) {
               return {
                 ...acc,
@@ -139,7 +137,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         <ButtonDefaultOpacity
           style={styles.helpButton}
           transparent={true}
-          onPress={() => shareQR(qrCode["image/png"], bonus.code)}
+          onPress={() =>
+            shareQR(
+              qrCode[PNG_IMAGE_TYPE],
+              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonus.code}`
+            )
+          }
           activeOpacity={1}
         >
           <IconFont name="io-share" color={variables.brandPrimary} />
