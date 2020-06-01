@@ -30,8 +30,8 @@ import {
   loadBonusVacanzeFromId
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../../features/bonusVacanze/store/reducers/availableBonuses";
-import { bonusVacanzeActivationSelector } from "../../features/bonusVacanze/store/reducers/bonusVacanze";
-import { BonusVacanze } from "../../features/bonusVacanze/types/bonusVacanze";
+import { bonusVacanzeActivationSelector } from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
+import { BonusVacanze } from "../../features/bonusVacanze/types/bonusVacanzeActivation";
 import I18n from "../../i18n";
 import {
   navigateBack,

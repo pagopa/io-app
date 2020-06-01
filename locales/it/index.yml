@@ -1275,6 +1275,7 @@ bonus:
     taxBenefit: Beneficio fiscale
     amount: Importo totale
     applicant: CF richiedente
+    shareMessage: "Questo è il codice del tuo bonus:"
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:

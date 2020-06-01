@@ -22,9 +22,9 @@ import ActiveBonus from "../components/ActiveBonus";
 import AvailableBonusItem from "../components/AvailableBonusItem";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../store/reducers/availableBonuses";
-import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanze";
+import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeActivation";
 import { BonusItem } from "../types/bonusList";
-import { BonusVacanze } from "../types/bonusVacanze";
+import { BonusVacanze } from "../types/bonusVacanzeActivation";
 import { ID_BONUS_VACANZE_TYPE, isBonusActive } from "../utils/bonus";
 
 export type Props = ReturnType<typeof mapStateToProps> &

@@ -1242,6 +1242,7 @@ bonus:
     taxBenefit: Tax benefit
     amount: Amount
     applicant: Applicant FC
+    shareMessage: "This is the code of your bonus:"
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:
