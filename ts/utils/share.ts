@@ -1,13 +1,22 @@
 import { tryCatch } from "fp-ts/lib/TaskEither";
 import Share from "react-native-share";
 
-export const shareBase64Content = (content: string, message?: string) => {
+/**
+ * share a file encoded in base64
+ * @param content base64 content
+ * @param message option string to attach as a text with shared file
+ */
+export const shareBase64Content = (
+  content: string,
+  message?: string,
+  failOnCancel: boolean = false
+) => {
   return tryCatch(
     () =>
       Share.open({
         url: `data:image/png;base64,${content}`,
         message,
-        failOnCancel: false
+        failOnCancel
       }),
     errorMsg => new Error(String(errorMsg))
   );
