@@ -1,5 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 
@@ -11,6 +12,12 @@ export type LoadingErrorProps = {
   onRetry: () => void;
   onCancel?: () => void;
 };
+
+const styles = StyleSheet.create({
+  body: {
+    flex: 1
+  }
+});
 
 /**
  * This component is a generic error component composed with a loading.
@@ -26,7 +33,7 @@ const InnerLoadingErrorComponent: React.FunctionComponent<
   LoadingErrorProps
 > = props => {
   return (
-    <View>
+    <View style={styles.body}>
       <GenericErrorComponent
         onRetry={props.onRetry}
         onCancel={props.onCancel}
