@@ -1262,7 +1262,7 @@ bonus:
         description: You can activate a {{amount}} bonus. Your tax discount is equal to {{taxBenefit}}
       timeout:
         title: Eligibility request received
-        description: Verification of eligibility for bonus access has been recorded. You will receive a message when the outcome of your request is available.
+        description: Verification of eligibility for bonus access has been recorded. You will receive a message when the outcome of your request will be available.
   bonusList:
     title: Available bonuses
     contentTitle: Select one of the available bonus

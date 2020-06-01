@@ -4,6 +4,7 @@ import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "./markdown/ButtonConfigurations";
+import themeVariables from "../../../theme/variables";
 
 /**
  * TODO Rename the title prop in the BaseScreenComponent to navigationTitle
@@ -19,7 +20,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   body: {
-    padding: 20,
+    padding: themeVariables.contentPadding,
     flex: 1,
     alignItems: "center"
   }

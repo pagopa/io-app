@@ -42,7 +42,7 @@ const handleEligibilityProgress = (props: Props) => {
  * @param props
  * @constructor
  */
-const CheckBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
+const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   useEffect(() => {
     RTron.log("MOUNT");
     // TODO: remove from here, all the stack is loaded at the start
@@ -90,4 +90,4 @@ const mapStateToProps = (globalState: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CheckBonusEligibilityScreen);
+)(LoadBonusEligibilityScreen);
