@@ -6,7 +6,6 @@ import { InfoScreenComponent } from "../../../components/InfoScreenComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const title = I18n.t("bonus.bonusVacanza.eligibility.activate.completed.title");
 const body = I18n.t(
   "bonus.bonusVacanza.eligibility.activate.completed.description"
 );
@@ -17,7 +16,7 @@ const image = require("../../../../../../img/wallet/errors/payment-duplicated-ic
 
 /**
  * This screen informs the user that the bonus has been activated!
- * It allows only one CTA: Display bonus details
+ * It allows only one CTA: goto -> display bonus details
  * The screen is tied to the business logic and is composed using {@link InfoScreenComponent}
  * @param props
  * @constructor
@@ -26,7 +25,6 @@ const image = require("../../../../../../img/wallet/errors/payment-duplicated-ic
 const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
   return (
     <InfoScreenComponent
-      navigationTitle={title}
       onConfirm={props.onConfirm}
       confirmText={confirmText}
       image={image}
