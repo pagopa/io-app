@@ -10,7 +10,8 @@ import { BaseLoadingErrorScreen } from "../../components/loadingErrorScreen/Base
 import {
   navigateToActivateBonus,
   navigateToIseeNotAvailable,
-  navigateToIseeNotEligible
+  navigateToIseeNotEligible,
+  navigateToTimeoutEligibilityCheck
 } from "../../navigation/action";
 import { checkBonusEligibility } from "../../store/actions/bonusVacanze";
 import {
@@ -26,7 +27,8 @@ const loadingCaption = I18n.t("bonus.bonusVacanza.eligibility.loading");
 const validResults = new Map([
   [EligibilityRequestProgressEnum.ELIGIBLE, navigateToActivateBonus],
   [EligibilityRequestProgressEnum.INELIGIBLE, navigateToIseeNotEligible],
-  [EligibilityRequestProgressEnum.ISEE_NOT_FOUND, navigateToIseeNotAvailable]
+  [EligibilityRequestProgressEnum.ISEE_NOT_FOUND, navigateToIseeNotAvailable],
+  [EligibilityRequestProgressEnum.TIMEOUT, navigateToTimeoutEligibilityCheck]
 ]);
 
 const handleEligibilityProgress = (props: Props) => {
