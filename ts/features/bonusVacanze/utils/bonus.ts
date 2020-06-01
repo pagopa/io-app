@@ -1,6 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { formatDateAsLocal } from "../../../utils/dates";
-import { BonusStatusEnum, BonusVacanze } from "../types/bonusVacanze";
+import { BonusStatusEnum, BonusVacanze } from "../types/bonusVacanzeActivation";
 
 export const ID_BONUS_VACANZE_TYPE = 1;
 

@@ -13,7 +13,7 @@ import {
 import { ProblemJson } from "../../../../definitions/backend/ProblemJson";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import { BonusList, BonusListT } from "../types/bonusList";
-import { BonusVacanze, BonusVacanzeT } from "../types/bonusVacanze";
+import { BonusVacanze, BonusVacanzeT } from "../types/bonusVacanzeActivation";
 import {
   EligibilityCheck,
   EligibilityCheckT,
