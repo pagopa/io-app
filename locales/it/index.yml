@@ -1271,22 +1271,25 @@ bonus:
   bonusVacanza:
     validity: Valido nel periodo
     taxBenefit: Beneficio fiscale
-    checkBonusEligibility:
-      loading: Verifico l'idoneità per l'accesso al bonus
     cta:
       requestBonus: Richiedi
-    iseeNotAvailable:
-      title: ISEE not trovato
-      subtitle: Non è disponibile nessun ISEE per l'utente
-      text: !include bonus/bonusVacanze/iseeNotAvailable.md
-      goToINPSWebsite: Vai al sito INPS
-    iseeNotEligible:
-      title: ISEE not idoneo
-      subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
-      text: !include bonus/bonusVacanze/iseeNotEligible.md
-    activateBonus:
-      title: Attiva
-      description: Puoi attivare un bonus di {{amount}}. Il tuo sconto sulle tasse è pari a {{taxBenefit}}
+    eligibility:
+      loading: Verifico l'idoneità per l'accesso al bonus
+      iseeNotAvailable:
+        title: ISEE not trovato
+        subtitle: Non è disponibile nessun ISEE per l'utente
+        text: !include bonus/bonusVacanze/iseeNotAvailable.md
+        goToINPSWebsite: Vai al sito INPS
+      iseeNotEligible:
+        title: ISEE not idoneo
+        subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
+        text: !include bonus/bonusVacanze/iseeNotEligible.md
+      activateBonus:
+        title: Attiva
+        description: Puoi attivare un bonus di {{amount}}. Il tuo sconto sulle tasse è pari a {{taxBenefit}}
+      timeout:
+        title: Verifica richiesta
+        description: La verifica dell'idoneità per l'accesso al bonus è stata registrata. Riceverai un messaggio quando l'esito della tua richiesta sarà disponibile.
   bonusList:
     title: Bonus disponibili
     contentTitle: Seleziona uno dei bonus disponibili
