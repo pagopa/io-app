@@ -28,9 +28,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const title = I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title");
-const activateBonusText = title;
-
 /**
  * Transform an object of type {@link FamilyMember} to a string representation
  * @param familyMember
@@ -77,6 +74,8 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
       taxBenefit: formatNumberCentsToAmount(props.taxBenefit, true)
     }
   );
+  const title = I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title");
+  const activateBonusText = title;
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={title}>

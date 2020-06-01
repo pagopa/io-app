@@ -8,8 +8,6 @@ import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenCompo
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const body = I18n.t("bonus.bonusVacanza.eligibility.timeout.description");
-const confirmText = I18n.t("global.buttons.close");
 const image = require("../../../../../img/wallet/errors/invalid-amount-icon.png");
 
 /**
@@ -23,6 +21,9 @@ const image = require("../../../../../img/wallet/errors/invalid-amount-icon.png"
 const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
   Props
 > = props => {
+  const title = I18n.t("bonus.bonusVacanza.eligibility.timeout.title");
+  const body = I18n.t("bonus.bonusVacanza.eligibility.timeout.description");
+  const confirmText = I18n.t("global.buttons.close");
   return (
     <InfoScreenComponent
       onConfirm={props.onConfirm}

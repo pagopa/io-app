@@ -6,7 +6,7 @@ import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
-import { BonusVacanze } from "../types/bonusVacanze";
+import { BonusVacanze } from "../types/bonusVacanzeActivation";
 import { validityInterval } from "../utils/bonus";
 
 type Props = {

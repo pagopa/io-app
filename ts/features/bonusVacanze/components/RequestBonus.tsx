@@ -8,7 +8,7 @@ import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { maybeInnerProperty } from "../../../utils/options";
 import { BonusList } from "../types/bonusList";
-import { BonusVacanze } from "../types/bonusVacanze";
+import { BonusVacanze } from "../types/bonusVacanzeActivation";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 import ActiveBonus from "./ActiveBonus";
 
