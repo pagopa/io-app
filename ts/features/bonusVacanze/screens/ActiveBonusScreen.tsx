@@ -87,7 +87,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const shareQR = async (content: string, code: string) => {
     await Share.open({
       url: `data:image/png;base64,${content}`,
-      message: `This is the code of your bonus: ${code}`
+      message: `${I18n.t("bonus.bonusVacanza.shareMessage")} ${code}`
     }).catch(error => {
       if (error && JSON.stringify(error) !== JSON.stringify({})) {
         showToast(I18n.t("global.genericError"));
