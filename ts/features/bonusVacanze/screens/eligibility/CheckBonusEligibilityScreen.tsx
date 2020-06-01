@@ -21,9 +21,7 @@ import {
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const loadingCaption = I18n.t(
-  "bonus.bonusVacanza.checkBonusEligibility.loading"
-);
+const loadingCaption = I18n.t("bonus.bonusVacanza.eligibility.loading");
 
 const validResults = new Map([
   [EligibilityRequestProgressEnum.ELIGIBLE, navigateToActivateBonus],

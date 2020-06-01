@@ -19,7 +19,7 @@ export const FooterTwoButtons: React.FunctionComponent<MyProps> = props => {
     <FooterWithButtons
       type={"TwoButtonsInlineHalf"}
       leftButton={cancelButtonProps(props.onCancel)}
-      rightButton={confirmButtonProps(props.title, props.onRight)}
+      rightButton={confirmButtonProps(props.onRight, props.title)}
     />
   );
 };

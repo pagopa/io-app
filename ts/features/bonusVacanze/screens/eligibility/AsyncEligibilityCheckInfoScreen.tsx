@@ -1,13 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import I18n from "../../../../i18n";
 import { navigateToWalletHome } from "../../../../store/actions/navigation";
 import { InfoScreenComponent } from "../../components/InfoScreenComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const title = "Riceverai notizie";
-const body = "bla bla lba";
+const title = I18n.t("bonus.bonusVacanza.eligibility.timeout.title");
+const body = I18n.t("bonus.bonusVacanza.eligibility.timeout.description");
+const confirmText = I18n.t("global.buttons.close");
 const image = require("../../../../../img/wallet/errors/invalid-amount-icon.png");
 
 /**
@@ -25,6 +27,7 @@ const AsyncEligibilityCheckInfoScreen: React.FunctionComponent<
     <InfoScreenComponent
       navigationTitle={title}
       onConfirm={props.onConfirm}
+      confirmText={confirmText}
       image={image}
       body={body}
     />

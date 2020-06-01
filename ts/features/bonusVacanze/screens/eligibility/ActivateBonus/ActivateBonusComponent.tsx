@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const title = I18n.t("bonus.bonusVacanza.activateBonus.title");
+const title = I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title");
 const activateBonusText = title;
 
 /**
@@ -68,10 +68,13 @@ const renderFamilyMembersList = (
  * @constructor
  */
 export const ActivateBonusComponent: React.FunctionComponent<Props> = props => {
-  const description = I18n.t("bonus.bonusVacanza.activateBonus.description", {
-    amount: formatNumberCentsToAmount(props.bonusAmount, true),
-    taxBenefit: formatNumberCentsToAmount(props.taxBenefit, true)
-  });
+  const description = I18n.t(
+    "bonus.bonusVacanza.eligibility.activateBonus.description",
+    {
+      amount: formatNumberCentsToAmount(props.bonusAmount, true),
+      taxBenefit: formatNumberCentsToAmount(props.taxBenefit, true)
+    }
+  );
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={title}>

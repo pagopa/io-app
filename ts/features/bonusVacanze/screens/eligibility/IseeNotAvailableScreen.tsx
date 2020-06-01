@@ -8,10 +8,16 @@ import { MarkdownBaseScreen } from "../../components/markdown/MarkdownBaseScreen
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const markdownBody = I18n.t("bonus.bonusVacanza.iseeNotAvailable.text");
-const title = I18n.t("bonus.bonusVacanza.iseeNotAvailable.title");
-const subtitle = I18n.t("bonus.bonusVacanza.iseeNotAvailable.subtitle");
-const gotoInps = I18n.t("bonus.bonusVacanza.iseeNotAvailable.goToINPSWebsite");
+const markdownBody = I18n.t(
+  "bonus.bonusVacanza.eligibility.iseeNotAvailable.text"
+);
+const title = I18n.t("bonus.bonusVacanza.eligibility.iseeNotAvailable.title");
+const subtitle = I18n.t(
+  "bonus.bonusVacanza.eligibility.iseeNotAvailable.subtitle"
+);
+const gotoInps = I18n.t(
+  "bonus.bonusVacanza.eligibility.iseeNotAvailable.goToINPSWebsite"
+);
 
 /**
  * This screen display some additional information when the ISEE is not available for the user.

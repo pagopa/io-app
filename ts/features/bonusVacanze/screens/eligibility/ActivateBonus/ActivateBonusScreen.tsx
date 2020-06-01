@@ -41,7 +41,7 @@ const requestIdentification = (dispatch: Dispatch) => {
       false,
       true,
       {
-        message: I18n.t("bonus.bonusVacanza.activateBonus.title")
+        message: I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title")
       },
       {
         label: I18n.t("global.buttons.cancel"),
