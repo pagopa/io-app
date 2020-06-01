@@ -7,14 +7,6 @@ import { MarkdownBaseScreen } from "../../components/markdown/MarkdownBaseScreen
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const markdownBody = I18n.t(
-  "bonus.bonusVacanza.eligibility.iseeNotEligible.text"
-);
-const title = I18n.t("bonus.bonusVacanza.eligibility.iseeNotEligible.title");
-const subtitle = I18n.t(
-  "bonus.bonusVacanza.eligibility.iseeNotEligible.subtitle"
-);
-
 /**
  * This screen display some additional information when the ISEE is not eligible for the bonus vacanza.
  * It provides one CTA:
@@ -25,6 +17,13 @@ const subtitle = I18n.t(
  */
 
 const IseeNotEligibleScreen: React.FunctionComponent<Props> = props => {
+  const markdownBody = I18n.t(
+    "bonus.bonusVacanza.eligibility.iseeNotEligible.text"
+  );
+  const title = I18n.t("bonus.bonusVacanza.eligibility.iseeNotEligible.title");
+  const subtitle = I18n.t(
+    "bonus.bonusVacanza.eligibility.iseeNotEligible.subtitle"
+  );
   return (
     <MarkdownBaseScreen
       navigationTitle={title}

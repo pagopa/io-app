@@ -28,9 +28,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const title = I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title");
-const activateBonusText = title;
-
 /**
  * Transform an object of type {@link FamilyMember} to a string representation
  * @param familyMember
@@ -68,6 +65,9 @@ const renderFamilyMembersList = (
  * @constructor
  */
 export const ActivateBonusComponent: React.FunctionComponent<Props> = props => {
+  const title = I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title");
+  const activateBonusText = title;
+
   const description = I18n.t(
     "bonus.bonusVacanza.eligibility.activateBonus.description",
     {
