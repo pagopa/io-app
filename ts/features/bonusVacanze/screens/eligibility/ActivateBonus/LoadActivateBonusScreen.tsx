@@ -7,10 +7,6 @@ import { BaseLoadingErrorScreen } from "../../../components/loadingErrorScreen/B
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const loadingCaption = I18n.t(
-  "bonus.bonusVacanza.eligibility.activate.loading"
-);
-
 /**
  * This screen is used during the activation of the bonus (and the associated loading phase).
  * This component link the generic {@link BaseLoadingErrorScreen} with the application flow using the {@link connect}
@@ -19,6 +15,10 @@ const loadingCaption = I18n.t(
  * @constructor
  */
 const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
+  const loadingCaption = I18n.t(
+    "bonus.bonusVacanza.eligibility.activate.loading"
+  );
+
   return (
     <BaseLoadingErrorScreen
       {...props}
