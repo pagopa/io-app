@@ -1247,18 +1247,23 @@ bonus:
       loading: Checking bonus eligibility
     cta:
       requestBonus: Request
-    iseeNotAvailable:
-      title: ISEE not available
-      subtitle: ISEE not found for the user
-      text: !include bonus/bonusVacanze/iseeNotAvailable.md
-      goToINPSWebsite: Go to INPS Website
-    iseeNotEligible:
-      title: ISEE not eligible
-      subtitle: The ISEE submitted does not meet the requirements
-      text: !include bonus/bonusVacanze/iseeNotEligible.md
-    activateBonus:
-      title: Activate
-      description: You can activate a {{amount}} bonus. Your tax discount is equal to {{taxBenefit}}
+    eligibility:
+      loading: Checking bonus eligibility
+      iseeNotAvailable:
+        title: ISEE not available
+        subtitle: ISEE not found for the user
+        text: !include bonus/bonusVacanze/iseeNotAvailable.md
+        goToINPSWebsite: Go to INPS Website
+      iseeNotEligible:
+        title: ISEE not eligible
+        subtitle: The ISEE submitted does not meet the requirements
+        text: !include bonus/bonusVacanze/iseeNotEligible.md
+      activateBonus:
+        title: Activate
+        description: You can activate a {{amount}} bonus. Your tax discount is equal to {{taxBenefit}}
+      timeout:
+        title: Eligibility request received
+        description: Verification of eligibility for bonus access has been recorded. You will receive a message when the outcome of your request will be available.
   bonusList:
     title: Available bonuses
     contentTitle: Select one of the available bonus

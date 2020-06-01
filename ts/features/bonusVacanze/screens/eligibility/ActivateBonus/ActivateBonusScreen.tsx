@@ -1,11 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { shufflePinPadOnPayment } from "../../../../config";
-import I18n from "../../../../i18n";
-import { identificationRequest } from "../../../../store/actions/identification";
-import { GlobalState } from "../../../../store/reducers/types";
-import { eligibilityCheckResults } from "../../store/reducers/eligibility";
+import { shufflePinPadOnPayment } from "../../../../../config";
+import I18n from "../../../../../i18n";
+import { identificationRequest } from "../../../../../store/actions/identification";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { eligibilityCheckResults } from "../../../store/reducers/eligibility";
 import { ActivateBonusComponent } from "./ActivateBonusComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -41,7 +41,7 @@ const requestIdentification = (dispatch: Dispatch) => {
       false,
       true,
       {
-        message: I18n.t("bonus.bonusVacanza.activateBonus.title")
+        message: I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title")
       },
       {
         label: I18n.t("global.buttons.cancel"),
@@ -67,7 +67,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  // TODO: link with the right reducer
   bonusAmount: eligibilityCheckResults(state).fold(
     0,
     results => results.max_amount as number
@@ -76,7 +75,6 @@ const mapStateToProps = (state: GlobalState) => ({
     0,
     results => results.max_tax_benefit as number
   ),
-  // TODO: link with the right reducer
   familyMembers: eligibilityCheckResults(state).fold(
     [],
     results => results.family_members

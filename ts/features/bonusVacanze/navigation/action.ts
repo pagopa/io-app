@@ -1,7 +1,7 @@
 import { NavigationActions } from "react-navigation";
 import BONUSVACANZE_ROUTES from "./routes";
 
-export const navigateToBonusEligibilityCheck = () =>
+export const navigateToBonusEligibilityLoading = () =>
   NavigationActions.navigate({
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK
   });
@@ -19,4 +19,9 @@ export const navigateToIseeNotAvailable = () =>
 export const navigateToActivateBonus = () =>
   NavigationActions.navigate({
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATE_BONUS
+  });
+
+export const navigateToTimeoutEligibilityCheck = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.TIMEOUT
   });
