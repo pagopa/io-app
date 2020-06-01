@@ -20,7 +20,7 @@ const image = require("../../../../../img/wallet/errors/invalid-amount-icon.png"
  * @constructor
  */
 
-const AsyncEligibilityCheckInfoScreen: React.FunctionComponent<
+const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
   Props
 > = props => {
   return (
@@ -42,4 +42,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   null,
   mapDispatchToProps
-)(AsyncEligibilityCheckInfoScreen);
+)(TimeoutEligibilityCheckInfoScreen);
