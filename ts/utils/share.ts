@@ -3,7 +3,7 @@ import Share from "react-native-share";
 
 /**
  * share a file encoded in base64
- * @param content base64 content
+ * @param content base64
  * @param message option string to attach as a text with shared file
  */
 export const shareBase64Content = (
