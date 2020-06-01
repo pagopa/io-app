@@ -5,10 +5,6 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import themeVariables from "../../../../theme/variables";
 import { confirmButtonProps } from "../markdown/ButtonConfigurations";
 
-const PropTypes = require("prop-types");
-
-PropTypes.oneOf();
-
 type Props = {
   image: React.ReactNode;
   body: string;

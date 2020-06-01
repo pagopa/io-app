@@ -1283,12 +1283,12 @@ bonus:
     eligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
       iseeNotAvailable:
-        title: ISEE not trovato
+        title: ISEE non trovato
         subtitle: Non è disponibile nessun ISEE per l'utente
         text: !include bonus/bonusVacanze/iseeNotAvailable.md
         goToINPSWebsite: Vai al sito INPS
       iseeNotEligible:
-        title: ISEE not idoneo
+        title: ISEE non idoneo
         subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
         text: !include bonus/bonusVacanze/iseeNotEligible.md
       activateBonus:
