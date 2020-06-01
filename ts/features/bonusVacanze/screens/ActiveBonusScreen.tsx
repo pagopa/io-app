@@ -17,7 +17,7 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
-import { BonusStatusEnum, BonusVacanze } from "../types/bonusVacanze";
+import { BonusStatusEnum, BonusVacanze } from "../types/bonusVacanzeActivation";
 import { validityInterval } from "../utils/bonus";
 
 type QRCodeContents = {

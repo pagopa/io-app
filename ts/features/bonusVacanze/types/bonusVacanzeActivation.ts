@@ -6,7 +6,7 @@ import { Timestamp } from "../../../../definitions/backend/Timestamp";
 
 export enum BonusStatusEnum {
   "ACTIVE" = "ACTIVE",
-  "CANCELLED" = "CANCELLED",
+  "VOIDED" = "VOIDED",
   "FAILED" = "FAILED",
   "CONSUMED" = "CONSUMED"
 }

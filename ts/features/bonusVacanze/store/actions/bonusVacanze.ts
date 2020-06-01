@@ -4,7 +4,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { BonusList } from "../../types/bonusList";
-import { BonusVacanze } from "../../types/bonusVacanze";
+import { BonusVacanze } from "../../types/bonusVacanzeActivation";
 import { EligibilityCheck, EligibilityId } from "../../types/eligibility";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
