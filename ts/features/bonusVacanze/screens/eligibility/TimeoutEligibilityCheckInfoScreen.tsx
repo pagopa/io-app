@@ -14,6 +14,7 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  * @param props
  * @constructor
  */
+const image = require("../../../../../img/wallet/errors/invalid-amount-icon.png");
 
 const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
   Props
@@ -21,7 +22,7 @@ const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
   const title = I18n.t("bonus.bonusVacanza.eligibility.timeout.title");
   const body = I18n.t("bonus.bonusVacanza.eligibility.timeout.description");
   const confirmText = I18n.t("global.buttons.close");
-  const image = require("../../../../../img/wallet/errors/invalid-amount-icon.png");
+
   return (
     <InfoScreenComponent
       navigationTitle={title}
