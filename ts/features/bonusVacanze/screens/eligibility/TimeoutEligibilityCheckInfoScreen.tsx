@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { navigateToWalletHome } from "../../../../store/actions/navigation";
-import { InfoScreenComponent } from "../../components/InfoScreenComponent";
+import { renderRasterImage } from "../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -26,7 +27,7 @@ const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
     <InfoScreenComponent
       onConfirm={props.onConfirm}
       confirmText={confirmText}
-      image={image}
+      image={renderRasterImage(image)}
       body={body}
     />
   );

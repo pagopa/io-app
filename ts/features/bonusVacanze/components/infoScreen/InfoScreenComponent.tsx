@@ -1,12 +1,18 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import themeVariables from "../../../theme/variables";
-import { confirmButtonProps } from "./markdown/ButtonConfigurations";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import IconFont from "../../../../components/ui/IconFont";
+import customVariables from "../../../../theme/variables";
+import themeVariables from "../../../../theme/variables";
+import { confirmButtonProps } from "../markdown/ButtonConfigurations";
+
+const PropTypes = require("prop-types");
+
+PropTypes.oneOf();
 
 type Props = {
-  image?: ImageSourcePropType;
+  image: React.ReactNode;
   body: string;
   confirmText?: string;
   onConfirm: () => void;
@@ -30,7 +36,8 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
     <>
       <View style={styles.body}>
         <View spacer={true} extralarge={true} />
-        {props.image && <Image source={props.image} resizeMode="contain" />}
+        <View spacer={true} extralarge={true} />
+        {props.image}
         <View spacer={true} extralarge={true} />
         <Text>{props.body}</Text>
       </View>

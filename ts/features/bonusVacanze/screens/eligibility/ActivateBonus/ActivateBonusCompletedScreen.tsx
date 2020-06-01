@@ -2,17 +2,10 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../../i18n";
-import { InfoScreenComponent } from "../../../components/InfoScreenComponent";
+import { renderIconImage } from "../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
-
-const body = I18n.t(
-  "bonus.bonusVacanza.eligibility.activate.completed.description"
-);
-const confirmText = I18n.t(
-  "bonus.bonusVacanza.eligibility.activate.goToDetails"
-);
-const image = require("../../../../../../img/wallet/errors/payment-duplicated-icon.png");
 
 /**
  * This screen informs the user that the bonus has been activated!
@@ -23,11 +16,18 @@ const image = require("../../../../../../img/wallet/errors/payment-duplicated-ic
  */
 
 const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
+  const body = I18n.t(
+    "bonus.bonusVacanza.eligibility.activate.completed.description"
+  );
+  const confirmText = I18n.t(
+    "bonus.bonusVacanza.eligibility.activate.goToDetails"
+  );
+
   return (
     <InfoScreenComponent
       onConfirm={props.onConfirm}
       confirmText={confirmText}
-      image={image}
+      image={renderIconImage("io-complete")}
       body={body}
     />
   );
