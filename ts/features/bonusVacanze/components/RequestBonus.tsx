@@ -7,7 +7,7 @@ import H5 from "../../../components/ui/H5";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { maybeInnerProperty } from "../../../utils/options";
-import { BonusList } from "../types/bonusesAvailable";
+import { BonusesAvailable } from "../types/bonusesAvailable";
 import { BonusVacanze } from "../types/bonusVacanzeActivation";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 import ActiveBonus from "./ActiveBonus";
@@ -16,7 +16,7 @@ type OwnProps = {
   onButtonPress: () => void;
   onBonusPress: (bonus: BonusVacanze, validFrom?: Date, validTo?: Date) => void;
   bonus: pot.Pot<BonusVacanze, Error>;
-  availableBonusesList: BonusList;
+  availableBonusesList: BonusesAvailable;
 };
 
 const styles = StyleSheet.create({
