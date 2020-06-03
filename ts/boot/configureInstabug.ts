@@ -115,7 +115,9 @@ export const instabugLog = (log: string, typeLog: TypeLogs, tag?: string) => {
   const chunckSize =
     maxInstabugLogLength - (tag ? tag.length : 0) - numberMargin;
 
-  const chunks = log.match(new RegExp(".{1," + chunckSize + "}", "g"));
+  const chunks = log.match(
+    new RegExp(".{1," + chunckSize.toString() + "}", "g")
+  );
   if (chunks) {
     chunks.forEach((chunk, i) => {
       const count = chunks.length > 1 ? ` ${i + 1}/${chunks.length}` : "";
