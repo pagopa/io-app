@@ -217,24 +217,24 @@ function* watchLoadIdsTextData(): SagaIterator {
 }
 
 export function* watchContentSaga() {
-  // watch content municipality
+  // watch municipality loading request
   yield takeEvery(
     getType(contentMunicipalityLoad.request),
     watchContentMunicipalityLoadSaga
   );
 
-  // watch service metadata
+  // watch service metadata loading request
   yield takeEvery(
     getType(loadServiceMetadata.request),
     watchServiceMetadataLoadSaga
   );
 
-  // watch services by scope
+  // watch services by scope loading request
   yield takeEvery(
     getType(loadVisibleServicesByScope.request),
     watchContentServicesByScopeLoad
   );
 
-  // watch idps text data
+  // watch idps text data loading request
   yield takeLatest(getType(loadIdpsTextData.request), watchLoadIdsTextData);
 }
