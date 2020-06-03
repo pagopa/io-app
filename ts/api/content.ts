@@ -15,6 +15,7 @@ import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
+import { IdpsTextData } from "../../definitions/content/IdpsTextData";
 
 type GetServiceT = IGetApiRequestType<
   {
@@ -68,6 +69,21 @@ const getServicesByScopeT: GetServicesByScopeT = {
   response_decoder: basicResponseDecoder(ServicesByScope)
 };
 
+type GetIdpsTextDataT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<IdpsTextData>
+>;
+
+const getIdpsTextDataT: GetIdpsTextDataT = {
+  method: "get",
+  url: () => `/idps/idps.json`,
+  query: _ => ({}),
+  headers: _ => ({}),
+  response_decoder: basicResponseDecoder(IdpsTextData)
+};
+
 /**
  * A client for the static content
  */
@@ -80,6 +96,7 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
   return {
     getService: createFetchRequestForApi(getServiceT, options),
     getMunicipality: createFetchRequestForApi(getMunicipalityT, options),
-    getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options)
+    getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options),
+    getIdpsTextData: createFetchRequestForApi(getIdpsTextDataT, options)
   };
 }
