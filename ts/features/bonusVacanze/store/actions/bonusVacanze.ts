@@ -3,7 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { BonusList } from "../../types/bonusList";
+import { BonusList } from "../../types/bonusesAvailable";
 import { BonusVacanze } from "../../types/bonusVacanzeActivation";
 import { EligibilityCheck, EligibilityId } from "../../types/eligibility";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";

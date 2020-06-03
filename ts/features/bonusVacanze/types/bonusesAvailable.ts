@@ -6,24 +6,29 @@ import * as t from "io-ts";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import { Timestamp } from "../../../../definitions/backend/Timestamp";
 
-const BonusItemR = t.interface({
+const BonusAvailableR = t.interface({
   id_type: NonNegativeInteger,
   name: t.string,
+  active: t.boolean,
   description: t.string,
   valid_from: Timestamp,
   valid_to: Timestamp
 });
-const BonusItemO = t.partial({
-  cover: t.string
+const BonusAvailableO = t.partial({
+  cover: t.string,
+  service_id: t.string
 });
-export const BonusItemT = t.intersection([BonusItemR, BonusItemO], "BonusItem");
+export const BonusAvailableCodec = t.intersection(
+  [BonusAvailableR, BonusAvailableO],
+  "BonusItem"
+);
 const BonusListR = t.interface({
-  items: t.readonlyArray(BonusItemT, "array of Bonus")
+  items: t.readonlyArray(BonusAvailableCodec, "array of available bonuses")
 });
 const BonusListRO = t.partial({});
-export const BonusListT = t.intersection(
+export const BonusesAvailableCodec = t.intersection(
   [BonusListR, BonusListRO],
   "BonusList"
 );
-export type BonusList = t.TypeOf<typeof BonusListT>;
-export type BonusItem = t.TypeOf<typeof BonusItemT>;
+export type BonusesAvailable = t.TypeOf<typeof BonusesAvailableCodec>;
+export type BonusAvailable = t.TypeOf<typeof BonusAvailableCodec>;
