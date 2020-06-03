@@ -1,19 +1,11 @@
 import * as React from "react";
-import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { cancelButtonProps, OnCancelProps } from "./FooterSingleButton";
+import { cancelButtonProps, confirmButtonProps } from "./ButtonConfigurations";
+import { OnCancelProps } from "./FooterSingleButton";
 
 type OnRightProps = {
   onRight: () => void;
   title: string;
-};
-
-export const rightButtonProps = (props: OnRightProps): BlockButtonProps => {
-  return {
-    primary: true,
-    title: props.title,
-    onPress: props.onRight
-  };
 };
 
 type MyProps = OnCancelProps & OnRightProps;
@@ -26,8 +18,8 @@ export const FooterTwoButtons: React.FunctionComponent<MyProps> = props => {
   return (
     <FooterWithButtons
       type={"TwoButtonsInlineHalf"}
-      leftButton={cancelButtonProps(props)}
-      rightButton={rightButtonProps(props)}
+      leftButton={cancelButtonProps(props.onCancel)}
+      rightButton={confirmButtonProps(props.onRight, props.title)}
     />
   );
 };

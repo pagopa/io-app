@@ -3,31 +3,31 @@ import * as React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Action, Dispatch } from "redux";
-import I18n from "../../../i18n";
-import { GlobalState } from "../../../store/reducers/types";
-import { BaseLoadingErrorScreen } from "../components/loadingErrorScreen/BaseLoadingErrorScreen";
+import I18n from "../../../../i18n";
+import { GlobalState } from "../../../../store/reducers/types";
+import { BaseLoadingErrorScreen } from "../../components/loadingErrorScreen/BaseLoadingErrorScreen";
 import {
   navigateToActivateBonus,
   navigateToIseeNotAvailable,
-  navigateToIseeNotEligible
-} from "../navigation/action";
-import { checkBonusEligibility } from "../store/actions/bonusVacanze";
+  navigateToIseeNotEligible,
+  navigateToTimeoutEligibilityCheck
+} from "../../navigation/action";
+import { checkBonusEligibility } from "../../store/actions/bonusVacanze";
 import {
   eligibilityCheckRequestProgress,
   EligibilityRequestProgressEnum
-} from "../store/reducers/eligibility";
+} from "../../store/reducers/eligibility";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const loadingCaption = I18n.t(
-  "bonus.bonusVacanza.checkBonusEligibility.loading"
-);
+const loadingCaption = I18n.t("bonus.bonusVacanza.eligibility.loading");
 
 const validResults = new Map([
   [EligibilityRequestProgressEnum.ELIGIBLE, navigateToActivateBonus],
   [EligibilityRequestProgressEnum.INELIGIBLE, navigateToIseeNotEligible],
-  [EligibilityRequestProgressEnum.ISEE_NOT_FOUND, navigateToIseeNotAvailable]
+  [EligibilityRequestProgressEnum.ISEE_NOT_FOUND, navigateToIseeNotAvailable],
+  [EligibilityRequestProgressEnum.TIMEOUT, navigateToTimeoutEligibilityCheck]
 ]);
 
 const handleEligibilityProgress = (props: Props) => {
@@ -43,8 +43,9 @@ const handleEligibilityProgress = (props: Props) => {
  * @param props
  * @constructor
  */
-const CheckBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
+const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   useEffect(() => {
+    // TODO: remove from here, all the stack is loaded at the start
     props.checkEligibility();
   }, []);
 
@@ -89,4 +90,4 @@ const mapStateToProps = (globalState: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CheckBonusEligibilityScreen);
+)(LoadBonusEligibilityScreen);

@@ -2,16 +2,11 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import I18n from "../../../i18n";
-import { FooterTwoButtons } from "../components/markdown/FooterTwoButtons";
-import { MarkdownBaseScreen } from "../components/markdown/MarkdownBaseScreen";
+import I18n from "../../../../i18n";
+import { FooterTwoButtons } from "../../components/markdown/FooterTwoButtons";
+import { MarkdownBaseScreen } from "../../components/markdown/MarkdownBaseScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
-
-const markdownBody = I18n.t("bonus.bonusVacanza.iseeNotAvailable.text");
-const title = I18n.t("bonus.bonusVacanza.iseeNotAvailable.title");
-const subtitle = I18n.t("bonus.bonusVacanza.iseeNotAvailable.subtitle");
-const gotoInps = I18n.t("bonus.bonusVacanza.iseeNotAvailable.goToINPSWebsite");
 
 /**
  * This screen display some additional information when the ISEE is not available for the user.
@@ -24,6 +19,17 @@ const gotoInps = I18n.t("bonus.bonusVacanza.iseeNotAvailable.goToINPSWebsite");
  */
 
 const IseeNotAvailableScreen: React.FunctionComponent<Props> = props => {
+  const markdownBody = I18n.t(
+    "bonus.bonusVacanza.eligibility.iseeNotAvailable.text"
+  );
+  const title = I18n.t("bonus.bonusVacanza.eligibility.iseeNotAvailable.title");
+  const subtitle = I18n.t(
+    "bonus.bonusVacanza.eligibility.iseeNotAvailable.subtitle"
+  );
+  const gotoInps = I18n.t(
+    "bonus.bonusVacanza.eligibility.iseeNotAvailable.goToINPSWebsite"
+  );
+
   return (
     <MarkdownBaseScreen
       navigationTitle={title}

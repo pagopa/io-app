@@ -1,14 +1,14 @@
 import { List, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import ListItemComponent from "../../../../components/screens/ListItemComponent";
-import ScreenContent from "../../../../components/screens/ScreenContent";
-import I18n from "../../../../i18n";
-import themeVariables from "../../../../theme/variables";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
-import { FooterTwoButtons } from "../../components/markdown/FooterTwoButtons";
-import { FamilyMember } from "../../types/eligibility";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import ListItemComponent from "../../../../../components/screens/ListItemComponent";
+import ScreenContent from "../../../../../components/screens/ScreenContent";
+import I18n from "../../../../../i18n";
+import themeVariables from "../../../../../theme/variables";
+import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
+import { FooterTwoButtons } from "../../../components/markdown/FooterTwoButtons";
+import { FamilyMember } from "../../../types/eligibility";
 
 type Props = {
   familyMembers: ReadonlyArray<FamilyMember>;
@@ -27,9 +27,6 @@ const styles = StyleSheet.create({
     paddingRight: themeVariables.contentPadding
   }
 });
-
-const title = I18n.t("bonus.bonusVacanza.activateBonus.title");
-const activateBonusText = title;
 
 /**
  * Transform an object of type {@link FamilyMember} to a string representation
@@ -68,10 +65,16 @@ const renderFamilyMembersList = (
  * @constructor
  */
 export const ActivateBonusComponent: React.FunctionComponent<Props> = props => {
-  const description = I18n.t("bonus.bonusVacanza.activateBonus.description", {
-    amount: formatNumberCentsToAmount(props.bonusAmount, true),
-    taxBenefit: formatNumberCentsToAmount(props.taxBenefit, true)
-  });
+  const title = I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title");
+  const activateBonusText = title;
+
+  const description = I18n.t(
+    "bonus.bonusVacanza.eligibility.activateBonus.description",
+    {
+      amount: formatNumberCentsToAmount(props.bonusAmount, true),
+      taxBenefit: formatNumberCentsToAmount(props.taxBenefit, true)
+    }
+  );
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={title}>
