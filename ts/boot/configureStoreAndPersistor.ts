@@ -212,7 +212,8 @@ const migrations: MigrationManifest = {
     };
   },
   // Version 12
-  // add content.idpTextData. Set default value
+  // add content.idpTextData
+  // set default value
   "13": (state: PersistedState) => {
     return {
       ...state,
