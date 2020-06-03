@@ -14,9 +14,9 @@ import PaymentBannerComponent from "../../components/wallet/PaymentBannerCompone
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
 import {
+  navigateToAvailableBonusScreen,
   navigateToPaymentTransactionSummaryScreen,
-  navigateToWalletAddCreditCard,
-  navigateToAvailableBonusScreen
+  navigateToWalletAddCreditCard
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import variables from "../../theme/variables";
