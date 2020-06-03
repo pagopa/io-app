@@ -7,7 +7,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { SagaIterator } from "redux-saga";
-import { call, Effect, put, takeEvery } from "redux-saga/effects";
+import { call, Effect, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
@@ -17,10 +17,12 @@ import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
   loadServiceMetadata,
-  loadVisibleServicesByScope
+  loadVisibleServicesByScope,
+  loadIdpsTextData
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
+import { IdpsTextData } from "../../definitions/content/IdpsTextData";
 
 const contentClient = ContentClient();
 
@@ -33,6 +35,19 @@ function getServiceMetadata(
   return new Promise((resolve, _) =>
     contentClient
       .getService({ serviceId })
+      .then(resolve, e => resolve(left([{ context: [], value: e }])))
+  );
+}
+
+/**
+ * Retrieves a service metadata from the static content repository
+ */
+function getIdpsTextData(): Promise<
+  t.Validation<BasicResponseType<IdpsTextData>>
+> {
+  return new Promise((resolve, _) =>
+    contentClient
+      .getIdpsTextData()
       .then(resolve, e => resolve(left([{ context: [], value: e }])))
   );
 }
@@ -180,6 +195,27 @@ function* watchContentMunicipalityLoadSaga(
   }
 }
 
+/**
+ * A saga that watches for and executes requests to load idps text data
+ */
+function* watchLoadIdsTextData(): SagaIterator {
+  try {
+    const response: SagaCallReturnType<typeof getIdpsTextData> = yield call(
+      getIdpsTextData
+    );
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(loadIdpsTextData.success(response.value.value));
+        return;
+      }
+      throw Error(`response status ${response.value.status}`);
+    }
+    throw Error(readableReport(response.value));
+  } catch (e) {
+    yield put(loadIdpsTextData.failure(e));
+  }
+}
+
 export function* watchContentSaga() {
   // watch content municipality
   yield takeEvery(
@@ -198,4 +234,7 @@ export function* watchContentSaga() {
     getType(loadVisibleServicesByScope.request),
     watchContentServicesByScopeLoad
   );
+
+  // watch idps text data
+  yield takeLatest(getType(loadIdpsTextData.request), watchLoadIdsTextData);
 }
