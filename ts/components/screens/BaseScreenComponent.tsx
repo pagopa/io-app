@@ -19,12 +19,16 @@ import {
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
-import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { handleItemOnPress } from "../../utils/url";
 import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
-import { isIoInternalLink } from "../ui/Markdown/handlers/link";
+import {
+  IO_CUSTOM_HANDLED_PRESS_PREFIX,
+  isCustomHandledLink,
+  isIoInternalLink
+} from "../ui/Markdown/handlers/link";
 import { BaseHeader } from "./BaseHeader";
 
 export interface ContextualHelpProps {
@@ -44,25 +48,11 @@ interface OwnProps {
   appLogo?: boolean;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
-  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }
 
-type BaseHeaderProps =
-  | "dark"
-  | "appLogo"
-  | "primary"
-  | "goBack"
-  | "headerTitle"
-  | "onShowHelp"
-  | "body"
-  | "isSearchAvailable"
-  | "showInstabugChat"
-  | "searchType"
-  | "customRightIcon"
-  | "customGoBack";
-
 type Props = OwnProps &
-  Pick<React.ComponentProps<typeof BaseHeader>, BaseHeaderProps>;
+  React.ComponentProps<typeof BaseHeader> &
+  Pick<React.ComponentProps<typeof ContextualHelpModal>, "faqCategories">;
 
 interface State {
   isHelpVisible: boolean;
@@ -168,8 +158,15 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   };
 
   private handleOnLinkClicked = (url: string) => {
+    // manage links with IO_INTERNAL_LINK_PREFIX as prefix
     if (isIoInternalLink(url)) {
       this.hideHelp();
+    }
+
+    // manage links with IO_CUSTOM_HANDLED_PRESS_PREFIX as prefix
+    if (isCustomHandledLink(url)) {
+      const link = url.split(IO_CUSTOM_HANDLED_PRESS_PREFIX)[1];
+      handleItemOnPress(link)();
     }
   };
 
@@ -187,8 +184,16 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       searchType,
       customRightIcon,
       customGoBack,
-      showInstabugChat
+      showInstabugChat,
+      children,
+      faqCategories
     } = this.props;
+
+    const {
+      isHelpVisible,
+      contextualHelpModalAnimation,
+      markdownContentLoaded
+    } = this.state;
 
     const ch = contextualHelp
       ? { body: contextualHelp.body, title: contextualHelp.title }
@@ -226,18 +231,18 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           customRightIcon={customRightIcon}
           customGoBack={customGoBack}
         />
-        {this.props.children}
+        {children}
         {ch && (
           <ContextualHelpModal
             title={ch.title}
             onLinkClicked={this.handleOnLinkClicked}
             body={ch.body}
-            isVisible={this.state.isHelpVisible}
-            modalAnimation={this.state.contextualHelpModalAnimation}
+            isVisible={isHelpVisible}
+            modalAnimation={contextualHelpModalAnimation}
             onRequestAssistance={this.handleOnRequestAssistance}
             close={this.hideHelp}
-            contentLoaded={this.state.markdownContentLoaded.fold(true, s => s)}
-            faqCategories={this.props.faqCategories}
+            contentLoaded={markdownContentLoaded.fold(true, s => s)}
+            faqCategories={faqCategories}
           />
         )}
       </Container>

@@ -1267,6 +1267,9 @@ faq:
   57:
     title: "Hai avuto problemi durante un pagamento?"
     content: !include faq/faq57.md
+  58:
+    title: "Non riesci ad accedere con le tue credenziali SPID posteID?"
+    content: !include faq/faq58.md
 bonus:
   bonusVacanza:
     status: Stato

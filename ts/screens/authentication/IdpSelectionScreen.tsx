@@ -1,11 +1,9 @@
-/**
- * A screen where the user choose the SPID IPD to login with.
- */
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
@@ -16,10 +14,9 @@ import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
-import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
 
-type Props = ReduxProps & NavigationScreenProps;
+type Props = ReturnType<typeof mapDispatchToProps> & NavigationScreenProps;
 
 // since this is a test SPID idp, we set isTestIdp flag to avoid rendering.
 // It is used has a placeholder to handle taps count on it and open when
@@ -86,10 +83,10 @@ const idps: ReadonlyArray<IdentityProvider> = [
     profileUrl: "https://myid.sieltecloud.it/profile/"
   },
   {
-    id: "spiditalia",
+    id: "spiditaliaid",
     name: "SPIDItalia Register.it",
     logo: require("../../../img/spid-idp-spiditalia.png"),
-    entityID: "spiditalia",
+    entityID: "spiditaliaid",
     profileUrl: "https://spid.register.it"
   },
   {
@@ -126,12 +123,12 @@ const IdpSelectionScreen: React.FunctionComponent<Props> = props => {
       setCounter(count => (count + 1) % (TAPS_TO_OPEN_TESTIDP + 1));
       return;
     }
-    props.dispatch(idpSelected(idp));
+    props.setSelectedIdp(idp);
     props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
   React.useEffect(() => {
     if (counter === TAPS_TO_OPEN_TESTIDP) {
-      props.dispatch(idpSelected(testIdp));
+      props.setSelectedIdp(testIdp);
       props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
     }
   });
@@ -163,4 +160,11 @@ const IdpSelectionScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-export default connect()(IdpSelectionScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setSelectedIdp: (idp: IdentityProvider) => dispatch(idpSelected(idp))
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(IdpSelectionScreen);

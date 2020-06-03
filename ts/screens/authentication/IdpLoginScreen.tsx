@@ -1,7 +1,3 @@
-/**
- * A screen that allows the user to login with an IDP.
- * The IDP page is opened in a WebView
- */
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
@@ -23,10 +19,12 @@ import { idpLoginUrlChanged } from "../../store/actions/authentication";
 import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
-  isLoggedOutWithIdp
+  isLoggedOutWithIdp,
+  selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
+import { FAQsCategoriesType } from "../../utils/faq";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
 
 type Props = NavigationScreenProps &
@@ -85,6 +83,9 @@ const styles = StyleSheet.create({
   cancelButtonStyle: {
     flex: 1,
     marginEnd: 10
+  },
+  flex2: {
+    flex: 2
   }
 });
 
@@ -93,6 +94,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "authentication.idp_login.contextualHelpContent"
 };
 
+/**
+ * A screen that allows the user to login with an IDP.
+ * The IDP page is opened in a WebView
+ */
 class IdpLoginScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -198,7 +203,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               onPress={this.setRequestStateToLoading}
-              style={{ flex: 2 }}
+              style={styles.flex2}
               block={true}
               primary={true}
             >
@@ -210,6 +215,22 @@ class IdpLoginScreen extends React.Component<Props, State> {
     }
     // loading complete, no mask needed
     return null;
+  };
+
+  private getFaqCathegories = () => {
+    // tslint:disable-next-line: no-let prefer-const readonly-array
+    let defaultCathegories: FAQsCategoriesType[] = ["authentication_SPID"];
+
+    if (!this.props.selectedIdentityProvider) {
+      return defaultCathegories;
+    }
+
+    switch (this.props.selectedIdentityProvider.id) {
+      case "posteid":
+        return defaultCathegories.concat(["authentication_IDP_posteid"]);
+      default:
+        return defaultCathegories;
+    }
   };
 
   public render() {
@@ -231,7 +252,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       <BaseScreenComponent
         goBack={true}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["authentication_SPID", "authentication_CIE"]}
+        faqCategories={this.getFaqCathegories()}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
           loggedOutWithIdpAuth.idp.name
         }`}
@@ -258,7 +279,8 @@ const mapStateToProps = (state: GlobalState) => ({
     : undefined,
   loggedInAuth: isLoggedIn(state.authentication)
     ? state.authentication
-    : undefined
+    : undefined,
+  selectedIdentityProvider: selectedIdentityProviderSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

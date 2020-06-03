@@ -1,6 +1,3 @@
-/**
- * A component to render the message markdown as HTML inside a WebView
- */
 import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
 import { AppState, AppStateStatus } from "react-native";
@@ -217,6 +214,9 @@ type State = {
   appState: string;
 };
 
+/**
+ * A component to render the message markdown as HTML inside a WebView
+ */
 class Markdown extends React.PureComponent<Props, State> {
   private webViewRef = React.createRef<WebView>();
 
@@ -302,6 +302,7 @@ class Markdown extends React.PureComponent<Props, State> {
 
     const isLoading =
       html === undefined || (html !== "" && htmlBodyHeight === 0);
+
     return (
       <React.Fragment>
         {isLoading && (

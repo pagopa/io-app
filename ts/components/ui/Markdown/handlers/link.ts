@@ -7,6 +7,13 @@ import { handleInternalLink, IO_INTERNAL_LINK_PREFIX } from "./internalLink";
 export const isIoInternalLink = (href: string): boolean =>
   href.startsWith(IO_INTERNAL_LINK_PREFIX);
 
+// Prefix to handle the press of a link as managed by the handleItemOnPress function.
+// It should be expressed like `ioHandledLink://PROFILE_MAIN`
+export const IO_CUSTOM_HANDLED_PRESS_PREFIX = "iohandledlink://";
+
+export const isCustomHandledLink = (href: string): boolean =>
+  href.startsWith(IO_CUSTOM_HANDLED_PRESS_PREFIX);
+
 /**
  * Handles links clicked in the Markdown (webview) component.
  * Internal links handling is demanded to the `handleInternalLink` function.
