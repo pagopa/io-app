@@ -20,7 +20,7 @@ const BonusAvailableO = t.partial({
 });
 export const BonusAvailableCodec = t.intersection(
   [BonusAvailableR, BonusAvailableO],
-  "BonusItem"
+  "BonusAvailable"
 );
 const BonusListR = t.interface({
   items: t.readonlyArray(BonusAvailableCodec, "array of available bonuses")
@@ -28,7 +28,7 @@ const BonusListR = t.interface({
 const BonusListRO = t.partial({});
 export const BonusesAvailableCodec = t.intersection(
   [BonusListR, BonusListRO],
-  "BonusList"
+  "BonusesAvailable"
 );
 export type BonusesAvailable = t.TypeOf<typeof BonusesAvailableCodec>;
 export type BonusAvailable = t.TypeOf<typeof BonusAvailableCodec>;

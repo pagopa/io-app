@@ -14,10 +14,10 @@ import { navigateBack } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
 import themeVariables from "../../../theme/variables";
 import { FooterTwoButtons } from "../components/markdown/FooterTwoButtons";
-import { BonusItem } from "../types/bonusesAvailable";
+import { BonusAvailable } from "../types/bonusesAvailable";
 
 type NavigationParams = Readonly<{
-  bonusItem: BonusItem;
+  bonusItem: BonusAvailable;
 }>;
 
 type Props = ReduxProps &
