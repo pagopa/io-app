@@ -14,6 +14,7 @@ import { navigateBack } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
 import themeVariables from "../../../theme/variables";
 import { FooterTwoButtons } from "../components/markdown/FooterTwoButtons";
+import { navigateToBonusTosScreen } from "../navigation/action";
 import { BonusItem } from "../types/bonusList";
 
 type NavigationParams = Readonly<{
@@ -49,6 +50,8 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const getBonusItem = () => props.navigation.getParam("bonusItem");
 
   const bonusItem = getBonusItem();
+
+  RTron.log(bonusItem);
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
       <ScreenContent
@@ -81,7 +84,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO add bonus request action or just navigate to TOS screen (?)
-  requestBonusActivation: () => null,
+  requestBonusActivation: () => dispatch(navigateToBonusTosScreen()),
   navigateBack: () => dispatch(navigateBack())
 });
 

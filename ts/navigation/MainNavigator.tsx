@@ -20,6 +20,8 @@ import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
 import WalletTabIcon from "../components/WalletTabIcon";
+import BONUSVACANZE_ROUTES from "../features/bonusVacanze/navigation/routes";
+import { routeToArray } from "../features/bonusVacanze/utils/routes";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -85,7 +87,8 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.INSERT_EMAIL_SCREEN,
   ROUTES.PAYMENTS_HISTORY_SCREEN,
   ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
-  ROUTES.WALLET_TRANSACTION_DETAILS
+  ROUTES.WALLET_TRANSACTION_DETAILS,
+  ...routeToArray(BONUSVACANZE_ROUTES)
 ];
 
 const getTabBarVisibility = (
