@@ -40,7 +40,7 @@ function getServiceMetadata(
 }
 
 /**
- * Retrieves a service metadata from the static content repository
+ * Retrieves idps text data from the static content repository
  */
 function getIdpsTextData(): Promise<
   t.Validation<BasicResponseType<IdpsTextData>>
