@@ -1280,6 +1280,7 @@ bonus:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:
       requestBonus: Richiedi
+      cancelRequest: Annulla la richiesta
     eligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
       iseeNotAvailable:
@@ -1288,9 +1289,10 @@ bonus:
         text: !include bonus/bonusVacanze/iseeNotAvailable.md
         goToINPSWebsite: Vai al sito INPS
       iseeNotEligible:
-        title: ISEE non idoneo
-        subtitle: L'ISEE presentato non soddisfa i requisiti per il bonus vacanze
-        text: !include bonus/bonusVacanze/iseeNotEligible.md
+        title: Siamo spiacenti. Il tuo ISEE supera la soglia richiesta.
+        text: Se non ti risulta corretto, oppure se il tuo reddito familiare è cambiato dall’ultimo ISEE creato, puoi aggiornarlo effettuando una nuova dichiarazione sostituiva unica (DSU) sul sito di INPS.
+        goToNewDSU: Presenta nuova DSU a INPS
+        goToNewSimulation: Fai una simulazione online
       activateBonus:
         title: Attiva
         description: Puoi attivare un bonus di {{amount}}. Il tuo sconto sulle tasse è pari a {{taxBenefit}}

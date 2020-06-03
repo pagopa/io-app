@@ -1247,6 +1247,7 @@ bonus:
       loading: Checking bonus eligibility
     cta:
       requestBonus: Request
+      cancelRequest: Cancel the request
     eligibility:
       loading: Checking bonus eligibility
       iseeNotAvailable:
@@ -1255,9 +1256,10 @@ bonus:
         text: !include bonus/bonusVacanze/iseeNotAvailable.md
         goToINPSWebsite: Go to INPS Website
       iseeNotEligible:
-        title: ISEE not eligible
-        subtitle: The ISEE submitted does not meet the requirements
-        text: !include bonus/bonusVacanze/iseeNotEligible.md
+        title: We're sorry. Your ISEE exceeds the required threshold.
+        text: If it is not correct, or if your family income has changed since the last ISEE created, you can update it by making a new declaration (DSU) on the INPS website.
+        goToNewDSU: Submit new DSU to INPS
+        goToNewSimulation: Online simulation
       activateBonus:
         title: Activate
         description: You can activate a {{amount}} bonus. Your tax discount is equal to {{taxBenefit}}
