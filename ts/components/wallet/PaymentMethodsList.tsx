@@ -20,6 +20,7 @@ import Markdown from "../ui/Markdown";
 
 type OwnProps = Readonly<{
   navigateToAddCreditCard: () => void;
+  navigateToRequestBonus: () => void;
 }>;
 
 type Props = OwnProps & LightModalContextInterface;
@@ -30,6 +31,8 @@ type IPaymentMethod = Readonly<{
   icon?: any;
   image?: any;
   implemented: boolean;
+  new?: boolean;
+  onPress?: () => void;
 }>;
 
 const underlayColor = "transparent";
@@ -68,6 +71,14 @@ const implementedMethod: IPaymentMethod = {
   icon: "io-48-card",
   implemented: true
 };
+
+const bonusMethod: IPaymentMethod = {
+  name: I18n.t("wallet.methods.sovvenzione.name"),
+  icon: "io-bonus",
+  implemented: true,
+  new: true
+};
+
 const paymentMethods: ReadonlyArray<IPaymentMethod> = [
   {
     name: I18n.t("wallet.methods.satispay.name"),
@@ -105,6 +116,11 @@ const AddMethodStyle = StyleSheet.create({
     marginTop: 2,
     backgroundColor: variables.lightGray
   },
+  newImplementedBadge: {
+    height: 18,
+    marginTop: 2,
+    backgroundColor: variables.brandHighLighter
+  },
   notImplementedText: {
     fontSize: 10,
     lineHeight: Platform.OS === "ios" ? 14 : 16
@@ -132,17 +148,25 @@ class PaymentMethodsList extends React.Component<Props, never> {
         <View spacer={true} large={true} />
         <FlatList
           removeClippedSubviews={false}
-          data={[implementedMethod, ...paymentMethods]}
+          data={[
+            {
+              ...implementedMethod,
+              onPress: this.props.navigateToAddCreditCard
+            },
+            { ...bonusMethod, onPress: this.props.navigateToRequestBonus },
+            ...paymentMethods
+          ]}
           keyExtractor={item => item.name}
           renderItem={itemInfo => {
             const isItemDisabled = !itemInfo.item.implemented;
             const disabledStyle = isItemDisabled ? styles.disabled : {};
+            const isItemNew = !isItemDisabled && itemInfo.item.new;
             return (
               <ListItem
                 style={styles.listItem}
                 onPress={() => {
-                  if (itemInfo.item.implemented) {
-                    this.props.navigateToAddCreditCard();
+                  if (itemInfo.item.onPress) {
+                    itemInfo.item.onPress();
                   }
                 }}
                 underlayColor={underlayColor}
@@ -161,6 +185,13 @@ class PaymentMethodsList extends React.Component<Props, never> {
                           <Badge style={AddMethodStyle.notImplementedBadge}>
                             <Text style={AddMethodStyle.notImplementedText}>
                               {I18n.t("wallet.methods.comingSoon")}
+                            </Text>
+                          </Badge>
+                        )}
+                        {isItemNew && (
+                          <Badge style={AddMethodStyle.newImplementedBadge}>
+                            <Text style={AddMethodStyle.notImplementedText}>
+                              {I18n.t("wallet.methods.newCome")}
                             </Text>
                           </Badge>
                         )}
