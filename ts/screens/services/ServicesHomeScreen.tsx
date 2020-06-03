@@ -41,7 +41,7 @@ import {
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import {
-  instabugLogChunked,
+  instabugLog,
   openInstabugBugReport,
   TypeLogs
 } from "../../boot/configureInstabug";
@@ -349,19 +349,19 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private instabugReportTag = "services-loading-error";
   private sendDataToInstabug() {
     Instabug.appendTags([this.instabugReportTag]);
-    instabugLogChunked(
+    instabugLog(
       JSON.stringify(this.props.potUserMetadata),
       TypeLogs.INFO,
       "userMetadata"
     );
 
-    instabugLogChunked(
+    instabugLog(
       JSON.stringify(this.props.debugONLYServices),
       TypeLogs.INFO,
       "services"
     );
 
-    instabugLogChunked(
+    instabugLog(
       `isInnerContentRendered=${
         this.state.isInnerContentRendered
       }  visibleServicesContentLoadState=${JSON.stringify(
