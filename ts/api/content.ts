@@ -9,13 +9,13 @@ import {
   IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
 import { ServiceId } from "../../definitions/backend/ServiceId";
+import { IdpsTextData } from "../../definitions/content/IdpsTextData";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
-import { IdpsTextData } from "../../definitions/content/IdpsTextData";
 
 type GetServiceT = IGetApiRequestType<
   {

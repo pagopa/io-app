@@ -10,19 +10,19 @@ import { SagaIterator } from "redux-saga";
 import { call, Effect, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ServiceId } from "../../definitions/backend/ServiceId";
+import { IdpsTextData } from "../../definitions/content/IdpsTextData";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
+  loadIdpsTextData,
   loadServiceMetadata,
-  loadVisibleServicesByScope,
-  loadIdpsTextData
+  loadVisibleServicesByScope
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
-import { IdpsTextData } from "../../definitions/content/IdpsTextData";
 
 const contentClient = ContentClient();
 
