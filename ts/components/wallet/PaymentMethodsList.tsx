@@ -8,6 +8,7 @@ import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, Platform, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
+import { bonusVacanzeEnabled } from "../../config";
 import I18n from "../../i18n";
 import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
@@ -148,14 +149,27 @@ class PaymentMethodsList extends React.Component<Props, never> {
         <View spacer={true} large={true} />
         <FlatList
           removeClippedSubviews={false}
-          data={[
-            {
-              ...implementedMethod,
-              onPress: this.props.navigateToAddCreditCard
-            },
-            { ...bonusMethod, onPress: this.props.navigateToRequestBonus },
-            ...paymentMethods
-          ]}
+          data={
+            bonusVacanzeEnabled
+              ? [
+                  {
+                    ...implementedMethod,
+                    onPress: this.props.navigateToAddCreditCard
+                  },
+                  {
+                    ...bonusMethod,
+                    onPress: this.props.navigateToRequestBonus
+                  },
+                  ...paymentMethods
+                ]
+              : [
+                  {
+                    ...implementedMethod,
+                    onPress: this.props.navigateToAddCreditCard
+                  },
+                  ...paymentMethods
+                ]
+          }
           keyExtractor={item => item.name}
           renderItem={itemInfo => {
             const isItemDisabled = !itemInfo.item.implemented;
