@@ -51,7 +51,6 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 
   const bonusItem = getBonusItem();
 
-  RTron.log(bonusItem);
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
       <ScreenContent
