@@ -9,17 +9,17 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import I18n from "../../../i18n";
-import {
-  navigateBack,
-  navigateToBonusActiveDetailScreen,
-  navigateToBonusRequestInformation
-} from "../../../store/actions/navigation";
+import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { maybeInnerProperty } from "../../../utils/options";
 import ActiveBonus from "../components/ActiveBonus";
 import AvailableBonusItem from "../components/AvailableBonusItem";
+import {
+  navigateToBonusActiveDetailScreen,
+  navigateToBonusRequestInformation
+} from "../navigation/action";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../store/reducers/availableBonuses";
 import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeActivation";

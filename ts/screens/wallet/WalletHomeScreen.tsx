@@ -26,6 +26,10 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled } from "../../config";
 import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
 import {
+  navigateToAvailableBonusScreen,
+  navigateToBonusActiveDetailScreen
+} from "../../features/bonusVacanze/navigation/action";
+import {
   availableBonusesLoad,
   loadBonusVacanzeFromId
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
@@ -35,8 +39,6 @@ import { BonusVacanze } from "../../features/bonusVacanze/types/bonusVacanzeActi
 import I18n from "../../i18n";
 import {
   navigateBack,
-  navigateToAvailableBonusScreen,
-  navigateToBonusActiveDetailScreen,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
