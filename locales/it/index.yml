@@ -1284,10 +1284,8 @@ bonus:
     eligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
       iseeNotAvailable:
-        title: ISEE non trovato
-        subtitle: Non è disponibile nessun ISEE per l'utente
-        text: !include bonus/bonusVacanze/iseeNotAvailable.md
-        goToINPSWebsite: Vai al sito INPS
+        title: Siamo spiacenti. Non abbiamo trovato il tuo ISEE.
+        text: "È necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE per ottenere il Bonus Vacanze.\n\nSe vuoi, puoi fare subito una simulazione o la richiesta online sul sito di INPS."
       iseeNotEligible:
         title: Siamo spiacenti. Il tuo ISEE supera la soglia richiesta.
         text: Se non ti risulta corretto, oppure se il tuo reddito familiare è cambiato dall’ultimo ISEE creato, puoi aggiornarlo effettuando una nuova dichiarazione sostituiva unica (DSU) sul sito di INPS.
@@ -1298,10 +1296,7 @@ bonus:
         description: Puoi attivare un bonus di {{amount}}. Il tuo sconto sulle tasse è pari a {{taxBenefit}}
       timeout:
         title: Siamo spiacenti, serve più tempo per verificare il tuo ISEE.
-        description: Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.
-
-
-         Quando lo riceverai, se sarà positivo, ricordati di completare la tua domanda entro 24 ore, altrimenti scadrà e dovrai iniziarne una nuova.
+        description: "Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.\n\nQuando lo riceverai, se sarà positivo, ricordati di completare la tua domanda entro 24 ore, altrimenti scadrà e dovrai iniziarne una nuova."
       activate:
         loading: Attivo il bonus
         goToDetails: Visualizza i dettagli
