@@ -460,7 +460,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     );
   }
 
-  // trigger on pull to refresh
+  // triggered on pull to refresh
   private handleOnRefresh = () => {
     this.loadBonusVacanze();
     this.props.loadTransactions(this.props.transactionsLoadedLength);
