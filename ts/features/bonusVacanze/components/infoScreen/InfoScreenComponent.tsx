@@ -1,11 +1,9 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
-import customVariables from "../../../../theme/variables";
 import themeVariables from "../../../../theme/variables";
-import { confirmButtonProps } from "../markdown/ButtonConfigurations";
+import { confirmButtonProps } from "../buttons/ButtonConfigurations";
 
 const PropTypes = require("prop-types");
 
