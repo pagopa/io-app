@@ -7,10 +7,10 @@ import IconFont from "../../../components/ui/IconFont";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
-import { BonusItem } from "../types/bonusList";
+import { BonusAvailable } from "../types/bonusesAvailable";
 
 type Props = {
-  bonusItem: BonusItem;
+  bonusItem: BonusAvailable;
   onPress: () => void;
 };
 
