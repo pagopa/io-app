@@ -12,9 +12,9 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
+import { navigateToAvailableBonusScreen } from "../../features/bonusVacanze/navigation/action";
 import I18n from "../../i18n";
 import {
-  navigateToAvailableBonusScreen,
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletAddCreditCard
 } from "../../store/actions/navigation";
