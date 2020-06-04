@@ -3,7 +3,11 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import themeVariables from "../../../../theme/variables";
-import { confirmButtonProps } from "../markdown/ButtonConfigurations";
+import { confirmButtonProps } from "../buttons/ButtonConfigurations";
+
+const PropTypes = require("prop-types");
+
+PropTypes.oneOf();
 
 type Props = {
   image: React.ReactNode;
