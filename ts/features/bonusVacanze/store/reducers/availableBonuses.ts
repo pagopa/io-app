@@ -2,10 +2,10 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { BonusList } from "../../types/bonusList";
+import { BonusesAvailable } from "../../types/bonusesAvailable";
 import { availableBonusesLoad } from "../actions/bonusVacanze";
 
-export type AvailableBonusesState = pot.Pot<BonusList, Error>;
+export type AvailableBonusesState = pot.Pot<BonusesAvailable, Error>;
 
 const INITIAL_STATE: AvailableBonusesState = pot.none;
 
@@ -28,6 +28,6 @@ const reducer = (
 // Selectors
 export const availableBonusesSelector = (
   state: GlobalState
-): pot.Pot<BonusList, Error> => state.bonus.availableBonuses;
+): pot.Pot<BonusesAvailable, Error> => state.bonus.availableBonuses;
 
 export default reducer;

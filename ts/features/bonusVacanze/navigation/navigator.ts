@@ -1,4 +1,8 @@
 import { createStackNavigator } from "react-navigation";
+import AcceptTosBonusScreen from "../screens/AcceptTosBonusScreen";
+import ActiveBonusScreen from "../screens/ActiveBonusScreen";
+import AvailableBonusScreen from "../screens/AvailableBonusScreen";
+import BonusInformationScreen from "../screens/BonusInformationScreen";
 import ActivateBonusCompletedScreen from "../screens/eligibility/ActivateBonus/ActivateBonusCompletedScreen";
 import LoadActivateBonusScreen from "../screens/eligibility/ActivateBonus/LoadActivateBonusScreen";
 import ActivateBonusRequestScreen from "../screens/eligibility/ActivateBonus/request/ActivateBonusRequestScreen";
@@ -10,6 +14,18 @@ import BONUSVACANZE_ROUTES from "./routes";
 
 const BonusVacanzeNavigator = createStackNavigator(
   {
+    [BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST]: {
+      screen: AvailableBonusScreen
+    },
+    [BONUSVACANZE_ROUTES.BONUS_REQUEST_INFORMATION]: {
+      screen: BonusInformationScreen
+    },
+    [BONUSVACANZE_ROUTES.BONUS_TOS_SCREEN]: {
+      screen: AcceptTosBonusScreen
+    },
+    [BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: {
+      screen: ActiveBonusScreen
+    },
     [BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK_LOADING]: {
       screen: LoadBonusEligibilityScreen
     },

@@ -6,8 +6,6 @@ import {
   StackActions
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
-import ActiveBonusScreen from "../../features/bonusVacanze/screens/ActiveBonusScreen";
-import BonusInformationScreen from "../../features/bonusVacanze/screens/BonusInformationScreen";
 import ROUTES from "../../navigation/routes";
 import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
@@ -297,34 +295,5 @@ export const navigateToCieCardReaderScreen = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_CARD_READER_SCREEN,
-    params
-  });
-
-/**
- * BONUS
- */
-export const navigateToAvailableBonusScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.BONUS_AVAILABLE_LIST
-  });
-
-export const navigateToBonusRequestInformation = (
-  params?: InferNavigationParams<typeof BonusInformationScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.BONUS_REQUEST_INFORMATION,
-    params
-  });
-
-export const navigateToBonusTosScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.BONUS_TOS_SCREEN
-  });
-
-export const navigateToBonusActiveDetailScreen = (
-  params?: InferNavigationParams<typeof ActiveBonusScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.BONUS_ACTIVE_DETAIL_SCREEN,
     params
   });
