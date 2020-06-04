@@ -10,6 +10,7 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { IdpsTextData } from "../../../definitions/content/IdpsTextData";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import {
   ScopeEnum,
@@ -19,6 +20,7 @@ import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import {
   contentMunicipalityLoad,
+  loadIdpsTextData,
   loadServiceMetadata,
   loadVisibleServicesByScope
 } from "../actions/content";
@@ -37,6 +39,7 @@ export type ContentState = Readonly<{
   };
   municipality: MunicipalityState;
   servicesByScope: pot.Pot<ServicesByScope, Error>;
+  idpTextData: pot.Pot<IdpsTextData, Error>;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -58,7 +61,8 @@ const initialContentState: ContentState = {
     codiceCatastale: pot.none,
     data: pot.none
   },
-  servicesByScope: pot.none
+  servicesByScope: pot.none,
+  idpTextData: pot.none
 };
 
 // Selectors
@@ -220,11 +224,31 @@ export default function content(
         servicesByScope: pot.toError(state.servicesByScope, action.payload)
       };
 
+    // idps text data
+    case getType(loadIdpsTextData.request):
+      return {
+        ...state,
+        idpTextData: pot.toLoading(state.idpTextData)
+      };
+
+    case getType(loadIdpsTextData.success):
+      return {
+        ...state,
+        idpTextData: pot.some(action.payload)
+      };
+
+    case getType(loadIdpsTextData.failure):
+      return {
+        ...state,
+        idpTextData: pot.toError(state.idpTextData, action.payload)
+      };
+
     case getType(clearCache):
       return {
         ...state,
         servicesMetadata: { ...initialContentState.servicesMetadata },
-        municipality: { ...initialContentState.municipality }
+        municipality: { ...initialContentState.municipality },
+        idpTextData: { ...initialContentState.idpTextData }
       };
 
     case getType(removeServiceTuples): {
