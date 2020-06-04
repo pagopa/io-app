@@ -8,10 +8,10 @@ import I18n from "../../../i18n";
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
-import { BonusItem } from "../types/bonusList";
+import { BonusAvailable } from "../types/bonusesAvailable";
 
 type OwnProps = {
-  bonusItem: BonusItem;
+  bonusItem: BonusAvailable;
   onPress: () => void;
 };
 
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
  */
 const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
   const { bonusItem, serviceById } = props;
-  const isItemDisabled = !bonusItem.active;
+  const isItemDisabled = !bonusItem.is_active;
   const disabledStyle = isItemDisabled ? styles.disabled : {};
   return (
     <ListItem
