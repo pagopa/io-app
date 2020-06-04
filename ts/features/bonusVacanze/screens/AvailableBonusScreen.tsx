@@ -26,7 +26,7 @@ import {
   bonusVacanzeActivationSelector,
   canBonusVacanzeBeRequestedSelector
 } from "../store/reducers/bonusVacanzeActivation";
-import { BonusItem } from "../types/bonusList";
+import { BonusAvailable } from "../types/bonusesAvailable";
 import { BonusVacanze } from "../types/bonusVacanzeActivation";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
  * instead if bonus is not active the user can navigate to the begin of request flow.
  */
 class AvailableBonusScreen extends React.PureComponent<Props> {
-  private renderListItem = (info: ListRenderItemInfo<BonusItem>) => {
+  private renderListItem = (info: ListRenderItemInfo<BonusAvailable>) => {
     const { activeBonus } = this.props;
     const item = info.item;
     const bonusVacanzeCategory = this.props.availableBonusesList.items.find(
@@ -139,7 +139,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
   loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
   // TODO Add the param to navigate to proper bonus by name (?)
-  navigateToBonusRequest: (bonusItem: BonusItem) =>
+  navigateToBonusRequest: (bonusItem: BonusAvailable) =>
     dispatch(navigateToBonusRequestInformation({ bonusItem })),
   // TODO Add the param to bonus detail if a bonus is already active
   navigateToBonusDetail: (

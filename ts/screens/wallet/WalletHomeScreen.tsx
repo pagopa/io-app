@@ -186,6 +186,13 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     return true;
   };
 
+  private loadBonusVacanze = () => {
+    if (bonusVacanzeEnabled) {
+      this.props.loadAvailableBonuses();
+      this.props.loadBonusVacanzeFromId("FAKE_ID");
+    }
+  };
+
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
@@ -199,10 +206,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         customVariables.brandDarkGray
       );
     }); // tslint:disable-line no-object-mutation
-    if (bonusVacanzeEnabled) {
-      this.props.loadAvailableBonuses();
-      this.props.loadBonusVacanzeFromId("FAKE_ID");
-    }
+    this.loadBonusVacanze();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
@@ -459,6 +463,13 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     );
   }
 
+  // triggered on pull to refresh
+  private handleOnRefresh = () => {
+    this.loadBonusVacanze();
+    this.props.loadTransactions(this.props.transactionsLoadedLength);
+    this.props.loadWallets();
+  };
+
   public render(): React.ReactNode {
     const { potWallets, potTransactions, historyPayments } = this.props;
 
@@ -488,11 +499,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
     const walletRefreshControl = (
       <RefreshControl
-        onRefresh={() => {
-          this.props.loadTransactions(this.props.transactionsLoadedLength);
-          this.props.loadWallets();
-          this.props.loadBonusVacanzeFromId("FAKE_ID");
-        }}
+        onRefresh={this.handleOnRefresh}
         refreshing={false}
         tintColor={"transparent"} // iOS
       />
