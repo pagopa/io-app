@@ -1282,7 +1282,7 @@ bonus:
       requestBonus: Richiedi
       cancelRequest: Annulla la richiesta
     eligibility:
-      loading: Verifico l'idoneità per l'accesso al bonus
+      loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
       iseeNotAvailable:
         title: Siamo spiacenti. Non abbiamo trovato il tuo ISEE.
         text: "È necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE per ottenere il Bonus Vacanze.\n\nSe vuoi, puoi fare subito una simulazione o la richiesta online sul sito di INPS."

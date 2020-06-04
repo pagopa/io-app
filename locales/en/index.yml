@@ -1249,7 +1249,7 @@ bonus:
       requestBonus: Request
       cancelRequest: Cancel the request
     eligibility:
-      loading: We are verifying your family's ISEE with INPS
+      loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
         title: "We're sorry.\n ISEE not found."
         text: "You should submit a DSU for the calculation of the ISEE to obtain the Holiday Bonus.\n\nIf you want, you can immediately make a simulation or request online on the INPS website."
