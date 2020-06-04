@@ -1,12 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { shufflePinPadOnPayment } from "../../../../../config";
-import I18n from "../../../../../i18n";
-import { identificationRequest } from "../../../../../store/actions/identification";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { eligibilityCheckResults } from "../../../store/reducers/eligibility";
-import { ActivateBonusComponent } from "./ActivateBonusComponent";
+import { shufflePinPadOnPayment } from "../../../../../../config";
+import I18n from "../../../../../../i18n";
+import { identificationRequest } from "../../../../../../store/actions/identification";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { eligibilityCheckResults } from "../../../../store/reducers/eligibility";
+import ActivateBonusRequestComponent from "./ActivateBonusRequestComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -14,14 +14,14 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 /**
  * This screen allows the user to visualize the amount of the bonus available, the family composition, and offers two CTA:
  * - Cancel: Abort the bonus request
- * - Activate the bonus: Start the procedure to activate the bonus
- * The screen is tied to the business logic and is composed using {@link ActivateBonusComponent}
+ * - Activate the bonus: Start the procedure to request the activation of the bonus
+ * The screen is tied to the business logic and is composed using {@link ActivateBonusRequestComponent}
  * @param props
  * @constructor
  */
-const ActivateBonusScreen: React.FunctionComponent<Props> = props => {
+const ActivateBonusRequestScreen: React.FunctionComponent<Props> = props => {
   return (
-    <ActivateBonusComponent
+    <ActivateBonusRequestComponent
       onCancel={props.onCancel}
       onRequestBonus={props.onActivateBonus}
       bonusAmount={props.bonusAmount}
@@ -84,4 +84,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ActivateBonusScreen);
+)(ActivateBonusRequestScreen);
