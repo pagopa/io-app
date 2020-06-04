@@ -1,6 +1,7 @@
 import { createStackNavigator } from "react-navigation";
 import { bonusVacanzeEnabled } from "../config";
-import bonusVacanzeNavigator from "../features/bonusVacanze/navigation/navigator";
+import BonusVacanzeNavigator from "../features/bonusVacanze/navigation/navigator";
+import BONUSVACANZE_ROUTES from "../features/bonusVacanze/navigation/routes";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
@@ -74,8 +75,14 @@ const baseRouteConfigMap = {
   }
 };
 
+const bonusVacanzeConfigMap = {
+  [BONUSVACANZE_ROUTES.MAIN]: {
+    screen: BonusVacanzeNavigator
+  }
+};
+
 const routeConfig = bonusVacanzeEnabled
-  ? { ...baseRouteConfigMap, ...bonusVacanzeNavigator }
+  ? { ...baseRouteConfigMap, ...bonusVacanzeConfigMap }
   : baseRouteConfigMap;
 
 /**
