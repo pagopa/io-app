@@ -12,7 +12,10 @@ import {
 } from "italia-ts-commons/lib/requests";
 import { ProblemJson } from "../../../../definitions/backend/ProblemJson";
 import { defaultRetryingFetch } from "../../../utils/fetch";
-import { BonusList, BonusListT } from "../types/bonusList";
+import {
+  BonusesAvailable,
+  BonusesAvailableCodec
+} from "../types/bonusesAvailable";
 import { BonusVacanze, BonusVacanzeT } from "../types/bonusVacanzeActivation";
 import {
   EligibilityCheck,
@@ -25,7 +28,7 @@ type GetBonusListT = IGetApiRequestType<
   {},
   never,
   never,
-  BasicResponseType<BonusList>
+  BasicResponseType<BonusesAvailable>
 >;
 
 type EligibilityCheckT = IGetApiRequestType<
@@ -140,7 +143,7 @@ const getAvailableBonusesT: GetBonusListT = {
   url: () => `/bonus/vacanze`,
   query: _ => ({}),
   headers: () => ({}),
-  response_decoder: basicResponseDecoder(BonusListT)
+  response_decoder: basicResponseDecoder(BonusesAvailableCodec)
 };
 
 //
