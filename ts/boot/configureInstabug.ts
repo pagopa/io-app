@@ -116,12 +116,15 @@ export const instabugLog = (log: string, typeLog: TypeLogs, tag?: string) => {
     maxInstabugLogLength - (tag ? tag.length : 0) - numberMargin;
 
   const chunks = log.match(
-    new RegExp(".{1," + chunckSize.toString() + "}", "g")
+    new RegExp("(.|[\r\n]){1," + chunckSize.toString() + "}", "g")
   );
   if (chunks) {
+    const prefix = tag ? tag : "";
+    const space = prefix.length > 0 && chunks.length > 1 ? " " : "";
+
     chunks.forEach((chunk, i) => {
-      const count = chunks.length > 1 ? ` ${i + 1}/${chunks.length}` : "";
-      InstabugLogger[typeLog](`[${tag}${count}] ${chunk}`);
+      const count = chunks.length > 1 ? `${i + 1}/${chunks.length}` : "";
+      InstabugLogger[typeLog](`[${prefix}${space}${count}] ${chunk}`);
     });
   }
 };
