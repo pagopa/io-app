@@ -1267,6 +1267,12 @@ bonus:
       timeout:
         title: Eligibility request received
         description: Verification of eligibility for bonus access has been recorded. You will receive a message when the outcome of your request will be available.
+      activate:
+        loading: Bonus activation
+        goToDetails: Show details
+        completed:
+          title: Bonus activation completed
+          description: Bonus activation completed description
   bonusList:
     title: Available bonuses
     contentTitle: Select one of the available bonus
