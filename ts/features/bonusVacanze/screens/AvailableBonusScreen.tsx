@@ -26,6 +26,7 @@ import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeAc
 import { BonusItem } from "../types/bonusList";
 import { BonusVacanze } from "../types/bonusVacanzeActivation";
 import { ID_BONUS_VACANZE_TYPE, isBonusActive } from "../utils/bonus";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -88,6 +89,13 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 
   public render() {
     const { availableBonusesList, isError } = this.props;
+    const cancelButtonProps = {
+      block: true,
+      light: true,
+      bordered: true,
+      onPress: this.props.navigateBack,
+      title: I18n.t("global.buttons.cancel")
+    };
     return isError ? (
       <GenericErrorComponent
         onRetry={this.props.loadAvailableBonuses}
@@ -103,7 +111,6 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
           scrollEnabled={false}
           style={styles.whiteContent}
         >
-          <ScreenContentHeader title={I18n.t("bonus.bonusList.contentTitle")} />
           <View style={styles.paddedContent}>
             <FlatList
               scrollEnabled={false}
@@ -116,6 +123,10 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
             />
           </View>
         </Content>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={cancelButtonProps}
+        />
       </BaseScreenComponent>
     );
   }

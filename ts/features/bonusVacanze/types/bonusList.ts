@@ -9,6 +9,7 @@ import { Timestamp } from "../../../../definitions/backend/Timestamp";
 const BonusItemR = t.interface({
   id_type: NonNegativeInteger,
   name: t.string,
+  active: t.boolean,
   description: t.string,
   valid_from: Timestamp,
   valid_to: Timestamp
@@ -16,7 +17,13 @@ const BonusItemR = t.interface({
 const BonusItemO = t.partial({
   cover: t.string
 });
-export const BonusItemT = t.intersection([BonusItemR, BonusItemO], "BonusItem");
+const BonusItemC = t.partial({
+  service_id: t.string
+});
+export const BonusItemT = t.intersection(
+  [BonusItemR, BonusItemO, BonusItemC],
+  "BonusItem"
+);
 const BonusListR = t.interface({
   items: t.readonlyArray(BonusItemT, "array of Bonus")
 });

@@ -1298,7 +1298,7 @@ bonus:
         title: Verifica richiesta
         description: La verifica dell'idoneità per l'accesso al bonus è stata registrata. Riceverai un messaggio quando l'esito della tua richiesta sarà disponibile.
   bonusList:
-    title: Bonus disponibili
+    title: Aggiungi sovvenzione
     contentTitle: Seleziona uno dei bonus disponibili
   request: Richiedi un nuovo bonus
   latestBonus: I tuoi bonus attivi
