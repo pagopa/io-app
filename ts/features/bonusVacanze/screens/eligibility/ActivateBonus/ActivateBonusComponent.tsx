@@ -65,9 +65,6 @@ const renderFamilyMembersList = (
  * @constructor
  */
 export const ActivateBonusComponent: React.FunctionComponent<Props> = props => {
-  const title = I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title");
-  const activateBonusText = title;
-
   const description = I18n.t(
     "bonus.bonusVacanza.eligibility.activateBonus.description",
     {
@@ -75,6 +72,8 @@ export const ActivateBonusComponent: React.FunctionComponent<Props> = props => {
       taxBenefit: formatNumberCentsToAmount(props.taxBenefit, true)
     }
   );
+  const title = I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title");
+  const activateBonusText = title;
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={title}>
