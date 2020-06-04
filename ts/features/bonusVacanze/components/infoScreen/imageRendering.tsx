@@ -4,9 +4,17 @@ import IconFont from "../../../../components/ui/IconFont";
 import customVariables from "../../../../theme/variables";
 
 export const renderRasterImage = (image: ImageSourcePropType) => (
-  <Image source={image} resizeMode="contain" />
+  <Image source={image} resizeMode={"contain"} />
 );
 
-export const renderIconImage = (image: string) => (
-  <IconFont name={image} size={120} color={customVariables.brandHighlight} />
+const iconDefaultSize = 120;
+export const renderIconImage = (
+  image: string,
+  iconSize: number = iconDefaultSize
+) => (
+  <IconFont
+    name={image}
+    size={iconSize}
+    color={customVariables.brandHighlight}
+  />
 );

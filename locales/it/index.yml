@@ -1295,11 +1295,8 @@ bonus:
         title: Attiva
         description: Puoi attivare un bonus di {{amount}}. Il tuo sconto sulle tasse è pari a {{taxBenefit}}
       timeout:
-        title: Siamo spiacenti, serve più tempo per verificare il tuo ISEE.
-        description: Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.
-
-
-         Quando lo riceverai, se sarà positivo, ricordati di completare la tua domanda entro 24 ore, altrimenti scadrà e dovrai iniziarne una nuova.
+        title: Verifica richiesta
+        description: La verifica dell'idoneità per l'accesso al bonus è stata registrata. Riceverai un messaggio quando l'esito della tua richiesta sarà disponibile.
       activate:
         loading: Attivo il bonus
         goToDetails: Visualizza i dettagli
