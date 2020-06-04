@@ -7,7 +7,7 @@ import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinn
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
-import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import {
   navigateBack,
@@ -26,7 +26,6 @@ import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeAc
 import { BonusItem } from "../types/bonusList";
 import { BonusVacanze } from "../types/bonusVacanzeActivation";
 import { ID_BONUS_VACANZE_TYPE, isBonusActive } from "../utils/bonus";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
