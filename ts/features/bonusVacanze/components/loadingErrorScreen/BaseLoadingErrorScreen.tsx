@@ -15,7 +15,7 @@ type Props = OwnProps & LoadingErrorProps;
  * @param props
  * @constructor
  */
-// TODO: maybe will be removed
+// TODO: deprecated candidate
 export const BaseLoadingErrorScreen: React.FunctionComponent<Props> = props => {
   return (
     <BaseScreenComponent goBack={true} headerTitle={props.navigationTitle}>
