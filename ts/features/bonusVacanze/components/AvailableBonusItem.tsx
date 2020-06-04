@@ -77,7 +77,10 @@ const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
   const isItemDisabled = !bonusItem.active;
   const disabledStyle = isItemDisabled ? styles.disabled : {};
   return (
-    <ListItem style={styles.listItem} onPress={() => props.onPress()}>
+    <ListItem
+      style={styles.listItem}
+      onPress={() => (isItemDisabled ? null : props.onPress())}
+    >
       <View style={styles.columnLeft}>
         <Grid>
           <Row>
