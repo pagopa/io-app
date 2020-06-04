@@ -9,7 +9,7 @@ import { Timestamp } from "../../../../definitions/backend/Timestamp";
 const BonusAvailableR = t.interface({
   id_type: NonNegativeInteger,
   name: t.string,
-  active: t.boolean,
+  is_active: t.boolean,
   description: t.string,
   valid_from: Timestamp,
   valid_to: Timestamp
