@@ -1,4 +1,4 @@
-import color from "color";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Badge, Grid, ListItem, Row, Text, View } from "native-base";
 import * as React from "react";
@@ -9,7 +9,6 @@ import { serviceByIdSelector } from "../../../store/reducers/entities/services/s
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { BonusItem } from "../types/bonusList";
-import { fromNullable } from "fp-ts/lib/Option";
 
 type OwnProps = {
   bonusItem: BonusItem;
