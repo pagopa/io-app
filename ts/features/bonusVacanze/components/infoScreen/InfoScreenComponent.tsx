@@ -1,18 +1,12 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import themeVariables from "../../../theme/variables";
-import { confirmButtonProps } from "./markdown/ButtonConfigurations";
+import { StyleSheet } from "react-native";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import themeVariables from "../../../../theme/variables";
+import { confirmButtonProps } from "../markdown/ButtonConfigurations";
 
-/**
- * TODO Rename the title prop in the BaseScreenComponent to navigationTitle
- * https://www.pivotaltracker.com/story/show/173056117
- */
 type Props = {
-  navigationTitle: string;
-  image?: ImageSourcePropType;
+  image: React.ReactNode;
   body: string;
   confirmText?: string;
   onConfirm: () => void;
@@ -33,10 +27,11 @@ const styles = StyleSheet.create({
  */
 export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
   return (
-    <BaseScreenComponent goBack={true} headerTitle={props.navigationTitle}>
+    <>
       <View style={styles.body}>
         <View spacer={true} extralarge={true} />
-        {props.image && <Image source={props.image} resizeMode="contain" />}
+        <View spacer={true} extralarge={true} />
+        {props.image}
         <View spacer={true} extralarge={true} />
         <Text>{props.body}</Text>
       </View>
@@ -44,6 +39,6 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
         type={"SingleButton"}
         leftButton={confirmButtonProps(props.onConfirm, props.confirmText)}
       />
-    </BaseScreenComponent>
+    </>
   );
 };

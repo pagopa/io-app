@@ -18,7 +18,7 @@ export const navigateToIseeNotAvailable = () =>
 
 export const navigateToActivateBonus = () =>
   NavigationActions.navigate({
-    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATE_BONUS
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_REQUEST
   });
 
 export const navigateToTimeoutEligibilityCheck = () =>
@@ -29,4 +29,9 @@ export const navigateToTimeoutEligibilityCheck = () =>
 export const navigateToActivationLoading = () =>
   NavigationActions.navigate({
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_LOADING
+  });
+
+export const navigateToActivationCompleted = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_COMPLETED
   });
