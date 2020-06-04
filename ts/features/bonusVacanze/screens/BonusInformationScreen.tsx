@@ -17,6 +17,7 @@ import {
 import { ReduxProps } from "../../../store/actions/types";
 import themeVariables from "../../../theme/variables";
 import { FooterTwoButtons } from "../components/markdown/FooterTwoButtons";
+import { navigateToBonusTosScreen } from "../navigation/action";
 import { BonusAvailable } from "../types/bonusesAvailable";
 
 type NavigationParams = Readonly<{
@@ -52,6 +53,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const getBonusItem = () => props.navigation.getParam("bonusItem");
 
   const bonusItem = getBonusItem();
+
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
       <ScreenContent

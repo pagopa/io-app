@@ -1,5 +1,6 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { IdpsTextData } from "../../../definitions/content/IdpsTextData";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
@@ -44,7 +45,14 @@ export const loadVisibleServicesByScope = createAsyncAction(
   "LOAD_VISIBLE_SERVICES_BY_SCOPE_FAILURE"
 )<void, ServicesByScope, Error>();
 
+export const loadIdpsTextData = createAsyncAction(
+  "LOAD_IDPS_TEXT_DATA_REQUEST",
+  "LOAD_IDPS_TEXT_DATA_SUCCESS",
+  "LOAD_IDPS_TEXT_DATA_FAILURE"
+)<void, IdpsTextData, Error>();
+
 export type ContentActions =
   | ActionType<typeof loadServiceMetadata>
   | ActionType<typeof contentMunicipalityLoad>
+  | ActionType<typeof loadIdpsTextData>
   | ActionType<typeof loadVisibleServicesByScope>;
