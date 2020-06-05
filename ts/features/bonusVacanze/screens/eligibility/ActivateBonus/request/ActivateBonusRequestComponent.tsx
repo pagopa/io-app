@@ -1,6 +1,7 @@
 import { List, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
+import { FamilyMember } from "../../../../../../../definitions/bonus_vacanze/FamilyMember";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../../../components/screens/ListItemComponent";
 import ScreenContent from "../../../../../../components/screens/ScreenContent";
@@ -8,7 +9,6 @@ import I18n from "../../../../../../i18n";
 import themeVariables from "../../../../../../theme/variables";
 import { formatNumberCentsToAmount } from "../../../../../../utils/stringBuilder";
 import { FooterTwoButtons } from "../../../../components/markdown/FooterTwoButtons";
-import { FamilyMember } from "../../../../types/eligibility";
 
 type Props = {
   familyMembers: ReadonlyArray<FamilyMember>;
