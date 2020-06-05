@@ -1,11 +1,13 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { MaxBonusAmount } from "../../../../../../../definitions/bonus_vacanze/MaxBonusAmount";
+import { MaxBonusTaxBenefit } from "../../../../../../../definitions/bonus_vacanze/MaxBonusTaxBenefit";
 import { shufflePinPadOnPayment } from "../../../../../../config";
 import I18n from "../../../../../../i18n";
 import { identificationRequest } from "../../../../../../store/actions/identification";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { eligibilityCheckResults } from "../../../../store/reducers/eligibility";
+import { eligibilityEligibleSelector } from "../../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -66,20 +68,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onActivateBonus: () => requestIdentification(dispatch)
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  bonusAmount: eligibilityCheckResults(state).fold(
-    0,
-    results => results.max_amount as number
-  ),
-  taxBenefit: eligibilityCheckResults(state).fold(
-    0,
-    results => results.max_tax_benefit as number
-  ),
-  familyMembers: eligibilityCheckResults(state).fold(
-    [],
-    results => results.family_members
-  )
-});
+const mapStateToProps = (state: GlobalState) => {
+  const elc = eligibilityEligibleSelector(state);
+  return {
+    bonusAmount: elc.fold(0 as MaxBonusAmount, e => e.max_amount),
+    taxBenefit: elc.fold(0 as MaxBonusTaxBenefit, e => e.max_tax_benefit),
+    familyMembers: elc.fold([], e => e.family_members)
+  };
+};
 
 export default connect(
   mapStateToProps,

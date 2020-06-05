@@ -28,8 +28,8 @@ export function* watchBonusSaga(): SagaIterator {
   yield takeLatest(
     getType(checkBonusEligibility.request),
     startBonusEligibilitySaga,
-    backendBonusVacanze.postEligibilityCheck,
-    backendBonusVacanze.getEligibilityCheck
+    backendBonusVacanze.startBonusEligibilityCheck,
+    backendBonusVacanze.getBonusEligibilityCheck
   );
 
   // begin the workflow: request a bonus eligibility
@@ -39,6 +39,6 @@ export function* watchBonusSaga(): SagaIterator {
   yield takeEvery(
     getType(loadBonusVacanzeFromId.request),
     handleLoadBonusVacanzeFromId,
-    backendBonusVacanze.getBonusVacanzeFromId
+    backendBonusVacanze.getLatestBonusVacanzeFromId
   );
 }
