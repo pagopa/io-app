@@ -20,6 +20,8 @@ import { BonusAvailable } from "../types/bonusesAvailable";
 import { logosForService } from "../../../utils/services";
 import { MultiImage } from "../../../components/ui/MultiImage";
 import customVariables from "../../../theme/variables";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -32,6 +34,10 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
+  noPadded: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
   mainContent: {
     flex: 1
   },
@@ -119,13 +125,32 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
           "bonus.requestTitle"
         )} ${bonusItem.name}`}</Text>
         <View spacer={true} large={true} />
-        <View>
-          <Markdown onLoadEnd={() => setMarkdownLoaded(true)}>
-            {/* TODO Replace with correct text of bonus */
-            I18n.t("profile.main.privacy.exportData.info.body")}
-          </Markdown>
-          {isMarkdownLoaded && <EdgeBorderComponent />}
-        </View>
+        <Text>{bonusItem.description}</Text>
+        <ButtonDefaultOpacity
+          style={styles.noPadded}
+          small={true}
+          transparent={true}
+        >
+          <Text>Privacy policy</Text>
+        </ButtonDefaultOpacity>
+        <View spacer={true} />
+        <ItemSeparatorComponent noPadded={true} />
+        <View spacer={true} />
+        <Markdown onLoadEnd={() => setMarkdownLoaded(true)}>
+          {/* TODO Replace with correct text of bonus */
+          I18n.t("profile.main.privacy.exportData.info.body")}
+        </Markdown>
+        <View spacer={true} extralarge={true} />
+        <ItemSeparatorComponent noPadded={true} />
+        <View spacer={true} extralarge={true} />
+        <Text>
+          Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e
+          compreso i Termini e le Condizioni d’uso e la Privacy Policy del
+          servizio.
+        </Text>
+        <View spacer={true} extralarge={true} />
+        <View spacer={true} extralarge={true} />
+        <View spacer={true} large={true} />
       </Content>
       {isMarkdownLoaded && (
         <FooterWithButtons
