@@ -3,6 +3,7 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { BonusActivation } from "../../../../definitions/bonus_vacanze/BonusActivation";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -24,7 +25,6 @@ import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../store/reducers/availableBonuses";
 import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeActivation";
 import { BonusAvailable } from "../types/bonusesAvailable";
-import { BonusVacanze } from "../types/bonusVacanzeActivation";
 import { ID_BONUS_VACANZE_TYPE, isBonusActive } from "../utils/bonus";
 
 export type Props = ReturnType<typeof mapStateToProps> &
@@ -139,11 +139,17 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToBonusRequestInformation({ bonusItem })),
   // TODO Add the param to bonus detail if a bonus is already active
   navigateToBonusDetail: (
-    bonus: BonusVacanze,
+    bonus: BonusActivation,
     validFrom?: Date,
     validTo?: Date
   ) =>
-    dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo }))
+    dispatch(
+      navigateToBonusActiveDetailScreen({
+        bonus,
+        validFrom,
+        validTo
+      })
+    )
 });
 
 export default connect(

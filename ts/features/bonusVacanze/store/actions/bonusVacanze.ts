@@ -3,9 +3,10 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { BonusActivation } from "../../../../../definitions/bonus_vacanze/BonusActivation";
+import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
+import { InstanceId } from "../../../../../definitions/bonus_vacanze/InstanceId";
 import { BonusesAvailable } from "../../types/bonusesAvailable";
-import { BonusVacanze } from "../../types/bonusVacanzeActivation";
-import { EligibilityCheck, EligibilityId } from "../../types/eligibility";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
 export const eligibilityRequestProgress = createStandardAction(
@@ -26,13 +27,13 @@ export const checkBonusEligibility = createAsyncAction(
 
 export const eligibilityRequestId = createStandardAction(
   "BONUS_CHECK_ELIGIBILITY_REQUEST_ID"
-)<EligibilityId>();
+)<InstanceId>();
 
 export const loadBonusVacanzeFromId = createAsyncAction(
   "BONUS_LOAD_FROM_ID_REQUEST",
   "BONUSLOAD_FROM_ID_SUCCESS",
   "BONUSLOAD_FROM_ID_FAILURE"
-)<string, BonusVacanze, Error>();
+)<string, BonusActivation, Error>();
 
 export type BonusActions =
   | ActionType<typeof availableBonusesLoad>

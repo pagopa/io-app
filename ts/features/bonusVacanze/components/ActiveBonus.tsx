@@ -1,19 +1,19 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { BonusActivation } from "../../../../definitions/bonus_vacanze/BonusActivation";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
-import { BonusVacanze } from "../types/bonusVacanzeActivation";
 import { validityInterval } from "../utils/bonus";
 
 type Props = {
-  bonus: BonusVacanze;
+  bonus: BonusActivation;
   validFrom?: Date;
   validTo?: Date;
-  onPress: (bonus: BonusVacanze, validFrom?: Date, validTo?: Date) => void;
+  onPress: (bonus: BonusActivation, validFrom?: Date, validTo?: Date) => void;
 };
 
 const ICON_WIDTH = 24;
@@ -77,7 +77,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
           )} ${bonusValidityInterval}`}</Text>
         )}
         <Text bold={true} style={styles.text12}>
-          {formatNumberCentsToAmount(props.bonus.max_amount)}
+          {formatNumberCentsToAmount(props.bonus.dsu_request.max_amount)}
         </Text>
       </View>
       <View small={true} />
@@ -86,7 +86,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
           {I18n.t("bonus.bonusVacanza.taxBenefit")}
         </Text>
         <Text bold={true} style={styles.text12}>
-          {formatNumberCentsToAmount(props.bonus.max_tax_benefit)}
+          {formatNumberCentsToAmount(props.bonus.dsu_request.max_tax_benefit)}
         </Text>
       </View>
       <View style={styles.smallSpacer} />

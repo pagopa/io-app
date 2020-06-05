@@ -2,12 +2,10 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { BonusActivation } from "../../../../../definitions/bonus_vacanze/BonusActivation";
+import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  BonusStatusEnum,
-  BonusVacanze
-} from "../../types/bonusVacanzeActivation";
 import { loadBonusVacanzeFromId } from "../actions/bonusVacanze";
 import availableBonusesReducer, {
   AvailableBonusesState
@@ -15,7 +13,7 @@ import availableBonusesReducer, {
 import eligibilityReducer, { EligibilityState } from "./eligibility";
 
 // type alias
-type BonusVacanzeActivationState = pot.Pot<BonusVacanze, Error>;
+type BonusVacanzeActivationState = pot.Pot<BonusActivation, Error>;
 
 export type BonusState = Readonly<{
   availableBonuses: AvailableBonusesState;
@@ -50,23 +48,18 @@ const reducer = combineReducers<BonusState, Action>({
 // return the bonus vacanze activation pot
 export const bonusVacanzeActivationSelector = (
   state: GlobalState
-): pot.Pot<BonusVacanze, Error> => state.bonus.bonusVacanzeActivation;
+): pot.Pot<BonusActivation, Error> => state.bonus.bonusVacanzeActivation;
 
 /* return true if a bonus vacanze
 * - doesn't exists (pot.none)
 * - exists but its state is VOIDED or FAILED
 */
 export const canBonusVacanzeBeRequestedSelector = () =>
-  createSelector<GlobalState, pot.Pot<BonusVacanze, Error>, boolean>(
+  createSelector<GlobalState, pot.Pot<BonusActivation, Error>, boolean>(
     bonusVacanzeActivationSelector,
     bv => {
       return pot.getOrElse(
-        pot.map(
-          bv,
-          v =>
-            v.status === BonusStatusEnum.VOIDED ||
-            v.status === BonusStatusEnum.FAILED
-        ),
+        pot.map(bv, v => v.status === BonusActivationStatusEnum.FAILED),
         true
       );
     }
