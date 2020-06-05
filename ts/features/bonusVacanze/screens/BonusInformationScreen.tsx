@@ -6,22 +6,24 @@ import { Image, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
+import { MultiImage } from "../../../components/ui/MultiImage";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../../store/reducers/types";
-import { navigateToBonusTosScreen } from "../navigation/action";
-import { BonusAvailable } from "../types/bonusesAvailable";
-import { logosForService } from "../../../utils/services";
-import { MultiImage } from "../../../components/ui/MultiImage";
 import customVariables from "../../../theme/variables";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
+import { logosForService } from "../../../utils/services";
+import TosBonusComponent from "../components/TosBonusComponent";
+import { navigateToBonusEligibilityLoading } from "../navigation/action";
+import { BonusAvailable } from "../types/bonusesAvailable";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -30,6 +32,7 @@ type NavigationParams = Readonly<{
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = OwnProps &
+  LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -92,8 +95,11 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
     block: true,
     primary: true,
     onPress: props.requestBonusActivation,
-    title: I18n.t("global.buttons.saveSelection")
+    title: `${I18n.t("bonus.bonusVacanza.request")} ${bonusItem.name}`
   };
+
+  const handleModalPress = () =>
+    props.showModal(<TosBonusComponent onClose={props.hideModal} />);
 
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
@@ -117,21 +123,22 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} />
         {props.serviceById &&
           pot.isSome(props.serviceById) && (
-            <Text style={styles.orgName}>
+            <Text dark={true} style={styles.orgName}>
               {props.serviceById.value.organization_name}
             </Text>
           )}
-        <Text bold={true} style={styles.title}>{`${I18n.t(
+        <Text bold={true} dark={true} style={styles.title}>{`${I18n.t(
           "bonus.requestTitle"
         )} ${bonusItem.name}`}</Text>
         <View spacer={true} large={true} />
-        <Text>{bonusItem.description}</Text>
+        <Text dark={true}>{bonusItem.description}</Text>
         <ButtonDefaultOpacity
           style={styles.noPadded}
           small={true}
           transparent={true}
+          onPress={handleModalPress}
         >
-          <Text>Privacy policy</Text>
+          <Text>{I18n.t("bonus.tos.title")}</Text>
         </ButtonDefaultOpacity>
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
@@ -143,7 +150,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} extralarge={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} extralarge={true} />
-        <Text>
+        <Text dark={true}>
           Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e
           compreso i Termini e le Condizioni d’uso e la Privacy Policy del
           servizio.
@@ -175,11 +182,13 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO add bonus request action or just navigate to TOS screen (?)
-  requestBonusActivation: () => dispatch(navigateToBonusTosScreen()),
+  requestBonusActivation: () => dispatch(navigateToBonusEligibilityLoading()),
   navigateBack: () => dispatch(navigateBack())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BonusInformationScreen);
+export default withLightModalContext(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(BonusInformationScreen)
+);

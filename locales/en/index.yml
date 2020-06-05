@@ -1236,6 +1236,7 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    request: Request the
     status: Status
     name: Bonus Vacanza
     validity: Valid between
@@ -1281,6 +1282,6 @@ bonus:
   inactive: Inactive bonus
   requestTitle: Request
   tos:
-    title: Terms of service
+    title: Terms and conditions of use and Privacy policy
     content: !include bonus/bonusVacanze/bonus_tos.md
 

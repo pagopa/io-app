@@ -1269,6 +1269,7 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    request: Richiedi il
     status: Stato
     name: Bonus Vacanza
     validity: Valido nel periodo
@@ -1314,5 +1315,5 @@ bonus:
   inactive: Bonus non attivo
   requestTitle: Richiesta
   tos:
-    title: Termini di servizio
+    title: Termini e condizioni d’uso e Privacy policy
     content: !include bonus/bonusVacanze/bonus_tos.md

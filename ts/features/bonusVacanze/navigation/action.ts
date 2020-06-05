@@ -42,11 +42,6 @@ export const navigateToBonusRequestInformation = (
     params
   });
 
-export const navigateToBonusTosScreen = () =>
-  NavigationActions.navigate({
-    routeName: BONUSVACANZE_ROUTES.BONUS_TOS_SCREEN
-  });
-
 export const navigateToBonusActiveDetailScreen = (
   params?: InferNavigationParams<typeof ActiveBonusScreen>
 ) =>
