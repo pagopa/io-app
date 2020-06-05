@@ -1302,6 +1302,9 @@ bonus:
       activate:
         loading: Attivo il bonus
         goToDetails: Visualizza i dettagli
+        timeout:
+          title: Siamo spiacenti, serve più tempo per processare la tua richiesta.
+          description: Ti invieremo un messaggio in app quando il tuo bonus sarà pronto.
         completed:
           title: Bonus attivato
           description: Descrizione del bonus attivato

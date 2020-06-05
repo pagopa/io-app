@@ -1269,6 +1269,9 @@ bonus:
       activate:
         loading: Bonus activation
         goToDetails: Show details
+        timeout:
+          title: Sorry, it takes longer to process your request.
+          description: We will send you a message in the app when your bonus is ready.
         completed:
           title: Bonus activation completed
           description: Bonus activation completed description
