@@ -4,7 +4,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
-import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TranslationKeys } from "../../../../locales/locales";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
