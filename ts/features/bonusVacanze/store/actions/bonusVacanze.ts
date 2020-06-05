@@ -34,9 +34,19 @@ export const loadBonusVacanzeFromId = createAsyncAction(
   "BONUSLOAD_FROM_ID_FAILURE"
 )<string, BonusVacanze, Error>();
 
+export const beginBonusEligibility = createStandardAction(
+  "BONUS_ELIGIBILITY_BEGIN"
+)<void>();
+
+export const cancelBonusEligibility = createStandardAction(
+  "BONUS_ELIGIBILITY_CANCEL"
+)<void>();
+
 export type BonusActions =
   | ActionType<typeof availableBonusesLoad>
   | ActionType<typeof eligibilityRequestProgress>
   | ActionType<typeof eligibilityRequestId>
   | ActionType<typeof checkBonusEligibility>
-  | ActionType<typeof loadBonusVacanzeFromId>;
+  | ActionType<typeof loadBonusVacanzeFromId>
+  | ActionType<typeof beginBonusEligibility>
+  | ActionType<typeof cancelBonusEligibility>;

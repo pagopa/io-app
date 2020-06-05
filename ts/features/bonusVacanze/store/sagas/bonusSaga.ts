@@ -5,9 +5,11 @@ import { apiUrlPrefix } from "../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import {
   availableBonusesLoad,
+  beginBonusEligibility,
   checkBonusEligibility,
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
+import { beginBonusEligibilitySaga } from "./beginBonusEligibilitySaga";
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
 import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
 import { startBonusEligibilitySaga } from "./startBonusEligibilitySaga";
@@ -29,6 +31,9 @@ export function* watchBonusSaga(): SagaIterator {
     backendBonusVacanze.postEligibilityCheck,
     backendBonusVacanze.getEligibilityCheck
   );
+
+  // begin the workflow: request a bonus eligibility
+  yield takeLatest(getType(beginBonusEligibility), beginBonusEligibilitySaga);
 
   // handle bonus vacanze from id loading
   yield takeEvery(

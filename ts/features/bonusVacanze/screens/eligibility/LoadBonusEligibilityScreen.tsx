@@ -12,7 +12,10 @@ import {
   navigateToIseeNotEligible,
   navigateToTimeoutEligibilityCheck
 } from "../../navigation/action";
-import { checkBonusEligibility } from "../../store/actions/bonusVacanze";
+import {
+  beginBonusEligibility,
+  checkBonusEligibility
+} from "../../store/actions/bonusVacanze";
 import {
   eligibilityCheckRequestProgress,
   EligibilityRequestProgressEnum
@@ -44,17 +47,17 @@ const handleEligibilityProgress = (props: Props) => {
 const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   const loadingCaption = I18n.t("bonus.bonusVacanza.eligibility.loading");
 
-  useEffect(() => {
-    // TODO: remove from here, all the stack is loaded at the start
-    props.checkEligibility();
-  }, []);
+  // useEffect(() => {
+  //   // TODO: remove from here, all the stack is loaded at the start
+  //   props.checkEligibility();
+  // }, []);
 
-  useEffect(
-    () => {
-      handleEligibilityProgress(props);
-    },
-    [props.eligibilityOutcome]
-  );
+  // useEffect(
+  //   () => {
+  //     handleEligibilityProgress(props);
+  //   },
+  //   [props.eligibilityOutcome]
+  // );
 
   return (
     <BaseLoadingErrorScreen
@@ -69,7 +72,7 @@ const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   checkEligibility: () => dispatch(checkBonusEligibility.request()),
   // TODO: link with the right dispatch action, will dispatch the cancel request
-  onCancel: () => undefined,
+  onCancel: () => dispatch(beginBonusEligibility()),
   onRetry: () => {
     dispatch(checkBonusEligibility.request());
   },
