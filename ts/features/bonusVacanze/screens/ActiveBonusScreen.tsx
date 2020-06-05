@@ -1,9 +1,10 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View, Badge } from "native-base";
+import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
+import { TranslationKeys } from "../../../../locales/locales";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
@@ -19,7 +20,6 @@ import {
 } from "../../../utils/stringBuilder";
 import { BonusVacanze } from "../types/bonusVacanzeActivation";
 import { validityInterval } from "../utils/bonus";
-import { TranslationKeys } from "../../../../locales/locales";
 
 type QRCodeContents = {
   [key: string]: string;
