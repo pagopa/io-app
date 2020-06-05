@@ -13,19 +13,11 @@ import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
-import { maybeInnerProperty } from "../../../utils/options";
-import ActiveBonus from "../components/ActiveBonus";
 import AvailableBonusItem from "../components/AvailableBonusItem";
-import {
-  navigateToBonusActiveDetailScreen,
-  navigateToBonusRequestInformation
-} from "../navigation/action";
+import { navigateToBonusRequestInformation } from "../navigation/action";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../store/reducers/availableBonuses";
-import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeActivation";
 import { BonusAvailable } from "../types/bonusesAvailable";
-import { BonusVacanze } from "../types/bonusVacanzeActivation";
-import { ID_BONUS_VACANZE_TYPE, isBonusActive } from "../utils/bonus";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -48,37 +40,8 @@ const styles = StyleSheet.create({
  */
 class AvailableBonusScreen extends React.PureComponent<Props> {
   private renderListItem = (info: ListRenderItemInfo<BonusAvailable>) => {
-    const { activeBonus } = this.props;
     const item = info.item;
-    const bonusVacanzeCategory = this.props.availableBonusesList.items.find(
-      bi => bi.id_type === ID_BONUS_VACANZE_TYPE
-    );
-    const validFrom = maybeInnerProperty(
-      bonusVacanzeCategory,
-      "valid_from",
-      _ => _
-    ).fold(undefined, _ => _);
-    const validTo = maybeInnerProperty(
-      bonusVacanzeCategory,
-      "valid_to",
-      _ => _
-    ).fold(undefined, _ => _);
-    return item.id_type === ID_BONUS_VACANZE_TYPE &&
-      pot.isSome(activeBonus) &&
-      pot.getOrElse(pot.map(activeBonus, b => isBonusActive(b)), false) ? (
-      <ActiveBonus
-        validFrom={validFrom}
-        validTo={validTo}
-        bonus={activeBonus.value}
-        onPress={() =>
-          this.props.navigateToBonusDetail(
-            activeBonus.value,
-            validFrom,
-            validTo
-          )
-        }
-      />
-    ) : (
+    return (
       <AvailableBonusItem
         bonusItem={item}
         onPress={() => this.props.navigateToBonusRequest(item)}
@@ -134,7 +97,6 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 const mapStateToProps = (state: GlobalState) => {
   const potAvailableBonuses = availableBonusesSelector(state);
   return {
-    activeBonus: bonusVacanzeActivationSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
     isLoading: pot.isLoading(potAvailableBonuses),
     isError: pot.isError(potAvailableBonuses)
@@ -146,14 +108,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
   // TODO Add the param to navigate to proper bonus by name (?)
   navigateToBonusRequest: (bonusItem: BonusAvailable) =>
-    dispatch(navigateToBonusRequestInformation({ bonusItem })),
-  // TODO Add the param to bonus detail if a bonus is already active
-  navigateToBonusDetail: (
-    bonus: BonusVacanze,
-    validFrom?: Date,
-    validTo?: Date
-  ) =>
-    dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo }))
+    dispatch(navigateToBonusRequestInformation({ bonusItem }))
 });
 
 export default connect(
