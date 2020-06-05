@@ -18,6 +18,10 @@ import variables from "../../theme/variables";
 
 type Props = ReturnType<typeof mapDispatchToProps> & NavigationScreenProps;
 
+type State = Readonly<{
+  counter: number
+}>;
+
 // since this is a test SPID idp, we set isTestIdp flag to avoid rendering.
 // It is used has a placeholder to handle taps count on it and open when
 // taps count threadshold is reached (see https://www.pivotaltracker.com/story/show/172082895)
@@ -115,28 +119,41 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-const IdpSelectionScreen: React.FunctionComponent<Props> = props => {
-  // using hooks to handle tap count on spid test id
-  const [counter, setCounter] = React.useState(0);
-  const onIdpSelected = (idp: IdentityProvider) => {
+class IdpSelectionScreen extends React.PureComponent<Props, State> {
+
+  constructor(props: Props){
+    super(props);
+    this.state = {counter: 0}
+  }
+   
+  private onIdpSelected = (idp: IdentityProvider) => {
+    const {counter} = this.state;
     if (idp.isTestIdp === true && counter < 5) {
-      setCounter(count => (count + 1) % (TAPS_TO_OPEN_TESTIDP + 1));
+      const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1)
+      this.setState({counter: newValue})
       return;
     }
-    props.setSelectedIdp(idp);
-    props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
+    this.props.setSelectedIdp(idp);
+    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
-  React.useEffect(() => {
-    if (counter === TAPS_TO_OPEN_TESTIDP) {
-      props.setSelectedIdp(testIdp);
-      props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
+
+  public componentDidMount(){
+
+  }
+
+  public componentDidUpdate(){
+    if (this.state.counter === TAPS_TO_OPEN_TESTIDP) {
+      this.props.setSelectedIdp(testIdp);
+      this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
     }
-  });
+  }
+
+  public render(){
   return (
     <BaseScreenComponent
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["authentication_IPD_selection"]}
-      goBack={props.navigation.goBack}
+      goBack={this.props.navigation.goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
       <Content noPadded={true} overScrollMode={"never"} bounces={false}>
@@ -144,13 +161,13 @@ const IdpSelectionScreen: React.FunctionComponent<Props> = props => {
           title={I18n.t("authentication.idp_selection.contentTitle")}
         />
         <View style={styles.gridContainer} testID={"idps-view"}>
-          <IdpsGrid idps={idps} onIdpSelected={onIdpSelected} />
+          <IdpsGrid idps={idps} onIdpSelected={this.onIdpSelected} />
           <View spacer={true} />
           <ButtonDefaultOpacity
             block={true}
             light={true}
             bordered={true}
-            onPress={props.navigation.goBack}
+            onPress={this.props.navigation.goBack}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
           </ButtonDefaultOpacity>
@@ -158,10 +175,12 @@ const IdpSelectionScreen: React.FunctionComponent<Props> = props => {
       </Content>
     </BaseScreenComponent>
   );
+  }
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setSelectedIdp: (idp: IdentityProvider) => dispatch(idpSelected(idp))
+  setSelectedIdp: (idp: IdentityProvider) => dispatch(idpSelected(idp)),
+  //loadIdpContent: () => dispatch()
 });
 
 export default connect(

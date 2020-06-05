@@ -9,9 +9,7 @@ import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, { ContextualHelpProps } from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import I18n from "../../i18n";
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
@@ -24,8 +22,9 @@ import {
 } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
-import { FAQsCategoriesType } from "../../utils/faq";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
+import Markdown from '../../components/ui/Markdown';
+import EmailCallCTA from '../../components/screens/EmailCallCTA';
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -55,25 +54,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 1000
   },
-
   errorContainer: {
     padding: 20,
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },
-
   errorTitle: {
     fontSize: 20,
     marginTop: 10
   },
-
   errorBody: {
     marginTop: 10,
     marginBottom: 10,
     textAlign: "center"
   },
-
   errorButtonsContainer: {
     position: "absolute",
     bottom: 30,
@@ -88,11 +83,6 @@ const styles = StyleSheet.create({
     flex: 2
   }
 });
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "authentication.idp_login.contextualHelpTitle",
-  body: "authentication.idp_login.contextualHelpContent"
-};
 
 /**
  * A screen that allows the user to login with an IDP.
@@ -125,8 +115,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
       errorCode
     });
   };
-
-  private goBack = this.props.navigation.goBack;
 
   private setRequestStateToLoading = (): void =>
     this.setState({ requestState: pot.noneLoading });
@@ -193,7 +181,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
           <View style={styles.errorButtonsContainer}>
             <ButtonDefaultOpacity
-              onPress={this.goBack}
+              onPress={this.props.navigation.goBack}
               style={styles.cancelButtonStyle}
               block={true}
               light={true}
@@ -217,21 +205,51 @@ class IdpLoginScreen extends React.Component<Props, State> {
     return null;
   };
 
-  private getFaqCathegories = () => {
-    // tslint:disable-next-line: no-let prefer-const readonly-array
-    let defaultCathegories: FAQsCategoriesType[] = ["authentication_SPID"];
-
-    if (!this.props.selectedIdentityProvider) {
-      return defaultCathegories;
+  get contextualHelp(){
+    if(!this.props.selectedIdentityProvider){
+        const defaultMarkdown : ContextualHelpProps = {
+          title: "authentication.idp_login.contextualHelpTitle",
+          body: () => (<Markdown>{I18n.t("authentication.idp_login.contextualHelpContent")}</Markdown>)
+      };
+        return defaultMarkdown
     }
 
-    switch (this.props.selectedIdentityProvider.id) {
-      case "posteid":
-        return defaultCathegories.concat(["authentication_IDP_posteid"]);
-      default:
-        return defaultCathegories;
+    const providerId = this.props.selectedIdentityProvider.id;
+
+    type MockedType = {
+      "email"?: string,
+      "phone": string,
+      "helpdesk_ticket"?: string,
+      "restore_password": string,
+      "restore_username"?: string,
+      "description"?: string,
+      "website": string
     }
-  };
+
+    const mockedData: MockedType = {
+      "description": "This is the description of the service. it can include a links to guidelines but also numberes to be called and emails to which seends messages",
+      "email": "fakeEmail@mail.it",
+      "phone": '1231231233',
+      "restore_password": "www.restorePassword.it",
+      "restore_username": "www.restoreUsername.it",
+      "website": "www.mainPresentation.it"
+    };
+    
+    const contextualHelp :ContextualHelpProps = {
+      title: '',
+      body: () => (
+        <React.Fragment>
+          {mockedData.description && (<Markdown>{mockedData.description}</Markdown>)}
+          <View spacer={true}/>
+          <EmailCallCTA phone={mockedData.phone} email={mockedData.email}/>
+          <View/>
+          {/*mockedData.helpdesk_ticket && (<BlockButtons/>)*/}
+        </React.Fragment>
+      )
+    }
+
+    return contextualHelp
+  }
 
   public render() {
     const { loggedOutWithIdpAuth, loggedInAuth } = this.props;
@@ -251,8 +269,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent
         goBack={true}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={this.getFaqCathegories()}
+        contextualHelp={this.contextualHelp}
+        faqCategories={["authentication_SPID"]}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
           loggedOutWithIdpAuth.idp.name
         }`}

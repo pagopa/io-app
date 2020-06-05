@@ -25,13 +25,7 @@ export const FAQs: Record<
   payment: [43, 44, 45, 46],
   services: [47, 48, 49],
   services_detail: [50, 51, 52],
-
-  // helpers for redirect user to the idp help desk
-  authentication_IDP_posteid: [58]
 };
-
-// helpers for redirect user to the idp help desk
-export type FAQsCategoriesIdpType = "authentication_IDP_posteid";
 
 export type FAQsCategoriesType =
   | "landing_SPID"
@@ -52,8 +46,7 @@ export type FAQsCategoriesType =
   | "wallet_transaction"
   | "payment"
   | "services"
-  | "services_detail"
-  | FAQsCategoriesIdpType;
+  | "services_detail";
 
 export type FAQType = {
   title: string;
