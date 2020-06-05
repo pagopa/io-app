@@ -3,7 +3,6 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
