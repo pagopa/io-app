@@ -1,9 +1,10 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
+import { InstanceId } from "../../../../../definitions/bonus_vacanze/InstanceId";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { EligibilityCheck, EligibilityId } from "../../types/eligibility";
 import {
   checkBonusEligibility,
   eligibilityRequestId,
@@ -23,7 +24,7 @@ export enum EligibilityRequestProgressEnum {
 export type EligibilityState = Readonly<{
   check: pot.Pot<EligibilityCheck, Error>; // the result of ISEE check
   requestProgess?: EligibilityRequestProgressEnum; // represent an internal status of the request (cause the app could do polling)
-  request?: EligibilityId; // the id related to the check (we could have only this if the check isn't ready and still in progress)
+  request?: InstanceId; // the id related to the check (we could have only this if the check isn't ready and still in progress)
 }>;
 
 const INITIAL_STATE: EligibilityState = {
