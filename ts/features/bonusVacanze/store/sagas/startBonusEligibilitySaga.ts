@@ -21,6 +21,7 @@ const checkEligibilityResultPolling = 1000 as Millisecond;
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
 const eligibilityResultToEnum = (check: EligibilityCheck) => {
+  // success
   if (EligibilityCheckSuccess.is(check)) {
     if (EligibilityCheckSuccessEligible.is(check)) {
       return EligibilityRequestProgressEnum.ELIGIBLE;
@@ -28,6 +29,7 @@ const eligibilityResultToEnum = (check: EligibilityCheck) => {
     // if it is ont elibigle it is ineligible
     return EligibilityRequestProgressEnum.INELIGIBLE;
   } else {
+    // failure
     switch (check.error) {
       case ErrorEnum.DATA_NOT_FOUND:
         return EligibilityRequestProgressEnum.ISEE_NOT_FOUND;

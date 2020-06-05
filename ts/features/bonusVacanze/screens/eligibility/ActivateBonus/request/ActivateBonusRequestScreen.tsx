@@ -7,7 +7,7 @@ import { shufflePinPadOnPayment } from "../../../../../../config";
 import I18n from "../../../../../../i18n";
 import { identificationRequest } from "../../../../../../store/actions/identification";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { eligibilityCheckResults } from "../../../../store/reducers/eligibility";
+import { eligibilityEligibleSelector } from "../../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => {
-  const elc = eligibilityCheckResults(state);
+  const elc = eligibilityEligibleSelector(state);
   return {
     bonusAmount: elc.fold(0 as MaxBonusAmount, e => e.max_amount),
     taxBenefit: elc.fold(0 as MaxBonusTaxBenefit, e => e.max_tax_benefit),

@@ -69,16 +69,23 @@ const reducer = (
 
 // Selectors
 
-// if is some the eligibility result is available
-export const eligibilityCheckResults = (
+// return some if the eligibility check is eligibile
+export const eligibilityEligibleSelector = (
   state: GlobalState
 ): Option<EligibilityCheckSuccessEligible> => {
   const check = state.bonus.eligibility.check;
-  if (EligibilityCheckSuccessEligible.is(check)) {
-    return some(check);
-  }
-  return none;
+  return pot.getOrElse(
+    pot.map(
+      check,
+      c => (EligibilityCheckSuccessEligible.is(c) ? some(c) : none)
+    ),
+    none
+  );
 };
+
+export const eligibilitySelector = (
+  state: GlobalState
+): Option<EligibilityCheck> => pot.toOption(state.bonus.eligibility.check);
 
 export const eligibilityCheckRequestProgress = (
   state: GlobalState
