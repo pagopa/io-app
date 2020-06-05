@@ -1,7 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
-import { formatDateAsLocal } from "../../../utils/dates";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { formatDateAsLocal } from "../../../utils/dates";
 
 export const ID_BONUS_VACANZE_TYPE = 1;
 
