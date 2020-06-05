@@ -5,7 +5,7 @@ import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { FooterTwoButtons } from "../components/markdown/FooterTwoButtons";
 import { MarkdownBaseScreen } from "../components/markdown/MarkdownBaseScreen";
-import { navigateToTimeoutEligibilityCheck } from "../navigation/action";
+import { navigateToBonusEligibilityLoading } from "../navigation/action";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -29,7 +29,7 @@ const AcceptTosBonusScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  acceptTos: () => dispatch(navigateToTimeoutEligibilityCheck()),
+  acceptTos: () => dispatch(navigateToBonusEligibilityLoading()),
   navigateBack: () => dispatch(navigateBack())
 });
 

@@ -9,6 +9,7 @@ import {
   NavigationInjectedProps
 } from "react-navigation";
 import { connect } from "react-redux";
+import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -38,7 +39,6 @@ import {
   bonusVacanzeActivationSelector,
   canBonusVacanzeBeRequestedSelector
 } from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
-import { BonusVacanze } from "../../features/bonusVacanze/types/bonusVacanzeActivation";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -584,7 +584,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBonusVacanzeFromId: (id: string) =>
     dispatch(loadBonusVacanzeFromId.request(id)),
   navigateToBonusDetail: (
-    bonus: BonusVacanze,
+    bonus: BonusActivationWithQrCode,
     validFrom?: Date,
     validTo?: Date
   ) =>

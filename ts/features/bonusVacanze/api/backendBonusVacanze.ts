@@ -1,28 +1,22 @@
-import * as t from "io-ts";
 import {
   basicResponseDecoder,
   BasicResponseType,
-  composeResponseDecoders,
-  constantResponseDecoder,
   createFetchRequestForApi,
-  IGetApiRequestType,
-  ioResponseDecoder,
-  IPostApiRequestType,
-  IResponseType
+  IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
-import { ProblemJson } from "../../../../definitions/backend/ProblemJson";
+import {
+  getBonusEligibilityCheckDefaultDecoder,
+  GetBonusEligibilityCheckT,
+  getLatestBonusActivationByIdDefaultDecoder,
+  GetLatestBonusActivationByIdT,
+  startBonusEligibilityCheckDefaultDecoder,
+  StartBonusEligibilityCheckT
+} from "../../../../definitions/bonus_vacanze/requestTypes";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import {
   BonusesAvailable,
   BonusesAvailableCodec
 } from "../types/bonusesAvailable";
-import { BonusVacanze, BonusVacanzeT } from "../types/bonusVacanzeActivation";
-import {
-  EligibilityCheck,
-  EligibilityCheckT,
-  EligibilityId,
-  EligibilityIdT
-} from "../types/eligibility";
 
 type GetBonusListT = IGetApiRequestType<
   {},
@@ -31,111 +25,29 @@ type GetBonusListT = IGetApiRequestType<
   BasicResponseType<BonusesAvailable>
 >;
 
-type EligibilityCheckT = IGetApiRequestType<
-  {},
-  never,
-  never,
-  // tslint:disable-next-line: max-union-size
-  | IResponseType<200, EligibilityCheck>
-  | IResponseType<202, EligibilityId>
-  | IResponseType<401, undefined>
-  | IResponseType<404, undefined>
-  | IResponseType<500, ProblemJson>
->;
-
-function getEligibilityCheckDecoder<A, O>(type: t.Type<A, O>) {
-  return composeResponseDecoders(
-    composeResponseDecoders(
-      composeResponseDecoders(
-        composeResponseDecoders(
-          ioResponseDecoder<200, (typeof type)["_A"], (typeof type)["_O"]>(
-            200,
-            type
-          ),
-          ioResponseDecoder<
-            202,
-            (typeof EligibilityIdT)["_A"],
-            (typeof EligibilityIdT)["_O"]
-          >(202, EligibilityIdT)
-        ),
-        constantResponseDecoder<undefined, 401>(401, undefined)
-      ),
-      constantResponseDecoder<undefined, 404>(404, undefined)
-    ),
-    ioResponseDecoder<
-      500,
-      (typeof ProblemJson)["_A"],
-      (typeof ProblemJson)["_O"]
-    >(500, ProblemJson)
-  );
-}
-
-type StartEligibilityCheckT = IPostApiRequestType<
-  {},
-  never,
-  never,
-  // tslint:disable-next-line: max-union-size
-  | IResponseType<202, EligibilityId>
-  | IResponseType<409, ProblemJson>
-  | IResponseType<401, undefined>
-  | IResponseType<500, ProblemJson>
->;
-
-function postEligibilityCheckDecoder<A, O>(type: t.Type<A, O>) {
-  return composeResponseDecoders(
-    composeResponseDecoders(
-      composeResponseDecoders(
-        ioResponseDecoder<202, (typeof type)["_A"], (typeof type)["_O"]>(
-          202,
-          type
-        ),
-        ioResponseDecoder<
-          409,
-          (typeof ProblemJson)["_A"],
-          (typeof ProblemJson)["_O"]
-        >(409, ProblemJson)
-      ),
-      constantResponseDecoder<undefined, 401>(401, undefined)
-    ),
-
-    ioResponseDecoder<
-      500,
-      (typeof ProblemJson)["_A"],
-      (typeof ProblemJson)["_O"]
-    >(500, ProblemJson)
-  );
-}
-
-type BonusVacanzeR = IGetApiRequestType<
-  { readonly id_bonus: string },
-  never,
-  never,
-  BasicResponseType<BonusVacanze>
->;
-
-const getBonusVacanzeFromIdT: BonusVacanzeR = {
+const getLatestBonusFromIdT: GetLatestBonusActivationByIdT = {
   method: "get",
-  url: params => `/bonus/vacanze/activations/${params.id_bonus}`,
+  url: params => `/bonus/vacanze/activations/${params.bonus_id}`,
   query: _ => ({}),
   headers: () => ({}),
-  response_decoder: basicResponseDecoder(BonusVacanzeT)
+  response_decoder: getLatestBonusActivationByIdDefaultDecoder()
 };
 
-const startEligibilityCheckT: StartEligibilityCheckT = {
+const startBonusEligibilityCheckT: StartBonusEligibilityCheckT = {
   method: "post",
   url: () => `/bonus/vacanze/eligibility`,
   query: _ => ({}),
   body: _ => "",
   headers: () => ({ "Content-Type": "application/json" }),
-  response_decoder: postEligibilityCheckDecoder(EligibilityIdT)
+  response_decoder: startBonusEligibilityCheckDefaultDecoder()
 };
 
-const eligibilityCheckT: EligibilityCheckT = {
+const getBonusEligibilityCheckT: GetBonusEligibilityCheckT = {
   method: "get",
   url: () => `/bonus/vacanze/eligibility`,
   query: _ => ({}),
   headers: () => ({}),
-  response_decoder: getEligibilityCheckDecoder(EligibilityCheckT)
+  response_decoder: getBonusEligibilityCheckDefaultDecoder()
 };
 
 const getAvailableBonusesT: GetBonusListT = {
@@ -163,13 +75,16 @@ export function BackendBonusVacanze(
       getAvailableBonusesT,
       options
     ),
-    postEligibilityCheck: createFetchRequestForApi(
-      startEligibilityCheckT,
+    startBonusEligibilityCheck: createFetchRequestForApi(
+      startBonusEligibilityCheckT,
       options
     ),
-    getEligibilityCheck: createFetchRequestForApi(eligibilityCheckT, options),
-    getBonusVacanzeFromId: createFetchRequestForApi(
-      getBonusVacanzeFromIdT,
+    getBonusEligibilityCheck: createFetchRequestForApi(
+      getBonusEligibilityCheckT,
+      options
+    ),
+    getLatestBonusVacanzeFromId: createFetchRequestForApi(
+      getLatestBonusFromIdT,
       options
     )
   };
