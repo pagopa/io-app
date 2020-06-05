@@ -2,6 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../../i18n";
+import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
 import { renderIconImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 
@@ -24,12 +26,12 @@ const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
   );
 
   return (
-    <InfoScreenComponent
-      onConfirm={props.onConfirm}
-      confirmText={confirmText}
-      image={renderIconImage("io-complete")}
-      body={body}
-    />
+    <>
+      <InfoScreenComponent image={renderIconImage("io-complete")} body={body} />
+      <FooterStackButton
+        buttons={[cancelButtonProps(props.onConfirm, confirmText)]}
+      />
+    </>
   );
 };
 
