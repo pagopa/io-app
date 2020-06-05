@@ -50,7 +50,7 @@ else
     SEND_EXIT=1
     #send slack notification
     channel="#io_status"
-    res=$(curl -X POST -H 'Content-type: application/json' -H 'Authorization: Bearer '"${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-}'"' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' https://slack.com/api/chat.postMessage)
+    res=$(curl -X POST -H 'Content-type: application/json' -H 'Authorization: Bearer '${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-}'' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' https://slack.com/api/chat.postMessage)
 fi
 
 exit $SEND_EXIT
