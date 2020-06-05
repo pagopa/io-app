@@ -64,7 +64,9 @@ const renderFamilyMembersList = (
  * @param props
  * @constructor
  */
-const ActivateBonusComponent: React.FunctionComponent<Props> = props => {
+export const ActivateBonusRequestComponent: React.FunctionComponent<
+  Props
+> = props => {
   const description = I18n.t(
     "bonus.bonusVacanza.eligibility.activateBonus.description",
     {
@@ -90,5 +92,3 @@ const ActivateBonusComponent: React.FunctionComponent<Props> = props => {
     </BaseScreenComponent>
   );
 };
-
-export default ActivateBonusComponent;
