@@ -1270,6 +1270,7 @@ faq:
 bonus:
   bonusVacanza:
     request: Richiedi il
+    advice: 'Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i Termini e le Condizioni d’uso e la Privacy Policy del servizio.'
     status: Stato
     name: Bonus Vacanza
     validity: Valido nel periodo

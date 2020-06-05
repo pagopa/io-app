@@ -150,11 +150,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} extralarge={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} extralarge={true} />
-        <Text dark={true}>
-          Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e
-          compreso i Termini e le Condizioni d’uso e la Privacy Policy del
-          servizio.
-        </Text>
+        <Text dark={true}>{I18n.t("bonus.bonusVacanza.advice")}</Text>
         <View spacer={true} extralarge={true} />
         <View spacer={true} extralarge={true} />
         <View spacer={true} large={true} />
