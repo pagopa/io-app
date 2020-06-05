@@ -1,7 +1,7 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
-import { all, call, put } from "redux-saga/effects";
+import { all, call, put, Effect } from "redux-saga/effects";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { startTimer } from "../../../../utils/timer";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
@@ -37,7 +37,7 @@ function* checkBonusEligibilitySaga(
   getEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze
   >["getEligibilityCheck"]
-): SagaIterator {
+): IterableIterator<Effect | boolean> {
   try {
     const eligibilityCheckResult: SagaCallReturnType<
       typeof getEligibilityCheck
@@ -106,10 +106,9 @@ export function* startBonusEligibilitySaga(
         const startPolling = new Date().getTime();
         // TODO: handle cancel request (stop polling)
         while (true) {
-          const eligibilityCheckResult: boolean = yield call(
-            checkBonusEligibilitySaga,
-            getEligibilityCheck
-          );
+          const eligibilityCheckResult: SagaCallReturnType<
+            typeof checkBonusEligibilitySaga
+          > = yield call(checkBonusEligibilitySaga, getEligibilityCheck);
           // we got the response, stop polling
           if (eligibilityCheckResult === true) {
             return;
