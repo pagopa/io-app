@@ -500,6 +500,10 @@ workflows:
           requires:
             - test-ios-e2e-build
 
+      - pagopa_specs_diff:
+            filters:
+              branches:
+                only: fix-nightly-check-pagopa-api
       # Build Android alpha release only on master branch
       #- alpha-release-android:
       #    requires:

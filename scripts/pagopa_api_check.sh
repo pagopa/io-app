@@ -50,7 +50,7 @@ else
     SEND_EXIT=1
     #send slack notification
     channel="#io_status"
-    res=$(curl -s -X POST -H 'Content-type: application/json' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' ${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-})
+    res=$(curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' ${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-})
 fi
 
 exit $SEND_EXIT
