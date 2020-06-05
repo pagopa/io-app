@@ -21,8 +21,6 @@ import {
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const loadingCaption = I18n.t("bonus.bonusVacanza.eligibility.loading");
-
 const validResults = new Map([
   [EligibilityRequestProgressEnum.ELIGIBLE, navigateToActivateBonus],
   [EligibilityRequestProgressEnum.INELIGIBLE, navigateToIseeNotEligible],
@@ -44,6 +42,8 @@ const handleEligibilityProgress = (props: Props) => {
  * @constructor
  */
 const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
+  const loadingCaption = I18n.t("bonus.bonusVacanza.eligibility.loading");
+
   useEffect(() => {
     // TODO: remove from here, all the stack is loaded at the start
     props.checkEligibility();

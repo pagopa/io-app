@@ -1,6 +1,6 @@
 import * as React from "react";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { cancelButtonProps } from "./ButtonConfigurations";
+import { cancelButtonProps } from "../buttons/ButtonConfigurations";
 
 export type OnCancelProps = {
   onCancel: () => void;
