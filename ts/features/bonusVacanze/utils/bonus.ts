@@ -1,12 +1,12 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { BonusActivation } from "../../../../definitions/bonus_vacanze/BonusActivation";
 import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { formatDateAsLocal } from "../../../utils/dates";
+import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 
 export const ID_BONUS_VACANZE_TYPE = 1;
 
 // return true if the bonus is active
-export const isBonusActive = (bonus: BonusActivation) =>
+export const isBonusActive = (bonus: BonusActivationWithQrCode) =>
   bonus.status === BonusActivationStatusEnum.ACTIVE;
 
 export const validityInterval = (

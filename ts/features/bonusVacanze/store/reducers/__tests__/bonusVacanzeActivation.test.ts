@@ -2,9 +2,9 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { canBonusVacanzeBeRequestedSelector } from "../bonusVacanzeActivation";
 
 import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
-import { BonusActivation } from "../../../../../../definitions/bonus_vacanze/BonusActivation";
 import { BonusActivationDsu } from "../../../../../../definitions/bonus_vacanze/BonusActivationDsu";
 import { BonusActivationStatusEnum } from "../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
+import { BonusActivationWithQrCode } from "../../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { EligibilityCheckSuccess } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
 import { StatusEnum } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { MaxBonusAmount } from "../../../../../../definitions/bonus_vacanze/MaxBonusAmount";
@@ -44,9 +44,19 @@ const dsuRequest: BonusActivationDsu = {
   has_discrepancies: false
 };
 
-export const bonus: BonusActivation = {
+export const bonus: BonusActivationWithQrCode = {
   id: "XYZ" as NonEmptyString,
   code: "ABCDE123XYZ" as NonEmptyString,
+  qr_code: [
+    {
+      mime_type: "image/png",
+      content: "content"
+    },
+    {
+      mime_type: "svg+xml",
+      content: "content"
+    }
+  ],
   applicant_fiscal_code: "ABCMYY82A12L722R" as FiscalCode,
   status: BonusActivationStatusEnum.ACTIVE,
   dsu_request: dsuRequest,

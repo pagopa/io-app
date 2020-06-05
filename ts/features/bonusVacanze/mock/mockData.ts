@@ -3,9 +3,9 @@
  */
 
 import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
-import { BonusActivation } from "../../../../definitions/bonus_vacanze/BonusActivation";
 import { BonusActivationDsu } from "../../../../definitions/bonus_vacanze/BonusActivationDsu";
 import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
+import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { EligibilityCheckSuccess } from "../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
 import { StatusEnum } from "../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { MaxBonusAmount } from "../../../../definitions/bonus_vacanze/MaxBonusAmount";
@@ -35,8 +35,8 @@ export const mockedElegibilityCheck: EligibilityCheckSuccess = {
       fiscal_code: "ABCMYY82A12L722R" as FiscalCode
     }
   ],
-  max_amount: 500 as MaxBonusAmount,
-  max_tax_benefit: 100 as MaxBonusTaxBenefit,
+  max_amount: 499 as MaxBonusAmount,
+  max_tax_benefit: 30 as MaxBonusTaxBenefit,
   id: "d296cf6a-11f8-412b-972a-ede34d629680" as NonEmptyString,
   status: StatusEnum.ELIGIBLE,
   valid_before: new Date("2020-07-04T12:20:00.000Z")
@@ -51,9 +51,19 @@ const dsuRequest: BonusActivationDsu = {
   has_discrepancies: false
 };
 
-export const mockedBonus: BonusActivation = {
+export const mockedBonus: BonusActivationWithQrCode = {
   id: "XYZ" as NonEmptyString,
   code: "ABCDE123XYZ" as NonEmptyString,
+  qr_code: [
+    {
+      mime_type: "image/png",
+      content: pngBase64
+    },
+    {
+      mime_type: "svg+xml",
+      content: svgBase64
+    }
+  ],
   applicant_fiscal_code: "ABCMYY82A12L722R" as FiscalCode,
   status: BonusActivationStatusEnum.ACTIVE,
   dsu_request: dsuRequest,

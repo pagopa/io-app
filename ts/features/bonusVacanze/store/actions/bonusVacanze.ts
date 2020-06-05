@@ -3,7 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { BonusActivation } from "../../../../../definitions/bonus_vacanze/BonusActivation";
+import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { InstanceId } from "../../../../../definitions/bonus_vacanze/InstanceId";
 import { BonusesAvailable } from "../../types/bonusesAvailable";
@@ -33,7 +33,7 @@ export const loadBonusVacanzeFromId = createAsyncAction(
   "BONUS_LOAD_FROM_ID_REQUEST",
   "BONUSLOAD_FROM_ID_SUCCESS",
   "BONUSLOAD_FROM_ID_FAILURE"
-)<string, BonusActivation, Error>();
+)<string, BonusActivationWithQrCode, Error>();
 
 export type BonusActions =
   | ActionType<typeof availableBonusesLoad>

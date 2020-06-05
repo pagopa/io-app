@@ -4,7 +4,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
-import { BonusActivation } from "../../../../definitions/bonus_vacanze/BonusActivation";
 import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -27,7 +26,7 @@ type QRCodeContents = {
 };
 
 type NavigationParams = Readonly<{
-  bonus: BonusActivation;
+  bonus: BonusActivationWithQrCode;
   validFrom?: Date;
   validTo?: Date;
 }>;
@@ -125,12 +124,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         res(content);
       });
     }
-    // TODO not well defined
-    if (BonusActivationWithQrCode.is(bonus)) {
-      readBase64Svg(bonus)
-        .then(cc => setQRCode(cc))
-        .catch(_ => undefined);
-    }
+    readBase64Svg(bonus)
+      .then(cc => setQRCode(cc))
+      .catch(_ => undefined);
   }, []);
 
   return (

@@ -1,7 +1,7 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { BonusActivation } from "../../../../definitions/bonus_vacanze/BonusActivation";
+import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
@@ -10,10 +10,14 @@ import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { validityInterval } from "../utils/bonus";
 
 type Props = {
-  bonus: BonusActivation;
+  bonus: BonusActivationWithQrCode;
   validFrom?: Date;
   validTo?: Date;
-  onPress: (bonus: BonusActivation, validFrom?: Date, validTo?: Date) => void;
+  onPress: (
+    bonus: BonusActivationWithQrCode,
+    validFrom?: Date,
+    validTo?: Date
+  ) => void;
 };
 
 const ICON_WIDTH = 24;

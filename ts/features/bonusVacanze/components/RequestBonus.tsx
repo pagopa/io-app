@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { BonusActivation } from "../../../../definitions/bonus_vacanze/BonusActivation";
+import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import H5 from "../../../components/ui/H5";
 import I18n from "../../../i18n";
@@ -15,11 +15,11 @@ import ActiveBonus from "./ActiveBonus";
 type OwnProps = {
   onButtonPress: () => void;
   onBonusPress: (
-    bonus: BonusActivation,
+    bonus: BonusActivationWithQrCode,
     validFrom?: Date,
     validTo?: Date
   ) => void;
-  bonus: pot.Pot<BonusActivation, Error>;
+  bonus: pot.Pot<BonusActivationWithQrCode, Error>;
   availableBonusesList: BonusesAvailable;
 };
 

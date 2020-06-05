@@ -3,7 +3,7 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { BonusActivation } from "../../../../definitions/bonus_vacanze/BonusActivation";
+import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -139,7 +139,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToBonusRequestInformation({ bonusItem })),
   // TODO Add the param to bonus detail if a bonus is already active
   navigateToBonusDetail: (
-    bonus: BonusActivation,
+    bonus: BonusActivationWithQrCode,
     validFrom?: Date,
     validTo?: Date
   ) =>
