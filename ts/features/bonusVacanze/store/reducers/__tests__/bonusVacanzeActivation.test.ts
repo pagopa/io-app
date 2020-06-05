@@ -28,11 +28,20 @@ export const mockedElegibilityCheck: EligibilityCheckSuccess = {
       fiscal_code: "ABCMYY82A12L722R" as FiscalCode
     }
   ],
-  max_amount: 50000 as MaxBonusAmount,
-  max_tax_benefit: 3000 as MaxBonusTaxBenefit,
+  max_amount: 500 as MaxBonusAmount,
+  max_tax_benefit: 100 as MaxBonusTaxBenefit,
   id: "d296cf6a-11f8-412b-972a-ede34d629680" as NonEmptyString,
   status: StatusEnum.ELIGIBLE,
   valid_before: new Date("2020-07-04T12:20:00.000Z")
+};
+
+const dsuRequest: BonusActivationDsu = {
+  ...mockedElegibilityCheck,
+  request_id: "request_id" as NonEmptyString,
+  isee_type: "isee_id",
+  dsu_protocol_id: "dsu_protocol_id" as NonEmptyString,
+  dsu_created_at: "2020-05-25T00:00:00.000Z",
+  has_discrepancies: false
 };
 
 export const bonus: BonusActivation = {
@@ -40,7 +49,7 @@ export const bonus: BonusActivation = {
   code: "ABCDE123XYZ" as NonEmptyString,
   applicant_fiscal_code: "ABCMYY82A12L722R" as FiscalCode,
   status: BonusActivationStatusEnum.ACTIVE,
-  dsu_request: mockedElegibilityCheck as BonusActivationDsu,
+  dsu_request: dsuRequest,
   updated_at: new Date("2020-07-04T12:20:00.000Z")
 };
 

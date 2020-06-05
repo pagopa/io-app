@@ -15,7 +15,6 @@ import {
   eligibilityRequestProgress
 } from "../actions/bonusVacanze";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
-import { RTron } from "../../../../boot/configureStoreAndPersistor";
 
 const checkEligibilityResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
@@ -71,10 +70,6 @@ function* checkBonusEligibilitySaga(
       }
       return false;
     } else {
-      RTron.log(
-        "eligibilityCheckResult",
-        readableReport(eligibilityCheckResult.value)
-      );
       // we got some error, stop polling
       throw Error(readableReport(eligibilityCheckResult.value));
     }
