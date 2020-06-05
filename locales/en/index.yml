@@ -1279,7 +1279,6 @@ bonus:
   latestBonus: Your active bonuses
   active: Active
   failed: Failed
-  voided: Voided
   consumed: Consumed
   tos:
     title: Terms of service

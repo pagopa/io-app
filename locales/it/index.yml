@@ -1312,7 +1312,6 @@ bonus:
   latestBonus: I tuoi bonus attivi
   active: Attivo
   failed: Fallito
-  voided: Annullato
   consumed: Consumato
   tos:
     title: Termini di servizio
