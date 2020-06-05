@@ -1,11 +1,14 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
-import { all, call, put } from "redux-saga/effects";
+import { all, call, Effect, put } from "redux-saga/effects";
+import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
+import { ErrorEnum } from "../../../../../definitions/bonus_vacanze/EligibilityCheckFailure";
+import { EligibilityCheckSuccess } from "../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
+import { EligibilityCheckSuccessEligible } from "../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { startTimer } from "../../../../utils/timer";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
-import { EligibilityCheckStatusEnum } from "../../types/eligibility";
 import {
   checkBonusEligibility,
   eligibilityRequestId,
@@ -17,31 +20,40 @@ const checkEligibilityResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
-const eligibilityResultToEnum = (
-  responseStatus: EligibilityCheckStatusEnum
-) => {
-  switch (responseStatus) {
-    case EligibilityCheckStatusEnum.ISEE_NOT_FOUND:
-      return EligibilityRequestProgressEnum.ISEE_NOT_FOUND;
-    case EligibilityCheckStatusEnum.INELIGIBLE:
-      return EligibilityRequestProgressEnum.INELIGIBLE;
-    case EligibilityCheckStatusEnum.ELIGIBLE:
+const eligibilityResultToEnum = (check: EligibilityCheck) => {
+  // success
+  if (EligibilityCheckSuccess.is(check)) {
+    if (EligibilityCheckSuccessEligible.is(check)) {
       return EligibilityRequestProgressEnum.ELIGIBLE;
-    default:
-      return EligibilityRequestProgressEnum.UNDEFINED;
+    }
+    // if it is ont elibigle it is ineligible
+    return EligibilityRequestProgressEnum.INELIGIBLE;
+  } else {
+    // failure
+    switch (check.error) {
+      case ErrorEnum.DATA_NOT_FOUND:
+        return EligibilityRequestProgressEnum.ISEE_NOT_FOUND;
+      case ErrorEnum.INTERNAL_ERROR:
+      case ErrorEnum.INVALID_REQUEST:
+      case ErrorEnum.DATABASE_OFFLINE:
+        return EligibilityRequestProgressEnum.ERROR;
+      default:
+        return EligibilityRequestProgressEnum.UNDEFINED;
+    }
   }
 };
 
 // handle start bonus eligibility check
 function* checkBonusEligibilitySaga(
-  getEligibilityCheck: ReturnType<
+  getBonusEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze
-  >["getEligibilityCheck"]
-): SagaIterator {
+  >["getBonusEligibilityCheck"]
+): IterableIterator<Effect | boolean> {
   try {
     const eligibilityCheckResult: SagaCallReturnType<
-      typeof getEligibilityCheck
-    > = yield call(getEligibilityCheck, {});
+      typeof getBonusEligibilityCheck
+    > = yield call(getBonusEligibilityCheck, {});
+
     if (eligibilityCheckResult.isRight()) {
       // we got the check result
       if (eligibilityCheckResult.value.status === 200) {
@@ -51,7 +63,7 @@ function* checkBonusEligibilitySaga(
           ),
           put(
             eligibilityRequestProgress(
-              eligibilityResultToEnum(eligibilityCheckResult.value.value.status)
+              eligibilityResultToEnum(eligibilityCheckResult.value.value)
             )
           )
         ]);
@@ -77,12 +89,12 @@ function* checkBonusEligibilitySaga(
 // handle start bonus eligibility check
 // tslint:disable-next-line: cognitive-complexity
 export function* startBonusEligibilitySaga(
-  postEligibilityCheck: ReturnType<
+  startBonusEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze
-  >["postEligibilityCheck"],
-  getEligibilityCheck: ReturnType<
+  >["startBonusEligibilityCheck"],
+  getBonusEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze
-  >["getEligibilityCheck"]
+  >["getBonusEligibilityCheck"]
 ): SagaIterator {
   try {
     // request is pending
@@ -90,8 +102,8 @@ export function* startBonusEligibilitySaga(
       eligibilityRequestProgress(EligibilityRequestProgressEnum.PROGRESS)
     );
     const startEligibilityResult: SagaCallReturnType<
-      typeof postEligibilityCheck
-    > = yield call(postEligibilityCheck, {});
+      typeof startBonusEligibilityCheck
+    > = yield call(startBonusEligibilityCheck, {});
     if (startEligibilityResult.isRight()) {
       // 202 -> request accepted | 409 -> pending request
       if (
@@ -106,10 +118,9 @@ export function* startBonusEligibilitySaga(
         const startPolling = new Date().getTime();
         // TODO: handle cancel request (stop polling)
         while (true) {
-          const eligibilityCheckResult: boolean = yield call(
-            checkBonusEligibilitySaga,
-            getEligibilityCheck
-          );
+          const eligibilityCheckResult: SagaCallReturnType<
+            typeof checkBonusEligibilitySaga
+          > = yield call(checkBonusEligibilitySaga, getBonusEligibilityCheck);
           // we got the response, stop polling
           if (eligibilityCheckResult === true) {
             return;
