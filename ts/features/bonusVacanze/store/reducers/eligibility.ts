@@ -1,7 +1,8 @@
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
+import { EligibilityCheckSuccessEligible } from "../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { InstanceId } from "../../../../../definitions/bonus_vacanze/InstanceId";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -71,7 +72,13 @@ const reducer = (
 // if is some the eligibility result is available
 export const eligibilityCheckResults = (
   state: GlobalState
-): Option<EligibilityCheck> => pot.toOption(state.bonus.eligibility.check);
+): Option<EligibilityCheckSuccessEligible> => {
+  const check = state.bonus.eligibility.check;
+  if (EligibilityCheckSuccessEligible.is(check)) {
+    return some(check);
+  }
+  return none;
+};
 
 export const eligibilityCheckRequestProgress = (
   state: GlobalState
