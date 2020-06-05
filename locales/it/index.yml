@@ -1310,8 +1310,10 @@ bonus:
     contentTitle: Seleziona uno dei bonus disponibili
   request: Richiedi un nuovo bonus
   latestBonus: I tuoi bonus attivi
-  active: Bonus attivo
-  inactive: Bonus non attivo
+  active: Attivo
+  failed: Fallito
+  voided: Annullato
+  consumed: Consumato
   tos:
     title: Termini di servizio
     content: !include bonus/bonusVacanze/bonus_tos.md
