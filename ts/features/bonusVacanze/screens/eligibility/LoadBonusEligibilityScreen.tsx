@@ -76,16 +76,16 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onNavigate: (action: Action) => dispatch(action)
 });
 
-const mapStateToProps = (globalState: GlobalState) => ({
-  // display the error with the retry only in case of networking errors
-  isLoading: eligibilityCheckRequestProgress(globalState).fold(
-    true,
-    progress => progress !== EligibilityRequestProgressEnum.ERROR
-  ),
-  eligibilityOutcome: eligibilityCheckRequestProgress(globalState).getOrElse(
-    EligibilityRequestProgressEnum.UNDEFINED
-  )
-});
+const mapStateToProps = (globalState: GlobalState) => {
+  const eligibilityOutcome = eligibilityCheckRequestProgress(globalState);
+  return {
+    // display the error with the retry only in case of networking errors
+    isLoading:
+      eligibilityOutcome === EligibilityRequestProgressEnum.UNDEFINED ||
+      eligibilityOutcome !== EligibilityRequestProgressEnum.ERROR,
+    eligibilityOutcome
+  };
+};
 
 export default connect(
   mapStateToProps,

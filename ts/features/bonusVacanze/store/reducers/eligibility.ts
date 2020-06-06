@@ -89,7 +89,9 @@ export const eligibilitySelector = (
 
 export const eligibilityCheckRequestProgress = (
   state: GlobalState
-): Option<EligibilityRequestProgressEnum> =>
-  fromNullable(state.bonus.eligibility.requestProgess);
+): EligibilityRequestProgressEnum =>
+  fromNullable(state.bonus.eligibility.requestProgess).getOrElse(
+    EligibilityRequestProgressEnum.UNDEFINED
+  );
 
 export default reducer;
