@@ -20,7 +20,7 @@ import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
 const checkEligibilityResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
-const pollingTimeThreshold = (60 * 1000) as Millisecond;
+const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
 const eligibilityResultToEnum = (check: EligibilityCheck) => {
   // success
