@@ -27,7 +27,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
     props.onClose();
     return true;
   };
-
+  const [isMarkdownLoaded, setMarkdownLoaded] = React.useState(false);
   React.useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackPressed);
 
@@ -42,15 +42,14 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
     title: I18n.t("global.buttons.close")
   };
 
+  const handleOnMarkdownLoadEnd = () => setMarkdownLoaded(true);
+
   return (
     <Container>
       <AppHeader noLeft={true}>
         <Body />
         <Right>
-          <ButtonDefaultOpacity
-            onPress={() => props.onClose()}
-            transparent={true}
-          >
+          <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
             <IconFont name="io-close" />
           </ButtonDefaultOpacity>
         </Right>
@@ -59,9 +58,13 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
         contentContainerStyle={styles.contentContainerStyle}
         noPadded={true}
       >
-        <Markdown>{I18n.t("bonus.tos.content")}</Markdown>
+        <Markdown onLoadEnd={handleOnMarkdownLoadEnd}>
+          {I18n.t("bonus.tos.content")}
+        </Markdown>
       </Content>
-      <FooterWithButtons type="SingleButton" leftButton={closeButtonProps} />
+      {isMarkdownLoaded && (
+        <FooterWithButtons type="SingleButton" leftButton={closeButtonProps} />
+      )}
     </Container>
   );
 };
