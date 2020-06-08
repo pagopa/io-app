@@ -713,9 +713,12 @@ wallet:
   backToPayments: Back to payments
   methods:
     comingSoon: incoming
+    newCome: New
     card:
       name: Credit/debit card
       maxFee: Maximum fee of 1.50€
+    sovvenzione:
+      name: Subsidy
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
@@ -1249,12 +1252,10 @@ bonus:
       requestBonus: Request
       cancelRequest: Cancel the request
     eligibility:
-      loading: Checking bonus eligibility
+      loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
-        title: ISEE not available
-        subtitle: ISEE not found for the user
-        text: !include bonus/bonusVacanze/iseeNotAvailable.md
-        goToINPSWebsite: Go to INPS Website
+        title: "We're sorry.\n ISEE not found."
+        text: "You should submit a DSU for the calculation of the ISEE to obtain the Holiday Bonus.\n\nIf you want, you can immediately make a simulation or request online on the INPS website."
       iseeNotEligible:
         title: We're sorry. Your ISEE exceeds the required threshold.
         text: If it is not correct, or if your family income has changed since the last ISEE created, you can update it by making a new declaration (DSU) on the INPS website.
@@ -1269,11 +1270,14 @@ bonus:
       activate:
         loading: Bonus activation
         goToDetails: Show details
+        timeout:
+          title: Sorry, it takes longer to process your request.
+          description: We will send you a message in the app when your bonus is ready.
         completed:
-          title: Bonus activation completed
-          description: Bonus activation completed description
+          title: Congratulation!
+          description: Bonus activated
   bonusList:
-    title: Available bonuses
+    title: Add subsidy
     contentTitle: Select one of the available bonus
   request: Request a new bonus
   latestBonus: Your active bonuses
