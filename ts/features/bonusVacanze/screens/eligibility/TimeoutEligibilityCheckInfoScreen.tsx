@@ -1,6 +1,6 @@
 import * as React from "react";
 import I18n from "../../../../i18n";
-import BaseTimeoutScreen from "../../components/BaseTimeoutScreen";
+import { BaseTimeoutScreen } from "../../components/BaseTimeoutScreen";
 
 /**
  * This screen informs that checking eligibility is taking too long and

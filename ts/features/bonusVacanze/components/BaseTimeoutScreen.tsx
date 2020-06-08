@@ -1,4 +1,9 @@
 import * as React from "react";
+import {
+  NavigationProp,
+  NavigationScreenProps,
+  withNavigation
+} from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../i18n";
@@ -13,7 +18,7 @@ type MyProps = {
   body: string;
 };
 
-type Props = ReturnType<typeof mapDispatchToProps> & MyProps;
+type Props = NavigationScreenProps & MyProps;
 
 const image = require("../../../../img/wallet/errors/payment-expired-icon.png");
 
@@ -24,7 +29,7 @@ const image = require("../../../../img/wallet/errors/payment-expired-icon.png");
  * @constructor
  */
 
-const BaseTimeoutScreen: React.FunctionComponent<Props> = props => {
+const InnerBaseTimeoutScreen: React.FunctionComponent<Props> = props => {
   const confirmText = I18n.t("global.buttons.exit");
   return (
     <>
@@ -34,18 +39,10 @@ const BaseTimeoutScreen: React.FunctionComponent<Props> = props => {
         body={props.body}
       />
       <FooterStackButton
-        buttons={[cancelButtonProps(props.onConfirm, confirmText)]}
+        buttons={[cancelButtonProps(props.navigation.goBack, confirmText)]}
       />
     </>
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO: temp navigation action
-  onConfirm: () => dispatch(navigateToWalletHome())
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(BaseTimeoutScreen);
+export const BaseTimeoutScreen = withNavigation(InnerBaseTimeoutScreen);
