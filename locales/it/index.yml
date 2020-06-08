@@ -740,9 +740,12 @@ wallet:
   backToPayments: Torna ai pagamenti
   methods:
     comingSoon: in arrivo
+    newCome: Novità
     card:
       name: Carta di credito/debito
       maxFee: Commissione massima 1.50€
+    sovvenzione:
+      name: Sovvenzione
     bank:
       name: Bancomat Pay
       maxFee: Commissione massima 0.50€
