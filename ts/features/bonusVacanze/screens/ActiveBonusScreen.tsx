@@ -5,7 +5,6 @@ import { StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
-import { TranslationKeys } from "../../../../locales/locales";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
