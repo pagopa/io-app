@@ -1,7 +1,9 @@
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
+import { NavigationScreenProps, withNavigation } from "react-navigation";
 import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../i18n";
+import { abortBonusRequest } from "../../../components/AbortBonusRequest";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -15,18 +17,20 @@ const inpsDsuHomeUrl =
 const inpsSimulationUrl =
   "https://servizi2.inps.it/servizi/ISEEPrecompilato/WfSimOrdDati.aspx";
 
-type Props = {
+type OwnProps = {
   image: ImageSourcePropType;
   title: string;
   body: string;
   onCancel: () => void;
 };
+
+type Props = OwnProps & NavigationScreenProps;
 /**
  * A generic component used to display the possible ISEE errors during the check eligibility phase.
  * @param props
  * @constructor
  */
-export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
+const InnerBaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
   const goToDsu = I18n.t(
     "bonus.bonusVacanza.eligibility.iseeNotEligible.goToNewDSU"
   );
@@ -46,9 +50,16 @@ export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
         buttons={[
           confirmButtonProps(() => openLink(inpsDsuHomeUrl), goToDsu),
           confirmButtonProps(() => openLink(inpsSimulationUrl), goToSimulation),
-          cancelButtonProps(props.onCancel, cancelRequest)
+          cancelButtonProps(
+            () => abortBonusRequest(props.navigation.goBack),
+            cancelRequest
+          )
         ]}
       />
     </>
   );
 };
+
+export const BaseIseeErrorComponent = withNavigation(
+  InnerBaseIseeErrorComponent
+);

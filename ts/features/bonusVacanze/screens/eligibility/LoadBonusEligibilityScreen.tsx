@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
+import { abortBonusRequest } from "../../components/AbortBonusRequest";
 import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 import {
   beginBonusEligibility,
@@ -27,6 +28,7 @@ const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
       {...props}
       loadingCaption={loadingCaption}
       loadingOpacity={1}
+      onCancel={() => abortBonusRequest(props.onCancel)}
     />
   );
 };

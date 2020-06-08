@@ -1273,6 +1273,12 @@ bonus:
         completed:
           title: Congratulation!
           description: Bonus activated
+    abort:
+      title: Cancel
+      body: Do you really want to quit? To request the "Bonus Vacanza" you will have to repeat the process from the beginning.
+      cancel: Back to the request
+      confirm: Abort request
+      completed: Request aborted
   bonusList:
     title: Available bonuses
     contentTitle: Select one of the available bonus
