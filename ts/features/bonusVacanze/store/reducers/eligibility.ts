@@ -1,4 +1,4 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
