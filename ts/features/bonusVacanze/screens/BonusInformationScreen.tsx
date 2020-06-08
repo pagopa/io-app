@@ -121,12 +121,11 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
           </View>
         </View>
         <View spacer={true} />
-        {props.serviceById &&
-          pot.isSome(props.serviceById) && (
-            <Text dark={true} style={styles.orgName}>
-              {props.serviceById.value.organization_name}
-            </Text>
-          )}
+        {pot.isSome(props.serviceById) && (
+          <Text dark={true} style={styles.orgName}>
+            {props.serviceById.value.organization_name}
+          </Text>
+        )}
         <Text bold={true} dark={true} style={styles.title}>{`${I18n.t(
           "bonus.requestTitle"
         )} ${bonusItem.name}`}</Text>
@@ -170,7 +169,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 const mapStateToProps = (state: GlobalState, props: OwnProps) => {
   const serviceById = fromNullable(
     props.navigation.getParam("bonusItem").service_id
-  ).fold(undefined, s => serviceByIdSelector(s)(state));
+  ).fold(pot.none, s => serviceByIdSelector(s)(state) || pot.none);
   return {
     serviceById
   };
