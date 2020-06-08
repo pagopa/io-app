@@ -14,8 +14,8 @@ import {
 } from "../../navigation/action";
 import { checkBonusEligibility } from "../../store/actions/bonusVacanze";
 import {
-  eligibilityCheckRequestProgress,
-  EligibilityRequestProgressEnum
+  EligibilityRequestProgressEnum,
+  eligibilityRequestProgressSelector
 } from "../../store/reducers/eligibility";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -76,7 +76,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (globalState: GlobalState) => {
-  const eligibilityOutcome = eligibilityCheckRequestProgress(globalState);
+  const eligibilityOutcome = eligibilityRequestProgressSelector(globalState);
   return {
     // display the error with the retry only in case of networking errors
     isLoading: eligibilityOutcome !== EligibilityRequestProgressEnum.ERROR,

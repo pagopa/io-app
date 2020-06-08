@@ -24,11 +24,12 @@ export enum EligibilityRequestProgressEnum {
 
 export type EligibilityState = Readonly<{
   check: pot.Pot<EligibilityCheck, Error>; // the result of ISEE check
-  requestProgess?: EligibilityRequestProgressEnum; // represent an internal status of the request (cause the app could do polling)
+  requestProgess: EligibilityRequestProgressEnum; // represent an internal status of the request (cause the app could do polling)
   request?: InstanceId; // the id related to the check (we could have only this if the check isn't ready and still in progress)
 }>;
 
 const INITIAL_STATE: EligibilityState = {
+  requestProgess: EligibilityRequestProgressEnum.UNDEFINED,
   check: pot.none
 };
 
@@ -87,11 +88,8 @@ export const eligibilitySelector = (
   state: GlobalState
 ): Option<EligibilityCheck> => pot.toOption(state.bonus.eligibility.check);
 
-export const eligibilityCheckRequestProgress = (
+export const eligibilityRequestProgressSelector = (
   state: GlobalState
-): EligibilityRequestProgressEnum =>
-  fromNullable(state.bonus.eligibility.requestProgess).getOrElse(
-    EligibilityRequestProgressEnum.UNDEFINED
-  );
+): EligibilityRequestProgressEnum => state.bonus.eligibility.requestProgess;
 
 export default reducer;
