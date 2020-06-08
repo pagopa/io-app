@@ -209,6 +209,13 @@ profile:
       preferred_calendar:
         title: Default Calendar
         not_selected: Not selected
+      preferred_language:
+        title: Favourite language
+        subtitle: In which language do you want to use the application?
+        alert: 
+          title: Do you want to change the language to 
+          subtitle: You'll need to restart the application to make this happen
+        not_selected: Not selected
     empty:
       default: No preference set
     unavailable:
@@ -461,7 +468,7 @@ onboarding:
     contentTitleConfirmSubtitle: insert again the code of 6 digits
     pinInfo: This code will be requested each time you open the app and when you need to view sensitive data or make dispositive transactions. You can change it at any time by authenticating yourself.
     reset: Change the code
-    confirmInvalid: the two pins do not match
+    confirmInvalid: The two pins do not match
     contextualHelpTitle: What your unlock code is
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
@@ -517,7 +524,6 @@ payment:
       dateAndTime: Date and time
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
-      totalPaid: Total paid
       transactionCode: Transaction identification code
       help: If you have encountered a problem with this payment, write to us for more information and details
     list:
@@ -1018,7 +1024,6 @@ identification:
       tip: To reset your unlock code you will have to log in again.
       tip_short: You will have to login again.
     confirmValid: Correct unlock code
-    confirmInvalid: Invalid unlock code
   unlock_screen:
     help:
       title: Access with unlock code
@@ -1229,3 +1234,50 @@ faq:
   57:
     title: "Did you have problems during a payment?"
     content: !include faq/faq57.md
+bonus:
+  bonusVacanza:
+    status: Status
+    name: Bonus Vacanza
+    validity: Valid between
+    taxBenefit: Tax benefit
+    amount: Amount
+    applicant: Applicant FC
+    shareMessage: "This is the code of your bonus:"
+    checkBonusEligibility:
+      loading: Checking bonus eligibility
+    cta:
+      requestBonus: Request
+      cancelRequest: Cancel the request
+    eligibility:
+      loading: "We are verifying your family's ISEE with INPS\nPlease wait."
+      iseeNotAvailable:
+        title: "We're sorry.\n ISEE not found."
+        text: "You should submit a DSU for the calculation of the ISEE to obtain the Holiday Bonus.\n\nIf you want, you can immediately make a simulation or request online on the INPS website."
+      iseeNotEligible:
+        title: We're sorry. Your ISEE exceeds the required threshold.
+        text: If it is not correct, or if your family income has changed since the last ISEE created, you can update it by making a new declaration (DSU) on the INPS website.
+        goToNewDSU: Submit new DSU to INPS
+        goToNewSimulation: Online simulation
+      activateBonus:
+        title: Activate
+        description: You can activate a {{amount}} bonus. Your tax discount is equal to {{taxBenefit}}
+      timeout:
+        title: Sorry, it takes longer to verify your ISEE.
+        description: "We will send you a message when INPS has given us the answer related to your ISEE.\n\nWhen you receive it, if it is positive, remember to complete your application within 24 hours, otherwise it will expire and you will have to start a new one."
+      activate:
+        loading: "We have forwarded your request to Agenzia delle Entrate\nPlease wait."
+        goToDetails: View bonus
+        completed:
+          title: Congratulation!
+          description: Bonus activated
+  bonusList:
+    title: Available bonuses
+    contentTitle: Select one of the available bonus
+  request: Request a new bonus
+  latestBonus: Your active bonuses
+  active: Active bonus
+  inactive: Inactive bonus
+  tos:
+    title: Terms of service
+    content: !include bonus/bonusVacanze/bonus_tos.md
+

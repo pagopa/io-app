@@ -6,7 +6,7 @@
  */
 
 import * as React from "react";
-import { Platform, StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   createBottomTabNavigator,
   NavigationRoute,
@@ -15,12 +15,12 @@ import {
   StackActions
 } from "react-navigation";
 import MessagesTabIcon from "../components/MessagesTabIcon";
+import NavBarLabel from "../components/NavBarLabel";
 import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
 import WalletTabIcon from "../components/WalletTabIcon";
-import I18n from "../i18n";
-import { makeFontStyleObject } from "../theme/fonts";
+import BONUSVACANZE_ROUTES from "../features/bonusVacanze/navigation/routes";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -29,15 +29,6 @@ import ServicesNavigator from "./ServicesNavigator";
 import WalletNavigator from "./WalletNavigator";
 
 type Routes = keyof typeof ROUTES;
-
-type RouteLabelMap = { [key in Routes]?: string };
-const ROUTE_LABEL: RouteLabelMap = {
-  MESSAGES_NAVIGATOR: I18n.t("global.navigator.messages"),
-  WALLET_HOME: I18n.t("global.navigator.wallet"),
-  DOCUMENTS_HOME: I18n.t("global.navigator.documents"),
-  SERVICES_NAVIGATOR: I18n.t("global.navigator.services"),
-  PROFILE_NAVIGATOR: I18n.t("global.navigator.profile")
-};
 
 type RouteIconMap = { [key in Routes]?: string };
 const ROUTE_ICON: RouteIconMap = {
@@ -48,14 +39,6 @@ const ROUTE_ICON: RouteIconMap = {
   PROFILE_NAVIGATOR: "io-profilo"
 };
 
-const getLabel = (routeName: string): string => {
-  const fallbackLabel = "unknown"; // fallback label
-  // "routeName as Routes" is assumed to be safe as explained @https://github.com/pagopa/io-app/pull/193#discussion_r192347234
-  // adding fallback anyway -- better safe than sorry
-  const label = ROUTE_LABEL[routeName as Routes];
-  return label === undefined ? fallbackLabel : label;
-};
-
 const getIcon = (routeName: string): string => {
   const fallbackIcon = "io-question"; // fallback icon: question mark
   const route = ROUTE_ICON[routeName as Routes]; // same as for getLabel
@@ -63,11 +46,6 @@ const getIcon = (routeName: string): string => {
 };
 
 const styles = StyleSheet.create({
-  labelStyle: {
-    ...makeFontStyleObject(Platform.select),
-    textAlign: "center",
-    fontSize: variables.fontSizeSmaller
-  },
   tabBarStyle: {
     height: 64,
     backgroundColor: variables.colorWhite,
@@ -108,7 +86,8 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.INSERT_EMAIL_SCREEN,
   ROUTES.PAYMENTS_HISTORY_SCREEN,
   ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
-  ROUTES.WALLET_TRANSACTION_DETAILS
+  ROUTES.WALLET_TRANSACTION_DETAILS,
+  BONUSVACANZE_ROUTES.MAIN
 ];
 
 const getTabBarVisibility = (
@@ -156,19 +135,7 @@ const navigation = createBottomTabNavigator(
       }) => {
         const { routeName } = nav.state;
         // adding `color` as a separate style property since it depends on tintColor
-        return (
-          <Text
-            style={[
-              styles.labelStyle,
-              {
-                color:
-                  options.tintColor === null ? undefined : options.tintColor
-              }
-            ]}
-          >
-            {getLabel(routeName)}
-          </Text>
-        );
+        return <NavBarLabel options={options} routeName={routeName} />;
       },
       tabBarIcon: (options: { tintColor: string | null; focused: boolean }) => {
         const { routeName } = nav.state;
