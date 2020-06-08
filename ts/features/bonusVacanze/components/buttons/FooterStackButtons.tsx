@@ -36,12 +36,12 @@ const renderButton = (props: BlockButtonProps) => {
   );
 };
 
-const withSpacer = (base: JSX.Element) => {
+const withSpacer = (base: JSX.Element, idx: number) => {
   return (
-    <>
+    <React.Fragment key={`stack_spacer_${idx}`}>
       {base}
       <View spacer={true} />
-    </>
+    </React.Fragment>
   );
 };
 
@@ -57,7 +57,7 @@ export const FooterStackButton: React.FunctionComponent<Props> = props => {
       <View style={styles.main}>
         {props.buttons
           .slice(0, buttonLength - 1)
-          .map(b => withSpacer(renderButton(b)))}
+          .map((b, idx) => withSpacer(renderButton(b), idx))}
         {renderButton(props.buttons[buttonLength - 1])}
       </View>
     </View>

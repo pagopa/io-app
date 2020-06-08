@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Action, Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import { BaseLoadingErrorScreen } from "../../components/loadingErrorScreen/BaseLoadingErrorScreen";
+import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 import {
   navigateToActivateBonus,
   navigateToIseeNotAvailable,
@@ -57,9 +57,8 @@ const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   );
 
   return (
-    <BaseLoadingErrorScreen
+    <LoadingErrorComponent
       {...props}
-      navigationTitle={loadingCaption}
       loadingCaption={loadingCaption}
       loadingOpacity={1}
     />

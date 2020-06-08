@@ -26,14 +26,14 @@ export function* watchBonusSaga(): SagaIterator {
   yield takeLatest(
     getType(checkBonusEligibility.request),
     startBonusEligibilitySaga,
-    backendBonusVacanze.postEligibilityCheck,
-    backendBonusVacanze.getEligibilityCheck
+    backendBonusVacanze.startBonusEligibilityCheck,
+    backendBonusVacanze.getBonusEligibilityCheck
   );
 
   // handle bonus vacanze from id loading
   yield takeEvery(
     getType(loadBonusVacanzeFromId.request),
     handleLoadBonusVacanzeFromId,
-    backendBonusVacanze.getBonusVacanzeFromId
+    backendBonusVacanze.getLatestBonusVacanzeFromId
   );
 }
