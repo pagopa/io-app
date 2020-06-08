@@ -1,13 +1,6 @@
 import * as React from "react";
-import {
-  NavigationProp,
-  NavigationScreenProps,
-  withNavigation
-} from "react-navigation";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { NavigationScreenProps, withNavigation } from "react-navigation";
 import I18n from "../../../i18n";
-import { navigateToWalletHome } from "../../../store/actions/navigation";
 import { cancelButtonProps } from "./buttons/ButtonConfigurations";
 import { FooterStackButton } from "./buttons/FooterStackButtons";
 import { renderRasterImage } from "./infoScreen/imageRendering";

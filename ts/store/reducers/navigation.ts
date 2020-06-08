@@ -1,5 +1,7 @@
+import { undefined } from "io-ts";
 import {
   NavigationActions,
+  NavigationRoute,
   NavigationState,
   StackActions
 } from "react-navigation";
@@ -18,6 +20,22 @@ const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
 
 export const navigationStateSelector = (state: GlobalState): NavigationState =>
   state.nav;
+
+const pickRoute = (route: NavigationRoute) => {
+  if ("index" in route) {
+    return route.routes[route.index];
+  }
+  return route;
+};
+
+export const navigationCurrentStateSelector = (state: GlobalState) => {
+  // tslint:disable-next-line:no-let
+  let value = pickRoute(state.nav.routes[state.nav.index]);
+  while ("index" in value) {
+    value = pickRoute(value);
+  }
+  return value;
+};
 
 function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {
