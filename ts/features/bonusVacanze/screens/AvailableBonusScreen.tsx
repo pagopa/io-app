@@ -3,32 +3,21 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
-import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
-import { maybeInnerProperty } from "../../../utils/options";
-import ActiveBonus from "../components/ActiveBonus";
 import AvailableBonusItem from "../components/AvailableBonusItem";
-import {
-  navigateToBonusActiveDetailScreen,
-  navigateToBonusRequestInformation
-} from "../navigation/action";
+import { navigateToBonusRequestInformation } from "../navigation/action";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../store/reducers/availableBonuses";
-import {
-  bonusVacanzeActivationSelector,
-  isBonusVacanzeActiveSelector
-} from "../store/reducers/bonusVacanzeActivation";
 import { BonusAvailable } from "../types/bonusesAvailable";
-import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -51,39 +40,8 @@ const styles = StyleSheet.create({
  */
 class AvailableBonusScreen extends React.PureComponent<Props> {
   private renderListItem = (info: ListRenderItemInfo<BonusAvailable>) => {
-    const { bonusActivation } = this.props;
     const item = info.item;
-    const bonusVacanzeCategory = this.props.availableBonusesList.items.find(
-      bi => bi.id_type === ID_BONUS_VACANZE_TYPE
-    );
-    const validFrom = maybeInnerProperty(
-      bonusVacanzeCategory,
-      "valid_from",
-      _ => _
-    ).fold(undefined, _ => _);
-    const validTo = maybeInnerProperty(
-      bonusVacanzeCategory,
-      "valid_to",
-      _ => _
-    ).fold(undefined, _ => _);
-    // if the bonus available is a bonus vacanze type
-    // and if the bonus activation exists and is in active state -> show ActiveBonus item
-    const isBonusVacanzeAlreadyActive =
-      item.id_type === ID_BONUS_VACANZE_TYPE && this.props.isBonusVacanzeActive;
-    return isBonusVacanzeAlreadyActive && pot.isSome(bonusActivation) ? (
-      <ActiveBonus
-        validFrom={validFrom}
-        validTo={validTo}
-        bonus={bonusActivation.value}
-        onPress={() =>
-          this.props.navigateToBonusDetail(
-            bonusActivation.value,
-            validFrom,
-            validTo
-          )
-        }
-      />
-    ) : (
+    return (
       <AvailableBonusItem
         bonusItem={item}
         onPress={() => this.props.navigateToBonusRequest(item)}
@@ -93,6 +51,13 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 
   public render() {
     const { availableBonusesList, isError } = this.props;
+    const cancelButtonProps = {
+      block: true,
+      light: true,
+      bordered: true,
+      onPress: this.props.navigateBack,
+      title: I18n.t("global.buttons.cancel")
+    };
     return isError ? (
       <GenericErrorComponent
         onRetry={this.props.loadAvailableBonuses}
@@ -108,7 +73,6 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
           scrollEnabled={false}
           style={styles.whiteContent}
         >
-          <ScreenContentHeader title={I18n.t("bonus.bonusList.contentTitle")} />
           <View style={styles.paddedContent}>
             <FlatList
               scrollEnabled={false}
@@ -121,6 +85,10 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
             />
           </View>
         </Content>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={cancelButtonProps}
+        />
       </BaseScreenComponent>
     );
   }
@@ -129,8 +97,6 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 const mapStateToProps = (state: GlobalState) => {
   const potAvailableBonuses = availableBonusesSelector(state);
   return {
-    bonusActivation: bonusVacanzeActivationSelector(state),
-    isBonusVacanzeActive: isBonusVacanzeActiveSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
     isLoading: pot.isLoading(potAvailableBonuses),
     isError: pot.isError(potAvailableBonuses)
@@ -142,20 +108,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
   // TODO Add the param to navigate to proper bonus by name (?)
   navigateToBonusRequest: (bonusItem: BonusAvailable) =>
-    dispatch(navigateToBonusRequestInformation({ bonusItem })),
-  // TODO Add the param to bonus detail if a bonus is already active
-  navigateToBonusDetail: (
-    bonus: BonusActivationWithQrCode,
-    validFrom?: Date,
-    validTo?: Date
-  ) =>
-    dispatch(
-      navigateToBonusActiveDetailScreen({
-        bonus,
-        validFrom,
-        validTo
-      })
-    )
+    dispatch(navigateToBonusRequestInformation({ bonusItem }))
 });
 
 export default connect(

@@ -1307,7 +1307,7 @@ bonus:
           title: Congratulazioni!
           description: Il tuo bonus è attivo
   bonusList:
-    title: Bonus disponibili
+    title: Aggiungi sovvenzione
     contentTitle: Seleziona uno dei bonus disponibili
   request: Richiedi un nuovo bonus
   latestBonus: I tuoi bonus attivi

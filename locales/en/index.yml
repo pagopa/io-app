@@ -1274,7 +1274,7 @@ bonus:
           title: Congratulation!
           description: Bonus activated
   bonusList:
-    title: Available bonuses
+    title: Add subsidy
     contentTitle: Select one of the available bonus
   request: Request a new bonus
   latestBonus: Your active bonuses
