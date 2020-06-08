@@ -713,9 +713,12 @@ wallet:
   backToPayments: Back to payments
   methods:
     comingSoon: incoming
+    newCome: New
     card:
       name: Credit/debit card
       maxFee: Maximum fee of 1.50€
+    sovvenzione:
+      name: Subsidy
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
@@ -1280,7 +1283,7 @@ bonus:
       confirm: Abort request
       completed: Request aborted
   bonusList:
-    title: Available bonuses
+    title: Add subsidy
     contentTitle: Select one of the available bonus
   request: Request a new bonus
   latestBonus: Your active bonuses

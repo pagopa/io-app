@@ -740,9 +740,12 @@ wallet:
   backToPayments: Torna ai pagamenti
   methods:
     comingSoon: in arrivo
+    newCome: Novità
     card:
       name: Carta di credito/debito
       maxFee: Commissione massima 1.50€
+    sovvenzione:
+      name: Sovvenzione
     bank:
       name: Bancomat Pay
       maxFee: Commissione massima 0.50€
@@ -1313,7 +1316,7 @@ bonus:
       confirm: Termina richiesta
       completed: Richiesta annullata
   bonusList:
-    title: Bonus disponibili
+    title: Aggiungi sovvenzione
     contentTitle: Seleziona uno dei bonus disponibili
   request: Richiedi un nuovo bonus
   latestBonus: I tuoi bonus attivi
