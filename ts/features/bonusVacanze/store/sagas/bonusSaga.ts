@@ -8,9 +8,9 @@ import {
   checkBonusEligibility,
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
+import { startBonusEligibilitySaga } from "./handleBonusEligibilitySaga";
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
 import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
-import { startBonusEligibilitySaga } from "./startBonusEligibilitySaga";
 
 // Saga that listen to all bonus requests
 export function* watchBonusSaga(): SagaIterator {
