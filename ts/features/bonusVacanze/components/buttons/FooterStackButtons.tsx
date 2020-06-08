@@ -57,7 +57,7 @@ export const FooterStackButton: React.FunctionComponent<Props> = props => {
       <View style={styles.main}>
         {props.buttons
           .slice(0, buttonLength - 1)
-          .map((b, idx) => withSpacer(renderButton(b, idx), idx))}
+          .map((b, idx) => withSpacer(renderButton(b), idx))}
         {renderButton(props.buttons[buttonLength - 1])}
       </View>
     </View>
