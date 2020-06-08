@@ -6,13 +6,11 @@ import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import {
   availableBonusesLoad,
   beginBonusEligibility,
-  checkBonusEligibility,
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
 import { beginBonusEligibilitySaga } from "./beginBonusEligibilitySaga";
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
 import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
-import { startBonusEligibilitySaga } from "./startBonusEligibilitySaga";
 
 // Saga that listen to all bonus requests
 export function* watchBonusSaga(): SagaIterator {
@@ -22,14 +20,6 @@ export function* watchBonusSaga(): SagaIterator {
     getType(availableBonusesLoad.request),
     handleLoadAvailableBonuses,
     backendBonusVacanze.getAvailableBonuses
-  );
-
-  // start bonus eligibility check and polling for result
-  yield takeLatest(
-    getType(checkBonusEligibility.request),
-    startBonusEligibilitySaga,
-    backendBonusVacanze.startBonusEligibilityCheck,
-    backendBonusVacanze.getBonusEligibilityCheck
   );
 
   // begin the workflow: request a bonus eligibility

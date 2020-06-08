@@ -1,4 +1,4 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
@@ -24,12 +24,13 @@ export enum EligibilityRequestProgressEnum {
 
 export type EligibilityState = Readonly<{
   check: pot.Pot<EligibilityCheck, Error>; // the result of ISEE check
-  requestProgess?: EligibilityRequestProgressEnum; // represent an internal status of the request (cause the app could do polling)
+  requestProgess: EligibilityRequestProgressEnum; // represent an internal status of the request (cause the app could do polling)
   request?: InstanceId; // the id related to the check (we could have only this if the check isn't ready and still in progress)
 }>;
 
 const INITIAL_STATE: EligibilityState = {
-  check: pot.none
+  check: pot.none,
+  requestProgess: EligibilityRequestProgressEnum.UNDEFINED
 };
 
 const reducer = (
@@ -89,7 +90,10 @@ export const eligibilitySelector = (
 
 export const eligibilityCheckRequestProgress = (
   state: GlobalState
-): Option<EligibilityRequestProgressEnum> =>
-  fromNullable(state.bonus.eligibility.requestProgess);
+): EligibilityRequestProgressEnum => state.bonus.eligibility.requestProgess;
+
+export const eligibilityIsLoading = (state: GlobalState): boolean =>
+  state.bonus.eligibility.requestProgess !==
+  EligibilityRequestProgressEnum.ERROR;
 
 export default reducer;
