@@ -7,7 +7,6 @@ import { shufflePinPadOnPayment } from "../../../../../../config";
 import I18n from "../../../../../../i18n";
 import { identificationRequest } from "../../../../../../store/actions/identification";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { eligibilityCheckResults } from "../../../../store/reducers/eligibility";
 import { eligibilityEligibleSelector } from "../../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 
