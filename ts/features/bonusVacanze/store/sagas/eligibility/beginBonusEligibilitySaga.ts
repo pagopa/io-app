@@ -1,7 +1,8 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import { NavigationActions } from "react-navigation";
 import { call, cancelled, put, race, select, take } from "redux-saga/effects";
 import { apiUrlPrefix } from "../../../../../config";
-import { navigateToWalletHome } from "../../../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
 import {
   navigateToActivateBonus,
@@ -42,9 +43,10 @@ export function* eligibilityWorker() {
       eligibilityToNavigate.get(progress)
     ).getOrElse(navigateToBonusEligibilityLoading);
     yield put(nextNavigation());
+    yield put(navigationHistoryPop(1));
   } finally {
     if (yield cancelled()) {
-      yield put(navigateToWalletHome());
+      yield put(NavigationActions.back());
     }
   }
 }
