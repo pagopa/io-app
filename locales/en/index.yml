@@ -1239,6 +1239,8 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    request: Request the
+    advice: 'By clicking on "Request the Bonus Vacanze" you declare that you have read and understood the Terms and Conditions of Use and Privacy Policy of the service.'
     status: Status
     name: Bonus Vacanza
     validity: Valid between
@@ -1281,10 +1283,11 @@ bonus:
     contentTitle: Select one of the available bonus
   request: Request a new bonus
   latestBonus: Your active bonuses
+  requestTitle: Request
   active: Active
   failed: Failed
   consumed: Consumed
   tos:
-    title: Terms of service
+    title: Terms and conditions of use and Privacy policy
     content: !include bonus/bonusVacanze/bonus_tos.md
 

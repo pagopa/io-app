@@ -1272,6 +1272,8 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    request: Richiedi il
+    advice: 'Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i Termini e le Condizioni d’uso e la Privacy Policy del servizio.'
     status: Stato
     name: Bonus Vacanza
     validity: Valido nel periodo
@@ -1314,9 +1316,10 @@ bonus:
     contentTitle: Seleziona uno dei bonus disponibili
   request: Richiedi un nuovo bonus
   latestBonus: I tuoi bonus attivi
+  requestTitle: Richiesta
   active: Attivo
   failed: Fallito
   consumed: Consumato
   tos:
-    title: Termini di servizio
+    title: Termini e condizioni d’uso e Privacy policy
     content: !include bonus/bonusVacanze/bonus_tos.md
