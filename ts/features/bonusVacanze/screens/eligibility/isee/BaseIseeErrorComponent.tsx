@@ -1,5 +1,6 @@
 import * as React from "react";
-import { ImageSourcePropType, Linking } from "react-native";
+import { ImageSourcePropType } from "react-native";
+import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../i18n";
 import {
   cancelButtonProps,
@@ -43,11 +44,8 @@ export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
       />
       <FooterStackButton
         buttons={[
-          confirmButtonProps(() => Linking.openURL(inpsDsuHomeUrl), goToDsu),
-          confirmButtonProps(
-            () => Linking.openURL(inpsSimulationUrl),
-            goToSimulation
-          ),
+          confirmButtonProps(() => openLink(inpsDsuHomeUrl), goToDsu),
+          confirmButtonProps(() => openLink(inpsSimulationUrl), goToSimulation),
           cancelButtonProps(props.onCancel, cancelRequest)
         ]}
       />
