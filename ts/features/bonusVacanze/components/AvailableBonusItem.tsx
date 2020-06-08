@@ -73,12 +73,12 @@ const styles = StyleSheet.create({
  */
 const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
   const { bonusItem, serviceById } = props;
-  const isItemDisabled = !bonusItem.is_active;
-  const disabledStyle = isItemDisabled ? styles.disabled : {};
+  const isComingSoon = !bonusItem.is_active;
+  const disabledStyle = isComingSoon ? styles.disabled : {};
   return (
     <ListItem
       style={styles.listItem}
-      onPress={() => (isItemDisabled ? null : props.onPress())}
+      onPress={() => (isComingSoon ? null : props.onPress())}
     >
       <View style={styles.columnLeft}>
         <Grid>
@@ -87,7 +87,7 @@ const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
               <Text bold={true} style={[disabledStyle, styles.methodTitle]}>
                 {bonusItem.name}
               </Text>
-              {isItemDisabled && (
+              {isComingSoon && (
                 <Badge style={styles.notImplementedBadge}>
                   <Text style={styles.notImplementedText}>
                     {I18n.t("wallet.methods.comingSoon")}
@@ -97,12 +97,11 @@ const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
             </View>
           </Row>
           <Row>
-            {serviceById &&
-              pot.isSome(serviceById) && (
-                <Text style={[styles.servicesName, disabledStyle]}>
-                  {serviceById.value.organization_name}
-                </Text>
-              )}
+            {pot.isSome(serviceById) && (
+              <Text style={[styles.servicesName, disabledStyle]}>
+                {serviceById.value.organization_name}
+              </Text>
+            )}
           </Row>
         </Grid>
       </View>
@@ -117,8 +116,8 @@ const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => {
   const serviceById = fromNullable(props.bonusItem.service_id).fold(
-    undefined,
-    s => serviceByIdSelector(s)(state)
+    pot.none,
+    s => serviceByIdSelector(s)(state) || pot.none
   );
   return {
     serviceById
