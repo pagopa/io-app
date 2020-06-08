@@ -1282,7 +1282,7 @@ bonus:
     title: Add subsidy
     contentTitle: Select one of the available bonus
   request: Request a new bonus
-  latestBonus: Your active bonuses
+  requestLabel: Bonuses and discounts
   requestTitle: Request
   active: Active
   failed: Failed

@@ -1315,7 +1315,7 @@ bonus:
     title: Aggiungi sovvenzione
     contentTitle: Seleziona uno dei bonus disponibili
   request: Richiedi un nuovo bonus
-  latestBonus: I tuoi bonus attivi
+  requestLabel: Bonus e sconti
   requestTitle: Richiesta
   active: Attivo
   failed: Fallito

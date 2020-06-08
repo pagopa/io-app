@@ -1,10 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Text, View } from "native-base";
+import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import H5 from "../../../components/ui/H5";
+import { AddPaymentMethodButton } from "../../../components/wallet/AddPaymentMethodButton";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { maybeInnerProperty } from "../../../utils/options";
@@ -24,6 +23,15 @@ type OwnProps = {
 };
 
 const styles = StyleSheet.create({
+  flexRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  flexRow2: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
   container: {
     flex: 1,
     alignItems: "flex-start",
@@ -37,6 +45,22 @@ const styles = StyleSheet.create({
   },
   brandDarkGray: {
     color: customVariables.brandDarkGray
+  },
+  brandLightGray: {
+    color: customVariables.brandLightGray
+  },
+  badgeColor: {
+    height: 18,
+    marginTop: 2,
+    backgroundColor: customVariables.brandHighLighter
+  },
+  headerText: {
+    fontSize: customVariables.fontSizeSmall,
+    marginRight: 9
+  },
+  badgeText: {
+    fontSize: customVariables.fontSizeSmaller,
+    lineHeight: 16
   }
 });
 
@@ -68,37 +92,38 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
   ).fold(undefined, _ => _);
 
   return (
-    <Content>
-      {!pot.isLoading(activeBonus) &&
-        pot.isSome(activeBonus) && (
-          <View>
-            <View style={styles.subHeaderContent}>
-              <H5 style={styles.brandDarkGray}>
-                {I18n.t("bonus.latestBonus")}
-              </H5>
-              <Text>{I18n.t("wallet.amount")}</Text>
-            </View>
-            <View spacer={true} />
-            <ActiveBonus
-              bonus={activeBonus.value}
-              onPress={onBonusPress}
-              validFrom={validFrom}
-              validTo={validTo}
-            />
-          </View>
-        )}
-      <View spacer={true} />
-      <View style={styles.container}>
-        <ButtonDefaultOpacity
-          block={true}
-          bordered={true}
-          onPress={onButtonPress}
-          activeOpacity={1}
-        >
-          <Text bold={true}>{I18n.t("bonus.request")}</Text>
-        </ButtonDefaultOpacity>
+    <React.Fragment>
+      <View style={styles.flexRow}>
+        <View style={styles.flexRow2}>
+          <Text style={[styles.brandLightGray, styles.headerText]}>
+            {I18n.t("bonus.requestLabel")}
+          </Text>
+          <Badge style={styles.badgeColor}>
+            <Text style={styles.badgeText}>
+              {/* Replace with I18n.t("wallet.methods.newCome") after PR #1875 */}
+              Novità
+            </Text>
+          </Badge>
+        </View>
+        <View>
+          <AddPaymentMethodButton
+            onPress={onButtonPress}
+            iconSize={customVariables.fontSize2}
+            labelSize={customVariables.fontSizeSmall}
+          />
+        </View>
       </View>
-    </Content>
+      <View spacer={true} />
+      {pot.isSome(activeBonus) &&
+        activeBonus.value && (
+          <ActiveBonus
+            bonus={activeBonus.value}
+            onPress={onBonusPress}
+            validFrom={validFrom}
+            validTo={validTo}
+          />
+        )}
+    </React.Fragment>
   );
 };
 

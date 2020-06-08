@@ -253,6 +253,15 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           }
           navigateToWalletList={this.props.navigateToWalletList}
         />
+        {/* Display this item only if the flag is enabled */}
+        {bonusVacanzeEnabled && (
+          <RequestBonus
+            onButtonPress={this.props.navigateToBonusList}
+            activeBonus={this.props.bonusVacanzeActivationActive}
+            availableBonusesList={this.props.availableBonusesList}
+            onBonusPress={this.props.navigateToBonusDetail}
+          />
+        )}
       </View>
     );
   }
@@ -519,22 +528,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet", "wallet_methods"]}
       >
-        {this.newMethodAdded ? (
-          this.newMethodAddedContent
-        ) : (
-          <React.Fragment>
-            {/* Display this item only if the flag is enabled */}
-            {bonusVacanzeEnabled && (
-              <RequestBonus
-                onButtonPress={this.props.navigateToBonusList}
-                activeBonus={this.props.bonusVacanzeActivationActive}
-                availableBonusesList={this.props.availableBonusesList}
-                onBonusPress={this.props.navigateToBonusDetail}
-              />
-            )}
-            {transactionContent}
-          </React.Fragment>
-        )}
+        {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
       </WalletLayout>
     );
   }
