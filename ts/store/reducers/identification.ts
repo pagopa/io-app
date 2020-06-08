@@ -77,7 +77,7 @@ const INITIAL_PROGRESS_STATE: IdentificationUnidentifiedState = {
   kind: "unidentified"
 };
 
-export const INITIAL_STATE: IdentificationState = {
+const INITIAL_STATE: IdentificationState = {
   progress: INITIAL_PROGRESS_STATE,
   fail: undefined
 };

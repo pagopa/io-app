@@ -15,7 +15,6 @@ import reducer, {
   deltaTimespanBetweenAttempts,
   freeAttempts,
   IdentificationState,
-  INITIAL_STATE,
   maxAttempts
 } from "../identification";
 
@@ -38,7 +37,10 @@ describe("Identification reducer", () => {
       identificationStartMock,
       identificationFailure()
     ];
-    const finalState = reproduceSequence(sequenceOfActions);
+    const finalState = reproduceSequence(
+      {} as IdentificationState,
+      sequenceOfActions
+    );
     expect(finalState.progress.kind).toEqual("started");
     expectFailState(finalState, maxAttempts - 1, 0);
   });
@@ -184,10 +186,11 @@ const expectFailState = (
  * @param sequenceOfActions
  */
 const reproduceSequence = (
+  initialState: IdentificationState,
   sequenceOfActions: ReadonlyArray<Action>
 ): IdentificationState => {
   return sequenceOfActions.reduce(
     (acc, val) => reducer(acc, val),
-    INITIAL_STATE
+    initialState
   );
 };
