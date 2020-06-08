@@ -134,6 +134,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       .catch(_ => undefined);
   }, []);
 
+  const bonusStatusDescription = I18n.t(`bonus.${bonus.status.toLowerCase()}`, {
+    defaultValue: ""
+  });
   return (
     <BaseScreenComponent
       goBack={true}
@@ -160,16 +163,14 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
         <View spacer={true} />
         <View style={styles.paddedContent}>
-          <View style={styles.rowBlock}>
-            <Text bold={true}>{I18n.t("bonus.bonusVacanza.status")}</Text>
-            <Badge style={styles.statusBadge}>
-              <Text style={styles.statusText}>
-                {I18n.t(
-                  `bonus.${bonus.status.toLowerCase()}` as TranslationKeys
-                )}
-              </Text>
-            </Badge>
-          </View>
+          {bonusStatusDescription.length > 0 && (
+            <View style={styles.rowBlock}>
+              <Text bold={true}>{I18n.t("bonus.bonusVacanza.status")}</Text>
+              <Badge style={styles.statusBadge}>
+                <Text style={styles.statusText}>{bonusStatusDescription}</Text>
+              </Badge>
+            </View>
+          )}
           {renderRow(
             I18n.t("bonus.bonusVacanza.amount"),
             formatNumberAmount(
