@@ -9,13 +9,17 @@ import { serviceByIdSelector } from "../../../store/reducers/entities/services/s
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { BonusAvailable } from "../types/bonusesAvailable";
+import { Dispatch } from "../../../store/actions/types";
+import { loadServiceDetail } from "../../../store/actions/services";
 
 type OwnProps = {
   bonusItem: BonusAvailable;
   onPress: () => void;
 };
 
-type Props = ReturnType<typeof mapStateToProps> & OwnProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  OwnProps;
 
 const styles = StyleSheet.create({
   listItem: {
@@ -75,6 +79,12 @@ const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
   const { bonusItem, serviceById } = props;
   const isComingSoon = !bonusItem.is_active;
   const disabledStyle = isComingSoon ? styles.disabled : {};
+  const [loadedService, setLoadedService] = React.useState(false);
+
+  if (pot.isNone(serviceById) && bonusItem.service_id && !loadedService) {
+    props.loadService(bonusItem.service_id);
+    setLoadedService(true);
+  }
   return (
     <ListItem
       style={styles.listItem}
@@ -124,4 +134,11 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => {
   };
 };
 
-export default connect(mapStateToProps)(AvailableBonusItem);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadService: (id: string) => dispatch(loadServiceDetail.request(id))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AvailableBonusItem);
