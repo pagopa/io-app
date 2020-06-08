@@ -67,7 +67,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       _ => _
     ).fold(undefined, _ => _);
     // if the bonus available is a bonus vacanze type
-    // and if the bonus activartion exists and is in active state -> show ActiveBonus item
+    // and if the bonus activation exists and is in active state -> show ActiveBonus item
     const isBonusVacanzeAlreadyActive =
       item.id_type === ID_BONUS_VACANZE_TYPE && this.props.isBonusVacanzeActive;
     return isBonusVacanzeAlreadyActive && pot.isSome(bonusActivation) ? (
