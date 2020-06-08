@@ -25,7 +25,7 @@ import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../store/reducers/availableBonuses";
 import {
   bonusVacanzeActivationSelector,
-  canBonusVacanzeBeRequestedSelector
+  isBonusVacanzeActiveSelector
 } from "../store/reducers/bonusVacanzeActivation";
 import { BonusAvailable } from "../types/bonusesAvailable";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
  */
 class AvailableBonusScreen extends React.PureComponent<Props> {
   private renderListItem = (info: ListRenderItemInfo<BonusAvailable>) => {
-    const { activeBonus } = this.props;
+    const { bonusActivation } = this.props;
     const item = info.item;
     const bonusVacanzeCategory = this.props.availableBonusesList.items.find(
       bi => bi.id_type === ID_BONUS_VACANZE_TYPE
@@ -66,16 +66,18 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       "valid_to",
       _ => _
     ).fold(undefined, _ => _);
-    return item.id_type === ID_BONUS_VACANZE_TYPE &&
-      pot.isSome(activeBonus) &&
-      !this.props.canBonusBeRequested ? (
+    // if the bonus available is a bonus vacanze type
+    // and if the bonus activartion exists and is in active state -> show ActiveBonus item
+    const isBonusVacanzeAlreadyActive =
+      item.id_type === ID_BONUS_VACANZE_TYPE && this.props.isBonusVacanzeActive;
+    return isBonusVacanzeAlreadyActive && pot.isSome(bonusActivation) ? (
       <ActiveBonus
         validFrom={validFrom}
         validTo={validTo}
-        bonus={activeBonus.value}
+        bonus={bonusActivation.value}
         onPress={() =>
           this.props.navigateToBonusDetail(
-            activeBonus.value,
+            bonusActivation.value,
             validFrom,
             validTo
           )
@@ -127,8 +129,8 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 const mapStateToProps = (state: GlobalState) => {
   const potAvailableBonuses = availableBonusesSelector(state);
   return {
-    activeBonus: bonusVacanzeActivationSelector(state),
-    canBonusBeRequested: canBonusVacanzeBeRequestedSelector(state),
+    bonusActivation: bonusVacanzeActivationSelector(state),
+    isBonusVacanzeActive: isBonusVacanzeActiveSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
     isLoading: pot.isLoading(potAvailableBonuses),
     isError: pot.isError(potAvailableBonuses)

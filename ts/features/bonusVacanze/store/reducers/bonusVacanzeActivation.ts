@@ -66,4 +66,16 @@ export const canBonusVacanzeBeRequestedSelector = createSelector<
   );
 });
 
+// return true if there is a bonus vacanze and its state is active
+export const isBonusVacanzeActiveSelector = createSelector<
+  GlobalState,
+  pot.Pot<BonusActivationWithQrCode, Error>,
+  boolean
+>(bonusVacanzeActivationSelector, bv => {
+  return pot.getOrElse(
+    pot.map(bv, v => v.status === BonusActivationStatusEnum.ACTIVE),
+    false
+  );
+});
+
 export default reducer;
