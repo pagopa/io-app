@@ -51,20 +51,40 @@ export const bonusVacanzeActivationSelector = (
 ): pot.Pot<BonusActivationWithQrCode, Error> =>
   state.bonus.bonusVacanzeActivation;
 
+// return the bonus activation if it is in ACTIVE state
+export const bonusVacanzeActivationActiveSelector = createSelector<
+  GlobalState,
+  pot.Pot<BonusActivationWithQrCode, Error>,
+  pot.Pot<BonusActivationWithQrCode, Error>
+>(bonusVacanzeActivationSelector, bv =>
+  pot.filter(bv, v => v.status === BonusActivationStatusEnum.ACTIVE)
+);
+
 /* return true if a bonus vacanze
 * - doesn't exists (pot.none)
 * - exists but its state is VOIDED or FAILED
 */
-export const canBonusVacanzeBeRequestedSelector = () =>
-  createSelector<
-    GlobalState,
-    pot.Pot<BonusActivationWithQrCode, Error>,
-    boolean
-  >(bonusVacanzeActivationSelector, bv => {
-    return pot.getOrElse(
-      pot.map(bv, v => v.status === BonusActivationStatusEnum.FAILED),
-      true
-    );
-  });
+export const canBonusVacanzeBeRequestedSelector = createSelector<
+  GlobalState,
+  pot.Pot<BonusActivationWithQrCode, Error>,
+  boolean
+>(bonusVacanzeActivationSelector, bv => {
+  return pot.getOrElse(
+    pot.map(bv, v => v.status === BonusActivationStatusEnum.FAILED),
+    true
+  );
+});
+
+// return true if there is a bonus vacanze and its state is active
+export const isBonusVacanzeActiveSelector = createSelector<
+  GlobalState,
+  pot.Pot<BonusActivationWithQrCode, Error>,
+  boolean
+>(bonusVacanzeActivationSelector, bv => {
+  return pot.getOrElse(
+    pot.map(bv, v => v.status === BonusActivationStatusEnum.ACTIVE),
+    false
+  );
+});
 
 export default reducer;

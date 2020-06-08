@@ -55,6 +55,11 @@ export const navigateToActivationLoading = () =>
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_LOADING
   });
 
+export const navigateToActivationTimeout = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_TIMEOUT
+  });
+
 export const navigateToActivationCompleted = () =>
   NavigationActions.navigate({
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_COMPLETED
