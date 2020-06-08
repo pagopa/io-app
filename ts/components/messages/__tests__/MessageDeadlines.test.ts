@@ -130,7 +130,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         id: "01DTH3SAA23QJ436BDHDXJ4H5Y",
         sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
         time_to_live: (3600 as unknown) as number &
-          WithinRangeInteger<3600, 604800>
+          WithinRangeInteger<3600, 604801>
       },
       isRead: true,
       isArchived: false,
@@ -153,7 +153,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
           id: "01DTH3SAA23QJ436BDHDXJ4H5Y",
           sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
           time_to_live: (3600 as unknown) as number &
-            WithinRangeInteger<3600, 604800>
+            WithinRangeInteger<3600, 604801>
         }
       }
     },
@@ -164,7 +164,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         id: "01DQQGBXWSCNNY44CH2QZ95J7A",
         sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
         time_to_live: (3600 as unknown) as number &
-          WithinRangeInteger<3600, 604800>
+          WithinRangeInteger<3600, 604801>
       },
       isRead: false,
       isArchived: false,
@@ -180,7 +180,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
             due_date: setDate(0, 15),
             payment_data: {
               amount: (1 as unknown) as number &
-                WithinRangeInteger<1, 9999999999>,
+                WithinRangeInteger<1, 10000000000>,
               notice_number: "002718270840468918" as string &
                 IPatternStringTag<"^[0123][0-9]{17}$">,
               invalid_after_due_date: true
@@ -191,7 +191,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
           id: "01DQQGBXWSCNNY44CH2QZ95J7A",
           sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
           time_to_live: (3600 as unknown) as number &
-            WithinRangeInteger<3600, 604800>
+            WithinRangeInteger<3600, 604801>
         }
       }
     },
@@ -202,7 +202,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         id: "01DQQGBXWSCNNY44CH2QZ95PIO",
         sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
         time_to_live: (3600 as unknown) as number &
-          WithinRangeInteger<3600, 604800>
+          WithinRangeInteger<3600, 604801>
       },
       isRead: false,
       isArchived: false,
@@ -218,7 +218,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
             due_date: setDate(1, 12),
             payment_data: {
               amount: (1 as unknown) as number &
-                WithinRangeInteger<1, 9999999999>,
+                WithinRangeInteger<1, 10000000000>,
               notice_number: "002718270840468918" as string &
                 IPatternStringTag<"^[0123][0-9]{17}$">,
               invalid_after_due_date: true
@@ -229,7 +229,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
           id: "01DQQGBXWSCNNY44CH2QZ95PIO",
           sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
           time_to_live: (3600 as unknown) as number &
-            WithinRangeInteger<3600, 604800>
+            WithinRangeInteger<3600, 604801>
         }
       }
     }
