@@ -2,6 +2,7 @@ import { range } from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import { fromNullable } from "fp-ts/lib/Option";
 import { PinString } from "../../../types/PinString";
+import { reproduceSequence } from "../../../utils/tests";
 import {
   identificationCancel,
   identificationFailure,
@@ -39,6 +40,7 @@ describe("Identification reducer", () => {
     ];
     const finalState = reproduceSequence(
       {} as IdentificationState,
+      reducer,
       sequenceOfActions
     );
     expect(finalState.progress.kind).toEqual("started");
@@ -178,19 +180,4 @@ const expectFailState = (
     expect(failState.remainingAttempts).toEqual(expectedRemainingAttempts);
     expect(failState.timespanBetweenAttempts).toEqual(expectedTimeSpan);
   });
-};
-
-/**
- * Reproduce a sequence of action, returning the state after this sequence
- * @param initialState
- * @param sequenceOfActions
- */
-const reproduceSequence = (
-  initialState: IdentificationState,
-  sequenceOfActions: ReadonlyArray<Action>
-): IdentificationState => {
-  return sequenceOfActions.reduce(
-    (acc, val) => reducer(acc, val),
-    initialState
-  );
 };
