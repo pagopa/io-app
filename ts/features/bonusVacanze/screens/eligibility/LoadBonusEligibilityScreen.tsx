@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import { BaseLoadingErrorScreen } from "../../components/loadingErrorScreen/BaseLoadingErrorScreen";
+import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 import { beginBonusEligibility } from "../../store/actions/bonusVacanze";
 import { eligibilityIsLoading } from "../../store/reducers/eligibility";
 
