@@ -145,7 +145,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
   };
 
   public render(): React.ReactNode {
-    const methods = [
+    const methods: ReadonlyArray<IPaymentMethod> = [
       {
         ...implementedMethod,
         onPress: this.props.navigateToAddCreditCard
