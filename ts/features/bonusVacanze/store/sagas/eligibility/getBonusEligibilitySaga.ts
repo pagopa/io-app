@@ -2,19 +2,19 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
 import { all, call, Effect, put } from "redux-saga/effects";
-import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
-import { ErrorEnum } from "../../../../../definitions/bonus_vacanze/EligibilityCheckFailure";
-import { EligibilityCheckSuccess } from "../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
-import { EligibilityCheckSuccessEligible } from "../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { startTimer } from "../../../../utils/timer";
-import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
+import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/EligibilityCheck";
+import { ErrorEnum } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckFailure";
+import { EligibilityCheckSuccess } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
+import { EligibilityCheckSuccessEligible } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { startTimer } from "../../../../../utils/timer";
+import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
 import {
   checkBonusEligibility,
   eligibilityRequestId,
   eligibilityRequestProgress
-} from "../actions/bonusVacanze";
-import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
+} from "../../actions/bonusVacanze";
+import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
 
 const checkEligibilityResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
@@ -86,9 +86,13 @@ function* checkBonusEligibilitySaga(
   }
 }
 
-// handle start bonus eligibility check
+/**
+ * This saga handle the networking part for the bonus eligibility
+ * @param startBonusEligibilityCheck
+ * @param getBonusEligibilityCheck
+ */
 // tslint:disable-next-line: cognitive-complexity
-export function* startBonusEligibilitySaga(
+export function* getBonusEligibilitySaga(
   startBonusEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze
   >["startBonusEligibilityCheck"],

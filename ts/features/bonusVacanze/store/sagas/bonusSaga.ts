@@ -8,7 +8,7 @@ import {
   beginBonusEligibility,
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
-import { beginBonusEligibilitySaga } from "./beginBonusEligibilitySaga";
+import { beginBonusEligibilitySaga } from "./eligibility/beginBonusEligibilitySaga";
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
 import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
 
