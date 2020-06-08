@@ -7,8 +7,8 @@ import ActivateBonusCompletedScreen from "../screens/eligibility/ActivateBonus/A
 import LoadActivateBonusScreen from "../screens/eligibility/ActivateBonus/LoadActivateBonusScreen";
 import ActivateBonusRequestScreen from "../screens/eligibility/ActivateBonus/request/ActivateBonusRequestScreen";
 import { TimeoutActivationInfoScreen } from "../screens/eligibility/ActivateBonus/TimeoutActivationInfoScreen";
-import IseeNotAvailableScreen from "../screens/eligibility/IseeNotAvailableScreen";
-import IseeNotEligibleScreen from "../screens/eligibility/IseeNotEligibleScreen";
+import IseeNotAvailableScreen from "../screens/eligibility/isee/IseeNotAvailableScreen";
+import IseeNotEligibleScreen from "../screens/eligibility/isee/IseeNotEligibleScreen";
 import LoadBonusEligibilityScreen from "../screens/eligibility/LoadBonusEligibilityScreen";
 import { TimeoutEligibilityCheckInfoScreen } from "../screens/eligibility/TimeoutEligibilityCheckInfoScreen";
 import BONUSVACANZE_ROUTES from "./routes";
