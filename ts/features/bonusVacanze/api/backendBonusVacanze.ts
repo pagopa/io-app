@@ -9,6 +9,8 @@ import {
   GetBonusEligibilityCheckT,
   getLatestBonusActivationByIdDefaultDecoder,
   GetLatestBonusActivationByIdT,
+  startBonusActivationProcedureDefaultDecoder,
+  StartBonusActivationProcedureT,
   startBonusEligibilityCheckDefaultDecoder,
   StartBonusEligibilityCheckT
 } from "../../../../definitions/bonus_vacanze/requestTypes";
@@ -31,6 +33,15 @@ const getLatestBonusFromIdT: GetLatestBonusActivationByIdT = {
   query: _ => ({}),
   headers: () => ({}),
   response_decoder: getLatestBonusActivationByIdDefaultDecoder()
+};
+
+const startBonusActivationProcedure: StartBonusActivationProcedureT = {
+  method: "post",
+  url: () => `/bonus/vacanze/activations`,
+  query: _ => ({}),
+  body: _ => "",
+  headers: () => ({ "Content-Type": "application/json" }),
+  response_decoder: startBonusActivationProcedureDefaultDecoder()
 };
 
 const startBonusEligibilityCheckT: StartBonusEligibilityCheckT = {
@@ -85,6 +96,10 @@ export function BackendBonusVacanze(
     ),
     getLatestBonusVacanzeFromId: createFetchRequestForApi(
       getLatestBonusFromIdT,
+      options
+    ),
+    startBonusActivationProcedure: createFetchRequestForApi(
+      startBonusActivationProcedure,
       options
     )
   };
