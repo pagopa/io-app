@@ -82,7 +82,6 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO add bonus request action or just navigate to TOS screen (?)
   requestBonusActivation: () => dispatch(navigateToBonusTosScreen()),
   navigateBack: () => dispatch(navigateBack())
 });
