@@ -1281,8 +1281,9 @@ bonus:
     contentTitle: Select one of the available bonus
   request: Request a new bonus
   latestBonus: Your active bonuses
-  active: Active bonus
-  inactive: Inactive bonus
+  active: Active
+  failed: Failed
+  consumed: Consumed
   tos:
     title: Terms of service
     content: !include bonus/bonusVacanze/bonus_tos.md
