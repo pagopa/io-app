@@ -19,7 +19,7 @@ type OwnProps = {
     validFrom?: Date,
     validTo?: Date
   ) => void;
-  bonus: pot.Pot<BonusActivationWithQrCode, Error>;
+  activeBonus: pot.Pot<BonusActivationWithQrCode, Error>;
   availableBonusesList: BonusesAvailable;
 };
 
@@ -47,10 +47,12 @@ const styles = StyleSheet.create({
  * @param props
  */
 const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
-  const { onButtonPress, bonus, onBonusPress, availableBonusesList } = props;
-
-  const [loading, setLoading] = React.useState(true);
-
+  const {
+    onButtonPress,
+    activeBonus,
+    onBonusPress,
+    availableBonusesList
+  } = props;
   const bonusVacanzeCategory = availableBonusesList.items.find(
     bi => bi.id_type === ID_BONUS_VACANZE_TYPE
   );
@@ -65,18 +67,10 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
     _ => _
   ).fold(undefined, _ => _);
 
-  React.useEffect(
-    () => {
-      setLoading(pot.isLoading(props.bonus));
-    },
-    [props.bonus]
-  );
-
   return (
     <Content>
-      {!loading &&
-        pot.isSome(bonus) &&
-        bonus.value && (
+      {!pot.isLoading(activeBonus) &&
+        pot.isSome(activeBonus) && (
           <View>
             <View style={styles.subHeaderContent}>
               <H5 style={styles.brandDarkGray}>
@@ -86,7 +80,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
             </View>
             <View spacer={true} />
             <ActiveBonus
-              bonus={bonus.value}
+              bonus={activeBonus.value}
               onPress={onBonusPress}
               validFrom={validFrom}
               validTo={validTo}
