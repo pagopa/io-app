@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { BaseLoadingErrorScreen } from "../../../components/loadingErrorScreen/BaseLoadingErrorScreen";
+import { LoadingErrorComponent } from "../../../components/loadingErrorScreen/LoadingErrorComponent";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -20,9 +20,8 @@ const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
   );
 
   return (
-    <BaseLoadingErrorScreen
+    <LoadingErrorComponent
       {...props}
-      navigationTitle={loadingCaption}
       loadingCaption={loadingCaption}
       loadingOpacity={1}
     />

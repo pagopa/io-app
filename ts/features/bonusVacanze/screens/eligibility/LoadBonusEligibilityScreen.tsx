@@ -20,9 +20,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   const loadingCaption = I18n.t("bonus.bonusVacanza.eligibility.loading");
   return (
-    <BaseLoadingErrorScreen
+    <LoadingErrorComponent
       {...props}
-      navigationTitle={loadingCaption}
       loadingCaption={loadingCaption}
       loadingOpacity={1}
     />
