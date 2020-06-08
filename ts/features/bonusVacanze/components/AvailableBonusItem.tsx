@@ -1,77 +1,70 @@
-import { Text, View } from "native-base";
+import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
+import { Badge, Grid, ListItem, Row, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
-import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
-import H5 from "../../../components/ui/H5";
-import IconFont from "../../../components/ui/IconFont";
-import { makeFontStyleObject } from "../../../theme/fonts";
-import customVariables from "../../../theme/variables";
-import { formatDateAsLocal } from "../../../utils/dates";
+import { connect } from "react-redux";
+import I18n from "../../../i18n";
+import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
+import { GlobalState } from "../../../store/reducers/types";
+import variables from "../../../theme/variables";
 import { BonusAvailable } from "../types/bonusesAvailable";
 
-type Props = {
+type OwnProps = {
   bonusItem: BonusAvailable;
   onPress: () => void;
 };
 
+type Props = ReturnType<typeof mapStateToProps> & OwnProps;
+
 const styles = StyleSheet.create({
-  withoutLogo: {
-    paddingTop: 19,
-    paddingBottom: 11,
-    alignItems: "center"
-  },
-  withLogo: {
-    paddingTop: customVariables.spacerWidth,
-    paddingBottom: 0,
-    alignItems: "center"
-  },
-  bonusTitle: {
-    ...makeFontStyleObject(Platform.select, "700"),
-    flex: 1
-  },
-  bonusView: {
-    backgroundColor: "#FFF",
+  listItem: {
+    marginLeft: 0,
+    paddingRight: 0,
     flexDirection: "row"
   },
-  smallSpacer: {
-    width: "100%",
-    height: 4
+  disabled: {
+    opacity: 0.75
   },
-  viewStyle: {
-    flexDirection: "row"
+  bonusItem: {
+    flexDirection: "column"
   },
-  text3: {
-    fontSize: 18,
-    color: customVariables.brandDarkestGray
+  methodTitle: {
+    fontSize: 16,
+    color: variables.colorBlack
   },
-  icon: {
-    width: 64,
+  methodImage: {
+    width: 48,
+    height: 48,
+    resizeMode: "contain"
+  },
+  columnLeft: {
+    flex: 0.7,
+    alignItems: "flex-start",
+    alignContent: "center"
+  },
+  columnRight: {
+    flex: 0.3,
     alignItems: "flex-end",
-    justifyContent: "center"
+    alignContent: "center"
   },
-  displayFlexRow: {
-    flex: 1,
-    flexDirection: "row"
+  notImplementedBadge: {
+    height: 18,
+    marginTop: 2,
+    backgroundColor: variables.lightGray
   },
-  firstBlockContainer: {
-    flex: 1
+  notImplementedText: {
+    fontSize: 10,
+    lineHeight: Platform.OS === "ios" ? 14 : 16
   },
-  text3Container: {
-    flex: 1,
-    flexDirection: "row",
-    minHeight: 24
+  centeredContents: {
+    alignItems: "center"
   },
-  bonusLogo: {
-    height: 32,
-    width: 32,
-    resizeMode: "contain",
-    marginBottom: 6,
-    alignSelf: "flex-start",
-    marginRight: customVariables.spacingBase
+  servicesName: {
+    fontSize: variables.fontSizeSmall,
+    color: variables.textColor
   }
 });
-
-const ICON_WIDTH = 24;
 
 /**
  * Component to show the listItem for available bonuses list,
@@ -79,48 +72,56 @@ const ICON_WIDTH = 24;
  * @param props
  */
 const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
-  const { bonusItem } = props;
+  const { bonusItem, serviceById } = props;
+  const isComingSoon = !bonusItem.is_active;
+  const disabledStyle = isComingSoon ? styles.disabled : {};
   return (
-    <TouchableDefaultOpacity onPress={() => props.onPress()}>
-      <View
-        style={[
-          styles.bonusView,
-          bonusItem.cover ? styles.withLogo : styles.withoutLogo
-        ]}
-      >
-        <View spacer={true} large={true} />
+    <ListItem
+      style={styles.listItem}
+      onPress={() => (isComingSoon ? null : props.onPress())}
+    >
+      <View style={styles.columnLeft}>
+        <Grid>
+          <Row>
+            <View style={styles.bonusItem}>
+              <Text bold={true} style={[disabledStyle, styles.methodTitle]}>
+                {bonusItem.name}
+              </Text>
+              {isComingSoon && (
+                <Badge style={styles.notImplementedBadge}>
+                  <Text style={styles.notImplementedText}>
+                    {I18n.t("wallet.methods.comingSoon")}
+                  </Text>
+                </Badge>
+              )}
+            </View>
+          </Row>
+          <Row>
+            {pot.isSome(serviceById) && (
+              <Text style={[styles.servicesName, disabledStyle]}>
+                {serviceById.value.organization_name}
+              </Text>
+            )}
+          </Row>
+        </Grid>
+      </View>
+      <View style={styles.columnRight}>
         {bonusItem.cover && (
-          <Image style={styles.bonusLogo} source={{ uri: bonusItem.cover }} />
+          <Image style={styles.methodImage} source={{ uri: bonusItem.cover }} />
         )}
-        <H5 style={styles.bonusTitle}>{bonusItem.name}</H5>
       </View>
-      <View style={styles.displayFlexRow}>
-        <View style={styles.firstBlockContainer}>
-          <View style={styles.viewStyle}>
-            <Text xsmall={true}>
-              {`${formatDateAsLocal(
-                bonusItem.valid_from,
-                true
-              )} - ${formatDateAsLocal(bonusItem.valid_to, true)}`}
-            </Text>
-          </View>
-          <View style={styles.smallSpacer} />
-          <View style={styles.text3Container}>
-            <Text numberOfLines={2} style={styles.text3}>
-              {bonusItem.description}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.icon}>
-          <IconFont
-            name="io-right"
-            size={ICON_WIDTH}
-            color={customVariables.contentPrimaryBackground}
-          />
-        </View>
-      </View>
-    </TouchableDefaultOpacity>
+    </ListItem>
   );
 };
 
-export default AvailableBonusItem;
+const mapStateToProps = (state: GlobalState, props: OwnProps) => {
+  const serviceById = fromNullable(props.bonusItem.service_id).fold(
+    pot.none,
+    s => serviceByIdSelector(s)(state) || pot.none
+  );
+  return {
+    serviceById
+  };
+};
+
+export default connect(mapStateToProps)(AvailableBonusItem);

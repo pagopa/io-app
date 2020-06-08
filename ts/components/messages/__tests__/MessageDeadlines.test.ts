@@ -1,6 +1,5 @@
 import { compareAsc, startOfDay } from "date-fns";
 import { none, Option, some } from "fp-ts/lib/Option";
-import { WithinRangeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
 import {
   FiscalCode,
@@ -8,6 +7,8 @@ import {
   WithinRangeString
 } from "italia-ts-commons/lib/strings";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
+import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
 import { MessagesStateAndStatus } from "../../../store/reducers/entities/messages";
 import { isCreatedMessageWithContentAndDueDate } from "../../../types/CreatedMessageWithContentAndDueDate";
 import {
@@ -129,8 +130,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         fiscal_code: fiscalCode,
         id: "01DTH3SAA23QJ436BDHDXJ4H5Y",
         sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
-        time_to_live: (3600 as unknown) as number &
-          WithinRangeInteger<3600, 604800>
+        time_to_live: 3600 as TimeToLiveSeconds
       },
       isRead: true,
       isArchived: false,
@@ -152,8 +152,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
           fiscal_code: fiscalCode,
           id: "01DTH3SAA23QJ436BDHDXJ4H5Y",
           sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
-          time_to_live: (3600 as unknown) as number &
-            WithinRangeInteger<3600, 604800>
+          time_to_live: 3600 as TimeToLiveSeconds
         }
       }
     },
@@ -163,8 +162,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         fiscal_code: fiscalCode,
         id: "01DQQGBXWSCNNY44CH2QZ95J7A",
         sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
-        time_to_live: (3600 as unknown) as number &
-          WithinRangeInteger<3600, 604800>
+        time_to_live: 3600 as TimeToLiveSeconds
       },
       isRead: false,
       isArchived: false,
@@ -179,8 +177,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
             >,
             due_date: setDate(0, 15),
             payment_data: {
-              amount: (1 as unknown) as number &
-                WithinRangeInteger<1, 9999999999>,
+              amount: 1 as PaymentAmount,
               notice_number: "002718270840468918" as string &
                 IPatternStringTag<"^[0123][0-9]{17}$">,
               invalid_after_due_date: true
@@ -190,8 +187,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
           fiscal_code: fiscalCode,
           id: "01DQQGBXWSCNNY44CH2QZ95J7A",
           sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
-          time_to_live: (3600 as unknown) as number &
-            WithinRangeInteger<3600, 604800>
+          time_to_live: 3600 as TimeToLiveSeconds
         }
       }
     },
@@ -201,8 +197,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         fiscal_code: fiscalCode,
         id: "01DQQGBXWSCNNY44CH2QZ95PIO",
         sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
-        time_to_live: (3600 as unknown) as number &
-          WithinRangeInteger<3600, 604800>
+        time_to_live: 3600 as TimeToLiveSeconds
       },
       isRead: false,
       isArchived: false,
@@ -217,8 +212,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
             >,
             due_date: setDate(1, 12),
             payment_data: {
-              amount: (1 as unknown) as number &
-                WithinRangeInteger<1, 9999999999>,
+              amount: 1 as PaymentAmount,
               notice_number: "002718270840468918" as string &
                 IPatternStringTag<"^[0123][0-9]{17}$">,
               invalid_after_due_date: true
@@ -228,8 +222,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
           fiscal_code: fiscalCode,
           id: "01DQQGBXWSCNNY44CH2QZ95PIO",
           sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
-          time_to_live: (3600 as unknown) as number &
-            WithinRangeInteger<3600, 604800>
+          time_to_live: 3600 as TimeToLiveSeconds
         }
       }
     }
