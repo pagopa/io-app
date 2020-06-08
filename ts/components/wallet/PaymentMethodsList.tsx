@@ -14,6 +14,7 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
 import { ContextualHelp } from "../ContextualHelp";
 import { withLightModalContext } from "../helpers/withLightModalContext";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
@@ -243,7 +244,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
         <TouchableDefaultOpacity onPress={this.showHelp}>
           <Text link={true}>{I18n.t("wallet.whyAFee.title")}</Text>
         </TouchableDefaultOpacity>
-        <View spacer={true} large={true} />
+        <EdgeBorderComponent />
       </View>
     );
   }
