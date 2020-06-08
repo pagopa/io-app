@@ -32,7 +32,7 @@ type IPaymentMethod = Readonly<{
   icon?: any;
   image?: any;
   implemented: boolean;
-  new?: boolean;
+  isNew?: boolean;
   onPress?: () => void;
 }>;
 
@@ -77,7 +77,7 @@ const bonusMethod: IPaymentMethod = {
   name: I18n.t("wallet.methods.sovvenzione.name"),
   icon: "io-bonus",
   implemented: true,
-  new: true
+  isNew: true
 };
 
 const paymentMethods: ReadonlyArray<IPaymentMethod> = [
@@ -149,40 +149,30 @@ class PaymentMethodsList extends React.Component<Props, never> {
         <View spacer={true} large={true} />
         <FlatList
           removeClippedSubviews={false}
-          data={
-            bonusVacanzeEnabled
+          data={[
+            {
+              ...implementedMethod,
+              onPress: this.props.navigateToAddCreditCard
+            },
+            ...(bonusVacanzeEnabled
               ? [
-                  {
-                    ...implementedMethod,
-                    onPress: this.props.navigateToAddCreditCard
-                  },
                   {
                     ...bonusMethod,
                     onPress: this.props.navigateToRequestBonus
-                  },
-                  ...paymentMethods
+                  }
                 ]
-              : [
-                  {
-                    ...implementedMethod,
-                    onPress: this.props.navigateToAddCreditCard
-                  },
-                  ...paymentMethods
-                ]
-          }
+              : []),
+            ...paymentMethods
+          ]}
           keyExtractor={item => item.name}
           renderItem={itemInfo => {
             const isItemDisabled = !itemInfo.item.implemented;
             const disabledStyle = isItemDisabled ? styles.disabled : {};
-            const isItemNew = !isItemDisabled && itemInfo.item.new;
+            const isItemNew = itemInfo.item.implemented && itemInfo.item.isNew;
             return (
               <ListItem
                 style={styles.listItem}
-                onPress={() => {
-                  if (itemInfo.item.onPress) {
-                    itemInfo.item.onPress();
-                  }
-                }}
+                onPress={itemInfo.item.onPress}
                 underlayColor={underlayColor}
               >
                 <View style={styles.columnLeft}>
