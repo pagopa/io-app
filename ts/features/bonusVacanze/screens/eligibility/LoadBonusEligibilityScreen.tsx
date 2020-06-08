@@ -80,9 +80,7 @@ const mapStateToProps = (globalState: GlobalState) => {
   const eligibilityOutcome = eligibilityCheckRequestProgress(globalState);
   return {
     // display the error with the retry only in case of networking errors
-    isLoading:
-      eligibilityOutcome === EligibilityRequestProgressEnum.UNDEFINED ||
-      eligibilityOutcome !== EligibilityRequestProgressEnum.ERROR,
+    isLoading: eligibilityOutcome !== EligibilityRequestProgressEnum.ERROR,
     eligibilityOutcome
   };
 };
