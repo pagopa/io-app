@@ -145,26 +145,27 @@ class PaymentMethodsList extends React.Component<Props, never> {
   };
 
   public render(): React.ReactNode {
+    const methods = [
+      {
+        ...implementedMethod,
+        onPress: this.props.navigateToAddCreditCard
+      },
+      ...(bonusVacanzeEnabled
+        ? [
+            {
+              ...bonusMethod,
+              onPress: this.props.navigateToRequestBonus
+            }
+          ]
+        : []),
+      ...paymentMethods
+    ];
     return (
       <View>
         <View spacer={true} large={true} />
         <FlatList
           removeClippedSubviews={false}
-          data={[
-            {
-              ...implementedMethod,
-              onPress: this.props.navigateToAddCreditCard
-            },
-            ...(bonusVacanzeEnabled
-              ? [
-                  {
-                    ...bonusMethod,
-                    onPress: this.props.navigateToRequestBonus
-                  }
-                ]
-              : []),
-            ...paymentMethods
-          ]}
+          data={methods}
           keyExtractor={item => item.name}
           renderItem={itemInfo => {
             const isItemDisabled = !itemInfo.item.implemented;
@@ -244,7 +245,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
         <TouchableDefaultOpacity onPress={this.showHelp}>
           <Text link={true}>{I18n.t("wallet.whyAFee.title")}</Text>
         </TouchableDefaultOpacity>
-        <EdgeBorderComponent />
+        {methods.length > 0 && <EdgeBorderComponent />}
       </View>
     );
   }
