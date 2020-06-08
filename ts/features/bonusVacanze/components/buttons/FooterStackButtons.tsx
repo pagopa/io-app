@@ -19,14 +19,10 @@ type Props = {
   buttons: ReadonlyArray<BlockButtonProps>;
 };
 
-const renderButton = (props: BlockButtonProps, idx?: number) => {
+const renderButton = (props: BlockButtonProps) => {
   return (
     <>
-      <ButtonDefaultOpacity
-        style={styles.button}
-        {...props}
-        key={idx || `stack_button_${idx}`}
-      >
+      <ButtonDefaultOpacity style={styles.button} {...props}>
         {props.iconName && <IconFont name={props.iconName} />}
         <Text
           style={fromNullable(props.buttonFontSize).fold(undefined, fs => {
