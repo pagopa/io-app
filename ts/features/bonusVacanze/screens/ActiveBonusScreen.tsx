@@ -1,10 +1,9 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
-import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -56,6 +55,15 @@ const styles = StyleSheet.create({
   },
   helpButton: {
     alignSelf: "center"
+  },
+  statusBadge: {
+    height: 18,
+    marginTop: 2,
+    backgroundColor: variables.brandHighLighter
+  },
+  statusText: {
+    fontSize: 12,
+    lineHeight: 16
   }
 });
 
@@ -71,10 +79,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const validFrom = props.navigation.getParam("validFrom");
   const validTo = props.navigation.getParam("validTo");
   const bonusValidityInterval = validityInterval(validFrom, validTo);
-  const status =
-    bonus.status === BonusActivationStatusEnum.ACTIVE
-      ? I18n.t("bonus.active")
-      : I18n.t("bonus.inactive");
   const renderRow = (key: string, value?: string) => {
     return fromNullable(value).fold(undefined, v => {
       return (
@@ -129,12 +133,15 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       .catch(_ => undefined);
   }, []);
 
+  const bonusStatusDescription = I18n.t(`bonus.${bonus.status.toLowerCase()}`, {
+    defaultValue: ""
+  });
   return (
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t("bonus.bonusVacanza.name")}
     >
-      <ScreenContent title={I18n.t("bonus.active")}>
+      <ScreenContent>
         <View style={styles.image}>
           {renderQRCode(qrCode[QR_CODE_MIME_TYPE])}
         </View>
@@ -155,7 +162,14 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
         <View spacer={true} />
         <View style={styles.paddedContent}>
-          {renderRow(I18n.t("bonus.bonusVacanza.status"), status)}
+          {bonusStatusDescription.length > 0 && (
+            <View style={styles.rowBlock}>
+              <Text bold={true}>{I18n.t("bonus.bonusVacanza.status")}</Text>
+              <Badge style={styles.statusBadge}>
+                <Text style={styles.statusText}>{bonusStatusDescription}</Text>
+              </Badge>
+            </View>
+          )}
           {renderRow(
             I18n.t("bonus.bonusVacanza.amount"),
             formatNumberAmount(

@@ -1,5 +1,4 @@
 import { createStackNavigator } from "react-navigation";
-import AcceptTosBonusScreen from "../screens/AcceptTosBonusScreen";
 import ActiveBonusScreen from "../screens/ActiveBonusScreen";
 import AvailableBonusScreen from "../screens/AvailableBonusScreen";
 import BonusInformationScreen from "../screens/BonusInformationScreen";
@@ -20,9 +19,6 @@ const BonusVacanzeNavigator = createStackNavigator(
     },
     [BONUSVACANZE_ROUTES.BONUS_REQUEST_INFORMATION]: {
       screen: BonusInformationScreen
-    },
-    [BONUSVACANZE_ROUTES.BONUS_TOS_SCREEN]: {
-      screen: AcceptTosBonusScreen
     },
     [BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: {
       screen: ActiveBonusScreen
