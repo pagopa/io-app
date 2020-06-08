@@ -1282,12 +1282,10 @@ bonus:
       requestBonus: Richiedi
       cancelRequest: Annulla la richiesta
     eligibility:
-      loading: Verifico l'idoneità per l'accesso al bonus
+      loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
       iseeNotAvailable:
-        title: ISEE non trovato
-        subtitle: Non è disponibile nessun ISEE per l'utente
-        text: !include bonus/bonusVacanze/iseeNotAvailable.md
-        goToINPSWebsite: Vai al sito INPS
+        title: Siamo spiacenti. Non abbiamo trovato il tuo ISEE.
+        text: "È necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE per ottenere il Bonus Vacanze.\n\nSe vuoi, puoi fare subito una simulazione o la richiesta online sul sito di INPS."
       iseeNotEligible:
         title: Siamo spiacenti. Il tuo ISEE supera la soglia richiesta.
         text: Se non ti risulta corretto, oppure se il tuo reddito familiare è cambiato dall’ultimo ISEE creato, puoi aggiornarlo effettuando una nuova dichiarazione sostituiva unica (DSU) sul sito di INPS.
@@ -1302,9 +1300,12 @@ bonus:
       activate:
         loading: Attivo il bonus
         goToDetails: Visualizza i dettagli
+        timeout:
+          title: Siamo spiacenti, serve più tempo per processare la tua richiesta.
+          description: Ti invieremo un messaggio in app quando il tuo bonus sarà pronto.
         completed:
-          title: Bonus attivato
-          description: Descrizione del bonus attivato
+          title: Congratulazioni!
+          description: Il tuo bonus è attivo
   bonusList:
     title: Aggiungi sovvenzione
     contentTitle: Seleziona uno dei bonus disponibili

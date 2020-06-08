@@ -35,7 +35,10 @@ import {
   loadBonusVacanzeFromId
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../../features/bonusVacanze/store/reducers/availableBonuses";
-import { bonusVacanzeActivationSelector } from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
+import {
+  bonusVacanzeActivationActiveSelector,
+  canBonusVacanzeBeRequestedSelector
+} from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -524,7 +527,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             {bonusVacanzeEnabled && (
               <RequestBonus
                 onButtonPress={this.props.navigateToBonusList}
-                bonus={this.props.currentActiveBonus}
+                activeBonus={this.props.bonusVacanzeActivationActive}
                 availableBonusesList={this.props.availableBonusesList}
                 onBonusPress={this.props.navigateToBonusDetail}
               />
@@ -544,7 +547,8 @@ const mapStateToProps = (state: GlobalState) => {
 
   const potAvailableBonuses = availableBonusesSelector(state);
   return {
-    currentActiveBonus: bonusVacanzeActivationSelector(state),
+    bonusVacanzeActivationActive: bonusVacanzeActivationActiveSelector(state),
+    canBonusBeRequested: canBonusVacanzeBeRequestedSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
