@@ -29,8 +29,8 @@ export type EligibilityState = Readonly<{
 }>;
 
 const INITIAL_STATE: EligibilityState = {
-  check: pot.none,
-  requestProgess: EligibilityRequestProgressEnum.UNDEFINED
+  requestProgess: EligibilityRequestProgressEnum.UNDEFINED,
+  check: pot.none
 };
 
 const reducer = (
@@ -88,7 +88,7 @@ export const eligibilitySelector = (
   state: GlobalState
 ): Option<EligibilityCheck> => pot.toOption(state.bonus.eligibility.check);
 
-export const eligibilityCheckRequestProgress = (
+export const eligibilityRequestProgressSelector = (
   state: GlobalState
 ): EligibilityRequestProgressEnum => state.bonus.eligibility.requestProgess;
 

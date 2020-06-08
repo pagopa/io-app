@@ -12,8 +12,8 @@ import {
 } from "../../../navigation/action";
 import { cancelBonusEligibility } from "../../actions/bonusVacanze";
 import {
-  eligibilityCheckRequestProgress,
-  EligibilityRequestProgressEnum
+  EligibilityRequestProgressEnum,
+  eligibilityRequestProgressSelector
 } from "../../reducers/eligibility";
 import { getBonusEligibilitySaga } from "./getBonusEligibilitySaga";
 
@@ -36,7 +36,7 @@ export function* eligibilityWorker() {
       backendBonusVacanze.getBonusEligibilityCheck
     );
     // read eligibility outcome from store (TODO: better return results from saga??)
-    const progress = yield select(eligibilityCheckRequestProgress);
+    const progress = yield select(eligibilityRequestProgressSelector);
     // choose next page for navigation
     const nextNavigation = fromNullable(
       eligibilityToNavigate.get(progress)

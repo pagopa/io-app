@@ -1,3 +1,5 @@
+import { Either, left, right } from "fp-ts/lib/Either";
+import { some } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
@@ -26,7 +28,7 @@ const eligibilityResultToEnum = (check: EligibilityCheck) => {
     if (EligibilityCheckSuccessEligible.is(check)) {
       return EligibilityRequestProgressEnum.ELIGIBLE;
     }
-    // if it is ont elibigle it is ineligible
+    // if it is not elibigle -> it is ineligible
     return EligibilityRequestProgressEnum.INELIGIBLE;
   } else {
     // failure
@@ -38,59 +40,64 @@ const eligibilityResultToEnum = (check: EligibilityCheck) => {
       case ErrorEnum.DATABASE_OFFLINE:
         return EligibilityRequestProgressEnum.ERROR;
       default:
+        // should never happen
         return EligibilityRequestProgressEnum.UNDEFINED;
     }
   }
 };
 
-// handle start bonus eligibility check
-function* checkBonusEligibilitySaga(
+/**
+ * return right if the request has been processed
+ * return left(true) if we got a blocking error (404 / decoding failure)
+ * @param getBonusEligibilityCheck
+ */
+function* getCheckBonusEligibilitySaga(
   getBonusEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze
   >["getBonusEligibilityCheck"]
-): IterableIterator<Effect | boolean> {
+): IterableIterator<Effect | Either<boolean, EligibilityCheck>> {
   try {
     const eligibilityCheckResult: SagaCallReturnType<
       typeof getBonusEligibilityCheck
     > = yield call(getBonusEligibilityCheck, {});
 
     if (eligibilityCheckResult.isRight()) {
-      // we got the check result
+      // 200 -> we got the check result, polling must be stopped
       if (eligibilityCheckResult.value.status === 200) {
+        const eligibilityCheck = eligibilityCheckResult.value.value;
         yield all([
-          put(
-            checkBonusEligibility.success(eligibilityCheckResult.value.value)
-          ),
+          put(checkBonusEligibility.success(eligibilityCheck)),
           put(
             eligibilityRequestProgress(
-              eligibilityResultToEnum(eligibilityCheckResult.value.value)
+              eligibilityResultToEnum(eligibilityCheck)
             )
           )
         ]);
-
-        return true;
+        return right(eligibilityCheck);
       }
-      return false;
+      // Request not found - polling must be stopped
+      if (eligibilityCheckResult.value.status === 404) {
+        return left(true);
+      }
+      // polling should be continue
+      return left(false);
     } else {
-      // we got some error, stop polling
-      throw Error(readableReport(eligibilityCheckResult.value));
+      yield put(
+        checkBonusEligibility.failure(
+          Error(readableReport(eligibilityCheckResult.value))
+        )
+      );
+      // we got some error on decoding, stop polling
+      return left(some(true));
     }
   } catch (e) {
-    yield all([
-      // TODO: atm the error of this call are hidden by the pooling phase.
-      //  What to do when an error occurs here?
-      // put(eligibilityRequestProgress(EligibilityRequestProgressEnum.ERROR)),
-      put(checkBonusEligibility.failure(e))
-    ]);
-    return false;
+    yield put(checkBonusEligibility.failure(e));
+    // polling should be continue
+    return left(false);
   }
 }
 
-/**
- * This saga handle the networking part for the bonus eligibility
- * @param startBonusEligibilityCheck
- * @param getBonusEligibilityCheck
- */
+// handle start bonus eligibility check
 // tslint:disable-next-line: cognitive-complexity
 export function* getBonusEligibilitySaga(
   startBonusEligibilityCheck: ReturnType<
@@ -123,10 +130,21 @@ export function* getBonusEligibilitySaga(
         // TODO: handle cancel request (stop polling)
         while (true) {
           const eligibilityCheckResult: SagaCallReturnType<
-            typeof checkBonusEligibilitySaga
-          > = yield call(checkBonusEligibilitySaga, getBonusEligibilityCheck);
-          // we got the response, stop polling
-          if (eligibilityCheckResult === true) {
+            typeof getCheckBonusEligibilitySaga
+          > = yield call(
+            getCheckBonusEligibilitySaga,
+            getBonusEligibilityCheck
+          );
+
+          // we got a blocking error -> stop polling
+          if (eligibilityCheckResult.isLeft() && eligibilityCheckResult.value) {
+            yield put(
+              eligibilityRequestProgress(EligibilityRequestProgressEnum.ERROR)
+            );
+            return;
+          }
+          // we got the eligibility result, stop polling
+          if (eligibilityCheckResult.isRight()) {
             return;
           }
           // sleep
