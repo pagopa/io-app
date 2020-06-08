@@ -17,6 +17,10 @@ import {
   Service as ServiceMetadata
 } from "../../../definitions/content/Service";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
+import {
+  IdentityProviderId,
+  textDataForIdp
+} from "../../models/IdentityProvider";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import {
   contentMunicipalityLoad,
@@ -131,6 +135,18 @@ export const servicesInScopeSelector = (
       ),
       []
     )
+  );
+
+export const idpTextDataSelector = (
+  state: GlobalState,
+  id: IdentityProviderId
+) =>
+  pot.getOrElse(
+    pot.map(state.content.idpTextData, data => {
+      const itData = (data.it as unknown) as textDataForIdp;
+      return itData[id];
+    }),
+    undefined
   );
 
 export default function content(

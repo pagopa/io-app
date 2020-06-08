@@ -376,9 +376,13 @@ authentication:
     contextualHelpTitle: Who is your Identity Provider
     contextualHelpContent: !include authentication/authentication_idp_selection.md
   idp_login:
-    headerTitle: Login
+    headerTitle: SPID Login
     contextualHelpTitle: What is your password
     contextualHelpContent: !include authentication/authentication_idp_login.md
+    contextualHelpTitle2: Need support on the login by SPID?
+    openTicket: Create a ticket
+    recoverUsername: Recover the username
+    recoverPassword: Recover the password
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout

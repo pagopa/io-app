@@ -24,7 +24,7 @@ export const FAQs: Record<
   wallet_transaction: [38, 39, 40],
   payment: [43, 44, 45, 46],
   services: [47, 48, 49],
-  services_detail: [50, 51, 52],
+  services_detail: [50, 51, 52]
 };
 
 export type FAQsCategoriesType =

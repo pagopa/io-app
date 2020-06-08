@@ -105,6 +105,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               <H3>{this.props.title}</H3>
               <View spacer={true} />
               {this.state.content}
+              <View spacer={true} />
               {this.props.faqCategories &&
                 this.props.contentLoaded && (
                   <FAQComponent

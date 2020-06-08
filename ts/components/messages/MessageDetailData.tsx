@@ -12,7 +12,7 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import { format, formatDateAsLocal } from "../../utils/dates";
 import CopyButtonComponent from "../CopyButtonComponent";
-import EmailCallCTA from '../screens/EmailCallCTA';
+import EmailCallCTA from "../screens/EmailCallCTA";
 
 const styles = StyleSheet.create({
   container: {
@@ -82,9 +82,7 @@ class MessageDetailData extends React.PureComponent<Props> {
     const phone = this.data.metadata.fold(undefined, m => m.phone);
     const email = this.data.metadata.fold(undefined, m => m.email);
 
-    return(
-      <EmailCallCTA phone={phone} email={email}/>
-    );
+    return <EmailCallCTA phone={phone} email={email} />;
   };
 
   public render() {

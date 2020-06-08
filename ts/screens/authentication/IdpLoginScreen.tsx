@@ -9,22 +9,25 @@ import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent, { ContextualHelpProps } from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import EmailCallCTA from "../../components/screens/EmailCallCTA";
+import BlockButtons from "../../components/ui/BlockButtons";
+import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import I18n from "../../i18n";
-import { loginFailure, loginSuccess } from "../../store/actions/authentication";
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
+import { loginFailure, loginSuccess } from "../../store/actions/authentication";
 import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
   isLoggedOutWithIdp,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
+import { idpTextDataSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
-import Markdown from '../../components/ui/Markdown';
-import EmailCallCTA from '../../components/screens/EmailCallCTA';
+import { handleItemOnPress } from "../../utils/url";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -205,50 +208,83 @@ class IdpLoginScreen extends React.Component<Props, State> {
     return null;
   };
 
-  get contextualHelp(){
-    if(!this.props.selectedIdentityProvider){
-        const defaultMarkdown : ContextualHelpProps = {
-          title: "authentication.idp_login.contextualHelpTitle",
-          body: () => (<Markdown>{I18n.t("authentication.idp_login.contextualHelpContent")}</Markdown>)
+  get contextualHelp() {
+    const { selectedIdpTextData } = this.props;
+
+    if (selectedIdpTextData === undefined) {
+      return {
+        title: "authentication.idp_login.contextualHelpTitle",
+        body: () => (
+          <Markdown>
+            {I18n.t("authentication.idp_login.contextualHelpContent")}
+          </Markdown>
+        )
       };
-        return defaultMarkdown
     }
 
-    const providerId = this.props.selectedIdentityProvider.id;
-
-    type MockedType = {
-      "email"?: string,
-      "phone": string,
-      "helpdesk_ticket"?: string,
-      "restore_password": string,
-      "restore_username"?: string,
-      "description"?: string,
-      "website": string
-    }
-
-    const mockedData: MockedType = {
-      "description": "This is the description of the service. it can include a links to guidelines but also numberes to be called and emails to which seends messages",
-      "email": "fakeEmail@mail.it",
-      "phone": '1231231233',
-      "restore_password": "www.restorePassword.it",
-      "restore_username": "www.restoreUsername.it",
-      "website": "www.mainPresentation.it"
-    };
-    
-    const contextualHelp :ContextualHelpProps = {
-      title: '',
+    return {
+      title: I18n.t("authentication.idp_login.contextualHelpTitle2"),
       body: () => (
         <React.Fragment>
-          {mockedData.description && (<Markdown>{mockedData.description}</Markdown>)}
-          <View spacer={true}/>
-          <EmailCallCTA phone={mockedData.phone} email={mockedData.email}/>
-          <View/>
-          {/*mockedData.helpdesk_ticket && (<BlockButtons/>)*/}
+          <Markdown>{selectedIdpTextData.description}</Markdown>
+          <View spacer={true} />
+
+          <EmailCallCTA
+            phone={selectedIdpTextData.phone.action}
+            email={
+              selectedIdpTextData.email
+                ? selectedIdpTextData.email.action
+                : undefined
+            }
+          />
+
+          <View spacer={true} />
+
+          {selectedIdpTextData.helpdesk_form && (
+            <BlockButtons
+              type={"SingleButton"}
+              leftButton={{
+                title: I18n.t("authentication.idp_login.openTicket"),
+                onPress: handleItemOnPress(
+                  selectedIdpTextData.helpdesk_form.action
+                ),
+                primary: true,
+                bordered: true,
+                small: true
+              }}
+            />
+          )}
+
+          <View spacer={true} />
+
+          {selectedIdpTextData.recover_username && (
+            <BlockButtons
+              type={"SingleButton"}
+              leftButton={{
+                title: I18n.t("authentication.idp_login.recoverUsername"),
+                onPress: handleItemOnPress(
+                  selectedIdpTextData.recover_username.action
+                ),
+                small: true
+              }}
+            />
+          )}
+
+          <View spacer={true} />
+
+          <BlockButtons
+            type={"SingleButton"}
+            leftButton={{
+              title: I18n.t("authentication.idp_login.recoverPassword"),
+              onPress: handleItemOnPress(
+                selectedIdpTextData.recover_password.action
+              ),
+              small: true
+            }}
+          />
         </React.Fragment>
       )
-    }
-
-    return contextualHelp
+    };
   }
 
   public render() {
@@ -291,15 +327,22 @@ class IdpLoginScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  loggedOutWithIdpAuth: isLoggedOutWithIdp(state.authentication)
-    ? state.authentication
-    : undefined,
-  loggedInAuth: isLoggedIn(state.authentication)
-    ? state.authentication
-    : undefined,
-  selectedIdentityProvider: selectedIdentityProviderSelector(state)
-});
+const mapStateToProps = (state: GlobalState) => {
+  const selectedtIdp = selectedIdentityProviderSelector(state);
+  const selectedIdpTextData = selectedtIdp
+    ? idpTextDataSelector(state, selectedtIdp.id)
+    : undefined;
+
+  return {
+    loggedOutWithIdpAuth: isLoggedOutWithIdp(state.authentication)
+      ? state.authentication
+      : undefined,
+    loggedInAuth: isLoggedIn(state.authentication)
+      ? state.authentication
+      : undefined,
+    selectedIdpTextData
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIdpLoginUrlChanged: (url: string) =>

@@ -395,6 +395,10 @@ authentication:
     headerTitle: Accedi
     contextualHelpTitle: Qual è la tua password
     contextualHelpContent: !include authentication/authentication_idp_login.md
+    contextualHelpTitle2: Hai bisogno di aiuto per il login SPID?
+    openTicket: Apri una segnalazione
+    recoverUsername: Recupera il nome utente
+    recoverPassword: Recupera la password
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout

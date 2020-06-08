@@ -14,12 +14,13 @@ import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
+import { loadIdpsTextData } from "../../store/actions/content";
 import variables from "../../theme/variables";
 
 type Props = ReturnType<typeof mapDispatchToProps> & NavigationScreenProps;
 
 type State = Readonly<{
-  counter: number
+  counter: number;
 }>;
 
 // since this is a test SPID idp, we set isTestIdp flag to avoid rendering.
@@ -120,67 +121,69 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen where the user choose the SPID IPD to login with.
  */
 class IdpSelectionScreen extends React.PureComponent<Props, State> {
-
-  constructor(props: Props){
+  constructor(props: Props) {
     super(props);
-    this.state = {counter: 0}
+    this.state = { counter: 0 };
   }
-   
+
   private onIdpSelected = (idp: IdentityProvider) => {
-    const {counter} = this.state;
+    const { counter } = this.state;
     if (idp.isTestIdp === true && counter < 5) {
-      const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1)
-      this.setState({counter: newValue})
+      const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
+      this.setState({ counter: newValue });
       return;
     }
     this.props.setSelectedIdp(idp);
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
 
-  public componentDidMount(){
-
+  public componentDidMount() {
+    // load, from content server, all the info about the identity providers.
+    // Is is used after the idp selection to customizee the contextual help.
+    // The request is performed here to reduce the loading time of the contextual help in the next screen
+    this.props.loadIdpContent();
   }
 
-  public componentDidUpdate(){
+  public componentDidUpdate() {
     if (this.state.counter === TAPS_TO_OPEN_TESTIDP) {
       this.props.setSelectedIdp(testIdp);
       this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
     }
   }
 
-  public render(){
-  return (
-    <BaseScreenComponent
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["authentication_IPD_selection"]}
-      goBack={this.props.navigation.goBack}
-      headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
-    >
-      <Content noPadded={true} overScrollMode={"never"} bounces={false}>
-        <ScreenContentHeader
-          title={I18n.t("authentication.idp_selection.contentTitle")}
-        />
-        <View style={styles.gridContainer} testID={"idps-view"}>
-          <IdpsGrid idps={idps} onIdpSelected={this.onIdpSelected} />
-          <View spacer={true} />
-          <ButtonDefaultOpacity
-            block={true}
-            light={true}
-            bordered={true}
-            onPress={this.props.navigation.goBack}
-          >
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </ButtonDefaultOpacity>
-        </View>
-      </Content>
-    </BaseScreenComponent>
-  );
+  public render() {
+    return (
+      <BaseScreenComponent
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["authentication_IPD_selection"]}
+        goBack={this.props.navigation.goBack}
+        headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
+      >
+        <Content noPadded={true} overScrollMode={"never"} bounces={false}>
+          <ScreenContentHeader
+            title={I18n.t("authentication.idp_selection.contentTitle")}
+          />
+          <View style={styles.gridContainer} testID={"idps-view"}>
+            <IdpsGrid idps={idps} onIdpSelected={this.onIdpSelected} />
+            <View spacer={true} />
+            <ButtonDefaultOpacity
+              block={true}
+              light={true}
+              bordered={true}
+              onPress={this.props.navigation.goBack}
+            >
+              <Text>{I18n.t("global.buttons.cancel")}</Text>
+            </ButtonDefaultOpacity>
+          </View>
+        </Content>
+      </BaseScreenComponent>
+    );
   }
-};
+}
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setSelectedIdp: (idp: IdentityProvider) => dispatch(idpSelected(idp)),
-  //loadIdpContent: () => dispatch()
+  loadIdpContent: () => dispatch(loadIdpsTextData.request())
 });
 
 export default connect(
