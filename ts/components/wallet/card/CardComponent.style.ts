@@ -22,7 +22,7 @@ export default StyleSheet.create({
     paddingBottom: 16,
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 22
+    paddingTop: 18
   },
   cardNumber: {
     flexDirection: "row",

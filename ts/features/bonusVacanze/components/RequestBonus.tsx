@@ -63,10 +63,10 @@ const styles = StyleSheet.create({
     lineHeight: 16
   },
   cardInner: {
-    paddingBottom: 16,
+    paddingBottom: 13,
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 22
+    paddingTop: 13
   },
   card: {
     // iOS and Andorid card shadow
@@ -160,26 +160,6 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
           </View>
         </View>
       </View>
-      {/* <View style={styles.flexRow}>
-        <View style={styles.flexRow2}>
-          <Text style={[styles.brandLightGray, styles.headerText]}>
-            {I18n.t("bonus.requestLabel")}
-          </Text>
-          <Badge style={styles.badgeColor}>
-            <Text style={styles.badgeText}>
-              {/* Replace with I18n.t("wallet.methods.newCome") after PR #1875
-              Novità
-            </Text>
-          </Badge>
-        </View>
-        <View>
-          <AddPaymentMethodButton
-            onPress={onButtonPress}
-            iconSize={customVariables.fontSize2}
-            labelSize={customVariables.fontSizeSmall}
-          />
-        </View>
-      </View> */}
       {pot.isSome(activeBonus) &&
         activeBonus.value && (
           <ActiveBonus

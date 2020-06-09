@@ -148,6 +148,71 @@ const styles = StyleSheet.create({
   }
 });
 
+const cardHeaderStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    backgroundColor: "transparent"
+  },
+  subHeaderContent: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between"
+  },
+  brandDarkGray: {
+    color: customVariables.brandDarkGray
+  },
+  brandLightGray: {
+    color: customVariables.brandGray
+  },
+  headerText: {
+    fontSize: customVariables.fontSizeSmall
+  },
+  cardInner: {
+    paddingBottom: 13,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 13
+  },
+  card: {
+    // iOS and Andorid card shadow
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1.5,
+    elevation: 3,
+
+    backgroundColor: customVariables.brandDarkGray,
+    borderRadius: 8,
+    marginBottom: -1,
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 20
+  },
+  flatBottom: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
+  },
+  rotateCard: {
+    marginBottom: -(58 / 2 + 4),
+    flex: 1,
+    shadowRadius: 10,
+    shadowOpacity: 0.15,
+    transform: [
+      { perspective: 700 },
+      { rotateX: "-20deg" },
+      { scaleX: 0.98 },
+      { translateY: -(58 / 2 + 20) * (1 - Math.cos(20)) }
+    ],
+    zIndex: 5
+  },
+  rotateText: {
+    flex: 1,
+    transform: [{ perspective: 700 }, { rotateX: "20deg" }, { scaleX: 0.98 }]
+  }
+});
+
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
   body: "wallet.contextualHelpContent"
@@ -221,23 +286,34 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
   private cardHeader(isError: boolean = false) {
     return (
-      <View style={styles.flexRow}>
-        <View>
-          <H5 style={styles.brandLightGray}>
-            {I18n.t("wallet.paymentMethods")}
-          </H5>
-        </View>
-        {!isError && (
-          <View>
-            <AddPaymentMethodButton
-              onPress={() =>
-                this.props.navigateToWalletAddPaymentMethod(
-                  getCurrentRouteKey(this.props.nav)
-                )
-              }
-            />
+      <View style={cardHeaderStyle.rotateCard}>
+        <View style={[cardHeaderStyle.card, cardHeaderStyle.flatBottom]}>
+          <View style={[cardHeaderStyle.cardInner]}>
+            <View style={[styles.flexRow, cardHeaderStyle.rotateText]}>
+              <Text
+                style={[
+                  cardHeaderStyle.brandLightGray,
+                  cardHeaderStyle.headerText
+                ]}
+              >
+                {I18n.t("wallet.paymentMethods")}
+              </Text>
+              <View>
+                {!isError && (
+                  <AddPaymentMethodButton
+                    onPress={() =>
+                      this.props.navigateToWalletAddPaymentMethod(
+                        getCurrentRouteKey(this.props.nav)
+                      )
+                    }
+                    iconSize={customVariables.fontSize2}
+                    labelSize={customVariables.fontSizeSmall}
+                  />
+                )}
+              </View>
+            </View>
           </View>
-        )}
+        </View>
       </View>
     );
   }
@@ -245,14 +321,16 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   private cardPreview(wallets: any) {
     return (
       <View>
-        {this.cardHeader()}
         <View spacer={true} />
-        <CardsFan
-          wallets={
-            wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
-          }
-          navigateToWalletList={this.props.navigateToWalletList}
-        />
+        {this.cardHeader()}
+        <View>
+          <CardsFan
+            wallets={
+              wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
+            }
+            navigateToWalletList={this.props.navigateToWalletList}
+          />
+        </View>
         {/* Display this item only if the flag is enabled */}
         {bonusVacanzeEnabled && (
           <RequestBonus
@@ -527,6 +605,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         refreshControl={walletRefreshControl}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet", "wallet_methods"]}
+        gradientHeader={true}
       >
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
       </WalletLayout>

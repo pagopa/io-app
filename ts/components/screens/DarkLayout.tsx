@@ -21,6 +21,7 @@ import {
 } from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
+import LinearGradient from "react-native-linear-gradient";
 
 type Props = Readonly<{
   allowGoBack?: boolean;
@@ -42,11 +43,11 @@ type Props = Readonly<{
   contentRefreshControl?: React.ReactElement<RefreshControlProps>;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   customGoBack?: React.ReactNode;
+  gradientHeader?: boolean;
 }>;
 
 const styles = StyleSheet.create({
   headerContents: {
-    backgroundColor: customVariables.brandDarkGray,
     paddingHorizontal: customVariables.contentPadding
   }
 });
@@ -60,9 +61,25 @@ export default class DarkLayout extends React.Component<Props> {
   }
 
   private screenContent() {
-    return (
+    return this.props.gradientHeader ? (
       <React.Fragment>
-        <View style={styles.headerContents}>
+        <LinearGradient
+          colors={[customVariables.brandDarkGray, "#42484F"]}
+          style={styles.headerContents}
+        >
+          <View spacer={true} />
+          {this.props.topContent}
+        </LinearGradient>
+        {this.props.children}
+      </React.Fragment>
+    ) : (
+      <React.Fragment>
+        <View
+          style={[
+            styles.headerContents,
+            { backgroundColor: customVariables.brandDarkGray }
+          ]}
+        >
           <View spacer={true} />
           {this.props.topContent}
         </View>
