@@ -17,6 +17,7 @@ import Markdown from "../../../components/ui/Markdown";
 import { MultiImage } from "../../../components/ui/MultiImage";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
+import { loadServiceDetail } from "../../../store/actions/services";
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
  */
 const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const [isMarkdownLoaded, setMarkdownLoaded] = React.useState(false);
+  const [loadedService, setLoadedService] = React.useState(false);
 
   const getBonusItem = () => props.navigation.getParam("bonusItem");
 
@@ -101,18 +103,28 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const handleModalPress = () =>
     props.showModal(<TosBonusComponent onClose={props.hideModal} />);
 
+  React.useEffect(() => {
+    if (
+      pot.isNone(props.serviceById) &&
+      bonusItem.service_id &&
+      !loadedService
+    ) {
+      props.loadService(bonusItem.service_id);
+      setLoadedService(true);
+    }
+  });
+
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
       <Content>
         <View style={styles.row}>
           <View style={styles.flexStart}>
-            {props.serviceById &&
-              pot.isSome(props.serviceById) && (
-                <MultiImage
-                  style={styles.serviceMultiImage}
-                  source={logosForService(props.serviceById.value)}
-                />
-              )}
+            {pot.isSome(props.serviceById) && (
+              <MultiImage
+                style={styles.serviceMultiImage}
+                source={logosForService(props.serviceById.value)}
+              />
+            )}
           </View>
           <View style={styles.flexEnd}>
             {bonusItem.cover && (
@@ -176,8 +188,8 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO add bonus request action or just navigate to TOS screen (?)
   requestBonusActivation: () => dispatch(navigateToBonusEligibilityLoading()),
+  loadService: (id: string) => dispatch(loadServiceDetail.request(id)),
   navigateBack: () => dispatch(navigateBack())
 });
 
