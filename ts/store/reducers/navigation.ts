@@ -21,10 +21,14 @@ export const navigationStateSelector = (state: GlobalState): NavigationState =>
   state.nav;
 
 const pickRoute = (route: NavigationRoute) => {
-  if ("index" in route) {
-    return route.routes[route.index];
+  if (
+    !route.routes ||
+    route.routes.length === 0 ||
+    route.index >= route.routes.length
+  ) {
+    return route;
   }
-  return route;
+  return route.routes[route.index];
 };
 
 export const navigationCurrentRouteSelector = (state: GlobalState) => {

@@ -60,6 +60,13 @@ export function* handleCancelEligibilitySaga() {
   yield put(NavigationActions.back());
 }
 
+function* beginBonusEligibilitySaga() {
+  yield race({
+    eligibility: call(eligibilityWorker),
+    cancelAction: take(cancelBonusEligibility)
+  });
+}
+
 /**
  * This saga orchestrate the check eligibility phase.
  */
@@ -73,11 +80,4 @@ export function* handleBonusEligibilitySaga(): SagaIterator {
     getType(cancelBonusEligibility),
     handleCancelEligibilitySaga
   );
-}
-
-export function* beginBonusEligibilitySaga() {
-  yield race({
-    eligibility: call(eligibilityWorker),
-    cancelAction: take(cancelBonusEligibility)
-  });
 }
