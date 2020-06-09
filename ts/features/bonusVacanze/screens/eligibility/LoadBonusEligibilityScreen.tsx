@@ -4,10 +4,11 @@ import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { abortBonusRequest } from "../../components/AbortBonusRequest";
+import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 import {
-  beginBonusEligibility,
-  cancelBonusEligibility
+  cancelBonusEligibility,
+  checkBonusEligibility
 } from "../../store/actions/bonusVacanze";
 import { eligibilityIsLoading } from "../../store/reducers/eligibility";
 
@@ -23,6 +24,12 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   const loadingCaption = I18n.t("bonus.bonusVacanza.eligibility.loading");
+
+  useHardwareBackButton(() => {
+    abortBonusRequest(props.onCancel);
+    return true;
+  });
+
   return (
     <LoadingErrorComponent
       {...props}
@@ -37,7 +44,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: link with the right dispatch action, will dispatch the cancel request
   onCancel: () => dispatch(cancelBonusEligibility()),
   onRetry: () => {
-    dispatch(beginBonusEligibility());
+    dispatch(checkBonusEligibility.request());
   }
 });
 
