@@ -78,8 +78,8 @@ export function* startBonusActivationSaga(
     > = yield call(startBonusActivationProcedure, {});
     if (startBonusActivationProcedureResult.isRight()) {
       const status = startBonusActivationProcedureResult.value.status;
-      // 202 -> Request accepted.
-      if (startBonusActivationProcedureResult.value.status === 202) {
+      // 201 -> Request created.
+      if (startBonusActivationProcedureResult.value.status === 201) {
         const instanceId = startBonusActivationProcedureResult.value.value;
         // start polling to try to get bonus activation
         const startPollingTime = new Date().getTime();
