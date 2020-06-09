@@ -118,11 +118,11 @@ export function* startBonusEligibilitySaga(
     if (startEligibilityResult.isRight()) {
       // 202 -> request accepted | 409 -> pending request
       if (
-        startEligibilityResult.value.status === 202 ||
+        startEligibilityResult.value.status === 201 ||
         startEligibilityResult.value.status === 409
       ) {
         // processing request, dispatch di process id
-        if (startEligibilityResult.value.status === 202) {
+        if (startEligibilityResult.value.status === 201) {
           yield put(eligibilityRequestId(startEligibilityResult.value.value));
         }
         // start polling to know about the check result
