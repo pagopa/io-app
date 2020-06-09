@@ -15,8 +15,8 @@ import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
 import { startBonusActivationSaga } from "./handleStartBonusActivationSaga";
 
 // Saga that listen to all bonus requests
-export function* watchBonusSaga(): SagaIterator {
-  const backendBonusVacanze = BackendBonusVacanze(apiUrlPrefix);
+export function* watchBonusSaga(bearerToken: string): SagaIterator {
+  const backendBonusVacanze = BackendBonusVacanze(apiUrlPrefix, bearerToken);
   // available bonus list request
   yield takeLatest(
     getType(availableBonusesLoad.request),
