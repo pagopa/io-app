@@ -5,9 +5,9 @@ import { apiUrlPrefix, contentRepoUrl } from "../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import {
   availableBonusesLoad,
+  bonusVacanzeActivation,
   checkBonusEligibility,
-  loadBonusVacanzeFromId,
-  bonusVacanzeActivation
+  loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
 import { startBonusActivationSaga } from "./bonusActivation/handleStartBonusActivationSaga";
 import { startBonusEligibilitySaga } from "./handleBonusEligibilitySaga";
