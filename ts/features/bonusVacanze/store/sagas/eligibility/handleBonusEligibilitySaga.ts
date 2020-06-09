@@ -32,7 +32,7 @@ const eligibilityToNavigate = new Map([
 export const isLoadingScreen = (screenName: string) =>
   screenName === BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK_LOADING;
 
-export function* eligibilityWorker() {
+export function* eligibilityWorker(bearerToken: string) {
   const currentState = yield select(navigationCurrentRouteSelector);
 
   if (!isLoadingScreen(currentState.routeName)) {
@@ -41,7 +41,7 @@ export function* eligibilityWorker() {
   }
 
   // start and wait for network request
-  yield call(getBonusEligibilitySaga);
+  yield call(getBonusEligibilitySaga, bearerToken);
   // read eligibility outcome from store (TODO: better return results from saga??)
   const progress = yield select(eligibilityRequestProgressSelector);
   // choose next page for navigation
@@ -63,11 +63,11 @@ export function* eligibilityWorker() {
 /**
  * Entry point; This saga orchestrate the check eligibility phase.
  */
-export function* handleBonusEligibilitySaga(): SagaIterator {
+export function* handleBonusEligibilitySaga(bearerToken: string): SagaIterator {
   // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
 
   const { cancelAction } = yield race({
-    eligibility: call(eligibilityWorker),
+    eligibility: call(eligibilityWorker, bearerToken),
     cancelAction: take(cancelBonusEligibility)
   });
   if (cancelAction) {

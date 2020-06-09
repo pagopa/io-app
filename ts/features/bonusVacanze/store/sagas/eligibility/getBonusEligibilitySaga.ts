@@ -8,7 +8,7 @@ import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/El
 import { ErrorEnum } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckFailure";
 import { EligibilityCheckSuccess } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
 import { EligibilityCheckSuccessEligible } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
-import { apiUrlPrefix } from "../../../../../config";
+import { apiUrlPrefix, contentRepoUrl } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { startTimer } from "../../../../../utils/timer";
 import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
@@ -18,6 +18,7 @@ import {
 } from "../../actions/bonusVacanze";
 import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
 
+// wait time between requests
 const checkEligibilityResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
@@ -77,7 +78,7 @@ function* getCheckBonusEligibilitySaga(
       if (eligibilityCheckResult.value.status === 404) {
         return left(true);
       }
-      // polling should be continue
+      // polling should continue
       return left(false);
     } else {
       yield put(
@@ -97,9 +98,13 @@ function* getCheckBonusEligibilitySaga(
 
 // handle start bonus eligibility check
 // tslint:disable-next-line: cognitive-complexity
-export function* getBonusEligibilitySaga(): SagaIterator {
+export function* getBonusEligibilitySaga(bearerToken: string): SagaIterator {
   try {
-    const backendBonusVacanze = BackendBonusVacanze(apiUrlPrefix);
+    const backendBonusVacanze = BackendBonusVacanze(
+      apiUrlPrefix,
+      contentRepoUrl,
+      bearerToken
+    );
 
     const startBonusEligibilityCheck =
       backendBonusVacanze.startBonusEligibilityCheck;
