@@ -33,7 +33,7 @@ const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
 const getLatestBonusFromIdT: GetLatestBonusActivationByIdT = {
   method: "get",
-  url: params => `/bonus/vacanze/activations/${params.bonus_id}`,
+  url: params => `/api/v1/bonus/vacanze/activations/${params.bonus_id}`,
   query: _ => ({}),
   headers: tokenHeaderProducer,
   response_decoder: getLatestBonusActivationByIdDefaultDecoder()
@@ -41,7 +41,7 @@ const getLatestBonusFromIdT: GetLatestBonusActivationByIdT = {
 
 const startBonusActivationProcedure: StartBonusActivationProcedureT = {
   method: "post",
-  url: () => `/bonus/vacanze/activations`,
+  url: () => `/api/v1/bonus/vacanze/activations`,
   query: _ => ({}),
   body: _ => "",
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
@@ -50,7 +50,7 @@ const startBonusActivationProcedure: StartBonusActivationProcedureT = {
 
 const startBonusEligibilityCheckT: StartBonusEligibilityCheckT = {
   method: "post",
-  url: () => `/bonus/vacanze/eligibility`,
+  url: () => `/api/v1/bonus/vacanze/eligibility`,
   query: _ => ({}),
   body: _ => "",
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
@@ -59,7 +59,7 @@ const startBonusEligibilityCheckT: StartBonusEligibilityCheckT = {
 
 const getBonusEligibilityCheckT: GetBonusEligibilityCheckT = {
   method: "get",
-  url: () => `/bonus/vacanze/eligibility`,
+  url: () => `/api/v1/bonus/vacanze/eligibility`,
   query: _ => ({}),
   headers: tokenHeaderProducer,
   response_decoder: getBonusEligibilityCheckDefaultDecoder()
@@ -67,7 +67,7 @@ const getBonusEligibilityCheckT: GetBonusEligibilityCheckT = {
 
 const getAvailableBonusesT: GetBonusListT = {
   method: "get",
-  url: () => `/bonus/vacanze`,
+  url: () => `/bonus-vacanze/bonuses.json`,
   query: _ => ({}),
   headers: () => ({}),
   response_decoder: basicResponseDecoder(BonusesAvailableCodec)
@@ -78,11 +78,17 @@ const getAvailableBonusesT: GetBonusListT = {
 //
 export function BackendBonusVacanze(
   baseUrl: string,
+  contentUrl: string,
   token: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
   const options = {
     baseUrl,
+    fetchApi
+  };
+
+  const optionsStaticContent = {
+    baseUrl: contentUrl,
     fetchApi
   };
 
@@ -98,7 +104,7 @@ export function BackendBonusVacanze(
   return {
     getAvailableBonuses: createFetchRequestForApi(
       getAvailableBonusesT,
-      options
+      optionsStaticContent
     ),
     startBonusEligibilityCheck: withBearerToken(
       createFetchRequestForApi(startBonusEligibilityCheckT, options)

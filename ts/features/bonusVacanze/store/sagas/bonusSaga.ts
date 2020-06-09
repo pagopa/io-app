@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { apiUrlPrefix } from "../../../../config";
+import { apiUrlPrefix, contentRepoUrl } from "../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import {
   availableBonusesLoad,
@@ -16,7 +16,11 @@ import { startBonusActivationSaga } from "./handleStartBonusActivationSaga";
 
 // Saga that listen to all bonus requests
 export function* watchBonusSaga(bearerToken: string): SagaIterator {
-  const backendBonusVacanze = BackendBonusVacanze(apiUrlPrefix, bearerToken);
+  const backendBonusVacanze = BackendBonusVacanze(
+    apiUrlPrefix,
+    contentRepoUrl,
+    bearerToken
+  );
   // available bonus list request
   yield takeLatest(
     getType(availableBonusesLoad.request),
