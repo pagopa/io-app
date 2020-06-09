@@ -51,16 +51,21 @@ export function* eligibilityWorker() {
     eligibilityToNavigate.get(progress)
   ).getOrElse(navigateToBonusEligibilityLoading);
   if (nextNavigation !== navigateToBonusEligibilityLoading) {
+    // the eligibility saga terminate with a transition to the next screen, removing from the history
+    // the loading screen
     yield put(nextNavigation());
     yield put(navigationHistoryPop(1));
   }
 }
 
 export function* handleCancelEligibilitySaga() {
+  // when a cancellation event is received, the current workflow of the saga is terminated and the navigation
+  // return to the previous screen
   yield put(NavigationActions.back());
 }
 
 function* beginBonusEligibilitySaga() {
+  // start the eligibility workflow but can be canceled with a cancelBonusEligibility action
   yield race({
     eligibility: call(eligibilityWorker),
     cancelAction: take(cancelBonusEligibility)
@@ -71,7 +76,7 @@ function* beginBonusEligibilitySaga() {
  * This saga orchestrate the check eligibility phase.
  */
 export function* handleBonusEligibilitySaga(): SagaIterator {
-  // begin the workflow: request a bonus eligibility
+  // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
   yield takeLatest(
     getType(checkBonusEligibility.request),
     beginBonusEligibilitySaga
