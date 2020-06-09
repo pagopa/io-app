@@ -6,6 +6,7 @@ import {
   createFetchRequestForApi,
   IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
+import { Omit } from "italia-ts-commons/lib/types";
 import {
   getBonusEligibilityCheckDefaultDecoder,
   GetBonusEligibilityCheckT,
