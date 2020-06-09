@@ -36,20 +36,22 @@ export const loadBonusVacanzeFromId = createAsyncAction(
   "BONUSLOAD_FROM_ID_FAILURE"
 )<string, BonusActivationWithQrCode, Error>();
 
-export const bonusActivationRequestProgress = createStandardAction(
-  "BONUS_ACTIVATION_REQUEST_PROGRESS"
-)<BonusActivationProgressEnum>();
+export type BonusVacanzeActivationPayload = {
+  status: BonusActivationProgressEnum;
+  instanceId?: InstanceId;
+  activation?: BonusActivationWithQrCode;
+};
 
-export const startBonusActivation = createAsyncAction(
+export const bonusVacanzeActivation = createAsyncAction(
   "BONUS_ACTIVATION_REQUEST",
   "BONUS_ACTIVATION_SUCCESS",
   "BONUS_ACTIVATION_FAILURE"
-)<void, InstanceId, Error>();
+)<void, BonusVacanzeActivationPayload, Error>();
 
 export type BonusActions =
   | ActionType<typeof availableBonusesLoad>
   | ActionType<typeof eligibilityRequestProgress>
   | ActionType<typeof eligibilityRequestId>
-  | ActionType<typeof startBonusActivation>
+  | ActionType<typeof bonusVacanzeActivation>
   | ActionType<typeof checkBonusEligibility>
   | ActionType<typeof loadBonusVacanzeFromId>;

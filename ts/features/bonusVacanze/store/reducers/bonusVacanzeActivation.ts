@@ -6,7 +6,10 @@ import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vaca
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { loadBonusVacanzeFromId } from "../actions/bonusVacanze";
+import {
+  bonusVacanzeActivation,
+  loadBonusVacanzeFromId
+} from "../actions/bonusVacanze";
 import availableBonusesReducer, {
   AvailableBonusesState
 } from "./availableBonuses";
@@ -16,31 +19,66 @@ export enum BonusActivationProgressEnum {
   "ELIGIBILITY_EXPIRED" = "ELIGIBILITY_EXPIRED", // Cannot activate a new bonus because the eligibility data has expired.
   "UNDEFINED" = "UNDEFINED",
   "PROGRESS" = "PROGRESS", // The request is started
-  "ERROR" = "ERROR" // The request is started
+  "TIMEOUT" = "TIMEOUT", // Polling time exceeded
+  "ERROR" = "ERROR", // The request is started
+  "EXISTS" = "EXISTS", // Another bonus related to this user was found
+  "SUCCESS" = "SUCCESS" // Activation has been completed
 }
 
 // type alias
-type BonusVacanzeActivationState = pot.Pot<BonusActivationWithQrCode, Error>;
+type BonusVacanzeActivationState = {
+  status: BonusActivationProgressEnum;
+  activation: pot.Pot<BonusActivationWithQrCode, Error>;
+};
 
 export type BonusState = Readonly<{
   availableBonuses: AvailableBonusesState;
   eligibility: EligibilityState;
-  bonusVacanzeActivation: BonusVacanzeActivationState;
+  bonusVacanze: BonusVacanzeActivationState;
 }>;
+
+const INITIAL_STATE: BonusVacanzeActivationState = {
+  status: BonusActivationProgressEnum.UNDEFINED,
+  activation: pot.none
+};
 
 // bonus reducer
 const bonusVacanzeActivationReducer = (
-  state: BonusVacanzeActivationState = pot.none,
+  state: BonusVacanzeActivationState = INITIAL_STATE,
   action: Action
 ): BonusVacanzeActivationState => {
   switch (action.type) {
-    // available bonuses
+    // bonus from id
     case getType(loadBonusVacanzeFromId.request):
-      return pot.toLoading(state);
+      return { ...state, activation: pot.toLoading(state.activation) };
     case getType(loadBonusVacanzeFromId.success):
-      return pot.some(action.payload);
+      return { ...state, activation: pot.some(action.payload) };
     case getType(loadBonusVacanzeFromId.failure):
-      return pot.toError(state, action.payload);
+      return {
+        ...state,
+        activation: pot.toError(state.activation, action.payload)
+      };
+    // bonus activation
+    case getType(bonusVacanzeActivation.request):
+      return {
+        ...state,
+        status: BonusActivationProgressEnum.PROGRESS,
+        activation: pot.toLoading(state.activation)
+      };
+    case getType(bonusVacanzeActivation.success):
+      return {
+        ...state,
+        status: action.payload.status,
+        activation: action.payload.activation
+          ? pot.some(action.payload.activation)
+          : pot.none
+      };
+    case getType(bonusVacanzeActivation.failure):
+      return {
+        ...state,
+        status: BonusActivationProgressEnum.ERROR,
+        activation: pot.toError(state.activation, action.payload)
+      };
   }
   return state;
 };
@@ -48,7 +86,7 @@ const bonusVacanzeActivationReducer = (
 const reducer = combineReducers<BonusState, Action>({
   availableBonuses: availableBonusesReducer,
   eligibility: eligibilityReducer,
-  bonusVacanzeActivation: bonusVacanzeActivationReducer
+  bonusVacanze: bonusVacanzeActivationReducer
 });
 
 // Selectors
@@ -56,7 +94,7 @@ const reducer = combineReducers<BonusState, Action>({
 export const bonusVacanzeActivationSelector = (
   state: GlobalState
 ): pot.Pot<BonusActivationWithQrCode, Error> =>
-  state.bonus.bonusVacanzeActivation;
+  state.bonus.bonusVacanze.activation;
 
 // return the bonus activation if it is in ACTIVE state
 export const bonusVacanzeActivationActiveSelector = createSelector<
