@@ -7,6 +7,7 @@ import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vaca
 import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { InstanceId } from "../../../../../definitions/bonus_vacanze/InstanceId";
 import { BonusesAvailable } from "../../types/bonusesAvailable";
+import { BonusActivationProgressEnum } from "../reducers/bonusVacanzeActivation";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
 export const eligibilityRequestProgress = createStandardAction(
@@ -35,9 +36,22 @@ export const loadBonusVacanzeFromId = createAsyncAction(
   "BONUSLOAD_FROM_ID_FAILURE"
 )<string, BonusActivationWithQrCode, Error>();
 
+export type BonusVacanzeActivationPayload = {
+  status: BonusActivationProgressEnum;
+  instanceId?: InstanceId;
+  activation?: BonusActivationWithQrCode;
+};
+
+export const bonusVacanzeActivation = createAsyncAction(
+  "BONUS_ACTIVATION_REQUEST",
+  "BONUS_ACTIVATION_SUCCESS",
+  "BONUS_ACTIVATION_FAILURE"
+)<void, BonusVacanzeActivationPayload, Error>();
+
 export type BonusActions =
   | ActionType<typeof availableBonusesLoad>
   | ActionType<typeof eligibilityRequestProgress>
   | ActionType<typeof eligibilityRequestId>
+  | ActionType<typeof bonusVacanzeActivation>
   | ActionType<typeof checkBonusEligibility>
   | ActionType<typeof loadBonusVacanzeFromId>;

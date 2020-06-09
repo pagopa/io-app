@@ -79,7 +79,7 @@ describe("canBonusVacanzeBeRequestedSelector selector", () => {
   it("should return false when bonus exists and is consumed", () => {
     expect(
       canBonusVacanzeBeRequestedSelector.resultFunc(
-        pot.some({ ...bonus, status: BonusActivationStatusEnum.CONSUMED })
+        pot.some({ ...bonus, status: BonusActivationStatusEnum.REDEEMED })
       )
     ).toBeFalsy();
   });

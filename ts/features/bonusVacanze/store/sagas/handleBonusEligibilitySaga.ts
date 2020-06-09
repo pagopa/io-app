@@ -18,6 +18,7 @@ import {
 } from "../actions/bonusVacanze";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
+// wait time between requests
 const checkEligibilityResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
@@ -79,7 +80,7 @@ function* getCheckBonusEligibilitySaga(
       if (eligibilityCheckResult.value.status === 404) {
         return left(true);
       }
-      // polling should be continue
+      // polling should continue
       return left(false);
     } else {
       yield put(
@@ -92,7 +93,7 @@ function* getCheckBonusEligibilitySaga(
     }
   } catch (e) {
     yield put(checkBonusEligibility.failure(e));
-    // polling should be continue
+    // polling should continue
     return left(false);
   }
 }
@@ -108,7 +109,6 @@ export function* startBonusEligibilitySaga(
   >["getBonusEligibilityCheck"]
 ): SagaIterator {
   try {
-    // request is pending
     yield put(
       eligibilityRequestProgress(EligibilityRequestProgressEnum.PROGRESS)
     );
@@ -126,7 +126,7 @@ export function* startBonusEligibilitySaga(
           yield put(eligibilityRequestId(startEligibilityResult.value.value));
         }
         // start polling to know about the check result
-        const startPolling = new Date().getTime();
+        const startPollingTime = new Date().getTime();
         // TODO: handle cancel request (stop polling)
         while (true) {
           const eligibilityCheckResult: SagaCallReturnType<
@@ -151,7 +151,7 @@ export function* startBonusEligibilitySaga(
           yield call(startTimer, checkEligibilityResultPolling);
           // check if the time threshold was exceeded, if yes abort
           const now = new Date().getTime();
-          if (now - startPolling >= pollingTimeThreshold) {
+          if (now - startPollingTime >= pollingTimeThreshold) {
             yield put(
               eligibilityRequestProgress(EligibilityRequestProgressEnum.TIMEOUT)
             );
