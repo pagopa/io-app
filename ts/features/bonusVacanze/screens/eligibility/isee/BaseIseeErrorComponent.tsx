@@ -1,6 +1,5 @@
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
-import { NavigationScreenProps, withNavigation } from "react-navigation";
 import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../i18n";
 import { abortBonusRequest } from "../../../components/AbortBonusRequest";
@@ -18,20 +17,19 @@ const inpsDsuHomeUrl =
 const inpsSimulationUrl =
   "https://servizi2.inps.it/servizi/ISEEPrecompilato/WfSimOrdDati.aspx";
 
-type OwnProps = {
+type Props = {
   image: ImageSourcePropType;
   title: string;
   body: string;
   onCancel: () => void;
 };
 
-type Props = OwnProps & NavigationScreenProps;
 /**
  * A generic component used to display the possible ISEE errors during the check eligibility phase.
  * @param props
  * @constructor
  */
-const InnerBaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
+export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
   const goToDsu = I18n.t(
     "bonus.bonusVacanza.eligibility.iseeNotEligible.goToNewDSU"
   );
@@ -65,7 +63,3 @@ const InnerBaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
     </>
   );
 };
-
-export const BaseIseeErrorComponent = withNavigation(
-  InnerBaseIseeErrorComponent
-);
