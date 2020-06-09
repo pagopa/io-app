@@ -1,6 +1,5 @@
 import {
   ActionType,
-  createAction,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
@@ -27,9 +26,9 @@ export const checkBonusEligibility = createAsyncAction(
   "BONUS_CHECK_ELIGIBILITY_FAILURE"
 )<void, EligibilityCheck, Error>();
 
-export const cancelBonusEligibility = createAction(
+export const cancelBonusEligibility = createStandardAction(
   "BONUS_ELIGIBILITY_CANCEL"
-)();
+)<void>();
 
 export const eligibilityRequestId = createStandardAction(
   "BONUS_CHECK_ELIGIBILITY_REQUEST_ID"
