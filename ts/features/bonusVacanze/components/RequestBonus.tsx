@@ -10,6 +10,7 @@ import { maybeInnerProperty } from "../../../utils/options";
 import { BonusesAvailable } from "../types/bonusesAvailable";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 import ActiveBonus from "./ActiveBonus";
+import SectionCardComponent from "../../../components/wallet/card/SectionCardComponent";
 
 type OwnProps = {
   onButtonPress: () => void;
@@ -120,32 +121,11 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
 
   return (
     <React.Fragment>
-      <View style={styles.rotateCard}>
-        <View style={[styles.card, styles.flatBottom]}>
-          <View style={[styles.cardInner]}>
-            <View style={[styles.flexRow, styles.rotateText]}>
-              <View style={styles.flexRow2}>
-                <Text style={[styles.brandLightGray, styles.headerText]}>
-                  {I18n.t("bonus.requestLabel")}
-                </Text>
-                <Badge style={styles.badgeColor}>
-                  <Text style={styles.badgeText}>
-                    {/* Replace with I18n.t("wallet.methods.newCome") after PR #1875 */}
-                    Novità
-                  </Text>
-                </Badge>
-              </View>
-              <View>
-                <AddPaymentMethodButton
-                  onPress={onButtonPress}
-                  iconSize={customVariables.fontSize2}
-                  labelSize={customVariables.fontSizeSmall}
-                />
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
+      <SectionCardComponent
+        label={I18n.t("bonus.requestLabel")}
+        onPress={onButtonPress}
+        isNew={true}
+      />
       {pot.isSome(activeBonus) &&
         activeBonus.value && (
           <ActiveBonus

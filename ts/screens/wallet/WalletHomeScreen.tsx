@@ -73,6 +73,7 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import SectionCardComponent from "../../components/wallet/card/SectionCardComponent";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -269,35 +270,44 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
   private cardHeader(isError: boolean = false) {
     return (
-      <View style={cardHeaderStyle.rotateCard}>
-        <View style={[cardHeaderStyle.card, cardHeaderStyle.flatBottom]}>
-          <View style={[cardHeaderStyle.cardInner]}>
-            <View style={[styles.flexRow, cardHeaderStyle.rotateText]}>
-              <Text
-                style={[
-                  cardHeaderStyle.brandLightGray,
-                  cardHeaderStyle.headerText
-                ]}
-              >
-                {I18n.t("wallet.paymentMethods")}
-              </Text>
-              <View>
-                {!isError && (
-                  <AddPaymentMethodButton
-                    onPress={() =>
-                      this.props.navigateToWalletAddPaymentMethod(
-                        getCurrentRouteKey(this.props.nav)
-                      )
-                    }
-                    iconSize={customVariables.fontSize2}
-                    labelSize={customVariables.fontSizeSmall}
-                  />
-                )}
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
+      <SectionCardComponent
+        label={I18n.t("wallet.paymentMethods")}
+        onPress={() =>
+          this.props.navigateToWalletAddPaymentMethod(
+            getCurrentRouteKey(this.props.nav)
+          )
+        }
+        isError={isError}
+      />
+      // <View style={cardHeaderStyle.rotateCard}>
+      //   <View style={[cardHeaderStyle.card, cardHeaderStyle.flatBottom]}>
+      //     <View style={[cardHeaderStyle.cardInner]}>
+      //       <View style={[styles.flexRow, cardHeaderStyle.rotateText]}>
+      //         <Text
+      //           style={[
+      //             cardHeaderStyle.brandLightGray,
+      //             cardHeaderStyle.headerText
+      //           ]}
+      //         >
+      //           {I18n.t("wallet.paymentMethods")}
+      //         </Text>
+      //         <View>
+      //           {!isError && (
+      //             <AddPaymentMethodButton
+      //               onPress={() =>
+      //                 this.props.navigateToWalletAddPaymentMethod(
+      //                   getCurrentRouteKey(this.props.nav)
+      //                 )
+      //               }
+      //               iconSize={customVariables.fontSize2}
+      //               labelSize={customVariables.fontSizeSmall}
+      //             />
+      //           )}
+      //         </View>
+      //       </View>
+      //     </View>
+      //   </View>
+      // </View>
     );
   }
 
