@@ -30,6 +30,10 @@ export const cancelBonusEligibility = createStandardAction(
   "BONUS_ELIGIBILITY_CANCEL"
 )<void>();
 
+export const completeBonusEligibility = createStandardAction(
+  "BONUS_ELIGIBILITY_COMPLETED"
+)<void>();
+
 export const eligibilityRequestId = createStandardAction(
   "BONUS_CHECK_ELIGIBILITY_REQUEST_ID"
 )<InstanceId>();

@@ -1,10 +1,11 @@
 import { SagaIterator } from "redux-saga";
-import { fork, takeEvery, takeLatest } from "redux-saga/effects";
+import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { apiUrlPrefix } from "../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import {
   availableBonusesLoad,
+  checkBonusEligibility,
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
 import { handleBonusEligibilitySaga } from "./eligibility/handleBonusEligibilitySaga";
@@ -21,7 +22,10 @@ export function* watchBonusSaga(): SagaIterator {
     backendBonusVacanze.getAvailableBonuses
   );
 
-  yield fork(handleBonusEligibilitySaga);
+  yield takeLatest(
+    getType(checkBonusEligibility.request),
+    handleBonusEligibilitySaga
+  );
 
   // handle bonus vacanze from id loading
   yield takeEvery(

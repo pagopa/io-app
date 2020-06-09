@@ -9,6 +9,7 @@ import { InfoScreenComponent } from "./infoScreen/InfoScreenComponent";
 type MyProps = {
   title: string;
   body: string;
+  onExit: () => void;
 };
 
 type Props = NavigationScreenProps & MyProps;
@@ -32,7 +33,7 @@ const InnerBaseTimeoutScreen: React.FunctionComponent<Props> = props => {
         body={props.body}
       />
       <FooterStackButton
-        buttons={[cancelButtonProps(props.navigation.goBack, confirmText)]}
+        buttons={[cancelButtonProps(props.onExit, confirmText)]}
       />
     </>
   );

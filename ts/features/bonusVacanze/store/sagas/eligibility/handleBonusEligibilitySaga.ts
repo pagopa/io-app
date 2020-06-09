@@ -1,8 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
-import { call, put, race, select, take, takeLatest } from "redux-saga/effects";
-import { getType } from "typesafe-actions";
+import { call, put, race, select, take } from "redux-saga/effects";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import {
@@ -15,7 +14,7 @@ import {
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   cancelBonusEligibility,
-  checkBonusEligibility
+  completeBonusEligibility
 } from "../../actions/bonusVacanze";
 import {
   EligibilityRequestProgressEnum,
@@ -56,20 +55,9 @@ export function* eligibilityWorker() {
     yield put(nextNavigation());
     yield put(navigationHistoryPop(1));
   }
-}
 
-export function* handleCancelEligibilitySaga() {
-  // when a cancellation event is received, the current workflow of the saga is terminated and the navigation
-  // return to the previous screen
-  yield put(NavigationActions.back());
-}
-
-function* beginBonusEligibilitySaga() {
-  // start the eligibility workflow but can be canceled with a cancelBonusEligibility action
-  yield race({
-    eligibility: call(eligibilityWorker),
-    cancelAction: take(cancelBonusEligibility)
-  });
+  // waiting for the event of completition in order to handle the intermediate cancel events
+  yield take(completeBonusEligibility);
 }
 
 /**
@@ -77,12 +65,12 @@ function* beginBonusEligibilitySaga() {
  */
 export function* handleBonusEligibilitySaga(): SagaIterator {
   // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
-  yield takeLatest(
-    getType(checkBonusEligibility.request),
-    beginBonusEligibilitySaga
-  );
-  yield takeLatest(
-    getType(cancelBonusEligibility),
-    handleCancelEligibilitySaga
-  );
+
+  const { cancelAction } = yield race({
+    eligibility: call(eligibilityWorker),
+    cancelAction: take(cancelBonusEligibility)
+  });
+  if (cancelAction) {
+    yield put(NavigationActions.back());
+  }
 }

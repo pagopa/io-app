@@ -51,7 +51,7 @@ const InnerBaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
           confirmButtonProps(() => openLink(inpsDsuHomeUrl), goToDsu),
           confirmButtonProps(() => openLink(inpsSimulationUrl), goToSimulation),
           cancelButtonProps(
-            () => abortBonusRequest(props.navigation.goBack),
+            () => abortBonusRequest(props.onCancel),
             cancelRequest
           )
         ]}
