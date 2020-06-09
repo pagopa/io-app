@@ -49,7 +49,7 @@ function* getBonusActivation(
       if (getLatestBonusVacanzeFromIdResult.value.status === 404) {
         return left(some(new Error("Bonus Activation not found")));
       }
-      // polling should be continue
+      // polling should continue
       return left(none);
     } else {
       // we got some error on decoding, stop polling
@@ -58,7 +58,7 @@ function* getBonusActivation(
       );
     }
   } catch (e) {
-    // polling should be continue
+    // polling should continue
     return left(none);
   }
 }
@@ -81,7 +81,7 @@ export function* startBonusActivationSaga(
       // 202 -> Request accepted.
       if (startBonusActivationProcedureResult.value.status === 202) {
         const instanceId = startBonusActivationProcedureResult.value.value;
-        // start polling to know about the check result
+        // start polling to try to get bonus activation
         const startPollingTime = new Date().getTime();
         while (true) {
           const bonusActivationFromIdResult: SagaCallReturnType<
@@ -110,7 +110,7 @@ export function* startBonusActivationSaga(
           }
           // sleep
           yield call(startTimer, bonusActivationResultPolling);
-          // check if the time threshold was exceeded, if yes abort
+          // check if the time threshold was exceeded, if yes stop polling
           const now = new Date().getTime();
           if (now - startPollingTime >= pollingTimeThreshold) {
             yield put(

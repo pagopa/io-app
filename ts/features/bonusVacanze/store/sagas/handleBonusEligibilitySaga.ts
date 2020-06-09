@@ -80,7 +80,7 @@ function* getCheckBonusEligibilitySaga(
       if (eligibilityCheckResult.value.status === 404) {
         return left(true);
       }
-      // polling should be continue
+      // polling should continue
       return left(false);
     } else {
       yield put(
@@ -93,7 +93,7 @@ function* getCheckBonusEligibilitySaga(
     }
   } catch (e) {
     yield put(checkBonusEligibility.failure(e));
-    // polling should be continue
+    // polling should continue
     return left(false);
   }
 }
