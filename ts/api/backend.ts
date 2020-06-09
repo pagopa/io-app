@@ -98,7 +98,7 @@ export type LogoutT = IPostApiRequestType<
   BaseResponseType<SuccessResponse>
 >;
 
-export function ParamAuthorizationBearerHeaderProducer<
+function ParamAuthorizationBearerHeaderProducer<
   P extends { readonly Bearer: string }
 >(): RequestHeaderProducer<P, "Authorization"> {
   return (p: P): RequestHeaders<"Authorization"> => {

@@ -4,7 +4,9 @@ import {
   BasicResponseType,
   composeHeaderProducers,
   createFetchRequestForApi,
-  IGetApiRequestType
+  IGetApiRequestType,
+  RequestHeaderProducer,
+  RequestHeaders
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
 import {
@@ -17,7 +19,6 @@ import {
   startBonusEligibilityCheckDefaultDecoder,
   StartBonusEligibilityCheckT
 } from "../../../../definitions/bonus_vacanze/requestTypes";
-import { ParamAuthorizationBearerHeaderProducer } from "../../../api/backend";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import {
   BonusesAvailable,
@@ -73,6 +74,16 @@ const getAvailableBonusesT: GetBonusListT = {
   headers: () => ({}),
   response_decoder: basicResponseDecoder(BonusesAvailableCodec)
 };
+
+function ParamAuthorizationBearerHeaderProducer<
+  P extends { readonly Bearer: string }
+>(): RequestHeaderProducer<P, "Authorization"> {
+  return (p: P): RequestHeaders<"Authorization"> => {
+    return {
+      Authorization: `Bearer ${p.Bearer}`
+    };
+  };
+}
 
 //
 // A specific backend client to handle bonus vacanze requests
