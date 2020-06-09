@@ -9,6 +9,7 @@ import {
   confirmButtonProps
 } from "../../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
+import { useHardwareBackButton } from "../../../components/hooks/useHardwareBackButton";
 import { renderRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 
@@ -38,6 +39,11 @@ const InnerBaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
     "bonus.bonusVacanza.eligibility.iseeNotEligible.goToNewSimulation"
   );
   const cancelRequest = I18n.t("bonus.bonusVacanza.cta.cancelRequest");
+
+  useHardwareBackButton(() => {
+    abortBonusRequest(props.onCancel);
+    return true;
+  });
 
   return (
     <>

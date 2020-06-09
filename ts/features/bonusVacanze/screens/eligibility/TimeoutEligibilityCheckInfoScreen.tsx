@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { BaseTimeoutScreen } from "../../components/BaseTimeoutScreen";
+import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { cancelBonusEligibility } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -18,6 +19,12 @@ const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
 > = props => {
   const title = I18n.t("bonus.bonusVacanza.eligibility.timeout.title");
   const body = I18n.t("bonus.bonusVacanza.eligibility.timeout.description");
+
+  useHardwareBackButton(() => {
+    props.onCancel();
+    return true;
+  });
+
   return (
     <BaseTimeoutScreen title={title} body={body} onExit={props.onCancel} />
   );
