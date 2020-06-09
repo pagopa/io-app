@@ -1,6 +1,6 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import customVariables from "../../../theme/variables";
 import { AddPaymentMethodButton } from "../AddPaymentMethodButton";
 
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     fontSize: customVariables.fontSizeSmaller,
-    lineHeight: 16
+    lineHeight: Platform.OS === "ios" ? 14 : 16
   },
   cardInner: {
     paddingBottom: 13,
@@ -49,11 +49,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
-    elevation: 3,
+    elevation: Platform.OS === "android" ? 3 : 0,
 
     backgroundColor: customVariables.brandDarkGray,
     borderRadius: 8,
-    marginBottom: -1,
     marginLeft: 0,
     marginRight: 0,
     marginTop: 20
@@ -72,8 +71,7 @@ const styles = StyleSheet.create({
       { rotateX: "-20deg" },
       { scaleX: 0.98 },
       { translateY: -(58 / 2 + 20) * (1 - Math.cos(20)) }
-    ],
-    zIndex: 2
+    ]
   },
   rotateText: {
     flex: 1,

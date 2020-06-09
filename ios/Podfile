@@ -43,6 +43,8 @@ target 'ItaliaApp' do
 
   pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
 
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'ItaliaAppTests' do
     inherit! :search_paths
     # Pods for testing
