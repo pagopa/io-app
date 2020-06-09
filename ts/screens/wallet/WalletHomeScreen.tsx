@@ -122,9 +122,6 @@ const styles = StyleSheet.create({
   brandDarkGray: {
     color: variables.brandDarkGray
   },
-  brandLightGray: {
-    color: variables.brandLightGray
-  },
   whiteBg: {
     backgroundColor: variables.colorWhite
   },
@@ -149,20 +146,6 @@ const styles = StyleSheet.create({
 });
 
 const cardHeaderStyle = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    backgroundColor: "transparent"
-  },
-  subHeaderContent: {
-    flexDirection: "row",
-    alignItems: "baseline",
-    justifyContent: "space-between"
-  },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
-  },
   brandLightGray: {
     color: customVariables.brandGray
   },

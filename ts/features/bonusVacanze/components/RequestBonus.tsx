@@ -32,20 +32,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-  container: {
-    flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    backgroundColor: "transparent"
-  },
-  subHeaderContent: {
-    flexDirection: "row",
-    alignItems: "baseline",
-    justifyContent: "space-between"
-  },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
-  },
   brandLightGray: {
     color: customVariables.brandGray
   },
