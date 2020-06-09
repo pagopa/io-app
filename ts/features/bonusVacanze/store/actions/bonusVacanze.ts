@@ -9,6 +9,7 @@ import { InstanceId } from "../../../../../definitions/bonus_vacanze/InstanceId"
 import { BonusesAvailable } from "../../types/bonusesAvailable";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
+// TODO: remove this action and change the payload for checkBonusEligibility
 export const eligibilityRequestProgress = createStandardAction(
   "BONUS_CHECK_ELIGIBILITY_REQUEST_PROGRESS"
 )<EligibilityRequestProgressEnum>();
@@ -25,6 +26,10 @@ export const checkBonusEligibility = createAsyncAction(
   "BONUS_CHECK_ELIGIBILITY_FAILURE"
 )<void, EligibilityCheck, Error>();
 
+export const cancelBonusEligibility = createStandardAction(
+  "BONUS_ELIGIBILITY_CANCEL"
+)<void>();
+
 export const eligibilityRequestId = createStandardAction(
   "BONUS_CHECK_ELIGIBILITY_REQUEST_ID"
 )<InstanceId>();
@@ -35,19 +40,10 @@ export const loadBonusVacanzeFromId = createAsyncAction(
   "BONUSLOAD_FROM_ID_FAILURE"
 )<string, BonusActivationWithQrCode, Error>();
 
-export const beginBonusEligibility = createStandardAction(
-  "BONUS_ELIGIBILITY_BEGIN"
-)<void>();
-
-export const cancelBonusEligibility = createStandardAction(
-  "BONUS_ELIGIBILITY_CANCEL"
-)<void>();
-
 export type BonusActions =
   | ActionType<typeof availableBonusesLoad>
   | ActionType<typeof eligibilityRequestProgress>
   | ActionType<typeof eligibilityRequestId>
   | ActionType<typeof checkBonusEligibility>
   | ActionType<typeof loadBonusVacanzeFromId>
-  | ActionType<typeof beginBonusEligibility>
   | ActionType<typeof cancelBonusEligibility>;

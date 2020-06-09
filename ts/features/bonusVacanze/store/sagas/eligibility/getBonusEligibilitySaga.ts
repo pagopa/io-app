@@ -8,6 +8,7 @@ import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/El
 import { ErrorEnum } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckFailure";
 import { EligibilityCheckSuccess } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
 import { EligibilityCheckSuccessEligible } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
+import { apiUrlPrefix } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { startTimer } from "../../../../../utils/timer";
 import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
@@ -28,7 +29,7 @@ const eligibilityResultToEnum = (check: EligibilityCheck) => {
     if (EligibilityCheckSuccessEligible.is(check)) {
       return EligibilityRequestProgressEnum.ELIGIBLE;
     }
-    // if it is not elibigle -> it is ineligible
+    // if it is not eligible -> it is ineligible
     return EligibilityRequestProgressEnum.INELIGIBLE;
   } else {
     // failure
@@ -99,15 +100,15 @@ function* getCheckBonusEligibilitySaga(
 
 // handle start bonus eligibility check
 // tslint:disable-next-line: cognitive-complexity
-export function* getBonusEligibilitySaga(
-  startBonusEligibilityCheck: ReturnType<
-    typeof BackendBonusVacanze
-  >["startBonusEligibilityCheck"],
-  getBonusEligibilityCheck: ReturnType<
-    typeof BackendBonusVacanze
-  >["getBonusEligibilityCheck"]
-): SagaIterator {
+export function* getBonusEligibilitySaga(): SagaIterator {
   try {
+    const backendBonusVacanze = BackendBonusVacanze(apiUrlPrefix);
+
+    const startBonusEligibilityCheck =
+      backendBonusVacanze.startBonusEligibilityCheck;
+    const getBonusEligibilityCheck =
+      backendBonusVacanze.getBonusEligibilityCheck;
+
     // request is pending
     yield put(
       eligibilityRequestProgress(EligibilityRequestProgressEnum.PROGRESS)

@@ -3,10 +3,8 @@ import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, race, select, take, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { apiUrlPrefix } from "../../../../../config";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
-import { navigationCurrentStateSelector } from "../../../../../store/reducers/navigation";
-import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
+import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import {
   navigateToActivateBonus,
   navigateToBonusEligibilityLoading,
@@ -16,8 +14,8 @@ import {
 } from "../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
-  beginBonusEligibility,
-  cancelBonusEligibility
+  cancelBonusEligibility,
+  checkBonusEligibility
 } from "../../actions/bonusVacanze";
 import {
   EligibilityRequestProgressEnum,
@@ -36,9 +34,7 @@ export const isLoadingScreen = (screenName: string) =>
   screenName === BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK_LOADING;
 
 export function* eligibilityWorker() {
-  const backendBonusVacanze = BackendBonusVacanze(apiUrlPrefix);
-
-  const currentState = yield select(navigationCurrentStateSelector);
+  const currentState = yield select(navigationCurrentRouteSelector);
 
   if (!isLoadingScreen(currentState.routeName)) {
     // show the loading page for the check eligibility
@@ -46,11 +42,7 @@ export function* eligibilityWorker() {
   }
 
   // start and wait for network request
-  yield call(
-    getBonusEligibilitySaga,
-    backendBonusVacanze.startBonusEligibilityCheck,
-    backendBonusVacanze.getBonusEligibilityCheck
-  );
+  yield call(getBonusEligibilitySaga);
   // read eligibility outcome from store (TODO: better return results from saga??)
   const progress = yield select(eligibilityRequestProgressSelector);
   // choose next page for navigation
@@ -73,7 +65,10 @@ export function* handleCancelEligibilitySaga() {
  */
 export function* handleBonusEligibilitySaga(): SagaIterator {
   // begin the workflow: request a bonus eligibility
-  yield takeLatest(getType(beginBonusEligibility), beginBonusEligibilitySaga);
+  yield takeLatest(
+    getType(checkBonusEligibility.request),
+    beginBonusEligibilitySaga
+  );
   yield takeLatest(
     getType(cancelBonusEligibility),
     handleCancelEligibilitySaga

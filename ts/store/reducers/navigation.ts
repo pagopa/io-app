@@ -1,4 +1,3 @@
-import { undefined } from "io-ts";
 import {
   NavigationActions,
   NavigationRoute,
@@ -28,7 +27,7 @@ const pickRoute = (route: NavigationRoute) => {
   return route;
 };
 
-export const navigationCurrentStateSelector = (state: GlobalState) => {
+export const navigationCurrentRouteSelector = (state: GlobalState) => {
   // tslint:disable-next-line:no-let
   let value = pickRoute(state.nav.routes[state.nav.index]);
   while ("index" in value) {
