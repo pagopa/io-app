@@ -73,7 +73,7 @@ function* beginBonusEligibilitySaga() {
 }
 
 /**
- * This saga orchestrate the check eligibility phase.
+ * Entry point; This saga orchestrate the check eligibility phase.
  */
 export function* handleBonusEligibilitySaga(): SagaIterator {
   // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
