@@ -5,12 +5,12 @@ import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../../../i18n";
+import { loadServiceDetail } from "../../../store/actions/services";
+import { Dispatch } from "../../../store/actions/types";
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { BonusAvailable } from "../types/bonusesAvailable";
-import { Dispatch } from "../../../store/actions/types";
-import { loadServiceDetail } from "../../../store/actions/services";
 
 type OwnProps = {
   bonusItem: BonusAvailable;
@@ -81,10 +81,13 @@ const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
   const disabledStyle = isComingSoon ? styles.disabled : {};
   const [loadedService, setLoadedService] = React.useState(false);
 
-  if (pot.isNone(serviceById) && bonusItem.service_id && !loadedService) {
-    props.loadService(bonusItem.service_id);
-    setLoadedService(true);
-  }
+  React.useEffect(() => {
+    if (pot.isNone(serviceById) && bonusItem.service_id && !loadedService) {
+      props.loadService(bonusItem.service_id);
+      setLoadedService(true);
+    }
+  });
+
   return (
     <ListItem
       style={styles.listItem}
