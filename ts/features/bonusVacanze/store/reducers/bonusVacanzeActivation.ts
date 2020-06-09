@@ -12,6 +12,13 @@ import availableBonusesReducer, {
 } from "./availableBonuses";
 import eligibilityReducer, { EligibilityState } from "./eligibility";
 
+export enum BonusActivationProgressEnum {
+  "ELIGIBILITY_EXPIRED" = "ELIGIBILITY_EXPIRED", // Cannot activate a new bonus because the eligibility data has expired.
+  "UNDEFINED" = "UNDEFINED",
+  "PROGRESS" = "PROGRESS", // The request is started
+  "ERROR" = "ERROR" // The request is started
+}
+
 // type alias
 type BonusVacanzeActivationState = pot.Pot<BonusActivationWithQrCode, Error>;
 

@@ -7,6 +7,7 @@ import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vaca
 import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { InstanceId } from "../../../../../definitions/bonus_vacanze/InstanceId";
 import { BonusesAvailable } from "../../types/bonusesAvailable";
+import { BonusActivationProgressEnum } from "../reducers/bonusVacanzeActivation";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
 export const eligibilityRequestProgress = createStandardAction(
@@ -34,6 +35,10 @@ export const loadBonusVacanzeFromId = createAsyncAction(
   "BONUSLOAD_FROM_ID_SUCCESS",
   "BONUSLOAD_FROM_ID_FAILURE"
 )<string, BonusActivationWithQrCode, Error>();
+
+export const bonusActivationRequestProgress = createStandardAction(
+  "BONUS_ACTIVATION_REQUEST_PROGRESS"
+)<BonusActivationProgressEnum>();
 
 export const startBonusActivation = createAsyncAction(
   "BONUS_ACTIVATION_REQUEST",

@@ -16,6 +16,7 @@ import { startBonusActivationSaga } from "./handleStartBonusActivationSaga";
 
 // Saga that listen to all bonus requests
 export function* watchBonusSaga(bearerToken: string): SagaIterator {
+  // create client to exchange data with the APIs
   const backendBonusVacanze = BackendBonusVacanze(
     apiUrlPrefix,
     contentRepoUrl,
