@@ -3,7 +3,7 @@ import { some } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
-import { all, call, Effect, put } from "redux-saga/effects";
+import { call, Effect, put } from "redux-saga/effects";
 import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { ErrorEnum } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckFailure";
 import { EligibilityCheckSuccess } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
@@ -14,8 +14,7 @@ import { startTimer } from "../../../../../utils/timer";
 import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
 import {
   checkBonusEligibility,
-  eligibilityRequestId,
-  eligibilityRequestProgress
+  eligibilityRequestId
 } from "../../actions/bonusVacanze";
 import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
 
@@ -66,14 +65,12 @@ function* getCheckBonusEligibilitySaga(
       // 200 -> we got the check result, polling must be stopped
       if (eligibilityCheckResult.value.status === 200) {
         const eligibilityCheck = eligibilityCheckResult.value.value;
-        yield all([
-          put(checkBonusEligibility.success(eligibilityCheck)),
-          put(
-            eligibilityRequestProgress(
-              eligibilityResultToEnum(eligibilityCheck)
-            )
-          )
-        ]);
+        yield put(
+          checkBonusEligibility.success({
+            check: eligibilityCheck,
+            status: eligibilityResultToEnum(eligibilityCheck)
+          })
+        );
         return right(eligibilityCheck);
       }
       // Request not found - polling must be stopped
@@ -109,10 +106,6 @@ export function* getBonusEligibilitySaga(): SagaIterator {
     const getBonusEligibilityCheck =
       backendBonusVacanze.getBonusEligibilityCheck;
 
-    // request is pending
-    yield put(
-      eligibilityRequestProgress(EligibilityRequestProgressEnum.PROGRESS)
-    );
     const startEligibilityResult: SagaCallReturnType<
       typeof startBonusEligibilityCheck
     > = yield call(startBonusEligibilityCheck, {});
@@ -139,10 +132,7 @@ export function* getBonusEligibilitySaga(): SagaIterator {
 
           // we got a blocking error -> stop polling
           if (eligibilityCheckResult.isLeft() && eligibilityCheckResult.value) {
-            yield put(
-              eligibilityRequestProgress(EligibilityRequestProgressEnum.ERROR)
-            );
-            return;
+            throw Error("Polling blocking error");
           }
           // we got the eligibility result, stop polling
           if (eligibilityCheckResult.isRight()) {
@@ -154,7 +144,9 @@ export function* getBonusEligibilitySaga(): SagaIterator {
           const now = new Date().getTime();
           if (now - startPolling >= pollingTimeThreshold) {
             yield put(
-              eligibilityRequestProgress(EligibilityRequestProgressEnum.TIMEOUT)
+              checkBonusEligibility.success({
+                status: EligibilityRequestProgressEnum.TIMEOUT
+              })
             );
             return;
           }
@@ -165,9 +157,6 @@ export function* getBonusEligibilitySaga(): SagaIterator {
       throw Error(readableReport(startEligibilityResult.value));
     }
   } catch (e) {
-    yield all([
-      put(eligibilityRequestProgress(EligibilityRequestProgressEnum.ERROR)),
-      put(checkBonusEligibility.failure(e))
-    ]);
+    yield put(checkBonusEligibility.failure(e));
   }
 }

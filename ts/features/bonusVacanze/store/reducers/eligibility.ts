@@ -8,8 +8,7 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   checkBonusEligibility,
-  eligibilityRequestId,
-  eligibilityRequestProgress
+  eligibilityRequestId
 } from "../actions/bonusVacanze";
 
 export enum EligibilityRequestProgressEnum {
@@ -22,15 +21,21 @@ export enum EligibilityRequestProgressEnum {
   "ERROR" = "ERROR" // generic error / network error
 }
 
+export type EligibilityCheckRequest = {
+  status: EligibilityRequestProgressEnum;
+  check: pot.Pot<EligibilityCheck, Error>;
+};
+
 export type EligibilityState = Readonly<{
-  check: pot.Pot<EligibilityCheck, Error>; // the result of ISEE check
-  requestProgess: EligibilityRequestProgressEnum; // represent an internal status of the request (cause the app could do polling)
+  checkRequest: EligibilityCheckRequest;
   request?: InstanceId; // the id related to the check (we could have only this if the check isn't ready and still in progress)
 }>;
 
 const INITIAL_STATE: EligibilityState = {
-  requestProgess: EligibilityRequestProgressEnum.UNDEFINED,
-  check: pot.none
+  checkRequest: {
+    status: EligibilityRequestProgressEnum.UNDEFINED,
+    check: pot.none
+  }
 };
 
 const reducer = (
@@ -44,25 +49,31 @@ const reducer = (
         ...state,
         request: action.payload
       };
-    case getType(eligibilityRequestProgress):
-      return {
-        ...state,
-        requestProgess: action.payload
-      };
     case getType(checkBonusEligibility.request):
       return {
         ...state,
-        check: pot.toLoading(state.check)
+        checkRequest: {
+          status: EligibilityRequestProgressEnum.PROGRESS,
+          check: pot.toLoading(state.checkRequest.check)
+        }
       };
     case getType(checkBonusEligibility.success):
       return {
         ...state,
-        check: pot.some(action.payload)
+        checkRequest: {
+          ...action.payload,
+          check: action.payload.check
+            ? pot.some(action.payload.check)
+            : pot.none
+        }
       };
     case getType(checkBonusEligibility.failure):
       return {
         ...state,
-        check: pot.toError(state.check, action.payload)
+        checkRequest: {
+          status: EligibilityRequestProgressEnum.ERROR,
+          check: pot.toError(state.checkRequest.check, action.payload)
+        }
       };
   }
   return state;
@@ -74,7 +85,7 @@ const reducer = (
 export const eligibilityEligibleSelector = (
   state: GlobalState
 ): Option<EligibilityCheckSuccessEligible> => {
-  const check = state.bonus.eligibility.check;
+  const check = state.bonus.eligibility.checkRequest.check;
   return pot.getOrElse(
     pot.map(
       check,
@@ -86,14 +97,16 @@ export const eligibilityEligibleSelector = (
 
 export const eligibilitySelector = (
   state: GlobalState
-): Option<EligibilityCheck> => pot.toOption(state.bonus.eligibility.check);
+): Option<EligibilityCheck> =>
+  pot.toOption(state.bonus.eligibility.checkRequest.check);
 
 export const eligibilityRequestProgressSelector = (
   state: GlobalState
-): EligibilityRequestProgressEnum => state.bonus.eligibility.requestProgess;
+): EligibilityRequestProgressEnum =>
+  state.bonus.eligibility.checkRequest.status;
 
 export const eligibilityIsLoading = (state: GlobalState): boolean =>
-  state.bonus.eligibility.requestProgess !==
+  state.bonus.eligibility.checkRequest.status !==
   EligibilityRequestProgressEnum.ERROR;
 
 export default reducer;
