@@ -316,15 +316,7 @@ class Markdown extends React.PureComponent<Props, State> {
         {/* Hide the WebView until we have the htmlBodyHeight */}
         {html && (
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
-            <View
-              style={[
-                containerStyle,
-                // it solve an undesired vertical margin on ios devices
-                Platform.OS === "ios" && {
-                  marginVertical: -IOS_PADDING_TOP
-                }
-              ]}
-            >
+            <View style={containerStyle}>
               <WebView
                 key={this.state.webviewKey}
                 textZoom={100}
