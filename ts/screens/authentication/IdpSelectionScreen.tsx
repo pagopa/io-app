@@ -139,9 +139,9 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     // load, from content server, all the info about the identity providers.
-    // Is is used after the idp selection to customizee the contextual help.
+    // Is is used after the idp selection to customize the contextual help.
     // The request is performed here to reduce the loading time of the contextual help in the next screen
-    this.props.loadIdpContent();
+    this.props.loadIdpsContent();
   }
 
   public componentDidUpdate() {
@@ -183,7 +183,7 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setSelectedIdp: (idp: IdentityProvider) => dispatch(idpSelected(idp)),
-  loadIdpContent: () => dispatch(loadIdpsTextData.request())
+  loadIdpsContent: () => dispatch(loadIdpsTextData.request())
 });
 
 export default connect(
