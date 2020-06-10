@@ -14,7 +14,8 @@ export type IdentityProviderId =
   | "posteid"
   | "sielteid"
   | "spiditaliaid"
-  | "timid";
+  | "timid"
+  | "cie";
 
 export type textDataForIdp = Record<IdentityProviderId, Idp>;
 
