@@ -24,7 +24,6 @@ import { handleLinkMessage } from "./handlers/link";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 import { WebViewMessage } from "./types";
 
-
 const IOS_PADDING_TOP = 16;
 
 const INJECTED_JAVASCRIPT = `
@@ -322,7 +321,7 @@ class Markdown extends React.PureComponent<Props, State> {
                 containerStyle,
                 // it solve an undesired vertical margin on ios devices
                 Platform.OS === "ios" && {
-                  marginVertical: - IOS_PADDING_TOP
+                  marginVertical: -IOS_PADDING_TOP
                 }
               ]}
             >
