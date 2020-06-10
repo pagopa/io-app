@@ -25,9 +25,8 @@ import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
 import {
-  IO_CUSTOM_HANDLED_PRESS_PREFIX,
-  isCustomHandledLink,
-  isIoInternalLink
+  isIoInternalLink,
+  deriveCustomHandledLink
 } from "../ui/Markdown/handlers/link";
 import { BaseHeader } from "./BaseHeader";
 
@@ -161,13 +160,12 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     // manage links with IO_INTERNAL_LINK_PREFIX as prefix
     if (isIoInternalLink(url)) {
       this.hideHelp();
+      return;
     }
 
     // manage links with IO_CUSTOM_HANDLED_PRESS_PREFIX as prefix
-    if (isCustomHandledLink(url)) {
-      const link = url.split(IO_CUSTOM_HANDLED_PRESS_PREFIX)[1];
-      handleItemOnPress(link)();
-    }
+    const customHandledLink = deriveCustomHandledLink(url);
+    customHandledLink.fold(undefined, link => handleItemOnPress(link)());
   };
 
   public render() {

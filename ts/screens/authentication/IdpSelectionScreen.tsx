@@ -88,10 +88,10 @@ const idps: ReadonlyArray<IdentityProvider> = [
     profileUrl: "https://myid.sieltecloud.it/profile/"
   },
   {
-    id: "spiditaliaid",
+    id: "spiditalia",
     name: "SPIDItalia Register.it",
     logo: require("../../../img/spid-idp-spiditalia.png"),
-    entityID: "spiditaliaid",
+    entityID: "spiditalia",
     profileUrl: "https://spid.register.it"
   },
   {

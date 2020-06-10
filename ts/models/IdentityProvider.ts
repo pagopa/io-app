@@ -13,7 +13,7 @@ export type IdentityProviderId =
   | "namirialid"
   | "posteid"
   | "sielteid"
-  | "spiditaliaid"
+  | "spiditalia"
   | "timid"
   | "cie";
 
