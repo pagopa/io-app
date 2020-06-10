@@ -2,12 +2,14 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../../i18n";
-import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
-import { renderIconImage } from "../../../components/infoScreen/imageRendering";
+import { renderRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
+
+const image = require("../../../../../../img/bonus/bonusVacanze/vacanze.png");
 
 /**
  * This screen informs the user that the bonus has been activated!
@@ -18,18 +20,25 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  */
 
 const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
+  const title = I18n.t(
+    "bonus.bonusVacanza.eligibility.activate.completed.title"
+  );
   const body = I18n.t(
     "bonus.bonusVacanza.eligibility.activate.completed.description"
   );
-  const confirmText = I18n.t(
+  const goToBonusDetail = I18n.t(
     "bonus.bonusVacanza.eligibility.activate.goToDetails"
   );
 
   return (
     <>
-      <InfoScreenComponent image={renderIconImage("io-complete")} body={body} />
+      <InfoScreenComponent
+        image={renderRasterImage(image)}
+        title={title}
+        body={body}
+      />
       <FooterStackButton
-        buttons={[cancelButtonProps(props.onConfirm, confirmText)]}
+        buttons={[confirmButtonProps(props.onConfirm, goToBonusDetail)]}
       />
     </>
   );

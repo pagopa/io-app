@@ -1,9 +1,10 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
+import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
@@ -17,7 +18,6 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
-import { BonusStatusEnum, BonusVacanze } from "../types/bonusVacanzeActivation";
 import { validityInterval } from "../utils/bonus";
 
 type QRCodeContents = {
@@ -25,7 +25,7 @@ type QRCodeContents = {
 };
 
 type NavigationParams = Readonly<{
-  bonus: BonusVacanze;
+  bonus: BonusActivationWithQrCode;
   validFrom?: Date;
   validTo?: Date;
 }>;
@@ -55,6 +55,15 @@ const styles = StyleSheet.create({
   },
   helpButton: {
     alignSelf: "center"
+  },
+  statusBadge: {
+    height: 18,
+    marginTop: 2,
+    backgroundColor: variables.brandHighLighter
+  },
+  statusText: {
+    fontSize: 12,
+    lineHeight: 16
   }
 });
 
@@ -70,10 +79,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const validFrom = props.navigation.getParam("validFrom");
   const validTo = props.navigation.getParam("validTo");
   const bonusValidityInterval = validityInterval(validFrom, validTo);
-  const status =
-    bonus.status === BonusStatusEnum.ACTIVE
-      ? I18n.t("bonus.active")
-      : I18n.t("bonus.inactive");
   const renderRow = (key: string, value?: string) => {
     return fromNullable(value).fold(undefined, v => {
       return (
@@ -93,24 +98,28 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   React.useEffect(() => {
-    async function readBase64Svg() {
+    async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
       return new Promise<QRCodeContents>((res, _) => {
-        const qrCodes: BonusVacanze["qr_code"] = [...bonus.qr_code];
+        const qrCodes: BonusActivationWithQrCode["qr_code"] = [
+          ...bonusWithQrCode.qr_code
+        ];
         const content = qrCodes.reduce<QRCodeContents>(
-          (acc: QRCodeContents, curr: BonusVacanze["qr_code"][0]) => {
+          (
+            acc: QRCodeContents,
+            curr: BonusActivationWithQrCode["qr_code"][0]
+          ) => {
             // for svg we need to convert base64 content to ascii to be rendered
             if (curr.mime_type === QR_CODE_MIME_TYPE) {
               return {
                 ...acc,
-                [curr.mime_type]: Buffer.from(
-                  curr.base64_content,
-                  "base64"
-                ).toString("ascii")
+                [curr.mime_type]: Buffer.from(curr.content, "base64").toString(
+                  "ascii"
+                )
               };
             } else {
               return {
                 ...acc,
-                [curr.mime_type]: curr.base64_content
+                [curr.mime_type]: curr.content
               };
             }
           },
@@ -119,17 +128,20 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         res(content);
       });
     }
-    readBase64Svg()
+    readBase64Svg(bonus)
       .then(cc => setQRCode(cc))
       .catch(_ => undefined);
   }, []);
 
+  const bonusStatusDescription = I18n.t(`bonus.${bonus.status.toLowerCase()}`, {
+    defaultValue: ""
+  });
   return (
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t("bonus.bonusVacanza.name")}
     >
-      <ScreenContent title={I18n.t("bonus.active")}>
+      <ScreenContent>
         <View style={styles.image}>
           {renderQRCode(qrCode[QR_CODE_MIME_TYPE])}
         </View>
@@ -150,14 +162,27 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
         <View spacer={true} />
         <View style={styles.paddedContent}>
-          {renderRow(I18n.t("bonus.bonusVacanza.status"), status)}
+          {bonusStatusDescription.length > 0 && (
+            <View style={styles.rowBlock}>
+              <Text bold={true}>{I18n.t("bonus.bonusVacanza.status")}</Text>
+              <Badge style={styles.statusBadge}>
+                <Text style={styles.statusText}>{bonusStatusDescription}</Text>
+              </Badge>
+            </View>
+          )}
           {renderRow(
             I18n.t("bonus.bonusVacanza.amount"),
-            formatNumberAmount(centsToAmount(bonus.max_amount), true)
+            formatNumberAmount(
+              centsToAmount(bonus.dsu_request.max_amount),
+              true
+            )
           )}
           {renderRow(
             I18n.t("bonus.bonusVacanza.taxBenefit"),
-            formatNumberAmount(centsToAmount(bonus.max_tax_benefit), true)
+            formatNumberAmount(
+              centsToAmount(bonus.dsu_request.max_tax_benefit),
+              true
+            )
           )}
           {renderRow(
             I18n.t("bonus.bonusVacanza.validity"),

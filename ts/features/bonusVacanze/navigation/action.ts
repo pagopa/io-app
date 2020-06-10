@@ -42,11 +42,6 @@ export const navigateToBonusRequestInformation = (
     params
   });
 
-export const navigateToBonusTosScreen = () =>
-  NavigationActions.navigate({
-    routeName: BONUSVACANZE_ROUTES.BONUS_TOS_SCREEN
-  });
-
 export const navigateToBonusActiveDetailScreen = (
   params?: InferNavigationParams<typeof ActiveBonusScreen>
 ) =>
@@ -58,6 +53,11 @@ export const navigateToBonusActiveDetailScreen = (
 export const navigateToActivationLoading = () =>
   NavigationActions.navigate({
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_LOADING
+  });
+
+export const navigateToActivationTimeout = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_TIMEOUT
   });
 
 export const navigateToActivationCompleted = () =>

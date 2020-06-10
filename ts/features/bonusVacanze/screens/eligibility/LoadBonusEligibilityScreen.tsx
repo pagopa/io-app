@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Action, Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import { BaseLoadingErrorScreen } from "../../components/loadingErrorScreen/BaseLoadingErrorScreen";
+import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 import {
   navigateToActivateBonus,
   navigateToIseeNotAvailable,
@@ -14,8 +14,8 @@ import {
 } from "../../navigation/action";
 import { checkBonusEligibility } from "../../store/actions/bonusVacanze";
 import {
-  eligibilityCheckRequestProgress,
-  EligibilityRequestProgressEnum
+  EligibilityRequestProgressEnum,
+  eligibilityRequestProgressSelector
 } from "../../store/reducers/eligibility";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -57,9 +57,8 @@ const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   );
 
   return (
-    <BaseLoadingErrorScreen
+    <LoadingErrorComponent
       {...props}
-      navigationTitle={loadingCaption}
       loadingCaption={loadingCaption}
       loadingOpacity={1}
     />
@@ -76,16 +75,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onNavigate: (action: Action) => dispatch(action)
 });
 
-const mapStateToProps = (globalState: GlobalState) => ({
-  // display the error with the retry only in case of networking errors
-  isLoading: eligibilityCheckRequestProgress(globalState).fold(
-    true,
-    progress => progress !== EligibilityRequestProgressEnum.ERROR
-  ),
-  eligibilityOutcome: eligibilityCheckRequestProgress(globalState).getOrElse(
-    EligibilityRequestProgressEnum.UNDEFINED
-  )
-});
+const mapStateToProps = (globalState: GlobalState) => {
+  const eligibilityOutcome = eligibilityRequestProgressSelector(globalState);
+  return {
+    // display the error with the retry only in case of networking errors
+    isLoading: eligibilityOutcome !== EligibilityRequestProgressEnum.ERROR,
+    eligibilityOutcome
+  };
+};
 
 export default connect(
   mapStateToProps,
