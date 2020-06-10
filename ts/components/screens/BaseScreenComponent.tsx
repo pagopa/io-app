@@ -165,7 +165,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
     // manage links with IO_CUSTOM_HANDLED_PRESS_PREFIX as prefix
     const customHandledLink = deriveCustomHandledLink(url);
-    customHandledLink.fold(undefined, link => handleItemOnPress(link)());
+    customHandledLink.map(link => handleItemOnPress(link)());
   };
 
   public render() {

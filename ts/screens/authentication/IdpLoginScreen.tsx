@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -23,7 +23,7 @@ import {
   isLoggedOutWithIdp,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
-import { idpTextDataSelector } from "../../store/reducers/content";
+import { idpTextDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
@@ -211,7 +211,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   get contextualHelp() {
     const { selectedIdpTextData } = this.props;
 
-    if (selectedIdpTextData === undefined) {
+    if (selectedIdpTextData.isNone()) {
       return {
         title: "authentication.idp_login.contextualHelpTitle",
         body: () => (
@@ -221,26 +221,26 @@ class IdpLoginScreen extends React.Component<Props, State> {
         )
       };
     }
-
+    const idpTextData = selectedIdpTextData.value;
     return {
       title: I18n.t("authentication.idp_login.contextualHelpTitle2"),
       body: () => (
         <React.Fragment>
           {/** Recover credentials */}
           <Markdown>
-            {selectedIdpTextData.recover_username
+            {idpTextData.recover_username
               ? I18n.t("authentication.idp_login.dualRecoverDescription")
               : I18n.t("authentication.idp_login.recoverDescription")}
           </Markdown>
           <View spacer={true} />
-          {selectedIdpTextData.recover_username && (
+          {idpTextData.recover_username && (
             <React.Fragment>
               <BlockButtons
                 type={"SingleButton"}
                 leftButton={{
                   title: I18n.t("authentication.idp_login.recoverUsername"),
                   onPress: handleItemOnPress(
-                    selectedIdpTextData.recover_username.action
+                    idpTextData.recover_username.action
                   ),
                   small: true
                 }}
@@ -252,37 +252,29 @@ class IdpLoginScreen extends React.Component<Props, State> {
             type={"SingleButton"}
             leftButton={{
               title: I18n.t("authentication.idp_login.recoverPassword"),
-              onPress: handleItemOnPress(
-                selectedIdpTextData.recover_password.action
-              ),
+              onPress: handleItemOnPress(idpTextData.recover_password.action),
               small: true
             }}
           />
 
           {/** Idp cotnacts */}
           <View spacer={true} />
-          <Markdown>{selectedIdpTextData.description}</Markdown>
+          <Markdown>{idpTextData.description}</Markdown>
           <View spacer={true} />
 
           <EmailCallCTA
-            phone={selectedIdpTextData.phone.action}
-            email={
-              selectedIdpTextData.email
-                ? selectedIdpTextData.email.action
-                : undefined
-            }
+            phone={idpTextData.phone.action}
+            email={idpTextData.email ? idpTextData.email.action : undefined}
           />
           <View spacer={true} />
 
-          {selectedIdpTextData.helpdesk_form && (
+          {idpTextData.helpdesk_form && (
             <React.Fragment>
               <BlockButtons
                 type={"SingleButton"}
                 leftButton={{
                   title: I18n.t("authentication.idp_login.openTicket"),
-                  onPress: handleItemOnPress(
-                    selectedIdpTextData.helpdesk_form.action
-                  ),
+                  onPress: handleItemOnPress(idpTextData.helpdesk_form.action),
                   primary: true,
                   bordered: true,
                   small: true
@@ -338,9 +330,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => {
   const selectedtIdp = selectedIdentityProviderSelector(state);
-  const selectedIdpTextData = selectedtIdp
-    ? idpTextDataSelector(state, selectedtIdp.id)
-    : undefined;
+
+  const selectedIdpTextData = fromNullable(selectedtIdp).fold(none, idp =>
+    idpTextDataFromIdSelector(idp.id)(state)
+  );
 
   return {
     loggedOutWithIdpAuth: isLoggedOutWithIdp(state.authentication)

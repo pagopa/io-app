@@ -4,13 +4,14 @@
  * TODO: add eviction of old entries
  * https://www.pivotaltracker.com/story/show/159440294
  */
-import I18n from "i18n-js";
+import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { createSelector } from "reselect";
+import { createSelector, OutputSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { Idp } from "../../../definitions/content/Idp";
 import { IdpsTextData } from "../../../definitions/content/IdpsTextData";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import {
@@ -18,11 +19,11 @@ import {
   Service as ServiceMetadata
 } from "../../../definitions/content/Service";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
-import {
-  IdentityProviderId,
-  textDataForIdp
-} from "../../models/IdentityProvider";
+import { Locales } from "../../../locales/locales";
+import I18n from "../../i18n";
+import { IdentityProviderId } from "../../models/IdentityProvider";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
+import { getLocalePrimary } from "../../utils/locale";
 import {
   contentMunicipalityLoad,
   loadIdpsTextData,
@@ -33,6 +34,7 @@ import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 /**
  * Stores useful content such as services and organizations metadata,
@@ -139,18 +141,22 @@ export const servicesInScopeSelector = (
   );
 
 export const idpTextDataSelector = (
-  state: GlobalState,
-  id: IdentityProviderId
-) =>
-  pot.getOrElse(
-    pot.map(state.content.idpTextData, data => {
-      const textData =
-        I18n.currentLocale() === "it"
-          ? ((data.it as unknown) as textDataForIdp)
-          : ((data.en as unknown) as textDataForIdp);
-      return textData[id];
-    }),
-    undefined
+  state: GlobalState
+): pot.Pot<IdpsTextData, Error> => state.content.idpTextData;
+
+export const idpTextDataFromIdSelector = (id: IdentityProviderId) =>
+  createSelector<GlobalState, pot.Pot<IdpsTextData, Error>, Option<Idp>>(
+    idpTextDataSelector,
+    idpTextData => {
+      return pot.toOption(
+        pot.map(idpTextData, data => {
+          const locale: Locales = getLocalePrimary(I18n.currentLocale())
+            .map(s => s as Locales)
+            .getOrElse("en"); // fallback en
+          return data[locale][id];
+        })
+      );
+    }
   );
 
 export default function content(

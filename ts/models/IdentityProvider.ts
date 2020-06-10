@@ -2,8 +2,6 @@
  * Describes a SPID Identity Provider
  */
 
-import { Idp } from "../../definitions/content/Idp";
-
 export type IdentityProviderId =
   | "test"
   | "arubaid"
@@ -16,8 +14,6 @@ export type IdentityProviderId =
   | "spiditalia"
   | "timid"
   | "cie";
-
-export type textDataForIdp = Record<IdentityProviderId, Idp>;
 
 export type IdentityProvider = {
   id: IdentityProviderId;
