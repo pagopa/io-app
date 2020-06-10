@@ -1311,6 +1311,10 @@ bonus:
         completed:
           title: Congratulazioni!
           description: Il tuo bonus è attivo
+    composition:
+      amount: "Importo massimo"
+      expendable: "Spendibile presso la struttura ricettiva"
+      taxBenefit: "Detraibile in dichiarazione dei redditi"
   bonusList:
     title: Aggiungi sovvenzione
     contentTitle: Seleziona uno dei bonus disponibili

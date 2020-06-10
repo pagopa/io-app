@@ -1278,6 +1278,10 @@ bonus:
         completed:
           title: Congratulation!
           description: Bonus activated
+    composition:
+      amount: "Maximum amount"
+      expendable: "Spendable amount"
+      taxBenefit: "Tax deductible"
   bonusList:
     title: Add subsidy
     contentTitle: Select one of the available bonus
@@ -1290,4 +1294,3 @@ bonus:
   tos:
     title: Terms and conditions of use and Privacy policy
     content: !include bonus/bonusVacanze/bonus_tos.md
-
