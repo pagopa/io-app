@@ -17,6 +17,7 @@ import {
   Service as ServiceMetadata
 } from "../../../definitions/content/Service";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
+import { Locales } from "../../../locales/locales";
 import {
   IdentityProviderId,
   textDataForIdp
@@ -32,7 +33,6 @@ import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
-import { Locales } from '../../../locales/locales';
 
 /**
  * Stores useful content such as services and organizations metadata,
