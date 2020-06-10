@@ -6,8 +6,8 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import ListItemComponent from "../../../../../../components/screens/ListItemComponent";
 import I18n from "../../../../../../i18n";
 import themeVariables from "../../../../../../theme/variables";
-import { BonusCompositionDetails } from "../../../../components/BonusCompositionDetails";
-import { FamilyComposition } from "../../../../components/FamilyComposition";
+import { BonusCompositionDetails } from "../../../../components/keyValueTable/BonusCompositionDetails";
+import { FamilyComposition } from "../../../../components/keyValueTable/FamilyComposition";
 import { FooterTwoButtons } from "../../../../components/markdown/FooterTwoButtons";
 
 type Props = {

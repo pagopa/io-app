@@ -1,8 +1,8 @@
 import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { FamilyMembers } from "../../../../definitions/bonus_vacanze/FamilyMembers";
-import themeVariables from "../../../theme/variables";
+import { FamilyMembers } from "../../../../../definitions/bonus_vacanze/FamilyMembers";
+import themeVariables from "../../../../theme/variables";
 
 type Props = {
   familyMembers: FamilyMembers;
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   right: {
     flex: 1,
     textAlign: "right",
-    alignSelf: "center",
+    alignSelf: "flex-end",
     fontWeight: "bold"
   },
   baseRow: {
