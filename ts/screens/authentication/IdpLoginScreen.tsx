@@ -226,6 +226,41 @@ class IdpLoginScreen extends React.Component<Props, State> {
       title: I18n.t("authentication.idp_login.contextualHelpTitle2"),
       body: () => (
         <React.Fragment>
+          {/** Recover credentials */}
+          <Markdown>
+            {selectedIdpTextData.recover_username
+              ? I18n.t("authentication.idp_login.dualRecoverDescription")
+              : I18n.t("authentication.idp_login.recoverDescription")}
+          </Markdown>
+          <View spacer={true} />
+          {selectedIdpTextData.recover_username && (
+            <React.Fragment>
+              <BlockButtons
+                type={"SingleButton"}
+                leftButton={{
+                  title: I18n.t("authentication.idp_login.recoverUsername"),
+                  onPress: handleItemOnPress(
+                    selectedIdpTextData.recover_username.action
+                  ),
+                  small: true
+                }}
+              />
+              <View spacer={true} />
+            </React.Fragment>
+          )}
+          <BlockButtons
+            type={"SingleButton"}
+            leftButton={{
+              title: I18n.t("authentication.idp_login.recoverPassword"),
+              onPress: handleItemOnPress(
+                selectedIdpTextData.recover_password.action
+              ),
+              small: true
+            }}
+          />
+
+          {/** Idp cotnacts */}
+          <View spacer={true} />
           <Markdown>{selectedIdpTextData.description}</Markdown>
           <View spacer={true} />
 
@@ -237,51 +272,25 @@ class IdpLoginScreen extends React.Component<Props, State> {
                 : undefined
             }
           />
-
           <View spacer={true} />
 
           {selectedIdpTextData.helpdesk_form && (
-            <BlockButtons
-              type={"SingleButton"}
-              leftButton={{
-                title: I18n.t("authentication.idp_login.openTicket"),
-                onPress: handleItemOnPress(
-                  selectedIdpTextData.helpdesk_form.action
-                ),
-                primary: true,
-                bordered: true,
-                small: true
-              }}
-            />
+            <React.Fragment>
+              <BlockButtons
+                type={"SingleButton"}
+                leftButton={{
+                  title: I18n.t("authentication.idp_login.openTicket"),
+                  onPress: handleItemOnPress(
+                    selectedIdpTextData.helpdesk_form.action
+                  ),
+                  primary: true,
+                  bordered: true,
+                  small: true
+                }}
+              />
+              <View spacer={true} />
+            </React.Fragment>
           )}
-
-          <View spacer={true} />
-
-          {selectedIdpTextData.recover_username && (
-            <BlockButtons
-              type={"SingleButton"}
-              leftButton={{
-                title: I18n.t("authentication.idp_login.recoverUsername"),
-                onPress: handleItemOnPress(
-                  selectedIdpTextData.recover_username.action
-                ),
-                small: true
-              }}
-            />
-          )}
-
-          <View spacer={true} />
-
-          <BlockButtons
-            type={"SingleButton"}
-            leftButton={{
-              title: I18n.t("authentication.idp_login.recoverPassword"),
-              onPress: handleItemOnPress(
-                selectedIdpTextData.recover_password.action
-              ),
-              small: true
-            }}
-          />
         </React.Fragment>
       )
     };

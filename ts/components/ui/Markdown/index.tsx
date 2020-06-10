@@ -165,16 +165,16 @@ const generateHtml = (
   return `
   <!DOCTYPE html>
   <html>
-  <head>
-  <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-  <head>
-  <body>
-  ${GLOBAL_CSS}
-  ${cssStyle ? generateInlineCss(cssStyle) : ""}
-  ${avoidTextSelection ? avoidTextSelectionCSS : ""}
-  ${useCustomSortedList ? generateCustomFontList : ""}
-  ${content}
-  </body>
+    <head>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </head>
+    <body>
+    ${GLOBAL_CSS}
+    ${cssStyle ? generateInlineCss(cssStyle) : ""}
+    ${avoidTextSelection ? avoidTextSelectionCSS : ""}
+    ${useCustomSortedList ? generateCustomFontList : ""}
+    ${content}
+    </body>
   </html>
   `;
 };
@@ -314,8 +314,16 @@ class Markdown extends React.PureComponent<Props, State> {
         )}
         {/* Hide the WebView until we have the htmlBodyHeight */}
         {html && (
-          <ScrollView nestedScrollEnabled={false} style={containerStyle}>
-            <View style={containerStyle}>
+          <ScrollView nestedScrollEnabled={false}>
+            <View
+              style={[
+                containerStyle,
+                // it solve an undesired vertical margin on ios devices
+                Platform.OS === "ios" && {
+                  marginVertical: -customVariables.contentPadding
+                }
+              ]}
+            >
               <WebView
                 key={this.state.webviewKey}
                 textZoom={100}

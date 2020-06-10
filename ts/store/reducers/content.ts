@@ -4,6 +4,7 @@
  * TODO: add eviction of old entries
  * https://www.pivotaltracker.com/story/show/159440294
  */
+import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { createSelector } from "reselect";
@@ -143,8 +144,11 @@ export const idpTextDataSelector = (
 ) =>
   pot.getOrElse(
     pot.map(state.content.idpTextData, data => {
-      const itData = (data.it as unknown) as textDataForIdp;
-      return itData[id];
+      const textData =
+        I18n.locale === "it"
+          ? ((data.it as unknown) as textDataForIdp)
+          : ((data.en as unknown) as textDataForIdp);
+      return textData[id];
     }),
     undefined
   );

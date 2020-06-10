@@ -382,6 +382,8 @@ authentication:
     contextualHelpTitle2: Need support on the login by SPID?
     openTicket: Create a ticket
     recoverUsername: Recover the username
+    recoverDescription: If you're missing your password, you can recover it by tapping on the following button.
+    dualRecoverDescription: If you're missing your credentials, you can recover them by tapping on the following buttons.
     recoverPassword: Recover the password
   errors:
     notoken: The session is not ready or is invalid

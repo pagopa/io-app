@@ -397,6 +397,8 @@ authentication:
     contextualHelpContent: !include authentication/authentication_idp_login.md
     contextualHelpTitle2: Hai bisogno di aiuto per il login SPID?
     openTicket: Apri una segnalazione
+    recoverDescription: Se hai dimenticato la tua password, ti consigliamo di procedere cliccando sul bottone qui di seguito.
+    dualRecoverDescription: Se hai dimenticato le tue credenziali, ti consigliamo di procedere cliccando sui bottoni qui di seguito.
     recoverUsername: Recupera il nome utente
     recoverPassword: Recupera la password
   errors:
