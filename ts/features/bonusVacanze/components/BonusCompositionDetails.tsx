@@ -8,10 +8,17 @@ import { formatNumberAmount } from "../../../utils/stringBuilder";
 type Props = {
   bonusAmount: number;
   taxBenefit: number;
-  textColor?: string;
 };
 
 const styles = StyleSheet.create({
+  left: {
+    flex: 3
+  },
+  right: {
+    flex: 1,
+    textAlign: "right",
+    alignSelf: "center"
+  },
   text: {
     fontSize: themeVariables.fontSizeSmall
   },
@@ -34,38 +41,31 @@ const styles = StyleSheet.create({
   }
 });
 
-type TextColor = {
-  color?: string;
-};
-
-const header = (key: string, value: string, textColor: TextColor) => (
+const header = (key: string, value: string) => (
   <View style={[styles.rowHeader, styles.baseRow]}>
-    <Text style={textColor} bold={true}>
-      {key}
-    </Text>
-    <Text style={[styles.bonus, textColor]} bold={true}>
+    <Text bold={true}>{key}</Text>
+    <Text style={styles.bonus} bold={true}>
       {value}
     </Text>
   </View>
 );
 
-const row = (key: string, value: string, textColor: TextColor) => (
+const row = (key: string, value: string) => (
   <View style={[styles.row, styles.baseRow]}>
-    <Text style={[styles.text, textColor]}>{key}</Text>
-    <Text style={[styles.text, textColor]}>{value}</Text>
+    <Text style={[styles.text, styles.left]}>{key}</Text>
+    <Text style={[styles.text, styles.right]}>{value}</Text>
   </View>
 );
 
 /**
- * This component display a table with the composition details of the bonus
+ * This component display a table with the composition details of the bonus.
+ * It displays the total bonus amount, the expendable amount and the tax benefit.
  * @param props
  * @constructor
  */
 export const BonusCompositionDetails: React.FunctionComponent<
   Props
 > = props => {
-  const textColor = props.textColor ? { color: props.textColor } : {};
-
   const amountTitle = I18n.t("bonus.bonusVacanza.composition.amount");
   const expendableText = I18n.t("bonus.bonusVacanza.composition.expendable");
   const taxBenefitText = I18n.t("bonus.bonusVacanza.composition.taxBenefit");
@@ -78,9 +78,9 @@ export const BonusCompositionDetails: React.FunctionComponent<
 
   return (
     <View>
-      {header(amountTitle, displayBonusAmount, textColor)}
-      {row(expendableText, displayExpendableAmount, textColor)}
-      {row(taxBenefitText, displayTaxBenefit, textColor)}
+      {header(amountTitle, displayBonusAmount)}
+      {row(expendableText, displayExpendableAmount)}
+      {row(taxBenefitText, displayTaxBenefit)}
     </View>
   );
 };

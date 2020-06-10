@@ -7,6 +7,7 @@ import { shufflePinPadOnPayment } from "../../../../../../config";
 import I18n from "../../../../../../i18n";
 import { identificationRequest } from "../../../../../../store/actions/identification";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { familyMembers } from "../../../../mock/mockData";
 import { eligibilityEligibleSelector } from "../../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 
@@ -71,9 +72,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => {
   const elc = eligibilityEligibleSelector(state);
   return {
-    bonusAmount: elc.fold(0 as MaxBonusAmount, e => e.max_amount),
-    taxBenefit: elc.fold(0 as MaxBonusTaxBenefit, e => e.max_tax_benefit),
-    familyMembers: elc.fold([], e => e.family_members)
+    bonusAmount: elc.fold(500 as MaxBonusAmount, e => e.max_amount),
+    taxBenefit: elc.fold(100 as MaxBonusTaxBenefit, e => e.max_tax_benefit),
+    familyMembers: elc.fold(familyMembers, e => e.family_members)
   };
 };
 

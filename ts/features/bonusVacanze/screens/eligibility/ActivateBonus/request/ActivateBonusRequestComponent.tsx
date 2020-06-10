@@ -1,4 +1,4 @@
-import { List, View } from "native-base";
+import { List, Separator, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
 import { FamilyMember } from "../../../../../../../definitions/bonus_vacanze/FamilyMember";
@@ -6,8 +6,8 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import ListItemComponent from "../../../../../../components/screens/ListItemComponent";
 import I18n from "../../../../../../i18n";
 import themeVariables from "../../../../../../theme/variables";
-import { formatNumberCentsToAmount } from "../../../../../../utils/stringBuilder";
 import { BonusCompositionDetails } from "../../../../components/BonusCompositionDetails";
+import { FamilyComposition } from "../../../../components/FamilyComposition";
 import { FooterTwoButtons } from "../../../../components/markdown/FooterTwoButtons";
 
 type Props = {
@@ -67,13 +67,6 @@ const renderFamilyMembersList = (
 export const ActivateBonusRequestComponent: React.FunctionComponent<
   Props
 > = props => {
-  const description = I18n.t(
-    "bonus.bonusVacanza.eligibility.activateBonus.description",
-    {
-      amount: formatNumberCentsToAmount(props.bonusAmount, true),
-      taxBenefit: formatNumberCentsToAmount(props.taxBenefit, true)
-    }
-  );
   const title = I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title");
   const activateBonusText = title;
 
@@ -81,12 +74,11 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
     <BaseScreenComponent goBack={true} headerTitle={title}>
       <View style={styles.body}>
         <BonusCompositionDetails
-          title={"Importo Totale"}
           bonusAmount={props.bonusAmount}
           taxBenefit={props.taxBenefit}
         />
         <View spacer={true} />
-        {renderFamilyMembersList(props.familyMembers)}
+        <FamilyComposition familyMembers={props.familyMembers} />
       </View>
       <FooterTwoButtons
         onCancel={props.onCancel}
