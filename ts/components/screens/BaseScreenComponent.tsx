@@ -25,8 +25,8 @@ import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
 import {
-  isIoInternalLink,
-  deriveCustomHandledLink
+  deriveCustomHandledLink,
+  isIoInternalLink
 } from "../ui/Markdown/handlers/link";
 import { BaseHeader } from "./BaseHeader";
 
