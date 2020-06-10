@@ -315,7 +315,7 @@ class Markdown extends React.PureComponent<Props, State> {
         )}
         {/* Hide the WebView until we have the htmlBodyHeight */}
         {html && (
-          <ScrollView nestedScrollEnabled={false}>
+          <ScrollView nestedScrollEnabled={false} style={containerStyle}>
             <View
               style={[
                 containerStyle,

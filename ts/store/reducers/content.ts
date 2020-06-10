@@ -7,7 +7,7 @@
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { createSelector, OutputSelector } from "reselect";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -34,7 +34,6 @@ import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 /**
  * Stores useful content such as services and organizations metadata,
