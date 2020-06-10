@@ -339,7 +339,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   const selectedtIdp = selectedIdentityProviderSelector(state);
   const selectedIdpTextData = selectedtIdp
-    ? idpTextDataSelector(state, selectedtIdp.id)
+    ? idpTextDataSelector(state, selectedtIdp.id, I18n.currentLocale())
     : undefined;
 
   return {
