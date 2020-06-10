@@ -4,6 +4,7 @@
  * TODO: add eviction of old entries
  * https://www.pivotaltracker.com/story/show/159440294
  */
+import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { createSelector } from "reselect";
@@ -17,7 +18,6 @@ import {
   Service as ServiceMetadata
 } from "../../../definitions/content/Service";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
-import { Locales } from "../../../locales/locales";
 import {
   IdentityProviderId,
   textDataForIdp
@@ -140,13 +140,12 @@ export const servicesInScopeSelector = (
 
 export const idpTextDataSelector = (
   state: GlobalState,
-  id: IdentityProviderId,
-  locale: Locales
+  id: IdentityProviderId
 ) =>
   pot.getOrElse(
     pot.map(state.content.idpTextData, data => {
       const textData =
-        locale === "it"
+        I18n.currentLocale() === "it"
           ? ((data.it as unknown) as textDataForIdp)
           : ((data.en as unknown) as textDataForIdp);
       return textData[id];
