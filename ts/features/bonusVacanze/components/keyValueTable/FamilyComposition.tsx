@@ -2,50 +2,43 @@ import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { FamilyMembers } from "../../../../../definitions/bonus_vacanze/FamilyMembers";
+import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
+import {
+  KeyValueRow,
+  KeyValueTable,
+  keyValueTableStyle
+} from "./KeyValueTable";
 
 type Props = {
   familyMembers: FamilyMembers;
 };
 
 const styles = StyleSheet.create({
-  left: {
-    flex: 1
-  },
-  right: {
-    flex: 1,
-    textAlign: "right",
-    alignSelf: "flex-end",
-    fontWeight: "bold"
-  },
-  baseRow: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  titleRow: {
-    paddingLeft: themeVariables.contentPadding,
-    paddingRight: themeVariables.contentPadding
-  },
-  row: {
-    paddingLeft:
-      themeVariables.contentPadding + themeVariables.contentPadding / 2,
-    paddingRight: themeVariables.contentPadding,
-    paddingTop: themeVariables.spacerSmallHeight
+  bold: {
+    fontWeight: themeVariables.headerBodyFontWeight
   }
 });
 
 const header = (title: string) => (
-  <Text style={styles.titleRow} bold={true}>
+  <Text
+    style={[keyValueTableStyle.baseRow, keyValueTableStyle.header]}
+    bold={true}
+  >
     {title}
   </Text>
 );
 
-const row = (key: string, value: string) => (
-  <View style={[styles.row, styles.baseRow]} key={key + value}>
-    <Text style={styles.left}>{key}</Text>
-    <Text style={styles.right}>{value}</Text>
-  </View>
-);
+const getRow = (k: string, v: string) =>
+  ({
+    key: {
+      text: k
+    },
+    value: {
+      text: v,
+      style: styles.bold
+    }
+  } as KeyValueRow);
 
 /**
  * This component display a table containing the family composition.
@@ -54,14 +47,18 @@ const row = (key: string, value: string) => (
  * @constructor
  */
 export const FamilyComposition: React.FunctionComponent<Props> = props => {
-  const title = "Chi può riscuotere il bonus:";
+  const title = I18n.t("bonus.bonusVacanza.family.title");
 
   return (
     <View>
       {header(title)}
-      {props.familyMembers.map(fm =>
-        row(`${fm.name} ${fm.surname}`, fm.fiscal_code)
-      )}
+      <KeyValueTable
+        leftFlex={1}
+        rightFlex={1}
+        rows={props.familyMembers.map(fm =>
+          getRow(`${fm.name} ${fm.surname}`, fm.fiscal_code)
+        )}
+      />
     </View>
   );
 };

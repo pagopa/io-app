@@ -67,9 +67,7 @@ export const BonusCompositionDetails: React.FunctionComponent<
   Props
 > = props => {
   const amountTitle = I18n.t("bonus.bonusVacanza.composition.amount");
-  const expendableText =
-    "ciao io sono un testo che sfora di molto ciao ciao ciao come va? sforo";
-  // const expendableText = I18n.t("bonus.bonusVacanza.composition.expendable");
+  const expendableText = I18n.t("bonus.bonusVacanza.composition.expendable");
   const taxBenefitText = I18n.t("bonus.bonusVacanza.composition.taxBenefit");
 
   const expendableAmount = props.bonusAmount - props.taxBenefit;
@@ -88,11 +86,5 @@ export const BonusCompositionDetails: React.FunctionComponent<
       {header(amountTitle, displayBonusAmount)}
       <KeyValueTable leftFlex={3} rightFlex={1} rows={rows} />
     </View>
-
-    // <View>
-    //   {header(amountTitle, displayBonusAmount)}
-    //   {row(expendableText, displayExpendableAmount)}
-    //   {row(taxBenefitText, displayTaxBenefit)}
-    // </View>
   );
 };

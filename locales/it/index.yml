@@ -1297,8 +1297,12 @@ bonus:
         goToNewDSU: Presenta nuova DSU a INPS
         goToNewSimulation: Fai una simulazione online
       activateBonus:
-        title: Attiva
-        description: Puoi attivare un bonus di {{amount}}. Il tuo sconto sulle tasse è pari a {{taxBenefit}}
+        headerTitle: Richiesta Bonus Vacanze
+        title: Buone notizie!
+        description: "Il tuo nucleo familiare ha diritto al seguente Bonus Vacanze:"
+        reminder: "Ti ricordiamo che ciascun componente del tuo nucleo famigliare può spendere il bonus. Se le informazioni riportate non ti risultano corrette, ti preghiamo di verificare con il servizio clienti di INPS."
+        discrepancies: "Attenzione! INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Se decidi di proseguire, potresti essere chiamato a fornire gli approfondimenti che hanno determinato la presenza di  tali omissioni o difformità."
+        activateCTA: "Attiva il Bonus"
       timeout:
         title: Siamo spiacenti, serve più tempo per verificare il tuo ISEE.
         description: "Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.\n\nQuando lo riceverai, se sarà positivo, ricordati di completare la tua domanda entro 24 ore, altrimenti scadrà e dovrai iniziarne una nuova."
@@ -1315,6 +1319,8 @@ bonus:
       amount: "Importo massimo"
       expendable: "Spendibile presso la struttura ricettiva"
       taxBenefit: "Detraibile in dichiarazione dei redditi"
+    family:
+      title: "Chi può riscuotere il bonus?"
   bonusList:
     title: Aggiungi sovvenzione
     contentTitle: Seleziona uno dei bonus disponibili
