@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
 const inpsCustomerCareLink =
   "https://www.inps.it/nuovoportaleinps/default.aspx?imenu=24";
 
+/**
+ * This component display a box with an icon and some text that remind the user some details about the bonus.
+ * @param props
+ * @constructor
+ */
 export const ActivateBonusReminder: React.FunctionComponent<Props> = props => {
   return (
     <View

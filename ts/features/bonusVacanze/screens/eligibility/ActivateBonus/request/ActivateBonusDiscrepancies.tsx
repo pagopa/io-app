@@ -22,7 +22,11 @@ const styles = StyleSheet.create({
     color: themeVariables.colorWhite
   }
 });
-
+/**
+ * This component display a colored box with an icon e some text that warn the user about some discrepancies.
+ * @param props
+ * @constructor
+ */
 export const ActivateBonusDiscrepancies: React.FunctionComponent<
   Props
 > = props => {

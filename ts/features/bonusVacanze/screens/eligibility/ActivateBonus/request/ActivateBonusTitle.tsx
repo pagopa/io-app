@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
 
 const bonusVacanzeImage = require("../../../../../../../img/bonus/bonusVacanze/vacanze.png");
 
+/**
+ * The title of the ActivateBonus Screen, displaying some text with an image on the right
+ * @param props
+ * @constructor
+ */
 export const ActivateBonusTitle: React.FunctionComponent<Props> = props => {
   return (
     <View style={activateBonusStyle.horizontalPadding}>

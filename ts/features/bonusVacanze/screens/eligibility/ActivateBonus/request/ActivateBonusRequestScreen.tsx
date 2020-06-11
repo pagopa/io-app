@@ -74,10 +74,7 @@ const mapStateToProps = (state: GlobalState) => {
       100 as MaxBonusTaxBenefit,
       e => e.dsu_request.max_tax_benefit
     ),
-    familyMembers: elc.fold(
-      [...familyMembers, ...familyMembers],
-      e => e.dsu_request.family_members
-    ),
+    familyMembers: elc.fold(familyMembers, e => e.dsu_request.family_members),
     hasDiscrepancies: elc.fold(true, e => e.dsu_request.has_discrepancies)
   };
 };

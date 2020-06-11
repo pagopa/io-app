@@ -93,10 +93,15 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
         )}
 
         <View spacer={true} />
-        <FamilyComposition familyMembers={props.familyMembers} />
-        <View spacer={true} />
-        <ItemSeparatorComponent />
-        <View spacer={true} />
+        {props.familyMembers.length > 0 && (
+          <>
+            <FamilyComposition familyMembers={props.familyMembers} />
+            <View spacer={true} />
+            <ItemSeparatorComponent />
+            <View spacer={true} />
+          </>
+        )}
+
         <ActivateBonusReminder text={reminder.text} link={reminder.link} />
       </ScrollView>
       <FooterTwoButtons

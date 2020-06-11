@@ -1,6 +1,8 @@
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleProp, StyleSheet, TextStyle } from "react-native";
+import H5 from "../../../../components/ui/H5";
+import H6 from "../../../../components/ui/H6";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
@@ -34,25 +36,32 @@ const styles = StyleSheet.create({
  */
 const header = (key: string, value: string) => (
   <View style={[keyValueTableStyle.baseRow, keyValueTableStyle.header]}>
-    <Text style={styles.bold}>{key}</Text>
-    <Text style={[styles.bonusAmount, styles.bold]}>{value}</Text>
+    <H6>{key}</H6>
+    <H5>{value}</H5>
   </View>
 );
 
 /**
  * Transform a generic couple of string in a {@link KeyValueRow} used to be rendered inside a KeyValueTable.
- * @param k
- * @param v
+ * @param keyText
+ * @param valueText
+ * @param keyStyle
+ * @param valueStyle
  */
-const getRow = (k: string, v: string) =>
+const getRow = (
+  keyText: string,
+  valueText: string,
+  keyStyle?: StyleProp<TextStyle>,
+  valueStyle?: StyleProp<TextStyle>
+) =>
   ({
     key: {
-      text: k,
-      style: styles.text
+      text: keyText,
+      style: keyStyle ? keyStyle : styles.text
     },
     value: {
-      text: v,
-      style: styles.text
+      text: valueText,
+      style: valueStyle ? valueStyle : styles.text
     }
   } as KeyValueRow);
 
@@ -77,7 +86,7 @@ export const BonusCompositionDetails: React.FunctionComponent<
   const displayTaxBenefit = formatNumberAmount(props.taxBenefit, true);
 
   const rows: ReadonlyArray<KeyValueRow> = [
-    getRow(expendableText, displayExpendableAmount),
+    getRow(expendableText, displayExpendableAmount, undefined, styles.bold),
     getRow(taxBenefitText, displayTaxBenefit)
   ];
 
