@@ -1,6 +1,6 @@
 import { Option, some } from "fp-ts/lib/Option";
-import I18n from "../i18n";
 import { Locales } from "../../locales/locales";
+import I18n from "../i18n";
 /**
  * Helpers for handling locales
  */
