@@ -166,9 +166,7 @@ export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
  * return an option with screen contextual help data if they are loaded and defined
  * @param id
  */
-export const screenContextualHelpDataFromIdSelector = (
-  navState: NavigationState
-) =>
+export const screenContextualHelpData = (navState: NavigationState) =>
   createSelector<
     GlobalState,
     pot.Pot<ContextualHelp, Error>,
