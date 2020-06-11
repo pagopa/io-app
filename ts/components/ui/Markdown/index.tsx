@@ -24,8 +24,6 @@ import { handleLinkMessage } from "./handlers/link";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 import { WebViewMessage } from "./types";
 
-const IOS_PADDING_TOP = 16;
-
 const INJECTED_JAVASCRIPT = `
 ${NOTIFY_LINK_CLICK_SCRIPT}
 `;
