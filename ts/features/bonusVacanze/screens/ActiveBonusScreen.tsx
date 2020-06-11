@@ -135,8 +135,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
 
   const bonus = props.navigation.getParam("bonus");
-  const validFrom = props.navigation.getParam("validFrom");
-  const validTo = props.navigation.getParam("validTo");
 
   const renderFiscalCodeLine = (name: string, cf: string) => {
     return (
@@ -218,7 +216,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               onPress: () =>
                 shareQR(
                   qrCode[PNG_IMAGE_TYPE],
-                  `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonus.code}`
+                  `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonus.id}`
                 )
             }}
             leftButton={{
@@ -229,7 +227,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               onPress: () =>
                 props.showAnimatedModal(
                   <QrModalBox
-                    secretCode={bonus.code}
+                    secretCode={bonus.id}
                     onClose={props.hideModal}
                     qrCode={qrCode[QR_CODE_MIME_TYPE]}
                   />,
