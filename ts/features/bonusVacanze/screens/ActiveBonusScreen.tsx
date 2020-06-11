@@ -5,7 +5,6 @@ import { StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
