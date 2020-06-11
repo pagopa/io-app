@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v5.21.1/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v5.21.1/api_public.yaml",
-  "io_content_specs": "http://127.0.0.1:3000/content_definitions.yaml",
+  "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
   "io_bonus_vacanze_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_bonus.yaml",
   "private": true,
   "scripts": {
