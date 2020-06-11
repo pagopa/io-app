@@ -9,7 +9,7 @@ import {
   IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
 import { ServiceId } from "../../definitions/backend/ServiceId";
-import { IdpsTextData } from "../../definitions/content/IdpsTextData";
+import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ServicesByScope } from "../../definitions/content/ServicesByScope";
@@ -69,19 +69,19 @@ const getServicesByScopeT: GetServicesByScopeT = {
   response_decoder: basicResponseDecoder(ServicesByScope)
 };
 
-type GetIdpsTextDataT = IGetApiRequestType<
+type GetContextualHelpT = IGetApiRequestType<
   void,
   never,
   never,
-  BasicResponseType<IdpsTextData>
+  BasicResponseType<ContextualHelp>
 >;
 
-const getIdpsTextDataT: GetIdpsTextDataT = {
+const getContextualHelpT: GetContextualHelpT = {
   method: "get",
-  url: () => `/idps/idps.json`,
+  url: () => `/contextualhelp/data.json`,
   query: _ => ({}),
   headers: _ => ({}),
-  response_decoder: basicResponseDecoder(IdpsTextData)
+  response_decoder: basicResponseDecoder(ContextualHelp)
 };
 
 /**
@@ -97,6 +97,6 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
     getService: createFetchRequestForApi(getServiceT, options),
     getMunicipality: createFetchRequestForApi(getMunicipalityT, options),
     getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options),
-    getIdpsTextData: createFetchRequestForApi(getIdpsTextDataT, options)
+    getContextualHelp: createFetchRequestForApi(getContextualHelpT, options)
   };
 }
