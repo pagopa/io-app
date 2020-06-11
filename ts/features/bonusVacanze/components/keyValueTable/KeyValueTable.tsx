@@ -49,16 +49,16 @@ const styles = StyleSheet.create({
 
 export const keyValueTableStyle = styles;
 
-const row = (kvrow: KeyValueRow, columnWidthStyle: ColumnWidthStyle) => (
+const row = (kvRow: KeyValueRow, columnWidthStyle: ColumnWidthStyle) => (
   <View
     style={[styles.row, styles.baseRow]}
-    key={kvrow.key.text + kvrow.value.text}
+    key={kvRow.key.text + kvRow.value.text}
   >
-    <Text style={[kvrow.key.style, columnWidthStyle.left]}>
-      {kvrow.key.text}
+    <Text style={[kvRow.key.style, columnWidthStyle.left]}>
+      {kvRow.key.text}
     </Text>
-    <Text style={[kvrow.value.style, styles.right, columnWidthStyle.right]}>
-      {kvrow.value.text}
+    <Text style={[kvRow.value.style, styles.right, columnWidthStyle.right]}>
+      {kvRow.value.text}
     </Text>
   </View>
 );
