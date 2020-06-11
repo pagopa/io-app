@@ -1267,8 +1267,12 @@ bonus:
         headerTitle: Bonus Vacanze request
         title: Good news!
         description: "Your family is entitled to the following Bonus Vacanze:"
-        reminder: "We remind you that each member of your household can spend the bonus. If the information shown is incorrect, please check with the INPS customer service."
-        discrepancies: "Warning! INPS has reported some omissions or discrepancies in your ISEE. If you decide to continue, you may be called to provide the insights that led to the presence of these omissions or discrepancies."
+        reminder:
+          text: "We remind you that each member of your household can spend the bonus. If the information shown is incorrect, please check with the"
+          link: "INPS customer service."
+        discrepancies:
+          attention: "Warning!"
+          text: "INPS has reported some omissions or discrepancies in your ISEE. If you decide to continue, you may be called to provide the insights that led to the presence of these omissions or discrepancies."
         activateCTA: "Activate the Bonus"
       timeout:
         title: Sorry, it takes longer to verify your ISEE.

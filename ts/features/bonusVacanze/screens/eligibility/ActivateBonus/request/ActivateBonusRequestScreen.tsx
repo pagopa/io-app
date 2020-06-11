@@ -25,11 +25,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const ActivateBonusRequestScreen: React.FunctionComponent<Props> = props => {
   return (
     <ActivateBonusRequestComponent
-      onCancel={props.onCancel}
+      {...props}
       onRequestBonus={props.onActivateBonus}
-      bonusAmount={props.bonusAmount}
-      taxBenefit={props.taxBenefit}
-      familyMembers={props.familyMembers}
     />
   );
 };
@@ -74,7 +71,11 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     bonusAmount: elc.fold(500 as MaxBonusAmount, e => e.max_amount),
     taxBenefit: elc.fold(100 as MaxBonusTaxBenefit, e => e.max_tax_benefit),
-    familyMembers: elc.fold(familyMembers, e => e.family_members)
+    familyMembers: elc.fold(
+      [...familyMembers, ...familyMembers],
+      e => e.family_members
+    ),
+    hasDiscrepancies: elc.fold(true, e => e.has_discrepancies)
   };
 };
 
