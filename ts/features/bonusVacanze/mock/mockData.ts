@@ -5,9 +5,12 @@
 import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
 import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { BonusCode } from "../../../../definitions/bonus_vacanze/BonusCode";
 import { Dsu } from "../../../../definitions/bonus_vacanze/Dsu";
-import { EligibilityCheckSuccess } from "../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
-import { StatusEnum } from "../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
+import {
+  EligibilityCheckSuccessEligible,
+  StatusEnum
+} from "../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { FamilyMember } from "../../../../definitions/bonus_vacanze/FamilyMember";
 import { MaxBonusAmount } from "../../../../definitions/bonus_vacanze/MaxBonusAmount";
 import { MaxBonusTaxBenefit } from "../../../../definitions/bonus_vacanze/MaxBonusTaxBenefit";
@@ -36,7 +39,7 @@ const familyMembers: ReadonlyArray<FamilyMember> = [
   }
 ];
 
-const dsuData: Dsu = {
+export const dsuData: Dsu = {
   request_id: "request_id" as NonEmptyString,
   isee_type: "isee_id",
   dsu_protocol_id: "dsu_protocol_id" as NonEmptyString,
@@ -47,18 +50,15 @@ const dsuData: Dsu = {
   max_tax_benefit: 30 as MaxBonusTaxBenefit
 };
 
-export const mockedElegibilityCheck: EligibilityCheckSuccess = {
-  max_amount: 499 as MaxBonusAmount,
-  max_tax_benefit: 30 as MaxBonusTaxBenefit,
+export const mockedElegibilityCheck: EligibilityCheckSuccessEligible = {
   id: "d296cf6a-11f8-412b-972a-ede34d629680" as NonEmptyString,
-  status: StatusEnum.ELIGIBLE,
   valid_before: new Date("2020-07-04T12:20:00.000Z"),
-  ...dsuData
+  dsu_request: dsuData,
+  status: StatusEnum.ELIGIBLE
 };
 
 export const mockedBonus: BonusActivationWithQrCode = {
-  id: "XYZ" as NonEmptyString,
-  code: "ABCDE123XYZ" as NonEmptyString,
+  id: "ACEFGHLMN346" as BonusCode,
   qr_code: [
     {
       mime_type: "image/png",
@@ -72,7 +72,7 @@ export const mockedBonus: BonusActivationWithQrCode = {
   applicant_fiscal_code: "ABCMYY82A12L722R" as FiscalCode,
   status: BonusActivationStatusEnum.ACTIVE,
   dsu_request: dsuData,
-  updated_at: new Date("2020-07-04T12:20:00.000Z")
+  created_at: new Date("2020-07-04T12:20:00.000Z")
 };
 
 export const mockedAvailableBonusItem = {
