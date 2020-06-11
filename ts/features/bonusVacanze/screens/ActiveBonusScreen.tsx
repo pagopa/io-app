@@ -145,14 +145,14 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         <View style={styles.image}>
           {renderQRCode(qrCode[QR_CODE_MIME_TYPE])}
         </View>
-        <Text style={styles.code}>{bonus.code}</Text>
+        <Text style={styles.code}>{bonus.id}</Text>
         <ButtonDefaultOpacity
           style={styles.helpButton}
           transparent={true}
           onPress={() =>
             shareQR(
               qrCode[PNG_IMAGE_TYPE],
-              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonus.code}`
+              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonus.id}`
             )
           }
           activeOpacity={1}
