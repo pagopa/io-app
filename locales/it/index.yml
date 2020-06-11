@@ -27,6 +27,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Il messaggio non può essere decodificato
   buttons:
+    share: Condividi
     delete: Elimina
     cancel: Annulla
     ok: OK
@@ -1272,20 +1273,26 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    validBetween: Potrai usare questo Bonus Vacanze dal 01/07/2020 fino al 31/12/2020
+    bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
+    usableAmount: Spendibile presso la struttura ricettiva
+    taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il
+    requestedAt: Richiesto il
     advice: 'Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i Termini e le Condizioni d’uso e la Privacy Policy del servizio.'
     status: Stato
-    name: Bonus Vacanza
+    name: Bonus Vacanze
     validity: Valido nel periodo
-    taxBenefit: Beneficio fiscale
-    amount: Importo totale
+    amount: Importo massimo
     applicant: CF richiedente
+    bonusClaim: Chi può riscuotere il bonus?
     shareMessage: "Questo è il codice del tuo bonus:"
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:
       requestBonus: Richiedi
       cancelRequest: Annulla la richiesta
+      qrCode: QR code
     eligibility:
       loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
       iseeNotAvailable:
