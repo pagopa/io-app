@@ -25,7 +25,7 @@ export enum EligibilityRequestProgressEnum {
 export type EligibilityState = Readonly<{
   check: pot.Pot<EligibilityCheck, Error>; // the result of ISEE check
   requestProgess: EligibilityRequestProgressEnum; // represent an internal status of the request (cause the app could do polling)
-  request?: InstanceId; // the id related to the check (we could have only this if the check isn't ready and still in progress)
+  request?: InstanceId; // the id related to the check (we could have only this if the check isn't ready and it is still in progress)
 }>;
 
 const INITIAL_STATE: EligibilityState = {
