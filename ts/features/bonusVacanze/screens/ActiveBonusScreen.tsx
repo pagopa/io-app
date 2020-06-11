@@ -131,24 +131,57 @@ const renderQRCode = (base64: string) =>
     <SvgXml xml={s} height="100%" width="100%" />
   ));
 
+const renderFiscalCodeLine = (name: string, cf: string) => {
+  return (
+    <React.Fragment key={cf}>
+      <View style={styles.rowBlock}>
+        <Text style={[styles.fmName, styles.colorGrey]}>{name}</Text>
+        <Text style={[styles.fmName, styles.colorGrey]} semibold={true}>
+          {cf}
+        </Text>
+      </View>
+      <View spacer={true} small={true} />
+    </React.Fragment>
+  );
+};
+
+async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
+  return new Promise<QRCodeContents>((res, _) => {
+    const qrCodes: BonusActivationWithQrCode["qr_code"] = [
+      ...bonusWithQrCode.qr_code
+    ];
+    const content = qrCodes.reduce<QRCodeContents>(
+      (acc: QRCodeContents, curr: BonusActivationWithQrCode["qr_code"][0]) => {
+        // for svg we need to convert base64 content to ascii to be rendered
+        if (curr.mime_type === QR_CODE_MIME_TYPE) {
+          return {
+            ...acc,
+            [curr.mime_type]: Buffer.from(curr.content, "base64").toString(
+              "ascii"
+            )
+          };
+        } else {
+          return {
+            ...acc,
+            [curr.mime_type]: curr.content
+          };
+        }
+      },
+      {}
+    );
+    res(content);
+  });
+}
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.fiscalCode.title",
+  body: "profile.fiscalCode.help"
+};
+
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
 
   const bonus = props.navigation.getParam("bonus");
-
-  const renderFiscalCodeLine = (name: string, cf: string) => {
-    return (
-      <React.Fragment key={cf}>
-        <View style={styles.rowBlock}>
-          <Text style={[styles.fmName, styles.colorGrey]}>{name}</Text>
-          <Text style={[styles.fmName, styles.colorGrey]} semibold={true}>
-            {cf}
-          </Text>
-        </View>
-        <View spacer={true} small={true} />
-      </React.Fragment>
-    );
-  };
 
   const shareQR = async (content: string, code: string) => {
     const shared = await shareBase64Content(content, code).run();
@@ -158,101 +191,56 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   React.useEffect(() => {
-    async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
-      return new Promise<QRCodeContents>((res, _) => {
-        const qrCodes: BonusActivationWithQrCode["qr_code"] = [
-          ...bonusWithQrCode.qr_code
-        ];
-        const content = qrCodes.reduce<QRCodeContents>(
-          (
-            acc: QRCodeContents,
-            curr: BonusActivationWithQrCode["qr_code"][0]
-          ) => {
-            // for svg we need to convert base64 content to ascii to be rendered
-            if (curr.mime_type === QR_CODE_MIME_TYPE) {
-              return {
-                ...acc,
-                [curr.mime_type]: Buffer.from(curr.content, "base64").toString(
-                  "ascii"
-                )
-              };
-            } else {
-              return {
-                ...acc,
-                [curr.mime_type]: curr.content
-              };
-            }
-          },
-          {}
-        );
-        res(content);
-      });
-    }
     readBase64Svg(bonus)
       .then(cc => setQRCode(cc))
       .catch(_ => undefined);
   }, []);
 
-  const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-    title: "profile.fiscalCode.title",
-    body: "profile.fiscalCode.help"
-  };
-
   const bonusStatusDescription = I18n.t(`bonus.${bonus.status.toLowerCase()}`, {
     defaultValue: ""
   });
 
-  const renderFooterButtons = () => {
-    switch (bonus.status) {
-      case BonusActivationStatusEnum.ACTIVE:
-        return (
-          <BlockButtons
-            type="TwoButtonsInlineHalf"
-            rightButton={{
-              primary: true,
-              iconName: "io-share",
-              iconColor: variables.colorWhite,
-              title: I18n.t("global.buttons.share"),
-              onPress: () =>
-                shareQR(
-                  qrCode[PNG_IMAGE_TYPE],
-                  `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonus.id}`
-                )
-            }}
-            leftButton={{
-              bordered: true,
-              iconName: "io-qr",
-              iconColor: variables.contentPrimaryBackground,
-              title: I18n.t("bonus.bonusVacanza.cta.qrCode"),
-              onPress: () =>
-                props.showAnimatedModal(
-                  <QrModalBox
-                    secretCode={bonus.id}
-                    onClose={props.hideModal}
-                    qrCode={qrCode[QR_CODE_MIME_TYPE]}
-                  />,
-                  BottomTopAnimation
-                )
-            }}
-          />
-        );
-      case BonusActivationStatusEnum.REDEEMED:
-      case BonusActivationStatusEnum.FAILED:
-        return (
-          <BlockButtons
-            type="SingleButton"
-            leftButton={{
-              bordered: true,
-              title: I18n.t("global.buttons.cancel"),
-              onPress: props.goBack
-            }}
-          />
-        );
-
-      default:
-        return;
-    }
-  };
+  const renderFooterButtons = () =>
+    isBonusActive(bonus) ? (
+      <BlockButtons
+        type="TwoButtonsInlineHalf"
+        rightButton={{
+          primary: true,
+          iconName: "io-share",
+          iconColor: variables.colorWhite,
+          title: I18n.t("global.buttons.share"),
+          onPress: () =>
+            shareQR(
+              qrCode[PNG_IMAGE_TYPE],
+              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonus.id}`
+            )
+        }}
+        leftButton={{
+          bordered: true,
+          iconName: "io-qr",
+          iconColor: variables.contentPrimaryBackground,
+          title: I18n.t("bonus.bonusVacanza.cta.qrCode"),
+          onPress: () =>
+            props.showAnimatedModal(
+              <QrModalBox
+                secretCode={bonus.id}
+                onClose={props.hideModal}
+                qrCode={qrCode[QR_CODE_MIME_TYPE]}
+              />,
+              BottomTopAnimation
+            )
+        }}
+      />
+    ) : (
+      <BlockButtons
+        type="SingleButton"
+        leftButton={{
+          bordered: true,
+          title: I18n.t("global.buttons.cancel"),
+          onPress: props.goBack
+        }}
+      />
+    );
 
   return (
     <DarkLayout
