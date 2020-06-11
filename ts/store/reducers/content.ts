@@ -4,15 +4,15 @@
  * TODO: add eviction of old entries
  * https://www.pivotaltracker.com/story/show/159440294
  */
-import { Option } from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
-import { IdpsTextData } from "../../../definitions/content/IdpsTextData";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import {
   ScopeEnum,
@@ -26,7 +26,7 @@ import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { getLocalePrimary } from "../../utils/locale";
 import {
   contentMunicipalityLoad,
-  loadIdpsTextData,
+  loadContextualHelpData,
   loadServiceMetadata,
   loadVisibleServicesByScope
 } from "../actions/content";
@@ -45,7 +45,7 @@ export type ContentState = Readonly<{
   };
   municipality: MunicipalityState;
   servicesByScope: pot.Pot<ServicesByScope, Error>;
-  idpTextData: pot.Pot<IdpsTextData, Error>;
+  contextualHelp: pot.Pot<ContextualHelp, Error>;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -68,7 +68,7 @@ const initialContentState: ContentState = {
     data: pot.none
   },
   servicesByScope: pot.none,
-  idpTextData: pot.none
+  contextualHelp: pot.none
 };
 
 // Selectors
@@ -139,21 +139,22 @@ export const servicesInScopeSelector = (
     )
   );
 
-export const idpTextDataSelector = (
+export const contextualHelpDataSelector = (
   state: GlobalState
-): pot.Pot<IdpsTextData, Error> => state.content.idpTextData;
+): pot.Pot<ContextualHelp, Error> => state.content.contextualHelp;
 
-export const idpTextDataFromIdSelector = (id: IdentityProviderId) =>
-  createSelector<GlobalState, pot.Pot<IdpsTextData, Error>, Option<Idp>>(
-    idpTextDataSelector,
-    idpTextData => {
-      return pot.toOption(
-        pot.map(idpTextData, data => {
+export const idpDataFromIdSelector = (id: IdentityProviderId) =>
+  createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, Option<Idp>>(
+    contextualHelpDataSelector,
+    contextualHelpData => {
+      return pot.getOrElse(
+        pot.map(contextualHelpData, data => {
           const locale: Locales = getLocalePrimary(I18n.currentLocale())
             .map(s => s as Locales)
             .getOrElse("en"); // fallback en
-          return data[locale][id];
-        })
+          return fromNullable(data[locale].idps[id]);
+        }),
+        none
       );
     }
   );
@@ -250,22 +251,22 @@ export default function content(
       };
 
     // idps text data
-    case getType(loadIdpsTextData.request):
+    case getType(loadContextualHelpData.request):
       return {
         ...state,
-        idpTextData: pot.toLoading(state.idpTextData)
+        contextualHelp: pot.toLoading(state.contextualHelp)
       };
 
-    case getType(loadIdpsTextData.success):
+    case getType(loadContextualHelpData.success):
       return {
         ...state,
-        idpTextData: pot.some(action.payload)
+        contextualHelp: pot.some(action.payload)
       };
 
-    case getType(loadIdpsTextData.failure):
+    case getType(loadContextualHelpData.failure):
       return {
         ...state,
-        idpTextData: pot.toError(state.idpTextData, action.payload)
+        contextualHelp: pot.toError(state.contextualHelp, action.payload)
       };
 
     case getType(clearCache):
@@ -273,7 +274,7 @@ export default function content(
         ...state,
         servicesMetadata: { ...initialContentState.servicesMetadata },
         municipality: { ...initialContentState.municipality },
-        idpTextData: { ...initialContentState.idpTextData }
+        contextualHelp: { ...initialContentState.contextualHelp }
       };
 
     case getType(removeServiceTuples): {

@@ -23,7 +23,7 @@ import {
   isLoggedOutWithIdp,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
-import { idpTextDataFromIdSelector } from "../../store/reducers/content";
+import { idpDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
@@ -239,9 +239,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
                 type={"SingleButton"}
                 leftButton={{
                   title: I18n.t("authentication.idp_login.recoverUsername"),
-                  onPress: handleItemOnPress(
-                    idpTextData.recover_username.action
-                  ),
+                  onPress: handleItemOnPress(idpTextData.recover_username),
                   small: true
                 }}
               />
@@ -252,7 +250,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
             type={"SingleButton"}
             leftButton={{
               title: I18n.t("authentication.idp_login.recoverPassword"),
-              onPress: handleItemOnPress(idpTextData.recover_password.action),
+              onPress: handleItemOnPress(idpTextData.recover_password),
               small: true
             }}
           />
@@ -263,8 +261,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
           <View spacer={true} />
 
           <EmailCallCTA
-            phone={idpTextData.phone.action}
-            email={idpTextData.email ? idpTextData.email.action : undefined}
+            phone={idpTextData.phone}
+            email={idpTextData.email ? idpTextData.email : undefined}
           />
           <View spacer={true} />
 
@@ -274,7 +272,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
                 type={"SingleButton"}
                 leftButton={{
                   title: I18n.t("authentication.idp_login.openTicket"),
-                  onPress: handleItemOnPress(idpTextData.helpdesk_form.action),
+                  onPress: handleItemOnPress(idpTextData.helpdesk_form),
                   primary: true,
                   bordered: true,
                   small: true
@@ -332,7 +330,7 @@ const mapStateToProps = (state: GlobalState) => {
   const selectedtIdp = selectedIdentityProviderSelector(state);
 
   const selectedIdpTextData = fromNullable(selectedtIdp).fold(none, idp =>
-    idpTextDataFromIdSelector(idp.id)(state)
+    idpDataFromIdSelector(idp.id)(state)
   );
 
   return {

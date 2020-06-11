@@ -14,7 +14,7 @@ import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
-import { loadIdpsTextData } from "../../store/actions/content";
+import { loadContextualHelpData } from "../../store/actions/content";
 import variables from "../../theme/variables";
 
 type Props = ReturnType<typeof mapDispatchToProps> & NavigationScreenProps;
@@ -183,7 +183,7 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setSelectedIdp: (idp: IdentityProvider) => dispatch(idpSelected(idp)),
-  loadIdpsContent: () => dispatch(loadIdpsTextData.request())
+  loadIdpsContent: () => dispatch(loadContextualHelpData.request())
 });
 
 export default connect(
