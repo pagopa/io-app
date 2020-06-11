@@ -7,6 +7,7 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { NavigationState } from "react-navigation";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
@@ -14,16 +15,16 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
+import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import {
   ScopeEnum,
   Service as ServiceMetadata
 } from "../../../definitions/content/Service";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
-import { Locales } from "../../../locales/locales";
-import I18n from "../../i18n";
 import { IdentityProviderId } from "../../models/IdentityProvider";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { getLocalePrimary } from "../../utils/locale";
+import { getLocalePrimaryWithFallback } from "../../utils/locale";
+import { getCurrentRouteName } from "../../utils/navigation";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
@@ -143,21 +144,52 @@ export const contextualHelpDataSelector = (
   state: GlobalState
 ): pot.Pot<ContextualHelp, Error> => state.content.contextualHelp;
 
-export const idpDataFromIdSelector = (id: IdentityProviderId) =>
+/**
+ * return an option with Idp contextual help data if they are loaded and defined
+ * @param id
+ */
+export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
   createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, Option<Idp>>(
     contextualHelpDataSelector,
     contextualHelpData => {
       return pot.getOrElse(
         pot.map(contextualHelpData, data => {
-          const locale: Locales = getLocalePrimary(I18n.currentLocale())
-            .map(s => s as Locales)
-            .getOrElse("en"); // fallback en
+          const locale = getLocalePrimaryWithFallback();
           return fromNullable(data[locale].idps[id]);
         }),
         none
       );
     }
   );
+
+/**
+ * return an option with screen contextual help data if they are loaded and defined
+ * @param id
+ */
+export const screenContextualHelpDataFromIdSelector = (
+  navState: NavigationState
+) =>
+  createSelector<
+    GlobalState,
+    pot.Pot<ContextualHelp, Error>,
+    Option<ScreenCHData>
+  >(contextualHelpDataSelector, contextualHelpData => {
+    return pot.getOrElse(
+      pot.map(contextualHelpData, data => {
+        const currentRouteName = getCurrentRouteName(navState);
+        if (currentRouteName === undefined) {
+          return none;
+        }
+        const locale = getLocalePrimaryWithFallback();
+        const screenData = data[locale].screens.find(
+          s =>
+            s.route_name.toLowerCase() === currentRouteName.toLocaleLowerCase()
+        );
+        return fromNullable(screenData);
+      }),
+      none
+    );
+  });
 
 export default function content(
   state: ContentState = initialContentState,

@@ -23,7 +23,7 @@ import {
   isLoggedOutWithIdp,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
-import { idpDataFromIdSelector } from "../../store/reducers/content";
+import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
@@ -330,7 +330,7 @@ const mapStateToProps = (state: GlobalState) => {
   const selectedtIdp = selectedIdentityProviderSelector(state);
 
   const selectedIdpTextData = fromNullable(selectedtIdp).fold(none, idp =>
-    idpDataFromIdSelector(idp.id)(state)
+    idpContextualHelpDataFromIdSelector(idp.id)(state)
   );
 
   return {
