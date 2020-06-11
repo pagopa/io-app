@@ -5,12 +5,10 @@ import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 
-type OwnProps = {
+type Props = {
   bonusItem: BonusAvailable;
   onPress: () => void;
 };
-
-type Props = OwnProps;
 
 const styles = StyleSheet.create({
   listItem: {
