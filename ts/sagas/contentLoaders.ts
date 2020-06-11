@@ -10,14 +10,14 @@ import { SagaIterator } from "redux-saga";
 import { call, Effect, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ServiceId } from "../../definitions/backend/ServiceId";
-import { IdpsTextData } from "../../definitions/content/IdpsTextData";
+import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
-  loadIdpsTextData,
+  loadContextualHelpData,
   loadServiceMetadata,
   loadVisibleServicesByScope
 } from "../store/actions/content";
@@ -42,12 +42,12 @@ function getServiceMetadata(
 /**
  * Retrieves idps text data from the static content repository
  */
-function getIdpsTextData(): Promise<
-  t.Validation<BasicResponseType<IdpsTextData>>
+function getContextualHelpData(): Promise<
+  t.Validation<BasicResponseType<ContextualHelp>>
 > {
   return new Promise((resolve, _) =>
     contentClient
-      .getIdpsTextData()
+      .getContextualHelp()
       .then(resolve, e => resolve(left([{ context: [], value: e }])))
   );
 }
@@ -196,23 +196,23 @@ function* watchContentMunicipalityLoadSaga(
 }
 
 /**
- * A saga that watches for and executes requests to load idps text data
+ * A saga that watches for and executes requests to load contextual help text data
  */
-function* watchLoadIdsTextData(): SagaIterator {
+function* watchLoadContextualHelp(): SagaIterator {
   try {
-    const response: SagaCallReturnType<typeof getIdpsTextData> = yield call(
-      getIdpsTextData
-    );
+    const response: SagaCallReturnType<
+      typeof getContextualHelpData
+    > = yield call(getContextualHelpData);
     if (response.isRight()) {
       if (response.value.status === 200) {
-        yield put(loadIdpsTextData.success(response.value.value));
+        yield put(loadContextualHelpData.success(response.value.value));
         return;
       }
       throw Error(`response status ${response.value.status}`);
     }
     throw Error(readableReport(response.value));
   } catch (e) {
-    yield put(loadIdpsTextData.failure(e));
+    yield put(loadContextualHelpData.failure(e));
   }
 }
 
@@ -235,6 +235,9 @@ export function* watchContentSaga() {
     watchContentServicesByScopeLoad
   );
 
-  // watch idps text data loading request
-  yield takeLatest(getType(loadIdpsTextData.request), watchLoadIdsTextData);
+  // watch contextual help text data loading request
+  yield takeLatest(
+    getType(loadContextualHelpData.request),
+    watchLoadContextualHelp
+  );
 }
