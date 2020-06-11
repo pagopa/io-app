@@ -11,25 +11,23 @@ import { withLightModalContext } from "../../../components/helpers/withLightModa
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../../components/screens/DarkLayout";
-import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import BlockButtons from "../../../components/ui/BlockButtons";
 import IconFont from "../../../components/ui/IconFont";
 import {
-  LightModalContextInterface,
-  TopBottomAnimation,
-  BottomTopAnimation
+  BottomTopAnimation,
+  LightModalContextInterface
 } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
+import { formatDateAsLocal } from "../../../utils/dates";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
 import QrModalBox from "../components/QrModalBox";
-import { validityInterval, isBonusActive } from "../utils/bonus";
-import { formatDateAsLocal } from "../../../utils/dates";
+import { isBonusActive } from "../utils/bonus";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -139,7 +137,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const bonus = props.navigation.getParam("bonus");
   const validFrom = props.navigation.getParam("validFrom");
   const validTo = props.navigation.getParam("validTo");
-  const bonusValidityInterval = validityInterval(validFrom, validTo);
 
   const renderFiscalCodeLine = (name: string, cf: string) => {
     return (
@@ -375,7 +372,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               {I18n.t("bonus.bonusVacanza.requestedAt")}
             </Text>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {formatDateAsLocal(bonus.updated_at, true)}
+              {isBonusActive(bonus)
+                ? formatDateAsLocal(bonus.created_at, true)
+                : fromNullable(bonus.redeemed_at).fold(
+                    formatDateAsLocal(bonus.created_at, true),
+                    d => formatDateAsLocal(d, true)
+                  )}
             </Text>
           </View>
         </View>
