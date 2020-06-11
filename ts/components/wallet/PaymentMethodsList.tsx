@@ -8,7 +8,6 @@ import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, Platform, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
-import { bonusVacanzeEnabled } from "../../config";
 import I18n from "../../i18n";
 import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
@@ -22,7 +21,6 @@ import Markdown from "../ui/Markdown";
 
 type OwnProps = Readonly<{
   navigateToAddCreditCard: () => void;
-  navigateToRequestBonus: () => void;
 }>;
 
 type Props = OwnProps & LightModalContextInterface;
@@ -72,13 +70,6 @@ const implementedMethod: IPaymentMethod = {
   maxFee: I18n.t("wallet.methods.card.maxFee"),
   icon: "io-48-card",
   implemented: true
-};
-
-const bonusMethod: IPaymentMethod = {
-  name: I18n.t("wallet.methods.sovvenzione.name"),
-  icon: "io-bonus",
-  implemented: true,
-  isNew: true
 };
 
 const paymentMethods: ReadonlyArray<IPaymentMethod> = [
@@ -150,14 +141,6 @@ class PaymentMethodsList extends React.Component<Props, never> {
         ...implementedMethod,
         onPress: this.props.navigateToAddCreditCard
       },
-      ...(bonusVacanzeEnabled
-        ? [
-            {
-              ...bonusMethod,
-              onPress: this.props.navigateToRequestBonus
-            }
-          ]
-        : []),
       ...paymentMethods
     ];
     return (
