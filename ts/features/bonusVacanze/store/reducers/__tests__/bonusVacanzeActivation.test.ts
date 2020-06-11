@@ -1,12 +1,13 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { canBonusVacanzeBeRequestedSelector } from "../bonusVacanzeActivation";
 import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
 import { BonusActivationStatusEnum } from "../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { BonusCode } from "../../../../../../definitions/bonus_vacanze/BonusCode";
 import { Dsu } from "../../../../../../definitions/bonus_vacanze/Dsu";
+import { FamilyMembers } from "../../../../../../definitions/bonus_vacanze/FamilyMembers";
 import { MaxBonusAmount } from "../../../../../../definitions/bonus_vacanze/MaxBonusAmount";
 import { MaxBonusTaxBenefit } from "../../../../../../definitions/bonus_vacanze/MaxBonusTaxBenefit";
+import { canBonusVacanzeBeRequestedSelector } from "../bonusVacanzeActivation";
 
 const familyMembers: FamilyMembers = [
   {
