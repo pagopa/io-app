@@ -82,12 +82,10 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
       onPress={() => props.onPress(props.bonus, props.validFrom, props.validTo)}
     >
       <View style={styles.spaced}>
-        {bonusValidityInterval && (
-          <Text style={{ color: customVariables.colorWhite }} small={true}>
-            {`${I18n.t(
-              "bonus.bonusVacanza.validity"
-            )} ${bonusValidityInterval}`}
-          </Text>
+        {bonusValidityInterval.isSome() && (
+          <Text small={true}>{`${I18n.t("bonus.bonusVacanza.validity")} ${
+            bonusValidityInterval.value.e1
+          } - ${bonusValidityInterval.value.e2}`}</Text>
         )}
         <Text bold={true} style={styles.text12}>
           {formatNumberCentsToAmount(props.bonus.dsu_request.max_amount)}

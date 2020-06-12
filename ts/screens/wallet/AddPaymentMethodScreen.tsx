@@ -12,7 +12,6 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
-import { navigateToAvailableBonusScreen } from "../../features/bonusVacanze/navigation/action";
 import I18n from "../../i18n";
 import {
   navigateToPaymentTransactionSummaryScreen,
@@ -88,7 +87,6 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
               <View spacer={true} />
               <PaymentMethodsList
                 navigateToAddCreditCard={this.props.navigateToAddCreditCard}
-                navigateToRequestBonus={this.props.navigateToRequestBonus}
               />
             </View>
           </Content>
@@ -96,7 +94,6 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
           <Content noPadded={true} style={styles.paddedLR}>
             <PaymentMethodsList
               navigateToAddCreditCard={this.props.navigateToAddCreditCard}
-              navigateToRequestBonus={this.props.navigateToRequestBonus}
             />
           </Content>
         )}
@@ -137,8 +134,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
         inPayment: props.navigation.getParam("inPayment"),
         keyFrom: props.navigation.getParam("keyFrom")
       })
-    ),
-  navigateToRequestBonus: () => dispatch(navigateToAvailableBonusScreen())
+    )
 });
 
 export default connect(
