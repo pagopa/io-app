@@ -61,28 +61,32 @@ export default class DarkLayout extends React.Component<Props> {
   }
 
   private screenContent() {
-    return this.props.gradientHeader ? (
-      <React.Fragment>
+    const wrapper = (childer: React.ReactNode) =>
+      this.props.gradientHeader ? (
         <LinearGradient
           colors={[customVariables.brandDarkGray, "#42484F"]}
           style={styles.headerContents}
         >
-          <View spacer={true} />
-          {this.props.topContent}
+          {childer}
         </LinearGradient>
-        {this.props.children}
-      </React.Fragment>
-    ) : (
-      <React.Fragment>
+      ) : (
         <View
           style={[
             styles.headerContents,
             { backgroundColor: customVariables.brandDarkGray }
           ]}
         >
-          <View spacer={true} />
-          {this.props.topContent}
+          {childer}
         </View>
+      );
+    return (
+      <React.Fragment>
+        {wrapper(
+          <React.Fragment>
+            <View spacer={true} />
+            {this.props.topContent}
+          </React.Fragment>
+        )}
         {this.props.children}
       </React.Fragment>
     );

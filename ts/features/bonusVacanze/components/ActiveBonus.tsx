@@ -59,6 +59,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     minHeight: 24
   },
+  textWhite: {
+    color: customVariables.colorWhite
+  },
   containerColor: {
     padding: customVariables.appHeaderPaddingHorizontal,
     backgroundColor: "#2C489D",
@@ -93,7 +96,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
       </View>
       <View small={true} />
       <View style={styles.spaced}>
-        <Text small={true} style={{ color: customVariables.colorWhite }}>
+        <Text small={true} style={styles.textWhite}>
           {I18n.t("bonus.bonusVacanza.taxBenefit")}
         </Text>
         <Text bold={true} style={styles.text12}>

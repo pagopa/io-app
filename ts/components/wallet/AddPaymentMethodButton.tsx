@@ -35,10 +35,7 @@ export const AddPaymentMethodButton: React.SFC<Props> = ({
       color={customVariables.colorWhite}
       size={iconSize}
     />
-    <Text
-      bold={true}
-      style={[styles.label, labelSize ? { fontSize: labelSize } : {}]}
-    >
+    <Text bold={true} style={[styles.label, { fontSize: labelSize }]}>
       {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
     </Text>
   </TouchableDefaultOpacity>

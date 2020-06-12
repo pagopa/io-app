@@ -44,8 +44,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
         isNew={true}
       />
       {!pot.isLoading(activeBonus) &&
-        pot.isSome(activeBonus) &&
-        activeBonus.value && (
+        pot.isSome(activeBonus) && (
           <ActiveBonus
             bonus={activeBonus.value}
             onPress={onBonusPress}
