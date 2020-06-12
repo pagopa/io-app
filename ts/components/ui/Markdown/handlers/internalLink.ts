@@ -3,11 +3,10 @@
  */
 import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
-
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
 
-// Prefix to match uri like `ioit://PROFILE_MAIN`
+// Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
 export const IO_INTERNAL_LINK_PREFIX = "ioit://";
 
 const ALLOWED_ROUTE_NAMES: ReadonlyArray<string> = [

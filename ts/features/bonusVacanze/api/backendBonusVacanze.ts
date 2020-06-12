@@ -1,137 +1,94 @@
-import * as t from "io-ts";
 import {
+  ApiHeaderJson,
   basicResponseDecoder,
   BasicResponseType,
-  composeResponseDecoders,
-  constantResponseDecoder,
+  composeHeaderProducers,
   createFetchRequestForApi,
   IGetApiRequestType,
-  ioResponseDecoder,
-  IPostApiRequestType,
-  IResponseType
+  RequestHeaderProducer,
+  RequestHeaders
 } from "italia-ts-commons/lib/requests";
-import { ProblemJson } from "../../../../definitions/backend/ProblemJson";
-import { defaultRetryingFetch } from "../../../utils/fetch";
-import { BonusList, BonusListT } from "../types/bonusList";
+import { Omit } from "italia-ts-commons/lib/types";
 import {
-  EligibilityCheck,
-  EligibilityCheckT,
-  EligibilityId,
-  EligibilityIdT
-} from "../types/eligibility";
+  getBonusEligibilityCheckDefaultDecoder,
+  GetBonusEligibilityCheckT,
+  getLatestBonusActivationByIdDefaultDecoder,
+  GetLatestBonusActivationByIdT,
+  startBonusActivationProcedureDefaultDecoder,
+  StartBonusActivationProcedureT,
+  startBonusEligibilityCheckDefaultDecoder,
+  StartBonusEligibilityCheckT
+} from "../../../../definitions/bonus_vacanze/requestTypes";
+import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
+import { defaultRetryingFetch } from "../../../utils/fetch";
 
 type GetBonusListT = IGetApiRequestType<
   {},
   never,
   never,
-  BasicResponseType<BonusList>
+  BasicResponseType<BonusesAvailable>
 >;
+const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
-type EligibilityCheckT = IGetApiRequestType<
-  {},
-  never,
-  never,
-  // tslint:disable-next-line: max-union-size
-  | IResponseType<200, EligibilityCheck>
-  | IResponseType<202, EligibilityCheck>
-  | IResponseType<401, undefined>
-  | IResponseType<404, undefined>
-  | IResponseType<500, ProblemJson>
->;
-
-function getEligibilityCheckDecoder<A, O>(type: t.Type<A, O>) {
-  return composeResponseDecoders(
-    composeResponseDecoders(
-      composeResponseDecoders(
-        composeResponseDecoders(
-          ioResponseDecoder<200, (typeof type)["_A"], (typeof type)["_O"]>(
-            200,
-            type
-          ),
-          ioResponseDecoder<
-            202,
-            (typeof EligibilityIdT)["_A"],
-            (typeof EligibilityIdT)["_O"]
-          >(202, EligibilityIdT)
-        ),
-        constantResponseDecoder<undefined, 401>(401, undefined)
-      ),
-      constantResponseDecoder<undefined, 404>(404, undefined)
-    ),
-    ioResponseDecoder<
-      500,
-      (typeof ProblemJson)["_A"],
-      (typeof ProblemJson)["_O"]
-    >(500, ProblemJson)
-  );
-}
-
-type StartEligibilityCheckT = IPostApiRequestType<
-  {},
-  never,
-  never,
-  // tslint:disable-next-line: max-union-size
-  | IResponseType<202, EligibilityId>
-  | IResponseType<409, ProblemJson>
-  | IResponseType<401, undefined>
-  | IResponseType<500, ProblemJson>
->;
-
-function postEligibilityCheckDecoder<A, O>(type: t.Type<A, O>) {
-  return composeResponseDecoders(
-    composeResponseDecoders(
-      composeResponseDecoders(
-        ioResponseDecoder<202, (typeof type)["_A"], (typeof type)["_O"]>(
-          202,
-          type
-        ),
-        ioResponseDecoder<
-          409,
-          (typeof ProblemJson)["_A"],
-          (typeof ProblemJson)["_O"]
-        >(409, ProblemJson)
-      ),
-      constantResponseDecoder<undefined, 401>(401, undefined)
-    ),
-
-    ioResponseDecoder<
-      500,
-      (typeof ProblemJson)["_A"],
-      (typeof ProblemJson)["_O"]
-    >(500, ProblemJson)
-  );
-}
-
-const startEligibilityCheckT: StartEligibilityCheckT = {
-  method: "post",
-  url: () => `/bonus/vacanze/eligibility`,
+const getLatestBonusFromIdT: GetLatestBonusActivationByIdT = {
+  method: "get",
+  url: params => `/api/v1/bonus/vacanze/activations/${params.bonus_id}`,
   query: _ => ({}),
-  body: _ => "",
-  headers: () => ({ "Content-Type": "application/json" }),
-  response_decoder: postEligibilityCheckDecoder(EligibilityIdT)
+  headers: tokenHeaderProducer,
+  response_decoder: getLatestBonusActivationByIdDefaultDecoder()
 };
 
-const eligibilityCheckT: EligibilityCheckT = {
-  method: "get",
-  url: () => `/bonus/vacanze/eligibility`,
+const startBonusActivationProcedure: StartBonusActivationProcedureT = {
+  method: "post",
+  url: () => `/api/v1/bonus/vacanze/activations`,
   query: _ => ({}),
-  headers: () => ({}),
-  response_decoder: getEligibilityCheckDecoder(EligibilityCheckT)
+  body: _ => "",
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: startBonusActivationProcedureDefaultDecoder()
+};
+
+const startBonusEligibilityCheckT: StartBonusEligibilityCheckT = {
+  method: "post",
+  url: () => `/api/v1/bonus/vacanze/eligibility`,
+  query: _ => ({}),
+  body: _ => "",
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: startBonusEligibilityCheckDefaultDecoder()
+};
+
+const getBonusEligibilityCheckT: GetBonusEligibilityCheckT = {
+  method: "get",
+  url: () => `/api/v1/bonus/vacanze/eligibility`,
+  query: _ => ({}),
+  headers: tokenHeaderProducer,
+  response_decoder: getBonusEligibilityCheckDefaultDecoder()
 };
 
 const getAvailableBonusesT: GetBonusListT = {
   method: "get",
-  url: () => `/bonus/vacanze`,
+  url: () => `/bonus/vacanze/bonuses_available.json`,
   query: _ => ({}),
   headers: () => ({}),
-  response_decoder: basicResponseDecoder(BonusListT)
+  response_decoder: basicResponseDecoder(BonusesAvailable)
 };
+
+function ParamAuthorizationBearerHeaderProducer<
+  P extends { readonly Bearer: string }
+>(): RequestHeaderProducer<P, "Authorization"> {
+  return (p: P): RequestHeaders<"Authorization"> => {
+    return {
+      Authorization: `Bearer ${p.Bearer}`
+    };
+  };
+}
 
 //
 // A specific backend client to handle bonus vacanze requests
 //
 export function BackendBonusVacanze(
   baseUrl: string,
+  contentUrl: string,
+  token: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
   const options = {
@@ -139,15 +96,36 @@ export function BackendBonusVacanze(
     fetchApi
   };
 
+  const optionsStaticContent = {
+    baseUrl: contentUrl,
+    fetchApi
+  };
+
+  // withBearerToken injects the field 'Baerer' with value token into the parameter P
+  // of the f function
+  const withBearerToken = <P extends { Bearer: string }, R>(
+    f: (p: P) => Promise<R>
+  ) => async (po: Omit<P, "Bearer">): Promise<R> => {
+    const params = Object.assign({ Bearer: String(token) }, po) as P;
+    return f(params);
+  };
+
   return {
     getAvailableBonuses: createFetchRequestForApi(
       getAvailableBonusesT,
-      options
+      optionsStaticContent
     ),
-    postEligibilityCheck: createFetchRequestForApi(
-      startEligibilityCheckT,
-      options
+    startBonusEligibilityCheck: withBearerToken(
+      createFetchRequestForApi(startBonusEligibilityCheckT, options)
     ),
-    getEligibilityCheck: createFetchRequestForApi(eligibilityCheckT, options)
+    getBonusEligibilityCheck: withBearerToken(
+      createFetchRequestForApi(getBonusEligibilityCheckT, options)
+    ),
+    getLatestBonusVacanzeFromId: withBearerToken(
+      createFetchRequestForApi(getLatestBonusFromIdT, options)
+    ),
+    startBonusActivationProcedure: withBearerToken(
+      createFetchRequestForApi(startBonusActivationProcedure, options)
+    )
   };
 }
