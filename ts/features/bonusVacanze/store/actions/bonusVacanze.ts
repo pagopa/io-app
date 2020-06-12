@@ -10,21 +10,30 @@ import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvai
 import { BonusActivationProgressEnum } from "../reducers/bonusVacanzeActivation";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
-export const eligibilityRequestProgress = createStandardAction(
-  "BONUS_CHECK_ELIGIBILITY_REQUEST_PROGRESS"
-)<EligibilityRequestProgressEnum>();
-
 export const availableBonusesLoad = createAsyncAction(
   "BONUS_AVAILABLE_REQUEST",
   "BONUS_AVAILABLE_SUCCESS",
   "BONUS_AVAILABLE_FAILURE"
 )<void, BonusesAvailable, Error>();
 
+export type EligibilityCheckPayload = {
+  status: EligibilityRequestProgressEnum;
+  check?: EligibilityCheck;
+};
+
 export const checkBonusEligibility = createAsyncAction(
   "BONUS_CHECK_ELIGIBILITY_REQUEST",
   "BONUS_CHECK_ELIGIBILITY_SUCCESS",
   "BONUS_CHECK_ELIGIBILITY_FAILURE"
-)<void, EligibilityCheck, Error>();
+)<void, EligibilityCheckPayload, Error>();
+
+export const cancelBonusEligibility = createStandardAction(
+  "BONUS_ELIGIBILITY_CANCEL"
+)<void>();
+
+export const completeBonusEligibility = createStandardAction(
+  "BONUS_ELIGIBILITY_COMPLETED"
+)<void>();
 
 export const eligibilityRequestId = createStandardAction(
   "BONUS_CHECK_ELIGIBILITY_REQUEST_ID"
@@ -50,8 +59,8 @@ export const bonusVacanzeActivation = createAsyncAction(
 
 export type BonusActions =
   | ActionType<typeof availableBonusesLoad>
-  | ActionType<typeof eligibilityRequestProgress>
   | ActionType<typeof eligibilityRequestId>
   | ActionType<typeof bonusVacanzeActivation>
   | ActionType<typeof checkBonusEligibility>
-  | ActionType<typeof loadBonusVacanzeFromId>;
+  | ActionType<typeof loadBonusVacanzeFromId>
+  | ActionType<typeof cancelBonusEligibility>;

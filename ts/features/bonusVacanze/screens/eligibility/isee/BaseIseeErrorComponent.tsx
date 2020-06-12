@@ -2,11 +2,13 @@ import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../i18n";
+import { abortBonusRequest } from "../../../components/AbortBonusRequest";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
+import { useHardwareBackButton } from "../../../components/hooks/useHardwareBackButton";
 import { renderRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 
@@ -21,6 +23,7 @@ type Props = {
   body: string;
   onCancel: () => void;
 };
+
 /**
  * A generic component used to display the possible ISEE errors during the check eligibility phase.
  * @param props
@@ -35,6 +38,11 @@ export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
   );
   const cancelRequest = I18n.t("bonus.bonusVacanza.cta.cancelRequest");
 
+  useHardwareBackButton(() => {
+    abortBonusRequest(props.onCancel);
+    return true;
+  });
+
   return (
     <>
       <InfoScreenComponent
@@ -46,7 +54,10 @@ export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
         buttons={[
           confirmButtonProps(() => openLink(inpsDsuHomeUrl), goToDsu),
           confirmButtonProps(() => openLink(inpsSimulationUrl), goToSimulation),
-          cancelButtonProps(props.onCancel, cancelRequest)
+          cancelButtonProps(
+            () => abortBonusRequest(props.onCancel),
+            cancelRequest
+          )
         ]}
       />
     </>
