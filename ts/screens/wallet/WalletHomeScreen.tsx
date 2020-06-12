@@ -3,14 +3,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, RefreshControl, StyleSheet } from "react-native";
-import { Grid, Row } from "react-native-easy-grid";
 import {
   NavigationEventSubscription,
   NavigationInjectedProps
 } from "react-navigation";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
-import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
@@ -86,6 +84,10 @@ type Props = ReturnType<typeof mapStateToProps> &
 const styles = StyleSheet.create({
   inLineSpace: {
     lineHeight: 20
+  },
+  addDescription: {
+    lineHeight: 24,
+    fontSize: variables.fontSize1
   },
   white: {
     color: variables.colorWhite
@@ -226,51 +228,35 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         }
         isError={isError}
       />
-      // <View style={cardHeaderStyle.rotateCard}>
-      //   <View style={[cardHeaderStyle.card, cardHeaderStyle.flatBottom]}>
-      //     <View style={[cardHeaderStyle.cardInner]}>
-      //       <View style={[styles.flexRow, cardHeaderStyle.rotateText]}>
-      //         <Text
-      //           style={[
-      //             cardHeaderStyle.brandLightGray,
-      //             cardHeaderStyle.headerText
-      //           ]}
-      //         >
-      //           {I18n.t("wallet.paymentMethods")}
-      //         </Text>
-      //         <View>
-      //           {!isError && (
-      //             <AddPaymentMethodButton
-      //               onPress={() =>
-      //                 this.props.navigateToWalletAddPaymentMethod(
-      //                   getCurrentRouteKey(this.props.nav)
-      //                 )
-      //               }
-      //               iconSize={customVariables.fontSize2}
-      //               labelSize={customVariables.fontSizeSmall}
-      //             />
-      //           )}
-      //         </View>
-      //       </View>
-      //     </View>
-      //   </View>
-      // </View>
     );
   }
 
-  private cardPreview(wallets: any) {
+  private cardPreview(wallets: ReadonlyArray<Wallet>) {
     return (
       <View>
         <View spacer={true} />
+        {wallets.length === 0 && (
+          <React.Fragment>
+            <Text white={true} style={styles.addDescription}>
+              {I18n.t("wallet.newPaymentMethod.addDescription")}
+            </Text>
+            <View spacer={true} large={true} />
+            <View spacer={true} small={true} />
+          </React.Fragment>
+        )}
         {this.cardHeader()}
-        <View>
-          <CardsFan
-            wallets={
-              wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
-            }
-            navigateToWalletList={this.props.navigateToWalletList}
-          />
-        </View>
+        {wallets.length > 0 ? (
+          <View>
+            <CardsFan
+              wallets={
+                wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
+              }
+              navigateToWalletList={this.props.navigateToWalletList}
+            />
+          </View>
+        ) : (
+          <View spacer={true} small={true} />
+        )}
         {/* Display this item only if the flag is enabled */}
         {bonusVacanzeEnabled && (
           <RequestBonus
@@ -281,48 +267,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           />
         )}
       </View>
-    );
-  }
-
-  private withoutCardsHeader(hasNotSupportedWalletsOnly: boolean) {
-    return (
-      <Grid>
-        <Row>
-          <Text note={true} white={true} style={styles.inLineSpace}>
-            {I18n.t("wallet.newPaymentMethod.addDescription")}
-            {hasNotSupportedWalletsOnly && (
-              <Text note={true} white={true} bold={true}>
-                {` ${I18n.t("wallet.newPaymentMethod.walletAlert")}`}
-              </Text>
-            )}
-          </Text>
-        </Row>
-        <Row />
-        <Row>
-          <View spacer={true} />
-        </Row>
-        <Row>
-          <View style={styles.container}>
-            <ButtonDefaultOpacity
-              block={true}
-              whiteBordered={true}
-              onPress={() =>
-                this.props.navigateToWalletAddPaymentMethod(
-                  getCurrentRouteKey(this.props.nav)
-                )
-              }
-              activeOpacity={1}
-            >
-              <Text bold={true}>
-                {I18n.t("wallet.newPaymentMethod.addButton")}
-              </Text>
-            </ButtonDefaultOpacity>
-          </View>
-        </Row>
-        <Row>
-          <View spacer={true} />
-        </Row>
-      </Grid>
     );
   }
 
@@ -343,8 +287,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   private errorWalletsHeader() {
     return (
       <View>
-        {this.cardHeader(true)}
-        <View spacer={true} />
         <Text style={[styles.white, styles.inLineSpace]}>
           {I18n.t("wallet.walletLoadFailure")}
         </Text>
@@ -359,6 +301,15 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
         </ButtonDefaultOpacity>
         <View spacer={true} />
+        {/* Display this item only if the flag is enabled */}
+        {bonusVacanzeEnabled && (
+          <RequestBonus
+            onButtonPress={this.props.navigateToBonusList}
+            activeBonus={this.props.bonusVacanzeActivationActive}
+            availableBonusesList={this.props.availableBonusesList}
+            onBonusPress={this.props.navigateToBonusDetail}
+          />
+        )}
       </View>
     );
   }
@@ -504,18 +455,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
     const wallets = pot.getOrElse(potWallets, []);
 
-    const hasNotSupportedWalletsOnly =
-      wallets.length > 0 &&
-      wallets.filter(wallet => wallet.type === TypeEnum.CREDIT_CARD).length ===
-        0;
-
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
       : pot.isError(potWallets)
         ? this.errorWalletsHeader()
-        : wallets.length > 0 && !hasNotSupportedWalletsOnly
-          ? this.cardPreview(wallets)
-          : this.withoutCardsHeader(hasNotSupportedWalletsOnly);
+        : this.cardPreview(wallets);
 
     const transactionContent = pot.isError(potTransactions)
       ? this.transactionError()

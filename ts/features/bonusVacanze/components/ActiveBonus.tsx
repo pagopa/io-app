@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     minHeight: 24
   },
   containerColor: {
-    backgroundColor: customVariables.brandPrimary,
+    padding: customVariables.appHeaderPaddingHorizontal,
+    backgroundColor: "#2C489D",
     color: customVariables.colorWhite
   }
 });

@@ -10,6 +10,7 @@ import {
   ViewStyle
 } from "react-native";
 import { StyleSheet } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
@@ -21,7 +22,6 @@ import {
 } from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
-import LinearGradient from "react-native-linear-gradient";
 
 type Props = Readonly<{
   allowGoBack?: boolean;

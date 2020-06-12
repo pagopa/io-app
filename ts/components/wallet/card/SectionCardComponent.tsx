@@ -1,6 +1,7 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
+import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { AddPaymentMethodButton } from "../AddPaymentMethodButton";
 
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   },
   badgeColor: {
     height: 18,
-    marginTop: 5,
+    marginTop: 4,
     backgroundColor: customVariables.brandHighLighter
   },
   headerText: {
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
     marginRight: 9
   },
   badgeText: {
+    marginTop: 2,
     fontSize: customVariables.fontSizeSmaller,
     lineHeight: Platform.OS === "ios" ? 14 : 16
   },
@@ -46,11 +48,14 @@ const styles = StyleSheet.create({
   card: {
     // iOS and Andorid card shadow
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1.5,
-    elevation: Platform.OS === "android" ? 3 : 0,
-
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    zIndex: 7,
+    elevation: 7,
     backgroundColor: customVariables.brandDarkGray,
     borderRadius: 8,
     marginLeft: 0,
@@ -92,9 +97,8 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               </Text>
               {isNew && (
                 <Badge style={styles.badgeColor}>
-                  <Text style={styles.badgeText}>
-                    {/* Replace with I18n.t("wallet.methods.newCome") after PR #1875 */}
-                    Novità
+                  <Text semibold={true} style={styles.badgeText}>
+                    {I18n.t("wallet.methods.newCome")}
                   </Text>
                 </Badge>
               )}

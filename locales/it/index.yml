@@ -593,9 +593,7 @@ wallet:
   newPaymentMethod:
     add: aggiungi
     addButton: Aggiungi un metodo
-    addDescription:
-      Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
-      ecc.) per non doverli inserire ad ogni transazione.
+    addDescription: Aggiungi un metodo di pagamento per pagare da IO in pochi secondi, oppure richiedi l’attivazione di un bonus o di una carta sconto.
     walletAlert: "Nel tuo portafoglio sono registrati dei metodi di pagamento ma nessuno di questi è compatibile con IO"
     successful: Carta aggiunta con successo
     failed: Impossibile aggiungere la carta
