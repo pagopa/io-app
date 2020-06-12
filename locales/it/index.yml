@@ -1324,6 +1324,12 @@ bonus:
         completed:
           title: Congratulazioni!
           description: Il tuo bonus è attivo
+    abort:
+      title: Annulla
+      body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
+      cancel: Torna alla richiesta
+      confirm: Termina richiesta
+      completed: Richiesta annullata
   bonusList:
     title: Aggiungi sovvenzione
     contentTitle: Seleziona uno dei bonus disponibili
@@ -1332,7 +1338,7 @@ bonus:
   requestTitle: Richiesta
   active: Attivo
   failed: Fallito
-  consumed: Consumato
+  redeemed: Consumato
   tos:
     title: Termini e condizioni d’uso e Privacy policy
     content: !include bonus/bonusVacanze/bonus_tos.md

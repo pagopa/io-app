@@ -1,14 +1,14 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import H5 from "../../../components/ui/H5";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { maybeInnerProperty } from "../../../utils/options";
-import { BonusesAvailable } from "../types/bonusesAvailable";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 import ActiveBonus from "./ActiveBonus";
 
@@ -53,19 +53,9 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
     onBonusPress,
     availableBonusesList
   } = props;
-  const bonusVacanzeCategory = availableBonusesList.items.find(
-    bi => bi.id_type === ID_BONUS_VACANZE_TYPE
+  const maybeBonusVacanzeCategory = fromNullable(
+    availableBonusesList.find(bi => bi.id_type === ID_BONUS_VACANZE_TYPE)
   );
-  const validFrom = maybeInnerProperty(
-    bonusVacanzeCategory,
-    "valid_from",
-    _ => _
-  ).fold(undefined, _ => _);
-  const validTo = maybeInnerProperty(
-    bonusVacanzeCategory,
-    "valid_to",
-    _ => _
-  ).fold(undefined, _ => _);
 
   return (
     <Content>
@@ -82,8 +72,12 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
             <ActiveBonus
               bonus={activeBonus.value}
               onPress={onBonusPress}
-              validFrom={validFrom}
-              validTo={validTo}
+              validFrom={maybeBonusVacanzeCategory
+                .map(b => b.valid_from)
+                .toUndefined()}
+              validTo={maybeBonusVacanzeCategory
+                .map(b => b.valid_to)
+                .toUndefined()}
             />
           </View>
         )}

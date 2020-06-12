@@ -78,7 +78,7 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
   const activateBonusText = title;
 
   return (
-    <BaseScreenComponent goBack={true} headerTitle={title}>
+    <BaseScreenComponent goBack={props.onCancel} headerTitle={title}>
       <ScreenContent title={title} bounces={false}>
         <Text style={styles.padding}>{description}</Text>
         <View spacer={true} />
