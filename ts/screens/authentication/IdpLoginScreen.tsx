@@ -10,6 +10,7 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
 import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import I18n from "../../i18n";
@@ -25,7 +26,6 @@ import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/conten
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
-import IdpCustomContextualHelpContent from '../../components/screens/IdpCustomContextualHelpContent';
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -220,7 +220,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       };
     }
     const idpTextData = selectedIdpTextData.value;
-    return IdpCustomContextualHelpContent({idpTextData})
+    return IdpCustomContextualHelpContent({ idpTextData });
   }
 
   public render() {

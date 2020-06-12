@@ -1,13 +1,9 @@
 /**
  * Implements the reducers for static content.
- *
- * TODO: add eviction of old entries
- * https://www.pivotaltracker.com/story/show/159440294
  */
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { NavigationState } from "react-navigation";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
@@ -15,7 +11,6 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
-import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import {
   ScopeEnum,
   Service as ServiceMetadata
@@ -34,6 +29,7 @@ import {
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
+import { navSelector } from "./navigationHistory";
 import { GlobalState } from "./types";
 
 /**
@@ -166,13 +162,10 @@ export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
  * return an option with screen contextual help data if they are loaded and defined
  * @param id
  */
-export const screenContextualHelpData = (navState: NavigationState) =>
-  createSelector<
-    GlobalState,
-    pot.Pot<ContextualHelp, Error>,
-    Option<ScreenCHData>
-  >(contextualHelpDataSelector, contextualHelpData => {
-    return pot.getOrElse(
+export const screenContextualHelpDataSelector = createSelector(
+  [contextualHelpDataSelector, navSelector],
+  (contextualHelpData, navState) =>
+    pot.getOrElse(
       pot.map(contextualHelpData, data => {
         const currentRouteName = getCurrentRouteName(navState);
         if (currentRouteName === undefined) {
@@ -186,8 +179,8 @@ export const screenContextualHelpData = (navState: NavigationState) =>
         return fromNullable(screenData);
       }),
       none
-    );
-  });
+    )
+);
 
 export default function content(
   state: ContentState = initialContentState,

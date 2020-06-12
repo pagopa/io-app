@@ -21,7 +21,7 @@ import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { handleItemOnPress } from "../../utils/url";
-import { ContextualHelpModal } from "../ContextualHelpModal";
+import ContextualHelpModal from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
 import {
