@@ -23,6 +23,7 @@ import {
   authenticationPersistConfig,
   createRootReducer
 } from "../store/reducers";
+import { ContentState } from "../store/reducers/content";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
@@ -34,7 +35,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 12;
+const CURRENT_REDUX_STORE_VERSION = 14;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -209,6 +210,34 @@ const migrations: MigrationManifest = {
       debug: {
         isDebugModeEnabled: false
       }
+    };
+  },
+  // Version 13
+  // add content.idpTextData
+  // set default value
+  "13": (state: PersistedState) => {
+    return {
+      ...state,
+      content: {
+        ...(state as PersistedGlobalState).content,
+        idpTextData: pot.none
+      }
+    };
+  },
+  // Version 14
+  // remove content.idpTextData
+  // add context.contextualHelp
+  "14": (state: PersistedState) => {
+    const content = (state as PersistedGlobalState).content;
+    const newContent: ContentState = {
+      servicesMetadata: content.servicesMetadata,
+      municipality: content.municipality,
+      servicesByScope: content.servicesByScope,
+      contextualHelp: pot.none
+    };
+    return {
+      ...state,
+      content: newContent
     };
   }
 };

@@ -1,3 +1,4 @@
+import { Option, some } from "fp-ts/lib/Option";
 import { Linking } from "react-native";
 import I18n from "../../../../i18n";
 import { Dispatch } from "../../../../store/actions/types";
@@ -6,6 +7,14 @@ import { handleInternalLink, IO_INTERNAL_LINK_PREFIX } from "./internalLink";
 
 export const isIoInternalLink = (href: string): boolean =>
   href.startsWith(IO_INTERNAL_LINK_PREFIX);
+
+// Prefix to handle the press of a link as managed by the handleItemOnPress function.
+// It should be expressed like `ioHandledLink://emailto:mario.rossi@yahoo.it` or `ioHandledLink://call:0039000000`
+export const IO_CUSTOM_HANDLED_PRESS_PREFIX = "iohandledlink://";
+export const deriveCustomHandledLink = (href: string): Option<string> =>
+  some(href.toLowerCase().trim())
+    .filter(s => s.indexOf(IO_CUSTOM_HANDLED_PRESS_PREFIX) !== -1)
+    .map(s => s.replace(IO_CUSTOM_HANDLED_PRESS_PREFIX, ""));
 
 /**
  * Handles links clicked in the Markdown (webview) component.

@@ -2,6 +2,7 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
+import { FOOTER_SAFE_AREA } from "../../utils/constants";
 
 type Props = Readonly<{
   dark?: boolean;
@@ -29,6 +30,13 @@ const styles = StyleSheet.create({
   },
   white: {
     backgroundColor: customVariables.colorWhite
+  },
+  flexGrow: {
+    flexGrow: 1
+  },
+  correctBottomPadding: {
+    marginBottom: -FOOTER_SAFE_AREA,
+    paddingBottom: FOOTER_SAFE_AREA * 2
   }
 });
 
@@ -40,9 +48,16 @@ const styles = StyleSheet.create({
  */
 export const SlidedContentComponent = (props: Props & React.Props<Content>) => {
   return (
-    <Content noPadded={true} style={styles.container} bounces={false}>
+    <Content
+      noPadded={true}
+      style={[styles.container, styles.flexGrow]}
+      contentContainerStyle={styles.flexGrow}
+      bounces={false}
+    >
       <View
         style={[
+          styles.flexGrow,
+          styles.correctBottomPadding,
           props.hasFlatBottom ? styles.contentBottomFlat : styles.content,
           props.dark ? styles.dark : styles.white
         ]}
