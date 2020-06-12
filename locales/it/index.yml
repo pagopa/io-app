@@ -1285,7 +1285,7 @@ bonus:
     taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il
     requestedAt: Richiesto il
-    advice: "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i Termini e le Condizioni d’uso e la Privacy Policy del servizio."
+    advice: `Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i `
     status: Stato
     name: Bonus Vacanze
     validity: Valido nel periodo

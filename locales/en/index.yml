@@ -1252,7 +1252,7 @@ bonus:
     taxBenefit: Deductible in tax return
     request: Request the
     requestedAt: Requested on
-    advice: 'By clicking on "Request the Bonus Vacanze" you declare that you have read and understood the Terms and Conditions of Use and Privacy Policy of the service.'
+    advice: `By clicking on "Request the Bonus Vacanze" you declare that you have read and understood the `
     status: Status
     name: Bonus Vacanze
     validity: Valid between
