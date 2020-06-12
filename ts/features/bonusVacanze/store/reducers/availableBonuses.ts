@@ -2,11 +2,11 @@ import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { availableBonusesLoad } from "../actions/bonusVacanze";
-import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 
 export type AvailableBonusesState = pot.Pot<BonusesAvailable, Error>;
 
