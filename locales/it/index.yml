@@ -215,8 +215,8 @@ profile:
       preferred_language:
         title: Lingua preferita
         subtitle: In quale lingua vuoi usare l'applicazione?
-        alert: 
-          title: Vuoi cambiare la lingua in  
+        alert:
+          title: Vuoi cambiare la lingua in
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
     empty:
@@ -1279,13 +1279,13 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
-    validBetween: Potrai usare questo Bonus Vacanze dal 01/07/2020 fino al 31/12/2020
+    validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
     bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
     usableAmount: Spendibile presso la struttura ricettiva
     taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il
     requestedAt: Richiesto il
-    advice: 'Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i Termini e le Condizioni d’uso e la Privacy Policy del servizio.'
+    advice: "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i Termini e le Condizioni d’uso e la Privacy Policy del servizio."
     status: Stato
     name: Bonus Vacanze
     validity: Valido nel periodo

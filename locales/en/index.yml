@@ -1246,7 +1246,7 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
-    validBetween: You will be able to use the Bonus Vacanze starting from 07/01/2020 until 12/31/2020
+    validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
     bonusRejected: Attention! This Bonus Vacanze has been rejected
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return

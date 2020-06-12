@@ -20,13 +20,19 @@ import {
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
+import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
 import QrModalBox from "../components/QrModalBox";
-import { isBonusActive } from "../utils/bonus";
+import { availableBonusesSelectorFromId } from "../store/reducers/availableBonuses";
+import {
+  ID_BONUS_VACANZE_TYPE,
+  isBonusActive,
+  validityInterval
+} from "../utils/bonus";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -43,6 +49,7 @@ const PNG_IMAGE_TYPE = "image/png";
 
 type Props = NavigationInjectedProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({
@@ -177,17 +184,18 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.fiscalCode.help"
 };
 
+const shareQR = async (content: string, code: string) => {
+  const shared = await shareBase64Content(content, code).run();
+  if (shared.isLeft()) {
+    showToast(I18n.t("global.genericError"));
+  }
+};
+
+// tslint:disable-next-line: no-big-function
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
 
   const bonus = props.navigation.getParam("bonus");
-
-  const shareQR = async (content: string, code: string) => {
-    const shared = await shareBase64Content(content, code).run();
-    if (shared.isLeft()) {
-      showToast(I18n.t("global.genericError"));
-    }
-  };
 
   React.useEffect(() => {
     readBase64Svg(bonus)
@@ -195,6 +203,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       .catch(_ => undefined);
   }, []);
 
+  // translate the bonus status. If no mapping found -> empty string
   const bonusStatusDescription = I18n.t(`bonus.${bonus.status.toLowerCase()}`, {
     defaultValue: ""
   });
@@ -241,6 +250,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       />
     );
 
+  const from = props.bonusInfo.map(bi => bi.valid_from);
+  const to = props.bonusInfo.map(bi => bi.valid_from);
+  const bonusValidityInterval = validityInterval(
+    from.toUndefined(),
+    to.toUndefined()
+  );
   return (
     <DarkLayout
       bounces={false}
@@ -270,7 +285,10 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             <View style={styles.paddedContent}>
               <Text style={[styles.validUntil]} semibold={true}>
                 {isBonusActive(bonus)
-                  ? I18n.t("bonus.bonusVacanza.validBetween")
+                  ? I18n.t("bonus.bonusVacanza.validBetween", {
+                      from: bonusValidityInterval.fold("n/a", v => v.e1),
+                      to: bonusValidityInterval.fold("n/a", v => v.e2)
+                    })
                   : I18n.t("bonus.bonusVacanza.bonusRejected")}
               </Text>
             </View>
@@ -371,11 +389,17 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
+const mapStateToProps = (state: GlobalState) => {
+  return {
+    bonusInfo: availableBonusesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state)
+  };
+};
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => dispatch(navigateBack())
 });
 
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(withLightModalContext(ActiveBonusScreen));
