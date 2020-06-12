@@ -1,11 +1,10 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -14,16 +13,11 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
-import { MultiImage } from "../../../components/ui/MultiImage";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
-import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
-import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
-import { logosForService } from "../../../utils/services";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { navigateToBonusEligibilityLoading } from "../navigation/action";
-import { BonusAvailable } from "../types/bonusesAvailable";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -33,8 +27,7 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = OwnProps &
   LightModalContextInterface &
-  ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   noPadded: {
@@ -55,7 +48,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48
   },
-  serviceMultiImage: {
+  bonusImage: {
     width: 48,
     height: 48
   },
@@ -106,13 +99,12 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
       <Content>
         <View style={styles.row}>
           <View style={styles.flexStart}>
-            {props.serviceById &&
-              pot.isSome(props.serviceById) && (
-                <MultiImage
-                  style={styles.serviceMultiImage}
-                  source={logosForService(props.serviceById.value)}
-                />
-              )}
+            {bonusItem.sponsorship_cover && (
+              <Image
+                style={styles.bonusImage}
+                source={{ uri: bonusItem.sponsorship_cover }}
+              />
+            )}
           </View>
           <View style={styles.flexEnd}>
             {bonusItem.cover && (
@@ -121,16 +113,14 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
           </View>
         </View>
         <View spacer={true} />
-        {pot.isSome(props.serviceById) && (
-          <Text dark={true} style={styles.orgName}>
-            {props.serviceById.value.organization_name}
-          </Text>
-        )}
+        <Text dark={true} style={styles.orgName}>
+          {bonusItem.subtitle}
+        </Text>
         <Text bold={true} dark={true} style={styles.title}>{`${I18n.t(
           "bonus.requestTitle"
         )} ${bonusItem.name}`}</Text>
         <View spacer={true} large={true} />
-        <Text dark={true}>{bonusItem.description}</Text>
+        <Text dark={true}>{bonusItem.content}</Text>
         <ButtonDefaultOpacity
           style={styles.noPadded}
           small={true}
@@ -166,15 +156,6 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   return <ContainerComponent isLoading={!isMarkdownLoaded} />;
 };
 
-const mapStateToProps = (state: GlobalState, props: OwnProps) => {
-  const serviceById = fromNullable(
-    props.navigation.getParam("bonusItem").service_id
-  ).fold(pot.none, s => serviceByIdSelector(s)(state) || pot.none);
-  return {
-    serviceById
-  };
-};
-
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO add bonus request action or just navigate to TOS screen (?)
   requestBonusActivation: () => dispatch(navigateToBonusEligibilityLoading()),
@@ -183,7 +164,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 export default withLightModalContext(
   connect(
-    mapStateToProps,
+    undefined,
     mapDispatchToProps
   )(BonusInformationScreen)
 );
