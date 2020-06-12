@@ -1,9 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import I18n from "../../../../../i18n";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { LoadingErrorComponent } from "../../../components/loadingErrorScreen/LoadingErrorComponent";
+import I18n from "../../../../i18n";
+import { GlobalState } from "../../../../store/reducers/types";
+import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 

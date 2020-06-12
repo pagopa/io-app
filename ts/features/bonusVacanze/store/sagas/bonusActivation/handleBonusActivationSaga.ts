@@ -7,8 +7,11 @@ import { navigationHistoryPop } from "../../../../../store/actions/navigationHis
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import {
-  navigateToActivateBonus,
-  navigateToBonusEligibilityLoading
+  navigateToBonusActivationCompleted,
+  navigateToBonusActivationLoading,
+  navigateToBonusActivationTimeout,
+  navigateToBonusEligibilityLoading,
+  navigateToEligible
 } from "../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
@@ -19,7 +22,13 @@ import { BonusActivationProgressEnum } from "../../reducers/bonusVacanzeActivati
 import { bonusActivationSaga } from "./getBonusActivationSaga";
 
 const eligibilityToNavigate = new Map([
-  [BonusActivationProgressEnum.SUCCESS, navigateToActivateBonus]
+  [BonusActivationProgressEnum.SUCCESS, navigateToBonusActivationCompleted],
+  [BonusActivationProgressEnum.TIMEOUT, navigateToBonusActivationTimeout],
+  [
+    BonusActivationProgressEnum.ELIGIBILITY_EXPIRED,
+    navigateToBonusActivationTimeout
+  ],
+  [BonusActivationProgressEnum.EXISTS, navigateToBonusActivationTimeout]
 ]);
 
 type BonusActivationSagaType = ReturnType<typeof bonusActivationSaga>;
@@ -48,7 +57,7 @@ export function* eligibilityWorker(eligibilitySaga: BonusActivationSagaType) {
   );
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
     // show the loading page for the check eligibility
-    yield put(navigateToBonusEligibilityLoading());
+    yield put(navigateToBonusActivationLoading());
   }
 
   // start and wait for network request

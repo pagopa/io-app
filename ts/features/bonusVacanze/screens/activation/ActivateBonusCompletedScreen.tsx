@@ -1,15 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import I18n from "../../../../../i18n";
-import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
-import { renderRasterImage } from "../../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import I18n from "../../../../i18n";
+import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
+import { renderRasterImage } from "../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const image = require("../../../../../../img/bonus/bonusVacanze/vacanze.png");
+const image = require("../../../../../img/bonus/bonusVacanze/vacanze.png");
 
 /**
  * This screen informs the user that the bonus has been activated!

@@ -7,7 +7,7 @@ import { navigationHistoryPop } from "../../../../../store/actions/navigationHis
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import {
-  navigateToActivateBonus,
+  navigateToEligible,
   navigateToBonusEligibilityLoading,
   navigateToIseeNotAvailable,
   navigateToIseeNotEligible,
@@ -23,7 +23,7 @@ import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
 import { bonusEligibilitySaga } from "./getBonusEligibilitySaga";
 
 const eligibilityToNavigate = new Map([
-  [EligibilityRequestProgressEnum.ELIGIBLE, navigateToActivateBonus],
+  [EligibilityRequestProgressEnum.ELIGIBLE, navigateToEligible],
   [EligibilityRequestProgressEnum.INELIGIBLE, navigateToIseeNotEligible],
   [EligibilityRequestProgressEnum.ISEE_NOT_FOUND, navigateToIseeNotAvailable],
   [EligibilityRequestProgressEnum.TIMEOUT, navigateToTimeoutEligibilityCheck]
