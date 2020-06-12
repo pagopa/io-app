@@ -71,9 +71,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => {
   const elc = eligibilityEligibleSelector(state);
   return {
-    bonusAmount: elc.fold(0 as MaxBonusAmount, e => e.max_amount),
-    taxBenefit: elc.fold(0 as MaxBonusTaxBenefit, e => e.max_tax_benefit),
-    familyMembers: elc.fold([], e => e.family_members)
+    bonusAmount: elc.fold(0 as MaxBonusAmount, e => e.dsu_request.max_amount),
+    taxBenefit: elc.fold(
+      0 as MaxBonusTaxBenefit,
+      e => e.dsu_request.max_tax_benefit
+    ),
+    familyMembers: elc.fold([], e => e.dsu_request.family_members)
   };
 };
 

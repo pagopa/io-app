@@ -1,52 +1,46 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { canBonusVacanzeBeRequestedSelector } from "../bonusVacanzeActivation";
-
 import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
-import { BonusActivationDsu } from "../../../../../../definitions/bonus_vacanze/BonusActivationDsu";
 import { BonusActivationStatusEnum } from "../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
-import { EligibilityCheckSuccess } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
-import { StatusEnum } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
+import { BonusCode } from "../../../../../../definitions/bonus_vacanze/BonusCode";
+import { Dsu } from "../../../../../../definitions/bonus_vacanze/Dsu";
+import { FamilyMembers } from "../../../../../../definitions/bonus_vacanze/FamilyMembers";
 import { MaxBonusAmount } from "../../../../../../definitions/bonus_vacanze/MaxBonusAmount";
 import { MaxBonusTaxBenefit } from "../../../../../../definitions/bonus_vacanze/MaxBonusTaxBenefit";
+import { canBonusVacanzeBeRequestedSelector } from "../bonusVacanzeActivation";
 
-export const mockedElegibilityCheck: EligibilityCheckSuccess = {
-  family_members: [
-    {
-      name: "Mario" as NonEmptyString,
-      surname: "Rossi" as NonEmptyString,
-      fiscal_code: "EFCMZZ80A12L720R" as FiscalCode
-    },
-    {
-      name: "Giulia" as NonEmptyString,
-      surname: "Rossi" as NonEmptyString,
-      fiscal_code: "CDCMQQ81A12L721R" as FiscalCode
-    },
-    {
-      name: "Piero" as NonEmptyString,
-      surname: "Rossi" as NonEmptyString,
-      fiscal_code: "ABCMYY82A12L722R" as FiscalCode
-    }
-  ],
-  max_amount: 500 as MaxBonusAmount,
-  max_tax_benefit: 100 as MaxBonusTaxBenefit,
-  id: "d296cf6a-11f8-412b-972a-ede34d629680" as NonEmptyString,
-  status: StatusEnum.ELIGIBLE,
-  valid_before: new Date("2020-07-04T12:20:00.000Z")
-};
+const familyMembers: FamilyMembers = [
+  {
+    name: "Mario" as NonEmptyString,
+    surname: "Rossi" as NonEmptyString,
+    fiscal_code: "EFCMZZ80A12L720R" as FiscalCode
+  },
+  {
+    name: "Giulia" as NonEmptyString,
+    surname: "Rossi" as NonEmptyString,
+    fiscal_code: "CDCMQQ81A12L721R" as FiscalCode
+  },
+  {
+    name: "Piero" as NonEmptyString,
+    surname: "Rossi" as NonEmptyString,
+    fiscal_code: "ABCMYY82A12L722R" as FiscalCode
+  }
+];
 
-const dsuRequest: BonusActivationDsu = {
-  ...mockedElegibilityCheck,
+const dsuData: Dsu = {
   request_id: "request_id" as NonEmptyString,
   isee_type: "isee_id",
   dsu_protocol_id: "dsu_protocol_id" as NonEmptyString,
   dsu_created_at: "2020-05-25T00:00:00.000Z",
-  has_discrepancies: false
+  has_discrepancies: false,
+  family_members: familyMembers,
+  max_amount: 499 as MaxBonusAmount,
+  max_tax_benefit: 30 as MaxBonusTaxBenefit
 };
 
 export const bonus: BonusActivationWithQrCode = {
-  id: "XYZ" as NonEmptyString,
-  code: "ABCDE123XYZ" as NonEmptyString,
+  id: "BONUS_ID" as BonusCode,
+  applicant_fiscal_code: "SPNDNL80R11C522K" as FiscalCode,
   qr_code: [
     {
       mime_type: "image/png",
@@ -57,10 +51,9 @@ export const bonus: BonusActivationWithQrCode = {
       content: "content"
     }
   ],
-  applicant_fiscal_code: "ABCMYY82A12L722R" as FiscalCode,
-  status: BonusActivationStatusEnum.ACTIVE,
-  dsu_request: dsuRequest,
-  updated_at: new Date("2020-07-04T12:20:00.000Z")
+  dsu_request: dsuData,
+  created_at: new Date(),
+  status: BonusActivationStatusEnum.ACTIVE
 };
 
 describe("canBonusVacanzeBeRequestedSelector selector", () => {
