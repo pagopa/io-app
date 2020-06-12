@@ -1298,7 +1298,7 @@ bonus:
   requestTitle: Request
   active: Active
   failed: Failed
-  consumed: Consumed
+  redeemed: Consumed
   tos:
     title: Terms and conditions of use and Privacy policy
     content: !include bonus/bonusVacanze/bonus_tos.md
