@@ -27,6 +27,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Il messaggio non può essere decodificato
   buttons:
+    share: Condividi
     delete: Elimina
     cancel: Annulla
     ok: OK
@@ -214,8 +215,8 @@ profile:
       preferred_language:
         title: Lingua preferita
         subtitle: In quale lingua vuoi usare l'applicazione?
-        alert: 
-          title: Vuoi cambiare la lingua in  
+        alert:
+          title: Vuoi cambiare la lingua in
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
     empty:
@@ -1278,20 +1279,26 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
+    bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
+    usableAmount: Spendibile presso la struttura ricettiva
+    taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il
-    advice: 'Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i Termini e le Condizioni d’uso e la Privacy Policy del servizio.'
+    requestedAt: Richiesto il
+    advice: "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i Termini e le Condizioni d’uso e la Privacy Policy del servizio."
     status: Stato
-    name: Bonus Vacanza
+    name: Bonus Vacanze
     validity: Valido nel periodo
-    taxBenefit: Beneficio fiscale
-    amount: Importo totale
+    amount: Importo massimo
     applicant: CF richiedente
+    bonusClaim: Chi può riscuotere il bonus?
     shareMessage: "Questo è il codice del tuo bonus:"
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:
       requestBonus: Richiedi
       cancelRequest: Annulla la richiesta
+      qrCode: QR code
     eligibility:
       loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
       iseeNotAvailable:
@@ -1317,6 +1324,12 @@ bonus:
         completed:
           title: Congratulazioni!
           description: Il tuo bonus è attivo
+    abort:
+      title: Annulla
+      body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
+      cancel: Torna alla richiesta
+      confirm: Termina richiesta
+      completed: Richiesta annullata
   bonusList:
     title: Aggiungi sovvenzione
     contentTitle: Seleziona uno dei bonus disponibili
@@ -1325,7 +1338,7 @@ bonus:
   requestTitle: Richiesta
   active: Attivo
   failed: Fallito
-  consumed: Consumato
+  redeemed: Consumato
   tos:
     title: Termini e condizioni d’uso e Privacy policy
     content: !include bonus/bonusVacanze/bonus_tos.md

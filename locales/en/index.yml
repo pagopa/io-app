@@ -27,6 +27,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   buttons:
+    share: Share
     delete: Delete
     cancel: Cancel
     ok: OK
@@ -1245,20 +1246,26 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
+    validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
+    bonusRejected: Attention! This Bonus Vacanze has been rejected
+    usableAmount: Expendable at the accommodation facility
+    taxBenefit: Deductible in tax return
     request: Request the
+    requestedAt: Requested on
     advice: 'By clicking on "Request the Bonus Vacanze" you declare that you have read and understood the Terms and Conditions of Use and Privacy Policy of the service.'
     status: Status
-    name: Bonus Vacanza
+    name: Bonus Vacanze
     validity: Valid between
-    taxBenefit: Tax benefit
-    amount: Amount
+    amount: Max amount
     applicant: Applicant FC
+    bonusClaim: Who can claim the bonus?
     shareMessage: "This is the code of your bonus:"
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:
       requestBonus: Request
       cancelRequest: Cancel the request
+      qrCode: QR code
     eligibility:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
@@ -1274,7 +1281,7 @@ bonus:
         description: You can activate a {{amount}} bonus. Your tax discount is equal to {{taxBenefit}}
       timeout:
         title: Sorry, it takes longer to verify your ISEE.
-        description: "We will send you a message when INPS has given us the answer related to your ISEE.\n\nWhen you receive it, if it is positive, remember to complete your application within 24 hours, otherwise it will expire and you will have to start a new one."
+        description: "We will send you a message when INPS has given us the answer related to your ISEE.\n\nIf the outcome is positive, when you receive it, remember to complete your application within 24 hours, otherwise it will expire and you will have to start a new one."
       activate:
         loading: Bonus activation
         goToDetails: Show details
@@ -1284,6 +1291,12 @@ bonus:
         completed:
           title: Congratulation!
           description: Bonus activated
+    abort:
+      title: Cancel
+      body: Do you really want to quit? To request the "Bonus Vacanza" you will have to repeat the process from the beginning.
+      cancel: Back to the request
+      confirm: Abort request
+      completed: Request aborted
   bonusList:
     title: Add subsidy
     contentTitle: Select one of the available bonus
@@ -1292,7 +1305,7 @@ bonus:
   requestTitle: Request
   active: Active
   failed: Failed
-  consumed: Consumed
+  redeemed: Consumed
   tos:
     title: Terms and conditions of use and Privacy policy
     content: !include bonus/bonusVacanze/bonus_tos.md

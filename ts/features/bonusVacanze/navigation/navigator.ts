@@ -9,7 +9,7 @@ import { TimeoutActivationInfoScreen } from "../screens/eligibility/ActivateBonu
 import IseeNotAvailableScreen from "../screens/eligibility/isee/IseeNotAvailableScreen";
 import IseeNotEligibleScreen from "../screens/eligibility/isee/IseeNotEligibleScreen";
 import LoadBonusEligibilityScreen from "../screens/eligibility/LoadBonusEligibilityScreen";
-import { TimeoutEligibilityCheckInfoScreen } from "../screens/eligibility/TimeoutEligibilityCheckInfoScreen";
+import TimeoutEligibilityCheckInfoScreen from "../screens/eligibility/TimeoutEligibilityCheckInfoScreen";
 import BONUSVACANZE_ROUTES from "./routes";
 
 const BonusVacanzeNavigator = createStackNavigator(
