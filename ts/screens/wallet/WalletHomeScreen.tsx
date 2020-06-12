@@ -70,6 +70,7 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -455,6 +456,12 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     const { potWallets, potTransactions, historyPayments } = this.props;
 
     const wallets = pot.getOrElse(potWallets, []);
+
+    // there are some wallets and all of them are not supported bu the app
+    const allWalletsAreNotSupported =
+      wallets.length > 0 &&
+      wallets.filter(wallet => wallet.type === TypeEnum.CREDIT_CARD).length ===
+        0;
 
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
