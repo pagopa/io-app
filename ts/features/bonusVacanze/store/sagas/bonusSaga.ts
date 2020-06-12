@@ -10,14 +10,15 @@ import {
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
 import { startBonusActivationSaga } from "./bonusActivation/handleStartBonusActivationSaga";
-import { startBonusEligibilitySaga } from "./handleBonusEligibilitySaga";
+import { bonusEligibilitySaga } from "./eligibility/getBonusEligibilitySaga";
+import { handleBonusEligibilitySaga } from "./eligibility/handleBonusEligibilitySaga";
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
 import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
 
 // Saga that listen to all bonus requests
 export function* watchBonusSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
-  const backendBonusVacanze = BackendBonusVacanze(
+  const backendBonusVacanzeClient = BackendBonusVacanze(
     apiUrlPrefix,
     contentRepoUrl,
     bearerToken
@@ -26,29 +27,31 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
   yield takeLatest(
     getType(availableBonusesLoad.request),
     handleLoadAvailableBonuses,
-    backendBonusVacanze.getAvailableBonuses
+    backendBonusVacanzeClient.getAvailableBonuses
   );
 
-  // start bonus eligibility check and polling for result
+  // handle bonus vacanze eligibility
   yield takeLatest(
     getType(checkBonusEligibility.request),
-    startBonusEligibilitySaga,
-    backendBonusVacanze.startBonusEligibilityCheck,
-    backendBonusVacanze.getBonusEligibilityCheck
+    handleBonusEligibilitySaga,
+    bonusEligibilitySaga(
+      backendBonusVacanzeClient.startBonusEligibilityCheck,
+      backendBonusVacanzeClient.getBonusEligibilityCheck
+    )
   );
 
   // handle bonus vacanze from id loading
   yield takeEvery(
     getType(loadBonusVacanzeFromId.request),
     handleLoadBonusVacanzeFromId,
-    backendBonusVacanze.getLatestBonusVacanzeFromId
+    backendBonusVacanzeClient.getLatestBonusVacanzeFromId
   );
 
   // handle bonus vacanze activation
   yield takeEvery(
     getType(bonusVacanzeActivation.request),
     startBonusActivationSaga,
-    backendBonusVacanze.startBonusActivationProcedure,
-    backendBonusVacanze.getLatestBonusVacanzeFromId
+    backendBonusVacanzeClient.startBonusActivationProcedure,
+    backendBonusVacanzeClient.getLatestBonusVacanzeFromId
   );
 }
