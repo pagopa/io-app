@@ -114,6 +114,7 @@ class WalletsScreen extends React.Component<Props> {
             />
           </Right>
         </View>
+        <View spacer={true} large={true} />
       </React.Fragment>
     );
   }
@@ -149,6 +150,7 @@ class WalletsScreen extends React.Component<Props> {
             renderItem={this.renderWallet}
             keyExtractor={(item, index) => `wallet-${item.idWallet}-${index}`}
             extraData={{ favoriteWallet }}
+            ItemSeparatorComponent={() => <View spacer={true} large={true} />}
           />
         </View>
         <EdgeBorderComponent />
