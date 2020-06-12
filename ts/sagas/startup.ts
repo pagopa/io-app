@@ -303,7 +303,7 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   if (bonusVacanzeEnabled) {
     // Start watching for requests about bonus
-    yield fork(watchBonusSaga);
+    yield fork(watchBonusSaga, sessionToken);
   }
 
   // Load the user metadata

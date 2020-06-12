@@ -1,5 +1,6 @@
 import { Option, some } from "fp-ts/lib/Option";
-
+import { Locales } from "../../locales/locales";
+import I18n from "../i18n";
 /**
  * Helpers for handling locales
  */
@@ -17,3 +18,8 @@ export function getLocalePrimary(
     .filter(_ => _.length > 0)
     .map(_ => _[0]);
 }
+
+export const getLocalePrimaryWithFallback = (fallback: Locales = "en") =>
+  getLocalePrimary(I18n.currentLocale())
+    .map(s => s as Locales)
+    .getOrElse(fallback);
