@@ -1,6 +1,3 @@
-/**
- * A component to render the message markdown as HTML inside a WebView
- */
 import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
 import { AppState, AppStateStatus } from "react-native";
@@ -20,7 +17,6 @@ import { WebView } from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import { filterXSS } from "xss";
-
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
 import { remarkProcessor } from "../../../utils/markdown";
@@ -168,16 +164,16 @@ const generateHtml = (
   return `
   <!DOCTYPE html>
   <html>
-  <head>
-  <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-  <head>
-  <body>
-  ${GLOBAL_CSS}
-  ${cssStyle ? generateInlineCss(cssStyle) : ""}
-  ${avoidTextSelection ? avoidTextSelectionCSS : ""}
-  ${useCustomSortedList ? generateCustomFontList : ""}
-  ${content}
-  </body>
+    <head>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </head>
+    <body>
+    ${GLOBAL_CSS}
+    ${cssStyle ? generateInlineCss(cssStyle) : ""}
+    ${avoidTextSelection ? avoidTextSelectionCSS : ""}
+    ${useCustomSortedList ? generateCustomFontList : ""}
+    ${content}
+    </body>
   </html>
   `;
 };
@@ -217,6 +213,9 @@ type State = {
   appState: string;
 };
 
+/**
+ * A component to render the message markdown as HTML inside a WebView
+ */
 class Markdown extends React.PureComponent<Props, State> {
   private webViewRef = React.createRef<WebView>();
 
@@ -302,6 +301,7 @@ class Markdown extends React.PureComponent<Props, State> {
 
     const isLoading =
       html === undefined || (html !== "" && htmlBodyHeight === 0);
+
     return (
       <React.Fragment>
         {isLoading && (

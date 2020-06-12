@@ -6,7 +6,7 @@ import {
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { InstanceId } from "../../../../../definitions/bonus_vacanze/InstanceId";
-import { BonusesAvailable } from "../../types/bonusesAvailable";
+import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
 import { BonusActivationProgressEnum } from "../reducers/bonusVacanzeActivation";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
