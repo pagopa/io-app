@@ -20,7 +20,7 @@ import {
   EligibilityRequestProgressEnum,
   eligibilityRequestProgressSelector
 } from "../../reducers/eligibility";
-import { getBonusEligibilitySaga } from "./getBonusEligibilitySaga";
+import { bonusEligibilitySaga } from "./getBonusEligibilitySaga";
 
 const eligibilityToNavigate = new Map([
   [EligibilityRequestProgressEnum.ELIGIBLE, navigateToActivateBonus],
@@ -32,18 +32,23 @@ const eligibilityToNavigate = new Map([
 export const isLoadingScreen = (screenName: string) =>
   screenName === BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK_LOADING;
 
-export function* eligibilityWorker(bearerToken: string) {
-  const currentState = yield select(navigationCurrentRouteSelector);
-
-  if (!isLoadingScreen(currentState.routeName)) {
+export function* eligibilityWorker(
+  eligibilitySaga: ReturnType<typeof bonusEligibilitySaga>
+) {
+  const currentRoute: ReturnType<
+    typeof navigationCurrentRouteSelector
+  > = yield select(navigationCurrentRouteSelector);
+  if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
     // show the loading page for the check eligibility
     yield put(navigateToBonusEligibilityLoading());
   }
 
   // start and wait for network request
-  yield call(getBonusEligibilitySaga, bearerToken);
+  yield call(eligibilitySaga);
   // read eligibility outcome from store (TODO: better return results from saga??)
-  const progress = yield select(eligibilityRequestProgressSelector);
+  const progress: ReturnType<
+    typeof eligibilityRequestProgressSelector
+  > = yield select(eligibilityRequestProgressSelector);
   // choose next page for navigation
 
   const nextNavigation = fromNullable(
@@ -63,11 +68,13 @@ export function* eligibilityWorker(bearerToken: string) {
 /**
  * Entry point; This saga orchestrate the check eligibility phase.
  */
-export function* handleBonusEligibilitySaga(bearerToken: string): SagaIterator {
+export function* handleBonusEligibilitySaga(
+  eligibilitySaga: ReturnType<typeof bonusEligibilitySaga>
+): SagaIterator {
   // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
 
   const { cancelAction } = yield race({
-    eligibility: call(eligibilityWorker, bearerToken),
+    eligibility: call(eligibilityWorker, eligibilitySaga),
     cancelAction: take(cancelBonusEligibility)
   });
   if (cancelAction) {

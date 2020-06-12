@@ -8,7 +8,6 @@ import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/El
 import { ErrorEnum } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckFailure";
 import { EligibilityCheckSuccess } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
 import { EligibilityCheckSuccessEligible } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
-import { apiUrlPrefix, contentRepoUrl } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { startTimer } from "../../../../../utils/timer";
 import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
@@ -98,73 +97,73 @@ function* getCheckBonusEligibilitySaga(
 
 // handle start bonus eligibility check
 // tslint:disable-next-line: cognitive-complexity
-export function* getBonusEligibilitySaga(bearerToken: string): SagaIterator {
-  try {
-    const backendBonusVacanze = BackendBonusVacanze(
-      apiUrlPrefix,
-      contentRepoUrl,
-      bearerToken
-    );
-
-    const startBonusEligibilityCheck =
-      backendBonusVacanze.startBonusEligibilityCheck;
-    const getBonusEligibilityCheck =
-      backendBonusVacanze.getBonusEligibilityCheck;
-
-    const startEligibilityResult: SagaCallReturnType<
-      typeof startBonusEligibilityCheck
-    > = yield call(startBonusEligibilityCheck, {});
-    if (startEligibilityResult.isRight()) {
-      // 201 -> created
-      // 202 -> request processing
-      // 409 -> pending request
-      if (
-        startEligibilityResult.value.status === 201 ||
-        startEligibilityResult.value.status === 202 ||
-        startEligibilityResult.value.status === 409
-      ) {
-        // processing request, dispatch di process id
-        if (startEligibilityResult.value.status === 201) {
-          yield put(eligibilityRequestId(startEligibilityResult.value.value));
-        }
-        // start polling to know about the check result
-        const startPolling = new Date().getTime();
-        // TODO: handle cancel request (stop polling)
-        while (true) {
-          const eligibilityCheckResult: SagaCallReturnType<
-            typeof getCheckBonusEligibilitySaga
-          > = yield call(
-            getCheckBonusEligibilitySaga,
-            getBonusEligibilityCheck
-          );
-
-          // we got a blocking error -> stop polling
-          if (eligibilityCheckResult.isLeft() && eligibilityCheckResult.value) {
-            throw Error("Polling blocking error");
+export const bonusEligibilitySaga = (
+  startBonusEligibilityCheck: ReturnType<
+    typeof BackendBonusVacanze
+  >["startBonusEligibilityCheck"],
+  getBonusEligibilityCheck: ReturnType<
+    typeof BackendBonusVacanze
+  >["getBonusEligibilityCheck"]
+) =>
+  function* getBonusEligibilitySaga(): SagaIterator {
+    try {
+      const startEligibilityResult: SagaCallReturnType<
+        typeof startBonusEligibilityCheck
+      > = yield call(startBonusEligibilityCheck, {});
+      if (startEligibilityResult.isRight()) {
+        // 201 -> created
+        // 202 -> request processing
+        // 409 -> pending request
+        if (
+          startEligibilityResult.value.status === 201 ||
+          startEligibilityResult.value.status === 202 ||
+          startEligibilityResult.value.status === 409
+        ) {
+          // processing request, dispatch di process id
+          if (startEligibilityResult.value.status === 201) {
+            yield put(eligibilityRequestId(startEligibilityResult.value.value));
           }
-          // we got the eligibility result, stop polling
-          if (eligibilityCheckResult.isRight()) {
-            return;
-          }
-          // sleep
-          yield call(startTimer, checkEligibilityResultPolling);
-          // check if the time threshold was exceeded, if yes abort
-          const now = new Date().getTime();
-          if (now - startPolling >= pollingTimeThreshold) {
-            yield put(
-              checkBonusEligibility.success({
-                status: EligibilityRequestProgressEnum.TIMEOUT
-              })
+          // start polling to know about the check result
+          const startPolling = new Date().getTime();
+          // TODO: handle cancel request (stop polling)
+          while (true) {
+            const eligibilityCheckResult: SagaCallReturnType<
+              typeof getCheckBonusEligibilitySaga
+            > = yield call(
+              getCheckBonusEligibilitySaga,
+              getBonusEligibilityCheck
             );
-            return;
+
+            // we got a blocking error -> stop polling
+            if (
+              eligibilityCheckResult.isLeft() &&
+              eligibilityCheckResult.value
+            ) {
+              throw Error("Polling blocking error");
+            }
+            // we got the eligibility result, stop polling
+            if (eligibilityCheckResult.isRight()) {
+              return;
+            }
+            // sleep
+            yield call(startTimer, checkEligibilityResultPolling);
+            // check if the time threshold was exceeded, if yes abort
+            const now = new Date().getTime();
+            if (now - startPolling >= pollingTimeThreshold) {
+              yield put(
+                checkBonusEligibility.success({
+                  status: EligibilityRequestProgressEnum.TIMEOUT
+                })
+              );
+              return;
+            }
           }
         }
+        throw Error(`response status ${startEligibilityResult.value.status}`);
+      } else {
+        throw Error(readableReport(startEligibilityResult.value));
       }
-      throw Error(`response status ${startEligibilityResult.value.status}`);
-    } else {
-      throw Error(readableReport(startEligibilityResult.value));
+    } catch (e) {
+      yield put(checkBonusEligibility.failure(e));
     }
-  } catch (e) {
-    yield put(checkBonusEligibility.failure(e));
-  }
-}
+  };
