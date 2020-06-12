@@ -45,13 +45,7 @@ export const acknowledgeOnEmailValidation = createStandardAction(
   "ACKNOWLEDGE_ON_EMAIL_VALIDATION"
 )<Option<boolean>>();
 
-type ProfileFirstLoginPayload = {
-  fiscal_code: InitializedProfile["fiscal_code"];
-  spid_email: InitializedProfile["spid_email"];
-};
-export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")<
-  ProfileFirstLoginPayload
->();
+export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")();
 
 export const clearCache = createStandardAction("CLEAR_CACHE")();
 

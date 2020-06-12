@@ -100,6 +100,31 @@ export const setInstabugProfileAttributes = (
   );
 };
 
-export const instabugLog = (log: string, typeLog: TypeLogs) => {
-  InstabugLogger[typeLog](log);
+// The maximum log length accepted by Instabug
+const maxInstabugLogLength = 4096;
+// margin used for numerate the chunks
+const numberMargin = 15;
+/**
+ * This method allows to log a string in the Instabug report. If the log is too long,
+ * the string will be splitted in chunks
+ * @param log the text that will be logged on istabug
+ * @param typeLog the type of the log
+ * @param tag a tag that can be used to identify the log
+ */
+export const instabugLog = (log: string, typeLog: TypeLogs, tag?: string) => {
+  const chunckSize =
+    maxInstabugLogLength - (tag ? tag.length : 0) - numberMargin;
+
+  const chunks = log.match(
+    new RegExp("(.|[\r\n]){1," + chunckSize.toString() + "}", "g")
+  );
+  if (chunks) {
+    const prefix = tag ? tag : "";
+    const space = prefix.length > 0 && chunks.length > 1 ? " " : "";
+
+    chunks.forEach((chunk, i) => {
+      const count = chunks.length > 1 ? `${i + 1}/${chunks.length}` : "";
+      InstabugLogger[typeLog](`[${prefix}${space}${count}] ${chunk}`);
+    });
+  }
 };
