@@ -1,6 +1,6 @@
 import * as React from "react";
 import I18n from "../../../../../i18n";
-import BaseTimeoutScreen from "../../../components/BaseTimeoutScreen";
+import { BaseTimeoutScreen } from "../../../components/BaseTimeoutScreen";
 
 /**
  * This screen informs that the bonus activation is taking too long and
@@ -13,5 +13,7 @@ export const TimeoutActivationInfoScreen: React.FunctionComponent = () => {
   const body = I18n.t(
     "bonus.bonusVacanza.eligibility.activate.timeout.description"
   );
-  return <BaseTimeoutScreen title={title} body={body} />;
+  return (
+    <BaseTimeoutScreen title={title} body={body} onExit={() => undefined} />
+  );
 };
