@@ -73,7 +73,7 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
   } = loadLocales();
 
   return (
-    <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
+    <BaseScreenComponent goBack={props.onCancel} headerTitle={title}>
       <ScrollView style={[styles.body]}>
         <View spacer={true} large={true} />
         <ActivateBonusTitle title={title} description={description} />

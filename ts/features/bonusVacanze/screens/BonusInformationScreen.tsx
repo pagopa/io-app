@@ -17,7 +17,7 @@ import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
 import TosBonusComponent from "../components/TosBonusComponent";
-import { navigateToBonusEligibilityLoading } from "../navigation/action";
+import { checkBonusEligibility } from "../store/actions/bonusVacanze";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -158,7 +158,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO add bonus request action or just navigate to TOS screen (?)
-  requestBonusActivation: () => dispatch(navigateToBonusEligibilityLoading()),
+  requestBonusActivation: () => dispatch(checkBonusEligibility.request()),
   navigateBack: () => dispatch(navigateBack())
 });
 
