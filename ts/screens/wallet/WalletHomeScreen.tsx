@@ -9,6 +9,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
@@ -70,7 +71,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -233,10 +233,12 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   }
 
   private cardPreview(wallets: ReadonlyArray<Wallet>) {
+    // we have to render only wallets of credit card type
+    const validWallets = wallets.filter(w => w.type === TypeEnum.CREDIT_CARD);
     return (
       <View>
         <View spacer={true} />
-        {wallets.length === 0 && (
+        {validWallets.length === 0 && (
           <React.Fragment>
             <Text white={true} style={styles.addDescription}>
               {I18n.t("wallet.newPaymentMethod.addDescription")}
@@ -246,12 +248,14 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           </React.Fragment>
         )}
         {this.cardHeader()}
-        {wallets.length > 0 ? (
+        {validWallets.length > 0 ? (
           <View>
             <RotatedCards
               cardType="Preview"
               wallets={
-                wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
+                validWallets.length === 1
+                  ? [validWallets[0]]
+                  : [validWallets[0], validWallets[1]]
               }
               onClick={this.props.navigateToWalletList}
             />
@@ -456,12 +460,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     const { potWallets, potTransactions, historyPayments } = this.props;
 
     const wallets = pot.getOrElse(potWallets, []);
-
-    // there are some wallets and all of them are not supported bu the app
-    const allWalletsAreNotSupported =
-      wallets.length > 0 &&
-      wallets.filter(wallet => wallet.type === TypeEnum.CREDIT_CARD).length ===
-        0;
 
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
