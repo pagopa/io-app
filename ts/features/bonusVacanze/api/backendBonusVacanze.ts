@@ -19,11 +19,8 @@ import {
   startBonusEligibilityCheckDefaultDecoder,
   StartBonusEligibilityCheckT
 } from "../../../../definitions/bonus_vacanze/requestTypes";
+import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
 import { defaultRetryingFetch } from "../../../utils/fetch";
-import {
-  BonusesAvailable,
-  BonusesAvailableCodec
-} from "../types/bonusesAvailable";
 
 type GetBonusListT = IGetApiRequestType<
   {},
@@ -69,10 +66,10 @@ const getBonusEligibilityCheckT: GetBonusEligibilityCheckT = {
 
 const getAvailableBonusesT: GetBonusListT = {
   method: "get",
-  url: () => `/bonus-vacanze/bonuses.json`,
+  url: () => `/bonus/vacanze/bonuses_available.json`,
   query: _ => ({}),
   headers: () => ({}),
-  response_decoder: basicResponseDecoder(BonusesAvailableCodec)
+  response_decoder: basicResponseDecoder(BonusesAvailable)
 };
 
 function ParamAuthorizationBearerHeaderProducer<
