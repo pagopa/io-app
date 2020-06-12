@@ -49,7 +49,7 @@ export function* eligibilityWorker(
   );
   // dispatch the progress
   yield put(progress);
-  // read eligibility outcome from store
+  // read eligibility outcome if check has ended successfully
   const nextNavigation =
     progress.type === getType(checkBonusEligibility.success)
       ? fromNullable(
