@@ -1,5 +1,8 @@
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -28,6 +31,18 @@ const reducer = (
 // Selectors
 export const availableBonusesSelector = (
   state: GlobalState
-): pot.Pot<BonusesAvailable, Error> => state.bonus.availableBonuses;
+): AvailableBonusesState => state.bonus.availableBonuses;
+
+export const availableBonusesSelectorFromId = (idBonusType: number) =>
+  createSelector<GlobalState, AvailableBonusesState, Option<BonusAvailable>>(
+    availableBonusesSelector,
+    ab =>
+      pot.getOrElse(
+        pot.map(ab, abs =>
+          fromNullable(abs.find(i => i.id_type === idBonusType))
+        ),
+        none
+      )
+  );
 
 export default reducer;
