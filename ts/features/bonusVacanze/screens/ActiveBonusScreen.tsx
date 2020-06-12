@@ -184,11 +184,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.fiscalCode.help"
 };
 
-const shareQR = async (content: string, code: string) => {
+const shareQR = async (content: string, code: string, errorMessage: string) => {
   const shared = await shareBase64Content(content, code).run();
-  if (shared.isLeft()) {
-    showToast(I18n.t("global.genericError"));
-  }
+  shared.mapLeft(_ => showToast(errorMessage));
 };
 
 // tslint:disable-next-line: no-big-function
@@ -220,7 +218,8 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           onPress: () =>
             shareQR(
               qrCode[PNG_IMAGE_TYPE],
-              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonus.id}`
+              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonus.id}`,
+              I18n.t("global.genericError")
             )
         }}
         leftButton={{
