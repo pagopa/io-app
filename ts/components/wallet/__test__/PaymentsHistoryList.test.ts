@@ -1,10 +1,10 @@
 import { none, some } from "fp-ts/lib/Option";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
-import { IWithinRangeIntegerTag } from "italia-ts-commons/lib/numbers";
 import {
   IPatternStringTag,
   IWithinRangeStringTag
 } from "italia-ts-commons/lib/strings";
+import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   isPaymentDoneSuccessfully,
@@ -24,7 +24,7 @@ const data: RptId = {
 
 // tslint:disable-next-line: variable-name
 const verified_data: PaymentRequestsGetResponse = {
-  importoSingoloVersamento: 1 as number & IWithinRangeIntegerTag<0, 99999999>,
+  importoSingoloVersamento: 1 as ImportoEuroCents,
   codiceContestoPagamento: "03314e90321011eaa22f931313a0ec7c" as string &
     IWithinRangeStringTag<32, 33>,
   ibanAccredito: "IT00V0000000000000000000000" as

@@ -129,6 +129,8 @@ PODS:
     - React
   - RNSha256 (1.2.3):
     - React
+  - RNShare (3.3.2):
+    - React
   - RNSVG (12.1.0):
     - React
   - RNVectorIcons (6.6.0):
@@ -179,6 +181,7 @@ DEPENDENCIES:
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNSha256 (from `../node_modules/react-native-sha256`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - TouchID (from `../node_modules/react-native-touch-id`)
@@ -272,6 +275,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-keychain"
   RNSha256:
     :path: "../node_modules/react-native-sha256"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -325,6 +330,7 @@ SPEC CHECKSUMS:
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
+  RNShare: bd6518701db274b8ba282b33620885f2225a5bcf
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4

@@ -1,42 +1,57 @@
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
-import { call, put, takeLatest } from "redux-saga/effects";
-import { apiUrlPrefix } from "../../../../config";
-import { SagaCallReturnType } from "../../../../types/utils";
+import { takeEvery, takeLatest } from "redux-saga/effects";
+import { getType } from "typesafe-actions";
+import { apiUrlPrefix, contentRepoUrl } from "../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
-import { availableBonusListLoad } from "../actions/bonusVacanze";
-
-// handle bonus list loading
-function* loadAvailableBonusesSaga(
-  getAvailableBonuses: ReturnType<
-    typeof BackendBonusVacanze
-  >["getAvailableBonuses"]
-): SagaIterator {
-  try {
-    const bonusListReponse: SagaCallReturnType<
-      typeof getAvailableBonuses
-    > = yield call(getAvailableBonuses, {});
-    if (bonusListReponse.isRight()) {
-      if (bonusListReponse.value.status === 200) {
-        yield put(availableBonusListLoad.success(bonusListReponse.value.value));
-        return;
-      }
-      throw Error(`response status ${bonusListReponse.value.status}`);
-    } else {
-      throw Error(readableReport(bonusListReponse.value));
-    }
-  } catch (e) {
-    yield put(availableBonusListLoad.failure(e));
-  }
-}
+import {
+  availableBonusesLoad,
+  bonusVacanzeActivation,
+  checkBonusEligibility,
+  loadBonusVacanzeFromId
+} from "../actions/bonusVacanze";
+import { startBonusActivationSaga } from "./bonusActivation/handleStartBonusActivationSaga";
+import { bonusEligibilitySaga } from "./eligibility/getBonusEligibilitySaga";
+import { handleBonusEligibilitySaga } from "./eligibility/handleBonusEligibilitySaga";
+import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
+import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
 
 // Saga that listen to all bonus requests
-export function* watchBonusSaga(): SagaIterator {
-  const backendBonusVacanze = BackendBonusVacanze(apiUrlPrefix);
-  // bonus list loading
+export function* watchBonusSaga(bearerToken: string): SagaIterator {
+  // create client to exchange data with the APIs
+  const backendBonusVacanzeClient = BackendBonusVacanze(
+    apiUrlPrefix,
+    contentRepoUrl,
+    bearerToken
+  );
+  // available bonus list request
   yield takeLatest(
-    availableBonusListLoad.request,
-    loadAvailableBonusesSaga,
-    backendBonusVacanze.getAvailableBonuses
+    getType(availableBonusesLoad.request),
+    handleLoadAvailableBonuses,
+    backendBonusVacanzeClient.getAvailableBonuses
+  );
+
+  // handle bonus vacanze eligibility
+  yield takeLatest(
+    getType(checkBonusEligibility.request),
+    handleBonusEligibilitySaga,
+    bonusEligibilitySaga(
+      backendBonusVacanzeClient.startBonusEligibilityCheck,
+      backendBonusVacanzeClient.getBonusEligibilityCheck
+    )
+  );
+
+  // handle bonus vacanze from id loading
+  yield takeEvery(
+    getType(loadBonusVacanzeFromId.request),
+    handleLoadBonusVacanzeFromId,
+    backendBonusVacanzeClient.getLatestBonusVacanzeFromId
+  );
+
+  // handle bonus vacanze activation
+  yield takeEvery(
+    getType(bonusVacanzeActivation.request),
+    startBonusActivationSaga,
+    backendBonusVacanzeClient.startBonusActivationProcedure,
+    backendBonusVacanzeClient.getLatestBonusVacanzeFromId
   );
 }

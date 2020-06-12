@@ -7,11 +7,11 @@ import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 
 import AsyncStorage from "@react-native-community/async-storage";
+import bonusReducer from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
 import { logoutFailure, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
-import bonusReducer from "./../../features/bonusVacanze/store/reducers/bonusVacanze";
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
