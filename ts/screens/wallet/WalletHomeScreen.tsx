@@ -549,7 +549,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     bonusVacanzeActivationActive: bonusVacanzeActivationActiveSelector(state),
     canBonusBeRequested: canBonusVacanzeBeRequestedSelector(state),
-    availableBonusesList: pot.getOrElse(potAvailableBonuses, { items: [] }),
+    availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
     potTransactions: latestTransactionsSelector(state),
