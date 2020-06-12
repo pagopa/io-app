@@ -8,10 +8,7 @@ import I18n from "../../../../../../i18n";
 import { identificationRequest } from "../../../../../../store/actions/identification";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { abortBonusRequest } from "../../../../components/AbortBonusRequest";
-import {
-  cancelBonusEligibility,
-  completeBonusEligibility
-} from "../../../../store/actions/bonusVacanze";
+import { cancelBonusEligibility } from "../../../../store/actions/bonusVacanze";
 import { eligibilityEligibleSelector } from "../../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 
