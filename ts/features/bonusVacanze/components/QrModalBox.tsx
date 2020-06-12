@@ -7,6 +7,7 @@ import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
+import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 
 type Props = {
   onClose: () => void;
@@ -85,6 +86,10 @@ const bonusVacanzeImage = require("../../../../img/bonus/bonusVacanze/vacanze.pn
 
 const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
   const { onClose, qrCode, secretCode } = props;
+  useHardwareBackButton(() => {
+    onClose();
+    return true;
+  });
   return (
     <View style={styles.modalBackdrop}>
       <View style={styles.modalBox}>
@@ -94,7 +99,7 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
           </Text>
           <Button
             style={styles.modalClose}
-            onPress={() => onClose()}
+            onPress={onClose}
             transparent={true}
           >
             <IconFont
