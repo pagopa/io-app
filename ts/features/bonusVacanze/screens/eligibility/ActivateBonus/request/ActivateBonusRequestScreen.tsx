@@ -63,7 +63,7 @@ const requestIdentification = (dispatch: Dispatch) => {
 };
 
 const onIdentificationSuccess = (dispatch: Dispatch) => {
-  dispatch(completeBonusEligibility());
+  dispatch(cancelBonusEligibility());
   // TODO: dispatch the start of the activation saga
 };
 
