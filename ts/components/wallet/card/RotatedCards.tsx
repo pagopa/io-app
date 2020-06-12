@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import I18n from "../../../i18n";
 
 import { Wallet } from "../../../types/pagopa";
+import TouchableDefaultOpacity from '../../TouchableDefaultOpacity';
 import CreditCardStyles from "./../card/CardComponent.style";
 import {CreditCardStyles as CreditCardStyles2} from "./../card/style";
 import CardComponent from "./CardComponent";
@@ -44,6 +45,7 @@ interface Props {
   // tslint:disable-next-line:prettier
   wallets?: readonly [Wallet] | readonly [Wallet, Wallet];
   cardType: "Preview";
+  onClick: () => void;
 }
 
 export class RotatedCards extends React.PureComponent<Props, {}> {
@@ -72,7 +74,7 @@ export class RotatedCards extends React.PureComponent<Props, {}> {
   }
 
   public render() {
-    const { wallets, cardType } = this.props;
+    const { wallets, cardType, onClick } = this.props;
 
     return (
       wallets === undefined 
@@ -91,14 +93,18 @@ export class RotatedCards extends React.PureComponent<Props, {}> {
               : styles.containerOneCard
           }
         >
-          <View style={styles.firstCard}>
-            <CardComponent type={cardType} wallet={wallets[0]} />
-          </View>
-          {typeof wallets[1] !== "undefined" && (
-            <View style={styles.secondCard}>
-              <CardComponent type={cardType} wallet={wallets[1]} />
+          <View spacer={true} />
+          <TouchableDefaultOpacity onPress={onClick}>
+            <View style={styles.firstCard}>
+              <CardComponent type={cardType} wallet={wallets[0]} />
             </View>
-          )}
+            <View spacer={true}/>
+            {typeof wallets[1] !== "undefined" && (
+              <View style={styles.secondCard}>
+                <CardComponent type={cardType} wallet={wallets[1]} />
+              </View>
+            )}
+          </TouchableDefaultOpacity>
         </View>
       )  
     );

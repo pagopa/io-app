@@ -15,8 +15,7 @@ export default StyleSheet.create({
     borderRadius: 8,
     marginBottom: -1,
     marginLeft: 0,
-    marginRight: 0,
-    marginTop: 20
+    marginRight: 0
   },
   cardInner: {
     paddingBottom: 16,

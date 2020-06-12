@@ -17,7 +17,7 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import CardsFan from "../../components/wallet/card/CardsFan";
+import { RotatedCards } from "../../components/wallet/card/RotatedCards";
 import SectionCardComponent from "../../components/wallet/card/SectionCardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
@@ -247,11 +247,12 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {this.cardHeader()}
         {wallets.length > 0 ? (
           <View>
-            <CardsFan
+            <RotatedCards
+              cardType="Preview"
               wallets={
                 wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
               }
-              navigateToWalletList={this.props.navigateToWalletList}
+              onClick={this.props.navigateToWalletList}
             />
           </View>
         ) : (
