@@ -2,8 +2,10 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, race, select, take } from "redux-saga/effects";
+import { getType } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
+import { SagaCallReturnType } from "../../../../../types/utils";
 import {
   navigateToActivateBonus,
   navigateToBonusEligibilityLoading,
@@ -14,12 +16,10 @@ import {
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   cancelBonusEligibility,
+  checkBonusEligibility,
   completeBonusEligibility
 } from "../../actions/bonusVacanze";
-import {
-  EligibilityRequestProgressEnum,
-  eligibilityRequestProgressSelector
-} from "../../reducers/eligibility";
+import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
 import { bonusEligibilitySaga } from "./getBonusEligibilitySaga";
 
 const eligibilityToNavigate = new Map([
@@ -44,16 +44,18 @@ export function* eligibilityWorker(
   }
 
   // start and wait for network request
-  yield call(eligibilitySaga);
-  // read eligibility outcome from store (TODO: better return results from saga??)
-  const progress: ReturnType<
-    typeof eligibilityRequestProgressSelector
-  > = yield select(eligibilityRequestProgressSelector);
-  // choose next page for navigation
-
-  const nextNavigation = fromNullable(
-    eligibilityToNavigate.get(progress)
-  ).getOrElse(navigateToBonusEligibilityLoading);
+  const progress: SagaCallReturnType<typeof eligibilitySaga> = yield call(
+    eligibilitySaga
+  );
+  // dispatch the progress
+  yield put(progress);
+  // read eligibility outcome from store
+  const nextNavigation =
+    progress.type === getType(checkBonusEligibility.success)
+      ? fromNullable(
+          eligibilityToNavigate.get(progress.payload.status)
+        ).getOrElse(navigateToBonusEligibilityLoading)
+      : navigateToBonusEligibilityLoading;
   if (nextNavigation !== navigateToBonusEligibilityLoading) {
     // the eligibility saga terminate with a transition to the next screen, removing from the history
     // the loading screen
