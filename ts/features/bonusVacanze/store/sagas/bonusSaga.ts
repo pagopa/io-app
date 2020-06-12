@@ -9,7 +9,8 @@ import {
   checkBonusEligibility,
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
-import { startBonusActivationSaga } from "./bonusActivation/handleStartBonusActivationSaga";
+import { bonusActivationSaga } from "./bonusActivation/getBonusActivationSaga";
+import { handleBonusActivationSaga } from "./bonusActivation/handleBonusActivationSaga";
 import { bonusEligibilitySaga } from "./eligibility/getBonusEligibilitySaga";
 import { handleBonusEligibilitySaga } from "./eligibility/handleBonusEligibilitySaga";
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
@@ -50,8 +51,10 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
   // handle bonus vacanze activation
   yield takeEvery(
     getType(bonusVacanzeActivation.request),
-    startBonusActivationSaga,
-    backendBonusVacanzeClient.startBonusActivationProcedure,
-    backendBonusVacanzeClient.getLatestBonusVacanzeFromId
+    handleBonusActivationSaga,
+    bonusActivationSaga(
+      backendBonusVacanzeClient.startBonusActivationProcedure,
+      backendBonusVacanzeClient.getLatestBonusVacanzeFromId
+    )
   );
 }

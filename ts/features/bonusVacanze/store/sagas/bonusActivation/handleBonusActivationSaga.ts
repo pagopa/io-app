@@ -8,39 +8,32 @@ import { navigationCurrentRouteSelector } from "../../../../../store/reducers/na
 import { SagaCallReturnType } from "../../../../../types/utils";
 import {
   navigateToActivateBonus,
-  navigateToBonusEligibilityLoading,
-  navigateToIseeNotAvailable,
-  navigateToIseeNotEligible,
-  navigateToTimeoutEligibilityCheck
+  navigateToBonusEligibilityLoading
 } from "../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   bonusVacanzeActivation,
-  cancelBonusEligibility,
-  checkBonusEligibility
+  cancelBonusEligibility
 } from "../../actions/bonusVacanze";
-import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
-import { bonusEligibilitySaga } from "./getBonusEligibilitySaga";
+import { BonusActivationProgressEnum } from "../../reducers/bonusVacanzeActivation";
+import { bonusActivationSaga } from "./getBonusActivationSaga";
 
 const eligibilityToNavigate = new Map([
-  [EligibilityRequestProgressEnum.ELIGIBLE, navigateToActivateBonus],
-  [EligibilityRequestProgressEnum.INELIGIBLE, navigateToIseeNotEligible],
-  [EligibilityRequestProgressEnum.ISEE_NOT_FOUND, navigateToIseeNotAvailable],
-  [EligibilityRequestProgressEnum.TIMEOUT, navigateToTimeoutEligibilityCheck]
+  [BonusActivationProgressEnum.SUCCESS, navigateToActivateBonus]
 ]);
 
-type BonusEligibilitySagaType = ReturnType<typeof bonusEligibilitySaga>;
+type BonusActivationSagaType = ReturnType<typeof bonusActivationSaga>;
 type NavigationCurrentRouteSelectorType = ReturnType<
   typeof navigationCurrentRouteSelector
 >;
-type CheckBonusEligibilityType = SagaCallReturnType<BonusEligibilitySagaType>;
+type BonusActivationType = SagaCallReturnType<BonusActivationSagaType>;
 
 /**
- * based on the result of eligibilitySaga, calculate the next screen
+ * based on the result of activation, calculate the next screen
  * @param result
  */
-export const getNextNavigation = (result: CheckBonusEligibilityType) =>
-  result.type === getType(checkBonusEligibility.success)
+export const getNextNavigation = (result: BonusActivationType) =>
+  result.type === getType(bonusVacanzeActivation.success)
     ? fromNullable(eligibilityToNavigate.get(result.payload.status)).getOrElse(
         navigateToBonusEligibilityLoading
       )
@@ -49,7 +42,7 @@ export const getNextNavigation = (result: CheckBonusEligibilityType) =>
 export const isLoadingScreen = (screenName: string) =>
   screenName === BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK_LOADING;
 
-export function* eligibilityWorker(eligibilitySaga: BonusEligibilitySagaType) {
+export function* eligibilityWorker(eligibilitySaga: BonusActivationSagaType) {
   const currentRoute: NavigationCurrentRouteSelectorType = yield select(
     navigationCurrentRouteSelector
   );
@@ -59,7 +52,7 @@ export function* eligibilityWorker(eligibilitySaga: BonusEligibilitySagaType) {
   }
 
   // start and wait for network request
-  const progress: CheckBonusEligibilityType = yield call(eligibilitySaga);
+  const progress: BonusActivationType = yield call(eligibilitySaga);
   // dispatch the progress
   yield put(progress);
   // read eligibility outcome if check has ended successfully
@@ -76,18 +69,18 @@ export function* eligibilityWorker(eligibilitySaga: BonusEligibilitySagaType) {
 }
 
 /**
- * Entry point; This saga orchestrate the check eligibility phase.
+ * Entry point; This saga orchestrate the activation phase.
  * There are two condition to exit from this saga:
  * - cancelBonusEligibility
  * - bonusVacanzeActivation.request
  */
-export function* handleBonusEligibilitySaga(
-  eligibilitySaga: BonusEligibilitySagaType
+export function* handleBonusActivationSaga(
+  activationSaga: BonusActivationSagaType
 ): SagaIterator {
   // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
 
   const { cancelAction } = yield race({
-    eligibility: call(eligibilityWorker, eligibilitySaga),
+    eligibility: call(eligibilityWorker, activationSaga),
     cancelAction: take(cancelBonusEligibility)
   });
   if (cancelAction) {
