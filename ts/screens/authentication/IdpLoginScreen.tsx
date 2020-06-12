@@ -213,7 +213,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     if (selectedIdpTextData.isNone()) {
       return {
-        title: "authentication.idp_login.contextualHelpTitle",
+        title: I18n.t("authentication.idp_login.contextualHelpTitle"),
         body: () => (
           <Markdown>
             {I18n.t("authentication.idp_login.contextualHelpContent")}
