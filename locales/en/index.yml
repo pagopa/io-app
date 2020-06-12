@@ -376,9 +376,15 @@ authentication:
     contextualHelpTitle: Who is your Identity Provider
     contextualHelpContent: !include authentication/authentication_idp_selection.md
   idp_login:
-    headerTitle: Login
+    headerTitle: SPID Login
     contextualHelpTitle: What is your password
     contextualHelpContent: !include authentication/authentication_idp_login.md
+    contextualHelpTitle2: Need support on the login by SPID?
+    openTicket: Create a ticket
+    recoverUsername: Recover the username
+    recoverDescription: If you're missing your password, you can recover it by tapping on the following button.
+    dualRecoverDescription: If you're missing your credentials, you can recover them by tapping on the following buttons.
+    recoverPassword: Recover the password
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
@@ -1268,7 +1274,7 @@ bonus:
         description: You can activate a {{amount}} bonus. Your tax discount is equal to {{taxBenefit}}
       timeout:
         title: Sorry, it takes longer to verify your ISEE.
-        description: "We will send you a message when INPS has given us the answer related to your ISEE.\n\nWhen you receive it, if it is positive, remember to complete your application within 24 hours, otherwise it will expire and you will have to start a new one."
+        description: "We will send you a message when INPS has given us the answer related to your ISEE.\n\nIf the outcome is positive, when you receive it, remember to complete your application within 24 hours, otherwise it will expire and you will have to start a new one."
       activate:
         loading: Bonus activation
         goToDetails: Show details
@@ -1278,6 +1284,12 @@ bonus:
         completed:
           title: Congratulation!
           description: Bonus activated
+    abort:
+      title: Cancel
+      body: Do you really want to quit? To request the "Bonus Vacanza" you will have to repeat the process from the beginning.
+      cancel: Back to the request
+      confirm: Abort request
+      completed: Request aborted
   bonusList:
     title: Add subsidy
     contentTitle: Select one of the available bonus

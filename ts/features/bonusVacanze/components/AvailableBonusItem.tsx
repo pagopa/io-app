@@ -1,25 +1,14 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Badge, Grid, ListItem, Row, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
-import { connect } from "react-redux";
+import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import I18n from "../../../i18n";
-import { loadServiceDetail } from "../../../store/actions/services";
-import { Dispatch } from "../../../store/actions/types";
-import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
-import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
-import { BonusAvailable } from "../types/bonusesAvailable";
 
-type OwnProps = {
+type Props = {
   bonusItem: BonusAvailable;
   onPress: () => void;
 };
-
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  OwnProps;
 
 const styles = StyleSheet.create({
   listItem: {
@@ -75,19 +64,12 @@ const styles = StyleSheet.create({
  * clicking the item user navigates to the request of the related bonus
  * @param props
  */
-const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
-  const { bonusItem, serviceById } = props;
+export const AvailableBonusItem: React.FunctionComponent<Props> = (
+  props: Props
+) => {
+  const { bonusItem } = props;
   const isComingSoon = !bonusItem.is_active;
   const disabledStyle = isComingSoon ? styles.disabled : {};
-  const [loadedService, setLoadedService] = React.useState(false);
-
-  React.useEffect(() => {
-    if (pot.isNone(serviceById) && bonusItem.service_id && !loadedService) {
-      props.loadService(bonusItem.service_id);
-      setLoadedService(true);
-    }
-  });
-
   return (
     <ListItem
       style={styles.listItem}
@@ -110,11 +92,9 @@ const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
             </View>
           </Row>
           <Row>
-            {pot.isSome(serviceById) && (
-              <Text style={[styles.servicesName, disabledStyle]}>
-                {serviceById.value.organization_name}
-              </Text>
-            )}
+            <Text style={[styles.servicesName, disabledStyle]}>
+              {bonusItem.subtitle}
+            </Text>
           </Row>
         </Grid>
       </View>
@@ -126,22 +106,3 @@ const AvailableBonusItem: React.FunctionComponent<Props> = (props: Props) => {
     </ListItem>
   );
 };
-
-const mapStateToProps = (state: GlobalState, props: OwnProps) => {
-  const serviceById = fromNullable(props.bonusItem.service_id).fold(
-    pot.none,
-    s => serviceByIdSelector(s)(state) || pot.none
-  );
-  return {
-    serviceById
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadService: (id: string) => dispatch(loadServiceDetail.request(id))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AvailableBonusItem);

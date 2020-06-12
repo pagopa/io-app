@@ -1,5 +1,5 @@
 import { BugReporting } from "instabug-reactnative";
-import { Body, Container, Content, H3, Right, Text, View } from "native-base";
+import { Container, Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import {
   InteractionManager,
@@ -8,17 +8,15 @@ import {
   StyleSheet,
   TouchableWithoutFeedback
 } from "react-native";
-import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import themeVariables from "../theme/variables";
 import { FAQsCategoriesType } from "../utils/faq";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FAQComponent from "./FAQComponent";
 import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
+import { BaseHeader } from "./screens/BaseHeader";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
-import AppHeader from "./ui/AppHeader";
 import { openLink } from "./ui/Markdown/handlers/link";
 
 type Props = Readonly<{
@@ -43,6 +41,14 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * A modal to show the contextual help reelated to a screen.
+ * the contextual help is characterized by:
+ * - a title
+ * - a textual or a component containing the screen description
+ * - [optional] if on SPID authentication once the user selected an idp, content to link the support desk of the selected identity provider
+ * - a list of questions and aswers. They are selected by the component depending on the cathegories passed to the component
+ */
 export class ContextualHelpModal extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -81,18 +87,10 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         onRequestClose={onClose}
       >
         <Container>
-          <AppHeader noLeft={false}>
-            <Body>
-              <Text white={false} numberOfLines={1}>
-                {I18n.t("contextualHelp.title")}
-              </Text>
-            </Body>
-            <Right>
-              <ButtonDefaultOpacity onPress={onClose} transparent={true}>
-                <IconFont name="io-close" />
-              </ButtonDefaultOpacity>
-            </Right>
-          </AppHeader>
+          <BaseHeader
+            headerTitle={I18n.t("contextualHelp.title")}
+            customRightIcon={{ iconName: "io-close", onPress: onClose }}
+          />
 
           {!this.state.content && (
             <View centerJustified={true}>
@@ -107,6 +105,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               <H3>{this.props.title}</H3>
               <View spacer={true} />
               {this.state.content}
+              <View spacer={true} />
               {this.props.faqCategories &&
                 this.props.contentLoaded && (
                   <FAQComponent
@@ -136,8 +135,6 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               {this.props.contentLoaded && <EdgeBorderComponent />}
             </Content>
           )}
-          <View spacer={true} extralarge={true} />
-
           <BetaBannerComponent />
         </Container>
       </Modal>

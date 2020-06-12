@@ -395,6 +395,12 @@ authentication:
     headerTitle: Accedi
     contextualHelpTitle: Qual è la tua password
     contextualHelpContent: !include authentication/authentication_idp_login.md
+    contextualHelpTitle2: Hai bisogno di aiuto per il login SPID?
+    openTicket: Apri una segnalazione
+    recoverDescription: Se hai dimenticato la tua password, ti consigliamo di procedere cliccando sul bottone qui di seguito.
+    dualRecoverDescription: Se hai dimenticato le tue credenziali, ti consigliamo di procedere cliccando sui bottoni qui di seguito.
+    recoverUsername: Recupera il nome utente
+    recoverPassword: Recupera la password
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
@@ -1311,6 +1317,12 @@ bonus:
         completed:
           title: Congratulazioni!
           description: Il tuo bonus è attivo
+    abort:
+      title: Annulla
+      body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
+      cancel: Torna alla richiesta
+      confirm: Termina richiesta
+      completed: Richiesta annullata
   bonusList:
     title: Aggiungi sovvenzione
     contentTitle: Seleziona uno dei bonus disponibili
