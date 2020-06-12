@@ -1,8 +1,9 @@
 import { Either, left, right } from "fp-ts/lib/Either";
-import { Option, none, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, Effect, put } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
 import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { ErrorEnum } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckFailure";
 import { EligibilityCheckSuccess } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
@@ -15,7 +16,6 @@ import {
   eligibilityRequestId
 } from "../../actions/bonusVacanze";
 import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
-import { ActionType } from "typesafe-actions";
 
 // wait time between requests
 const checkEligibilityResultPolling = 1000 as Millisecond;
