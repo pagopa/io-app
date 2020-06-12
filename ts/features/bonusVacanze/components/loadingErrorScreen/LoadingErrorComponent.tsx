@@ -1,11 +1,10 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
-import customVariables from "../../../theme/variables";
+import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
+import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 
-type Props = {
+export type LoadingErrorProps = {
   isLoading: boolean;
   loadingCaption?: string;
   loadingOpacity?: number;
@@ -15,16 +14,11 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  main: {
-    backgroundColor: customVariables.colorWhite,
-    flex: 1,
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0
+  body: {
+    flex: 1
   }
 });
+
 /**
  * This component is a generic error component composed with a loading.
  * In this way it is testable regardless of how it will be connected to the application flow.
@@ -35,11 +29,11 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-const InnerGenericLoadingErrorScreen: React.FunctionComponent<
-  Props
+const InnerLoadingErrorComponent: React.FunctionComponent<
+  LoadingErrorProps
 > = props => {
   return (
-    <View style={styles.main}>
+    <View style={styles.body}>
       <GenericErrorComponent
         onRetry={props.onRetry}
         onCancel={props.onCancel}
@@ -49,6 +43,6 @@ const InnerGenericLoadingErrorScreen: React.FunctionComponent<
   );
 };
 
-export const GenericLoadingErrorScreen = withLoadingSpinner(
-  InnerGenericLoadingErrorScreen
+export const LoadingErrorComponent = withLoadingSpinner(
+  InnerLoadingErrorComponent
 );

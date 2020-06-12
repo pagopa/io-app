@@ -18,6 +18,7 @@ import { BackendClient } from "../api/backend";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
+  bonusVacanzeEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
@@ -52,6 +53,7 @@ import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
+import { watchBonusSaga } from "../features/bonusVacanze/store/sagas/bonusSaga";
 import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest
@@ -298,6 +300,11 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
   //
   // User is autenticated, session token is valid
   //
+
+  if (bonusVacanzeEnabled) {
+    // Start watching for requests about bonus
+    yield fork(watchBonusSaga, sessionToken);
+  }
 
   // Load the user metadata
   yield call(loadUserMetadata, backendClient.getUserMetadata, true);
