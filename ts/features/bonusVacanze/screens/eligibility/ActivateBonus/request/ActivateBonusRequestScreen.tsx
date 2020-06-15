@@ -1,18 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { MaxBonusAmount } from "../../../../../../../definitions/bonus_vacanze/MaxBonusAmount";
-import { MaxBonusTaxBenefit } from "../../../../../../../definitions/bonus_vacanze/MaxBonusTaxBenefit";
 import { shufflePinPadOnPayment } from "../../../../../../config";
 import I18n from "../../../../../../i18n";
 import { identificationRequest } from "../../../../../../store/actions/identification";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { abortBonusRequest } from "../../../../components/AbortBonusRequest";
-import { familyMembers } from "../../../../mock/mockData";
-import {
-  cancelBonusEligibility,
-  completeBonusEligibility
-} from "../../../../store/actions/bonusVacanze";
+import { cancelBonusEligibility } from "../../../../store/actions/bonusVacanze";
 import { eligibilityEligibleSelector } from "../../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 
@@ -73,14 +67,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => {
   const elc = eligibilityEligibleSelector(state);
+  // it should never happen we are here and elibilityCheck is not set
   return {
-    bonusAmount: elc.fold(500 as MaxBonusAmount, e => e.dsu_request.max_amount),
-    taxBenefit: elc.fold(
-      100 as MaxBonusTaxBenefit,
-      e => e.dsu_request.max_tax_benefit
-    ),
-    familyMembers: elc.fold(familyMembers, e => e.dsu_request.family_members),
-    hasDiscrepancies: elc.fold(true, e => e.dsu_request.has_discrepancies)
+    bonusAmount: elc.fold(0, e => e.dsu_request.max_amount),
+    taxBenefit: elc.fold(0, e => e.dsu_request.max_tax_benefit),
+    familyMembers: elc.fold([], e => e.dsu_request.family_members),
+    hasDiscrepancies: elc.fold(false, e => e.dsu_request.has_discrepancies)
   };
 };
 

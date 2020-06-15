@@ -22,6 +22,8 @@ const styles = StyleSheet.create({
     color: themeVariables.colorWhite
   }
 });
+const iconSize = 24;
+
 /**
  * This component display a colored box with an icon e some text that warn the user about some discrepancies.
  * @param props
@@ -41,7 +43,7 @@ export const ActivateBonusDiscrepancies: React.FunctionComponent<
     >
       <IconFont
         name={"io-notice"}
-        size={24}
+        size={iconSize}
         color={themeVariables.colorWhite}
       />
       <View hspacer={true} />
