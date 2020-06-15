@@ -39,6 +39,7 @@ type Props = Readonly<{
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   appLogo?: boolean;
+  gradientHeader?: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -124,6 +125,7 @@ export default class WalletLayout extends React.Component<Props> {
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
         contentRefreshControl={this.props.refreshControl}
         faqCategories={this.props.faqCategories}
+        gradientHeader={this.props.gradientHeader}
       >
         {this.props.children}
       </DarkLayout>
