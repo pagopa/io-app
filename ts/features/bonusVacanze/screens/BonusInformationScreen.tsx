@@ -106,7 +106,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
           <View style={styles.flexStart}>
             <Text dark={true} style={styles.orgName} semibold={true}>
               {/* FIXME: replace with correct attribute from the object */}
-              Agenzia delle Entrate
+              {"Agenzia delle Entrate"}
             </Text>
             <Text bold={true} dark={true} style={styles.title}>{`${I18n.t(
               "bonus.requestTitle"
