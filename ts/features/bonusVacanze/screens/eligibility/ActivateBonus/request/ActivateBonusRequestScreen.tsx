@@ -1,8 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { MaxBonusAmount } from "../../../../../../../definitions/bonus_vacanze/MaxBonusAmount";
-import { MaxBonusTaxBenefit } from "../../../../../../../definitions/bonus_vacanze/MaxBonusTaxBenefit";
 import { shufflePinPadOnPayment } from "../../../../../../config";
 import I18n from "../../../../../../i18n";
 import { identificationRequest } from "../../../../../../store/actions/identification";
