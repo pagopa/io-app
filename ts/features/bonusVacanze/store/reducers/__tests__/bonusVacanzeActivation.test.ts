@@ -28,14 +28,14 @@ const familyMembers: FamilyMembers = [
 ];
 
 const dsuData: Dsu = {
-  request_id: "request_id" as NonEmptyString,
+  request_id: 1,
   isee_type: "isee_id",
   dsu_protocol_id: "dsu_protocol_id" as NonEmptyString,
   dsu_created_at: "2020-05-25T00:00:00.000Z",
   has_discrepancies: false,
   family_members: familyMembers,
-  max_amount: 499 as MaxBonusAmount,
-  max_tax_benefit: 30 as MaxBonusTaxBenefit
+  max_amount: 499,
+  max_tax_benefit: 30
 };
 
 export const bonus: BonusActivationWithQrCode = {
