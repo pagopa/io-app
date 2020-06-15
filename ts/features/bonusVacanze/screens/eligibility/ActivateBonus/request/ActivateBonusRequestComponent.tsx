@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import { FamilyMember } from "../../../../../../../definitions/bonus_vacanze/FamilyMember";
 import ItemSeparatorComponent from "../../../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../../../../../components/screens/EdgeBorderComponent";
 import I18n from "../../../../../../i18n";
 import { BonusCompositionDetails } from "../../../../components/keyValueTable/BonusCompositionDetails";
 import { FamilyComposition } from "../../../../components/keyValueTable/FamilyComposition";
@@ -11,7 +12,6 @@ import { FooterTwoButtons } from "../../../../components/markdown/FooterTwoButto
 import { ActivateBonusDiscrepancies } from "./ActivateBonusDiscrepancies";
 import { ActivateBonusReminder } from "./ActivateBonusReminder";
 import { ActivateBonusTitle } from "./ActivateBonusTitle";
-import { EdgeBorderComponent } from "../../../../../../components/screens/EdgeBorderComponent";
 
 type Props = {
   familyMembers: ReadonlyArray<FamilyMember>;
