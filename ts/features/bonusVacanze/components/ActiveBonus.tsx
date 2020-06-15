@@ -37,12 +37,13 @@ const styles = StyleSheet.create({
   },
   text3: {
     fontSize: 18,
-    color: customVariables.brandDarkestGray
+    color: customVariables.colorWhite
   },
   text12: {
     lineHeight: 18,
     marginBottom: -4,
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    color: customVariables.colorWhite
   },
   icon: {
     width: 64,
@@ -57,6 +58,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     minHeight: 24
+  },
+  textWhite: {
+    color: customVariables.colorWhite
+  },
+  containerColor: {
+    padding: customVariables.appHeaderPaddingHorizontal,
+    backgroundColor: "#2C489D",
+    color: customVariables.colorWhite
   }
 });
 
@@ -72,6 +81,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <TouchableDefaultOpacity
+      style={styles.containerColor}
       onPress={() => props.onPress(props.bonus, props.validFrom, props.validTo)}
     >
       <View style={styles.spaced}>
@@ -86,7 +96,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
       </View>
       <View small={true} />
       <View style={styles.spaced}>
-        <Text small={true} dark={true}>
+        <Text small={true} style={styles.textWhite}>
           {I18n.t("bonus.bonusVacanza.taxBenefit")}
         </Text>
         <Text bold={true} style={styles.text12}>
@@ -105,7 +115,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
           <IconFont
             name="io-right"
             size={ICON_WIDTH}
-            color={customVariables.contentPrimaryBackground}
+            color={customVariables.colorWhite}
           />
         </View>
       </View>
