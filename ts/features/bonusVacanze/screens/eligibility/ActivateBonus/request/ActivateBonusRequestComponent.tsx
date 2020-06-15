@@ -11,6 +11,7 @@ import { FooterTwoButtons } from "../../../../components/markdown/FooterTwoButto
 import { ActivateBonusDiscrepancies } from "./ActivateBonusDiscrepancies";
 import { ActivateBonusReminder } from "./ActivateBonusReminder";
 import { ActivateBonusTitle } from "./ActivateBonusTitle";
+import { EdgeBorderComponent } from "../../../../../../components/screens/EdgeBorderComponent";
 
 type Props = {
   familyMembers: ReadonlyArray<FamilyMember>;
@@ -103,6 +104,7 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
         )}
 
         <ActivateBonusReminder text={reminder.text} link={reminder.link} />
+        <EdgeBorderComponent />
       </ScrollView>
       <FooterTwoButtons
         onCancel={props.onCancel}
