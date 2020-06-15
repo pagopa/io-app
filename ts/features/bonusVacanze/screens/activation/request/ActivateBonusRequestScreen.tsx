@@ -7,7 +7,10 @@ import { identificationRequest } from "../../../../../store/actions/identificati
 import { GlobalState } from "../../../../../store/reducers/types";
 import { abortBonusRequest } from "../../../components/AbortBonusRequest";
 import { familyMembers } from "../../../mock/mockData";
-import { cancelBonusEligibility } from "../../../store/actions/bonusVacanze";
+import {
+  bonusVacanzeActivation,
+  cancelBonusEligibility
+} from "../../../store/actions/bonusVacanze";
 import { eligibilityEligibleSelector } from "../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 
@@ -56,7 +59,7 @@ const requestIdentification = (dispatch: Dispatch) => {
 };
 
 const onIdentificationSuccess = (dispatch: Dispatch) => {
-  // dispatch(completeBonusEligibility());
+  dispatch(bonusVacanzeActivation.request());
   // TODO: dispatch the start of the activation saga
 };
 

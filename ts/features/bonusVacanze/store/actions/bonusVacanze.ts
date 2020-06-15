@@ -31,10 +31,6 @@ export const cancelBonusEligibility = createStandardAction(
   "BONUS_ELIGIBILITY_CANCEL"
 )<void>();
 
-// export const completeBonusEligibility = createStandardAction(
-//   "BONUS_ELIGIBILITY_COMPLETED"
-// )<void>();
-
 export const eligibilityRequestId = createStandardAction(
   "BONUS_CHECK_ELIGIBILITY_REQUEST_ID"
 )<InstanceId>();
@@ -56,6 +52,10 @@ export const bonusVacanzeActivation = createAsyncAction(
   "BONUS_ACTIVATION_SUCCESS",
   "BONUS_ACTIVATION_FAILURE"
 )<void, BonusVacanzeActivationPayload, Error>();
+
+export const cancelBonusActivation = createStandardAction(
+  "BONUS_ACTIVATION_CANCEL"
+)<void>();
 
 export type BonusActions =
   | ActionType<typeof availableBonusesLoad>

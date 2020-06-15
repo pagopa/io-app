@@ -9,8 +9,8 @@ import {
   checkBonusEligibility,
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
-import { bonusActivationSaga } from "./bonusActivation/getBonusActivationSaga";
-import { handleBonusActivationSaga } from "./bonusActivation/handleBonusActivationSaga";
+import { bonusActivationSaga } from "./activation/getBonusActivationSaga";
+import { handleBonusActivationSaga } from "./activation/handleBonusActivationSaga";
 import { bonusEligibilitySaga } from "./eligibility/getBonusEligibilitySaga";
 import { handleBonusEligibilitySaga } from "./eligibility/handleBonusEligibilitySaga";
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
