@@ -60,6 +60,15 @@ export const navigateToBonusActivationTimeout = () =>
     routeName: BONUSVACANZE_ROUTES.ACTIVATION.TIMEOUT
   });
 
+export const navigateToBonusAlreadyExists = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ACTIVATION.EXISTS
+  });
+
+export const navigateToEligibilityExpired = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ACTIVATION.ELIGIBILITY_EXPIRED
+  });
 export const navigateToBonusActivationCompleted = () =>
   NavigationActions.navigate({
     routeName: BONUSVACANZE_ROUTES.ACTIVATION.COMPLETED

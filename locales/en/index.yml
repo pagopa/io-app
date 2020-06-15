@@ -1295,6 +1295,12 @@ bonus:
         timeout:
           title: Sorry, it takes longer to process your request.
           description: We will send you a message in the app when your bonus is ready.
+        alreadyRedeemed:
+          title: The bonus for your household has already been claimed.
+          body: We ask you to check with your family members. If this information is not correct, check with the Revenue Agency customer service.
+        eligibilityExpired:
+          title: Eligibility expired
+          body: The period in which it was possible to activate the bonus has expired. A new procedure must be started.
         completed:
           title: Congratulation!
           description: Bonus activated

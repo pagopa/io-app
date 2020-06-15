@@ -10,7 +10,9 @@ import {
   navigateToBonusActivationCompleted,
   navigateToBonusActivationLoading,
   navigateToBonusActivationTimeout,
-  navigateToBonusEligibilityLoading
+  navigateToBonusAlreadyExists,
+  navigateToBonusEligibilityLoading,
+  navigateToEligibilityExpired
 } from "../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
@@ -25,9 +27,9 @@ const eligibilityToNavigate = new Map([
   [BonusActivationProgressEnum.TIMEOUT, navigateToBonusActivationTimeout],
   [
     BonusActivationProgressEnum.ELIGIBILITY_EXPIRED,
-    navigateToBonusActivationTimeout
+    navigateToEligibilityExpired
   ],
-  [BonusActivationProgressEnum.EXISTS, navigateToBonusActivationTimeout]
+  [BonusActivationProgressEnum.EXISTS, navigateToBonusAlreadyExists]
 ]);
 
 type BonusActivationSagaType = ReturnType<typeof bonusActivationSaga>;

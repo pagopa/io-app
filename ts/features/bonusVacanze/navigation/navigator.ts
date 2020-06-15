@@ -1,5 +1,7 @@
 import { createStackNavigator } from "react-navigation";
 import ActivateBonusCompletedScreen from "../screens/activation/ActivateBonusCompletedScreen";
+import BonusAlreadyExists from "../screens/activation/BonusAlreadyExists";
+import EligibilityExpired from "../screens/activation/EligibilityExpired";
 import LoadActivateBonusScreen from "../screens/activation/LoadActivateBonusScreen";
 import ActivateBonusRequestScreen from "../screens/activation/request/ActivateBonusRequestScreen";
 import { TimeoutActivationInfoScreen } from "../screens/activation/TimeoutActivationInfoScreen";
@@ -43,6 +45,12 @@ const BonusVacanzeNavigator = createStackNavigator(
     },
     [BONUSVACANZE_ROUTES.ACTIVATION.TIMEOUT]: {
       screen: TimeoutActivationInfoScreen
+    },
+    [BONUSVACANZE_ROUTES.ACTIVATION.EXISTS]: {
+      screen: BonusAlreadyExists
+    },
+    [BONUSVACANZE_ROUTES.ACTIVATION.ELIGIBILITY_EXPIRED]: {
+      screen: EligibilityExpired
     },
     [BONUSVACANZE_ROUTES.ACTIVATION.COMPLETED]: {
       screen: ActivateBonusCompletedScreen
