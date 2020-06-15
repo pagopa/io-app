@@ -14,13 +14,13 @@ type OnRightProps = {
 type MyProps = OnCancelProps & OnRightProps;
 
 /**
- * A preset for {@link MarkdownBaseView} that compose the code used in {@link FooterSingleButton}
+ * A preset for the screens of bonusVacanze that compose the code used in {@link FooterSingleButton}
  * @param props
  */
 export const FooterTwoButtons: React.FunctionComponent<MyProps> = props => {
   return (
     <FooterWithButtons
-      type={"TwoButtonsInlineHalf"}
+      type={"TwoButtonsInlineThird"}
       leftButton={cancelButtonProps(props.onCancel)}
       rightButton={confirmButtonProps(props.onRight, props.title)}
     />
