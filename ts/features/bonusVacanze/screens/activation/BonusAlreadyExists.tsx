@@ -6,6 +6,7 @@ import { confirmButtonProps } from "../../components/buttons/ButtonConfiguration
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { renderRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
+import { cancelBonusActivation } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -43,8 +44,8 @@ const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  onCancel: () => undefined
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onCancel: () => dispatch(cancelBonusActivation())
 });
 
 export default connect(

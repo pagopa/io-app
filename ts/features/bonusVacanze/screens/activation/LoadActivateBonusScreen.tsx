@@ -3,7 +3,12 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
+import { abortBonusRequest } from "../../components/AbortBonusRequest";
 import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
+import {
+  bonusVacanzeActivation,
+  cancelBonusActivation
+} from "../../store/actions/bonusVacanze";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -24,15 +29,16 @@ const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
       {...props}
       loadingCaption={loadingCaption}
       loadingOpacity={1}
+      onCancel={() => abortBonusRequest(props.onCancel)}
     />
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: link with the right dispatch action, will dispatch the cancel request
-  onCancel: () => undefined,
+  onCancel: () => dispatch(cancelBonusActivation()),
   // TODO: link with the right dispatch action, will dispatch the retry request
-  onRetry: () => undefined
+  onRetry: () => dispatch(bonusVacanzeActivation.request())
 });
 
 const mapStateToProps = (_: GlobalState) => ({

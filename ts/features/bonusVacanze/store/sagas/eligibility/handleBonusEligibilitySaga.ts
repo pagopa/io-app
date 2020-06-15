@@ -73,6 +73,8 @@ export function* eligibilityWorker(eligibilitySaga: BonusEligibilitySagaType) {
 
   // the saga complete with the bonusVacanzeActivation.request action
   yield take(bonusVacanzeActivation.request);
+  // remove the eligibility detail info screen from the navigation stack
+  yield put(navigationHistoryPop(1));
 }
 
 /**

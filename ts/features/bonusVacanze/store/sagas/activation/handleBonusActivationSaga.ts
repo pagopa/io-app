@@ -11,18 +11,17 @@ import {
   navigateToBonusActivationLoading,
   navigateToBonusActivationTimeout,
   navigateToBonusAlreadyExists,
-  navigateToBonusEligibilityLoading,
   navigateToEligibilityExpired
 } from "../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   bonusVacanzeActivation,
-  cancelBonusEligibility
+  cancelBonusActivation
 } from "../../actions/bonusVacanze";
 import { BonusActivationProgressEnum } from "../../reducers/bonusVacanzeActivation";
 import { bonusActivationSaga } from "./getBonusActivationSaga";
 
-const eligibilityToNavigate = new Map([
+const activationToNavigate = new Map([
   [BonusActivationProgressEnum.SUCCESS, navigateToBonusActivationCompleted],
   [BonusActivationProgressEnum.TIMEOUT, navigateToBonusActivationTimeout],
   [
@@ -44,45 +43,48 @@ type BonusActivationType = SagaCallReturnType<BonusActivationSagaType>;
  */
 export const getNextNavigation = (result: BonusActivationType) =>
   result.type === getType(bonusVacanzeActivation.success)
-    ? fromNullable(eligibilityToNavigate.get(result.payload.status)).getOrElse(
-        navigateToBonusEligibilityLoading
+    ? fromNullable(activationToNavigate.get(result.payload.status)).getOrElse(
+        navigateToBonusActivationLoading
       )
-    : navigateToBonusEligibilityLoading;
+    : navigateToBonusActivationLoading;
 
 export const isLoadingScreen = (screenName: string) =>
-  screenName === BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK_LOADING;
+  screenName === BONUSVACANZE_ROUTES.ACTIVATION.LOADING;
 
-export function* eligibilityWorker(eligibilitySaga: BonusActivationSagaType) {
+export function* activationWorker(activationSaga: BonusActivationSagaType) {
   const currentRoute: NavigationCurrentRouteSelectorType = yield select(
     navigationCurrentRouteSelector
   );
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
-    // show the loading page for the check eligibility
+    // show the loading page for the activation
     yield put(navigateToBonusActivationLoading());
   }
 
   // start and wait for network request
-  const progress: BonusActivationType = yield call(eligibilitySaga);
+  const progress: BonusActivationType = yield call(activationSaga);
   // dispatch the progress
   yield put(progress);
-  // read eligibility outcome if check has ended successfully
+  // read activation outcome if check has ended successfully
   const nextNavigation = getNextNavigation(progress);
-  if (nextNavigation !== navigateToBonusEligibilityLoading) {
-    // the eligibility saga terminate with a transition to the next screen, removing from the history
+  if (nextNavigation !== navigateToBonusActivationLoading) {
+    // the activation saga terminate with a transition to the next screen, removing from the history
     // the loading screen
     yield put(nextNavigation());
     yield put(navigationHistoryPop(1));
   }
 
   // the saga complete with the bonusVacanzeActivation.request action
+  // TODO: add event to the next flow
   yield take(bonusVacanzeActivation.request);
+  // remove the congratulation screen from the navigation stack
+  yield put(navigationHistoryPop(1));
 }
 
 /**
  * Entry point; This saga orchestrate the activation phase.
  * There are two condition to exit from this saga:
- * - cancelBonusEligibility
- * - bonusVacanzeActivation.request
+ * - cancelBonusActivation
+ * - ??? next screen event ???
  */
 export function* handleBonusActivationSaga(
   activationSaga: BonusActivationSagaType
@@ -90,8 +92,8 @@ export function* handleBonusActivationSaga(
   // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
 
   const { cancelAction } = yield race({
-    eligibility: call(eligibilityWorker, activationSaga),
-    cancelAction: take(cancelBonusEligibility)
+    eligibility: call(activationWorker, activationSaga),
+    cancelAction: take(cancelBonusActivation)
   });
   if (cancelAction) {
     yield put(NavigationActions.back());
