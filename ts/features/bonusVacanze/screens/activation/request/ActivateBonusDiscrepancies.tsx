@@ -1,8 +1,8 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import IconFont from "../../../../../../components/ui/IconFont";
-import themeVariables from "../../../../../../theme/variables";
+import IconFont from "../../../../../components/ui/IconFont";
+import themeVariables from "../../../../../theme/variables";
 import { activateBonusStyle } from "./Style";
 
 type Props = {

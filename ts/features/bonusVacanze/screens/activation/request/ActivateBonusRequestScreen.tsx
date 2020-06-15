@@ -1,19 +1,19 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { MaxBonusAmount } from "../../../../../../../definitions/bonus_vacanze/MaxBonusAmount";
-import { MaxBonusTaxBenefit } from "../../../../../../../definitions/bonus_vacanze/MaxBonusTaxBenefit";
-import { shufflePinPadOnPayment } from "../../../../../../config";
-import I18n from "../../../../../../i18n";
-import { identificationRequest } from "../../../../../../store/actions/identification";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { abortBonusRequest } from "../../../../components/AbortBonusRequest";
-import { familyMembers } from "../../../../mock/mockData";
+import { MaxBonusAmount } from "../../../../../../definitions/bonus_vacanze/MaxBonusAmount";
+import { MaxBonusTaxBenefit } from "../../../../../../definitions/bonus_vacanze/MaxBonusTaxBenefit";
+import { shufflePinPadOnPayment } from "../../../../../config";
+import I18n from "../../../../../i18n";
+import { identificationRequest } from "../../../../../store/actions/identification";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { abortBonusRequest } from "../../../components/AbortBonusRequest";
+import { familyMembers } from "../../../mock/mockData";
 import {
   cancelBonusEligibility,
   completeBonusEligibility
-} from "../../../../store/actions/bonusVacanze";
-import { eligibilityEligibleSelector } from "../../../../store/reducers/eligibility";
+} from "../../../store/actions/bonusVacanze";
+import { eligibilityEligibleSelector } from "../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &

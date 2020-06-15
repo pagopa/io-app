@@ -1,7 +1,7 @@
 import { createStackNavigator } from "react-navigation";
 import ActivateBonusCompletedScreen from "../screens/activation/ActivateBonusCompletedScreen";
 import LoadActivateBonusScreen from "../screens/activation/LoadActivateBonusScreen";
-import ActivateBonusRequestScreen from "../screens/activation/request/request/ActivateBonusRequestScreen";
+import ActivateBonusRequestScreen from "../screens/activation/request/ActivateBonusRequestScreen";
 import { TimeoutActivationInfoScreen } from "../screens/activation/TimeoutActivationInfoScreen";
 import ActiveBonusScreen from "../screens/ActiveBonusScreen";
 import AvailableBonusScreen from "../screens/AvailableBonusScreen";
