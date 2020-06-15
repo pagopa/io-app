@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
 
 // the number of markdown component inside BonusInformationScreen
 const markdownComponents = 1;
+const loadingOpacity = 0.9;
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
  */
@@ -166,7 +167,10 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
     </BaseScreenComponent>
   ));
   return (
-    <ContainerComponent isLoading={!isMarkdownLoaded} loadingOpacity={0.9} />
+    <ContainerComponent
+      isLoading={!isMarkdownLoaded}
+      loadingOpacity={loadingOpacity}
+    />
   );
 };
 
