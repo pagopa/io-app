@@ -8,8 +8,8 @@ import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
@@ -18,7 +18,6 @@ import { navigateBack } from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusEligibility } from "../store/actions/bonusVacanze";
-import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
