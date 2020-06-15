@@ -99,7 +99,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     isLoading: pot.isLoading(potAvailableBonuses),
-    isError: pot.isError(potAvailableBonuses)
+    isError: pot.isNone(potAvailableBonuses) && pot.isError(potAvailableBonuses)
   };
 };
 
