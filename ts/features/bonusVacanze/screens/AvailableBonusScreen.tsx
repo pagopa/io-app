@@ -99,6 +99,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     isLoading: pot.isLoading(potAvailableBonuses),
+    // show error only when we have an error and no data to show
     isError: pot.isNone(potAvailableBonuses) && pot.isError(potAvailableBonuses)
   };
 };
