@@ -15,14 +15,13 @@ export default StyleSheet.create({
     borderRadius: 8,
     marginBottom: -1,
     marginLeft: 0,
-    marginRight: 0,
-    marginTop: 20
+    marginRight: 0
   },
   cardInner: {
     paddingBottom: 16,
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 22
+    paddingTop: 18
   },
   cardNumber: {
     flexDirection: "row",

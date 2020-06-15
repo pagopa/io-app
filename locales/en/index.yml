@@ -573,8 +573,7 @@ wallet:
   newPaymentMethod:
     add: add
     addButton: Add a new method
-    addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
-      so that you don't have to re-add them from scratch for every transaction.
+    addDescription: Add a payment method to pay from IO in seconds, or request activation of a bonus or discount card.
     walletAlert: "Your wallet includes payment methods but no one is supported by IO yet"
     successful: The card was added successfully!
     failed: The card could not be added
@@ -1315,7 +1314,7 @@ bonus:
     title: Add subsidy
     contentTitle: Select one of the available bonus
   request: Request a new bonus
-  latestBonus: Your active bonuses
+  requestLabel: Bonuses and discounts
   requestTitle: Request
   active: Active
   failed: Failed
