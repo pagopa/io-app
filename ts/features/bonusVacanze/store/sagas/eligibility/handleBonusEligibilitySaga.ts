@@ -7,8 +7,8 @@ import { navigationHistoryPop } from "../../../../../store/actions/navigationHis
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import {
-  navigateToEligible,
   navigateToBonusEligibilityLoading,
+  navigateToEligible,
   navigateToIseeNotAvailable,
   navigateToIseeNotEligible,
   navigateToTimeoutEligibilityCheck

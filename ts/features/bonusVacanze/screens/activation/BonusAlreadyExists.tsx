@@ -2,8 +2,9 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
-import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
+import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { renderRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { cancelBonusActivation } from "../../store/actions/bonusVacanze";
@@ -30,6 +31,11 @@ const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
   );
   const cancel = I18n.t("bonus.bonusVacanza.cta.cancelRequest");
 
+  useHardwareBackButton(() => {
+    props.onCancel();
+    return true;
+  });
+
   return (
     <>
       <InfoScreenComponent
@@ -38,7 +44,7 @@ const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
         body={body}
       />
       <FooterStackButton
-        buttons={[confirmButtonProps(props.onCancel, cancel)]}
+        buttons={[cancelButtonProps(props.onCancel, cancel)]}
       />
     </>
   );

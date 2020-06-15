@@ -4,7 +4,7 @@ import BonusAlreadyExists from "../screens/activation/BonusAlreadyExists";
 import EligibilityExpired from "../screens/activation/EligibilityExpired";
 import LoadActivateBonusScreen from "../screens/activation/LoadActivateBonusScreen";
 import ActivateBonusRequestScreen from "../screens/activation/request/ActivateBonusRequestScreen";
-import { TimeoutActivationInfoScreen } from "../screens/activation/TimeoutActivationInfoScreen";
+import TimeoutActivationInfoScreen from "../screens/activation/TimeoutActivationInfoScreen";
 import ActiveBonusScreen from "../screens/ActiveBonusScreen";
 import AvailableBonusScreen from "../screens/AvailableBonusScreen";
 import BonusInformationScreen from "../screens/BonusInformationScreen";

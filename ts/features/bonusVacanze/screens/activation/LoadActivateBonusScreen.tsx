@@ -4,6 +4,7 @@ import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { abortBonusRequest } from "../../components/AbortBonusRequest";
+import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 import {
   bonusVacanzeActivation,
@@ -23,6 +24,11 @@ const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
   const loadingCaption = I18n.t(
     "bonus.bonusVacanza.eligibility.activate.loading"
   );
+
+  useHardwareBackButton(() => {
+    abortBonusRequest(props.onCancel);
+    return true;
+  });
 
   return (
     <LoadingErrorComponent
