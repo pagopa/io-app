@@ -10,8 +10,7 @@ import {
   navigateToBonusActivationCompleted,
   navigateToBonusActivationLoading,
   navigateToBonusActivationTimeout,
-  navigateToBonusEligibilityLoading,
-  navigateToEligible
+  navigateToBonusEligibilityLoading
 } from "../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
