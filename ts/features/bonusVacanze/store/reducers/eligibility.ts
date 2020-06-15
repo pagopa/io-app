@@ -18,7 +18,8 @@ export enum EligibilityRequestProgressEnum {
   "INELIGIBLE" = "INELIGIBLE", // possible outcome
   "ISEE_NOT_FOUND" = "ISEE_NOT_FOUND", // possible outcome
   "TIMEOUT" = "TIMEOUT", // too long to complete the request
-  "ERROR" = "ERROR" // generic error / network error
+  "ERROR" = "ERROR", // generic error / network error
+  "BONUS_ALREADY_ACTIVE" = "BONUS_ALREADY_ACTIVE" // generic error / network error
 }
 
 export type EligibilityCheckRequest = {
