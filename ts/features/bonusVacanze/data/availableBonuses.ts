@@ -41,7 +41,7 @@ Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso 
 export const availableBonuses: BonusesAvailable = [
   {
     id_type: ID_BONUS_VACANZE_TYPE,
-    name: "Bonus Vacanze FALLBACK",
+    name: "Bonus Vacanze",
     subtitle: "dal 01/07/2020 al 31/12/2020",
     is_active: true,
     content: contentBonusVacanze,
