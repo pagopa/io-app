@@ -11,6 +11,7 @@ import { withLightModalContext } from "../../../components/helpers/withLightModa
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../../components/screens/DarkLayout";
+import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import BlockButtons from "../../../components/ui/BlockButtons";
 import IconFont from "../../../components/ui/IconFont";
@@ -39,7 +40,6 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
-import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 
 type QRCodeContents = {
   [key: string]: string;
