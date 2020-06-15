@@ -66,6 +66,9 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSize3,
     lineHeight: customVariables.lineHeightH3,
     color: customVariables.colorBlack
+  },
+  disclaimer: {
+    fontSize: customVariables.fontSizeXSmall
   }
 });
 
@@ -101,7 +104,8 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
       <Content>
         <View style={styles.row}>
           <View style={styles.flexStart}>
-            <Text dark={true} style={styles.orgName}>
+            <Text dark={true} style={styles.orgName} semibold={true}>
+              {/* FIXME: replace with correct attribute from the object */}
               Agenzia delle Entrate
             </Text>
             <Text bold={true} dark={true} style={styles.title}>{`${I18n.t(
@@ -133,9 +137,16 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} extralarge={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} extralarge={true} />
-        <Text dark={true}>{I18n.t("bonus.bonusVacanza.advice")}</Text>
+        <Text style={styles.disclaimer} dark={true}>
+          {I18n.t("bonus.bonusVacanza.advice")}
+        </Text>
         <TouchableDefaultOpacity onPress={handleModalPress}>
-          <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
+          <Text
+            style={styles.disclaimer}
+            link={true}
+            ellipsizeMode={"tail"}
+            numberOfLines={1}
+          >
             {I18n.t("bonus.tos.title")}
           </Text>
         </TouchableDefaultOpacity>
