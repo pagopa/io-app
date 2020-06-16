@@ -1,8 +1,8 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, race, select, take } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
+import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -73,8 +73,6 @@ export function* eligibilityWorker(eligibilitySaga: BonusEligibilitySagaType) {
 
   // the saga complete with the bonusVacanzeActivation.request action
   yield take(bonusVacanzeActivation.request);
-  // remove the eligibility detail info screen from the navigation stack
-  yield put(navigationHistoryPop(1));
 }
 
 /**
@@ -93,6 +91,8 @@ export function* handleBonusEligibilitySaga(
     cancelAction: take(cancelBonusEligibility)
   });
   if (cancelAction) {
-    yield put(NavigationActions.back());
+    yield put(navigateToWalletHome());
   }
+  // remove the eligibility detail info screen from the navigation stack
+  yield put(navigationHistoryPop(1));
 }
