@@ -6,7 +6,7 @@ import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { formatNumberAmount } from "../../../utils/stringBuilder";
 import { validityInterval } from "../utils/bonus";
 
 type Props = {
@@ -91,7 +91,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
           } - ${bonusValidityInterval.value.e2}`}</Text>
         )}
         <Text bold={true} style={styles.text12}>
-          {formatNumberCentsToAmount(props.bonus.dsu_request.max_amount)}
+          {formatNumberAmount(props.bonus.dsu_request.max_amount, true)}
         </Text>
       </View>
       <View small={true} />
@@ -100,7 +100,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
           {I18n.t("bonus.bonusVacanza.taxBenefit")}
         </Text>
         <Text bold={true} style={styles.text12}>
-          {formatNumberCentsToAmount(props.bonus.dsu_request.max_tax_benefit)}
+          {formatNumberAmount(props.bonus.dsu_request.max_tax_benefit, true)}
         </Text>
       </View>
       <View style={styles.smallSpacer} />
