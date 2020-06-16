@@ -496,6 +496,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet", "wallet_methods"]}
         gradientHeader={true}
+        headerPaddingMin={true}
       >
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
       </WalletLayout>

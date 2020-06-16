@@ -26,6 +26,7 @@ import { formatDateAsLocal } from "../../../utils/dates";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
+import BonusCardComponent from "../components/BonusCardComponent";
 import QrModalBox from "../components/QrModalBox";
 import { availableBonusesSelectorFromId } from "../store/reducers/availableBonuses";
 import {
@@ -73,8 +74,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     zIndex: 7,
     elevation: 7,
-    alignSelf: "center",
-    backgroundColor: variables.contentPrimaryBackground
+    alignSelf: "center"
   },
   center: {
     alignSelf: "center"
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   rowBlock: {
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "space-between"
   },
   paddedContent: {
@@ -125,24 +125,32 @@ const styles = StyleSheet.create({
   },
   fmName: {
     fontSize: variables.fontSize1,
-    lineHeight: 21
+    flex: 1,
+    lineHeight: 21,
+    alignSelf: "flex-start"
+  },
+  textRight: {
+    textAlign: "right"
+  },
+  textLeft: {
+    textAlign: "left"
   },
   amount: {
     fontSize: variables.fontSize2
   }
 });
 
-const renderQRCode = (base64: string) =>
-  fromNullable(base64).fold(null, s => (
-    <SvgXml xml={s} height="100%" width="100%" />
-  ));
-
 const renderFiscalCodeLine = (name: string, cf: string) => {
   return (
     <React.Fragment key={cf}>
       <View style={styles.rowBlock}>
-        <Text style={[styles.fmName, styles.colorGrey]}>{name}</Text>
-        <Text style={[styles.fmName, styles.colorGrey]} semibold={true}>
+        <Text style={[styles.fmName, styles.colorGrey, styles.textLeft]}>
+          {name}
+        </Text>
+        <Text
+          style={[styles.fmName, styles.colorGrey, styles.textRight]}
+          semibold={true}
+        >
           {cf}
         </Text>
       </View>
@@ -206,6 +214,17 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     defaultValue: ""
   });
 
+  const openModalBox = () =>
+    props.showAnimatedModal(
+      // tslint:disable-next-line:jsx-wrap-multiline
+      <QrModalBox
+        secretCode={bonus.id}
+        onClose={props.hideModal}
+        qrCode={qrCode[QR_CODE_MIME_TYPE]}
+      />,
+      BottomTopAnimation
+    );
+
   const renderFooterButtons = () =>
     isBonusActive(bonus) ? (
       <BlockButtons
@@ -227,15 +246,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           iconName: "io-qr",
           iconColor: variables.contentPrimaryBackground,
           title: I18n.t("bonus.bonusVacanza.cta.qrCode"),
-          onPress: () =>
-            props.showAnimatedModal(
-              <QrModalBox
-                secretCode={bonus.id}
-                onClose={props.hideModal}
-                qrCode={qrCode[QR_CODE_MIME_TYPE]}
-              />,
-              BottomTopAnimation
-            )
+          onPress: openModalBox
         }}
       />
     ) : (
@@ -268,11 +279,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       topContent={<View style={{ height: 90 }} />}
       faqCategories={["profile"]}
       footerContent={renderFooterButtons()}
+      gradientHeader={true}
     >
       <View>
         <View style={styles.paddedContent}>
           <View style={styles.image}>
-            {renderQRCode(qrCode[QR_CODE_MIME_TYPE])}
+            <BonusCardComponent bonus={bonus} viewQR={openModalBox} />
           </View>
           <View spacer={true} extralarge={true} />
           <View style={styles.rowBlock}>

@@ -1,12 +1,14 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
 import SectionCardComponent from "../../../components/wallet/card/SectionCardComponent";
 import I18n from "../../../i18n";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
-import ActiveBonus from "./ActiveBonus";
+import BonusCardComponent from "./BonusCardComponent";
 
 type OwnProps = {
   onButtonPress: () => void;
@@ -18,6 +20,20 @@ type OwnProps = {
   activeBonus: pot.Pot<BonusActivationWithQrCode, Error>;
   availableBonusesList: BonusesAvailable;
 };
+
+const styles = StyleSheet.create({
+  preview: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 12
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    zIndex: 0,
+    elevation: 0
+  }
+});
 
 /**
  * Component to show the request Bonus section on the Wallet Home Screen:
@@ -36,6 +52,10 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
     availableBonusesList.find(bi => bi.id_type === ID_BONUS_VACANZE_TYPE)
   );
 
+  const validFrom = maybeBonusVacanzeCategory
+    .map(b => b.valid_from)
+    .toUndefined();
+  const validTo = maybeBonusVacanzeCategory.map(b => b.valid_to).toUndefined();
   return (
     <React.Fragment>
       <SectionCardComponent
@@ -45,16 +65,15 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
       />
       {!pot.isLoading(activeBonus) &&
         pot.isSome(activeBonus) && (
-          <ActiveBonus
-            bonus={activeBonus.value}
-            onPress={onBonusPress}
-            validFrom={maybeBonusVacanzeCategory
-              .map(b => b.valid_from)
-              .toUndefined()}
-            validTo={maybeBonusVacanzeCategory
-              .map(b => b.valid_to)
-              .toUndefined()}
-          />
+          <View style={styles.preview}>
+            <BonusCardComponent
+              bonus={activeBonus.value}
+              preview={true}
+              onPress={() =>
+                onBonusPress(activeBonus.value, validFrom, validTo)
+              }
+            />
+          </View>
         )}
     </React.Fragment>
   );

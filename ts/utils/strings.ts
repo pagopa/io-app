@@ -85,3 +85,10 @@ export const maybeNotNullyString = (
   fromPredicate((t: string) => t.trim().length > 0)(
     fromNullable(text).getOrElse("")
   );
+
+/**
+ * Adds a space every four characters
+ * @param text
+ */
+export const spaceEveryFour = (text: string) =>
+  text.replace(/\W/gi, "").replace(/(.{4})/g, "$1 ");

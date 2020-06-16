@@ -1250,6 +1250,8 @@ bonus:
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return
     request: Request the
+    code: Code
+    uniqueCode: Unique code
     requestedAt: Requested on
     advice: 'By clicking on "Request the Bonus Vacanze" you declare that you have read and understood the '
     status: Status
@@ -1265,6 +1267,8 @@ bonus:
       requestBonus: Request
       cancelRequest: Cancel the request
       qrCode: QR code
+      copyCode: Code copy
+      openQRCode: View QR code
     eligibility:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
