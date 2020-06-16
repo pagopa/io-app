@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
  */
 export const PaymentSummaryComponent = (props: Props) => {
   const renderItem = (label: string, value?: string) => {
-    if (isNullyOrEmpty(props.recipient)) {
+    if (isNullyOrEmpty(value)) {
       return null;
     }
     return (
