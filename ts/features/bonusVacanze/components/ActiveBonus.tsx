@@ -1,16 +1,23 @@
-import { Text } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { formatDateAsLocal } from "../../../utils/dates";
-import { Bonus } from "../mock/mockData";
+import { formatNumberAmount } from "../../../utils/stringBuilder";
+import { validityInterval } from "../utils/bonus";
 
 type Props = {
-  bonus: any;
-  onPress: (bonus: Bonus) => void;
+  bonus: BonusActivationWithQrCode;
+  validFrom?: Date;
+  validTo?: Date;
+  onPress: (
+    bonus: BonusActivationWithQrCode,
+    validFrom?: Date,
+    validTo?: Date
+  ) => void;
 };
 
 const ICON_WIDTH = 24;
@@ -28,25 +35,15 @@ const styles = StyleSheet.create({
   brandDarkGray: {
     color: customVariables.brandDarkGray
   },
-  badgeContainer: {
-    flex: 0,
-    paddingRight: 8,
-    alignSelf: "flex-start",
-    paddingTop: 6.5
-  },
-  viewStyle: {
-    flexDirection: "row"
-  },
-  text11: {
-    color: customVariables.brandDarkestGray
-  },
   text3: {
     fontSize: 18,
-    color: customVariables.brandDarkestGray
+    color: customVariables.colorWhite
   },
   text12: {
     lineHeight: 18,
-    marginBottom: -4
+    marginBottom: -4,
+    justifyContent: "flex-end",
+    color: customVariables.colorWhite
   },
   icon: {
     width: 64,
@@ -61,6 +58,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     minHeight: 24
+  },
+  textWhite: {
+    color: customVariables.colorWhite
+  },
+  containerColor: {
+    padding: customVariables.appHeaderPaddingHorizontal,
+    backgroundColor: "#2C489D",
+    color: customVariables.colorWhite
   }
 });
 
@@ -69,33 +74,48 @@ const styles = StyleSheet.create({
  * in the store
  */
 const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
+  const bonusValidityInterval = validityInterval(
+    props.validFrom,
+    props.validTo
+  );
+
   return (
-    <TouchableDefaultOpacity onPress={() => props.onPress(props.bonus)}>
+    <TouchableDefaultOpacity
+      style={styles.containerColor}
+      onPress={() => props.onPress(props.bonus, props.validFrom, props.validTo)}
+    >
       <View style={styles.spaced}>
-        <Text small={true} dark={true}>
-          {I18n.t("bonus.active")}
-        </Text>
+        {bonusValidityInterval.isSome() && (
+          <Text small={true}>{`${I18n.t("bonus.bonusVacanza.validity")} ${
+            bonusValidityInterval.value.e1
+          } - ${bonusValidityInterval.value.e2}`}</Text>
+        )}
         <Text bold={true} style={styles.text12}>
-          {props.bonus.max_amount}
+          {formatNumberAmount(props.bonus.dsu_request.max_amount, true)}
         </Text>
       </View>
-      <View style={styles.viewStyle}>
-        <Text xsmall={true}>
-          {formatDateAsLocal(props.bonus.activated_at, true, true)}
+      <View small={true} />
+      <View style={styles.spaced}>
+        <Text small={true} style={styles.textWhite}>
+          {I18n.t("bonus.bonusVacanza.taxBenefit")}
+        </Text>
+        <Text bold={true} style={styles.text12}>
+          {formatNumberAmount(props.bonus.dsu_request.max_tax_benefit, true)}
         </Text>
       </View>
       <View style={styles.smallSpacer} />
       <View style={styles.text3Line}>
         <View style={styles.text3Container}>
           <Text numberOfLines={2} style={styles.text3}>
-            {props.bonus.type}
+            {/*TODO replace this hardcoded string*/}
+            {"Bonus Vacanze"}
           </Text>
         </View>
         <View style={styles.icon}>
           <IconFont
             name="io-right"
             size={ICON_WIDTH}
-            color={customVariables.contentPrimaryBackground}
+            color={customVariables.colorWhite}
           />
         </View>
       </View>

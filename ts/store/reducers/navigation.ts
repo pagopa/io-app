@@ -5,7 +5,10 @@ import {
 } from "react-navigation";
 import { getType } from "typesafe-actions";
 
+import { index } from "fp-ts/lib/Array";
+import { none, Option } from "fp-ts/lib/Option";
 import AppNavigator from "../../navigation/AppNavigator";
+import { getRouteName } from "../../utils/navigation";
 import { navigationRestore } from "../actions/navigation";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -15,9 +18,17 @@ const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
 );
 
 // Selectors
-
 export const navigationStateSelector = (state: GlobalState): NavigationState =>
   state.nav;
+
+// if some, it returns the name of the current route
+export const navigationCurrentRouteSelector = (
+  state: GlobalState
+): Option<string> => {
+  return index(state.nav.index, [...state.nav.routes]).fold(none, ln =>
+    getRouteName(ln.routes[ln.index])
+  );
+};
 
 function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {

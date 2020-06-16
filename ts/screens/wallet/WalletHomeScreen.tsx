@@ -3,12 +3,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, RefreshControl, StyleSheet } from "react-native";
-import { Grid, Row } from "react-native-easy-grid";
 import {
   NavigationEventSubscription,
   NavigationInjectedProps
 } from "react-navigation";
 import { connect } from "react-redux";
+import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -16,16 +16,27 @@ import { withValidatedEmail } from "../../components/helpers/withValidatedEmail"
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
-import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
-import CardsFan from "../../components/wallet/card/CardsFan";
+import { RotatedCards } from "../../components/wallet/card/RotatedCards";
+import SectionCardComponent from "../../components/wallet/card/SectionCardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled } from "../../config";
 import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
-import { mockedBonus } from "../../features/bonusVacanze/mock/mockData";
+import {
+  navigateToAvailableBonusScreen,
+  navigateToBonusActiveDetailScreen
+} from "../../features/bonusVacanze/navigation/action";
+import {
+  availableBonusesLoad,
+  loadBonusVacanzeFromId
+} from "../../features/bonusVacanze/store/actions/bonusVacanze";
+import { availableBonusesSelector } from "../../features/bonusVacanze/store/reducers/availableBonuses";
+import {
+  bonusVacanzeActivationActiveSelector,
+  canBonusVacanzeBeRequestedSelector
+} from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -76,6 +87,10 @@ const styles = StyleSheet.create({
   inLineSpace: {
     lineHeight: 20
   },
+  addDescription: {
+    lineHeight: 24,
+    fontSize: variables.fontSize1
+  },
   white: {
     color: variables.colorWhite
   },
@@ -109,9 +124,6 @@ const styles = StyleSheet.create({
   },
   brandDarkGray: {
     color: variables.brandDarkGray
-  },
-  brandLightGray: {
-    color: variables.brandLightGray
   },
   whiteBg: {
     backgroundColor: variables.colorWhite
@@ -176,6 +188,13 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     return true;
   };
 
+  private loadBonusVacanze = () => {
+    if (bonusVacanzeEnabled) {
+      this.props.loadAvailableBonuses();
+      this.props.loadBonusVacanzeFromId("FAKE_ID");
+    }
+  };
+
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
@@ -189,6 +208,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         customVariables.brandDarkGray
       );
     }); // tslint:disable-line no-object-mutation
+    this.loadBonusVacanze();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
@@ -201,81 +221,59 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
   private cardHeader(isError: boolean = false) {
     return (
-      <View style={styles.flexRow}>
-        <View>
-          <H5 style={styles.brandLightGray}>
-            {I18n.t("wallet.paymentMethods")}
-          </H5>
-        </View>
-        {!isError && (
-          <View>
-            <AddPaymentMethodButton
-              onPress={() =>
-                this.props.navigateToWalletAddPaymentMethod(
-                  getCurrentRouteKey(this.props.nav)
-                )
-              }
-            />
-          </View>
-        )}
-      </View>
+      <SectionCardComponent
+        label={I18n.t("wallet.paymentMethods")}
+        onPress={() =>
+          this.props.navigateToWalletAddPaymentMethod(
+            getCurrentRouteKey(this.props.nav)
+          )
+        }
+        isError={isError}
+      />
     );
   }
 
-  private cardPreview(wallets: any) {
+  private cardPreview(wallets: ReadonlyArray<Wallet>) {
+    // we have to render only wallets of credit card type
+    const validWallets = wallets.filter(w => w.type === TypeEnum.CREDIT_CARD);
     return (
       <View>
-        {this.cardHeader()}
         <View spacer={true} />
-        <CardsFan
-          wallets={
-            wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
-          }
-          navigateToWalletList={this.props.navigateToWalletList}
-        />
-      </View>
-    );
-  }
-
-  private withoutCardsHeader(hasNotSupportedWalletsOnly: boolean) {
-    return (
-      <Grid>
-        <Row>
-          <Text note={true} white={true} style={styles.inLineSpace}>
-            {I18n.t("wallet.newPaymentMethod.addDescription")}
-            {hasNotSupportedWalletsOnly && (
-              <Text note={true} white={true} bold={true}>
-                {` ${I18n.t("wallet.newPaymentMethod.walletAlert")}`}
-              </Text>
-            )}
-          </Text>
-        </Row>
-        <Row />
-        <Row>
-          <View spacer={true} />
-        </Row>
-        <Row>
-          <View style={styles.container}>
-            <ButtonDefaultOpacity
-              block={true}
-              whiteBordered={true}
-              onPress={() =>
-                this.props.navigateToWalletAddPaymentMethod(
-                  getCurrentRouteKey(this.props.nav)
-                )
+        {validWallets.length === 0 && (
+          <React.Fragment>
+            <Text white={true} style={styles.addDescription}>
+              {I18n.t("wallet.newPaymentMethod.addDescription")}
+            </Text>
+            <View spacer={true} large={true} />
+            <View spacer={true} small={true} />
+          </React.Fragment>
+        )}
+        {this.cardHeader()}
+        {validWallets.length > 0 ? (
+          <View>
+            <RotatedCards
+              cardType="Preview"
+              wallets={
+                validWallets.length === 1
+                  ? [validWallets[0]]
+                  : [validWallets[0], validWallets[1]]
               }
-              activeOpacity={1}
-            >
-              <Text bold={true}>
-                {I18n.t("wallet.newPaymentMethod.addButton")}
-              </Text>
-            </ButtonDefaultOpacity>
+              onClick={this.props.navigateToWalletList}
+            />
           </View>
-        </Row>
-        <Row>
-          <View spacer={true} />
-        </Row>
-      </Grid>
+        ) : (
+          <View spacer={true} small={true} />
+        )}
+        {/* Display this item only if the flag is enabled */}
+        {bonusVacanzeEnabled && (
+          <RequestBonus
+            onButtonPress={this.props.navigateToBonusList}
+            activeBonus={this.props.bonusVacanzeActivationActive}
+            availableBonusesList={this.props.availableBonusesList}
+            onBonusPress={this.props.navigateToBonusDetail}
+          />
+        )}
+      </View>
     );
   }
 
@@ -296,8 +294,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   private errorWalletsHeader() {
     return (
       <View>
-        {this.cardHeader(true)}
-        <View spacer={true} />
         <Text style={[styles.white, styles.inLineSpace]}>
           {I18n.t("wallet.walletLoadFailure")}
         </Text>
@@ -312,11 +308,22 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
         </ButtonDefaultOpacity>
         <View spacer={true} />
+        {/* Display this item only if the flag is enabled */}
+        {bonusVacanzeEnabled && (
+          <RequestBonus
+            onButtonPress={this.props.navigateToBonusList}
+            activeBonus={this.props.bonusVacanzeActivationActive}
+            availableBonusesList={this.props.availableBonusesList}
+            onBonusPress={this.props.navigateToBonusDetail}
+          />
+        )}
       </View>
     );
   }
 
-  private helpMessage = (alignCenter: boolean = false): React.ReactNode => (
+  private renderHelpMessage = (
+    alignCenter: boolean = false
+  ): React.ReactNode => (
     <React.Fragment>
       <View spacer={true} large={true} />
       <Text xsmall={true} style={alignCenter ? styles.centered : undefined}>
@@ -333,14 +340,13 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     </React.Fragment>
   );
 
-  private transactionError(potPayments: PaymentsHistoryState) {
+  private transactionError() {
     return (
       <Content
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
       >
-        {this.helpMessage()}
-        {potPayments.length > 0 && this.helpMessage()}
+        {this.renderHelpMessage()}
         <View spacer={true} large={true} />
         <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
           {I18n.t("wallet.transactionsLoadFailure")}
@@ -366,7 +372,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     return (
       <Content scrollEnabled={false} noPadded={true}>
         <View style={styles.emptyListWrapper}>
-          {potPayments.length > 0 && this.helpMessage(true)}
+          {potPayments.length > 0 && this.renderHelpMessage(true)}
           <Text style={styles.emptyListContentTitle}>
             {I18n.t("wallet.noTransactionsInWalletHome")}
           </Text>
@@ -391,7 +397,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         title={I18n.t("wallet.latestTransactions")}
         amount={I18n.t("wallet.amount")}
         transactions={potTransactions}
-        helpMessage={potPayments.length > 0 ? this.helpMessage() : undefined}
+        helpMessage={
+          potPayments.length > 0 ? this.renderHelpMessage() : undefined
+        }
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
@@ -442,26 +450,26 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     );
   }
 
+  // triggered on pull to refresh
+  private handleOnRefresh = () => {
+    this.loadBonusVacanze();
+    this.props.loadTransactions(this.props.transactionsLoadedLength);
+    this.props.loadWallets();
+  };
+
   public render(): React.ReactNode {
     const { potWallets, potTransactions, historyPayments } = this.props;
 
     const wallets = pot.getOrElse(potWallets, []);
 
-    const hasNotSupportedWalletsOnly =
-      wallets.length > 0 &&
-      wallets.filter(wallet => wallet.type === TypeEnum.CREDIT_CARD).length ===
-        0;
-
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
       : pot.isError(potWallets)
         ? this.errorWalletsHeader()
-        : wallets.length > 0 && !hasNotSupportedWalletsOnly
-          ? this.cardPreview(wallets)
-          : this.withoutCardsHeader(hasNotSupportedWalletsOnly);
+        : this.cardPreview(wallets);
 
     const transactionContent = pot.isError(potTransactions)
-      ? this.transactionError(historyPayments)
+      ? this.transactionError()
       : this.transactionList(potTransactions, historyPayments);
 
     const footerContent =
@@ -471,10 +479,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
     const walletRefreshControl = (
       <RefreshControl
-        onRefresh={() => {
-          this.props.loadTransactions(this.props.transactionsLoadedLength);
-          this.props.loadWallets();
-        }}
+        onRefresh={this.handleOnRefresh}
         refreshing={false}
         tintColor={"transparent"} // iOS
       />
@@ -491,22 +496,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         refreshControl={walletRefreshControl}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet", "wallet_methods"]}
+        gradientHeader={true}
       >
-        {this.newMethodAdded ? (
-          this.newMethodAddedContent
-        ) : (
-          <React.Fragment>
-            {/* Display this item only if the flag is enabled */}
-            {bonusVacanzeEnabled && (
-              <RequestBonus
-                onButtonPress={this.props.navigateToRequestBonus}
-                bonus={this.props.currentActiveBonus}
-                onBonusPress={this.props.navigateToBonusDetail}
-              />
-            )}
-            {transactionContent}
-          </React.Fragment>
-        )}
+        {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
       </WalletLayout>
     );
   }
@@ -517,8 +509,11 @@ const mapStateToProps = (state: GlobalState) => {
     .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
     .getOrElse(true);
 
+  const potAvailableBonuses = availableBonusesSelector(state);
   return {
-    currentActiveBonus: pot.some(mockedBonus),
+    bonusVacanzeActivationActive: bonusVacanzeActivationActiveSelector(state),
+    canBonusBeRequested: canBonusVacanzeBeRequestedSelector(state),
+    availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
     potTransactions: latestTransactionsSelector(state),
@@ -545,9 +540,16 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  // TODO add bonus detail as function parameter when adding the navigate to bonus detail
-  navigateToBonusDetail: () => dispatch(navigateBack()),
-  navigateToRequestBonus: () => dispatch(navigateBack()),
+  loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
+  loadBonusVacanzeFromId: (id: string) =>
+    dispatch(loadBonusVacanzeFromId.request(id)),
+  navigateToBonusDetail: (
+    bonus: BonusActivationWithQrCode,
+    validFrom?: Date,
+    validTo?: Date
+  ) =>
+    dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo })),
+  navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),

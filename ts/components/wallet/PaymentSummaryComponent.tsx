@@ -4,14 +4,24 @@ import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import { BadgeComponent } from "../screens/BadgeComponent";
 
 type Props = Readonly<{
   title: string;
-  recipient: string;
-  description: string;
+  recipient?: string;
+  description?: string;
+  iuv?: string;
+  error?: string;
+  dateTime?: string;
   dark?: boolean;
   image?: ImageSourcePropType;
+  paymentStatus?: paymentStatusType;
 }>;
+
+export type paymentStatusType = {
+  color: string;
+  description: string;
+};
 
 const styles = StyleSheet.create({
   title: {
@@ -32,6 +42,16 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     paddingRight: 4
+  },
+  flex: {
+    flex: 1
+  },
+  paymentOutcome: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  text11: {
+    paddingLeft: 8
   }
 });
 
@@ -39,6 +59,29 @@ const styles = StyleSheet.create({
  * This component displays the transaction details
  */
 export const PaymentSummaryComponent = (props: Props) => {
+  const renderItem = (label: string, value: string) => (
+    <React.Fragment>
+      <Text small={true} style={props.dark && styles.lighterGray}>
+        {label}
+      </Text>
+      <Text bold={true} dark={!props.dark} white={props.dark}>
+        {value}
+      </Text>
+      <View spacer={true} />
+    </React.Fragment>
+  );
+
+  const paymentStatus = props.paymentStatus && (
+    <React.Fragment>
+      <View style={styles.paymentOutcome}>
+        <BadgeComponent color={props.paymentStatus.color} />
+        <View hspacer={true} small={true} />
+        <Text small={true}>{props.paymentStatus.description}</Text>
+      </View>
+      <View spacer={true} />
+    </React.Fragment>
+  );
+
   return (
     <React.Fragment>
       <Text
@@ -56,25 +99,20 @@ export const PaymentSummaryComponent = (props: Props) => {
       <ItemSeparatorComponent noPadded={true} />
       <View spacer={true} large={true} />
 
+      {paymentStatus}
+
       <View style={styles.row}>
         <View style={styles.column}>
-          {/** recipient */}
-          <Text style={props.dark && styles.lighterGray}>
-            {I18n.t("wallet.recipient")}
-          </Text>
-          <Text bold={true} dark={!props.dark} white={props.dark}>
-            {props.recipient}
-          </Text>
+          {props.recipient &&
+            renderItem(I18n.t("wallet.recipient"), props.recipient)}
 
-          <View spacer={true} />
+          {props.description &&
+            renderItem(
+              I18n.t("wallet.firstTransactionSummary.object"),
+              props.description
+            )}
 
-          {/** transaction/notice description */}
-          <Text style={props.dark && styles.lighterGray}>
-            {I18n.t("wallet.firstTransactionSummary.object")}
-          </Text>
-          <Text bold={true} dark={!props.dark} white={props.dark}>
-            {props.description}
-          </Text>
+          {props.iuv && renderItem(I18n.t("payment.IUV"), props.iuv)}
         </View>
 
         {props.image !== undefined && <Image source={props.image} />}
