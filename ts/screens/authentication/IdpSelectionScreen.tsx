@@ -14,7 +14,6 @@ import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
-import { loadContextualHelpData } from "../../store/actions/content";
 import variables from "../../theme/variables";
 
 type Props = ReturnType<typeof mapDispatchToProps> & NavigationScreenProps;
@@ -137,13 +136,6 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
 
-  public componentDidMount() {
-    // load, from content server, all the info about the identity providers.
-    // Is is used after the idp selection to customize the contextual help.
-    // The request is performed here to reduce the loading time of the contextual help in the next screen
-    this.props.loadIdpsContent();
-  }
-
   public componentDidUpdate() {
     if (this.state.counter === TAPS_TO_OPEN_TESTIDP) {
       this.props.setSelectedIdp(testIdp);
@@ -182,8 +174,7 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setSelectedIdp: (idp: IdentityProvider) => dispatch(idpSelected(idp)),
-  loadIdpsContent: () => dispatch(loadContextualHelpData.request())
+  setSelectedIdp: (idp: IdentityProvider) => dispatch(idpSelected(idp))
 });
 
 export default connect(

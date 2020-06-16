@@ -235,9 +235,12 @@ export function* watchContentSaga() {
     watchContentServicesByScopeLoad
   );
 
-  // watch contextual help text data loading request
+  // Watch contextual help text data loading request
   yield takeLatest(
     getType(loadContextualHelpData.request),
     watchLoadContextualHelp
   );
+
+  // Load content related to the contextual help body
+  yield put(loadContextualHelpData.request());
 }
