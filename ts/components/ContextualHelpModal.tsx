@@ -69,7 +69,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 
   React.useEffect(
     () => {
-      // if the contextual data is empty or has an try to reload
+      // if the contextual data is empty or is none -> try to reload
       if (
         !props.isContextualDataLoading &&
         props.isContextualDataEmptyOrError
