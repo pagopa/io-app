@@ -594,9 +594,7 @@ wallet:
   newPaymentMethod:
     add: aggiungi
     addButton: Aggiungi un metodo
-    addDescription:
-      Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
-      ecc.) per non doverli inserire ad ogni transazione.
+    addDescription: Aggiungi un metodo di pagamento per pagare da IO in pochi secondi, oppure richiedi l’attivazione di un bonus o di una carta sconto.
     walletAlert: "Nel tuo portafoglio sono registrati dei metodi di pagamento ma nessuno di questi è compatibile con IO"
     successful: Carta aggiunta con successo
     failed: Impossibile aggiungere la carta
@@ -1287,7 +1285,7 @@ bonus:
     taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il
     requestedAt: Richiesto il
-    advice: "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i Termini e le Condizioni d’uso e la Privacy Policy del servizio."
+    advice: 'Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i '
     status: Stato
     name: Bonus Vacanze
     validity: Valido nel periodo
@@ -1312,8 +1310,16 @@ bonus:
         goToNewDSU: Presenta nuova DSU a INPS
         goToNewSimulation: Fai una simulazione online
       activateBonus:
-        title: Attiva
-        description: Puoi attivare un bonus di {{amount}}. Il tuo sconto sulle tasse è pari a {{taxBenefit}}
+        headerTitle: Richiesta Bonus Vacanze
+        title: Buone notizie!
+        description: "Il tuo nucleo familiare ha diritto al seguente Bonus Vacanze:"
+        reminder:
+          text: "Ti ricordiamo che ciascun componente del tuo nucleo famigliare può spendere il bonus. Se le informazioni riportate non ti risultano corrette, ti preghiamo di verificare con il"
+          link: "servizio clienti di INPS."
+        discrepancies:
+          attention: "Attenzione!"
+          text: "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Se decidi di proseguire, potresti essere chiamato a fornire gli approfondimenti che hanno determinato la presenza di tali omissioni o difformità."
+        activateCTA: "Attiva il Bonus"
       timeout:
         title: Siamo spiacenti, serve più tempo per verificare il tuo ISEE.
         description: "Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.\n\nQuando lo riceverai, se sarà positivo, ricordati di completare la tua domanda entro 24 ore, altrimenti scadrà e dovrai iniziarne una nuova."
@@ -1332,11 +1338,17 @@ bonus:
       cancel: Torna alla richiesta
       confirm: Termina richiesta
       completed: Richiesta annullata
+    composition:
+      amount: "Importo massimo"
+      expendable: "Spendibile presso la struttura ricettiva"
+      taxBenefit: "Detraibile in dichiarazione dei redditi"
+    family:
+      title: "Chi può riscuotere il bonus?"
   bonusList:
     title: Aggiungi sovvenzione
     contentTitle: Seleziona uno dei bonus disponibili
   request: Richiedi un nuovo bonus
-  latestBonus: I tuoi bonus attivi
+  requestLabel: Bonus e sconti
   requestTitle: Richiesta
   active: Attivo
   failed: Fallito
