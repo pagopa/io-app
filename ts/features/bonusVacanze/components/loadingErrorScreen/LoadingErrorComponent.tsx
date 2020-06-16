@@ -38,6 +38,7 @@ const InnerLoadingErrorComponent: React.FunctionComponent<
         onRetry={props.onRetry}
         onCancel={props.onCancel}
         text={props.errorText}
+        subText={" "}
       />
     </View>
   );

@@ -11,6 +11,7 @@ type Props = Readonly<{
   onCancel?: () => void;
   image?: ImageSourcePropType;
   text?: string;
+  subText?: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -77,7 +78,8 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
             <View spacer={true} extralarge={true} />
             <View spacer={true} extralarge={true} />
             <Text alignCenter={true} style={styles.errorText2}>
-              {I18n.t("wallet.errorTransaction.submitBugText")}
+              {this.props.subText ||
+                I18n.t("wallet.errorTransaction.submitBugText")}
             </Text>
             <View spacer={true} extralarge={true} />
           </View>
