@@ -1,9 +1,9 @@
+import { none, some } from "fp-ts/lib/Option";
 import {
   capitalize,
   isStringNullyOrEmpty,
   maybeNotNullyString
 } from "../strings";
-import { none, some } from "fp-ts/lib/Option";
 
 describe("capitalize", () => {
   it("should return a string where each word has first char in uppercase-1", () => {
