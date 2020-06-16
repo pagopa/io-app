@@ -16,12 +16,13 @@ import {
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   bonusVacanzeActivation,
-  cancelBonusActivation
+  cancelBonusActivation,
+  completeBonusVacanze
 } from "../../actions/bonusVacanze";
 import { BonusActivationProgressEnum } from "../../reducers/bonusVacanzeActivation";
 import { bonusActivationSaga } from "./getBonusActivationSaga";
 
-const activationToNavigate = new Map([
+export const activationToNavigate = new Map([
   [BonusActivationProgressEnum.SUCCESS, navigateToBonusActivationCompleted],
   [BonusActivationProgressEnum.TIMEOUT, navigateToBonusActivationTimeout],
   [
@@ -74,8 +75,8 @@ export function* activationWorker(activationSaga: BonusActivationSagaType) {
   }
 
   // the saga complete with the bonusVacanzeActivation.request action
-  // TODO: add event to the next flow
-  yield take(bonusVacanzeActivation.request);
+  // TODO: replace with the next true action
+  yield take(completeBonusVacanze);
   // remove the congratulation screen from the navigation stack
   yield put(navigationHistoryPop(1));
 }

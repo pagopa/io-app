@@ -6,6 +6,7 @@ import { confirmButtonProps } from "../../components/buttons/ButtonConfiguration
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { renderRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
+import { completeBonusVacanze } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -44,9 +45,9 @@ const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  // TODO: goto bonus details
-  onConfirm: () => undefined
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  // TODO: replace with the event to go in the next screen
+  onConfirm: () => dispatch(completeBonusVacanze())
 });
 
 export default connect(
