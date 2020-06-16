@@ -6,7 +6,6 @@ import I18n from "../../../../../i18n";
 import { identificationRequest } from "../../../../../store/actions/identification";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { abortBonusRequest } from "../../../components/AbortBonusRequest";
-import { familyMembers } from "../../../mock/mockData";
 import {
   bonusVacanzeActivation,
   cancelBonusEligibility
@@ -72,10 +71,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => {
   const elc = eligibilityEligibleSelector(state);
   return {
-    bonusAmount: elc.fold(500, e => e.dsu_request.max_amount),
-    taxBenefit: elc.fold(100, e => e.dsu_request.max_tax_benefit),
-    familyMembers: elc.fold(familyMembers, e => e.dsu_request.family_members),
-    hasDiscrepancies: elc.fold(true, e => e.dsu_request.has_discrepancies)
+    bonusAmount: elc.fold(0, e => e.dsu_request.max_amount),
+    taxBenefit: elc.fold(0, e => e.dsu_request.max_tax_benefit),
+    familyMembers: elc.fold([], e => e.dsu_request.family_members),
+    hasDiscrepancies: elc.fold(false, e => e.dsu_request.has_discrepancies)
   };
 };
 

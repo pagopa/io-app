@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import { FamilyMember } from "../../../../../../definitions/bonus_vacanze/FamilyMember";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
 import I18n from "../../../../../i18n";
 import { BonusCompositionDetails } from "../../../components/keyValueTable/BonusCompositionDetails";
 import { FamilyComposition } from "../../../components/keyValueTable/FamilyComposition";
@@ -103,6 +104,7 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
         )}
 
         <ActivateBonusReminder text={reminder.text} link={reminder.link} />
+        <EdgeBorderComponent />
       </ScrollView>
       <FooterTwoButtons
         onCancel={props.onCancel}
