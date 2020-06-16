@@ -3,9 +3,9 @@ import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { isNullyOrEmpty } from "../../utils/strings";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { BadgeComponent } from "../screens/BadgeComponent";
-import { isNullyOrEmpty } from "../../utils/strings";
 
 type Props = Readonly<{
   title: string;
