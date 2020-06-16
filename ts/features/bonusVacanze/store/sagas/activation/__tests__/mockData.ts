@@ -122,3 +122,5 @@ export const navigationActions: ReadonlyArray<StartScreenScenario> = [
   startFromAnotherScreen,
   startFromLoadingScreen
 ];
+
+test.skip("mockDataOnlyFile", () => undefined);
