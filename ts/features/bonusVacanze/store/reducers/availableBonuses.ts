@@ -24,8 +24,11 @@ const reducer = (
     case getType(availableBonusesLoad.success):
       return pot.some(action.payload);
     case getType(availableBonusesLoad.failure):
-      // if there are some error -> return hardcoded fallback data
-      return pot.toError(pot.some(availableBonuses), action.payload);
+      // if there are some errors and no data into the store -> return hardcoded fallback data
+      return pot.toError(
+        pot.isNone(state) ? pot.some(availableBonuses) : state,
+        action.payload
+      );
   }
   return state;
 };
