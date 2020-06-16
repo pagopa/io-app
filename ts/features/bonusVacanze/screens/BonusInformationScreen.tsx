@@ -18,6 +18,10 @@ import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
+import {
+  isStringNullyOrEmpty,
+  maybeNotNullyString
+} from "../../../utils/strings";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusEligibility } from "../store/actions/bonusVacanze";
 
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
     color: customVariables.colorBlack
   },
   disclaimer: {
-    fontSize: customVariables.fontSizeXSmall
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -100,24 +104,29 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
     title: `${I18n.t("bonus.bonusVacanza.request")} ${bonusItem.name}`
   };
 
-  const handleModalPress = () =>
-    props.showModal(<TosBonusComponent onClose={props.hideModal} />);
+  const handleModalPress = (tos: string) =>
+    props.showModal(
+      <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
+    );
   const onMarkdownLoaded = () => {
     setMarkdownLoaded(c => Math.min(c + 1, markdownComponents));
   };
   const isMarkdownLoaded = markdownLoaded === markdownComponents;
+  const maybeBonusTos = maybeNotNullyString(bonusItem.tos_url);
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
       <Content>
         <View style={styles.row}>
           <View style={styles.flexStart}>
-            <Text dark={true} style={styles.orgName} semibold={true}>
-              {/* FIXME: replace with correct attribute from the object */}
-              {"Agenzia delle Entrate"}
+            {!isStringNullyOrEmpty(bonusItem.sponsorship_description) && (
+              <Text dark={true} style={styles.orgName} semibold={true}>
+                {bonusItem.sponsorship_description}
+              </Text>
+            )}
+
+            <Text bold={true} dark={true} style={styles.title}>
+              {bonusItem.title}
             </Text>
-            <Text bold={true} dark={true} style={styles.title}>{`${I18n.t(
-              "bonus.requestTitle"
-            )} ${bonusItem.name}`}</Text>
           </View>
           <View style={styles.flexEnd}>
             {bonusItem.cover && (
@@ -127,34 +136,42 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
         </View>
         <View spacer={true} large={true} />
         <Text dark={true}>{bonusItem.subtitle}</Text>
-        <ButtonDefaultOpacity
-          style={styles.noPadded}
-          small={true}
-          transparent={true}
-          onPress={handleModalPress}
-        >
-          <Text>{I18n.t("bonus.tos.title")}</Text>
-        </ButtonDefaultOpacity>
+        {maybeBonusTos.isSome() && (
+          <ButtonDefaultOpacity
+            style={styles.noPadded}
+            small={true}
+            transparent={true}
+            onPress={() => handleModalPress(maybeBonusTos.value)}
+          >
+            <Text>{I18n.t("bonus.tos.title")}</Text>
+          </ButtonDefaultOpacity>
+        )}
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
         <Markdown onLoadEnd={onMarkdownLoaded}>{bonusItem.content}</Markdown>
-        <View spacer={true} extralarge={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} extralarge={true} />
-        <Text style={styles.disclaimer} dark={true}>
-          {I18n.t("bonus.bonusVacanza.advice")}
-        </Text>
-        <TouchableDefaultOpacity onPress={handleModalPress}>
-          <Text
-            style={styles.disclaimer}
-            link={true}
-            ellipsizeMode={"tail"}
-            numberOfLines={1}
-          >
-            {I18n.t("bonus.tos.title")}
-          </Text>
-        </TouchableDefaultOpacity>
+        {maybeBonusTos.isSome() && (
+          <>
+            <View spacer={true} extralarge={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} extralarge={true} />
+            <Text style={styles.disclaimer} dark={true}>
+              {I18n.t("bonus.bonusVacanza.advice")}
+            </Text>
+            <TouchableDefaultOpacity
+              onPress={() => handleModalPress(maybeBonusTos.value)}
+            >
+              <Text
+                style={styles.disclaimer}
+                link={true}
+                ellipsizeMode={"tail"}
+                numberOfLines={1}
+              >
+                {I18n.t("bonus.tos.title")}
+              </Text>
+            </TouchableDefaultOpacity>
+          </>
+        )}
         {isMarkdownLoaded && <EdgeBorderComponent />}
       </Content>
       {isMarkdownLoaded && (

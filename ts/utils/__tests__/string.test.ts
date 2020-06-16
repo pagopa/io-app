@@ -1,4 +1,9 @@
-import { capitalize, isNullyOrEmpty } from "../strings";
+import {
+  capitalize,
+  isStringNullyOrEmpty,
+  maybeNotNullyString
+} from "../strings";
+import { none, some } from "fp-ts/lib/Option";
 
 describe("capitalize", () => {
   it("should return a string where each word has first char in uppercase-1", () => {
@@ -22,24 +27,46 @@ describe("capitalize", () => {
   });
 });
 
-describe("null or empty", () => {
+describe("isStringNullyOrEmpty", () => {
   it("should return true", () => {
-    expect(isNullyOrEmpty(undefined)).toBeTruthy();
+    expect(isStringNullyOrEmpty(undefined)).toBeTruthy();
   });
 
   it("should return false", () => {
-    expect(isNullyOrEmpty("hello")).toBeFalsy();
+    expect(isStringNullyOrEmpty("hello")).toBeFalsy();
   });
 
   it("should return true", () => {
-    expect(isNullyOrEmpty("    ")).toBeTruthy();
+    expect(isStringNullyOrEmpty("    ")).toBeTruthy();
   });
 
   it("should return true", () => {
-    expect(isNullyOrEmpty("")).toBeTruthy();
+    expect(isStringNullyOrEmpty("")).toBeTruthy();
   });
 
   it("should return true", () => {
-    expect(isNullyOrEmpty(null)).toBeTruthy();
+    expect(isStringNullyOrEmpty(null)).toBeTruthy();
+  });
+});
+
+describe("maybeNotNullyString", () => {
+  it("should return none", () => {
+    expect(maybeNotNullyString(undefined)).toEqual(none);
+  });
+
+  it("should return some", () => {
+    expect(maybeNotNullyString("hello")).toEqual(some("hello"));
+  });
+
+  it("should return none", () => {
+    expect(maybeNotNullyString("    ")).toEqual(none);
+  });
+
+  it("should return none", () => {
+    expect(maybeNotNullyString("")).toEqual(none);
+  });
+
+  it("should return none", () => {
+    expect(maybeNotNullyString(null)).toEqual(none);
   });
 });
