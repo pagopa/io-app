@@ -1343,7 +1343,7 @@ bonus:
       title: Annulla
       body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
       cancel: Torna alla richiesta
-      confirm: Termina richiesta
+      confirm: Annulla richiesta
       completed: Richiesta annullata
     composition:
       amount: "Importo massimo"
