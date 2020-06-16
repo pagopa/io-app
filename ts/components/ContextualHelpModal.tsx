@@ -76,7 +76,10 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
         props.loadContextualHelpData();
       }
     },
-    [pot.isNone(props.potContextualData)]
+    [
+      pot.isNone(props.potContextualData) ||
+        pot.isError(props.potContextualData)
+    ]
   );
 
   // after the modal is fully visible, render the content -
