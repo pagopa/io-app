@@ -4,8 +4,7 @@ import { Image, Platform, StyleSheet } from "react-native";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
-import { isStringNullyOrEmpty } from "../../../utils/strings";
-import { validityInterval } from "../utils/bonus";
+import { maybeNotNullyString } from "../../../utils/strings";
 
 type Props = {
   bonusItem: BonusAvailable;
@@ -72,9 +71,8 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
   const { bonusItem } = props;
   const isComingSoon = !bonusItem.is_active;
   const disabledStyle = isComingSoon ? styles.disabled : {};
-  const validityIntervalTuple = validityInterval(
-    bonusItem.valid_from,
-    bonusItem.valid_to
+  const maybeSponsorDescription = maybeNotNullyString(
+    bonusItem.sponsorship_description
   );
   return (
     <ListItem
@@ -97,12 +95,10 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
               )}
             </View>
           </Row>
-          {!isNulisStringNullyOrEmptylyOrEmpty(
-            bonusItem.sponsorship_description
-          ) && (
+          {maybeSponsorDescription.isSome() && (
             <Row>
               <Text style={[styles.servicesName, disabledStyle]}>
-                {bonusItem.sponsorship_description}
+                {maybeSponsorDescription.value}
               </Text>
             </Row>
           )}

@@ -8,7 +8,7 @@ import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
-import { AVOID_ZOOM_JS } from "../../../screens/onboarding/TosScreen";
+import { AVOID_ZOOM_JS } from "../../../utils/webview";
 
 type Props = {
   onClose: () => void;
@@ -16,11 +16,11 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  contentContainerStyle: {
+  flex1: {
     flex: 1
   },
-  webViewContainer: {
-    flex: 1
+  flex2: {
+    flex: 2
   },
   errorContainer: {
     padding: 20,
@@ -121,16 +121,13 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>
-      <Content
-        contentContainerStyle={styles.contentContainerStyle}
-        noPadded={true}
-      >
+      <Content contentContainerStyle={styles.flex1} noPadded={true}>
         {renderError()}
         {!hasError && (
-          <View style={styles.webViewContainer}>
+          <View style={styles.flex1}>
             <WebView
               textZoom={100}
-              style={{ flex: 1 }}
+              style={styles.flex2}
               onLoadEnd={handleLoadEnd}
               onError={handleError}
               source={{ uri: props.tos_url }}

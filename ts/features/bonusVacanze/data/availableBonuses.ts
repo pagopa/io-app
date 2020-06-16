@@ -1,4 +1,5 @@
 import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
+import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 
 const contentBonusVacanze = `#### Chi può richiederlo?
 
@@ -31,7 +32,7 @@ Se durante il processo, i dati relativi all’ISEE e al tuo nucleo familiare non
 
 export const availableBonuses: BonusesAvailable = [
   {
-    id_type: 1,
+    id_type: ID_BONUS_VACANZE_TYPE,
     name: "Bonus Vacanze",
     subtitle:
       "L'incentivo per supportare il settore del turismo dopo il lockdown richiesto dal COVID-19",

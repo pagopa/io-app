@@ -18,10 +18,7 @@ import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
-import {
-  isStringNullyOrEmpty,
-  maybeNotNullyString
-} from "../../../utils/strings";
+import { maybeNotNullyString } from "../../../utils/strings";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusEligibility } from "../store/actions/bonusVacanze";
 
@@ -113,14 +110,17 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   };
   const isMarkdownLoaded = markdownLoaded === markdownComponents;
   const maybeBonusTos = maybeNotNullyString(bonusItem.tos_url);
+  const maybeSponsorshipDescription = maybeNotNullyString(
+    bonusItem.sponsorship_description
+  );
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
       <Content>
         <View style={styles.row}>
           <View style={styles.flexStart}>
-            {!isStringNullyOrEmpty(bonusItem.sponsorship_description) && (
+            {maybeSponsorshipDescription.isSome() && (
               <Text dark={true} style={styles.orgName} semibold={true}>
-                {bonusItem.sponsorship_description}
+                {maybeSponsorshipDescription.value}
               </Text>
             )}
 
