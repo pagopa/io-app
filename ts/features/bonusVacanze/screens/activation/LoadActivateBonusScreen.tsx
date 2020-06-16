@@ -26,7 +26,6 @@ const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
   );
 
   useHardwareBackButton(() => {
-    abortBonusRequest(props.onCancel);
     return true;
   });
 
@@ -35,14 +34,14 @@ const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
       {...props}
       loadingCaption={loadingCaption}
       loadingOpacity={1}
-      onCancel={() => abortBonusRequest(props.onCancel)}
+      onAbort={() => abortBonusRequest(props.onAbort)}
     />
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: link with the right dispatch action, will dispatch the cancel request
-  onCancel: () => dispatch(cancelBonusActivation()),
+  onAbort: () => dispatch(cancelBonusActivation()),
   // TODO: link with the right dispatch action, will dispatch the retry request
   onRetry: () => dispatch(bonusVacanzeActivation.request())
 });

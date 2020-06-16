@@ -10,7 +10,7 @@ export type LoadingErrorProps = {
   loadingOpacity?: number;
   errorText?: string;
   onRetry: () => void;
-  onCancel?: () => void;
+  onAbort?: () => void;
 };
 
 const styles = StyleSheet.create({
@@ -36,7 +36,7 @@ const InnerLoadingErrorComponent: React.FunctionComponent<
     <View style={styles.body}>
       <GenericErrorComponent
         onRetry={props.onRetry}
-        onCancel={props.onCancel}
+        // onCancel={props.onAbort}
         text={props.errorText}
         subText={" "}
       />
