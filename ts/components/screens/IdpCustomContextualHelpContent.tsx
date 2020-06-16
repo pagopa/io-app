@@ -60,7 +60,7 @@ const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {
         </React.Fragment>
       )}
 
-      {/** Idp cotnacts */}
+      {/** Idp contacts */}
       <View spacer={true} />
       <Markdown onLoadEnd={() => setIsMarkdown2Loaded(true)}>
         {idpTextData.description}
@@ -68,10 +68,7 @@ const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {
       <View spacer={true} />
       {isMarkdown2Loaded && (
         <React.Fragment>
-          <EmailCallCTA
-            phone={idpTextData.phone}
-            email={idpTextData.email ? idpTextData.email : undefined}
-          />
+          <EmailCallCTA phone={idpTextData.phone} email={idpTextData.email} />
           <View spacer={true} />
           {idpTextData.helpdesk_form && (
             <React.Fragment>
