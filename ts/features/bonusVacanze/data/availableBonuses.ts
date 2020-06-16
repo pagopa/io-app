@@ -13,8 +13,8 @@ Il bonus è destinato a tutte le famiglie italiane con un reddito familiare ISEE
 #### Quanto vale?
 Il valore del bonus cambia in base al numero di componenti del nucleo familiare:
 - 150€ per un solo componente; 
--  300€ per due componenti; 
--  500€ per più di due componenti.
+- 300€ per due componenti; 
+- 500€ per più di due componenti.
 
 L’incentivo può essere paragonato a uno sconto pari all’80% del valore del bonus, che viene applicato dalla struttura turistica al momento del pagamento della vacanza. Il restante 20% sarà fruito in forma di detrazione fiscale in fase di dichiarazione dei redditi.
 
