@@ -161,30 +161,27 @@ export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
   );
 
 /**
- * return an option with screen contextual help data if they are loaded and defined
+ * return a pot with screen contextual help data if they are loaded and defined otherwise
  * @param id
  */
 export const screenContextualHelpDataSelector = createSelector<
   GlobalState,
   pot.Pot<ContextualHelp, Error>,
   NavigationState,
-  Option<ScreenCHData>
->([contextualHelpDataSelector, navSelector], (contextualHelpData, navState) =>
-  pot.getOrElse(
-    pot.map(contextualHelpData, data => {
-      const currentRouteName = getCurrentRouteName(navState);
-      if (currentRouteName === undefined) {
-        return none;
-      }
-      const locale = getLocalePrimaryWithFallback();
-      const screenData = data[locale].screens.find(
-        s => s.route_name.toLowerCase() === currentRouteName.toLocaleLowerCase()
-      );
-      return fromNullable(screenData);
-    }),
-    none
-  )
-);
+  pot.Pot<Option<ScreenCHData>, Error>
+>([contextualHelpDataSelector, navSelector], (contextualHelpData, navState) => {
+  return pot.map(contextualHelpData, data => {
+    const currentRouteName = getCurrentRouteName(navState);
+    if (currentRouteName === undefined) {
+      return none;
+    }
+    const locale = getLocalePrimaryWithFallback();
+    const screenData = data[locale].screens.find(
+      s => s.route_name.toLowerCase() === currentRouteName.toLocaleLowerCase()
+    );
+    return fromNullable(screenData);
+  });
+});
 
 export default function content(
   state: ContentState = initialContentState,

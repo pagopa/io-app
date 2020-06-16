@@ -1,3 +1,4 @@
+import { none } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Container, Content, H3, Text, View } from "native-base";
@@ -13,10 +14,7 @@ import { connect } from "react-redux";
 import I18n from "../i18n";
 import { loadContextualHelpData } from "../store/actions/content";
 import { Dispatch } from "../store/actions/types";
-import {
-  contextualHelpDataSelector,
-  screenContextualHelpDataSelector
-} from "../store/reducers/content";
+import { screenContextualHelpDataSelector } from "../store/reducers/content";
 import { GlobalState } from "../store/reducers/types";
 import themeVariables from "../theme/variables";
 import { FAQsCategoriesType } from "../utils/faq";
@@ -69,15 +67,16 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 
   React.useEffect(
     () => {
-      // if the contextual data is empty or is none -> try to reload
+      // if the contextual data is empty or is in error -> try to reload
       if (
-        !props.isContextualDataLoading &&
-        props.isContextualDataEmptyOrError
+        !pot.isLoading(props.potContextualData) &&
+        pot.isNone(props.potContextualData) &&
+        pot.isError(props.potContextualData)
       ) {
         props.loadContextualHelpData();
       }
     },
-    [props.isContextualDataEmptyOrError]
+    [pot.isNone(props.potContextualData)]
   );
 
   // after the modal is fully visible, render the content -
@@ -96,20 +95,20 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
    *  If contextualData (loaded from the content server) contains the route of the current screen,
    *  title and content are read from it, otherwise they came from the locales sotred in app
    */
-  const customizedTitle = props.contextualData.fold(
+  const customizedTitle = props.maybeContextualData.fold(
     props.title,
     data => data.title
   );
 
   // content could be the one provided from props or the remote one
-  const customizedContent = props.contextualData.fold(content, data => (
+  const customizedContent = props.maybeContextualData.fold(content, data => (
     <Markdown onLoadEnd={() => setContentLoaded(true)}>{data.content}</Markdown>
   ));
 
   // content is loaded is when:
   // - provided one from props is loaded or
   // - when the remote one is loaded
-  const isContentLoaded = props.contextualData.fold(
+  const isContentLoaded = props.maybeContextualData.fold(
     props.contentLoaded,
     _ => contentLoaded
   );
@@ -179,14 +178,11 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => {
-  const contextualData = screenContextualHelpDataSelector(state);
-  const chd = contextualHelpDataSelector(state);
-  const isContextualDataEmptyOrError = pot.isNone(chd) || pot.isError(chd);
-  const isContextualDataLoading = pot.isLoading(chd);
+  const potContextualData = screenContextualHelpDataSelector(state);
+  const maybeContextualData = pot.getOrElse(potContextualData, none);
   return {
-    contextualData,
-    isContextualDataEmptyOrError,
-    isContextualDataLoading
+    potContextualData,
+    maybeContextualData
   };
 };
 
