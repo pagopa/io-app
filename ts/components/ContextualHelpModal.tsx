@@ -109,7 +109,10 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   // content is loaded is when:
   // - provided one from props is loaded or
   // - when the remote one is loaded
-  const isContentLoaded = props.contentLoaded || contentLoaded;
+  const isContentLoaded = props.contextualData.fold(
+    props.contentLoaded,
+    _ => contentLoaded
+  );
 
   return (
     <Modal
