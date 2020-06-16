@@ -148,10 +148,10 @@ export const bonusEligibilitySaga = (
             }
           }
         }
-        // there's already an active bonus related to this user
+        // there's already an activation bonus running
         else if (startEligibilityResult.value.status === 403) {
           return checkBonusEligibility.success({
-            status: EligibilityRequestProgressEnum.BONUS_ALREADY_ACTIVE
+            status: EligibilityRequestProgressEnum.BONUS_ACTIVATION_PENDING
           });
         }
 
