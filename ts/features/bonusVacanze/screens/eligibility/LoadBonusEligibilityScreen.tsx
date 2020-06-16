@@ -26,6 +26,9 @@ const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
   const loadingCaption = I18n.t("bonus.bonusVacanza.eligibility.loading");
 
   useHardwareBackButton(() => {
+    if (!props.isLoading) {
+      abortBonusRequest(props.onAbort);
+    }
     return true;
   });
 

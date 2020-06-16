@@ -36,7 +36,7 @@ const InnerLoadingErrorComponent: React.FunctionComponent<
     <View style={styles.body}>
       <GenericErrorComponent
         onRetry={props.onRetry}
-        // onCancel={props.onAbort}
+        onCancel={props.onAbort}
         text={props.errorText}
         subText={" "}
       />
