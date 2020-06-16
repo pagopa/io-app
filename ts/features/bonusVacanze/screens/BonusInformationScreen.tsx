@@ -10,6 +10,7 @@ import { withLightModalContext } from "../../../components/helpers/withLightModa
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
@@ -38,10 +39,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   flexEnd: {
-    alignSelf: "flex-end"
+    alignSelf: "center"
   },
   flexStart: {
-    alignSelf: "flex-start"
+    alignSelf: "center"
   },
   cover: {
     resizeMode: "contain",
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between"
   },
   orgName: {
@@ -64,6 +66,9 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSize3,
     lineHeight: customVariables.lineHeightH3,
     color: customVariables.colorBlack
+  },
+  disclaimer: {
+    fontSize: customVariables.fontSizeXSmall
   }
 });
 
@@ -99,12 +104,13 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
       <Content>
         <View style={styles.row}>
           <View style={styles.flexStart}>
-            {bonusItem.sponsorship_cover && (
-              <Image
-                style={styles.bonusImage}
-                source={{ uri: bonusItem.sponsorship_cover }}
-              />
-            )}
+            <Text dark={true} style={styles.orgName} semibold={true}>
+              {/* FIXME: replace with correct attribute from the object */}
+              {"Agenzia delle Entrate"}
+            </Text>
+            <Text bold={true} dark={true} style={styles.title}>{`${I18n.t(
+              "bonus.requestTitle"
+            )} ${bonusItem.name}`}</Text>
           </View>
           <View style={styles.flexEnd}>
             {bonusItem.cover && (
@@ -112,15 +118,8 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
             )}
           </View>
         </View>
-        <View spacer={true} />
-        <Text dark={true} style={styles.orgName}>
-          {bonusItem.subtitle}
-        </Text>
-        <Text bold={true} dark={true} style={styles.title}>{`${I18n.t(
-          "bonus.requestTitle"
-        )} ${bonusItem.name}`}</Text>
         <View spacer={true} large={true} />
-        <Text dark={true}>{bonusItem.content}</Text>
+        <Text dark={true}>{bonusItem.subtitle}</Text>
         <ButtonDefaultOpacity
           style={styles.noPadded}
           small={true}
@@ -133,13 +132,24 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
         <Markdown onLoadEnd={() => setMarkdownLoaded(true)}>
-          {/* TODO Replace with correct text of bonus */
-          I18n.t("profile.main.privacy.exportData.info.body")}
+          {bonusItem.content}
         </Markdown>
         <View spacer={true} extralarge={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} extralarge={true} />
-        <Text dark={true}>{I18n.t("bonus.bonusVacanza.advice")}</Text>
+        <Text style={styles.disclaimer} dark={true}>
+          {I18n.t("bonus.bonusVacanza.advice")}
+        </Text>
+        <TouchableDefaultOpacity onPress={handleModalPress}>
+          <Text
+            style={styles.disclaimer}
+            link={true}
+            ellipsizeMode={"tail"}
+            numberOfLines={1}
+          >
+            {I18n.t("bonus.tos.title")}
+          </Text>
+        </TouchableDefaultOpacity>
         <View spacer={true} extralarge={true} />
         <View spacer={true} extralarge={true} />
         <View spacer={true} large={true} />
