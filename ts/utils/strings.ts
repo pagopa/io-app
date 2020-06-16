@@ -71,6 +71,5 @@ ${cap}${city}${province}`.trim();
  * determine if the text is undefined or empty (or composed only by blanks)
  * @param text
  */
-export const isNullyOrEmpty = (text: string | undefined | null) => {
-  return (text || "").trim().length === 0;
-};
+export const isNullyOrEmpty = (text: string | null | undefined) =>
+  fromNullable(text).fold(true, t => t.trim().length === 0);
