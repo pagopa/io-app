@@ -1,19 +1,20 @@
 import I18n from "i18n-js";
 import { View } from "native-base";
 import * as React from "react";
+import { Idp } from "../../../definitions/content/Idp";
 import { handleItemOnPress } from "../../utils/url";
 import BlockButtons from "../ui/BlockButtons";
 import Markdown from "../ui/Markdown";
 import EmailCallCTA from "./EmailCallCTA";
 
 type Props = Readonly<{
-  idpTextData: any;
+  idpTextData: Idp;
 }>;
 
-const IdpCustomContextualHelpContent = (props: Props) => {
+const IdpCustomContextualHelpContent = (idpTextData: Idp) => {
   return {
     title: I18n.t("authentication.idp_login.contextualHelpTitle2"),
-    body: () => <IdpCustomContextualHelpBody idpTextData={props.idpTextData} />
+    body: () => <IdpCustomContextualHelpBody idpTextData={idpTextData} />
   };
 };
 

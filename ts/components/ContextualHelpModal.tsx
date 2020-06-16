@@ -54,12 +54,15 @@ const styles = StyleSheet.create({
  * Optionally, the title and the content are injected from the content presented in the related clinet response.
  */
 const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
-  const [content, setContent] = React.useState<React.ReactNode | null>(null);
+  const [content, setContent] = React.useState<React.ReactNode>(null);
+  const [contentLoaded, setContentLoaded] = React.useState<boolean | undefined>(
+    undefined
+  );
 
   // after the modal is fully visible, render the content -
   // in case of complex markdown this can take some time and we don't
   // want to impact the modal animation
-  const onModalShow = () => setContent(props.body);
+  const onModalShow = () => setContent(props.body());
 
   // on close, we set a handler to cleanup the content after all
   // interactions (animations) are complete
@@ -76,9 +79,15 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     props.title,
     data => data.title
   );
+
   const customizedContent = props.contextualData.fold(content, data => (
-    <Markdown>{data.content}</Markdown>
+    <Markdown onLoadEnd={() => setContentLoaded(true)}>{data.content}</Markdown>
   ));
+
+  const isContentLoaded = props.contextualData.fold(
+    props.contentLoaded,
+    _ => contentLoaded
+  );
 
   return (
     <Modal
@@ -95,12 +104,12 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
           customRightIcon={{ iconName: "io-close", onPress: onClose }}
         />
 
-        {!content && (
+        {!customizedContent && (
           <View centerJustified={true}>
             <ActivityIndicator color={themeVariables.brandPrimaryLight} />
           </View>
         )}
-        {content && (
+        {customizedContent && (
           <Content
             contentContainerStyle={styles.contentContainerStyle}
             noPadded={true}
@@ -110,13 +119,13 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
             {customizedContent}
             <View spacer={true} />
             {props.faqCategories &&
-              props.contentLoaded && (
+              isContentLoaded && (
                 <FAQComponent
                   onLinkClicked={props.onLinkClicked}
                   faqCategories={props.faqCategories}
                 />
               )}
-            {props.contentLoaded && (
+            {isContentLoaded && (
               <React.Fragment>
                 <View spacer={true} extralarge={true} />
                 <InstabugAssistanceComponent
@@ -135,7 +144,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
                 </Text>
               </React.Fragment>
             )}
-            {props.contentLoaded && <EdgeBorderComponent />}
+            {isContentLoaded && <EdgeBorderComponent />}
           </Content>
         )}
         <BetaBannerComponent />

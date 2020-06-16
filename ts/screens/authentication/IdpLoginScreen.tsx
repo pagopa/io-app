@@ -220,7 +220,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       };
     }
     const idpTextData = selectedIdpTextData.value;
-    return IdpCustomContextualHelpContent({ idpTextData });
+    return IdpCustomContextualHelpContent(idpTextData);
   }
 
   public render() {

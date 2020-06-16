@@ -4,6 +4,7 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { NavigationState } from "react-navigation";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
@@ -11,6 +12,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
+import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import {
   ScopeEnum,
   Service as ServiceMetadata
@@ -162,24 +164,26 @@ export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
  * return an option with screen contextual help data if they are loaded and defined
  * @param id
  */
-export const screenContextualHelpDataSelector = createSelector(
-  [contextualHelpDataSelector, navSelector],
-  (contextualHelpData, navState) =>
-    pot.getOrElse(
-      pot.map(contextualHelpData, data => {
-        const currentRouteName = getCurrentRouteName(navState);
-        if (currentRouteName === undefined) {
-          return none;
-        }
-        const locale = getLocalePrimaryWithFallback();
-        const screenData = data[locale].screens.find(
-          s =>
-            s.route_name.toLowerCase() === currentRouteName.toLocaleLowerCase()
-        );
-        return fromNullable(screenData);
-      }),
-      none
-    )
+export const screenContextualHelpDataSelector = createSelector<
+  GlobalState,
+  pot.Pot<ContextualHelp, Error>,
+  NavigationState,
+  Option<ScreenCHData>
+>([contextualHelpDataSelector, navSelector], (contextualHelpData, navState) =>
+  pot.getOrElse(
+    pot.map(contextualHelpData, data => {
+      const currentRouteName = getCurrentRouteName(navState);
+      if (currentRouteName === undefined) {
+        return none;
+      }
+      const locale = getLocalePrimaryWithFallback();
+      const screenData = data[locale].screens.find(
+        s => s.route_name.toLowerCase() === currentRouteName.toLocaleLowerCase()
+      );
+      return fromNullable(screenData);
+    }),
+    none
+  )
 );
 
 export default function content(
