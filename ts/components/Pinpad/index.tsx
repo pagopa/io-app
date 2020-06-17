@@ -12,7 +12,8 @@ import { ComponentProps } from "../../types/react";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
 import { KeyPad } from "./KeyPad";
-import { Baseline, Bullet } from "./Placeholders";
+import customVariables from '../../theme/variables';
+import InputPlaceHolder from './InputPlaceholder';
 
 interface Props {
   activeColor: string;
@@ -55,12 +56,12 @@ const styles = StyleSheet.create({
 });
 
 const screenWidth = Dimensions.get("window").width;
-// Placeholders values
-const width = 36;
-const sideMargin = 32;
-const margin = 12;
+
 const SMALL_ICON_WIDTH = 17;
 const ICON_WIDTH = 48;
+
+const INPUT_MARGIN = 36;
+
 /**
  * A customized CodeInput component.
  */
@@ -204,15 +205,13 @@ class Pinpad extends React.PureComponent<Props, State> {
     // we avoid to shuffle pin/code pad in dev env
     const newPinPadValue =
       this.props.shufflePad !== true ? pinPadValues : shuffle(pinPadValues);
-
-    // compute width placeholder
-    const totalMargins = margin * 2 * (pinLength - 1) + sideMargin * 2;
-    const widthNeeded = width * pinLength + totalMargins;
-
-    const placeholderWidth = (screenWidth - totalMargins) / pinLength;
-
+    
     const scalableDimension: ViewStyle = {
-      width: widthNeeded > screenWidth ? placeholderWidth : width
+      width: (screenWidth 
+        - (customVariables.spacerWidth * (pinLength-1)) 
+        - (customVariables.contentPadding * 2)
+        - (INPUT_MARGIN * 2)
+      ) / pinLength
     };
 
     this.setState({
@@ -274,27 +273,7 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   private handlePinDigit = (digit: string) =>
     this.handleChangeText(`${this.state.value}${digit}`);
-
-  private renderPlaceholder = (i: number) => {
-    const isPlaceholderPopulated = i <= this.state.value.length - 1;
-    const { activeColor, inactiveColor } = this.props;
-    const { scalableDimension } = this.state;
-
-    return isPlaceholderPopulated ? (
-      <Bullet
-        color={activeColor}
-        scalableDimension={scalableDimension}
-        key={`baseline-${i}`}
-      />
-    ) : (
-      <Baseline
-        color={inactiveColor}
-        scalableDimension={scalableDimension}
-        key={`baseline-${i}`}
-      />
-    );
-  };
-
+ 
   public debounceClear = debounce(() => {
     this.setState({ value: "" });
   }, 100);
@@ -313,13 +292,14 @@ class Pinpad extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const placeholderPositions = range(0, this.state.pinLength - 1);
-
     return (
       <React.Fragment>
-        <View style={styles.placeholderContainer}>
-          {placeholderPositions.map(this.renderPlaceholder)}
-        </View>
+        <InputPlaceHolder 
+        digits={this.state.pinLength} 
+        activeColor={this.props.activeColor} 
+        inactiveColor={this.props.inactiveColor} 
+        inputValue={this.state.value} 
+        customHorizontalMargin={INPUT_MARGIN}/>
         <View spacer={true} />
         {this.renderCodeInsertionStatus()}
         {this.props.onPinResetHandler !== undefined && (

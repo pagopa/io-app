@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const HorizontalScroll: React.SFC<Props> = props => {
+export const HorizontalScroll: React.FunctionComponent<Props> = (props: Props) => {
   const animVal = new Animated.Value(0);
 
   const barArray = props.cards.map((_, i) => {
@@ -84,6 +84,11 @@ export const HorizontalScroll: React.SFC<Props> = props => {
         onScroll={Animated.event([
           { nativeEvent: { contentOffset: { x: animVal } } }
         ])}
+        accessible={true}
+        accessibilityLabel={"Presentazione di IO"}
+        accessibilityHint={
+          "Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto"
+        }
       >
         {props.cards}
       </ScrollView>

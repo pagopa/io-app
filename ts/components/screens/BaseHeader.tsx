@@ -16,6 +16,7 @@ import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
+import Config from 'react-native-config';
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -78,7 +79,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     // if no customGoBack is provided also the header text could be press to execute goBack
     // note goBack could a boolean or a function (check this.getGoBackHandler)
     return (
-      <TouchableDefaultOpacity onPress={this.getGoBackHandler}>
+      <TouchableDefaultOpacity onPress={Config.isAccessibilityModeEnabled ? undefined : this.getGoBackHandler}>
         <Text white={isWhite} numberOfLines={1}>
           {headerTitle}
         </Text>
@@ -127,6 +128,8 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               onPress={onShowHelp}
               style={styles.helpButton}
               transparent={true}
+              accessibilityLabel={"Aiuto contestuale"}
+              accessibilityHint={"Accedi alle informazioni utili sul contenuto della schermata corrente"} // TODO: evaluate how customize
             >
               <IconFont name="io-question" />
             </ButtonDefaultOpacity>

@@ -8,13 +8,11 @@ interface PlaceholderProps {
   scalableDimension?: ViewStyle;
 }
 
+export const INPUT_PLACEHOLDER_HEIGHT = 40;
+
 const styles = StyleSheet.create({
   placeholder: {
-    height: 40,
-    marginLeft: 8,
-    marginRight: 8,
-    marginTop: 18,
-    width: 36,
+    height: INPUT_PLACEHOLDER_HEIGHT,
     alignItems: "center",
     justifyContent: "center"
   },
@@ -28,7 +26,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const Bullet: React.SFC<PlaceholderProps> = ({
+export const Bullet: React.FunctionComponent<PlaceholderProps> = ({
   color,
   scalableDimension
 }) => (
@@ -37,7 +35,7 @@ export const Bullet: React.SFC<PlaceholderProps> = ({
   </View>
 );
 
-export const Baseline: React.SFC<PlaceholderProps> = ({
+export const Baseline: React.FunctionComponent<PlaceholderProps> = ({
   color,
   placeHolderStyle,
   scalableDimension
