@@ -7,8 +7,8 @@ import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 import { spaceEveryFour } from "../../../utils/strings";
+import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 
 type Props = {
   onClose: () => void;
