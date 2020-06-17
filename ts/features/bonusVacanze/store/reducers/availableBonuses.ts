@@ -6,6 +6,7 @@ import { BonusAvailable } from "../../../../../definitions/content/BonusAvailabl
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
+import { availableBonuses } from "../../data/availableBonuses";
 import { availableBonusesLoad } from "../actions/bonusVacanze";
 
 export type AvailableBonusesState = pot.Pot<BonusesAvailable, Error>;
@@ -23,7 +24,11 @@ const reducer = (
     case getType(availableBonusesLoad.success):
       return pot.some(action.payload);
     case getType(availableBonusesLoad.failure):
-      return pot.toError(state, action.payload);
+      // if there are some errors and no data into the store -> return hardcoded fallback data
+      return pot.toError(
+        pot.isNone(state) ? pot.some(availableBonuses) : state,
+        action.payload
+      );
   }
   return state;
 };

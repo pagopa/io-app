@@ -1322,6 +1322,7 @@ bonus:
   request: Request a new bonus
   requestLabel: Bonuses and discounts
   requestTitle: Request
+  validity_interval: from {{from}} until {{to}}
   active: Active
   failed: Failed
   redeemed: Consumed

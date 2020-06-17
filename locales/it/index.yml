@@ -1283,7 +1283,7 @@ bonus:
     taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il
     requestedAt: Richiesto il
-    advice: 'Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i '
+    advice: "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i "
     status: Stato
     name: Bonus Vacanze
     validity: Valido nel periodo
@@ -1354,6 +1354,7 @@ bonus:
   request: Richiedi un nuovo bonus
   requestLabel: Bonus e sconti
   requestTitle: Richiesta
+  validity_interval: dal {{from}} fino al {{to}}
   active: Attivo
   failed: Fallito
   redeemed: Consumato

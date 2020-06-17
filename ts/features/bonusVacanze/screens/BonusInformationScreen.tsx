@@ -10,6 +10,7 @@ import { withLightModalContext } from "../../../components/helpers/withLightModa
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
@@ -17,6 +18,7 @@ import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
+import { maybeNotNullyString } from "../../../utils/strings";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusEligibility } from "../store/actions/bonusVacanze";
 
@@ -68,15 +70,18 @@ const styles = StyleSheet.create({
     color: customVariables.colorBlack
   },
   disclaimer: {
-    fontSize: customVariables.fontSizeXSmall
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
+// the number of markdown component inside BonusInformationScreen
+const markdownComponents = 1;
+const loadingOpacity = 0.9;
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
  */
 const BonusInformationScreen: React.FunctionComponent<Props> = props => {
-  const [isMarkdownLoaded, setMarkdownLoaded] = React.useState(false);
+  const [markdownLoaded, setMarkdownLoaded] = React.useState(0);
 
   const getBonusItem = () => props.navigation.getParam("bonusItem");
 
@@ -96,21 +101,32 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
     title: `${I18n.t("bonus.bonusVacanza.request")} ${bonusItem.name}`
   };
 
-  const handleModalPress = () =>
-    props.showModal(<TosBonusComponent onClose={props.hideModal} />);
-
+  const handleModalPress = (tos: string) =>
+    props.showModal(
+      <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
+    );
+  const onMarkdownLoaded = () => {
+    setMarkdownLoaded(c => Math.min(c + 1, markdownComponents));
+  };
+  const isMarkdownLoaded = markdownLoaded === markdownComponents;
+  const maybeBonusTos = maybeNotNullyString(bonusItem.tos_url);
+  const maybeSponsorshipDescription = maybeNotNullyString(
+    bonusItem.sponsorship_description
+  );
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
       <Content>
         <View style={styles.row}>
           <View style={styles.flexStart}>
-            <Text dark={true} style={styles.orgName} semibold={true}>
-              {/* FIXME: replace with correct attribute from the object */}
-              {"Agenzia delle Entrate"}
+            {maybeSponsorshipDescription.isSome() && (
+              <Text dark={true} style={styles.orgName} semibold={true}>
+                {maybeSponsorshipDescription.value}
+              </Text>
+            )}
+
+            <Text bold={true} dark={true} style={styles.title}>
+              {bonusItem.title}
             </Text>
-            <Text bold={true} dark={true} style={styles.title}>{`${I18n.t(
-              "bonus.requestTitle"
-            )} ${bonusItem.name}`}</Text>
           </View>
           <View style={styles.flexEnd}>
             {bonusItem.cover && (
@@ -120,39 +136,43 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
         </View>
         <View spacer={true} large={true} />
         <Text dark={true}>{bonusItem.subtitle}</Text>
-        <ButtonDefaultOpacity
-          style={styles.noPadded}
-          small={true}
-          transparent={true}
-          onPress={handleModalPress}
-        >
-          <Text>{I18n.t("bonus.tos.title")}</Text>
-        </ButtonDefaultOpacity>
-        <View spacer={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} />
-        <Markdown onLoadEnd={() => setMarkdownLoaded(true)}>
-          {bonusItem.content}
-        </Markdown>
-        <View spacer={true} extralarge={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} extralarge={true} />
-        <Text style={styles.disclaimer} dark={true}>
-          {I18n.t("bonus.bonusVacanza.advice")}
-        </Text>
-        <TouchableDefaultOpacity onPress={handleModalPress}>
-          <Text
-            style={styles.disclaimer}
-            link={true}
-            ellipsizeMode={"tail"}
-            numberOfLines={1}
+        {maybeBonusTos.isSome() && (
+          <ButtonDefaultOpacity
+            style={styles.noPadded}
+            small={true}
+            transparent={true}
+            onPress={() => handleModalPress(maybeBonusTos.value)}
           >
-            {I18n.t("bonus.tos.title")}
-          </Text>
-        </TouchableDefaultOpacity>
-        <View spacer={true} extralarge={true} />
-        <View spacer={true} extralarge={true} />
-        <View spacer={true} large={true} />
+            <Text>{I18n.t("bonus.tos.title")}</Text>
+          </ButtonDefaultOpacity>
+        )}
+        <View spacer={true} />
+        <ItemSeparatorComponent noPadded={true} />
+        <View spacer={true} />
+        <Markdown onLoadEnd={onMarkdownLoaded}>{bonusItem.content}</Markdown>
+        {maybeBonusTos.isSome() && (
+          <>
+            <View spacer={true} extralarge={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} extralarge={true} />
+            <Text style={styles.disclaimer} dark={true}>
+              {I18n.t("bonus.bonusVacanza.advice")}
+            </Text>
+            <TouchableDefaultOpacity
+              onPress={() => handleModalPress(maybeBonusTos.value)}
+            >
+              <Text
+                style={styles.disclaimer}
+                link={true}
+                ellipsizeMode={"tail"}
+                numberOfLines={1}
+              >
+                {I18n.t("bonus.tos.title")}
+              </Text>
+            </TouchableDefaultOpacity>
+          </>
+        )}
+        {isMarkdownLoaded && <EdgeBorderComponent />}
       </Content>
       {isMarkdownLoaded && (
         <FooterWithButtons
@@ -163,7 +183,12 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
       )}
     </BaseScreenComponent>
   ));
-  return <ContainerComponent isLoading={!isMarkdownLoaded} />;
+  return (
+    <ContainerComponent
+      isLoading={!isMarkdownLoaded}
+      loadingOpacity={loadingOpacity}
+    />
+  );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
