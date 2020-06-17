@@ -2,7 +2,7 @@ import * as React from "react";
 import { ImageSourcePropType, SafeAreaView } from "react-native";
 import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../i18n";
-import { abortBonusRequest } from "../../../components/AbortBonusRequest";
+import { abortBonusRequest } from "../../../components/alert/AbortBonusRequest";
 import {
   cancelButtonProps,
   confirmButtonProps
