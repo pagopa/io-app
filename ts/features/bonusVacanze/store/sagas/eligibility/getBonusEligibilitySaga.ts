@@ -7,6 +7,7 @@ import { ActionType } from "typesafe-actions";
 import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { ErrorEnum } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckFailure";
 import { EligibilityCheckSuccess } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
+import { EligibilityCheckSuccessConflict } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessConflict";
 import { EligibilityCheckSuccessEligible } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { startTimer } from "../../../../../utils/timer";
@@ -27,8 +28,10 @@ const eligibilityResultToEnum = (check: EligibilityCheck) => {
   if (EligibilityCheckSuccess.is(check)) {
     if (EligibilityCheckSuccessEligible.is(check)) {
       return EligibilityRequestProgressEnum.ELIGIBLE;
+    } else if (EligibilityCheckSuccessConflict.is(check)) {
+      return EligibilityRequestProgressEnum.CONFLICT;
     }
-    // if it is not eligible -> it is ineligible
+    // if it is not eligible & not conflict -> it is ineligible
     return EligibilityRequestProgressEnum.INELIGIBLE;
   } else {
     // failure

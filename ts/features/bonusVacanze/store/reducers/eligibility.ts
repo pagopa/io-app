@@ -19,7 +19,8 @@ export enum EligibilityRequestProgressEnum {
   "ISEE_NOT_FOUND" = "ISEE_NOT_FOUND", // possible outcome
   "TIMEOUT" = "TIMEOUT", // too long to complete the request
   "ERROR" = "ERROR", // generic error / network error
-  "BONUS_ACTIVATION_PENDING" = "BONUS_ACTIVATION_PENDING" // there's already an activation bonus running
+  "BONUS_ACTIVATION_PENDING" = "BONUS_ACTIVATION_PENDING", // there's already an activation bonus running
+  "CONFLICT" = "CONFLICT" // eligibility check succeeded but there's already a bonus found for this set of family members.
 }
 
 export type EligibilityCheckRequest = {
