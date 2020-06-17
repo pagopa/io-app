@@ -43,7 +43,7 @@ const INITIAL_STATE: BonusVacanzeActivationState = {
 };
 
 // bonus reducer
-const bonusVacanzeActivationReducer = (
+export const bonusVacanzeActivationReducer = (
   state: BonusVacanzeActivationState = INITIAL_STATE,
   action: Action
 ): BonusVacanzeActivationState => {
