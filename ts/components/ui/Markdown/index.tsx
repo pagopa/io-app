@@ -306,9 +306,12 @@ class Markdown extends React.PureComponent<Props, State> {
       <React.Fragment>
         {isLoading && (
           <ActivityIndicator
-            size="large"
+            size={"large"}
             color={customVariables.brandPrimary}
             animating={true}
+            accessible={true}
+            accessibilityHint={'Attendi il caricamento del contenuto'}
+            accessibilityLabel={'Caricamento in corso'}
           />
         )}
         {/* Hide the WebView until we have the htmlBodyHeight */}
@@ -316,6 +319,7 @@ class Markdown extends React.PureComponent<Props, State> {
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
             <View style={containerStyle}>
               <WebView
+                accessible={false}
                 key={this.state.webviewKey}
                 textZoom={100}
                 ref={this.webViewRef}

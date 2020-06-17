@@ -17,6 +17,7 @@ import SearchButton, { SearchType } from "../search/SearchButton";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
 import Config from 'react-native-config';
+import { isAccessibilityModeEnabled } from '../../config';
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -42,6 +43,7 @@ interface OwnProps {
   customRightIcon?: {
     iconName: string;
     onPress: () => void;
+    accessibilityLabel?: string;
   };
   customGoBack?: React.ReactNode;
 }
@@ -64,22 +66,28 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
   private renderHeader = () => {
     const { customGoBack, headerTitle } = this.props;
-    // if customGoBack is provided only the header text will be rendered
+    const isWhite = this.props.primary || this.props.dark;
+
+    if(isAccessibilityModeEnabled){
+      return;
+    }
+
+    // if customGoBack is provided or if the app is in accessibility mode only the header text will be rendered
     if (customGoBack) {
       return (
         <Text
-          white={this.props.primary || this.props.dark ? true : undefined}
+          white={isWhite}
           numberOfLines={1}
+          accessible={false}
         >
           {headerTitle}
         </Text>
       );
     }
-    const isWhite = this.props.primary || this.props.dark;
     // if no customGoBack is provided also the header text could be press to execute goBack
     // note goBack could a boolean or a function (check this.getGoBackHandler)
     return (
-      <TouchableDefaultOpacity onPress={Config.isAccessibilityModeEnabled ? undefined : this.getGoBackHandler}>
+      <TouchableDefaultOpacity onPress={this.getGoBackHandler} accessible={false}>
         <Text white={isWhite} numberOfLines={1}>
           {headerTitle}
         </Text>
@@ -131,7 +139,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               accessibilityLabel={"Aiuto contestuale"}
               accessibilityHint={"Accedi alle informazioni utili sul contenuto della schermata corrente"} // TODO: evaluate how customize
             >
-              <IconFont name="io-question" />
+              <IconFont name={"io-question"} />
             </ButtonDefaultOpacity>
           )}
 
@@ -142,6 +150,8 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               onPress={customRightIcon.onPress}
               style={styles.helpButton}
               transparent={true}
+              accessible={customRightIcon.accessibilityLabel !== undefined}
+              accessibilityLabel={customRightIcon.accessibilityLabel}
             >
               <IconFont name={customRightIcon.iconName} />
             </ButtonDefaultOpacity>

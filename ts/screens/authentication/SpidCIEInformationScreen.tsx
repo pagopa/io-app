@@ -16,13 +16,13 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import { openLink } from "../../components/ui/Markdown/handlers/link";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
+import BaseScreenComponent from '../../components/screens/BaseScreenComponent';
 
 type Props = NavigationInjectedProps;
 
@@ -97,7 +97,9 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
 
   public render() {
     return (
-      <TopScreenComponent goBack={true}>
+      <BaseScreenComponent 
+        goBack={true} 
+        headerTitle={I18n.t("authentication.landing.infoSpidCie")}>
         <ScreenContentHeader
           title={I18n.t("authentication.landing.contentTitleCie")}
           subtitle={I18n.t("authentication.landing.spid_or_cie")}
@@ -152,7 +154,7 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
           </Tab>
         </Tabs>
         {this.getFooterButton()}
-      </TopScreenComponent>
+      </BaseScreenComponent>
     );
   }
 }

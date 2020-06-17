@@ -277,6 +277,7 @@ authentication:
     loginSpid: Entra con SPID
     loginCie: Entra con CIE
     loginSpidCie: Accedi con SPID o CIE
+    infoSpidCie: Introduzione a SPID e CIE
     loginSpidCieContent: Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere
     nospid: Non hai SPID? Scopri di più
     nospid-nocie: Non hai SPID o CIE? Scopri di più

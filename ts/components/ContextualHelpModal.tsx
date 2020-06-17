@@ -89,7 +89,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         <Container>
           <BaseHeader
             headerTitle={I18n.t("contextualHelp.title")}
-            customRightIcon={{ iconName: "io-close", onPress: onClose }}
+            customRightIcon={{ iconName: "io-close", onPress: onClose, accessibilityLabel: "Chiudi l'aiuto contestuale" }}
           />
 
           {!this.state.content && (
