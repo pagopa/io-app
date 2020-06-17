@@ -28,10 +28,11 @@ import { formatDateAsLocal } from "../../../utils/dates";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
+import { maybeNotNullyString } from "../../../utils/strings";
 import QrModalBox from "../components/QrModalBox";
 import {
-  cancelBonusFromId,
-  startBonusFromId
+  cancelLoadBonusFromIdPolling,
+  startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
 import { availableBonusesSelectorFromId } from "../store/reducers/availableBonuses";
 import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeActivation";
@@ -219,11 +220,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   }, []);
 
   // translate the bonus status. If no mapping found -> empty string
-  const bonusStatusDescription = bonus
-    ? I18n.t(`bonus.${bonus.status.toLowerCase()}`, {
-        defaultValue: ""
-      })
-    : "";
+  const maybeStatusDescription = maybeNotNullyString(
+    bonus
+      ? I18n.t(`bonus.${bonus.status.toLowerCase()}`, {
+          defaultValue: ""
+        })
+      : ""
+  );
 
   const renderFooterButtons = () =>
     bonus && isBonusActive(bonus) ? (
@@ -366,7 +369,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           )}
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} />
-          {bonusStatusDescription.length > 0 && (
+          {maybeStatusDescription.isSome() && (
             <View style={styles.rowBlock}>
               <Text
                 semibold={true}
@@ -382,7 +385,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 }
               >
                 <Text style={styles.statusText} semibold={true}>
-                  {bonusStatusDescription}
+                  {maybeStatusDescription.value}
                 </Text>
               </Badge>
             </View>
@@ -423,8 +426,9 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => dispatch(navigateBack()),
-  startPollingBonusFromId: (id: string) => dispatch(startBonusFromId(id)),
-  cancelPollingBonusFromId: () => dispatch(cancelBonusFromId())
+  startPollingBonusFromId: (id: string) =>
+    dispatch(startLoadBonusFromIdPolling(id)),
+  cancelPollingBonusFromId: () => dispatch(cancelLoadBonusFromIdPolling())
 });
 
 export default connect(

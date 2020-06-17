@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { fork, takeEvery, takeLatest } from "redux-saga/effects";
+import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { apiUrlPrefix, contentRepoUrl } from "../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
@@ -7,7 +7,8 @@ import {
   availableBonusesLoad,
   bonusVacanzeActivation,
   checkBonusEligibility,
-  loadBonusVacanzeFromId
+  loadBonusVacanzeFromId,
+  startLoadBonusFromIdPolling
 } from "../actions/bonusVacanze";
 import { startBonusActivationSaga } from "./bonusActivation/handleStartBonusActivationSaga";
 import { bonusEligibilitySaga } from "./eligibility/getBonusEligibilitySaga";
@@ -31,7 +32,8 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
     backendBonusVacanzeClient.getAvailableBonuses
   );
 
-  yield fork(handleBonusFromIdPollingSaga);
+  // start polling bonus from id
+  yield takeLatest(startLoadBonusFromIdPolling, handleBonusFromIdPollingSaga);
 
   // handle bonus vacanze eligibility
   yield takeLatest(
