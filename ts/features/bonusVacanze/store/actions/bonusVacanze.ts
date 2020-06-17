@@ -37,9 +37,17 @@ export const eligibilityRequestId = createStandardAction(
 
 export const loadBonusVacanzeFromId = createAsyncAction(
   "BONUS_LOAD_FROM_ID_REQUEST",
-  "BONUSLOAD_FROM_ID_SUCCESS",
-  "BONUSLOAD_FROM_ID_FAILURE"
+  "BONUS_LOAD_FROM_ID_SUCCESS",
+  "BONUS_LOAD_FROM_ID_FAILURE"
 )<string, BonusActivationWithQrCode, Error>();
+
+export const startLoadBonusFromIdPolling = createStandardAction(
+  "BONUS_FROM_ID_START"
+)<string>();
+
+export const cancelLoadBonusFromIdPolling = createStandardAction(
+  "BONUS_FROM_ID_CANCEL"
+)<void>();
 
 export type BonusVacanzeActivationPayload = {
   status: BonusActivationProgressEnum;
@@ -68,4 +76,6 @@ export type BonusActions =
   | ActionType<typeof bonusVacanzeActivation>
   | ActionType<typeof checkBonusEligibility>
   | ActionType<typeof loadBonusVacanzeFromId>
-  | ActionType<typeof cancelBonusEligibility>;
+  | ActionType<typeof cancelBonusEligibility>
+  | ActionType<typeof startLoadBonusFromIdPolling>
+  | ActionType<typeof cancelLoadBonusFromIdPolling>;
