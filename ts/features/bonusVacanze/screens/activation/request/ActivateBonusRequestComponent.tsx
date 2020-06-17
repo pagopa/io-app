@@ -1,14 +1,14 @@
 import { View } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import { FamilyMember } from "../../../../../../../definitions/bonus_vacanze/FamilyMember";
-import ItemSeparatorComponent from "../../../../../../components/ItemSeparatorComponent";
-import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../../../../../components/screens/EdgeBorderComponent";
-import I18n from "../../../../../../i18n";
-import { BonusCompositionDetails } from "../../../../components/keyValueTable/BonusCompositionDetails";
-import { FamilyComposition } from "../../../../components/keyValueTable/FamilyComposition";
-import { FooterTwoButtons } from "../../../../components/markdown/FooterTwoButtons";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { FamilyMember } from "../../../../../../definitions/bonus_vacanze/FamilyMember";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
+import I18n from "../../../../../i18n";
+import { BonusCompositionDetails } from "../../../components/keyValueTable/BonusCompositionDetails";
+import { FamilyComposition } from "../../../components/keyValueTable/FamilyComposition";
+import { FooterTwoButtons } from "../../../components/markdown/FooterTwoButtons";
 import { ActivateBonusDiscrepancies } from "./ActivateBonusDiscrepancies";
 import { ActivateBonusReminder } from "./ActivateBonusReminder";
 import { ActivateBonusTitle } from "./ActivateBonusTitle";
@@ -75,42 +75,44 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
 
   return (
     <BaseScreenComponent goBack={props.onCancel} headerTitle={headerTitle}>
-      <ScrollView style={[styles.body]}>
-        <View spacer={true} large={true} />
-        <ActivateBonusTitle title={title} description={description} />
-        <View spacer={true} large={true} />
-        <BonusCompositionDetails
-          bonusAmount={props.bonusAmount}
-          taxBenefit={props.taxBenefit}
-        />
-        <View spacer={true} />
-        {props.hasDiscrepancies ? (
-          <ActivateBonusDiscrepancies
-            text={discrepancies.text}
-            attention={discrepancies.attention}
+      <SafeAreaView style={[styles.body]}>
+        <ScrollView>
+          <View spacer={true} large={true} />
+          <ActivateBonusTitle title={title} description={description} />
+          <View spacer={true} large={true} />
+          <BonusCompositionDetails
+            bonusAmount={props.bonusAmount}
+            taxBenefit={props.taxBenefit}
           />
-        ) : (
-          <ItemSeparatorComponent />
-        )}
-
-        <View spacer={true} />
-        {props.familyMembers.length > 0 && (
-          <>
-            <FamilyComposition familyMembers={props.familyMembers} />
-            <View spacer={true} />
+          <View spacer={true} />
+          {props.hasDiscrepancies ? (
+            <ActivateBonusDiscrepancies
+              text={discrepancies.text}
+              attention={discrepancies.attention}
+            />
+          ) : (
             <ItemSeparatorComponent />
-            <View spacer={true} />
-          </>
-        )}
+          )}
 
-        <ActivateBonusReminder text={reminder.text} link={reminder.link} />
-        <EdgeBorderComponent />
-      </ScrollView>
-      <FooterTwoButtons
-        onCancel={props.onCancel}
-        onRight={props.onRequestBonus}
-        title={activateBonusText}
-      />
+          <View spacer={true} />
+          {props.familyMembers.length > 0 && (
+            <>
+              <FamilyComposition familyMembers={props.familyMembers} />
+              <View spacer={true} />
+              <ItemSeparatorComponent />
+              <View spacer={true} />
+            </>
+          )}
+
+          <ActivateBonusReminder text={reminder.text} link={reminder.link} />
+          <EdgeBorderComponent />
+        </ScrollView>
+        <FooterTwoButtons
+          onCancel={props.onCancel}
+          onRight={props.onRequestBonus}
+          title={activateBonusText}
+        />
+      </SafeAreaView>
     </BaseScreenComponent>
   );
 };

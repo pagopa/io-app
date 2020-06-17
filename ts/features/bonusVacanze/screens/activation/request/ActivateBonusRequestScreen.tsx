@@ -1,13 +1,14 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { shufflePinPadOnPayment } from "../../../../../../config";
-import I18n from "../../../../../../i18n";
-import { identificationRequest } from "../../../../../../store/actions/identification";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { abortBonusRequest } from "../../../../components/AbortBonusRequest";
-import { cancelBonusEligibility } from "../../../../store/actions/bonusVacanze";
-import { eligibilityEligibleSelector } from "../../../../store/reducers/eligibility";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { abortBonusRequest } from "../../../components/alert/AbortBonusRequest";
+import { confirmBonusActivation } from "../../../components/alert/ConfirmBonusActivation";
+import {
+  bonusVacanzeActivation,
+  cancelBonusEligibility
+} from "../../../store/actions/bonusVacanze";
+import { eligibilityEligibleSelector } from "../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -30,44 +31,15 @@ const ActivateBonusRequestScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-/**
- * Verify the identification using pin / biometric
- * @param dispatch
- */
-const requestIdentification = (dispatch: Dispatch) => {
-  dispatch(
-    identificationRequest(
-      false,
-      true,
-      {
-        message: I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title")
-      },
-      {
-        label: I18n.t("global.buttons.cancel"),
-        onCancel: () => undefined
-      },
-      {
-        onSuccess: () => onIdentificationSuccess(dispatch)
-      },
-      shufflePinPadOnPayment
-    )
-  );
-};
-
-const onIdentificationSuccess = (dispatch: Dispatch) => {
-  dispatch(cancelBonusEligibility());
-  // TODO: dispatch the start of the activation saga
-};
-
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => abortBonusRequest(() => dispatch(cancelBonusEligibility())),
   // When the user choose to activate the bonus, verify the identification
-  onActivateBonus: () => requestIdentification(dispatch)
+  onActivateBonus: () =>
+    confirmBonusActivation(() => dispatch(bonusVacanzeActivation.request()))
 });
 
 const mapStateToProps = (state: GlobalState) => {
   const elc = eligibilityEligibleSelector(state);
-  // it should never happen we are here and elibilityCheck is not set
   return {
     bonusAmount: elc.fold(0, e => e.dsu_request.max_amount),
     taxBenefit: elc.fold(0, e => e.dsu_request.max_tax_benefit),

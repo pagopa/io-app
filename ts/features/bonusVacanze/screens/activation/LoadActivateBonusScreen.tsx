@@ -1,9 +1,16 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import I18n from "../../../../../i18n";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { LoadingErrorComponent } from "../../../components/loadingErrorScreen/LoadingErrorComponent";
+import I18n from "../../../../i18n";
+import { GlobalState } from "../../../../store/reducers/types";
+import { abortBonusRequest } from "../../components/alert/AbortBonusRequest";
+import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
+import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
+import {
+  bonusVacanzeActivation,
+  cancelBonusActivation
+} from "../../store/actions/bonusVacanze";
+import { activationIsLoading } from "../../store/reducers/bonusVacanzeActivation";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -19,26 +26,34 @@ const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
     "bonus.bonusVacanza.eligibility.activate.loading"
   );
 
+  useHardwareBackButton(() => {
+    if (!props.isLoading) {
+      abortBonusRequest(props.onAbort);
+    }
+    return true;
+  });
+
   return (
     <LoadingErrorComponent
       {...props}
       loadingCaption={loadingCaption}
       loadingOpacity={1}
+      onAbort={() => abortBonusRequest(props.onAbort)}
     />
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: link with the right dispatch action, will dispatch the cancel request
-  onCancel: () => undefined,
+  onAbort: () => dispatch(cancelBonusActivation()),
   // TODO: link with the right dispatch action, will dispatch the retry request
-  onRetry: () => undefined
+  onRetry: () => dispatch(bonusVacanzeActivation.request())
 });
 
-const mapStateToProps = (_: GlobalState) => ({
+const mapStateToProps = (state: GlobalState) => ({
   // display the error with the retry only in case of networking errors
   // TODO: link with the real data
-  isLoading: true
+  isLoading: activationIsLoading(state)
 });
 
 export default connect(

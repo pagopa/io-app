@@ -1,9 +1,11 @@
+import { Text } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { BaseTimeoutScreen } from "../../components/BaseTimeoutScreen";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
+import { InfoScreenStyle } from "../../components/infoScreen/InfoScreenComponent";
 import { cancelBonusEligibility } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -14,11 +16,27 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  * @constructor
  */
 
+const renderBody = (first: string, second: string, third: string) => (
+  <Text style={InfoScreenStyle.body}>
+    {first}
+    <Text style={InfoScreenStyle.bold}>{second}</Text>
+    {third}
+  </Text>
+);
+
 const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
   Props
 > = props => {
   const title = I18n.t("bonus.bonusVacanza.eligibility.timeout.title");
-  const body = I18n.t("bonus.bonusVacanza.eligibility.timeout.description");
+  const first = I18n.t(
+    "bonus.bonusVacanza.eligibility.timeout.description.first"
+  );
+  const second = I18n.t(
+    "bonus.bonusVacanza.eligibility.timeout.description.second"
+  );
+  const third = I18n.t(
+    "bonus.bonusVacanza.eligibility.timeout.description.third"
+  );
 
   useHardwareBackButton(() => {
     props.onCancel();
@@ -26,7 +44,11 @@ const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
   });
 
   return (
-    <BaseTimeoutScreen title={title} body={body} onExit={props.onCancel} />
+    <BaseTimeoutScreen
+      title={title}
+      body={renderBody(first, second, third)}
+      onExit={props.onCancel}
+    />
   );
 };
 
