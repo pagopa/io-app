@@ -91,7 +91,7 @@ export function* handleBonusActivationSaga(
   // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
 
   const { cancelAction } = yield race({
-    eligibility: call(activationWorker, activationSaga),
+    activation: call(activationWorker, activationSaga),
     cancelAction: take(cancelBonusActivation)
   });
   if (cancelAction) {
