@@ -323,7 +323,7 @@ authentication:
         block1: "Il codice PIN è composto da 8 cifre:"
         block2: "-Quattro cifre che ti sono state consegnate all'anagrafe,"
         block3: "-Quattro cifre ti sono state consegnate insieme alla carta."
-        block4: "Mettile insieme, in quest'ordine, e inseriscile qui per favore."
+        block4: "Inseriscile qui in quest'ordine."
       incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
       incorrectCiePinHeaderTitle: PIN errato
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
