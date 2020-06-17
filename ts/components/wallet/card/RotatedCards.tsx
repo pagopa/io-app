@@ -98,11 +98,13 @@ export class RotatedCards extends React.PureComponent<Props, {}> {
             <View style={styles.firstCard}>
               <CardComponent type={cardType} wallet={wallets[0]} />
             </View>
-            <View spacer={true}/>
             {typeof wallets[1] !== "undefined" && (
-              <View style={styles.secondCard}>
-                <CardComponent type={cardType} wallet={wallets[1]} />
-              </View>
+              <React.Fragment>
+                <View spacer={true}/>
+                <View style={styles.secondCard}>
+                  <CardComponent type={cardType} wallet={wallets[1]} />
+                </View>
+              </React.Fragment>
             )}
           </TouchableDefaultOpacity>
         </View>
