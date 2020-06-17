@@ -18,6 +18,7 @@ import { AvailableBonusItem } from "../components/AvailableBonusItem";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusesSelector } from "../store/reducers/availableBonuses";
+import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -48,6 +49,10 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       />
     );
   };
+
+  public componentDidMount() {
+    setStatusBarColorAndBackground("dark-content", variables.colorWhite);
+  }
 
   public render() {
     const { availableBonusesList, isError } = this.props;
