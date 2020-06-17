@@ -92,7 +92,7 @@ export function* handleBonusActivationSaga(
 
   const { cancelAction } = yield race({
     activation: call(activationWorker, activationSaga),
-    cancelAction: take(cancelBonusActivation)
+    cancelAction: take(cancelBonusRequest)
   });
   if (cancelAction) {
     yield put(navigateToWalletHome());
