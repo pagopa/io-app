@@ -132,4 +132,7 @@ export const isBonusVacanzeActiveSelector = createSelector<
   );
 });
 
+export const activationIsLoading = (state: GlobalState): boolean =>
+  state.bonus.bonusVacanze.status !== BonusActivationProgressEnum.ERROR;
+
 export default reducer;

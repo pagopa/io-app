@@ -1320,7 +1320,10 @@ bonus:
         activateCTA: "Attiva il Bonus"
       timeout:
         title: Siamo spiacenti, serve più tempo per verificare il tuo ISEE.
-        description: "Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.\n\nQuando lo riceverai, se sarà positivo, ricordati di completare la tua domanda entro 24 ore, altrimenti scadrà e dovrai iniziarne una nuova."
+        description:
+          first: "Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.\n\nQuando lo riceverai, se sarà positivo, ricordati di completare la tua domanda "
+          second: "entro 24 ore"
+          third: ", altrimenti scadrà e dovrai iniziarne una nuova."
       activate:
         loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
         goToDetails: Visualizza i dettagli
@@ -1340,7 +1343,7 @@ bonus:
       title: Annulla
       body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
       cancel: Torna alla richiesta
-      confirm: Termina richiesta
+      confirm: Annulla richiesta
       completed: Richiesta annullata
     composition:
       amount: "Importo massimo"

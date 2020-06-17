@@ -10,6 +10,7 @@ import {
   bonusVacanzeActivation,
   cancelBonusActivation
 } from "../../store/actions/bonusVacanze";
+import { activationIsLoading } from "../../store/reducers/bonusVacanzeActivation";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -26,7 +27,9 @@ const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
   );
 
   useHardwareBackButton(() => {
-    abortBonusRequest(props.onCancel);
+    if (!props.isLoading) {
+      abortBonusRequest(props.onAbort);
+    }
     return true;
   });
 
@@ -35,22 +38,22 @@ const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
       {...props}
       loadingCaption={loadingCaption}
       loadingOpacity={1}
-      onCancel={() => abortBonusRequest(props.onCancel)}
+      onAbort={() => abortBonusRequest(props.onAbort)}
     />
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: link with the right dispatch action, will dispatch the cancel request
-  onCancel: () => dispatch(cancelBonusActivation()),
+  onAbort: () => dispatch(cancelBonusActivation()),
   // TODO: link with the right dispatch action, will dispatch the retry request
   onRetry: () => dispatch(bonusVacanzeActivation.request())
 });
 
-const mapStateToProps = (_: GlobalState) => ({
+const mapStateToProps = (state: GlobalState) => ({
   // display the error with the retry only in case of networking errors
   // TODO: link with the real data
-  isLoading: true
+  isLoading: activationIsLoading(state)
 });
 
 export default connect(

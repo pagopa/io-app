@@ -1,9 +1,9 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { NavigationActions } from "react-navigation";
 import { Action } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga-test-plan/matchers";
 import { ActionType } from "typesafe-actions";
+import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import BONUSVACANZE_ROUTES from "../../../../navigation/routes";
@@ -42,7 +42,8 @@ describe("Bonus Activation Saga", () => {
         ]
       ])
       .dispatch(cancelBonusActivation())
-      .put(NavigationActions.back())
+      .put(navigateToWalletHome())
+      .put(navigationHistoryPop(1))
       .run();
   });
   networkingActivationResultActions.map(networkingScenario =>
