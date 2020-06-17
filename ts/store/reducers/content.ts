@@ -1,8 +1,5 @@
 /**
  * Implements the reducers for static content.
- *
- * TODO: add eviction of old entries
- * https://www.pivotaltracker.com/story/show/159440294
  */
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -34,6 +31,7 @@ import {
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
+import { navSelector } from "./navigationHistory";
 import { GlobalState } from "./types";
 
 /**
@@ -163,31 +161,27 @@ export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
   );
 
 /**
- * return an option with screen contextual help data if they are loaded and defined
+ * return a pot with screen contextual help data if they are loaded and defined otherwise
  * @param id
  */
-export const screenContextualHelpData = (navState: NavigationState) =>
-  createSelector<
-    GlobalState,
-    pot.Pot<ContextualHelp, Error>,
-    Option<ScreenCHData>
-  >(contextualHelpDataSelector, contextualHelpData => {
-    return pot.getOrElse(
-      pot.map(contextualHelpData, data => {
-        const currentRouteName = getCurrentRouteName(navState);
-        if (currentRouteName === undefined) {
-          return none;
-        }
-        const locale = getLocalePrimaryWithFallback();
-        const screenData = data[locale].screens.find(
-          s =>
-            s.route_name.toLowerCase() === currentRouteName.toLocaleLowerCase()
-        );
-        return fromNullable(screenData);
-      }),
-      none
+export const screenContextualHelpDataSelector = createSelector<
+  GlobalState,
+  pot.Pot<ContextualHelp, Error>,
+  NavigationState,
+  pot.Pot<Option<ScreenCHData>, Error>
+>([contextualHelpDataSelector, navSelector], (contextualHelpData, navState) => {
+  return pot.map(contextualHelpData, data => {
+    const currentRouteName = getCurrentRouteName(navState);
+    if (currentRouteName === undefined) {
+      return none;
+    }
+    const locale = getLocalePrimaryWithFallback();
+    const screenData = data[locale].screens.find(
+      s => s.route_name.toLowerCase() === currentRouteName.toLocaleLowerCase()
     );
+    return fromNullable(screenData);
   });
+});
 
 export default function content(
   state: ContentState = initialContentState,

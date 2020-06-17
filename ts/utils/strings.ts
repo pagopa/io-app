@@ -2,7 +2,7 @@
  * Generic utilities for strings
  */
 
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, fromPredicate, Option } from "fp-ts/lib/Option";
 import _ from "lodash";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 
@@ -66,3 +66,22 @@ export const formatTextRecipient = (e: EnteBeneficiario): string => {
 ${address}${civicNumber}\n
 ${cap}${city}${province}`.trim();
 };
+
+/**
+ * determine if the text is undefined or empty (or composed only by blanks)
+ * @param text
+ */
+export const isStringNullyOrEmpty = (
+  text: string | null | undefined
+): boolean => fromNullable(text).fold(true, t => t.trim().length === 0);
+
+/**
+ * return some(text) if the text is not nully and not empty (or composed only by blanks)
+ * @param text
+ */
+export const maybeNotNullyString = (
+  text: string | null | undefined
+): Option<string> =>
+  fromPredicate((t: string) => t.trim().length > 0)(
+    fromNullable(text).getOrElse("")
+  );

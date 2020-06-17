@@ -24,11 +24,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const ActivateBonusRequestScreen: React.FunctionComponent<Props> = props => {
   return (
     <ActivateBonusRequestComponent
-      onCancel={props.onCancel}
+      {...props}
       onRequestBonus={props.onActivateBonus}
-      bonusAmount={props.bonusAmount}
-      taxBenefit={props.taxBenefit}
-      familyMembers={props.familyMembers}
     />
   );
 };
@@ -70,10 +67,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => {
   const elc = eligibilityEligibleSelector(state);
+  // it should never happen we are here and elibilityCheck is not set
   return {
     bonusAmount: elc.fold(0, e => e.dsu_request.max_amount),
     taxBenefit: elc.fold(0, e => e.dsu_request.max_tax_benefit),
-    familyMembers: elc.fold([], e => e.dsu_request.family_members)
+    familyMembers: elc.fold([], e => e.dsu_request.family_members),
+    hasDiscrepancies: elc.fold(false, e => e.dsu_request.has_discrepancies)
   };
 };
 
