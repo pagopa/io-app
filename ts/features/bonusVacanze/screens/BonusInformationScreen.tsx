@@ -10,6 +10,7 @@ import { withLightModalContext } from "../../../components/helpers/withLightModa
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
@@ -72,11 +73,14 @@ const styles = StyleSheet.create({
   }
 });
 
+// the number of markdown component inside BonusInformationScreen
+const markdownComponents = 1;
+const loadingOpacity = 0.9;
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
  */
 const BonusInformationScreen: React.FunctionComponent<Props> = props => {
-  const [isMarkdownLoaded, setMarkdownLoaded] = React.useState(false);
+  const [markdownLoaded, setMarkdownLoaded] = React.useState(0);
 
   const getBonusItem = () => props.navigation.getParam("bonusItem");
 
@@ -98,7 +102,10 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 
   const handleModalPress = () =>
     props.showModal(<TosBonusComponent onClose={props.hideModal} />);
-
+  const onMarkdownLoaded = () => {
+    setMarkdownLoaded(c => Math.min(c + 1, markdownComponents));
+  };
+  const isMarkdownLoaded = markdownLoaded === markdownComponents;
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
       <Content>
@@ -131,9 +138,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
-        <Markdown onLoadEnd={() => setMarkdownLoaded(true)}>
-          {bonusItem.content}
-        </Markdown>
+        <Markdown onLoadEnd={onMarkdownLoaded}>{bonusItem.content}</Markdown>
         <View spacer={true} extralarge={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} extralarge={true} />
@@ -150,9 +155,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
             {I18n.t("bonus.tos.title")}
           </Text>
         </TouchableDefaultOpacity>
-        <View spacer={true} extralarge={true} />
-        <View spacer={true} extralarge={true} />
-        <View spacer={true} large={true} />
+        {isMarkdownLoaded && <EdgeBorderComponent />}
       </Content>
       {isMarkdownLoaded && (
         <FooterWithButtons
@@ -163,7 +166,12 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
       )}
     </BaseScreenComponent>
   ));
-  return <ContainerComponent isLoading={!isMarkdownLoaded} />;
+  return (
+    <ContainerComponent
+      isLoading={!isMarkdownLoaded}
+      loadingOpacity={loadingOpacity}
+    />
+  );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
