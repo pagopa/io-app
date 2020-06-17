@@ -64,7 +64,12 @@ const InputPlaceHolder: React.FunctionComponent<Props> = (props: Props) => {
     };
     
     return (
-        <View style={styles.placeholderContainer}>
+        <View 
+          style={styles.placeholderContainer}
+          accessible={true} 
+          accessibilityLabel={'codice di sblocco'}
+          accessibilityHint={`hai inserito ${props.inputValue.length} cifre`}
+        >
             {placeholderPositions.map(renderPlaceholder)}
         </View>
     )

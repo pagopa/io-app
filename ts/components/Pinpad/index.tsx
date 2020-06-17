@@ -11,7 +11,7 @@ import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
-import { KeyPad } from "./KeyPad";
+import { KeyPad, DigitRpr } from "./KeyPad";
 import customVariables from '../../theme/variables';
 import InputPlaceHolder from './InputPlaceholder';
 
@@ -76,13 +76,13 @@ class Pinpad extends React.PureComponent<Props, State> {
    */
   private getBiometryIconName(
     biometryPrintableSimpleType: BiometryPrintableSimpleType
-  ): { name: string; size: number } {
+  ): DigitRpr {
     switch (biometryPrintableSimpleType) {
       case "FINGERPRINT":
       case "TOUCH_ID":
-        return { name: "io-fingerprint", size: ICON_WIDTH };
+        return right({ name: "io-fingerprint", size: ICON_WIDTH, accessibilityLabel: 'autenticati mediante impronta digitale' });
       case "FACE_ID":
-        return { name: "io-face-id", size: ICON_WIDTH };
+        return right({ name: "io-face-id", size: ICON_WIDTH, accessibilityLabel: 'autenticati mediante Face ID' });
     }
   }
 
@@ -146,7 +146,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         this.props.biometryType &&
         this.props.onFingerPrintReq
           ? Tuple2(
-              right(this.getBiometryIconName(this.props.biometryType)),
+              this.getBiometryIconName(this.props.biometryType),
               this.props.onFingerPrintReq
             )
           : undefined,
@@ -154,7 +154,7 @@ class Pinpad extends React.PureComponent<Props, State> {
           this.handlePinDigit(pinPadValues[0])
         ),
         Tuple2(
-          right({ name: "io-cancel", size: SMALL_ICON_WIDTH }),
+          right({ name: "io-cancel", size: SMALL_ICON_WIDTH, accessibilityLabel: "cancella l'ultima cifra inserita" }),
           this.deleteLastDigit
         )
       ]
@@ -285,6 +285,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         bold={true}
         white={this.props.buttonType === "primary"}
         primary={this.props.buttonType === "light"}
+        accessible={true}
       >
         {this.props.codeInsertionStatus}
       </Text>
