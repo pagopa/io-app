@@ -1,8 +1,3 @@
-/**
- * This data represents a fallback the app should return if there are some troubles
- * on retrieving the remote data from here https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/bonuses_available.json
- */
-
 import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 
@@ -33,24 +28,25 @@ Questi sono i passaggi che ti chiederemo di effettuare:
 - invieremo la tua richiesta ad Agenzia delle Entrate che la validerà;
 - il tuo bonus sarà poi visibile nella sezione Pagamenti.
 
-Se durante il processo, i dati relativi all’ISEE e al tuo nucleo familiare non dovessero essere corretti, ti preghiamo di verificare direttamente con il servizio clienti di INPS.
-
-
-Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i Termini e le Condizioni d’uso e la Privacy Policy del servizio.`;
+Se durante il processo, i dati relativi all’ISEE e al tuo nucleo familiare non dovessero essere corretti, ti preghiamo di verificare direttamente con il servizio clienti di INPS.`;
 
 export const availableBonuses: BonusesAvailable = [
   {
     id_type: ID_BONUS_VACANZE_TYPE,
     title: "Title",
     name: "Bonus Vacanze",
-    subtitle: "dal 01/07/2020 al 31/12/2020",
+    subtitle:
+      "L'incentivo per supportare il settore del turismo dopo il lockdown richiesto dal COVID-19",
+    title: "Richiesta Bonus Vacanze",
     is_active: true,
     content: contentBonusVacanze,
     valid_from: new Date("2020-07-01T00:00:00.000Z"),
     valid_to: new Date("2020-12-31T00:00:00.000Z"),
     cover:
-      "https://gdsit.cdn-immedia.net/2018/08/fff810d2e44464312e70071340fd92fc.jpg",
+      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/logo/logo_BonusVacanze.png",
+    sponsorship_description: "Agenzia delle Entrate",
+    tos_url: "https://io.italia.it/app-content/tos_privacy.html",
     sponsorship_cover:
-      "https://www.sinetinformatica.it/wp-content/uploads/2020/03/APP-IO-300x260.png"
+      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/logo/logo_AgenziaEntrate.png"
   }
 ];
