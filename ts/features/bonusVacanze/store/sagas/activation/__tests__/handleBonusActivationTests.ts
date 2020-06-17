@@ -9,7 +9,7 @@ import { navigationCurrentRouteSelector } from "../../../../../../store/reducers
 import BONUSVACANZE_ROUTES from "../../../../navigation/routes";
 import {
   bonusVacanzeActivation,
-  cancelBonusActivation,
+  cancelBonusRequest,
   completeBonusVacanze
 } from "../../../actions/bonusVacanze";
 import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
@@ -41,7 +41,7 @@ describe("Bonus Activation Saga", () => {
           fromNullable(BONUSVACANZE_ROUTES.ACTIVATION.LOADING)
         ]
       ])
-      .dispatch(cancelBonusActivation())
+      .dispatch(cancelBonusRequest())
       .put(navigateToWalletHome())
       .put(navigationHistoryPop(1))
       .run();

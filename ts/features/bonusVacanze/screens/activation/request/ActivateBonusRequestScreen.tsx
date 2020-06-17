@@ -6,7 +6,7 @@ import { abortBonusRequest } from "../../../components/alert/AbortBonusRequest";
 import { confirmBonusActivation } from "../../../components/alert/ConfirmBonusActivation";
 import {
   bonusVacanzeActivation,
-  cancelBonusEligibility
+  cancelBonusRequest
 } from "../../../store/actions/bonusVacanze";
 import { eligibilityEligibleSelector } from "../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
@@ -32,7 +32,7 @@ const ActivateBonusRequestScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => abortBonusRequest(() => dispatch(cancelBonusEligibility())),
+  onCancel: () => abortBonusRequest(() => dispatch(cancelBonusRequest())),
   // When the user choose to activate the bonus, verify the identification
   onActivateBonus: () =>
     confirmBonusActivation(() => dispatch(bonusVacanzeActivation.request()))

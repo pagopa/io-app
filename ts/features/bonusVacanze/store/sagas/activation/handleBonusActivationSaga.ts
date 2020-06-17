@@ -16,7 +16,7 @@ import {
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   bonusVacanzeActivation,
-  cancelBonusActivation,
+  cancelBonusRequest,
   completeBonusVacanze
 } from "../../actions/bonusVacanze";
 import { BonusActivationProgressEnum } from "../../reducers/bonusVacanzeActivation";
@@ -92,7 +92,7 @@ export function* handleBonusActivationSaga(
 
   const { cancelAction } = yield race({
     eligibility: call(activationWorker, activationSaga),
-    cancelAction: take(cancelBonusActivation)
+    cancelAction: take(cancelBonusRequest)
   });
   if (cancelAction) {
     yield put(navigateToWalletHome());
