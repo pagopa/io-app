@@ -37,7 +37,7 @@ export const familyMembers: ReadonlyArray<FamilyMember> = [
   },
   // Overflow name
   {
-    name: "Maria Giovanna" as NonEmptyString,
+    name: "Maria Giovanni" as NonEmptyString,
     surname: "D'Anassimandro Curtis" as NonEmptyString,
     fiscal_code: "ABCMYY82A12L722R" as FiscalCode
   },
@@ -50,8 +50,14 @@ export const familyMembers: ReadonlyArray<FamilyMember> = [
   // Overflow name + Fiscal Code
   {
     name: "Maria Giovanna" as NonEmptyString,
-    surname: "D'Anassimandro Curtis" as NonEmptyString,
+    surname: "D'Anassimandri Curtis" as NonEmptyString,
     fiscal_code: "MMMMMM00M00M000M" as FiscalCode
+  },
+  // Overflow name + very short fiscal code
+  {
+    name: "Maria Giovanna" as NonEmptyString,
+    surname: "D'Anassimandrei Curtis" as NonEmptyString,
+    fiscal_code: "IIIIII11I11I111I" as FiscalCode
   }
 ];
 
