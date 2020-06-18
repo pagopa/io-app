@@ -3,7 +3,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import Svg, { Rect, SvgXml } from "react-native-svg";
+import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
@@ -86,6 +86,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: variables.contentPrimaryBackground
   },
+  qrCodeContainer: {
+    backgroundColor: "white",
+    width: qrCodeSize,
+    height: qrCodeSize
+  },
   center: {
     alignSelf: "center"
   },
@@ -144,10 +149,9 @@ const styles = StyleSheet.create({
 
 const renderQRCode = (base64: string) =>
   fromNullable(base64).fold(null, xml => (
-    <Svg height={qrCodeSize} width={qrCodeSize} viewBox="0 0 100 100">
-      <Rect fill="#ffffff" height="100%" width="100%" />
-      <SvgXml xml={xml} />
-    </Svg>
+    <View style={styles.qrCodeContainer}>
+      <SvgXml xml={xml} height={qrCodeSize} width={qrCodeSize} />
+    </View>
   ));
 
 const renderFiscalCodeLine = (name: string, cf: string) => {
