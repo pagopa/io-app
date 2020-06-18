@@ -1,6 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { FamilyMember } from "../../../../../../definitions/bonus_vacanze/FamilyMember";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -9,6 +9,7 @@ import I18n from "../../../../../i18n";
 import { BonusCompositionDetails } from "../../../components/keyValueTable/BonusCompositionDetails";
 import { FamilyComposition } from "../../../components/keyValueTable/FamilyComposition";
 import { FooterTwoButtons } from "../../../components/markdown/FooterTwoButtons";
+import { bonusVacanzaStyle } from "../../../components/Styles";
 import { ActivateBonusDiscrepancies } from "./ActivateBonusDiscrepancies";
 import { ActivateBonusReminder } from "./ActivateBonusReminder";
 import { ActivateBonusTitle } from "./ActivateBonusTitle";
@@ -21,12 +22,6 @@ type Props = {
   onCancel: () => void;
   onRequestBonus: () => void;
 };
-
-const styles = StyleSheet.create({
-  body: {
-    flex: 1
-  }
-});
 
 export const loadLocales = () => ({
   headerTitle: I18n.t(
@@ -75,8 +70,8 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
 
   return (
     <BaseScreenComponent goBack={props.onCancel} headerTitle={headerTitle}>
-      <SafeAreaView style={[styles.body]}>
-        <ScrollView>
+      <SafeAreaView style={bonusVacanzaStyle.flex}>
+        <ScrollView style={bonusVacanzaStyle.horizontalPadding}>
           <View spacer={true} large={true} />
           <ActivateBonusTitle title={title} description={description} />
           <View spacer={true} large={true} />

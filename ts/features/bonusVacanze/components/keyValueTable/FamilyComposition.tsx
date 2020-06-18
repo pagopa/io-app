@@ -21,24 +21,20 @@ const styles = StyleSheet.create({
 });
 
 const header = (title: string) => (
-  <Text
-    style={[keyValueTableStyle.baseRow, keyValueTableStyle.header]}
-    bold={true}
-  >
+  <Text style={[keyValueTableStyle.baseRow]} bold={true}>
     {title}
   </Text>
 );
 
-const getRow = (k: string, v: string) =>
-  ({
-    key: {
-      text: k
-    },
-    value: {
-      text: v,
-      style: styles.bold
-    }
-  } as KeyValueRow);
+const getRow = (k: string, v: string): KeyValueRow => ({
+  key: {
+    text: k
+  },
+  value: {
+    text: v,
+    style: styles.bold
+  }
+});
 
 /**
  * This component display a table containing the family composition.

@@ -2,7 +2,6 @@ import { H3, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import H5 from "../../../../../components/ui/H5";
-import { activateBonusStyle } from "./Style";
 
 type Props = {
   title: string;
@@ -30,7 +29,7 @@ const bonusVacanzeImage = require("../../../../../../img/bonus/bonusVacanze/vaca
  */
 export const ActivateBonusTitle: React.FunctionComponent<Props> = props => {
   return (
-    <View style={activateBonusStyle.horizontalPadding}>
+    <View>
       <View style={styles.row}>
         <H3>{props.title}</H3>
         <Image

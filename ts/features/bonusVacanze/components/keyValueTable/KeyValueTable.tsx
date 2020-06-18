@@ -36,14 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   row: {
-    paddingLeft:
-      themeVariables.contentPadding + themeVariables.contentPadding / 2,
-    paddingRight: themeVariables.contentPadding,
     paddingTop: themeVariables.spacerSmallHeight
-  },
-  header: {
-    paddingLeft: themeVariables.contentPadding,
-    paddingRight: themeVariables.contentPadding
   }
 });
 
