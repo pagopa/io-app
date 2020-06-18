@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -61,5 +62,15 @@ export const allBonusActiveSelector = createSelector<
 >(allBonusActiveByIdSelector, allActiveObj => {
   return Object.keys(allActiveObj).map(k => allActiveObj[k]);
 });
+
+// return the bonus from a given ID
+export const bonusActiveDetailByIdSelector = (id: string) =>
+  createSelector<
+    GlobalState,
+    AllActiveState,
+    pot.Pot<BonusActivationWithQrCode, Error>
+  >(allBonusActiveByIdSelector, allActiveObj => {
+    return fromNullable(allActiveObj[id]).getOrElse(pot.none);
+  });
 
 export default reducer;
