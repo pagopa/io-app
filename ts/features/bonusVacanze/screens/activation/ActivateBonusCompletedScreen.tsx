@@ -1,4 +1,5 @@
 import * as React from "react";
+import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
@@ -6,6 +7,7 @@ import { confirmButtonProps } from "../../components/buttons/ButtonConfiguration
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { renderRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
+import { bonusVacanzaStyle } from "../../components/Styles";
 import { completeBonusVacanze } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -32,7 +34,7 @@ const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
   );
 
   return (
-    <>
+    <SafeAreaView style={bonusVacanzaStyle.flex}>
       <InfoScreenComponent
         image={renderRasterImage(image)}
         title={title}
@@ -41,7 +43,7 @@ const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
       <FooterStackButton
         buttons={[confirmButtonProps(props.onConfirm, goToBonusDetail)]}
       />
-    </>
+    </SafeAreaView>
   );
 };
 
