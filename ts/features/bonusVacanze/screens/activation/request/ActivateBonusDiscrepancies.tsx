@@ -21,11 +21,6 @@ const styles = StyleSheet.create({
   },
   discrepancies: {
     color: themeVariables.colorWhite
-  },
-  horizontalExpand: {
-    marginLeft: -themeVariables.contentPadding,
-    marginRight: -themeVariables.contentPadding,
-    overflow: "visible"
   }
 });
 
@@ -44,8 +39,7 @@ export const ActivateBonusDiscrepancies: React.FunctionComponent<
         styles.verticalPadding,
         styles.discrepanciesBox,
         bonusVacanzaStyle.row,
-        bonusVacanzaStyle.horizontalPadding,
-        styles.horizontalExpand
+        bonusVacanzaStyle.horizontalPadding
       ]}
     >
       <IconFont
