@@ -28,8 +28,7 @@ type ColumnWidthStyle = {
 
 const styles = StyleSheet.create({
   right: {
-    textAlign: "right",
-    alignSelf: "flex-end"
+    textAlign: "right"
   },
   baseRow: {
     flexDirection: "row",
