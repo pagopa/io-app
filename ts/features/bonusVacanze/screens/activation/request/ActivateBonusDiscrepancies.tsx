@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
   },
   horizontalExpand: {
     marginLeft: -themeVariables.contentPadding,
-    marginRight: -themeVariables.contentPadding
+    marginRight: -themeVariables.contentPadding,
+    overflow: "visible"
   }
 });
 

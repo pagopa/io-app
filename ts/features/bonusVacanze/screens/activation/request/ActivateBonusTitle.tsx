@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
+  text: {
+    width: "80%"
+  },
   image: {
     width: 48,
     height: 48
@@ -31,7 +34,7 @@ export const ActivateBonusTitle: React.FunctionComponent<Props> = props => {
   return (
     <View>
       <View style={styles.row}>
-        <H3>{props.title}</H3>
+        <H3 style={styles.text}>{props.title}</H3>
         <Image
           source={bonusVacanzeImage}
           resizeMode={"contain"}
@@ -39,7 +42,7 @@ export const ActivateBonusTitle: React.FunctionComponent<Props> = props => {
         />
       </View>
       <View style={styles.row}>
-        <H5>{props.description}</H5>
+        <H5 style={styles.text}>{props.description}</H5>
         <View style={styles.image} />
       </View>
     </View>
