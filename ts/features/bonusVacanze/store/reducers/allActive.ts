@@ -18,11 +18,10 @@ const reducer = (
     // bonus from id
     case getType(loadBonusVacanzeFromId.request):
       const cachedValue = state[action.payload];
-      const a = {
+      return {
         ...state,
         [action.payload]: cachedValue ? pot.toLoading(cachedValue) : pot.none
       };
-      return a;
     case getType(loadBonusVacanzeFromId.success):
       return { ...state, [action.payload.id]: pot.some(action.payload) };
     case getType(loadBonusVacanzeFromId.failure):
