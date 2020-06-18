@@ -9,14 +9,14 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { availableBonuses } from "../../data/availableBonuses";
 import { availableBonusesLoad } from "../actions/bonusVacanze";
 
-export type AvailableBonusesState = pot.Pot<BonusesAvailable, Error>;
+export type AvailableBonusTypesState = pot.Pot<BonusesAvailable, Error>;
 
-const INITIAL_STATE: AvailableBonusesState = pot.none;
+const INITIAL_STATE: AvailableBonusTypesState = pot.none;
 
 const reducer = (
-  state: AvailableBonusesState = INITIAL_STATE,
+  state: AvailableBonusTypesState = INITIAL_STATE,
   action: Action
-): AvailableBonusesState => {
+): AvailableBonusTypesState => {
   switch (action.type) {
     // available bonuses
     case getType(availableBonusesLoad.request):
@@ -34,13 +34,13 @@ const reducer = (
 };
 
 // Selectors
-export const availableBonusesSelector = (
+export const availableBonusTypesSelector = (
   state: GlobalState
-): AvailableBonusesState => state.bonus.availableBonuses;
+): AvailableBonusTypesState => state.bonus.availableBonuses;
 
-export const availableBonusesSelectorFromId = (idBonusType: number) =>
-  createSelector<GlobalState, AvailableBonusesState, Option<BonusAvailable>>(
-    availableBonusesSelector,
+export const availableBonusTypesSelectorFromId = (idBonusType: number) =>
+  createSelector<GlobalState, AvailableBonusTypesState, Option<BonusAvailable>>(
+    availableBonusTypesSelector,
     ab =>
       pot.getOrElse(
         pot.map(ab, abs =>

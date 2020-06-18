@@ -3,8 +3,8 @@ import { Action } from "../../../../store/actions/types";
 import bonusVacanzeActivationReducer, { ActivationState } from "./activation";
 import allActiveReducer, { AllActiveState } from "./allActive";
 import availableBonusesReducer, {
-  AvailableBonusesState
-} from "./availableBonuses";
+  AvailableBonusTypesState
+} from "./availableBonusesTypes";
 import eligibilityReducer, { EligibilityState } from "./eligibility";
 
 // type alias
@@ -15,7 +15,7 @@ type BonusVacanzeState = {
 };
 
 export type BonusState = Readonly<{
-  availableBonuses: AvailableBonusesState;
+  availableBonusTypes: AvailableBonusTypesState;
   bonusVacanze: BonusVacanzeState;
 }>;
 
@@ -26,7 +26,7 @@ const bonusVacanzeReducer = combineReducers<BonusVacanzeState, Action>({
 });
 
 const bonusReducer = combineReducers<BonusState, Action>({
-  availableBonuses: availableBonusesReducer,
+  availableBonusTypes: availableBonusesReducer,
   bonusVacanze: bonusVacanzeReducer
 });
 

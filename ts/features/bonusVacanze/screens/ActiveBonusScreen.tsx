@@ -38,7 +38,7 @@ import {
   allBonusActiveSelector,
   bonusActiveDetailByIdSelector
 } from "../store/reducers/allActive";
-import { availableBonusesSelectorFromId } from "../store/reducers/availableBonuses";
+import { availableBonusTypesSelectorFromId } from "../store/reducers/availableBonusesTypes";
 import {
   ID_BONUS_VACANZE_TYPE,
   isBonusActive,
@@ -424,7 +424,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const bonusFromNav = ownProps.navigation.getParam("bonus");
   const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
   return {
-    bonusInfo: availableBonusesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
+    bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus,
     isError: pot.isError(bonus)
   };

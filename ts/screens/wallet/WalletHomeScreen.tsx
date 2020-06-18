@@ -33,7 +33,7 @@ import {
   loadAllBonusActivations
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonusVacanze/store/reducers/allActive";
-import { availableBonusesSelector } from "../../features/bonusVacanze/store/reducers/availableBonuses";
+import { availableBonusTypesSelector } from "../../features/bonusVacanze/store/reducers/availableBonusesTypes";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -509,7 +509,7 @@ const mapStateToProps = (state: GlobalState) => {
     .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
     .getOrElse(true);
 
-  const potAvailableBonuses = availableBonusesSelector(state);
+  const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
     allActiveBonus: allBonusActiveSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
