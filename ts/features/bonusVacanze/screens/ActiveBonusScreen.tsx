@@ -3,7 +3,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { SvgXml } from "react-native-svg";
+import Svg, { Rect, SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
@@ -60,6 +60,7 @@ type Props = NavigationInjectedProps<NavigationParams> &
   ReturnType<typeof mapStateToProps> &
   LightModalContextInterface;
 
+const qrCodeSize = 168;
 const styles = StyleSheet.create({
   emptyHeader: { height: 90 },
   title: {
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -144,
     resizeMode: "stretch",
-    height: 168,
+    height: qrCodeSize,
     width: "100%",
     shadowColor: "#000",
     shadowOffset: {
@@ -82,6 +83,7 @@ const styles = StyleSheet.create({
     zIndex: 7,
     elevation: 7,
     alignSelf: "center",
+    alignItems: "center",
     backgroundColor: variables.contentPrimaryBackground
   },
   center: {
@@ -141,8 +143,11 @@ const styles = StyleSheet.create({
 });
 
 const renderQRCode = (base64: string) =>
-  fromNullable(base64).fold(null, s => (
-    <SvgXml xml={s} height="100%" width="100%" />
+  fromNullable(base64).fold(null, xml => (
+    <Svg height={qrCodeSize} width={qrCodeSize} viewBox="0 0 100 100">
+      <Rect fill="#ffffff" height="100%" width="100%" />
+      <SvgXml xml={xml} />
+    </Svg>
   ));
 
 const renderFiscalCodeLine = (name: string, cf: string) => {
