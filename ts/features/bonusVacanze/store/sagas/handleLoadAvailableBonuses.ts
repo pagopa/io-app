@@ -4,6 +4,7 @@ import { call, put } from "redux-saga/effects";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import { availableBonusesLoad } from "../actions/bonusVacanze";
+import { RTron } from "../../../../boot/configureStoreAndPersistor";
 
 // handle bonus list loading
 export function* handleLoadAvailableBonuses(
@@ -15,6 +16,7 @@ export function* handleLoadAvailableBonuses(
     const bonusListReponse: SagaCallReturnType<
       typeof getAvailableBonuses
     > = yield call(getAvailableBonuses, {});
+    RTron.log("bonusListReponse", bonusListReponse);
     if (bonusListReponse.isRight()) {
       if (bonusListReponse.value.status === 200) {
         yield put(availableBonusesLoad.success(bonusListReponse.value.value));

@@ -5,7 +5,7 @@ import { BonusActivationWithQrCode } from "../../../../../../definitions/bonus_v
 import { BonusCode } from "../../../../../../definitions/bonus_vacanze/BonusCode";
 import { Dsu } from "../../../../../../definitions/bonus_vacanze/Dsu";
 import { FamilyMembers } from "../../../../../../definitions/bonus_vacanze/FamilyMembers";
-import { canBonusVacanzeBeRequestedSelector } from "../bonusVacanzeActivation";
+import { canBonusVacanzeBeRequestedSelector } from "../index";
 
 const familyMembers: FamilyMembers = [
   {

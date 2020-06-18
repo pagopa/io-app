@@ -35,7 +35,7 @@ import {
   startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
 import { availableBonusesSelectorFromId } from "../store/reducers/availableBonuses";
-import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeActivation";
+import { allBonusActiveSelector } from "../store/reducers/allActive";
 import {
   ID_BONUS_VACANZE_TYPE,
   isBonusActive,
@@ -416,11 +416,11 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => {
-  const activeBonus = bonusVacanzeActivationSelector(state);
+  const activeBonus = allBonusActiveSelector(state);
   return {
     bonusInfo: availableBonusesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
-    bonus: activeBonus,
-    isError: pot.isError(activeBonus)
+    bonus: activeBonus[0], // fix me
+    isError: pot.isError(activeBonus[0]) // fix me
   };
 };
 

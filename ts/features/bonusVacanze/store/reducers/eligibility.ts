@@ -10,6 +10,7 @@ import {
   checkBonusEligibility,
   eligibilityRequestId
 } from "../actions/bonusVacanze";
+import { createSelector } from "reselect";
 
 export enum EligibilityRequestProgressEnum {
   "UNDEFINED" = "UNDEFINED",
@@ -82,32 +83,32 @@ const reducer = (
 
 // Selectors
 
+export const eligibilitySelector = (state: GlobalState): EligibilityState =>
+  state.bonus.bonusVacanze.eligibility;
+
 // return some if the eligibility check is eligibile
-export const eligibilityEligibleSelector = (
-  state: GlobalState
-): Option<EligibilityCheckSuccessEligible> => {
-  const check = state.bonus.eligibility.checkRequest.check;
+export const eligibilityEligibleSelector = createSelector<
+  GlobalState,
+  EligibilityState,
+  Option<EligibilityCheckSuccessEligible>
+>(eligibilitySelector, eligibility => {
   return pot.getOrElse(
     pot.map(
-      check,
+      eligibility.checkRequest.check,
       c => (EligibilityCheckSuccessEligible.is(c) ? some(c) : none)
     ),
     none
   );
-};
+});
 
-export const eligibilitySelector = (
-  state: GlobalState
-): Option<EligibilityCheck> =>
-  pot.toOption(state.bonus.eligibility.checkRequest.check);
-
-export const eligibilityRequestProgressSelector = (
-  state: GlobalState
-): EligibilityRequestProgressEnum =>
-  state.bonus.eligibility.checkRequest.status;
-
-export const eligibilityIsLoading = (state: GlobalState): boolean =>
-  state.bonus.eligibility.checkRequest.status !==
-  EligibilityRequestProgressEnum.ERROR;
+export const eligibilityIsLoading = createSelector<
+  GlobalState,
+  EligibilityState,
+  boolean
+>(
+  eligibilitySelector,
+  eligibility =>
+    eligibility.checkRequest.status !== EligibilityRequestProgressEnum.ERROR
+);
 
 export default reducer;
