@@ -4,7 +4,10 @@ import { getType } from "typesafe-actions";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { loadBonusVacanzeFromId } from "../actions/bonusVacanze";
+import {
+  bonusVacanzeActivation,
+  loadBonusVacanzeFromId
+} from "../actions/bonusVacanze";
 
 export type AllActiveState = {
   [key: string]: pot.Pot<BonusActivationWithQrCode, Error>;
@@ -21,6 +24,15 @@ const reducer = (
       return {
         ...state,
         [action.payload]: cachedValue ? pot.toLoading(cachedValue) : pot.none
+      };
+    // a bonus is activated -> store it
+    case getType(bonusVacanzeActivation.success):
+      if (action.payload.activation === undefined) {
+        return state;
+      }
+      return {
+        ...state,
+        [action.payload.activation.id]: pot.some(action.payload.activation)
       };
     case getType(loadBonusVacanzeFromId.success):
       return { ...state, [action.payload.id]: pot.some(action.payload) };
