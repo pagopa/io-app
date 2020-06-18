@@ -67,10 +67,6 @@ function* getCheckBonusEligibilitySaga(
         const check = eligibilityCheckResult.value.value;
         return right(check);
       }
-      // Request not found - polling must be stopped
-      if (eligibilityCheckResult.value.status === 404) {
-        return left(some(Error("404 on getBonusEligibilityCheck")));
-      }
       // polling should continue
       return left(none);
     } else {
@@ -81,6 +77,18 @@ function* getCheckBonusEligibilitySaga(
     return left(none);
   }
 }
+
+// return a function that executes getCheckBonusEligibilitySaga
+const executeGetEligibilityCheck = (
+  getBonusEligibilityCheck: ReturnType<
+    typeof BackendBonusVacanze
+  >["getBonusEligibilityCheck"]
+) =>
+  function* executeGetCheckBonusEligibilitySaga(): IterableIterator<
+    Effect | SagaCallReturnType<typeof getCheckBonusEligibilitySaga>
+  > {
+    return yield call(getCheckBonusEligibilitySaga, getBonusEligibilityCheck);
+  };
 
 // handle start bonus eligibility check
 // tslint:disable-next-line: cognitive-complexity
@@ -96,6 +104,16 @@ export const bonusEligibilitySaga = (
     Effect | ActionType<typeof checkBonusEligibility>
   > {
     try {
+      // before activate, make an optimistic check, maybe the isee result is already available
+      const optimisticResult = yield call(
+        executeGetEligibilityCheck(getBonusEligibilityCheck)
+      );
+      if (optimisticResult.isRight()) {
+        return checkBonusEligibility.success({
+          check: optimisticResult.value,
+          status: eligibilityResultToEnum(optimisticResult.value)
+        });
+      }
       const startEligibilityResult: SagaCallReturnType<
         typeof startBonusEligibilityCheck
       > = yield call(startBonusEligibilityCheck, {});
@@ -116,13 +134,9 @@ export const bonusEligibilitySaga = (
           const startPolling = new Date().getTime();
           // TODO: handle cancel request (stop polling)
           while (true) {
-            const eligibilityCheckResult: SagaCallReturnType<
-              typeof getCheckBonusEligibilitySaga
-            > = yield call(
-              getCheckBonusEligibilitySaga,
-              getBonusEligibilityCheck
+            const eligibilityCheckResult = yield call(
+              executeGetEligibilityCheck(getBonusEligibilityCheck)
             );
-
             // we got a blocking error -> stop polling
             if (
               eligibilityCheckResult.isLeft() &&
