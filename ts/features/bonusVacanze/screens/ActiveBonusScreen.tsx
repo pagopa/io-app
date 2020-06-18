@@ -202,7 +202,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
 
   const bonusFromNav = props.navigation.getParam("bonus");
-  const bonus = pot.getOrElse(props.bonus, undefined);
+  const bonus = pot.getOrElse(props.bonus, bonusFromNav);
 
   React.useEffect(() => {
     // When mounting the component starts a polling to update the bonus information at runtime
@@ -420,7 +420,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     bonusInfo: availableBonusesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus: activeBonus,
-    isError: pot.isError(activeBonus)
+    isError: pot.isNone(activeBonus) && pot.isError(activeBonus)
   };
 };
 
