@@ -1,4 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, Image, StyleSheet } from "react-native";
@@ -82,7 +83,7 @@ const renderQRCode = (base64: string) =>
   ));
 
 const bonusVacanzeImage = require("../../../../img/bonus/bonusVacanze/vacanze.png");
-
+const opacityAnimationDuration = 800 as Millisecond;
 const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
   const { onClose, qrCode, secretCode } = props;
 
@@ -105,7 +106,7 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
   React.useEffect(() => {
     Animated.timing(opacity, {
       toValue: 1,
-      duration: 800
+      duration: opacityAnimationDuration
     }).start();
   });
 
