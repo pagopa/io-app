@@ -79,7 +79,6 @@ export type BonusActions =
   | ActionType<typeof bonusVacanzeActivation>
   | ActionType<typeof checkBonusEligibility>
   | ActionType<typeof loadBonusVacanzeFromId>
-  | ActionType<typeof cancelBonusEligibility>
   | ActionType<typeof loadAllBonusActivations>
   | ActionType<typeof startLoadBonusFromIdPolling>
   | ActionType<typeof cancelBonusRequest>
