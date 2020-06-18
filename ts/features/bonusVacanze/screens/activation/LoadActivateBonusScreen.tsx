@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import { abortBonusRequest } from "../../components/AbortBonusRequest";
+import { abortBonusRequest } from "../../components/alert/AbortBonusRequest";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 import {
   bonusVacanzeActivation,
-  cancelBonusActivation
+  cancelBonusRequest
 } from "../../store/actions/bonusVacanze";
 import { activationIsLoading } from "../../store/reducers/bonusVacanzeActivation";
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -45,7 +45,7 @@ const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: link with the right dispatch action, will dispatch the cancel request
-  onAbort: () => dispatch(cancelBonusActivation()),
+  onAbort: () => dispatch(cancelBonusRequest()),
   // TODO: link with the right dispatch action, will dispatch the retry request
   onRetry: () => dispatch(bonusVacanzeActivation.request())
 });

@@ -7,6 +7,8 @@ import { navigationHistoryPop } from "../../../../../store/actions/navigationHis
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import {
+  navigateToBonusActivationTimeout,
+  navigateToBonusAlreadyExists,
   navigateToBonusEligibilityLoading,
   navigateToEligible,
   navigateToIseeNotAvailable,
@@ -16,7 +18,7 @@ import {
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   bonusVacanzeActivation,
-  cancelBonusEligibility,
+  cancelBonusRequest,
   checkBonusEligibility
 } from "../../actions/bonusVacanze";
 import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
@@ -26,7 +28,12 @@ const eligibilityToNavigate = new Map([
   [EligibilityRequestProgressEnum.ELIGIBLE, navigateToEligible],
   [EligibilityRequestProgressEnum.INELIGIBLE, navigateToIseeNotEligible],
   [EligibilityRequestProgressEnum.ISEE_NOT_FOUND, navigateToIseeNotAvailable],
-  [EligibilityRequestProgressEnum.TIMEOUT, navigateToTimeoutEligibilityCheck]
+  [EligibilityRequestProgressEnum.TIMEOUT, navigateToTimeoutEligibilityCheck],
+  [
+    EligibilityRequestProgressEnum.BONUS_ACTIVATION_PENDING,
+    navigateToBonusActivationTimeout
+  ],
+  [EligibilityRequestProgressEnum.CONFLICT, navigateToBonusAlreadyExists]
 ]);
 
 type BonusEligibilitySagaType = ReturnType<typeof bonusEligibilitySaga>;
@@ -88,7 +95,7 @@ export function* handleBonusEligibilitySaga(
 
   const { cancelAction } = yield race({
     eligibility: call(eligibilityWorker, eligibilitySaga),
-    cancelAction: take(cancelBonusEligibility)
+    cancelAction: take(cancelBonusRequest)
   });
   if (cancelAction) {
     yield put(navigateToWalletHome());

@@ -27,9 +27,10 @@ export const checkBonusEligibility = createAsyncAction(
   "BONUS_CHECK_ELIGIBILITY_FAILURE"
 )<void, EligibilityCheckPayload, Error>();
 
-export const cancelBonusEligibility = createStandardAction(
-  "BONUS_ELIGIBILITY_CANCEL"
-)<void>();
+// A common event to cancel the request bonus, used both for eligibility and activation
+export const cancelBonusRequest = createStandardAction("BONUS_REQUEST_CANCEL")<
+  void
+>();
 
 export const eligibilityRequestId = createStandardAction(
   "BONUS_CHECK_ELIGIBILITY_REQUEST_ID"
@@ -66,16 +67,12 @@ export const completeBonusVacanze = createStandardAction(
   "BONUS_ACTIVATION_COMPLETE"
 )();
 
-export const cancelBonusActivation = createStandardAction(
-  "BONUS_ACTIVATION_CANCEL"
-)();
-
 export type BonusActions =
   | ActionType<typeof availableBonusesLoad>
   | ActionType<typeof eligibilityRequestId>
   | ActionType<typeof bonusVacanzeActivation>
   | ActionType<typeof checkBonusEligibility>
   | ActionType<typeof loadBonusVacanzeFromId>
-  | ActionType<typeof cancelBonusEligibility>
   | ActionType<typeof startLoadBonusFromIdPolling>
+  | ActionType<typeof cancelBonusRequest>
   | ActionType<typeof cancelLoadBonusFromIdPolling>;

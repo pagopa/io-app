@@ -7,6 +7,7 @@ import { ActionType } from "typesafe-actions";
 import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { ErrorEnum } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckFailure";
 import { EligibilityCheckSuccess } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccess";
+import { EligibilityCheckSuccessConflict } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessConflict";
 import { EligibilityCheckSuccessEligible } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { startTimer } from "../../../../../utils/timer";
@@ -27,8 +28,10 @@ const eligibilityResultToEnum = (check: EligibilityCheck) => {
   if (EligibilityCheckSuccess.is(check)) {
     if (EligibilityCheckSuccessEligible.is(check)) {
       return EligibilityRequestProgressEnum.ELIGIBLE;
+    } else if (EligibilityCheckSuccessConflict.is(check)) {
+      return EligibilityRequestProgressEnum.CONFLICT;
     }
-    // if it is not eligible -> it is ineligible
+    // if it is not eligible & not conflict -> it is ineligible
     return EligibilityRequestProgressEnum.INELIGIBLE;
   } else {
     // failure
@@ -67,10 +70,6 @@ function* getCheckBonusEligibilitySaga(
         const check = eligibilityCheckResult.value.value;
         return right(check);
       }
-      // Request not found - polling must be stopped
-      if (eligibilityCheckResult.value.status === 404) {
-        return left(some(Error("404 on getBonusEligibilityCheck")));
-      }
       // polling should continue
       return left(none);
     } else {
@@ -81,6 +80,18 @@ function* getCheckBonusEligibilitySaga(
     return left(none);
   }
 }
+
+// return a function that executes getCheckBonusEligibilitySaga
+const executeGetEligibilityCheck = (
+  getBonusEligibilityCheck: ReturnType<
+    typeof BackendBonusVacanze
+  >["getBonusEligibilityCheck"]
+) =>
+  function* executeGetCheckBonusEligibilitySaga(): IterableIterator<
+    Effect | SagaCallReturnType<typeof getCheckBonusEligibilitySaga>
+  > {
+    return yield call(getCheckBonusEligibilitySaga, getBonusEligibilityCheck);
+  };
 
 // handle start bonus eligibility check
 // tslint:disable-next-line: cognitive-complexity
@@ -96,6 +107,16 @@ export const bonusEligibilitySaga = (
     Effect | ActionType<typeof checkBonusEligibility>
   > {
     try {
+      // before activate, make an optimistic check, maybe the isee result is already available
+      const firstCheck = yield call(
+        executeGetEligibilityCheck(getBonusEligibilityCheck)
+      );
+      if (firstCheck.isRight()) {
+        return checkBonusEligibility.success({
+          check: firstCheck.value,
+          status: eligibilityResultToEnum(firstCheck.value)
+        });
+      }
       const startEligibilityResult: SagaCallReturnType<
         typeof startBonusEligibilityCheck
       > = yield call(startBonusEligibilityCheck, {});
@@ -116,13 +137,9 @@ export const bonusEligibilitySaga = (
           const startPolling = new Date().getTime();
           // TODO: handle cancel request (stop polling)
           while (true) {
-            const eligibilityCheckResult: SagaCallReturnType<
-              typeof getCheckBonusEligibilitySaga
-            > = yield call(
-              getCheckBonusEligibilitySaga,
-              getBonusEligibilityCheck
+            const eligibilityCheckResult = yield call(
+              executeGetEligibilityCheck(getBonusEligibilityCheck)
             );
-
             // we got a blocking error -> stop polling
             if (
               eligibilityCheckResult.isLeft() &&
@@ -148,10 +165,10 @@ export const bonusEligibilitySaga = (
             }
           }
         }
-        // there's already an active bonus related to this user
+        // there's already an activation bonus running
         else if (startEligibilityResult.value.status === 403) {
           return checkBonusEligibility.success({
-            status: EligibilityRequestProgressEnum.BONUS_ALREADY_ACTIVE
+            status: EligibilityRequestProgressEnum.BONUS_ACTIVATION_PENDING
           });
         }
 

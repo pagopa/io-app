@@ -1,4 +1,5 @@
 import * as React from "react";
+import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
@@ -7,7 +8,8 @@ import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { renderRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
-import { cancelBonusActivation } from "../../store/actions/bonusVacanze";
+import { bonusVacanzaStyle } from "../../components/Styles";
+import { cancelBonusRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -39,7 +41,7 @@ const EligibilityExpired: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <>
+    <SafeAreaView style={bonusVacanzaStyle.flex}>
       <InfoScreenComponent
         image={renderRasterImage(image)}
         title={title}
@@ -48,12 +50,12 @@ const EligibilityExpired: React.FunctionComponent<Props> = props => {
       <FooterStackButton
         buttons={[cancelButtonProps(props.onCancel, cancel)]}
       />
-    </>
+    </SafeAreaView>
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => dispatch(cancelBonusActivation())
+  onCancel: () => dispatch(cancelBonusRequest())
 });
 
 export default connect(
