@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ImageSourcePropType } from "react-native";
+import { ImageSourcePropType, SafeAreaView } from "react-native";
 import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../i18n";
 import { abortBonusRequest } from "../../../components/AbortBonusRequest";
@@ -11,6 +11,7 @@ import { FooterStackButton } from "../../../components/buttons/FooterStackButton
 import { useHardwareBackButton } from "../../../components/hooks/useHardwareBackButton";
 import { renderRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { bonusVacanzaStyle } from "../../../components/Styles";
 
 const inpsDsuHomeUrl =
   "https://www.inps.it/nuovoportaleinps/default.aspx?itemdir=49961";
@@ -44,7 +45,7 @@ export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <>
+    <SafeAreaView style={bonusVacanzaStyle.flex}>
       <InfoScreenComponent
         image={renderRasterImage(props.image)}
         title={props.title}
@@ -60,6 +61,6 @@ export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
           )
         ]}
       />
-    </>
+    </SafeAreaView>
   );
 };
