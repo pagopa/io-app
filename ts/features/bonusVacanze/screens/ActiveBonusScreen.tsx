@@ -272,7 +272,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     );
 
   const from = props.bonusInfo.map(bi => bi.valid_from);
-  const to = props.bonusInfo.map(bi => bi.valid_from);
+  const to = props.bonusInfo.map(bi => bi.valid_to);
   const bonusValidityInterval = validityInterval(
     from.toUndefined(),
     to.toUndefined()
