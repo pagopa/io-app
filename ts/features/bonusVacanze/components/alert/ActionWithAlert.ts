@@ -1,6 +1,5 @@
 import { Alert } from "react-native";
-import I18n from "../../../i18n";
-import { showToast } from "../../../utils/showToast";
+import { showToast } from "../../../../utils/showToast";
 
 type ConfirmConfig = {
   title: string;
@@ -8,9 +7,13 @@ type ConfirmConfig = {
   confirmText: string;
   cancelText: string;
   onConfirmAction: () => void;
+  // optional, in case will show a toast with the feedback text when the action is executed
   completedFeedbackText?: string;
 };
-
+/**
+ * A generic way to ask confirmation with {@link Alert.alert} for a specific action
+ * @param confirmConfig
+ */
 export const actionWithAlert = (confirmConfig: ConfirmConfig) => {
   Alert.alert(
     confirmConfig.title,
@@ -32,13 +35,3 @@ export const actionWithAlert = (confirmConfig: ConfirmConfig) => {
     ]
   );
 };
-
-export const abortBonusRequest = (onAbort: () => void) =>
-  actionWithAlert({
-    title: I18n.t("bonus.bonusVacanza.abort.title"),
-    body: I18n.t("bonus.bonusVacanza.abort.body"),
-    confirmText: I18n.t("bonus.bonusVacanza.abort.confirm"),
-    cancelText: I18n.t("bonus.bonusVacanza.abort.cancel"),
-    completedFeedbackText: I18n.t("bonus.bonusVacanza.abort.completed"),
-    onConfirmAction: onAbort
-  });

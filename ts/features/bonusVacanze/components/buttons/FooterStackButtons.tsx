@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
 import IconFont from "../../../../components/ui/IconFont";
+import { FooterTopShadow } from "../FooterTopShadow";
 
 const styles = StyleSheet.create({
   button: {
@@ -53,13 +54,13 @@ export const FooterStackButton: React.FunctionComponent<Props> = props => {
   const buttonLength = props.buttons.length;
 
   return (
-    <View footer={true}>
+    <FooterTopShadow>
       <View style={styles.main}>
         {props.buttons
           .slice(0, buttonLength - 1)
           .map((b, idx) => withSpacer(renderButton(b), idx))}
         {renderButton(props.buttons[buttonLength - 1])}
       </View>
-    </View>
+    </FooterTopShadow>
   );
 };
