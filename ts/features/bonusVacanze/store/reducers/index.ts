@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import { Action } from "../../../../store/actions/types";
+import bonusVacanzeActivationReducer, { ActivationState } from "./activation";
+import allActiveReducer, { AllActiveState } from "./allActive";
 import availableBonusesReducer, {
   AvailableBonusesState
 } from "./availableBonuses";
 import eligibilityReducer, { EligibilityState } from "./eligibility";
-import bonusVacanzeActivationReducer, { ActivationState } from "./activation";
-import allActiveReducer, { AllActiveState } from "./allActive";
 
 // type alias
 type BonusVacanzeState = {

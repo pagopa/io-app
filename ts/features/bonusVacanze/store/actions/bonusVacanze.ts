@@ -7,8 +7,8 @@ import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vaca
 import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { InstanceId } from "../../../../../definitions/bonus_vacanze/InstanceId";
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
-import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 import { BonusActivationProgressEnum } from "../reducers/activation";
+import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
 export const availableBonusesLoad = createAsyncAction(
   "BONUS_AVAILABLE_REQUEST",

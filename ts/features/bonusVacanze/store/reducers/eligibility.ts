@@ -1,5 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { EligibilityCheckSuccessEligible } from "../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
@@ -10,7 +11,6 @@ import {
   checkBonusEligibility,
   eligibilityRequestId
 } from "../actions/bonusVacanze";
-import { createSelector } from "reselect";
 
 export enum EligibilityRequestProgressEnum {
   "UNDEFINED" = "UNDEFINED",

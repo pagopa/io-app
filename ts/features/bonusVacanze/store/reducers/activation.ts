@@ -1,8 +1,8 @@
 // bonus reducer
-import { Action } from "../../../../store/actions/types";
 import { getType } from "typesafe-actions";
-import { bonusVacanzeActivation } from "../actions/bonusVacanze";
+import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
+import { bonusVacanzeActivation } from "../actions/bonusVacanze";
 
 export enum BonusActivationProgressEnum {
   "ELIGIBILITY_EXPIRED" = "ELIGIBILITY_EXPIRED", // Cannot activate a new bonus because the eligibility data has expired.
