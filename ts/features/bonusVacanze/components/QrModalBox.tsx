@@ -1,7 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Animated, Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import IconFont from "../../../components/ui/IconFont";
@@ -17,8 +17,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   modalBackdrop: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)"
+    flex: 1
   },
   modalBox: {
     position: "absolute",
@@ -86,12 +85,32 @@ const bonusVacanzeImage = require("../../../../img/bonus/bonusVacanze/vacanze.pn
 
 const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
   const { onClose, qrCode, secretCode } = props;
+
+  const [opacity] = React.useState(new Animated.Value(0));
+
   useHardwareBackButton(() => {
     onClose();
     return true;
   });
+
+  const color = opacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["rgba(0,0,0,0)", "rgba(0,0,0,0.5)"]
+  });
+
+  const modalBackdrop = {
+    backgroundColor: color
+  };
+
+  React.useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 800
+    }).start();
+  });
+
   return (
-    <View style={styles.modalBackdrop}>
+    <Animated.View style={[styles.modalBackdrop, modalBackdrop]}>
       <View style={styles.modalBox}>
         <View style={styles.row}>
           <Text style={styles.title} semibold={true}>
@@ -130,7 +149,7 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
         <View spacer={true} extralarge={true} />
         <View style={styles.image}>{renderQRCode(qrCode)}</View>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
