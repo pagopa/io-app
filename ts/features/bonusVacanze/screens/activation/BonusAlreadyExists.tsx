@@ -9,7 +9,7 @@ import { useHardwareBackButton } from "../../components/hooks/useHardwareBackBut
 import { renderRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzaStyle } from "../../components/Styles";
-import { cancelBonusRequest } from "../../store/actions/bonusVacanze";
+import { cancelBonusActivation } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
