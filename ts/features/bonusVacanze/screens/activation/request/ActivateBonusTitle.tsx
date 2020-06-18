@@ -1,7 +1,7 @@
 import { H3, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import H5 from "../../../../../../components/ui/H5";
+import H5 from "../../../../../components/ui/H5";
 import { activateBonusStyle } from "./Style";
 
 type Props = {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const bonusVacanzeImage = require("../../../../../../../img/bonus/bonusVacanze/vacanze.png");
+const bonusVacanzeImage = require("../../../../../../img/bonus/bonusVacanze/vacanze.png");
 
 /**
  * The title of the ActivateBonus Screen, displaying some text with an image on the right
