@@ -1307,6 +1307,11 @@ bonus:
         completed:
           title: Congratulation!
           description: Bonus activated
+        confirm:
+          title: Attention
+          body: If you continue, you will no longer be able to cancel the request.
+          cancel: Back to the request
+          confirm: Continue
     abort:
       title: Cancel
       body: Do you really want to quit? To request the "Bonus Vacanza" you will have to repeat the process from the beginning.
