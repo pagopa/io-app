@@ -1,6 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { Image, SafeAreaView, ScrollView } from "react-native";
 import { FamilyMember } from "../../../../../../definitions/bonus_vacanze/FamilyMember";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -19,6 +19,7 @@ type Props = {
   bonusAmount: number;
   taxBenefit: number;
   hasDiscrepancies: boolean;
+  logo?: string;
   onCancel: () => void;
   onRequestBonus: () => void;
 };
@@ -73,7 +74,11 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
       <SafeAreaView style={bonusVacanzaStyle.flex}>
         <ScrollView style={bonusVacanzaStyle.horizontalPadding}>
           <View spacer={true} large={true} />
-          <ActivateBonusTitle title={title} description={description} />
+          <ActivateBonusTitle
+            title={title}
+            description={description}
+            image={props.logo}
+          />
           <View spacer={true} large={true} />
           <BonusCompositionDetails
             bonusAmount={props.bonusAmount}

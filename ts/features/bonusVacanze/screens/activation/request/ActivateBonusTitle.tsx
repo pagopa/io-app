@@ -6,6 +6,7 @@ import H5 from "../../../../../components/ui/H5";
 type Props = {
   title: string;
   description: string;
+  image?: string;
 };
 
 const styles = StyleSheet.create({
@@ -23,8 +24,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const bonusVacanzeImage = require("../../../../../../img/bonus/bonusVacanze/vacanze.png");
-
 /**
  * The title of the ActivateBonus Screen, displaying some text with an image on the right
  * @param props
@@ -35,11 +34,13 @@ export const ActivateBonusTitle: React.FunctionComponent<Props> = props => {
     <View>
       <View style={styles.row}>
         <H3 style={styles.text}>{props.title}</H3>
-        <Image
-          source={bonusVacanzeImage}
-          resizeMode={"contain"}
-          style={styles.image}
-        />
+        {props.image ? (
+          <Image
+            source={{ uri: props.image }}
+            resizeMode={"contain"}
+            style={styles.image}
+          />
+        ) : null}
       </View>
       <View style={styles.row}>
         <H5 style={styles.text}>{props.description}</H5>

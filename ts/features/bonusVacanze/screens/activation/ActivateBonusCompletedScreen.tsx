@@ -3,16 +3,17 @@ import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
+import { GlobalState } from "../../../../store/reducers/types";
 import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
-import { renderRasterImage } from "../../components/infoScreen/imageRendering";
+import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzaStyle } from "../../components/Styles";
 import { completeBonusVacanze } from "../../store/actions/bonusVacanze";
+import { bonusVacanzeLogo } from "../../store/reducers/availableBonuses";
 
-type Props = ReturnType<typeof mapDispatchToProps>;
-
-const image = require("../../../../../img/bonus/bonusVacanze/vacanze.png");
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 /**
  * This screen informs the user that the bonus has been activated!
@@ -36,7 +37,9 @@ const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
   return (
     <SafeAreaView style={bonusVacanzaStyle.flex}>
       <InfoScreenComponent
-        image={renderRasterImage(image)}
+        image={
+          props.logo ? renderInfoRasterImage({ uri: props.logo }) : undefined
+        }
         title={title}
         body={body}
       />
@@ -47,12 +50,16 @@ const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
+const mapStateToProps = (state: GlobalState) => ({
+  logo: bonusVacanzeLogo(state)
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: replace with the event to go in the next screen
   onConfirm: () => dispatch(completeBonusVacanze())
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ActivateBonusCompletedScreen);
