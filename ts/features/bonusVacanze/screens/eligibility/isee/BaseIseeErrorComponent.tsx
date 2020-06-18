@@ -13,9 +13,9 @@ import { renderRasterImage } from "../../../components/infoScreen/imageRendering
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 
 const inpsDsuHomeUrl =
-  "https://servizi2.inps.it/servizi/ISEEPrecompilato/WfSimHome.aspx";
+  "https://www.inps.it/nuovoportaleinps/default.aspx?itemdir=49961";
 const inpsSimulationUrl =
-  "https://servizi2.inps.it/servizi/ISEEPrecompilato/WfSimOrdDati.aspx";
+  "https://servizi2.inps.it/servizi/Iseeriforma/FrmSimHome.aspx";
 
 type Props = {
   image: ImageSourcePropType;

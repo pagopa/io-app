@@ -7,7 +7,7 @@ import { InfoScreenComponent } from "./infoScreen/InfoScreenComponent";
 
 type Props = {
   title: string;
-  body: string;
+  body: string | React.ReactNode;
   onExit: () => void;
 };
 
