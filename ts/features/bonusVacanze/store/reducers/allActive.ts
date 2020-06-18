@@ -1,10 +1,10 @@
-import { Action } from "../../../../store/actions/types";
-import { getType } from "typesafe-actions";
-import { loadBonusVacanzeFromId } from "../actions/bonusVacanze";
 import * as pot from "italia-ts-commons/lib/pot";
-import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
-import { GlobalState } from "../../../../store/reducers/types";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { loadBonusVacanzeFromId } from "../actions/bonusVacanze";
 
 export type AllActiveState = {
   [key: string]: pot.Pot<BonusActivationWithQrCode, Error>;

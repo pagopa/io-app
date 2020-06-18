@@ -16,9 +16,9 @@ import { handleBonusActivationSaga } from "./activation/handleBonusActivationSag
 import { bonusEligibilitySaga } from "./eligibility/getBonusEligibilitySaga";
 import { handleBonusEligibilitySaga } from "./eligibility/handleBonusEligibilitySaga";
 import { handleBonusFromIdPollingSaga } from "./handleBonusFromIdPolling";
+import { handleLoadAllBonusActivations } from "./handleLoadAllBonusActivationSaga";
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
 import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
-import { handleLoadAllBonusActivations } from "./handleLoadAllBonusActivationSaga";
 
 // Saga that listen to all bonus requests
 export function* watchBonusSaga(bearerToken: string): SagaIterator {

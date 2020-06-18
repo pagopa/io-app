@@ -32,6 +32,7 @@ import {
   availableBonusesLoad,
   loadAllBonusActivations
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
+import { allBonusActiveSelector } from "../../features/bonusVacanze/store/reducers/allActive";
 import { availableBonusesSelector } from "../../features/bonusVacanze/store/reducers/availableBonuses";
 import I18n from "../../i18n";
 import {
@@ -67,7 +68,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { allBonusActiveSelector } from "../../features/bonusVacanze/store/reducers/allActive";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
