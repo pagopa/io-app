@@ -105,13 +105,13 @@ export const bonusEligibilitySaga = (
   > {
     try {
       // before activate, make an optimistic check, maybe the isee result is already available
-      const optimisticResult = yield call(
+      const firstCheck = yield call(
         executeGetEligibilityCheck(getBonusEligibilityCheck)
       );
-      if (optimisticResult.isRight()) {
+      if (firstCheck.isRight()) {
         return checkBonusEligibility.success({
-          check: optimisticResult.value,
-          status: eligibilityResultToEnum(optimisticResult.value)
+          check: firstCheck.value,
+          status: eligibilityResultToEnum(firstCheck.value)
         });
       }
       const startEligibilityResult: SagaCallReturnType<
