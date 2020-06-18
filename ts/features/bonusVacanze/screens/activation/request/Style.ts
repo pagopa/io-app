@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import themeVariables from "../../../../../../theme/variables";
+import themeVariables from "../../../../../theme/variables";
 
 export const activateBonusStyle = StyleSheet.create({
   horizontalPadding: {

@@ -6,7 +6,7 @@ import themeVariables from "../../../../theme/variables";
 type Props = {
   image: React.ReactNode;
   title?: string;
-  body?: string;
+  body?: string | React.ReactNode;
 };
 
 const styles = StyleSheet.create({
@@ -21,8 +21,21 @@ const styles = StyleSheet.create({
   },
   body: {
     textAlign: "center"
+  },
+  bold: {
+    fontWeight: "bold"
   }
 });
+
+export const InfoScreenStyle = styles;
+
+const renderNode = (body: string | React.ReactNode) => {
+  if (typeof body === "string") {
+    return <Text style={styles.body}>{body}</Text>;
+  }
+
+  return body;
+};
 
 /**
  * A base screen that displays one image, text, and one bottom button
@@ -46,7 +59,7 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
         </>
       )}
 
-      <Text style={styles.body}>{props.body}</Text>
+      {renderNode(props.body)}
     </View>
   );
 };

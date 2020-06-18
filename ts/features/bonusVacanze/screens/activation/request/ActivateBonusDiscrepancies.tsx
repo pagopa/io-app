@@ -1,8 +1,8 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import IconFont from "../../../../../../components/ui/IconFont";
-import themeVariables from "../../../../../../theme/variables";
+import IconFont from "../../../../../components/ui/IconFont";
+import themeVariables from "../../../../../theme/variables";
 import { activateBonusStyle } from "./Style";
 
 type Props = {
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     color: themeVariables.colorWhite
   }
 });
-const iconSize = 24;
 
+const iconSize = 24;
 /**
  * This component display a colored box with an icon e some text that warn the user about some discrepancies.
  * @param props

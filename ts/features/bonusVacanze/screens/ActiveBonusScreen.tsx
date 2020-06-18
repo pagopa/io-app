@@ -1,4 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -10,6 +11,7 @@ import { withLightModalContext } from "../../../components/helpers/withLightModa
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../../components/screens/DarkLayout";
+import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import BlockButtons from "../../../components/ui/BlockButtons";
 import IconFont from "../../../components/ui/IconFont";
@@ -26,8 +28,14 @@ import { formatDateAsLocal } from "../../../utils/dates";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
+import { maybeNotNullyString } from "../../../utils/strings";
 import QrModalBox from "../components/QrModalBox";
+import {
+  cancelLoadBonusFromIdPolling,
+  startLoadBonusFromIdPolling
+} from "../store/actions/bonusVacanze";
 import { availableBonusesSelectorFromId } from "../store/reducers/availableBonuses";
+import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeActivation";
 import {
   ID_BONUS_VACANZE_TYPE,
   isBonusActive,
@@ -193,21 +201,35 @@ const shareQR = async (content: string, code: string, errorMessage: string) => {
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
 
-  const bonus = props.navigation.getParam("bonus");
+  const bonusFromNav = props.navigation.getParam("bonus");
+  const bonus = pot.getOrElse(props.bonus, undefined);
 
   React.useEffect(() => {
-    readBase64Svg(bonus)
-      .then(cc => setQRCode(cc))
-      .catch(_ => undefined);
+    // When mounting the component starts a polling to update the bonus information at runtime
+    props.startPollingBonusFromId(bonusFromNav.id);
+
+    if (bonus) {
+      readBase64Svg(bonus)
+        .then(cc => setQRCode(cc))
+        .catch(_ => undefined);
+    }
+    return () => {
+      // When the component unmounts demands the stop to the polling saga
+      props.cancelPollingBonusFromId();
+    };
   }, []);
 
   // translate the bonus status. If no mapping found -> empty string
-  const bonusStatusDescription = I18n.t(`bonus.${bonus.status.toLowerCase()}`, {
-    defaultValue: ""
-  });
+  const maybeStatusDescription = maybeNotNullyString(
+    bonus
+      ? I18n.t(`bonus.${bonus.status.toLowerCase()}`, {
+          defaultValue: ""
+        })
+      : ""
+  );
 
   const renderFooterButtons = () =>
-    isBonusActive(bonus) ? (
+    bonus && isBonusActive(bonus) ? (
       <BlockButtons
         type="TwoButtonsInlineHalf"
         rightButton={{
@@ -218,7 +240,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           onPress: () =>
             shareQR(
               qrCode[PNG_IMAGE_TYPE],
-              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonus.id}`,
+              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonusFromNav.id}`,
               I18n.t("global.genericError")
             )
         }}
@@ -230,7 +252,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           onPress: () =>
             props.showAnimatedModal(
               <QrModalBox
-                secretCode={bonus.id}
+                secretCode={bonusFromNav.id}
                 onClose={props.hideModal}
                 qrCode={qrCode[QR_CODE_MIME_TYPE]}
               />,
@@ -255,7 +277,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     from.toUndefined(),
     to.toUndefined()
   );
-  return (
+  return !props.isError && bonus ? (
     <DarkLayout
       bounces={false}
       headerBody={
@@ -347,7 +369,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           )}
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} />
-          {bonusStatusDescription.length > 0 && (
+          {maybeStatusDescription.isSome() && (
             <View style={styles.rowBlock}>
               <Text
                 semibold={true}
@@ -363,7 +385,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 }
               >
                 <Text style={styles.statusText} semibold={true}>
-                  {bonusStatusDescription}
+                  {maybeStatusDescription.value}
                 </Text>
               </Badge>
             </View>
@@ -385,17 +407,28 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         </View>
       </View>
     </DarkLayout>
+  ) : (
+    <GenericErrorComponent
+      onRetry={() => props.startPollingBonusFromId(bonusFromNav.id)}
+      onCancel={props.goBack}
+    />
   );
 };
 
 const mapStateToProps = (state: GlobalState) => {
+  const activeBonus = bonusVacanzeActivationSelector(state);
   return {
-    bonusInfo: availableBonusesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state)
+    bonusInfo: availableBonusesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
+    bonus: activeBonus,
+    isError: pot.isError(activeBonus)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  goBack: () => dispatch(navigateBack())
+  goBack: () => dispatch(navigateBack()),
+  startPollingBonusFromId: (id: string) =>
+    dispatch(startLoadBonusFromIdPolling(id)),
+  cancelPollingBonusFromId: () => dispatch(cancelLoadBonusFromIdPolling())
 });
 
 export default connect(

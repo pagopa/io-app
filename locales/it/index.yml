@@ -1320,13 +1320,22 @@ bonus:
         activateCTA: "Attiva il Bonus"
       timeout:
         title: Siamo spiacenti, serve più tempo per verificare il tuo ISEE.
-        description: "Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.\n\nQuando lo riceverai, se sarà positivo, ricordati di completare la tua domanda entro 24 ore, altrimenti scadrà e dovrai iniziarne una nuova."
+        description:
+          first: "Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.\n\nQuando lo riceverai, se sarà positivo, ricordati di completare la tua domanda "
+          second: "entro 24 ore"
+          third: ", altrimenti scadrà e dovrai iniziarne una nuova."
       activate:
-        loading: Attivo il bonus
+        loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
         goToDetails: Visualizza i dettagli
         timeout:
           title: Siamo spiacenti, serve più tempo per processare la tua richiesta.
           description: Ti invieremo un messaggio in app quando il tuo bonus sarà pronto.
+        alreadyRedeemed:
+          title: Sembra che il bonus per il tuo nucleo familiare sia già stato richiesto.
+          body: Ti chiediamo di verificare con i tuoi familiari. Se questa informazione non dovesse essere corretta, verifica con il servizio clienti di Agenzia delle Entrate.
+        eligibilityExpired:
+          title: Eligibilità scaduta
+          body: Il periodo in cui era possibile attivare il bonus è scaduto. È necessario iniziare una nuova procedura.
         completed:
           title: Congratulazioni!
           description: Il tuo bonus è attivo
@@ -1334,7 +1343,7 @@ bonus:
       title: Annulla
       body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
       cancel: Torna alla richiesta
-      confirm: Termina richiesta
+      confirm: Annulla richiesta
       completed: Richiesta annullata
     composition:
       amount: "Importo massimo"
