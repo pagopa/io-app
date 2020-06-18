@@ -9,7 +9,7 @@ import { useHardwareBackButton } from "../../components/hooks/useHardwareBackBut
 import { renderRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzaStyle } from "../../components/Styles";
-import { cancelBonusActivation } from "../../store/actions/bonusVacanze";
+import { cancelBonusRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -53,7 +53,7 @@ const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => dispatch(cancelBonusActivation())
+  onCancel: () => dispatch(cancelBonusRequest())
 });
 
 export default connect(
