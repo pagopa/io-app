@@ -246,20 +246,16 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         )}
         {this.cardHeader()}
         {validWallets.length > 0 ? (
-          <View>
-            <RotatedCards
-              cardType="Preview"
-              wallets={
-                validWallets.length === 1
-                  ? [validWallets[0]]
-                  : [validWallets[0], validWallets[1]]
-              }
-              onClick={this.props.navigateToWalletList}
-            />
-          </View>
-        ) : (
-          <View spacer={true} small={true} />
-        )}
+          <RotatedCards
+            cardType="Preview"
+            wallets={
+              validWallets.length === 1
+                ? [validWallets[0]]
+                : [validWallets[0], validWallets[1]]
+            }
+            onClick={this.props.navigateToWalletList}
+          />
+        ) : null}
         {/* Display this item only if the flag is enabled */}
         {bonusVacanzeEnabled && (
           <RequestBonus

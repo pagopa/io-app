@@ -43,6 +43,17 @@ const styles = StyleSheet.create({
     marginBottom: -20,
     height: 88
   },
+  previewContainer: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 12
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    zIndex: 0,
+    elevation: 0
+  },
   row: {
     flexDirection: "row",
     alignItems: "center",
@@ -168,22 +179,27 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
 
   const renderPreviewCard = () => {
     return (
-      <TouchableDefaultOpacity
-        style={[styles.row, styles.spaced]}
-        onPress={props.onPress}
-      >
-        <View style={[styles.row]}>
-          <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
-            {I18n.t("bonus.bonusVacanza.name")}
-          </Text>
-          <View hspacer={true} large={true} />
-          <Text bold={true} style={[styles.colorWhite, styles.previewAmount]}>
-            {bonus.dsu_request.max_amount}
-          </Text>
-          <Text style={[styles.colorWhite, styles.fontLarge]}>{"€"}</Text>
-        </View>
-        <Image source={bonusVacanzeWhiteLogo} style={styles.previewLogo} />
-      </TouchableDefaultOpacity>
+      <View style={styles.preview}>
+        <TouchableDefaultOpacity
+          style={[styles.row, styles.spaced]}
+          onPress={props.onPress}
+        >
+          <View style={[styles.row]}>
+            <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
+              {I18n.t("bonus.bonusVacanza.name")}
+            </Text>
+            <View hspacer={true} large={true} />
+            <Text bold={true} style={[styles.colorWhite, styles.previewAmount]}>
+              {bonus.dsu_request.max_amount}
+            </Text>
+            <Text style={[styles.colorWhite, { fontSize: 20 }]}>{"€"}</Text>
+          </View>
+          <Image
+            source={require("../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png")}
+            style={styles.previewLogo}
+          />
+        </TouchableDefaultOpacity>
+      </View>
     );
   };
 

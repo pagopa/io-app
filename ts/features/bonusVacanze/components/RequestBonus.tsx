@@ -63,18 +63,17 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
         onPress={onButtonPress}
         isNew={true}
       />
-      {!pot.isLoading(activeBonus) &&
-        pot.isSome(activeBonus) && (
-          <View style={styles.preview}>
-            <BonusCardComponent
-              bonus={activeBonus.value}
-              preview={true}
-              onPress={() =>
-                onBonusPress(activeBonus.value, validFrom, validTo)
-              }
-            />
-          </View>
-        )}
+      {!pot.isLoading(activeBonus) && pot.isSome(activeBonus) ? (
+        <View style={styles.preview}>
+          <BonusCardComponent
+            bonus={activeBonus.value}
+            preview={true}
+            onPress={() => onBonusPress(activeBonus.value, validFrom, validTo)}
+          />
+        </View>
+      ) : (
+        <View spacer={true} xsmall={true} />
+      )}
     </React.Fragment>
   );
 };
