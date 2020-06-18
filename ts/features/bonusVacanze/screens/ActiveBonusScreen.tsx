@@ -213,7 +213,8 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     // When mounting the component starts a polling to update the bonus information at runtime
     props.startPollingBonusFromId(bonusFromNav.id);
 
-    if (bonus) {
+    const needToLoad = Object.keys(qrCode).length === 0;
+    if (bonus && needToLoad) {
       readBase64Svg(bonus)
         .then(cc => setQRCode(cc))
         .catch(_ => undefined);
