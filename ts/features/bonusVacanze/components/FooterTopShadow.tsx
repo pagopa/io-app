@@ -1,11 +1,9 @@
 import { View } from "native-base";
 import * as React from "react";
-import variables from "../../theme/variables";
-import BlockButtons, { BlockButtonsProps } from "./BlockButtons";
-
 import { StyleSheet } from "react-native";
+import variables from "../../../theme/variables";
 
-// TODO: Refactor with an unique component like `FooterTopShadow` after bonus vacanze
+// TODO: after bonus vacanze,create a common style for footer, atm duplicated in FooterWithButtons
 const styles = StyleSheet.create({
   footerVariant: {
     backgroundColor: variables.footerBackground,
@@ -31,21 +29,16 @@ const styles = StyleSheet.create({
   }
 });
 
+type Props = {};
 /**
- * Implements a component that show buttons as sticky footer
- * It can include 1, 2 or 3 buttons. If they are 2, they can have the inlineHalf  or the inlineOneThird style
+ * A generic component that can be used to draw shadow on top
+ * @param props
+ * @constructor
  */
-export default class FooterWithButtons extends React.Component<
-  BlockButtonsProps,
-  never
-> {
-  public render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.footerVariant}>
-          <BlockButtons {...this.props} />
-        </View>
-      </View>
-    );
-  }
-}
+export const FooterTopShadow: React.FunctionComponent<Props> = props => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.footerVariant}>{props.children}</View>
+    </View>
+  );
+};
