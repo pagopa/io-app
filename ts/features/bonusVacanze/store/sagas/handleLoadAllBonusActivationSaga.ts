@@ -7,7 +7,6 @@ import {
   loadAllBonusActivations,
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
-import { RTron } from "../../../../boot/configureStoreAndPersistor";
 
 // handle all bonus activation load
 export function* handleLoadAllBonusActivations(
@@ -19,15 +18,12 @@ export function* handleLoadAllBonusActivations(
     const allBonusActivationsResponse: SagaCallReturnType<
       typeof getAllBonusActivations
     > = yield call(getAllBonusActivations, {});
-    RTron.log("allBonusActivationsResponse", "1");
     if (allBonusActivationsResponse.isRight()) {
       if (allBonusActivationsResponse.value.status === 200) {
         // for each bonus load details
         const items = allBonusActivationsResponse.value.value.items;
-        RTron.log("allBonusActivationsResponse", "2");
         const ids = items.map(i => i.id);
         yield all(ids.map(id => put(loadBonusVacanzeFromId.request(id))));
-        RTron.log("allBonusActivationsResponse", "3");
         return;
       }
       throw Error(

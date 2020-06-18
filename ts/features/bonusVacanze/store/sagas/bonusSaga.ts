@@ -55,6 +55,7 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
     backendBonusVacanzeClient.getLatestBonusVacanzeFromId
   );
 
+  // handle the all bonus activation loading request
   yield takeLatest(
     getType(loadAllBonusActivations.request),
     handleLoadAllBonusActivations,

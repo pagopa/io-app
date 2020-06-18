@@ -116,14 +116,7 @@ export function BackendBonusVacanze(
   const withBearerToken = <P extends { Bearer: string }, R>(
     f: (p: P) => Promise<R>
   ) => async (po: Omit<P, "Bearer">): Promise<R> => {
-    const params = Object.assign(
-      {
-        Bearer: String(
-          "d5af96d92bab590800ad2d9aaac3fdabe85307c0ddb603541b84d3cc37d0c401689f05e6b528ea07233ce36af304b2da"
-        )
-      },
-      po
-    ) as P;
+    const params = Object.assign({ Bearer: String(token) }, po) as P;
     return f(params);
   };
 
