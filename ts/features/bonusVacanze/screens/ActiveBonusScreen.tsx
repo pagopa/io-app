@@ -34,10 +34,7 @@ import {
   cancelLoadBonusFromIdPolling,
   startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
-import {
-  allBonusActiveSelector,
-  bonusActiveDetailByIdSelector
-} from "../store/reducers/allActive";
+import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
 import { availableBonusTypesSelectorFromId } from "../store/reducers/availableBonusesTypes";
 import {
   ID_BONUS_VACANZE_TYPE,

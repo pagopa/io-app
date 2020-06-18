@@ -36,7 +36,7 @@ const reducer = (
 // Selectors
 export const availableBonusTypesSelector = (
   state: GlobalState
-): AvailableBonusTypesState => state.bonus.availableBonuses;
+): AvailableBonusTypesState => state.bonus.availableBonusTypes;
 
 export const availableBonusTypesSelectorFromId = (idBonusType: number) =>
   createSelector<GlobalState, AvailableBonusTypesState, Option<BonusAvailable>>(
