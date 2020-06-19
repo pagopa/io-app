@@ -20,7 +20,8 @@ class InstabugAssistanceComponent extends React.PureComponent<Props> {
         <View spacer={true} />
         <Text>{I18n.t("instabug.contextualHelp.description")}</Text>
         <View spacer={true} />
-        <Text>{I18n.t("instabug.contextualHelp.descriptionBug")}</Text>
+        <Text>{I18n.t("instabug.contextualHelp.descriptionChat")}</Text>
+
         <View spacer={true} />
         <ButtonWithImage
           icon={"io-bug"}
@@ -32,7 +33,7 @@ class InstabugAssistanceComponent extends React.PureComponent<Props> {
           light={true}
         />
         <View spacer={true} />
-        <Text>{I18n.t("instabug.contextualHelp.descriptionChat")}</Text>
+        <Text>{I18n.t("instabug.contextualHelp.descriptionBug")}</Text>
         <View spacer={true} />
         <ButtonWithImage
           icon={"io-send-message"}
