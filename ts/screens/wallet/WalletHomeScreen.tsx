@@ -265,11 +265,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {bonusVacanzeEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
-            activeBonus={
-              this.props.allActiveBonus.length > 0
-                ? this.props.allActiveBonus[0]
-                : pot.none
-            }
+            activeBonuses={this.props.allActiveBonus}
             noMethod={noMethod}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
@@ -315,7 +311,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {bonusVacanzeEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
-            activeBonus={pot.none}
+            activeBonuses={this.props.allActiveBonus}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
             noMethod={noMethod}
@@ -494,6 +490,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
         appLogo={true}
+        topContentHeight={this.getHeaderHeight()}
         hasDynamicSubHeader={true}
         topContent={headerContent}
         footerContent={footerContent}
@@ -505,6 +502,12 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       >
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
       </WalletLayout>
+    );
+  }
+
+  private getHeaderHeight() {
+    return (
+      250 + (bonusVacanzeEnabled ? this.props.allActiveBonus.length * 65 : 0)
     );
   }
 }
