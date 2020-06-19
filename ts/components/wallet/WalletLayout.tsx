@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.colorWhite
   }
 });
-const HEADER_HEIGHT = 250;
+
 export default class WalletLayout extends React.Component<Props> {
   private dynamicSubHeader() {
     return (
