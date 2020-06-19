@@ -310,10 +310,9 @@ export default class CardComponent extends React.Component<Props> {
             </View>
             <View>{this.renderTopRightCorner()}</View>
           </View>
-
+          {hasFlatBottom && <View spacer={true} />}
           {this.renderBody(wallet.creditCard)}
         </View>
-
         {this.renderFooterRow()}
       </View>
     );
