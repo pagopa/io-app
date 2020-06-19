@@ -1098,13 +1098,14 @@ contextualHelp:
 instabug:
   contextualHelp:
     title1: Hai bisogno di aiuto?
-    description: "Ricorda che se hai dubbi sul contenuto di un messaggio, ti consigliamo di contattare direttamente l'ente che te lo ha inviato: troverai i recapiti in fondo al messaggo o nella scheda del relativo servizio."
+    description: "Ricorda che se hai dubbi sul contenuto di un messaggio, ti consigliamo di contattare direttamente l'ente che te lo ha inviato: troverai i recapiti in fondo al messaggio o nella scheda del relativo servizio."
     buttonChat: Inviaci un messaggio
     descriptionChat: "Se invece hai trovato un errore o qualcosa che non funziona nell’app, segnala un bug agli sviluppatori: si prenderanno carico del problema al più presto e ti risponderanno direttamente tramite IO."
     buttonBug: Segnala un bug
-    descriptionBug: Puoi segnalare un errore o qualcosa che non funziona ai nostri sviluppatori, si prenderanno carico del problema al più presto.
+    descriptionBug: Se vuoi suggerirci un miglioramento o un nuovo servizio che vorresti avere su IO, puoi inviare un messaggio al team direttamente da qui.
     title2: Sei nuovo in IO?
     descriptionLink: Scopri di più sul progetto IO, sulla sua storia e su quali novità ti attendono, visitando il sito
+    assistanceWorkHours: L'assistenza di IO è disponibile nei giorni feriali dalle ore 8.00 alle 20.00 e nei festivi dalle ore 8.00 alle 12.00
 faq:
   1:
     title: "Cos'è SPID?"

@@ -441,7 +441,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   return {
     bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus,
-    isError: pot.isError(bonus)
+    isError: pot.isNone(bonus) && pot.isError(bonus) // error and no bonus data, user should retry to load
   };
 };
 

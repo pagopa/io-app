@@ -1071,9 +1071,10 @@ instabug:
     description: "Remember that if you have any doubts about the content of a message, we suggest you to contact the public administration that sent it to you directly: you will find the contact details at the bottom of the message or in the relevant service card."
     descriptionChat: "If you have found an error or something that is not working in the app, report a bug to the developers: they will take care of the problem as soon as possible and they will answer you directly via IO."
     buttonBug: Report a bug
-    descriptionBug: You can report an error or something that does not work to our developers, they will take care of the problem as soon as possible.
+    descriptionBug: If you want to suggest an improvement or a new service that you would like to have on IO, you can send a message to the team directly from here.
     title2: Are you new to IO?
     descriptionLink: Find out more about the IO project, its history and what news await you by visiting the website
+    assistanceWorkHours: IO assistance is available on weekdays from 8.00 to 20.00 and on holidays from 8.00 to 12.00
 faq:
   1:
     title: "What is SPID?"
