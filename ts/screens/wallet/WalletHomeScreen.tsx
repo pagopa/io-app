@@ -490,6 +490,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
         appLogo={true}
+        topContentHeight={this.getHeaderHeight()}
         hasDynamicSubHeader={true}
         topContent={headerContent}
         footerContent={footerContent}
@@ -501,6 +502,12 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       >
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
       </WalletLayout>
+    );
+  }
+
+  private getHeaderHeight() {
+    return (
+      250 + (bonusVacanzeEnabled ? this.props.allActiveBonus.length * 65 : 0)
     );
   }
 }

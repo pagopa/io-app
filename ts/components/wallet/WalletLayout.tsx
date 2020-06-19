@@ -29,6 +29,7 @@ import H5 from "../ui/H5";
 type Props = Readonly<{
   title: string;
   allowGoBack: boolean;
+  topContentHeight: number;
   hasDynamicSubHeader: boolean;
   topContent?: React.ReactNode;
   hideHeader?: boolean;
@@ -118,7 +119,7 @@ export default class WalletLayout extends React.Component<Props> {
         contentStyle={contentStyle}
         hasDynamicSubHeader={this.props.hasDynamicSubHeader}
         dynamicSubHeader={this.dynamicSubHeader()}
-        topContentHeight={250}
+        topContentHeight={this.props.topContentHeight}
         topContent={this.props.topContent}
         hideHeader={hideHeader}
         footerContent={footerContent}
