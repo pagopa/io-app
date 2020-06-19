@@ -42,6 +42,7 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
+import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -422,6 +423,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                   )}
             </Text>
           </View>
+          <EdgeBorderComponent />
         </View>
       </View>
     </DarkLayout>

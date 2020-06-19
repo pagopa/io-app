@@ -17,7 +17,7 @@ type OwnProps = {
     validFrom?: Date,
     validTo?: Date
   ) => void;
-  activeBonus: pot.Pot<BonusActivationWithQrCode, Error>;
+  activeBonuses: ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>;
   availableBonusesList: BonusesAvailable;
 };
 
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
   const {
     onButtonPress,
-    activeBonus,
+    activeBonuses,
     onBonusPress,
     availableBonusesList
   } = props;
@@ -56,6 +56,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
     .map(b => b.valid_from)
     .toUndefined();
   const validTo = maybeBonusVacanzeCategory.map(b => b.valid_to).toUndefined();
+
   return (
     <React.Fragment>
       <SectionCardComponent
@@ -63,18 +64,19 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
         onPress={onButtonPress}
         isNew={true}
       />
-      {!pot.isLoading(activeBonus) &&
-        pot.isSome(activeBonus) && (
-          <View style={styles.preview}>
-            <BonusCardComponent
-              bonus={activeBonus.value}
-              preview={true}
-              onPress={() =>
-                onBonusPress(activeBonus.value, validFrom, validTo)
-              }
-            />
-          </View>
-        )}
+      {activeBonuses.map(
+        bonus =>
+          !pot.isLoading(bonus) &&
+          pot.isSome(bonus) && (
+            <View key={bonus.value.id} style={styles.preview}>
+              <BonusCardComponent
+                bonus={bonus.value}
+                preview={true}
+                onPress={() => onBonusPress(bonus.value, validFrom, validTo)}
+              />
+            </View>
+          )
+      )}
     </React.Fragment>
   );
 };

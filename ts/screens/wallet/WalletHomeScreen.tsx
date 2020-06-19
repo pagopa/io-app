@@ -264,11 +264,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {bonusVacanzeEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
-            activeBonus={
-              this.props.allActiveBonus.length > 0
-                ? this.props.allActiveBonus[0]
-                : pot.none
-            }
+            activeBonuses={this.props.allActiveBonus}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
           />
@@ -312,7 +308,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {bonusVacanzeEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
-            activeBonus={pot.none}
+            activeBonuses={this.props.allActiveBonus}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
           />
