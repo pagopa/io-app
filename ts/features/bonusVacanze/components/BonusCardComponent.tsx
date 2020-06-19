@@ -194,10 +194,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             </Text>
             <Text style={[styles.colorWhite, { fontSize: 20 }]}>{"€"}</Text>
           </View>
-          <Image
-            source={require("../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png")}
-            style={styles.previewLogo}
-          />
+          <Image source={bonusVacanzeWhiteLogo} style={styles.previewLogo} />
         </TouchableDefaultOpacity>
       </View>
     );

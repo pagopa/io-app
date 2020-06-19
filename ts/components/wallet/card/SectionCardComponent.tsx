@@ -1,6 +1,6 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
+import { Platform, StyleSheet, ViewStyle } from "react-native";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
@@ -11,7 +11,7 @@ type Props = {
   label: string;
   isError?: boolean;
   isNew?: boolean;
-  isBlue?: boolean;
+  cardStyle?: ViewStyle;
 };
 
 const styles = StyleSheet.create({
@@ -64,9 +64,6 @@ const styles = StyleSheet.create({
   cardGrey: {
     backgroundColor: customVariables.brandDarkGray
   },
-  cardBlue: {
-    backgroundColor: customVariables.brandPrimary
-  },
   flatBottom: {
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0
@@ -94,16 +91,12 @@ const styles = StyleSheet.create({
 });
 
 const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const { label, onPress, isNew, isError, isBlue } = props;
+  const { label, onPress, isNew, isError, cardStyle } = props;
   return (
     <View style={styles.rotateCard}>
       <TouchableDefaultOpacity onPress={onPress}>
         <View
-          style={[
-            styles.card,
-            styles.flatBottom,
-            isBlue ? styles.cardBlue : styles.cardGrey
-          ]}
+          style={[styles.card, styles.flatBottom, cardStyle || styles.cardGrey]}
         >
           <View style={[styles.cardInner]}>
             <View style={[styles.flexRow]}>

@@ -9,6 +9,7 @@ import SectionCardComponent from "../../../components/wallet/card/SectionCardCom
 import I18n from "../../../i18n";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 import BonusCardComponent from "./BonusCardComponent";
+import customVariables from "../../../theme/variables";
 
 type OwnProps = {
   onButtonPress: () => void;
@@ -64,9 +65,13 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
         label={I18n.t("bonus.requestLabel")}
         onPress={onButtonPress}
         isNew={true}
-        isBlue={noMethod}
+        cardStyle={
+          noMethod
+            ? { backgroundColor: customVariables.brandPrimary }
+            : undefined
+        }
       />
-      {!pot.isLoading(activeBonus) && pot.isSome(activeBonus) ? (
+      {pot.isSome(activeBonus) ? (
         <View style={styles.preview}>
           <BonusCardComponent
             bonus={activeBonus.value}

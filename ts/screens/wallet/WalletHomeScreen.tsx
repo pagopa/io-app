@@ -225,7 +225,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           )
         }
         isError={isError}
-        isBlue={isBlue}
+        cardStyle={
+          isBlue ? { backgroundColor: customVariables.brandPrimary } : undefined
+        }
       />
     );
   }
