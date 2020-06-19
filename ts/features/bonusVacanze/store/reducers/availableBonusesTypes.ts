@@ -54,7 +54,7 @@ export const availableBonusTypesSelectorFromId = (idBonusType: number) =>
  * Return the uri of the bonus vacanze image logo
  */
 export const bonusVacanzeLogo = createSelector(
-  availableBonusesSelectorFromId(ID_BONUS_VACANZE_TYPE),
+  availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE),
   bonus => bonus.fold(undefined, b => b.cover)
 );
 

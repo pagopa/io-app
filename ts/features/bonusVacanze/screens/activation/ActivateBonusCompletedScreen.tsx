@@ -10,7 +10,7 @@ import { renderInfoRasterImage } from "../../components/infoScreen/imageRenderin
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzaStyle } from "../../components/Styles";
 import { completeBonusVacanze } from "../../store/actions/bonusVacanze";
-import { bonusVacanzeLogo } from "../../store/reducers/availableBonuses";
+import { bonusVacanzeLogo } from "../../store/reducers/availableBonusesTypes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
