@@ -4,7 +4,6 @@ import { Platform, StyleSheet } from "react-native";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { AddPaymentMethodButton } from "../AddPaymentMethodButton";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 
 type Props = {
@@ -12,6 +11,7 @@ type Props = {
   label: string;
   isError?: boolean;
   isNew?: boolean;
+  isBlue?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -57,10 +57,15 @@ const styles = StyleSheet.create({
     zIndex: -7,
     elevation: -7,
     height: 88,
-    backgroundColor: customVariables.brandDarkGray,
     borderRadius: 8,
     marginLeft: 0,
     marginRight: 0
+  },
+  cardGrey: {
+    backgroundColor: customVariables.brandDarkGray
+  },
+  cardBlue: {
+    backgroundColor: customVariables.brandPrimary
   },
   flatBottom: {
     borderBottomLeftRadius: 0,
@@ -89,11 +94,17 @@ const styles = StyleSheet.create({
 });
 
 const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const { label, onPress, isNew, isError } = props;
+  const { label, onPress, isNew, isError, isBlue } = props;
   return (
     <View style={styles.rotateCard}>
       <TouchableDefaultOpacity onPress={onPress}>
-        <View style={[styles.card, styles.flatBottom]}>
+        <View
+          style={[
+            styles.card,
+            styles.flatBottom,
+            isBlue ? styles.cardBlue : styles.cardGrey
+          ]}
+        >
           <View style={[styles.cardInner]}>
             <View style={[styles.flexRow]}>
               <View style={styles.flexRow2}>

@@ -19,6 +19,7 @@ type OwnProps = {
   ) => void;
   activeBonus: pot.Pot<BonusActivationWithQrCode, Error>;
   availableBonusesList: BonusesAvailable;
+  noMethod: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -46,7 +47,8 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
     onButtonPress,
     activeBonus,
     onBonusPress,
-    availableBonusesList
+    availableBonusesList,
+    noMethod
   } = props;
   const maybeBonusVacanzeCategory = fromNullable(
     availableBonusesList.find(bi => bi.id_type === ID_BONUS_VACANZE_TYPE)
@@ -62,6 +64,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
         label={I18n.t("bonus.requestLabel")}
         onPress={onButtonPress}
         isNew={true}
+        isBlue={noMethod}
       />
       {!pot.isLoading(activeBonus) && pot.isSome(activeBonus) ? (
         <View style={styles.preview}>
