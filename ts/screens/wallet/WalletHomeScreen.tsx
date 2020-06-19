@@ -215,7 +215,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
-  private cardHeader(isError: boolean = false) {
+  private cardHeader(isError: boolean = false, isBlue: boolean = false) {
     return (
       <SectionCardComponent
         label={I18n.t("wallet.paymentMethods")}
@@ -225,6 +225,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           )
         }
         isError={isError}
+        cardStyle={
+          isBlue ? { backgroundColor: customVariables.brandPrimary } : undefined
+        }
       />
     );
   }
@@ -232,10 +235,12 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   private cardPreview(wallets: ReadonlyArray<Wallet>) {
     // we have to render only wallets of credit card type
     const validWallets = wallets.filter(w => w.type === TypeEnum.CREDIT_CARD);
+    const noMethod =
+      validWallets.length === 0 && this.props.allActiveBonus.length === 0;
     return (
       <View>
         <View spacer={true} />
-        {validWallets.length === 0 && (
+        {noMethod && (
           <React.Fragment>
             <Text white={true} style={styles.addDescription}>
               {I18n.t("wallet.newPaymentMethod.addDescription")}
@@ -244,22 +249,18 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             <View spacer={true} small={true} />
           </React.Fragment>
         )}
-        {this.cardHeader()}
+        {this.cardHeader(false, noMethod)}
         {validWallets.length > 0 ? (
-          <View>
-            <RotatedCards
-              cardType="Preview"
-              wallets={
-                validWallets.length === 1
-                  ? [validWallets[0]]
-                  : [validWallets[0], validWallets[1]]
-              }
-              onClick={this.props.navigateToWalletList}
-            />
-          </View>
-        ) : (
-          <View spacer={true} small={true} />
-        )}
+          <RotatedCards
+            cardType="Preview"
+            wallets={
+              validWallets.length === 1
+                ? [validWallets[0]]
+                : [validWallets[0], validWallets[1]]
+            }
+            onClick={this.props.navigateToWalletList}
+          />
+        ) : null}
         {/* Display this item only if the flag is enabled */}
         {bonusVacanzeEnabled && (
           <RequestBonus
@@ -269,6 +270,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
                 ? this.props.allActiveBonus[0]
                 : pot.none
             }
+            noMethod={noMethod}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
           />
@@ -292,6 +294,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   }
 
   private errorWalletsHeader() {
+    const noMethod = this.props.allActiveBonus.length === 0;
     return (
       <View>
         <Text style={[styles.white, styles.inLineSpace]}>
@@ -315,6 +318,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             activeBonus={pot.none}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
+            noMethod={noMethod}
           />
         )}
       </View>

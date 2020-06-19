@@ -1293,7 +1293,7 @@ bonus:
     amount: Importo massimo
     applicant: CF richiedente
     bonusClaim: Chi può riscuotere il bonus?
-    shareMessage: "Questo è il codice del tuo bonus:"
+    shareMessage: "Questo è il codice del tuo Bonus Vacanze:"
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:
@@ -1362,7 +1362,7 @@ bonus:
     family:
       title: "Chi può riscuotere il bonus?"
   bonusList:
-    title: Aggiungi sovvenzione
+    title: Aggiungi bonus o sconto
     contentTitle: Seleziona uno dei bonus disponibili
   request: Richiedi un nuovo bonus
   requestLabel: Bonus e sconti
