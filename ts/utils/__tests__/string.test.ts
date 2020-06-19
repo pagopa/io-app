@@ -1,5 +1,6 @@
 import { none, some } from "fp-ts/lib/Option";
 import {
+  addEvery,
   capitalize,
   isStringNullyOrEmpty,
   maybeNotNullyString
@@ -68,5 +69,15 @@ describe("maybeNotNullyString", () => {
 
   it("should return none", () => {
     expect(maybeNotNullyString(null)).toEqual(none);
+  });
+});
+
+describe("addEvery", () => {
+  it("should return the same string", () => {
+    expect(addEvery("hi", "world", 4)).toEqual("hi");
+  });
+
+  it("should add a space", () => {
+    expect(addEvery("hello", "*", 1)).toEqual("h*e*l*l*o*");
   });
 });

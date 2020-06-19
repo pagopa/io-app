@@ -87,8 +87,12 @@ export const maybeNotNullyString = (
   );
 
 /**
- * Adds a space every four characters
+ * return a string by adding 'toAdd' every 'every' chars
  * @param text
+ * @param toAdd
+ * @param every
  */
-export const spaceEveryFour = (text: string) =>
-  text.replace(/\W/gi, "").replace(/(.{4})/g, "$1 ");
+export const addEvery = (text: string, toAdd: string, every: number): string =>
+  text
+    .replace(/\W/gi, "")
+    .replace(new RegExp(`(.{${every}})`, "g"), `$1${toAdd}`);

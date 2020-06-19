@@ -16,7 +16,7 @@ import I18n from "../../../i18n";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import { spaceEveryFour } from "../../../utils/strings";
+import { addEvery } from "../../../utils/strings";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -95,8 +95,9 @@ const styles = StyleSheet.create({
   },
   logo: {
     resizeMode: "contain",
-    height: 72,
-    width: 72
+    marginBottom: -30,
+    height: 48,
+    width: 48
   },
   previewLogo: {
     resizeMode: "contain",
@@ -106,6 +107,9 @@ const styles = StyleSheet.create({
   }
 });
 
+const bonusVacanzeWhiteLogo = require("../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png");
+const bonusVacanzePreviewBg = require("../../../../img/bonus/bonusVacanze/bonus_preview_bg.png");
+const bonusVacanzeBg = require("../../../../img/bonus/bonusVacanze/bonus_preview_bg.png");
 const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const { bonus } = props;
 
@@ -129,7 +133,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             {I18n.t("bonus.bonusVacanza.code")}
           </Text>
           <Text style={[styles.colorWhite, styles.fontLarge, styles.bonusCode]}>
-            {spaceEveryFour(bonus.id)}
+            {addEvery(bonus.id, " ", 4).trim()}
           </Text>
         </View>
         <View>
@@ -157,10 +161,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             </Menu>
           </View>
           <View spacer={true} extralarge={true} />
-          <Image
-            source={require("../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png")}
-            style={styles.logo}
-          />
+          <Image source={bonusVacanzeWhiteLogo} style={styles.logo} />
         </View>
       </View>
     );
@@ -180,12 +181,9 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           <Text bold={true} style={[styles.colorWhite, styles.previewAmount]}>
             {bonus.dsu_request.max_amount}
           </Text>
-          <Text style={[styles.colorWhite, { fontSize: 20 }]}>{"€"}</Text>
+          <Text style={[styles.colorWhite, styles.fontLarge]}>{"€"}</Text>
         </View>
-        <Image
-          source={require("../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png")}
-          style={styles.previewLogo}
-        />
+        <Image source={bonusVacanzeWhiteLogo} style={styles.previewLogo} />
       </TouchableDefaultOpacity>
     );
   };
@@ -194,11 +192,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
     <ImageBackground
       style={[styles.container, props.preview ? styles.preview : {}]}
       imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
-      source={
-        props.preview
-          ? require("../../../../img/bonus/bonusVacanze/bonus_preview_bg.png")
-          : require("../../../../img/bonus/bonusVacanze/bonus_bg.png")
-      }
+      source={props.preview ? bonusVacanzePreviewBg : bonusVacanzeBg}
     >
       <View style={styles.paddedContent}>
         {props.preview ? renderPreviewCard() : renderFullCard()}

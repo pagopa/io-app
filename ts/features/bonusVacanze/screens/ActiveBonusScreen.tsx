@@ -237,16 +237,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       : ""
   );
 
-  const openModalBox = () =>
-    props.showAnimatedModal(
-      // tslint:disable-next-line:jsx-wrap-multiline
+  const openModalBox = () => {
+    const modalBox = (
       <QrModalBox
         secretCode={bonusFromNav.id}
         onClose={props.hideModal}
         qrCode={qrCode[QR_CODE_MIME_TYPE]}
-      />,
-      BottomTopAnimation
+      />
     );
+    props.showAnimatedModal(modalBox, BottomTopAnimation);
+  };
 
   const renderFooterButtons = () =>
     bonus && isBonusActive(bonus) ? (
