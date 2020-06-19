@@ -9,7 +9,7 @@ import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzaStyle } from "../../components/Styles";
-import { completeBonusVacanze } from "../../store/actions/bonusVacanze";
+import { completeBonusVacanzeActivation } from "../../store/actions/bonusVacanze";
 import { bonusVacanzeLogo } from "../../store/reducers/availableBonusesTypes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -55,8 +55,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO: replace with the event to go in the next screen
-  onConfirm: () => dispatch(completeBonusVacanze())
+  onConfirm: () => dispatch(completeBonusVacanzeActivation())
 });
 
 export default connect(

@@ -10,6 +10,7 @@ import {
   navigateToBonusActivationCompleted,
   navigateToBonusActivationLoading,
   navigateToBonusActivationTimeout,
+  navigateToBonusActiveDetailScreen,
   navigateToBonusAlreadyExists,
   navigateToEligibilityExpired
 } from "../../../navigation/action";
@@ -17,7 +18,7 @@ import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   bonusVacanzeActivation,
   cancelBonusRequest,
-  completeBonusVacanze
+  completeBonusVacanzeActivation
 } from "../../actions/bonusVacanze";
 import { BonusActivationProgressEnum } from "../../reducers/activation";
 import { bonusActivationSaga } from "./getBonusActivationSaga";
@@ -75,15 +76,23 @@ export function* activationWorker(activationSaga: BonusActivationSagaType) {
   }
 
   // the saga complete with the bonusVacanzeActivation.request action
-  // TODO: replace with the next true action
-  yield take(completeBonusVacanze);
+  yield take(completeBonusVacanzeActivation);
+
+  if (
+    progress.type === getType(bonusVacanzeActivation.success) &&
+    progress.payload.activation
+  ) {
+    yield put(
+      navigateToBonusActiveDetailScreen({ bonus: progress.payload.activation })
+    );
+  }
 }
 
 /**
  * Entry point; This saga orchestrate the activation phase.
  * There are two condition to exit from this saga:
  * - cancelBonusActivation
- * - ??? next screen event ???
+ * - completeBonusVacanze
  */
 export function* handleBonusActivationSaga(
   activationSaga: BonusActivationSagaType

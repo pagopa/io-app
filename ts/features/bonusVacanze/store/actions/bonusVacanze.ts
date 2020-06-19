@@ -68,8 +68,7 @@ export const bonusVacanzeActivation = createAsyncAction(
   "BONUS_ACTIVATION_FAILURE"
 )<void, BonusVacanzeActivationPayload, Error>();
 
-// TODO: remove with the true action
-export const completeBonusVacanze = createStandardAction(
+export const completeBonusVacanzeActivation = createStandardAction(
   "BONUS_ACTIVATION_COMPLETE"
 )();
 
@@ -82,4 +81,5 @@ export type BonusActions =
   | ActionType<typeof loadAllBonusActivations>
   | ActionType<typeof startLoadBonusFromIdPolling>
   | ActionType<typeof cancelBonusRequest>
+  | ActionType<typeof completeBonusVacanzeActivation>
   | ActionType<typeof cancelLoadBonusFromIdPolling>;
