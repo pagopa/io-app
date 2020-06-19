@@ -7,6 +7,7 @@ import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze
 import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
 import SectionCardComponent from "../../../components/wallet/card/SectionCardComponent";
 import I18n from "../../../i18n";
+import customVariables from "../../../theme/variables";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 import BonusCardComponent from "./BonusCardComponent";
 
@@ -19,6 +20,7 @@ type OwnProps = {
   ) => void;
   activeBonus: pot.Pot<BonusActivationWithQrCode, Error>;
   availableBonusesList: BonusesAvailable;
+  noMethod: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -46,7 +48,8 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
     onButtonPress,
     activeBonus,
     onBonusPress,
-    availableBonusesList
+    availableBonusesList,
+    noMethod
   } = props;
   const maybeBonusVacanzeCategory = fromNullable(
     availableBonusesList.find(bi => bi.id_type === ID_BONUS_VACANZE_TYPE)
@@ -62,19 +65,23 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
         label={I18n.t("bonus.requestLabel")}
         onPress={onButtonPress}
         isNew={true}
+        cardStyle={
+          noMethod
+            ? { backgroundColor: customVariables.brandPrimary }
+            : undefined
+        }
       />
-      {!pot.isLoading(activeBonus) &&
-        pot.isSome(activeBonus) && (
-          <View style={styles.preview}>
-            <BonusCardComponent
-              bonus={activeBonus.value}
-              preview={true}
-              onPress={() =>
-                onBonusPress(activeBonus.value, validFrom, validTo)
-              }
-            />
-          </View>
-        )}
+      {pot.isSome(activeBonus) ? (
+        <View style={styles.preview}>
+          <BonusCardComponent
+            bonus={activeBonus.value}
+            preview={true}
+            onPress={() => onBonusPress(activeBonus.value, validFrom, validTo)}
+          />
+        </View>
+      ) : (
+        <View spacer={true} xsmall={true} />
+      )}
     </React.Fragment>
   );
 };

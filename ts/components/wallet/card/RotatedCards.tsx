@@ -11,32 +11,16 @@ import CardComponent from "./CardComponent";
 import Logo from './Logo';
 
 const styles = StyleSheet.create({
-  firstCard: {
+  rotadedCard: {
+    shadowColor: "#000",
+    marginBottom: -30,
     flex: 1,
     shadowRadius: 10,
     shadowOpacity: 0.15,
-    transform: [{ perspective: 700 }, { rotateX: "-20deg" }, { scaleX: 0.98 }],
-    zIndex: -10
+    transform: [{ perspective: 1200 }, { rotateX: "-20deg" }, { scaleX: 0.99 }],
   },
-  secondCard: {
-    flex: 1,
-    shadowRadius: 10,
-    shadowOpacity: 0.15,
-    transform: [
-      { perspective: 700 },
-      { rotateX: "-20deg" },
-      { translateY: -(58 / 2 + 20) * (1 - Math.cos(20)) }, // card preview height: 58
-      { scaleX: 0.98 }
-    ],
-    zIndex: -10
-  },
-  containerOneCard: {
-    marginBottom: -4,
-    marginTop: -(58 / 2) * (1 - Math.cos(20)) 
-  },
-  containerTwoCards: {
-    marginBottom: -(58 / 2 + 1),
-    marginTop: -(58 / 2) * (1 - Math.cos(20))
+  container: {
+    marginBottom: -4
   }
 });
 
@@ -54,7 +38,7 @@ export class RotatedCards extends React.PureComponent<Props, {}> {
     const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
     const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(4);
     return(
-      <View style={[styles.firstCard, styles.containerOneCard]}>
+      <View style={[styles.rotadedCard]}>
         <View style={[CreditCardStyles.card,CreditCardStyles.flatBottom]}>
           <View style={[CreditCardStyles.cardInner, CreditCardStyles.row]}>
             <View
@@ -86,27 +70,21 @@ export class RotatedCards extends React.PureComponent<Props, {}> {
           {this.emptyCardPreview()}
         </View> 
       ) : (
-        <View
-          style={
-            wallets.length === 2
-              ? styles.containerTwoCards
-              : styles.containerOneCard
-          }
-        >
-          <View spacer={true} />
+        <View style={styles.container}>
           <TouchableDefaultOpacity onPress={onClick}>
-            <View style={styles.firstCard}>
+            <View style={styles.rotadedCard}>
               <CardComponent type={cardType} wallet={wallets[0]} />
             </View>
             {typeof wallets[1] !== "undefined" && (
-              <React.Fragment>
-                <View spacer={true}/>
-                <View style={styles.secondCard}>
-                  <CardComponent type={cardType} wallet={wallets[1]} />
-                </View>
-              </React.Fragment>
+              <>
+              <View spacer={true} />
+              <View style={styles.rotadedCard}>
+                <CardComponent type={cardType} wallet={wallets[1]} />
+              </View>
+              </>
             )}
           </TouchableDefaultOpacity>
+          <View spacer={true}/>
         </View>
       )  
     );
