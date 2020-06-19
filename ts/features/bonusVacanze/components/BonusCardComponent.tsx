@@ -95,9 +95,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     resizeMode: "contain",
-    marginBottom: -30,
-    height: 48,
-    width: 48
+    height: 72,
+    width: 72
   },
   previewLogo: {
     resizeMode: "contain",
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
 
 const bonusVacanzeWhiteLogo = require("../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png");
 const bonusVacanzePreviewBg = require("../../../../img/bonus/bonusVacanze/bonus_preview_bg.png");
-const bonusVacanzeBg = require("../../../../img/bonus/bonusVacanze/bonus_preview_bg.png");
+const bonusVacanzeBg = require("../../../../img/bonus/bonusVacanze/bonus_bg.png");
 const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const { bonus } = props;
 
