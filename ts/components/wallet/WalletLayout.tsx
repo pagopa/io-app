@@ -29,7 +29,7 @@ import H5 from "../ui/H5";
 type Props = Readonly<{
   title: string;
   allowGoBack: boolean;
-  topContentHeight: number;
+  topContentHeight?: number;
   hasDynamicSubHeader: boolean;
   topContent?: React.ReactNode;
   hideHeader?: boolean;
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.colorWhite
   }
 });
-
+const HEADER_HEIGHT = 250;
 export default class WalletLayout extends React.Component<Props> {
   private dynamicSubHeader() {
     return (
