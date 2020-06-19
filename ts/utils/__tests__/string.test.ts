@@ -77,7 +77,7 @@ describe("addEvery", () => {
     expect(addEvery("hi", "world", 4)).toEqual("hi");
   });
 
-  it("should add a space", () => {
+  it("should add a * every 2 chars", () => {
     expect(addEvery("hello", "*", 1)).toEqual("h*e*l*l*o*");
   });
 });
