@@ -1294,6 +1294,9 @@ bonus:
     applicant: CF richiedente
     bonusClaim: Chi può riscuotere il bonus?
     shareMessage: "Questo è il codice del tuo Bonus Vacanze:"
+    contextualHelp:
+      title: Il tuo Bonus Vacanze
+      body: In questa schermata puoi consultare il tuo Bonus Vacanze
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:

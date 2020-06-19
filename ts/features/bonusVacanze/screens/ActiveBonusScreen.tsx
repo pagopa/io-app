@@ -199,8 +199,8 @@ async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
 }
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.fiscalCode.title",
-  body: "profile.fiscalCode.help"
+  title: "bonus.bonusVacanza.contextualHelp.title",
+  body: "bonus.bonusVacanza.contextualHelp.body"
 };
 
 const shareQR = async (content: string, code: string, errorMessage: string) => {
@@ -314,7 +314,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       allowGoBack={true}
       topContent={<View style={{ height: 90 }} />}
-      faqCategories={["profile"]}
       footerContent={renderFooterButtons()}
       gradientHeader={true}
     >
