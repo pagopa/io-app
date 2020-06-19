@@ -1,5 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -206,16 +207,21 @@ const shareQR = async (content: string, code: string, errorMessage: string) => {
   shared.mapLeft(_ => showToast(errorMessage));
 };
 
+const startRefreshPollingAfter = 3000 as Millisecond;
 // tslint:disable-next-line: no-big-function
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
-
   const bonusFromNav = props.navigation.getParam("bonus");
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
 
+  // tslint:disable-next-line: no-let
+  let delayedPolling: number | undefined;
+
   React.useEffect(() => {
-    // When mounting the component starts a polling to update the bonus information at runtime
-    props.startPollingBonusFromId(bonusFromNav.id);
+    delayedPolling = setTimeout(() => {
+      // When mounting the component starts a polling to update the bonus information at runtime
+      props.startPollingBonusFromId(bonusFromNav.id);
+    }, startRefreshPollingAfter);
 
     if (bonus) {
       readBase64Svg(bonus)
@@ -225,6 +231,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     return () => {
       // When the component unmounts demands the stop to the polling saga
       props.cancelPollingBonusFromId();
+      clearTimeout(delayedPolling);
     };
   }, []);
 
