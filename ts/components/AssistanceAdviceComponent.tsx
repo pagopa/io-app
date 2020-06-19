@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
 const iconSize = 18;
 /**
  * This component displays a box with an icon and some text to inform about assistance work days/hours
- * @param props
  * @constructor
  */
 const AssistanceAdviceComponent: React.FunctionComponent<{}> = () => {
