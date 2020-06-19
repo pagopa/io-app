@@ -214,12 +214,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const bonusFromNav = props.navigation.getParam("bonus");
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
 
-  // tslint:disable-next-line: no-let
-  let delayedPolling: number | undefined;
-
   React.useEffect(() => {
     // start refresh polling after startRefreshPollingAfter
-    delayedPolling = setTimeout(() => {
+    const delayedPolling = setTimeout(() => {
       // When mounting the component starts a polling to update the bonus information at runtime
       props.startPollingBonusFromId(bonusFromNav.id);
     }, startRefreshPollingAfter);
