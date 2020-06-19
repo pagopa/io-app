@@ -9,7 +9,7 @@ import {
 } from "../../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../../components/hooks/useHardwareBackButton";
-import { renderRasterImage } from "../../../components/infoScreen/imageRendering";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzaStyle } from "../../../components/Styles";
 
@@ -47,7 +47,7 @@ export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
   return (
     <SafeAreaView style={bonusVacanzaStyle.flex}>
       <InfoScreenComponent
-        image={renderRasterImage(props.image)}
+        image={renderInfoRasterImage(props.image)}
         title={props.title}
         body={props.body}
       />

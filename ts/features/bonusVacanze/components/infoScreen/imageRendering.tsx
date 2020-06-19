@@ -3,14 +3,23 @@ import { Image, ImageSourcePropType } from "react-native";
 import IconFont from "../../../../components/ui/IconFont";
 import customVariables from "../../../../theme/variables";
 
-export const renderRasterImage = (image: ImageSourcePropType) => (
-  <Image source={image} resizeMode={"contain"} />
+import { StyleSheet } from "react-native";
+
+const infoImageSize = 128;
+const styles = StyleSheet.create({
+  raster: {
+    width: infoImageSize,
+    height: infoImageSize
+  }
+});
+
+export const renderInfoRasterImage = (image: ImageSourcePropType) => (
+  <Image source={image} resizeMode={"contain"} style={styles.raster} />
 );
 
-const iconDefaultSize = 120;
-export const renderIconImage = (
+export const renderInfoIconImage = (
   image: string,
-  iconSize: number = iconDefaultSize
+  iconSize: number = infoImageSize
 ) => (
   <IconFont
     name={image}

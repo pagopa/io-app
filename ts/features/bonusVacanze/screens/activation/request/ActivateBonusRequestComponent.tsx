@@ -1,6 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { FamilyMember } from "../../../../../../definitions/bonus_vacanze/FamilyMember";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -9,6 +9,7 @@ import I18n from "../../../../../i18n";
 import { BonusCompositionDetails } from "../../../components/keyValueTable/BonusCompositionDetails";
 import { FamilyComposition } from "../../../components/keyValueTable/FamilyComposition";
 import { FooterTwoButtons } from "../../../components/markdown/FooterTwoButtons";
+import { bonusVacanzaStyle } from "../../../components/Styles";
 import { ActivateBonusDiscrepancies } from "./ActivateBonusDiscrepancies";
 import { ActivateBonusReminder } from "./ActivateBonusReminder";
 import { ActivateBonusTitle } from "./ActivateBonusTitle";
@@ -18,15 +19,10 @@ type Props = {
   bonusAmount: number;
   taxBenefit: number;
   hasDiscrepancies: boolean;
+  logo?: string;
   onCancel: () => void;
   onRequestBonus: () => void;
 };
-
-const styles = StyleSheet.create({
-  body: {
-    flex: 1
-  }
-});
 
 export const loadLocales = () => ({
   headerTitle: I18n.t(
@@ -75,16 +71,23 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
 
   return (
     <BaseScreenComponent goBack={props.onCancel} headerTitle={headerTitle}>
-      <SafeAreaView style={[styles.body]}>
+      <SafeAreaView style={bonusVacanzaStyle.flex}>
         <ScrollView>
-          <View spacer={true} large={true} />
-          <ActivateBonusTitle title={title} description={description} />
-          <View spacer={true} large={true} />
-          <BonusCompositionDetails
-            bonusAmount={props.bonusAmount}
-            taxBenefit={props.taxBenefit}
-          />
-          <View spacer={true} />
+          <View style={bonusVacanzaStyle.horizontalPadding}>
+            <View spacer={true} large={true} />
+            <ActivateBonusTitle
+              title={title}
+              description={description}
+              image={props.logo}
+            />
+            <View spacer={true} large={true} />
+            <BonusCompositionDetails
+              bonusAmount={props.bonusAmount}
+              taxBenefit={props.taxBenefit}
+            />
+            <View spacer={true} />
+          </View>
+
           {props.hasDiscrepancies ? (
             <ActivateBonusDiscrepancies
               text={discrepancies.text}
@@ -93,19 +96,20 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
           ) : (
             <ItemSeparatorComponent />
           )}
+          <View style={bonusVacanzaStyle.horizontalPadding}>
+            <View spacer={true} />
+            {props.familyMembers.length > 0 && (
+              <>
+                <FamilyComposition familyMembers={props.familyMembers} />
+                <View spacer={true} />
+                <ItemSeparatorComponent />
+                <View spacer={true} />
+              </>
+            )}
 
-          <View spacer={true} />
-          {props.familyMembers.length > 0 && (
-            <>
-              <FamilyComposition familyMembers={props.familyMembers} />
-              <View spacer={true} />
-              <ItemSeparatorComponent />
-              <View spacer={true} />
-            </>
-          )}
-
-          <ActivateBonusReminder text={reminder.text} link={reminder.link} />
-          <EdgeBorderComponent />
+            <ActivateBonusReminder text={reminder.text} link={reminder.link} />
+            <EdgeBorderComponent />
+          </View>
         </ScrollView>
         <FooterTwoButtons
           onCancel={props.onCancel}
