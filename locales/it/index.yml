@@ -1282,6 +1282,8 @@ bonus:
     usableAmount: Spendibile presso la struttura ricettiva
     taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il
+    code: Codice
+    uniqueCode: Codice univoco
     requestedAt: Richiesto il
     advice: "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i "
     status: Stato
@@ -1297,6 +1299,8 @@ bonus:
       requestBonus: Richiedi
       cancelRequest: Annulla la richiesta
       qrCode: QR code
+      copyCode: Copia codice
+      openQRCode: Visualizza QR code
     eligibility:
       loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
       iseeNotAvailable:

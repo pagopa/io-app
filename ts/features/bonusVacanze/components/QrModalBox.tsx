@@ -8,6 +8,7 @@ import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
+import { addEvery } from "../../../utils/strings";
 import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 
 type Props = {
@@ -132,10 +133,12 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
         <View spacer={true} large={true} />
         <View style={styles.row}>
           <View>
-            <Text style={styles.uniqueCode}>Codice univoco</Text>
+            <Text style={styles.uniqueCode}>
+              {I18n.t("bonus.bonusVacanza.uniqueCode")}
+            </Text>
             <View style={styles.row}>
               <Text style={styles.codeText} bold={true}>
-                {secretCode}
+                {addEvery(secretCode, " ", 4).trim()}
               </Text>
               <View hspacer={true} />
               <CopyButtonComponent textToCopy={secretCode.toString()} />

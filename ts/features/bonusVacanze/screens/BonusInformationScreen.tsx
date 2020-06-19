@@ -98,7 +98,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
     block: true,
     primary: true,
     onPress: props.requestBonusActivation,
-    title: `${I18n.t("bonus.bonusVacanza.request")} ${bonusItem.name}`
+    title: `${I18n.t("bonus.bonusVacanza.cta.requestBonus")} ${bonusItem.name}`
   };
 
   const handleModalPress = (tos: string) =>

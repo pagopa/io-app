@@ -18,7 +18,7 @@ import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import { AvailableBonusItem } from "../components/AvailableBonusItem";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
-import { availableBonusesSelector } from "../store/reducers/availableBonuses";
+import { availableBonusTypesSelector } from "../store/reducers/availableBonusesTypes";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -100,7 +100,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potAvailableBonuses = availableBonusesSelector(state);
+  const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     isLoading: pot.isLoading(potAvailableBonuses),

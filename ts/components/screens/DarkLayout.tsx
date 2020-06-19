@@ -44,11 +44,15 @@ type Props = Readonly<{
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   customGoBack?: React.ReactNode;
   gradientHeader?: boolean;
+  headerPaddingMin?: boolean;
 }>;
 
 const styles = StyleSheet.create({
   headerContents: {
     paddingHorizontal: customVariables.contentPadding
+  },
+  headerContentsMin: {
+    paddingHorizontal: 16
   }
 });
 
@@ -65,14 +69,20 @@ export default class DarkLayout extends React.Component<Props> {
       this.props.gradientHeader ? (
         <LinearGradient
           colors={[customVariables.brandDarkGray, "#42484F"]}
-          style={styles.headerContents}
+          style={
+            this.props.headerPaddingMin
+              ? styles.headerContentsMin
+              : styles.headerContents
+          }
         >
           {childer}
         </LinearGradient>
       ) : (
         <View
           style={[
-            styles.headerContents,
+            this.props.headerPaddingMin
+              ? styles.headerContentsMin
+              : styles.headerContents,
             { backgroundColor: customVariables.brandDarkGray }
           ]}
         >

@@ -1,9 +1,9 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
@@ -29,13 +29,14 @@ import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
 import { maybeNotNullyString } from "../../../utils/strings";
+import BonusCardComponent from "../components/BonusCardComponent";
 import QrModalBox from "../components/QrModalBox";
 import {
   cancelLoadBonusFromIdPolling,
   startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
-import { availableBonusesSelectorFromId } from "../store/reducers/availableBonuses";
-import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeActivation";
+import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
+import { availableBonusTypesSelectorFromId } from "../store/reducers/availableBonusesTypes";
 import {
   ID_BONUS_VACANZE_TYPE,
   isBonusActive,
@@ -55,7 +56,9 @@ type NavigationParams = Readonly<{
 const QR_CODE_MIME_TYPE = "svg+xml";
 const PNG_IMAGE_TYPE = "image/png";
 
-type Props = NavigationInjectedProps<NavigationParams> &
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
+type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   LightModalContextInterface;
@@ -81,8 +84,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     zIndex: 7,
     elevation: 7,
-    alignSelf: "center",
-    backgroundColor: variables.contentPrimaryBackground
+    alignSelf: "center"
   },
   center: {
     alignSelf: "center"
@@ -93,7 +95,7 @@ const styles = StyleSheet.create({
   },
   rowBlock: {
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "space-between"
   },
   paddedContent: {
@@ -133,24 +135,32 @@ const styles = StyleSheet.create({
   },
   fmName: {
     fontSize: variables.fontSize1,
-    lineHeight: 21
+    flex: 1,
+    lineHeight: 21,
+    alignSelf: "flex-start"
+  },
+  textRight: {
+    textAlign: "right"
+  },
+  textLeft: {
+    textAlign: "left"
   },
   amount: {
     fontSize: variables.fontSize2
   }
 });
 
-const renderQRCode = (base64: string) =>
-  fromNullable(base64).fold(null, s => (
-    <SvgXml xml={s} height="100%" width="100%" />
-  ));
-
 const renderFiscalCodeLine = (name: string, cf: string) => {
   return (
     <React.Fragment key={cf}>
       <View style={styles.rowBlock}>
-        <Text style={[styles.fmName, styles.colorGrey]}>{name}</Text>
-        <Text style={[styles.fmName, styles.colorGrey]} semibold={true}>
+        <Text style={[styles.fmName, styles.colorGrey, styles.textLeft]}>
+          {name}
+        </Text>
+        <Text
+          style={[styles.fmName, styles.colorGrey, styles.textRight]}
+          semibold={true}
+        >
           {cf}
         </Text>
       </View>
@@ -197,16 +207,19 @@ const shareQR = async (content: string, code: string, errorMessage: string) => {
   shared.mapLeft(_ => showToast(errorMessage));
 };
 
+const startRefreshPollingAfter = 3000 as Millisecond;
 // tslint:disable-next-line: no-big-function
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
-
   const bonusFromNav = props.navigation.getParam("bonus");
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
 
   React.useEffect(() => {
-    // When mounting the component starts a polling to update the bonus information at runtime
-    props.startPollingBonusFromId(bonusFromNav.id);
+    // start refresh polling after startRefreshPollingAfter
+    const delayedPolling = setTimeout(() => {
+      // When mounting the component starts a polling to update the bonus information at runtime
+      props.startPollingBonusFromId(bonusFromNav.id);
+    }, startRefreshPollingAfter);
 
     if (bonus) {
       readBase64Svg(bonus)
@@ -216,6 +229,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     return () => {
       // When the component unmounts demands the stop to the polling saga
       props.cancelPollingBonusFromId();
+      clearTimeout(delayedPolling);
     };
   }, []);
 
@@ -227,6 +241,17 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         })
       : ""
   );
+
+  const openModalBox = () => {
+    const modalBox = (
+      <QrModalBox
+        secretCode={bonusFromNav.id}
+        onClose={props.hideModal}
+        qrCode={qrCode[QR_CODE_MIME_TYPE]}
+      />
+    );
+    props.showAnimatedModal(modalBox, BottomTopAnimation);
+  };
 
   const renderFooterButtons = () =>
     bonus && isBonusActive(bonus) ? (
@@ -249,15 +274,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           iconName: "io-qr",
           iconColor: variables.contentPrimaryBackground,
           title: I18n.t("bonus.bonusVacanza.cta.qrCode"),
-          onPress: () =>
-            props.showAnimatedModal(
-              <QrModalBox
-                secretCode={bonusFromNav.id}
-                onClose={props.hideModal}
-                qrCode={qrCode[QR_CODE_MIME_TYPE]}
-              />,
-              BottomTopAnimation
-            )
+          onPress: openModalBox
         }}
       />
     ) : (
@@ -290,11 +307,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       topContent={<View style={{ height: 90 }} />}
       faqCategories={["profile"]}
       footerContent={renderFooterButtons()}
+      gradientHeader={true}
     >
       <View>
         <View style={styles.paddedContent}>
           <View style={styles.image}>
-            {renderQRCode(qrCode[QR_CODE_MIME_TYPE])}
+            <BonusCardComponent bonus={bonus} viewQR={openModalBox} />
           </View>
           <View spacer={true} extralarge={true} />
           <View style={styles.rowBlock}>
@@ -415,12 +433,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => {
-  const activeBonus = bonusVacanzeActivationSelector(state);
+const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
+  const bonusFromNav = ownProps.navigation.getParam("bonus");
+  const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
   return {
-    bonusInfo: availableBonusesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
-    bonus: activeBonus,
-    isError: pot.isNone(activeBonus) && pot.isError(activeBonus)
+    bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
+    bonus,
+    isError: pot.isError(bonus)
   };
 };
 

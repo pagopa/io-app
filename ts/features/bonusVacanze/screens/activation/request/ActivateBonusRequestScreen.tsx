@@ -8,7 +8,7 @@ import {
   bonusVacanzeActivation,
   cancelBonusRequest
 } from "../../../store/actions/bonusVacanze";
-import { bonusVacanzeLogo } from "../../../store/reducers/availableBonuses";
+import { bonusVacanzeLogo } from "../../../store/reducers/availableBonusesTypes";
 import { eligibilityEligibleSelector } from "../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 

@@ -10,7 +10,7 @@ import BONUSVACANZE_ROUTES from "../../../../navigation/routes";
 import {
   bonusVacanzeActivation,
   cancelBonusRequest,
-  completeBonusVacanze
+  completeBonusVacanzeActivation
 } from "../../../actions/bonusVacanze";
 import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
 import {
@@ -84,7 +84,7 @@ const expectSagaFactory = (
     actionToVerify
       .reduce((acc, val) => acc.put(val), baseSaga)
       // when the last event completeBonusVacanze is received, the navigation stack is popped
-      .dispatch(completeBonusVacanze())
+      .dispatch(completeBonusVacanzeActivation())
       .put(navigationHistoryPop(1))
       .run()
       .then(results => {
