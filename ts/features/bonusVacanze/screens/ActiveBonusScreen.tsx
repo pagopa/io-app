@@ -255,37 +255,45 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   const renderFooterButtons = () =>
     bonus && isBonusActive(bonus) ? (
-      <BlockButtons
-        type="TwoButtonsInlineHalf"
-        rightButton={{
-          primary: true,
-          iconName: "io-share",
-          iconColor: variables.colorWhite,
-          title: I18n.t("global.buttons.share"),
-          onPress: () =>
-            shareQR(
-              qrCode[PNG_IMAGE_TYPE],
-              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonusFromNav.id}`,
-              I18n.t("global.genericError")
-            )
-        }}
-        leftButton={{
-          bordered: true,
-          iconName: "io-qr",
-          iconColor: variables.contentPrimaryBackground,
-          title: I18n.t("bonus.bonusVacanza.cta.qrCode"),
-          onPress: openModalBox
-        }}
-      />
+      <>
+        <BlockButtons
+          type="TwoButtonsInlineHalf"
+          rightButton={{
+            primary: true,
+            iconName: "io-share",
+            iconColor: variables.colorWhite,
+            title: I18n.t("global.buttons.share"),
+            onPress: () =>
+              shareQR(
+                qrCode[PNG_IMAGE_TYPE],
+                `${I18n.t("bonus.bonusVacanza.shareMessage")} ${
+                  bonusFromNav.id
+                }`,
+                I18n.t("global.genericError")
+              )
+          }}
+          leftButton={{
+            bordered: true,
+            iconName: "io-qr",
+            iconColor: variables.contentPrimaryBackground,
+            title: I18n.t("bonus.bonusVacanza.cta.qrCode"),
+            onPress: openModalBox
+          }}
+        />
+        <View spacer={true} />
+      </>
     ) : (
-      <BlockButtons
-        type="SingleButton"
-        leftButton={{
-          bordered: true,
-          title: I18n.t("global.buttons.cancel"),
-          onPress: props.goBack
-        }}
-      />
+      <>
+        <BlockButtons
+          type="SingleButton"
+          leftButton={{
+            bordered: true,
+            title: I18n.t("global.buttons.cancel"),
+            onPress: props.goBack
+          }}
+        />
+        <View spacer={true} />
+      </>
     );
 
   const from = props.bonusInfo.map(bi => bi.valid_from);

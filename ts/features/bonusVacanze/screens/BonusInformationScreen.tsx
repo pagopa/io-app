@@ -1,7 +1,7 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationInjectedProps, SafeAreaView } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
@@ -19,6 +19,7 @@ import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
 import { maybeNotNullyString } from "../../../utils/strings";
+import { bonusVacanzaStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusEligibility } from "../store/actions/bonusVacanze";
 
@@ -115,72 +116,74 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   );
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
-      <Content>
-        <View style={styles.row}>
-          <View style={styles.flexStart}>
-            {maybeSponsorshipDescription.isSome() && (
-              <Text dark={true} style={styles.orgName} semibold={true}>
-                {maybeSponsorshipDescription.value}
-              </Text>
-            )}
+      <SafeAreaView style={bonusVacanzaStyle.flex}>
+        <Content>
+          <View style={styles.row}>
+            <View style={styles.flexStart}>
+              {maybeSponsorshipDescription.isSome() && (
+                <Text dark={true} style={styles.orgName} semibold={true}>
+                  {maybeSponsorshipDescription.value}
+                </Text>
+              )}
 
-            <Text bold={true} dark={true} style={styles.title}>
-              {bonusItem.title}
-            </Text>
+              <Text bold={true} dark={true} style={styles.title}>
+                {bonusItem.title}
+              </Text>
+            </View>
+            <View style={styles.flexEnd}>
+              {bonusItem.cover && (
+                <Image source={{ uri: bonusItem.cover }} style={styles.cover} />
+              )}
+            </View>
           </View>
-          <View style={styles.flexEnd}>
-            {bonusItem.cover && (
-              <Image source={{ uri: bonusItem.cover }} style={styles.cover} />
-            )}
-          </View>
-        </View>
-        <View spacer={true} large={true} />
-        <Text dark={true}>{bonusItem.subtitle}</Text>
-        {maybeBonusTos.isSome() && (
-          <ButtonDefaultOpacity
-            style={styles.noPadded}
-            small={true}
-            transparent={true}
-            onPress={() => handleModalPress(maybeBonusTos.value)}
-          >
-            <Text>{I18n.t("bonus.tos.title")}</Text>
-          </ButtonDefaultOpacity>
-        )}
-        <View spacer={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} />
-        <Markdown onLoadEnd={onMarkdownLoaded}>{bonusItem.content}</Markdown>
-        {maybeBonusTos.isSome() && (
-          <>
-            <View spacer={true} extralarge={true} />
-            <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} extralarge={true} />
-            <Text style={styles.disclaimer} dark={true}>
-              {I18n.t("bonus.bonusVacanza.advice")}
-            </Text>
-            <TouchableDefaultOpacity
+          <View spacer={true} large={true} />
+          <Text dark={true}>{bonusItem.subtitle}</Text>
+          {maybeBonusTos.isSome() && (
+            <ButtonDefaultOpacity
+              style={styles.noPadded}
+              small={true}
+              transparent={true}
               onPress={() => handleModalPress(maybeBonusTos.value)}
             >
-              <Text
-                style={styles.disclaimer}
-                link={true}
-                ellipsizeMode={"tail"}
-                numberOfLines={1}
-              >
-                {I18n.t("bonus.tos.title")}
+              <Text>{I18n.t("bonus.tos.title")}</Text>
+            </ButtonDefaultOpacity>
+          )}
+          <View spacer={true} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} />
+          <Markdown onLoadEnd={onMarkdownLoaded}>{bonusItem.content}</Markdown>
+          {maybeBonusTos.isSome() && (
+            <>
+              <View spacer={true} extralarge={true} />
+              <ItemSeparatorComponent noPadded={true} />
+              <View spacer={true} extralarge={true} />
+              <Text style={styles.disclaimer} dark={true}>
+                {I18n.t("bonus.bonusVacanza.advice")}
               </Text>
-            </TouchableDefaultOpacity>
-          </>
+              <TouchableDefaultOpacity
+                onPress={() => handleModalPress(maybeBonusTos.value)}
+              >
+                <Text
+                  style={styles.disclaimer}
+                  link={true}
+                  ellipsizeMode={"tail"}
+                  numberOfLines={1}
+                >
+                  {I18n.t("bonus.tos.title")}
+                </Text>
+              </TouchableDefaultOpacity>
+            </>
+          )}
+          {isMarkdownLoaded && <EdgeBorderComponent />}
+        </Content>
+        {isMarkdownLoaded && (
+          <FooterWithButtons
+            type="TwoButtonsInlineThird"
+            leftButton={cancelButtonProps}
+            rightButton={requestButtonProps}
+          />
         )}
-        {isMarkdownLoaded && <EdgeBorderComponent />}
-      </Content>
-      {isMarkdownLoaded && (
-        <FooterWithButtons
-          type="TwoButtonsInlineThird"
-          leftButton={cancelButtonProps}
-          rightButton={requestButtonProps}
-        />
-      )}
+      </SafeAreaView>
     </BaseScreenComponent>
   ));
   return (
