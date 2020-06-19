@@ -218,6 +218,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   let delayedPolling: number | undefined;
 
   React.useEffect(() => {
+    // start refresh polling after startRefreshPollingAfter
     delayedPolling = setTimeout(() => {
       // When mounting the component starts a polling to update the bonus information at runtime
       props.startPollingBonusFromId(bonusFromNav.id);
