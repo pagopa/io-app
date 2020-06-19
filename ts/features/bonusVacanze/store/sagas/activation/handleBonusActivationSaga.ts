@@ -97,7 +97,7 @@ export function* activationWorker(activationSaga: BonusActivationSagaType) {
 export function* handleBonusActivationSaga(
   activationSaga: BonusActivationSagaType
 ): SagaIterator {
-  // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
+  // an event of bonusVacanzeActivation.request trigger a new workflow for the activation
 
   const { cancelAction } = yield race({
     activation: call(activationWorker, activationSaga),
