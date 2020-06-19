@@ -7,6 +7,7 @@ import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvai
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { availableBonuses } from "../../data/availableBonuses";
+import { ID_BONUS_VACANZE_TYPE } from "../../utils/bonus";
 import { availableBonusesLoad } from "../actions/bonusVacanze";
 
 export type AvailableBonusesState = pot.Pot<BonusesAvailable, Error>;
@@ -49,5 +50,12 @@ export const availableBonusesSelectorFromId = (idBonusType: number) =>
         none
       )
   );
+/**
+ * Return the uri of the bonus vacanze image logo
+ */
+export const bonusVacanzeLogo = createSelector(
+  availableBonusesSelectorFromId(ID_BONUS_VACANZE_TYPE),
+  bonus => bonus.fold(undefined, b => b.cover)
+);
 
 export default reducer;

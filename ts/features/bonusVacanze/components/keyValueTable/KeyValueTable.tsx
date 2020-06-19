@@ -28,22 +28,14 @@ type ColumnWidthStyle = {
 
 const styles = StyleSheet.create({
   right: {
-    textAlign: "right",
-    alignSelf: "flex-end"
+    textAlign: "right"
   },
   baseRow: {
     flexDirection: "row",
     justifyContent: "space-between"
   },
   row: {
-    paddingLeft:
-      themeVariables.contentPadding + themeVariables.contentPadding / 2,
-    paddingRight: themeVariables.contentPadding,
     paddingTop: themeVariables.spacerSmallHeight
-  },
-  header: {
-    paddingLeft: themeVariables.contentPadding,
-    paddingRight: themeVariables.contentPadding
   }
 });
 

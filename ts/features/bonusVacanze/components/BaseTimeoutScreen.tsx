@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native";
 import I18n from "../../../i18n";
 import { cancelButtonProps } from "./buttons/ButtonConfigurations";
 import { FooterStackButton } from "./buttons/FooterStackButtons";
-import { renderRasterImage } from "./infoScreen/imageRendering";
+import { renderInfoRasterImage } from "./infoScreen/imageRendering";
 import { InfoScreenComponent } from "./infoScreen/InfoScreenComponent";
 import { bonusVacanzaStyle } from "./Styles";
 
@@ -27,7 +27,7 @@ export const BaseTimeoutScreen: React.FunctionComponent<Props> = props => {
   return (
     <SafeAreaView style={bonusVacanzaStyle.flex}>
       <InfoScreenComponent
-        image={renderRasterImage(image)}
+        image={renderInfoRasterImage(image)}
         title={props.title}
         body={props.body}
       />

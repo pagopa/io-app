@@ -8,6 +8,7 @@ import {
   bonusVacanzeActivation,
   cancelBonusRequest
 } from "../../../store/actions/bonusVacanze";
+import { bonusVacanzeLogo } from "../../../store/reducers/availableBonuses";
 import { eligibilityEligibleSelector } from "../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 
@@ -44,7 +45,8 @@ const mapStateToProps = (state: GlobalState) => {
     bonusAmount: elc.fold(0, e => e.dsu_request.max_amount),
     taxBenefit: elc.fold(0, e => e.dsu_request.max_tax_benefit),
     familyMembers: elc.fold([], e => e.dsu_request.family_members),
-    hasDiscrepancies: elc.fold(false, e => e.dsu_request.has_discrepancies)
+    hasDiscrepancies: elc.fold(false, e => e.dsu_request.has_discrepancies),
+    logo: bonusVacanzeLogo(state)
   };
 };
 
