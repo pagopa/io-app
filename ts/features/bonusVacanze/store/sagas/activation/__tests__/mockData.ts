@@ -7,6 +7,7 @@ import {
   navigateToBonusActivationCompleted,
   navigateToBonusActivationLoading,
   navigateToBonusActivationTimeout,
+  navigateToBonusActiveDetailScreen,
   navigateToBonusAlreadyExists,
   navigateToEligibilityExpired
 } from "../../../../navigation/action";
@@ -50,6 +51,7 @@ export const activationSuccess: NetworkingResults = {
   }),
   expectedActions: [
     navigateToBonusActivationCompleted(),
+    navigateToBonusActiveDetailScreen({ bonus: mockedBonus }),
     navigationHistoryPop(1)
   ]
 };
