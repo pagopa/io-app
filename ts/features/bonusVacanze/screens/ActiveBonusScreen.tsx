@@ -28,7 +28,7 @@ import { formatDateAsLocal } from "../../../utils/dates";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
-import { maybeNotNullyString } from "../../../utils/strings";
+import { addEvery, maybeNotNullyString } from "../../../utils/strings";
 import BonusCardComponent from "../components/BonusCardComponent";
 import QrModalBox from "../components/QrModalBox";
 import {
@@ -265,7 +265,11 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           onPress: () =>
             shareQR(
               qrCode[PNG_IMAGE_TYPE],
-              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonusFromNav.id}`,
+              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${addEvery(
+                bonusFromNav.id,
+                " ",
+                4
+              ).trim()}`,
               I18n.t("global.genericError")
             )
         }}

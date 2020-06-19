@@ -141,7 +141,11 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
                 {addEvery(secretCode, " ", 4).trim()}
               </Text>
               <View hspacer={true} />
-              <CopyButtonComponent textToCopy={secretCode.toString()} />
+              <CopyButtonComponent
+                textToCopy={addEvery(secretCode, " ", 4)
+                  .trim()
+                  .toString()}
+              />
             </View>
           </View>
           <Image

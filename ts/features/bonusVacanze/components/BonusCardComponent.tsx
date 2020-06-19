@@ -155,7 +155,13 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
 
               <MenuOptions>
                 <MenuOption
-                  onSelect={() => clipboardSetStringWithFeedback(bonus.id)}
+                  onSelect={() =>
+                    clipboardSetStringWithFeedback(
+                      addEvery(bonus.id, " ", 4)
+                        .trim()
+                        .toString()
+                    )
+                  }
                 >
                   <Text style={styles.actions}>
                     {I18n.t("bonus.bonusVacanza.cta.copyCode")}
