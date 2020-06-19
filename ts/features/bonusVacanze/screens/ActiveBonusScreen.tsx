@@ -11,6 +11,7 @@ import { withLightModalContext } from "../../../components/helpers/withLightModa
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../../components/screens/DarkLayout";
+import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import BlockButtons from "../../../components/ui/BlockButtons";
@@ -422,6 +423,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                   )}
             </Text>
           </View>
+          <EdgeBorderComponent />
         </View>
       </View>
     </DarkLayout>
