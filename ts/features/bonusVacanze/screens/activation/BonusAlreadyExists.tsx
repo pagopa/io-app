@@ -6,7 +6,7 @@ import I18n from "../../../../i18n";
 import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
-import { renderRasterImage } from "../../components/infoScreen/imageRendering";
+import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzaStyle } from "../../components/Styles";
 import { cancelBonusRequest } from "../../store/actions/bonusVacanze";
@@ -41,7 +41,7 @@ const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
   return (
     <SafeAreaView style={bonusVacanzaStyle.flex}>
       <InfoScreenComponent
-        image={renderRasterImage(image)}
+        image={renderInfoRasterImage(image)}
         title={title}
         body={body}
       />

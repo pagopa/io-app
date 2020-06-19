@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
  * @param value
  */
 const header = (key: string, value: string) => (
-  <View style={[keyValueTableStyle.baseRow, keyValueTableStyle.header]}>
+  <View style={keyValueTableStyle.baseRow}>
     <H6>{key}</H6>
     <H5>{value}</H5>
   </View>

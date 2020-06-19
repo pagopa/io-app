@@ -30,13 +30,10 @@ import {
 } from "../../features/bonusVacanze/navigation/action";
 import {
   availableBonusesLoad,
-  loadBonusVacanzeFromId
+  loadAllBonusActivations
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
-import { availableBonusesSelector } from "../../features/bonusVacanze/store/reducers/availableBonuses";
-import {
-  bonusVacanzeActivationActiveSelector,
-  canBonusVacanzeBeRequestedSelector
-} from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
+import { allBonusActiveSelector } from "../../features/bonusVacanze/store/reducers/allActive";
+import { availableBonusTypesSelector } from "../../features/bonusVacanze/store/reducers/availableBonusesTypes";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -190,7 +187,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   private loadBonusVacanze = () => {
     if (bonusVacanzeEnabled) {
       this.props.loadAvailableBonuses();
-      this.props.loadBonusVacanzeFromId("FAKE_ID");
+      this.props.loadAllBonusActivations();
     }
   };
 
@@ -267,7 +264,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {bonusVacanzeEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
-            activeBonus={this.props.bonusVacanzeActivationActive}
+            activeBonus={
+              this.props.allActiveBonus.length > 0
+                ? this.props.allActiveBonus[0]
+                : pot.none
+            }
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
           />
@@ -311,7 +312,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {bonusVacanzeEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
-            activeBonus={this.props.bonusVacanzeActivationActive}
+            activeBonus={pot.none}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
           />
@@ -509,10 +510,9 @@ const mapStateToProps = (state: GlobalState) => {
     .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
     .getOrElse(true);
 
-  const potAvailableBonuses = availableBonusesSelector(state);
+  const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
-    bonusVacanzeActivationActive: bonusVacanzeActivationActiveSelector(state),
-    canBonusBeRequested: canBonusVacanzeBeRequestedSelector(state),
+    allActiveBonus: allBonusActiveSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
@@ -541,8 +541,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     );
   },
   loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
-  loadBonusVacanzeFromId: (id: string) =>
-    dispatch(loadBonusVacanzeFromId.request(id)),
+  loadAllBonusActivations: () => dispatch(loadAllBonusActivations.request()),
   navigateToBonusDetail: (
     bonus: BonusActivationWithQrCode,
     validFrom?: Date,

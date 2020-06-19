@@ -32,6 +32,7 @@ export const actionWithAlert = (confirmConfig: ConfirmConfig) => {
       {
         text: confirmConfig.cancelText
       }
-    ]
+    ],
+    { cancelable: true }
   );
 };

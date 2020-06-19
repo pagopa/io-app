@@ -19,7 +19,7 @@ import {
   cancelBonusRequest,
   completeBonusVacanze
 } from "../../actions/bonusVacanze";
-import { BonusActivationProgressEnum } from "../../reducers/bonusVacanzeActivation";
+import { BonusActivationProgressEnum } from "../../reducers/activation";
 import { bonusActivationSaga } from "./getBonusActivationSaga";
 
 export const activationToNavigate = new Map([

@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import IconFont from "../../../../../components/ui/IconFont";
 import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 import themeVariables from "../../../../../theme/variables";
+import { bonusVacanzaStyle } from "../../../components/Styles";
 import { activateBonusStyle } from "./Style";
 
 type Props = {
@@ -30,9 +31,7 @@ const inpsCustomerCareLink =
  */
 export const ActivateBonusReminder: React.FunctionComponent<Props> = props => {
   return (
-    <View
-      style={[activateBonusStyle.row, activateBonusStyle.horizontalPadding]}
-    >
+    <View style={[bonusVacanzaStyle.row]}>
       <IconFont
         name={"io-titolare"}
         size={24}
