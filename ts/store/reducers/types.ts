@@ -1,7 +1,7 @@
 import { NavigationState } from "react-navigation";
 import { PersistPartial } from "redux-persist";
 
-import { BonusState } from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
+import { BonusState } from "../../features/bonusVacanze/store/reducers";
 import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";

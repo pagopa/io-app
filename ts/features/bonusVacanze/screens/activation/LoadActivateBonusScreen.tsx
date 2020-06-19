@@ -10,7 +10,7 @@ import {
   bonusVacanzeActivation,
   cancelBonusRequest
 } from "../../store/actions/bonusVacanze";
-import { activationIsLoading } from "../../store/reducers/bonusVacanzeActivation";
+import { activationIsLoading } from "../../store/reducers/activation";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 

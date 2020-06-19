@@ -12,7 +12,7 @@ import {
 } from "../../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../../navigation/routes";
 import { bonusVacanzeActivation } from "../../../actions/bonusVacanze";
-import { BonusActivationProgressEnum } from "../../../reducers/bonusVacanzeActivation";
+import { BonusActivationProgressEnum } from "../../../reducers/activation";
 
 interface IExpectedActions {
   displayName: string;

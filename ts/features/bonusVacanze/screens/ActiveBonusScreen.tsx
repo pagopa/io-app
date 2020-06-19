@@ -34,8 +34,8 @@ import {
   cancelLoadBonusFromIdPolling,
   startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
-import { availableBonusesSelectorFromId } from "../store/reducers/availableBonuses";
-import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeActivation";
+import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
+import { availableBonusTypesSelectorFromId } from "../store/reducers/availableBonusesTypes";
 import {
   ID_BONUS_VACANZE_TYPE,
   isBonusActive,
@@ -55,7 +55,9 @@ type NavigationParams = Readonly<{
 const QR_CODE_MIME_TYPE = "svg+xml";
 const PNG_IMAGE_TYPE = "image/png";
 
-type Props = NavigationInjectedProps<NavigationParams> &
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
+type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   LightModalContextInterface;
@@ -415,12 +417,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => {
-  const activeBonus = bonusVacanzeActivationSelector(state);
+const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
+  const bonusFromNav = ownProps.navigation.getParam("bonus");
+  const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
   return {
-    bonusInfo: availableBonusesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
-    bonus: activeBonus,
-    isError: pot.isNone(activeBonus) && pot.isError(activeBonus)
+    bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
+    bonus,
+    isError: pot.isError(bonus)
   };
 };
 

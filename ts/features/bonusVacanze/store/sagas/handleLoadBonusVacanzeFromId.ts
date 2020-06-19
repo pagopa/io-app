@@ -29,6 +29,6 @@ export function* handleLoadBonusVacanzeFromId(
       throw Error(readableReport(bonusVacanzaResponse.value));
     }
   } catch (e) {
-    yield put(loadBonusVacanzeFromId.failure(e));
+    yield put(loadBonusVacanzeFromId.failure({ error: e, id: action.payload }));
   }
 }

@@ -7,7 +7,7 @@ import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 
 import AsyncStorage from "@react-native-community/async-storage";
-import bonusReducer from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
+import bonusReducer from "../../features/bonusVacanze/store/reducers";
 import { logoutFailure, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";

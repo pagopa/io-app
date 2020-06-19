@@ -7,7 +7,7 @@ import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vaca
 import { EligibilityCheck } from "../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { InstanceId } from "../../../../../definitions/bonus_vacanze/InstanceId";
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
-import { BonusActivationProgressEnum } from "../reducers/bonusVacanzeActivation";
+import { BonusActivationProgressEnum } from "../reducers/activation";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
 export const availableBonusesLoad = createAsyncAction(
@@ -40,11 +40,17 @@ export const loadBonusVacanzeFromId = createAsyncAction(
   "BONUS_LOAD_FROM_ID_REQUEST",
   "BONUS_LOAD_FROM_ID_SUCCESS",
   "BONUS_LOAD_FROM_ID_FAILURE"
-)<string, BonusActivationWithQrCode, Error>();
+)<string, BonusActivationWithQrCode, { error: Error; id: string }>();
 
 export const startLoadBonusFromIdPolling = createStandardAction(
   "BONUS_FROM_ID_START"
 )<string>();
+
+export const loadAllBonusActivations = createAsyncAction(
+  "BONUS_LOAD_ALL_ACTIVATION_REQUEST",
+  "BONUS_LOAD_ALL_ACTIVATION_SUCCESS",
+  "BONUS_LOAD_ALL_ACTIVATION_FAILURE"
+)<void, void, Error>();
 
 export const cancelLoadBonusFromIdPolling = createStandardAction(
   "BONUS_FROM_ID_CANCEL"
@@ -73,6 +79,7 @@ export type BonusActions =
   | ActionType<typeof bonusVacanzeActivation>
   | ActionType<typeof checkBonusEligibility>
   | ActionType<typeof loadBonusVacanzeFromId>
+  | ActionType<typeof loadAllBonusActivations>
   | ActionType<typeof startLoadBonusFromIdPolling>
   | ActionType<typeof cancelBonusRequest>
   | ActionType<typeof cancelLoadBonusFromIdPolling>;
