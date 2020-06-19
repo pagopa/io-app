@@ -2,6 +2,7 @@ import { H3, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import H5 from "../../../../../components/ui/H5";
+import { maybeNotNullyString } from "../../../../../utils/strings";
 
 type Props = {
   title: string;
@@ -30,13 +31,14 @@ const styles = StyleSheet.create({
  * @constructor
  */
 export const ActivateBonusTitle: React.FunctionComponent<Props> = props => {
+  const maybeLogo = maybeNotNullyString(props.image);
   return (
     <View>
       <View style={styles.row}>
         <H3 style={styles.text}>{props.title}</H3>
-        {props.image ? (
+        {maybeLogo.isSome() ? (
           <Image
-            source={{ uri: props.image }}
+            source={{ uri: maybeLogo.value }}
             resizeMode={"contain"}
             style={styles.image}
           />
