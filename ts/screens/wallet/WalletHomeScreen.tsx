@@ -292,6 +292,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   }
 
   private errorWalletsHeader() {
+    const noMethod = this.props.allActiveBonus.length === 0;
     return (
       <View>
         <Text style={[styles.white, styles.inLineSpace]}>
@@ -315,6 +316,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             activeBonus={pot.none}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
+            noMethod={noMethod}
           />
         )}
       </View>
