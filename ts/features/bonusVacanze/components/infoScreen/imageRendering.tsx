@@ -1,15 +1,25 @@
 import * as React from "react";
-import { Image, ImageSourcePropType } from "react-native";
+import { Dimensions, Image, ImageSourcePropType } from "react-native";
+import { heightPercentageToDP } from "react-native-responsive-screen";
 import IconFont from "../../../../components/ui/IconFont";
 import customVariables from "../../../../theme/variables";
 
 import { StyleSheet } from "react-native";
 
-const infoImageSize = 128;
+const infoImageSize = 102;
+const screenHeight = Dimensions.get("screen").height;
+const maxHeightFullSize = 650;
+
 const styles = StyleSheet.create({
   raster: {
-    width: infoImageSize,
-    height: infoImageSize
+    width:
+      screenHeight >= maxHeightFullSize
+        ? infoImageSize
+        : heightPercentageToDP("11%"),
+    height:
+      screenHeight >= maxHeightFullSize
+        ? infoImageSize
+        : heightPercentageToDP("11%")
   }
 });
 
