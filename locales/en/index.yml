@@ -1071,9 +1071,10 @@ instabug:
     description: "Remember that if you have any doubts about the content of a message, we suggest you to contact the public administration that sent it to you directly: you will find the contact details at the bottom of the message or in the relevant service card."
     descriptionChat: "If you have found an error or something that is not working in the app, report a bug to the developers: they will take care of the problem as soon as possible and they will answer you directly via IO."
     buttonBug: Report a bug
-    descriptionBug: You can report an error or something that does not work to our developers, they will take care of the problem as soon as possible.
+    descriptionBug: If you want to suggest an improvement or a new service that you would like to have on IO, you can send a message to the team directly from here.
     title2: Are you new to IO?
     descriptionLink: Find out more about the IO project, its history and what news await you by visiting the website
+    assistanceWorkHours: IO assistance is available on weekdays from 8.00 to 20.00 and on holidays from 8.00 to 12.00
 faq:
   1:
     title: "What is SPID?"
@@ -1250,6 +1251,8 @@ bonus:
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return
     request: Request the
+    code: Code
+    uniqueCode: Unique code
     requestedAt: Requested on
     advice: 'By clicking on "Request the Bonus Vacanze" you declare that you have read and understood the '
     status: Status
@@ -1258,13 +1261,15 @@ bonus:
     amount: Max amount
     applicant: Applicant FC
     bonusClaim: Who can claim the bonus?
-    shareMessage: "This is the code of your bonus:"
+    shareMessage: "This is the code of your Bonus Vacanze:"
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:
       requestBonus: Request
       cancelRequest: Cancel the request
       qrCode: QR code
+      copyCode: Code copy
+      openQRCode: View QR code
     eligibility:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
@@ -1325,7 +1330,7 @@ bonus:
     family:
       title: "Who can claim the bonus?"
   bonusList:
-    title: Add subsidy
+    title: Add bonus or discount
     contentTitle: Select one of the available bonus
   request: Request a new bonus
   requestLabel: Bonuses and discounts
