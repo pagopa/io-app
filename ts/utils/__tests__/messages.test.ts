@@ -145,14 +145,23 @@ const test2CTA = (
 
 describe("isCtaActionValid", () => {
   it("should be a valid internal navigation action", async () => {
-    const ctaValid: CTA = { text: "dummy", action: "ioit://PROFILE_MAIN" };
-    const isValid = await isCtaActionValid(ctaValid);
+    const valid: CTA = { text: "dummy", action: "ioit://PROFILE_MAIN" };
+    const isValid = await isCtaActionValid(valid);
     expect(isValid).toBeTruthy();
   });
 
   it("should be not valid (wrong protocol)", async () => {
-    const invalidValid: CTA = { text: "dummy", action: "iosit://PROFILE_MAIN" };
-    const isValid = await isCtaActionValid(invalidValid);
+    const invalidProtocol: CTA = {
+      text: "dummy",
+      action: "iosit://PROFILE_MAIN"
+    };
+    const isValid = await isCtaActionValid(invalidProtocol);
+    expect(isValid).toBeFalsy();
+  });
+
+  it("should be not valid (wrong route)", async () => {
+    const invalidRoute: CTA = { text: "dummy", action: "iosit://WRONG_ROUTE" };
+    const isValid = await isCtaActionValid(invalidRoute);
     expect(isValid).toBeFalsy();
   });
 
