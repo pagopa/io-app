@@ -6,6 +6,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
@@ -25,6 +26,7 @@ import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
+import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
@@ -43,8 +45,6 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
-import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
-import customVariables from "../../../theme/variables";
 
 type QRCodeContents = {
   [key: string]: string;
