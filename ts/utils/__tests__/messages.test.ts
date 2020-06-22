@@ -205,7 +205,6 @@ some noise`;
 
   it("should be cleaned (extended version)", async () => {
     const cleaned = cleanMarkdownFromCTAs(CTA_2 as MessageBodyMarkdown);
-    console.log(`**${cleaned}**`);
     expect(cleaned).toEqual(messageBody);
   });
 });
