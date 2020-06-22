@@ -1,3 +1,4 @@
+import { pot } from "italia-ts-commons";
 import { ProblemJson } from "italia-ts-commons/lib/responses";
 import { InstanceId } from "../../../../../../../../definitions/bonus_vacanze/InstanceId";
 import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
@@ -8,6 +9,11 @@ import {
   navigateToBonusAlreadyExists,
   navigateToEligibilityExpired
 } from "../../../../../navigation/action";
+import {
+  ActivationState,
+  BonusActivationProgressEnum
+} from "../../../../reducers/activation";
+import { AllActiveState } from "../../../../reducers/allActive";
 import { IExpectedActions } from "../mockData";
 
 const genericServiceUnavailable = {
@@ -40,6 +46,11 @@ const getActivationNoBonusFound = {
   status: 404
 };
 
+export type MockActivationState = {
+  activation: ActivationState;
+  allActive: AllActiveState;
+};
+
 export type ActivationBackendResponse = {
   startBonusActivationResponse: any;
   getBonusActivationResponseById: any;
@@ -47,8 +58,10 @@ export type ActivationBackendResponse = {
 
 interface MockBackendScenario extends IExpectedActions {
   responses: ReadonlyArray<ActivationBackendResponse>;
+  finalState: MockActivationState;
 }
 
+// TODO: test polling timeout case
 export const success = {
   displayName: "success",
   responses: [
@@ -61,7 +74,11 @@ export const success = {
     navigateToBonusActivationCompleted(),
     navigateToBonusActiveDetailScreen({ bonus: mockedBonus }),
     navigationHistoryPop(1)
-  ]
+  ],
+  finalState: {
+    activation: { status: BonusActivationProgressEnum.SUCCESS },
+    allActive: { [mockedBonus.id]: pot.some(mockedBonus) }
+  }
 } as MockBackendScenario;
 
 export const eligibilityExpired = {
@@ -72,7 +89,11 @@ export const eligibilityExpired = {
       getBonusActivationResponseById: undefined
     }
   ],
-  expectedActions: [navigateToEligibilityExpired(), navigationHistoryPop(1)]
+  expectedActions: [navigateToEligibilityExpired(), navigationHistoryPop(1)],
+  finalState: {
+    activation: { status: BonusActivationProgressEnum.ELIGIBILITY_EXPIRED },
+    allActive: {}
+  }
 } as MockBackendScenario;
 
 export const bonusAlreadyExists = {
@@ -83,7 +104,11 @@ export const bonusAlreadyExists = {
       getBonusActivationResponseById: undefined
     }
   ],
-  expectedActions: [navigateToBonusAlreadyExists(), navigationHistoryPop(1)]
+  expectedActions: [navigateToBonusAlreadyExists(), navigationHistoryPop(1)],
+  finalState: {
+    activation: { status: BonusActivationProgressEnum.EXISTS },
+    allActive: {}
+  }
 } as MockBackendScenario;
 
 export const error = {
@@ -110,7 +135,11 @@ export const error = {
       getBonusActivationResponseById: getActivationNoBonusFound
     }
   ],
-  expectedActions: []
+  expectedActions: [],
+  finalState: {
+    activation: { status: BonusActivationProgressEnum.ERROR },
+    allActive: {}
+  }
 } as MockBackendScenario;
 
 export const backendIntegrationTestCases = [

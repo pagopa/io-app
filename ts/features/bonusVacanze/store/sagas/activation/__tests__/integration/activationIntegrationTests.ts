@@ -1,6 +1,6 @@
 import { right } from "fp-ts/lib/Either";
 import { fromNullable } from "fp-ts/lib/Option";
-import { Action } from "redux";
+import { Action, combineReducers } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { select } from "redux-saga-test-plan/matchers";
@@ -8,12 +8,20 @@ import { navigateToWalletHome } from "../../../../../../../store/actions/navigat
 import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../../store/reducers/navigation";
 import BONUSVACANZE_ROUTES from "../../../../../navigation/routes";
-import { completeBonusVacanzeActivation } from "../../../../actions/bonusVacanze";
+import {
+  cancelBonusRequest,
+  completeBonusVacanzeActivation
+} from "../../../../actions/bonusVacanze";
+import allActiveReducer from "../../../../reducers/allActive";
 import { bonusActivationSaga } from "../../getBonusActivationSaga";
 import { handleBonusActivationSaga } from "../../handleBonusActivationSaga";
+import bonusVacanzeActivationReducer, {
+  BonusActivationProgressEnum
+} from "./../../../../reducers/activation";
 import {
   ActivationBackendResponse,
-  backendIntegrationTestCases
+  backendIntegrationTestCases,
+  MockActivationState
 } from "./mockData";
 
 jest.mock("react-native-background-timer", () => {
@@ -28,8 +36,13 @@ jest.mock("react-native-share", () => {
   };
 });
 
+const activationReducer = combineReducers<MockActivationState, Action>({
+  activation: bonusVacanzeActivationReducer,
+  allActive: allActiveReducer
+});
+
 describe("Bonus Activation Saga Integration Test", () => {
-  it("Test", () => {
+  it("Cancel A bonus request after server error", () => {
     const startBonusActivation = jest.fn();
     const getActivationById = jest.fn();
 
@@ -37,6 +50,7 @@ describe("Bonus Activation Saga Integration Test", () => {
       handleBonusActivationSaga,
       bonusActivationSaga(startBonusActivation, getActivationById)
     )
+      .withReducer(activationReducer)
       .provide([
         [
           select(navigationCurrentRouteSelector),
@@ -44,11 +58,17 @@ describe("Bonus Activation Saga Integration Test", () => {
         ],
         [
           matchers.call.fn(startBonusActivation),
-          right({ status: 409, value: {} })
+          right({ status: 500, value: {} })
         ],
         [matchers.call.fn(getActivationById), right({ status: 500, value: {} })]
       ])
+      .dispatch(cancelBonusRequest())
+      .put(navigationHistoryPop(1))
       .put(navigateToWalletHome())
+      .hasFinalState({
+        activation: { status: BonusActivationProgressEnum.ERROR },
+        allActive: {}
+      } as MockActivationState)
       .run();
   });
   backendIntegrationTestCases.map(testCase =>
@@ -62,40 +82,48 @@ describe("Bonus Activation Saga Integration Test", () => {
       return it(`${testCase.displayName}, startBonusActivation[${
         response.startBonusActivationResponse.status
       }] ${bonusActivationById}`, () =>
-        expectSagaFactory(response, testCase.expectedActions));
+        expectSagaFactory(
+          response,
+          testCase.expectedActions,
+          testCase.finalState
+        ));
     })
   );
 });
 
 const expectSagaFactory = (
   backendResponses: ActivationBackendResponse,
-  actionToVerify: ReadonlyArray<Action>
+  actionToVerify: ReadonlyArray<Action>,
+  finalState: MockActivationState
 ) => {
   const startBonusActivation = jest.fn();
   const getActivationById = jest.fn();
   const baseSaga = expectSaga(
     handleBonusActivationSaga,
     bonusActivationSaga(startBonusActivation, getActivationById)
-  ).provide([
-    [
-      select(navigationCurrentRouteSelector),
-      fromNullable(BONUSVACANZE_ROUTES.ACTIVATION.LOADING)
-    ],
-    [
-      matchers.call.fn(startBonusActivation),
-      right(backendResponses.startBonusActivationResponse)
-    ],
-    [
-      matchers.call.fn(getActivationById),
-      right(backendResponses.getBonusActivationResponseById)
-    ]
-  ]);
+  )
+    .provide([
+      [
+        select(navigationCurrentRouteSelector),
+        fromNullable(BONUSVACANZE_ROUTES.ACTIVATION.LOADING)
+      ],
+      [
+        matchers.call.fn(startBonusActivation),
+        right(backendResponses.startBonusActivationResponse)
+      ],
+      [
+        matchers.call.fn(getActivationById),
+        right(backendResponses.getBonusActivationResponseById)
+      ]
+    ])
+    .withReducer(activationReducer);
   return (
     actionToVerify
       .reduce((acc, val) => acc.put(val), baseSaga)
       // when the last event completeBonusVacanze is received, the navigation stack is popped
       .dispatch(completeBonusVacanzeActivation())
       .put(navigationHistoryPop(1))
+      .hasFinalState(finalState)
       .run()
       .then(results => {
         expect(results.effects.select.length).toEqual(1);
