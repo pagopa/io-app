@@ -1278,8 +1278,10 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
-    validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
-    bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
+    statusInfo:
+      validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
+      bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
+      redeemed: Questo Bonus Vacanze è stato utilizzato il {{date}}
     usableAmount: Spendibile presso la struttura ricettiva
     taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il
