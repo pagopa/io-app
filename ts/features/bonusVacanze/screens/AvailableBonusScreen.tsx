@@ -11,6 +11,7 @@ import GenericErrorComponent from "../../../components/screens/GenericErrorCompo
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../store/actions/navigationHistory";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
@@ -113,8 +114,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
   loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
   // TODO Add the param to navigate to proper bonus by name (?)
-  navigateToBonusRequest: (bonusItem: BonusAvailable) =>
-    dispatch(navigateToBonusRequestInformation({ bonusItem }))
+  navigateToBonusRequest: (bonusItem: BonusAvailable) => {
+    dispatch(navigateToBonusRequestInformation({ bonusItem }));
+    dispatch(navigationHistoryPop(1));
+  }
 });
 
 export default connect(

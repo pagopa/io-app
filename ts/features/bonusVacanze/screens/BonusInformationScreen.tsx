@@ -17,6 +17,7 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../store/actions/navigationHistory";
 import customVariables from "../../../theme/variables";
 import { maybeNotNullyString } from "../../../utils/strings";
 import TosBonusComponent from "../components/TosBonusComponent";
@@ -192,8 +193,10 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO add bonus request action or just navigate to TOS screen (?)
-  requestBonusActivation: () => dispatch(checkBonusEligibility.request()),
+  requestBonusActivation: () => {
+    dispatch(checkBonusEligibility.request());
+    dispatch(navigationHistoryPop(1));
+  },
   navigateBack: () => dispatch(navigateBack())
 });
 
