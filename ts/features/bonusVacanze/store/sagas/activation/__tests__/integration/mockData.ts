@@ -148,3 +148,5 @@ export const backendIntegrationTestCases = [
   bonusAlreadyExists,
   error
 ] as ReadonlyArray<MockBackendScenario>;
+
+test.skip("mockDataOnlyFile", () => undefined);
