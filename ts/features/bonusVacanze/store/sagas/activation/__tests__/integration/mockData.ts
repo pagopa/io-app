@@ -1,3 +1,5 @@
+import { Either, left, right } from "fp-ts/lib/Either";
+import { Errors } from "io-ts";
 import { pot } from "italia-ts-commons";
 import { ProblemJson } from "italia-ts-commons/lib/responses";
 import { InstanceId } from "../../../../../../../../definitions/bonus_vacanze/InstanceId";
@@ -16,7 +18,7 @@ import {
 import { AllActiveState } from "../../../../reducers/allActive";
 import { IExpectedActions } from "../mockData";
 
-const genericServiceUnavailable = {
+const genericServiceUnavailable: Either<Errors, any> = right({
   status: 500,
   value: {
     type: "https://example.com/problem/constraint-violation",
@@ -25,26 +27,38 @@ const genericServiceUnavailable = {
     detail: "There was an error processing the request",
     instance: "string"
   } as ProblemJson
-};
+});
+
+const genericDecodingFailure = left([
+  { context: [], value: new Error("decoding failure") }
+]);
 
 // mock activation for /bonus/vacanze/activations POST
 
-const startActivationRequestCreated = {
+const startActivationRequestCreated: Either<Errors, any> = right({
   status: 201,
   value: { id: "bonus_id" } as InstanceId
-};
-const startActivationEligibilityExpired = { status: 403 };
-const startActivationBonusAlreadyExists = { status: 409 };
-const startActivationNoToken = { status: 401 };
+});
+const startActivationEligibilityExpired: Either<Errors, any> = right({
+  status: 403
+});
+const startActivationBonusAlreadyExists: Either<Errors, any> = right({
+  status: 409
+});
+const startActivationNoToken: Either<Errors, any> = right({ status: 401 });
 
 // mock activation /bonus/vacanze/activations/{bonus_id} GET
-const getActivationSuccess = { status: 200, value: mockedBonus };
-const getActivationNoToken = {
+const getActivationSuccess: Either<Errors, any> = right({
+  status: 200,
+  value: mockedBonus
+});
+
+const getActivationNoToken: Either<Errors, any> = right({
   status: 401
-};
-const getActivationNoBonusFound = {
+});
+const getActivationNoBonusFound: Either<Errors, any> = right({
   status: 404
-};
+});
 
 export type MockActivationState = {
   activation: ActivationState;
@@ -52,8 +66,8 @@ export type MockActivationState = {
 };
 
 export type ActivationBackendResponse = {
-  startBonusActivationResponse: any;
-  getBonusActivationResponseById: any;
+  startBonusActivationResponse: Either<Errors, any>;
+  getBonusActivationResponseById: Either<Errors, any>;
 };
 
 interface MockBackendScenario extends IExpectedActions {
@@ -62,7 +76,7 @@ interface MockBackendScenario extends IExpectedActions {
 }
 
 // TODO: test polling timeout case
-export const success = {
+export const success: MockBackendScenario = {
   displayName: "success",
   responses: [
     {
@@ -79,14 +93,14 @@ export const success = {
     activation: { status: BonusActivationProgressEnum.SUCCESS },
     allActive: { [mockedBonus.id]: pot.some(mockedBonus) }
   }
-} as MockBackendScenario;
+};
 
-export const eligibilityExpired = {
+export const eligibilityExpired: MockBackendScenario = {
   displayName: "eligibility expired",
   responses: [
     {
       startBonusActivationResponse: startActivationEligibilityExpired,
-      getBonusActivationResponseById: undefined
+      getBonusActivationResponseById: right(undefined)
     }
   ],
   expectedActions: [navigateToEligibilityExpired(), navigationHistoryPop(1)],
@@ -94,14 +108,14 @@ export const eligibilityExpired = {
     activation: { status: BonusActivationProgressEnum.ELIGIBILITY_EXPIRED },
     allActive: {}
   }
-} as MockBackendScenario;
+};
 
-export const bonusAlreadyExists = {
+export const bonusAlreadyExists: MockBackendScenario = {
   displayName: "bonus already exists",
   responses: [
     {
       startBonusActivationResponse: startActivationBonusAlreadyExists,
-      getBonusActivationResponseById: undefined
+      getBonusActivationResponseById: right(undefined)
     }
   ],
   expectedActions: [navigateToBonusAlreadyExists(), navigationHistoryPop(1)],
@@ -109,9 +123,9 @@ export const bonusAlreadyExists = {
     activation: { status: BonusActivationProgressEnum.EXISTS },
     allActive: {}
   }
-} as MockBackendScenario;
+};
 
-export const error = {
+export const error: MockBackendScenario = {
   displayName: "error",
   responses: [
     {
@@ -120,7 +134,11 @@ export const error = {
     },
     {
       startBonusActivationResponse: startActivationNoToken,
-      getBonusActivationResponseById: undefined
+      getBonusActivationResponseById: right(undefined)
+    },
+    {
+      startBonusActivationResponse: genericDecodingFailure,
+      getBonusActivationResponseById: right(undefined)
     },
     {
       startBonusActivationResponse: startActivationRequestCreated,
@@ -133,6 +151,10 @@ export const error = {
     {
       startBonusActivationResponse: startActivationRequestCreated,
       getBonusActivationResponseById: getActivationNoBonusFound
+    },
+    {
+      startBonusActivationResponse: startActivationRequestCreated,
+      getBonusActivationResponseById: genericDecodingFailure
     }
   ],
   expectedActions: [],
@@ -140,13 +162,13 @@ export const error = {
     activation: { status: BonusActivationProgressEnum.ERROR },
     allActive: {}
   }
-} as MockBackendScenario;
+};
 
-export const backendIntegrationTestCases = [
+export const backendIntegrationTestCases: ReadonlyArray<MockBackendScenario> = [
   success,
   eligibilityExpired,
   bonusAlreadyExists,
   error
-] as ReadonlyArray<MockBackendScenario>;
+];
 
 test.skip("mockDataOnlyFile", () => undefined);

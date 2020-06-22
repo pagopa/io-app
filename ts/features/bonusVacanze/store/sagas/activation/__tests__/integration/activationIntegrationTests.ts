@@ -1,5 +1,6 @@
-import { right } from "fp-ts/lib/Either";
-import { fromNullable } from "fp-ts/lib/Option";
+import { Either, right } from "fp-ts/lib/Either";
+import { fromNullable, some } from "fp-ts/lib/Option";
+import { Errors } from "io-ts";
 import { Action, combineReducers } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
@@ -41,6 +42,17 @@ const activationReducer = combineReducers<MockActivationState, Action>({
   allActive: allActiveReducer
 });
 
+const getDisplayNameBackendResponse = (value: Either<Errors, any>): string => {
+  return value.fold(
+    _ => {
+      return "Left error";
+    },
+    r => {
+      return r ? (r.status as string) : "undefined";
+    }
+  );
+};
+
 describe("Bonus Activation Saga Integration Test", () => {
   it("Cancel A bonus request after server error", () => {
     const startBonusActivation = jest.fn();
@@ -54,13 +66,12 @@ describe("Bonus Activation Saga Integration Test", () => {
       .provide([
         [
           select(navigationCurrentRouteSelector),
-          fromNullable(BONUSVACANZE_ROUTES.ACTIVATION.LOADING)
+          some(BONUSVACANZE_ROUTES.ACTIVATION.LOADING)
         ],
         [
           matchers.call.fn(startBonusActivation),
           right({ status: 500, value: {} })
-        ],
-        [matchers.call.fn(getActivationById), right({ status: 500, value: {} })]
+        ]
       ])
       .dispatch(cancelBonusRequest())
       .put(navigationHistoryPop(1))
@@ -73,15 +84,13 @@ describe("Bonus Activation Saga Integration Test", () => {
   });
   backendIntegrationTestCases.map(testCase =>
     testCase.responses.map(response => {
-      const bonusActivationById = response.getBonusActivationResponseById
-        ? `with GetBonusActivationResponseById[${
-            response.getBonusActivationResponseById.status
-          }]`
-        : "";
-
-      return it(`${testCase.displayName}, startBonusActivation[${
-        response.startBonusActivationResponse.status
-      }] ${bonusActivationById}`, () =>
+      return it(`${
+        testCase.displayName
+      }, startBonusActivation[${getDisplayNameBackendResponse(
+        response.startBonusActivationResponse
+      )}] with GetBonusActivationResponseById[${getDisplayNameBackendResponse(
+        response.getBonusActivationResponseById
+      )}]`, () =>
         expectSagaFactory(
           response,
           testCase.expectedActions,
@@ -109,11 +118,11 @@ const expectSagaFactory = (
       ],
       [
         matchers.call.fn(startBonusActivation),
-        right(backendResponses.startBonusActivationResponse)
+        backendResponses.startBonusActivationResponse
       ],
       [
         matchers.call.fn(getActivationById),
-        right(backendResponses.getBonusActivationResponseById)
+        backendResponses.getBonusActivationResponseById
       ]
     ])
     .withReducer(activationReducer);
