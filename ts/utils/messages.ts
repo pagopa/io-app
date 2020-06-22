@@ -163,7 +163,7 @@ export const getPrescriptionDataFromName = (
 
 /**
  * extract the CTAs if they are nested inside the message markdown content
- * if CTAs are been found, the localized versione will be returned
+ * if some CTAs are been found, the localized version will be returned
  * @param message
  * @param locale
  */
