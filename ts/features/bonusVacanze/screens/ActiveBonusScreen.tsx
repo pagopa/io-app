@@ -95,12 +95,16 @@ const styles = StyleSheet.create({
   },
   validUntil: {
     color: variables.brandDarkestGray,
-    fontSize: variables.fontSizeSmall
+    fontSize: variables.fontSizeSmall,
+    lineHeight: variables.lineHeightSmall
   },
   rowBlock: {
     flexDirection: "row",
     // alignItems: "center",
     justifyContent: "space-between"
+  },
+  itemsCenter: {
+    alignItems: "center"
   },
   paddedContent: {
     paddingLeft: variables.contentPadding,
@@ -305,14 +309,21 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     text: string,
     iconColor?: string
   ) => (
-    <View style={styles.rowBlock}>
-      <IconFont
-        name={icon}
-        color={fromNullable(iconColor).getOrElse(variables.textColor)}
-        size={variables.fontSize3}
-      />
+    <View style={[styles.rowBlock, styles.itemsCenter]}>
+      <View>
+        <IconFont
+          name={icon}
+          color={fromNullable(iconColor).getOrElse(variables.textColor)}
+          size={variables.fontSize3}
+          style={{
+            justifyContent: "center",
+            lineHeight: customVariables.lineHeightBase,
+            alignSelf: "flex-end"
+          }}
+        />
+      </View>
       <View style={styles.paddedContent}>
-        <Text style={[styles.validUntil]} semibold={true}>
+        <Text style={[styles.validUntil]} bold={true}>
           {text}
         </Text>
       </View>

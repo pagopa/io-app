@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
 import {
@@ -16,6 +16,7 @@ import I18n from "../../../i18n";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
+import { maybeNotNullyString } from "../../../utils/strings";
 import { getBonusCodeFormatted } from "../utils/bonus";
 
 type Props = {
@@ -114,6 +115,20 @@ const styles = StyleSheet.create({
     marginRight: 6,
     height: 40,
     width: 40
+  },
+  euroCharacter: {
+    fontSize: customVariables.fontSize3,
+    lineHeight: customVariables.lineHeightH3
+  },
+  badge: {
+    height: 18,
+    marginTop: 6,
+    backgroundColor: customVariables.colorWhite
+  },
+  statusText: {
+    fontSize: 12,
+    lineHeight: 16,
+    color: customVariables.textColor
   }
 });
 
@@ -124,6 +139,13 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const { bonus } = props;
 
   const renderFullCard = () => {
+    const maybeStatusDescription = maybeNotNullyString(
+      bonus
+        ? I18n.t(`bonus.${bonus.status.toLowerCase()}`, {
+            defaultValue: ""
+          })
+        : ""
+    );
     return (
       <View style={[styles.row, styles.spaced]}>
         <View style={{ flexDirection: "column" }}>
@@ -136,7 +158,15 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             <Text bold={true} style={[styles.colorWhite, styles.previewAmount]}>
               {bonus.dsu_request.max_amount}
             </Text>
-            <Text style={[styles.colorWhite, styles.fontLarge]}>{"€"}</Text>
+            <Text style={[styles.colorWhite, styles.euroCharacter]}>{"€"}</Text>
+            <View hspacer={true} />
+            {maybeStatusDescription.isSome() && (
+              <Badge style={styles.badge}>
+                <Text style={styles.statusText} semibold={true}>
+                  {maybeStatusDescription.value}
+                </Text>
+              </Badge>
+            )}
           </View>
           <View spacer={true} />
           <Text style={[styles.colorWhite, styles.codeLabel]}>
