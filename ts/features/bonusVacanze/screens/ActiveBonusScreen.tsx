@@ -31,7 +31,7 @@ import { formatDateAsLocal } from "../../../utils/dates";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
-import { addEvery, maybeNotNullyString } from "../../../utils/strings";
+import { maybeNotNullyString } from "../../../utils/strings";
 import BonusCardComponent from "../components/BonusCardComponent";
 import QrModalBox from "../components/QrModalBox";
 import {
@@ -41,6 +41,7 @@ import {
 import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
 import { availableBonusTypesSelectorFromId } from "../store/reducers/availableBonusesTypes";
 import {
+  getBonusCodeFormatted,
   ID_BONUS_VACANZE_TYPE,
   isBonusActive,
   validityInterval
@@ -248,7 +249,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const openModalBox = () => {
     const modalBox = (
       <QrModalBox
-        secretCode={bonusFromNav.id}
+        secretCode={getBonusCodeFormatted(bonus)}
         onClose={props.hideModal}
         qrCode={qrCode[QR_CODE_MIME_TYPE]}
       />
@@ -268,11 +269,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           onPress: () =>
             shareQR(
               qrCode[PNG_IMAGE_TYPE],
-              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${addEvery(
-                bonusFromNav.id,
-                " ",
-                4
-              ).trim()}`,
+              `${I18n.t(
+                "bonus.bonusVacanza.shareMessage"
+              )} ${getBonusCodeFormatted(bonusFromNav)}`,
               I18n.t("global.genericError")
             )
         }}

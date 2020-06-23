@@ -16,7 +16,7 @@ import I18n from "../../../i18n";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import { addEvery } from "../../../utils/strings";
+import { getBonusCodeFormatted } from "../utils/bonus";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -143,7 +143,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             {I18n.t("bonus.bonusVacanza.code")}
           </Text>
           <Text style={[styles.colorWhite, styles.fontLarge, styles.bonusCode]}>
-            {addEvery(bonus.id, " ", 4).trim()}
+            {getBonusCodeFormatted(bonus)}
           </Text>
         </View>
         <View>
@@ -156,11 +156,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               <MenuOptions>
                 <MenuOption
                   onSelect={() =>
-                    clipboardSetStringWithFeedback(
-                      addEvery(bonus.id, " ", 4)
-                        .trim()
-                        .toString()
-                    )
+                    clipboardSetStringWithFeedback(getBonusCodeFormatted(bonus))
                   }
                 >
                   <Text style={styles.actions}>
