@@ -1313,7 +1313,7 @@ bonus:
           third: " sul sito dell'INPS per verificare la tua idoneità, oppure richiedere l'ISEE sui canali previsti da INPS."
         goToDSU: Richiedi ISEE
       iseeNotEligible:
-        title: Siamo spiacenti. Il tuo ISEE supera la soglia richiesta.
+        title: "Siamo spiacenti.\n Il tuo ISEE supera la soglia richiesta."
         text: Se la situazione patrimoniale del tuo nucleo familiare è cambiata rispetto all'ultima Dichiarazioni Sostitutiva Unica (DSU) presentata, puoi presentarne una nuova attraverso i canali previsti da INPS.
         goToNewDSU: Richiedi nuovo ISEE
       activateBonus:
