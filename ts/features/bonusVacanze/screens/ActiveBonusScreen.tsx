@@ -41,6 +41,7 @@ import {
 import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
 import { availableBonusTypesSelectorFromId } from "../store/reducers/availableBonusesTypes";
 import {
+  getBonusCodeFormatted,
   ID_BONUS_VACANZE_TYPE,
   isBonusActive,
   validityInterval
@@ -248,7 +249,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const openModalBox = () => {
     const modalBox = (
       <QrModalBox
-        secretCode={bonusFromNav.id}
+        secretCode={getBonusCodeFormatted(bonus)}
         onClose={props.hideModal}
         qrCode={qrCode[QR_CODE_MIME_TYPE]}
       />
