@@ -33,18 +33,29 @@ Se durante il processo, i dati relativi all’ISEE e al tuo nucleo familiare non
 export const availableBonuses: BonusesAvailable = [
   {
     id_type: ID_BONUS_VACANZE_TYPE,
-    name: "Bonus Vacanze",
-    subtitle:
-      "L'incentivo per supportare il settore del turismo dopo il lockdown richiesto dal COVID-19",
-    title: "Richiesta Bonus Vacanze",
+    it: {
+      name: "Bonus Vacanze",
+      subtitle:
+        "L'incentivo per supportare il settore del turismo dopo il lockdown richiesto dal COVID-19",
+      title: "Richiesta Bonus Vacanze",
+      content: contentBonusVacanze,
+      tos_url: "https://io.italia.it/app-content/tos_privacy.html"
+    },
+    en: {
+      name: "Bonus Vacanze",
+      subtitle:
+        "L'incentivo per supportare il settore del turismo dopo il lockdown richiesto dal COVID-19",
+      title: "Richiesta Bonus Vacanze",
+      content: contentBonusVacanze,
+      tos_url: "https://io.italia.it/app-content/tos_privacy.html"
+    },
+    service_id: "01EB8AXKNV6NMSP2R25KSGF743",
     is_active: true,
-    content: contentBonusVacanze,
     valid_from: new Date("2020-07-01T00:00:00.000Z"),
     valid_to: new Date("2020-12-31T00:00:00.000Z"),
     cover:
       "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/logo/logo_BonusVacanze.png",
     sponsorship_description: "Agenzia delle Entrate",
-    tos_url: "https://io.italia.it/app-content/tos_privacy.html",
     sponsorship_cover:
       "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/logo/logo_AgenziaEntrate.png"
   }

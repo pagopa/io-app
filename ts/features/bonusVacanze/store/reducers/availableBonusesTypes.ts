@@ -39,6 +39,10 @@ export const availableBonusTypesSelector = (
   state: GlobalState
 ): AvailableBonusTypesState => state.bonus.availableBonusTypes;
 
+/**
+ * return the bonus type corresponding to the given idBonusType
+ * @param idBonusType
+ */
 export const availableBonusTypesSelectorFromId = (idBonusType: number) =>
   createSelector<GlobalState, AvailableBonusTypesState, Option<BonusAvailable>>(
     availableBonusTypesSelector,
