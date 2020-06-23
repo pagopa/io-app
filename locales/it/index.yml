@@ -1333,6 +1333,9 @@ bonus:
           first: "Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.\n\nQuando lo riceverai, se sarà positivo, ricordati di completare la tua domanda "
           second: "entro 24 ore"
           third: ", altrimenti scadrà e dovrai iniziarne una nuova."
+      activationPending:
+        title: Il bonus per il tuo nucleo familiare è già stato richiesto ed è in fase di attivazione.
+        description: Riceverai un messaggio quando sarà attivato.
       activate:
         loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
         goToDetails: Visualizza i dettagli
