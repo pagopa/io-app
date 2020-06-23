@@ -13,7 +13,7 @@ import { cancelBonusRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const image = require("../../../../../img/servicesStatus/error-detail-icon.png");
+const image = require("../../../../../img/messages/empty-due-date-list-icon.png");
 
 /**
  * This screen informs the user that the bonus cannot be activated because another active or redeemed

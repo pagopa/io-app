@@ -1340,8 +1340,8 @@ bonus:
           title: Siamo spiacenti, serve più tempo per processare la tua richiesta.
           description: Ti invieremo un messaggio in app quando il tuo bonus sarà pronto.
         alreadyRedeemed:
-          title: Sembra che il bonus per il tuo nucleo familiare sia già stato richiesto.
-          body: Ti chiediamo di verificare con i tuoi familiari. Se questa informazione non dovesse essere corretta, verifica con il servizio clienti di Agenzia delle Entrate.
+          title: Il bonus per il tuo nucleo familiare è già attivo!
+          body: Puoi visualizzarne i dettagli nella sezione Pagamenti.
         eligibilityExpired:
           title: Eligibilità scaduta
           body: Il periodo in cui era possibile attivare il bonus è scaduto. È necessario iniziare una nuova procedura.
