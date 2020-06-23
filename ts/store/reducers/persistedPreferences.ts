@@ -4,6 +4,7 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Calendar } from "react-native-calendar-events";
+import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
 import { Locales } from "../../../locales/locales";
 import {
@@ -17,7 +18,6 @@ import {
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
-import { createSelector } from "reselect";
 
 export type PersistedPreferencesState = Readonly<{
   isFingerprintEnabled?: boolean;
