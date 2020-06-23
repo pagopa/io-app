@@ -85,7 +85,8 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 
   const getBonusItem = () => props.navigation.getParam("bonusItem");
 
-  const bonusItem = getBonusItem();
+  const bonusType = getBonusItem();
+  const bonusTypeLocalizedContent = bonusType[I18n.currentLocale()];
 
   const cancelButtonProps = {
     block: true,
@@ -98,7 +99,9 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
     block: true,
     primary: true,
     onPress: props.requestBonusActivation,
-    title: `${I18n.t("bonus.bonusVacanza.cta.requestBonus")} ${bonusItem.name}`
+    title: `${I18n.t("bonus.bonusVacanza.cta.requestBonus")} ${
+      bonusTypeLocalizedContent.name
+    }`
   };
 
   const handleModalPress = (tos: string) =>
@@ -109,12 +112,16 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
     setMarkdownLoaded(c => Math.min(c + 1, markdownComponents));
   };
   const isMarkdownLoaded = markdownLoaded === markdownComponents;
-  const maybeBonusTos = maybeNotNullyString(bonusItem.tos_url);
+  const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
+  const maybeCover = maybeNotNullyString(bonusType.cover);
   const maybeSponsorshipDescription = maybeNotNullyString(
-    bonusItem.sponsorship_description
+    bonusType.sponsorship_description
   );
   const ContainerComponent = withLoadingSpinner(() => (
-    <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={bonusTypeLocalizedContent.name}
+    >
       <Content>
         <View style={styles.row}>
           <View style={styles.flexStart}>
@@ -125,17 +132,17 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
             )}
 
             <Text bold={true} dark={true} style={styles.title}>
-              {bonusItem.title}
+              {bonusTypeLocalizedContent.title}
             </Text>
           </View>
           <View style={styles.flexEnd}>
-            {bonusItem.cover && (
-              <Image source={{ uri: bonusItem.cover }} style={styles.cover} />
+            {maybeCover.isSome() && (
+              <Image source={{ uri: maybeCover.value }} style={styles.cover} />
             )}
           </View>
         </View>
         <View spacer={true} large={true} />
-        <Text dark={true}>{bonusItem.subtitle}</Text>
+        <Text dark={true}>{bonusTypeLocalizedContent.subtitle}</Text>
         {maybeBonusTos.isSome() && (
           <ButtonDefaultOpacity
             style={styles.noPadded}
@@ -149,7 +156,9 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
-        <Markdown onLoadEnd={onMarkdownLoaded}>{bonusItem.content}</Markdown>
+        <Markdown onLoadEnd={onMarkdownLoaded}>
+          {bonusTypeLocalizedContent.content}
+        </Markdown>
         {maybeBonusTos.isSome() && (
           <>
             <View spacer={true} extralarge={true} />
