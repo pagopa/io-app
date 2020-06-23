@@ -217,7 +217,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestBonusActivation: () => {
-    dispatch(checkBonusEligibility.request());
+    dispatch(checkBonusVacanzeEligibility.request());
     dispatch(navigationHistoryPop(1));
   },
   navigateBack: () => dispatch(navigateBack())
