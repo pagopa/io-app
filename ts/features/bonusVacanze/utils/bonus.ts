@@ -29,6 +29,11 @@ export const validityInterval = (
         .map(vts => Tuple2(vfs, vts))
     );
 
+/**
+ * return the bonus code with a space every 4 chars
+ * i.e. ABCDEFGH -> ABCD EFGH
+ * @param bonus
+ */
 export const getBonusCodeFormatted = (
   bonus: BonusActivationWithQrCode
 ): string => addEvery(bonus.id, " ", 4).trim();
