@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   rotateCard: {
     shadowColor: "#000",
-    marginBottom: -35,
+    marginBottom: -38,
     flex: 1,
     shadowRadius: 10,
     shadowOpacity: 0.15,
