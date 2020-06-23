@@ -1,7 +1,12 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  SafeAreaView,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -16,6 +21,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import { AvailableBonusItem } from "../components/AvailableBonusItem";
+import { bonusVacanzaStyle } from "../components/Styles";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusTypesSelector } from "../store/reducers/availableBonusesTypes";
@@ -73,27 +79,29 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
         goBack={true}
         headerTitle={I18n.t("bonus.bonusList.title")}
       >
-        <Content
-          noPadded={true}
-          scrollEnabled={false}
-          style={styles.whiteContent}
-        >
-          <View style={styles.paddedContent}>
-            <FlatList
-              scrollEnabled={false}
-              data={availableBonusesList}
-              renderItem={this.renderListItem}
-              keyExtractor={item => item.id_type.toString()}
-              ItemSeparatorComponent={() => (
-                <ItemSeparatorComponent noPadded={true} />
-              )}
-            />
-          </View>
-        </Content>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps}
-        />
+        <SafeAreaView style={bonusVacanzaStyle.flex}>
+          <Content
+            noPadded={true}
+            scrollEnabled={false}
+            style={styles.whiteContent}
+          >
+            <View style={styles.paddedContent}>
+              <FlatList
+                scrollEnabled={false}
+                data={availableBonusesList}
+                renderItem={this.renderListItem}
+                keyExtractor={item => item.id_type.toString()}
+                ItemSeparatorComponent={() => (
+                  <ItemSeparatorComponent noPadded={true} />
+                )}
+              />
+            </View>
+          </Content>
+          <FooterWithButtons
+            type={"SingleButton"}
+            leftButton={cancelButtonProps}
+          />
+        </SafeAreaView>
       </BaseScreenComponent>
     );
   }

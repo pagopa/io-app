@@ -1246,8 +1246,10 @@ faq:
     content: !include faq/faq57.md
 bonus:
   bonusVacanza:
-    validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
-    bonusRejected: Attention! This Bonus Vacanze has been rejected
+    statusInfo:
+      validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
+      bonusRejected: Attention! This Bonus Vacanze has been rejected
+      redeemed: This Bonus Vacanze has been consumed on {{date}}
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return
     request: Request the
@@ -1262,6 +1264,9 @@ bonus:
     applicant: Applicant FC
     bonusClaim: Who can claim the bonus?
     shareMessage: "This is the code of your Bonus Vacanze:"
+    contextualHelp:
+      title: Your Bonus Vacanze
+      body: On this page you can view your Bonus Vacanze
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:
