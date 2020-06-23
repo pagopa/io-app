@@ -85,7 +85,6 @@ const renderQRCode = (base64: string) =>
     <SvgXml xml={s} height={249} width={249} />
   ));
 
-const bonusVacanzeImage = require("../../../../img/bonus/bonusVacanze/vacanze.png");
 const opacityAnimationDuration = 800 as Millisecond;
 const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
   const { onClose, qrCode, secretCode } = props;
