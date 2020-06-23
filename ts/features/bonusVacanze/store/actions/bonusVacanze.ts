@@ -10,6 +10,12 @@ import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvai
 import { BonusActivationProgressEnum } from "../reducers/activation";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
+export const loadAllBonusActivations = createAsyncAction(
+  "BONUS_VACANZE_LOAD_ALL_ACTIVATION_REQUEST",
+  "BONUS_VACANZE_LOAD_ALL_ACTIVATION_SUCCESS",
+  "BONUS_VACANZE_LOAD_ALL_ACTIVATION_FAILURE"
+)<void, void, Error>();
+
 export const loadAvailableBonuses = createAsyncAction(
   "BONUSES_AVAILABLE_REQUEST",
   "BONUSES_AVAILABLE_SUCCESS",
@@ -27,14 +33,24 @@ export const checkBonusVacanzeEligibility = createAsyncAction(
   "BONUS_VACANZE_CHECK_ELIGIBILITY_FAILURE"
 )<void, EligibilityCheckPayload, Error>();
 
+export const storeEligibilityRequestId = createStandardAction(
+  "BONUS_VACANZE_CHECK_ELIGIBILITY_STORE_REQUEST_ID"
+)<InstanceId>();
+
+export const activateBonusVacanze = createAsyncAction(
+  "BONUS_VACANZE_ACTIVATION_REQUEST",
+  "BONUS_VACANZE_ACTIVATION_SUCCESS",
+  "BONUS_VACANZE_ACTIVATION_FAILURE"
+)<void, BonusVacanzeActivationPayload, Error>();
+
 // A common event to cancel the request bonus, used both for eligibility and activation
 export const cancelBonusVacanzeRequest = createStandardAction(
   "BONUS_VACANZE_REQUEST_CANCEL"
 )<void>();
 
-export const storeEligibilityRequestId = createStandardAction(
-  "BONUS_VACANZE_CHECK_ELIGIBILITY_STORE_REQUEST_ID"
-)<InstanceId>();
+export const completeBonusVacanzeActivation = createStandardAction(
+  "BONUS_VACANZE_ACTIVATION_COMPLETE"
+)();
 
 export const loadBonusVacanzeFromId = createAsyncAction(
   "BONUS_VACANZE_LOAD_FROM_ID_REQUEST",
@@ -50,27 +66,11 @@ export const cancelLoadBonusFromIdPolling = createStandardAction(
   "BONUS_VACANZE_FROM_ID_POLLING_CANCEL"
 )<void>();
 
-export const loadAllBonusActivations = createAsyncAction(
-  "BONUS_VACANZE_LOAD_ALL_ACTIVATION_REQUEST",
-  "BONUS_VACANZE_LOAD_ALL_ACTIVATION_SUCCESS",
-  "BONUS_VACANZE_LOAD_ALL_ACTIVATION_FAILURE"
-)<void, void, Error>();
-
 export type BonusVacanzeActivationPayload = {
   status: BonusActivationProgressEnum;
   instanceId?: InstanceId;
   activation?: BonusActivationWithQrCode;
 };
-
-export const activateBonusVacanze = createAsyncAction(
-  "BONUS_VACANZE_ACTIVATION_REQUEST",
-  "BONUS_VACANZE_ACTIVATION_SUCCESS",
-  "BONUS_VACANZE_ACTIVATION_FAILURE"
-)<void, BonusVacanzeActivationPayload, Error>();
-
-export const completeBonusVacanzeActivation = createStandardAction(
-  "BONUS_VACANZE_ACTIVATION_COMPLETE"
-)();
 
 export type BonusActions =
   | ActionType<typeof loadAvailableBonuses>
