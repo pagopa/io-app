@@ -43,7 +43,7 @@ const getRow = (k: string, v: string): KeyValueRow => ({
  * @constructor
  */
 export const FamilyComposition: React.FunctionComponent<Props> = props => {
-  const title = I18n.t("bonus.bonusVacanza.family.title");
+  const title = I18n.t("bonus.bonusVacanze.family.title");
 
   return (
     <View>

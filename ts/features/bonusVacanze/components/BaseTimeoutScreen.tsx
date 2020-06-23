@@ -5,7 +5,7 @@ import { cancelButtonProps } from "./buttons/ButtonConfigurations";
 import { FooterStackButton } from "./buttons/FooterStackButtons";
 import { renderInfoRasterImage } from "./infoScreen/imageRendering";
 import { InfoScreenComponent } from "./infoScreen/InfoScreenComponent";
-import { bonusVacanzaStyle } from "./Styles";
+import { bonusVacanzeStyle } from "./Styles";
 
 type Props = {
   title: string;
@@ -25,7 +25,7 @@ const image = require("../../../../img/wallet/errors/payment-expired-icon.png");
 export const BaseTimeoutScreen: React.FunctionComponent<Props> = props => {
   const confirmText = I18n.t("global.buttons.exit");
   return (
-    <SafeAreaView style={bonusVacanzaStyle.flex}>
+    <SafeAreaView style={bonusVacanzeStyle.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={props.title}
