@@ -10,7 +10,7 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 const image = require("../../../../../../img/servicesStatus/error-detail-icon.png");
 
 /**
- * This screen display some additional information when the ISEE is not eligible for the bonus vacanza.
+ * This screen display some additional information when the ISEE is not eligible for the bonus vacanze.
  * It provides three CTA:
  * - goToDsu: goto INPS website to submit a new DSU
  * - goToSimulation: goto INPS website to do a simulation
@@ -21,10 +21,10 @@ const image = require("../../../../../../img/servicesStatus/error-detail-icon.pn
  */
 
 const IseeNotEligibleScreen: React.FunctionComponent<Props> = props => {
-  const title = I18n.t("bonus.bonusVacanza.eligibility.iseeNotEligible.title");
-  const body = I18n.t("bonus.bonusVacanza.eligibility.iseeNotEligible.text");
+  const title = I18n.t("bonus.bonusVacanze.eligibility.iseeNotEligible.title");
+  const body = I18n.t("bonus.bonusVacanze.eligibility.iseeNotEligible.text");
   const goToDsu = I18n.t(
-    "bonus.bonusVacanza.eligibility.iseeNotEligible.goToNewDSU"
+    "bonus.bonusVacanze.eligibility.iseeNotEligible.goToNewDSU"
   );
 
   return (

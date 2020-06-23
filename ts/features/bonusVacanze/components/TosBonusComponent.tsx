@@ -9,7 +9,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { AVOID_ZOOM_JS } from "../../../utils/webview";
-import { bonusVacanzaStyle } from "./Styles";
+import { bonusVacanzeStyle } from "./Styles";
 
 type Props = {
   onClose: () => void;
@@ -122,7 +122,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>
-      <SafeAreaView style={bonusVacanzaStyle.flex}>
+      <SafeAreaView style={bonusVacanzeStyle.flex}>
         <Content contentContainerStyle={styles.flex1} noPadded={true}>
           {renderError()}
           {!hasError && (

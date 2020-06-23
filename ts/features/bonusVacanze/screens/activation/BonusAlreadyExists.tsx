@@ -8,7 +8,7 @@ import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
-import { bonusVacanzaStyle } from "../../components/Styles";
+import { bonusVacanzeStyle } from "../../components/Styles";
 import { cancelBonusRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -25,9 +25,9 @@ const image = require("../../../../../img/messages/empty-due-date-list-icon.png"
  */
 
 const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
-  const title = I18n.t("bonus.bonusVacanza.activation.alreadyRedeemed.title");
-  const body = I18n.t("bonus.bonusVacanza.activation.alreadyRedeemed.body");
-  const cta = I18n.t("bonus.bonusVacanza.activation.alreadyRedeemed.cta");
+  const title = I18n.t("bonus.bonusVacanze.activation.alreadyRedeemed.title");
+  const body = I18n.t("bonus.bonusVacanze.activation.alreadyRedeemed.body");
+  const cta = I18n.t("bonus.bonusVacanze.activation.alreadyRedeemed.cta");
 
   useHardwareBackButton(() => {
     props.onCancel();
@@ -35,7 +35,7 @@ const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <SafeAreaView style={bonusVacanzaStyle.flex}>
+    <SafeAreaView style={bonusVacanzeStyle.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={title}

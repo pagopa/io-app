@@ -116,7 +116,7 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
       <View style={styles.modalBox}>
         <View style={styles.row}>
           <Text style={styles.title} semibold={true}>
-            {I18n.t("bonus.bonusVacanza.name")}
+            {I18n.t("bonus.bonusVacanze.name")}
           </Text>
           <Button
             style={styles.modalClose}
@@ -134,7 +134,7 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
         <View style={styles.row}>
           <View>
             <Text style={styles.uniqueCode}>
-              {I18n.t("bonus.bonusVacanza.uniqueCode")}
+              {I18n.t("bonus.bonusVacanze.uniqueCode")}
             </Text>
             <View style={styles.row}>
               <Text style={styles.codeText} bold={true}>

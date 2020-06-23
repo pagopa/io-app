@@ -1277,7 +1277,7 @@ faq:
     title: "Hai avuto problemi durante un pagamento?"
     content: !include faq/faq57.md
 bonus:
-  bonusVacanza:
+  bonusVacanze:
     statusInfo:
       validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
       bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato

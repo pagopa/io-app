@@ -21,7 +21,7 @@ import { navigateBack } from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
-import { bonusVacanzaStyle } from "../components/Styles";
+import { bonusVacanzeStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusEligibility } from "../store/actions/bonusVacanze";
 
@@ -103,7 +103,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
     block: true,
     primary: true,
     onPress: props.requestBonusActivation,
-    title: `${I18n.t("bonus.bonusVacanza.cta.requestBonus")} ${
+    title: `${I18n.t("bonus.bonusVacanze.cta.requestBonus")} ${
       bonusTypeLocalizedContent.name
     }`
   };
@@ -126,7 +126,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
       goBack={true}
       headerTitle={bonusTypeLocalizedContent.name}
     >
-      <SafeAreaView style={bonusVacanzaStyle.flex}>
+      <SafeAreaView style={bonusVacanzeStyle.flex}>
         <Content>
           <View style={styles.row}>
             <View style={styles.flexStart}>
@@ -173,7 +173,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
               <ItemSeparatorComponent noPadded={true} />
               <View spacer={true} extralarge={true} />
               <Text style={styles.disclaimer} dark={true}>
-                {I18n.t("bonus.bonusVacanza.advice")}
+                {I18n.t("bonus.bonusVacanze.advice")}
               </Text>
               <TouchableDefaultOpacity
                 onPress={() => handleModalPress(maybeBonusTos.value)}

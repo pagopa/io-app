@@ -8,7 +8,7 @@ import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
-import { bonusVacanzaStyle } from "../../components/Styles";
+import { bonusVacanzeStyle } from "../../components/Styles";
 import { cancelBonusRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -25,10 +25,10 @@ const image = require("../../../../../img/messages/empty-message-list-icon.png")
 
 const BonusActivationPending: React.FunctionComponent<Props> = props => {
   const title = I18n.t(
-    "bonus.bonusVacanza.eligibility.activationPending.title"
+    "bonus.bonusVacanze.eligibility.activationPending.title"
   );
   const body = I18n.t(
-    "bonus.bonusVacanza.eligibility.activationPending.description"
+    "bonus.bonusVacanze.eligibility.activationPending.description"
   );
   const cancel = I18n.t("global.buttons.exit");
 
@@ -38,7 +38,7 @@ const BonusActivationPending: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <SafeAreaView style={bonusVacanzaStyle.flex}>
+    <SafeAreaView style={bonusVacanzeStyle.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={title}
