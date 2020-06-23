@@ -120,6 +120,27 @@ some noise`;
     );
     expect(maybeCTA.isNone()).toBeTruthy();
   });
+
+  it("should not have a valid CTA", () => {
+    const NO_CTA = `---
+it:
+    act_1:
+        txet: "premi"
+        aa: "io://PROFILE_MAIN"
+--- 
+some noise`;
+    const maybeCTA = getCTA(
+      {
+        ...messageWithContent,
+        content: {
+          ...messageWithContent.content,
+          markdown: NO_CTA as MessageBodyMarkdown
+        }
+      },
+      "it"
+    );
+    expect(maybeCTA.isNone()).toBeTruthy();
+  });
 });
 
 const test2CTA = (

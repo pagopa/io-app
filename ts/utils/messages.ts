@@ -173,7 +173,7 @@ export const getCTA = (
 ): Option<CTAS> => {
   return fromPredicate((t: string) => FM.test(t))(message.content.markdown)
     .map(m => FM<MessageCTA>(m).attributes)
-    .chain(attrs => fromNullable(attrs[locale]));
+    .chain(attrs => CTAS.decode(attrs[locale]).fold(_ => none, some));
 };
 
 /**
