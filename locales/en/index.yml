@@ -1264,6 +1264,9 @@ bonus:
     applicant: Applicant FC
     bonusClaim: Who can claim the bonus?
     shareMessage: "This is the code of your Bonus Vacanze:"
+    contextualHelp:
+      title: Your Bonus Vacanze
+      body: On this page you can view your Bonus Vacanze
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:
