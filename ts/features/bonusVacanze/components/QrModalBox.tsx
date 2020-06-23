@@ -4,20 +4,18 @@ import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
-import { connect } from "react-redux";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
-import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
-import { bonusVacanzeLogo } from "../store/reducers/availableBonusesTypes";
 import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 
 type Props = {
   onClose: () => void;
   qrCode: string;
   secretCode: string;
-} & ReturnType<typeof mapStateToProps>;
+  logo?: string;
+};
 
 const styles = StyleSheet.create({
   modalBackdrop: {
@@ -160,8 +158,4 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  logo: bonusVacanzeLogo(state)
-});
-
-export default connect(mapStateToProps)(QrModalBox);
+export default QrModalBox;

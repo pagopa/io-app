@@ -39,7 +39,10 @@ import {
   startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
 import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
-import { availableBonusTypesSelectorFromId } from "../store/reducers/availableBonusesTypes";
+import {
+  availableBonusTypesSelectorFromId,
+  bonusVacanzeLogo
+} from "../store/reducers/availableBonusesTypes";
 import {
   getBonusCodeFormatted,
   ID_BONUS_VACANZE_TYPE,
@@ -256,6 +259,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         secretCode={getBonusCodeFormatted(bonus)}
         onClose={props.hideModal}
         qrCode={qrCode[QR_CODE_MIME_TYPE]}
+        logo={props.logo}
       />
     );
     props.showAnimatedModal(modalBox, BottomTopAnimation);
@@ -496,7 +500,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   return {
     bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus,
-    isError: pot.isNone(bonus) && pot.isError(bonus) // error and no bonus data, user should retry to load
+    isError: pot.isNone(bonus) && pot.isError(bonus), // error and no bonus data, user should retry to load
+    logo: bonusVacanzeLogo(state)
   };
 };
 
