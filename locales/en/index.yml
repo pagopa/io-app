@@ -1306,7 +1306,7 @@ bonus:
         description: You will receive a message when it is activated.
       activate:
         loading: "We have forwarded your request to the Revenue Agency\nPlease wait."
-        goToDetails: Show details
+        goToDetails: Show Bonus Vacanze
         timeout:
           title: Sorry, it takes longer to process your request.
           description: We will send you a message in the app when your bonus is ready.

@@ -3,10 +3,7 @@ import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
