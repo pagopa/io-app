@@ -1274,12 +1274,16 @@ bonus:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
         title: "We're sorry.\n ISEE not found."
-        text: "You should submit a DSU for the calculation of the ISEE to obtain the \"Bonus Vacanze\".\n\nIf you want, you can immediately make a simulation or request online on the INPS website."
+        text:
+          first: "It is necessary to submit a DSU for the calculation of the ISEE, before requesting the \"Bonus Vacanze\".\n
+                  You can do a "
+          secondo: "online simulation"
+          third: " on the INPS website to check your eligibility, or request ISEE through the channels provided by INPS."
+        goToDSU: Request ISEE
       iseeNotEligible:
         title: We're sorry. Your ISEE exceeds the required threshold.
-        text: If it is not correct, or if your family income has changed since the last ISEE created, you can update it by making a new declaration (DSU) on the INPS website.
-        goToNewDSU: Submit new DSU to INPS
-        goToNewSimulation: Online simulation
+        text: If the financial position of your household has changed since the last DSU published, you can file a new through the channels provided by INPS.
+        goToNewDSU: Request new DSU
       activateBonus:
         headerTitle: Bonus Vacanze request
         title: Good news!

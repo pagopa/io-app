@@ -1305,13 +1305,17 @@ bonus:
     eligibility:
       loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
       iseeNotAvailable:
-        title: Siamo spiacenti. Non abbiamo trovato il tuo ISEE.
-        text: "È necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE per ottenere il Bonus Vacanze.\n\nSe vuoi, puoi fare subito una simulazione o la richiesta online sul sito di INPS."
+        title: "Siamo spiacenti.\n Non abbiamo trovato il tuo ISEE."
+        text:
+          first: "E' necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE, prima di richiedere nuovamente il Bonus Vacanze.\n
+                  Puoi fare subito una "
+          secondo: "simulazione online"
+          third: " sul sito dell'INPS per verificare la tua idoneità, oppure richiedere l'ISEE sui canali previsti da INPS."
+        goToDSU: Richiedi ISEE
       iseeNotEligible:
         title: Siamo spiacenti. Il tuo ISEE supera la soglia richiesta.
-        text: Se non ti risulta corretto, oppure se il tuo reddito familiare è cambiato dall’ultimo ISEE creato, puoi aggiornarlo effettuando una nuova dichiarazione sostituiva unica (DSU) sul sito di INPS.
-        goToNewDSU: Presenta nuova DSU a INPS
-        goToNewSimulation: Fai una simulazione online
+        text: Se la situazione patrimoniale del tuo nucleo familiare è cambiata rispetto all'ultima Dichiarazioni Sostitutiva Unica (DSU) presentata, puoi presentarne una nuova attraverso i canali previsti da INPS.
+        goToNewDSU: Richiedi nuovo ISEE
       activateBonus:
         headerTitle: Richiesta Bonus Vacanze
         title: Buone notizie!

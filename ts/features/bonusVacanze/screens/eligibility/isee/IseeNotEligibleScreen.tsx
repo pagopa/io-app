@@ -23,6 +23,9 @@ const image = require("../../../../../../img/servicesStatus/error-detail-icon.pn
 const IseeNotEligibleScreen: React.FunctionComponent<Props> = props => {
   const title = I18n.t("bonus.bonusVacanza.eligibility.iseeNotEligible.title");
   const body = I18n.t("bonus.bonusVacanza.eligibility.iseeNotEligible.text");
+  const goToDsu = I18n.t(
+    "bonus.bonusVacanza.eligibility.iseeNotEligible.goToNewDSU"
+  );
 
   return (
     <BaseIseeErrorComponent
@@ -30,6 +33,7 @@ const IseeNotEligibleScreen: React.FunctionComponent<Props> = props => {
       title={title}
       body={body}
       onCancel={props.onCancel}
+      ctaText={goToDsu}
     />
   );
 };
