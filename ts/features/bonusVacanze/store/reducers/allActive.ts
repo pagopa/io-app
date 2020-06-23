@@ -6,7 +6,7 @@ import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vaca
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  bonusVacanzeActivation,
+  activateBonusVacanze,
   loadAllBonusActivations,
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
@@ -32,7 +32,7 @@ const reducer = (
         [action.payload]: cachedValue ? pot.toLoading(cachedValue) : pot.none
       };
     // a bonus is activated -> store it
-    case getType(bonusVacanzeActivation.success):
+    case getType(activateBonusVacanze.success):
       if (action.payload.activation === undefined) {
         return state;
       }

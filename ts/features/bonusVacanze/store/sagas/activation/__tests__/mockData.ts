@@ -12,7 +12,7 @@ import {
   navigateToEligibilityExpired
 } from "../../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../../navigation/routes";
-import { bonusVacanzeActivation } from "../../../actions/bonusVacanze";
+import { activateBonusVacanze } from "../../../actions/bonusVacanze";
 import { BonusActivationProgressEnum } from "../../../reducers/activation";
 
 interface IExpectedActions {
@@ -39,12 +39,12 @@ export const startFromAnotherScreen: StartScreenScenario = {
 };
 
 interface NetworkingResults extends IExpectedActions {
-  results: ActionType<typeof bonusVacanzeActivation>;
+  results: ActionType<typeof activateBonusVacanze>;
 }
 
 export const activationSuccess: NetworkingResults = {
   displayName: "activationSuccess",
-  results: bonusVacanzeActivation.success({
+  results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.SUCCESS,
     activation: mockedBonus,
     instanceId: { id: "unique_id" } as InstanceId
@@ -58,7 +58,7 @@ export const activationSuccess: NetworkingResults = {
 
 export const activationTimeout: NetworkingResults = {
   displayName: "activationTimeout",
-  results: bonusVacanzeActivation.success({
+  results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.TIMEOUT,
     instanceId: { id: "unique_id" } as InstanceId
   }),
@@ -67,7 +67,7 @@ export const activationTimeout: NetworkingResults = {
 
 export const activationExpired: NetworkingResults = {
   displayName: "activationTimeout",
-  results: bonusVacanzeActivation.success({
+  results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.ELIGIBILITY_EXPIRED
   }),
   expectedActions: [navigateToEligibilityExpired(), navigationHistoryPop(1)]
@@ -75,7 +75,7 @@ export const activationExpired: NetworkingResults = {
 
 export const activationExists: NetworkingResults = {
   displayName: "activationExists",
-  results: bonusVacanzeActivation.success({
+  results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.EXISTS
   }),
   expectedActions: [navigateToBonusAlreadyExists(), navigationHistoryPop(1)]
@@ -84,7 +84,7 @@ export const activationExists: NetworkingResults = {
 // when an error occurs, no navigation is expected, just the reducer `isLoading` should return false
 export const activationError: NetworkingResults = {
   displayName: "activationError",
-  results: bonusVacanzeActivation.success({
+  results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.ERROR
   }),
   expectedActions: []
@@ -93,7 +93,7 @@ export const activationError: NetworkingResults = {
 // This case should never happens, but in case no action is expected
 export const activationUndefined: NetworkingResults = {
   displayName: "activationUndefined",
-  results: bonusVacanzeActivation.success({
+  results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.UNDEFINED
   }),
   expectedActions: []
@@ -102,7 +102,7 @@ export const activationUndefined: NetworkingResults = {
 // This case should never happens, but in case no action is expected
 export const activationProgress: NetworkingResults = {
   displayName: "activationProgress",
-  results: bonusVacanzeActivation.success({
+  results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.PROGRESS
   }),
   expectedActions: []

@@ -23,7 +23,7 @@ import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
 import { bonusVacanzaStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
-import { checkBonusEligibility } from "../store/actions/bonusVacanze";
+import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -211,7 +211,8 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO add bonus request action or just navigate to TOS screen (?)
-  requestBonusActivation: () => dispatch(checkBonusEligibility.request()),
+  requestBonusActivation: () =>
+    dispatch(checkBonusVacanzeEligibility.request()),
   navigateBack: () => dispatch(navigateBack())
 });
 

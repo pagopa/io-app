@@ -7,8 +7,8 @@ import { abortBonusRequest } from "../../components/alert/AbortBonusRequest";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 import {
-  bonusVacanzeActivation,
-  cancelBonusRequest
+  activateBonusVacanze,
+  cancelBonusVacanzeRequest
 } from "../../store/actions/bonusVacanze";
 import { activationIsLoading } from "../../store/reducers/activation";
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -45,9 +45,9 @@ const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: link with the right dispatch action, will dispatch the cancel request
-  onAbort: () => dispatch(cancelBonusRequest()),
+  onAbort: () => dispatch(cancelBonusVacanzeRequest()),
   // TODO: link with the right dispatch action, will dispatch the retry request
-  onRetry: () => dispatch(bonusVacanzeActivation.request())
+  onRetry: () => dispatch(activateBonusVacanze.request())
 });
 
 const mapStateToProps = (state: GlobalState) => ({

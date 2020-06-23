@@ -13,8 +13,8 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { startTimer } from "../../../../../utils/timer";
 import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
 import {
-  checkBonusEligibility,
-  eligibilityRequestId
+  checkBonusVacanzeEligibility,
+  storeEligibilityRequestId
 } from "../../actions/bonusVacanze";
 import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
 
@@ -104,7 +104,7 @@ export const bonusEligibilitySaga = (
   >["getBonusEligibilityCheck"]
 ) =>
   function* getBonusEligibilitySaga(): IterableIterator<
-    Effect | ActionType<typeof checkBonusEligibility>
+    Effect | ActionType<typeof checkBonusVacanzeEligibility>
   > {
     try {
       // before activate, make an optimistic check, maybe the isee result is already available
@@ -112,7 +112,7 @@ export const bonusEligibilitySaga = (
         executeGetEligibilityCheck(getBonusEligibilityCheck)
       );
       if (firstCheck.isRight()) {
-        return checkBonusEligibility.success({
+        return checkBonusVacanzeEligibility.success({
           check: firstCheck.value,
           status: eligibilityResultToEnum(firstCheck.value)
         });
@@ -131,7 +131,9 @@ export const bonusEligibilitySaga = (
         ) {
           // processing request, dispatch di process id
           if (startEligibilityResult.value.status === 201) {
-            yield put(eligibilityRequestId(startEligibilityResult.value.value));
+            yield put(
+              storeEligibilityRequestId(startEligibilityResult.value.value)
+            );
           }
           // start polling to know about the check result
           const startPolling = new Date().getTime();
@@ -149,7 +151,7 @@ export const bonusEligibilitySaga = (
             }
             // we got the eligibility result, stop polling
             if (eligibilityCheckResult.isRight()) {
-              return checkBonusEligibility.success({
+              return checkBonusVacanzeEligibility.success({
                 check: eligibilityCheckResult.value,
                 status: eligibilityResultToEnum(eligibilityCheckResult.value)
               });
@@ -159,7 +161,7 @@ export const bonusEligibilitySaga = (
             // check if the time threshold was exceeded, if yes abort
             const now = new Date().getTime();
             if (now - startPolling >= pollingTimeThreshold) {
-              return checkBonusEligibility.success({
+              return checkBonusVacanzeEligibility.success({
                 status: EligibilityRequestProgressEnum.TIMEOUT
               });
             }
@@ -167,7 +169,7 @@ export const bonusEligibilitySaga = (
         }
         // there's already an activation bonus running
         else if (startEligibilityResult.value.status === 403) {
-          return checkBonusEligibility.success({
+          return checkBonusVacanzeEligibility.success({
             status: EligibilityRequestProgressEnum.BONUS_ACTIVATION_PENDING
           });
         }
@@ -177,6 +179,6 @@ export const bonusEligibilitySaga = (
         throw Error(readableReport(startEligibilityResult.value));
       }
     } catch (e) {
-      return checkBonusEligibility.failure(e);
+      return checkBonusVacanzeEligibility.failure(e);
     }
   };
