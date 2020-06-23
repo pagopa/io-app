@@ -23,7 +23,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
-  const loadingCaption = I18n.t("bonus.bonusVacanza.eligibility.loading");
+  const loadingCaption = I18n.t("bonus.bonusVacanze.eligibility.loading");
 
   useHardwareBackButton(() => {
     if (!props.isLoading) {

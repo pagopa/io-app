@@ -15,10 +15,8 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  */
 
 const TimeoutActivationInfoScreen: React.FunctionComponent<Props> = props => {
-  const title = I18n.t("bonus.bonusVacanza.eligibility.activate.timeout.title");
-  const body = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.timeout.description"
-  );
+  const title = I18n.t("bonus.bonusVacanze.activation.timeout.title");
+  const body = I18n.t("bonus.bonusVacanze.activation.timeout.description");
 
   useHardwareBackButton(() => {
     props.onExit();

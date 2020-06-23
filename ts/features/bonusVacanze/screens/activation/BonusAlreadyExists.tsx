@@ -3,17 +3,17 @@ import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
-import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
-import { bonusVacanzaStyle } from "../../components/Styles";
+import { bonusVacanzeStyle } from "../../components/Styles";
 import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const image = require("../../../../../img/servicesStatus/error-detail-icon.png");
+const image = require("../../../../../img/messages/empty-due-date-list-icon.png");
 
 /**
  * This screen informs the user that the bonus cannot be activated because another active or redeemed
@@ -25,13 +25,9 @@ const image = require("../../../../../img/servicesStatus/error-detail-icon.png")
  */
 
 const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
-  const title = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.alreadyRedeemed.title"
-  );
-  const body = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.alreadyRedeemed.body"
-  );
-  const cancel = I18n.t("bonus.bonusVacanza.cta.cancelRequest");
+  const title = I18n.t("bonus.bonusVacanze.activation.alreadyRedeemed.title");
+  const body = I18n.t("bonus.bonusVacanze.activation.alreadyRedeemed.body");
+  const cta = I18n.t("bonus.bonusVacanze.activation.alreadyRedeemed.cta");
 
   useHardwareBackButton(() => {
     props.onCancel();
@@ -39,15 +35,13 @@ const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <SafeAreaView style={bonusVacanzaStyle.flex}>
+    <SafeAreaView style={bonusVacanzeStyle.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={title}
         body={body}
       />
-      <FooterStackButton
-        buttons={[cancelButtonProps(props.onCancel, cancel)]}
-      />
+      <FooterStackButton buttons={[confirmButtonProps(props.onCancel, cta)]} />
     </SafeAreaView>
   );
 };
