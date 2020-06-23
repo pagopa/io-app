@@ -9,12 +9,15 @@ import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
+import { GlobalState } from "../../../store/reducers/types";
+import { connect } from "react-redux";
+import { bonusVacanzeLogo } from "../store/reducers/availableBonusesTypes";
 
 type Props = {
   onClose: () => void;
   qrCode: string;
   secretCode: string;
-};
+} & ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   modalBackdrop: {
@@ -143,11 +146,13 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
               <CopyButtonComponent textToCopy={secretCode} />
             </View>
           </View>
-          <Image
-            source={bonusVacanzeImage}
-            resizeMode={"contain"}
-            style={styles.bonusLogo}
-          />
+          {props.logo && (
+            <Image
+              source={{ uri: props.logo }}
+              resizeMode={"contain"}
+              style={styles.bonusLogo}
+            />
+          )}
         </View>
         <View spacer={true} extralarge={true} />
         <View style={styles.image}>{renderQRCode(qrCode)}</View>
@@ -156,4 +161,8 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-export default QrModalBox;
+const mapStateToProps = (state: GlobalState) => ({
+  logo: bonusVacanzeLogo(state)
+});
+
+export default connect(mapStateToProps)(QrModalBox);
