@@ -19,6 +19,7 @@ import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
+import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusEligibility } from "../store/actions/bonusVacanze";
@@ -88,7 +89,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 
   const bonusType = getBonusItem();
   const bonusTypeLocalizedContent: BonusAvailableContent =
-    bonusType[I18n.currentLocale()];
+    bonusType[getLocalePrimaryWithFallback()];
 
   const cancelButtonProps = {
     block: true,
