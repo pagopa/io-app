@@ -18,7 +18,7 @@ import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
 import { Locales } from "../../locales/locales";
 import { getInternalRoute } from "../components/ui/Markdown/handlers/internalLink";
 import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link";
-import I18n from "../i18n";
+import I18n, { translations } from "../i18n";
 import { CTA, CTAS, MessageCTA } from "../types/MessageCTA";
 import { getExpireStatus } from "./dates";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -173,7 +173,18 @@ export const getCTA = (
 ): Option<CTAS> => {
   return fromPredicate((t: string) => FM.test(t))(message.content.markdown)
     .map(m => FM<MessageCTA>(m).attributes)
-    .chain(attrs => CTAS.decode(attrs[locale]).fold(_ => none, some));
+    .chain(attrs =>
+      CTAS.decode(attrs[locale]).fold(_ => {
+        // fallback on the first locale available
+        const fallback = translations.find(
+          s => attrs[s as Locales] !== undefined
+        );
+        if (fallback) {
+          return CTAS.decode(attrs[fallback as Locales]).fold(__ => none, some);
+        }
+        return none;
+      }, some)
+    );
 };
 
 /**

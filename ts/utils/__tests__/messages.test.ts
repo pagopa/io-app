@@ -104,7 +104,8 @@ some noise`;
       },
       "en"
     );
-    expect(maybeCTAEn.isNone()).toBeTruthy();
+    // this is because it fallbacks on the next locale supported (it in this case)
+    expect(maybeCTAEn.isSome()).toBeTruthy();
   });
 
   it("should not have a valid CTA", () => {
