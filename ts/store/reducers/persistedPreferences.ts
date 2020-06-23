@@ -1,7 +1,7 @@
 /**
  * A reducer for persisted preferences.
  */
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Calendar } from "react-native-calendar-events";
 import { isActionOf } from "typesafe-actions";
@@ -17,6 +17,7 @@ import {
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
+import { createSelector } from "reselect";
 
 export type PersistedPreferencesState = Readonly<{
   isFingerprintEnabled?: boolean;
@@ -108,6 +109,12 @@ export const preferredCalendarSelector = (state: GlobalState) =>
 export const isFingerprintEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isFingerprintEnabled;
 
+export const persistedPreferencesSelector = (state: GlobalState) =>
+  state.persistedPreferences;
+
 // returns the preferred language as an Option from the persisted store
-export const preferredLanguageSelector = (state: GlobalState) =>
-  fromNullable(state.persistedPreferences.preferredLanguage);
+export const preferredLanguageSelector = createSelector<
+  GlobalState,
+  PersistedPreferencesState,
+  Option<Locales>
+>(persistedPreferencesSelector, pps => fromNullable(pps.preferredLanguage));
