@@ -1,30 +1,37 @@
 /**
  * Implements the reducers for static content.
- *
- * TODO: add eviction of old entries
- * https://www.pivotaltracker.com/story/show/159440294
  */
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { NavigationState } from "react-navigation";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
+import { Idp } from "../../../definitions/content/Idp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
+import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import {
   ScopeEnum,
   Service as ServiceMetadata
 } from "../../../definitions/content/Service";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
+import { IdentityProviderId } from "../../models/IdentityProvider";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
+import { getLocalePrimaryWithFallback } from "../../utils/locale";
+import { getCurrentRouteName } from "../../utils/navigation";
 import {
   contentMunicipalityLoad,
+  loadContextualHelpData,
   loadServiceMetadata,
   loadVisibleServicesByScope
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
+import { navSelector } from "./navigationHistory";
 import { GlobalState } from "./types";
 
 /**
@@ -37,6 +44,7 @@ export type ContentState = Readonly<{
   };
   municipality: MunicipalityState;
   servicesByScope: pot.Pot<ServicesByScope, Error>;
+  contextualHelp: pot.Pot<ContextualHelp, Error>;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -58,7 +66,8 @@ const initialContentState: ContentState = {
     codiceCatastale: pot.none,
     data: pot.none
   },
-  servicesByScope: pot.none
+  servicesByScope: pot.none,
+  contextualHelp: pot.none
 };
 
 // Selectors
@@ -128,6 +137,51 @@ export const servicesInScopeSelector = (
       []
     )
   );
+
+export const contextualHelpDataSelector = (
+  state: GlobalState
+): pot.Pot<ContextualHelp, Error> => state.content.contextualHelp;
+
+/**
+ * return an option with Idp contextual help data if they are loaded and defined
+ * @param id
+ */
+export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
+  createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, Option<Idp>>(
+    contextualHelpDataSelector,
+    contextualHelpData => {
+      return pot.getOrElse(
+        pot.map(contextualHelpData, data => {
+          const locale = getLocalePrimaryWithFallback();
+          return fromNullable(data[locale].idps[id]);
+        }),
+        none
+      );
+    }
+  );
+
+/**
+ * return a pot with screen contextual help data if they are loaded and defined otherwise
+ * @param id
+ */
+export const screenContextualHelpDataSelector = createSelector<
+  GlobalState,
+  pot.Pot<ContextualHelp, Error>,
+  NavigationState,
+  pot.Pot<Option<ScreenCHData>, Error>
+>([contextualHelpDataSelector, navSelector], (contextualHelpData, navState) => {
+  return pot.map(contextualHelpData, data => {
+    const currentRouteName = getCurrentRouteName(navState);
+    if (currentRouteName === undefined) {
+      return none;
+    }
+    const locale = getLocalePrimaryWithFallback();
+    const screenData = data[locale].screens.find(
+      s => s.route_name.toLowerCase() === currentRouteName.toLocaleLowerCase()
+    );
+    return fromNullable(screenData);
+  });
+});
 
 export default function content(
   state: ContentState = initialContentState,
@@ -220,11 +274,31 @@ export default function content(
         servicesByScope: pot.toError(state.servicesByScope, action.payload)
       };
 
+    // idps text data
+    case getType(loadContextualHelpData.request):
+      return {
+        ...state,
+        contextualHelp: pot.toLoading(state.contextualHelp)
+      };
+
+    case getType(loadContextualHelpData.success):
+      return {
+        ...state,
+        contextualHelp: pot.some(action.payload)
+      };
+
+    case getType(loadContextualHelpData.failure):
+      return {
+        ...state,
+        contextualHelp: pot.toError(state.contextualHelp, action.payload)
+      };
+
     case getType(clearCache):
       return {
         ...state,
         servicesMetadata: { ...initialContentState.servicesMetadata },
-        municipality: { ...initialContentState.municipality }
+        municipality: { ...initialContentState.municipality },
+        contextualHelp: { ...initialContentState.contextualHelp }
       };
 
     case getType(removeServiceTuples): {

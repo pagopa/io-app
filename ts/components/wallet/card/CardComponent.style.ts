@@ -9,20 +9,18 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
-    elevation: 3,
-
+    elevation: -7,
+    zIndex: -7,
     backgroundColor: variables.brandGray,
     borderRadius: 8,
-    marginBottom: -1,
     marginLeft: 0,
-    marginRight: 0,
-    marginTop: 20
+    marginRight: 0
   },
   cardInner: {
     paddingBottom: 16,
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 22
+    paddingTop: 18
   },
   cardNumber: {
     flexDirection: "row",

@@ -27,6 +27,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   buttons:
+    share: Share
     delete: Delete
     cancel: Cancel
     ok: OK
@@ -382,9 +383,15 @@ authentication:
     contextualHelpTitle: Who is your Identity Provider
     contextualHelpContent: !include authentication/authentication_idp_selection.md
   idp_login:
-    headerTitle: Login
+    headerTitle: SPID Login
     contextualHelpTitle: What is your password
     contextualHelpContent: !include authentication/authentication_idp_login.md
+    contextualHelpTitle2: Need support on the login by SPID?
+    openTicket: Create a ticket
+    recoverUsername: Recover the username
+    recoverDescription: If you're missing your password, you can recover it by tapping on the following button.
+    dualRecoverDescription: If you're missing your credentials, you can recover them by tapping on the following buttons.
+    recoverPassword: Recover the password
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
@@ -530,7 +537,6 @@ payment:
       dateAndTime: Date and time
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
-      totalPaid: Total paid
       transactionCode: Transaction identification code
       help: If you have encountered a problem with this payment, write to us for more information and details
     list:
@@ -573,8 +579,7 @@ wallet:
   newPaymentMethod:
     add: add
     addButton: Add a new method
-    addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
-      so that you don't have to re-add them from scratch for every transaction.
+    addDescription: Add a payment method to pay from IO in seconds, or request activation of a bonus or discount card.
     walletAlert: "Your wallet includes payment methods but no one is supported by IO yet"
     successful: The card was added successfully!
     failed: The card could not be added
@@ -720,9 +725,12 @@ wallet:
   backToPayments: Back to payments
   methods:
     comingSoon: incoming
+    newCome: New
     card:
       name: Credit/debit card
       maxFee: Maximum fee of 1.50€
+    sovvenzione:
+      name: Subsidy
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
@@ -1069,9 +1077,10 @@ instabug:
     description: "Remember that if you have any doubts about the content of a message, we suggest you to contact the public administration that sent it to you directly: you will find the contact details at the bottom of the message or in the relevant service card."
     descriptionChat: "If you have found an error or something that is not working in the app, report a bug to the developers: they will take care of the problem as soon as possible and they will answer you directly via IO."
     buttonBug: Report a bug
-    descriptionBug: You can report an error or something that does not work to our developers, they will take care of the problem as soon as possible.
+    descriptionBug: If you want to suggest an improvement or a new service that you would like to have on IO, you can send a message to the team directly from here.
     title2: Are you new to IO?
     descriptionLink: Find out more about the IO project, its history and what news await you by visiting the website
+    assistanceWorkHours: IO assistance is available on weekdays from 8.00 to 20.00 and on holidays from 8.00 to 12.00
 faq:
   1:
     title: "What is SPID?"
@@ -1241,3 +1250,101 @@ faq:
   57:
     title: "Did you have problems during a payment?"
     content: !include faq/faq57.md
+bonus:
+  bonusVacanza:
+    validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
+    bonusRejected: Attention! This Bonus Vacanze has been rejected
+    usableAmount: Expendable at the accommodation facility
+    taxBenefit: Deductible in tax return
+    request: Request the
+    code: Code
+    uniqueCode: Unique code
+    requestedAt: Requested on
+    advice: 'By clicking on "Request the Bonus Vacanze" you declare that you have read and understood the '
+    status: Status
+    name: Bonus Vacanze
+    validity: Valid between
+    amount: Max amount
+    applicant: Applicant FC
+    bonusClaim: Who can claim the bonus?
+    shareMessage: "This is the code of your Bonus Vacanze:"
+    checkBonusEligibility:
+      loading: Checking bonus eligibility
+    cta:
+      requestBonus: Request
+      cancelRequest: Cancel the request
+      qrCode: QR code
+      copyCode: Code copy
+      openQRCode: View QR code
+    eligibility:
+      loading: "We are verifying your family's ISEE with INPS\nPlease wait."
+      iseeNotAvailable:
+        title: "We're sorry.\n ISEE not found."
+        text: "You should submit a DSU for the calculation of the ISEE to obtain the Holiday Bonus.\n\nIf you want, you can immediately make a simulation or request online on the INPS website."
+      iseeNotEligible:
+        title: We're sorry. Your ISEE exceeds the required threshold.
+        text: If it is not correct, or if your family income has changed since the last ISEE created, you can update it by making a new declaration (DSU) on the INPS website.
+        goToNewDSU: Submit new DSU to INPS
+        goToNewSimulation: Online simulation
+      activateBonus:
+        headerTitle: Bonus Vacanze request
+        title: Good news!
+        description: "Your family is entitled to the following Bonus Vacanze:"
+        reminder:
+          text: "We remind you that each member of your household can spend the bonus. If the information shown is incorrect, please check with the"
+          link: "INPS customer service."
+        discrepancies:
+          attention: "Warning!"
+          text: "INPS has reported some omissions or discrepancies in your ISEE. If you decide to continue, you may be called to provide the insights that led to the presence of these omissions or discrepancies."
+        activateCTA: "Activate the Bonus"
+      timeout:
+        title: Sorry, it takes longer to verify your ISEE.
+        description:
+          first: "We will send you a message when INPS has given us the answer related to your ISEE.\n\nIf the outcome is positive, when you receive it, remember to complete your application "
+          second: "within 24 hours"
+          third: ", otherwise it will expire and you will have to start a new one."
+      activate:
+        loading: "We have forwarded your request to the Revenue Agency\nPlease wait."
+        goToDetails: Show details
+        timeout:
+          title: Sorry, it takes longer to process your request.
+          description: We will send you a message in the app when your bonus is ready.
+        alreadyRedeemed:
+          title: The bonus for your household has already been claimed.
+          body: We ask you to check with your family members. If this information is not correct, check with the Revenue Agency customer service.
+        eligibilityExpired:
+          title: Eligibility expired
+          body: The period in which it was possible to activate the bonus has expired. A new procedure must be started.
+        completed:
+          title: Congratulation!
+          description: Bonus activated
+        confirm:
+          title: Attention
+          body: If you continue, you will no longer be able to cancel the request.
+          cancel: Back to the request
+          confirm: Continue
+    abort:
+      title: Cancel
+      body: Do you really want to quit? To request the "Bonus Vacanza" you will have to repeat the process from the beginning.
+      cancel: Back to the request
+      confirm: Abort request
+      completed: Request aborted
+    composition:
+      amount: "Maximum amount"
+      expendable: "Spendable amount"
+      taxBenefit: "Tax deductible"
+    family:
+      title: "Who can claim the bonus?"
+  bonusList:
+    title: Add bonus or discount
+    contentTitle: Select one of the available bonus
+  request: Request a new bonus
+  requestLabel: Bonuses and discounts
+  requestTitle: Request
+  validity_interval: from {{from}} until {{to}}
+  active: Active
+  failed: Failed
+  redeemed: Consumed
+  tos:
+    title: Terms and conditions of use and Privacy policy
+    content: !include bonus/bonusVacanze/bonus_tos.md

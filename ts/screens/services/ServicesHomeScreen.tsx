@@ -350,24 +350,27 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private sendDataToInstabug() {
     Instabug.appendTags([this.instabugReportTag]);
     instabugLog(
-      "userMetadata: " + JSON.stringify(this.props.potUserMetadata),
-      TypeLogs.INFO
+      JSON.stringify(this.props.potUserMetadata),
+      TypeLogs.INFO,
+      "userMetadata"
     );
 
     instabugLog(
-      "services: " + JSON.stringify(this.props.debugONLYServices),
-      TypeLogs.INFO
+      JSON.stringify(this.props.debugONLYServices),
+      TypeLogs.INFO,
+      "services"
     );
 
     instabugLog(
-      `Internal component state: isInnerContentRendered=${
+      `isInnerContentRendered=${
         this.state.isInnerContentRendered
       }  visibleServicesContentLoadState=${JSON.stringify(
         this.props.visibleServicesContentLoadState
       )} loadDataFailure=${JSON.stringify(
         this.props.loadDataFailure
       )} servicesByScope=${JSON.stringify(this.props.servicesByScope)}`,
-      TypeLogs.INFO
+      TypeLogs.INFO,
+      "Internal component state"
     );
   }
 
