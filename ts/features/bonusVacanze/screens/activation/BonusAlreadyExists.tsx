@@ -3,7 +3,10 @@ import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
-import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
@@ -31,7 +34,9 @@ const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
   const body = I18n.t(
     "bonus.bonusVacanza.eligibility.activate.alreadyRedeemed.body"
   );
-  const cancel = I18n.t("bonus.bonusVacanza.cta.cancelRequest");
+  const cta = I18n.t(
+    "bonus.bonusVacanza.eligibility.activate.alreadyRedeemed.cta"
+  );
 
   useHardwareBackButton(() => {
     props.onCancel();
@@ -45,9 +50,7 @@ const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
         title={title}
         body={body}
       />
-      <FooterStackButton
-        buttons={[cancelButtonProps(props.onCancel, cancel)]}
-      />
+      <FooterStackButton buttons={[confirmButtonProps(props.onCancel, cta)]} />
     </SafeAreaView>
   );
 };

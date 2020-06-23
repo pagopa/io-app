@@ -1345,6 +1345,7 @@ bonus:
         alreadyRedeemed:
           title: Il bonus per il tuo nucleo familiare è già attivo!
           body: Puoi visualizzarne i dettagli nella sezione Pagamenti.
+          cta: Visualizza Bonus Vacanze
         eligibilityExpired:
           title: Eligibilità scaduta
           body: Il periodo in cui era possibile attivare il bonus è scaduto. È necessario iniziare una nuova procedura.
@@ -1359,7 +1360,7 @@ bonus:
     abort:
       title: Annulla
       body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
-      cancel: Torna alla richiesta
+      cancel: Continua
       confirm: Annulla richiesta
       completed: Richiesta annullata
     composition:
