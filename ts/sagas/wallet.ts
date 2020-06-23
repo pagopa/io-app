@@ -81,6 +81,7 @@ import { SessionToken } from "../types/SessionToken";
 
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 
+import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import ROUTES from "../navigation/routes";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
@@ -467,13 +468,18 @@ function* deleteActivePaymentSaga() {
     GlobalState
   >(_ => _.wallet.payment.paymentId);
   const maybePaymentId = pot.toOption(potPaymentId);
+  shouldAbortPaymentIdPollingRequest.e2(true);
   if (maybePaymentId.isSome()) {
+    shouldAbortPaymentIdPollingRequest.e2(true);
     yield put(
       paymentDeletePayment.request({ paymentId: maybePaymentId.value })
     );
   }
 }
 
+// this is a shared DeferredPromise used to stop polling when user aborts a running payment
+// tslint:disable-next-line:no-let
+let shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
 /**
  * Main wallet saga.
  *
@@ -496,17 +502,6 @@ export function* watchWalletSaga(
     apiUrlPrefix,
     sessionToken,
     defaultRetryingFetch(fetchPagoPaTimeout, 0)
-  );
-
-  // Backend client for polling for paymentId - uses an instance of fetch that
-  // considers a 404 as a transient error and retries with a constant delay
-  const pollingPagopaNodoClient = BackendClient(
-    apiUrlPrefix,
-    sessionToken,
-    constantPollingFetch(
-      PAYMENT_ID_MAX_POLLING_RETRIES,
-      PAYMENT_ID_RETRY_DELAY_MILLIS
-    )
   );
 
   // Client for the PagoPA PaymentManager
@@ -636,11 +631,29 @@ export function* watchWalletSaga(
     pagopaNodoClient.postAttivaRpt
   );
 
-  yield takeLatest(
-    getType(paymentIdPolling.request),
-    paymentIdPollingRequestHandler,
-    pollingPagopaNodoClient.getPaymentId
-  );
+  yield takeLatest(getType(paymentIdPolling.request), function*(
+    action: ActionType<typeof paymentIdPolling["request"]>
+  ) {
+    shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
+    // Backend client for polling for paymentId - uses an instance of fetch that
+    // considers a 404 as a transient error and retries with a constant delay
+    // it is created every time paymentIdPolling.request is triggered:
+    // this is because we have to re-new shouldAbortPaymentIdPollingRequest to be able to abort the running polling
+    const pollingPagopaNodoClient = BackendClient(
+      apiUrlPrefix,
+      sessionToken,
+      constantPollingFetch(
+        shouldAbortPaymentIdPollingRequest.e1,
+        PAYMENT_ID_MAX_POLLING_RETRIES,
+        PAYMENT_ID_RETRY_DELAY_MILLIS
+      )
+    );
+    yield call(
+      paymentIdPollingRequestHandler,
+      pollingPagopaNodoClient.getPaymentId,
+      action
+    );
+  });
 
   yield takeLatest(
     getType(paymentCheck.request),
