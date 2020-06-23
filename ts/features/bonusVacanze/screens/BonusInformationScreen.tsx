@@ -18,6 +18,7 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../store/actions/navigationHistory";
 import customVariables from "../../../theme/variables";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
@@ -80,6 +81,8 @@ const styles = StyleSheet.create({
 // the number of markdown component inside BonusInformationScreen
 const markdownComponents = 1;
 const loadingOpacity = 0.9;
+// for long content markdown computed height should be not enough
+const extraMarkdownBodyHeight = 20;
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
  */
@@ -164,7 +167,10 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
           <View spacer={true} />
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} />
-          <Markdown onLoadEnd={onMarkdownLoaded}>
+          <Markdown
+            extraBodyHeight={extraMarkdownBodyHeight}
+            onLoadEnd={onMarkdownLoaded}
+          >
             {bonusTypeLocalizedContent.content}
           </Markdown>
           {maybeBonusTos.isSome() && (
@@ -210,9 +216,10 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO add bonus request action or just navigate to TOS screen (?)
-  requestBonusActivation: () =>
-    dispatch(checkBonusVacanzeEligibility.request()),
+  requestBonusActivation: () => {
+    dispatch(checkBonusEligibility.request());
+    dispatch(navigationHistoryPop(1));
+  },
   navigateBack: () => dispatch(navigateBack())
 });
 
