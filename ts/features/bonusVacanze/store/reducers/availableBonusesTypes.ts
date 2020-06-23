@@ -40,7 +40,7 @@ export const availableBonusTypesSelector = (
 ): AvailableBonusTypesState => state.bonus.availableBonusTypes;
 
 /**
- * return the bonus type corresponding to the given id if it is present
+ * return the bonus type corresponding to the given idBonusType
  * @param idBonusType
  */
 export const availableBonusTypesSelectorFromId = (idBonusType: number) =>
