@@ -5,6 +5,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
+import { BonusAvailableContent } from "../../../../definitions/content/BonusAvailableContent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -86,7 +87,8 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const getBonusItem = () => props.navigation.getParam("bonusItem");
 
   const bonusType = getBonusItem();
-  const bonusTypeLocalizedContent = bonusType[I18n.currentLocale()];
+  const bonusTypeLocalizedContent: BonusAvailableContent =
+    bonusType[I18n.currentLocale()];
 
   const cancelButtonProps = {
     block: true,
