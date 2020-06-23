@@ -1372,7 +1372,7 @@ bonus:
   validity_interval: dal {{from}} fino al {{to}}
   active: Attivo
   failed: Fallito
-  redeemed: Consumato
+  redeemed: Utilizzato
   tos:
     title: Termini e condizioni d’uso e Privacy policy
     content: !include bonus/bonusVacanze/bonus_tos.md

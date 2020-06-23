@@ -324,9 +324,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         return renderInformationBlock(
           "io-complete",
           I18n.t("bonus.bonusVacanza.statusInfo.redeemed", {
-            date: fromNullable(bonus.redeemed_at).fold(
-              formatDateAsLocal(bonus.created_at, true),
-              d => formatDateAsLocal(d, true)
+            date: formatDateAsLocal(
+              fromNullable(bonus.redeemed_at).getOrElse(bonus.created_at),
+              true
             )
           }),
           customVariables.brandSuccess
