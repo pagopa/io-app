@@ -3,13 +3,9 @@ import { actionWithAlert } from "./ActionWithAlert";
 
 export const confirmBonusActivation = (onConfirm: () => void) =>
   actionWithAlert({
-    title: I18n.t("bonus.bonusVacanza.eligibility.activate.confirm.title"),
-    body: I18n.t("bonus.bonusVacanza.eligibility.activate.confirm.body"),
-    confirmText: I18n.t(
-      "bonus.bonusVacanza.eligibility.activate.confirm.confirm"
-    ),
-    cancelText: I18n.t(
-      "bonus.bonusVacanza.eligibility.activate.confirm.cancel"
-    ),
+    title: I18n.t("bonus.bonusVacanza.activation.confirm.title"),
+    body: I18n.t("bonus.bonusVacanza.activation.confirm.body"),
+    confirmText: I18n.t("bonus.bonusVacanza.activation.confirm.confirm"),
+    cancelText: I18n.t("bonus.bonusVacanza.activation.confirm.cancel"),
     onConfirmAction: onConfirm
   });

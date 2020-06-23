@@ -28,11 +28,9 @@ const image = require("../../../../../img/servicesStatus/error-detail-icon.png")
 
 const EligibilityExpired: React.FunctionComponent<Props> = props => {
   const title = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.eligibilityExpired.title"
+    "bonus.bonusVacanza.activation.eligibilityExpired.title"
   );
-  const body = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.eligibilityExpired.body"
-  );
+  const body = I18n.t("bonus.bonusVacanza.activation.eligibilityExpired.body");
   const cancel = I18n.t("bonus.bonusVacanza.cta.cancelRequest");
 
   useHardwareBackButton(() => {

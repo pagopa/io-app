@@ -24,15 +24,9 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 
 const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
-  const title = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.completed.title"
-  );
-  const body = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.completed.description"
-  );
-  const goToBonusDetail = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.goToDetails"
-  );
+  const title = I18n.t("bonus.bonusVacanza.activation.completed.title");
+  const body = I18n.t("bonus.bonusVacanza.activation.completed.description");
+  const goToBonusDetail = I18n.t("bonus.bonusVacanza.activation.goToDetails");
 
   return (
     <SafeAreaView style={bonusVacanzaStyle.flex}>

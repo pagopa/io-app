@@ -25,15 +25,9 @@ const image = require("../../../../../img/messages/empty-due-date-list-icon.png"
  */
 
 const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
-  const title = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.alreadyRedeemed.title"
-  );
-  const body = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.alreadyRedeemed.body"
-  );
-  const cta = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.alreadyRedeemed.cta"
-  );
+  const title = I18n.t("bonus.bonusVacanza.activation.alreadyRedeemed.title");
+  const body = I18n.t("bonus.bonusVacanza.activation.alreadyRedeemed.body");
+  const cta = I18n.t("bonus.bonusVacanza.activation.alreadyRedeemed.cta");
 
   useHardwareBackButton(() => {
     props.onCancel();

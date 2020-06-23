@@ -1309,27 +1309,27 @@ bonus:
       activationPending:
         title: The bonus for your family has already been requested and is being activated.
         description: You will receive a message when it is activated.
-      activate:
-        loading: "We have forwarded your request to the Revenue Agency\nPlease wait."
-        goToDetails: Show Bonus Vacanze
-        timeout:
-          title: Sorry, it takes longer to process your request.
-          description: We will send you a message in the app when your bonus is ready.
-        alreadyRedeemed:
-          title: The bonus for your family is already active!
-          body: You can view the details in the Payments section.
-          cta: Show Bonus Vacanze
-        eligibilityExpired:
-          title: Eligibility expired
-          body: The period in which it was possible to activate the bonus has expired. A new procedure must be started.
-        completed:
-          title: Congratulation!
-          description: Bonus activated
-        confirm:
-          title: Attention
-          body: If you continue, you will no longer be able to cancel the request.
-          cancel: Back to the request
-          confirm: Continue
+    activation:
+      loading: "We have forwarded your request to the Revenue Agency\nPlease wait."
+      goToDetails: Show Bonus Vacanze
+      timeout:
+        title: Sorry, it takes longer to process your request.
+        description: We will send you a message in the app when your bonus is ready.
+      alreadyRedeemed:
+        title: The bonus for your family is already active!
+        body: You can view the details in the Payments section.
+        cta: Show Bonus Vacanze
+      eligibilityExpired:
+        title: Eligibility expired
+        body: The period in which it was possible to activate the bonus has expired. A new procedure must be started.
+      completed:
+        title: Congratulation!
+        description: Bonus activated
+      confirm:
+        title: Attention
+        body: If you continue, you will no longer be able to cancel the request.
+        cancel: Back to the request
+        confirm: Continue
     abort:
       title: Cancel
       body: Do you really want to quit? To request the "Bonus Vacanze" you will have to repeat the process from the beginning.
