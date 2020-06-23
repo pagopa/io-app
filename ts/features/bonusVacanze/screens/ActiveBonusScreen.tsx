@@ -6,6 +6,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
@@ -25,6 +26,7 @@ import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
+import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
@@ -289,6 +291,56 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       />
     );
 
+  const renderInformationBlock = (
+    icon: string,
+    text: string,
+    iconColor?: string
+  ) => (
+    <View style={styles.rowBlock}>
+      <IconFont
+        name={icon}
+        color={fromNullable(iconColor).getOrElse(variables.textColor)}
+        size={variables.fontSize3}
+      />
+      <View style={styles.paddedContent}>
+        <Text style={[styles.validUntil]} semibold={true}>
+          {text}
+        </Text>
+      </View>
+    </View>
+  );
+
+  const switchInformationText = () => {
+    switch (bonus.status) {
+      case BonusActivationStatusEnum.ACTIVE:
+        return renderInformationBlock(
+          "io-calendario",
+          I18n.t("bonus.bonusVacanza.statusInfo.validBetween", {
+            from: bonusValidityInterval.fold("n/a", v => v.e1),
+            to: bonusValidityInterval.fold("n/a", v => v.e2)
+          })
+        );
+      case BonusActivationStatusEnum.REDEEMED:
+        return renderInformationBlock(
+          "io-complete",
+          I18n.t("bonus.bonusVacanza.statusInfo.redeemed", {
+            date: formatDateAsLocal(
+              fromNullable(bonus.redeemed_at).getOrElse(bonus.created_at),
+              true
+            )
+          }),
+          customVariables.brandSuccess
+        );
+      case BonusActivationStatusEnum.FAILED:
+        return renderInformationBlock(
+          "io-notice",
+          I18n.t("bonus.bonusVacanza.statusInfo.bonusRejected")
+        );
+      default:
+        return null;
+    }
+  };
+
   const from = props.bonusInfo.map(bi => bi.valid_from);
   const to = props.bonusInfo.map(bi => bi.valid_to);
   const bonusValidityInterval = validityInterval(
@@ -316,23 +368,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             <BonusCardComponent bonus={bonus} viewQR={openModalBox} />
           </View>
           <View spacer={true} extralarge={true} />
-          <View style={styles.rowBlock}>
-            <IconFont
-              name={isBonusActive(bonus) ? "io-calendario" : "io-notice"}
-              color={variables.textColor}
-              size={variables.fontSize3}
-            />
-            <View style={styles.paddedContent}>
-              <Text style={[styles.validUntil]} semibold={true}>
-                {isBonusActive(bonus)
-                  ? I18n.t("bonus.bonusVacanza.validBetween", {
-                      from: bonusValidityInterval.fold("n/a", v => v.e1),
-                      to: bonusValidityInterval.fold("n/a", v => v.e2)
-                    })
-                  : I18n.t("bonus.bonusVacanza.bonusRejected")}
-              </Text>
-            </View>
-          </View>
+          {switchInformationText()}
           <View spacer={true} />
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} />
