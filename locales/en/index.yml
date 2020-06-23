@@ -1279,7 +1279,7 @@ bonus:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
         title: "We're sorry.\n ISEE not found."
-        text: "You should submit a DSU for the calculation of the ISEE to obtain the Holiday Bonus.\n\nIf you want, you can immediately make a simulation or request online on the INPS website."
+        text: "You should submit a DSU for the calculation of the ISEE to obtain the \"Bonus Vacanze\".\n\nIf you want, you can immediately make a simulation or request online on the INPS website."
       iseeNotEligible:
         title: We're sorry. Your ISEE exceeds the required threshold.
         text: If it is not correct, or if your family income has changed since the last ISEE created, you can update it by making a new declaration (DSU) on the INPS website.
@@ -1324,7 +1324,7 @@ bonus:
           confirm: Continue
     abort:
       title: Cancel
-      body: Do you really want to quit? To request the "Bonus Vacanza" you will have to repeat the process from the beginning.
+      body: Do you really want to quit? To request the "Bonus Vacanze" you will have to repeat the process from the beginning.
       cancel: Back to the request
       confirm: Abort request
       completed: Request aborted
