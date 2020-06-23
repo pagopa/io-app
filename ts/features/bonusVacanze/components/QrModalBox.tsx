@@ -4,14 +4,14 @@ import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
+import { connect } from "react-redux";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
-import customVariables from "../../../theme/variables";
-import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 import { GlobalState } from "../../../store/reducers/types";
-import { connect } from "react-redux";
+import customVariables from "../../../theme/variables";
 import { bonusVacanzeLogo } from "../store/reducers/availableBonusesTypes";
+import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 
 type Props = {
   onClose: () => void;
