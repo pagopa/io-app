@@ -4,7 +4,6 @@ import { ImageSourcePropType, SafeAreaView } from "react-native";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../i18n";
-import { abortBonusRequest } from "../../../components/alert/AbortBonusRequest";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -35,7 +34,7 @@ export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
   const cancelRequest = I18n.t("global.buttons.close");
 
   useHardwareBackButton(() => {
-    abortBonusRequest(props.onCancel);
+    props.onCancel();
     return true;
   });
 
