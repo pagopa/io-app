@@ -10,12 +10,18 @@ import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvai
 import { BonusActivationProgressEnum } from "../reducers/activation";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
+/**
+ * Request the list of all the bonus activated
+ */
 export const loadAllBonusActivations = createAsyncAction(
   "BONUS_VACANZE_LOAD_ALL_ACTIVATION_REQUEST",
   "BONUS_VACANZE_LOAD_ALL_ACTIVATION_SUCCESS",
   "BONUS_VACANZE_LOAD_ALL_ACTIVATION_FAILURE"
 )<void, void, Error>();
 
+/**
+ * Request the list of all the types of bonus
+ */
 export const loadAvailableBonuses = createAsyncAction(
   "BONUSES_AVAILABLE_REQUEST",
   "BONUSES_AVAILABLE_SUCCESS",
@@ -26,7 +32,9 @@ export type EligibilityCheckPayload = {
   status: EligibilityRequestProgressEnum;
   check?: EligibilityCheck;
 };
-
+/**
+ * Start and handle the eligibility phase
+ */
 export const checkBonusVacanzeEligibility = createAsyncAction(
   "BONUS_VACANZE_CHECK_ELIGIBILITY_REQUEST",
   "BONUS_VACANZE_CHECK_ELIGIBILITY_SUCCESS",
@@ -37,6 +45,9 @@ export const storeEligibilityRequestId = createStandardAction(
   "BONUS_VACANZE_CHECK_ELIGIBILITY_STORE_REQUEST_ID"
 )<InstanceId>();
 
+/**
+ * Start and handle the activation phase
+ */
 export const activateBonusVacanze = createAsyncAction(
   "BONUS_VACANZE_ACTIVATION_REQUEST",
   "BONUS_VACANZE_ACTIVATION_SUCCESS",
@@ -48,6 +59,7 @@ export const cancelBonusVacanzeRequest = createStandardAction(
   "BONUS_VACANZE_REQUEST_CANCEL"
 )<void>();
 
+// Complete the bonus activation phase with success
 export const completeBonusVacanzeActivation = createStandardAction(
   "BONUS_VACANZE_ACTIVATION_COMPLETE"
 )();

@@ -3,6 +3,16 @@ import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
+import {
+  activateBonusVacanze,
+  cancelBonusVacanzeRequest,
+  checkBonusVacanzeEligibility,
+  completeBonusVacanzeActivation,
+  loadAllBonusActivations,
+  loadAvailableBonuses,
+  loadBonusVacanzeFromId,
+  storeEligibilityRequestId
+} from "../../features/bonusVacanze/store/actions/bonusVacanze";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
@@ -247,6 +257,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentDeletePayment.failure):
     case getType(paymentUpdateWalletPsp.failure):
     case getType(updateNotificationInstallationFailure):
+    // Bonus vacanze
+    case getType(loadAllBonusActivations.failure):
+    case getType(loadAvailableBonuses.failure):
+    case getType(checkBonusVacanzeEligibility.failure):
+    case getType(activateBonusVacanze.failure):
       return mp.track(action.type, {
         reason: action.payload.message
       });
@@ -344,10 +359,28 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(profileFirstLogin):
     // other
     case getType(updateNotificationsInstallationToken):
+    // bonus vacanze
+    case getType(loadAllBonusActivations.request):
+    case getType(loadAllBonusActivations.success):
+    case getType(loadAvailableBonuses.success):
+    case getType(loadAvailableBonuses.request):
+    case getType(checkBonusVacanzeEligibility.request):
+    case getType(activateBonusVacanze.request):
+    case getType(cancelBonusVacanzeRequest):
+    case getType(completeBonusVacanzeActivation):
       return mp.track(action.type);
+
+    case getType(checkBonusVacanzeEligibility.success):
+    case getType(activateBonusVacanze.success):
+    case getType(storeEligibilityRequestId):
+    case getType(loadBonusVacanzeFromId.request):
+    case getType(loadBonusVacanzeFromId.failure):
+    case getType(loadBonusVacanzeFromId.success):
+      return Promise.resolve();
   }
   return Promise.resolve();
 };
+
 /*
  * The middleware acts as a general hook in order to track any meaningful action
  */
