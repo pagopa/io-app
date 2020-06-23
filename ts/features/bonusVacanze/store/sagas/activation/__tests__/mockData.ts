@@ -15,7 +15,7 @@ import BONUSVACANZE_ROUTES from "../../../../navigation/routes";
 import { bonusVacanzeActivation } from "../../../actions/bonusVacanze";
 import { BonusActivationProgressEnum } from "../../../reducers/activation";
 
-interface IExpectedActions {
+export interface IExpectedActions {
   displayName: string;
   expectedActions: ReadonlyArray<Action>;
 }

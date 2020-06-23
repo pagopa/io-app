@@ -131,6 +131,8 @@ export const bonusActivationSaga = (
           `response status ${startBonusActivationProcedureResult.value.status}`
         );
       }
+      // decoding failure
+      throw Error(readableReport(startBonusActivationProcedureResult.value));
     } catch (e) {
       return bonusVacanzeActivation.failure(e);
     }
