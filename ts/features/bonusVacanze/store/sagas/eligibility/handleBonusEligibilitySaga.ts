@@ -7,7 +7,7 @@ import { navigationHistoryPop } from "../../../../../store/actions/navigationHis
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import {
-  navigateToBonusActivationTimeout,
+  navigateToBonusActivationPending,
   navigateToBonusAlreadyExists,
   navigateToBonusEligibilityLoading,
   navigateToEligible,
@@ -31,7 +31,7 @@ const eligibilityToNavigate = new Map([
   [EligibilityRequestProgressEnum.TIMEOUT, navigateToTimeoutEligibilityCheck],
   [
     EligibilityRequestProgressEnum.BONUS_ACTIVATION_PENDING,
-    navigateToBonusActivationTimeout
+    navigateToBonusActivationPending
   ],
   [EligibilityRequestProgressEnum.CONFLICT, navigateToBonusAlreadyExists]
 ]);

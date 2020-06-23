@@ -3,7 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import IconFont from "../../../../../components/ui/IconFont";
 import themeVariables from "../../../../../theme/variables";
-import { bonusVacanzaStyle } from "../../../components/Styles";
+import { bonusVacanzeStyle } from "../../../components/Styles";
 import { activateBonusStyle } from "./Style";
 
 type Props = {
@@ -38,8 +38,8 @@ export const ActivateBonusDiscrepancies: React.FunctionComponent<
       style={[
         styles.verticalPadding,
         styles.discrepanciesBox,
-        bonusVacanzaStyle.row,
-        bonusVacanzaStyle.horizontalPadding
+        bonusVacanzeStyle.row,
+        bonusVacanzeStyle.horizontalPadding
       ]}
     >
       <IconFont

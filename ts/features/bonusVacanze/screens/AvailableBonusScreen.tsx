@@ -22,7 +22,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import { AvailableBonusItem } from "../components/AvailableBonusItem";
-import { bonusVacanzaStyle } from "../components/Styles";
+import { bonusVacanzeStyle } from "../components/Styles";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
 import { availableBonusTypesSelector } from "../store/reducers/availableBonusesTypes";
@@ -80,7 +80,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
         goBack={true}
         headerTitle={I18n.t("bonus.bonusList.title")}
       >
-        <SafeAreaView style={bonusVacanzaStyle.flex}>
+        <SafeAreaView style={bonusVacanzeStyle.flex}>
           <Content
             noPadded={true}
             scrollEnabled={false}

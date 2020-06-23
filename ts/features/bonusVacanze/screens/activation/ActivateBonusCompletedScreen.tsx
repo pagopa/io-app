@@ -8,7 +8,7 @@ import { confirmButtonProps } from "../../components/buttons/ButtonConfiguration
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
-import { bonusVacanzaStyle } from "../../components/Styles";
+import { bonusVacanzeStyle } from "../../components/Styles";
 import { completeBonusVacanzeActivation } from "../../store/actions/bonusVacanze";
 import { bonusVacanzeLogo } from "../../store/reducers/availableBonusesTypes";
 
@@ -24,18 +24,12 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 
 const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
-  const title = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.completed.title"
-  );
-  const body = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.completed.description"
-  );
-  const goToBonusDetail = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.goToDetails"
-  );
+  const title = I18n.t("bonus.bonusVacanze.activation.completed.title");
+  const body = I18n.t("bonus.bonusVacanze.activation.completed.description");
+  const goToBonusDetail = I18n.t("bonus.bonusVacanze.activation.goToDetails");
 
   return (
-    <SafeAreaView style={bonusVacanzaStyle.flex}>
+    <SafeAreaView style={bonusVacanzeStyle.flex}>
       <InfoScreenComponent
         image={
           props.logo ? renderInfoRasterImage({ uri: props.logo }) : undefined

@@ -2,7 +2,7 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
-import { bonusVacanzaStyle } from "../Styles";
+import { bonusVacanzeStyle } from "../Styles";
 
 export type LoadingErrorProps = {
   isLoading: boolean;
@@ -27,7 +27,7 @@ const InnerLoadingErrorComponent: React.FunctionComponent<
   LoadingErrorProps
 > = props => {
   return (
-    <SafeAreaView style={bonusVacanzaStyle.flex}>
+    <SafeAreaView style={bonusVacanzeStyle.flex}>
       <GenericErrorComponent
         onRetry={props.onRetry}
         onCancel={props.onAbort}
