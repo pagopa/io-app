@@ -19,6 +19,7 @@ import { handleBonusFromIdPollingSaga } from "./handleBonusFromIdPolling";
 import { handleLoadAllBonusActivations } from "./handleLoadAllBonusActivationSaga";
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
 import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
+import { handleForceBonusServiceActivation } from "./handleForceBonusServiceActivation";
 
 // Saga that listen to all bonus requests
 export function* watchBonusSaga(bearerToken: string): SagaIterator {
@@ -70,5 +71,14 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
       backendBonusVacanzeClient.startBonusActivationProcedure,
       backendBonusVacanzeClient.getLatestBonusVacanzeFromId
     )
+  );
+
+  // force bonus vacanze service activation when eligibility or activation is engaged
+  yield takeLatest(
+    [
+      getType(bonusVacanzeActivation.request),
+      getType(checkBonusEligibility.request)
+    ],
+    handleForceBonusServiceActivation
   );
 }
