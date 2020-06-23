@@ -39,6 +39,7 @@
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
     "fp-ts": "1.12.0",
+    "front-matter": "^4.0.2",
     "hoist-non-react-statics": "^3.0.1",
     "instabug-reactnative": "8.7.0",
     "io-ts": "1.8.5",

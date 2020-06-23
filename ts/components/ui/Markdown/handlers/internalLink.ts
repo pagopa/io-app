@@ -37,7 +37,7 @@ function replaceOldRoute(routeName: string): string {
   }
 }
 
-function getInternalRoute(href: string): Option<string> {
+export function getInternalRoute(href: string): Option<string> {
   return some(href.split(IO_INTERNAL_LINK_PREFIX))
     .filter(_ => _.length === 2 && _[0] === "")
     .chain(_ =>
