@@ -7,6 +7,7 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   bonusVacanzeActivation,
+  loadAllBonusActivations,
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
 
@@ -19,6 +20,10 @@ const reducer = (
   action: Action
 ): AllActiveState => {
   switch (action.type) {
+    // loading all active bonuses
+    case getType(loadAllBonusActivations.request):
+      // When we call `/activations` API the state needs to be cleaned up or the bonus will append when the payload changes
+      return INITIAL_STATE;
     // bonus from id
     case getType(loadBonusVacanzeFromId.request):
       const cachedValue = state[action.payload];
