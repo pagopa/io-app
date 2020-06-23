@@ -468,9 +468,9 @@ function* deleteActivePaymentSaga() {
     GlobalState
   >(_ => _.wallet.payment.paymentId);
   const maybePaymentId = pot.toOption(potPaymentId);
+  // stop polling
   shouldAbortPaymentIdPollingRequest.e2(true);
   if (maybePaymentId.isSome()) {
-    shouldAbortPaymentIdPollingRequest.e2(true);
     yield put(
       paymentDeletePayment.request({ paymentId: maybePaymentId.value })
     );
