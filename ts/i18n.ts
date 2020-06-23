@@ -15,11 +15,11 @@ I18n.translations = {
   it: locales.localeIT
 };
 
-export const availableTransations: ReadonlyArray<locales.Locales> = Object.keys(
-  I18n.translations
-)
-  .map(k => k as locales.Locales)
-  .sort();
+export const translations = Object.keys(I18n.translations);
+
+export const availableTransations: ReadonlyArray<
+  locales.Locales
+> = translations.map(k => k as locales.Locales).sort();
 
 export function setLocale(lang: locales.Locales) {
   // tslint:disable-next-line:no-object-mutation
