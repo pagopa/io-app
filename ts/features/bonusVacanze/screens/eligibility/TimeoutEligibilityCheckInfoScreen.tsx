@@ -27,15 +27,15 @@ const renderBody = (first: string, second: string, third: string) => (
 const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
   Props
 > = props => {
-  const title = I18n.t("bonus.bonusVacanza.eligibility.timeout.title");
+  const title = I18n.t("bonus.bonusVacanze.eligibility.timeout.title");
   const first = I18n.t(
-    "bonus.bonusVacanza.eligibility.timeout.description.first"
+    "bonus.bonusVacanze.eligibility.timeout.description.first"
   );
   const second = I18n.t(
-    "bonus.bonusVacanza.eligibility.timeout.description.second"
+    "bonus.bonusVacanze.eligibility.timeout.description.second"
   );
   const third = I18n.t(
-    "bonus.bonusVacanza.eligibility.timeout.description.third"
+    "bonus.bonusVacanze.eligibility.timeout.description.third"
   );
 
   useHardwareBackButton(() => {

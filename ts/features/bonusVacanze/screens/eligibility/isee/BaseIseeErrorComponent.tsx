@@ -11,7 +11,7 @@ import {
 import { useHardwareBackButton } from "../../../components/hooks/useHardwareBackButton";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import { bonusVacanzaStyle } from "../../../components/Styles";
+import { bonusVacanzeStyle } from "../../../components/Styles";
 
 const inpsDsuHomeUrl =
   "https://www.inps.it/nuovoportaleinps/default.aspx?itemdir=49961";
@@ -39,7 +39,7 @@ export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <SafeAreaView style={bonusVacanzaStyle.flex}>
+    <SafeAreaView style={bonusVacanzeStyle.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(props.image)}
         title={props.title}

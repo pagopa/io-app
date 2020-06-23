@@ -36,17 +36,17 @@ const renderBody = (first: string, second: string, third: string) => (
  */
 
 const IseeNotAvailableScreen: React.FunctionComponent<Props> = props => {
-  const title = I18n.t("bonus.bonusVacanza.eligibility.iseeNotAvailable.title");
+  const title = I18n.t("bonus.bonusVacanze.eligibility.iseeNotAvailable.title");
   const first = I18n.t(
-    "bonus.bonusVacanza.eligibility.iseeNotAvailable.text.first"
+    "bonus.bonusVacanze.eligibility.iseeNotAvailable.text.first"
   );
   const second = I18n.t(
-    "bonus.bonusVacanza.eligibility.iseeNotAvailable.text.secondo"
+    "bonus.bonusVacanze.eligibility.iseeNotAvailable.text.secondo"
   );
   const third = I18n.t(
-    "bonus.bonusVacanza.eligibility.iseeNotAvailable.text.third"
+    "bonus.bonusVacanze.eligibility.iseeNotAvailable.text.third"
   );
-  const cta = I18n.t("bonus.bonusVacanza.eligibility.iseeNotAvailable.goToDSU");
+  const cta = I18n.t("bonus.bonusVacanze.eligibility.iseeNotAvailable.goToDSU");
 
   return (
     <BaseIseeErrorComponent

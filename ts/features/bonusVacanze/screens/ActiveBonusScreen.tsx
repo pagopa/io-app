@@ -41,6 +41,7 @@ import {
 import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
 import { availableBonusTypesSelectorFromId } from "../store/reducers/availableBonusesTypes";
 import {
+  getBonusCodeFormatted,
   ID_BONUS_VACANZE_TYPE,
   isBonusActive,
   validityInterval
@@ -201,8 +202,8 @@ async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
 }
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "bonus.bonusVacanza.contextualHelp.title",
-  body: "bonus.bonusVacanza.contextualHelp.body"
+  title: "bonus.bonusVacanze.contextualHelp.title",
+  body: "bonus.bonusVacanze.contextualHelp.body"
 };
 
 const shareQR = async (content: string, code: string, errorMessage: string) => {
@@ -248,7 +249,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const openModalBox = () => {
     const modalBox = (
       <QrModalBox
-        secretCode={bonusFromNav.id}
+        secretCode={getBonusCodeFormatted(bonus)}
         onClose={props.hideModal}
         qrCode={qrCode[QR_CODE_MIME_TYPE]}
       />
@@ -269,7 +270,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             onPress: () =>
               shareQR(
                 qrCode[PNG_IMAGE_TYPE],
-                `${I18n.t("bonus.bonusVacanza.shareMessage")} ${
+                `${I18n.t("bonus.bonusVacanze.shareMessage")} ${
                   bonusFromNav.id
                 }`,
                 I18n.t("global.genericError")
@@ -279,7 +280,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             bordered: true,
             iconName: "io-qr",
             iconColor: variables.contentPrimaryBackground,
-            title: I18n.t("bonus.bonusVacanza.cta.qrCode"),
+            title: I18n.t("bonus.bonusVacanze.cta.qrCode"),
             onPress: openModalBox
           }}
         />
@@ -323,7 +324,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       case BonusActivationStatusEnum.ACTIVE:
         return renderInformationBlock(
           "io-calendario",
-          I18n.t("bonus.bonusVacanza.statusInfo.validBetween", {
+          I18n.t("bonus.bonusVacanze.statusInfo.validBetween", {
             from: bonusValidityInterval.fold("n/a", v => v.e1),
             to: bonusValidityInterval.fold("n/a", v => v.e2)
           })
@@ -331,7 +332,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       case BonusActivationStatusEnum.REDEEMED:
         return renderInformationBlock(
           "io-complete",
-          I18n.t("bonus.bonusVacanza.statusInfo.redeemed", {
+          I18n.t("bonus.bonusVacanze.statusInfo.redeemed", {
             date: formatDateAsLocal(
               fromNullable(bonus.redeemed_at).getOrElse(bonus.created_at),
               true
@@ -342,7 +343,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       case BonusActivationStatusEnum.FAILED:
         return renderInformationBlock(
           "io-notice",
-          I18n.t("bonus.bonusVacanza.statusInfo.bonusRejected")
+          I18n.t("bonus.bonusVacanze.statusInfo.bonusRejected")
         );
       default:
         return null;
@@ -360,7 +361,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       bounces={false}
       headerBody={
         <TouchableDefaultOpacity onPress={props.goBack} style={styles.center}>
-          <Text style={styles.title}>{I18n.t("bonus.bonusVacanza.name")}</Text>
+          <Text style={styles.title}>{I18n.t("bonus.bonusVacanze.name")}</Text>
         </TouchableDefaultOpacity>
       }
       contextualHelpMarkdown={contextualHelpMarkdown}
@@ -384,7 +385,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               semibold={true}
               style={[styles.colorDarkest, styles.sectionLabel]}
             >
-              {I18n.t("bonus.bonusVacanza.amount")}
+              {I18n.t("bonus.bonusVacanze.amount")}
             </Text>
             <Text semibold={true} style={[styles.amount, styles.colorDarkest]}>
               {formatNumberAmount(bonus.dsu_request.max_amount, true)}
@@ -393,7 +394,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} />
           <View style={styles.rowBlock}>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanza.usableAmount")}
+              {I18n.t("bonus.bonusVacanze.usableAmount")}
             </Text>
             <Text bold={true} style={[styles.colorGrey, styles.commonLabel]}>
               {formatNumberAmount(
@@ -407,7 +408,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} xsmall={true} />
           <View style={styles.rowBlock}>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanza.taxBenefit")}
+              {I18n.t("bonus.bonusVacanze.taxBenefit")}
             </Text>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
               {formatNumberAmount(bonus.dsu_request.max_tax_benefit, true)}
@@ -420,7 +421,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             semibold={true}
             style={[styles.sectionLabel, styles.colorDarkest]}
           >
-            {I18n.t("bonus.bonusVacanza.bonusClaim")}
+            {I18n.t("bonus.bonusVacanze.bonusClaim")}
           </Text>
           <View spacer={true} />
           {bonus.dsu_request.family_members.map(member =>
@@ -437,7 +438,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 semibold={true}
                 style={[styles.sectionLabel, styles.colorDarkest]}
               >
-                {I18n.t("bonus.bonusVacanza.status")}
+                {I18n.t("bonus.bonusVacanze.status")}
               </Text>
               <Badge
                 style={
@@ -455,7 +456,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} />
           <View style={styles.rowBlock}>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanza.requestedAt")}
+              {I18n.t("bonus.bonusVacanze.requestedAt")}
             </Text>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
               {isBonusActive(bonus)

@@ -16,7 +16,7 @@ import I18n from "../../../i18n";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import { addEvery } from "../../../utils/strings";
+import { getBonusCodeFormatted } from "../utils/bonus";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -129,7 +129,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         <View style={{ flexDirection: "column" }}>
           <View spacer={true} small={true} />
           <Text bold={true} style={[styles.colorWhite, styles.fontLarge]}>
-            {I18n.t("bonus.bonusVacanza.name")}
+            {I18n.t("bonus.bonusVacanze.name")}
           </Text>
           <View spacer={true} small={true} />
           <View style={styles.row}>
@@ -140,10 +140,10 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           <View spacer={true} />
           <Text style={[styles.colorWhite, styles.codeLabel]}>
-            {I18n.t("bonus.bonusVacanza.code")}
+            {I18n.t("bonus.bonusVacanze.code")}
           </Text>
           <Text style={[styles.colorWhite, styles.fontLarge, styles.bonusCode]}>
-            {addEvery(bonus.id, " ", 4).trim()}
+            {getBonusCodeFormatted(bonus)}
           </Text>
         </View>
         <View>
@@ -155,16 +155,18 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
 
               <MenuOptions>
                 <MenuOption
-                  onSelect={() => clipboardSetStringWithFeedback(bonus.id)}
+                  onSelect={() =>
+                    clipboardSetStringWithFeedback(getBonusCodeFormatted(bonus))
+                  }
                 >
                   <Text style={styles.actions}>
-                    {I18n.t("bonus.bonusVacanza.cta.copyCode")}
+                    {I18n.t("bonus.bonusVacanze.cta.copyCode")}
                   </Text>
                 </MenuOption>
                 <ItemSeparatorComponent />
                 <MenuOption onSelect={props.viewQR}>
                   <Text style={styles.actions}>
-                    {I18n.t("bonus.bonusVacanza.cta.openQRCode")}
+                    {I18n.t("bonus.bonusVacanze.cta.openQRCode")}
                   </Text>
                 </MenuOption>
               </MenuOptions>
@@ -186,7 +188,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         >
           <View style={[styles.row]}>
             <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
-              {I18n.t("bonus.bonusVacanza.name")}
+              {I18n.t("bonus.bonusVacanze.name")}
             </Text>
             <View hspacer={true} large={true} />
             <Text bold={true} style={[styles.colorWhite, styles.previewAmount]}>
