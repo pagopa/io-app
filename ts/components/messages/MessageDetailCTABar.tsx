@@ -1,7 +1,7 @@
 import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import React from "react";
-import { Linking, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -10,17 +10,13 @@ import { PaidReason } from "../../store/reducers/entities/payments";
 import { CTA } from "../../types/MessageCTA";
 import {
   getCTA,
+  handleCtaAction,
   hasCTAValidActions,
   isCtaActionValid,
   isExpired,
   paymentExpirationInfo
 } from "../../utils/messages";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import {
-  getInternalRoute,
-  handleInternalLink
-} from "../ui/Markdown/handlers/internalLink";
-import { deriveCustomHandledLink } from "../ui/Markdown/handlers/link";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
 
@@ -91,18 +87,6 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     });
   }
 
-  private handleCTAAction = (cta: CTA) => {
-    const maybeInternalLink = getInternalRoute(cta.action);
-    if (maybeInternalLink.isSome()) {
-      handleInternalLink(this.props.dispatch, cta.action);
-    } else {
-      const maybeHandledAction = deriveCustomHandledLink(cta.action);
-      if (maybeHandledAction.isSome()) {
-        Linking.openURL(maybeHandledAction.value).catch(() => 0);
-      }
-    }
-  };
-
   private renderCTA(cta?: CTA, primary: boolean = false) {
     if (cta === undefined || !isCtaActionValid(cta)) {
       return null;
@@ -113,7 +97,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
         primary={primary}
         disabled={false}
         bordered={!primary}
-        onPress={() => this.handleCTAAction(cta)}
+        onPress={() => handleCtaAction(cta, this.props.dispatch)}
         style={{
           flex: 1
         }}
