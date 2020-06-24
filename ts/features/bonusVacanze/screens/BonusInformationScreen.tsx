@@ -113,7 +113,11 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 
   const handleModalPress = (tos: string) =>
     props.showModal(
-      <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
+      // <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
+      <RootedDeviceScreen
+        onContinue={props.hideModal}
+        onCancel={props.hideModal}
+      />
     );
   const onMarkdownLoaded = () => {
     setMarkdownLoaded(c => Math.min(c + 1, markdownComponents));
