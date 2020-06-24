@@ -2,7 +2,7 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { bonusVacanzeActivation } from "../actions/bonusVacanze";
+import { activateBonusVacanze } from "../actions/bonusVacanze";
 
 export enum BonusActivationProgressEnum {
   "ELIGIBILITY_EXPIRED" = "ELIGIBILITY_EXPIRED", // Cannot activate a new bonus because the eligibility data has expired.
@@ -27,17 +27,17 @@ const reducer = (
 ): ActivationState => {
   switch (action.type) {
     // bonus activation
-    case getType(bonusVacanzeActivation.request):
+    case getType(activateBonusVacanze.request):
       return {
         ...state,
         status: BonusActivationProgressEnum.PROGRESS
       };
-    case getType(bonusVacanzeActivation.success):
+    case getType(activateBonusVacanze.success):
       return {
         ...state,
         status: action.payload.status
       };
-    case getType(bonusVacanzeActivation.failure):
+    case getType(activateBonusVacanze.failure):
       return {
         ...state,
         status: BonusActivationProgressEnum.ERROR

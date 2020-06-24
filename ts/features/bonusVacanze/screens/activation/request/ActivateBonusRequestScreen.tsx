@@ -5,8 +5,8 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { abortBonusRequest } from "../../../components/alert/AbortBonusRequest";
 import { confirmBonusActivation } from "../../../components/alert/ConfirmBonusActivation";
 import {
-  bonusVacanzeActivation,
-  cancelBonusRequest
+  activateBonusVacanze,
+  cancelBonusVacanzeRequest
 } from "../../../store/actions/bonusVacanze";
 import { bonusVacanzeLogo } from "../../../store/reducers/availableBonusesTypes";
 import { eligibilityEligibleSelector } from "../../../store/reducers/eligibility";
@@ -33,10 +33,11 @@ const ActivateBonusRequestScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => abortBonusRequest(() => dispatch(cancelBonusRequest())),
+  onCancel: () =>
+    abortBonusRequest(() => dispatch(cancelBonusVacanzeRequest())),
   // When the user choose to activate the bonus, verify the identification
   onActivateBonus: () =>
-    confirmBonusActivation(() => dispatch(bonusVacanzeActivation.request()))
+    confirmBonusActivation(() => dispatch(activateBonusVacanze.request()))
 });
 
 const mapStateToProps = (state: GlobalState) => {

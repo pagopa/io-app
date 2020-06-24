@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../../i18n";
-import { cancelBonusRequest } from "../../../store/actions/bonusVacanze";
+import { cancelBonusVacanzeRequest } from "../../../store/actions/bonusVacanze";
 import { BaseIseeErrorComponent } from "./BaseIseeErrorComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -40,7 +40,7 @@ const IseeNotEligibleScreen: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: link with the right dispatch action
-  onCancel: () => dispatch(cancelBonusRequest())
+  onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
 export default connect(

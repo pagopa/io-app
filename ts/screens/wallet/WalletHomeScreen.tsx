@@ -29,8 +29,8 @@ import {
   navigateToBonusActiveDetailScreen
 } from "../../features/bonusVacanze/navigation/action";
 import {
-  availableBonusesLoad,
-  loadAllBonusActivations
+  loadAllBonusActivations,
+  loadAvailableBonuses
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonusVacanze/store/reducers/allActive";
 import { availableBonusTypesSelector } from "../../features/bonusVacanze/store/reducers/availableBonusesTypes";
@@ -547,7 +547,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
+  loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
   loadAllBonusActivations: () => dispatch(loadAllBonusActivations.request()),
   navigateToBonusDetail: (
     bonus: BonusActivationWithQrCode,

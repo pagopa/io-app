@@ -8,8 +8,8 @@ import { InstanceId } from "../../../../../definitions/bonus_vacanze/InstanceId"
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  checkBonusEligibility,
-  eligibilityRequestId
+  checkBonusVacanzeEligibility,
+  storeEligibilityRequestId
 } from "../actions/bonusVacanze";
 
 export enum EligibilityRequestProgressEnum {
@@ -47,12 +47,12 @@ const reducer = (
 ): EligibilityState => {
   switch (action.type) {
     // eligibility
-    case getType(eligibilityRequestId):
+    case getType(storeEligibilityRequestId):
       return {
         ...state,
         request: action.payload
       };
-    case getType(checkBonusEligibility.request):
+    case getType(checkBonusVacanzeEligibility.request):
       return {
         ...state,
         checkRequest: {
@@ -60,7 +60,7 @@ const reducer = (
           check: pot.toLoading(state.checkRequest.check)
         }
       };
-    case getType(checkBonusEligibility.success):
+    case getType(checkBonusVacanzeEligibility.success):
       return {
         ...state,
         checkRequest: {
@@ -70,7 +70,7 @@ const reducer = (
             : pot.none
         }
       };
-    case getType(checkBonusEligibility.failure):
+    case getType(checkBonusVacanzeEligibility.failure):
       return {
         ...state,
         checkRequest: {

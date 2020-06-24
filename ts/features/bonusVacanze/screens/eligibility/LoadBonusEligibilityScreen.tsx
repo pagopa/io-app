@@ -7,8 +7,8 @@ import { abortBonusRequest } from "../../components/alert/AbortBonusRequest";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 import {
-  cancelBonusRequest,
-  checkBonusEligibility
+  cancelBonusVacanzeRequest,
+  checkBonusVacanzeEligibility
 } from "../../store/actions/bonusVacanze";
 import { eligibilityIsLoading } from "../../store/reducers/eligibility";
 
@@ -43,9 +43,9 @@ const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onAbort: () => dispatch(cancelBonusRequest()),
+  onAbort: () => dispatch(cancelBonusVacanzeRequest()),
   onRetry: () => {
-    dispatch(checkBonusEligibility.request());
+    dispatch(checkBonusVacanzeEligibility.request());
   }
 });
 

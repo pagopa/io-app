@@ -24,7 +24,7 @@ import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import { AvailableBonusItem } from "../components/AvailableBonusItem";
 import { bonusVacanzeStyle } from "../components/Styles";
 import { navigateToBonusRequestInformation } from "../navigation/action";
-import { availableBonusesLoad } from "../store/actions/bonusVacanze";
+import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
 import { availableBonusTypesSelector } from "../store/reducers/availableBonusesTypes";
 
 export type Props = ReturnType<typeof mapStateToProps> &
@@ -120,7 +120,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
-  loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
+  loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
   // TODO Add the param to navigate to proper bonus by name (?)
   navigateToBonusRequest: (bonusItem: BonusAvailable) => {
     dispatch(navigateToBonusRequestInformation({ bonusItem }));
