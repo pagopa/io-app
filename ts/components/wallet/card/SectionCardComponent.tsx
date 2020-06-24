@@ -1,6 +1,6 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
@@ -17,11 +17,11 @@ type Props = {
 const styles = StyleSheet.create({
   flexRow: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
+    alignItems: "center"
   },
   flexRow2: {
     flexDirection: "row",
+    flex: 1,
     alignItems: "center"
   },
   brandLightGray: {
@@ -33,13 +33,13 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.brandHighLighter
   },
   headerText: {
-    fontSize: customVariables.fontSizeSmall,
+    fontSize: 17,
     marginRight: 9
   },
   badgeText: {
     marginTop: 2,
-    fontSize: customVariables.fontSizeSmaller,
-    lineHeight: Platform.OS === "ios" ? 14 : 16
+    fontSize: customVariables.fontSizeSmall,
+    lineHeight: 16
   },
   cardInner: {
     paddingBottom: 13,
@@ -101,7 +101,10 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           <View style={[styles.cardInner]}>
             <View style={[styles.flexRow]}>
               <View style={styles.flexRow2}>
-                <Text style={[styles.brandLightGray, styles.headerText]}>
+                <Text
+                  style={[styles.brandLightGray, styles.headerText]}
+                  ellipsizeMode="tail"
+                >
                   {label}
                 </Text>
                 {isNew && (
@@ -113,7 +116,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                 )}
               </View>
               {!isError && (
-                <View style={[styles.labelButton, styles.flexRow2]}>
+                <View style={[styles.button]}>
                   <IconFont
                     name="io-plus"
                     color={customVariables.colorWhite}
@@ -123,7 +126,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                     bold={true}
                     style={[
                       styles.labelButton,
-                      { fontSize: customVariables.fontSizeSmall }
+                      { fontSize: customVariables.fontSize1 }
                     ]}
                   >
                     {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
