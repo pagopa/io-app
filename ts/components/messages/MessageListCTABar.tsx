@@ -1,18 +1,29 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
-import { View } from "native-base";
+import { Text, View } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ReduxProps } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
+import { CTA } from "../../types/MessageCTA";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
+  getCTA,
+  hasCTAValidActions,
+  isCtaActionValid,
   isExpired,
-  isExpiring,
   paymentExpirationInfo
 } from "../../utils/messages";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import {
+  getInternalRoute,
+  handleInternalLink
+} from "../ui/Markdown/handlers/internalLink";
+import { deriveCustomHandledLink } from "../ui/Markdown/handlers/link";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 import PaymentButton from "./PaymentButton";
@@ -22,7 +33,7 @@ type Props = {
   service?: ServicePublic;
   payment?: PaidReason;
   disabled?: boolean;
-};
+} & ReduxProps;
 
 const styles = StyleSheet.create({
   topContainer: {
@@ -45,6 +56,7 @@ const styles = StyleSheet.create({
  * - a calendar icon
  * - a button to add/remove a calendar event
  * - a button to show/start a payment
+ * - cta defined inside the markdown content as front-matter
  */
 class MessageListCTABar extends React.PureComponent<Props> {
   get paymentExpirationInfo() {
@@ -59,9 +71,12 @@ class MessageListCTABar extends React.PureComponent<Props> {
     return this.paymentExpirationInfo.fold(false, info => isExpired(info));
   }
 
-  // Evaluate if use 'isExpiring' or 'isToday' (from date-fns) to determine if it is expiring today
-  get isPaymentExpiring() {
-    return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
+  get hasPaymentData() {
+    return this.paymentExpirationInfo.fold(false, _ => true);
+  }
+
+  get nestedCTA() {
+    return getCTA(this.props.message);
   }
 
   get dueDate(): Option<Date> {
@@ -104,7 +119,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
       ));
   };
 
-  // Render abutton to display details of the payment related to the message
+  // Render a button to display details of the payment related to the message
   private renderPaymentButton() {
     // The button is displayed if the payment has an expiration date in the future
     return this.paymentExpirationInfo.fold(undefined, pei => {
@@ -124,19 +139,80 @@ class MessageListCTABar extends React.PureComponent<Props> {
     });
   }
 
+  private handleCTAAction = (cta: CTA) => {
+    const maybeInternalLink = getInternalRoute(cta.action);
+    if (maybeInternalLink.isSome()) {
+      handleInternalLink(this.props.dispatch, cta.action);
+    } else {
+      const maybeHandledAction = deriveCustomHandledLink(cta.action);
+      if (maybeHandledAction.isSome()) {
+        Linking.openURL(maybeHandledAction.value).catch(() => 0);
+      }
+    }
+  };
+
+  private renderCTA(cta?: CTA, primary: boolean = false) {
+    if (cta === undefined || !isCtaActionValid(cta)) {
+      return null;
+    }
+
+    return (
+      <ButtonDefaultOpacity
+        primary={primary}
+        disabled={false}
+        bordered={!primary}
+        onPress={() => this.handleCTAAction(cta)}
+        xsmall={true}
+        style={{
+          flex: 1
+        }}
+      >
+        <Text>{cta.text}</Text>
+      </ButtonDefaultOpacity>
+    );
+  }
+
+  // render nested cta if the message is not about payment and cta are present and valid
+  // inside the message content
+  private renderNestedCTAs = () => {
+    if (!this.hasPaymentData && this.nestedCTA.isSome()) {
+      const ctas = this.nestedCTA.value;
+      const hasValidActions = ctas
+        ? hasCTAValidActions(this.nestedCTA.value)
+        : false;
+      if (hasValidActions) {
+        const cta1 = this.renderCTA(ctas.cta_1, true);
+        const cta2 = this.renderCTA(ctas.cta_2, false);
+        return (
+          <>
+            {cta2}
+            {cta2 && <View hspacer={true} small={true} />}
+            {cta1}
+          </>
+        );
+      }
+    }
+    return undefined;
+  };
+
   public render() {
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
-    return (
-      <View style={[styles.topContainer, this.paid && styles.topContainerPaid]}>
+    const content = this.renderNestedCTAs() || (
+      <>
         {calendarIcon}
         {calendarIcon && <View hspacer={true} small={true} />}
         {calendarEventButton}
         {calendarEventButton && <View hspacer={true} small={true} />}
         {this.renderPaymentButton()}
+      </>
+    );
+    return (
+      <View style={[styles.topContainer, this.paid && styles.topContainerPaid]}>
+        {content}
       </View>
     );
   }
 }
 
-export default MessageListCTABar;
+export default connect()(MessageListCTABar);

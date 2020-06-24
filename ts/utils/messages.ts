@@ -10,7 +10,6 @@ import {
   some
 } from "fp-ts/lib/Option";
 import FM from "front-matter";
-import { Linking } from "react-native";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
@@ -48,7 +47,11 @@ export function messageNeedsPaymentCTA(
 export function messageNeedsCTABar(
   message: CreatedMessageWithContentAndAttachments
 ): boolean {
-  return messageNeedsDueDateCTA(message) || messageNeedsPaymentCTA(message);
+  return (
+    messageNeedsDueDateCTA(message) ||
+    messageNeedsPaymentCTA(message) ||
+    getCTA(message).isSome()
+  );
 }
 
 export const hasPrescriptionData = (
@@ -191,17 +194,26 @@ export const getCTA = (
  * return a Promise indicating if the cta action is valid or not
  * @param cta
  */
-export const isCtaActionValid = async (cta: CTA): Promise<boolean> => {
+export const isCtaActionValid = (cta: CTA): boolean => {
   // check if it is an internal navigation
   if (getInternalRoute(cta.action).isSome()) {
-    return Promise.resolve(true);
+    return true;
   }
   const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
   // check if it is a custom action (it should be composed in a specific format)
   if (maybeCustomHandledAction.isSome()) {
-    return Linking.canOpenURL(maybeCustomHandledAction.value);
+    return true;
   }
-  return Promise.resolve(false);
+  return false;
+};
+
+export const hasCTAValidActions = (ctas: CTAS): boolean => {
+  const isCTA1Valid = isCtaActionValid(ctas.cta_1);
+  if (ctas.cta_2 === undefined) {
+    return isCTA1Valid;
+  }
+  const isCTA2Valid = isCtaActionValid(ctas.cta_2);
+  return isCTA1Valid || isCTA2Valid;
 };
 
 /**

@@ -1,15 +1,27 @@
 import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
-import { View } from "native-base";
+import { Text, View } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ReduxProps } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
+import { CTA } from "../../types/MessageCTA";
 import {
+  getCTA,
+  hasCTAValidActions,
+  isCtaActionValid,
   isExpired,
   isExpiring,
   paymentExpirationInfo
 } from "../../utils/messages";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import {
+  getInternalRoute,
+  handleInternalLink
+} from "../ui/Markdown/handlers/internalLink";
+import { deriveCustomHandledLink } from "../ui/Markdown/handlers/link";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
 
@@ -17,7 +29,7 @@ type Props = {
   message: CreatedMessageWithContent;
   service?: ServicePublic;
   payment?: PaidReason;
-};
+} & ReduxProps;
 
 const styles = StyleSheet.create({
   row: {
@@ -45,6 +57,14 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     return this.paymentExpirationInfo.fold(false, info => isExpired(info));
   }
 
+  get hasPaymentData() {
+    return this.paymentExpirationInfo.fold(false, _ => true);
+  }
+
+  get nestedCTA() {
+    return getCTA(this.props.message);
+  }
+
   get isPaymentExpiring() {
     return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
   }
@@ -65,7 +85,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
       });
   };
 
-  // Render abutton to display details of the payment related to the message
+  // Render a button to display details of the payment related to the message
   private renderPaymentButton() {
     if (this.paid) {
       return null;
@@ -84,21 +104,82 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     });
   }
 
+  private handleCTAAction = (cta: CTA) => {
+    const maybeInternalLink = getInternalRoute(cta.action);
+    if (maybeInternalLink.isSome()) {
+      handleInternalLink(this.props.dispatch, cta.action);
+    } else {
+      const maybeHandledAction = deriveCustomHandledLink(cta.action);
+      if (maybeHandledAction.isSome()) {
+        Linking.openURL(maybeHandledAction.value).catch(() => 0);
+      }
+    }
+  };
+
+  private renderCTA(cta?: CTA, primary: boolean = false) {
+    if (cta === undefined || !isCtaActionValid(cta)) {
+      return null;
+    }
+
+    return (
+      <ButtonDefaultOpacity
+        primary={primary}
+        disabled={false}
+        bordered={!primary}
+        onPress={() => this.handleCTAAction(cta)}
+        style={{
+          flex: 1
+        }}
+      >
+        <Text>{cta.text}</Text>
+      </ButtonDefaultOpacity>
+    );
+  }
+
+  // render nested cta if the message is not about payment and cta are present and valid
+  // inside the message content
+  private renderNestedCTAs = () => {
+    if (this.nestedCTA.isSome()) {
+      const ctas = this.nestedCTA.value;
+      const hasValidActions = ctas
+        ? hasCTAValidActions(this.nestedCTA.value)
+        : false;
+      if (hasValidActions) {
+        const cta1 = this.renderCTA(ctas.cta_1, true);
+        const cta2 = this.renderCTA(ctas.cta_2, false);
+        return (
+          <View footer={true} style={styles.row}>
+            {cta2}
+            {cta2 && <View hspacer={true} small={true} />}
+            {cta1}
+          </View>
+        );
+      }
+    }
+    return undefined;
+  };
+
   public render() {
     const paymentButton = this.renderPaymentButton();
     const calendarButton = this.renderCalendarEventButton();
-
-    if (paymentButton || calendarButton) {
-      return (
+    const footer1 =
+      paymentButton || calendarButton ? (
         <View footer={true} style={styles.row}>
           {calendarButton}
           {paymentButton && calendarButton && <View hspacer={true} />}
           {paymentButton}
         </View>
+      ) : (
+        undefined
       );
-    }
-    return null;
+    const footer2 = this.renderNestedCTAs();
+    return (
+      <View>
+        {footer2}
+        {footer1}
+      </View>
+    );
   }
 }
 
-export default MessageDetailCTABar;
+export default connect()(MessageDetailCTABar);
