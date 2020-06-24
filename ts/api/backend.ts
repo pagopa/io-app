@@ -366,8 +366,9 @@ export function BackendClient(
     getPaymentId: () => {
       // since we could abort the polling a new constantPollingFetch and DeferredPromise are created
       const shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
+      const shouldAbort = shouldAbortPaymentIdPollingRequest.e1;
       const fetchPolling = constantPollingFetch(
-        shouldAbortPaymentIdPollingRequest.e1,
+        shouldAbort,
         PAYMENT_ID_MAX_POLLING_RETRIES,
         PAYMENT_ID_RETRY_DELAY
       );
