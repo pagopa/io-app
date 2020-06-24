@@ -5,8 +5,8 @@ import { Dispatch } from "redux";
 import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 
 import I18n from "../../../../../i18n";
-import { cancelBonusVacanzeRequest } from "../../../store/actions/bonusVacanze";
 import { InfoScreenStyle } from "../../../components/infoScreen/InfoScreenComponent";
+import { cancelBonusVacanzeRequest } from "../../../store/actions/bonusVacanze";
 import { BaseIseeErrorComponent } from "./BaseIseeErrorComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;

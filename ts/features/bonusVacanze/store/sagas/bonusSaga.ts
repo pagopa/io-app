@@ -4,10 +4,10 @@ import { getType } from "typesafe-actions";
 import { apiUrlPrefix, contentRepoUrl } from "../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import {
-  loadAvailableBonuses,
   activateBonusVacanze,
   checkBonusVacanzeEligibility,
   loadAllBonusActivations,
+  loadAvailableBonuses,
   loadBonusVacanzeFromId,
   startLoadBonusFromIdPolling
 } from "../actions/bonusVacanze";
