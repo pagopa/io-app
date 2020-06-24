@@ -187,6 +187,7 @@ const renderFiscalCodeLine = (name: string, cf: string) => {
         <Text
           style={[styles.fmName, styles.colorGrey, styles.textRight]}
           semibold={true}
+          robotomono={true}
         >
           {cf}
         </Text>
