@@ -2,6 +2,8 @@ import { constNull } from "fp-ts/lib/function";
 import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
+import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { EligibilityCheckSuccessEligible } from "../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import {
   activateBonusVacanze,
@@ -14,6 +16,7 @@ import {
   storeEligibilityRequestId
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
 import { mixpanel } from "../../mixpanel";
+import { format } from "../../utils/dates";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
   analyticsAuthenticationCompleted,
@@ -235,6 +238,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(logoutFailure):
     case getType(loadServiceDetail.failure):
     case getType(loadServiceMetadata.failure):
+    // bonus vacanze
+    case getType(loadBonusVacanzeFromId.failure):
       return mp.track(action.type, {
         reason: action.payload.error.message
       });
@@ -368,18 +373,55 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(activateBonusVacanze.request):
     case getType(cancelBonusVacanzeRequest):
     case getType(completeBonusVacanzeActivation):
+    case getType(loadBonusVacanzeFromId.request):
       return mp.track(action.type);
 
+    // bonus vacanze
     case getType(checkBonusVacanzeEligibility.success):
-    case getType(activateBonusVacanze.success):
+      // tslint:disable-next-line: no-let
+      let additionalPayload = {};
+      if (EligibilityCheckSuccessEligible.is(action.payload.check)) {
+        additionalPayload = {
+          id: action.payload.check.id,
+          max_amount: action.payload.check.dsu_request.max_amount,
+          max_tax_benefit: action.payload.check.dsu_request.max_tax_benefit,
+          has_discrepancies: action.payload.check.dsu_request.has_discrepancies,
+          dsu_created_at: action.payload.check.dsu_request.dsu_created_at,
+          family_members_count:
+            action.payload.check.dsu_request.family_members.length
+        };
+      }
+
+      return mp.track(action.type, {
+        status: action.payload.status,
+        ...additionalPayload
+      });
     case getType(storeEligibilityRequestId):
-    case getType(loadBonusVacanzeFromId.request):
-    case getType(loadBonusVacanzeFromId.failure):
+      return mp.track(action.type, {
+        id: action.payload.id
+      });
+    case getType(activateBonusVacanze.success):
+      const bonus = action.payload.activation
+        ? getAnalyticsBonusRepresentation(action.payload.activation)
+        : {};
+
+      return mp.track(action.type, {
+        status: action.payload.status,
+        ...bonus
+      });
     case getType(loadBonusVacanzeFromId.success):
-      return Promise.resolve();
+      return mp.track(action.type, {
+        ...getAnalyticsBonusRepresentation(action.payload)
+      });
   }
   return Promise.resolve();
 };
+
+const getAnalyticsBonusRepresentation = (bonus: BonusActivationWithQrCode) => ({
+  bonus_status: bonus.status,
+  created_at: format(bonus.created_at),
+  redeemed_at: bonus.redeemed_at ? format(bonus.redeemed_at) : "-"
+});
 
 /*
  * The middleware acts as a general hook in order to track any meaningful action
