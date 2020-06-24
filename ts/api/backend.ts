@@ -50,11 +50,11 @@ import {
   UpsertUserMetadataT
 } from "../../definitions/backend/requestTypes";
 
-import { SessionToken } from "../types/SessionToken";
-import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { SessionToken } from "../types/SessionToken";
+import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 
 //
 // Other helper types
