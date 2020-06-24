@@ -2,9 +2,9 @@ import { fromNullable, Option } from "fp-ts/lib/Option";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { EligibilityCheckSuccessEligible } from "../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { format, formatDateAsLocal } from "../../../utils/dates";
 import { addEvery } from "../../../utils/strings";
-import { EligibilityCheckSuccessEligible } from "../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { EligibilityCheckPayload } from "../store/actions/bonusVacanze";
 
 export const ID_BONUS_VACANZE_TYPE = 1;
