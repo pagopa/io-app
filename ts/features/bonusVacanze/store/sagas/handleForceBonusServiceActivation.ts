@@ -8,15 +8,15 @@ import { profileSelector } from "../../../../store/reducers/profile";
 import { getBlockedChannels } from "../../../../utils/profile";
 import { availableBonusTypesSelectorFromId } from "../reducers/availableBonusesTypes";
 
-// handle a profile update if the service related to the bonus is in the profile blocked channel
+// handle a profile update if the service related to the bonus is in its blocked channel
 export function* handleForceBonusServiceActivation(
   bonusTypeId: number
 ): SagaIterator {
-  // first check if we know about the service
+  // first: check if we have data about bonus type
   const maybeBonusVacanze: ReturnType<
     ReturnType<typeof availableBonusTypesSelectorFromId>
   > = yield select(availableBonusTypesSelectorFromId(bonusTypeId));
-  // no data about bonus
+  // no data
   if (maybeBonusVacanze.isNone()) {
     return;
   }
