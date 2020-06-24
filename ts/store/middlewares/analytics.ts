@@ -378,23 +378,24 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     // bonus vacanze
     case getType(checkBonusVacanzeEligibility.success):
-      // tslint:disable-next-line: no-let
-      let additionalPayload = {};
-      if (EligibilityCheckSuccessEligible.is(action.payload.check)) {
-        additionalPayload = {
-          id: action.payload.check.id,
-          max_amount: action.payload.check.dsu_request.max_amount,
-          max_tax_benefit: action.payload.check.dsu_request.max_tax_benefit,
-          has_discrepancies: action.payload.check.dsu_request.has_discrepancies,
-          dsu_created_at: action.payload.check.dsu_request.dsu_created_at,
-          family_members_count:
-            action.payload.check.dsu_request.family_members.length
-        };
-      }
+      const dsuPayload = EligibilityCheckSuccessEligible.is(
+        action.payload.check
+      )
+        ? {
+            id: action.payload.check.id,
+            max_amount: action.payload.check.dsu_request.max_amount,
+            max_tax_benefit: action.payload.check.dsu_request.max_tax_benefit,
+            has_discrepancies:
+              action.payload.check.dsu_request.has_discrepancies,
+            dsu_created_at: action.payload.check.dsu_request.dsu_created_at,
+            family_members_count:
+              action.payload.check.dsu_request.family_members.length
+          }
+        : {};
 
       return mp.track(action.type, {
         status: action.payload.status,
-        ...additionalPayload
+        ...dsuPayload
       });
     case getType(storeEligibilityRequestId):
       return mp.track(action.type, {
