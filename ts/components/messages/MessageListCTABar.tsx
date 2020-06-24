@@ -1,6 +1,6 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -9,7 +9,6 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ReduxProps } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
-import { CTA } from "../../types/MessageCTA";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
   getCTA,
@@ -19,9 +18,9 @@ import {
   isExpired,
   paymentExpirationInfo
 } from "../../utils/messages";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
+import { NestedCtaButton } from "./NestedCtaButton";
 import PaymentButton from "./PaymentButton";
 
 type Props = {
@@ -131,27 +130,6 @@ class MessageListCTABar extends React.PureComponent<Props> {
     });
   }
 
-  private renderCTA(cta?: CTA, primary: boolean = false) {
-    if (cta === undefined || !isCtaActionValid(cta)) {
-      return null;
-    }
-
-    return (
-      <ButtonDefaultOpacity
-        primary={primary}
-        disabled={false}
-        bordered={!primary}
-        onPress={() => handleCtaAction(cta, this.props.dispatch)}
-        xsmall={true}
-        style={{
-          flex: 1
-        }}
-      >
-        <Text>{cta.text}</Text>
-      </ButtonDefaultOpacity>
-    );
-  }
-
   // render nested cta if the message is not about payment and cta are present and valid
   // inside the message content
   private renderNestedCTAs = () => {
@@ -159,8 +137,23 @@ class MessageListCTABar extends React.PureComponent<Props> {
     if (!this.hasPaymentData && maybeNestedCTA.isSome()) {
       const ctas = maybeNestedCTA.value;
       if (hasCTAValidActions(ctas)) {
-        const cta1 = this.renderCTA(ctas.cta_1, true);
-        const cta2 = this.renderCTA(ctas.cta_2, false);
+        const cta2 = ctas.cta_2 &&
+          isCtaActionValid(ctas.cta_2) && (
+            <NestedCtaButton
+              cta={ctas.cta_2}
+              xsmall={true}
+              primary={false}
+              onCTAPress={c => handleCtaAction(c, this.props.dispatch)}
+            />
+          );
+        const cta1 = (
+          <NestedCtaButton
+            cta={ctas.cta_1}
+            primary={true}
+            xsmall={true}
+            onCTAPress={c => handleCtaAction(c, this.props.dispatch)}
+          />
+        );
         return (
           <>
             {cta2}
