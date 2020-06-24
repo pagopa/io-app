@@ -73,7 +73,7 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
     )
   );
 
-  // force bonus vacanze service activation when eligibility or activation is engaged
+  // force bonus vacanze service activation when eligibility or activation starts
   yield takeLatest(
     [
       getType(bonusVacanzeActivation.request),
