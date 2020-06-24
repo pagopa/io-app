@@ -13,7 +13,6 @@ import {
   hasCTAValidActions,
   isCtaActionValid,
   isExpired,
-  isExpiring,
   paymentExpirationInfo
 } from "../../utils/messages";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
@@ -55,18 +54,6 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
 
   get isPaymentExpired() {
     return this.paymentExpirationInfo.fold(false, info => isExpired(info));
-  }
-
-  get hasPaymentData() {
-    return this.paymentExpirationInfo.fold(false, _ => true);
-  }
-
-  get nestedCTA() {
-    return getCTA(this.props.message);
-  }
-
-  get isPaymentExpiring() {
-    return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
   }
 
   get dueDate() {
@@ -139,11 +126,10 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
   // render nested cta if the message is not about payment and cta are present and valid
   // inside the message content
   private renderNestedCTAs = () => {
-    if (this.nestedCTA.isSome()) {
-      const ctas = this.nestedCTA.value;
-      const hasValidActions = ctas
-        ? hasCTAValidActions(this.nestedCTA.value)
-        : false;
+    const maybeNestedCTA = getCTA(this.props.message);
+    if (maybeNestedCTA.isSome()) {
+      const ctas = maybeNestedCTA.value;
+      const hasValidActions = ctas ? hasCTAValidActions(ctas) : false;
       if (hasValidActions) {
         const cta1 = this.renderCTA(ctas.cta_1, true);
         const cta2 = this.renderCTA(ctas.cta_2, false);
@@ -162,16 +148,13 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
   public render() {
     const paymentButton = this.renderPaymentButton();
     const calendarButton = this.renderCalendarEventButton();
-    const footer1 =
-      paymentButton || calendarButton ? (
-        <View footer={true} style={styles.row}>
-          {calendarButton}
-          {paymentButton && calendarButton && <View hspacer={true} />}
-          {paymentButton}
-        </View>
-      ) : (
-        undefined
-      );
+    const footer1 = (paymentButton || calendarButton) && (
+      <View footer={true} style={styles.row}>
+        {calendarButton}
+        {paymentButton && calendarButton && <View hspacer={true} />}
+        {paymentButton}
+      </View>
+    );
     const footer2 = this.renderNestedCTAs();
     return (
       <View>

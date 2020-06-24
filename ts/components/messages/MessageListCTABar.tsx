@@ -75,10 +75,6 @@ class MessageListCTABar extends React.PureComponent<Props> {
     return this.paymentExpirationInfo.fold(false, _ => true);
   }
 
-  get nestedCTA() {
-    return getCTA(this.props.message);
-  }
-
   get dueDate(): Option<Date> {
     return fromNullable(this.props.message.content.due_date);
   }
@@ -175,11 +171,10 @@ class MessageListCTABar extends React.PureComponent<Props> {
   // render nested cta if the message is not about payment and cta are present and valid
   // inside the message content
   private renderNestedCTAs = () => {
-    if (!this.hasPaymentData && this.nestedCTA.isSome()) {
-      const ctas = this.nestedCTA.value;
-      const hasValidActions = ctas
-        ? hasCTAValidActions(this.nestedCTA.value)
-        : false;
+    const maybeNestedCTA = getCTA(this.props.message);
+    if (!this.hasPaymentData && maybeNestedCTA.isSome()) {
+      const ctas = maybeNestedCTA.value;
+      const hasValidActions = ctas ? hasCTAValidActions(ctas) : false;
       if (hasValidActions) {
         const cta1 = this.renderCTA(ctas.cta_1, true);
         const cta2 = this.renderCTA(ctas.cta_2, false);
