@@ -59,6 +59,8 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   };
 
   public componentDidMount() {
+    // since this is the first screen of the Bonus Navigation Stack, avoid to put
+    // logic inside this method because this screen will be mounted as soon the stack is created
     setStatusBarColorAndBackground("dark-content", variables.colorWhite);
   }
 
