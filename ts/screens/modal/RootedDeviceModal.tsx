@@ -1,13 +1,13 @@
 import { Container, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, SafeAreaView, StyleSheet } from "react-native";
-import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
+import I18n from "../../i18n";
+import customVariables from "../../theme/variables";
 
 type Props = {
   onContinue: () => void;
