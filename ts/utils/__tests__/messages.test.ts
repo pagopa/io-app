@@ -3,7 +3,6 @@ import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedM
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../definitions/backend/MessageContent";
-import { Timestamp } from "../../../definitions/backend/Timestamp";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { cleanMarkdownFromCTAs, getCTA, isCtaActionValid } from "../messages";
 
