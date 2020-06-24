@@ -2,7 +2,6 @@ import { constNull } from "fp-ts/lib/function";
 import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
-import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { EligibilityCheckSuccessEligible } from "../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import {
@@ -15,8 +14,11 @@ import {
   loadBonusVacanzeFromId,
   storeEligibilityRequestId
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
+import {
+  getAnalyticsBonusRepresentation,
+  getAnalyticsEligibilityRepresentation
+} from "../../features/bonusVacanze/utils/bonus";
 import { mixpanel } from "../../mixpanel";
-import { format } from "../../utils/dates";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
   analyticsAuthenticationCompleted,
@@ -378,20 +380,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     // bonus vacanze
     case getType(checkBonusVacanzeEligibility.success):
-      const dsuPayload = EligibilityCheckSuccessEligible.is(
-        action.payload.check
-      )
-        ? {
-            id: action.payload.check.id,
-            max_amount: action.payload.check.dsu_request.max_amount,
-            max_tax_benefit: action.payload.check.dsu_request.max_tax_benefit,
-            has_discrepancies:
-              action.payload.check.dsu_request.has_discrepancies,
-            dsu_created_at: action.payload.check.dsu_request.dsu_created_at,
-            family_members_count:
-              action.payload.check.dsu_request.family_members.length
-          }
-        : {};
+      const dsuPayload = getAnalyticsEligibilityRepresentation(action.payload);
 
       return mp.track(action.type, {
         status: action.payload.status,
@@ -411,18 +400,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         ...bonus
       });
     case getType(loadBonusVacanzeFromId.success):
-      return mp.track(action.type, {
-        ...getAnalyticsBonusRepresentation(action.payload)
-      });
+      return mp.track(
+        action.type,
+        getAnalyticsBonusRepresentation(action.payload)
+      );
   }
   return Promise.resolve();
 };
-
-const getAnalyticsBonusRepresentation = (bonus: BonusActivationWithQrCode) => ({
-  bonus_status: bonus.status,
-  created_at: format(bonus.created_at),
-  redeemed_at: bonus.redeemed_at ? format(bonus.redeemed_at) : "-"
-});
 
 /*
  * The middleware acts as a general hook in order to track any meaningful action
