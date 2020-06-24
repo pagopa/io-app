@@ -1350,7 +1350,7 @@ bonus:
       alreadyRedeemed:
         title: Il bonus per il tuo nucleo familiare è già attivo!
         body: Puoi visualizzarne i dettagli nella sezione Pagamenti.
-        cta: Visualizza Bonus Vacanze
+        cta: Visualizza Bonus disponibili
       eligibilityExpired:
         title: Eligibilità scaduta
         body: Il periodo in cui era possibile attivare il bonus è scaduto. È necessario iniziare una nuova procedura.
