@@ -79,9 +79,10 @@ import {
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 
-import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
+import { defaultRetryingFetch } from "../utils/fetch";
 
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import ROUTES from "../navigation/routes";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
@@ -118,7 +119,7 @@ const PAYMENT_ID_MAX_POLLING_RETRIES = 180;
 /**
  * How much time to wait between retries when polling for a payment ID
  */
-const PAYMENT_ID_RETRY_DELAY_MILLIS = 1000;
+const PAYMENT_ID_RETRY_DELAY_MILLIS = 1000 as Millisecond;
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -504,6 +505,10 @@ export function* watchWalletSaga(
     defaultRetryingFetch(fetchPagoPaTimeout, 0)
   );
 
+  // Backend client for polling for paymentId - uses an instance of fetch that
+  // considers a 404 as a transient error and retries with a constant delay
+  const pollingPagopaNodoClient = BackendClient(apiUrlPrefix, sessionToken);
+
   // Client for the PagoPA PaymentManager
   const paymentManagerClient: PaymentManagerClient = PaymentManagerClient(
     paymentManagerUrlPrefix,
@@ -634,25 +639,15 @@ export function* watchWalletSaga(
   yield takeLatest(getType(paymentIdPolling.request), function*(
     action: ActionType<typeof paymentIdPolling["request"]>
   ) {
-    shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
-    // Backend client for polling for paymentId - uses an instance of fetch that
-    // considers a 404 as a transient error and retries with a constant delay
-    // it is created every time paymentIdPolling.request is triggered:
-    // this is because we have to re-new shouldAbortPaymentIdPollingRequest to be able to abort the running polling
-    const pollingPagopaNodoClient = BackendClient(
-      apiUrlPrefix,
-      sessionToken,
-      constantPollingFetch(
-        shouldAbortPaymentIdPollingRequest.e1,
-        PAYMENT_ID_MAX_POLLING_RETRIES,
-        PAYMENT_ID_RETRY_DELAY_MILLIS
-      )
+    // getPaymentId is a tuple2
+    // e1: deferredPromise, used to abort the constantPollingFetch
+    // e2: the fetch to execute
+    const getPaymentId = pollingPagopaNodoClient.getPaymentId(
+      PAYMENT_ID_MAX_POLLING_RETRIES,
+      PAYMENT_ID_RETRY_DELAY_MILLIS
     );
-    yield call(
-      paymentIdPollingRequestHandler,
-      pollingPagopaNodoClient.getPaymentId,
-      action
-    );
+    shouldAbortPaymentIdPollingRequest = getPaymentId.e1;
+    yield call(paymentIdPollingRequestHandler, getPaymentId, action);
   });
 
   yield takeLatest(

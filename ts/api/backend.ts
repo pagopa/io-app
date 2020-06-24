@@ -51,7 +51,10 @@ import {
 } from "../../definitions/backend/requestTypes";
 
 import { SessionToken } from "../types/SessionToken";
-import { defaultRetryingFetch } from "../utils/fetch";
+import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { DeferredPromise } from "italia-ts-commons/lib/promises";
+import { Tuple2 } from "italia-ts-commons/lib/tuples";
 
 //
 // Other helper types
@@ -347,9 +350,22 @@ export function BackendClient(
     postAttivaRpt: withBearerToken(
       createFetchRequestForApi(attivaRptT, options)
     ),
-    getPaymentId: withBearerToken(
-      createFetchRequestForApi(getPaymentIdT, options)
-    ),
+    getPaymentId: (maxPollingRetries: number, retryDelay: Millisecond) => {
+      // since we could abort the polling a new constantPollingFetch and DeferredPromise are created
+      const shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
+      const fetchPolling = constantPollingFetch(
+        shouldAbortPaymentIdPollingRequest.e1,
+        maxPollingRetries,
+        retryDelay
+      );
+      const request = withBearerToken(
+        createFetchRequestForApi(getPaymentIdT, {
+          ...options,
+          fetchApi: fetchPolling
+        })
+      );
+      return Tuple2(shouldAbortPaymentIdPollingRequest, request);
+    },
     startEmailValidationProcess: withBearerToken(
       createFetchRequestForApi(postStartEmailValidationProcessT, options)
     ),

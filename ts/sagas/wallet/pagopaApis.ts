@@ -650,7 +650,7 @@ export function* paymentAttivaRequestHandler(
  * Polls the backend for the paymentId linked to the payment context code
  */
 export function* paymentIdPollingRequestHandler(
-  getPaymentIdApi: ReturnType<typeof BackendClient>["getPaymentId"],
+  getPaymentIdApi: ReturnType<ReturnType<typeof BackendClient>["getPaymentId"]>,
   action: ActionType<typeof paymentIdPolling["request"]>
 ) {
   // successfully request the payment activation
@@ -661,8 +661,8 @@ export function* paymentIdPollingRequestHandler(
       typeof isPagoPATestEnabledSelector
     > = yield select<GlobalState>(isPagoPATestEnabledSelector);
 
-    const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
-      getPaymentIdApi,
+    const response: SagaCallReturnType<typeof getPaymentIdApi.e2> = yield call(
+      getPaymentIdApi.e2,
       {
         codiceContestoPagamento: action.payload.codiceContestoPagamento,
         test: isPagoPATestEnabled
