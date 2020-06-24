@@ -60,7 +60,7 @@ type NavigationParams = Readonly<{
   validTo?: Date;
 }>;
 
-const QR_CODE_MIME_TYPE = "svg+xml";
+const QR_CODE_MIME_TYPE = "image/svg+xml";
 const PNG_IMAGE_TYPE = "image/png";
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
