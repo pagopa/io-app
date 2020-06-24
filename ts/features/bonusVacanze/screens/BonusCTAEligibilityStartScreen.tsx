@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { navigationHistoryPop } from "../../../store/actions/navigationHistory";
 import { Dispatch } from "../../../store/actions/types";
-import { checkBonusEligibility } from "../store/actions/bonusVacanze";
+import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
 import LoadBonusEligibilityScreen from "./eligibility/LoadBonusEligibilityScreen";
 
 export type Props = ReturnType<typeof mapDispatchToProps>;
@@ -17,7 +17,7 @@ const BonusCTAEligibilityStartScreen = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   startEligibilityCheck: () => {
-    dispatch(checkBonusEligibility.request());
+    dispatch(checkBonusVacanzeEligibility.request());
     dispatch(navigationHistoryPop(1));
   }
 });
