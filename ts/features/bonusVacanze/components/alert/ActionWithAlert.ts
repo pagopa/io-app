@@ -20,6 +20,9 @@ export const actionWithAlert = (confirmConfig: ConfirmConfig) => {
     confirmConfig.body ? confirmConfig.body : "",
     [
       {
+        text: confirmConfig.cancelText
+      },
+      {
         text: confirmConfig.confirmText,
         onPress: () => {
           confirmConfig.onConfirmAction();
@@ -28,9 +31,6 @@ export const actionWithAlert = (confirmConfig: ConfirmConfig) => {
           }
         },
         style: "cancel"
-      },
-      {
-        text: confirmConfig.cancelText
       }
     ],
     { cancelable: true }
