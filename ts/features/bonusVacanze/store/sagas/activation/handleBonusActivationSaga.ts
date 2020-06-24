@@ -16,8 +16,8 @@ import {
 } from "../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
-  bonusVacanzeActivation,
-  cancelBonusRequest,
+  activateBonusVacanze,
+  cancelBonusVacanzeRequest,
   completeBonusVacanzeActivation
 } from "../../actions/bonusVacanze";
 import { BonusActivationProgressEnum } from "../../reducers/activation";
@@ -44,7 +44,7 @@ type BonusActivationType = SagaCallReturnType<BonusActivationSagaType>;
  * @param result
  */
 export const getNextNavigation = (result: BonusActivationType) =>
-  result.type === getType(bonusVacanzeActivation.success)
+  result.type === getType(activateBonusVacanze.success)
     ? fromNullable(activationToNavigate.get(result.payload.status)).getOrElse(
         navigateToBonusActivationLoading
       )
@@ -79,7 +79,7 @@ export function* activationWorker(activationSaga: BonusActivationSagaType) {
   yield take(completeBonusVacanzeActivation);
 
   if (
-    progress.type === getType(bonusVacanzeActivation.success) &&
+    progress.type === getType(activateBonusVacanze.success) &&
     progress.payload.activation
   ) {
     yield put(
@@ -101,7 +101,7 @@ export function* handleBonusActivationSaga(
 
   const { cancelAction } = yield race({
     activation: call(activationWorker, activationSaga),
-    cancelAction: take(cancelBonusRequest)
+    cancelAction: take(cancelBonusVacanzeRequest)
   });
   if (cancelAction) {
     yield put(navigateToWalletHome());

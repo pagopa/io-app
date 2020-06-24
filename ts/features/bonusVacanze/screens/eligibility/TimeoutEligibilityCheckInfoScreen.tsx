@@ -6,7 +6,7 @@ import I18n from "../../../../i18n";
 import { BaseTimeoutScreen } from "../../components/BaseTimeoutScreen";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { InfoScreenStyle } from "../../components/infoScreen/InfoScreenComponent";
-import { cancelBonusRequest } from "../../store/actions/bonusVacanze";
+import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -53,7 +53,7 @@ const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => dispatch(cancelBonusRequest())
+  onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
 export default connect(
