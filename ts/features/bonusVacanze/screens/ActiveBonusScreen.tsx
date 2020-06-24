@@ -1,4 +1,4 @@
-import { fromNullable, Option, none } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, View } from "native-base";
@@ -28,12 +28,14 @@ import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
+import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
 import { maybeNotNullyString } from "../../../utils/strings";
 import BonusCardComponent from "../components/BonusCardComponent";
 import QrModalBox from "../components/QrModalBox";
+import TosBonusComponent from "../components/TosBonusComponent";
 import {
   cancelLoadBonusFromIdPolling,
   startLoadBonusFromIdPolling
@@ -49,9 +51,6 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
-import TosBonusComponent from "../components/TosBonusComponent";
-import { getLocalePrimaryWithFallback } from "../../../utils/locale";
-import { BonusAvailableContent } from "../../../../definitions/content/BonusAvailableContent";
 
 type QRCodeContents = {
   [key: string]: string;
