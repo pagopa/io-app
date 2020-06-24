@@ -4,6 +4,7 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
+import { clearCache } from "../../../../store/actions/profile";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { availableBonuses } from "../../data/availableBonuses";
@@ -30,6 +31,8 @@ const reducer = (
         pot.isNone(state) ? pot.some(availableBonuses) : state,
         action.payload
       );
+    case getType(clearCache):
+      return INITIAL_STATE;
   }
   return state;
 };
