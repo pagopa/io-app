@@ -20,6 +20,7 @@ import { handleLoadAllBonusActivations } from "./handleLoadAllBonusActivationSag
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
 import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
 import { handleForceBonusServiceActivation } from "./handleForceBonusServiceActivation";
+import { ID_BONUS_VACANZE_TYPE } from "../../utils/bonus";
 
 // Saga that listen to all bonus requests
 export function* watchBonusSaga(bearerToken: string): SagaIterator {
@@ -79,6 +80,7 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
       getType(bonusVacanzeActivation.request),
       getType(checkBonusEligibility.request)
     ],
-    handleForceBonusServiceActivation
+    handleForceBonusServiceActivation,
+    ID_BONUS_VACANZE_TYPE
   );
 }
