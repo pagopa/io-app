@@ -2,10 +2,24 @@
  * Generic utilities for messages
  */
 
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import {
+  fromNullable,
+  fromPredicate,
+  none,
+  Option,
+  some
+} from "fp-ts/lib/Option";
+import FM from "front-matter";
+import { Linking } from "react-native";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
+import { Locales } from "../../locales/locales";
+import { getInternalRoute } from "../components/ui/Markdown/handlers/internalLink";
+import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link";
+import I18n, { translations } from "../i18n";
+import { CTA, CTAS, MessageCTA } from "../types/MessageCTA";
 import { getExpireStatus } from "./dates";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
@@ -145,4 +159,59 @@ export const getPrescriptionDataFromName = (
     }
     return none;
   });
+};
+
+/**
+ * extract the CTAs if they are nested inside the message markdown content
+ * if some CTAs are been found, the localized version will be returned
+ * @param message
+ * @param locale
+ */
+export const getCTA = (
+  message: CreatedMessageWithContent,
+  locale: Locales = I18n.currentLocale()
+): Option<CTAS> => {
+  return fromPredicate((t: string) => FM.test(t))(message.content.markdown)
+    .map(m => FM<MessageCTA>(m).attributes)
+    .chain(attrs =>
+      CTAS.decode(attrs[locale]).fold(_ => {
+        // fallback on the first locale available
+        const fallback = translations.find(
+          s => attrs[s as Locales] !== undefined
+        );
+        if (fallback) {
+          return CTAS.decode(attrs[fallback as Locales]).fold(__ => none, some);
+        }
+        return none;
+      }, some)
+    );
+};
+
+/**
+ * return a Promise indicating if the cta action is valid or not
+ * @param cta
+ */
+export const isCtaActionValid = async (cta: CTA): Promise<boolean> => {
+  // check if it is an internal navigation
+  if (getInternalRoute(cta.action).isSome()) {
+    return Promise.resolve(true);
+  }
+  const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
+  // check if it is a custom action (it should be composed in a specific format)
+  if (maybeCustomHandledAction.isSome()) {
+    return Linking.canOpenURL(maybeCustomHandledAction.value);
+  }
+  return Promise.resolve(false);
+};
+
+/**
+ * remove the cta front-matter if it is nested inside the markdown
+ * @param cta
+ */
+export const cleanMarkdownFromCTAs = (
+  markdown: MessageBodyMarkdown
+): string => {
+  return fromPredicate((t: string) => FM.test(t))(markdown)
+    .map(m => FM(m).body)
+    .getOrElse(markdown as string);
 };

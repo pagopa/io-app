@@ -10,7 +10,7 @@ import {
   bonusVacanzeActivation,
   cancelBonusRequest
 } from "../../store/actions/bonusVacanze";
-import { activationIsLoading } from "../../store/reducers/bonusVacanzeActivation";
+import { activationIsLoading } from "../../store/reducers/activation";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -22,9 +22,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
-  const loadingCaption = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.loading"
-  );
+  const loadingCaption = I18n.t("bonus.bonusVacanze.activation.loading");
 
   useHardwareBackButton(() => {
     if (!props.isLoading) {

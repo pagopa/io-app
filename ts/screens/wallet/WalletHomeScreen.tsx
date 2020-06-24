@@ -30,13 +30,10 @@ import {
 } from "../../features/bonusVacanze/navigation/action";
 import {
   availableBonusesLoad,
-  loadBonusVacanzeFromId
+  loadAllBonusActivations
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
-import { availableBonusesSelector } from "../../features/bonusVacanze/store/reducers/availableBonuses";
-import {
-  bonusVacanzeActivationActiveSelector,
-  canBonusVacanzeBeRequestedSelector
-} from "../../features/bonusVacanze/store/reducers/bonusVacanzeActivation";
+import { allBonusActiveSelector } from "../../features/bonusVacanze/store/reducers/allActive";
+import { availableBonusTypesSelector } from "../../features/bonusVacanze/store/reducers/availableBonusesTypes";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -190,7 +187,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   private loadBonusVacanze = () => {
     if (bonusVacanzeEnabled) {
       this.props.loadAvailableBonuses();
-      this.props.loadBonusVacanzeFromId("FAKE_ID");
+      this.props.loadAllBonusActivations();
     }
   };
 
@@ -218,7 +215,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
-  private cardHeader(isError: boolean = false) {
+  private cardHeader(isError: boolean = false, isBlue: boolean = false) {
     return (
       <SectionCardComponent
         label={I18n.t("wallet.paymentMethods")}
@@ -228,6 +225,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           )
         }
         isError={isError}
+        cardStyle={
+          isBlue ? { backgroundColor: customVariables.brandPrimary } : undefined
+        }
       />
     );
   }
@@ -235,10 +235,12 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   private cardPreview(wallets: ReadonlyArray<Wallet>) {
     // we have to render only wallets of credit card type
     const validWallets = wallets.filter(w => w.type === TypeEnum.CREDIT_CARD);
+    const noMethod =
+      validWallets.length === 0 && this.props.allActiveBonus.length === 0;
     return (
       <View>
         <View spacer={true} />
-        {validWallets.length === 0 && (
+        {noMethod && (
           <React.Fragment>
             <Text white={true} style={styles.addDescription}>
               {I18n.t("wallet.newPaymentMethod.addDescription")}
@@ -247,27 +249,24 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             <View spacer={true} small={true} />
           </React.Fragment>
         )}
-        {this.cardHeader()}
+        {this.cardHeader(false, noMethod)}
         {validWallets.length > 0 ? (
-          <View>
-            <RotatedCards
-              cardType="Preview"
-              wallets={
-                validWallets.length === 1
-                  ? [validWallets[0]]
-                  : [validWallets[0], validWallets[1]]
-              }
-              onClick={this.props.navigateToWalletList}
-            />
-          </View>
-        ) : (
-          <View spacer={true} small={true} />
-        )}
+          <RotatedCards
+            cardType="Preview"
+            wallets={
+              validWallets.length === 1
+                ? [validWallets[0]]
+                : [validWallets[0], validWallets[1]]
+            }
+            onClick={this.props.navigateToWalletList}
+          />
+        ) : null}
         {/* Display this item only if the flag is enabled */}
         {bonusVacanzeEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
-            activeBonus={this.props.bonusVacanzeActivationActive}
+            activeBonuses={this.props.allActiveBonus}
+            noMethod={noMethod}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
           />
@@ -291,6 +290,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   }
 
   private errorWalletsHeader() {
+    const noMethod = this.props.allActiveBonus.length === 0;
     return (
       <View>
         <Text style={[styles.white, styles.inLineSpace]}>
@@ -311,9 +311,10 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {bonusVacanzeEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
-            activeBonus={this.props.bonusVacanzeActivationActive}
+            activeBonuses={this.props.allActiveBonus}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
+            noMethod={noMethod}
           />
         )}
       </View>
@@ -489,6 +490,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
         appLogo={true}
+        topContentHeight={this.getHeaderHeight()}
         hasDynamicSubHeader={true}
         topContent={headerContent}
         footerContent={footerContent}
@@ -496,9 +498,16 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet", "wallet_methods"]}
         gradientHeader={true}
+        headerPaddingMin={true}
       >
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
       </WalletLayout>
+    );
+  }
+
+  private getHeaderHeight() {
+    return (
+      250 + (bonusVacanzeEnabled ? this.props.allActiveBonus.length * 65 : 0)
     );
   }
 }
@@ -508,10 +517,9 @@ const mapStateToProps = (state: GlobalState) => {
     .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
     .getOrElse(true);
 
-  const potAvailableBonuses = availableBonusesSelector(state);
+  const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
-    bonusVacanzeActivationActive: bonusVacanzeActivationActiveSelector(state),
-    canBonusBeRequested: canBonusVacanzeBeRequestedSelector(state),
+    allActiveBonus: allBonusActiveSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     potWallets: walletsSelector(state),
     historyPayments: paymentsHistorySelector(state),
@@ -540,8 +548,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     );
   },
   loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
-  loadBonusVacanzeFromId: (id: string) =>
-    dispatch(loadBonusVacanzeFromId.request(id)),
+  loadAllBonusActivations: () => dispatch(loadAllBonusActivations.request()),
   navigateToBonusDetail: (
     bonus: BonusActivationWithQrCode,
     validFrom?: Date,

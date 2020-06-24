@@ -1,16 +1,18 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { SvgXml } from "react-native-svg";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../../components/screens/DarkLayout";
+import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import BlockButtons from "../../../components/ui/BlockButtons";
@@ -24,19 +26,22 @@ import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
+import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
 import { maybeNotNullyString } from "../../../utils/strings";
+import BonusCardComponent from "../components/BonusCardComponent";
 import QrModalBox from "../components/QrModalBox";
 import {
   cancelLoadBonusFromIdPolling,
   startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
-import { availableBonusesSelectorFromId } from "../store/reducers/availableBonuses";
-import { bonusVacanzeActivationSelector } from "../store/reducers/bonusVacanzeActivation";
+import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
+import { availableBonusTypesSelectorFromId } from "../store/reducers/availableBonusesTypes";
 import {
+  getBonusCodeFormatted,
   ID_BONUS_VACANZE_TYPE,
   isBonusActive,
   validityInterval
@@ -52,10 +57,12 @@ type NavigationParams = Readonly<{
   validTo?: Date;
 }>;
 
-const QR_CODE_MIME_TYPE = "svg+xml";
+const QR_CODE_MIME_TYPE = "image/svg+xml";
 const PNG_IMAGE_TYPE = "image/png";
 
-type Props = NavigationInjectedProps<NavigationParams> &
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
+type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   LightModalContextInterface;
@@ -81,8 +88,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     zIndex: 7,
     elevation: 7,
-    alignSelf: "center",
-    backgroundColor: variables.contentPrimaryBackground
+    alignSelf: "center"
   },
   center: {
     alignSelf: "center"
@@ -93,7 +99,7 @@ const styles = StyleSheet.create({
   },
   rowBlock: {
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "space-between"
   },
   paddedContent: {
@@ -133,24 +139,32 @@ const styles = StyleSheet.create({
   },
   fmName: {
     fontSize: variables.fontSize1,
-    lineHeight: 21
+    flex: 1,
+    lineHeight: 21,
+    alignSelf: "flex-start"
+  },
+  textRight: {
+    textAlign: "right"
+  },
+  textLeft: {
+    textAlign: "left"
   },
   amount: {
     fontSize: variables.fontSize2
   }
 });
 
-const renderQRCode = (base64: string) =>
-  fromNullable(base64).fold(null, s => (
-    <SvgXml xml={s} height="100%" width="100%" />
-  ));
-
 const renderFiscalCodeLine = (name: string, cf: string) => {
   return (
     <React.Fragment key={cf}>
       <View style={styles.rowBlock}>
-        <Text style={[styles.fmName, styles.colorGrey]}>{name}</Text>
-        <Text style={[styles.fmName, styles.colorGrey]} semibold={true}>
+        <Text style={[styles.fmName, styles.colorGrey, styles.textLeft]}>
+          {name}
+        </Text>
+        <Text
+          style={[styles.fmName, styles.colorGrey, styles.textRight]}
+          semibold={true}
+        >
           {cf}
         </Text>
       </View>
@@ -188,8 +202,8 @@ async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
 }
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.fiscalCode.title",
-  body: "profile.fiscalCode.help"
+  title: "bonus.bonusVacanze.contextualHelp.title",
+  body: "bonus.bonusVacanze.contextualHelp.body"
 };
 
 const shareQR = async (content: string, code: string, errorMessage: string) => {
@@ -197,16 +211,19 @@ const shareQR = async (content: string, code: string, errorMessage: string) => {
   shared.mapLeft(_ => showToast(errorMessage));
 };
 
+const startRefreshPollingAfter = 3000 as Millisecond;
 // tslint:disable-next-line: no-big-function
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
-
   const bonusFromNav = props.navigation.getParam("bonus");
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
 
   React.useEffect(() => {
-    // When mounting the component starts a polling to update the bonus information at runtime
-    props.startPollingBonusFromId(bonusFromNav.id);
+    // start refresh polling after startRefreshPollingAfter
+    const delayedPolling = setTimeout(() => {
+      // When mounting the component starts a polling to update the bonus information at runtime
+      props.startPollingBonusFromId(bonusFromNav.id);
+    }, startRefreshPollingAfter);
 
     if (bonus) {
       readBase64Svg(bonus)
@@ -216,6 +233,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     return () => {
       // When the component unmounts demands the stop to the polling saga
       props.cancelPollingBonusFromId();
+      clearTimeout(delayedPolling);
     };
   }, []);
 
@@ -228,48 +246,109 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       : ""
   );
 
-  const renderFooterButtons = () =>
-    bonus && isBonusActive(bonus) ? (
-      <BlockButtons
-        type="TwoButtonsInlineHalf"
-        rightButton={{
-          primary: true,
-          iconName: "io-share",
-          iconColor: variables.colorWhite,
-          title: I18n.t("global.buttons.share"),
-          onPress: () =>
-            shareQR(
-              qrCode[PNG_IMAGE_TYPE],
-              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonusFromNav.id}`,
-              I18n.t("global.genericError")
-            )
-        }}
-        leftButton={{
-          bordered: true,
-          iconName: "io-qr",
-          iconColor: variables.contentPrimaryBackground,
-          title: I18n.t("bonus.bonusVacanza.cta.qrCode"),
-          onPress: () =>
-            props.showAnimatedModal(
-              <QrModalBox
-                secretCode={bonusFromNav.id}
-                onClose={props.hideModal}
-                qrCode={qrCode[QR_CODE_MIME_TYPE]}
-              />,
-              BottomTopAnimation
-            )
-        }}
-      />
-    ) : (
-      <BlockButtons
-        type="SingleButton"
-        leftButton={{
-          bordered: true,
-          title: I18n.t("global.buttons.cancel"),
-          onPress: props.goBack
-        }}
+  const openModalBox = () => {
+    const modalBox = (
+      <QrModalBox
+        secretCode={getBonusCodeFormatted(bonus)}
+        onClose={props.hideModal}
+        qrCode={qrCode[QR_CODE_MIME_TYPE]}
       />
     );
+    props.showAnimatedModal(modalBox, BottomTopAnimation);
+  };
+
+  const renderFooterButtons = () =>
+    bonus && isBonusActive(bonus) ? (
+      <>
+        <BlockButtons
+          type="TwoButtonsInlineHalf"
+          rightButton={{
+            primary: true,
+            iconName: "io-share",
+            iconColor: variables.colorWhite,
+            title: I18n.t("global.buttons.share"),
+            onPress: () =>
+              shareQR(
+                qrCode[PNG_IMAGE_TYPE],
+                `${I18n.t("bonus.bonusVacanze.shareMessage")} ${
+                  bonusFromNav.id
+                }`,
+                I18n.t("global.genericError")
+              )
+          }}
+          leftButton={{
+            bordered: true,
+            iconName: "io-qr",
+            iconColor: variables.contentPrimaryBackground,
+            title: I18n.t("bonus.bonusVacanze.cta.qrCode"),
+            onPress: openModalBox
+          }}
+        />
+        <View spacer={true} />
+      </>
+    ) : (
+      <>
+        <BlockButtons
+          type="SingleButton"
+          leftButton={{
+            bordered: true,
+            title: I18n.t("global.buttons.cancel"),
+            onPress: props.goBack
+          }}
+        />
+        <View spacer={true} />
+      </>
+    );
+
+  const renderInformationBlock = (
+    icon: string,
+    text: string,
+    iconColor?: string
+  ) => (
+    <View style={styles.rowBlock}>
+      <IconFont
+        name={icon}
+        color={fromNullable(iconColor).getOrElse(variables.textColor)}
+        size={variables.fontSize3}
+      />
+      <View style={styles.paddedContent}>
+        <Text style={[styles.validUntil]} semibold={true}>
+          {text}
+        </Text>
+      </View>
+    </View>
+  );
+
+  const switchInformationText = () => {
+    switch (bonus.status) {
+      case BonusActivationStatusEnum.ACTIVE:
+        return renderInformationBlock(
+          "io-calendario",
+          I18n.t("bonus.bonusVacanze.statusInfo.validBetween", {
+            from: bonusValidityInterval.fold("n/a", v => v.e1),
+            to: bonusValidityInterval.fold("n/a", v => v.e2)
+          })
+        );
+      case BonusActivationStatusEnum.REDEEMED:
+        return renderInformationBlock(
+          "io-complete",
+          I18n.t("bonus.bonusVacanze.statusInfo.redeemed", {
+            date: formatDateAsLocal(
+              fromNullable(bonus.redeemed_at).getOrElse(bonus.created_at),
+              true
+            )
+          }),
+          customVariables.brandSuccess
+        );
+      case BonusActivationStatusEnum.FAILED:
+        return renderInformationBlock(
+          "io-notice",
+          I18n.t("bonus.bonusVacanze.statusInfo.bonusRejected")
+        );
+      default:
+        return null;
+    }
+  };
 
   const from = props.bonusInfo.map(bi => bi.valid_from);
   const to = props.bonusInfo.map(bi => bi.valid_to);
@@ -282,38 +361,22 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       bounces={false}
       headerBody={
         <TouchableDefaultOpacity onPress={props.goBack} style={styles.center}>
-          <Text style={styles.title}>{I18n.t("bonus.bonusVacanza.name")}</Text>
+          <Text style={styles.title}>{I18n.t("bonus.bonusVacanze.name")}</Text>
         </TouchableDefaultOpacity>
       }
       contextualHelpMarkdown={contextualHelpMarkdown}
       allowGoBack={true}
       topContent={<View style={{ height: 90 }} />}
-      faqCategories={["profile"]}
       footerContent={renderFooterButtons()}
+      gradientHeader={true}
     >
       <View>
         <View style={styles.paddedContent}>
           <View style={styles.image}>
-            {renderQRCode(qrCode[QR_CODE_MIME_TYPE])}
+            <BonusCardComponent bonus={bonus} viewQR={openModalBox} />
           </View>
           <View spacer={true} extralarge={true} />
-          <View style={styles.rowBlock}>
-            <IconFont
-              name={isBonusActive(bonus) ? "io-calendario" : "io-notice"}
-              color={variables.textColor}
-              size={variables.fontSize3}
-            />
-            <View style={styles.paddedContent}>
-              <Text style={[styles.validUntil]} semibold={true}>
-                {isBonusActive(bonus)
-                  ? I18n.t("bonus.bonusVacanza.validBetween", {
-                      from: bonusValidityInterval.fold("n/a", v => v.e1),
-                      to: bonusValidityInterval.fold("n/a", v => v.e2)
-                    })
-                  : I18n.t("bonus.bonusVacanza.bonusRejected")}
-              </Text>
-            </View>
-          </View>
+          {switchInformationText()}
           <View spacer={true} />
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} />
@@ -322,7 +385,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               semibold={true}
               style={[styles.colorDarkest, styles.sectionLabel]}
             >
-              {I18n.t("bonus.bonusVacanza.amount")}
+              {I18n.t("bonus.bonusVacanze.amount")}
             </Text>
             <Text semibold={true} style={[styles.amount, styles.colorDarkest]}>
               {formatNumberAmount(bonus.dsu_request.max_amount, true)}
@@ -331,7 +394,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} />
           <View style={styles.rowBlock}>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanza.usableAmount")}
+              {I18n.t("bonus.bonusVacanze.usableAmount")}
             </Text>
             <Text bold={true} style={[styles.colorGrey, styles.commonLabel]}>
               {formatNumberAmount(
@@ -345,7 +408,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} xsmall={true} />
           <View style={styles.rowBlock}>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanza.taxBenefit")}
+              {I18n.t("bonus.bonusVacanze.taxBenefit")}
             </Text>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
               {formatNumberAmount(bonus.dsu_request.max_tax_benefit, true)}
@@ -358,7 +421,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             semibold={true}
             style={[styles.sectionLabel, styles.colorDarkest]}
           >
-            {I18n.t("bonus.bonusVacanza.bonusClaim")}
+            {I18n.t("bonus.bonusVacanze.bonusClaim")}
           </Text>
           <View spacer={true} />
           {bonus.dsu_request.family_members.map(member =>
@@ -375,7 +438,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 semibold={true}
                 style={[styles.sectionLabel, styles.colorDarkest]}
               >
-                {I18n.t("bonus.bonusVacanza.status")}
+                {I18n.t("bonus.bonusVacanze.status")}
               </Text>
               <Badge
                 style={
@@ -393,7 +456,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} />
           <View style={styles.rowBlock}>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanza.requestedAt")}
+              {I18n.t("bonus.bonusVacanze.requestedAt")}
             </Text>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
               {isBonusActive(bonus)
@@ -404,6 +467,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                   )}
             </Text>
           </View>
+          <EdgeBorderComponent />
         </View>
       </View>
     </DarkLayout>
@@ -415,12 +479,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => {
-  const activeBonus = bonusVacanzeActivationSelector(state);
+const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
+  const bonusFromNav = ownProps.navigation.getParam("bonus");
+  const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
   return {
-    bonusInfo: availableBonusesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
-    bonus: activeBonus,
-    isError: pot.isNone(activeBonus) && pot.isError(activeBonus)
+    bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
+    bonus,
+    isError: pot.isNone(bonus) && pot.isError(bonus) // error and no bonus data, user should retry to load
   };
 };
 

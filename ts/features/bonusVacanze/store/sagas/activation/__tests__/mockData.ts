@@ -7,14 +7,15 @@ import {
   navigateToBonusActivationCompleted,
   navigateToBonusActivationLoading,
   navigateToBonusActivationTimeout,
+  navigateToBonusActiveDetailScreen,
   navigateToBonusAlreadyExists,
   navigateToEligibilityExpired
 } from "../../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../../navigation/routes";
 import { bonusVacanzeActivation } from "../../../actions/bonusVacanze";
-import { BonusActivationProgressEnum } from "../../../reducers/bonusVacanzeActivation";
+import { BonusActivationProgressEnum } from "../../../reducers/activation";
 
-interface IExpectedActions {
+export interface IExpectedActions {
   displayName: string;
   expectedActions: ReadonlyArray<Action>;
 }
@@ -50,6 +51,7 @@ export const activationSuccess: NetworkingResults = {
   }),
   expectedActions: [
     navigateToBonusActivationCompleted(),
+    navigateToBonusActiveDetailScreen({ bonus: mockedBonus }),
     navigationHistoryPop(1)
   ]
 };

@@ -1,7 +1,12 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  SafeAreaView,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -11,14 +16,16 @@ import GenericErrorComponent from "../../../components/screens/GenericErrorCompo
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../store/actions/navigationHistory";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import { AvailableBonusItem } from "../components/AvailableBonusItem";
+import { bonusVacanzeStyle } from "../components/Styles";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { availableBonusesLoad } from "../store/actions/bonusVacanze";
-import { availableBonusesSelector } from "../store/reducers/availableBonuses";
+import { availableBonusTypesSelector } from "../store/reducers/availableBonusesTypes";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -73,34 +80,36 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
         goBack={true}
         headerTitle={I18n.t("bonus.bonusList.title")}
       >
-        <Content
-          noPadded={true}
-          scrollEnabled={false}
-          style={styles.whiteContent}
-        >
-          <View style={styles.paddedContent}>
-            <FlatList
-              scrollEnabled={false}
-              data={availableBonusesList}
-              renderItem={this.renderListItem}
-              keyExtractor={item => item.id_type.toString()}
-              ItemSeparatorComponent={() => (
-                <ItemSeparatorComponent noPadded={true} />
-              )}
-            />
-          </View>
-        </Content>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps}
-        />
+        <SafeAreaView style={bonusVacanzeStyle.flex}>
+          <Content
+            noPadded={true}
+            scrollEnabled={false}
+            style={styles.whiteContent}
+          >
+            <View style={styles.paddedContent}>
+              <FlatList
+                scrollEnabled={false}
+                data={availableBonusesList}
+                renderItem={this.renderListItem}
+                keyExtractor={item => item.id_type.toString()}
+                ItemSeparatorComponent={() => (
+                  <ItemSeparatorComponent noPadded={true} />
+                )}
+              />
+            </View>
+          </Content>
+          <FooterWithButtons
+            type={"SingleButton"}
+            leftButton={cancelButtonProps}
+          />
+        </SafeAreaView>
       </BaseScreenComponent>
     );
   }
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potAvailableBonuses = availableBonusesSelector(state);
+  const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     isLoading: pot.isLoading(potAvailableBonuses),
@@ -113,8 +122,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
   loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
   // TODO Add the param to navigate to proper bonus by name (?)
-  navigateToBonusRequest: (bonusItem: BonusAvailable) =>
-    dispatch(navigateToBonusRequestInformation({ bonusItem }))
+  navigateToBonusRequest: (bonusItem: BonusAvailable) => {
+    dispatch(navigateToBonusRequestInformation({ bonusItem }));
+    dispatch(navigationHistoryPop(1));
+  }
 });
 
 export default connect(

@@ -85,3 +85,14 @@ export const maybeNotNullyString = (
   fromPredicate((t: string) => t.trim().length > 0)(
     fromNullable(text).getOrElse("")
   );
+
+/**
+ * return a string by adding 'toAdd' every 'every' chars
+ * @param text
+ * @param toAdd
+ * @param every
+ */
+export const addEvery = (text: string, toAdd: string, every: number): string =>
+  text
+    .replace(/\W/gi, "")
+    .replace(new RegExp(`(.{${every}})`, "g"), `$1${toAdd}`);

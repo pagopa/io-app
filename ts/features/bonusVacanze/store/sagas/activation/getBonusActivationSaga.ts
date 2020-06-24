@@ -9,7 +9,7 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { startTimer } from "../../../../../utils/timer";
 import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
 import { bonusVacanzeActivation } from "../../actions/bonusVacanze";
-import { BonusActivationProgressEnum } from "../../reducers/bonusVacanzeActivation";
+import { BonusActivationProgressEnum } from "../../reducers/activation";
 
 // wait time between requests
 const bonusActivationResultPolling = 1000 as Millisecond;
@@ -131,6 +131,8 @@ export const bonusActivationSaga = (
           `response status ${startBonusActivationProcedureResult.value.status}`
         );
       }
+      // decoding failure
+      throw Error(readableReport(startBonusActivationProcedureResult.value));
     } catch (e) {
       return bonusVacanzeActivation.failure(e);
     }

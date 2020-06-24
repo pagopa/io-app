@@ -1,6 +1,6 @@
 import { Body, Container, Content, Right, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, StyleSheet } from "react-native";
+import { BackHandler, Image, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -9,6 +9,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { AVOID_ZOOM_JS } from "../../../utils/webview";
+import { bonusVacanzeStyle } from "./Styles";
 
 type Props = {
   onClose: () => void;
@@ -121,24 +122,29 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>
-      <Content contentContainerStyle={styles.flex1} noPadded={true}>
-        {renderError()}
-        {!hasError && (
-          <View style={styles.flex1}>
-            <WebView
-              textZoom={100}
-              style={styles.flex2}
-              onLoadEnd={handleLoadEnd}
-              onError={handleError}
-              source={{ uri: props.tos_url }}
-              injectedJavaScript={AVOID_ZOOM_JS}
-            />
-          </View>
+      <SafeAreaView style={bonusVacanzeStyle.flex}>
+        <Content contentContainerStyle={styles.flex1} noPadded={true}>
+          {renderError()}
+          {!hasError && (
+            <View style={styles.flex1}>
+              <WebView
+                textZoom={100}
+                style={styles.flex2}
+                onLoadEnd={handleLoadEnd}
+                onError={handleError}
+                source={{ uri: props.tos_url }}
+                injectedJavaScript={AVOID_ZOOM_JS}
+              />
+            </View>
+          )}
+        </Content>
+        {isLoadEnd && (
+          <FooterWithButtons
+            type="SingleButton"
+            leftButton={closeButtonProps}
+          />
         )}
-      </Content>
-      {isLoadEnd && (
-        <FooterWithButtons type="SingleButton" leftButton={closeButtonProps} />
-      )}
+      </SafeAreaView>
     </Container>
   ));
   return <ContainerComponent isLoading={!isLoadEnd} />;

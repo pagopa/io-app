@@ -25,6 +25,8 @@ import { ServiceTuple } from "../../../../../../definitions/backend/ServiceTuple
 import { ServicesByScope } from "../../../../../../definitions/content/ServicesByScope";
 import { UserMetadataState } from "../../../userMetadata";
 import { OrganizationsState } from "../../organizations";
+import { ServicesByIdState } from "../servicesById";
+import { VisibleServicesState } from "../visibleServices";
 
 const customPotUserMetadata: UserMetadataState = pot.some({
   version: 1,
@@ -260,6 +262,44 @@ describe("visibleServicesDetailLoadStateSelector", () => {
         customServices.visible
       )
     ).toBe(pot.noneLoading);
+  });
+
+  it("should do be pot.some when a service is loading but it is some", () => {
+    const data = {
+      byId: {
+        "azure-deployc49a": {
+          kind: "PotSomeLoading",
+          value: {
+            available_notification_channels: ["EMAIL", "WEBHOOK"],
+            department_name: "Progetto IO",
+            organization_fiscal_code: "15376371009",
+            organization_name: "IO - L'app dei servizi pubblici",
+            service_id: "azure-deployc49a",
+            service_name: "Novità e aggiornamenti",
+            version: 2
+          }
+        }
+      },
+      byOrgFiscalCode: {
+        "15376371009": ["azure-deployc49a"]
+      },
+      visible: {
+        kind: "PotSome",
+        value: [
+          {
+            scope: "NATIONAL",
+            service_id: "azure-deployc49a",
+            version: 1
+          }
+        ]
+      }
+    };
+    expect(
+      visibleServicesDetailLoadStateSelector.resultFunc(
+        data.byId as ServicesByIdState,
+        data.visible as VisibleServicesState
+      )
+    ).toEqual(pot.some(undefined));
   });
 });
 

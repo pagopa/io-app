@@ -9,11 +9,10 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
-    elevation: 3,
-
+    elevation: -7,
+    zIndex: -7,
     backgroundColor: variables.brandGray,
     borderRadius: 8,
-    marginBottom: -1,
     marginLeft: 0,
     marginRight: 0
   },
