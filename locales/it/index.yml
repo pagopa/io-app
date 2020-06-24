@@ -1385,5 +1385,5 @@ bonus:
   failed: Fallito
   redeemed: Utilizzato
   tos:
-    title: Termini e condizioni d’uso e Privacy policy
+    title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
