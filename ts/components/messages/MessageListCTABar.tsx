@@ -158,8 +158,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
     const maybeNestedCTA = getCTA(this.props.message);
     if (!this.hasPaymentData && maybeNestedCTA.isSome()) {
       const ctas = maybeNestedCTA.value;
-      const hasValidActions = ctas ? hasCTAValidActions(ctas) : false;
-      if (hasValidActions) {
+      if (hasCTAValidActions(ctas)) {
         const cta1 = this.renderCTA(ctas.cta_1, true);
         const cta2 = this.renderCTA(ctas.cta_2, false);
         return (
