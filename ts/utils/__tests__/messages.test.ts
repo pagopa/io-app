@@ -3,7 +3,6 @@ import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedM
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../definitions/backend/MessageContent";
-import { Timestamp } from "../../../definitions/backend/Timestamp";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { cleanMarkdownFromCTAs, getCTA, isCtaActionValid } from "../messages";
 
@@ -31,7 +30,7 @@ en:
 ` + messageBody;
 
 const messageWithContent = {
-  created_at: new Date() as Timestamp,
+  created_at: new Date(),
   fiscal_code: "RSSMRA83A12H501D" as FiscalCode,
   id: "93726BD8-D29C-48F2-AE6D-2F",
   sender_service_id: "dev-service_0",
@@ -39,7 +38,7 @@ const messageWithContent = {
   content: {
     subject: "Subject - test 1",
     markdown: CTA_2,
-    due_date: new Date() as Timestamp,
+    due_date: new Date(),
     payment_data: {
       notice_number: "012345678912345678",
       amount: 406,

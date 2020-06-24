@@ -23,8 +23,9 @@ import variables from "../../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import { AvailableBonusItem } from "../components/AvailableBonusItem";
 import { bonusVacanzeStyle } from "../components/Styles";
+import { availableBonuses } from "../data/availableBonuses";
 import { navigateToBonusRequestInformation } from "../navigation/action";
-import { availableBonusesLoad } from "../store/actions/bonusVacanze";
+import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
 import { availableBonusTypesSelector } from "../store/reducers/availableBonusesTypes";
 
 export type Props = ReturnType<typeof mapStateToProps> &
@@ -58,6 +59,8 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   };
 
   public componentDidMount() {
+    // since this is the first screen of the Bonus Navigation Stack, avoid to put
+    // logic inside this method because this screen will be mounted as soon the stack is created
     setStatusBarColorAndBackground("dark-content", variables.colorWhite);
   }
 
@@ -111,7 +114,8 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 const mapStateToProps = (state: GlobalState) => {
   const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
-    availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
+    // fallback to hardcode data if pot is none
+    availableBonusesList: pot.getOrElse(potAvailableBonuses, availableBonuses),
     isLoading: pot.isLoading(potAvailableBonuses),
     // show error only when we have an error and no data to show
     isError: pot.isNone(potAvailableBonuses) && pot.isError(potAvailableBonuses)
@@ -120,7 +124,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
-  loadAvailableBonuses: () => dispatch(availableBonusesLoad.request()),
+  loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
   // TODO Add the param to navigate to proper bonus by name (?)
   navigateToBonusRequest: (bonusItem: BonusAvailable) => {
     dispatch(navigateToBonusRequestInformation({ bonusItem }));
