@@ -2,7 +2,6 @@ import { constNull } from "fp-ts/lib/function";
 import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
-import { EligibilityCheckSuccessEligible } from "../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import {
   activateBonusVacanze,
