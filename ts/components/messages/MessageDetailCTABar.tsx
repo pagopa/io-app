@@ -7,6 +7,7 @@ import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedM
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ReduxProps } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
+import { CTA } from "../../types/MessageCTA";
 import {
   getCTA,
   handleCtaAction,
@@ -86,6 +87,10 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     });
   }
 
+  private handleCtaAction = (cta: CTA) => {
+    handleCtaAction(cta, this.props.dispatch);
+  };
+
   // render nested cta if the message is not about payment and cta are present and valid
   // inside the message content
   private renderNestedCTAs = () => {
@@ -99,15 +104,15 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
               cta={ctas.cta_2}
               xsmall={false}
               primary={false}
-              onCTAPress={c => handleCtaAction(c, this.props.dispatch)}
+              onCTAPress={this.handleCtaAction}
             />
           );
-        const cta1 = (
+        const cta1 = isCtaActionValid(ctas.cta_1) && (
           <NestedCtaButton
             cta={ctas.cta_1}
             primary={true}
             xsmall={false}
-            onCTAPress={c => handleCtaAction(c, this.props.dispatch)}
+            onCTAPress={this.handleCtaAction}
           />
         );
         return (

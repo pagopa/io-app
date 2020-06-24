@@ -9,6 +9,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ReduxProps } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
+import { CTA } from "../../types/MessageCTA";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
   getCTA,
@@ -130,6 +131,10 @@ class MessageListCTABar extends React.PureComponent<Props> {
     });
   }
 
+  private handleCtaAction = (cta: CTA) => {
+    handleCtaAction(cta, this.props.dispatch);
+  };
+
   // render nested cta if the message is not about payment and cta are present and valid
   // inside the message content
   private renderNestedCTAs = () => {
@@ -143,15 +148,15 @@ class MessageListCTABar extends React.PureComponent<Props> {
               cta={ctas.cta_2}
               xsmall={true}
               primary={false}
-              onCTAPress={c => handleCtaAction(c, this.props.dispatch)}
+              onCTAPress={this.handleCtaAction}
             />
           );
-        const cta1 = (
+        const cta1 = isCtaActionValid(ctas.cta_1) && (
           <NestedCtaButton
             cta={ctas.cta_1}
             primary={true}
             xsmall={true}
-            onCTAPress={c => handleCtaAction(c, this.props.dispatch)}
+            onCTAPress={this.handleCtaAction}
           />
         );
         return (
