@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, View } from "native-base";
@@ -49,6 +49,9 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
+import TosBonusComponent from "../components/TosBonusComponent";
+import { getLocalePrimaryWithFallback } from "../../../utils/locale";
+import { BonusAvailableContent } from "../../../../definitions/content/BonusAvailableContent";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -72,6 +75,9 @@ type Props = OwnProps &
 
 const styles = StyleSheet.create({
   emptyHeader: { height: 90 },
+  flex: {
+    flex: 1
+  },
   title: {
     color: variables.lightGray,
     fontSize: variables.fontSize1
@@ -99,7 +105,8 @@ const styles = StyleSheet.create({
   validUntil: {
     color: variables.brandDarkestGray,
     fontSize: variables.fontSizeSmall,
-    lineHeight: variables.lineHeightSmall
+    lineHeight: variables.lineHeightSmall,
+    paddingVertical: 8
   },
   rowBlock: {
     flexDirection: "row",
@@ -109,8 +116,13 @@ const styles = StyleSheet.create({
   itemsCenter: {
     alignItems: "center"
   },
-  paddedContent: {
-    paddingLeft: variables.contentPadding,
+  paddedIconLeft: {
+    paddingLeft: 12
+  },
+  paddedContentLeft: {
+    paddingLeft: variables.contentPadding
+  },
+  paddedContentRight: {
     paddingRight: variables.contentPadding
   },
   helpButton: {
@@ -158,6 +170,10 @@ const styles = StyleSheet.create({
   },
   amount: {
     fontSize: variables.fontSize2
+  },
+  disclaimer: {
+    fontSize: customVariables.fontSizeSmall,
+    color: customVariables.selectedColor
   }
 });
 
@@ -314,23 +330,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     iconColor?: string
   ) => (
     <View style={[styles.rowBlock, styles.itemsCenter]}>
-      <View>
-        <IconFont
-          name={icon}
-          color={fromNullable(iconColor).getOrElse(variables.textColor)}
-          size={variables.fontSize3}
-          style={{
-            justifyContent: "center",
-            lineHeight: customVariables.lineHeightBase,
-            alignSelf: "flex-end"
-          }}
-        />
-      </View>
-      <View style={styles.paddedContent}>
-        <Text style={[styles.validUntil]} bold={true}>
-          {text}
-        </Text>
-      </View>
+      <IconFont
+        name={icon}
+        color={fromNullable(iconColor).getOrElse(variables.textColor)}
+        size={variables.fontSize3}
+        style={styles.paddedIconLeft}
+      />
+      <View hspacer={true} />
+      <Text style={[styles.flex, styles.validUntil]} bold={true}>
+        {text}
+      </Text>
     </View>
   );
 
@@ -365,6 +374,18 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   };
 
+  const handleModalPress = (tos: string) =>
+    props.showModal(
+      <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
+    );
+
+  const bonusInfoFromLocale = props.bonusInfo
+    .map(b => b[getLocalePrimaryWithFallback()])
+    .toUndefined();
+  const maybeBonusTos = fromNullable(bonusInfoFromLocale).fold(none, b =>
+    maybeNotNullyString(b.tos_url)
+  );
+
   const from = props.bonusInfo.map(bi => bi.valid_from);
   const to = props.bonusInfo.map(bi => bi.valid_to);
   const bonusValidityInterval = validityInterval(
@@ -386,7 +407,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       gradientHeader={true}
     >
       <View>
-        <View style={styles.paddedContent}>
+        <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
           <View style={styles.image}>
             <BonusCardComponent bonus={bonus} viewQR={openModalBox} />
           </View>
@@ -482,6 +503,24 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                   )}
             </Text>
           </View>
+          {maybeBonusTos.isSome() && (
+            <>
+              <View spacer={true} />
+              <ItemSeparatorComponent noPadded={true} />
+              <View spacer={true} large={true} />
+              <TouchableDefaultOpacity
+                onPress={() => handleModalPress(maybeBonusTos.value)}
+              >
+                <Text
+                  style={styles.disclaimer}
+                  ellipsizeMode={"tail"}
+                  numberOfLines={1}
+                >
+                  {I18n.t("bonus.tos.title")}
+                </Text>
+              </TouchableDefaultOpacity>
+            </>
+          )}
           <EdgeBorderComponent />
         </View>
       </View>

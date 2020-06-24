@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     marginRight: 9
   },
   badgeText: {
-    marginTop: 2,
+    marginTop: 3,
     fontSize: customVariables.fontSizeSmall,
     lineHeight: 16
   },
@@ -126,7 +126,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                     bold={true}
                     style={[
                       styles.labelButton,
-                      { fontSize: customVariables.fontSize1 }
+                      { fontSize: customVariables.fontSize1 + 1 }
                     ]}
                   >
                     {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
