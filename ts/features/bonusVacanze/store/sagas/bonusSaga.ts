@@ -3,6 +3,7 @@ import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { apiUrlPrefix, contentRepoUrl } from "../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
+import { ID_BONUS_VACANZE_TYPE } from "../../utils/bonus";
 import {
   activateBonusVacanze,
   checkBonusVacanzeEligibility,
@@ -16,6 +17,7 @@ import { handleBonusActivationSaga } from "./activation/handleBonusActivationSag
 import { bonusEligibilitySaga } from "./eligibility/getBonusEligibilitySaga";
 import { handleBonusEligibilitySaga } from "./eligibility/handleBonusEligibilitySaga";
 import { handleBonusFromIdPollingSaga } from "./handleBonusFromIdPolling";
+import { handleForceBonusServiceActivation } from "./handleForceBonusServiceActivation";
 import { handleLoadAllBonusActivations } from "./handleLoadAllBonusActivationSaga";
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
 import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
@@ -70,5 +72,15 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
       backendBonusVacanzeClient.startBonusActivationProcedure,
       backendBonusVacanzeClient.getLatestBonusVacanzeFromId
     )
+  );
+
+  // force bonus vacanze service activation when eligibility or activation starts
+  yield takeLatest(
+    [
+      getType(activateBonusVacanze.request),
+      getType(checkBonusVacanzeEligibility.request)
+    ],
+    handleForceBonusServiceActivation,
+    ID_BONUS_VACANZE_TYPE
   );
 }
