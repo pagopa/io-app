@@ -10,7 +10,7 @@ type Props = {
   onCTAPress: (cta: CTA) => void;
 };
 
-// a button that display a CTA nested into the message content as front-matter
+// a button displaying a CTA coming from the message content as nested front-matter
 export const NestedCtaButton: React.FunctionComponent<Props> = (
   props: Props
 ) => {
