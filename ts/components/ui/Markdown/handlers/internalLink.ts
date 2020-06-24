@@ -4,9 +4,9 @@
 import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import { bonusVacanzeEnabled } from "../../../../config";
+import BONUSVACANZE_ROUTES from "../../../../features/bonusVacanze/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
-import BONUSVACANZE_ROUTES from "../../../../features/bonusVacanze/navigation/routes";
 
 // Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
 export const IO_INTERNAL_LINK_PREFIX = "ioit://";
