@@ -21,7 +21,7 @@ export function* handleForceBonusServiceActivation(
     return;
   }
   const bonusVacanze = maybeBonusVacanze.value;
-  const serviceId = bonusVacanze.service_id;
+  const serviceId = bonusVacanze.service_id as ServiceId;
   // no service id
   if (serviceId === undefined) {
     return;
@@ -37,7 +37,7 @@ export function* handleForceBonusServiceActivation(
         s => s === serviceId
       );
       if (isBlocked) {
-        return getBlockedChannels(profile, serviceId as ServiceId)({
+        return getBlockedChannels(profile, serviceId)({
           email: true,
           inbox: true,
           push: true
