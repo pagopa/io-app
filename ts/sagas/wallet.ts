@@ -112,14 +112,14 @@ import {
  * We will retry for as many times when polling for a payment ID.
  * The total maximum time we are going to wait will be:
  *
- * PAYMENT_ID_MAX_POLLING_RETRIES * PAYMENT_ID_RETRY_DELAY_MILLIS (milliseconds)
+ * PAYMENT_ID_MAX_POLLING_RETRIES * PAYMENT_ID_RETRY_DELAY
  */
 const PAYMENT_ID_MAX_POLLING_RETRIES = 180;
 
 /**
  * How much time to wait between retries when polling for a payment ID
  */
-const PAYMENT_ID_RETRY_DELAY_MILLIS = 1000 as Millisecond;
+const PAYMENT_ID_RETRY_DELAY = 1000 as Millisecond;
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -644,7 +644,7 @@ export function* watchWalletSaga(
     // e2: the fetch to execute
     const getPaymentId = pollingPagopaNodoClient.getPaymentId(
       PAYMENT_ID_MAX_POLLING_RETRIES,
-      PAYMENT_ID_RETRY_DELAY_MILLIS
+      PAYMENT_ID_RETRY_DELAY
     );
     shouldAbortPaymentIdPollingRequest = getPaymentId.e1;
     yield call(paymentIdPollingRequestHandler, getPaymentId, action);
