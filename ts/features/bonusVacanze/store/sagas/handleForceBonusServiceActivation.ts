@@ -21,9 +21,9 @@ export function* handleForceBonusServiceActivation(
     return;
   }
   const bonusVacanze = maybeBonusVacanze.value;
-  const serviceId = bonusVacanze.service_id as ServiceId;
+  const serviceId = ServiceId.decode(bonusVacanze.service_id);
   // no service id
-  if (serviceId === undefined) {
+  if (serviceId.isLeft()) {
     return;
   }
   // retrieve profile from store
@@ -34,10 +34,10 @@ export function* handleForceBonusServiceActivation(
   const newBlockedInboxOrChannel = pot.getOrElse(
     pot.map(profile, p => {
       const isBlocked = Object.keys(p.blocked_inbox_or_channels || {}).some(
-        s => s === serviceId
+        s => s === serviceId.value
       );
       if (isBlocked) {
-        return getBlockedChannels(profile, serviceId)({
+        return getBlockedChannels(profile, serviceId.value)({
           email: true,
           inbox: true,
           push: true
