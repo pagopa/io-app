@@ -139,6 +139,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
   // inside the message content
   private renderNestedCTAs = () => {
     const maybeNestedCTA = getCTA(this.props.message);
+    // payment data cta has priority
     if (!this.hasPaymentData && maybeNestedCTA.isSome()) {
       const ctas = maybeNestedCTA.value;
       if (hasCTAValidActions(ctas)) {
