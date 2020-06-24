@@ -82,7 +82,6 @@ import { SessionToken } from "../types/SessionToken";
 import { defaultRetryingFetch } from "../utils/fetch";
 
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import ROUTES from "../navigation/routes";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
@@ -107,19 +106,6 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-
-/**
- * We will retry for as many times when polling for a payment ID.
- * The total maximum time we are going to wait will be:
- *
- * PAYMENT_ID_MAX_POLLING_RETRIES * PAYMENT_ID_RETRY_DELAY
- */
-const PAYMENT_ID_MAX_POLLING_RETRIES = 180;
-
-/**
- * How much time to wait between retries when polling for a payment ID
- */
-const PAYMENT_ID_RETRY_DELAY = 1000 as Millisecond;
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -642,10 +628,7 @@ export function* watchWalletSaga(
     // getPaymentId is a tuple2
     // e1: deferredPromise, used to abort the constantPollingFetch
     // e2: the fetch to execute
-    const getPaymentId = pollingPagopaNodoClient.getPaymentId(
-      PAYMENT_ID_MAX_POLLING_RETRIES,
-      PAYMENT_ID_RETRY_DELAY
-    );
+    const getPaymentId = pollingPagopaNodoClient.getPaymentId();
     shouldAbortPaymentIdPollingRequest = getPaymentId.e1;
     yield call(paymentIdPollingRequestHandler, getPaymentId, action);
   });

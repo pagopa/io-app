@@ -56,6 +56,19 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 
+/**
+ * We will retry for as many times when polling for a payment ID.
+ * The total maximum time we are going to wait will be:
+ *
+ * PAYMENT_ID_MAX_POLLING_RETRIES * PAYMENT_ID_RETRY_DELAY
+ */
+const PAYMENT_ID_MAX_POLLING_RETRIES = 180;
+
+/**
+ * How much time to wait between retries when polling for a payment ID
+ */
+const PAYMENT_ID_RETRY_DELAY = 1000 as Millisecond;
+
 //
 // Other helper types
 //
@@ -350,13 +363,13 @@ export function BackendClient(
     postAttivaRpt: withBearerToken(
       createFetchRequestForApi(attivaRptT, options)
     ),
-    getPaymentId: (maxPollingRetries: number, retryDelay: Millisecond) => {
+    getPaymentId: () => {
       // since we could abort the polling a new constantPollingFetch and DeferredPromise are created
       const shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
       const fetchPolling = constantPollingFetch(
         shouldAbortPaymentIdPollingRequest.e1,
-        maxPollingRetries,
-        retryDelay
+        PAYMENT_ID_MAX_POLLING_RETRIES,
+        PAYMENT_ID_RETRY_DELAY
       );
       const request = withBearerToken(
         createFetchRequestForApi(getPaymentIdT, {
