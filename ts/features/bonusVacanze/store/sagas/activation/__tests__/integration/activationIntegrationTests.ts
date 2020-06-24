@@ -10,7 +10,7 @@ import { navigationHistoryPop } from "../../../../../../../store/actions/navigat
 import { navigationCurrentRouteSelector } from "../../../../../../../store/reducers/navigation";
 import BONUSVACANZE_ROUTES from "../../../../../navigation/routes";
 import {
-  cancelBonusRequest,
+  cancelBonusVacanzeRequest,
   completeBonusVacanzeActivation
 } from "../../../../actions/bonusVacanze";
 import allActiveReducer from "../../../../reducers/allActive";
@@ -73,7 +73,7 @@ describe("Bonus Activation Saga Integration Test", () => {
           right({ status: 500, value: {} })
         ]
       ])
-      .dispatch(cancelBonusRequest())
+      .dispatch(cancelBonusVacanzeRequest())
       .put(navigationHistoryPop(1))
       .put(navigateToWalletHome())
       .hasFinalState({

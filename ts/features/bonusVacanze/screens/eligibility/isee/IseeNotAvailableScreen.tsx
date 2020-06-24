@@ -6,7 +6,7 @@ import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 
 import I18n from "../../../../../i18n";
 import { InfoScreenStyle } from "../../../components/infoScreen/InfoScreenComponent";
-import { cancelBonusRequest } from "../../../store/actions/bonusVacanze";
+import { cancelBonusVacanzeRequest } from "../../../store/actions/bonusVacanze";
 import { BaseIseeErrorComponent } from "./BaseIseeErrorComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -60,7 +60,7 @@ const IseeNotAvailableScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => dispatch(cancelBonusRequest())
+  onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
 export default connect(

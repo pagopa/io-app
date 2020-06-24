@@ -10,50 +10,72 @@ import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvai
 import { BonusActivationProgressEnum } from "../reducers/activation";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
-export const availableBonusesLoad = createAsyncAction(
-  "BONUS_AVAILABLE_REQUEST",
-  "BONUS_AVAILABLE_SUCCESS",
-  "BONUS_AVAILABLE_FAILURE"
+/**
+ * Request the list of all the bonus activated
+ */
+export const loadAllBonusActivations = createAsyncAction(
+  "BONUS_VACANZE_LOAD_ALL_ACTIVATION_REQUEST",
+  "BONUS_VACANZE_LOAD_ALL_ACTIVATION_SUCCESS",
+  "BONUS_VACANZE_LOAD_ALL_ACTIVATION_FAILURE"
+)<void, void, Error>();
+
+/**
+ * Request the list of all the types of bonus
+ */
+export const loadAvailableBonuses = createAsyncAction(
+  "BONUSES_AVAILABLE_REQUEST",
+  "BONUSES_AVAILABLE_SUCCESS",
+  "BONUSES_AVAILABLE_FAILURE"
 )<void, BonusesAvailable, Error>();
 
 export type EligibilityCheckPayload = {
   status: EligibilityRequestProgressEnum;
   check?: EligibilityCheck;
 };
-
-export const checkBonusEligibility = createAsyncAction(
-  "BONUS_CHECK_ELIGIBILITY_REQUEST",
-  "BONUS_CHECK_ELIGIBILITY_SUCCESS",
-  "BONUS_CHECK_ELIGIBILITY_FAILURE"
+/**
+ * Start and handle the eligibility phase
+ */
+export const checkBonusVacanzeEligibility = createAsyncAction(
+  "BONUS_VACANZE_CHECK_ELIGIBILITY_REQUEST",
+  "BONUS_VACANZE_CHECK_ELIGIBILITY_SUCCESS",
+  "BONUS_VACANZE_CHECK_ELIGIBILITY_FAILURE"
 )<void, EligibilityCheckPayload, Error>();
 
-// A common event to cancel the request bonus, used both for eligibility and activation
-export const cancelBonusRequest = createStandardAction("BONUS_REQUEST_CANCEL")<
-  void
->();
-
-export const eligibilityRequestId = createStandardAction(
-  "BONUS_CHECK_ELIGIBILITY_REQUEST_ID"
+export const storeEligibilityRequestId = createStandardAction(
+  "BONUS_VACANZE_CHECK_ELIGIBILITY_STORE_REQUEST_ID"
 )<InstanceId>();
 
+/**
+ * Start and handle the activation phase
+ */
+export const activateBonusVacanze = createAsyncAction(
+  "BONUS_VACANZE_ACTIVATION_REQUEST",
+  "BONUS_VACANZE_ACTIVATION_SUCCESS",
+  "BONUS_VACANZE_ACTIVATION_FAILURE"
+)<void, BonusVacanzeActivationPayload, Error>();
+
+// A common event to cancel the request bonus, used both for eligibility and activation
+export const cancelBonusVacanzeRequest = createStandardAction(
+  "BONUS_VACANZE_REQUEST_CANCEL"
+)<void>();
+
+// Complete the bonus activation phase with success
+export const completeBonusVacanzeActivation = createStandardAction(
+  "BONUS_VACANZE_ACTIVATION_COMPLETE"
+)();
+
 export const loadBonusVacanzeFromId = createAsyncAction(
-  "BONUS_LOAD_FROM_ID_REQUEST",
-  "BONUS_LOAD_FROM_ID_SUCCESS",
-  "BONUS_LOAD_FROM_ID_FAILURE"
+  "BONUS_VACANZE_LOAD_FROM_ID_REQUEST",
+  "BONUS_VACANZE_LOAD_FROM_ID_SUCCESS",
+  "BONUS_VACANZE_LOAD_FROM_ID_FAILURE"
 )<string, BonusActivationWithQrCode, { error: Error; id: string }>();
 
 export const startLoadBonusFromIdPolling = createStandardAction(
-  "BONUS_FROM_ID_START"
+  "BONUS_VACANZE_FROM_ID_POLLING_START"
 )<string>();
 
-export const loadAllBonusActivations = createAsyncAction(
-  "BONUS_LOAD_ALL_ACTIVATION_REQUEST",
-  "BONUS_LOAD_ALL_ACTIVATION_SUCCESS",
-  "BONUS_LOAD_ALL_ACTIVATION_FAILURE"
-)<void, void, Error>();
-
 export const cancelLoadBonusFromIdPolling = createStandardAction(
-  "BONUS_FROM_ID_CANCEL"
+  "BONUS_VACANZE_FROM_ID_POLLING_CANCEL"
 )<void>();
 
 export type BonusVacanzeActivationPayload = {
@@ -62,24 +84,14 @@ export type BonusVacanzeActivationPayload = {
   activation?: BonusActivationWithQrCode;
 };
 
-export const bonusVacanzeActivation = createAsyncAction(
-  "BONUS_ACTIVATION_REQUEST",
-  "BONUS_ACTIVATION_SUCCESS",
-  "BONUS_ACTIVATION_FAILURE"
-)<void, BonusVacanzeActivationPayload, Error>();
-
-export const completeBonusVacanzeActivation = createStandardAction(
-  "BONUS_ACTIVATION_COMPLETE"
-)();
-
 export type BonusActions =
-  | ActionType<typeof availableBonusesLoad>
-  | ActionType<typeof eligibilityRequestId>
-  | ActionType<typeof bonusVacanzeActivation>
-  | ActionType<typeof checkBonusEligibility>
+  | ActionType<typeof loadAvailableBonuses>
+  | ActionType<typeof storeEligibilityRequestId>
+  | ActionType<typeof activateBonusVacanze>
+  | ActionType<typeof checkBonusVacanzeEligibility>
   | ActionType<typeof loadBonusVacanzeFromId>
   | ActionType<typeof loadAllBonusActivations>
   | ActionType<typeof startLoadBonusFromIdPolling>
-  | ActionType<typeof cancelBonusRequest>
+  | ActionType<typeof cancelBonusVacanzeRequest>
   | ActionType<typeof completeBonusVacanzeActivation>
   | ActionType<typeof cancelLoadBonusFromIdPolling>;
