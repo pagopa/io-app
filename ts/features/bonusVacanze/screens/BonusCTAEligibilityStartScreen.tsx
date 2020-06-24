@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { View } from "react-native";
 import { connect } from "react-redux";
 import { navigationHistoryPop } from "../../../store/actions/navigationHistory";
 import { Dispatch } from "../../../store/actions/types";
 import { checkBonusEligibility } from "../store/actions/bonusVacanze";
+import LoadBonusEligibilityScreen from "./eligibility/LoadBonusEligibilityScreen";
 
 export type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -12,7 +12,7 @@ export type Props = ReturnType<typeof mapDispatchToProps>;
 const BonusCTAEligibilityStartScreen = (props: Props) => {
   useEffect(() => props.startEligibilityCheck(), []);
 
-  return <View style={{ flex: 1, backgroundColor: "transparent" }} />;
+  return <LoadBonusEligibilityScreen />;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
