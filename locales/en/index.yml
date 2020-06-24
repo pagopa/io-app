@@ -61,6 +61,9 @@ global:
     spidLogin:
       title: Remember to login to IO!
       message: Login with your digital identity on IO, the public services app
+rooted:
+  title: Looks like the security of your device has been compromised!
+  body: !include rooted_body.md
 locales:
   it: Italian
   en: English

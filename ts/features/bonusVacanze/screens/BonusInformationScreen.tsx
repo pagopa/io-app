@@ -25,6 +25,7 @@ import { maybeNotNullyString } from "../../../utils/strings";
 import { bonusVacanzeStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusEligibility } from "../store/actions/bonusVacanze";
+import RootedDeviceScreen from "../../../components/RootedDeviceScreen";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -113,7 +114,11 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 
   const handleModalPress = (tos: string) =>
     props.showModal(
-      <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
+      // <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
+      <RootedDeviceScreen
+        onContinue={props.hideModal}
+        onCancel={props.hideModal}
+      />
     );
   const onMarkdownLoaded = () => {
     setMarkdownLoaded(c => Math.min(c + 1, markdownComponents));

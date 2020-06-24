@@ -61,6 +61,9 @@ global:
     spidLogin:
       title: Ricordati di accedere ad IO!
       message: Accedi con la tua identità digitale su IO, l’app dei servizi pubblici
+rooted:
+  title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
+  body: !include rooted_body.md
 locales:
   it: Italiano
   en: Inglese
