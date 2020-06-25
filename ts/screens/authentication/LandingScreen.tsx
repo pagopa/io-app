@@ -31,6 +31,8 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import { showToast } from "../../utils/showToast";
+import { RTron } from "../../boot/configureStoreAndPersistor";
+import JailMonkey from "jail-monkey";
 
 type Props = NavigationInjectedProps &
   ReturnType<typeof mapStateToProps> &
@@ -101,7 +103,9 @@ const IdpCIE: IdentityProvider = {
 };
 
 class LandingScreen extends React.PureComponent<Props> {
-  public componentDidMount() {
+  public async componentDidMount() {
+    const isJB = await JailMonkey.isJailBroken();
+    RTron.log(isJB);
     if (this.props.isSessionExpired) {
       showToast(
         I18n.t("authentication.expiredSessionBanner.message"),

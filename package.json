@@ -45,6 +45,7 @@
     "io-ts": "1.8.5",
     "italia-pagopa-commons": "^1.2.0",
     "italia-ts-commons": "5.1.11",
+    "jail-monkey": "^2.3.2",
     "lodash": "^4.17.15",
     "native-base": "2.13.8",
     "native-base-shoutem-theme": "0.3.1",
