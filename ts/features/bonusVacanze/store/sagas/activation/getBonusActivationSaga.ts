@@ -4,6 +4,7 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, Effect } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
+import { BonusActivationStatusEnum } from "../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { startTimer } from "../../../../../utils/timer";
@@ -44,6 +45,15 @@ function* getBonusActivation(
     if (getLatestBonusVacanzeFromIdResult.isRight()) {
       // 200 -> we got the check result, polling must be stopped
       if (getLatestBonusVacanzeFromIdResult.value.status === 200) {
+        const activation = getLatestBonusVacanzeFromIdResult.value.value;
+        if (activation.status === BonusActivationStatusEnum.PROCESSING) {
+          // we got some error, stop polling
+          return left(none);
+        } else if (activation.status === BonusActivationStatusEnum.FAILED) {
+          // block
+          return left(some(new Error("Bonus Activation failed")));
+        }
+        // active
         return right(getLatestBonusVacanzeFromIdResult.value.value);
       }
       // Request not found - polling must be stopped
@@ -119,6 +129,12 @@ export const bonusActivationSaga = (
               });
             }
           }
+        }
+        // 202 -> still processing
+        if (startBonusActivationProcedureResult.value.status === 202) {
+          return activateBonusVacanze.success({
+            status: BonusActivationProgressEnum.TIMEOUT
+          });
         }
         // 409 -> Cannot activate a new bonus because another bonus related to this user was found.
         // 403 -> Eligibility Expired
