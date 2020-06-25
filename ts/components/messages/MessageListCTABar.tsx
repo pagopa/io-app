@@ -9,19 +9,11 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ReduxProps } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
-import { CTA } from "../../types/MessageCTA";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
-import {
-  getCTA,
-  handleCtaAction,
-  hasCTAValidActions,
-  isCtaActionValid,
-  isExpired,
-  paymentExpirationInfo
-} from "../../utils/messages";
+import { isExpired, paymentExpirationInfo } from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
-import { NestedCtaButton } from "./NestedCtaButton";
+import { MessageNestedCTABar } from "./MessageNestedCTABar";
 import PaymentButton from "./PaymentButton";
 
 type Props = {
@@ -131,51 +123,17 @@ class MessageListCTABar extends React.PureComponent<Props> {
     });
   }
 
-  private handleCtaAction = (cta: CTA) => {
-    handleCtaAction(cta, this.props.dispatch);
-  };
-
-  // render nested cta if the message is not about payment and cta are present and valid
-  // inside the message content
-  private renderNestedCTAs = () => {
-    const maybeNestedCTA = getCTA(this.props.message);
-    // payment data cta has priority
-    if (!this.hasPaymentData && maybeNestedCTA.isSome()) {
-      const ctas = maybeNestedCTA.value;
-      if (hasCTAValidActions(ctas)) {
-        const cta2 = ctas.cta_2 &&
-          isCtaActionValid(ctas.cta_2) && (
-            <NestedCtaButton
-              cta={ctas.cta_2}
-              xsmall={true}
-              primary={false}
-              onCTAPress={this.handleCtaAction}
-            />
-          );
-        const cta1 = isCtaActionValid(ctas.cta_1) && (
-          <NestedCtaButton
-            cta={ctas.cta_1}
-            primary={true}
-            xsmall={true}
-            onCTAPress={this.handleCtaAction}
-          />
-        );
-        return (
-          <>
-            {cta2}
-            {cta2 && <View hspacer={true} small={true} />}
-            {cta1}
-          </>
-        );
-      }
-    }
-    return undefined;
-  };
-
   public render() {
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
-    const content = this.renderNestedCTAs() || (
+    const nestedCTA = (
+      <MessageNestedCTABar
+        message={this.props.message}
+        dispatch={this.props.dispatch}
+        xsmall={true}
+      />
+    );
+    const content = nestedCTA || (
       <>
         {calendarIcon}
         {calendarIcon && <View hspacer={true} small={true} />}

@@ -11,7 +11,7 @@ type Props = {
 };
 
 // a button displaying a CTA coming from the message content as nested front-matter
-export const NestedCtaButton: React.FunctionComponent<Props> = (
+export const MessageNestedCtaButton: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const cta = props.cta;

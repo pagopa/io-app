@@ -7,17 +7,9 @@ import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedM
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ReduxProps } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
-import { CTA } from "../../types/MessageCTA";
-import {
-  getCTA,
-  handleCtaAction,
-  hasCTAValidActions,
-  isCtaActionValid,
-  isExpired,
-  paymentExpirationInfo
-} from "../../utils/messages";
+import { isExpired, paymentExpirationInfo } from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
-import { NestedCtaButton } from "./NestedCtaButton";
+import { MessageNestedCTABar } from "./MessageNestedCTABar";
 import PaymentButton from "./PaymentButton";
 
 type Props = {
@@ -87,46 +79,6 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     });
   }
 
-  private handleCtaAction = (cta: CTA) => {
-    handleCtaAction(cta, this.props.dispatch);
-  };
-
-  // render nested cta if the message is not about payment and cta are present and valid
-  // inside the message content
-  private renderNestedCTAs = () => {
-    const maybeNestedCTA = getCTA(this.props.message);
-    if (maybeNestedCTA.isSome()) {
-      const ctas = maybeNestedCTA.value;
-      if (hasCTAValidActions(ctas)) {
-        const cta2 = ctas.cta_2 &&
-          isCtaActionValid(ctas.cta_2) && (
-            <NestedCtaButton
-              cta={ctas.cta_2}
-              xsmall={false}
-              primary={false}
-              onCTAPress={this.handleCtaAction}
-            />
-          );
-        const cta1 = isCtaActionValid(ctas.cta_1) && (
-          <NestedCtaButton
-            cta={ctas.cta_1}
-            primary={true}
-            xsmall={false}
-            onCTAPress={this.handleCtaAction}
-          />
-        );
-        return (
-          <View footer={true} style={styles.row}>
-            {cta2}
-            {cta2 && <View hspacer={true} small={true} />}
-            {cta1}
-          </View>
-        );
-      }
-    }
-    return undefined;
-  };
-
   public render() {
     const paymentButton = this.renderPaymentButton();
     const calendarButton = this.renderCalendarEventButton();
@@ -137,7 +89,18 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
         {paymentButton}
       </View>
     );
-    const footer2 = this.renderNestedCTAs();
+    const nestedCTAs = (
+      <MessageNestedCTABar
+        message={this.props.message}
+        dispatch={this.props.dispatch}
+        xsmall={false}
+      />
+    );
+    const footer2 = nestedCTAs && (
+      <View footer={true} style={styles.row}>
+        {nestedCTAs}
+      </View>
+    );
     return (
       <View>
         {footer2}
