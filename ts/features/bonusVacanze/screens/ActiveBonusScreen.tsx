@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, View } from "native-base";
@@ -28,18 +28,23 @@ import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
+import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
 import { maybeNotNullyString } from "../../../utils/strings";
 import BonusCardComponent from "../components/BonusCardComponent";
 import QrModalBox from "../components/QrModalBox";
+import TosBonusComponent from "../components/TosBonusComponent";
 import {
   cancelLoadBonusFromIdPolling,
   startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
 import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
-import { availableBonusTypesSelectorFromId } from "../store/reducers/availableBonusesTypes";
+import {
+  availableBonusTypesSelectorFromId,
+  bonusVacanzeLogo
+} from "../store/reducers/availableBonusesTypes";
 import {
   getBonusCodeFormatted,
   ID_BONUS_VACANZE_TYPE,
@@ -69,6 +74,9 @@ type Props = OwnProps &
 
 const styles = StyleSheet.create({
   emptyHeader: { height: 90 },
+  flex: {
+    flex: 1
+  },
   title: {
     color: variables.lightGray,
     fontSize: variables.fontSize1
@@ -95,15 +103,25 @@ const styles = StyleSheet.create({
   },
   validUntil: {
     color: variables.brandDarkestGray,
-    fontSize: variables.fontSizeSmall
+    fontSize: variables.fontSizeSmall,
+    lineHeight: variables.lineHeightSmall,
+    paddingVertical: 8
   },
   rowBlock: {
     flexDirection: "row",
     // alignItems: "center",
     justifyContent: "space-between"
   },
-  paddedContent: {
-    paddingLeft: variables.contentPadding,
+  itemsCenter: {
+    alignItems: "center"
+  },
+  paddedIconLeft: {
+    paddingLeft: 12
+  },
+  paddedContentLeft: {
+    paddingLeft: variables.contentPadding
+  },
+  paddedContentRight: {
     paddingRight: variables.contentPadding
   },
   helpButton: {
@@ -151,6 +169,10 @@ const styles = StyleSheet.create({
   },
   amount: {
     fontSize: variables.fontSize2
+  },
+  disclaimer: {
+    fontSize: customVariables.fontSizeSmall,
+    color: customVariables.selectedColor
   }
 });
 
@@ -164,6 +186,7 @@ const renderFiscalCodeLine = (name: string, cf: string) => {
         <Text
           style={[styles.fmName, styles.colorGrey, styles.textRight]}
           semibold={true}
+          robotomono={true}
         >
           {cf}
         </Text>
@@ -253,6 +276,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         codeToCopy={bonus.id}
         onClose={props.hideModal}
         qrCode={qrCode[QR_CODE_MIME_TYPE]}
+        logo={props.logo}
       />
     );
     props.showAnimatedModal(modalBox, BottomTopAnimation);
@@ -308,17 +332,17 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     text: string,
     iconColor?: string
   ) => (
-    <View style={styles.rowBlock}>
+    <View style={[styles.rowBlock, styles.itemsCenter]}>
       <IconFont
         name={icon}
         color={fromNullable(iconColor).getOrElse(variables.textColor)}
         size={variables.fontSize3}
+        style={styles.paddedIconLeft}
       />
-      <View style={styles.paddedContent}>
-        <Text style={[styles.validUntil]} semibold={true}>
-          {text}
-        </Text>
-      </View>
+      <View hspacer={true} />
+      <Text style={[styles.flex, styles.validUntil]} bold={true}>
+        {text}
+      </Text>
     </View>
   );
 
@@ -353,6 +377,18 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   };
 
+  const handleModalPress = (tos: string) =>
+    props.showModal(
+      <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
+    );
+
+  const bonusInfoFromLocale = props.bonusInfo
+    .map(b => b[getLocalePrimaryWithFallback()])
+    .toUndefined();
+  const maybeBonusTos = fromNullable(bonusInfoFromLocale).fold(none, b =>
+    maybeNotNullyString(b.tos_url)
+  );
+
   const from = props.bonusInfo.map(bi => bi.valid_from);
   const to = props.bonusInfo.map(bi => bi.valid_to);
   const bonusValidityInterval = validityInterval(
@@ -374,7 +410,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       gradientHeader={true}
     >
       <View>
-        <View style={styles.paddedContent}>
+        <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
           <View style={styles.image}>
             <BonusCardComponent
               bonus={bonus}
@@ -474,6 +510,24 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                   )}
             </Text>
           </View>
+          {maybeBonusTos.isSome() && (
+            <>
+              <View spacer={true} />
+              <ItemSeparatorComponent noPadded={true} />
+              <View spacer={true} large={true} />
+              <TouchableDefaultOpacity
+                onPress={() => handleModalPress(maybeBonusTos.value)}
+              >
+                <Text
+                  style={styles.disclaimer}
+                  ellipsizeMode={"tail"}
+                  numberOfLines={1}
+                >
+                  {I18n.t("bonus.tos.title")}
+                </Text>
+              </TouchableDefaultOpacity>
+            </>
+          )}
           <EdgeBorderComponent />
         </View>
       </View>
@@ -492,7 +546,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   return {
     bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus,
-    isError: pot.isNone(bonus) && pot.isError(bonus) // error and no bonus data, user should retry to load
+    isError: pot.isNone(bonus) && pot.isError(bonus), // error and no bonus data, user should retry to load
+    logo: bonusVacanzeLogo(state)
   };
 };
 
