@@ -126,13 +126,14 @@ class MessageListCTABar extends React.PureComponent<Props> {
   public render() {
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
-    const nestedCTA = (
+    // payment CTA has priority to nested CTA
+    const nestedCTA = !this.hasPaymentData ? (
       <MessageNestedCTABar
         message={this.props.message}
         dispatch={this.props.dispatch}
         xsmall={true}
       />
-    );
+    ) : null;
     const content = nestedCTA || (
       <>
         {calendarIcon}
