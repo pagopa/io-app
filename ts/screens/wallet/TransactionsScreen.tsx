@@ -90,6 +90,8 @@ const ListEmptyComponent = (
   </Content>
 );
 
+const HEADER_HEIGHT = 250;
+
 class TransactionsScreen extends React.Component<Props> {
   private headerContent(
     selectedWallet: Wallet,
@@ -153,7 +155,7 @@ class TransactionsScreen extends React.Component<Props> {
         topContent={this.headerContent(selectedWallet, isFavorite)}
         hideHeader={true}
         hasDynamicSubHeader={true}
-        topContentHeight={250}
+        topContentHeight={HEADER_HEIGHT}
         refreshControl={transactionsRefreshControl}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_transaction"]}
