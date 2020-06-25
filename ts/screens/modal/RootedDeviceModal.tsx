@@ -83,7 +83,7 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
     Alert.alert(
       confirmConfig.title,
       confirmConfig.body ? confirmConfig.body : "",
-      buttons.slice(confirmConfig.cancelText ? 0 : 1), // remove cancel button if text is undefined
+      buttons.slice(confirmConfig.cancelText ? 0 : 1), // remove cancel button if cancelText is undefined
       { cancelable: true }
     );
   };
