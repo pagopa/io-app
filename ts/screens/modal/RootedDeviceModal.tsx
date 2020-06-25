@@ -2,6 +2,7 @@ import { Container, Content, Text, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
+  AlertButton,
   Image,
   Modal,
   Platform,
@@ -69,19 +70,20 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
   const [markdownLoaded, setMarkdownLoaded] = React.useState(false);
 
   const showAlert = (confirmConfig: ConfirmConfig) => {
+    const buttons: ReadonlyArray<AlertButton> = [
+      {
+        text: confirmConfig.cancelText
+      },
+      {
+        text: confirmConfig.confirmText,
+        onPress: confirmConfig.onConfirmAction,
+        style: "cancel"
+      }
+    ];
     Alert.alert(
       confirmConfig.title,
       confirmConfig.body ? confirmConfig.body : "",
-      [
-        {
-          text: confirmConfig.cancelText
-        },
-        {
-          text: confirmConfig.confirmText,
-          onPress: confirmConfig.onConfirmAction,
-          style: "cancel"
-        }
-      ],
+      buttons.slice(confirmConfig.cancelText ? 0 : 1),
       { cancelable: true }
     );
   };
