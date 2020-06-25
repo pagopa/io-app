@@ -36,6 +36,17 @@ type Props = OwnProps &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps>;
 
+const CSS_STYLE = `
+body {
+  font-size: ${customVariables.fontSizeSmall}px;
+  color: ${customVariables.brandDarkestGray}
+}
+
+h4 {
+  font-size: ${customVariables.fontSize1}px;
+}
+`;
+
 const styles = StyleSheet.create({
   noPadded: {
     paddingLeft: 0,
@@ -157,17 +168,17 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
           {maybeBonusTos.isSome() && (
             <ButtonDefaultOpacity
               style={styles.noPadded}
-              small={true}
               transparent={true}
               onPress={() => handleModalPress(maybeBonusTos.value)}
             >
-              <Text>{I18n.t("bonus.tos.title")}</Text>
+              <Text semibold={true}>{I18n.t("bonus.tos.title")}</Text>
             </ButtonDefaultOpacity>
           )}
           <View spacer={true} />
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} />
           <Markdown
+            cssStyle={CSS_STYLE}
             extraBodyHeight={extraMarkdownBodyHeight}
             onLoadEnd={onMarkdownLoaded}
           >
@@ -187,6 +198,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
                 <Text
                   style={styles.disclaimer}
                   link={true}
+                  semibold={true}
                   ellipsizeMode={"tail"}
                   numberOfLines={1}
                 >
