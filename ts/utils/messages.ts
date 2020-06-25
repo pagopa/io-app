@@ -190,12 +190,12 @@ export const getPrescriptionDataFromName = (
  */
 export const getCTA = (
   message: CreatedMessageWithContent,
-  locale: Locales = I18n.currentLocale()
+  locale: Locales = getLocalePrimaryWithFallback(I18n.currentLocale())
 ): Option<CTAS> => {
   return fromPredicate((t: string) => FM.test(t))(message.content.markdown)
     .map(m => FM<MessageCTA>(m).attributes)
     .chain(attrs =>
-      CTAS.decode(attrs[getLocalePrimaryWithFallback(locale)]).fold(_ => {
+      CTAS.decode(attrs[locale]).fold(_ => {
         // fallback on the first locale available
         const fallback = translations.find(
           s => attrs[s as Locales] !== undefined
