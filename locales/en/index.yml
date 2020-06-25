@@ -1301,7 +1301,7 @@ bonus:
           link: "INPS customer service."
         discrepancies:
           attention: "Warning!"
-          text: "INPS has reported some omissions or discrepancies in your ISEE. If you decide to continue, you may be called to provide the insights that led to the presence of these omissions or discrepancies."
+          text: "INPS has reported some omissions or discrepancies in your ISEE. Check that everything is correct before continuing. If you decide to continue, you may be called to provide documentation to prove the completeness and truthfulness of the data indicated in the DSU. Otherwise, you can present a new DSU and check the bonus at a later time."
         activateCTA: "Activate the Bonus"
       timeout:
         title: Sorry, it takes longer to verify your ISEE.

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { abortBonusRequest } from "../../../components/alert/AbortBonusRequest";
-import { confirmBonusActivation } from "../../../components/alert/ConfirmBonusActivation";
 import {
   activateBonusVacanze,
   cancelBonusVacanzeRequest
@@ -36,8 +35,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () =>
     abortBonusRequest(() => dispatch(cancelBonusVacanzeRequest())),
   // When the user choose to activate the bonus, verify the identification
-  onActivateBonus: () =>
-    confirmBonusActivation(() => dispatch(activateBonusVacanze.request()))
+  onActivateBonus: () => dispatch(activateBonusVacanze.request())
 });
 
 const mapStateToProps = (state: GlobalState) => {
