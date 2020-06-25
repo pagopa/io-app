@@ -11,7 +11,9 @@ import { connect } from "react-redux";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -41,6 +43,11 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "bonus.bonusList.contextualHelp.title",
+  body: "bonus.bonusList.contextualHelp.body"
+};
 
 /**
  * This component presents the list of available bonus the user can request
@@ -82,6 +89,8 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       <BaseScreenComponent
         goBack={true}
         headerTitle={I18n.t("bonus.bonusList.title")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["bonus_available_list"]}
       >
         <SafeAreaView style={bonusVacanzeStyle.flex}>
           <Content

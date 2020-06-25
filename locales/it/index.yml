@@ -271,6 +271,12 @@ spid:
     line2: Inserisci la tua email per attivarla.
 authentication:
   landing:
+    cie_unsupported:
+      title: Accesso con CIE non disponibile
+      body: !include cie/cieNotSupported.md
+      android_desc: !include cie/cieNotSupported_android.md
+      os_version_unsupported: il tuo sistema operativo non ha una versione compatibile con l'autenticazione tramite CIE
+      nfc_incompatible: il tuo dispositivo non ha una antenna NFC compatibile con l'autenticazione tramite CIE
     contentTitleCie: Non hai SPID o la CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
@@ -1280,6 +1286,63 @@ faq:
   57:
     title: "Hai avuto problemi durante un pagamento?"
     content: !include faq/faq57.md
+  58:
+    title: "Come faccio a richiedere il bonus?"
+    content: !include bonus/faq/faq58.md
+  59:
+    title: "Cosa serve per richiedere il bonus?"
+    content: !include bonus/faq/faq59.md
+  60:
+    title: "Ho ottenuto il bonus?"
+    content: !include bonus/faq/faq60.md
+  61:
+    title: "Cosa vuol dire che i miei familiari sono beneficiari del bonus vacanze?"
+    content: !include bonus/faq/faq61.md
+  62:
+    title: "Cosa significa che la mia DSU presenta omissioni o difformità?"
+    content: !include bonus/faq/faq62.md
+  63:
+    title: "Come posso usare il Bonus Vacanze?"
+    content: !include bonus/faq/faq63.md
+  64:
+    title: "Come posso condividere il Bonus con i miei familiari?"
+    content: !include bonus/faq/faq64.md
+  65:
+    title: "Dove trovo l'elenco delle strutture che accettano il Bonus Vacanze?"
+    content: !include bonus/faq/faq65.md
+  66:
+    title: "Quali bonus o carte sconto posso aggiungere?"
+    content: !include bonus/faq/faq66.md
+  67:
+    title: "Devo caricare il mio ISEE in versione PDF sull’app IO?"
+    content: !include bonus/faq/faq67.md
+  68:
+    title: "Nell’app IO trovo l’elenco delle strutture turistiche che accettano il “Bonus Vacanze”?"
+    content: !include bonus/faq/faq68.md
+  69:
+    title: "Quanto tempo passa dal momento della richiesta al momento dell’attivazione del Bonus su IO?"
+    content: !include bonus/faq/faq69.md
+  70:
+    title: "Devo necessariamente aggiungere una carta di credito sull’app IO per richiedere e spendere il bonus?"
+    content: !include bonus/faq/faq70.md
+  71:
+    title: "Ho intenzione di richiedere il Bonus Vacanze ma non lo userò personalmente. Posso cederlo a un altro componente del mio nucleo familiare?"
+    content: !include bonus/faq/faq71.md
+  72:
+    title: "Come potrò condividere il Bonus con i miei familiari?"
+    content: !include bonus/faq/faq72.md
+  73:
+    title: "Come fa l’app IO a conoscere la composizione del mio nucleo familiare?"
+    content: !include bonus/faq/faq73.md
+  74:
+    title: "Sull’app IO potrò richiedere anche il Bonus Bici?"
+    content: !include bonus/faq/faq74.md
+  75:
+    title: "Dopo aver fatto la richiesta, ho trovato un errore nel riepilogo dei dati relativi al mio nucleo familiare che l’app mi mostra prima di confermare l’attivazione del Bonus. Come risolvo?"
+    content: !include bonus/faq/faq75.md
+  76:
+    title: "L’app mi dice che l’importo massimo del mio Bonus Vacanze è di 500 euro. Cosa succede se il costo del mio soggiorno è inferiore?"
+    content: !include bonus/faq/faq76.md
 bonus:
   bonusVacanze:
     statusInfo:
@@ -1300,9 +1363,10 @@ bonus:
     applicant: CF richiedente
     bonusClaim: Chi può riscuotere il bonus?
     shareMessage: "Questo è il codice del tuo Bonus Vacanze:"
-    contextualHelp:
-      title: Il tuo Bonus Vacanze
-      body: In questa schermata puoi consultare il tuo Bonus Vacanze
+    detail:
+      contextualHelp:
+        title: Bonus Vacanze
+        body: Qui sono visualizzati i dettagli del Bonus Vacanze e le informazioni necessarie per spendere il bonus.
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:
@@ -1326,6 +1390,9 @@ bonus:
         text: Se la situazione patrimoniale del tuo nucleo familiare è cambiata rispetto all'ultima Dichiarazioni Sostitutiva Unica (DSU) presentata, puoi presentarne una nuova attraverso i canali previsti da INPS.
         goToNewDSU: Richiedi nuovo ISEE
       activateBonus:
+        contextualHelp:
+          title: Il Bonus Vacanze del tuo nucleo familiare
+          body: !include bonus/bonusVacanze/eligible_ch.md
         headerTitle: Richiesta Bonus Vacanze
         title: Buone notizie!
         description: "Il tuo nucleo familiare ha diritto al seguente Bonus Vacanze:"
@@ -1354,7 +1421,7 @@ bonus:
       alreadyRedeemed:
         title: Il bonus per il tuo nucleo familiare è già attivo!
         body: Puoi visualizzarne i dettagli nella sezione Pagamenti.
-        cta: Visualizza Bonus Vacanze
+        cta: Visualizza Bonus disponibili
       eligibilityExpired:
         title: Eligibilità scaduta
         body: Il periodo in cui era possibile attivare il bonus è scaduto. È necessario iniziare una nuova procedura.
@@ -1381,6 +1448,13 @@ bonus:
   bonusList:
     title: Aggiungi bonus o sconto
     contentTitle: Seleziona uno dei bonus disponibili
+    contextualHelp:
+      title: Aggiungere un bonus o una carta sconto
+      body: Qui puoi selezionare il bonus o la carta sconto che vuoi aggiungere. Una volta attivati, verranno poi visualizzati nella sezione Pagamenti. Potrai sempre visualizzare i dettagli del Bonus o dello sconto, entrando nella sezione Pagamenti, e selezionando l'elemento interessato all'interno della lista.
+  bonusInformation:
+    contextualHelp:
+      title: Il bonus vacanze
+      body: Qui sono visualizzate tutte le informazioni relative al bonus vacanze, il provvedimento istituito dal Decreto Rilancio per incentivare  il turismo dopo il lockdown dovuto all'emergenza Coronavirus.
   request: Richiedi un nuovo bonus
   requestLabel: Bonus e sconti
   requestTitle: Richiesta

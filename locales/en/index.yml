@@ -266,6 +266,12 @@ spid:
     line2: Insert your email address to enable it.
 authentication:
   landing:
+    cie_unsupported:
+      title: Login with CIE unavailable
+      body: !include cie/cieNotSupported.md
+      android_desc: !include cie/cieNotSupported_android.md
+      os_version_unsupported: your operating system does not have a version compatible with CIE authentication
+      nfc_incompatible: your device does not have an NFC antenna compatible with CIE authentication
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -1248,6 +1254,63 @@ faq:
   57:
     title: "Did you have problems during a payment?"
     content: !include faq/faq57.md
+  58:
+    title: "How do I claim the bonus?"
+    content: !include bonus/faq/faq58.md
+  59:
+    title: "What does it take to claim the bonus?"
+    content: !include bonus/faq/faq59.md
+  60:
+    title: "Did I get the bonus?"
+    content: !include bonus/faq/faq60.md
+  61:
+    title: "What do you mean my family members are beneficiaries of the Bonus Vacanze?"
+    content: !include bonus/faq/faq61.md
+  62:
+    title: "What does it mean that my DSU has omissions or discrepancies?"
+    content: !include bonus/faq/faq62.md
+  63:
+    title: "How can I use the Holiday Bonus?"
+    content: !include bonus/faq/faq63.md
+  64:
+    title: "How can I share the bonus with my family?"
+    content: !include bonus/faq/faq64.md
+  65:
+    title: "Where can I find the list of facilities that accept the Bonus Vacanze?"
+    content: !include bonus/faq/faq65.md
+  66:
+    title: "What bonuses or discount cards can I add?"
+    content: !include bonus/faq/faq66.md
+  67:
+    title: "Should I upload my ISEE as a PDF version to the IO app?"
+    content: !include bonus/faq/faq67.md
+  68:
+    title: "In the app IO I find the list of tourist facilities that accept the Bonus Vacanze?"
+    content: !include bonus/faq/faq68.md
+  69:
+    title: "How long does it take from the time of the request to the time of activation of the IO Bonus?"
+    content: !include bonus/faq/faq69.md
+  70:
+    title: "Do I need to add a credit card to the IO app to claim and spend the bonus?"
+    content: !include bonus/faq/faq70.md
+  71:
+    title: "I'm going to apply for the Bonus Vacanze but I'm not going to use it personally. Can I give it to another member of my household?"
+    content: !include bonus/faq/faq71.md
+  72:
+    title: "How will I share the bonus with my family?"
+    content: !include bonus/faq/faq72.md
+  73:
+    title: "How does the app IO know the composition of my household?"
+    content: !include bonus/faq/faq73.md
+  74:
+    title: "Can I apply for the Bonus Bici on the IO app?"
+    content: !include bonus/faq/faq74.md
+  75:
+    title: "After making the request, I found an error in the summary of my household data that the app shows me before confirming the Bonus activation. How do I fix it?"
+    content: !include bonus/faq/faq75.md
+  76:
+    title: "The app tells me that the maximum amount of my Bonus Vacanze is 500 euros. What happens if the cost of my stay is lower?"
+    content: !include bonus/faq/faq76.md
 bonus:
   bonusVacanze:
     statusInfo:
@@ -1268,9 +1331,10 @@ bonus:
     applicant: Applicant FC
     bonusClaim: Who can claim the bonus?
     shareMessage: "This is the code of your Bonus Vacanze:"
-    contextualHelp:
-      title: Your Bonus Vacanze
-      body: On this page you can view your Bonus Vacanze
+    detail:
+      contextualHelp:
+        title: Bonus Vacanze
+        body: Here you can see the details of the Bonus Vacanze and the information needed to spend the bonus.
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:
@@ -1294,6 +1358,9 @@ bonus:
         text: If the financial position of your household has changed since the last DSU published, you can file a new through the channels provided by INPS.
         goToNewDSU: Request new DSU
       activateBonus:
+        contextualHelp:
+          title: The Bonus Vacanze of your family
+          body: !include bonus/bonusVacanze/eligible_ch.md
         headerTitle: Bonus Vacanze request
         title: Good news!
         description: "Your family is entitled to the following Bonus Vacanze:"
@@ -1322,7 +1389,7 @@ bonus:
       alreadyRedeemed:
         title: The bonus for your family is already active!
         body: You can view the details in the Payments section.
-        cta: Show Bonus Vacanze
+        cta: Show available Bonuses
       eligibilityExpired:
         title: Eligibility expired
         body: The period in which it was possible to activate the bonus has expired. A new procedure must be started.
@@ -1349,6 +1416,13 @@ bonus:
   bonusList:
     title: Add bonus or discount
     contentTitle: Select one of the available bonus
+    contextualHelp:
+      title: Add a bonus or discount card
+      body: Here you can select the bonus or discount card you want to add. Once activated, they will then be displayed in the Payments section. You will always be able to see the details of the bonus or discount, entering the Payments section, and selecting the item in the list.
+  bonusInformation:
+    contextualHelp:
+      title: The Bonus Vacanze
+      body: Here you can see all the information related to the Bonus Vacanze, the measure established by the Decreto Rilancio to encourage tourism after the lockdown due to the Coronavirus emergency.
   request: Request a new bonus
   requestLabel: Bonuses and discounts
   requestTitle: Request

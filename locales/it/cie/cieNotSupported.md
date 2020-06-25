@@ -1,0 +1,1 @@
+Per effettuare il login è necessario avere un dispositivo con tecnologia NFC e il sistema operativo con i requisiti minimi necessari (i dispositivi **iOS** non sono ancora compatibili ma a breve lo diventeranno con i prossimi aggiornamenti).
