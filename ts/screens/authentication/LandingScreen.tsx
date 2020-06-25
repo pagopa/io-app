@@ -164,7 +164,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    // if the device is compromised and the user didn't express any choice or denies to continue
+    // if the device is compromised and the user didn't allow to continue
     // show a blocking modal
     if (
       this.state.isRootedOrJailbroken &&
