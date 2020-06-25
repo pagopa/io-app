@@ -107,9 +107,6 @@ const styles = StyleSheet.create({
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
   },
-  helpButton: {
-    alignSelf: "center"
-  },
   statusBadgeActive: {
     height: 18,
     marginTop: 2,
@@ -137,21 +134,6 @@ const styles = StyleSheet.create({
   commonLabel: {
     fontSize: variables.fontSizeSmall,
     lineHeight: 18
-  },
-  fmName: {
-    fontSize: variables.fontSize1,
-    flex: 1,
-    lineHeight: 21,
-    alignSelf: "flex-start"
-  },
-  textRight: {
-    textAlign: "right"
-  },
-  textLeft: {
-    textAlign: "left"
-  },
-  amount: {
-    fontSize: variables.fontSize2
   }
 });
 
