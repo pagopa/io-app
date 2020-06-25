@@ -1383,7 +1383,7 @@ bonus:
       alreadyRedeemed:
         title: The bonus for your family is already active!
         body: You can view the details in the Payments section.
-        cta: Show Bonus Vacanze
+        cta: Show available Bonuses
       eligibilityExpired:
         title: Eligibility expired
         body: The period in which it was possible to activate the bonus has expired. A new procedure must be started.
@@ -1425,5 +1425,5 @@ bonus:
   failed: Failed
   redeemed: Consumed
   tos:
-    title: Terms and conditions of use and Privacy policy
+    title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
