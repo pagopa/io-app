@@ -153,6 +153,7 @@ class TransactionsScreen extends React.Component<Props> {
         topContent={this.headerContent(selectedWallet, isFavorite)}
         hideHeader={true}
         hasDynamicSubHeader={true}
+        topContentHeight={250}
         refreshControl={transactionsRefreshControl}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_transaction"]}
