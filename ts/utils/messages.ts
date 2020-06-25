@@ -17,6 +17,7 @@ import { CreatedMessageWithContentAndAttachments } from "../../definitions/backe
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
 import { Locales } from "../../locales/locales";
+import { RTron } from "../boot/configureStoreAndPersistor";
 import {
   getInternalRoute,
   handleInternalLink
@@ -25,6 +26,7 @@ import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link
 import I18n, { translations } from "../i18n";
 import { CTA, CTAS, MessageCTA } from "../types/MessageCTA";
 import { getExpireStatus } from "./dates";
+import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
 export function messageContainsText(
@@ -191,10 +193,11 @@ export const getCTA = (
   message: CreatedMessageWithContent,
   locale: Locales = I18n.currentLocale()
 ): Option<CTAS> => {
+  RTron.log(locale);
   return fromPredicate((t: string) => FM.test(t))(message.content.markdown)
     .map(m => FM<MessageCTA>(m).attributes)
     .chain(attrs =>
-      CTAS.decode(attrs[locale]).fold(_ => {
+      CTAS.decode(attrs[getLocalePrimaryWithFallback(locale)]).fold(_ => {
         // fallback on the first locale available
         const fallback = translations.find(
           s => attrs[s as Locales] !== undefined
