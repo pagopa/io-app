@@ -272,7 +272,8 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const openModalBox = () => {
     const modalBox = (
       <QrModalBox
-        secretCode={getBonusCodeFormatted(bonus)}
+        codeToDisplay={getBonusCodeFormatted(bonus)}
+        codeToCopy={bonus.id}
         onClose={props.hideModal}
         qrCode={qrCode[QR_CODE_MIME_TYPE]}
         logo={props.logo}
@@ -280,6 +281,15 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     );
     props.showAnimatedModal(modalBox, BottomTopAnimation);
   };
+
+  const handleShare = () =>
+    shareQR(
+      qrCode[PNG_IMAGE_TYPE],
+      `${I18n.t("bonus.bonusVacanze.shareMessage")} ${getBonusCodeFormatted(
+        bonusFromNav
+      )}`,
+      I18n.t("global.genericError")
+    );
 
   const renderFooterButtons = () =>
     bonus && isBonusActive(bonus) ? (
@@ -291,14 +301,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             iconName: "io-share",
             iconColor: variables.colorWhite,
             title: I18n.t("global.buttons.share"),
-            onPress: () =>
-              shareQR(
-                qrCode[PNG_IMAGE_TYPE],
-                `${I18n.t("bonus.bonusVacanze.shareMessage")} ${
-                  bonusFromNav.id
-                }`,
-                I18n.t("global.genericError")
-              )
+            onPress: handleShare
           }}
           leftButton={{
             bordered: true,
@@ -409,7 +412,11 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       <View>
         <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
           <View style={styles.image}>
-            <BonusCardComponent bonus={bonus} viewQR={openModalBox} />
+            <BonusCardComponent
+              bonus={bonus}
+              viewQR={openModalBox}
+              share={handleShare}
+            />
           </View>
           <View spacer={true} extralarge={true} />
           {switchInformationText()}

@@ -10,7 +10,10 @@ import { ServiceMetadataState } from "../../store/reducers/content";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
-import { paymentExpirationInfo } from "../../utils/messages";
+import {
+  cleanMarkdownFromCTAs,
+  paymentExpirationInfo
+} from "../../utils/messages";
 import OrganizationHeader from "../OrganizationHeader";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
@@ -194,7 +197,7 @@ export default class MessageDetailComponent extends React.PureComponent<
             webViewStyle={styles.webview}
             onLoadEnd={this.onMarkdownLoadEnd}
           >
-            {message.content.markdown}
+            {cleanMarkdownFromCTAs(message.content.markdown)}
           </MessageMarkdown>
 
           <View spacer={true} large={true} />

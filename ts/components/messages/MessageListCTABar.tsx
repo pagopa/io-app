@@ -3,18 +3,17 @@ import { capitalize } from "lodash";
 import { View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
+import { connect } from "react-redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ReduxProps } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
-import {
-  isExpired,
-  isExpiring,
-  paymentExpirationInfo
-} from "../../utils/messages";
+import { isExpired, paymentExpirationInfo } from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
+import { MessageNestedCTABar } from "./MessageNestedCTABar";
 import PaymentButton from "./PaymentButton";
 
 type Props = {
@@ -22,7 +21,7 @@ type Props = {
   service?: ServicePublic;
   payment?: PaidReason;
   disabled?: boolean;
-};
+} & ReduxProps;
 
 const styles = StyleSheet.create({
   topContainer: {
@@ -45,6 +44,7 @@ const styles = StyleSheet.create({
  * - a calendar icon
  * - a button to add/remove a calendar event
  * - a button to show/start a payment
+ * - cta defined inside the markdown content as front-matter
  */
 class MessageListCTABar extends React.PureComponent<Props> {
   get paymentExpirationInfo() {
@@ -59,9 +59,8 @@ class MessageListCTABar extends React.PureComponent<Props> {
     return this.paymentExpirationInfo.fold(false, info => isExpired(info));
   }
 
-  // Evaluate if use 'isExpiring' or 'isToday' (from date-fns) to determine if it is expiring today
-  get isPaymentExpiring() {
-    return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
+  get hasPaymentData() {
+    return this.paymentExpirationInfo.fold(false, _ => true);
   }
 
   get dueDate(): Option<Date> {
@@ -104,7 +103,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
       ));
   };
 
-  // Render abutton to display details of the payment related to the message
+  // Render a button to display details of the payment related to the message
   private renderPaymentButton() {
     // The button is displayed if the payment has an expiration date in the future
     return this.paymentExpirationInfo.fold(undefined, pei => {
@@ -127,16 +126,29 @@ class MessageListCTABar extends React.PureComponent<Props> {
   public render() {
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
-    return (
-      <View style={[styles.topContainer, this.paid && styles.topContainerPaid]}>
+    // payment CTA has priority to nested CTA
+    const nestedCTA = !this.hasPaymentData ? (
+      <MessageNestedCTABar
+        message={this.props.message}
+        dispatch={this.props.dispatch}
+        xsmall={true}
+      />
+    ) : null;
+    const content = nestedCTA || (
+      <>
         {calendarIcon}
         {calendarIcon && <View hspacer={true} small={true} />}
         {calendarEventButton}
         {calendarEventButton && <View hspacer={true} small={true} />}
         {this.renderPaymentButton()}
+      </>
+    );
+    return (
+      <View style={[styles.topContainer, this.paid && styles.topContainerPaid]}>
+        {content}
       </View>
     );
   }
 }
 
-export default MessageListCTABar;
+export default connect()(MessageListCTABar);
