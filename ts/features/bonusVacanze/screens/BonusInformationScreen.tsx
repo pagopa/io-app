@@ -10,7 +10,9 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -78,6 +80,11 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "bonus.bonusInformation.contextualHelp.title",
+  body: "bonus.bonusInformation.contextualHelp.body"
+};
+
 // the number of markdown component inside BonusInformationScreen
 const markdownComponents = 1;
 const loadingOpacity = 0.9;
@@ -128,6 +135,8 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
     <BaseScreenComponent
       goBack={true}
       headerTitle={bonusTypeLocalizedContent.name}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["bonus_information"]}
     >
       <SafeAreaView style={bonusVacanzeStyle.flex}>
         <Content>

@@ -202,8 +202,8 @@ async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
 }
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "bonus.bonusVacanze.contextualHelp.title",
-  body: "bonus.bonusVacanze.contextualHelp.body"
+  title: "bonus.bonusVacanze.detail.contextualHelp.title",
+  body: "bonus.bonusVacanze.detail.contextualHelp.body"
 };
 
 const shareQR = async (content: string, code: string, errorMessage: string) => {
@@ -365,6 +365,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         </TouchableDefaultOpacity>
       }
       contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["bonus_detail"]}
       allowGoBack={true}
       topContent={<View style={{ height: 90 }} />}
       footerContent={renderFooterButtons()}
