@@ -105,6 +105,7 @@ const IdpCIE: IdentityProvider = {
 class LandingScreen extends React.PureComponent<Props> {
   public async componentDidMount() {
     const isJB = await JailMonkey.isJailBroken();
+    showToast(`rooted: ${isJB}`, "warning", "top");
     RTron.log(isJB);
     if (this.props.isSessionExpired) {
       showToast(
