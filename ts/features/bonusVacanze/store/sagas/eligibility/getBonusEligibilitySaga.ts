@@ -107,16 +107,6 @@ export const bonusEligibilitySaga = (
     Effect | ActionType<typeof checkBonusVacanzeEligibility>
   > {
     try {
-      // before activate, make an optimistic check, maybe the isee result is already available
-      const firstCheck = yield call(
-        executeGetEligibilityCheck(getBonusEligibilityCheck)
-      );
-      if (firstCheck.isRight()) {
-        return checkBonusVacanzeEligibility.success({
-          check: firstCheck.value,
-          status: eligibilityResultToEnum(firstCheck.value)
-        });
-      }
       const startEligibilityResult: SagaCallReturnType<
         typeof startBonusEligibilityCheck
       > = yield call(startBonusEligibilityCheck, {});

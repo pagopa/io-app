@@ -46,15 +46,17 @@ function* getBonusActivation(
       // 200 -> we got the check result, polling must be stopped
       if (getLatestBonusVacanzeFromIdResult.value.status === 200) {
         const activation = getLatestBonusVacanzeFromIdResult.value.value;
-        if (activation.status === BonusActivationStatusEnum.PROCESSING) {
+        switch (activation.status) {
           // we got some error, stop polling
-          return left(none);
-        } else if (activation.status === BonusActivationStatusEnum.FAILED) {
-          // block
-          return left(some(new Error("Bonus Activation failed")));
+          case BonusActivationStatusEnum.PROCESSING:
+            return left(none);
+          case BonusActivationStatusEnum.FAILED:
+            // blocking error
+            return left(some(new Error("Bonus Activation failed")));
+          default:
+            // active
+            return right(getLatestBonusVacanzeFromIdResult.value.value);
         }
-        // active
-        return right(getLatestBonusVacanzeFromIdResult.value.value);
       }
       // Request not found - polling must be stopped
       if (getLatestBonusVacanzeFromIdResult.value.status === 404) {
