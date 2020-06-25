@@ -152,6 +152,10 @@ const styles = StyleSheet.create({
   commonLabel: {
     fontSize: variables.fontSizeSmall,
     lineHeight: 18
+  },
+  disclaimer: {
+    fontSize: customVariables.fontSizeSmall,
+    color: customVariables.selectedColor
   }
 });
 
