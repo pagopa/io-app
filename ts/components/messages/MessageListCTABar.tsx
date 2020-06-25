@@ -11,9 +11,7 @@ import { PaidReason } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
-  getCTA,
   hasCtaAndValidActions,
-  hasCtaValidActions,
   isExpired,
   paymentExpirationInfo
 } from "../../utils/messages";
