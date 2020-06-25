@@ -3,7 +3,9 @@ import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { FamilyMember } from "../../../../../../definitions/bonus_vacanze/FamilyMember";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
 import I18n from "../../../../../i18n";
 import { BonusCompositionDetails } from "../../../components/keyValueTable/BonusCompositionDetails";
@@ -49,6 +51,11 @@ export const loadLocales = () => ({
   )
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "bonus.bonusVacanze.eligibility.activateBonus.contextualHelp.title",
+  body: "bonus.bonusVacanze.eligibility.activateBonus.contextualHelp.body"
+};
+
 /**
  * This component displays generic information about the bonus, including the {@link Props.bonusAmount} and
  * the {@link Props.familyMembers}.
@@ -70,7 +77,16 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
   } = loadLocales();
 
   return (
-    <BaseScreenComponent goBack={props.onCancel} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={props.onCancel}
+      headerTitle={headerTitle}
+      faqCategories={
+        props.hasDiscrepancies
+          ? ["bonus_eligible", "bonus_eligible_discrepancies"]
+          : ["bonus_eligible"]
+      }
+      contextualHelpMarkdown={contextualHelpMarkdown}
+    >
       <SafeAreaView style={bonusVacanzeStyle.flex}>
         <ScrollView>
           <View style={bonusVacanzeStyle.horizontalPadding}>

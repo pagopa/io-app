@@ -1,0 +1,2 @@
+Al momento puoi richiedere solo il Bonus Vacanze. L'aggiunta di ulteriori bonus o carte sconto è in programma per i prossimi mesi.
+La lista di questa pagina mostra già tutti i Bonus o gli sconti richiedibili tramite l'app IO.
