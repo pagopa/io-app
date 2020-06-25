@@ -65,6 +65,15 @@ rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
   bodyiOS: !include jailbroken_body.md
   bodyAndroid: !include rooted_body.md
+  continueAlert:
+    title: Continua
+    body: Sei sicuro di aver compreso i rischi e voler continuare?
+    confirmText: Si
+    cancelText: Annulla
+  cancelAlert:
+    title: Esci
+    body: Puoi chiudere l'app
+    confirmText: Esci
 locales:
   it: Italiano
   en: Inglese

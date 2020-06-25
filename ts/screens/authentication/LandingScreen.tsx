@@ -3,6 +3,7 @@
  * It includes a carousel with highlights on the app functionalities
  */
 import * as pot from "italia-ts-commons/lib/pot";
+import JailMonkey from "jail-monkey";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -23,20 +24,25 @@ import {
   idpSelected,
   resetAuthenticationState
 } from "../../store/actions/authentication";
+import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
 import { Dispatch } from "../../store/actions/types";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { isCieSupportedSelector } from "../../store/reducers/cie";
+import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import { showToast } from "../../utils/showToast";
-import { RTron } from "../../boot/configureStoreAndPersistor";
-import JailMonkey from "jail-monkey";
+import RootedDeviceModal from "../modal/RootedDeviceModal";
 
 type Props = NavigationInjectedProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
+
+type State = {
+  isRootedOrJailbroken: boolean;
+};
 
 const getCards = (
   isCIEAvailable: boolean
@@ -102,11 +108,14 @@ const IdpCIE: IdentityProvider = {
   profileUrl: ""
 };
 
-class LandingScreen extends React.PureComponent<Props> {
+class LandingScreen extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { isRootedOrJailbroken: false };
+  }
   public async componentDidMount() {
-    const isJB = await JailMonkey.isJailBroken();
-    showToast(`rooted: ${isJB}`, "warning", "top");
-    RTron.log(isJB);
+    const isRootedOrJailbroken = await JailMonkey.isJailBroken();
+    this.setState({ isRootedOrJailbroken });
     if (this.props.isSessionExpired) {
       showToast(
         I18n.t("authentication.expiredSessionBanner.message"),
@@ -150,7 +159,24 @@ class LandingScreen extends React.PureComponent<Props> {
     ));
   };
 
+  private handleContinueWithRootOrJailbreak = (continueWith: boolean) => {
+    this.props.dispatchContinueWithRootOrJailbreak(continueWith);
+  };
+
   public render() {
+    // if the device is compromised and the user didn't express any choice or denies to continue
+    // show a blocking modal
+    if (
+      this.state.isRootedOrJailbroken &&
+      !this.props.continueWithRootOrJailbreak
+    ) {
+      return (
+        <RootedDeviceModal
+          onContinue={() => this.handleContinueWithRootOrJailbreak(true)}
+          onCancel={() => this.handleContinueWithRootOrJailbreak(false)}
+        />
+      );
+    }
     return (
       <BaseScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
@@ -213,13 +239,16 @@ const mapStateToProps = (state: GlobalState) => {
   const isCIEAuthenticationSupported = isCieSupportedSelector(state);
   return {
     isSessionExpired: isSessionExpiredSelector(state),
+    continueWithRootOrJailbreak: continueWithRootOrJailbreakSelector(state),
     isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetState: () => dispatch(resetAuthenticationState()),
-  dispatchIdpCieSelected: () => dispatch(idpSelected(IdpCIE))
+  dispatchIdpCieSelected: () => dispatch(idpSelected(IdpCIE)),
+  dispatchContinueWithRootOrJailbreak: (continueWith: boolean) =>
+    dispatch(continueWithRootOrJailbreak(continueWith))
 });
 
 export default connect(
