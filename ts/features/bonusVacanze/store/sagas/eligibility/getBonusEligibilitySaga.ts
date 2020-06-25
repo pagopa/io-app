@@ -1,6 +1,5 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
@@ -10,6 +9,7 @@ import { EligibilityCheckSuccess } from "../../../../../../definitions/bonus_vac
 import { EligibilityCheckSuccessConflict } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessConflict";
 import { EligibilityCheckSuccessEligible } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckSuccessEligible";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { startTimer } from "../../../../../utils/timer";
 import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
 import {
@@ -74,7 +74,9 @@ function* getCheckBonusEligibilitySaga(
       return left(none);
     } else {
       // we got some error on decoding, stop polling
-      return left(some(Error(readableReport(eligibilityCheckResult.value))));
+      return left(
+        some(Error(readablePrivacyReport(eligibilityCheckResult.value)))
+      );
     }
   } catch (e) {
     return left(none);
@@ -166,7 +168,7 @@ export const bonusEligibilitySaga = (
 
         throw Error(`response status ${startEligibilityResult.value.status}`);
       } else {
-        throw Error(readableReport(startEligibilityResult.value));
+        throw Error(readablePrivacyReport(startEligibilityResult.value));
       }
     } catch (e) {
       return checkBonusVacanzeEligibility.failure(e);

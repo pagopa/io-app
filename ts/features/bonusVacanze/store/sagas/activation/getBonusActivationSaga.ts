@@ -1,12 +1,12 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, Effect } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BonusActivationStatusEnum } from "../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { startTimer } from "../../../../../utils/timer";
 import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
 import { activateBonusVacanze } from "../../actions/bonusVacanze";
@@ -67,7 +67,9 @@ function* getBonusActivation(
     } else {
       // we got some error on decoding, stop polling
       return left(
-        some(Error(readableReport(getLatestBonusVacanzeFromIdResult.value)))
+        some(
+          Error(readablePrivacyReport(getLatestBonusVacanzeFromIdResult.value))
+        )
       );
     }
   } catch (e) {
@@ -150,7 +152,9 @@ export const bonusActivationSaga = (
         );
       }
       // decoding failure
-      throw Error(readableReport(startBonusActivationProcedureResult.value));
+      throw Error(
+        readablePrivacyReport(startBonusActivationProcedureResult.value)
+      );
     } catch (e) {
       return activateBonusVacanze.failure(e);
     }

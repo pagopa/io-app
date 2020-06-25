@@ -1,8 +1,8 @@
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../types/utils";
+import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import { loadBonusVacanzeFromId } from "../actions/bonusVacanze";
 
@@ -26,7 +26,7 @@ export function* handleLoadBonusVacanzeFromId(
       }
       throw Error(`response status ${bonusVacanzeResponse.value.status}`);
     } else {
-      throw Error(readableReport(bonusVacanzeResponse.value));
+      throw Error(readablePrivacyReport(bonusVacanzeResponse.value));
     }
   } catch (e) {
     yield put(loadBonusVacanzeFromId.failure({ error: e, id: action.payload }));
