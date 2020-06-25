@@ -1,0 +1,3 @@
+Simply click on the "Request holiday bonus" button at the bottom of the page and follow the flow you are offered. The IO app will query INPS to verify the ISEE of your household, and if it complies with the established conditions, it will show you how much bonus you or your family members can take advantage of. Once your request has been confirmed, we will create and activate your Bonus. 
+
+Please note that the process has been made as easy as possible for the citizen, but it may take longer than expected to process the data. Don't worry: if this happens, we will send you an app message when your request is ready.
