@@ -225,7 +225,7 @@ export const isCtaActionValid = (cta: CTA): boolean => {
   return false;
 };
 
-export const hasCTAValidActions = (ctas: CTAS): boolean => {
+export const hasCtaValidActions = (ctas: CTAS): boolean => {
   const isCTA1Valid = isCtaActionValid(ctas.cta_1);
   if (ctas.cta_2 === undefined) {
     return isCTA1Valid;
@@ -233,6 +233,10 @@ export const hasCTAValidActions = (ctas: CTAS): boolean => {
   const isCTA2Valid = isCtaActionValid(ctas.cta_2);
   return isCTA1Valid || isCTA2Valid;
 };
+
+export const hasCtaAndValidActions = (
+  message: CreatedMessageWithContent
+): boolean => getCTA(message).fold(false, c => hasCtaValidActions(c));
 
 /**
  * remove the cta front-matter if it is nested inside the markdown
