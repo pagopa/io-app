@@ -31,13 +31,12 @@ import {
 import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
 import { Dispatch } from "../../store/actions/types";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import { isCieSupportedSelector } from "../../store/reducers/cie";
-import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import {
   hasApiLevelSupportSelector,
   hasNFCFeatureSelector,
   isCieSupportedSelector
 } from "../../store/reducers/cie";
+import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
