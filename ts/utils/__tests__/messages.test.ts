@@ -167,7 +167,7 @@ const test2CTA = (
 describe("isCtaActionValid", () => {
   it("should be a valid internal navigation action", async () => {
     const valid: CTA = { text: "dummy", action: "ioit://PROFILE_MAIN" };
-    const isValid = await isCtaActionValid(valid);
+    const isValid = isCtaActionValid(valid);
     expect(isValid).toBeTruthy();
   });
 
@@ -176,13 +176,13 @@ describe("isCtaActionValid", () => {
       text: "dummy",
       action: "iosit://PROFILE_MAIN"
     };
-    const isValid = await isCtaActionValid(invalidProtocol);
+    const isValid = isCtaActionValid(invalidProtocol);
     expect(isValid).toBeFalsy();
   });
 
   it("should be not valid (wrong route)", async () => {
     const invalidRoute: CTA = { text: "dummy", action: "iosit://WRONG_ROUTE" };
-    const isValid = await isCtaActionValid(invalidRoute);
+    const isValid = isCtaActionValid(invalidRoute);
     expect(isValid).toBeFalsy();
   });
 
@@ -191,7 +191,7 @@ describe("isCtaActionValid", () => {
       text: "dummy",
       action: "iohandledlink://tel://3471615647"
     };
-    const isValid = await isCtaActionValid(phoneCtaValid);
+    const isValid = isCtaActionValid(phoneCtaValid);
     expect(isValid).toBeTruthy();
   });
 
@@ -200,7 +200,7 @@ describe("isCtaActionValid", () => {
       text: "dummy",
       action: "iohandledlink://https://www.google.it"
     };
-    const isValid = await isCtaActionValid(webCtaValid);
+    const isValid = isCtaActionValid(webCtaValid);
     expect(isValid).toBeTruthy();
   });
 });

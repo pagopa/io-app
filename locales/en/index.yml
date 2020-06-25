@@ -61,6 +61,10 @@ global:
     spidLogin:
       title: Remember to login to IO!
       message: Login with your digital identity on IO, the public services app
+rooted:
+  title: Looks like the security of your device has been compromised!
+  bodyiOS: !include jailbroken_body.md
+  bodyAndroid: !include rooted_body.md
 locales:
   it: Italian
   en: English
@@ -262,6 +266,12 @@ spid:
     line2: Insert your email address to enable it.
 authentication:
   landing:
+    cie_unsupported:
+      title: Login with CIE unavailable
+      body: !include cie/cieNotSupported.md
+      android_desc: !include cie/cieNotSupported_android.md
+      os_version_unsupported: your operating system does not have a version compatible with CIE authentication
+      nfc_incompatible: your device does not have an NFC antenna compatible with CIE authentication
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -1298,7 +1308,7 @@ bonus:
           link: "INPS customer service."
         discrepancies:
           attention: "Warning!"
-          text: "INPS has reported some omissions or discrepancies in your ISEE. If you decide to continue, you may be called to provide the insights that led to the presence of these omissions or discrepancies."
+          text: "INPS has reported some omissions or discrepancies in your ISEE. Check that everything is correct before continuing. If you decide to continue, you may be called to provide documentation to prove the completeness and truthfulness of the data indicated in the DSU. Otherwise, you can present a new DSU and check the bonus at a later time."
         activateCTA: "Activate the Bonus"
       timeout:
         title: Sorry, it takes longer to verify your ISEE.
@@ -1318,7 +1328,7 @@ bonus:
       alreadyRedeemed:
         title: The bonus for your family is already active!
         body: You can view the details in the Payments section.
-        cta: Show Bonus Vacanze
+        cta: Show available Bonuses
       eligibilityExpired:
         title: Eligibility expired
         body: The period in which it was possible to activate the bonus has expired. A new procedure must be started.
