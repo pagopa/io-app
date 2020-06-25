@@ -8,6 +8,7 @@ import { isUpdateNeeded } from "../../utils/appVersion";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
+import RootedDeviceModal from "./RootedDeviceModal";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
@@ -18,6 +19,7 @@ type Props = ReturnType<typeof mapStateToProps>;
  * - IdentificationModal -> the default case. It renders it self only if an identification action is required
  */
 export const RootModal: React.FunctionComponent<Props> = (props: Props) => {
+  return <RootedDeviceModal onContinue={() => {}} onCancel={() => {}} />;
   // avoid app usage if backend systems are OFF
   if (props.isBackendServicesStatusOff) {
     return <SystemOffModal />;

@@ -3,7 +3,6 @@ import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedM
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../definitions/backend/MessageContent";
-import { Timestamp } from "../../../definitions/backend/Timestamp";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { cleanMarkdownFromCTAs, getCTA, isCtaActionValid } from "../messages";
 
@@ -31,7 +30,7 @@ en:
 ` + messageBody;
 
 const messageWithContent = {
-  created_at: new Date() as Timestamp,
+  created_at: new Date(),
   fiscal_code: "RSSMRA83A12H501D" as FiscalCode,
   id: "93726BD8-D29C-48F2-AE6D-2F",
   sender_service_id: "dev-service_0",
@@ -39,7 +38,7 @@ const messageWithContent = {
   content: {
     subject: "Subject - test 1",
     markdown: CTA_2,
-    due_date: new Date() as Timestamp,
+    due_date: new Date(),
     payment_data: {
       notice_number: "012345678912345678",
       amount: 406,
@@ -168,7 +167,7 @@ const test2CTA = (
 describe("isCtaActionValid", () => {
   it("should be a valid internal navigation action", async () => {
     const valid: CTA = { text: "dummy", action: "ioit://PROFILE_MAIN" };
-    const isValid = await isCtaActionValid(valid);
+    const isValid = isCtaActionValid(valid);
     expect(isValid).toBeTruthy();
   });
 
@@ -177,13 +176,13 @@ describe("isCtaActionValid", () => {
       text: "dummy",
       action: "iosit://PROFILE_MAIN"
     };
-    const isValid = await isCtaActionValid(invalidProtocol);
+    const isValid = isCtaActionValid(invalidProtocol);
     expect(isValid).toBeFalsy();
   });
 
   it("should be not valid (wrong route)", async () => {
     const invalidRoute: CTA = { text: "dummy", action: "iosit://WRONG_ROUTE" };
-    const isValid = await isCtaActionValid(invalidRoute);
+    const isValid = isCtaActionValid(invalidRoute);
     expect(isValid).toBeFalsy();
   });
 
@@ -192,7 +191,7 @@ describe("isCtaActionValid", () => {
       text: "dummy",
       action: "iohandledlink://tel://3471615647"
     };
-    const isValid = await isCtaActionValid(phoneCtaValid);
+    const isValid = isCtaActionValid(phoneCtaValid);
     expect(isValid).toBeTruthy();
   });
 
@@ -201,7 +200,7 @@ describe("isCtaActionValid", () => {
       text: "dummy",
       action: "iohandledlink://https://www.google.it"
     };
-    const isValid = await isCtaActionValid(webCtaValid);
+    const isValid = isCtaActionValid(webCtaValid);
     expect(isValid).toBeTruthy();
   });
 });

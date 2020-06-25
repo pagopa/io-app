@@ -7,6 +7,7 @@ import ActivateBonusRequestScreen from "../screens/activation/request/ActivateBo
 import TimeoutActivationInfoScreen from "../screens/activation/TimeoutActivationInfoScreen";
 import ActiveBonusScreen from "../screens/ActiveBonusScreen";
 import AvailableBonusScreen from "../screens/AvailableBonusScreen";
+import BonusCTAEligibilityStartScreen from "../screens/BonusCTAEligibilityStartScreen";
 import BonusInformationScreen from "../screens/BonusInformationScreen";
 import BonusActivationPending from "../screens/eligibility/BonusActivationPending";
 import IseeNotAvailableScreen from "../screens/eligibility/isee/IseeNotAvailableScreen";
@@ -58,6 +59,9 @@ const BonusVacanzeNavigator = createStackNavigator(
     },
     [BONUSVACANZE_ROUTES.ACTIVATION.COMPLETED]: {
       screen: ActivateBonusCompletedScreen
+    },
+    [BONUSVACANZE_ROUTES.BONUS_CTA_ELIGILITY_START]: {
+      screen: BonusCTAEligibilityStartScreen
     }
   },
   {

@@ -8,8 +8,8 @@ import { navigationHistoryPop } from "../../../../../../store/actions/navigation
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import BONUSVACANZE_ROUTES from "../../../../navigation/routes";
 import {
-  bonusVacanzeActivation,
-  cancelBonusRequest,
+  activateBonusVacanze,
+  cancelBonusVacanzeRequest,
   completeBonusVacanzeActivation
 } from "../../../actions/bonusVacanze";
 import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
@@ -30,7 +30,7 @@ jest.mock("react-native-share", () => {
   };
 });
 
-type BonusVacanzeReturnType = ActionType<typeof bonusVacanzeActivation>;
+type BonusVacanzeReturnType = ActionType<typeof activateBonusVacanze>;
 
 describe("Bonus Activation Saga", () => {
   it("Cancel bonus activation saga", () => {
@@ -41,7 +41,7 @@ describe("Bonus Activation Saga", () => {
           fromNullable(BONUSVACANZE_ROUTES.ACTIVATION.LOADING)
         ]
       ])
-      .dispatch(cancelBonusRequest())
+      .dispatch(cancelBonusVacanzeRequest())
       .put(navigateToWalletHome())
       .put(navigationHistoryPop(1))
       .run();

@@ -1333,7 +1333,7 @@ bonus:
           link: "servizio clienti di INPS."
         discrepancies:
           attention: "Attenzione!"
-          text: "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Se decidi di proseguire, potresti essere chiamato a fornire gli approfondimenti che hanno determinato la presenza di tali omissioni o difformità."
+          text: "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Verifica che sia tutto corretto prima di continuare. Se decidi di proseguire, potresti essere chiamato a fornire la documentazione per provare la completezza e la veridicità dei dati indicati nella DSU Altrimenti, puoi presentare una nuova DSU e richiedere il Bonus in un secondo momento."
         activateCTA: "Attiva il Bonus"
       timeout:
         title: Siamo spiacenti, serve più tempo per verificare il tuo ISEE.
