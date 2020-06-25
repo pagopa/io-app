@@ -31,7 +31,7 @@ const EligibilityExpired: React.FunctionComponent<Props> = props => {
     "bonus.bonusVacanze.activation.eligibilityExpired.title"
   );
   const body = I18n.t("bonus.bonusVacanze.activation.eligibilityExpired.body");
-  const cancel = I18n.t("bonus.bonusVacanze.cta.cancelRequest");
+  const cancel = I18n.t("global.buttons.close");
 
   useHardwareBackButton(() => {
     props.onCancel();
