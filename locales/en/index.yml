@@ -1357,5 +1357,5 @@ bonus:
   failed: Failed
   redeemed: Consumed
   tos:
-    title: Terms and conditions of use and Privacy policy
+    title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md

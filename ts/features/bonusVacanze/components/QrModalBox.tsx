@@ -13,7 +13,8 @@ import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 type Props = {
   onClose: () => void;
   qrCode: string;
-  secretCode: string;
+  codeToCopy: string;
+  codeToDisplay: string;
 };
 
 const styles = StyleSheet.create({
@@ -85,7 +86,7 @@ const renderQRCode = (base64: string) =>
 const bonusVacanzeImage = require("../../../../img/bonus/bonusVacanze/vacanze.png");
 const opacityAnimationDuration = 800 as Millisecond;
 const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
-  const { onClose, qrCode, secretCode } = props;
+  const { onClose, qrCode, codeToDisplay, codeToCopy } = props;
 
   const [opacity] = React.useState(new Animated.Value(0));
 
@@ -137,10 +138,10 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
             </Text>
             <View style={styles.row}>
               <Text style={styles.codeText} bold={true}>
-                {secretCode}
+                {codeToDisplay}
               </Text>
               <View hspacer={true} />
-              <CopyButtonComponent textToCopy={secretCode} />
+              <CopyButtonComponent textToCopy={codeToCopy} />
             </View>
           </View>
           <Image
