@@ -17,7 +17,6 @@ import { CreatedMessageWithContentAndAttachments } from "../../definitions/backe
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
 import { Locales } from "../../locales/locales";
-import { RTron } from "../boot/configureStoreAndPersistor";
 import {
   getInternalRoute,
   handleInternalLink
@@ -193,7 +192,6 @@ export const getCTA = (
   message: CreatedMessageWithContent,
   locale: Locales = I18n.currentLocale()
 ): Option<CTAS> => {
-  RTron.log(locale);
   return fromPredicate((t: string) => FM.test(t))(message.content.markdown)
     .map(m => FM<MessageCTA>(m).attributes)
     .chain(attrs =>
