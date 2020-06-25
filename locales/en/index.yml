@@ -1275,7 +1275,7 @@ faq:
     title: "Should I upload my ISEE as a PDF version to the IO app?"
     content: !include bonus/faq/faq67.md
   68:
-    title: "In the app IO I find the list of tourist facilities that accept the "Bonus Vacanze"?"
+    title: "In the app IO I find the list of tourist facilities that accept the Bonus Vacanze?"
     content: !include bonus/faq/faq68.md
   69:
     title: "How long does it take from the time of the request to the time of activation of the IO Bonus?"
