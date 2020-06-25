@@ -63,7 +63,8 @@ global:
       message: Login with your digital identity on IO, the public services app
 rooted:
   title: Looks like the security of your device has been compromised!
-  body: !include rooted_body.md
+  bodyiOS: !include jailbroken_body.md
+  bodyAndroid: !include rooted_body.md
 locales:
   it: Italian
   en: English

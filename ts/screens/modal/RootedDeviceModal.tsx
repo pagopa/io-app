@@ -1,6 +1,6 @@
 import { Container, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, Modal, SafeAreaView, StyleSheet } from "react-native";
+import { Image, Modal, Platform, SafeAreaView, StyleSheet } from "react-native";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
@@ -47,7 +47,7 @@ body {
 }
 `;
 
-const image = require("../../img/rooted/broken-phone.png");
+const image = require("../../../img/rooted/broken-phone.png");
 
 const opacity = 0.9;
 const markdownComponents = 1;
@@ -73,7 +73,10 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const loaded = markdownLoaded === markdownComponents;
-
+  const body = Platform.select({
+    ios: I18n.t("rooted.bodyiOS"),
+    default: I18n.t("rooted.bodyAndroid")
+  });
   const ComponentWithLoading = withLoadingSpinner(() => (
     <Modal>
       <BaseScreenComponent goBack={false}>
@@ -93,7 +96,7 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
               </View>
               <View spacer={true} small={true} />
               <Markdown cssStyle={CSS_STYLE} onLoadEnd={onMarkdownLoaded}>
-                {I18n.t("rooted.body")}
+                {body}
               </Markdown>
             </Content>
             <FooterWithButtons
