@@ -266,6 +266,12 @@ spid:
     line2: Insert your email address to enable it.
 authentication:
   landing:
+    cie_unsupported:
+      title: Login with CIE unavailable
+      body: !include cie/cieNotSupported.md
+      android_desc: !include cie/cieNotSupported_android.md
+      os_version_unsupported: your operating system does not have a version compatible with CIE authentication
+      nfc_incompatible: your device does not have an NFC antenna compatible with CIE authentication
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
