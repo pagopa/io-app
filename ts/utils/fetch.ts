@@ -43,8 +43,7 @@ function retryingFetch(
     _ => _.status === 429,
     retryLogic
   );
-  // TODO: remove the cast once we upgrade to tsc >= 3.1 (https://www.pivotaltracker.com/story/show/170819445)
-  return retriableFetch(retryWithTransient429s)(timeoutFetch as typeof fetch);
+  return retriableFetch(retryWithTransient429s)(timeoutFetch);
 }
 
 /**
@@ -95,6 +94,7 @@ export function retryLogicForTransientResponseError(
  * createFetchRequestForApi when creating "getPaymentId"
  */
 export const constantPollingFetch = (
+  shouldAbort: Promise<boolean>,
   retries: number,
   delay: number,
   timeout: Millisecond = 1000 as Millisecond
@@ -119,5 +119,7 @@ export const constantPollingFetch = (
   );
 
   // TODO: remove the cast once we upgrade to tsc >= 3.1 (https://www.pivotaltracker.com/story/show/170819445)
-  return retriableFetch(retryWithTransient404s)(timeoutFetch as typeof fetch);
+  return retriableFetch(retryWithTransient404s, shouldAbort)(
+    timeoutFetch as typeof fetch
+  );
 };

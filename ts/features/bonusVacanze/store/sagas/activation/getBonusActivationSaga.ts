@@ -8,7 +8,7 @@ import { BonusActivationWithQrCode } from "../../../../../../definitions/bonus_v
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { startTimer } from "../../../../../utils/timer";
 import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
-import { bonusVacanzeActivation } from "../../actions/bonusVacanze";
+import { activateBonusVacanze } from "../../actions/bonusVacanze";
 import { BonusActivationProgressEnum } from "../../reducers/activation";
 
 // wait time between requests
@@ -74,7 +74,7 @@ export const bonusActivationSaga = (
   >["getLatestBonusVacanzeFromId"]
 ) =>
   function* startBonusActivationSaga(): IterableIterator<
-    Effect | ActionType<typeof bonusVacanzeActivation>
+    Effect | ActionType<typeof activateBonusVacanze>
   > {
     try {
       const startBonusActivationProcedureResult: SagaCallReturnType<
@@ -104,7 +104,7 @@ export const bonusActivationSaga = (
             }
             // we got the result -> stop polling
             else if (bonusActivationFromIdResult.isRight()) {
-              return bonusVacanzeActivation.success({
+              return activateBonusVacanze.success({
                 status: BonusActivationProgressEnum.SUCCESS,
                 activation: bonusActivationFromIdResult.value
               });
@@ -114,7 +114,7 @@ export const bonusActivationSaga = (
             // check if the time threshold was exceeded, if yes stop polling
             const now = new Date().getTime();
             if (now - startPollingTime >= pollingTimeThreshold) {
-              return bonusVacanzeActivation.success({
+              return activateBonusVacanze.success({
                 status: BonusActivationProgressEnum.TIMEOUT
               });
             }
@@ -123,7 +123,7 @@ export const bonusActivationSaga = (
         // 409 -> Cannot activate a new bonus because another bonus related to this user was found.
         // 403 -> Eligibility Expired
         else if (status === 409 || status === 403) {
-          return bonusVacanzeActivation.success({
+          return activateBonusVacanze.success({
             status: bonusActivationStatusMapping[status]
           });
         }
@@ -131,7 +131,9 @@ export const bonusActivationSaga = (
           `response status ${startBonusActivationProcedureResult.value.status}`
         );
       }
+      // decoding failure
+      throw Error(readableReport(startBonusActivationProcedureResult.value));
     } catch (e) {
-      return bonusVacanzeActivation.failure(e);
+      return activateBonusVacanze.failure(e);
     }
   };

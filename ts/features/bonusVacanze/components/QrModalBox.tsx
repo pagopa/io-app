@@ -8,13 +8,13 @@ import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { addEvery } from "../../../utils/strings";
 import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 
 type Props = {
   onClose: () => void;
   qrCode: string;
-  secretCode: string;
+  codeToCopy: string;
+  codeToDisplay: string;
 };
 
 const styles = StyleSheet.create({
@@ -86,7 +86,7 @@ const renderQRCode = (base64: string) =>
 const bonusVacanzeImage = require("../../../../img/bonus/bonusVacanze/vacanze.png");
 const opacityAnimationDuration = 800 as Millisecond;
 const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
-  const { onClose, qrCode, secretCode } = props;
+  const { onClose, qrCode, codeToDisplay, codeToCopy } = props;
 
   const [opacity] = React.useState(new Animated.Value(0));
 
@@ -116,7 +116,7 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
       <View style={styles.modalBox}>
         <View style={styles.row}>
           <Text style={styles.title} semibold={true}>
-            {I18n.t("bonus.bonusVacanza.name")}
+            {I18n.t("bonus.bonusVacanze.name")}
           </Text>
           <Button
             style={styles.modalClose}
@@ -134,14 +134,14 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
         <View style={styles.row}>
           <View>
             <Text style={styles.uniqueCode}>
-              {I18n.t("bonus.bonusVacanza.uniqueCode")}
+              {I18n.t("bonus.bonusVacanze.uniqueCode")}
             </Text>
             <View style={styles.row}>
               <Text style={styles.codeText} bold={true}>
-                {addEvery(secretCode, " ", 4).trim()}
+                {codeToDisplay}
               </Text>
               <View hspacer={true} />
-              <CopyButtonComponent textToCopy={secretCode.toString()} />
+              <CopyButtonComponent textToCopy={codeToCopy} />
             </View>
           </View>
           <Image

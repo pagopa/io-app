@@ -6,7 +6,7 @@ import I18n from "../../../../i18n";
 import { BaseTimeoutScreen } from "../../components/BaseTimeoutScreen";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { InfoScreenStyle } from "../../components/infoScreen/InfoScreenComponent";
-import { cancelBonusRequest } from "../../store/actions/bonusVacanze";
+import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -27,15 +27,15 @@ const renderBody = (first: string, second: string, third: string) => (
 const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
   Props
 > = props => {
-  const title = I18n.t("bonus.bonusVacanza.eligibility.timeout.title");
+  const title = I18n.t("bonus.bonusVacanze.eligibility.timeout.title");
   const first = I18n.t(
-    "bonus.bonusVacanza.eligibility.timeout.description.first"
+    "bonus.bonusVacanze.eligibility.timeout.description.first"
   );
   const second = I18n.t(
-    "bonus.bonusVacanza.eligibility.timeout.description.second"
+    "bonus.bonusVacanze.eligibility.timeout.description.second"
   );
   const third = I18n.t(
-    "bonus.bonusVacanza.eligibility.timeout.description.third"
+    "bonus.bonusVacanze.eligibility.timeout.description.third"
   );
 
   useHardwareBackButton(() => {
@@ -53,7 +53,7 @@ const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => dispatch(cancelBonusRequest())
+  onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
 export default connect(

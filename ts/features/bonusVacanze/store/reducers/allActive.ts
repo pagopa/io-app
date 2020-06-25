@@ -6,7 +6,8 @@ import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vaca
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  bonusVacanzeActivation,
+  activateBonusVacanze,
+  loadAllBonusActivations,
   loadBonusVacanzeFromId
 } from "../actions/bonusVacanze";
 
@@ -19,6 +20,10 @@ const reducer = (
   action: Action
 ): AllActiveState => {
   switch (action.type) {
+    // loading all active bonuses
+    case getType(loadAllBonusActivations.request):
+      // When we call `/activations` API the state needs to be cleaned up or the bonus will append when the payload changes
+      return INITIAL_STATE;
     // bonus from id
     case getType(loadBonusVacanzeFromId.request):
       const cachedValue = state[action.payload];
@@ -27,7 +32,7 @@ const reducer = (
         [action.payload]: cachedValue ? pot.toLoading(cachedValue) : pot.none
       };
     // a bonus is activated -> store it
-    case getType(bonusVacanzeActivation.success):
+    case getType(activateBonusVacanze.success):
       if (action.payload.activation === undefined) {
         return state;
       }

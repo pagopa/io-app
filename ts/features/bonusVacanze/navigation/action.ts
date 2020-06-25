@@ -29,6 +29,11 @@ export const navigateToTimeoutEligibilityCheck = () =>
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.TIMEOUT
   });
 
+export const navigateToBonusActivationPending = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.PENDING
+  });
+
 export const navigateToAvailableBonusScreen = () =>
   NavigationActions.navigate({
     routeName: BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST

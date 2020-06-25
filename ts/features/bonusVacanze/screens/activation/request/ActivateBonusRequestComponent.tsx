@@ -9,7 +9,7 @@ import I18n from "../../../../../i18n";
 import { BonusCompositionDetails } from "../../../components/keyValueTable/BonusCompositionDetails";
 import { FamilyComposition } from "../../../components/keyValueTable/FamilyComposition";
 import { FooterTwoButtons } from "../../../components/markdown/FooterTwoButtons";
-import { bonusVacanzaStyle } from "../../../components/Styles";
+import { bonusVacanzeStyle } from "../../../components/Styles";
 import { ActivateBonusDiscrepancies } from "./ActivateBonusDiscrepancies";
 import { ActivateBonusReminder } from "./ActivateBonusReminder";
 import { ActivateBonusTitle } from "./ActivateBonusTitle";
@@ -26,26 +26,26 @@ type Props = {
 
 export const loadLocales = () => ({
   headerTitle: I18n.t(
-    "bonus.bonusVacanza.eligibility.activateBonus.headerTitle"
+    "bonus.bonusVacanze.eligibility.activateBonus.headerTitle"
   ),
-  title: I18n.t("bonus.bonusVacanza.eligibility.activateBonus.title"),
+  title: I18n.t("bonus.bonusVacanze.eligibility.activateBonus.title"),
   description: I18n.t(
-    "bonus.bonusVacanza.eligibility.activateBonus.description"
+    "bonus.bonusVacanze.eligibility.activateBonus.description"
   ),
   discrepancies: {
     attention: I18n.t(
-      "bonus.bonusVacanza.eligibility.activateBonus.discrepancies.attention"
+      "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.attention"
     ),
     text: I18n.t(
-      "bonus.bonusVacanza.eligibility.activateBonus.discrepancies.text"
+      "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.text"
     )
   },
   reminder: {
-    text: I18n.t("bonus.bonusVacanza.eligibility.activateBonus.reminder.text"),
-    link: I18n.t("bonus.bonusVacanza.eligibility.activateBonus.reminder.link")
+    text: I18n.t("bonus.bonusVacanze.eligibility.activateBonus.reminder.text"),
+    link: I18n.t("bonus.bonusVacanze.eligibility.activateBonus.reminder.link")
   },
   activateBonusText: I18n.t(
-    "bonus.bonusVacanza.eligibility.activateBonus.activateCTA"
+    "bonus.bonusVacanze.eligibility.activateBonus.activateCTA"
   )
 });
 
@@ -71,9 +71,9 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
 
   return (
     <BaseScreenComponent goBack={props.onCancel} headerTitle={headerTitle}>
-      <SafeAreaView style={bonusVacanzaStyle.flex}>
+      <SafeAreaView style={bonusVacanzeStyle.flex}>
         <ScrollView>
-          <View style={bonusVacanzaStyle.horizontalPadding}>
+          <View style={bonusVacanzeStyle.horizontalPadding}>
             <View spacer={true} large={true} />
             <ActivateBonusTitle
               title={title}
@@ -96,7 +96,7 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
           ) : (
             <ItemSeparatorComponent />
           )}
-          <View style={bonusVacanzaStyle.horizontalPadding}>
+          <View style={bonusVacanzeStyle.horizontalPadding}>
             <View spacer={true} />
             {props.familyMembers.length > 0 && (
               <>

@@ -61,6 +61,10 @@ global:
     spidLogin:
       title: Ricordati di accedere ad IO!
       message: Accedi con la tua identità digitale su IO, l’app dei servizi pubblici
+rooted:
+  title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
+  bodyiOS: !include jailbroken_body.md
+  bodyAndroid: !include rooted_body.md
 locales:
   it: Italiano
   en: Inglese
@@ -1283,7 +1287,7 @@ faq:
     title: "Hai avuto problemi durante un pagamento?"
     content: !include faq/faq57.md
 bonus:
-  bonusVacanza:
+  bonusVacanze:
     statusInfo:
       validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
       bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
@@ -1302,6 +1306,9 @@ bonus:
     applicant: CF richiedente
     bonusClaim: Chi può riscuotere il bonus?
     shareMessage: "Questo è il codice del tuo Bonus Vacanze:"
+    contextualHelp:
+      title: Il tuo Bonus Vacanze
+      body: In questa schermata puoi consultare il tuo Bonus Vacanze
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:
@@ -1313,13 +1320,17 @@ bonus:
     eligibility:
       loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
       iseeNotAvailable:
-        title: Siamo spiacenti. Non abbiamo trovato il tuo ISEE.
-        text: "È necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE per ottenere il Bonus Vacanze.\n\nSe vuoi, puoi fare subito una simulazione o la richiesta online sul sito di INPS."
+        title: "Siamo spiacenti.\n Non abbiamo trovato il tuo ISEE."
+        text:
+          first: "E' necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE, prima di richiedere nuovamente il Bonus Vacanze.\n
+                  Puoi fare subito una "
+          secondo: "simulazione online"
+          third: " sul sito dell'INPS per verificare la tua idoneità, oppure richiedere l'ISEE sui canali previsti da INPS."
+        goToDSU: Richiedi ISEE
       iseeNotEligible:
-        title: Siamo spiacenti. Il tuo ISEE supera la soglia richiesta.
-        text: Se non ti risulta corretto, oppure se il tuo reddito familiare è cambiato dall’ultimo ISEE creato, puoi aggiornarlo effettuando una nuova dichiarazione sostituiva unica (DSU) sul sito di INPS.
-        goToNewDSU: Presenta nuova DSU a INPS
-        goToNewSimulation: Fai una simulazione online
+        title: "Siamo spiacenti.\n Il tuo ISEE supera la soglia richiesta."
+        text: Se la situazione patrimoniale del tuo nucleo familiare è cambiata rispetto all'ultima Dichiarazioni Sostitutiva Unica (DSU) presentata, puoi presentarne una nuova attraverso i canali previsti da INPS.
+        goToNewDSU: Richiedi nuovo ISEE
       activateBonus:
         headerTitle: Richiesta Bonus Vacanze
         title: Buone notizie!
@@ -1329,7 +1340,7 @@ bonus:
           link: "servizio clienti di INPS."
         discrepancies:
           attention: "Attenzione!"
-          text: "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Se decidi di proseguire, potresti essere chiamato a fornire gli approfondimenti che hanno determinato la presenza di tali omissioni o difformità."
+          text: "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Verifica che sia tutto corretto prima di continuare. Se decidi di proseguire, potresti essere chiamato a fornire la documentazione per provare la completezza e la veridicità dei dati indicati nella DSU Altrimenti, puoi presentare una nuova DSU e richiedere il Bonus in un secondo momento."
         activateCTA: "Attiva il Bonus"
       timeout:
         title: Siamo spiacenti, serve più tempo per verificare il tuo ISEE.
@@ -1337,30 +1348,34 @@ bonus:
           first: "Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.\n\nQuando lo riceverai, se sarà positivo, ricordati di completare la tua domanda "
           second: "entro 24 ore"
           third: ", altrimenti scadrà e dovrai iniziarne una nuova."
-      activate:
-        loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
-        goToDetails: Visualizza i dettagli
-        timeout:
-          title: Siamo spiacenti, serve più tempo per processare la tua richiesta.
-          description: Ti invieremo un messaggio in app quando il tuo bonus sarà pronto.
-        alreadyRedeemed:
-          title: Sembra che il bonus per il tuo nucleo familiare sia già stato richiesto.
-          body: Ti chiediamo di verificare con i tuoi familiari. Se questa informazione non dovesse essere corretta, verifica con il servizio clienti di Agenzia delle Entrate.
-        eligibilityExpired:
-          title: Eligibilità scaduta
-          body: Il periodo in cui era possibile attivare il bonus è scaduto. È necessario iniziare una nuova procedura.
-        confirm:
-          title: Attenzione
-          body: Continuando nel processo, non sarà più possibile annullare la richiesta.
-          cancel: Torna alla richiesta
-          confirm: Continua
-        completed:
-          title: Congratulazioni!
-          description: Il tuo bonus è attivo
+      activationPending:
+        title: Il bonus per il tuo nucleo familiare è già stato richiesto ed è in fase di attivazione.
+        description: Riceverai un messaggio quando sarà attivato.
+    activation:
+      loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
+      goToDetails: Visualizza Bonus Vacanze
+      timeout:
+        title: Siamo spiacenti, serve più tempo per processare la tua richiesta.
+        description: Ti invieremo un messaggio in app quando il tuo bonus sarà pronto.
+      alreadyRedeemed:
+        title: Il bonus per il tuo nucleo familiare è già attivo!
+        body: Puoi visualizzarne i dettagli nella sezione Pagamenti.
+        cta: Visualizza Bonus disponibili
+      eligibilityExpired:
+        title: Eligibilità scaduta
+        body: Il periodo in cui era possibile attivare il bonus è scaduto. È necessario iniziare una nuova procedura.
+      confirm:
+        title: Attenzione
+        body: Continuando nel processo, non sarà più possibile annullare la richiesta.
+        cancel: Torna alla richiesta
+        confirm: Continua
+      completed:
+        title: Congratulazioni!
+        description: Il tuo bonus è attivo
     abort:
       title: Annulla
       body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
-      cancel: Torna alla richiesta
+      cancel: Continua
       confirm: Annulla richiesta
       completed: Richiesta annullata
     composition:
@@ -1380,5 +1395,5 @@ bonus:
   failed: Fallito
   redeemed: Utilizzato
   tos:
-    title: Termini e condizioni d’uso e Privacy policy
+    title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md

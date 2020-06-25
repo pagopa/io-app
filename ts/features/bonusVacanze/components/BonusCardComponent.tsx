@@ -16,13 +16,14 @@ import I18n from "../../../i18n";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import { addEvery } from "../../../utils/strings";
+import { getBonusCodeFormatted, isBonusActive } from "../utils/bonus";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
   preview?: boolean;
   onPress?: () => void;
   viewQR?: () => void;
+  share?: () => void;
 };
 
 const styles = StyleSheet.create({
@@ -114,6 +115,9 @@ const styles = StyleSheet.create({
     marginRight: 6,
     height: 40,
     width: 40
+  },
+  consumedOpacity: {
+    opacity: 0.5
   }
 });
 
@@ -129,21 +133,36 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         <View style={{ flexDirection: "column" }}>
           <View spacer={true} small={true} />
           <Text bold={true} style={[styles.colorWhite, styles.fontLarge]}>
-            {I18n.t("bonus.bonusVacanza.name")}
+            {I18n.t("bonus.bonusVacanze.name")}
           </Text>
           <View spacer={true} small={true} />
           <View style={styles.row}>
-            <Text bold={true} style={[styles.colorWhite, styles.previewAmount]}>
+            <Text
+              bold={true}
+              style={[
+                !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
+                styles.colorWhite,
+                styles.previewAmount
+              ]}
+            >
               {bonus.dsu_request.max_amount}
             </Text>
-            <Text style={[styles.colorWhite, styles.fontLarge]}>{"€"}</Text>
+            <Text
+              style={[
+                !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
+                styles.colorWhite,
+                styles.fontLarge
+              ]}
+            >
+              {"€"}
+            </Text>
           </View>
           <View spacer={true} />
           <Text style={[styles.colorWhite, styles.codeLabel]}>
-            {I18n.t("bonus.bonusVacanza.code")}
+            {I18n.t("bonus.bonusVacanze.code")}
           </Text>
           <Text style={[styles.colorWhite, styles.fontLarge, styles.bonusCode]}>
-            {addEvery(bonus.id, " ", 4).trim()}
+            {getBonusCodeFormatted(bonus)}
           </Text>
         </View>
         <View>
@@ -158,15 +177,25 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                   onSelect={() => clipboardSetStringWithFeedback(bonus.id)}
                 >
                   <Text style={styles.actions}>
-                    {I18n.t("bonus.bonusVacanza.cta.copyCode")}
+                    {I18n.t("bonus.bonusVacanze.cta.copyCode")}
                   </Text>
                 </MenuOption>
-                <ItemSeparatorComponent />
-                <MenuOption onSelect={props.viewQR}>
-                  <Text style={styles.actions}>
-                    {I18n.t("bonus.bonusVacanza.cta.openQRCode")}
-                  </Text>
-                </MenuOption>
+                {isBonusActive(props.bonus) && (
+                  <>
+                    <ItemSeparatorComponent />
+                    <MenuOption onSelect={props.viewQR}>
+                      <Text style={styles.actions}>
+                        {I18n.t("bonus.bonusVacanze.cta.openQRCode")}
+                      </Text>
+                    </MenuOption>
+                    <ItemSeparatorComponent />
+                    <MenuOption onSelect={props.share}>
+                      <Text style={styles.actions}>
+                        {I18n.t("global.buttons.share")}
+                      </Text>
+                    </MenuOption>
+                  </>
+                )}
               </MenuOptions>
             </Menu>
           </View>
@@ -186,13 +215,28 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         >
           <View style={[styles.row]}>
             <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
-              {I18n.t("bonus.bonusVacanza.name")}
+              {I18n.t("bonus.bonusVacanze.name")}
             </Text>
             <View hspacer={true} large={true} />
-            <Text bold={true} style={[styles.colorWhite, styles.previewAmount]}>
+            <Text
+              bold={true}
+              style={[
+                !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
+                styles.colorWhite,
+                styles.previewAmount
+              ]}
+            >
               {bonus.dsu_request.max_amount}
             </Text>
-            <Text style={[styles.colorWhite, { fontSize: 20 }]}>{"€"}</Text>
+            <Text
+              style={[
+                !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
+                styles.colorWhite,
+                { fontSize: 20 }
+              ]}
+            >
+              {"€"}
+            </Text>
           </View>
           <Image source={bonusVacanzeWhiteLogo} style={styles.previewLogo} />
         </TouchableDefaultOpacity>

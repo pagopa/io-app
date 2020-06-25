@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { BaseTimeoutScreen } from "../../components/BaseTimeoutScreen";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
-import { cancelBonusRequest } from "../../store/actions/bonusVacanze";
+import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -15,10 +15,8 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  */
 
 const TimeoutActivationInfoScreen: React.FunctionComponent<Props> = props => {
-  const title = I18n.t("bonus.bonusVacanza.eligibility.activate.timeout.title");
-  const body = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.timeout.description"
-  );
+  const title = I18n.t("bonus.bonusVacanze.activation.timeout.title");
+  const body = I18n.t("bonus.bonusVacanze.activation.timeout.description");
 
   useHardwareBackButton(() => {
     props.onExit();
@@ -29,7 +27,7 @@ const TimeoutActivationInfoScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onExit: () => dispatch(cancelBonusRequest())
+  onExit: () => dispatch(cancelBonusVacanzeRequest())
 });
 
 export default connect(

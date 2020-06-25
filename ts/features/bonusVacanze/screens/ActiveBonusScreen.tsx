@@ -41,6 +41,7 @@ import {
 import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
 import { availableBonusTypesSelectorFromId } from "../store/reducers/availableBonusesTypes";
 import {
+  getBonusCodeFormatted,
   ID_BONUS_VACANZE_TYPE,
   isBonusActive,
   validityInterval
@@ -56,7 +57,7 @@ type NavigationParams = Readonly<{
   validTo?: Date;
 }>;
 
-const QR_CODE_MIME_TYPE = "svg+xml";
+const QR_CODE_MIME_TYPE = "image/svg+xml";
 const PNG_IMAGE_TYPE = "image/png";
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -201,8 +202,8 @@ async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
 }
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.fiscalCode.title",
-  body: "profile.fiscalCode.help"
+  title: "bonus.bonusVacanze.contextualHelp.title",
+  body: "bonus.bonusVacanze.contextualHelp.body"
 };
 
 const shareQR = async (content: string, code: string, errorMessage: string) => {
@@ -248,7 +249,8 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const openModalBox = () => {
     const modalBox = (
       <QrModalBox
-        secretCode={bonusFromNav.id}
+        codeToDisplay={getBonusCodeFormatted(bonus)}
+        codeToCopy={bonus.id}
         onClose={props.hideModal}
         qrCode={qrCode[QR_CODE_MIME_TYPE]}
       />
@@ -256,39 +258,49 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     props.showAnimatedModal(modalBox, BottomTopAnimation);
   };
 
+  const handleShare = () =>
+    shareQR(
+      qrCode[PNG_IMAGE_TYPE],
+      `${I18n.t("bonus.bonusVacanze.shareMessage")} ${getBonusCodeFormatted(
+        bonusFromNav
+      )}`,
+      I18n.t("global.genericError")
+    );
+
   const renderFooterButtons = () =>
     bonus && isBonusActive(bonus) ? (
-      <BlockButtons
-        type="TwoButtonsInlineHalf"
-        rightButton={{
-          primary: true,
-          iconName: "io-share",
-          iconColor: variables.colorWhite,
-          title: I18n.t("global.buttons.share"),
-          onPress: () =>
-            shareQR(
-              qrCode[PNG_IMAGE_TYPE],
-              `${I18n.t("bonus.bonusVacanza.shareMessage")} ${bonusFromNav.id}`,
-              I18n.t("global.genericError")
-            )
-        }}
-        leftButton={{
-          bordered: true,
-          iconName: "io-qr",
-          iconColor: variables.contentPrimaryBackground,
-          title: I18n.t("bonus.bonusVacanza.cta.qrCode"),
-          onPress: openModalBox
-        }}
-      />
+      <>
+        <BlockButtons
+          type="TwoButtonsInlineHalf"
+          rightButton={{
+            primary: true,
+            iconName: "io-share",
+            iconColor: variables.colorWhite,
+            title: I18n.t("global.buttons.share"),
+            onPress: handleShare
+          }}
+          leftButton={{
+            bordered: true,
+            iconName: "io-qr",
+            iconColor: variables.contentPrimaryBackground,
+            title: I18n.t("bonus.bonusVacanze.cta.qrCode"),
+            onPress: openModalBox
+          }}
+        />
+        <View spacer={true} />
+      </>
     ) : (
-      <BlockButtons
-        type="SingleButton"
-        leftButton={{
-          bordered: true,
-          title: I18n.t("global.buttons.cancel"),
-          onPress: props.goBack
-        }}
-      />
+      <>
+        <BlockButtons
+          type="SingleButton"
+          leftButton={{
+            bordered: true,
+            title: I18n.t("global.buttons.cancel"),
+            onPress: props.goBack
+          }}
+        />
+        <View spacer={true} />
+      </>
     );
 
   const renderInformationBlock = (
@@ -315,7 +327,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       case BonusActivationStatusEnum.ACTIVE:
         return renderInformationBlock(
           "io-calendario",
-          I18n.t("bonus.bonusVacanza.statusInfo.validBetween", {
+          I18n.t("bonus.bonusVacanze.statusInfo.validBetween", {
             from: bonusValidityInterval.fold("n/a", v => v.e1),
             to: bonusValidityInterval.fold("n/a", v => v.e2)
           })
@@ -323,7 +335,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       case BonusActivationStatusEnum.REDEEMED:
         return renderInformationBlock(
           "io-complete",
-          I18n.t("bonus.bonusVacanza.statusInfo.redeemed", {
+          I18n.t("bonus.bonusVacanze.statusInfo.redeemed", {
             date: formatDateAsLocal(
               fromNullable(bonus.redeemed_at).getOrElse(bonus.created_at),
               true
@@ -334,7 +346,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       case BonusActivationStatusEnum.FAILED:
         return renderInformationBlock(
           "io-notice",
-          I18n.t("bonus.bonusVacanza.statusInfo.bonusRejected")
+          I18n.t("bonus.bonusVacanze.statusInfo.bonusRejected")
         );
       default:
         return null;
@@ -352,20 +364,23 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       bounces={false}
       headerBody={
         <TouchableDefaultOpacity onPress={props.goBack} style={styles.center}>
-          <Text style={styles.title}>{I18n.t("bonus.bonusVacanza.name")}</Text>
+          <Text style={styles.title}>{I18n.t("bonus.bonusVacanze.name")}</Text>
         </TouchableDefaultOpacity>
       }
       contextualHelpMarkdown={contextualHelpMarkdown}
       allowGoBack={true}
       topContent={<View style={{ height: 90 }} />}
-      faqCategories={["profile"]}
       footerContent={renderFooterButtons()}
       gradientHeader={true}
     >
       <View>
         <View style={styles.paddedContent}>
           <View style={styles.image}>
-            <BonusCardComponent bonus={bonus} viewQR={openModalBox} />
+            <BonusCardComponent
+              bonus={bonus}
+              viewQR={openModalBox}
+              share={handleShare}
+            />
           </View>
           <View spacer={true} extralarge={true} />
           {switchInformationText()}
@@ -377,7 +392,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               semibold={true}
               style={[styles.colorDarkest, styles.sectionLabel]}
             >
-              {I18n.t("bonus.bonusVacanza.amount")}
+              {I18n.t("bonus.bonusVacanze.amount")}
             </Text>
             <Text semibold={true} style={[styles.amount, styles.colorDarkest]}>
               {formatNumberAmount(bonus.dsu_request.max_amount, true)}
@@ -386,7 +401,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} />
           <View style={styles.rowBlock}>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanza.usableAmount")}
+              {I18n.t("bonus.bonusVacanze.usableAmount")}
             </Text>
             <Text bold={true} style={[styles.colorGrey, styles.commonLabel]}>
               {formatNumberAmount(
@@ -400,7 +415,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} xsmall={true} />
           <View style={styles.rowBlock}>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanza.taxBenefit")}
+              {I18n.t("bonus.bonusVacanze.taxBenefit")}
             </Text>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
               {formatNumberAmount(bonus.dsu_request.max_tax_benefit, true)}
@@ -413,7 +428,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             semibold={true}
             style={[styles.sectionLabel, styles.colorDarkest]}
           >
-            {I18n.t("bonus.bonusVacanza.bonusClaim")}
+            {I18n.t("bonus.bonusVacanze.bonusClaim")}
           </Text>
           <View spacer={true} />
           {bonus.dsu_request.family_members.map(member =>
@@ -430,7 +445,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 semibold={true}
                 style={[styles.sectionLabel, styles.colorDarkest]}
               >
-                {I18n.t("bonus.bonusVacanza.status")}
+                {I18n.t("bonus.bonusVacanze.status")}
               </Text>
               <Badge
                 style={
@@ -448,7 +463,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} />
           <View style={styles.rowBlock}>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanza.requestedAt")}
+              {I18n.t("bonus.bonusVacanze.requestedAt")}
             </Text>
             <Text style={[styles.colorGrey, styles.commonLabel]}>
               {isBonusActive(bonus)

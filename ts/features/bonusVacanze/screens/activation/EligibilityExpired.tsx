@@ -8,8 +8,8 @@ import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
-import { bonusVacanzaStyle } from "../../components/Styles";
-import { cancelBonusRequest } from "../../store/actions/bonusVacanze";
+import { bonusVacanzeStyle } from "../../components/Styles";
+import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -28,12 +28,10 @@ const image = require("../../../../../img/servicesStatus/error-detail-icon.png")
 
 const EligibilityExpired: React.FunctionComponent<Props> = props => {
   const title = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.eligibilityExpired.title"
+    "bonus.bonusVacanze.activation.eligibilityExpired.title"
   );
-  const body = I18n.t(
-    "bonus.bonusVacanza.eligibility.activate.eligibilityExpired.body"
-  );
-  const cancel = I18n.t("bonus.bonusVacanza.cta.cancelRequest");
+  const body = I18n.t("bonus.bonusVacanze.activation.eligibilityExpired.body");
+  const cancel = I18n.t("bonus.bonusVacanze.cta.cancelRequest");
 
   useHardwareBackButton(() => {
     props.onCancel();
@@ -41,7 +39,7 @@ const EligibilityExpired: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <SafeAreaView style={bonusVacanzaStyle.flex}>
+    <SafeAreaView style={bonusVacanzeStyle.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={title}
@@ -55,7 +53,7 @@ const EligibilityExpired: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => dispatch(cancelBonusRequest())
+  onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
 export default connect(

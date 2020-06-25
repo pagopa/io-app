@@ -1,7 +1,7 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationInjectedProps, SafeAreaView } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
@@ -18,11 +18,13 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../store/actions/navigationHistory";
 import customVariables from "../../../theme/variables";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
+import { bonusVacanzeStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
-import { checkBonusEligibility } from "../store/actions/bonusVacanze";
+import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -79,6 +81,8 @@ const styles = StyleSheet.create({
 // the number of markdown component inside BonusInformationScreen
 const markdownComponents = 1;
 const loadingOpacity = 0.9;
+// for long content markdown computed height should be not enough
+const extraMarkdownBodyHeight = 20;
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
  */
@@ -102,7 +106,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
     block: true,
     primary: true,
     onPress: props.requestBonusActivation,
-    title: `${I18n.t("bonus.bonusVacanza.cta.requestBonus")} ${
+    title: `${I18n.t("bonus.bonusVacanze.cta.requestBonus")} ${
       bonusTypeLocalizedContent.name
     }`
   };
@@ -125,74 +129,82 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
       goBack={true}
       headerTitle={bonusTypeLocalizedContent.name}
     >
-      <Content>
-        <View style={styles.row}>
-          <View style={styles.flexStart}>
-            {maybeSponsorshipDescription.isSome() && (
-              <Text dark={true} style={styles.orgName} semibold={true}>
-                {maybeSponsorshipDescription.value}
-              </Text>
-            )}
+      <SafeAreaView style={bonusVacanzeStyle.flex}>
+        <Content>
+          <View style={styles.row}>
+            <View style={styles.flexStart}>
+              {maybeSponsorshipDescription.isSome() && (
+                <Text dark={true} style={styles.orgName} semibold={true}>
+                  {maybeSponsorshipDescription.value}
+                </Text>
+              )}
 
-            <Text bold={true} dark={true} style={styles.title}>
-              {bonusTypeLocalizedContent.title}
-            </Text>
+              <Text bold={true} dark={true} style={styles.title}>
+                {bonusTypeLocalizedContent.title}
+              </Text>
+            </View>
+            <View style={styles.flexEnd}>
+              {maybeCover.isSome() && (
+                <Image
+                  source={{ uri: maybeCover.value }}
+                  style={styles.cover}
+                />
+              )}
+            </View>
           </View>
-          <View style={styles.flexEnd}>
-            {maybeCover.isSome() && (
-              <Image source={{ uri: maybeCover.value }} style={styles.cover} />
-            )}
-          </View>
-        </View>
-        <View spacer={true} large={true} />
-        <Text dark={true}>{bonusTypeLocalizedContent.subtitle}</Text>
-        {maybeBonusTos.isSome() && (
-          <ButtonDefaultOpacity
-            style={styles.noPadded}
-            small={true}
-            transparent={true}
-            onPress={() => handleModalPress(maybeBonusTos.value)}
-          >
-            <Text>{I18n.t("bonus.tos.title")}</Text>
-          </ButtonDefaultOpacity>
-        )}
-        <View spacer={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} />
-        <Markdown onLoadEnd={onMarkdownLoaded}>
-          {bonusTypeLocalizedContent.content}
-        </Markdown>
-        {maybeBonusTos.isSome() && (
-          <>
-            <View spacer={true} extralarge={true} />
-            <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} extralarge={true} />
-            <Text style={styles.disclaimer} dark={true}>
-              {I18n.t("bonus.bonusVacanza.advice")}
-            </Text>
-            <TouchableDefaultOpacity
+          <View spacer={true} large={true} />
+          <Text dark={true}>{bonusTypeLocalizedContent.subtitle}</Text>
+          {maybeBonusTos.isSome() && (
+            <ButtonDefaultOpacity
+              style={styles.noPadded}
+              small={true}
+              transparent={true}
               onPress={() => handleModalPress(maybeBonusTos.value)}
             >
-              <Text
-                style={styles.disclaimer}
-                link={true}
-                ellipsizeMode={"tail"}
-                numberOfLines={1}
-              >
-                {I18n.t("bonus.tos.title")}
+              <Text>{I18n.t("bonus.tos.title")}</Text>
+            </ButtonDefaultOpacity>
+          )}
+          <View spacer={true} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} />
+          <Markdown
+            extraBodyHeight={extraMarkdownBodyHeight}
+            onLoadEnd={onMarkdownLoaded}
+          >
+            {bonusTypeLocalizedContent.content}
+          </Markdown>
+          {maybeBonusTos.isSome() && (
+            <>
+              <View spacer={true} extralarge={true} />
+              <ItemSeparatorComponent noPadded={true} />
+              <View spacer={true} extralarge={true} />
+              <Text style={styles.disclaimer} dark={true}>
+                {I18n.t("bonus.bonusVacanze.advice")}
               </Text>
-            </TouchableDefaultOpacity>
-          </>
+              <TouchableDefaultOpacity
+                onPress={() => handleModalPress(maybeBonusTos.value)}
+              >
+                <Text
+                  style={styles.disclaimer}
+                  link={true}
+                  ellipsizeMode={"tail"}
+                  numberOfLines={1}
+                >
+                  {I18n.t("bonus.tos.title")}
+                </Text>
+              </TouchableDefaultOpacity>
+            </>
+          )}
+          {isMarkdownLoaded && <EdgeBorderComponent />}
+        </Content>
+        {isMarkdownLoaded && (
+          <FooterWithButtons
+            type="TwoButtonsInlineThird"
+            leftButton={cancelButtonProps}
+            rightButton={requestButtonProps}
+          />
         )}
-        {isMarkdownLoaded && <EdgeBorderComponent />}
-      </Content>
-      {isMarkdownLoaded && (
-        <FooterWithButtons
-          type="TwoButtonsInlineThird"
-          leftButton={cancelButtonProps}
-          rightButton={requestButtonProps}
-        />
-      )}
+      </SafeAreaView>
     </BaseScreenComponent>
   ));
   return (
@@ -204,8 +216,10 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO add bonus request action or just navigate to TOS screen (?)
-  requestBonusActivation: () => dispatch(checkBonusEligibility.request()),
+  requestBonusActivation: () => {
+    dispatch(checkBonusVacanzeEligibility.request());
+    dispatch(navigationHistoryPop(1));
+  },
   navigateBack: () => dispatch(navigateBack())
 });
 

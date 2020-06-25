@@ -7,7 +7,7 @@ import { navigationHistoryPop } from "../../../../../store/actions/navigationHis
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import {
-  navigateToBonusActivationTimeout,
+  navigateToBonusActivationPending,
   navigateToBonusAlreadyExists,
   navigateToBonusEligibilityLoading,
   navigateToEligible,
@@ -17,9 +17,9 @@ import {
 } from "../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
-  bonusVacanzeActivation,
-  cancelBonusRequest,
-  checkBonusEligibility
+  activateBonusVacanze,
+  cancelBonusVacanzeRequest,
+  checkBonusVacanzeEligibility
 } from "../../actions/bonusVacanze";
 import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
 import { bonusEligibilitySaga } from "./getBonusEligibilitySaga";
@@ -31,7 +31,7 @@ const eligibilityToNavigate = new Map([
   [EligibilityRequestProgressEnum.TIMEOUT, navigateToTimeoutEligibilityCheck],
   [
     EligibilityRequestProgressEnum.BONUS_ACTIVATION_PENDING,
-    navigateToBonusActivationTimeout
+    navigateToBonusActivationPending
   ],
   [EligibilityRequestProgressEnum.CONFLICT, navigateToBonusAlreadyExists]
 ]);
@@ -47,7 +47,7 @@ type CheckBonusEligibilityType = SagaCallReturnType<BonusEligibilitySagaType>;
  * @param result
  */
 export const getNextNavigation = (result: CheckBonusEligibilityType) =>
-  result.type === getType(checkBonusEligibility.success)
+  result.type === getType(checkBonusVacanzeEligibility.success)
     ? fromNullable(eligibilityToNavigate.get(result.payload.status)).getOrElse(
         navigateToBonusEligibilityLoading
       )
@@ -79,7 +79,7 @@ export function* eligibilityWorker(eligibilitySaga: BonusEligibilitySagaType) {
   }
 
   // the saga complete with the bonusVacanzeActivation.request action
-  yield take(bonusVacanzeActivation.request);
+  yield take(activateBonusVacanze.request);
 }
 
 /**
@@ -95,7 +95,7 @@ export function* handleBonusEligibilitySaga(
 
   const { cancelAction } = yield race({
     eligibility: call(eligibilityWorker, eligibilitySaga),
-    cancelAction: take(cancelBonusRequest)
+    cancelAction: take(cancelBonusVacanzeRequest)
   });
   if (cancelAction) {
     yield put(navigateToWalletHome());

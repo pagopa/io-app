@@ -6,6 +6,7 @@ import themeVariables from "../../../../theme/variables";
 type Props = {
   image: React.ReactNode;
   title?: string;
+  // this is necessary in order to render text with different formatting
   body?: string | React.ReactNode;
 };
 
@@ -13,7 +14,8 @@ const styles = StyleSheet.create({
   main: {
     padding: themeVariables.contentPadding,
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center"
   },
   title: {
     textAlign: "center",
@@ -45,11 +47,8 @@ const renderNode = (body: string | React.ReactNode) => {
 export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
   return (
     <View style={styles.main}>
-      <View spacer={true} extralarge={true} />
-      <View spacer={true} extralarge={true} />
-      <View spacer={true} extralarge={true} />
       {props.image}
-      <View spacer={true} extralarge={true} />
+      <View spacer={true} large={true} />
       {props.title && (
         <>
           <Text style={styles.title} bold={true}>
