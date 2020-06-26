@@ -231,7 +231,7 @@ export const isCtaActionValid = (cta: CTA): boolean => {
 };
 
 /**
- * return true if at least one of the CTA is valid
+ * return true if at least one of the CTAs is valid
  * @param ctas
  */
 export const hasCtaValidActions = (ctas: CTAS): boolean => {
