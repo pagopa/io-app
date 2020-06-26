@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import { abortBonusRequest } from "../../components/AbortBonusRequest";
+import { abortBonusRequest } from "../../components/alert/AbortBonusRequest";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 import {
-  cancelBonusEligibility,
-  checkBonusEligibility
+  cancelBonusVacanzeRequest,
+  checkBonusVacanzeEligibility
 } from "../../store/actions/bonusVacanze";
 import { eligibilityIsLoading } from "../../store/reducers/eligibility";
 
@@ -23,10 +23,12 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
-  const loadingCaption = I18n.t("bonus.bonusVacanza.eligibility.loading");
+  const loadingCaption = I18n.t("bonus.bonusVacanze.eligibility.loading");
 
   useHardwareBackButton(() => {
-    abortBonusRequest(props.onCancel);
+    if (!props.isLoading) {
+      abortBonusRequest(props.onAbort);
+    }
     return true;
   });
 
@@ -35,16 +37,15 @@ const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
       {...props}
       loadingCaption={loadingCaption}
       loadingOpacity={1}
-      onCancel={() => abortBonusRequest(props.onCancel)}
+      onAbort={() => abortBonusRequest(props.onAbort)}
     />
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO: link with the right dispatch action, will dispatch the cancel request
-  onCancel: () => dispatch(cancelBonusEligibility()),
+  onAbort: () => dispatch(cancelBonusVacanzeRequest()),
   onRetry: () => {
-    dispatch(checkBonusEligibility.request());
+    dispatch(checkBonusVacanzeEligibility.request());
   }
 });
 

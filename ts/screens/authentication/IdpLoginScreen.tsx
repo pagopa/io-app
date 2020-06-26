@@ -10,8 +10,7 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import EmailCallCTA from "../../components/screens/EmailCallCTA";
-import BlockButtons from "../../components/ui/BlockButtons";
+import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
 import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import I18n from "../../i18n";
@@ -27,7 +26,6 @@ import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/conten
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
-import { handleItemOnPress } from "../../utils/url";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -222,68 +220,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       };
     }
     const idpTextData = selectedIdpTextData.value;
-    return {
-      title: I18n.t("authentication.idp_login.contextualHelpTitle2"),
-      body: () => (
-        <React.Fragment>
-          {/** Recover credentials */}
-          <Markdown>
-            {idpTextData.recover_username
-              ? I18n.t("authentication.idp_login.dualRecoverDescription")
-              : I18n.t("authentication.idp_login.recoverDescription")}
-          </Markdown>
-          <View spacer={true} />
-          {idpTextData.recover_username && (
-            <React.Fragment>
-              <BlockButtons
-                type={"SingleButton"}
-                leftButton={{
-                  title: I18n.t("authentication.idp_login.recoverUsername"),
-                  onPress: handleItemOnPress(idpTextData.recover_username),
-                  small: true
-                }}
-              />
-              <View spacer={true} />
-            </React.Fragment>
-          )}
-          <BlockButtons
-            type={"SingleButton"}
-            leftButton={{
-              title: I18n.t("authentication.idp_login.recoverPassword"),
-              onPress: handleItemOnPress(idpTextData.recover_password),
-              small: true
-            }}
-          />
-
-          {/** Idp cotnacts */}
-          <View spacer={true} />
-          <Markdown>{idpTextData.description}</Markdown>
-          <View spacer={true} />
-
-          <EmailCallCTA
-            phone={idpTextData.phone}
-            email={idpTextData.email ? idpTextData.email : undefined}
-          />
-          <View spacer={true} />
-
-          {idpTextData.helpdesk_form && (
-            <React.Fragment>
-              <BlockButtons
-                type={"SingleButton"}
-                leftButton={{
-                  title: I18n.t("authentication.idp_login.openTicket"),
-                  onPress: handleItemOnPress(idpTextData.helpdesk_form),
-                  primary: true,
-                  bordered: true,
-                  small: true
-                }}
-              />
-              <View spacer={true} />
-            </React.Fragment>
-          )}
-        </React.Fragment>
-      )
-    };
+    return IdpCustomContextualHelpContent(idpTextData);
   }
 
   public render() {

@@ -20,12 +20,22 @@ const styles = StyleSheet.create({
 
 interface Props {
   onPress: () => void;
+  iconSize?: number;
+  labelSize?: number;
 }
 
-export const AddPaymentMethodButton: React.SFC<Props> = ({ onPress }) => (
+export const AddPaymentMethodButton: React.SFC<Props> = ({
+  onPress,
+  iconSize,
+  labelSize
+}) => (
   <TouchableDefaultOpacity onPress={onPress} style={styles.button}>
-    <IconFont name="io-plus" color={customVariables.colorWhite} />
-    <Text style={styles.label} bold={true}>
+    <IconFont
+      name="io-plus"
+      color={customVariables.colorWhite}
+      size={iconSize}
+    />
+    <Text bold={true} style={[styles.label, { fontSize: labelSize }]}>
       {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
     </Text>
   </TouchableDefaultOpacity>

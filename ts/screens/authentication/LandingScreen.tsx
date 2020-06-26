@@ -3,19 +3,24 @@
  * It includes a carousel with highlights on the app functionalities
  */
 import * as pot from "italia-ts-commons/lib/pot";
+import JailMonkey from "jail-monkey";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import CieNotSupported from "../../components/cie/CieNotSupported";
+import { ContextualHelp } from "../../components/ContextualHelp";
 import { DevScreenButton } from "../../components/DevScreenButton";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
@@ -23,18 +28,30 @@ import {
   idpSelected,
   resetAuthenticationState
 } from "../../store/actions/authentication";
+import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
 import { Dispatch } from "../../store/actions/types";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import { isCieSupportedSelector } from "../../store/reducers/cie";
+import {
+  hasApiLevelSupportSelector,
+  hasNFCFeatureSelector,
+  isCieSupportedSelector
+} from "../../store/reducers/cie";
+import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import { showToast } from "../../utils/showToast";
+import RootedDeviceModal from "../modal/RootedDeviceModal";
 
 type Props = NavigationInjectedProps &
+  LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
+
+type State = {
+  isRootedOrJailbroken: boolean;
+};
 
 const getCards = (
   isCIEAvailable: boolean
@@ -89,6 +106,9 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1
+  },
+  noCie: {
+    opacity: 0.35
   }
 });
 
@@ -100,8 +120,14 @@ const IdpCIE: IdentityProvider = {
   profileUrl: ""
 };
 
-class LandingScreen extends React.PureComponent<Props> {
-  public componentDidMount() {
+class LandingScreen extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { isRootedOrJailbroken: false };
+  }
+  public async componentDidMount() {
+    const isRootedOrJailbroken = await JailMonkey.isJailBroken();
+    this.setState({ isRootedOrJailbroken });
     if (this.props.isSessionExpired) {
       showToast(
         I18n.t("authentication.expiredSessionBanner.message"),
@@ -120,6 +146,21 @@ class LandingScreen extends React.PureComponent<Props> {
     }
   }
 
+  private openUnsupportedCIEModal = () => {
+    this.props.showAnimatedModal(
+      <ContextualHelp
+        onClose={this.props.hideModal}
+        title={I18n.t("authentication.landing.cie_unsupported.title")}
+        body={() => (
+          <CieNotSupported
+            hasCieApiLevelSupport={this.props.hasCieApiLevelSupport}
+            hasCieNFCFeature={this.props.hasCieNFCFeature}
+          />
+        )}
+      />
+    );
+  };
+
   private navigateToMarkdown = () =>
     this.props.navigation.navigate(ROUTES.MARKDOWN);
 
@@ -127,8 +168,12 @@ class LandingScreen extends React.PureComponent<Props> {
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
 
   private navigateToCiePinScreen = () => {
-    this.props.dispatchIdpCieSelected();
-    this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
+    if (this.props.isCieSupported) {
+      this.props.dispatchIdpCieSelected();
+      this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
+    } else {
+      this.openUnsupportedCIEModal();
+    }
   };
 
   private navigateToSpidCieInformationRequest = () =>
@@ -145,7 +190,24 @@ class LandingScreen extends React.PureComponent<Props> {
     ));
   };
 
+  private handleContinueWithRootOrJailbreak = (continueWith: boolean) => {
+    this.props.dispatchContinueWithRootOrJailbreak(continueWith);
+  };
+
   public render() {
+    // if the device is compromised and the user didn't allow to continue
+    // show a blocking modal
+    if (
+      this.state.isRootedOrJailbroken &&
+      !this.props.continueWithRootOrJailbreak
+    ) {
+      return (
+        <RootedDeviceModal
+          onContinue={() => this.handleContinueWithRootOrJailbreak(true)}
+          onCancel={() => this.handleContinueWithRootOrJailbreak(false)}
+        />
+      );
+    }
     return (
       <BaseScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
@@ -162,28 +224,57 @@ class LandingScreen extends React.PureComponent<Props> {
         </Content>
 
         <View footer={true}>
-          {this.props.isCieSupported && (
-            <ButtonDefaultOpacity
-              block={true}
-              primary={true}
-              iconLeft={true}
-              onPress={this.navigateToCiePinScreen}
-              testID={"landing-button-login-cie"}
-            >
-              <IconFont name={"io-cie"} color={variables.colorWhite} />
-              <Text>{I18n.t("authentication.landing.loginCie")}</Text>
-            </ButtonDefaultOpacity>
-          )}
-          <View spacer={true} />
           <ButtonDefaultOpacity
             block={true}
             primary={true}
             iconLeft={true}
-            onPress={this.navigateToIdpSelection}
-            testID={"landing-button-login-spid"}
+            onPress={
+              this.props.isCieSupported
+                ? this.navigateToCiePinScreen
+                : this.navigateToIdpSelection
+            }
+            testID={
+              this.props.isCieSupported
+                ? "landing-button-login-cie"
+                : "landing-button-login-spid"
+            }
           >
-            <IconFont name={"io-profilo"} color={variables.colorWhite} />
-            <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
+            <IconFont
+              name={this.props.isCieSupported ? "io-cie" : "io-profilo"}
+              color={variables.colorWhite}
+            />
+            <Text>
+              {this.props.isCieSupported
+                ? I18n.t("authentication.landing.loginCie")
+                : I18n.t("authentication.landing.loginSpid")}
+            </Text>
+          </ButtonDefaultOpacity>
+          <View spacer={true} />
+          <ButtonDefaultOpacity
+            style={!this.props.isCieSupported ? styles.noCie : undefined}
+            block={true}
+            primary={true}
+            iconLeft={true}
+            onPress={
+              this.props.isCieSupported
+                ? this.navigateToIdpSelection
+                : this.navigateToCiePinScreen
+            }
+            testID={
+              this.props.isCieSupported
+                ? "landing-button-login-spid"
+                : "landing-button-login-cie"
+            }
+          >
+            <IconFont
+              name={this.props.isCieSupported ? "io-profilo" : "io-cie"}
+              color={variables.colorWhite}
+            />
+            <Text>
+              {this.props.isCieSupported
+                ? I18n.t("authentication.landing.loginSpid")
+                : I18n.t("authentication.landing.loginCie")}
+            </Text>
           </ButtonDefaultOpacity>
           <View spacer={true} />
           <ButtonDefaultOpacity
@@ -206,18 +297,25 @@ class LandingScreen extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => {
   const isCIEAuthenticationSupported = isCieSupportedSelector(state);
+  const hasApiLevelSupport = hasApiLevelSupportSelector(state);
+  const hasNFCFeature = hasNFCFeatureSelector(state);
   return {
     isSessionExpired: isSessionExpiredSelector(state),
-    isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false)
+    continueWithRootOrJailbreak: continueWithRootOrJailbreakSelector(state),
+    isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false),
+    hasCieApiLevelSupport: pot.getOrElse(hasApiLevelSupport, false),
+    hasCieNFCFeature: pot.getOrElse(hasNFCFeature, false)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetState: () => dispatch(resetAuthenticationState()),
-  dispatchIdpCieSelected: () => dispatch(idpSelected(IdpCIE))
+  dispatchIdpCieSelected: () => dispatch(idpSelected(IdpCIE)),
+  dispatchContinueWithRootOrJailbreak: (continueWith: boolean) =>
+    dispatch(continueWithRootOrJailbreak(continueWith))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LandingScreen);
+)(withLightModalContext(LandingScreen));

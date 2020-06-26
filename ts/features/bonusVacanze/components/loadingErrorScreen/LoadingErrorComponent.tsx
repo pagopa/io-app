@@ -1,8 +1,8 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
+import { bonusVacanzeStyle } from "../Styles";
 
 export type LoadingErrorProps = {
   isLoading: boolean;
@@ -10,14 +10,8 @@ export type LoadingErrorProps = {
   loadingOpacity?: number;
   errorText?: string;
   onRetry: () => void;
-  onCancel?: () => void;
+  onAbort?: () => void;
 };
-
-const styles = StyleSheet.create({
-  body: {
-    flex: 1
-  }
-});
 
 /**
  * This component is a generic error component composed with a loading.
@@ -33,13 +27,14 @@ const InnerLoadingErrorComponent: React.FunctionComponent<
   LoadingErrorProps
 > = props => {
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={bonusVacanzeStyle.flex}>
       <GenericErrorComponent
         onRetry={props.onRetry}
-        onCancel={props.onCancel}
+        onCancel={props.onAbort}
         text={props.errorText}
+        subText={" "}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

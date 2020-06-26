@@ -61,6 +61,19 @@ global:
     spidLogin:
       title: Remember to login to IO!
       message: Login with your digital identity on IO, the public services app
+rooted:
+  title: Looks like the security of your device has been compromised!
+  bodyiOS: !include jailbroken_body.md
+  bodyAndroid: !include rooted_body.md
+  continueAlert:
+    title: Continue
+    body: Are you sure you understand the risks and want to continue?
+    confirmText: Yes
+    cancelText: Cancel
+  cancelAlert:
+    title: Exit
+    body: You can close the app
+    confirmText: Exit
 locales:
   it: Italian
   en: English
@@ -262,6 +275,12 @@ spid:
     line2: Insert your email address to enable it.
 authentication:
   landing:
+    cie_unsupported:
+      title: Login with CIE unavailable
+      body: !include cie/cieNotSupported.md
+      android_desc: !include cie/cieNotSupported_android.md
+      os_version_unsupported: your operating system does not have a version compatible with CIE authentication
+      nfc_incompatible: your device does not have an NFC antenna compatible with CIE authentication
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -574,8 +593,7 @@ wallet:
   newPaymentMethod:
     add: add
     addButton: Add a new method
-    addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
-      so that you don't have to re-add them from scratch for every transaction.
+    addDescription: Add a payment method to pay from IO in seconds, or request activation of a bonus or discount card.
     walletAlert: "Your wallet includes payment methods but no one is supported by IO yet"
     successful: The card was added successfully!
     failed: The card could not be added
@@ -1073,9 +1091,10 @@ instabug:
     description: "Remember that if you have any doubts about the content of a message, we suggest you to contact the public administration that sent it to you directly: you will find the contact details at the bottom of the message or in the relevant service card."
     descriptionChat: "If you have found an error or something that is not working in the app, report a bug to the developers: they will take care of the problem as soon as possible and they will answer you directly via IO."
     buttonBug: Report a bug
-    descriptionBug: You can report an error or something that does not work to our developers, they will take care of the problem as soon as possible.
+    descriptionBug: If you want to suggest an improvement or a new service that you would like to have on IO, you can send a message to the team directly from here.
     title2: Are you new to IO?
     descriptionLink: Find out more about the IO project, its history and what news await you by visiting the website
+    assistanceWorkHours: IO assistance is available on weekdays from 8.00 to 20.00 and on holidays from 8.00 to 12.00
 faq:
   1:
     title: "What is SPID?"
@@ -1245,69 +1264,182 @@ faq:
   57:
     title: "Did you have problems during a payment?"
     content: !include faq/faq57.md
+  58:
+    title: "How do I claim the bonus?"
+    content: !include bonus/faq/faq58.md
+  59:
+    title: "What does it take to claim the bonus?"
+    content: !include bonus/faq/faq59.md
+  60:
+    title: "Did I get the bonus?"
+    content: !include bonus/faq/faq60.md
+  61:
+    title: "What do you mean my family members are beneficiaries of the Bonus Vacanze?"
+    content: !include bonus/faq/faq61.md
+  62:
+    title: "What does it mean that my DSU has omissions or discrepancies?"
+    content: !include bonus/faq/faq62.md
+  63:
+    title: "How can I use the Holiday Bonus?"
+    content: !include bonus/faq/faq63.md
+  64:
+    title: "How can I share the bonus with my family?"
+    content: !include bonus/faq/faq64.md
+  65:
+    title: "Where can I find the list of facilities that accept the Bonus Vacanze?"
+    content: !include bonus/faq/faq65.md
+  66:
+    title: "What bonuses or discount cards can I add?"
+    content: !include bonus/faq/faq66.md
+  67:
+    title: "Should I upload my ISEE as a PDF version to the IO app?"
+    content: !include bonus/faq/faq67.md
+  68:
+    title: "In the app IO I find the list of tourist facilities that accept the Bonus Vacanze?"
+    content: !include bonus/faq/faq68.md
+  69:
+    title: "How long does it take from the time of the request to the time of activation of the IO Bonus?"
+    content: !include bonus/faq/faq69.md
+  70:
+    title: "Do I need to add a credit card to the IO app to claim and spend the bonus?"
+    content: !include bonus/faq/faq70.md
+  71:
+    title: "I'm going to apply for the Bonus Vacanze but I'm not going to use it personally. Can I give it to another member of my household?"
+    content: !include bonus/faq/faq71.md
+  72:
+    title: "How will I share the bonus with my family?"
+    content: !include bonus/faq/faq72.md
+  73:
+    title: "How does the app IO know the composition of my household?"
+    content: !include bonus/faq/faq73.md
+  74:
+    title: "Can I apply for the Bonus Bici on the IO app?"
+    content: !include bonus/faq/faq74.md
+  75:
+    title: "After making the request, I found an error in the summary of my household data that the app shows me before confirming the Bonus activation. How do I fix it?"
+    content: !include bonus/faq/faq75.md
+  76:
+    title: "The app tells me that the maximum amount of my Bonus Vacanze is 500 euros. What happens if the cost of my stay is lower?"
+    content: !include bonus/faq/faq76.md
 bonus:
-  bonusVacanza:
-    validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
-    bonusRejected: Attention! This Bonus Vacanze has been rejected
+  bonusVacanze:
+    statusInfo:
+      validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
+      bonusRejected: Attention! This Bonus Vacanze has been rejected
+      redeemed: This Bonus Vacanze has been consumed on {{date}}
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return
     request: Request the
+    code: Code
+    uniqueCode: Unique code
     requestedAt: Requested on
-    advice: 'By clicking on "Request the Bonus Vacanze" you declare that you have read and understood the Terms and Conditions of Use and Privacy Policy of the service.'
+    advice: 'By clicking on "Request the Bonus Vacanze" you declare that you have read and understood the '
     status: Status
     name: Bonus Vacanze
     validity: Valid between
     amount: Max amount
     applicant: Applicant FC
     bonusClaim: Who can claim the bonus?
-    shareMessage: "This is the code of your bonus:"
+    shareMessage: "This is the code of your Bonus Vacanze:"
+    detail:
+      contextualHelp:
+        title: Bonus Vacanze
+        body: Here you can see the details of the Bonus Vacanze and the information needed to spend the bonus.
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:
       requestBonus: Request
       cancelRequest: Cancel the request
       qrCode: QR code
+      copyCode: Code copy
+      openQRCode: View QR code
     eligibility:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
         title: "We're sorry.\n ISEE not found."
-        text: "You should submit a DSU for the calculation of the ISEE to obtain the Holiday Bonus.\n\nIf you want, you can immediately make a simulation or request online on the INPS website."
+        text:
+          first: "It is necessary to submit a DSU for the calculation of the ISEE, before requesting the \"Bonus Vacanze\".\n
+                  You can do a "
+          secondo: "online simulation"
+          third: " on the INPS website to check your eligibility, or request ISEE through the channels provided by INPS."
+        goToDSU: Request ISEE
       iseeNotEligible:
-        title: We're sorry. Your ISEE exceeds the required threshold.
-        text: If it is not correct, or if your family income has changed since the last ISEE created, you can update it by making a new declaration (DSU) on the INPS website.
-        goToNewDSU: Submit new DSU to INPS
-        goToNewSimulation: Online simulation
+        title: "We're sorry.\n Your ISEE exceeds the required threshold."
+        text: If the financial position of your household has changed since the last DSU published, you can file a new through the channels provided by INPS.
+        goToNewDSU: Request new DSU
       activateBonus:
-        title: Activate
-        description: You can activate a {{amount}} bonus. Your tax discount is equal to {{taxBenefit}}
+        contextualHelp:
+          title: The Bonus Vacanze of your family
+          body: !include bonus/bonusVacanze/eligible_ch.md
+        headerTitle: Bonus Vacanze request
+        title: Good news!
+        description: "Your family is entitled to the following Bonus Vacanze:"
+        reminder:
+          text: "We remind you that each member of your household can spend the bonus. If the information shown is incorrect, please check with the"
+          link: "INPS customer service."
+        discrepancies:
+          attention: "Warning!"
+          text: "INPS has reported some omissions or discrepancies in your ISEE. Check that everything is correct before continuing. If you decide to continue, you may be called to provide documentation to prove the completeness and truthfulness of the data indicated in the DSU. Otherwise, you can present a new DSU and check the bonus at a later time."
+        activateCTA: "Activate the Bonus"
       timeout:
         title: Sorry, it takes longer to verify your ISEE.
-        description: "We will send you a message when INPS has given us the answer related to your ISEE.\n\nIf the outcome is positive, when you receive it, remember to complete your application within 24 hours, otherwise it will expire and you will have to start a new one."
-      activate:
-        loading: Bonus activation
-        goToDetails: Show details
-        timeout:
-          title: Sorry, it takes longer to process your request.
-          description: We will send you a message in the app when your bonus is ready.
-        completed:
-          title: Congratulation!
-          description: Bonus activated
+        description:
+          first: "We will send you a message when INPS has given us the answer related to your ISEE.\n\nIf the outcome is positive, when you receive it, remember to complete your application "
+          second: "within 24 hours"
+          third: ", otherwise it will expire and you will have to start a new one."
+      activationPending:
+        title: The bonus for your family has already been requested and is being activated.
+        description: You will receive a message when it is activated.
+    activation:
+      loading: "We have forwarded your request to the Revenue Agency\nPlease wait."
+      goToDetails: Show Bonus Vacanze
+      timeout:
+        title: Sorry, it takes longer to process your request.
+        description: We will send you a message in the app when your bonus is ready.
+      alreadyRedeemed:
+        title: The bonus for your family is already active!
+        body: You can view the details in the Payments section.
+        cta: Show available Bonuses
+      eligibilityExpired:
+        title: Time expired.
+        body: The 24 hours needed to continue your request have expired. Please, start a new request.
+      completed:
+        title: Congratulation!
+        description: Bonus activated
+      confirm:
+        title: Attention
+        body: If you continue, you will no longer be able to cancel the request.
+        cancel: Back to the request
+        confirm: Continue
     abort:
       title: Cancel
-      body: Do you really want to quit? To request the "Bonus Vacanza" you will have to repeat the process from the beginning.
-      cancel: Back to the request
+      body: Do you really want to quit? To request the "Bonus Vacanze" you will have to repeat the process from the beginning.
+      cancel: Continue
       confirm: Abort request
       completed: Request aborted
+    composition:
+      amount: "Maximum amount"
+      expendable: "Spendable amount"
+      taxBenefit: "Tax deductible"
+    family:
+      title: "Who can claim the bonus?"
   bonusList:
-    title: Add subsidy
+    title: Add bonus or discount
     contentTitle: Select one of the available bonus
+    contextualHelp:
+      title: Add a bonus or discount card
+      body: Here you can select the bonus or discount card you want to add. Once activated, they will then be displayed in the Payments section. You will always be able to see the details of the bonus or discount, entering the Payments section, and selecting the item in the list.
+  bonusInformation:
+    contextualHelp:
+      title: The Bonus Vacanze
+      body: Here you can see all the information related to the Bonus Vacanze, the measure established by the Decreto Rilancio to encourage tourism after the lockdown due to the Coronavirus emergency.
   request: Request a new bonus
-  latestBonus: Your active bonuses
+  requestLabel: Bonuses and discounts
   requestTitle: Request
+  validity_interval: from {{from}} until {{to}}
   active: Active
   failed: Failed
   redeemed: Consumed
   tos:
-    title: Terms and conditions of use and Privacy policy
+    title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
-

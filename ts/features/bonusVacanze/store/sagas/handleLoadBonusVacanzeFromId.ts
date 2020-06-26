@@ -1,8 +1,8 @@
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../types/utils";
+import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import { loadBonusVacanzeFromId } from "../actions/bonusVacanze";
 
@@ -14,21 +14,21 @@ export function* handleLoadBonusVacanzeFromId(
   action: ActionType<typeof loadBonusVacanzeFromId["request"]>
 ): SagaIterator {
   try {
-    const bonusVacanzaResponse: SagaCallReturnType<
+    const bonusVacanzeResponse: SagaCallReturnType<
       typeof getLatestBonusVacanzeFromId
     > = yield call(getLatestBonusVacanzeFromId, { bonus_id: action.payload });
-    if (bonusVacanzaResponse.isRight()) {
-      if (bonusVacanzaResponse.value.status === 200) {
+    if (bonusVacanzeResponse.isRight()) {
+      if (bonusVacanzeResponse.value.status === 200) {
         yield put(
-          loadBonusVacanzeFromId.success(bonusVacanzaResponse.value.value)
+          loadBonusVacanzeFromId.success(bonusVacanzeResponse.value.value)
         );
         return;
       }
-      throw Error(`response status ${bonusVacanzaResponse.value.status}`);
+      throw Error(`response status ${bonusVacanzeResponse.value.status}`);
     } else {
-      throw Error(readableReport(bonusVacanzaResponse.value));
+      throw Error(readablePrivacyReport(bonusVacanzeResponse.value));
     }
   } catch (e) {
-    yield put(loadBonusVacanzeFromId.failure(e));
+    yield put(loadBonusVacanzeFromId.failure({ error: e, id: action.payload }));
   }
 }
