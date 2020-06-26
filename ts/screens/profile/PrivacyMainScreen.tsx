@@ -221,7 +221,8 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               useExtendedSubTitle={true}
             />
 
-            {/* Remove account */}
+            {/* Remove account - temporary disabled https://www.pivotaltracker.com/story/show/173418452
+
             <ListItemComponent
               title={I18n.t("profile.main.privacy.removeAccount.title")}
               subTitle={I18n.t(
@@ -241,7 +242,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                   : undefined
               }
             />
-
+            */}
             {/* Export your data */}
             <ListItemComponent
               title={I18n.t("profile.main.privacy.exportData.title")}

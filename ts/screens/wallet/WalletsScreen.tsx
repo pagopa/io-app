@@ -15,6 +15,7 @@ import {
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
@@ -114,6 +115,7 @@ class WalletsScreen extends React.Component<Props> {
             />
           </Right>
         </View>
+        <View spacer={true} large={true} />
       </React.Fragment>
     );
   }
@@ -149,6 +151,7 @@ class WalletsScreen extends React.Component<Props> {
             renderItem={this.renderWallet}
             keyExtractor={(item, index) => `wallet-${item.idWallet}-${index}`}
             extraData={{ favoriteWallet }}
+            ItemSeparatorComponent={() => <View spacer={true} large={true} />}
           />
         </View>
         <EdgeBorderComponent />
@@ -160,7 +163,9 @@ class WalletsScreen extends React.Component<Props> {
 const mapStateToProps = (state: GlobalState) => {
   const potWallets = walletsSelector(state);
   return {
-    wallets: pot.getOrElse(potWallets, []),
+    wallets: pot
+      .getOrElse(potWallets, [])
+      .filter(w => w.type === TypeEnum.CREDIT_CARD),
     isLoading: pot.isLoading(potWallets),
     favoriteWallet: getFavoriteWalletId(state),
     nav: navSelector(state)

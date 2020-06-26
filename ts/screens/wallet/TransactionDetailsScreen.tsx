@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
   },
   centered: { alignItems: "center" },
   flex: {
-    flex: 1
+    flex: 1,
+    alignSelf: "center"
   }
 });
 
@@ -117,14 +118,16 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
   private getData = () => {
     const transaction = this.props.navigation.getParam("transaction");
-    const amount = formatNumberCentsToAmount(transaction.amount.amount);
+    const amount = formatNumberCentsToAmount(transaction.amount.amount, true);
     const fee = formatNumberCentsToAmount(
       transaction.fee === undefined
         ? transaction.grandTotal.amount - transaction.amount.amount
-        : transaction.fee.amount
+        : transaction.fee.amount,
+      true
     );
     const totalAmount = formatNumberCentsToAmount(
-      transaction.grandTotal.amount
+      transaction.grandTotal.amount,
+      true
     );
 
     const transactionWallet = this.props.wallets
@@ -164,9 +167,12 @@ class TransactionDetailsScreen extends React.Component<Props> {
     const { psp } = this.props;
     const transaction = this.props.navigation.getParam("transaction");
     const data = this.getData();
+
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
-        <Text style={styles.flex}>{label}</Text>
+        <Text small={true} style={styles.flex}>
+          {label}
+        </Text>
         <Text bold={true} dark={true}>
           {value}
         </Text>
@@ -190,14 +196,12 @@ class TransactionDetailsScreen extends React.Component<Props> {
           />
 
           {/** transaction date */}
-          <React.Fragment>
-            <View spacer={true} xsmall={true} />
-            <View spacer={true} large={true} />
-            {standardRow(
-              I18n.t("wallet.firstTransactionSummary.date"),
-              data.transactionDateTime
-            )}
-          </React.Fragment>
+          <View spacer={true} xsmall={true} />
+          <View spacer={true} large={true} />
+          {standardRow(
+            I18n.t("wallet.firstTransactionSummary.date"),
+            data.transactionDateTime
+          )}
 
           <View spacer={true} large={true} />
           <ItemSeparatorComponent noPadded={true} />
@@ -235,7 +239,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
           {data.paymentMethodIcon ? (
             <View style={[styles.row, styles.centered]}>
-              <Text>{I18n.t("wallet.paymentMethod")}</Text>
+              <Text small={true}>{I18n.t("wallet.paymentMethod")}</Text>
               <Image
                 style={styles.cardLogo}
                 source={{ uri: data.paymentMethodIcon }}
@@ -254,7 +258,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
           {/** psp logo */}
           {psp && (
             <View style={[styles.row, styles.centered]}>
-              <Text>{I18n.t("wallet.psp")}</Text>
+              <Text small={true}>{I18n.t("wallet.psp")}</Text>
               {psp.logoPSP && psp.logoPSP.length > 0 ? (
                 <Image style={styles.pspLogo} source={{ uri: psp.logoPSP }} />
               ) : psp.businessName ? (
@@ -271,7 +275,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
           {/** Transaction id */}
           <View>
-            <Text>
+            <Text small={true}>
               {I18n.t("wallet.firstTransactionSummary.idTransaction")}
             </Text>
             <View style={styles.row}>
@@ -290,6 +294,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
           >
             <Text>{I18n.t("global.buttons.close")}</Text>
           </ButtonDefaultOpacity>
+          <View spacer={true} />
         </SlidedContentComponent>
       </BaseScreenComponent>
     );

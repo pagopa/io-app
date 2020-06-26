@@ -129,13 +129,15 @@ export const sessionTokenSelector = (
     : undefined;
 };
 
-export const sessionInfoSelector = (
-  state: GlobalState
-): Option<PublicSession> => {
-  return isLoggedInWithSessionInfo(state.authentication)
+export const sessionInfoSelector = (state: GlobalState) =>
+  isLoggedInWithSessionInfo(state.authentication)
     ? some(state.authentication.sessionInfo)
     : none;
-};
+
+export const selectedIdentityProviderSelector = (state: GlobalState) =>
+  isLoggedOutWithIdp(state.authentication)
+    ? state.authentication.idp
+    : undefined;
 
 function matchWithIdp<O>(
   state: AuthenticationState,
