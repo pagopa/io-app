@@ -33,6 +33,10 @@ export const customEmailChannelSetEnabled = createStandardAction(
   "CUSTOM_EMAIL_CHANNEL_SET_ENABLED"
 )<boolean>();
 
+export const continueWithRootOrJailbreak = createStandardAction(
+  "CONTINUE_WITH_ROOT_OR_JAILBREAK"
+)<boolean>();
+
 export type PersistedPreferencesActions = ActionType<
   // tslint:disable-next-line: max-union-size
   | typeof preferenceFingerprintIsEnabledSaveSuccess
@@ -42,4 +46,5 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesPagoPaTestEnvironmentSetEnabled
   | typeof preferencesExperimentalFeaturesSetEnabled
   | typeof customEmailChannelSetEnabled
+  | typeof continueWithRootOrJailbreak
 >;

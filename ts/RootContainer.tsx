@@ -1,6 +1,3 @@
-/**
- * The main container of the application with the IdentificationModal and the Navigator
- */
 import { Root } from "native-base";
 import * as React from "react";
 import {
@@ -19,28 +16,29 @@ import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { shouldDisplayVersionInfoOverlay } from "./config";
 import Navigation from "./navigation";
-import IdentificationModal from "./screens/modal/IdentificationModal";
-import SystemOffModal from "./screens/modal/SystemOffModal";
-import UpdateAppModal from "./screens/modal/UpdateAppModal";
 import {
   applicationChangeState,
   ApplicationState
 } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
-import { isBackendServicesStatusOffSelector } from "./store/reducers/backendStatus";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
-import { fromNullable } from "fp-ts/lib/Option";
 import { setLocale } from "./i18n";
-import { serverInfoDataSelector } from "./store/reducers/backendInfo";
+import RootModal from "./screens/modal/RootModal";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
-// Check min version app supported
-import { isUpdateNeeded } from "./utils/appVersion";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
+/**
+ * The main container of the application with:
+ * - the Navigator
+ * - the IdentificationModal, for authenticating user after login by CIE/SPID
+ * - the SystemOffModal, shown if backend is unavailable
+ * - the UpdateAppModal, if the backend is not compatible with the installed app version
+ * - the root for displaying light modals
+ */
 class RootContainer extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
@@ -126,21 +124,6 @@ class RootContainer extends React.PureComponent<Props> {
     }
   }
 
-  private get getModal() {
-    // avoid app usage if backend systems are OFF
-    if (this.props.isBackendServicesStatusOff) {
-      return <SystemOffModal />;
-    }
-    const isAppOutOfDate = fromNullable(this.props.backendInfo)
-      .map(bi => isUpdateNeeded(bi, "min_app_version"))
-      .getOrElse(false);
-    // if the app is out of date, force a screen to update it
-    if (isAppOutOfDate) {
-      return <UpdateAppModal />;
-    }
-    return <IdentificationModal />;
-  }
-
   public render() {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
@@ -158,7 +141,7 @@ class RootContainer extends React.PureComponent<Props> {
         )}
         <Navigation />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
-        {this.getModal}
+        <RootModal />
         <LightModalRoot />
       </Root>
     );
@@ -168,9 +151,7 @@ class RootContainer extends React.PureComponent<Props> {
 const mapStateToProps = (state: GlobalState) => ({
   preferredLanguage: preferredLanguageSelector(state),
   deepLinkState: state.deepLink,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled,
-  isBackendServicesStatusOff: isBackendServicesStatusOffSelector(state),
-  backendInfo: serverInfoDataSelector(state)
+  isDebugModeEnabled: state.debug.isDebugModeEnabled
 });
 
 const mapDispatchToProps = {

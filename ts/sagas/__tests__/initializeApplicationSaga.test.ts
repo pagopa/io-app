@@ -32,6 +32,12 @@ jest.mock("react-native-background-timer", () => {
   };
 });
 
+jest.mock("react-native-share", () => {
+  return {
+    open: jest.fn()
+  };
+});
+
 jest.mock("../../api/backend");
 
 const profile: InitializedProfile = {

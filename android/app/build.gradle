@@ -203,6 +203,9 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false)
 
 dependencies {
+    implementation project(':jail-monkey')
+    implementation project(':react-native-linear-gradient')
+    implementation project(':react-native-share')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"
     compile project(':react-native-cie')
