@@ -65,6 +65,15 @@ rooted:
   title: Looks like the security of your device has been compromised!
   bodyiOS: !include jailbroken_body.md
   bodyAndroid: !include rooted_body.md
+  continueAlert:
+    title: Continue
+    body: Are you sure you understand the risks and want to continue?
+    confirmText: Yes
+    cancelText: Cancel
+  cancelAlert:
+    title: Exit
+    body: You can close the app
+    confirmText: Exit
 locales:
   it: Italian
   en: English

@@ -1,6 +1,14 @@
 import { Container, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, Modal, Platform, SafeAreaView, StyleSheet } from "react-native";
+import {
+  Alert,
+  AlertButton,
+  Image,
+  Modal,
+  Platform,
+  SafeAreaView,
+  StyleSheet
+} from "react-native";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
@@ -48,31 +56,70 @@ body {
 `;
 
 const image = require("../../../img/rooted/broken-phone.png");
-
 const opacity = 0.9;
-const markdownComponents = 1;
+
+type ConfirmConfig = {
+  title: string;
+  body?: string;
+  confirmText: string;
+  cancelText?: string;
+  onConfirmAction: () => void;
+};
 
 const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
-  const [markdownLoaded, setMarkdownLoaded] = React.useState(0);
+  const [markdownLoaded, setMarkdownLoaded] = React.useState(false);
+
+  const showAlert = (confirmConfig: ConfirmConfig) => {
+    const buttons: ReadonlyArray<AlertButton> = [
+      {
+        text: confirmConfig.cancelText
+      },
+      {
+        text: confirmConfig.confirmText,
+        onPress: confirmConfig.onConfirmAction,
+        style: "cancel"
+      }
+    ];
+    Alert.alert(
+      confirmConfig.title,
+      confirmConfig.body ? confirmConfig.body : "",
+      buttons.slice(confirmConfig.cancelText ? 0 : 1), // remove cancel button if cancelText is undefined
+      { cancelable: true }
+    );
+  };
+
+  const continueAlertConfig: ConfirmConfig = {
+    title: I18n.t("rooted.continueAlert.title"),
+    body: I18n.t("rooted.continueAlert.body"),
+    confirmText: I18n.t("rooted.continueAlert.confirmText"),
+    cancelText: I18n.t("rooted.continueAlert.cancelText"),
+    onConfirmAction: props.onContinue
+  };
+
+  const cancelAlertConfig: ConfirmConfig = {
+    title: I18n.t("rooted.cancelAlert.title"),
+    body: I18n.t("rooted.cancelAlert.body"),
+    confirmText: I18n.t("rooted.cancelAlert.confirmText"),
+    onConfirmAction: props.onCancel
+  };
 
   const leftButton: BlockButtonProps = {
     title: I18n.t("global.buttons.continue"),
     bordered: true,
     danger: true,
-    onPress: props.onContinue
+    onPress: () => showAlert(continueAlertConfig)
   };
 
   const rightButton: BlockButtonProps = {
     title: I18n.t("global.buttons.cancel"),
     primary: true,
-    onPress: props.onCancel
+    onPress: () => showAlert(cancelAlertConfig)
   };
 
   const onMarkdownLoaded = () => {
-    setMarkdownLoaded(c => Math.min(c + 1, markdownComponents));
+    setMarkdownLoaded(true);
   };
 
-  const loaded = markdownLoaded === markdownComponents;
   const body = Platform.select({
     ios: I18n.t("rooted.bodyiOS"),
     default: I18n.t("rooted.bodyAndroid")
@@ -110,7 +157,12 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
     </Modal>
   ));
 
-  return <ComponentWithLoading isLoading={!loaded} loadingOpacity={opacity} />;
+  return (
+    <ComponentWithLoading
+      isLoading={!markdownLoaded}
+      loadingOpacity={opacity}
+    />
+  );
 };
 
 export default RootedDeviceModal;
