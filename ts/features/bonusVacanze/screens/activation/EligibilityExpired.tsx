@@ -13,7 +13,7 @@ import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const image = require("../../../../../img/servicesStatus/error-detail-icon.png");
+const image = require("../../../../../img/wallet/errors/payment-expired-icon.png");
 
 /**
  * This screen informs the user that the eligibility data has expired
