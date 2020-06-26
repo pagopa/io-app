@@ -67,7 +67,7 @@ describe("getCTA", () => {
     );
   });
 
-  it("should have 1 valid CTA", () => {
+  it("should not have valid CTA (action is malformed)", () => {
     const CTA_1 = `---
 it:
     cta_1:
@@ -86,25 +86,7 @@ some noise`;
       },
       "it"
     );
-    expect(maybeCTA.isSome()).toBeTruthy();
-    if (maybeCTA.isSome()) {
-      const ctas = maybeCTA.value;
-      expect(ctas.cta_1).toBeDefined();
-      expect(ctas.cta_2).not.toBeDefined();
-    }
-
-    const maybeCTAEn = getCTA(
-      {
-        ...messageWithContent,
-        content: {
-          ...messageWithContent.content,
-          markdown: CTA_1 as MessageBodyMarkdown
-        }
-      },
-      "en"
-    );
-    // this is because it fallbacks on the next locale supported (it in this case)
-    expect(maybeCTAEn.isSome()).toBeTruthy();
+    expect(maybeCTA.isNone());
   });
 
   it("should not have a valid CTA", () => {

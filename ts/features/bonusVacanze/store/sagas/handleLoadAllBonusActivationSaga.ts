@@ -1,7 +1,7 @@
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
 import { all, call, put } from "redux-saga/effects";
 import { SagaCallReturnType } from "../../../../types/utils";
+import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import {
   loadAllBonusActivations,
@@ -30,7 +30,7 @@ export function* handleLoadAllBonusActivations(
         `response status ${allBonusActivationsResponse.value.status}`
       );
     } else {
-      throw Error(readableReport(allBonusActivationsResponse.value));
+      throw Error(readablePrivacyReport(allBonusActivationsResponse.value));
     }
   } catch (e) {
     yield put(loadAllBonusActivations.failure(e));

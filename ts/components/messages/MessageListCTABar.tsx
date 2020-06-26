@@ -10,7 +10,7 @@ import { ReduxProps } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
-import { isExpired, paymentExpirationInfo } from "../../utils/messages";
+import { getCTA, isExpired, paymentExpirationInfo } from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 import { MessageNestedCTABar } from "./MessageNestedCTABar";
@@ -126,14 +126,16 @@ class MessageListCTABar extends React.PureComponent<Props> {
   public render() {
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
+    const maybeCTA = getCTA(this.props.message);
     // payment CTA has priority to nested CTA
-    const nestedCTA = !this.hasPaymentData ? (
-      <MessageNestedCTABar
-        message={this.props.message}
-        dispatch={this.props.dispatch}
-        xsmall={true}
-      />
-    ) : null;
+    const nestedCTA =
+      !this.hasPaymentData && maybeCTA.isSome() ? (
+        <MessageNestedCTABar
+          ctas={maybeCTA.value}
+          dispatch={this.props.dispatch}
+          xsmall={true}
+        />
+      ) : null;
     const content = nestedCTA || (
       <>
         {calendarIcon}
