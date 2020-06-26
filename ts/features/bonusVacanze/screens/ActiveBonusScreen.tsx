@@ -31,9 +31,10 @@ import { formatDateAsLocal } from "../../../utils/dates";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
-import { formatNumberAmount } from "../../../utils/stringBuilder";
 import { maybeNotNullyString } from "../../../utils/strings";
 import BonusCardComponent from "../components/BonusCardComponent";
+import { BonusCompositionDetails } from "../components/keyValueTable/BonusCompositionDetails";
+import { FamilyComposition } from "../components/keyValueTable/FamilyComposition";
 import QrModalBox from "../components/QrModalBox";
 import TosBonusComponent from "../components/TosBonusComponent";
 import {
@@ -124,9 +125,6 @@ const styles = StyleSheet.create({
   paddedContentRight: {
     paddingRight: variables.contentPadding
   },
-  helpButton: {
-    alignSelf: "center"
-  },
   statusBadgeActive: {
     height: 18,
     marginTop: 2,
@@ -155,46 +153,11 @@ const styles = StyleSheet.create({
     fontSize: variables.fontSizeSmall,
     lineHeight: 18
   },
-  fmName: {
-    fontSize: variables.fontSize1,
-    flex: 1,
-    lineHeight: 21,
-    alignSelf: "flex-start"
-  },
-  textRight: {
-    textAlign: "right"
-  },
-  textLeft: {
-    textAlign: "left"
-  },
-  amount: {
-    fontSize: variables.fontSize2
-  },
   disclaimer: {
     fontSize: customVariables.fontSizeSmall,
     color: customVariables.selectedColor
   }
 });
-
-const renderFiscalCodeLine = (name: string, cf: string) => {
-  return (
-    <React.Fragment key={cf}>
-      <View style={styles.rowBlock}>
-        <Text style={[styles.fmName, styles.colorGrey, styles.textLeft]}>
-          {name}
-        </Text>
-        <Text
-          style={[styles.fmName, styles.colorGrey, styles.textRight]}
-          semibold={true}
-          robotomono={true}
-        >
-          {cf}
-        </Text>
-      </View>
-      <View spacer={true} small={true} />
-    </React.Fragment>
-  );
-};
 
 async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
   return new Promise<QRCodeContents>((res, _) => {
@@ -424,56 +387,15 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} />
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} />
-          <View style={styles.rowBlock}>
-            <Text
-              semibold={true}
-              style={[styles.colorDarkest, styles.sectionLabel]}
-            >
-              {I18n.t("bonus.bonusVacanze.amount")}
-            </Text>
-            <Text semibold={true} style={[styles.amount, styles.colorDarkest]}>
-              {formatNumberAmount(bonus.dsu_request.max_amount, true)}
-            </Text>
-          </View>
-          <View spacer={true} />
-          <View style={styles.rowBlock}>
-            <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanze.usableAmount")}
-            </Text>
-            <Text bold={true} style={[styles.colorGrey, styles.commonLabel]}>
-              {formatNumberAmount(
-                bonus.dsu_request.max_amount -
-                  bonus.dsu_request.max_tax_benefit,
-                true
-              )}
-            </Text>
-          </View>
-          <View spacer={true} small={true} />
-          <View spacer={true} xsmall={true} />
-          <View style={styles.rowBlock}>
-            <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanze.taxBenefit")}
-            </Text>
-            <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {formatNumberAmount(bonus.dsu_request.max_tax_benefit, true)}
-            </Text>
-          </View>
+          <BonusCompositionDetails
+            bonusAmount={bonus.dsu_request.max_amount}
+            taxBenefit={bonus.dsu_request.max_tax_benefit}
+          />
           <View spacer={true} />
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} />
-          <Text
-            semibold={true}
-            style={[styles.sectionLabel, styles.colorDarkest]}
-          >
-            {I18n.t("bonus.bonusVacanze.bonusClaim")}
-          </Text>
+          <FamilyComposition familyMembers={bonus.dsu_request.family_members} />
           <View spacer={true} />
-          {bonus.dsu_request.family_members.map(member =>
-            renderFiscalCodeLine(
-              `${member.name} ${member.surname}`,
-              member.fiscal_code
-            )
-          )}
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} />
           {maybeStatusDescription.isSome() && (
