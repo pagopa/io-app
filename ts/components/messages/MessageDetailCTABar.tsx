@@ -7,7 +7,7 @@ import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedM
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ReduxProps } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
-import { isExpired, paymentExpirationInfo } from "../../utils/messages";
+import { getCTA, isExpired, paymentExpirationInfo } from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
 import { MessageNestedCTABar } from "./MessageNestedCTABar";
 import PaymentButton from "./PaymentButton";
@@ -89,16 +89,14 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
         {paymentButton}
       </View>
     );
-    const nestedCTAs = (
-      <MessageNestedCTABar
-        message={this.props.message}
-        dispatch={this.props.dispatch}
-        xsmall={false}
-      />
-    );
-    const footer2 = nestedCTAs && (
+    const maybeCtas = getCTA(this.props.message);
+    const footer2 = maybeCtas.isSome() && (
       <View footer={true} style={styles.row}>
-        {nestedCTAs}
+        <MessageNestedCTABar
+          ctas={maybeCtas.value}
+          dispatch={this.props.dispatch}
+          xsmall={false}
+        />
       </View>
     );
     return (

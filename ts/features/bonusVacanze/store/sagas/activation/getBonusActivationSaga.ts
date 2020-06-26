@@ -1,11 +1,12 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, Effect } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
+import { BonusActivationStatusEnum } from "../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { startTimer } from "../../../../../utils/timer";
 import { BackendBonusVacanze } from "../../../api/backendBonusVacanze";
 import { activateBonusVacanze } from "../../actions/bonusVacanze";
@@ -44,7 +45,18 @@ function* getBonusActivation(
     if (getLatestBonusVacanzeFromIdResult.isRight()) {
       // 200 -> we got the check result, polling must be stopped
       if (getLatestBonusVacanzeFromIdResult.value.status === 200) {
-        return right(getLatestBonusVacanzeFromIdResult.value.value);
+        const activation = getLatestBonusVacanzeFromIdResult.value.value;
+        switch (activation.status) {
+          // processing -> polling should continue
+          case BonusActivationStatusEnum.PROCESSING:
+            return left(none);
+          case BonusActivationStatusEnum.FAILED:
+            // blocking error
+            return left(some(new Error("Bonus Activation failed")));
+          default:
+            // active
+            return right(getLatestBonusVacanzeFromIdResult.value.value);
+        }
       }
       // Request not found - polling must be stopped
       if (getLatestBonusVacanzeFromIdResult.value.status === 404) {
@@ -55,7 +67,9 @@ function* getBonusActivation(
     } else {
       // we got some error on decoding, stop polling
       return left(
-        some(Error(readableReport(getLatestBonusVacanzeFromIdResult.value)))
+        some(
+          Error(readablePrivacyReport(getLatestBonusVacanzeFromIdResult.value))
+        )
       );
     }
   } catch (e) {
@@ -120,6 +134,12 @@ export const bonusActivationSaga = (
             }
           }
         }
+        // 202 -> still processing
+        if (startBonusActivationProcedureResult.value.status === 202) {
+          return activateBonusVacanze.success({
+            status: BonusActivationProgressEnum.TIMEOUT
+          });
+        }
         // 409 -> Cannot activate a new bonus because another bonus related to this user was found.
         // 403 -> Eligibility Expired
         else if (status === 409 || status === 403) {
@@ -132,7 +152,9 @@ export const bonusActivationSaga = (
         );
       }
       // decoding failure
-      throw Error(readableReport(startBonusActivationProcedureResult.value));
+      throw Error(
+        readablePrivacyReport(startBonusActivationProcedureResult.value)
+      );
     } catch (e) {
       return activateBonusVacanze.failure(e);
     }
