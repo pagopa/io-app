@@ -201,7 +201,12 @@ export const getCTA = (
           s => attrs[s as Locales] !== undefined
         );
         if (fallback) {
-          return CTAS.decode(attrs[fallback as Locales]).fold(__ => none, some);
+          // try decoding
+          return CTAS.decode(attrs[fallback as Locales]).fold(
+            __ => none,
+            // check the decode actions are valid
+            cta => (hasCtaValidActions(cta) ? some(cta) : none)
+          );
         }
         return none;
       }, some)
@@ -209,7 +214,7 @@ export const getCTA = (
 };
 
 /**
- * return a Promise indicating if the cta action is valid or not
+ * return a boolean indicating if the cta action is valid or not
  * @param cta
  */
 export const isCtaActionValid = (cta: CTA): boolean => {
@@ -225,6 +230,10 @@ export const isCtaActionValid = (cta: CTA): boolean => {
   return false;
 };
 
+/**
+ * return true if at least one of the CTA is valid
+ * @param ctas
+ */
 export const hasCtaValidActions = (ctas: CTAS): boolean => {
   const isCTA1Valid = isCtaActionValid(ctas.cta_1);
   if (ctas.cta_2 === undefined) {
@@ -233,10 +242,6 @@ export const hasCtaValidActions = (ctas: CTAS): boolean => {
   const isCTA2Valid = isCtaActionValid(ctas.cta_2);
   return isCTA1Valid || isCTA2Valid;
 };
-
-export const hasCtaAndValidActions = (
-  message: CreatedMessageWithContent
-): boolean => getCTA(message).fold(false, c => hasCtaValidActions(c));
 
 /**
  * remove the cta front-matter if it is nested inside the markdown
