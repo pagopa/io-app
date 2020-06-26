@@ -7,15 +7,13 @@ import {
   activateBonusVacanze,
   cancelBonusVacanzeRequest,
   checkBonusVacanzeEligibility,
-  completeBonusVacanzeActivation,
   loadAllBonusActivations,
   loadAvailableBonuses,
-  loadBonusVacanzeFromId,
   storeEligibilityRequestId
 } from "../../features/bonusVacanze/store/actions/bonusVacanze";
 import {
-  getAnalyticsBonusRepresentation,
-  getAnalyticsEligibilityRepresentation
+  isActivationResponseTrackable,
+  isEligibilityResponseTrackable
 } from "../../features/bonusVacanze/utils/bonus";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
@@ -239,8 +237,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(logoutFailure):
     case getType(loadServiceDetail.failure):
     case getType(loadServiceMetadata.failure):
-    // bonus vacanze
-    case getType(loadBonusVacanzeFromId.failure):
       return mp.track(action.type, {
         reason: action.payload.error.message
       });
@@ -371,38 +367,25 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadAvailableBonuses.success):
     case getType(loadAvailableBonuses.request):
     case getType(checkBonusVacanzeEligibility.request):
-    case getType(activateBonusVacanze.request):
     case getType(cancelBonusVacanzeRequest):
-    case getType(completeBonusVacanzeActivation):
-    case getType(loadBonusVacanzeFromId.request):
+    case getType(storeEligibilityRequestId):
       return mp.track(action.type);
 
     // bonus vacanze
     case getType(checkBonusVacanzeEligibility.success):
-      const dsuPayload = getAnalyticsEligibilityRepresentation(action.payload);
-
-      return mp.track(action.type, {
-        status: action.payload.status,
-        ...dsuPayload
-      });
-    case getType(storeEligibilityRequestId):
-      return mp.track(action.type, {
-        id: action.payload.id
-      });
+      if (isEligibilityResponseTrackable(action.payload)) {
+        return mp.track(action.type, {
+          status: action.payload.status
+        });
+      }
+      break;
     case getType(activateBonusVacanze.success):
-      const bonus = action.payload.activation
-        ? getAnalyticsBonusRepresentation(action.payload.activation)
-        : {};
-
-      return mp.track(action.type, {
-        status: action.payload.status,
-        ...bonus
-      });
-    case getType(loadBonusVacanzeFromId.success):
-      return mp.track(
-        action.type,
-        getAnalyticsBonusRepresentation(action.payload)
-      );
+      if (isActivationResponseTrackable(action.payload)) {
+        return mp.track(action.type, {
+          status: action.payload.status
+        });
+      }
+      break;
   }
   return Promise.resolve();
 };

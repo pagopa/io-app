@@ -47,7 +47,7 @@ function* getBonusActivation(
       if (getLatestBonusVacanzeFromIdResult.value.status === 200) {
         const activation = getLatestBonusVacanzeFromIdResult.value.value;
         switch (activation.status) {
-          // we got some error, stop polling
+          // processing -> polling should continue
           case BonusActivationStatusEnum.PROCESSING:
             return left(none);
           case BonusActivationStatusEnum.FAILED:
