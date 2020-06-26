@@ -2,11 +2,13 @@ import { Either, left, right } from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
 import { pot } from "italia-ts-commons";
 import { ProblemJson } from "italia-ts-commons/lib/responses";
+import { BonusActivationStatusEnum } from "../../../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { InstanceId } from "../../../../../../../../definitions/bonus_vacanze/InstanceId";
 import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
 import { mockedBonus } from "../../../../../mock/mockData";
 import {
   navigateToBonusActivationCompleted,
+  navigateToBonusActivationTimeout,
   navigateToBonusActiveDetailScreen,
   navigateToBonusAlreadyExists,
   navigateToEligibilityExpired
@@ -39,6 +41,11 @@ const startActivationRequestCreated: Either<Errors, any> = right({
   status: 201,
   value: { id: "bonus_id" } as InstanceId
 });
+
+const startActivationProcessingRequest: Either<Errors, any> = right({
+  status: 202
+});
+
 const startActivationEligibilityExpired: Either<Errors, any> = right({
   status: 403
 });
@@ -51,6 +58,14 @@ const startActivationNoToken: Either<Errors, any> = right({ status: 401 });
 const getActivationSuccess: Either<Errors, any> = right({
   status: 200,
   value: mockedBonus
+});
+
+const getActivationSuccessBonusError: Either<Errors, any> = right({
+  status: 200,
+  value: {
+    ...mockedBonus,
+    status: BonusActivationStatusEnum.FAILED
+  }
 });
 
 const getActivationNoToken: Either<Errors, any> = right({
@@ -75,7 +90,6 @@ interface MockBackendScenario extends IExpectedActions {
   finalState: MockActivationState;
 }
 
-// TODO: test polling timeout case
 export const success: MockBackendScenario = {
   displayName: "success",
   responses: [
@@ -125,6 +139,25 @@ export const bonusAlreadyExists: MockBackendScenario = {
   }
 };
 
+// TODO: add others timeout case
+export const timeout: MockBackendScenario = {
+  displayName: "timeout",
+  responses: [
+    {
+      startBonusActivationResponse: startActivationProcessingRequest,
+      getBonusActivationResponseById: right(undefined)
+    }
+  ],
+  expectedActions: [
+    navigateToBonusActivationTimeout(),
+    navigationHistoryPop(1)
+  ],
+  finalState: {
+    activation: { status: BonusActivationProgressEnum.TIMEOUT },
+    allActive: {}
+  }
+};
+
 export const error: MockBackendScenario = {
   displayName: "error",
   responses: [
@@ -155,6 +188,10 @@ export const error: MockBackendScenario = {
     {
       startBonusActivationResponse: startActivationRequestCreated,
       getBonusActivationResponseById: genericDecodingFailure
+    },
+    {
+      startBonusActivationResponse: startActivationRequestCreated,
+      getBonusActivationResponseById: getActivationSuccessBonusError
     }
   ],
   expectedActions: [],
@@ -168,6 +205,7 @@ export const backendIntegrationTestCases: ReadonlyArray<MockBackendScenario> = [
   success,
   eligibilityExpired,
   bonusAlreadyExists,
+  timeout,
   error
 ];
 
