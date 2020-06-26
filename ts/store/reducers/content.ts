@@ -153,7 +153,9 @@ export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
       return pot.getOrElse(
         pot.map(contextualHelpData, data => {
           const locale = getLocalePrimaryWithFallback();
-          return fromNullable(data[locale].idps[id]);
+          return fromNullable(
+            data[locale] !== undefined ? data[locale].idps[id] : undefined
+          );
         }),
         none
       );
@@ -176,9 +178,14 @@ export const screenContextualHelpDataSelector = createSelector<
       return none;
     }
     const locale = getLocalePrimaryWithFallback();
-    const screenData = data[locale].screens.find(
-      s => s.route_name.toLowerCase() === currentRouteName.toLocaleLowerCase()
-    );
+    const screenData =
+      data[locale] !== undefined
+        ? data[locale].screens.find(
+            s =>
+              s.route_name.toLowerCase() ===
+              currentRouteName.toLocaleLowerCase()
+          )
+        : undefined;
     return fromNullable(screenData);
   });
 });
