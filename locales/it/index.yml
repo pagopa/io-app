@@ -1432,8 +1432,8 @@ bonus:
         body: Puoi visualizzarne i dettagli nella sezione Pagamenti.
         cta: Visualizza Bonus disponibili
       eligibilityExpired:
-        title: Eligibilità scaduta
-        body: Il periodo in cui era possibile attivare il bonus è scaduto. È necessario iniziare una nuova procedura.
+        title: Tempo scaduto.
+        body: Le 24 ore utili a proseguire la tua richiesta sono scadute. Ti chiediamo di ricominciare una nuova richiesta.
       confirm:
         title: Attenzione
         body: Continuando nel processo, non sarà più possibile annullare la richiesta.

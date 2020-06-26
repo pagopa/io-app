@@ -1400,8 +1400,8 @@ bonus:
         body: You can view the details in the Payments section.
         cta: Show available Bonuses
       eligibilityExpired:
-        title: Eligibility expired
-        body: The period in which it was possible to activate the bonus has expired. A new procedure must be started.
+        title: Time expired.
+        body: The 24 hours needed to continue your request have expired. Please, start a new request.
       completed:
         title: Congratulation!
         description: Bonus activated

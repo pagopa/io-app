@@ -13,7 +13,7 @@ import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const image = require("../../../../../img/servicesStatus/error-detail-icon.png");
+const image = require("../../../../../img/wallet/errors/payment-expired-icon.png");
 
 /**
  * This screen informs the user that the eligibility data has expired
@@ -31,7 +31,7 @@ const EligibilityExpired: React.FunctionComponent<Props> = props => {
     "bonus.bonusVacanze.activation.eligibilityExpired.title"
   );
   const body = I18n.t("bonus.bonusVacanze.activation.eligibilityExpired.body");
-  const cancel = I18n.t("bonus.bonusVacanze.cta.cancelRequest");
+  const cancel = I18n.t("global.buttons.close");
 
   useHardwareBackButton(() => {
     props.onCancel();
