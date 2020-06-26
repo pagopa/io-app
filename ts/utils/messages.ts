@@ -25,6 +25,7 @@ import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link
 import I18n, { translations } from "../i18n";
 import { CTA, CTAS, MessageCTA } from "../types/MessageCTA";
 import { getExpireStatus } from "./dates";
+import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
 export function messageContainsText(
@@ -189,7 +190,7 @@ export const getPrescriptionDataFromName = (
  */
 export const getCTA = (
   message: CreatedMessageWithContent,
-  locale: Locales = I18n.currentLocale()
+  locale: Locales = getLocalePrimaryWithFallback(I18n.currentLocale())
 ): Option<CTAS> => {
   return fromPredicate((t: string) => FM.test(t))(message.content.markdown)
     .map(m => FM<MessageCTA>(m).attributes)
@@ -200,7 +201,12 @@ export const getCTA = (
           s => attrs[s as Locales] !== undefined
         );
         if (fallback) {
-          return CTAS.decode(attrs[fallback as Locales]).fold(__ => none, some);
+          // try decoding
+          return CTAS.decode(attrs[fallback as Locales]).fold(
+            __ => none,
+            // check the decode actions are valid
+            cta => (hasCtaValidActions(cta) ? some(cta) : none)
+          );
         }
         return none;
       }, some)
@@ -208,7 +214,7 @@ export const getCTA = (
 };
 
 /**
- * return a Promise indicating if the cta action is valid or not
+ * return a boolean indicating if the cta action is valid or not
  * @param cta
  */
 export const isCtaActionValid = (cta: CTA): boolean => {
@@ -224,7 +230,11 @@ export const isCtaActionValid = (cta: CTA): boolean => {
   return false;
 };
 
-export const hasCTAValidActions = (ctas: CTAS): boolean => {
+/**
+ * return true if at least one of the CTAs is valid
+ * @param ctas
+ */
+export const hasCtaValidActions = (ctas: CTAS): boolean => {
   const isCTA1Valid = isCtaActionValid(ctas.cta_1);
   if (ctas.cta_2 === undefined) {
     return isCTA1Valid;
