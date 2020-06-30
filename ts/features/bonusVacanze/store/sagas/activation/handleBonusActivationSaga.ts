@@ -19,6 +19,7 @@ import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   activateBonusVacanze,
   cancelBonusVacanzeRequest,
+  checkBonusVacanzeEligibility,
   completeBonusVacanzeActivation,
   showBonusVacanze
 } from "../../actions/bonusVacanze";
@@ -107,7 +108,8 @@ export function* handleBonusActivationSaga(
   const { cancelAction, showAction } = yield race({
     activation: call(activationWorker, activationSaga),
     cancelAction: take(cancelBonusVacanzeRequest),
-    showAction: take(showBonusVacanze)
+    showAction: take(showBonusVacanze),
+    restartEligibility: take(checkBonusVacanzeEligibility.request)
   });
   if (cancelAction) {
     yield put(NavigationActions.back());

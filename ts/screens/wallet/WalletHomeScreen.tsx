@@ -26,7 +26,8 @@ import { bonusVacanzeEnabled } from "../../config";
 import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
-  navigateToBonusActiveDetailScreen
+  navigateToBonusActiveDetailScreen,
+  navigateToEligibilityExpired
 } from "../../features/bonusVacanze/navigation/action";
 import {
   loadAllBonusActivations,
@@ -537,7 +538,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
+  navigateToPaymentScanQrCode: () => dispatch(navigateToEligibilityExpired()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(
