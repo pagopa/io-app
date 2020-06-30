@@ -1,12 +1,11 @@
 import { Either, right } from "fp-ts/lib/Either";
 import { fromNullable, some } from "fp-ts/lib/Option";
 import { Errors } from "io-ts";
+import { NavigationActions } from "react-navigation";
 import { Action, combineReducers } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { select } from "redux-saga-test-plan/matchers";
-import { navigateToWalletHome } from "../../../../../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../../store/reducers/navigation";
 import BONUSVACANZE_ROUTES from "../../../../../navigation/routes";
 import {
@@ -74,13 +73,17 @@ describe("Bonus Activation Saga Integration Test", () => {
         ]
       ])
       .dispatch(cancelBonusVacanzeRequest())
-      .put(navigationHistoryPop(1))
-      .put(navigateToWalletHome())
+      .put(NavigationActions.back())
       .hasFinalState({
         activation: { status: BonusActivationProgressEnum.ERROR },
         allActive: {}
       } as MockActivationState)
-      .run();
+      .run()
+      .then(results => {
+        expect(results.effects.select.length).toEqual(1);
+        // in this phase the put in the store is not tested, at the end I should have only one put action left
+        expect(results.effects.put.length).toEqual(1);
+      });
   });
   backendIntegrationTestCases.map(testCase =>
     testCase.responses.map(response => {
@@ -131,7 +134,6 @@ const expectSagaFactory = (
       .reduce((acc, val) => acc.put(val), baseSaga)
       // when the last event completeBonusVacanze is received, the navigation stack is popped
       .dispatch(completeBonusVacanzeActivation())
-      .put(navigationHistoryPop(1))
       .hasFinalState(finalState)
       .run()
       .then(results => {

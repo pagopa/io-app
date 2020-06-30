@@ -100,6 +100,7 @@ export const success: MockBackendScenario = {
   ],
   expectedActions: [
     navigateToBonusActivationCompleted(),
+    navigationHistoryPop(1),
     navigateToBonusActiveDetailScreen({ bonus: mockedBonus }),
     navigationHistoryPop(1)
   ],
