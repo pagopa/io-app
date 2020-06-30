@@ -1,6 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import I18n from "../../../i18n";
 
 import { Wallet } from "../../../types/pagopa";
@@ -72,12 +72,30 @@ export class RotatedCards extends React.PureComponent<Props, {}> {
       ) : (
         <View style={styles.container}>
           <TouchableDefaultOpacity onPress={onClick}>
+            {Platform.OS === "android" && <View
+              style={{
+                marginBottom: -15,
+                borderRadius: 8,
+                borderTopWidth: 8,
+                borderTopColor: "rgba(0,0,0,0.1)",
+                height: 15
+              }}
+            />}
             <View style={styles.rotadedCard}>
               <CardComponent type={cardType} wallet={wallets[0]} />
             </View>
             {typeof wallets[1] !== "undefined" && (
               <>
               <View spacer={true} />
+                {Platform.OS === "android" && <View
+                  style={{
+                    marginBottom: -15,
+                    borderRadius: 8,
+                    borderTopWidth: 8,
+                    borderTopColor: "rgba(0,0,0,0.1)",
+                    height: 15
+                  }}
+                />}
               <View style={styles.rotadedCard}>
                 <CardComponent type={cardType} wallet={wallets[1]} />
               </View>
