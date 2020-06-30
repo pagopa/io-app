@@ -9,6 +9,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Image, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
+import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -17,6 +18,7 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { WebViewMessage } from "../../components/ui/Markdown/types";
 import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
@@ -29,7 +31,11 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
-import { AVOID_ZOOM_JS } from "../../utils/webview";
+import {
+  AVOID_ZOOM_JS,
+  closeInjectedScript,
+  ON_SCROLL_END_LISTENER
+} from "../../utils/webview";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -39,6 +45,7 @@ type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
 type State = {
   isLoading: boolean;
   hasError: boolean;
+  scrollEnd: boolean;
 };
 
 const brokenLinkImage = require("../../../img/broken-link.png");
@@ -107,7 +114,7 @@ class TosScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     // it start with loading webview
-    this.state = { isLoading: true, hasError: false };
+    this.state = { isLoading: true, hasError: false, scrollEnd: false };
   }
 
   public componentDidUpdate() {
@@ -151,6 +158,23 @@ class TosScreen extends React.PureComponent<Props, State> {
     );
   };
 
+  // A function that handles message sent by the WebView component
+  private handleWebViewMessage = (event: WebViewMessageEvent) => {
+    if (this.state.scrollEnd) {
+      return;
+    }
+    // We validate the format of the message with io-ts
+    const messageOrErrors = WebViewMessage.decode(
+      JSON.parse(event.nativeEvent.data)
+    );
+
+    messageOrErrors.map(message => {
+      if (message.type === "SCROLL_END_MESSAGE") {
+        this.setState({ scrollEnd: true });
+      }
+    });
+  };
+
   public render() {
     const { dispatch } = this.props;
 
@@ -179,7 +203,10 @@ class TosScreen extends React.PureComponent<Props, State> {
               onLoadEnd={this.handleLoadEnd}
               onError={this.handleError}
               source={{ uri: privacyUrl }}
-              injectedJavaScript={AVOID_ZOOM_JS}
+              onMessage={this.handleWebViewMessage}
+              injectedJavaScript={closeInjectedScript(
+                AVOID_ZOOM_JS + ON_SCROLL_END_LISTENER
+              )}
             />
           </View>
         )}
@@ -196,8 +223,9 @@ class TosScreen extends React.PureComponent<Props, State> {
                 title: I18n.t("global.buttons.exit")
               }}
               rightButton={{
+                disabled: !this.state.scrollEnd,
                 block: true,
-                primary: true,
+                primary: this.state.scrollEnd,
                 onPress: () => dispatch(tosAccepted(tosVersion)),
                 title: I18n.t("onboarding.tos.accept")
               }}
