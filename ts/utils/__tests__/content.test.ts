@@ -79,7 +79,7 @@ const chData = {
     }
   }
 };
-// test it as default language
+// test "it" as default language
 beforeAll(() => setLocale("it" as Locales));
 
 describe("idpContextualHelpDataFromIdSelector", () => {
