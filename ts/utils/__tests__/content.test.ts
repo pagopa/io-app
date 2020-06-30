@@ -60,6 +60,7 @@ const chData = {
         phone: "003905750504",
         web_site: "https://www.pec.it/richiedi-spid-aruba-id.aspx",
         recover_username: "https://selfcarespid.aruba.it/#/yyyyy",
+        // tslint:disable-next-line:no-hardcoded-credentials
         recover_password: "https://selfcarespid.aruba.it/#/xxxxx",
         recover_emergency_code:
           "https://selfcarespid.aruba.it/#/recovery-emergency-code"
@@ -72,6 +73,7 @@ const chData = {
         phone: "PHONE EN",
         web_site: "https://www.pec.it/richiedi-spid-aruba-id.aspx",
         recover_username: "https://selfcarespid.aruba.it/#/yyyy",
+        // tslint:disable-next-line:no-hardcoded-credentials
         recover_password: "https://selfcarespid.aruba.it/#/xxxx",
         recover_emergency_code:
           "https://selfcarespid.aruba.it/#/recovery-emergency-code"
