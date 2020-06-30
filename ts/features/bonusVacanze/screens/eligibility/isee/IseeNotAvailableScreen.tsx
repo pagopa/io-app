@@ -11,7 +11,7 @@ import { BaseIseeErrorComponent } from "./BaseIseeErrorComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const image = require("../../../../../../img/search/search-icon.png");
+const image = require("../../../../../../img/servicesStatus/error-detail-icon.png");
 const dsuUrl = "https://servizi2.inps.it/servizi/Iseeriforma/FrmSimHome.aspx";
 
 const renderBody = (first: string, second: string, third: string) => (
