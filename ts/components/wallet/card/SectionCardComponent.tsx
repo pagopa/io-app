@@ -87,6 +87,13 @@ const styles = StyleSheet.create({
   labelButton: {
     marginLeft: customVariables.fontSizeBase / 4,
     color: customVariables.colorWhite
+  },
+  shadowBox: {
+    marginBottom: -15,
+    borderRadius: 8,
+    borderTopWidth: 8,
+    borderTopColor: "rgba(0,0,0,0.1)",
+    height: 15
   }
 });
 
@@ -94,17 +101,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const { label, onPress, isNew, isError, cardStyle } = props;
   return (
     <>
-      {Platform.OS === "android" && (
-        <View
-          style={{
-            marginBottom: -15,
-            borderRadius: 8,
-            borderTopWidth: 8,
-            borderTopColor: "rgba(0,0,0,0.1)",
-            height: 15
-          }}
-        />
-      )}
+      {Platform.OS === "android" && <View style={styles.shadowBox} />}
       <View style={[styles.rotateCard]}>
         <TouchableDefaultOpacity onPress={onPress}>
           <View

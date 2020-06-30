@@ -21,6 +21,13 @@ const styles = StyleSheet.create({
   },
   container: {
     marginBottom: -4
+  },
+  shadowBox: {
+    marginBottom: -15,
+    borderRadius: 8,
+    borderTopWidth: 8,
+    borderTopColor: "rgba(0,0,0,0.1)",
+    height: 15
   }
 });
 
@@ -73,13 +80,7 @@ export class RotatedCards extends React.PureComponent<Props, {}> {
         <View style={styles.container}>
           <TouchableDefaultOpacity onPress={onClick}>
             {Platform.OS === "android" && <View
-              style={{
-                marginBottom: -15,
-                borderRadius: 8,
-                borderTopWidth: 8,
-                borderTopColor: "rgba(0,0,0,0.1)",
-                height: 15
-              }}
+              style={styles.shadowBox}
             />}
             <View style={styles.rotadedCard}>
               <CardComponent type={cardType} wallet={wallets[0]} />
@@ -88,13 +89,7 @@ export class RotatedCards extends React.PureComponent<Props, {}> {
               <>
               <View spacer={true} />
                 {Platform.OS === "android" && <View
-                  style={{
-                    marginBottom: -15,
-                    borderRadius: 8,
-                    borderTopWidth: 8,
-                    borderTopColor: "rgba(0,0,0,0.1)",
-                    height: 15
-                  }}
+                  style={styles.shadowBox}
                 />}
               <View style={styles.rotadedCard}>
                 <CardComponent type={cardType} wallet={wallets[1]} />
