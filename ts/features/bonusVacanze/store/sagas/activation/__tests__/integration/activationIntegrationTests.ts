@@ -6,11 +6,14 @@ import { Action, combineReducers } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { select } from "redux-saga-test-plan/matchers";
+import { navigateToWalletHome } from "../../../../../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../../store/reducers/navigation";
 import BONUSVACANZE_ROUTES from "../../../../../navigation/routes";
 import {
   cancelBonusVacanzeRequest,
-  completeBonusVacanzeActivation
+  completeBonusVacanzeActivation,
+  showBonusVacanze
 } from "../../../../actions/bonusVacanze";
 import allActiveReducer from "../../../../reducers/allActive";
 import { bonusActivationSaga } from "../../getBonusActivationSaga";
@@ -74,6 +77,40 @@ describe("Bonus Activation Saga Integration Test", () => {
       ])
       .dispatch(cancelBonusVacanzeRequest())
       .put(NavigationActions.back())
+      .hasFinalState({
+        activation: { status: BonusActivationProgressEnum.ERROR },
+        allActive: {}
+      } as MockActivationState)
+      .run()
+      .then(results => {
+        expect(results.effects.select.length).toEqual(1);
+        // in this phase the put in the store is not tested, at the end I should have only one put action left
+        expect(results.effects.put.length).toEqual(1);
+      });
+  });
+  //TODO: refactor with the previous test
+  it("Handle showBonusVacanze", () => {
+    const startBonusActivation = jest.fn();
+    const getActivationById = jest.fn();
+
+    return expectSaga(
+      handleBonusActivationSaga,
+      bonusActivationSaga(startBonusActivation, getActivationById)
+    )
+      .withReducer(activationReducer)
+      .provide([
+        [
+          select(navigationCurrentRouteSelector),
+          some(BONUSVACANZE_ROUTES.ACTIVATION.LOADING)
+        ],
+        [
+          matchers.call.fn(startBonusActivation),
+          right({ status: 500, value: {} })
+        ]
+      ])
+      .dispatch(showBonusVacanze())
+      .put(navigateToWalletHome())
+      .put(navigationHistoryPop(1))
       .hasFinalState({
         activation: { status: BonusActivationProgressEnum.ERROR },
         allActive: {}

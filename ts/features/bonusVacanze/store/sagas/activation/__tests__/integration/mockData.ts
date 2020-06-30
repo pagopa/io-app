@@ -2,8 +2,11 @@ import { Either, left, right } from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
 import { pot } from "italia-ts-commons";
 import { ProblemJson } from "italia-ts-commons/lib/responses";
+import { NavigationActions } from "react-navigation";
+import { Action } from "redux";
 import { BonusActivationStatusEnum } from "../../../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { InstanceId } from "../../../../../../../../definitions/bonus_vacanze/InstanceId";
+import { navigateToWalletHome } from "../../../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
 import { mockedBonus } from "../../../../../mock/mockData";
 import {
@@ -13,6 +16,12 @@ import {
   navigateToBonusAlreadyExists,
   navigateToEligibilityExpired
 } from "../../../../../navigation/action";
+import {
+  cancelBonusVacanzeRequest,
+  checkBonusVacanzeEligibility,
+  completeBonusVacanzeActivation,
+  showBonusVacanze
+} from "../../../../actions/bonusVacanze";
 import {
   ActivationState,
   BonusActivationProgressEnum
@@ -90,6 +99,44 @@ interface MockBackendScenario extends IExpectedActions {
   finalState: MockActivationState;
 }
 
+interface IMockUserActions extends IExpectedActions {
+  userAction: Action;
+}
+
+// Mock user actions
+
+const userCancel: IMockUserActions = {
+  displayName: "User Cancel Action",
+  userAction: cancelBonusVacanzeRequest(),
+  expectedActions: [NavigationActions.back()]
+};
+
+const userCompleteActivation: IMockUserActions = {
+  displayName: "User Complete Activation",
+  userAction: completeBonusVacanzeActivation(),
+  expectedActions: []
+};
+
+const userShowBonusVacanze: IMockUserActions = {
+  displayName: "User Show Bonus Vacanze",
+  userAction: showBonusVacanze(),
+  expectedActions: [navigateToWalletHome(), navigationHistoryPop(1)]
+};
+
+const userRestartEligibility: IMockUserActions = {
+  displayName: "User Restart Eligibility",
+  userAction: checkBonusVacanzeEligibility.request(),
+  expectedActions: []
+};
+
+export const possibleUserActions: ReadonlyArray<IMockUserActions> = [
+  userCancel,
+  userCompleteActivation,
+  userShowBonusVacanze,
+  userRestartEligibility
+];
+
+// Mock Backend response
 export const success: MockBackendScenario = {
   displayName: "success",
   responses: [
