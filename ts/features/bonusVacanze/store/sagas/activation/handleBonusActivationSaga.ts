@@ -1,4 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, race, select, take } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
@@ -18,7 +19,8 @@ import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   activateBonusVacanze,
   cancelBonusVacanzeRequest,
-  completeBonusVacanzeActivation
+  completeBonusVacanzeActivation,
+  showBonusVacanze
 } from "../../actions/bonusVacanze";
 import { BonusActivationProgressEnum } from "../../reducers/activation";
 import { bonusActivationSaga } from "./getBonusActivationSaga";
@@ -60,6 +62,7 @@ export function* activationWorker(activationSaga: BonusActivationSagaType) {
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
     // show the loading page for the activation
     yield put(navigateToBonusActivationLoading());
+    yield put(navigationHistoryPop(1));
   }
 
   // start and wait for network request
@@ -85,6 +88,8 @@ export function* activationWorker(activationSaga: BonusActivationSagaType) {
     yield put(
       navigateToBonusActiveDetailScreen({ bonus: progress.payload.activation })
     );
+    // remove the congratulation screen from the navigation stack
+    yield put(navigationHistoryPop(1));
   }
 }
 
@@ -99,13 +104,15 @@ export function* handleBonusActivationSaga(
 ): SagaIterator {
   // an event of bonusVacanzeActivation.request trigger a new workflow for the activation
 
-  const { cancelAction } = yield race({
+  const { cancelAction, showAction } = yield race({
     activation: call(activationWorker, activationSaga),
-    cancelAction: take(cancelBonusVacanzeRequest)
+    cancelAction: take(cancelBonusVacanzeRequest),
+    showAction: take(showBonusVacanze)
   });
   if (cancelAction) {
+    yield put(NavigationActions.back());
+  } else if (showAction) {
     yield put(navigateToWalletHome());
+    yield put(navigationHistoryPop(1));
   }
-  // remove the congratulation screen from the navigation stack
-  yield put(navigationHistoryPop(1));
 }

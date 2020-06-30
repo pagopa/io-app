@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { navigationHistoryPop } from "../../../store/actions/navigationHistory";
 import { Dispatch } from "../../../store/actions/types";
 import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
 import LoadBonusEligibilityScreen from "./eligibility/LoadBonusEligibilityScreen";
@@ -18,7 +17,6 @@ const BonusCTAEligibilityStartScreen = (props: Props) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   startEligibilityCheck: () => {
     dispatch(checkBonusVacanzeEligibility.request());
-    dispatch(navigationHistoryPop(1));
   }
 });
 
