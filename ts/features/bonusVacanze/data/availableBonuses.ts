@@ -36,36 +36,36 @@ Questi sono i passaggi che ti chiederemo di effettuare:
 
 const contentBonusVacanzeEN = `#### Who can request it?
   
-  The bonus is intended for all families with an ISEE family income of no more than € 40,000.
+The bonus is intended for all families with an ISEE family income of no more than € 40,000.
   
-  The applicant must be over 18 years of age.
+The applicant must be over 18 years of age.
   
-  #### How much is it worth?
-  The bonus value changes according to the number of members of the family:
-  - € 150 for one person; 
-  - € 300 for two people; 
-  - € 500 for more than two people.
+#### How much is it worth?
+The bonus value changes according to the number of members of the family:
+- € 150 for one person; 
+- € 300 for two people; 
+- € 500 for more than two people.
   
-  The incentive consists of a discount equal to 80% of the bonus value, which is applied by the tourist facility when paying for the holiday. The remaining 20% ​​will be used in the form of a tax deduction in the individual income tax return.
+The incentive consists of a discount equal to 80% of the bonus value, which is applied by the tourist facility when paying for the holiday. The remaining 20% ​​will be used in the form of a tax deduction in the individual income tax return.
   
-  #### Who, where and when can spend it?
-  Each member of the household can use the bonus. 
+#### Who, where and when can spend it?
+Each member of the household can use the bonus. 
   
-  It has to be spent in a single payment in Italian accommodation facilities, from 1 July to 31 December 2020. 
+It has to be spent in a single payment in Italian accommodation facilities, from 1 July to 31 December 2020. 
   
-  Payment must be made directly to the structure and must be documented through an invoice, commercial document, or receipt showing the beneficiary's tax code.
+Payment must be made directly to the structure and must be documented through an invoice, commercial document, or receipt showing the beneficiary's tax code.
   
-  #### How does the application process work?
-  IO app is the only channel through which it is possible to request the bonus. You can claim the bonus if you or somebody in your household have a valid ISEE not exceeding € 40,000.
+#### How does the application process work?
+IO app is the only channel through which it is possible to request the bonus. You can claim the bonus if you or somebody in your household have a valid ISEE not exceeding € 40,000.
   
-  This is the process in app:
-  - start the request by clicking on the button below; 
-  - read the terms of service and privacy; 
-  - IO will ask INPS to verify your family's ISEE; 
-  - if you have a valid ISEE below the set threshold, we will show you how much your bonus is worth and the members of your family who can use it; 
-  - if you confirm the request, IO generates your Bonus Vacanze; 
-  - once activated, your bonus will be visible in the Payments section of the app.
-  `;
+This is the process in app:
+- start the request by clicking on the button below; 
+- read the terms of service and privacy; 
+- IO will ask INPS to verify your family's ISEE; 
+- if you have a valid ISEE below the set threshold, we will show you how much your bonus is worth and the members of your family who can use it; 
+- if you confirm the request, IO generates your Bonus Vacanze; 
+- once activated, your bonus will be visible in the Payments section of the app.
+`;
 
 export const availableBonuses: BonusesAvailable = [
   {
