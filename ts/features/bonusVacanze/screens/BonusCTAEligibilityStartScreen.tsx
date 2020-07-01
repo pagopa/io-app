@@ -18,6 +18,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const BonusCTAEligibilityStartScreen = (props: Props) => {
   useEffect(
     () => {
+      // coming from message CTA
       // if we are here it means the eligibility check result is available
       if (!props.isCheckAsyncReady) {
         props.dispatchEligibilityAsyncCheckReady();

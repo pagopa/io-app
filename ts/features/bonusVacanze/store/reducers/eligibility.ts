@@ -32,7 +32,7 @@ export type EligibilityCheckRequest = {
 
 export type EligibilityState = Readonly<{
   checkRequest: EligibilityCheckRequest;
-  isCheckAsyncReady: boolean; // a flag indicating if the async check is completed or not (it is ready when the app receive certain messages)
+  isCheckAsyncReady: boolean; // a flag indicating if the async check is completed or not (it is ready when the app receives certain messages)
   request?: InstanceId; // the id related to the check (we could have only this if the check isn't ready and still in progress)
 }>;
 
