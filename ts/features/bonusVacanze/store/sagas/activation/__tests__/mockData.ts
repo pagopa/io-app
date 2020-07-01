@@ -35,7 +35,7 @@ export const startFromLoadingScreen: StartScreenScenario = {
 export const startFromAnotherScreen: StartScreenScenario = {
   displayName: "startFromAnotherScreen",
   startScreen: BONUSVACANZE_ROUTES.MAIN,
-  expectedActions: [navigateToBonusActivationLoading()]
+  expectedActions: [navigateToBonusActivationLoading(), navigationHistoryPop(1)]
 };
 
 interface NetworkingResults extends IExpectedActions {
@@ -51,6 +51,7 @@ export const activationSuccess: NetworkingResults = {
   }),
   expectedActions: [
     navigateToBonusActivationCompleted(),
+    navigationHistoryPop(1),
     navigateToBonusActiveDetailScreen({ bonus: mockedBonus }),
     navigationHistoryPop(1)
   ]
