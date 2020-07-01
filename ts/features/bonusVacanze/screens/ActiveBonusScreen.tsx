@@ -459,6 +459,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     <GenericErrorComponent
       onRetry={() => props.startPollingBonusFromId(bonusFromNav.id)}
       onCancel={props.goBack}
+      subText={" "}
     />
   );
 };

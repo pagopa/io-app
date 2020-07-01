@@ -16,13 +16,11 @@ import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMess
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
-import { Locales } from "../../locales/locales";
 import {
   getInternalRoute,
   handleInternalLink
 } from "../components/ui/Markdown/handlers/internalLink";
 import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link";
-import I18n, { translations } from "../i18n";
 import { CTA, CTAS, MessageCTA } from "../types/MessageCTA";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
@@ -188,28 +186,15 @@ export const getPrescriptionDataFromName = (
  * @param message
  * @param locale
  */
-export const getCTA = (
-  message: CreatedMessageWithContent,
-  locale: Locales = getLocalePrimaryWithFallback(I18n.currentLocale())
-): Option<CTAS> => {
+export const getCTA = (message: CreatedMessageWithContent): Option<CTAS> => {
   return fromPredicate((t: string) => FM.test(t))(message.content.markdown)
     .map(m => FM<MessageCTA>(m).attributes)
     .chain(attrs =>
-      CTAS.decode(attrs[locale]).fold(_ => {
-        // fallback on the first locale available
-        const fallback = translations.find(
-          s => attrs[s as Locales] !== undefined
-        );
-        if (fallback) {
-          // try decoding
-          return CTAS.decode(attrs[fallback as Locales]).fold(
-            __ => none,
-            // check the decode actions are valid
-            cta => (hasCtaValidActions(cta) ? some(cta) : none)
-          );
-        }
-        return none;
-      }, some)
+      CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
+        _ => none,
+        // check if the decoded actions are valid
+        cta => (hasCtaValidActions(cta) ? some(cta) : none)
+      )
     );
 };
 
