@@ -205,7 +205,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         customVariables.brandDarkGray
       );
     }); // tslint:disable-line no-object-mutation
-    this.loadBonusVacanze();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
