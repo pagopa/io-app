@@ -4,6 +4,7 @@ import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, RefreshControl, StyleSheet } from "react-native";
 import {
+  NavigationEvents,
   NavigationEventSubscription,
   NavigationInjectedProps
 } from "react-navigation";
@@ -457,6 +458,10 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     this.props.loadWallets();
   };
 
+  private handleOnWillFocus = () => {
+    this.loadBonusVacanze();
+  };
+
   public render(): React.ReactNode {
     const { potWallets, potTransactions, historyPayments } = this.props;
 
@@ -465,8 +470,8 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
       : pot.isError(potWallets)
-        ? this.errorWalletsHeader()
-        : this.cardPreview(wallets);
+      ? this.errorWalletsHeader()
+      : this.cardPreview(wallets);
 
     const transactionContent = pot.isError(potTransactions)
       ? this.transactionError()
@@ -501,6 +506,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         headerPaddingMin={true}
       >
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
+        {bonusVacanzeEnabled && (
+          <NavigationEvents onWillFocus={this.handleOnWillFocus} />
+        )}
       </WalletLayout>
     );
   }
