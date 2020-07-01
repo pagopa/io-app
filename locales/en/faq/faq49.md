@@ -1,1 +1,1 @@
-Non puoi direttamente contattare gli enti dall'app IO ma puoi visualizzare le loro informazioni di contatto all'interno della sezione 'Servizi', nella scheda di ciascun servizio. 
+You cannot directly contact the entities from IO, but you can view their contact information in the related service details, within the 'Services' section.
