@@ -3,6 +3,8 @@ import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedM
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../definitions/backend/MessageContent";
+import { Locales } from "../../../locales/locales";
+import { setLocale } from "../../i18n";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { cleanMarkdownFromCTAs, getCTA, isCtaActionValid } from "../messages";
 
@@ -15,17 +17,17 @@ const CTA_2 =
 it:
     cta_1: 
         text: "premi"
-        action: "io://PROFILE_MAIN"
+        action: "ioit://PROFILE_MAIN"
     cta_2: 
         text: "premi2"
-        action: "io://PROFILE_MAIN2"
+        action: "ioit://PROFILE_MAIN2"
 en:
     cta_1: 
         text: "go1"
-        action: "io://PROFILE_MAIN"
+        action: "ioit://PROFILE_MAIN"
     cta_2: 
         text: "go2"
-        action: "io://PROFILE_MAIN2"
+        action: "ioit://PROFILE_MAIN2"
 ---
 ` + messageBody;
 
@@ -47,24 +49,41 @@ const messageWithContent = {
   } as MessageContent
 } as CreatedMessageWithContent;
 
+// test "it" as default language
+beforeAll(() => setLocale("it" as Locales));
+
 describe("getCTA", () => {
   it("should have 2 valid CTA", () => {
-    const maybeCTAs = getCTA(messageWithContent, "it");
+    const maybeCTAs = getCTA(messageWithContent);
     test2CTA(
       maybeCTAs,
       "premi",
-      "io://PROFILE_MAIN",
+      "ioit://PROFILE_MAIN",
       "premi2",
-      "io://PROFILE_MAIN2"
+      "ioit://PROFILE_MAIN2"
     );
-    const maybeCTAsEn = getCTA(messageWithContent, "en");
+    setLocale("en" as Locales);
+    const maybeCTAsEn = getCTA(messageWithContent);
     test2CTA(
       maybeCTAsEn,
       "go1",
-      "io://PROFILE_MAIN",
+      "ioit://PROFILE_MAIN",
       "go2",
-      "io://PROFILE_MAIN2"
+      "ioit://PROFILE_MAIN2"
     );
+  });
+
+  it("should return the english CTA when the language is not supported", () => {
+    setLocale("fr" as Locales);
+    const maybeCTAs = getCTA(messageWithContent);
+    test2CTA(
+      maybeCTAs,
+      "go1",
+      "ioit://PROFILE_MAIN",
+      "go2",
+      "ioit://PROFILE_MAIN2"
+    );
+    setLocale("it" as Locales); // restore default
   });
 
   it("should not have valid CTA (action is malformed)", () => {
@@ -76,30 +95,24 @@ it:
 --- 
 some noise`;
 
-    const maybeCTA = getCTA(
-      {
-        ...messageWithContent,
-        content: {
-          ...messageWithContent.content,
-          markdown: CTA_1 as MessageBodyMarkdown
-        }
-      },
-      "it"
-    );
+    const maybeCTA = getCTA({
+      ...messageWithContent,
+      content: {
+        ...messageWithContent.content,
+        markdown: CTA_1 as MessageBodyMarkdown
+      }
+    });
     expect(maybeCTA.isNone());
   });
 
   it("should not have a valid CTA", () => {
-    const maybeCTA = getCTA(
-      {
-        ...messageWithContent,
-        content: {
-          ...messageWithContent.content,
-          markdown: "nothing of nothing" as MessageBodyMarkdown
-        }
-      },
-      "it"
-    );
+    const maybeCTA = getCTA({
+      ...messageWithContent,
+      content: {
+        ...messageWithContent.content,
+        markdown: "nothing of nothing" as MessageBodyMarkdown
+      }
+    });
     expect(maybeCTA.isNone()).toBeTruthy();
   });
 
@@ -108,19 +121,16 @@ some noise`;
 it:
     act_1:
         txet: "premi"
-        aa: "io://PROFILE_MAIN"
+        aa: "ioit://PROFILE_MAIN"
 --- 
 some noise`;
-    const maybeCTA = getCTA(
-      {
-        ...messageWithContent,
-        content: {
-          ...messageWithContent.content,
-          markdown: NO_CTA as MessageBodyMarkdown
-        }
-      },
-      "it"
-    );
+    const maybeCTA = getCTA({
+      ...messageWithContent,
+      content: {
+        ...messageWithContent.content,
+        markdown: NO_CTA as MessageBodyMarkdown
+      }
+    });
     expect(maybeCTA.isNone()).toBeTruthy();
   });
 });

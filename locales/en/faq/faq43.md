@@ -1,1 +1,1 @@
-Il CVC (per le carte MasterCard) e il CVV (per le carte Visa) sono codici di sicurezza riportati generalmente sul retro della carta di pagamento in prossimità dello spazio riservato alla firma del titolare. Questi codici sono composti tipicamente da 3 cifre, nelle carte Visa e MasterCard.
+The Card Verification Code, CVC or CVV (Card Verification Value), is a security code present on the credit or debit card. On Visa, MasterCard and other cards, the code consists of three digits located on the back of the card, in the signature area.

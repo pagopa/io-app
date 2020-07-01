@@ -1364,7 +1364,7 @@ bonus:
     code: Codice
     uniqueCode: Codice univoco
     requestedAt: Richiesto il
-    advice: "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso i "
+    advice: "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso la "
     status: Stato
     name: Bonus Vacanze
     validity: Valido nel periodo
@@ -1387,9 +1387,9 @@ bonus:
     eligibility:
       loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
       iseeNotAvailable:
-        title: "Siamo spiacenti.\n Non abbiamo trovato il tuo ISEE."
+        title: "Siamo spiacenti.\n Non hai un ISEE in corso di validità."
         text:
-          first: "E' necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE, prima di richiedere nuovamente il Bonus Vacanze.\n
+          first: "E' necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE, prima di richiedere nuovamente il Bonus Vacanze.\n\n
                   Puoi fare subito una "
           secondo: "simulazione online"
           third: " sul sito dell'INPS per verificare la tua idoneità, oppure richiedere l'ISEE sui canali previsti da INPS."

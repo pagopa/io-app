@@ -1,1 +1,1 @@
-Un Fac Simile può essere utilizzato per la lettura dei dati e del codice a barre sul documento dagli esercenti che lo richiedono, per esempio in una farmacia o in posta.
+A facsimile does not replace the physical document in its entirety but can be used to read the data and the bar code on the document by operators who request it, for example in a pharmacy or in the post office.
