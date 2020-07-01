@@ -457,10 +457,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     this.props.loadWallets();
   };
 
-  private handleOnWillFocus = () => {
-    this.loadBonusVacanze();
-  };
-
   public render(): React.ReactNode {
     const { potWallets, potTransactions, historyPayments } = this.props;
 
@@ -506,7 +502,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       >
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
         {bonusVacanzeEnabled && (
-          <NavigationEvents onWillFocus={this.handleOnWillFocus} />
+          <NavigationEvents onWillFocus={this.loadBonusVacanze} />
         )}
       </WalletLayout>
     );
