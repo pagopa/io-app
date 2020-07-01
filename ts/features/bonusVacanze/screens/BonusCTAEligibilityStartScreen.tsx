@@ -16,18 +16,12 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 // this is a dummy screen reachable only from a message CTA
 // when the component is mounted the checkBonusEligibility action will be dispatched
 const BonusCTAEligibilityStartScreen = (props: Props) => {
-  useEffect(
-    () => {
-      // coming from message CTA
-      // if we are here it means the eligibility check result is available
-      if (!props.isCheckAsyncReady) {
-        props.dispatchEligibilityAsyncCheckReady();
-      } else if (props.isCheckAsyncReady === true) {
-        props.startEligibilityCheck();
-      }
-    },
-    [props.isCheckAsyncReady]
-  );
+  useEffect(() => {
+    // coming from message CTA
+    // if we are here it means the eligibility check result is available
+    props.dispatchEligibilityAsyncCheckReady();
+    props.startEligibilityCheck();
+  }, []);
 
   return <LoadBonusEligibilityScreen />;
 };

@@ -53,8 +53,7 @@ const reducer = (
     case getType(storeEligibilityRequestId):
       return {
         ...state,
-        request: action.payload,
-        isCheckAsyncReady: false
+        request: action.payload
       };
     case getType(checkBonusVacanzeEligibility.request):
       return {

@@ -19,7 +19,8 @@ import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   activateBonusVacanze,
   cancelBonusVacanzeRequest,
-  checkBonusVacanzeEligibility
+  checkBonusVacanzeEligibility,
+  eligibilityAsyncReady
 } from "../../actions/bonusVacanze";
 import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
 import { bonusEligibilitySaga } from "./getBonusEligibilitySaga";
@@ -102,4 +103,5 @@ export function* handleBonusEligibilitySaga(
   }
   // remove the eligibility detail info screen from the navigation stack
   yield put(navigationHistoryPop(1));
+  yield put(eligibilityAsyncReady(false));
 }
