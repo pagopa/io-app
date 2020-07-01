@@ -164,7 +164,7 @@ export const bonusEligibilitySaga = (
       const eligibility: ReturnType<typeof eligibilitySelector> = yield select(
         eligibilitySelector
       );
-      if (eligibility.isCheckAsyncReady === true) {
+      if (eligibility.isCheckAsyncReady) {
         const pollingResult: SagaCallReturnType<
           typeof startPolling
         > = yield call(startPolling, getBonusEligibilityCheck);
