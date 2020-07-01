@@ -4,6 +4,7 @@ import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, RefreshControl, StyleSheet } from "react-native";
 import {
+  NavigationEvents,
   NavigationEventSubscription,
   NavigationInjectedProps
 } from "react-navigation";
@@ -204,7 +205,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         customVariables.brandDarkGray
       );
     }); // tslint:disable-line no-object-mutation
-    this.loadBonusVacanze();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
@@ -501,6 +501,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         headerPaddingMin={true}
       >
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
+        {bonusVacanzeEnabled && (
+          <NavigationEvents onWillFocus={this.loadBonusVacanze} />
+        )}
       </WalletLayout>
     );
   }
