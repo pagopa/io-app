@@ -42,15 +42,12 @@ const LoadActivateBonusScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO: link with the right dispatch action, will dispatch the cancel request
   onAbort: () => dispatch(cancelBonusVacanzeRequest()),
-  // TODO: link with the right dispatch action, will dispatch the retry request
   onRetry: () => dispatch(activateBonusVacanze.request())
 });
 
 const mapStateToProps = (state: GlobalState) => ({
   // display the error with the retry only in case of networking errors
-  // TODO: link with the real data
   isLoading: activationIsLoading(state)
 });
 

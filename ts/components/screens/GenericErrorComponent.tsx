@@ -3,7 +3,6 @@ import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
-import { maybeNotNullyString } from "../../utils/strings";
 import { SingleButton, TwoButtonsInlineHalf } from "../ui/BlockButtons";
 import FooterWithButtons from "../ui/FooterWithButtons";
 
@@ -74,16 +73,16 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
             />
             <View spacer={true} />
             <Text bold={true} alignCenter={true} style={styles.errorText}>
-              {maybeNotNullyString(this.props.text).getOrElse(
-                I18n.t("wallet.errors.GENERIC_ERROR")
-              )}
+              {this.props.text
+                ? this.props.text
+                : I18n.t("wallet.errors.GENERIC_ERROR")}
             </Text>
             <View spacer={true} extralarge={true} />
             <View spacer={true} extralarge={true} />
             <Text alignCenter={true} style={styles.errorText2}>
-              {maybeNotNullyString(this.props.subText).getOrElse(
-                I18n.t("wallet.errorTransaction.submitBugText")
-              )}
+              {this.props.subText
+                ? this.props.subText
+                : I18n.t("wallet.errorTransaction.submitBugText")}
             </Text>
             <View spacer={true} extralarge={true} />
           </View>
