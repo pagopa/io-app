@@ -164,11 +164,9 @@ export const bonusEligibilitySaga = (
       const eligibility: ReturnType<typeof eligibilitySelector> = yield select(
         eligibilitySelector
       );
+      // if the async result is ready we don't have to perform the startBonusEligibilityCheck
       if (eligibility.isCheckAsyncReady) {
-        const pollingResult: SagaCallReturnType<
-          typeof startPolling
-        > = yield call(startPolling, getBonusEligibilityCheck);
-        return pollingResult;
+        return yield call(startPolling, getBonusEligibilityCheck);
       }
       const startEligibilityResult: SagaCallReturnType<
         typeof startBonusEligibilityCheck
@@ -188,10 +186,7 @@ export const bonusEligibilitySaga = (
               storeEligibilityRequestId(startEligibilityResult.value.value)
             );
           }
-          const pollingAfterPostResult: SagaCallReturnType<
-            typeof startPolling
-          > = yield call(startPolling, getBonusEligibilityCheck);
-          return pollingAfterPostResult;
+          return yield call(startPolling, getBonusEligibilityCheck);
         }
         // there's already an activation bonus running
         else if (startEligibilityResult.value.status === 403) {
