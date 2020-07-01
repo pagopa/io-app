@@ -39,7 +39,6 @@ const IseeNotEligibleScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO: link with the right dispatch action
   onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 

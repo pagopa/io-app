@@ -1217,55 +1217,55 @@ faq:
     title: "How can you remove a payment method?"
     content: !include faq/faq41.md
   42:
-    title: "Come puoi aggiungere un metodo di pagamento?"
+    title: "How can you add a payment method?"
     content: !include faq/faq42.md
   43:
-    title: "Cos'è il CVC/CVV?"
+    title: "What is the CVC/CVV?"
     content: !include faq/faq43.md
   44:
-    title: "Perchè devo pagare una commissione?"
+    title: "Why do I have to pay a transaction fee?"
     content: !include faq/faq44.md
   45:
-    title: "Perchè le commissioni cambiano da un gestore all'altro?"
+    title: "Why do different PSPs ask for different transaction fees?"
     content: !include faq/faq45.md
   46:
-    title: "Puoi scegliere un gestore diverso a ogni pagamento?"
+    title: "Can I select different PSPs for my payments?"
     content: !include faq/faq46.md
   47:
-    title: "Come gestire i servizi su IO?"
+    title: "How to manage Services on IO?"
     content: !include faq/faq7.md
   48:
-    title: "Cosa sono le tue aree di interesse?"
+    title: "What are your areas of interest?"
     content: !include faq/faq48.md
   49:
-    title: "Puoi contattare gli enti tramite IO?"
+    title: "Can I contact entities through IO?"
     content: !include faq/faq49.md
   50:
-    title: "Cosa succede se disattivi un servizio?"
+    title: "What happens when I disable a service?"
     content: !include faq/faq50.md
   51:
-    title: "Come funzionano le notifiche push?"
+    title: "How do push notifications work?"
     content: !include faq/faq51.md
   52:
-    title: "Come funziona l'inoltro via email dei messaggi?"
+    title: "How does messages email-forwarding work?"
     content: !include faq/faq52.md
   53:
-    title: "Come usare i documenti in versione digitale?"
+    title: "How to use the digital version of my personal documents?"
     content: !include faq/faq53.md
   54:
-    title: "A cosa serve un fac-simile del Codice Fiscale?"
+    title: "How can I use a facsimile of my tax code?"
     content: !include faq/faq54.md
   55:
-    title: "Come sarà tutelata la tua privacy?"
+    title: "How is my privacy protected?"
     content: !include faq/faq55.md
   56:
-    title: "Come cancellare tutti i tuoi dati da IO?"
+    title: "How to delete all my personal data associated to IO?"
     content: !include faq/faq56.md
   57:
     title: "Did you have problems during a payment?"
     content: !include faq/faq57.md
   58:
-    title: "How do I claim the bonus?"
+    title: "How do I claim the Bonus Vacanze?"
     content: !include bonus/faq/faq58.md
   59:
     title: "What does it take to claim the bonus?"
@@ -1280,7 +1280,7 @@ faq:
     title: "What does it mean that my DSU has omissions or discrepancies?"
     content: !include bonus/faq/faq62.md
   63:
-    title: "How can I use the Holiday Bonus?"
+    title: "How can I use the Bonus Vacanze?"
     content: !include bonus/faq/faq63.md
   64:
     title: "How can I share the bonus with my family?"
@@ -1333,7 +1333,7 @@ bonus:
     code: Code
     uniqueCode: Unique code
     requestedAt: Requested on
-    advice: 'By clicking on "Request the Bonus Vacanze" you declare that you have read and understood the '
+    advice: 'By tapping on "Request the Bonus Vacanze" you declare that you have read and understood the '
     status: Status
     name: Bonus Vacanze
     validity: Valid between
