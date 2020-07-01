@@ -3,7 +3,7 @@ import { fromNullable, some } from "fp-ts/lib/Option";
 import { Errors } from "io-ts";
 import { NavigationActions } from "react-navigation";
 import { Action, combineReducers } from "redux";
-import { expectSaga } from "redux-saga-test-plan";
+import { expectSaga, RunResult } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { select } from "redux-saga-test-plan/matchers";
 import { navigateToWalletHome } from "../../../../../../../store/actions/navigation";
@@ -82,13 +82,9 @@ describe("Bonus Activation Saga Integration Test", () => {
         allActive: {}
       } as MockActivationState)
       .run()
-      .then(results => {
-        expect(results.effects.select.length).toEqual(1);
-        // in this phase the put in the store is not tested, at the end I should have only one put action left
-        expect(results.effects.put.length).toEqual(1);
-      });
+      .then(expectFinalSagaState);
   });
-  //TODO: refactor with the previous test
+  // TODO: refactor with the previous test
   it("Handle showBonusVacanze", () => {
     const startBonusActivation = jest.fn();
     const getActivationById = jest.fn();
@@ -116,11 +112,7 @@ describe("Bonus Activation Saga Integration Test", () => {
         allActive: {}
       } as MockActivationState)
       .run()
-      .then(results => {
-        expect(results.effects.select.length).toEqual(1);
-        // in this phase the put in the store is not tested, at the end I should have only one put action left
-        expect(results.effects.put.length).toEqual(1);
-      });
+      .then(expectFinalSagaState);
   });
   backendIntegrationTestCases.map(testCase =>
     testCase.responses.map(response => {
@@ -173,10 +165,12 @@ const expectSagaFactory = (
       .dispatch(completeBonusVacanzeActivation())
       .hasFinalState(finalState)
       .run()
-      .then(results => {
-        expect(results.effects.select.length).toEqual(1);
-        // in this phase the put in the store is not tested, at the end I should have only one put action left
-        expect(results.effects.put.length).toEqual(1);
-      })
+      .then(expectFinalSagaState)
   );
+};
+
+const expectFinalSagaState = (result: RunResult) => {
+  expect(result.effects.select.length).toEqual(1);
+  // in this phase the put in the store is not tested, at the end I should have only one put action left
+  expect(result.effects.put.length).toEqual(1);
 };
