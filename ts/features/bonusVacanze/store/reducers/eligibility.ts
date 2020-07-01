@@ -9,6 +9,7 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   checkBonusVacanzeEligibility,
+  eligibilityAsyncReady,
   storeEligibilityRequestId
 } from "../actions/bonusVacanze";
 
@@ -31,6 +32,7 @@ export type EligibilityCheckRequest = {
 
 export type EligibilityState = Readonly<{
   checkRequest: EligibilityCheckRequest;
+  isCheckAsyncReady: boolean; // a flag indicating if the async check is completed or not (it is ready when the app receive certain messages)
   request?: InstanceId; // the id related to the check (we could have only this if the check isn't ready and still in progress)
 }>;
 
@@ -38,7 +40,8 @@ const INITIAL_STATE: EligibilityState = {
   checkRequest: {
     status: EligibilityRequestProgressEnum.UNDEFINED,
     check: pot.none
-  }
+  },
+  isCheckAsyncReady: false
 };
 
 const reducer = (
@@ -50,7 +53,8 @@ const reducer = (
     case getType(storeEligibilityRequestId):
       return {
         ...state,
-        request: action.payload
+        request: action.payload,
+        isCheckAsyncReady: false
       };
     case getType(checkBonusVacanzeEligibility.request):
       return {
@@ -77,6 +81,11 @@ const reducer = (
           status: EligibilityRequestProgressEnum.ERROR,
           check: pot.toError(state.checkRequest.check, action.payload)
         }
+      };
+    case getType(eligibilityAsyncReady):
+      return {
+        ...state,
+        isCheckAsyncReady: action.payload
       };
   }
   return state;

@@ -45,6 +45,10 @@ export const storeEligibilityRequestId = createStandardAction(
   "BONUS_VACANZE_CHECK_ELIGIBILITY_STORE_REQUEST_ID"
 )<InstanceId>();
 
+export const eligibilityAsyncReady = createStandardAction(
+  "BONUS_VACANZE_CHECK_ELIGIBILITY_ASYNC_READY"
+)<boolean>();
+
 /**
  * Start and handle the activation phase
  */
@@ -93,5 +97,6 @@ export type BonusActions =
   | ActionType<typeof loadAllBonusActivations>
   | ActionType<typeof startLoadBonusFromIdPolling>
   | ActionType<typeof cancelBonusVacanzeRequest>
+  | ActionType<typeof eligibilityAsyncReady>
   | ActionType<typeof completeBonusVacanzeActivation>
   | ActionType<typeof cancelLoadBonusFromIdPolling>;

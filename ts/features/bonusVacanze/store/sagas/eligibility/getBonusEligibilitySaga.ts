@@ -1,7 +1,7 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { call, Effect, put } from "redux-saga/effects";
+import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { ErrorEnum } from "../../../../../../definitions/bonus_vacanze/EligibilityCheckFailure";
@@ -16,7 +16,10 @@ import {
   checkBonusVacanzeEligibility,
   storeEligibilityRequestId
 } from "../../actions/bonusVacanze";
-import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
+import {
+  EligibilityRequestProgressEnum,
+  eligibilitySelector
+} from "../../reducers/eligibility";
 
 // wait time between requests
 const checkEligibilityResultPolling = 1000 as Millisecond;
@@ -57,7 +60,8 @@ const eligibilityResultToEnum = (check: EligibilityCheck) => {
 function* getCheckBonusEligibilitySaga(
   getBonusEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze
-  >["getBonusEligibilityCheck"]
+  >["getBonusEligibilityCheck"],
+  blockingErrorsCode: ReadonlyArray<number>
 ): IterableIterator<Effect | Either<Option<Error>, EligibilityCheck>> {
   try {
     const eligibilityCheckResult: SagaCallReturnType<
@@ -65,10 +69,14 @@ function* getCheckBonusEligibilitySaga(
     > = yield call(getBonusEligibilityCheck, {});
 
     if (eligibilityCheckResult.isRight()) {
+      const status = eligibilityCheckResult.value.status;
       // 200 -> we got the check result, polling must be stopped
-      if (eligibilityCheckResult.value.status === 200) {
+      if (status === 200) {
         const check = eligibilityCheckResult.value.value;
         return right(check);
+      }
+      if (blockingErrorsCode.some(e => e === status)) {
+        return some(Error(`blocking error with code ${status}`));
       }
       // polling should continue
       return left(none);
@@ -87,13 +95,57 @@ function* getCheckBonusEligibilitySaga(
 const executeGetEligibilityCheck = (
   getBonusEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze
-  >["getBonusEligibilityCheck"]
+  >["getBonusEligibilityCheck"],
+  blockingErrorsCode: ReadonlyArray<number>
 ) =>
   function* executeGetCheckBonusEligibilitySaga(): IterableIterator<
     Effect | SagaCallReturnType<typeof getCheckBonusEligibilitySaga>
   > {
-    return yield call(getCheckBonusEligibilitySaga, getBonusEligibilityCheck);
+    return yield call(
+      getCheckBonusEligibilitySaga,
+      getBonusEligibilityCheck,
+      blockingErrorsCode
+    );
   };
+
+function* startPolling(
+  getBonusEligibilityCheck: ReturnType<
+    typeof BackendBonusVacanze
+  >["getBonusEligibilityCheck"],
+  blockingErrorsCode: ReadonlyArray<number> = []
+) {
+  // start polling to know about the check result
+  const startPollingTime = new Date().getTime();
+  // TODO: handle cancel request (stop polling)
+  while (true) {
+    const eligibilityCheckResult = yield call(
+      executeGetEligibilityCheck(getBonusEligibilityCheck, blockingErrorsCode)
+    );
+    // we got a blocking error -> stop polling
+    if (
+      eligibilityCheckResult.isLeft() &&
+      eligibilityCheckResult.value.isSome()
+    ) {
+      throw eligibilityCheckResult.value.value;
+    }
+    // we got the eligibility result, stop polling
+    if (eligibilityCheckResult.isRight()) {
+      return checkBonusVacanzeEligibility.success({
+        check: eligibilityCheckResult.value,
+        status: eligibilityResultToEnum(eligibilityCheckResult.value)
+      });
+    }
+    // sleep
+    yield call(startTimer, checkEligibilityResultPolling);
+    // check if the time threshold was exceeded, if yes abort
+    const now = new Date().getTime();
+    if (now - startPollingTime >= pollingTimeThreshold) {
+      return checkBonusVacanzeEligibility.success({
+        status: EligibilityRequestProgressEnum.TIMEOUT
+      });
+    }
+  }
+}
 
 // handle start bonus eligibility check
 // tslint:disable-next-line: cognitive-complexity
@@ -109,6 +161,15 @@ export const bonusEligibilitySaga = (
     Effect | ActionType<typeof checkBonusVacanzeEligibility>
   > {
     try {
+      const eligibility: ReturnType<typeof eligibilitySelector> = yield select(
+        eligibilitySelector
+      );
+      if (eligibility.isCheckAsyncReady === true) {
+        const pollingResult: SagaCallReturnType<
+          typeof startPolling
+        > = yield call(startPolling, getBonusEligibilityCheck);
+        return pollingResult;
+      }
       const startEligibilityResult: SagaCallReturnType<
         typeof startBonusEligibilityCheck
       > = yield call(startBonusEligibilityCheck, {});
@@ -127,37 +188,10 @@ export const bonusEligibilitySaga = (
               storeEligibilityRequestId(startEligibilityResult.value.value)
             );
           }
-          // start polling to know about the check result
-          const startPolling = new Date().getTime();
-          // TODO: handle cancel request (stop polling)
-          while (true) {
-            const eligibilityCheckResult = yield call(
-              executeGetEligibilityCheck(getBonusEligibilityCheck)
-            );
-            // we got a blocking error -> stop polling
-            if (
-              eligibilityCheckResult.isLeft() &&
-              eligibilityCheckResult.value.isSome()
-            ) {
-              throw eligibilityCheckResult.value.value;
-            }
-            // we got the eligibility result, stop polling
-            if (eligibilityCheckResult.isRight()) {
-              return checkBonusVacanzeEligibility.success({
-                check: eligibilityCheckResult.value,
-                status: eligibilityResultToEnum(eligibilityCheckResult.value)
-              });
-            }
-            // sleep
-            yield call(startTimer, checkEligibilityResultPolling);
-            // check if the time threshold was exceeded, if yes abort
-            const now = new Date().getTime();
-            if (now - startPolling >= pollingTimeThreshold) {
-              return checkBonusVacanzeEligibility.success({
-                status: EligibilityRequestProgressEnum.TIMEOUT
-              });
-            }
-          }
+          const pollingAfterPostResult: SagaCallReturnType<
+            typeof startPolling
+          > = yield call(startPolling, getBonusEligibilityCheck);
+          return pollingAfterPostResult;
         }
         // there's already an activation bonus running
         else if (startEligibilityResult.value.status === 403) {
