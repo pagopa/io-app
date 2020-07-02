@@ -1,4 +1,4 @@
-const BONUSVACANZE_ROUTES = {
+const BONUSVACANZE_ROUTES: BonusVacanzeRouteType = {
   MAIN: "MAIN",
 
   BONUS_AVAILABLE_LIST: "BONUS_AVAILABLE_LIST",
@@ -24,6 +24,21 @@ const BONUSVACANZE_ROUTES = {
     EXISTS: "BONUS_ACTIVATION_EXISTS",
     COMPLETED: "BONUS_ACTIVATION_COMPLETED"
   }
+};
+
+type SubRoute = {
+  [propName: string]: string;
+};
+
+type BonusVacanzeRouteType = {
+  MAIN: string;
+  BONUS_AVAILABLE_LIST: string;
+  BONUS_CTA_ELIGILITY_START: string;
+  BONUS_REQUEST_INFORMATION: string;
+  BONUS_TOS_SCREEN: string;
+  BONUS_ACTIVE_DETAIL_SCREEN: string;
+  ELIGIBILITY: SubRoute;
+  ACTIVATION: SubRoute;
 };
 
 export default BONUSVACANZE_ROUTES;

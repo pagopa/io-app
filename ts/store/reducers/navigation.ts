@@ -1,12 +1,12 @@
+import { index } from "fp-ts/lib/Array";
+import { none, Option } from "fp-ts/lib/Option";
 import {
   NavigationActions,
   NavigationState,
   StackActions
 } from "react-navigation";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-
-import { index } from "fp-ts/lib/Array";
-import { none, Option } from "fp-ts/lib/Option";
 import AppNavigator from "../../navigation/AppNavigator";
 import { getRouteName } from "../../utils/navigation";
 import { navigationRestore } from "../actions/navigation";
@@ -25,10 +25,17 @@ export const navigationStateSelector = (state: GlobalState): NavigationState =>
 export const navigationCurrentRouteSelector = (
   state: GlobalState
 ): Option<string> => {
-  return index(state.nav.index, [...state.nav.routes]).fold(none, ln =>
-    getRouteName(ln.routes[ln.index])
-  );
+  return index(state.nav.index, [...state.nav.routes]).fold(none, ln => {
+    return "routes" in ln && "index" in ln
+      ? getRouteName(ln.routes[ln.index])
+      : getRouteName(ln);
+  });
 };
+
+export const plainNavigationCurrentRouteSelector = createSelector(
+  navigationCurrentRouteSelector,
+  maybeRoute => maybeRoute.getOrElse("")
+);
 
 function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {
