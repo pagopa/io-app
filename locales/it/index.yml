@@ -1413,11 +1413,11 @@ bonus:
           text: "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Verifica che sia tutto corretto prima di continuare. Se decidi di proseguire, potresti essere chiamato a fornire la documentazione per provare la completezza e la veridicità dei dati indicati nella DSU Altrimenti, puoi presentare una nuova DSU e richiedere il Bonus in un secondo momento."
         activateCTA: "Attiva il Bonus"
       timeout:
-        title: Siamo spiacenti, serve più tempo per verificare il tuo ISEE.
+        title: Stiamo procedendo alla verifica del tuo ISEE.
         description:
-          first: "Ti invieremo un messaggio in app quando INPS ci avrà fornito la risposta relativa al tuo ISEE.\n\nQuando lo riceverai, se sarà positivo, ricordati di completare la tua domanda "
+          first: "Ti invieremo un messaggio in app non appena sarà completata.\n\nQuando lo riceverai, se l'esito sarà positivo, ricordati di completare la tua richiesta "
           second: "entro 24 ore"
-          third: ", altrimenti scadrà e dovrai iniziarne una nuova."
+          third: ", altrimenti dovrai iniziarne una nuova."
       activationPending:
         title: Il bonus per il tuo nucleo familiare è già stato richiesto ed è in fase di attivazione.
         description: Riceverai un messaggio quando sarà attivato.
@@ -1425,7 +1425,7 @@ bonus:
       loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
       goToDetails: Visualizza Bonus Vacanze
       timeout:
-        title: Siamo spiacenti, serve più tempo per processare la tua richiesta.
+        title: Stiamo processando la tua richiesta.
         description: Ti invieremo un messaggio in app quando il tuo bonus sarà pronto.
       alreadyRedeemed:
         title: Il bonus per il tuo nucleo familiare è già attivo!
