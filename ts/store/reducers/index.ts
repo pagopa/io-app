@@ -1,14 +1,12 @@
 /**
  * Aggregates all defined reducers
  */
+import AsyncStorage from "@react-native-community/async-storage";
 import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
-
-import AsyncStorage from "@react-native-community/async-storage";
 import bonusReducer from "../../features/bonusVacanze/store/reducers";
-import { isTestEnv } from "../../utils/environment";
 import { logoutFailure, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
