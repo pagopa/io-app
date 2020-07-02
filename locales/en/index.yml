@@ -1355,12 +1355,12 @@ bonus:
     eligibility:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
-        title: "We're sorry.\n ISEE not found."
+        title: "We're sorry.\n You don't have a valid ISEE."
         text:
           first: "It is necessary to submit a DSU for the calculation of the ISEE, before requesting the \"Bonus Vacanze\".\n
-                  You can do a "
+                  You can do an "
           secondo: "online simulation"
-          third: " on the INPS website to check your eligibility, or request ISEE through the channels provided by INPS."
+          third: " on the INPS website to check your eligibility, or request your ISEE through the channels provided by INPS."
         goToDSU: Request ISEE
       iseeNotEligible:
         title: "We're sorry.\n Your ISEE exceeds the required threshold."
@@ -1381,11 +1381,11 @@ bonus:
           text: "INPS has reported some omissions or discrepancies in your ISEE. Check that everything is correct before continuing. If you decide to continue, you may be called to provide documentation to prove the completeness and truthfulness of the data indicated in the DSU. Otherwise, you can present a new DSU and check the bonus at a later time."
         activateCTA: "Activate the Bonus"
       timeout:
-        title: Sorry, it takes longer to verify your ISEE.
+        title: We are verifying your ISEE.
         description:
-          first: "We will send you a message when INPS has given us the answer related to your ISEE.\n\nIf the outcome is positive, when you receive it, remember to complete your application "
+          first: "We will send you a message when the verification is complete.\n\nIf the outcome is positive, when you receive it, remember to complete your application "
           second: "within 24 hours"
-          third: ", otherwise it will expire and you will have to start a new one."
+          third: ", otherwise you will have to start a new one."
       activationPending:
         title: The bonus for your family has already been requested and is being activated.
         description: You will receive a message when it is activated.
@@ -1393,7 +1393,7 @@ bonus:
       loading: "We have forwarded your request to the Revenue Agency\nPlease wait."
       goToDetails: Show Bonus Vacanze
       timeout:
-        title: Sorry, it takes longer to process your request.
+        title: We are processing your request.
         description: We will send you a message in the app when your bonus is ready.
       alreadyRedeemed:
         title: The bonus for your family is already active!
