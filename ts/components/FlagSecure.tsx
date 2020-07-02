@@ -8,8 +8,11 @@ import { GlobalState } from "../store/reducers/types";
 type Props = ReturnType<typeof mapStateToProps>;
 
 /**
- * On Android, it enables or disables FLAG_SECURE based on the isFlagSecureEnabled prop.
- * On unmount, FLAG_SECURE gets disabled if it was enabled.
+ *
+ * On Android, it enables or disables FLAG_SECURE based on the isAllowedSnapshotCurrentScreen prop.
+ *
+ * @param props
+ * @constructor
  */
 const FlagSecureComponent: React.FunctionComponent<Props> = props => {
   useEffect(

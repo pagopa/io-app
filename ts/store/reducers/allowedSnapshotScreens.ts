@@ -21,10 +21,14 @@ const screenBonusVacanzaWhiteList: ReadonlyArray<string> = [
   )
 ];
 
-const screenWhiteList = bonusVacanzeEnabled
+export const screenWhiteList = bonusVacanzeEnabled
   ? new Set([...defaultScreenWhiteList, ...screenBonusVacanzaWhiteList])
   : new Set(defaultScreenWhiteList);
 
+/**
+ * Return {true} if the current screen can be snapshotted (android only).
+ * If the app is in debug mode, the snapshot is always possible.
+ */
 export const isAllowedSnapshotCurrentScreen = createSelector(
   [plainNavigationCurrentRouteSelector, isDebugModeEnabledSelector],
   (currentRoute, debugEnabled) =>
