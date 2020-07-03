@@ -15,17 +15,17 @@ import {
   completeBonusVacanzeActivation,
   showBonusVacanze
 } from "../../../actions/bonusVacanze";
-import allActiveReducer from "../../../reducers/allActive";
-import { bonusActivationSaga } from "../getBonusActivationSaga";
-import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
 import bonusVacanzeActivationReducer, {
   BonusActivationProgressEnum
 } from "../../../reducers/activation";
+import allActiveReducer from "../../../reducers/allActive";
 import {
   ActivationBackendResponse,
   backendIntegrationTestCases,
   MockActivationState
 } from "../__mock__/backendMockData";
+import { bonusActivationSaga } from "../getBonusActivationSaga";
+import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
 
 jest.mock("react-native-background-timer", () => {
   return {

@@ -11,11 +11,11 @@ import {
   cancelBonusVacanzeRequest,
   completeBonusVacanzeActivation
 } from "../../../actions/bonusVacanze";
-import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
 import {
   navigationActions,
   networkingActivationResultActions
 } from "../__mock__/networkingSagaResponseMockData";
+import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
 
 jest.mock("react-native-background-timer", () => {
   return {
