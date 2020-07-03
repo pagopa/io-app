@@ -133,6 +133,13 @@ const styles = StyleSheet.create({
   },
   consumedOpacity: {
     opacity: 0.5
+  },
+  shadowBox: {
+    marginBottom: -13,
+    borderRadius: 8,
+    borderTopWidth: 10,
+    borderTopColor: "rgba(0,0,0,0.1)",
+    height: 15
   }
 });
 
@@ -275,15 +282,18 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   return (
-    <ImageBackground
-      style={[styles.container, props.preview ? styles.preview : {}]}
-      imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
-      source={props.preview ? bonusVacanzePreviewBg : bonusVacanzeBg}
-    >
-      <View style={styles.paddedContent}>
-        {props.preview ? renderPreviewCard() : renderFullCard()}
-      </View>
-    </ImageBackground>
+    <>
+      {Platform.OS === "android" && <View style={styles.shadowBox} />}
+      <ImageBackground
+        style={[styles.container, props.preview ? styles.preview : {}]}
+        imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
+        source={props.preview ? bonusVacanzePreviewBg : bonusVacanzeBg}
+      >
+        <View style={styles.paddedContent}>
+          {props.preview ? renderPreviewCard() : renderFullCard()}
+        </View>
+      </ImageBackground>
+    </>
   );
 };
 

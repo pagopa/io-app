@@ -84,6 +84,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       <GenericErrorComponent
         onRetry={this.props.loadAvailableBonuses}
         onCancel={this.props.navigateBack}
+        subText={" "}
       />
     ) : (
       <BaseScreenComponent
