@@ -15,7 +15,7 @@ import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
 import {
   navigationActions,
   networkingActivationResultActions
-} from "./mockData";
+} from "../__mock__/networkingSagaResponseMockData";
 
 jest.mock("react-native-background-timer", () => {
   return {
@@ -31,7 +31,7 @@ jest.mock("react-native-share", () => {
 
 type BonusVacanzeReturnType = ActionType<typeof activateBonusVacanze>;
 
-describe("Bonus Activation Saga", () => {
+describe("Bonus Activation Saga, mock networking saga", () => {
   it("Cancel bonus activation saga", () => {
     return expectSaga(handleBonusActivationSaga, mockRemote)
       .provide([

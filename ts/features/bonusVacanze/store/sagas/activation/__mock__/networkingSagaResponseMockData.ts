@@ -1,6 +1,7 @@
 import { Action } from "redux";
 import { ActionType } from "typesafe-actions";
 import { InstanceId } from "../../../../../../../definitions/bonus_vacanze/InstanceId";
+import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { mockedBonus } from "../../../../mock/mockData";
 import {
@@ -14,6 +15,8 @@ import {
 import BONUSVACANZE_ROUTES from "../../../../navigation/routes";
 import { activateBonusVacanze } from "../../../actions/bonusVacanze";
 import { BonusActivationProgressEnum } from "../../../reducers/activation";
+
+// This file mocks response from the networking saga.
 
 export interface IExpectedActions {
   displayName: string;
@@ -42,6 +45,13 @@ interface NetworkingResults extends IExpectedActions {
   results: ActionType<typeof activateBonusVacanze>;
 }
 
+// When the saga is completed with a `completeBonusVacanzeActivation` and no a valid payload is found
+// return to wallet. To test the saga, after the networking part a `completeDummyActions` is executed.
+export const completeBonusDefaultActions: ReadonlyArray<Action> = [
+  navigateToWalletHome(),
+  navigationHistoryPop(1)
+];
+
 export const activationSuccess: NetworkingResults = {
   displayName: "activationSuccess",
   results: activateBonusVacanze.success({
@@ -63,7 +73,11 @@ export const activationTimeout: NetworkingResults = {
     status: BonusActivationProgressEnum.TIMEOUT,
     instanceId: { id: "unique_id" } as InstanceId
   }),
-  expectedActions: [navigateToBonusActivationTimeout(), navigationHistoryPop(1)]
+  expectedActions: [
+    navigateToBonusActivationTimeout(),
+    navigationHistoryPop(1),
+    ...completeBonusDefaultActions
+  ]
 };
 
 export const activationExpired: NetworkingResults = {
@@ -71,7 +85,11 @@ export const activationExpired: NetworkingResults = {
   results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.ELIGIBILITY_EXPIRED
   }),
-  expectedActions: [navigateToEligibilityExpired(), navigationHistoryPop(1)]
+  expectedActions: [
+    navigateToEligibilityExpired(),
+    navigationHistoryPop(1),
+    ...completeBonusDefaultActions
+  ]
 };
 
 export const activationExists: NetworkingResults = {
@@ -79,7 +97,11 @@ export const activationExists: NetworkingResults = {
   results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.EXISTS
   }),
-  expectedActions: [navigateToBonusAlreadyExists(), navigationHistoryPop(1)]
+  expectedActions: [
+    navigateToBonusAlreadyExists(),
+    navigationHistoryPop(1),
+    ...completeBonusDefaultActions
+  ]
 };
 
 // when an error occurs, no navigation is expected, just the reducer `isLoading` should return false
@@ -88,7 +110,7 @@ export const activationError: NetworkingResults = {
   results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.ERROR
   }),
-  expectedActions: []
+  expectedActions: completeBonusDefaultActions
 };
 
 // This case should never happens, but in case no action is expected
@@ -97,7 +119,7 @@ export const activationUndefined: NetworkingResults = {
   results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.UNDEFINED
   }),
-  expectedActions: []
+  expectedActions: completeBonusDefaultActions
 };
 
 // This case should never happens, but in case no action is expected
@@ -106,7 +128,7 @@ export const activationProgress: NetworkingResults = {
   results: activateBonusVacanze.success({
     status: BonusActivationProgressEnum.PROGRESS
   }),
-  expectedActions: []
+  expectedActions: completeBonusDefaultActions
 };
 
 export const networkingActivationResultActions: ReadonlyArray<
@@ -125,5 +147,3 @@ export const navigationActions: ReadonlyArray<StartScreenScenario> = [
   startFromAnotherScreen,
   startFromLoadingScreen
 ];
-
-test.skip("mockDataOnlyFile", () => undefined);

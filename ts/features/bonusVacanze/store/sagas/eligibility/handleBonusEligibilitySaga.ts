@@ -3,6 +3,7 @@ import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, race, select, take } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
+import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -19,7 +20,8 @@ import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   activateBonusVacanze,
   cancelBonusVacanzeRequest,
-  checkBonusVacanzeEligibility
+  checkBonusVacanzeEligibility,
+  showBonusVacanze
 } from "../../actions/bonusVacanze";
 import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
 import { bonusEligibilitySaga } from "./getBonusEligibilitySaga";
@@ -94,11 +96,15 @@ export function* handleBonusEligibilitySaga(
 ): SagaIterator {
   // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
 
-  const { cancelAction } = yield race({
+  const { cancelAction, showAction } = yield race({
     eligibility: call(eligibilityWorker, eligibilitySaga),
-    cancelAction: take(cancelBonusVacanzeRequest)
+    cancelAction: take(cancelBonusVacanzeRequest),
+    showAction: take(showBonusVacanze)
   });
   if (cancelAction) {
     yield put(NavigationActions.back());
+  } else if (showAction) {
+    yield put(navigateToWalletHome());
+    yield put(navigationHistoryPop(1));
   }
 }

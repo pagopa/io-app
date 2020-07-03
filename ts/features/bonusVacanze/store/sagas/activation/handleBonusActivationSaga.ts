@@ -91,6 +91,10 @@ export function* activationWorker(activationSaga: BonusActivationSagaType) {
     );
     // remove the congratulation screen from the navigation stack
     yield put(navigationHistoryPop(1));
+  } else {
+    // to avoid leaving the user stuck in this screen in case of lack of payload, return to wallet
+    yield put(navigateToWalletHome());
+    yield put(navigationHistoryPop(1));
   }
 }
 

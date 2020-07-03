@@ -6,26 +6,26 @@ import { Action, combineReducers } from "redux";
 import { expectSaga, RunResult } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { select } from "redux-saga-test-plan/matchers";
-import { navigateToWalletHome } from "../../../../../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
-import { navigationCurrentRouteSelector } from "../../../../../../../store/reducers/navigation";
-import BONUSVACANZE_ROUTES from "../../../../../navigation/routes";
+import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
+import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
+import BONUSVACANZE_ROUTES from "../../../../navigation/routes";
 import {
   cancelBonusVacanzeRequest,
   completeBonusVacanzeActivation,
   showBonusVacanze
-} from "../../../../actions/bonusVacanze";
-import allActiveReducer from "../../../../reducers/allActive";
-import { bonusActivationSaga } from "../../getBonusActivationSaga";
-import { handleBonusActivationSaga } from "../../handleBonusActivationSaga";
+} from "../../../actions/bonusVacanze";
+import allActiveReducer from "../../../reducers/allActive";
+import { bonusActivationSaga } from "../getBonusActivationSaga";
+import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
 import bonusVacanzeActivationReducer, {
   BonusActivationProgressEnum
-} from "./../../../../reducers/activation";
+} from "../../../reducers/activation";
 import {
   ActivationBackendResponse,
   backendIntegrationTestCases,
   MockActivationState
-} from "./mockData";
+} from "../__mock__/backendMockData";
 
 jest.mock("react-native-background-timer", () => {
   return {
@@ -54,7 +54,9 @@ const getDisplayNameBackendResponse = (value: Either<Errors, any>): string => {
     }
   );
 };
-
+/** This test suite test the integration of the Activation saga, mocking the backend responses
+ *
+ */
 describe("Bonus Activation Saga Integration Test", () => {
   it("Cancel A bonus request after server error", () => {
     const startBonusActivation = jest.fn();
