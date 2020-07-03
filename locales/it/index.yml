@@ -506,6 +506,9 @@ onboarding:
     headerTitle: Attivazione
     accept: Accetta
     error: Errore nel caricamento
+    alert:
+      title: Attenzione
+      message: Devi leggere tutto il contenuto dei Termini di servizio e Privacy policy per continuare.
   unlockCode:
     headerTitle: Attivazione
     contentTitle: Scegli un codice di sblocco

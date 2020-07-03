@@ -1,6 +1,6 @@
 export const AVOID_ZOOM_JS = `
 const meta = document.createElement('meta');
-meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
+meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');
 meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);`;
 
 export const ON_SCROLL_END_LISTENER = `window.onscroll=function(){

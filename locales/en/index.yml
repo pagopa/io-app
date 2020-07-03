@@ -486,6 +486,9 @@ onboarding:
     headerTitle: Activation
     accept: Accept
     error: Loading error
+    alert:
+      title: Attention
+      message: Please, read the full content of the Terms of Service and Privacy Policy to continue
   unlockCode:
     headerTitle: Activation
     contentTitle: Choose an unlock code
