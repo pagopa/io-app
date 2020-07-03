@@ -26,10 +26,6 @@ const BONUSVACANZE_ROUTES: BonusVacanzeRouteType = {
   }
 };
 
-type SubRoute = {
-  [propName: string]: string;
-};
-
 type BonusVacanzeRouteType = {
   MAIN: string;
   BONUS_AVAILABLE_LIST: string;
@@ -37,8 +33,8 @@ type BonusVacanzeRouteType = {
   BONUS_REQUEST_INFORMATION: string;
   BONUS_TOS_SCREEN: string;
   BONUS_ACTIVE_DETAIL_SCREEN: string;
-  ELIGIBILITY: SubRoute;
-  ACTIVATION: SubRoute;
+  ELIGIBILITY: Record<string, string>;
+  ACTIVATION: Record<string, string>;
 };
 
 export default BONUSVACANZE_ROUTES;

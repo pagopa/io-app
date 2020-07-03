@@ -21,7 +21,12 @@ const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
 export const navigationStateSelector = (state: GlobalState): NavigationState =>
   state.nav;
 
-// if some, it returns the name of the current route
+/**
+ * If some, it returns the name of the current route.
+ * Don't use this as conditional param to update the rendering of a component or to compute
+ * another selector because return always a different {@link Option} each time the state is updated
+ * @param state
+ */
 export const navigationCurrentRouteSelector = (
   state: GlobalState
 ): Option<string> => {
@@ -32,6 +37,7 @@ export const navigationCurrentRouteSelector = (
   });
 };
 
+// Return a string that represent the current route
 export const plainNavigationCurrentRouteSelector = createSelector(
   navigationCurrentRouteSelector,
   maybeRoute => maybeRoute.getOrElse("")

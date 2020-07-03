@@ -7,18 +7,7 @@ import { plainNavigationCurrentRouteSelector } from "./navigation";
 const defaultScreenWhiteList: ReadonlyArray<string> = [];
 
 const screenBonusVacanzaWhiteList: ReadonlyArray<string> = [
-  BONUSVACANZE_ROUTES.MAIN,
-  BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN,
-  BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST,
-  BONUSVACANZE_ROUTES.BONUS_CTA_ELIGILITY_START,
-  BONUSVACANZE_ROUTES.BONUS_REQUEST_INFORMATION,
-  BONUSVACANZE_ROUTES.BONUS_TOS_SCREEN,
-  ...Object.keys(BONUSVACANZE_ROUTES.ELIGIBILITY).map(
-    k => BONUSVACANZE_ROUTES.ELIGIBILITY[k]
-  ),
-  ...Object.keys(BONUSVACANZE_ROUTES.ACTIVATION).map(
-    k => BONUSVACANZE_ROUTES.ACTIVATION[k]
-  )
+  BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN
 ];
 
 export const screenWhiteList = bonusVacanzeEnabled
