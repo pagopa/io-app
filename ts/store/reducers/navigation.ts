@@ -1,12 +1,12 @@
+import { index } from "fp-ts/lib/Array";
+import { none, Option } from "fp-ts/lib/Option";
 import {
   NavigationActions,
   NavigationState,
   StackActions
 } from "react-navigation";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-
-import { index } from "fp-ts/lib/Array";
-import { none, Option } from "fp-ts/lib/Option";
 import AppNavigator from "../../navigation/AppNavigator";
 import { getRouteName } from "../../utils/navigation";
 import { navigationRestore } from "../actions/navigation";
@@ -21,14 +21,27 @@ const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
 export const navigationStateSelector = (state: GlobalState): NavigationState =>
   state.nav;
 
-// if some, it returns the name of the current route
+/**
+ * If some, it returns the name of the current route.
+ * Don't use this as conditional param to update the rendering of a component or to compute
+ * another selector because return always a different {@link Option} each time the state is updated
+ * @param state
+ */
 export const navigationCurrentRouteSelector = (
   state: GlobalState
 ): Option<string> => {
-  return index(state.nav.index, [...state.nav.routes]).fold(none, ln =>
-    getRouteName(ln.routes[ln.index])
-  );
+  return index(state.nav.index, [...state.nav.routes]).fold(none, ln => {
+    return "routes" in ln && "index" in ln
+      ? getRouteName(ln.routes[ln.index])
+      : getRouteName(ln);
+  });
 };
+
+// Return a string that represent the current route
+export const plainNavigationCurrentRouteSelector = createSelector(
+  navigationCurrentRouteSelector,
+  maybeRoute => maybeRoute.getOrElse("")
+);
 
 function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {

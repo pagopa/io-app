@@ -1,12 +1,11 @@
 /**
  * Aggregates all defined reducers
  */
+import AsyncStorage from "@react-native-community/async-storage";
 import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
-
-import AsyncStorage from "@react-native-community/async-storage";
 import bonusReducer from "../../features/bonusVacanze/store/reducers";
 import { logoutFailure, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
@@ -71,7 +70,7 @@ export const identificationPersistConfig: PersistConfig = {
  * More at
  * @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
-const appReducer: Reducer<GlobalState, Action> = combineReducers<
+export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   GlobalState,
   Action
 >({
