@@ -6,7 +6,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import JailMonkey from "jail-monkey";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
+import DeviceInfo from "react-native-device-info";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -146,6 +147,20 @@ class LandingScreen extends React.PureComponent<Props, State> {
     }
   }
 
+  private displayTabletAlert() {
+    Alert.alert(
+      "",
+      I18n.t("tablet.message"),
+      [
+        {
+          text: I18n.t("global.buttons.continue"),
+          style: "cancel"
+        }
+      ],
+      { cancelable: true }
+    );
+  }
+
   private openUnsupportedCIEModal = () => {
     this.props.showAnimatedModal(
       <ContextualHelp
@@ -207,6 +222,9 @@ class LandingScreen extends React.PureComponent<Props, State> {
           onCancel={() => this.handleContinueWithRootOrJailbreak(false)}
         />
       );
+    }
+    if (DeviceInfo.isTablet()) {
+      this.displayTabletAlert();
     }
     return (
       <BaseScreenComponent
