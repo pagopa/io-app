@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
+import { isAccessibilityModeEnabled } from "../../config";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -16,8 +17,6 @@ import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
-import Config from 'react-native-config';
-import { isAccessibilityModeEnabled } from '../../config';
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -68,18 +67,14 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     const { customGoBack, headerTitle } = this.props;
     const isWhite = this.props.primary || this.props.dark;
 
-    if(isAccessibilityModeEnabled){
+    if (isAccessibilityModeEnabled) {
       return;
     }
 
     // if customGoBack is provided or if the app is in accessibility mode only the header text will be rendered
     if (customGoBack) {
       return (
-        <Text
-          white={isWhite}
-          numberOfLines={1}
-          accessible={false}
-        >
+        <Text white={isWhite} numberOfLines={1} accessible={false}>
           {headerTitle}
         </Text>
       );
@@ -87,7 +82,10 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     // if no customGoBack is provided also the header text could be press to execute goBack
     // note goBack could a boolean or a function (check this.getGoBackHandler)
     return (
-      <TouchableDefaultOpacity onPress={this.getGoBackHandler} accessible={false}>
+      <TouchableDefaultOpacity
+        onPress={this.getGoBackHandler}
+        accessible={false}
+      >
         <Text white={isWhite} numberOfLines={1}>
           {headerTitle}
         </Text>
@@ -137,7 +135,9 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               style={styles.helpButton}
               transparent={true}
               accessibilityLabel={"Aiuto contestuale"}
-              accessibilityHint={"Accedi alle informazioni utili sul contenuto della schermata corrente"} // TODO: evaluate how customize
+              accessibilityHint={
+                "Accedi alle informazioni utili sul contenuto della schermata corrente"
+              } // TODO: evaluate how customize
             >
               <IconFont name={"io-question"} />
             </ButtonDefaultOpacity>

@@ -1,11 +1,11 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInput } from "react-native";
+import { isAccessibilityModeEnabled } from "../../config";
 import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
+import InputPlaceHolder from "../Pinpad/InputPlaceholder";
 import { INPUT_PLACEHOLDER_HEIGHT } from "../Pinpad/Placeholders";
-import InputPlaceHolder from '../Pinpad/InputPlaceholder';
-import customVariables from '../../theme/variables';
-import { isAccessibilityModeEnabled } from '../../config';
 
 type Props = {
   description: string;
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
  * A customized CodeInput component.
  */
 const CiePinpad = (props: Props) => {
-
   const handleOnSubmit = () => {
     {
       // if pin is full filled
@@ -58,34 +57,36 @@ const CiePinpad = (props: Props) => {
   };
 
   return (
-      <View>
-        <InputPlaceHolder
-          digits={props.pinLength} 
-          activeColor={customVariables.colorBlack} 
-          inactiveColor={variables.brandLightGray} 
-          inputValue={props.pin || ""}
-        />
-        <TextInput
-          style={styles.input}
-          maxLength={props.pinLength}
-          caretHidden={true}
-          onChangeText={(pin: string) => {
-            props.onPinChanged(pin)
-          }}
-          autoFocus={!isAccessibilityModeEnabled}
-          multiline={false}
-          keyboardType={"number-pad"}
-          onSubmitEditing={handleOnSubmit}
-          value={props.pin}
-          accessible={true}
-          accessibilityLabel={'campo inserimento pin Cie'}
-          accessibilityHint={'inserire in questo campo il pin della propria Carta di Identità Elettronica'}
-        />
-        <View spacer={true} />
-        <Text>{props.description}</Text>
-        <View spacer={true} />
-      </View>
-    );
+    <View>
+      <InputPlaceHolder
+        digits={props.pinLength}
+        activeColor={customVariables.colorBlack}
+        inactiveColor={variables.brandLightGray}
+        inputValue={props.pin || ""}
+      />
+      <TextInput
+        style={styles.input}
+        maxLength={props.pinLength}
+        caretHidden={true}
+        onChangeText={(pin: string) => {
+          props.onPinChanged(pin);
+        }}
+        autoFocus={!isAccessibilityModeEnabled}
+        multiline={false}
+        keyboardType={"number-pad"}
+        onSubmitEditing={handleOnSubmit}
+        value={props.pin}
+        accessible={true}
+        accessibilityLabel={"campo inserimento pin Cie"}
+        accessibilityHint={
+          "inserire in questo campo il pin della propria Carta di Identità Elettronica"
+        }
+      />
+      <View spacer={true} />
+      <Text>{props.description}</Text>
+      <View spacer={true} />
+    </View>
+  );
 };
 
 export default CiePinpad;

@@ -29,7 +29,7 @@ const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 // Default number of workers to fetch message.
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 
-export const environment: string = "PROD"//Config.ENVIRONMENT;
+export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
@@ -86,8 +86,7 @@ export const privacyUrl: string = t.string
   .decode(Config.PRIVACY_URL)
   .getOrElse("https://io.italia.it/app-content/tos_privacy.html");
 
-
-// TODO: 
-// evaluate if it is possible to set it dinamically (depending on the user settings). 
+// TODO:
+// evaluate if it is possible to set it dinamically (depending on the user settings).
 // otherwise, it could be a presisted preference
 export const isAccessibilityModeEnabled = true;
