@@ -182,7 +182,7 @@ profile:
         title: Privacy policy
         description: See the Privacy policy and the conditions of use of IO
         header: Information note on the processing of the IO app users's personal data
-        updated: It is required to accept the new version of Terms and Conditions
+        updated: We updated our Terms and conditions
         infobox: It is necessary to read and accept the Terms and Conditions
         contextualHelpTitlePolicy: What is the information on the processing of personal data
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
