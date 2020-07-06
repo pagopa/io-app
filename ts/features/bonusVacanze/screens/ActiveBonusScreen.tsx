@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
   image: {
     position: "absolute",
     top: -144,
-    resizeMode: "stretch",
     height: 168,
     width: "100%",
     shadowColor: "#000",
@@ -97,7 +96,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     zIndex: 7,
     elevation: 7,
-    alignSelf: "center"
+    alignSelf: "center",
+    justifyContent: "center",
+    maxWidth: 327
   },
   center: {
     alignSelf: "center"
@@ -295,7 +296,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     text: string,
     iconColor?: string
   ) => (
-    <View style={[styles.rowBlock, styles.itemsCenter]}>
+    <View
+      style={[
+        styles.rowBlock,
+        styles.itemsCenter,
+        { justifyContent: "center" }
+      ]}
+    >
       <IconFont
         name={icon}
         color={fromNullable(iconColor).getOrElse(variables.textColor)}
