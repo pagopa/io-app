@@ -7,7 +7,6 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
@@ -29,17 +28,18 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    height: 168
   },
   imageFull: {
     resizeMode: "stretch",
     height: 168,
-    width: Platform.OS === "android" ? wp("89%") : "100%"
+    maxWidth: 327
   },
   imagePreview: {
     resizeMode: "stretch",
     height: 88,
-    width: Platform.OS === "android" ? wp("92%") : "100%"
+    width: "100%"
   },
   preview: {
     marginBottom: -20,
@@ -139,7 +139,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderTopWidth: 10,
     borderTopColor: "rgba(0,0,0,0.1)",
-    height: 15
+    height: 15,
+    width: "100%",
+    maxWidth: 327
   }
 });
 
