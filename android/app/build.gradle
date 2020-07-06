@@ -116,8 +116,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 40000
-        versionName "1.3.3"
+        versionCode System.getenv('CIRCLE_BUILD_NUM') ? ("100" + System.getenv('CIRCLE_BUILD_NUM')).toInteger() : 1
+        versionName "1.1." + (System.getenv('CIRCLE_BUILD_NUM') ? System.getenv('CIRCLE_BUILD_NUM') : "1")
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -203,13 +203,20 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false)
 
 dependencies {
+    implementation project(':jail-monkey')
+    implementation project(':react-native-linear-gradient')
     implementation project(':react-native-share')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"
     compile project(':react-native-cie')
-    compile "com.squareup.okhttp3:okhttp:4.2.1"
-    compile "com.squareup.okhttp3:logging-interceptor:4.2.1"
-    compile "com.squareup.okhttp3:okhttp-urlconnection:4.2.1"
+    // compile "com.squareup.okhttp3:okhttp:4.2.1"
+    // compile "com.squareup.okhttp3:logging-interceptor:4.2.1"
+    // compile "com.squareup.okhttp3:okhttp-urlconnection:4.2.1"
+    //OkHttp
+    implementation ("com.squareup.okhttp3:okhttp:3.12.12"){
+        force = true //API 19 support
+    }
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.12'
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermesvm/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")

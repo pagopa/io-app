@@ -29,6 +29,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
+import { AVOID_ZOOM_JS } from "../../utils/webview";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -41,12 +42,6 @@ type State = {
 };
 
 const brokenLinkImage = require("../../../img/broken-link.png");
-const AVOID_ZOOM_JS = `
-const meta = document.createElement('meta');
-meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
-meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);
-true;
-`;
 
 const styles = StyleSheet.create({
   alert: {

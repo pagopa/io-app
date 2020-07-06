@@ -6,14 +6,16 @@ import themeVariables from "../../../../theme/variables";
 type Props = {
   image: React.ReactNode;
   title?: string;
-  body?: string;
+  // this is necessary in order to render text with different formatting
+  body?: string | React.ReactNode;
 };
 
 const styles = StyleSheet.create({
   main: {
     padding: themeVariables.contentPadding,
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center"
   },
   title: {
     textAlign: "center",
@@ -21,8 +23,21 @@ const styles = StyleSheet.create({
   },
   body: {
     textAlign: "center"
+  },
+  bold: {
+    fontWeight: "bold"
   }
 });
+
+export const InfoScreenStyle = styles;
+
+const renderNode = (body: string | React.ReactNode) => {
+  if (typeof body === "string") {
+    return <Text style={styles.body}>{body}</Text>;
+  }
+
+  return body;
+};
 
 /**
  * A base screen that displays one image, text, and one bottom button
@@ -32,11 +47,8 @@ const styles = StyleSheet.create({
 export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
   return (
     <View style={styles.main}>
-      <View spacer={true} extralarge={true} />
-      <View spacer={true} extralarge={true} />
-      <View spacer={true} extralarge={true} />
       {props.image}
-      <View spacer={true} extralarge={true} />
+      <View spacer={true} large={true} />
       {props.title && (
         <>
           <Text style={styles.title} bold={true}>
@@ -46,7 +58,7 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
         </>
       )}
 
-      <Text style={styles.body}>{props.body}</Text>
+      {renderNode(props.body)}
     </View>
   );
 };

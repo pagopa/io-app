@@ -3,6 +3,7 @@ import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { isStringNullyOrEmpty } from "../../utils/strings";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { BadgeComponent } from "../screens/BadgeComponent";
 
@@ -59,17 +60,22 @@ const styles = StyleSheet.create({
  * This component displays the transaction details
  */
 export const PaymentSummaryComponent = (props: Props) => {
-  const renderItem = (label: string, value: string) => (
-    <React.Fragment>
-      <Text small={true} style={props.dark && styles.lighterGray}>
-        {label}
-      </Text>
-      <Text bold={true} dark={!props.dark} white={props.dark}>
-        {value}
-      </Text>
-      <View spacer={true} />
-    </React.Fragment>
-  );
+  const renderItem = (label: string, value?: string) => {
+    if (isStringNullyOrEmpty(value)) {
+      return null;
+    }
+    return (
+      <React.Fragment>
+        <Text small={true} style={props.dark && styles.lighterGray}>
+          {label}
+        </Text>
+        <Text bold={true} dark={!props.dark} white={props.dark}>
+          {value}
+        </Text>
+        <View spacer={true} />
+      </React.Fragment>
+    );
+  };
 
   const paymentStatus = props.paymentStatus && (
     <React.Fragment>
@@ -103,16 +109,14 @@ export const PaymentSummaryComponent = (props: Props) => {
 
       <View style={styles.row}>
         <View style={styles.column}>
-          {props.recipient &&
-            renderItem(I18n.t("wallet.recipient"), props.recipient)}
+          {renderItem(I18n.t("wallet.recipient"), props.recipient)}
 
-          {props.description &&
-            renderItem(
-              I18n.t("wallet.firstTransactionSummary.object"),
-              props.description
-            )}
+          {renderItem(
+            I18n.t("wallet.firstTransactionSummary.object"),
+            props.description
+          )}
 
-          {props.iuv && renderItem(I18n.t("payment.IUV"), props.iuv)}
+          {renderItem(I18n.t("payment.IUV"), props.iuv)}
         </View>
 
         {props.image !== undefined && <Image source={props.image} />}

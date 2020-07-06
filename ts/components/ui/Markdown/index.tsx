@@ -191,6 +191,7 @@ const convertOldDemoMarkdownTag = (markdown: string) =>
 type OwnProps = {
   children: string;
   animated?: boolean;
+  extraBodyHeight?: number;
   useCustomSortedList?: boolean;
   onLoadEnd?: () => void;
   onLinkClicked?: (url: string) => void;
@@ -293,10 +294,10 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { webViewStyle } = this.props;
+    const { extraBodyHeight, webViewStyle } = this.props;
     const { html, htmlBodyHeight } = this.state;
     const containerStyle: ViewStyle = {
-      height: htmlBodyHeight
+      height: htmlBodyHeight + (extraBodyHeight || 0)
     };
 
     const isLoading =
