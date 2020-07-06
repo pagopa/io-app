@@ -28,7 +28,6 @@ import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
-  LogoutOption,
   logoutRequest,
   sessionExpired
 } from "../../store/actions/authentication";
