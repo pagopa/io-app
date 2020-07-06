@@ -161,7 +161,7 @@ class TosScreen extends React.PureComponent<Props, State> {
     if (this.state.scrollEnd) {
       return;
     }
-    // We validate the format of the message with io-ts
+    // We validate the format of the message with a dedicated codec
     const messageOrErrors = WebViewMessage.decode(
       JSON.parse(event.nativeEvent.data)
     );
@@ -177,9 +177,9 @@ class TosScreen extends React.PureComponent<Props, State> {
     const { dispatch } = this.props;
 
     const shouldFooterRender =
-      this.state.hasError === false &&
-      this.state.isLoading === false &&
-      this.props.isOnbardingCompleted === false;
+      !this.state.hasError &&
+      !this.state.isLoading &&
+      !this.props.isOnbardingCompleted;
 
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
@@ -193,15 +193,15 @@ class TosScreen extends React.PureComponent<Props, State> {
         }
       >
         <SafeAreaView style={styles.webViewContainer}>
-          {this.props.hasAcceptedOldTosVersion && (
-            <View style={styles.alert}>
-              <Text>
-                {I18n.t("profile.main.privacy.privacyPolicy.updated")}
-              </Text>
-            </View>
-          )}
+          <View style={styles.alert}>
+            <Text>
+              {this.props.hasAcceptedOldTosVersion
+                ? I18n.t("profile.main.privacy.privacyPolicy.updated")
+                : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
+            </Text>
+          </View>
           {this.renderError()}
-          {this.state.hasError === false && (
+          {!this.state.hasError && (
             <TosWebviewComponent
               handleError={this.handleError}
               handleLoadEnd={this.handleLoadEnd}
