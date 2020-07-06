@@ -61,6 +61,8 @@ global:
     spidLogin:
       title: Ricordati di accedere ad IO!
       message: Accedi con la tua identità digitale su IO, l’app dei servizi pubblici
+tablet:
+  message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
 rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
   bodyiOS: !include jailbroken_body.md
@@ -117,6 +119,7 @@ profile:
   unknown: SCONOSCIUTO
   logout:
     menulabel: Esci da IO
+    alertMessage: Uscendo da IO ti verrà chiesto nuovamente di accedere. Vuoi Uscire?
     cta:
       header: Come vuoi uscire dall'app?
       keepData:
