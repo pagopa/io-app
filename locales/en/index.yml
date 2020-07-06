@@ -61,6 +61,8 @@ global:
     spidLogin:
       title: Remember to login to IO!
       message: Login with your digital identity on IO, the public services app
+tablet:
+  message: The IO interface is optimized for smartphones, but all the functions compatible with your device are still available.
 rooted:
   title: Looks like the security of your device has been compromised!
   bodyiOS: !include jailbroken_body.md
