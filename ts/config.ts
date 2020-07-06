@@ -85,8 +85,3 @@ export const shufflePinPadOnPayment =
 export const privacyUrl: string = t.string
   .decode(Config.PRIVACY_URL)
   .getOrElse("https://io.italia.it/app-content/tos_privacy.html");
-
-// TODO:
-// evaluate if it is possible to set it dinamically (depending on the user settings).
-// otherwise, it could be a presisted preference
-export const isAccessibilityModeEnabled = true;

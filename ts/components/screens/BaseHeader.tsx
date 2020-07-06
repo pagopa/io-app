@@ -3,7 +3,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
-import { isAccessibilityModeEnabled } from "../../config";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -67,14 +66,16 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     const { customGoBack, headerTitle } = this.props;
     const isWhite = this.props.primary || this.props.dark;
 
-    if (isAccessibilityModeEnabled) {
-      return;
-    }
-
     // if customGoBack is provided or if the app is in accessibility mode only the header text will be rendered
     if (customGoBack) {
       return (
-        <Text white={isWhite} numberOfLines={1} accessible={false}>
+        <Text
+          white={isWhite}
+          numberOfLines={1}
+          accessible={false}
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
+        >
           {headerTitle}
         </Text>
       );
@@ -86,7 +87,12 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
         onPress={this.getGoBackHandler}
         accessible={false}
       >
-        <Text white={isWhite} numberOfLines={1}>
+        <Text
+          white={isWhite}
+          numberOfLines={1}
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
+        >
           {headerTitle}
         </Text>
       </TouchableDefaultOpacity>

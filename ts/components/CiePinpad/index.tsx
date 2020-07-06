@@ -1,7 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInput } from "react-native";
-import { isAccessibilityModeEnabled } from "../../config";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
@@ -72,7 +71,6 @@ const CiePinpad = (props: Props) => {
         onChangeText={(pin: string) => {
           props.onPinChanged(pin);
         }}
-        autoFocus={!isAccessibilityModeEnabled}
         multiline={false}
         keyboardType={"number-pad"}
         onSubmitEditing={handleOnSubmit}

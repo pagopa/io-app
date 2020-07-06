@@ -58,7 +58,7 @@ const InputPlaceHolder: React.FunctionComponent<Props> = (props: Props) => {
             scalableDimension={scalableDimension}
           />
         )}
-        {i !== digits - 1 && <View hspacer={true} />}
+        {i < digits && <View hspacer={true} />}
       </React.Fragment>
     );
   };
