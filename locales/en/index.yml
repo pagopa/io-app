@@ -61,6 +61,8 @@ global:
     spidLogin:
       title: Remember to login to IO!
       message: Login with your digital identity on IO, the public services app
+tablet:
+  message: The IO interface is optimized for smartphones, but all the functions compatible with your device are still available.
 rooted:
   title: Looks like the security of your device has been compromised!
   bodyiOS: !include jailbroken_body.md
@@ -117,6 +119,7 @@ profile:
   unknown: UNKNOWN
   logout:
     menulabel: Logout from IO
+    alertMessage: By exiting IO you will be asked to log in again. Logout?
     cta:
       header: How do you want to quit the app?
       keepData:
