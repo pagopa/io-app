@@ -37,7 +37,7 @@ const InputPlaceHolder: React.FunctionComponent<Props> = (props: Props) => {
 
     const margin = customHorizontalMargin || 0;
 
-    const isPlaceholderPopulated = i <= inputValue.length - 1;
+    const isPlaceholderPopulated = i < inputValue.length;
 
     const scalableDimension: ViewStyle = {
       width:

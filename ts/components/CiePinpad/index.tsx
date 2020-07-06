@@ -68,6 +68,7 @@ const CiePinpad = (props: Props) => {
         style={styles.input}
         maxLength={props.pinLength}
         caretHidden={true}
+        autoFocus={true}
         onChangeText={(pin: string) => {
           props.onPinChanged(pin);
         }}
