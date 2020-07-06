@@ -3,9 +3,9 @@
  */
 import { Header, NativeBase, View } from "native-base";
 import * as React from "react";
+import { ViewProps } from "react-native";
 import variables from "../../theme/variables";
 import ConnectionBar from "../ConnectionBar";
-import { ViewProps } from 'react-native';
 
 type Props = NativeBase.Header & ViewProps;
 

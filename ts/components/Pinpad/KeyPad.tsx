@@ -11,7 +11,10 @@ import StyledIconFont from "../ui/IconFont";
 
 // left -> the string to represent as text
 // right -> the icon to represent with name and size
-export type DigitRpr = Either<string, { name: string; size: number, accessibilityLabel: string }>;
+export type DigitRpr = Either<
+  string,
+  { name: string; size: number; accessibilityLabel: string }
+>;
 type Digit = ITuple2<DigitRpr, () => void> | undefined;
 
 type Props = Readonly<{

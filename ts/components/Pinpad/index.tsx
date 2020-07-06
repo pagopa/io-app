@@ -7,13 +7,13 @@ import * as React from "react";
 import { Alert, Dimensions, StyleSheet, ViewStyle } from "react-native";
 import I18n from "../../i18n";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
+import customVariables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
-import { KeyPad, DigitRpr } from "./KeyPad";
-import customVariables from '../../theme/variables';
-import InputPlaceHolder from './InputPlaceholder';
+import InputPlaceHolder from "./InputPlaceholder";
+import { DigitRpr, KeyPad } from "./KeyPad";
 
 interface Props {
   activeColor: string;
@@ -80,9 +80,17 @@ class Pinpad extends React.PureComponent<Props, State> {
     switch (biometryPrintableSimpleType) {
       case "FINGERPRINT":
       case "TOUCH_ID":
-        return right({ name: "io-fingerprint", size: ICON_WIDTH, accessibilityLabel: 'autenticati mediante impronta digitale' });
+        return right({
+          name: "io-fingerprint",
+          size: ICON_WIDTH,
+          accessibilityLabel: "autenticati mediante impronta digitale"
+        });
       case "FACE_ID":
-        return right({ name: "io-face-id", size: ICON_WIDTH, accessibilityLabel: 'autenticati mediante Face ID' });
+        return right({
+          name: "io-face-id",
+          size: ICON_WIDTH,
+          accessibilityLabel: "autenticati mediante Face ID"
+        });
     }
   }
 
@@ -154,7 +162,11 @@ class Pinpad extends React.PureComponent<Props, State> {
           this.handlePinDigit(pinPadValues[0])
         ),
         Tuple2(
-          right({ name: "io-cancel", size: SMALL_ICON_WIDTH, accessibilityLabel: "cancella l'ultima cifra inserita" }),
+          right({
+            name: "io-cancel",
+            size: SMALL_ICON_WIDTH,
+            accessibilityLabel: "cancella l'ultima cifra inserita"
+          }),
           this.deleteLastDigit
         )
       ]
@@ -205,13 +217,14 @@ class Pinpad extends React.PureComponent<Props, State> {
     // we avoid to shuffle pin/code pad in dev env
     const newPinPadValue =
       this.props.shufflePad !== true ? pinPadValues : shuffle(pinPadValues);
-    
+
     const scalableDimension: ViewStyle = {
-      width: (screenWidth 
-        - (customVariables.spacerWidth * (pinLength-1)) 
-        - (customVariables.contentPadding * 2)
-        - (INPUT_MARGIN * 2)
-      ) / pinLength
+      width:
+        (screenWidth -
+          customVariables.spacerWidth * (pinLength - 1) -
+          customVariables.contentPadding * 2 -
+          INPUT_MARGIN * 2) /
+        pinLength
     };
 
     this.setState({
@@ -273,7 +286,7 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   private handlePinDigit = (digit: string) =>
     this.handleChangeText(`${this.state.value}${digit}`);
- 
+
   public debounceClear = debounce(() => {
     this.setState({ value: "" });
   }, 100);
@@ -295,12 +308,13 @@ class Pinpad extends React.PureComponent<Props, State> {
   public render() {
     return (
       <React.Fragment>
-        <InputPlaceHolder 
-        digits={this.state.pinLength} 
-        activeColor={this.props.activeColor} 
-        inactiveColor={this.props.inactiveColor} 
-        inputValue={this.state.value} 
-        customHorizontalMargin={INPUT_MARGIN}/>
+        <InputPlaceHolder
+          digits={this.state.pinLength}
+          activeColor={this.props.activeColor}
+          inactiveColor={this.props.inactiveColor}
+          inputValue={this.state.value}
+          customHorizontalMargin={INPUT_MARGIN}
+        />
         <View spacer={true} />
         {this.renderCodeInsertionStatus()}
         {this.props.onPinResetHandler !== undefined && (

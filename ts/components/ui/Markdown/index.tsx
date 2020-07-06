@@ -311,8 +311,8 @@ class Markdown extends React.PureComponent<Props, State> {
             color={customVariables.brandPrimary}
             animating={true}
             accessible={true}
-            accessibilityHint={'Attendi il caricamento del contenuto'}
-            accessibilityLabel={'Caricamento in corso'}
+            accessibilityHint={"Attendi il caricamento del contenuto"}
+            accessibilityLabel={"Caricamento in corso"}
           />
         )}
         {/* Hide the WebView until we have the htmlBodyHeight */}

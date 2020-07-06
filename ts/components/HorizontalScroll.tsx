@@ -42,7 +42,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export const HorizontalScroll: React.FunctionComponent<Props> = (props: Props) => {
+export const HorizontalScroll: React.FunctionComponent<Props> = (
+  props: Props
+) => {
   const animVal = new Animated.Value(0);
 
   const barArray = props.cards.map((_, i) => {
