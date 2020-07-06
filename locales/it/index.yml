@@ -117,6 +117,7 @@ profile:
   unknown: SCONOSCIUTO
   logout:
     menulabel: Esci da IO
+    alertMessage: Uscendo da IO ti verrà chiesto nuovamente di accedere. Vuoi Uscire?
     cta:
       header: Come vuoi uscire dall'app?
       keepData:
