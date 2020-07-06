@@ -1,5 +1,16 @@
 ---
 global:
+  accessibility:
+    activityIndicator:
+      label: Loading
+      hint: Wait for the content load
+    header:
+      label: Application header
+    contextualHelp:
+      close: Close the contextual help
+      open:
+        label: Contextual Help
+        hint: Access information about the contents of the current screen
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -279,6 +290,10 @@ spid:
     line2: Insert your email address to enable it.
 authentication:
   landing:
+    accessibility:
+      carousel:
+        label: IO presentation
+        hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
@@ -295,6 +310,7 @@ authentication:
     loginSpid: Login with SPID
     loginCie: Login with CIE
     loginSpidCie: Login with SPID or CIE
+    infoSpidCie: Introduction to SPID and CIE
     loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
     nospid: Don't have SPID? Find out more
     nospid-nocie: Don't have SPID or CIE? Find out more
@@ -328,6 +344,9 @@ authentication:
       enableNfcHeader: Check NFC
       enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
     pin:
+      accessibility:
+        label: Insertion field for Electronic Identity Card pins
+        hint: Enter the 8 digits pin of your Electronic Identity Card in this field.
       pinCardTitle: Enter the PIN of your card
       pinCardHeader: Enter the PIN
       pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
@@ -1052,6 +1071,11 @@ identification:
     tooManyAttempts: Too many attempts.
     waitMessage: "Try again in:"
   unlockCode:
+    accessibility:
+      unlockHint: You entered {{number}} digits
+      fingerprint: Login with your fingerprint
+      faceId: Login with the Face ID
+      delete: Remove last inserted digit
     reset:
       button: Did you forget the
       code: unlock code
