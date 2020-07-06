@@ -1,10 +1,14 @@
 import { createSelector } from "reselect";
 import { bonusVacanzeEnabled } from "../../config";
 import BONUSVACANZE_ROUTES from "../../features/bonusVacanze/navigation/routes";
+import ROUTES from "../../navigation/routes";
 import { isDebugModeEnabledSelector } from "./debug";
 import { plainNavigationCurrentRouteSelector } from "./navigation";
 
-const defaultScreenWhiteList: ReadonlyArray<string> = [];
+const defaultScreenWhiteList: ReadonlyArray<string> = [
+  ROUTES.WALLET_HOME,
+  ROUTES.WALLET_TRANSACTION_DETAILS
+];
 
 const screenBonusVacanzaWhiteList: ReadonlyArray<string> = [
   BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN
