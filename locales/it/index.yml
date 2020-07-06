@@ -182,7 +182,8 @@ profile:
         title: Informativa e condizioni d'uso
         description: Consulta l’Informativa Privacy e le condizioni d’uso di IO
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
-        updated: È necessario prendere visione della nuova versione dell'Informativa
+        updated: Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d'uso
+        infobox: È necessario prendere visione e accettare l'Informativa ed i Termini e condizioni d'uso
         contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
@@ -509,6 +510,9 @@ onboarding:
     headerTitle: Attivazione
     accept: Accetta
     error: Errore nel caricamento
+    alert:
+      title: Attenzione
+      message: Devi leggere tutto il contenuto dei Termini di servizio e Privacy policy per continuare.
   unlockCode:
     headerTitle: Attivazione
     contentTitle: Scegli un codice di sblocco
