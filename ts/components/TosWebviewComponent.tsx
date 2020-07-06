@@ -7,7 +7,6 @@ import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
 type Props = {
-  // scrollEnd: boolean;
   shouldFooterRender: boolean;
   url: string;
   handleLoadEnd: () => void;
