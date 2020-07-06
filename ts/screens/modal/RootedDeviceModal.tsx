@@ -4,7 +4,6 @@ import {
   Alert,
   AlertButton,
   Image,
-  Modal,
   Platform,
   SafeAreaView,
   StyleSheet
@@ -125,36 +124,30 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
     default: I18n.t("rooted.bodyAndroid")
   });
   const ComponentWithLoading = withLoadingSpinner(() => (
-    <Modal>
-      <BaseScreenComponent goBack={false}>
-        <Container>
-          <SafeAreaView style={styles.flex}>
-            <Content>
-              <View style={styles.main}>
-                <Image
-                  source={image}
-                  resizeMode="contain"
-                  style={styles.image}
-                />
-                <View spacer={true} large={true} />
-                <Text style={styles.title} bold={true} dark={true}>
-                  {I18n.t("rooted.title")}
-                </Text>
-              </View>
-              <View spacer={true} small={true} />
-              <Markdown cssStyle={CSS_STYLE} onLoadEnd={onMarkdownLoaded}>
-                {body}
-              </Markdown>
-            </Content>
-            <FooterWithButtons
-              type="TwoButtonsInlineHalf"
-              leftButton={leftButton}
-              rightButton={rightButton}
-            />
-          </SafeAreaView>
-        </Container>
-      </BaseScreenComponent>
-    </Modal>
+    <BaseScreenComponent goBack={false}>
+      <Container>
+        <SafeAreaView style={styles.flex}>
+          <Content>
+            <View style={styles.main}>
+              <Image source={image} resizeMode="contain" style={styles.image} />
+              <View spacer={true} large={true} />
+              <Text style={styles.title} bold={true} dark={true}>
+                {I18n.t("rooted.title")}
+              </Text>
+            </View>
+            <View spacer={true} small={true} />
+            <Markdown cssStyle={CSS_STYLE} onLoadEnd={onMarkdownLoaded}>
+              {body}
+            </Markdown>
+          </Content>
+          <FooterWithButtons
+            type="TwoButtonsInlineHalf"
+            leftButton={leftButton}
+            rightButton={rightButton}
+          />
+        </SafeAreaView>
+      </Container>
+    </BaseScreenComponent>
   ));
 
   return (
