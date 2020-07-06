@@ -117,6 +117,7 @@ profile:
   unknown: UNKNOWN
   logout:
     menulabel: Logout from IO
+    alertMessage: By exiting IO you will be asked to log in again. Logout?
     cta:
       header: How do you want to quit the app?
       keepData:
