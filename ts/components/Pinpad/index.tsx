@@ -83,13 +83,17 @@ class Pinpad extends React.PureComponent<Props, State> {
         return right({
           name: "io-fingerprint",
           size: ICON_WIDTH,
-          accessibilityLabel: "autenticati mediante impronta digitale"
+          accessibilityLabel: I18n.t(
+            "identification.unlockCode.accessibility.fingerprint"
+          )
         });
       case "FACE_ID":
         return right({
           name: "io-face-id",
           size: ICON_WIDTH,
-          accessibilityLabel: "autenticati mediante Face ID"
+          accessibilityLabel: I18n.t(
+            "identification.unlockCode.accessibility.faceId"
+          )
         });
     }
   }
@@ -165,7 +169,9 @@ class Pinpad extends React.PureComponent<Props, State> {
           right({
             name: "io-cancel",
             size: SMALL_ICON_WIDTH,
-            accessibilityLabel: "cancella l'ultima cifra inserita"
+            accessibilityLabel: I18n.t(
+              "identification.unlockCode.accessibility.delete"
+            )
           }),
           this.deleteLastDigit
         )

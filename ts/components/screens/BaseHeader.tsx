@@ -134,10 +134,12 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               onPress={onShowHelp}
               style={styles.helpButton}
               transparent={true}
-              accessibilityLabel={"Aiuto contestuale"}
-              accessibilityHint={
-                "Accedi alle informazioni utili sul contenuto della schermata corrente"
-              } // TODO: evaluate how customize
+              accessibilityLabel={I18n.t(
+                "global.accessibility.contextualHelp.open.label"
+              )}
+              accessibilityHint={I18n.t(
+                "global.accessibility.contextualHelp.open.hint"
+              )}
             >
               <IconFont name={"io-question"} />
             </ButtonDefaultOpacity>
@@ -199,7 +201,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       (appLogo ? (
         <Left>
           <View>
-            <IconFont name={"io-logo"} color={iconColor} />
+            <IconFont name={"io-logo"} color={iconColor} accessible={false} />
           </View>
         </Left>
       ) : (

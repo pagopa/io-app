@@ -4,6 +4,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { Animated, Dimensions, ScrollView, StyleSheet } from "react-native";
+import I18n from "../i18n";
 import variables from "../theme/variables";
 
 type Props = {
@@ -87,10 +88,12 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
           { nativeEvent: { contentOffset: { x: animVal } } }
         ])}
         accessible={true}
-        accessibilityLabel={"Presentazione di IO"}
-        accessibilityHint={
-          "Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto"
-        }
+        accessibilityLabel={I18n.t(
+          "authentication.landing.accessibility.carousel.label"
+        )}
+        accessibilityHint={I18n.t(
+          "authentication.landing.accessibility.carousel.hint"
+        )}
       >
         {props.cards}
       </ScrollView>

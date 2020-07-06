@@ -131,7 +131,9 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
           customRightIcon={{
             iconName: "io-close",
             onPress: onClose,
-            accessibilityLabel: "Chiudi l'aiuto contestuale"
+            accessibilityLabel: I18n.t(
+              "global.accessibility.contextualHelp.close"
+            )
           }}
         />
 
@@ -145,7 +147,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
             contentContainerStyle={styles.contentContainerStyle}
             noPadded={true}
           >
-            <H3>{customizedTitle}</H3>
+            <H3 accessible={true}>{customizedTitle}</H3>
             <View spacer={true} />
             {customizedContent}
             <View spacer={true} />

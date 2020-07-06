@@ -17,6 +17,7 @@ import { WebView } from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import { filterXSS } from "xss";
+import I18n from "../../../i18n";
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
 import { remarkProcessor } from "../../../utils/markdown";
@@ -311,8 +312,12 @@ class Markdown extends React.PureComponent<Props, State> {
             color={customVariables.brandPrimary}
             animating={true}
             accessible={true}
-            accessibilityHint={"Attendi il caricamento del contenuto"}
-            accessibilityLabel={"Caricamento in corso"}
+            accessibilityHint={I18n.t(
+              "global.accessibility.activityIndicator.hint"
+            )}
+            accessibilityLabel={I18n.t(
+              "global.accessibility.activityIndicator.label"
+            )}
           />
         )}
         {/* Hide the WebView until we have the htmlBodyHeight */}

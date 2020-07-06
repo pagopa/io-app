@@ -1,5 +1,16 @@
 ---
 global:
+  accessibility:
+    activityIndicator:
+      label: Caricamento in corso
+      hint: Attendi il caricamento del contenuto
+    header:
+      label: Header dell'applicazione
+    contextualHelp:
+      close: Chiudi l'help contestuale
+      open:
+        label: Aiuto contestuale
+        hint: Accedi alle informazioni sul contenuto della schermata corrente
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -280,6 +291,10 @@ spid:
     line2: Inserisci la tua email per attivarla.
 authentication:
   landing:
+    accessibility:
+      carousel:
+        label: Presentazione di IO
+        hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
@@ -336,6 +351,9 @@ authentication:
       enableNfcHeader: Verifica NFC
       enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
     pin:
+      accessibility:
+        label: Campo di inserimento per pin della Carta di Itentità elettronica
+        hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
       pinCardTitle: Inserisci il PIN della tua carta
       pinCardHeader: Inserisci il PIN
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
@@ -1078,6 +1096,11 @@ identification:
     tooManyAttempts: Troppi tentativi di inserimento errati.
     waitMessage: "Riprova tra:"
   unlockCode:
+    accessibility:
+      unlockHint: Hai inserito {{number}} cifre
+      fingerprint: Autenticati con l'impronta digitale
+      faceId: Autenticati con il riconoscimento facciale
+      delete: Cancella l'ultima cifra inserita
     reset:
       button: Hai dimenticato il
       code: codice di sblocco

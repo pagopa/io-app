@@ -2,6 +2,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInput } from "react-native";
 import { isAccessibilityModeEnabled } from "../../config";
+import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import InputPlaceHolder from "../Pinpad/InputPlaceholder";
@@ -77,10 +78,10 @@ const CiePinpad = (props: Props) => {
         onSubmitEditing={handleOnSubmit}
         value={props.pin}
         accessible={true}
-        accessibilityLabel={"campo inserimento pin Cie"}
-        accessibilityHint={
-          "inserire in questo campo il pin della propria Carta di Identità Elettronica"
-        }
+        accessibilityLabel={I18n.t(
+          "authentication.cie.pin.accessibility.label"
+        )}
+        accessibilityHint={I18n.t("authentication.cie.pin.accessibility.hint")}
       />
       <View spacer={true} />
       <Text>{props.description}</Text>

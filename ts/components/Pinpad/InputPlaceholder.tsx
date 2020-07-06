@@ -2,6 +2,7 @@ import { range } from "fp-ts/lib/Array";
 import { View } from "native-base";
 import * as React from "react";
 import { Dimensions, StyleSheet, ViewStyle } from "react-native";
+import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { Baseline, Bullet } from "./Placeholders";
 
@@ -48,18 +49,13 @@ const InputPlaceHolder: React.FunctionComponent<Props> = (props: Props) => {
     };
 
     return (
-      <React.Fragment>
+      <React.Fragment key={`bullet-${i}`}>
         {isPlaceholderPopulated ? (
-          <Bullet
-            color={activeColor}
-            scalableDimension={scalableDimension}
-            key={`bullet-${i}`}
-          />
+          <Bullet color={activeColor} scalableDimension={scalableDimension} />
         ) : (
           <Baseline
             color={inactiveColor}
             scalableDimension={scalableDimension}
-            key={`baseline-${i}`}
           />
         )}
         {i !== digits - 1 && <View hspacer={true} />}
@@ -71,8 +67,13 @@ const InputPlaceHolder: React.FunctionComponent<Props> = (props: Props) => {
     <View
       style={styles.placeholderContainer}
       accessible={true}
-      accessibilityLabel={"codice di sblocco"}
-      accessibilityHint={`hai inserito ${props.inputValue.length} cifre`}
+      accessibilityLabel={I18n.t("identification.unlockCode.reset.code")}
+      accessibilityHint={I18n.t(
+        "identification.unlockCode.accessibility.unlockHint",
+        {
+          number: props.inputValue.length
+        }
+      )}
     >
       {placeholderPositions.map(renderPlaceholder)}
     </View>
