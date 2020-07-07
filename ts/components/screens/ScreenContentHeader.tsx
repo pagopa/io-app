@@ -15,6 +15,7 @@ import {
 import ScreenHeader from "../ScreenHeader";
 
 type Props = Readonly<{
+  accessible?: boolean;
   title?: string;
   icon?: ImageSourcePropType;
   iconFont?: IconProps;
@@ -90,7 +91,14 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
         >
           <View spacer={true} />
           <ScreenHeader
-            heading={<H3 style={dark && styles.white}>{this.props.title}</H3>}
+            heading={
+              <H3
+                accessible={this.props.accessible}
+                style={dark && styles.white}
+              >
+                {this.props.title}
+              </H3>
+            }
             icon={icon}
             iconFont={iconFont}
             dark={dark}

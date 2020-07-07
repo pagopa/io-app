@@ -1,6 +1,11 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import {
+  AccessibilityInfo,
+  findNodeHandle,
+  FlatList,
+  StyleSheet
+} from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -15,6 +20,8 @@ import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import variables from "../../theme/variables";
+import { fromNullable } from "fp-ts/lib/Option";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type Props = ReturnType<typeof mapDispatchToProps> & NavigationScreenProps;
 
@@ -39,49 +46,49 @@ const TAPS_TO_OPEN_TESTIDP = 5;
 const idps: ReadonlyArray<IdentityProvider> = [
   {
     id: "arubaid",
-    name: "Aruba ID",
+    name: "Aruba",
     logo: require("../../../img/spid-idp-arubaid.png"),
     entityID: "arubaid",
     profileUrl: "http://selfcarespid.aruba.it"
   },
   {
     id: "infocertid",
-    name: "Infocert ID",
+    name: "Infocert",
     logo: require("../../../img/spid-idp-infocertid.png"),
     entityID: "infocertid",
     profileUrl: "https://my.infocert.it/selfcare"
   },
   {
     id: "intesaid",
-    name: "Intesa ID",
+    name: "Intesa",
     logo: require("../../../img/spid-idp-intesaid.png"),
     entityID: "intesaid",
     profileUrl: "https://spid.intesa.it"
   },
   {
     id: "lepidaid",
-    name: "Lepida ID",
+    name: "Lepida",
     logo: require("../../../img/spid-idp-lepidaid.png"),
     entityID: "lepidaid",
     profileUrl: "https://id.lepida.it/"
   },
   {
     id: "namirialid",
-    name: "Namirial ID",
+    name: "Namirial",
     logo: require("../../../img/spid-idp-namirialid.png"),
     entityID: "namirialid",
     profileUrl: "https://idp.namirialtsp.com/idp"
   },
   {
     id: "posteid",
-    name: "Poste ID",
+    name: "Poste",
     logo: require("../../../img/spid-idp-posteid.png"),
     entityID: "posteid",
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
   },
   {
     id: "sielteid",
-    name: "Sielte ID",
+    name: "Sielte",
     logo: require("../../../img/spid-idp-sielteid.png"),
     entityID: "sielteid",
     profileUrl: "https://myid.sieltecloud.it/profile/"
@@ -120,6 +127,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen where the user choose the SPID IPD to login with.
  */
 class IdpSelectionScreen extends React.PureComponent<Props, State> {
+  private firstElementRef = React.createRef<Text>();
   constructor(props: Props) {
     super(props);
     this.state = { counter: 0 };
@@ -135,6 +143,12 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
     this.props.setSelectedIdp(idp);
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
+
+  public componentDidMount() {
+    fromNullable(this.firstElementRef.current)
+      .chain(ref => fromNullable(findNodeHandle(ref)))
+      .map(AccessibilityInfo.setAccessibilityFocus);
+  }
 
   public componentDidUpdate() {
     if (this.state.counter === TAPS_TO_OPEN_TESTIDP) {
@@ -156,6 +170,11 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
             title={I18n.t("authentication.idp_selection.contentTitle")}
           />
           <View style={styles.gridContainer} testID={"idps-view"}>
+            <View accessible={true}>
+              <Text ref={this.firstElementRef} accessible={true}>
+                {"ciao"}
+              </Text>
+            </View>
             <IdpsGrid idps={idps} onIdpSelected={this.onIdpSelected} />
             <View spacer={true} />
             <ButtonDefaultOpacity

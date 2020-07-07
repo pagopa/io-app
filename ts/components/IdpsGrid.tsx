@@ -5,10 +5,11 @@
 import * as React from "react";
 import { FlatList, Image, ListRenderItemInfo, StyleSheet } from "react-native";
 
-import { Button } from "native-base";
+import { Button, View } from "native-base";
 import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { Ref } from "react";
 
 type OwnProps = {
   // Array of Identity Provider to show in the grid.
@@ -43,14 +44,19 @@ const keyExtractor = (idp: IdentityProvider): string => idp.id;
 
 const renderItem = (props: Props) => (
   info: ListRenderItemInfo<IdentityProvider>
-): React.ReactElement<any> => {
+): React.ReactElement => {
   const { onIdpSelected } = props;
   const { item } = info;
   const onPress = () => onIdpSelected(item);
   if (item.isTestIdp === true) {
     return (
       // render transparent button if idp is testIdp (see https://www.pivotaltracker.com/story/show/172082895)
-      <Button transparent={true} onPress={onPress} style={styles.gridItem} />
+      <Button
+        transparent={true}
+        onPress={onPress}
+        style={styles.gridItem}
+        accessible={false}
+      />
     );
   }
   return (
@@ -70,14 +76,19 @@ const renderItem = (props: Props) => (
   );
 };
 
-const IdpsGrid: React.SFC<Props> = props => (
-  <FlatList
-    bounces={false}
-    data={props.idps}
-    numColumns={2}
-    keyExtractor={keyExtractor}
-    renderItem={renderItem(props)}
-  />
+const IdpsGrid = React.forwardRef(
+  (props: Props, ref: Ref<FlatList<IdentityProvider>>) => {
+    return (
+      <FlatList
+        ref={ref}
+        bounces={false}
+        data={props.idps}
+        numColumns={2}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem(props)}
+      />
+    );
+  }
 );
 
 export default IdpsGrid;
