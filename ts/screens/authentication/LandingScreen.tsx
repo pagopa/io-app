@@ -46,6 +46,7 @@ import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import { showToast } from "../../utils/showToast";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
+// import cieManager from "@pagopa/react-native-cie";
 
 type Props = NavigationInjectedProps &
   LightModalContextInterface &
@@ -129,8 +130,9 @@ class LandingScreen extends React.PureComponent<Props, State> {
     this.state = { isRootedOrJailbroken: none };
   }
   public async componentDidMount() {
-    const isRootedOrJailbroken = await JailMonkey.isJailBroken();
-    this.setState({ isRootedOrJailbroken: some(isRootedOrJailbroken) });
+    //const supported = await cieManager.isCIEAuthenticationSupported();
+    const isRootedOrJailbroken = false;
+    this.setState({ isRootedOrJailbroken: some(false) });
     if (this.props.isSessionExpired) {
       showToast(
         I18n.t("authentication.expiredSessionBanner.message"),
@@ -287,9 +289,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
           onPress={this.navigateToSpidCieInformationRequest}
         >
           <Text style={styles.noPadded}>
-            {this.props.isCieSupported
-              ? I18n.t("authentication.landing.nospid-nocie")
-              : I18n.t("authentication.landing.nospid")}
+            {"CIAO CIAO"}
           </Text>
         </ButtonDefaultOpacity>
       </View>

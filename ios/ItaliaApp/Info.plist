@@ -105,6 +105,7 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
+		<string>nfc</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
@@ -114,5 +115,15 @@
 	<string>IO needs access to the microphone in case you want to leave a voice note</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+  	<array>
+  		<string>com.apple.developer.nfc.readersession.iso7816.select-identifiers</string>
+  		<string>A0000000308000000009816001</string>
+  		<string>A00000000039</string>
+  		<string>A0000002471001</string>
+  		<string>00000000000000</string>
+  	</array>
+  	<key>method</key>
+      <string>app-store</string>
 </dict>
 </plist>

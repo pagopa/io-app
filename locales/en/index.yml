@@ -272,6 +272,10 @@ userMetadata:
 navigation:
   messages: Messages
   profile: Profile
+cie:
+  title: Touch the card
+  layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
+  layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.
 spid:
   login: LOGIN
   loginButton: LOGIN WITH
