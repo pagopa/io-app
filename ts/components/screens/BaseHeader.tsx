@@ -206,7 +206,11 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       !isSearchEnabled &&
       (appLogo ? (
         <Left>
-          <View>
+          <View
+            accessible={true}
+            accessibilityElementsHidden={true}
+            importantForAccessibility="no-hide-descendants"
+          >
             <IconFont name={"io-logo"} color={iconColor} accessible={false} />
           </View>
         </Left>
