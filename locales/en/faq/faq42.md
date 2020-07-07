@@ -1,1 +1,1 @@
-Nella sezione “Pagamenti' in alto trovi i tuoi metodi di pagamento. Il tasto 'Aggiungi un metodo' ti consente di aggiungere un nuovo metodo di pagamento.
+In the top area of the "Payment" section, you can find all the payment methods and the bonuses you saved in the app. You can add a new payment method or request a new bonus, by tapping on the related **"+ Add"** button.

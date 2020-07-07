@@ -93,7 +93,9 @@ function getServicesLoadState<T>(
     // check if there is at least one service in loading state
     const areServicesLoading =
       pot.isLoading(visibleServices) ||
-      visibleServicesById.some(vs => vs === undefined || pot.isLoading(vs));
+      visibleServicesById.some(
+        vs => vs === undefined || (pot.isNone(vs) && pot.isLoading(vs))
+      );
 
     // check if there is at least one service in error state
     const isServicesLoadFailed =

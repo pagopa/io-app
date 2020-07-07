@@ -1,6 +1,3 @@
-/**
- * A component to render the message markdown as HTML inside a WebView
- */
 import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
 import { AppState, AppStateStatus } from "react-native";
@@ -20,7 +17,7 @@ import { WebView } from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import { filterXSS } from "xss";
-
+import I18n from "../../../i18n";
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
 import { remarkProcessor } from "../../../utils/markdown";
@@ -168,16 +165,16 @@ const generateHtml = (
   return `
   <!DOCTYPE html>
   <html>
-  <head>
-  <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-  <head>
-  <body>
-  ${GLOBAL_CSS}
-  ${cssStyle ? generateInlineCss(cssStyle) : ""}
-  ${avoidTextSelection ? avoidTextSelectionCSS : ""}
-  ${useCustomSortedList ? generateCustomFontList : ""}
-  ${content}
-  </body>
+    <head>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </head>
+    <body>
+    ${GLOBAL_CSS}
+    ${cssStyle ? generateInlineCss(cssStyle) : ""}
+    ${avoidTextSelection ? avoidTextSelectionCSS : ""}
+    ${useCustomSortedList ? generateCustomFontList : ""}
+    ${content}
+    </body>
   </html>
   `;
 };
@@ -195,6 +192,7 @@ const convertOldDemoMarkdownTag = (markdown: string) =>
 type OwnProps = {
   children: string;
   animated?: boolean;
+  extraBodyHeight?: number;
   useCustomSortedList?: boolean;
   onLoadEnd?: () => void;
   onLinkClicked?: (url: string) => void;
@@ -217,6 +215,9 @@ type State = {
   appState: string;
 };
 
+/**
+ * A component to render the message markdown as HTML inside a WebView
+ */
 class Markdown extends React.PureComponent<Props, State> {
   private webViewRef = React.createRef<WebView>();
 
@@ -294,21 +295,29 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { webViewStyle } = this.props;
+    const { extraBodyHeight, webViewStyle } = this.props;
     const { html, htmlBodyHeight } = this.state;
     const containerStyle: ViewStyle = {
-      height: htmlBodyHeight
+      height: htmlBodyHeight + (extraBodyHeight || 0)
     };
 
     const isLoading =
       html === undefined || (html !== "" && htmlBodyHeight === 0);
+
     return (
       <React.Fragment>
         {isLoading && (
           <ActivityIndicator
-            size="large"
+            size={"large"}
             color={customVariables.brandPrimary}
             animating={true}
+            accessible={true}
+            accessibilityHint={I18n.t(
+              "global.accessibility.activityIndicator.hint"
+            )}
+            accessibilityLabel={I18n.t(
+              "global.accessibility.activityIndicator.label"
+            )}
           />
         )}
         {/* Hide the WebView until we have the htmlBodyHeight */}
@@ -316,6 +325,7 @@ class Markdown extends React.PureComponent<Props, State> {
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
             <View style={containerStyle}>
               <WebView
+                accessible={false}
                 key={this.state.webviewKey}
                 textZoom={100}
                 ref={this.webViewRef}
@@ -342,9 +352,14 @@ class Markdown extends React.PureComponent<Props, State> {
     if (this.props.onLoadEnd) {
       this.props.onLoadEnd();
     }
-    if (this.webViewRef.current) {
-      this.webViewRef.current.injectJavaScript(NOTIFY_BODY_HEIGHT_SCRIPT);
-    }
+
+    setTimeout(() => {
+      // to avoid yellow box warning
+      // it's ugly but it works https://github.com/react-native-community/react-native-webview/issues/341#issuecomment-466639820
+      if (this.webViewRef.current) {
+        this.webViewRef.current.injectJavaScript(NOTIFY_BODY_HEIGHT_SCRIPT);
+      }
+    }, 100);
   };
 
   // A function that handles message sent by the WebView component

@@ -39,6 +39,7 @@
 		C2CF038002D24FEEAB41B336 /* RobotoMono-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */; };
 		C580141680914A61A6B342F4 /* io-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3FC0952CE6E4DEE96DDC59F /* io-icon-font.ttf */; };
 		D18E075B28304466B6CA2381 /* TitilliumWeb-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65D221FCB5A461FBC44285D /* TitilliumWeb-LightItalic.ttf */; };
+		E4B7E7371E9D4257914E3BF0 /* io-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71D89A4BF5744BAB927798CA /* io-icon-font.ttf */; };
 		EFFA620FCD2D46F6B942663B /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2D52800996AA471A87A7F975 /* LICENSE.txt */; };
 		F0625E7E2326824D00EDEF90 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E03A5FB22C6155200629442 /* libART.a */; };
 		F0625E7F2326825600EDEF90 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
@@ -410,6 +411,7 @@
 		6A786CC45B2D4B77BDF55C1D /* TitilliumWeb-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Black.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Black.ttf"; sourceTree = "<group>"; };
 		6B343CBB6FCFE52950730384 /* Pods-ItaliaAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ItaliaAppTests/Pods-ItaliaAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6D94E785317A4CE6840C34C0 /* libReactNativeExceptionHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeExceptionHandler.a; sourceTree = "<group>"; };
+		71D89A4BF5744BAB927798CA /* io-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "io-icon-font.ttf"; path = "../assets/fonts/io-icon-font/io-icon-font.ttf"; sourceTree = "<group>"; };
 		76E4CEA78E3F4060ABB59808 /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Regular.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7A83F0572152B12C000C6389 /* ItaliaApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ItaliaApp.entitlements; path = ItaliaApp/ItaliaApp.entitlements; sourceTree = "<group>"; };
@@ -625,7 +627,7 @@
 				640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */,
 				76E4CEA78E3F4060ABB59808 /* RobotoMono-Regular.ttf */,
 				5389C36762A04AE69D762289 /* RobotoMono-RegularItalic.ttf */,
-				D3FC0952CE6E4DEE96DDC59F /* io-icon-font.ttf */,
+				71D89A4BF5744BAB927798CA /* io-icon-font.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -817,6 +819,7 @@
 				03ECE9DA1D6DB2D1353E986C /* Embed Instabug Framework */,
 				EB0FFA733F5451135571F869 /* [CP] Copy Pods Resources */,
 				F98B07D8659B8C347D85D18A /* [CP] Embed Pods Frameworks */,
+				9469A4BBA8323D8A13EEF44B /* Upload Sourcemap */,
 			);
 			buildRules = (
 			);
@@ -1266,7 +1269,7 @@
 				C2CF038002D24FEEAB41B336 /* RobotoMono-LightItalic.ttf in Resources */,
 				16E38CBD19D4437A9C020B21 /* RobotoMono-Regular.ttf in Resources */,
 				28E4866232804051B865FC10 /* RobotoMono-RegularItalic.ttf in Resources */,
-				C580141680914A61A6B342F4 /* io-icon-font.ttf in Resources */,
+				E4B7E7371E9D4257914E3BF0 /* io-icon-font.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1285,7 +1288,53 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		616E1A2BB64E72519DD7C30F /* Strip Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Strip Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Instabug.framework/strip-frameworks.sh\"\n";
+		};
+		7A034949213D55CA0064B689 /* Work around InputMask.xcodeproj embedding an extra set of Swift libraries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Work around InputMask.xcodeproj embedding an extra set of Swift libraries";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# see https://github.com/react-native-community/react-native-text-input-mask/issues/22#issuecomment-344765116\n\nEXTRA_DIR=\"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Frameworks/InputMask.framework/Frameworks\"\n\nif [[ -d \"${EXTRA_DIR}\" ]]; then\n  rm -rf \"${EXTRA_DIR}\"\nfi";
+		};
+		9469A4BBA8323D8A13EEF44B /* Upload Sourcemap */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Sourcemap";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "export INSTABUG_APP_TOKEN=\"YOUR_APP_TOKEN\"\nbash \"../node_modules/instabug-reactnative/ios/upload_sourcemap.sh\"\n";
 		};
 		95AEBF4A23D0A295000598A9 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1577,7 +1626,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaAppDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 65;
+				CURRENT_PROJECT_VERSION = 87;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1593,7 +1642,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1621,7 +1670,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaAppRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 65;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1636,7 +1685,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

@@ -226,6 +226,9 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     cieManager.onEvent(this.handleCieEvent);
     cieManager.onError(this.handleCieError);
     cieManager.onSuccess(this.handleCieSuccess);
+    console.warn(this.ciePin);
+    console.warn(this.cieAuthorizationUri);
+    return;
     await cieManager.setPin(this.ciePin);
     cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
     cieManager

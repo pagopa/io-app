@@ -15,6 +15,7 @@ import {
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
@@ -34,6 +35,7 @@ import {
   fetchWalletsRequest,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
+import { navSelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import {
   getFavoriteWalletId,
@@ -41,6 +43,7 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
+import { getCurrentRouteKey } from "../../utils/navigation";
 import { showToast } from "../../utils/showToast";
 
 const styles = StyleSheet.create({
@@ -104,10 +107,15 @@ class WalletsScreen extends React.Component<Props> {
           </Left>
           <Right>
             <AddPaymentMethodButton
-              onPress={this.props.navigateToWalletAddPaymentMethod}
+              onPress={() =>
+                this.props.navigateToWalletAddPaymentMethod(
+                  getCurrentRouteKey(this.props.nav)
+                )
+              }
             />
           </Right>
         </View>
+        <View spacer={true} large={true} />
       </React.Fragment>
     );
   }
@@ -143,6 +151,7 @@ class WalletsScreen extends React.Component<Props> {
             renderItem={this.renderWallet}
             keyExtractor={(item, index) => `wallet-${item.idWallet}-${index}`}
             extraData={{ favoriteWallet }}
+            ItemSeparatorComponent={() => <View spacer={true} large={true} />}
           />
         </View>
         <EdgeBorderComponent />
@@ -154,9 +163,12 @@ class WalletsScreen extends React.Component<Props> {
 const mapStateToProps = (state: GlobalState) => {
   const potWallets = walletsSelector(state);
   return {
-    wallets: pot.getOrElse(potWallets, []),
+    wallets: pot
+      .getOrElse(potWallets, [])
+      .filter(w => w.type === TypeEnum.CREDIT_CARD),
     isLoading: pot.isLoading(potWallets),
-    favoriteWallet: getFavoriteWalletId(state)
+    favoriteWallet: getFavoriteWalletId(state),
+    nav: navSelector(state)
   };
 };
 
@@ -166,8 +178,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
-  navigateToWalletAddPaymentMethod: () =>
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
+  navigateToWalletAddPaymentMethod: (key?: string) =>
+    dispatch(
+      navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom: key })
+    ),
   deleteWallet: (walletId: number) =>
     dispatch(
       deleteWalletRequest({

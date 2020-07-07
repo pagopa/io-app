@@ -10,6 +10,7 @@ import {
   ViewStyle
 } from "react-native";
 import { StyleSheet } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
@@ -41,12 +42,17 @@ type Props = Readonly<{
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   contentRefreshControl?: React.ReactElement<RefreshControlProps>;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  customGoBack?: React.ReactNode;
+  gradientHeader?: boolean;
+  headerPaddingMin?: boolean;
 }>;
 
 const styles = StyleSheet.create({
   headerContents: {
-    backgroundColor: customVariables.brandDarkGray,
     paddingHorizontal: customVariables.contentPadding
+  },
+  headerContentsMin: {
+    paddingHorizontal: 16
   }
 });
 
@@ -59,12 +65,38 @@ export default class DarkLayout extends React.Component<Props> {
   }
 
   private screenContent() {
+    const wrapper = (childer: React.ReactNode) =>
+      this.props.gradientHeader ? (
+        <LinearGradient
+          colors={[customVariables.brandDarkGray, "#42484F"]}
+          style={
+            this.props.headerPaddingMin
+              ? styles.headerContentsMin
+              : styles.headerContents
+          }
+        >
+          {childer}
+        </LinearGradient>
+      ) : (
+        <View
+          style={[
+            this.props.headerPaddingMin
+              ? styles.headerContentsMin
+              : styles.headerContents,
+            { backgroundColor: customVariables.brandDarkGray }
+          ]}
+        >
+          {childer}
+        </View>
+      );
     return (
       <React.Fragment>
-        <View style={styles.headerContents}>
-          <View spacer={true} />
-          {this.props.topContent}
-        </View>
+        {wrapper(
+          <React.Fragment>
+            <View spacer={true} />
+            {this.props.topContent}
+          </React.Fragment>
+        )}
         {this.props.children}
       </React.Fragment>
     );
@@ -73,6 +105,7 @@ export default class DarkLayout extends React.Component<Props> {
     return (
       <TopScreenComponent
         goBack={this.props.allowGoBack}
+        customGoBack={this.props.customGoBack}
         headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}

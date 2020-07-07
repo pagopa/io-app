@@ -20,11 +20,16 @@ export const FAQs: Record<
   messages_detail: [27, 28, 29, 30, 31, 32],
   wallet: [57, 33, 34, 35, 36, 37],
   wallet_insert_notice_data: [33, 35],
-  wallet_methods: [37, 41, 42],
+  wallet_methods: [37, 41, 42, 66],
   wallet_transaction: [38, 39, 40],
   payment: [43, 44, 45, 46],
   services: [47, 48, 49],
-  services_detail: [50, 51, 52]
+  services_detail: [50, 51, 52],
+  bonus_information: [58, 59, 67, 68, 69, 70, 71, 72],
+  bonus_eligible: [60, 61, 69, 71, 72, 73, 75],
+  bonus_eligible_discrepancies: [62],
+  bonus_detail: [63, 64, 65, 76],
+  bonus_available_list: [66, 74]
 };
 
 export type FAQsCategoriesType =
@@ -46,7 +51,12 @@ export type FAQsCategoriesType =
   | "wallet_transaction"
   | "payment"
   | "services"
-  | "services_detail";
+  | "services_detail"
+  | "bonus_information"
+  | "bonus_eligible"
+  | "bonus_eligible_discrepancies"
+  | "bonus_detail"
+  | "bonus_available_list";
 
 export type FAQType = {
   title: string;

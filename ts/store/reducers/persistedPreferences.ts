@@ -1,15 +1,20 @@
 /**
  * A reducer for persisted preferences.
  */
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Calendar } from "react-native-calendar-events";
+import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
+import { Locales } from "../../../locales/locales";
 import {
+  continueWithRootOrJailbreak,
   customEmailChannelSetEnabled,
   preferenceFingerprintIsEnabledSaveSuccess,
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferredCalendarSaveSuccess,
+  preferredLanguageSaveSuccess,
   serviceAlertDisplayedOnceSuccess
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
@@ -18,21 +23,25 @@ import { GlobalState } from "./types";
 export type PersistedPreferencesState = Readonly<{
   isFingerprintEnabled?: boolean;
   preferredCalendar?: Calendar;
+  preferredLanguage?: Locales;
   wasServiceAlertDisplayedOnce?: boolean;
   isPagoPATestEnabled: boolean;
   isExperimentalFeaturesEnabled: boolean;
   // TODO: create transformer for Option objects and use Option instead of pot
   //       https://www.pivotaltracker.com/story/show/170998374
   isCustomEmailChannelEnabled: pot.Pot<boolean, undefined>;
+  continueWithRootOrJailbreak?: boolean;
 }>;
 
 const initialPreferencesState: PersistedPreferencesState = {
   isFingerprintEnabled: undefined,
   preferredCalendar: undefined,
+  preferredLanguage: undefined,
   wasServiceAlertDisplayedOnce: false,
   isPagoPATestEnabled: false,
   isExperimentalFeaturesEnabled: false,
-  isCustomEmailChannelEnabled: pot.none
+  isCustomEmailChannelEnabled: pot.none,
+  continueWithRootOrJailbreak: false
 };
 
 export default function preferencesReducer(
@@ -49,6 +58,12 @@ export default function preferencesReducer(
     return {
       ...state,
       preferredCalendar: action.payload.preferredCalendar
+    };
+  }
+  if (isActionOf(preferredLanguageSaveSuccess, action)) {
+    return {
+      ...state,
+      preferredLanguage: action.payload.preferredLanguage
     };
   }
   if (isActionOf(serviceAlertDisplayedOnceSuccess, action)) {
@@ -78,6 +93,13 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(continueWithRootOrJailbreak, action)) {
+    return {
+      ...state,
+      continueWithRootOrJailbreak: action.payload
+    };
+  }
+
   return state;
 }
 
@@ -96,3 +118,16 @@ export const preferredCalendarSelector = (state: GlobalState) =>
 
 export const isFingerprintEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isFingerprintEnabled;
+
+export const persistedPreferencesSelector = (state: GlobalState) =>
+  state.persistedPreferences;
+
+export const continueWithRootOrJailbreakSelector = (state: GlobalState) =>
+  state.persistedPreferences.continueWithRootOrJailbreak;
+
+// returns the preferred language as an Option from the persisted store
+export const preferredLanguageSelector = createSelector<
+  GlobalState,
+  PersistedPreferencesState,
+  Option<Locales>
+>(persistedPreferencesSelector, pps => fromNullable(pps.preferredLanguage));

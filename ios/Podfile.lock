@@ -1,5 +1,7 @@
 PODS:
   - boost-for-react-native (1.63.0)
+  - BVLinearGradient (2.5.6):
+    - React
   - DoubleConversion (1.1.6)
   - Folly (2018.10.22.00):
     - boost-for-react-native
@@ -12,6 +14,8 @@ PODS:
     - glog
   - glog (0.3.5)
   - instabug-reactnative (8.7.0):
+    - React
+  - jail-monkey (2.3.2):
     - React
   - Mixpanel (3.6.0)
   - QrCode (1.0.2):
@@ -65,13 +69,13 @@ PODS:
     - React
   - react-native-calendar-events (1.7.1):
     - React
-  - react-native-camera (3.4.0):
+  - react-native-camera (3.26.0):
     - React
-    - react-native-camera/RCT (= 3.4.0)
-    - react-native-camera/RN (= 3.4.0)
-  - react-native-camera/RCT (3.4.0):
+    - react-native-camera/RCT (= 3.26.0)
+    - react-native-camera/RN (= 3.26.0)
+  - react-native-camera/RCT (3.26.0):
     - React
-  - react-native-camera/RN (3.4.0):
+  - react-native-camera/RN (3.26.0):
     - React
   - react-native-config (1.0.0):
     - React
@@ -81,6 +85,8 @@ PODS:
     - Mixpanel (~> 3.6.0)
     - React
   - react-native-netinfo (4.2.2):
+    - React
+  - react-native-screen-brightness (2.0.0-alpha):
     - React
   - react-native-splash-screen (3.2.0):
     - React
@@ -131,6 +137,8 @@ PODS:
     - React
   - RNSha256 (1.2.3):
     - React
+  - RNShare (3.3.2):
+    - React
   - RNSVG (12.1.0):
     - React
   - RNVectorIcons (6.6.0):
@@ -140,10 +148,12 @@ PODS:
   - yoga (0.60.5.React)
 
 DEPENDENCIES:
+  - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - instabug-reactnative (from `../node_modules/instabug-reactnative`)
+  - jail-monkey (from `../node_modules/jail-monkey`)
   - QrCode (from `../node_modules/react-native-lewin-qrcode/ios`)
   - React (from `../node_modules/react-native/`)
   - React-Core (from `../node_modules/react-native/React`)
@@ -159,6 +169,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-text-input-mask (from `../node_modules/react-native-text-input-mask`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -182,6 +193,7 @@ DEPENDENCIES:
   - RNInputMask (from `../node_modules/react-native-text-input-mask/ios/InputMask`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNSha256 (from `../node_modules/react-native-sha256`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - TouchID (from `../node_modules/react-native-touch-id`)
@@ -193,6 +205,8 @@ SPEC REPOS:
     - Mixpanel
 
 EXTERNAL SOURCES:
+  BVLinearGradient:
+    :path: "../node_modules/react-native-linear-gradient"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   Folly:
@@ -201,6 +215,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   instabug-reactnative:
     :path: "../node_modules/instabug-reactnative"
+  jail-monkey:
+    :path: "../node_modules/jail-monkey"
   QrCode:
     :path: "../node_modules/react-native-lewin-qrcode/ios"
   React:
@@ -231,6 +247,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-mixpanel"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
+  react-native-screen-brightness:
+    :path: "../node_modules/react-native-screen-brightness"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
   react-native-text-input-mask:
@@ -277,6 +295,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-keychain"
   RNSha256:
     :path: "../node_modules/react-native-sha256"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -288,10 +308,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
   instabug-reactnative: 6a4b20152fee125f9b884371ef10ccbf721dff1e
+  jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
   Mixpanel: 446b6e7713aa34a9a3516ff7648d56551384fc94
   QrCode: d288f3c041248649031e1d7ef6b14319242cf76a
   React: 53c53c4d99097af47cf60594b8706b4e3321e722
@@ -303,11 +325,12 @@ SPEC CHECKSUMS:
   React-jsinspector: e08662d1bf5b129a3d556eb9ea343a3f40353ae4
   react-native-background-timer: 1b6e6b4e10f1b74c367a1fdc3c72b67c619b222b
   react-native-calendar-events: 667f4141959b3f90c44cd328396c1488f216922d
-  react-native-camera: f4f2144140ae1e808cad97cc7caf013767c11f1b
+  react-native-camera: 2b74be8edc1103c4c46d1f4e5f41723d9ff052cc
   react-native-config: 7db9b96479164dfd7b2be68eb9079e08279511c4
   react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-netinfo: 2bb2e5094edcfecfb340a85053608526cb20f185
+  react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-text-input-mask: 07227297075f9653315f43b0424d596423a01736
   react-native-webview: a75bffe77bc4efaab83d7b3af12007ad40cced09
@@ -331,11 +354,12 @@ SPEC CHECKSUMS:
   RNInputMask: 815461ebdf396beb62cf58916c35cf6930adb991
   RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
+  RNShare: bd6518701db274b8ba282b33620885f2225a5bcf
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
-PODFILE CHECKSUM: e56d9b0cf8c3434a8a4aadfa8d1d5f1d4a11752f
+PODFILE CHECKSUM: 46c823e80d21a24ff4270589ea6ae6996f97d25d
 
 COCOAPODS: 1.9.1

@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
   },
   twoThird: {
     flex: 7
-  }
+  },
+  marginTop1: { marginTop: 1 }
 });
 
 /**
@@ -148,7 +149,7 @@ class PaymentButton extends React.PureComponent<Props> {
         }
         style={this.props.small ? styles.twoThird : styles.half}
       >
-        <Text>{this.getButtonText()}</Text>
+        <Text style={styles.marginTop1}>{this.getButtonText()}</Text>
       </ButtonDefaultOpacity>
     );
   }

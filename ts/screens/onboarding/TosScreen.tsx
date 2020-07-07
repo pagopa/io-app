@@ -8,26 +8,32 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Image, StyleSheet } from "react-native";
-import WebView from "react-native-webview";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
+import {
+  NavigationScreenProp,
+  NavigationState,
+  SafeAreaView
+} from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import TosWebviewComponent from "../../components/TosWebviewComponent";
+import { WebViewMessage } from "../../components/ui/Markdown/types";
 import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
   isProfileFirstOnBoarding,
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
+import { showToast } from "../../utils/showToast";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -37,6 +43,7 @@ type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
 type State = {
   isLoading: boolean;
   hasError: boolean;
+  scrollEnd: boolean;
 };
 
 const brokenLinkImage = require("../../../img/broken-link.png");
@@ -105,7 +112,13 @@ class TosScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     // it start with loading webview
-    this.state = { isLoading: true, hasError: false };
+    this.state = { isLoading: true, hasError: false, scrollEnd: false };
+  }
+
+  public componentDidUpdate() {
+    if (this.props.hasProfileError) {
+      showToast(I18n.t("global.genericError"));
+    }
   }
 
   private handleLoadEnd = () => {
@@ -143,68 +156,70 @@ class TosScreen extends React.PureComponent<Props, State> {
     );
   };
 
+  // A function that handles message sent by the WebView component
+  private handleWebViewMessage = (event: WebViewMessageEvent) => {
+    if (this.state.scrollEnd) {
+      return;
+    }
+    // We validate the format of the message with a dedicated codec
+    const messageOrErrors = WebViewMessage.decode(
+      JSON.parse(event.nativeEvent.data)
+    );
+
+    messageOrErrors.map(message => {
+      if (message.type === "SCROLL_END_MESSAGE") {
+        this.setState({ scrollEnd: true });
+      }
+    });
+  };
+
   public render() {
-    const { navigation, dispatch } = this.props;
-    const isProfile = navigation.getParam("isProfile", false);
-    const avoidZoomWebview = `
-      const meta = document.createElement('meta');
-      meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
-      meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);
-      true;
-      `;
+    const { dispatch } = this.props;
+
+    const shouldFooterRender =
+      !this.state.hasError &&
+      !this.state.isLoading &&
+      !this.props.isOnbardingCompleted;
 
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
-        goBack={isProfile || this.handleGoBack}
+        goBack={this.props.isOnbardingCompleted || this.handleGoBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["privacy"]}
         headerTitle={
-          isProfile
+          this.props.isOnbardingCompleted
             ? I18n.t("profile.main.privacy.privacyPolicy.title")
             : I18n.t("onboarding.tos.headerTitle")
         }
       >
-        {this.props.hasAcceptedOldTosVersion && (
+        <SafeAreaView style={styles.webViewContainer}>
           <View style={styles.alert}>
-            <Text>{I18n.t("profile.main.privacy.privacyPolicy.updated")}</Text>
+            <Text>
+              {this.props.hasAcceptedOldTosVersion
+                ? I18n.t("profile.main.privacy.privacyPolicy.updated")
+                : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
+            </Text>
           </View>
-        )}
-        {this.renderError()}
-        {this.state.hasError === false && (
-          <View style={styles.webViewContainer}>
-            <WebView
-              textZoom={100}
-              style={{ flex: 1 }}
-              onLoadEnd={this.handleLoadEnd}
-              onError={this.handleError}
-              source={{ uri: privacyUrl }}
-              injectedJavaScript={avoidZoomWebview}
-            />
-          </View>
-        )}
-        {this.state.hasError === false &&
-          this.state.isLoading === false &&
-          isProfile === false && (
-            <FooterWithButtons
-              type={"TwoButtonsInlineThird"}
-              leftButton={{
-                block: true,
-                light: true,
-                bordered: true,
-                onPress: this.handleGoBack,
-                title: I18n.t("global.buttons.exit")
-              }}
-              rightButton={{
-                block: true,
-                primary: true,
-                onPress: () => dispatch(tosAccepted(tosVersion)),
-                title: I18n.t("onboarding.tos.accept")
-              }}
+          {this.renderError()}
+          {!this.state.hasError && (
+            <TosWebviewComponent
+              handleError={this.handleError}
+              handleLoadEnd={this.handleLoadEnd}
+              handleWebViewMessage={this.handleWebViewMessage}
+              url={privacyUrl}
+              shouldFooterRender={shouldFooterRender}
+              onExit={this.handleGoBack}
+              onAcceptTos={() => dispatch(tosAccepted(tosVersion))}
             />
           )}
+        </SafeAreaView>
       </BaseScreenComponent>
     ));
-    return <ContainerComponent isLoading={this.state.isLoading} />;
+    return (
+      <ContainerComponent
+        isLoading={this.state.isLoading || this.props.isLoading}
+      />
+    );
   }
 
   private handleGoBack = () =>
@@ -228,7 +243,8 @@ class TosScreen extends React.PureComponent<Props, State> {
 function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
-    isLoading: pot.isLoading(userMetadataSelector(state)),
+    isOnbardingCompleted: isOnboardingCompletedSelector(state),
+    isLoading: pot.isUpdating(potProfile),
     hasAcceptedOldTosVersion: pot.getOrElse(
       pot.map(
         potProfile,
@@ -238,7 +254,8 @@ function mapStateToProps(state: GlobalState) {
           p.accepted_tos_version < tosVersion
       ),
       false
-    )
+    ),
+    hasProfileError: pot.isError(potProfile)
   };
 }
 

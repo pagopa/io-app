@@ -1351,6 +1351,14 @@
   resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-3.0.5.tgz#9e80a3015cae9ffb3b4a2601ea655481f64da940"
   integrity sha512-pIvo2I/i9vVisDGGxP/stAbZ8ODnwHhPWEU7GweWZU/mqwmUXDbAgq824AsDAzbeI1ApDLE7MdLDVjQDYueaqA==
 
+"@types/react-native-share@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-share/-/react-native-share-3.1.0.tgz#06b3772257d77a8f56af05aa92729efaf6387069"
+  integrity sha512-qW4gLw04HPHMDDzosX34eSdCKQanncqy8RH4KJNittkpxc5MLBmosa0d/05AEAjPhnuzciw6UK+WHbZ/XcApOA==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native-text-input-mask@^0.7.2":
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/@types/react-native-text-input-mask/-/react-native-text-input-mask-0.7.2.tgz#a70bb2ab74a4f178f404abaf35853ce29b5f7c57"
@@ -4163,10 +4171,6 @@ form-data@~2.3.1:
     combined-stream "1.0.6"
     mime-types "^2.1.12"
 
-format-util@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/format-util/-/format-util-1.0.3.tgz#032dca4a116262a12c43f4c3ec8566416c5b2d95"
-
 fp-ts@1.12.0, fp-ts@^1.0.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.12.0.tgz#d333310e4ac104cdcb6bea47908e381bb09978e7"
@@ -4185,6 +4189,13 @@ fresh@0.5.2:
 from@^0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/from/-/from-0.1.7.tgz#83c60afc58b9c56997007ed1a768b3ab303a44fe"
+
+front-matter@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/front-matter/-/front-matter-4.0.2.tgz#b14e54dc745cfd7293484f3210d15ea4edd7f4d5"
+  integrity sha512-I8ZuJ/qG92NWX8i5x1Y8qyj3vizhXS31OxjKDu3LKP+7/qBgfIKValiZIEwoVoJKUHlhWtYrktkxV1XsX+pPlg==
+  dependencies:
+    js-yaml "^3.13.1"
 
 fs-exists-sync@^0.1.0:
   version "0.1.0"
@@ -5289,18 +5300,22 @@ italia-tslint-rules@^1.1.0:
     tslint-sonarts "^1.9.0"
     typestrict "^1.0.2"
 
-italia-utils@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/italia-utils/-/italia-utils-4.0.0.tgz#65e0f2a993e7fac625e840dee9ecc159b91b76c3"
-  integrity sha512-s7uhf3ZtbBs2hR0lzHJBAQX+0YXQnU5gSAmnEfmtOJN+00AYDsfCpbSSEGmBRYWBDRjNb5P9+qVJklgKXLrcQA==
+italia-utils@^4.1.1:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/italia-utils/-/italia-utils-4.2.0.tgz#dffcbb66c896c06f6b4d17bf6090a478736c7736"
+  integrity sha512-C6Pbyz7AUdFIMQ85+vxyRu/lfkG7trVrf6U6YzScnLeHssJCWCpf7OffQ33qCtp78B6roQr5Tdl+SyGDCD/4/w==
   dependencies:
     fs-extra "^6.0.0"
     italia-ts-commons "^5.0.1"
     nunjucks "^3.1.2"
     prettier "^1.12.1"
-    swagger-parser "^4.1.0"
-    swagger-schema-official "^2.0.0-bab6bed"
+    swagger-parser "^7.0.0"
     yargs "^11.1.0"
+
+jail-monkey@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/jail-monkey/-/jail-monkey-2.3.2.tgz#0a65b2ed92c24c3b7be1b8af2ca78ab4d4ab05db"
+  integrity sha512-2vmj6gE7OkJ6Z+7PXoqFLnftDO+MO1iv/+Sj1ExWWeMCWZj6uDs35GQ3SZOJsfvEzAKsrWKDeLCZIMam1Tykqw==
 
 jest-changed-files@^24.8.0:
   version "24.8.0"
@@ -5768,7 +5783,7 @@ js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
 
-js-yaml@^3.11.0, js-yaml@^3.13.1, js-yaml@^3.9.0:
+js-yaml@^3.13.1, js-yaml@^3.9.0:
   version "3.13.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
   integrity sha512-YfbcO7jXDdyj0DGxYVSlSeQNHbD7XPWvrVWeVUujrQEoZzWJIRrCPoyk6kL6IAjAG2IolMK4T0hNUe0HOUs5Jw==
@@ -5861,14 +5876,14 @@ json-parse-better-errors@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
 
-json-schema-ref-parser@^5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/json-schema-ref-parser/-/json-schema-ref-parser-5.0.3.tgz#5a8a7b4c865f840ee637c7a5f076421988eb8292"
+json-schema-ref-parser@^7.1.0:
+  version "7.1.4"
+  resolved "https://registry.yarnpkg.com/json-schema-ref-parser/-/json-schema-ref-parser-7.1.4.tgz#abb3f2613911e9060dc2268477b40591753facf0"
+  integrity sha512-AD7bvav0vak1/63w3jH8F7eHId/4E4EPdMAEZhGxtjktteUv9dnNB/cJy6nVnMyoTPBJnLwFK6tiQPSTeleCtQ==
   dependencies:
     call-me-maybe "^1.0.1"
-    debug "^3.1.0"
-    js-yaml "^3.11.0"
-    ono "^4.0.3"
+    js-yaml "^3.13.1"
+    ono "^6.0.0"
 
 json-schema-traverse@^0.3.0:
   version "0.3.1"
@@ -5938,6 +5953,16 @@ jsonify@~0.0.0:
 jsonpointer@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/jsonpointer/-/jsonpointer-4.0.1.tgz#4fd92cb34e0e9db3c89c8622ecf51f9b978c6cb9"
+
+jsonschema-draft4@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jsonschema-draft4/-/jsonschema-draft4-1.0.0.tgz#f0af2005054f0f0ade7ea2118614b69dc512d865"
+  integrity sha1-8K8gBQVPDwrefqIRhhS2ncUS2GU=
+
+jsonschema@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/jsonschema/-/jsonschema-1.2.4.tgz#a46bac5d3506a254465bc548876e267c6d0d6464"
+  integrity sha512-lz1nOH69GbsVHeVgEdvyavc/33oymY1AZwtePMiMj4HZPMbP5OIKK3zT9INMWjwua/V4Z4yq7wSlBbSG+g4AEw==
 
 jsonwebtoken@^8.2.1:
   version "8.3.0"
@@ -6130,9 +6155,10 @@ lodash.foreach@^4.3.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.foreach/-/lodash.foreach-4.5.0.tgz#1a6a35eace401280c7f06dddec35165ab27e3e53"
 
-lodash.get@^4.0.0:
+lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
+  integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
 lodash.includes@^4.3.0:
   version "4.3.0"
@@ -6142,9 +6168,10 @@ lodash.isboolean@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz#6c2e171db2a257cd96802fd43b01b20d5f5870f6"
 
-lodash.isequal@^4.0.0, lodash.isequal@^4.5.0:
+lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
 
 lodash.isinteger@^4.0.4:
   version "4.0.4"
@@ -7196,11 +7223,15 @@ onetime@^2.0.0:
   dependencies:
     mimic-fn "^1.0.0"
 
-ono@^4.0.3, ono@^4.0.5:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/ono/-/ono-4.0.5.tgz#bc62740493a5c1c08b2c21e60cbb0e5c56ab7de2"
-  dependencies:
-    format-util "^1.0.3"
+ono@^5.0.1:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/ono/-/ono-5.1.0.tgz#8cafa7e56afa2211ad63dd2eb798427e64f1a070"
+  integrity sha512-GgqRIUWErLX4l9Up0khRtbrlH8Fyj59A0nKv8V6pWEto38aUgnOGOOF7UmgFFLzFnDSc8REzaTXOc0hqEe7yIw==
+
+ono@^6.0.0:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/ono/-/ono-6.0.1.tgz#1bc14ffb8af1e5db3f7397f75b88e4a2d64bbd71"
+  integrity sha512-5rdYW/106kHqLeG22GE2MHKq+FlsxMERZev9DCzQX1zwkxnFwBivSn5i17a5O/rDmOJOdf4Wyt80UZljzx9+DA==
 
 open@^6.2.0:
   version "6.4.0"
@@ -7208,6 +7239,20 @@ open@^6.2.0:
   integrity sha512-IFenVPgF70fSm1keSd2iDBIDIBZkroLeuffXq+wKTzTJlBpesFWojV9lb8mzOfaAzM1sr7HQHuO0vtV0zYekGg==
   dependencies:
     is-wsl "^1.1.0"
+
+openapi-schema-validation@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/openapi-schema-validation/-/openapi-schema-validation-0.4.2.tgz#895c29021be02e000f71c51f859da52118eb1e21"
+  integrity sha512-K8LqLpkUf2S04p2Nphq9L+3bGFh/kJypxIG2NVGKX0ffzT4NQI9HirhiY6Iurfej9lCu7y4Ndm4tv+lm86Ck7w==
+  dependencies:
+    jsonschema "1.2.4"
+    jsonschema-draft4 "^1.0.0"
+    swagger-schema-official "2.0.0-bab6bed"
+
+openapi-types@^1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/openapi-types/-/openapi-types-1.3.5.tgz#6718cfbc857fe6c6f1471f65b32bdebb9c10ce40"
+  integrity sha512-11oi4zYorsgvg5yBarZplAqbpev5HkuVNPlZaPTknPDzAynq+lnJdXAmruGWP0s+dNYZS7bjM+xrTpJw7184Fg==
 
 opencollective-postinstall@^2.0.2:
   version "2.0.2"
@@ -7887,10 +7932,10 @@ react-native-calendar-events@1.7.1:
   resolved "https://registry.yarnpkg.com/react-native-calendar-events/-/react-native-calendar-events-1.7.1.tgz#177dcac0a3c711f1190ce107f6299e47aabba645"
   integrity sha512-Kixqf4Evu+keQa5H6T1Pq2Hu5JPQLGxNp9NA4nf75QjT3tAT6naZX9RIltlnUX9+va2cWbJ5hoTQ6VXax1CRNA==
 
-react-native-camera@3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.4.0.tgz#1591acdb76d626b9630299fe5dd9d3d77c4e58e5"
-  integrity sha512-EFaixLtQsd3Kjs2AnxPx4Qb1mNSlZRZBVoxXDUdWcSdCEE3CSvdeonTb3vWAT3ZlGMi1RTOggtBpI4StMtFNjw==
+react-native-camera@^3.4.0:
+  version "3.26.0"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.26.0.tgz#80f37124c524d76ae79f55f3975ed73b6515aa49"
+  integrity sha512-W/h89LN+jujlzc89nWpvukbfnbFO+Fskf6PR23pP6zminpJDIArHabWLd1mQoJ3p6r+gUJ8I4bgsxUmSMgLAgA==
   dependencies:
     prop-types "^15.6.2"
 
@@ -7993,6 +8038,11 @@ react-native-lewin-qrcode@^1.0.2:
   resolved "https://registry.yarnpkg.com/react-native-lewin-qrcode/-/react-native-lewin-qrcode-1.0.2.tgz#360e78a9ce6ed861a9711a5a35e3b1ecffe8d452"
   integrity sha512-kjF/hEfAPrlxTviW/mZjhsKCHQ7yUJAaoV8964J5XHZtBc0JxybHsqcA2qF3JU8XyqerzITaXyb1Zf2/Zh2+OQ==
 
+react-native-linear-gradient@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
+  integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
 react-native-mixpanel@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.2.0.tgz#17c24151cf2039482cd20decc54ccf0e49ccebc5"
@@ -8038,12 +8088,22 @@ react-native-qrcode-scanner@^1.1.0:
     prop-types "^15.5.10"
     react-native-permissions "^1.1.1"
 
+react-native-responsive-screen@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-responsive-screen/-/react-native-responsive-screen-1.4.1.tgz#0270bc8f03a208b578299c1594495db69aff506b"
+  integrity sha512-WuMkVyCPeepzKQaT3N+mbUAvQLL0jGsBnGf6yDtA7vyA/sp1imXYVPYjCNMRaKV+PSM5GzEMXxl4Bj+tUpD2Tw==
+
 react-native-safe-area-view@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.12.0.tgz#5c312f087300ecf82e8541c3eac25d560e147f22"
   integrity sha512-UrAXmBC4KNR5K2eczIDZgqceWyKsgG9gmWFerHCvoyApfei8ceBB9u/c//PWCpS5Gt8MRLTmX5jPtzdXo2yNqg==
   dependencies:
     hoist-non-react-statics "^2.3.1"
+
+react-native-screen-brightness@^2.0.0-alpha:
+  version "2.0.0-alpha"
+  resolved "https://registry.yarnpkg.com/react-native-screen-brightness/-/react-native-screen-brightness-2.0.0-alpha.tgz#2fc30cf711cfafa5e0aec685f0fce51ce65e0052"
+  integrity sha512-NdJPptcWiFwG9aypm0awYv9d/aoZSJetXPFkx6w/UuNX9SRr5YTKXMSND/2lwuSOw6uGU9mQ0f4dBuGZSNgzow==
 
 "react-native-screens@^1.0.0 || ^1.0.0-alpha":
   version "1.0.0-alpha.22"
@@ -8054,6 +8114,11 @@ react-native-sha256@1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/react-native-sha256/-/react-native-sha256-1.2.3.tgz#59eaa2c260882ed1e4de94c88e0383726cddc40c"
   integrity sha512-3KQBrAKnB8BAhQuyIBg4p1vsCU6A4LPCTjdNDhFomIaCaDLswEyb4GZoyGWPooTPyKVGd8aCR4pd7/Js9o1ySQ==
+
+react-native-share@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-3.3.2.tgz#06d1d3f14ba8eeb95e7e94e4db6a286e9902bd29"
+  integrity sha512-Pvkr62TiCX511RMPL+wvy9Fofre4HQnvUT5zzgPPN3vszP/C8lUb7cmFu/8x5U14t3JQg+xW/svNK5eKNebJKw==
 
 react-native-splash-screen@^3.2.0:
   version "3.2.0"
@@ -9395,23 +9460,26 @@ supports-hyperlinks@^1.0.1:
     has-flag "^2.0.0"
     supports-color "^5.0.0"
 
-swagger-methods@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/swagger-methods/-/swagger-methods-1.0.4.tgz#2c5b844f4a22ab2f5e773f98193c28e386b1c37e"
+swagger-methods@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/swagger-methods/-/swagger-methods-2.0.2.tgz#5891d5536e54d5ba8e7ae1007acc9170f41c9590"
+  integrity sha512-/RNqvBZkH8+3S/FqBPejHxJxZenaYq3MrpeXnzi06aDIS39Mqf5YCUNb/ZBjsvFFt8h9FxfKs8EXPtcYdfLiRg==
 
-swagger-parser@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/swagger-parser/-/swagger-parser-4.1.0.tgz#5fb08ccc0c5abb8f9de7cba6c5e437736d8a10f5"
+swagger-parser@^7.0.0:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/swagger-parser/-/swagger-parser-7.0.1.tgz#da6892673b66b0cd831b26d63ce5914eeda7ee47"
+  integrity sha512-73FAlW1xqtkGLsxp41C4ASXPyEeJ9h38SGJRSDH0gSImjG5XzlbFb2EWsnhakLZfKOG/VsjzKQjO5aenmDSw/g==
   dependencies:
     call-me-maybe "^1.0.1"
-    debug "^3.1.0"
-    json-schema-ref-parser "^5.0.3"
-    ono "^4.0.5"
-    swagger-methods "^1.0.4"
+    json-schema-ref-parser "^7.1.0"
+    ono "^5.0.1"
+    openapi-schema-validation "^0.4.2"
+    openapi-types "^1.3.5"
+    swagger-methods "^2.0.0"
     swagger-schema-official "2.0.0-bab6bed"
-    z-schema "^3.19.1"
+    z-schema "^4.1.0"
 
-swagger-schema-official@2.0.0-bab6bed, swagger-schema-official@^2.0.0-bab6bed:
+swagger-schema-official@2.0.0-bab6bed:
   version "2.0.0-bab6bed"
   resolved "https://registry.yarnpkg.com/swagger-schema-official/-/swagger-schema-official-2.0.0-bab6bed.tgz#70070468d6d2977ca5237b2e519ca7d06a2ea3fd"
 
@@ -10055,9 +10123,10 @@ validator@^10.1.0, validator@^10.7.0:
   version "10.7.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-10.7.0.tgz#2d6443badcf942c86c19dc3deac7b87c0bd9b60d"
 
-validator@^9.0.0:
-  version "9.4.1"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-9.4.1.tgz#abf466d398b561cd243050112c6ff1de6cc12663"
+validator@^12.0.0:
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-12.2.0.tgz#660d47e96267033fd070096c3b1a6f2db4380a0a"
+  integrity sha512-jJfE/DW6tIK1Ek8nCfNFqt8Wb3nzMoAbocBF6/Icgg1ZFSBpObdnwVY2jQj6qUqzhx5jc71fpvBWyLGO7Xl+nQ==
 
 vary@~1.1.2:
   version "1.1.2"
@@ -10459,12 +10528,13 @@ yn@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/yn/-/yn-2.0.0.tgz#e5adabc8acf408f6385fc76495684c88e6af689a"
 
-z-schema@^3.19.1:
-  version "3.20.0"
-  resolved "https://registry.yarnpkg.com/z-schema/-/z-schema-3.20.0.tgz#bcc08fe9f3f1328ff7f90e3a607baffb55760bfb"
+z-schema@^4.1.0:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/z-schema/-/z-schema-4.2.3.tgz#85f7eea7e6d4fe59a483462a98f511bd78fe9882"
+  integrity sha512-zkvK/9TC6p38IwcrbnT3ul9in1UX4cm1y/VZSs4GHKIiDCrlafc+YQBgQBUdDXLAoZHf2qvQ7gJJOo6yT1LH6A==
   dependencies:
-    lodash.get "^4.0.0"
-    lodash.isequal "^4.0.0"
-    validator "^9.0.0"
+    lodash.get "^4.4.2"
+    lodash.isequal "^4.5.0"
+    validator "^12.0.0"
   optionalDependencies:
     commander "^2.7.1"
