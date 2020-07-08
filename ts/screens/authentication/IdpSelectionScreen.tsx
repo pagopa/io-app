@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -20,8 +21,6 @@ import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import variables from "../../theme/variables";
-import { fromNullable } from "fp-ts/lib/Option";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type Props = ReturnType<typeof mapDispatchToProps> & NavigationScreenProps;
 
@@ -172,7 +171,7 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
           <View style={styles.gridContainer} testID={"idps-view"}>
             <View accessible={true}>
               <Text ref={this.firstElementRef} accessible={true}>
-                {"ciao"}
+                {"test"}
               </Text>
             </View>
             <IdpsGrid idps={idps} onIdpSelected={this.onIdpSelected} />
