@@ -1,7 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { AccessibilityInfo, findNodeHandle, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -154,7 +153,6 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
       >
         <Content noPadded={true} overScrollMode={"never"} bounces={false}>
           <ScreenContentHeader
-            setAccessibilityFocus={true}
             title={I18n.t("authentication.idp_selection.contentTitle")}
           />
           <View style={styles.gridContainer} testID={"idps-view"}>
