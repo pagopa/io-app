@@ -1,7 +1,13 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
-import { AccessibilityInfo, findNodeHandle, StyleSheet } from "react-native";
+import {
+  AccessibilityInfo,
+  findNodeHandle,
+  Platform,
+  StyleSheet,
+  UIManager
+} from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
@@ -54,7 +60,7 @@ type Props = OwnProps &
 
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props> {
-  private firstElementRef = React.createRef<Left>();
+  private firstElementRef = React.createRef<View>();
 
   public constructor(props: Props) {
     super(props);
@@ -64,7 +70,21 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   public setAccessibilyFocus() {
     fromNullable(this.firstElementRef.current)
       .chain(ref => fromNullable(findNodeHandle(ref)))
-      .map(AccessibilityInfo.setAccessibilityFocus);
+      .map(reactTag => {
+        if (Platform.OS === "android") {
+          // could raise an exception
+          try {
+            UIManager.sendAccessibilityEvent(
+              reactTag,
+              UIManager.AccessibilityEventTypes.typeViewFocused
+            );
+            // tslint:disable-next-line:no-empty
+          } catch {} // ignore
+          return;
+        }
+        // ios
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      });
   }
   /**
    * if go back is a function it will be returned
@@ -125,7 +145,9 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
         {!isSearchEnabled && (
           <Body style={goBack ? {} : styles.noLeft}>
-            {body ? body : headerTitle && this.renderHeader()}
+            <View ref={this.firstElementRef} accessible={true}>
+              {body ? body : headerTitle && this.renderHeader()}
+            </View>
           </Body>
         )}
 
@@ -186,10 +208,10 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   private renderGoBack = () => {
     const { goBack, dark, customGoBack } = this.props;
     return customGoBack ? (
-      <Left ref={this.firstElementRef}>{customGoBack}</Left>
+      <Left>{customGoBack}</Left>
     ) : (
       goBack && (
-        <Left ref={this.firstElementRef}>
+        <Left>
           <GoBackButton
             testID={"back-button"}
             onPress={goBack}

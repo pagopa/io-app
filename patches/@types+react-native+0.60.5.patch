@@ -1,0 +1,15 @@
+diff --git a/node_modules/@types/react-native/index.d.ts b/node_modules/@types/react-native/index.d.ts
+index d945df7..ff92750 100644
+--- a/node_modules/@types/react-native/index.d.ts
++++ b/node_modules/@types/react-native/index.d.ts
+@@ -8329,6 +8329,10 @@ export interface ToastAndroidStatic {
+ }
+ 
+ export interface UIManagerStatic {
++	sendAccessibilityEvent(nodeRef: number, type: any);
++  	AccessibilityEventTypes: {
++    	typeViewFocused : any;
++  	}
+     /**
+      * Capture an image of the screen, window or an individual view. The image
+      * will be stored in a temporary file that will only exist for as long as the

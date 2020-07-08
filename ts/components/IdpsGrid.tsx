@@ -54,7 +54,7 @@ const renderItem = (props: Props) => (
         transparent={true}
         onPress={onPress}
         style={styles.gridItem}
-        accessible={false}
+        accessible={false} // ignore cause it serves only for debug mode (stores reviewers)
       />
     );
   }
