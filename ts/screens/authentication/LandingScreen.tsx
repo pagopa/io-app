@@ -130,7 +130,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
   }
   public async componentDidMount() {
     const isRootedOrJailbroken = await JailMonkey.isJailBroken();
-    this.setState({ isRootedOrJailbroken: some(true) });
+    this.setState({ isRootedOrJailbroken: some(isRootedOrJailbroken) });
     if (this.props.isSessionExpired) {
       showToast(
         I18n.t("authentication.expiredSessionBanner.message"),
