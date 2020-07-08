@@ -21,6 +21,7 @@ import I18n from "../../../i18n";
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
 import { remarkProcessor } from "../../../utils/markdown";
+import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { handleLinkMessage } from "./handlers/link";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 import { WebViewMessage } from "./types";
@@ -204,6 +205,7 @@ type OwnProps = {
   avoidTextSelection?: boolean;
   cssStyle?: string;
   webViewStyle?: StyleProp<ViewStyle>;
+  letUserZoom?: boolean;
 };
 
 type Props = OwnProps & ReduxProps;
@@ -335,7 +337,10 @@ class Markdown extends React.PureComponent<Props, State> {
                 originWhitelist={["*"]}
                 source={{ html, baseUrl: "" }}
                 javaScriptEnabled={true}
-                injectedJavaScript={INJECTED_JAVASCRIPT}
+                injectedJavaScript={closeInjectedScript(
+                  INJECTED_JAVASCRIPT +
+                    (this.props.letUserZoom ? "" : AVOID_ZOOM_JS)
+                )}
                 onLoadEnd={this.handleLoadEnd}
                 onMessage={this.handleWebViewMessage}
                 showsVerticalScrollIndicator={false}
@@ -357,7 +362,9 @@ class Markdown extends React.PureComponent<Props, State> {
       // to avoid yellow box warning
       // it's ugly but it works https://github.com/react-native-community/react-native-webview/issues/341#issuecomment-466639820
       if (this.webViewRef.current) {
-        this.webViewRef.current.injectJavaScript(NOTIFY_BODY_HEIGHT_SCRIPT);
+        this.webViewRef.current.injectJavaScript(
+          closeInjectedScript(NOTIFY_BODY_HEIGHT_SCRIPT)
+        );
       }
     }, 100);
   };

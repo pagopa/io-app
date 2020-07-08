@@ -15,7 +15,9 @@ type Props = {
   onAcceptTos: () => void;
   onExit: () => void;
 };
+
 const scrollEndTolerance = 600;
+
 const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [scrollEnd, setScrollEnd] = React.useState(false);
 
