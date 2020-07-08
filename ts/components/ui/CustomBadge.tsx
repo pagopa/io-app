@@ -19,7 +19,7 @@ export default class CustomBadge extends React.PureComponent<Props> {
     return (
       this.props.badgeValue > 0 && (
         <Badge style={this.props.badgeStyle}>
-          <Text badge={true} style={this.props.textStyle}>
+          <Text badge={true} style={this.props.textStyle} accessible={false}>
             {Math.min(this.props.badgeValue, MAX_BADGE_VALUE)}
           </Text>
         </Badge>
