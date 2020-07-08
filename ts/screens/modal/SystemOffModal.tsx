@@ -44,7 +44,11 @@ class SystemOffModal extends React.PureComponent<Props> {
       .getOrElse(undefined);
     return (
       <Modal>
-        <BaseScreenComponent appLogo={true} goBack={false}>
+        <BaseScreenComponent
+          appLogo={true}
+          goBack={false}
+          avoidNavigationEvents={true}
+        >
           <Container>
             <View style={styles.container}>
               <React.Fragment>
