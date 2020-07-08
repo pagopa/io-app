@@ -48,7 +48,7 @@ const ConnectionBar: React.SFC<Props> = props => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} accessible={true}>
       <View style={styles.inner}>
         <IconFont name={"io-offline"} style={styles.icon} />
         <Text style={styles.text}>{I18n.t("connection.status.offline")}</Text>

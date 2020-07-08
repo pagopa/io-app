@@ -7,7 +7,6 @@ import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
 type Props = {
-  // scrollEnd: boolean;
   shouldFooterRender: boolean;
   url: string;
   handleLoadEnd: () => void;
@@ -17,24 +16,24 @@ type Props = {
   onExit: () => void;
 };
 
+const scrollEndTolerance = 600;
+
 const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [scrollEnd, setScrollEnd] = React.useState(false);
 
   const handleScroll = (event: any) => {
+    if (event === undefined || event === null) {
+      return;
+    }
     const scrollEvent = event.nativeEvent as NativeScrollEvent;
-    if (!scrollEnd && scrollEvent.contentSize.height > 0) {
-      if (
-        event &&
-        event.nativeEvent &&
+    if (!scrollEnd && scrollEvent && scrollEvent.contentSize.height > 0) {
+      const scrollEnded =
         scrollEvent.contentOffset &&
         scrollEvent.contentSize &&
         scrollEvent.contentOffset.y > 0 &&
-        scrollEvent.contentSize.height - scrollEvent.contentOffset.y < 600
-      ) {
-        setScrollEnd(true);
-        return;
-      }
-    } else {
+        scrollEvent.contentSize.height - scrollEvent.contentOffset.y <
+          scrollEndTolerance;
+      setScrollEnd(scrollEnded);
       return;
     }
   };

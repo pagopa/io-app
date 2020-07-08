@@ -15,6 +15,7 @@ const ButtonDefaultOpacity = (
         ...props,
         activeOpacity: props.activeOpacity || defaultActiveOpacity
       }}
+      accessible={true} // allows with TalkBack the feedback request to touch for button activation
     >
       {props.children}
     </Button>

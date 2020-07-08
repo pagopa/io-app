@@ -1,6 +1,3 @@
-/**
- * A screen that allow the user to insert the Cie PIN.
- */
 import { View } from "native-base";
 import * as React from "react";
 import {
@@ -33,10 +30,10 @@ type Props = ReduxProps &
   NavigationInjectedProps &
   LightModalContextInterface;
 
-type State = {
+type State = Readonly<{
   pin: string;
   url?: string;
-};
+}>;
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +44,9 @@ const styles = StyleSheet.create({
 
 const CIE_PIN_LENGTH = 8;
 
+/**
+ * A screen that allow the user to insert the Cie PIN.
+ */
 class CiePinScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -85,10 +85,6 @@ class CiePinScreen extends React.PureComponent<Props, State> {
     });
   };
 
-  private handleOnContinue = () => {
-    this.showModal();
-  };
-
   public render() {
     return (
       <TopScreenComponent
@@ -107,7 +103,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
               pinLength={CIE_PIN_LENGTH}
               description={I18n.t("authentication.cie.pin.pinCardContent")}
               onPinChanged={this.handelOnPinChanged}
-              onSubmit={this.handleOnContinue}
+              onSubmit={this.showModal}
             />
           </View>
         </ScrollView>
@@ -116,7 +112,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
             type={"SingleButton"}
             leftButton={{
               primary: true,
-              onPress: this.handleOnContinue,
+              onPress: this.showModal,
               title: I18n.t("global.buttons.continue")
             }}
           />

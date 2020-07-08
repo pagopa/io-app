@@ -41,6 +41,7 @@ interface OwnProps {
   customRightIcon?: {
     iconName: string;
     onPress: () => void;
+    accessibilityLabel?: string;
   };
   customGoBack?: React.ReactNode;
 }
@@ -63,23 +64,35 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
   private renderHeader = () => {
     const { customGoBack, headerTitle } = this.props;
-    // if customGoBack is provided only the header text will be rendered
+    const isWhite = this.props.primary || this.props.dark;
+
+    // if customGoBack is provided or if the app is in accessibility mode only the header text will be rendered
     if (customGoBack) {
       return (
         <Text
-          white={this.props.primary || this.props.dark ? true : undefined}
+          white={isWhite}
           numberOfLines={1}
+          accessible={false}
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
         >
           {headerTitle}
         </Text>
       );
     }
-    const isWhite = this.props.primary || this.props.dark;
     // if no customGoBack is provided also the header text could be press to execute goBack
     // note goBack could a boolean or a function (check this.getGoBackHandler)
     return (
-      <TouchableDefaultOpacity onPress={this.getGoBackHandler}>
-        <Text white={isWhite} numberOfLines={1}>
+      <TouchableDefaultOpacity
+        onPress={this.getGoBackHandler}
+        accessible={false}
+      >
+        <Text
+          white={isWhite}
+          numberOfLines={1}
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
+        >
           {headerTitle}
         </Text>
       </TouchableDefaultOpacity>
@@ -127,8 +140,14 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               onPress={onShowHelp}
               style={styles.helpButton}
               transparent={true}
+              accessibilityLabel={I18n.t(
+                "global.accessibility.contextualHelp.open.label"
+              )}
+              accessibilityHint={I18n.t(
+                "global.accessibility.contextualHelp.open.hint"
+              )}
             >
-              <IconFont name="io-question" />
+              <IconFont name={"io-question"} />
             </ButtonDefaultOpacity>
           )}
 
@@ -139,6 +158,8 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               onPress={customRightIcon.onPress}
               style={styles.helpButton}
               transparent={true}
+              accessible={customRightIcon.accessibilityLabel !== undefined}
+              accessibilityLabel={customRightIcon.accessibilityLabel}
             >
               <IconFont name={customRightIcon.iconName} />
             </ButtonDefaultOpacity>
@@ -185,8 +206,12 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       !isSearchEnabled &&
       (appLogo ? (
         <Left>
-          <View>
-            <IconFont name={"io-logo"} color={iconColor} />
+          <View
+            accessible={true}
+            accessibilityElementsHidden={true}
+            importantForAccessibility="no-hide-descendants"
+          >
+            <IconFont name={"io-logo"} color={iconColor} accessible={false} />
           </View>
         </Left>
       ) : (
