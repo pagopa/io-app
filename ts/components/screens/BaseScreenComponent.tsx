@@ -41,6 +41,7 @@ export interface ContextualHelpPropsMarkdown {
 }
 
 interface OwnProps {
+  avoidNavigationEvents?: boolean;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
@@ -214,6 +215,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     return (
       <Container>
         <BaseHeader
+          avoidNavigationEvents={this.props.avoidNavigationEvents}
           showInstabugChat={showInstabugChat}
           primary={primary}
           dark={dark}

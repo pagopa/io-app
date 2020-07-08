@@ -1,13 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
-import {
-  AccessibilityInfo,
-  findNodeHandle,
-  Platform,
-  StyleSheet,
-  UIManager
-} from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
@@ -18,6 +11,7 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
 import InstabugChatsComponent from "../InstabugChatsComponent";
@@ -35,6 +29,7 @@ const styles = StyleSheet.create({
 });
 
 interface OwnProps {
+  avoidNavigationEvents?: boolean;
   dark?: boolean;
   headerTitle?: string;
   goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
@@ -64,28 +59,22 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
   public constructor(props: Props) {
     super(props);
-    this.setAccessibilyFocus = this.setAccessibilyFocus.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
   }
 
-  public setAccessibilyFocus() {
-    fromNullable(this.firstElementRef.current)
-      .chain(ref => fromNullable(findNodeHandle(ref)))
-      .map(reactTag => {
-        if (Platform.OS === "android") {
-          // could raise an exception
-          try {
-            UIManager.sendAccessibilityEvent(
-              reactTag,
-              UIManager.AccessibilityEventTypes.typeViewFocused
-            );
-            // tslint:disable-next-line:no-empty
-          } catch {} // ignore
-          return;
-        }
-        // ios
-        AccessibilityInfo.setAccessibilityFocus(reactTag);
-      });
+  // set accessibility focus when component is mounted
+  // it should be used paired with avoidNavigationEvents === true (navigation context not available)
+  public componentDidMount() {
+    if (this.props.avoidNavigationEvents) {
+      setTimeout(() => setAccessibilityFocus(this.firstElementRef), 10);
+    }
   }
+
+  // set accessibility focus when this view comes visible
+  public handleFocus() {
+    setAccessibilityFocus(this.firstElementRef);
+  }
+
   /**
    * if go back is a function it will be returned
    * otherwise the default goback navigation will be returned
@@ -200,7 +189,9 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               <IconFont name={customRightIcon.iconName} />
             </ButtonDefaultOpacity>
           )}
-        <NavigationEvents onDidFocus={this.setAccessibilyFocus} />
+        {this.props.avoidNavigationEvents !== true && (
+          <NavigationEvents onDidFocus={this.handleFocus} />
+        )}
       </Right>
     );
   };
