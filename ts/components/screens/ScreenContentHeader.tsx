@@ -43,7 +43,6 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
   private heightAnimation: Animated.Value;
   private elapse: Animated.CompositeAnimation;
   private collapse: Animated.CompositeAnimation;
-  private accessibleElementRef = React.createRef<H3>();
 
   constructor(props: Props) {
     super(props);
@@ -81,11 +80,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
     const { subtitle, dark, icon, iconFont } = this.props;
 
     return (
-      <View
-        style={dark && styles.darkGrayBg}
-        accessible={true}
-        ref={this.accessibleElementRef}
-      >
+      <View style={dark && styles.darkGrayBg} accessible={true}>
         <Animated.View
           style={
             this.props.dynamicHeight !== undefined && {

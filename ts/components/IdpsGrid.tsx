@@ -5,11 +5,10 @@
 import * as React from "react";
 import { FlatList, Image, ListRenderItemInfo, StyleSheet } from "react-native";
 
-import { Button, View } from "native-base";
+import { Button } from "native-base";
 import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { Ref } from "react";
 
 type OwnProps = {
   // Array of Identity Provider to show in the grid.
