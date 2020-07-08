@@ -3,16 +3,9 @@
  * - an image, displayed on the right of the title
  * - a subtitle, displayed below the title
  */
-import { fromNullable } from "fp-ts/lib/Option";
 import { H3, Text, View } from "native-base";
 import * as React from "react";
-import {
-  AccessibilityInfo,
-  Animated,
-  findNodeHandle,
-  ImageSourcePropType,
-  StyleSheet
-} from "react-native";
+import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 import variables from "../../theme/variables";
 import {
@@ -22,7 +15,6 @@ import {
 import ScreenHeader from "../ScreenHeader";
 
 type Props = Readonly<{
-  setAccessibilityFocus?: boolean;
   title?: string;
   icon?: ImageSourcePropType;
   iconFont?: IconProps;
@@ -88,7 +80,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
     const { subtitle, dark, icon, iconFont } = this.props;
 
     return (
-      <View style={dark && styles.darkGrayBg} ref={this.firstElementRef}>
+      <View style={dark && styles.darkGrayBg}>
         <Animated.View
           style={
             this.props.dynamicHeight !== undefined && {
