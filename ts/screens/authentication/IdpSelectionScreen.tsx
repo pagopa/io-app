@@ -1,12 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import {
-  AccessibilityInfo,
-  findNodeHandle,
-  FlatList,
-  StyleSheet
-} from "react-native";
+import { AccessibilityInfo, findNodeHandle, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -126,7 +121,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen where the user choose the SPID IPD to login with.
  */
 class IdpSelectionScreen extends React.PureComponent<Props, State> {
-  private firstElementRef = React.createRef<Text>();
   constructor(props: Props) {
     super(props);
     this.state = { counter: 0 };
@@ -134,7 +128,7 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
 
   private onIdpSelected = (idp: IdentityProvider) => {
     const { counter } = this.state;
-    if (idp.isTestIdp === true && counter < 5) {
+    if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
       const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
       this.setState({ counter: newValue });
       return;
@@ -143,14 +137,8 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
 
-  public componentDidMount() {
-    fromNullable(this.firstElementRef.current)
-      .chain(ref => fromNullable(findNodeHandle(ref)))
-      .map(AccessibilityInfo.setAccessibilityFocus);
-  }
-
   public componentDidUpdate() {
-    if (this.state.counter === TAPS_TO_OPEN_TESTIDP) {
+    if (this.state.counter >= TAPS_TO_OPEN_TESTIDP) {
       this.props.setSelectedIdp(testIdp);
       this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
     }
@@ -166,14 +154,10 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
       >
         <Content noPadded={true} overScrollMode={"never"} bounces={false}>
           <ScreenContentHeader
+            setAccessibilityFocus={true}
             title={I18n.t("authentication.idp_selection.contentTitle")}
           />
           <View style={styles.gridContainer} testID={"idps-view"}>
-            <View accessible={true}>
-              <Text ref={this.firstElementRef} accessible={true}>
-                {"test"}
-              </Text>
-            </View>
             <IdpsGrid idps={idps} onIdpSelected={this.onIdpSelected} />
             <View spacer={true} />
             <ButtonDefaultOpacity

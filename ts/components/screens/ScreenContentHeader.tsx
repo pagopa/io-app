@@ -3,9 +3,16 @@
  * - an image, displayed on the right of the title
  * - a subtitle, displayed below the title
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import { H3, Text, View } from "native-base";
 import * as React from "react";
-import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
+import {
+  AccessibilityInfo,
+  Animated,
+  findNodeHandle,
+  ImageSourcePropType,
+  StyleSheet
+} from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 import variables from "../../theme/variables";
 import {
@@ -15,6 +22,7 @@ import {
 import ScreenHeader from "../ScreenHeader";
 
 type Props = Readonly<{
+  setAccessibilityFocus?: boolean;
   title?: string;
   icon?: ImageSourcePropType;
   iconFont?: IconProps;
@@ -40,6 +48,7 @@ const shouldCollapse = (1 as unknown) as Animated.AnimatedInterpolation;
 const shouldExpand = (0 as unknown) as Animated.AnimatedInterpolation;
 
 export class ScreenContentHeader extends React.PureComponent<Props> {
+  private firstElementRef = React.createRef<View>();
   private heightAnimation: Animated.Value;
   private elapse: Animated.CompositeAnimation;
   private collapse: Animated.CompositeAnimation;
@@ -63,6 +72,16 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
     });
   }
 
+  public componentDidMount() {
+    if (this.props.setAccessibilityFocus) {
+      setTimeout(() => {
+        fromNullable(this.firstElementRef.current)
+          .chain(ref => fromNullable(findNodeHandle(ref)))
+          .map(AccessibilityInfo.setAccessibilityFocus);
+      }, 10);
+    }
+  }
+
   public componentDidUpdate(prevProps: Props) {
     if (this.props.dynamicHeight !== prevProps.dynamicHeight) {
       if (this.props.dynamicHeight === shouldCollapse) {
@@ -80,7 +99,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
     const { subtitle, dark, icon, iconFont } = this.props;
 
     return (
-      <View style={dark && styles.darkGrayBg}>
+      <View style={dark && styles.darkGrayBg} ref={this.firstElementRef}>
         <Animated.View
           style={
             this.props.dynamicHeight !== undefined && {
