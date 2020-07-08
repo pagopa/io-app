@@ -16,7 +16,14 @@ class IconFont extends React.Component<Props> {
     const { color, size, style } = this.props;
     const colorStyle = color ? { color } : {};
     const fontSizeStyle = size ? { fontSize: size } : {};
-    return <Icon {...this.props} style={[style, colorStyle, fontSizeStyle]} />;
+    return (
+      <Icon
+        {...this.props}
+        style={[style, colorStyle, fontSizeStyle]}
+        accessible={false}
+        importantForAccessibility={"no-hide-descendants"}
+      />
+    );
   }
 }
 
