@@ -76,19 +76,16 @@ const renderItem = (props: Props) => (
   );
 };
 
-const IdpsGrid = React.forwardRef(
-  (props: Props, ref: Ref<FlatList<IdentityProvider>>) => {
-    return (
-      <FlatList
-        ref={ref}
-        bounces={false}
-        data={props.idps}
-        numColumns={2}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem(props)}
-      />
-    );
-  }
-);
+const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => {
+  return (
+    <FlatList
+      bounces={false}
+      data={props.idps}
+      numColumns={2}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem(props)}
+    />
+  );
+};
 
 export default IdpsGrid;
