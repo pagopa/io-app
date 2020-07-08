@@ -1,6 +1,8 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { AccessibilityInfo, findNodeHandle, StyleSheet } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -52,6 +54,18 @@ type Props = OwnProps &
 
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props> {
+  private firstElementRef = React.createRef<Left>();
+
+  public constructor(props: Props) {
+    super(props);
+    this.setAccessibilyFocus = this.setAccessibilyFocus.bind(this);
+  }
+
+  public setAccessibilyFocus() {
+    fromNullable(this.firstElementRef.current)
+      .chain(ref => fromNullable(findNodeHandle(ref)))
+      .map(AccessibilityInfo.setAccessibilityFocus);
+  }
   /**
    * if go back is a function it will be returned
    * otherwise the default goback navigation will be returned
@@ -164,6 +178,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               <IconFont name={customRightIcon.iconName} />
             </ButtonDefaultOpacity>
           )}
+        <NavigationEvents onDidFocus={this.setAccessibilyFocus} />
       </Right>
     );
   };
@@ -171,10 +186,10 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   private renderGoBack = () => {
     const { goBack, dark, customGoBack } = this.props;
     return customGoBack ? (
-      <Left>{customGoBack}</Left>
+      <Left ref={this.firstElementRef}>{customGoBack}</Left>
     ) : (
       goBack && (
-        <Left>
+        <Left ref={this.firstElementRef}>
           <GoBackButton
             testID={"back-button"}
             onPress={goBack}

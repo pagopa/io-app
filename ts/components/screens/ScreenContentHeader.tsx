@@ -48,7 +48,6 @@ const shouldCollapse = (1 as unknown) as Animated.AnimatedInterpolation;
 const shouldExpand = (0 as unknown) as Animated.AnimatedInterpolation;
 
 export class ScreenContentHeader extends React.PureComponent<Props> {
-  private firstElementRef = React.createRef<View>();
   private heightAnimation: Animated.Value;
   private elapse: Animated.CompositeAnimation;
   private collapse: Animated.CompositeAnimation;
@@ -70,16 +69,6 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
       toValue: 0,
       duration: HEADER_ANIMATION_DURATION
     });
-  }
-
-  public componentDidMount() {
-    if (this.props.setAccessibilityFocus) {
-      setTimeout(() => {
-        fromNullable(this.firstElementRef.current)
-          .chain(ref => fromNullable(findNodeHandle(ref)))
-          .map(AccessibilityInfo.setAccessibilityFocus);
-      }, 10);
-    }
   }
 
   public componentDidUpdate(prevProps: Props) {
