@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { connect } from "react-redux";
 
 import { GlobalState } from "../store/reducers/types";
@@ -21,11 +22,13 @@ class ProfileTabIcon extends React.PureComponent<Props> {
     // when new experimental features will be avaible, pick this flag from props
     const isExperimentalFeaturesEnabled = false;
     return (
-      <IconFont
-        size={size}
-        color={color}
-        name={isExperimentalFeaturesEnabled ? "io-profilo-exp" : "io-profilo"}
-      />
+      <View accessibilityLabel={""}>
+        <IconFont
+          size={size}
+          color={color}
+          name={isExperimentalFeaturesEnabled ? "io-profilo-exp" : "io-profilo"}
+        />
+      </View>
     );
   }
 }
