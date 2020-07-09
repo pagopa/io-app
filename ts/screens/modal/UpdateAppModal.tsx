@@ -145,11 +145,7 @@ class UpdateAppModal extends React.PureComponent<never, State> {
     // Current version not supported
     return (
       <Modal>
-        <BaseScreenComponent
-          appLogo={true}
-          goBack={false}
-          avoidNavigationEvents={true}
-        >
+        <BaseScreenComponent appLogo={true} goBack={false}>
           <Container>
             <View style={styles.container}>
               <H2>{I18n.t("titleUpdateApp")}</H2>

@@ -7,6 +7,7 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { navHistorySelector } from "../../store/reducers/navigationHistory";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
@@ -29,7 +30,6 @@ const styles = StyleSheet.create({
 });
 
 interface OwnProps {
-  avoidNavigationEvents?: boolean;
   dark?: boolean;
   headerTitle?: string;
   goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
@@ -189,7 +189,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               <IconFont name={customRightIcon.iconName} />
             </ButtonDefaultOpacity>
           )}
-        {this.props.avoidNavigationEvents !== true && (
+        {this.props.isNavigationHistoryNonEmpty && (
           <NavigationEvents onDidFocus={this.handleFocus} />
         )}
       </Right>
@@ -251,6 +251,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state),
+  isNavigationHistoryNonEmpty: navHistorySelector(state).length > 0,
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
 });
 
