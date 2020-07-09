@@ -20,7 +20,6 @@ import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -68,14 +67,12 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   // it should be used paired with avoidNavigationEvents === true (navigation context not available)
   public componentDidMount() {
     if (this.props.isNavigationHistoryEmpty) {
-      RTron.log("componentDidMount");
       setAccessibilityFocus(this.firstElementRef, 10 as Millisecond);
     }
   }
 
   // set accessibility focus when this view comes visible
   public handleFocus() {
-    RTron.log("handleFocus");
     setAccessibilityFocus(this.firstElementRef);
   }
 
