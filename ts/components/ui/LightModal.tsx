@@ -4,19 +4,7 @@
  */
 
 import React from "react";
-import {
-  Animated,
-  Dimensions,
-  Easing,
-  StyleSheet,
-  View,
-  AccessibilityInfo,
-  findNodeHandle,
-  Modal
-} from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
-import { RTron } from "../../boot/configureStoreAndPersistor";
-import { tryCatch } from "fp-ts/lib/TaskEither";
+import { Animated, Dimensions, Easing, Modal, StyleSheet } from "react-native";
 import { isScreenReaderEnabled } from "../../utils/accessibility";
 
 export type LightModalContextInterface = Readonly<{
