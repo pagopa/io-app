@@ -11,6 +11,10 @@ global:
       open:
         label: Contextual Help
         hint: Access information about the contents of the current screen
+    chat:
+      description: "IO assistance messages"
+      unread_singular: "{{message}} new message"
+      unread_plural: "{{message}} new messages"
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -50,6 +54,7 @@ global:
     close: Close
     exit: Exit
     saveSelection: Save the selection
+    search: Search
   navigator:
     messages: messages
     wallet: payments
