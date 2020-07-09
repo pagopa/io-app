@@ -65,7 +65,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   // set accessibility focus when component is mounted
   // it should be used paired with avoidNavigationEvents === true (navigation context not available)
   public componentDidMount() {
-    if (this.props.avoidNavigationEvents) {
+    if (this.props.isNavigationHistoryEmpty) {
       setTimeout(() => setAccessibilityFocus(this.firstElementRef), 10);
     }
   }
@@ -189,7 +189,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               <IconFont name={customRightIcon.iconName} />
             </ButtonDefaultOpacity>
           )}
-        {this.props.isNavigationHistoryNonEmpty && (
+        {!this.props.isNavigationHistoryEmpty && (
           <NavigationEvents onDidFocus={this.handleFocus} />
         )}
       </Right>
@@ -251,7 +251,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state),
-  isNavigationHistoryNonEmpty: navHistorySelector(state).length > 0,
+  isNavigationHistoryEmpty: navHistorySelector(state).length === 0,
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
 });
 
