@@ -3,10 +3,11 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import { BackHandler, NavState, StyleSheet } from "react-native";
+import { BackHandler, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
+  WebViewNavigation,
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
 import I18n from "../../i18n";
@@ -79,7 +80,9 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     });
   };
 
-  private handleOnShouldStartLoadWithRequest = (event: NavState): boolean => {
+  private handleOnShouldStartLoadWithRequest = (
+    event: WebViewNavigation
+  ): boolean => {
     if (this.state.findOpenApp) {
       return false;
     }
