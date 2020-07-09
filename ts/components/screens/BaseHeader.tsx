@@ -59,6 +59,7 @@ type Props = OwnProps &
 
 const setAccessibilityTimeout = 100 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
+const isScreenReaderActive = true; // replace with the proper function
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props> {
   private firstElementRef = React.createRef<View>();
@@ -148,6 +149,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       dark,
       accessibilityLabel
     } = this.props;
+    const maybeAccessibilityLabel = maybeNotNullyString(accessibilityLabel);
     return (
       <AppHeader
         primary={this.props.primary}
@@ -158,11 +160,16 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
         {!isSearchEnabled && (
           <Body style={goBack ? {} : styles.noLeft}>
-            {maybeNotNullyString(accessibilityLabel).fold(
+            {isScreenReaderActive && maybeAccessibilityLabel.isSome() ? (
+              this.renderBodyLabel(
+                maybeAccessibilityLabel.value,
+                true,
+                this.firstElementRef
+              )
+            ) : (
               <View ref={this.firstElementRef} accessible={true}>
                 {body ? body : headerTitle && this.renderHeader()}
-              </View>,
-              al => this.renderBodyLabel(al, true, this.firstElementRef)
+              </View>
             )}
           </Body>
         )}
