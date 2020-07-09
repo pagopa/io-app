@@ -161,6 +161,7 @@ class TosScreen extends React.PureComponent<Props, State> {
     if (this.state.scrollEnd) {
       return;
     }
+
     // We validate the format of the message with a dedicated codec
     const messageOrErrors = WebViewMessage.decode(
       JSON.parse(event.nativeEvent.data)
