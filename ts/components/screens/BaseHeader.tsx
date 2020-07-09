@@ -139,6 +139,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           numberOfLines={1}
           accessible={accessible}
           accessibilityElementsHidden={true}
+          accessibilityRole={"header"}
           importantForAccessibility="no-hide-descendants"
         >
           {l}
@@ -249,13 +250,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     ) : (
       goBack && (
         <Left>
-          <GoBackButton
-            testID={"back-button"}
-            onPress={goBack}
-            accessible={true}
-            accessibilityLabel={I18n.t("global.buttons.back")}
-            white={dark}
-          />
+          <GoBackButton testID={"back-button"} onPress={goBack} white={dark} />
         </Left>
       )
     );
