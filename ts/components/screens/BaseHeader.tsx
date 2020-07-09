@@ -2,7 +2,7 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { Body, Left, Right, Text, View } from "native-base";
 import { Ref } from "react";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { AccessibilityInfo, StyleSheet } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
@@ -56,25 +56,30 @@ interface OwnProps {
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
-
+type State = {
+  isScreenReaderActive: boolean;
+};
 const setAccessibilityTimeout = 100 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
-const isScreenReaderActive = true; // replace with the proper function
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
-class BaseHeaderComponent extends React.PureComponent<Props> {
+class BaseHeaderComponent extends React.PureComponent<Props, State> {
   private firstElementRef = React.createRef<View>();
 
   public constructor(props: Props) {
     super(props);
     this.handleFocus = this.handleFocus.bind(this);
+    this.state = { isScreenReaderActive: false };
   }
 
   // set accessibility focus when component is mounted
   // it should be used paired with avoidNavigationEvents === true (navigation context not available)
   public componentDidMount() {
-    if (this.props.avoidNavigationEventsUsage) {
-      setAccessibilityFocus(this.firstElementRef, setAccessibilityTimeout);
-    }
+    AccessibilityInfo.isScreenReaderEnabled().then(isScreenReaderActive => {
+      this.setState({ isScreenReaderActive });
+      if (isScreenReaderActive && this.props.avoidNavigationEventsUsage) {
+        setAccessibilityFocus(this.firstElementRef, setAccessibilityTimeout);
+      }
+    });
   }
 
   // set accessibility focus when this view comes visible
@@ -149,6 +154,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       dark,
       accessibilityLabel
     } = this.props;
+
     const maybeAccessibilityLabel = maybeNotNullyString(accessibilityLabel);
     return (
       <AppHeader
@@ -158,9 +164,13 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       >
         {this.renderLeft()}
 
+        {/* if screen reader is active and the accessibility label is defined, render the accessibility label
+          as placeholder where force focus
+        */}
         {!isSearchEnabled && (
           <Body style={goBack ? {} : styles.noLeft}>
-            {isScreenReaderActive && maybeAccessibilityLabel.isSome() ? (
+            {this.state.isScreenReaderActive &&
+            maybeAccessibilityLabel.isSome() ? (
               this.renderBodyLabel(
                 maybeAccessibilityLabel.value,
                 true,
