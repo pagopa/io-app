@@ -1,5 +1,16 @@
 ---
 global:
+  accessibility:
+    activityIndicator:
+      label: Caricamento in corso
+      hint: Attendi il caricamento del contenuto
+    header:
+      label: Header dell'applicazione
+    contextualHelp:
+      close: Chiudi l'help contestuale
+      open:
+        label: Aiuto contestuale
+        hint: Accedi alle informazioni sul contenuto della schermata corrente
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -61,6 +72,8 @@ global:
     spidLogin:
       title: Ricordati di accedere ad IO!
       message: Accedi con la tua identità digitale su IO, l’app dei servizi pubblici
+tablet:
+  message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
 rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
   bodyiOS: !include jailbroken_body.md
@@ -117,6 +130,7 @@ profile:
   unknown: SCONOSCIUTO
   logout:
     menulabel: Esci da IO
+    alertMessage: Uscendo da IO ti verrà chiesto nuovamente di accedere. Vuoi Uscire?
     cta:
       header: Come vuoi uscire dall'app?
       keepData:
@@ -179,7 +193,8 @@ profile:
         title: Informativa e condizioni d'uso
         description: Consulta l’Informativa Privacy e le condizioni d’uso di IO
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
-        updated: È necessario prendere visione della nuova versione dell'Informativa
+        updated: Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d'uso
+        infobox: È necessario prendere visione e accettare l'Informativa ed i Termini e condizioni d'uso
         contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
@@ -280,6 +295,10 @@ spid:
     line2: Inserisci la tua email per attivarla.
 authentication:
   landing:
+    accessibility:
+      carousel:
+        label: Presentazione di IO
+        hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
@@ -296,6 +315,7 @@ authentication:
     loginSpid: Entra con SPID
     loginCie: Entra con CIE
     loginSpidCie: Accedi con SPID o CIE
+    infoSpidCie: Introduzione a SPID e CIE
     loginSpidCieContent: Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere
     nospid: Non hai SPID? Scopri di più
     nospid-nocie: Non hai SPID o CIE? Scopri di più
@@ -335,6 +355,9 @@ authentication:
       enableNfcHeader: Verifica NFC
       enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
     pin:
+      accessibility:
+        label: Campo di inserimento per pin della Carta di Itentità elettronica
+        hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
       pinCardTitle: Inserisci il PIN della tua carta
       pinCardHeader: Inserisci il PIN
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
@@ -506,6 +529,9 @@ onboarding:
     headerTitle: Attivazione
     accept: Accetta
     error: Errore nel caricamento
+    alert:
+      title: Attenzione
+      message: Devi leggere tutto il contenuto dei Termini di servizio e Privacy policy per continuare.
   unlockCode:
     headerTitle: Attivazione
     contentTitle: Scegli un codice di sblocco
@@ -1077,6 +1103,11 @@ identification:
     tooManyAttempts: Troppi tentativi di inserimento errati.
     waitMessage: "Riprova tra:"
   unlockCode:
+    accessibility:
+      unlockHint: Hai inserito {{number}} cifre
+      fingerprint: Autenticati con l'impronta digitale
+      faceId: Autenticati con il riconoscimento facciale
+      delete: Cancella l'ultima cifra inserita
     reset:
       button: Hai dimenticato il
       code: codice di sblocco
