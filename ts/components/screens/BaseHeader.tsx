@@ -74,12 +74,14 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   // set accessibility focus when component is mounted
   // it should be used paired with avoidNavigationEvents === true (navigation context not available)
   public componentDidMount() {
-    AccessibilityInfo.isScreenReaderEnabled().then(isScreenReaderActive => {
-      this.setState({ isScreenReaderActive });
-      if (isScreenReaderActive && this.props.avoidNavigationEventsUsage) {
-        setAccessibilityFocus(this.firstElementRef, setAccessibilityTimeout);
-      }
-    });
+    AccessibilityInfo.isScreenReaderEnabled()
+      .then(isScreenReaderActive => {
+        this.setState({ isScreenReaderActive });
+        if (isScreenReaderActive && this.props.avoidNavigationEventsUsage) {
+          setAccessibilityFocus(this.firstElementRef, setAccessibilityTimeout);
+        }
+      })
+      .catch(); // do nothing
   }
 
   // set accessibility focus when this view comes visible
