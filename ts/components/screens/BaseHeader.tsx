@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 });
 
 interface OwnProps {
-  avoidNavigationEventsUsage?: boolean;
+  avoidNavigationEventsUsage?: boolean; // if true NavigationEvents and its events will be excluded (onDidFocus)
   accessibilityLabel?: string; // rendered only if it is defined and a screen reader is active
   dark?: boolean;
   headerTitle?: string;
@@ -57,6 +57,8 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const setAccessibilityTimeout = 100 as Millisecond;
+const noReferenceTimeout = 150 as Millisecond;
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props> {
   private firstElementRef = React.createRef<View>();
@@ -70,7 +72,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   // it should be used paired with avoidNavigationEvents === true (navigation context not available)
   public componentDidMount() {
     if (this.props.avoidNavigationEventsUsage) {
-      setAccessibilityFocus(this.firstElementRef, 10 as Millisecond);
+      setAccessibilityFocus(this.firstElementRef, setAccessibilityTimeout);
     }
   }
 
@@ -82,8 +84,8 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
         this.handleFocus();
         return;
       }
-      setAccessibilityFocus(this.firstElementRef, 100 as Millisecond);
-    }, 50);
+      setAccessibilityFocus(this.firstElementRef, setAccessibilityTimeout);
+    }, noReferenceTimeout);
   }
 
   /**
