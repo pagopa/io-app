@@ -20,7 +20,7 @@ export const setAccessibilityFocus = <T extends View>(
   executionDelay: Millisecond = 0 as Millisecond // default: execute immediately
 ) => {
   setTimeout(() => {
-    fromNullable(nodeReference.current)
+    fromNullable(nodeReference && nodeReference.current) // nodeReference could be null or undefined
       .chain(ref => fromNullable(findNodeHandle(ref)))
       .map(reactTag => {
         if (Platform.OS === "android") {
