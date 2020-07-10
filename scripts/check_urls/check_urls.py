@@ -18,7 +18,7 @@ HEADERS = {
 }
 MAX_TIMEOUT = 7
 global_uris = set()
-SLACK_TOKEN = os.environ.get("IO_APP_SLACK_TOKEN_CHECK_URLS", None)
+SLACK_TOKEN = os.environ.get("IO_APP_SLACK_TOKEN_CHECK_URLS", "xoxb-842391135888-1098955295713-fmoEFs5Sf0fJD4dw0vU1UNiB")
 tagged_people = ["<@UTVS9R0SF>"]
 SLACK_CHANNEL = "#io_status"
 
@@ -70,12 +70,12 @@ def readFile(files):
 
 def load_remote_content(uri):
     try:
-      r = requests.get(uri, timeout=MAX_TIMEOUT)
-      if r.ok:
-        return r.text
-      return None
+        r = requests.get(uri, timeout=MAX_TIMEOUT)
+        if r.ok:
+            return r.text
+        return None
     except:
-      return None
+        return None
 
 def test_protocol(uri):
     """
@@ -84,8 +84,8 @@ def test_protocol(uri):
     :return:
     """
     if re.search(r'^http:', uri, re.IGNORECASE) is not None:
-      return "%s has not https protocol" % (uri)
-    return None
+      return uri,"has not https protocol"
+    return None,None
 
 def test_availability(uri):
     """
@@ -97,23 +97,24 @@ def test_availability(uri):
     try:
         r = requests.get(uri, headers=HEADERS, timeout=MAX_TIMEOUT,verify=False)
         if r.ok:
-            return None
-        return "%s status code %d" % (uri, r.status_code)
+            return None,None
+        return uri,"status code %d" % r.status_code
     except Exception as e:
-        return "%s -> %s" % (uri,str(e))
+        return uri,str(e)
 
 
 
 def test_http_uri(uri):
     # a list of test to apply
-    tests = [test_availability,test_protocol]
+    tests = [test_availability]
     for t in tests:
         res = t(uri)
-        if res is not None:
+        if res[0] is not None:
             return res
+    return None,None
 
 
-def send_slack_message(invalid_uris):
+def send_slack_message(msg):
     """
     Sends the report of the check to slack to notify the status of the static texts of the app
     :return:
@@ -125,11 +126,8 @@ def send_slack_message(invalid_uris):
             token=SLACK_TOKEN, ssl=ssl_context
         )
         if len(invalid_uris) > 0:
-            invalid_uris_message = "\n".join(
-                list(map(lambda iu: "- " + iu, invalid_uris)))
             tags = " ".join(tagged_people)
-            message = "%s :warning: There are %d uris in *IO App* that are not working:\n%s" % (tags,
-                                                                                                len(invalid_uris), invalid_uris_message)
+            message = "%s :warning: There are uris in *IO App* that are not working" % tags
             message_blocks = []
             message_blocks.append({
                 "type": "section",
@@ -142,6 +140,25 @@ def send_slack_message(invalid_uris):
                 channel=SLACK_CHANNEL,
                 blocks=message_blocks
             )
+            slice = 10
+            count = 0
+            msgs = msg.split("\n")
+            while count <= len(msgs):
+                message = "\n".join(msgs[count:count + slice])
+                message_blocks = []
+                message_blocks.append({
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": message
+                  }
+                })
+                rtm_client.chat_postMessage(
+                  channel=SLACK_CHANNEL,
+                  blocks=message_blocks
+                  )
+                count += slice
+
     except SlackApiError as e:
         # You will get a SlackApiError if "ok" is False
         assert e.response["ok"] is False
@@ -154,6 +171,7 @@ remote_content_uri = ["https://raw.githubusercontent.com/pagopa/io-services-meta
 "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/bonuses_available.json"]
 
 run_test = len(argv) > 1 and argv[1] == "run_tests"
+mapping_source_uri = {}
 # since this code is executed multiple time for each process spawned
 # we have to ensure the init part is execute only the first time
 if not run_test and __name__ == '__main__':
@@ -161,11 +179,13 @@ if not run_test and __name__ == '__main__':
     print("scanning locales folder...")
     all_uris = scan_directory(
         abspath(join(dirname(__file__), "../..", "locales")))
+    mapping_source_uri["locales.ts"] = all_uris
     for ru in remote_content_uri:
         c = load_remote_content(ru)
         if c is not None:
-          test = extract_uris(c)
-          all_uris = all_uris.union(test)
+          uris = extract_uris(c)
+          all_uris = all_uris.union(uris)
+          mapping_source_uri[ru] = uris
     pool = Pool(cpu_count())
     invalid_uri_processing = []
     print("found and processing %d uris..." % len(all_uris))
@@ -175,14 +195,23 @@ if not run_test and __name__ == '__main__':
     # get all processes results
     invalid_uris = list(map(lambda r: r.get(), invalid_uri_processing))
     # remove None results from list
-    invalid_uris = list(filter(lambda r: r is not None, invalid_uris))
+    invalid_uris = list(filter(lambda r: r[0] is not None, invalid_uris))
     pool.close()
-    print('found %d broken uris' % len(invalid_uris))
+    print('found %d broken or invalid uris' % len(invalid_uris))
     if len(invalid_uris):
-        print("\n".join(list(map(lambda iu: "- " + iu, invalid_uris))))
-    if len(invalid_uris) > 0:
+        msg = "\n"
+        for source, uris in mapping_source_uri.items():
+            errors = []
+            for uri,error in invalid_uris:
+              if uri in uris:
+                  errors.append((uri,error))
+            if len(errors):
+              msg += '\nfound %d errors in %s\n' % (len(errors),source)
+              msg += "\n".join(list(map(lambda iu: "- %s -> %s" % (iu[0],iu[1]), errors)))
+              msg += "\n"
+        print(msg)
         if SLACK_TOKEN:
-            send_slack_message(invalid_uris)
+            send_slack_message(msg)
         else:
             print("no SLACK token provided")
 
