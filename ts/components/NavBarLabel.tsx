@@ -32,7 +32,7 @@ const ROUTE_LABEL: RouteLabelMap = {
 };
 const fallbackLabel = "unknown"; // fallback label
 
-const routeOrder = new Map([
+const routeOrder = new Map<Routes, number>([
   ["MESSAGES_NAVIGATOR", 1],
   ["WALLET_HOME", 2],
   ["SERVICES_NAVIGATOR", 3],
@@ -64,7 +64,7 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
   const { options, routeName, preferredLanguage } = props;
   const locale: Locales = preferredLanguage.fold(I18n.locale, l => l);
   const label = getLabel(routeName, locale);
-  const maybeOrder = fromNullable(routeOrder.get(routeName));
+  const maybeOrder = fromNullable(routeOrder.get(routeName as Routes));
 
   return (
     <Text
