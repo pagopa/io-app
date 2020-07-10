@@ -149,9 +149,10 @@ def send_slack_message(invalid_uris):
         assert e.response["error"]
         print(f"Got an error: {e.response['error']}")
 
-
+# a list of remote uris consumed by the app for content presentation
 remote_content_uri = ["https://raw.githubusercontent.com/pagopa/io-services-metadata/master/services.yml",
 "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/bonuses_available.json"]
+
 run_test = len(argv) > 1 and argv[1] == "run_tests"
 # since this code is executed multiple time for each process spawned
 # we have to ensure the init part is execute only the first time
