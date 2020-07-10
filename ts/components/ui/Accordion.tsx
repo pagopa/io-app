@@ -74,7 +74,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const renderContent = (content: string) => (
-    <View style={styles.pad}>
+    <View style={styles.pad} accessible={expanded}>
       <Markdown
         onLinkClicked={(url: string) => {
           fromNullable(props.onLinkClicked).map(s => s(url));
