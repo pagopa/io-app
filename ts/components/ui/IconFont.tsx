@@ -20,7 +20,9 @@ class IconFont extends React.Component<Props> {
       <Icon
         {...this.props}
         style={[style, colorStyle, fontSizeStyle]}
-        accessible={false}
+        // in order to avoid the reading of the text associated to the icon on ios, we need to force the
+        // accessibility label to empty string
+        accessibilityLabel={""}
         importantForAccessibility={"no-hide-descendants"}
       />
     );
