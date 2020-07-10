@@ -59,7 +59,7 @@ type Props = OwnProps &
 type State = {
   isScreenReaderActive: boolean;
 };
-const setAccessibilityTimeout = 100 as Millisecond;
+const setAccessibilityTimeout = 0 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props, State> {
