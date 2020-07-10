@@ -18,7 +18,7 @@ HEADERS = {
 }
 MAX_TIMEOUT = 7
 global_uris = set()
-SLACK_TOKEN = os.environ.get("IO_APP_SLACK_TOKEN_CHECK_URLS", "xoxb-842391135888-1098955295713-fmoEFs5Sf0fJD4dw0vU1UNiB")
+SLACK_TOKEN = os.environ.get("IO_APP_SLACK_TOKEN_CHECK_URLS", None)
 tagged_people = ["<@UTVS9R0SF>"]
 SLACK_CHANNEL = "#io_status"
 
