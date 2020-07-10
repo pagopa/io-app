@@ -23,7 +23,7 @@ export const fetchTransactionsSuccess = createStandardAction(
   "FETCH_TRANSACTIONS_SUCCESS"
 )<{ data: ReadonlyArray<Transaction>; total: Option<number> }>();
 
-// on transaction refresh all stored transactions are cleared
+// on transactions refresh all stored transactions are cleared
 export const clearTransactions = createStandardAction("CLEAR_TRANSACTIONS")<
   void
 >();
