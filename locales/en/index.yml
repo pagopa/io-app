@@ -277,6 +277,7 @@ userMetadata:
 navigation:
   messages: Messages
   profile: Profile
+  accessibility: "Section {{section}}, panel, {{order}} of 4"
 cie:
   title: Touch the card
   layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
