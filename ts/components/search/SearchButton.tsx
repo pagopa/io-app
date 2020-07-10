@@ -62,26 +62,18 @@ class SearchButton extends React.Component<Props, State> {
             <ButtonDefaultOpacity
               onPress={this.onSearchDisable}
               transparent={true}
+              accessibilityLabel={I18n.t("global.buttons.close")}
             >
-              <IconFont
-                name="io-close"
-                color={this.props.color}
-                accessible={true}
-                accessibilityLabel={I18n.t("global.buttons.close")}
-              />
+              <IconFont name="io-close" color={this.props.color} />
             </ButtonDefaultOpacity>
           </Item>
         ) : (
           <ButtonDefaultOpacity
             onPress={this.handleSearchPress}
             transparent={true}
+            accessibilityLabel={I18n.t("global.buttons.search")}
           >
-            <IconFont
-              name="io-search"
-              color={this.props.color}
-              accessible={true}
-              accessibilityLabel={I18n.t("global.actions.search")}
-            />
+            <IconFont name="io-search" color={this.props.color} />
           </ButtonDefaultOpacity>
         )}
       </React.Fragment>
