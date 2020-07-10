@@ -45,6 +45,7 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
+  clearTransactions,
   fetchTransactionsRequest,
   readTransaction
 } from "../../store/actions/wallet/transactions";
@@ -453,7 +454,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   // triggered on pull to refresh
   private handleOnRefresh = () => {
     this.loadBonusVacanze();
-    this.props.loadTransactions(this.props.transactionsLoadedLength);
+    this.props.refreshTransactions();
     this.props.loadWallets();
   };
 
@@ -561,6 +562,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo })),
   navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
+  refreshTransactions: () => {
+    dispatch(clearTransactions());
+    dispatch(fetchTransactionsRequest({ start: 0 }));
+  },
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),
   loadWallets: () => dispatch(fetchWalletsRequest())
