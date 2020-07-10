@@ -1,6 +1,8 @@
 ---
 global:
   accessibility:
+    expanded: Expanded
+    collapsed: Collapsed
     activityIndicator:
       label: Loading
       hint: Wait for the content load
