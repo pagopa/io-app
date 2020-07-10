@@ -1,15 +1,15 @@
-import re
-from pathlib import Path
-
-import requests
-import ssl
-import certifi
 import os
-from sys import argv
+import re
+import ssl
 from multiprocessing import Manager, Pool, cpu_count
+from os.path import dirname, abspath, join
+from pathlib import Path
+from sys import argv
+
+import certifi
+import requests
 from slack import WebClient
 from slack.errors import SlackApiError
-from os.path import dirname, abspath, join
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
@@ -21,7 +21,7 @@ tagged_people = ["<@UTVS9R0SF>"]
 SLACK_CHANNEL = "#io_status"
 
 
-def scan_directory(path, exts=['*.md', '*.MD']):
+def scan_directory(path, exts=['*.ts']):
     """
       Scan the chosen directory, and the sub-directories and returns the execution of readFile from the found collection of files
       :param path: directory to scan
@@ -41,8 +41,12 @@ def extract_uris(text):
     # http:// or https:// followed by anything but a closing paren
     url_regex = "http[s]?://[^)]+"
     markup_regex = '\[({0})]\(\s*({1})\s*\)'.format(name_regex, url_regex)
-    result = re.findall(markup_regex, text)
-    return list(filter(lambda r: not r.lower().startswith("ioit://"), map(lambda r: r[1], result)))
+    md_uris = re.findall(markup_regex, text)
+    uris = re.findall("http[s]?://[^)]+?(?=[\\*|\s*|\\n*\\t*\\n*])", text)
+    result_md = set(map(lambda r: r[1],md_uris))
+    result_uri = set(map(lambda r: r.replace("\\n","").replace('",''',""),uris))
+    result = result_md.union(result_uri)
+    return list(filter(lambda r: not r.lower().startswith("ioit://"), result))
 
 
 def readFile(files):
@@ -60,20 +64,39 @@ def readFile(files):
     return uri_set
 
 
-def test_http_uri(uri):
+def test_protocol(uri):
     """
-    Tests the uri passed as argument making an http get request.
-    If it causes an exception or an error code the uri will be returned
-    :param uri: the uri to test
-    :return: the uri if it is problematic, None otherwise
+    check if the protocol is http (it could cause a crash inside the app cause http is not allow)
+    :param uri:
+    :return:
     """
+    if re.search(r'^http:', uri, re.IGNORECASE) is not None:
+      return "%s has not https protocol" % (uri)
+    return None
+
+def test_availability(uri):
+    """
+        Tests the uri passed as argument making an http get request.
+        If it causes an exception or an error code the uri will be returned
+        :param uri: the uri to test
+        :return: the uri if it is problematic, None otherwise
+        """
     try:
         r = requests.get(uri, headers=HEADERS, timeout=MAX_TIMEOUT)
         if r.ok:
             return None
-    except:
-        print("failed to connect:" + uri)
-        return uri
+        return "%s status code %d" % (uri, r.status_code)
+    except Exception as e:
+        return "%s -> %s" % (uri,str(e))
+
+
+
+def test_http_uri(uri):
+    tests = [test_availability,test_protocol]
+    for t in tests:
+        res = t(uri)
+        if res is not None:
+            return res
 
 
 def send_slack_message(invalid_uris):
@@ -170,21 +193,24 @@ if run_test:
 
     test1 = extract_uris("[hello world](http://test.com)")
     assert len(test1) == 1
-    assert test1[0] == "http://test.com"
+    assert test1 == "http://test.com"
 
     test2 = extract_uris(
         "[a](https://test2.com) hello world [b](http://test.com)")
     assert len(test2) == 2
-    assert test2[0] == "https://test2.com"
-    assert test2[1] == "http://test.com"
+    assert test2 == "https://test2.com"
+    assert test2 == "http://test.com"
 
     test3 = extract_uris(
         "[a](https://www.test.com)      site.it        [b](https://empty)")
     assert len(test3) == 2
-    assert test3[0] == "https://www.test.com"
-    assert test3[1] == "https://empty"
+    assert test3 == "https://www.test.com"
+    assert test3 == "https://empty"
 
     test4 = extract_uris(a_text_with_urls)
     assert len(test4) == 17
+
+    test5 = extract_uris("bla bla http://www.google.it")
+    assert len(test5) == 1
 
     print("all tests passed")
