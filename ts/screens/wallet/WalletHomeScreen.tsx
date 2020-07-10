@@ -454,8 +454,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   // triggered on pull to refresh
   private handleOnRefresh = () => {
     this.loadBonusVacanze();
-    // request transactions from the head (youngest on first position)
-    this.props.refreshTransactions(0);
+    this.props.refreshTransactions();
     this.props.loadWallets();
   };
 
