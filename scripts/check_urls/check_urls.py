@@ -143,7 +143,7 @@ def send_slack_message(msg):
             slice = 10
             count = 0
             msgs = msg.split("\n")
-            while count <= len(msgs):
+            while count < len(msgs):
                 message = "\n".join(msgs[count:count + slice])
                 message_blocks = []
                 message_blocks.append({
@@ -207,7 +207,7 @@ if not run_test and __name__ == '__main__':
                   errors.append((uri,error))
             if len(errors):
               msg += '\nfound %d errors in %s\n' % (len(errors),source)
-              msg += "\n".join(list(map(lambda iu: "- %s -> %s" % (iu[0],iu[1]), errors)))
+              msg += "\n".join(list(map(lambda iu: "%s -> %s" % (iu[0],iu[1]), errors)))
               msg += "\n"
         print(msg)
         if SLACK_TOKEN:
