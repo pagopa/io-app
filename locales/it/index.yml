@@ -279,6 +279,7 @@ userMetadata:
 navigation:
   messages: Messaggi
   profile: Profilo
+  accessibility: "Sezione {{section}}, pannello, {{order}} di 4"
 cie:
   title: Appoggia la carta
   layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
