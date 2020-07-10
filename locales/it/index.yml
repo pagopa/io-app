@@ -11,6 +11,10 @@ global:
       open:
         label: Aiuto contestuale
         hint: Accedi alle informazioni sul contenuto della schermata corrente
+    chat:
+      description: "Messaggi assistenza IO"
+      unread_singular: "{{messages}} nuovo messaggio"
+      unread_plural: "{{messages}} nuovi messaggi"
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -50,6 +54,7 @@ global:
     close: Chiudi
     exit: Esci
     saveSelection: Salva la selezione
+    search: Ricerca
   navigator:
     messages: messaggi
     wallet: pagamenti
