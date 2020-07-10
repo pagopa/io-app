@@ -1443,8 +1443,7 @@ bonus:
         title: Buone notizie!
         description: "Il tuo nucleo familiare ha diritto al seguente Bonus Vacanze:"
         reminder:
-          text: "Ti ricordiamo che ciascun componente del tuo nucleo famigliare può spendere il bonus. Se le informazioni riportate non ti risultano corrette, ti preghiamo di verificare con il"
-          link: "servizio clienti di INPS."
+          text: "Ciascun componente del tuo nucleo familiare concorre a determinare l'importo e potrà spendere il bonus. Se i dati non sono corretti o aggiornati, per evitare problemi in seguito all'utilizzo del Bonus, ti invitiamo a presentare una nuova DSU prima di procedere con la richiesta."
         discrepancies:
           attention: "Attenzione!"
           text: "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Verifica che sia tutto corretto prima di continuare. Se decidi di proseguire, potresti essere chiamato a fornire la documentazione per provare la completezza e la veridicità dei dati indicati nella DSU Altrimenti, puoi presentare una nuova DSU e richiedere il Bonus in un secondo momento."
