@@ -6,7 +6,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { DetailEnum } from "../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   instabugLog,
@@ -18,10 +17,7 @@ import CopyButtonComponent from "../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-import {
-  getIuv,
-  getPaymentHistoryInfo
-} from "../../components/wallet/PaymentsHistoryList";
+import { getPaymentHistoryInfo } from "../../components/wallet/PaymentsHistoryList";
 import {
   paymentStatusType,
   PaymentSummaryComponent
@@ -29,6 +25,7 @@ import {
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
 import {
+  getCodiceAvviso,
   isPaymentDoneSuccessfully,
   PaymentHistory
 } from "../../store/reducers/payments/history";
@@ -38,7 +35,10 @@ import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { maybeInnerProperty } from "../../utils/options";
-import { getPaymentHistoryDetails } from "../../utils/payment";
+import {
+  getErrorDescription,
+  getPaymentHistoryDetails
+} from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
@@ -66,32 +66,6 @@ const styles = StyleSheet.create({
 
 const notAvailable = I18n.t("global.remoteStates.notAvailable");
 
-const renderErrorTransactionMessage = (
-  error?: keyof typeof DetailEnum
-): string | undefined => {
-  if (error === undefined) {
-    return undefined;
-  }
-  switch (error) {
-    case "PAYMENT_DUPLICATED":
-      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
-    case "INVALID_AMOUNT":
-      return I18n.t("wallet.errors.INVALID_AMOUNT");
-    case "PAYMENT_ONGOING":
-      return I18n.t("wallet.errors.PAYMENT_ONGOING");
-    case "PAYMENT_EXPIRED":
-      return I18n.t("wallet.errors.PAYMENT_EXPIRED");
-    case "PAYMENT_UNAVAILABLE":
-      return I18n.t("wallet.errors.PAYMENT_UNAVAILABLE");
-    case "PAYMENT_UNKNOWN":
-      return I18n.t("wallet.errors.PAYMENT_UNKNOWN");
-    case "DOMAIN_UNKNOWN":
-      return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
-    default:
-      return undefined;
-  }
-};
-
 /**
  * Payment Details
  */
@@ -109,16 +83,14 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
   private getData = () => {
     const payment = this.props.navigation.getParam("payment");
-
+    const codiceAvviso = getCodiceAvviso(payment.data);
     const paymentCheckout = isPaymentDoneSuccessfully(payment);
     const paymentInfo = getPaymentHistoryInfo(payment, paymentCheckout);
     const paymentStatus: paymentStatusType = {
       color: paymentInfo.color,
       description: paymentInfo.text11
     };
-    const errorDetail = fromNullable(
-      renderErrorTransactionMessage(payment.failure)
-    );
+    const errorDetail = fromNullable(getErrorDescription(payment.failure));
 
     const paymentOutcome = isPaymentDoneSuccessfully(payment);
 
@@ -143,8 +115,6 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       m => m
     ).fold(notAvailable, c => c);
 
-    const iuv = getIuv(payment.data);
-
     const amount = maybeInnerProperty<Transaction, "amount", number>(
       payment.transaction,
       "amount",
@@ -165,7 +135,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     return {
       recipient,
       reason,
-      iuv,
+      codiceAvviso,
       paymentOutcome,
       paymentInfo,
       paymentStatus,
@@ -237,7 +207,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
             <React.Fragment>
               <PaymentSummaryComponent
                 title={I18n.t("payment.details.info.title")}
-                iuv={data.iuv}
+                codiceAvviso={data.codiceAvviso}
                 paymentStatus={data.paymentStatus}
               />
               {data.errorDetail.isSome() && (
