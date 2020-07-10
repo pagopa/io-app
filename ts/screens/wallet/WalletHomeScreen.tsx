@@ -487,6 +487,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
     return (
       <WalletLayout
+        accessibilityLabel={I18n.t("wallet.wallet")}
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
         appLogo={true}

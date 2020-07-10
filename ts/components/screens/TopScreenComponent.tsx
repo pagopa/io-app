@@ -5,6 +5,7 @@ import { SearchType } from "../search/SearchButton";
 import BaseScreenComponent from "./BaseScreenComponent";
 
 interface OwnProps {
+  accessibilityLabel?: string;
   headerTitle?: string;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
@@ -39,6 +40,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
       appLogo,
       goBack,
       headerTitle,
+      accessibilityLabel,
       contextualHelp,
       contextualHelpMarkdown,
       headerBody,
@@ -51,6 +53,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
 
     return (
       <BaseScreenComponent
+        accessibilityLabel={accessibilityLabel}
         appLogo={appLogo}
         dark={dark}
         goBack={goBack}

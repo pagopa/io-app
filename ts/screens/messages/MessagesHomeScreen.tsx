@@ -149,6 +149,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
     return (
       <TopScreenComponent
+        accessibilityLabel={I18n.t("messages.contentTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["messages"]}
         headerTitle={I18n.t("messages.contentTitle")}

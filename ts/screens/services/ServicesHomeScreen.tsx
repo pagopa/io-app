@@ -600,6 +600,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       >
         <View style={styles.topScreenContainer}>
           <TopScreenComponent
+            accessibilityLabel={I18n.t("services.title")}
             headerTitle={I18n.t("services.title")}
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
