@@ -42,9 +42,11 @@ def extract_uris(text):
     url_regex = "http[s]?://[^)]+"
     markup_regex = '\[({0})]\(\s*({1})\s*\)'.format(name_regex, url_regex)
     md_uris = re.findall(markup_regex, text)
+    # find all url not included in markdown syntax
     uris = re.findall("http[s]?://[^)]+?(?=[\\*|\s*|\\n*\\t*\\n*])", text)
     result_md = set(map(lambda r: r[1],md_uris))
     result_uri = set(map(lambda r: r.replace("\\n","").replace('",''',""),uris))
+    # merging sets
     result = result_md.union(result_uri)
     return list(filter(lambda r: not r.lower().startswith("ioit://"), result))
 
@@ -92,6 +94,7 @@ def test_availability(uri):
 
 
 def test_http_uri(uri):
+    # a list of test to apply
     tests = [test_availability,test_protocol]
     for t in tests:
         res = t(uri)
