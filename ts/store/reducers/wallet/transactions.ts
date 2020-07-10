@@ -7,8 +7,10 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
 import { isSuccessTransaction, Transaction } from "../../../types/pagopa";
+import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
 import {
+  clearTransactions,
   fetchTransactionsFailure,
   fetchTransactionsRequest,
   fetchTransactionsSuccess
@@ -135,6 +137,9 @@ const reducer = (
         transactions: pot.toError(state.transactions, action.payload),
         total: pot.toError(state.total, action.payload)
       };
+    case getType(clearTransactions):
+    case getType(clearCache):
+      return TRANSACTIONS_INITIAL_STATE;
 
     default:
       return state;
