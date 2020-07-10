@@ -10,6 +10,8 @@ import certifi
 import requests
 from slack import WebClient
 from slack.errors import SlackApiError
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
@@ -66,6 +68,15 @@ def readFile(files):
     return uri_set
 
 
+def load_remote_content(uri):
+    try:
+      r = requests.get(uri, timeout=MAX_TIMEOUT)
+      if r.ok:
+        return r.text
+      return None
+    except:
+      return None
+
 def test_protocol(uri):
     """
     check if the protocol is http (it could cause a crash inside the app cause http is not allow)
@@ -84,7 +95,7 @@ def test_availability(uri):
         :return: the uri if it is problematic, None otherwise
         """
     try:
-        r = requests.get(uri, headers=HEADERS, timeout=MAX_TIMEOUT)
+        r = requests.get(uri, headers=HEADERS, timeout=MAX_TIMEOUT,verify=False)
         if r.ok:
             return None
         return "%s status code %d" % (uri, r.status_code)
@@ -139,6 +150,8 @@ def send_slack_message(invalid_uris):
         print(f"Got an error: {e.response['error']}")
 
 
+remote_content_uri = ["https://raw.githubusercontent.com/pagopa/io-services-metadata/master/services.yml",
+"https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/bonuses_available.json"]
 run_test = len(argv) > 1 and argv[1] == "run_tests"
 # since this code is executed multiple time for each process spawned
 # we have to ensure the init part is execute only the first time
@@ -147,6 +160,11 @@ if not run_test and __name__ == '__main__':
     print("scanning locales folder...")
     all_uris = scan_directory(
         abspath(join(dirname(__file__), "../..", "locales")))
+    for ru in remote_content_uri:
+        c = load_remote_content(ru)
+        if c is not None:
+          test = extract_uris(c)
+          all_uris = all_uris.union(test)
     pool = Pool(cpu_count())
     invalid_uri_processing = []
     print("found and processing %d uris..." % len(all_uris))
