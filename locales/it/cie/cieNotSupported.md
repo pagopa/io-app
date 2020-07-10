@@ -1,1 +1,2 @@
-Per effettuare il login è necessario avere un dispositivo con tecnologia NFC e il sistema operativo con i requisiti minimi necessari (i dispositivi **iOS** non sono ancora compatibili ma a breve lo diventeranno con i prossimi aggiornamenti).
+Per effettuare il login con CIE è necessario avere un dispositivo provvisto di tecnologia NFC, con sistema operativo Android (versione 6.0 e superiori).
+A breve rilasceremo una versione dell’app che permetterà l'accesso con CIE anche dai dispositivi iOS compatibili.
