@@ -565,6 +565,7 @@ payment:
   noPsp: You have yet to select a PSP
   changePsp: Change PSP
   IUV: IUV
+  noticeCode: Notice code
   recipientFiscalCode: Recipient fiscal code
   details:
     state:
@@ -1410,8 +1411,7 @@ bonus:
         title: Good news!
         description: "Your family is entitled to the following Bonus Vacanze:"
         reminder:
-          text: "We remind you that each member of your household can spend the bonus. If the information shown is incorrect, please check with the"
-          link: "INPS customer service."
+          text: "Each member of your family helps determine the amount and can spend the bonus. If the data is incorrect or updated, to avoid problems following the use of the Bonus, we invite you to submit a new DSU before proceeding with the request."
         discrepancies:
           attention: "Warning!"
           text: "INPS has reported some omissions or discrepancies in your ISEE. Check that everything is correct before continuing. If you decide to continue, you may be called to provide documentation to prove the completeness and truthfulness of the data indicated in the DSU. Otherwise, you can present a new DSU and check the bonus at a later time."

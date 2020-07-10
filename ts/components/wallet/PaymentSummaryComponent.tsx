@@ -11,7 +11,7 @@ type Props = Readonly<{
   title: string;
   recipient?: string;
   description?: string;
-  iuv?: string;
+  codiceAvviso?: string;
   error?: string;
   dateTime?: string;
   dark?: boolean;
@@ -116,7 +116,7 @@ export const PaymentSummaryComponent = (props: Props) => {
             props.description
           )}
 
-          {renderItem(I18n.t("payment.IUV"), props.iuv)}
+          {renderItem(I18n.t("payment.noticeCode"), props.codiceAvviso)}
         </View>
 
         {props.image !== undefined && <Image source={props.image} />}
