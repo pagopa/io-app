@@ -132,11 +132,7 @@ export class LightModalProvider extends React.Component<Props, State> {
     childComponent: React.ReactNode,
     styledAnimation: AnimationLightModal = RightLeftAnimation
   ) => {
-    const maybeScreenReaderEnabled = await isScreenReaderEnabled().run();
-    const isScreenReaderActive = maybeScreenReaderEnabled.fold(
-      _ => false,
-      s => s
-    );
+    const isScreenReaderActive = await isScreenReaderEnabled();
     const component = (
       <Animated.View style={[styles.container, styledAnimation]}>
         {isScreenReaderActive ? (
@@ -155,11 +151,7 @@ export class LightModalProvider extends React.Component<Props, State> {
   };
 
   public showModalFadeInAnimation = async (childComponent: React.ReactNode) => {
-    const maybeScreenReaderEnabled = await isScreenReaderEnabled().run();
-    const isScreenReaderActive = maybeScreenReaderEnabled.fold(
-      _ => false,
-      s => s
-    );
+    const isScreenReaderActive = await isScreenReaderEnabled();
     const component = (
       <Animated.View style={styles.container} opacity={fadeAnim}>
         {isScreenReaderActive ? (
@@ -180,11 +172,7 @@ export class LightModalProvider extends React.Component<Props, State> {
   };
 
   public showModal = async (childComponent: React.ReactNode) => {
-    const maybeScreenReaderEnabled = await isScreenReaderEnabled().run();
-    const isScreenReaderActive = maybeScreenReaderEnabled.fold(
-      _ => false,
-      s => s
-    );
+    const isScreenReaderActive = await isScreenReaderEnabled();
     const component = isScreenReaderActive ? (
       <Modal>{childComponent}</Modal>
     ) : (
