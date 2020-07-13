@@ -1,6 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { View } from "native-base";
 import * as React from "react";
 import {
   AccessibilityInfo,
@@ -15,7 +14,7 @@ import {
  * @param nodeReference
  * @param executionDelay
  */
-export const setAccessibilityFocus = <T extends View>(
+export const setAccessibilityFocus = <T extends React.Component>(
   nodeReference: React.RefObject<T>,
   executionDelay: Millisecond = 0 as Millisecond // default: execute immediately
 ) => {
