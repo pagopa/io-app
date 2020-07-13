@@ -229,6 +229,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             >
               <IconFont
                 name={"io-question"}
+                style={{ paddingRight: 0 }}
                 color={
                   dark || primary
                     ? customVariables.colorWhite

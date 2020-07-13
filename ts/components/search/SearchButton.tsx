@@ -82,7 +82,11 @@ class SearchButton extends React.Component<Props, State> {
             transparent={true}
             accessibilityLabel={I18n.t("global.buttons.search")}
           >
-            <IconFont name="io-search" color={this.props.color} />
+            <IconFont
+              name="io-search"
+              color={this.props.color}
+              style={{ paddingRight: 0 }}
+            />
           </ButtonDefaultOpacity>
         )}
       </React.Fragment>
