@@ -1,11 +1,13 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import themeVariables from "../../../../theme/variables";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 type Props = {
   image: React.ReactNode;
-  title?: string;
+  title: string;
   // this is necessary in order to render text with different formatting
   body?: string | React.ReactNode;
 };
@@ -45,19 +47,16 @@ const renderNode = (body: string | React.ReactNode) => {
  * @constructor
  */
 export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
+  const elementRef = React.createRef<View>();
   return (
     <View style={styles.main}>
+      <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       {props.image}
       <View spacer={true} large={true} />
-      {props.title && (
-        <>
-          <Text style={styles.title} bold={true}>
-            {props.title}
-          </Text>
-          <View spacer={true} />
-        </>
-      )}
-
+      <Text style={styles.title} bold={true} ref={elementRef} accessible={true}>
+        {props.title}
+      </Text>
+      <View spacer={true} />
       {renderNode(props.body)}
     </View>
   );
