@@ -1,6 +1,9 @@
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Body, Left, Right, Text, View } from "native-base";
+import { Ref } from "react";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { AccessibilityInfo, StyleSheet } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -10,6 +13,8 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import { setAccessibilityFocus } from "../../utils/accessibility";
+import { maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
 import InstabugChatsComponent from "../InstabugChatsComponent";
@@ -27,6 +32,8 @@ const styles = StyleSheet.create({
 });
 
 interface OwnProps {
+  avoidNavigationEventsUsage?: boolean; // if true NavigationEvents and its events will be excluded (onDidFocus)
+  accessibilityLabel?: string; // rendered only if it is defined and a screen reader is active
   dark?: boolean;
   headerTitle?: string;
   goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
@@ -49,9 +56,46 @@ interface OwnProps {
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
-
+type State = {
+  isScreenReaderActive: boolean;
+};
+const setAccessibilityTimeout = 0 as Millisecond;
+const noReferenceTimeout = 150 as Millisecond;
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
-class BaseHeaderComponent extends React.PureComponent<Props> {
+class BaseHeaderComponent extends React.PureComponent<Props, State> {
+  private firstElementRef = React.createRef<View>();
+
+  public constructor(props: Props) {
+    super(props);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.state = { isScreenReaderActive: false };
+  }
+
+  // set accessibility focus when component is mounted
+  // it should be used paired with avoidNavigationEvents === true (navigation context not available)
+  public componentDidMount() {
+    AccessibilityInfo.isScreenReaderEnabled()
+      .then(isScreenReaderActive => {
+        this.setState({ isScreenReaderActive });
+        if (isScreenReaderActive && this.props.avoidNavigationEventsUsage) {
+          setAccessibilityFocus(this.firstElementRef, setAccessibilityTimeout);
+        }
+      })
+      .catch(); // do nothing
+  }
+
+  // set accessibility focus when this view comes visible
+  public handleFocus() {
+    setTimeout(() => {
+      // retry until the reference is defined
+      if (this.firstElementRef === undefined) {
+        this.handleFocus();
+        return;
+      }
+      setAccessibilityFocus(this.firstElementRef, setAccessibilityTimeout);
+    }, noReferenceTimeout);
+  }
+
   /**
    * if go back is a function it will be returned
    * otherwise the default goback navigation will be returned
@@ -64,21 +108,10 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
   private renderHeader = () => {
     const { customGoBack, headerTitle } = this.props;
-    const isWhite = this.props.primary || this.props.dark;
 
     // if customGoBack is provided or if the app is in accessibility mode only the header text will be rendered
     if (customGoBack) {
-      return (
-        <Text
-          white={isWhite}
-          numberOfLines={1}
-          accessible={false}
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no-hide-descendants"
-        >
-          {headerTitle}
-        </Text>
-      );
+      return this.renderBodyLabel(headerTitle, false);
     }
     // if no customGoBack is provided also the header text could be press to execute goBack
     // note goBack could a boolean or a function (check this.getGoBackHandler)
@@ -87,20 +120,45 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
         onPress={this.getGoBackHandler}
         accessible={false}
       >
-        <Text
-          white={isWhite}
-          numberOfLines={1}
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no-hide-descendants"
-        >
-          {headerTitle}
-        </Text>
+        {this.renderBodyLabel(headerTitle)}
       </TouchableDefaultOpacity>
     );
   };
 
+  private renderBodyLabel = (
+    label?: string,
+    accessible: boolean | undefined = undefined,
+    ref?: Ref<Text>
+  ) => {
+    return maybeNotNullyString(label).fold(undefined, l => {
+      const isWhite = this.props.primary || this.props.dark;
+      return (
+        <Text
+          ref={ref}
+          white={isWhite}
+          numberOfLines={1}
+          accessible={accessible}
+          accessibilityElementsHidden={true}
+          accessibilityRole={"header"}
+          importantForAccessibility="no-hide-descendants"
+        >
+          {l}
+        </Text>
+      );
+    });
+  };
+
   public render() {
-    const { goBack, headerTitle, body, isSearchEnabled, dark } = this.props;
+    const {
+      goBack,
+      headerTitle,
+      body,
+      isSearchEnabled,
+      dark,
+      accessibilityLabel
+    } = this.props;
+
+    const maybeAccessibilityLabel = maybeNotNullyString(accessibilityLabel);
     return (
       <AppHeader
         primary={this.props.primary}
@@ -109,9 +167,23 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       >
         {this.renderLeft()}
 
+        {/* if screen reader is active and the accessibility label is defined, render the accessibility label
+          as placeholder where force focus
+        */}
         {!isSearchEnabled && (
           <Body style={goBack ? {} : styles.noLeft}>
-            {body ? body : headerTitle && this.renderHeader()}
+            {this.state.isScreenReaderActive &&
+            maybeAccessibilityLabel.isSome() ? (
+              this.renderBodyLabel(
+                maybeAccessibilityLabel.value,
+                true,
+                this.firstElementRef
+              )
+            ) : (
+              <View ref={this.firstElementRef} accessible={true}>
+                {body ? body : headerTitle && this.renderHeader()}
+              </View>
+            )}
           </Body>
         )}
 
@@ -164,6 +236,9 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               <IconFont name={customRightIcon.iconName} />
             </ButtonDefaultOpacity>
           )}
+        {!this.props.avoidNavigationEventsUsage && (
+          <NavigationEvents onDidFocus={this.handleFocus} />
+        )}
       </Right>
     );
   };
@@ -175,13 +250,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     ) : (
       goBack && (
         <Left>
-          <GoBackButton
-            testID={"back-button"}
-            onPress={goBack}
-            accessible={true}
-            accessibilityLabel={I18n.t("global.buttons.back")}
-            white={dark}
-          />
+          <GoBackButton testID={"back-button"} onPress={goBack} white={dark} />
         </Left>
       )
     );
