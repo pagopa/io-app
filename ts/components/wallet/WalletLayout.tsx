@@ -27,6 +27,7 @@ import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
 
 type Props = Readonly<{
+  accessibilityLabel?: string;
   title: string;
   allowGoBack: boolean;
   topContentHeight?: number;
@@ -102,6 +103,7 @@ export default class WalletLayout extends React.Component<Props> {
   public render(): React.ReactNode {
     const {
       title,
+      accessibilityLabel,
       allowGoBack,
       hideHeader,
       footerContent,
@@ -111,6 +113,7 @@ export default class WalletLayout extends React.Component<Props> {
 
     return (
       <DarkLayout
+        accessibilityLabel={accessibilityLabel}
         bounces={false}
         allowGoBack={allowGoBack}
         title={title ? title : I18n.t("wallet.wallet")}

@@ -4,6 +4,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { Animated, Dimensions, ScrollView, StyleSheet } from "react-native";
+import I18n from "../i18n";
 import variables from "../theme/variables";
 
 type Props = {
@@ -42,7 +43,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export const HorizontalScroll: React.SFC<Props> = props => {
+export const HorizontalScroll: React.FunctionComponent<Props> = (
+  props: Props
+) => {
   const animVal = new Animated.Value(0);
 
   const barArray = props.cards.map((_, i) => {
@@ -84,6 +87,13 @@ export const HorizontalScroll: React.SFC<Props> = props => {
         onScroll={Animated.event([
           { nativeEvent: { contentOffset: { x: animVal } } }
         ])}
+        accessible={true}
+        accessibilityLabel={I18n.t(
+          "authentication.landing.accessibility.carousel.label"
+        )}
+        accessibilityHint={I18n.t(
+          "authentication.landing.accessibility.carousel.hint"
+        )}
       >
         {props.cards}
       </ScrollView>

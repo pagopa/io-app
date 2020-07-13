@@ -1,5 +1,20 @@
 ---
 global:
+  accessibility:
+    activityIndicator:
+      label: Loading
+      hint: Wait for the content load
+    header:
+      label: Application header
+    contextualHelp:
+      close: Close the contextual help
+      open:
+        label: Contextual Help
+        hint: Access information about the contents of the current screen
+    chat:
+      description: "IO assistance messages"
+      unread_singular: "{{message}} new message"
+      unread_plural: "{{message}} new messages"
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -39,6 +54,7 @@ global:
     close: Close
     exit: Exit
     saveSelection: Save the selection
+    search: Search
   navigator:
     messages: messages
     wallet: payments
@@ -61,6 +77,8 @@ global:
     spidLogin:
       title: Remember to login to IO!
       message: Login with your digital identity on IO, the public services app
+tablet:
+  message: The IO interface is optimized for smartphones, but all the functions compatible with your device are still available.
 rooted:
   title: Looks like the security of your device has been compromised!
   bodyiOS: !include jailbroken_body.md
@@ -117,6 +135,7 @@ profile:
   unknown: UNKNOWN
   logout:
     menulabel: Logout from IO
+    alertMessage: By exiting IO you will be asked to log in again. Logout?
     cta:
       header: How do you want to quit the app?
       keepData:
@@ -179,7 +198,8 @@ profile:
         title: Privacy policy
         description: See the Privacy policy and the conditions of use of IO
         header: Information note on the processing of the IO app users's personal data
-        updated: It is required to accept the new version of Terms and Conditions
+        updated: We updated our Terms and conditions
+        infobox: It is necessary to read and accept the Terms and Conditions
         contextualHelpTitlePolicy: What is the information on the processing of personal data
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Your privacy settings
@@ -257,6 +277,7 @@ userMetadata:
 navigation:
   messages: Messages
   profile: Profile
+  accessibility: "Section {{section}}, panel, {{order}} of 4"
 cie:
   title: Touch the card
   layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
@@ -275,6 +296,10 @@ spid:
     line2: Insert your email address to enable it.
 authentication:
   landing:
+    accessibility:
+      carousel:
+        label: IO presentation
+        hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
@@ -291,6 +316,7 @@ authentication:
     loginSpid: Login with SPID
     loginCie: Login with CIE
     loginSpidCie: Login with SPID or CIE
+    infoSpidCie: Introduction to SPID and CIE
     loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
     nospid: Don't have SPID? Find out more
     nospid-nocie: Don't have SPID or CIE? Find out more
@@ -324,6 +350,9 @@ authentication:
       enableNfcHeader: Check NFC
       enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
     pin:
+      accessibility:
+        label: Insertion field for Electronic Identity Card pins
+        hint: Enter the 8 digits pin of your Electronic Identity Card in this field.
       pinCardTitle: Enter the PIN of your card
       pinCardHeader: Enter the PIN
       pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
@@ -486,6 +515,9 @@ onboarding:
     headerTitle: Activation
     accept: Accept
     error: Loading error
+    alert:
+      title: Attention
+      message: Please, read the full content of the Terms of Service and Privacy Policy to continue
   unlockCode:
     headerTitle: Activation
     contentTitle: Choose an unlock code
@@ -534,6 +566,7 @@ payment:
   noPsp: You have yet to select a PSP
   changePsp: Change PSP
   IUV: IUV
+  noticeCode: Notice code
   recipientFiscalCode: Recipient fiscal code
   details:
     state:
@@ -1045,6 +1078,11 @@ identification:
     tooManyAttempts: Too many attempts.
     waitMessage: "Try again in:"
   unlockCode:
+    accessibility:
+      unlockHint: You entered {{number}} digits
+      fingerprint: Login with your fingerprint
+      faceId: Login with the Face ID
+      delete: Remove last inserted digit
     reset:
       button: Did you forget the
       code: unlock code
@@ -1374,8 +1412,7 @@ bonus:
         title: Good news!
         description: "Your family is entitled to the following Bonus Vacanze:"
         reminder:
-          text: "We remind you that each member of your household can spend the bonus. If the information shown is incorrect, please check with the"
-          link: "INPS customer service."
+          text: "Each member of your family helps determine the amount and can spend the bonus. If the data is incorrect or updated, to avoid problems following the use of the Bonus, we invite you to submit a new DSU before proceeding with the request."
         discrepancies:
           attention: "Warning!"
           text: "INPS has reported some omissions or discrepancies in your ISEE. Check that everything is correct before continuing. If you decide to continue, you may be called to provide documentation to prove the completeness and truthfulness of the data indicated in the DSU. Otherwise, you can present a new DSU and check the bonus at a later time."
