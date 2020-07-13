@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     paddingLeft: 4
   },
   noLeft: {
-    marginLeft: variables.contentPadding - variables.appHeaderPaddingHorizontal
+    marginLeft: 2
   },
   row: {
     flexDirection: "row",
@@ -177,26 +177,18 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         */}
           {!isSearchEnabled && (
             <View style={goBack ? {} : [styles.noLeft]}>
-              {this.state.isScreenReaderActive &&
-              maybeAccessibilityLabel.isSome() ? (
-                <View style={styles.centerItem}>
-                  {this.renderBodyLabel(
-                    maybeAccessibilityLabel.value,
-                    true,
-                    this.firstElementRef
-                  )}
-                </View>
-              ) : body ? (
-                body
-              ) : (
-                <View
-                  ref={this.firstElementRef}
-                  style={styles.centerItem}
-                  accessible={true}
-                >
-                  {headerTitle && this.renderHeader()}
-                </View>
-              )}
+              <View style={goBack ? styles.centerItem : {}}>
+                {this.state.isScreenReaderActive &&
+                maybeAccessibilityLabel.isSome()
+                  ? this.renderBodyLabel(
+                      maybeAccessibilityLabel.value,
+                      true,
+                      this.firstElementRef
+                    )
+                  : body
+                    ? body
+                    : headerTitle && this.renderHeader()}
+              </View>
             </View>
           )}
 
