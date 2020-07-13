@@ -1,8 +1,8 @@
 ---
 global:
   accessibility:
-    expanded: Espanso
-    collapsed: Chiuso
+    expanded: Paragrafo espanso
+    collapsed: Paragrafo chiuso
     activityIndicator:
       label: Caricamento in corso
       hint: Attendi il caricamento del contenuto
