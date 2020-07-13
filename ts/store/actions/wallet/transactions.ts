@@ -23,6 +23,11 @@ export const fetchTransactionsSuccess = createStandardAction(
   "FETCH_TRANSACTIONS_SUCCESS"
 )<{ data: ReadonlyArray<Transaction>; total: Option<number> }>();
 
+// on transactions refresh all stored transactions are cleared
+export const clearTransactions = createStandardAction("CLEAR_TRANSACTIONS")<
+  void
+>();
+
 export const fetchTransactionsFailure = createStandardAction(
   "FETCH_TRANSACTIONS_FAILURE"
 )<Error>();
@@ -104,6 +109,7 @@ export type TransactionsActions =
   | ActionType<typeof fetchTransactionRequest>
   | ActionType<typeof fetchTransactionFailure>
   | ActionType<typeof fetchPsp>
+  | ActionType<typeof clearTransactions>
   | ActionType<typeof runPollTransactionSaga>
   | ActionType<typeof pollTransactionSagaCompleted>
   | ActionType<typeof pollTransactionSagaTimeout>;
