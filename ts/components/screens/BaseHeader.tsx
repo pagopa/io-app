@@ -176,7 +176,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           as placeholder where force focus
         */}
           {!isSearchEnabled && (
-            <View style={goBack ? {} : [styles.noLeft, styles.centerItem]}>
+            <View style={goBack ? {} : [styles.noLeft]}>
               {this.state.isScreenReaderActive &&
               maybeAccessibilityLabel.isSome() ? (
                 <View style={styles.centerItem}>
@@ -275,24 +275,14 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
   private renderGoBack = () => {
     const { goBack, dark, customGoBack } = this.props;
-    return (
-      <View
-        style={{
-          alignSelf: "center",
-          justifyContent: "flex-start",
-          flex: 1
-        }}
-      >
-        {customGoBack
-          ? customGoBack
-          : goBack && (
-              <GoBackButton
-                testID={"back-button"}
-                onPress={goBack}
-                white={dark}
-              />
-            )}
-      </View>
+    return customGoBack ? (
+      <View style={styles.leftItem}>{customGoBack}</View>
+    ) : (
+      goBack && (
+        <View style={styles.leftItem}>
+          <GoBackButton testID={"back-button"} onPress={goBack} white={dark} />
+        </View>
+      )
     );
   };
 
@@ -315,11 +305,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       !isSearchEnabled &&
       (appLogo ? (
         <View
-          style={{
-            alignSelf: "center",
-            justifyContent: "flex-start",
-            flex: 1
-          }}
+          style={styles.leftItem}
           accessible={true}
           accessibilityElementsHidden={true}
           importantForAccessibility="no-hide-descendants"
