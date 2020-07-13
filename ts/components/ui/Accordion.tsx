@@ -43,7 +43,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
     return (
       <TouchableDefaultOpacity
         accessible={true}
-        accessibilityRole="button"
+        accessibilityRole={"button"}
         accessibilityLabel={
           props.title +
           (expanded
