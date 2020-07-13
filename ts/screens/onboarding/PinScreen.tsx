@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -102,7 +102,7 @@ class PinScreen extends React.PureComponent<Props, State> {
           pin: code
         }
       },
-      // set focus on header to read "insert again pin for confirmation..."
+      // set focus on header to read "type inserted pin again..."
       () => setAccessibilityFocus(this.headerRef, 100 as Millisecond)
     );
   };
@@ -160,7 +160,7 @@ class PinScreen extends React.PureComponent<Props, State> {
     return maybeNotNullyString(this.state.codeInsertionStatus).fold(
       undefined,
       cis => {
-        // wait until the component is rendered then set focus
+        // wait 100ms to set focus
         setAccessibilityFocus(this.confirmationStatusRef, 100 as Millisecond);
         return (
           <Text
