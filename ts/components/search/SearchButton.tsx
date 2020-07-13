@@ -37,7 +37,7 @@ type State = {
 const styles = StyleSheet.create({
   rightButton: {
     paddingRight: 0,
-    paddingLeft: 4
+    paddingLeft: 8
   }
 });
 
