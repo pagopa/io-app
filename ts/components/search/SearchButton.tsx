@@ -1,11 +1,11 @@
 import color from "color";
-import debounce from "lodash/debounce";
-import * as React from "react";
-import { connect } from "react-redux";
-
 import { none, Option, some } from "fp-ts/lib/Option";
+import debounce from "lodash/debounce";
 import { Input, Item } from "native-base";
+import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationEvents } from "react-navigation";
+import { connect } from "react-redux";
 import I18n from "../../i18n";
 import {
   disableSearch,
@@ -34,6 +34,13 @@ type State = {
   debouncedSearchText: Option<string>;
 };
 
+const styles = StyleSheet.create({
+  rightButton: {
+    paddingRight: 0,
+    paddingLeft: 4
+  }
+});
+
 class SearchButton extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -60,6 +67,7 @@ class SearchButton extends React.Component<Props, State> {
                 .string()}
             />
             <ButtonDefaultOpacity
+              style={styles.rightButton}
               onPress={this.onSearchDisable}
               transparent={true}
               accessibilityLabel={I18n.t("global.buttons.close")}
@@ -70,6 +78,7 @@ class SearchButton extends React.Component<Props, State> {
         ) : (
           <ButtonDefaultOpacity
             onPress={this.handleSearchPress}
+            style={styles.rightButton}
             transparent={true}
             accessibilityLabel={I18n.t("global.buttons.search")}
           >
