@@ -203,6 +203,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
               </Text>
               <TouchableDefaultOpacity
                 onPress={() => handleModalPress(maybeBonusTos.value)}
+                accessibilityRole={"link"}
               >
                 <Text
                   style={styles.disclaimer}
