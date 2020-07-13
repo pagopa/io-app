@@ -58,7 +58,7 @@ type PinState =
 
 type State = {
   pinState: PinState;
-  codeInsertionStatus?: string;
+  errorDescription?: string;
 };
 
 const styles = StyleSheet.create({
@@ -133,12 +133,17 @@ class PinScreen extends React.PureComponent<Props, State> {
           ...this.state.pinState,
           state: "PinConfirmError"
         };
-        this.setState({
-          pinState: pinConfirmError,
-          codeInsertionStatus: I18n.t("onboarding.unlockCode.confirmInvalid")
-        });
+        this.setState(
+          {
+            pinState: pinConfirmError,
+            errorDescription: I18n.t("onboarding.unlockCode.confirmInvalid")
+          },
+          () => {
+            // set focus on label to read about the error
+            setAccessibilityFocus(this.confirmationStatusRef);
+          }
+        );
       }
-      setAccessibilityFocus(this.confirmationStatusRef);
       return;
     }
     this.setState(
@@ -147,7 +152,7 @@ class PinScreen extends React.PureComponent<Props, State> {
           state: "PinConfirmed",
           pin: code
         },
-        codeInsertionStatus: undefined
+        errorDescription: undefined
       },
       () => {
         // set focus on "continue" button
@@ -156,10 +161,10 @@ class PinScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  private renderCodeInsertionStatus = () => {
-    return maybeNotNullyString(this.state.codeInsertionStatus).fold(
+  private renderErrorDescription = () => {
+    return maybeNotNullyString(this.state.errorDescription).fold(
       undefined,
-      cis => {
+      des => {
         // wait 100ms to set focus
         setAccessibilityFocus(this.confirmationStatusRef, 100 as Millisecond);
         return (
@@ -171,7 +176,7 @@ class PinScreen extends React.PureComponent<Props, State> {
             primary={true}
             accessible={true}
           >
-            {cis}
+            {des}
           </Text>
         );
       }
@@ -253,7 +258,7 @@ class PinScreen extends React.PureComponent<Props, State> {
     return (
       <Content>
         {this.renderContentHeader(pinState)}
-        {this.renderCodeInsertionStatus()}
+        {this.renderErrorDescription()}
         {this.renderCodeInput(pinState)}
         {this.renderDescription()}
       </Content>
