@@ -1,5 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Text, View } from "native-base";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -10,14 +11,14 @@ import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import IconFont from "../../components/ui/IconFont";
-import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import { createPinSuccess } from "../../store/actions/pinset";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import { setPin } from "../../utils/keychain";
+import { maybeNotNullyString } from "../../utils/strings";
 
 type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
 
@@ -57,6 +58,7 @@ type PinState =
 
 type State = {
   pinState: PinState;
+  codeInsertionStatus?: string;
 };
 
 const styles = StyleSheet.create({
@@ -77,7 +79,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 class PinScreen extends React.PureComponent<Props, State> {
   private pinConfirmComponent: Pinpad | null = null;
-
+  private headerRef = React.createRef<Text>();
+  private confirmationStatusRef = React.createRef<Text>();
+  private continueButtonRef = React.createRef<View>();
   constructor(props: Props) {
     super(props);
 
@@ -90,13 +94,18 @@ class PinScreen extends React.PureComponent<Props, State> {
   }
 
   // Method called when the first CodeInput is filled
-  public onPinFulfill = (code: PinString) =>
-    this.setState({
-      pinState: {
-        state: "PinSelected",
-        pin: code
-      }
-    });
+  public onPinFulfill = (code: PinString) => {
+    this.setState(
+      {
+        pinState: {
+          state: "PinSelected",
+          pin: code
+        }
+      },
+      // set focus on header to read "insert again pin for confirmation..."
+      () => setAccessibilityFocus(this.headerRef, 100 as Millisecond)
+    );
+  };
 
   // Method called when the confirmation CodeInput is valid and cancel button is pressed
   public onPinConfirmRemoveLastDigit = () => {
@@ -125,17 +134,48 @@ class PinScreen extends React.PureComponent<Props, State> {
           state: "PinConfirmError"
         };
         this.setState({
-          pinState: pinConfirmError
+          pinState: pinConfirmError,
+          codeInsertionStatus: I18n.t("onboarding.unlockCode.confirmInvalid")
         });
       }
+      setAccessibilityFocus(this.confirmationStatusRef);
       return;
     }
-    this.setState({
-      pinState: {
-        state: "PinConfirmed",
-        pin: code
+    this.setState(
+      {
+        pinState: {
+          state: "PinConfirmed",
+          pin: code
+        },
+        codeInsertionStatus: undefined
+      },
+      () => {
+        // set focus on "continue" button
+        setAccessibilityFocus(this.continueButtonRef);
       }
-    });
+    );
+  };
+
+  private renderCodeInsertionStatus = () => {
+    return maybeNotNullyString(this.state.codeInsertionStatus).fold(
+      undefined,
+      cis => {
+        // wait until the component is rendered then set focus
+        setAccessibilityFocus(this.confirmationStatusRef, 100 as Millisecond);
+        return (
+          <Text
+            ref={this.confirmationStatusRef}
+            alignCenter={true}
+            bold={true}
+            white={false}
+            primary={true}
+            accessible={true}
+          >
+            {cis}
+          </Text>
+        );
+      }
+    );
   };
 
   public onPinReset() {
@@ -150,7 +190,13 @@ class PinScreen extends React.PureComponent<Props, State> {
   public renderContentHeader(pinState: PinState) {
     return (
       <React.Fragment>
-        <Text style={styles.header} alignCenter={true} bold={true} dark={true}>
+        <Text
+          style={styles.header}
+          alignCenter={true}
+          bold={true}
+          dark={true}
+          ref={this.headerRef}
+        >
           {I18n.t(
             pinState.state === "PinUnselected"
               ? "onboarding.unlockCode.contentTitle"
@@ -168,23 +214,6 @@ class PinScreen extends React.PureComponent<Props, State> {
     );
   }
 
-  // Render the unlock code match/doesn't match feedback message
-  public renderCodeInputConfirmValidation() {
-    if (this.state.pinState.state === "PinConfirmError") {
-      return (
-        <React.Fragment>
-          <View spacer={true} extralarge={true} />
-          <TextWithIcon danger={true}>
-            <IconFont name="io-close" />
-            <Text>{I18n.t("onboarding.unlockCode.confirmInvalid")}</Text>
-          </TextWithIcon>
-        </React.Fragment>
-      );
-    }
-
-    return undefined;
-  }
-
   // Render select/confirm Pinpad component
   public renderCodeInput(pinState: PinState) {
     if (pinState.state === "PinUnselected") {
@@ -200,10 +229,6 @@ class PinScreen extends React.PureComponent<Props, State> {
         />
       );
     } else {
-      const codeInsertionStatus =
-        this.state.pinState.state === "PinConfirmError"
-          ? I18n.t("onboarding.unlockCode.confirmInvalid")
-          : undefined;
       /**
        * The component that allows the user to CONFIRM the unlock code.
        */
@@ -217,7 +242,6 @@ class PinScreen extends React.PureComponent<Props, State> {
             ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
             buttonType={"light"}
             onDeleteLastDigit={this.onPinConfirmRemoveLastDigit}
-            codeInsertionStatus={codeInsertionStatus}
           />
         </React.Fragment>
       );
@@ -229,6 +253,7 @@ class PinScreen extends React.PureComponent<Props, State> {
     return (
       <Content>
         {this.renderContentHeader(pinState)}
+        {this.renderCodeInsertionStatus()}
         {this.renderCodeInput(pinState)}
         {this.renderDescription()}
       </Content>
@@ -250,7 +275,7 @@ class PinScreen extends React.PureComponent<Props, State> {
     }
 
     return (
-      <React.Fragment>
+      <View accessible={true} ref={this.continueButtonRef}>
         <ButtonDefaultOpacity
           block={true}
           primary={true}
@@ -260,7 +285,7 @@ class PinScreen extends React.PureComponent<Props, State> {
           <Text>{I18n.t("global.buttons.continue")}</Text>
         </ButtonDefaultOpacity>
         <View spacer={true} />
-      </React.Fragment>
+      </View>
     );
   }
 
