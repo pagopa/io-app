@@ -25,11 +25,13 @@ import AppHeader from "../ui/AppHeader";
 const styles = StyleSheet.create({
   helpButton: {
     padding: 8,
-    paddingRight: 0,
-    paddingLeft: 4
+    paddingRight: 0
   },
   noLeft: {
     marginLeft: 2
+  },
+  noPadRight: {
+    paddingRight: 0
   },
   row: {
     flexDirection: "row",
@@ -176,19 +178,17 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           as placeholder where force focus
         */}
           {!isSearchEnabled && (
-            <View style={goBack ? {} : [styles.noLeft]}>
-              <View style={goBack ? styles.centerItem : {}}>
-                {this.state.isScreenReaderActive &&
-                maybeAccessibilityLabel.isSome()
-                  ? this.renderBodyLabel(
-                      maybeAccessibilityLabel.value,
-                      true,
-                      this.firstElementRef
-                    )
-                  : body
-                    ? body
-                    : headerTitle && this.renderHeader()}
-              </View>
+            <View style={goBack ? styles.centerItem : [styles.noLeft]}>
+              {this.state.isScreenReaderActive &&
+              maybeAccessibilityLabel.isSome()
+                ? this.renderBodyLabel(
+                    maybeAccessibilityLabel.value,
+                    true,
+                    this.firstElementRef
+                  )
+                : body
+                  ? body
+                  : headerTitle && this.renderHeader()}
             </View>
           )}
 
@@ -229,7 +229,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             >
               <IconFont
                 name={"io-question"}
-                style={{ paddingRight: 0 }}
+                style={styles.noPadRight}
                 color={
                   dark || primary
                     ? customVariables.colorWhite

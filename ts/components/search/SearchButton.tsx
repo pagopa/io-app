@@ -37,7 +37,10 @@ type State = {
 const styles = StyleSheet.create({
   rightButton: {
     paddingRight: 0,
-    paddingLeft: 8
+    paddingLeft: 16
+  },
+  noPadRight: {
+    paddingRight: 0
   }
 });
 
@@ -85,7 +88,7 @@ class SearchButton extends React.Component<Props, State> {
             <IconFont
               name="io-search"
               color={this.props.color}
-              style={{ paddingRight: 0 }}
+              style={styles.noPadRight}
             />
           </ButtonDefaultOpacity>
         )}
