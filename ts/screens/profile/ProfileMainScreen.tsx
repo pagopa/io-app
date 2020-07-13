@@ -525,6 +525,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     return (
       <DarkLayout
+        accessibilityLabel={I18n.t("profile.main.title")}
         bounces={false}
         appLogo={true}
         title={I18n.t("profile.main.title")}
