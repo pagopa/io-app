@@ -73,7 +73,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
   body: "onboarding.unlockCode.contextualHelpContent"
 };
-
+const accessibilityTimeout = 100 as Millisecond;
 /**
  * A screen that allows the user to set the unlock code.
  */
@@ -103,7 +103,7 @@ class PinScreen extends React.PureComponent<Props, State> {
         }
       },
       // set focus on header to read "type inserted pin again..."
-      () => setAccessibilityFocus(this.headerRef, 100 as Millisecond)
+      () => setAccessibilityFocus(this.headerRef, accessibilityTimeout)
     );
   };
 
@@ -143,6 +143,9 @@ class PinScreen extends React.PureComponent<Props, State> {
             setAccessibilityFocus(this.confirmationStatusRef);
           }
         );
+      } else if (this.state.pinState.state === "PinConfirmError") {
+        // another pin confirm error, set focus on label to read about the error
+        setAccessibilityFocus(this.confirmationStatusRef);
       }
       return;
     }
@@ -166,7 +169,7 @@ class PinScreen extends React.PureComponent<Props, State> {
       undefined,
       des => {
         // wait 100ms to set focus
-        setAccessibilityFocus(this.confirmationStatusRef, 100 as Millisecond);
+        setAccessibilityFocus(this.confirmationStatusRef, accessibilityTimeout);
         return (
           <Text
             ref={this.confirmationStatusRef}
@@ -184,11 +187,17 @@ class PinScreen extends React.PureComponent<Props, State> {
   };
 
   public onPinReset() {
-    this.setState({
-      pinState: {
-        state: "PinUnselected"
+    this.setState(
+      {
+        pinState: {
+          state: "PinUnselected"
+        },
+        errorDescription: undefined
+      },
+      () => {
+        setAccessibilityFocus(this.headerRef, accessibilityTimeout);
       }
-    });
+    );
   }
 
   // Render a different header when the user need to confirm the unlock code
