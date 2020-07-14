@@ -1,8 +1,8 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Spinner, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
-import { SafeAreaView } from "react-native";
+import { ActivityIndicator, SafeAreaView } from "react-native";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { InfoScreenComponent } from "../infoScreen/InfoScreenComponent";
@@ -17,7 +17,7 @@ export type LoadingErrorProps = {
 };
 
 const errorRef = React.createRef<GenericErrorComponent>();
-const loadingRef = React.createRef<View>();
+const loadingRef = React.createRef<React.Component>();
 
 const renderError = (props: LoadingErrorProps) => (
   <GenericErrorComponent
@@ -33,7 +33,7 @@ const renderLoading = (loadingCaption: string) => (
   <View accessible={true} ref={loadingRef} style={{ flex: 1 }}>
     <InfoScreenComponent
       image={
-        <Spinner
+        <ActivityIndicator
           color={"black"}
           accessible={false}
           importantForAccessibility={"no-hide-descendants"}
@@ -62,11 +62,7 @@ export const LoadingErrorComponent: React.FunctionComponent<
 > = props => {
   useEffect(
     () => {
-      if (props.isLoading) {
-        setAccessibilityFocus(loadingRef, delay);
-      } else {
-        setAccessibilityFocus(errorRef, delay);
-      }
+      setAccessibilityFocus(props.isLoading ? loadingRef : errorRef, delay);
     },
     [props.isLoading]
   );
