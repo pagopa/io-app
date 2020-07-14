@@ -871,6 +871,7 @@ messages:
       description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "received on"
       received_at: "received at"
+      date_format: "MMMM Do YYYY"
   contextualHelpTitle: About this section
   contextualHelpContent: !include messages/messages_home.md
   counting:

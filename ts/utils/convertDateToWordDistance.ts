@@ -47,6 +47,6 @@ export const convertReceivedDateToAccessible = (date: Date) => {
   }
   return `${I18n.t("messages.accessibility.message.received_on")} ${format(
     date,
-    "Do MMMM YYYY"
+    I18n.t("messages.accessibility.message.date_format")
   )}`;
 };
