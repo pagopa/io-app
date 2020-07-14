@@ -1468,6 +1468,8 @@ bonus:
       activationPending:
         title: Il bonus per il tuo nucleo familiare è già stato richiesto ed è in fase di attivazione.
         description: Riceverai un messaggio quando sarà attivato.
+      underage:
+        title: "Siamo spiacenti. Solo i cittadini maggiorenni possono richiedere il Bonus Vacanze"
     activation:
       loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
       goToDetails: Visualizza Bonus Vacanze

@@ -14,6 +14,7 @@ import IseeNotAvailableScreen from "../screens/eligibility/isee/IseeNotAvailable
 import IseeNotEligibleScreen from "../screens/eligibility/isee/IseeNotEligibleScreen";
 import LoadBonusEligibilityScreen from "../screens/eligibility/LoadBonusEligibilityScreen";
 import TimeoutEligibilityCheckInfoScreen from "../screens/eligibility/TimeoutEligibilityCheckInfoScreen";
+import UnderageScreen from "../screens/eligibility/UnderageScreen";
 import BONUSVACANZE_ROUTES from "./routes";
 
 const BonusVacanzeNavigator = createStackNavigator(
@@ -44,6 +45,9 @@ const BonusVacanzeNavigator = createStackNavigator(
     },
     [BONUSVACANZE_ROUTES.ELIGIBILITY.PENDING]: {
       screen: BonusActivationPending
+    },
+    [BONUSVACANZE_ROUTES.ELIGIBILITY.UNDERAGE]: {
+      screen: UnderageScreen
     },
     [BONUSVACANZE_ROUTES.ACTIVATION.LOADING]: {
       screen: LoadActivateBonusScreen
