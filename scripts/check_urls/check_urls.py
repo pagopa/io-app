@@ -10,6 +10,7 @@ from pathlib import Path
 from sys import argv
 from slack import WebClient
 from slack.errors import SlackApiError
+from urlextract import URLExtract
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -55,22 +56,10 @@ def scan_directory(path, exts={'*.ts'}):
 
 
 def extract_uris(text):
-    # Anything that isn't a square closing bracket
-    name_regex = "[^]]+"
-    # http:// or https:// followed by anything but a closing paren
-    url_regex = "http[s]?://[^)]+"
-    markup_regex = '\[({0})]\(\s*({1})\s*\)'.format(name_regex, url_regex)
-    md_uris = re.findall(markup_regex, text)
-    # find all url not included in markdown syntax
-    regex = ["http[s]?://[^)]+?(?=[\\*|\s*|\\n*\\t*\\n*])","https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+"]
-    uris = []
-    for r in regex:
-        uris.extend(re.findall(r, text))
-    result_md = set(map(lambda r: r[1], md_uris))
-    result_uri = set(map(lambda r: r.replace("\\n", "").replace('",''', "").replace('"', ""), uris))
-    # merging sets
-    result = result_md.union(result_uri)
-    return list(filter(lambda r: not r.lower().startswith("ioit://"), result))
+    extractor = URLExtract()
+    urls = set(extractor.find_urls(text))
+    urls = set(map(lambda r : r.replace(")",""),filter(lambda r : r.startswith("http") or r.startswith("www"), urls)))
+    return urls
 
 
 def readFile(files):
@@ -260,7 +249,6 @@ if run_test:
     test2 = extract_uris(
         "[a](https://test2.com) hello world [b](http://test.com)")
     assert len(test2) == 2
-    print(test2)
     assert "https://test2.com" in test2
     assert "http://test.com" in test2
 
@@ -271,8 +259,9 @@ if run_test:
     assert "https://empty" in test3
 
     test4 = extract_uris(a_text_with_urls)
-
-    assert len(test4) == 18
+    print("\n".join(test4))
+    print(len(test4))
+    assert len(test4) == 19
 
     test5 = extract_uris("bla bla http://www.google.it")
     assert len(test5) == 1
