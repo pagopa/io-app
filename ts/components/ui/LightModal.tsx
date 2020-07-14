@@ -4,7 +4,14 @@
  */
 
 import React from "react";
-import { Animated, Dimensions, Easing, Modal, StyleSheet } from "react-native";
+import {
+  Animated,
+  Dimensions,
+  Easing,
+  Modal,
+  StyleSheet,
+  View
+} from "react-native";
 import { isScreenReaderEnabled } from "../../utils/accessibility";
 
 export type LightModalContextInterface = Readonly<{
@@ -173,10 +180,14 @@ export class LightModalProvider extends React.Component<Props, State> {
 
   public showModal = async (childComponent: React.ReactNode) => {
     const isScreenReaderActive = await isScreenReaderEnabled();
-    const component = isScreenReaderActive ? (
-      <Modal>{childComponent}</Modal>
-    ) : (
-      childComponent
+    const component = (
+      <View style={[styles.container]}>
+        {isScreenReaderActive ? (
+          <Modal>{childComponent}</Modal>
+        ) : (
+          childComponent
+        )}
+      </View>
     );
     this.setState({
       component
