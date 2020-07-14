@@ -35,6 +35,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { authenticateConfig } from "../../utils/biometric";
+import { maybeNotNullyString } from "../../utils/strings";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -56,6 +57,7 @@ type State = {
   biometryAuthAvailable: boolean;
   canInsertPinTooManyAttempts: boolean;
   countdown?: Millisecond;
+  errorDescription?: string;
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -317,6 +319,25 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   };
 
+  private renderErrorDescription = () => {
+    return maybeNotNullyString(this.getCodeInsertionStatus()).fold(
+      undefined,
+      des => {
+        return (
+          <Text
+            alignCenter={true}
+            bold={true}
+            white={true}
+            primary={false}
+            accessible={true}
+          >
+            {des}
+          </Text>
+        );
+      }
+    );
+  };
+
   private getCodeInsertionStatus = () => {
     if (this.state.identificationByPinState === "unstarted") {
       return undefined;
@@ -431,12 +452,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           />
           <Content primary={!isValidatingTask}>
             {renderHeader()}
-
+            {this.renderErrorDescription()}
             <Pinpad
               onPinResetHandler={this.props.onPinResetHandler}
               isValidatingTask={isValidatingTask}
               isFingerprintEnabled={isFingerprintEnabled}
-              codeInsertionStatus={this.getCodeInsertionStatus()}
               biometryType={biometryType}
               onFingerPrintReq={() =>
                 this.onFingerprintRequest(this.onIdentificationSuccessHandler)
