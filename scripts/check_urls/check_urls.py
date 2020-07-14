@@ -244,7 +244,7 @@ if run_test:
 
     test1 = extract_uris("[hello world](http://test.com)")
     assert len(test1) == 1
-    assert test1[0] == "http://test.com"
+    assert "http://test.com" in test1
 
     test2 = extract_uris(
         "[a](https://test2.com) hello world [b](http://test.com)")
@@ -254,14 +254,11 @@ if run_test:
 
     test3 = extract_uris(
         "[a](https://www.test.com)      site.it        [b](https://empty)")
-    assert len(test3) == 2
+    assert len(test3) == 1
     assert "https://www.test.com" in test3
-    assert "https://empty" in test3
 
     test4 = extract_uris(a_text_with_urls)
-    print("\n".join(test4))
-    print(len(test4))
-    assert len(test4) == 19
+    assert len(test4) == 18
 
     test5 = extract_uris("bla bla http://www.google.it")
     assert len(test5) == 1
