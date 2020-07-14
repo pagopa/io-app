@@ -311,8 +311,8 @@ authentication:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: il tuo sistema operativo non ha una versione compatibile con l'autenticazione tramite CIE
-      nfc_incompatible: il tuo dispositivo non ha una antenna NFC compatibile con l'autenticazione tramite CIE
+      os_version_unsupported: una versione del sistema operativo compatibile con l'autenticazione tramite CIE (Android 6.0 o superiore)
+      nfc_incompatible: una antenna NFC compatibile con l'autenticazione tramite CIE
     contentTitleCie: Non hai SPID o la CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
