@@ -6,6 +6,7 @@ import { all, call, Effect } from "redux-saga/effects";
 import backendInfoSaga from "./backendInfo";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
+import initializeMixpanelSaga from "./initializeMixpanelSaga";
 import unreadInstabugMessagesSaga from "./instabug";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
@@ -36,6 +37,7 @@ export default function* root(): Iterator<Effect> {
     // this saga is temporary removed since it seems to not work properly
     // TODO https://www.pivotaltracker.com/story/show/171597422
     // call(networkSaga, connectionMonitorParameters),
+    call(initializeMixpanelSaga),
     call(backendStatusSaga),
     call(backendInfoSaga),
     call(unreadInstabugMessagesSaga),
