@@ -33,18 +33,8 @@ public class MainActivity extends ReactActivity {
     // https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        /*
-         * When the app starts, a check is made on the "isTablet" flag in the bools.xml
-         * file. The value changes automatically depending on the device dp. Starting
-         * from 600dp it is set to true.
-         */
-        if (getResources().getBoolean(R.bool.isTablet)) {
-            super.onCreate(savedInstanceState);
-            showAlertDialog(getString(R.string.dialog_attention), getString(R.string.tablet_not_supported));
-        } else {
-            SplashScreen.show(this, R.style.SplashScreenTheme);
-            super.onCreate(savedInstanceState);
-        }
+        SplashScreen.show(this, R.style.SplashScreenTheme);
+        super.onCreate(savedInstanceState);
         // Fix the problem described here:
         // https://stackoverflow.com/questions/48072438/java-lang-illegalstateexception-only-fullscreen-opaque-activities-can-request-o
         if (android.os.Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {

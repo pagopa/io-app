@@ -43,14 +43,19 @@ const keyExtractor = (idp: IdentityProvider): string => idp.id;
 
 const renderItem = (props: Props) => (
   info: ListRenderItemInfo<IdentityProvider>
-): React.ReactElement<any> => {
+): React.ReactElement => {
   const { onIdpSelected } = props;
   const { item } = info;
   const onPress = () => onIdpSelected(item);
   if (item.isTestIdp === true) {
     return (
       // render transparent button if idp is testIdp (see https://www.pivotaltracker.com/story/show/172082895)
-      <Button transparent={true} onPress={onPress} style={styles.gridItem} />
+      <Button
+        transparent={true}
+        onPress={onPress}
+        style={styles.gridItem}
+        accessible={false} // ignore cause it serves only for debug mode (stores reviewers)
+      />
     );
   }
   return (
@@ -70,14 +75,16 @@ const renderItem = (props: Props) => (
   );
 };
 
-const IdpsGrid: React.SFC<Props> = props => (
-  <FlatList
-    bounces={false}
-    data={props.idps}
-    numColumns={2}
-    keyExtractor={keyExtractor}
-    renderItem={renderItem(props)}
-  />
-);
+const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => {
+  return (
+    <FlatList
+      bounces={false}
+      data={props.idps}
+      numColumns={2}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem(props)}
+    />
+  );
+};
 
 export default IdpsGrid;

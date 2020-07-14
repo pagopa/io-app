@@ -41,6 +41,8 @@ export interface ContextualHelpPropsMarkdown {
 }
 
 interface OwnProps {
+  avoidNavigationEventsUsage?: boolean;
+  accessibilityLabel?: string;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
@@ -170,6 +172,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const {
+      avoidNavigationEventsUsage,
+      accessibilityLabel,
       dark,
       appLogo,
       contextualHelp,
@@ -214,6 +218,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     return (
       <Container>
         <BaseHeader
+          avoidNavigationEventsUsage={avoidNavigationEventsUsage}
+          accessibilityLabel={accessibilityLabel}
           showInstabugChat={showInstabugChat}
           primary={primary}
           dark={dark}

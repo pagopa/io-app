@@ -42,10 +42,9 @@ export const loadLocales = () => ({
       "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.text"
     )
   },
-  reminder: {
-    text: I18n.t("bonus.bonusVacanze.eligibility.activateBonus.reminder.text"),
-    link: I18n.t("bonus.bonusVacanze.eligibility.activateBonus.reminder.link")
-  },
+  reminder: I18n.t(
+    "bonus.bonusVacanze.eligibility.activateBonus.reminder.text"
+  ),
   activateBonusText: I18n.t(
     "bonus.bonusVacanze.eligibility.activateBonus.activateCTA"
   )
@@ -123,7 +122,7 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<
               </>
             )}
 
-            <ActivateBonusReminder text={reminder.text} link={reminder.link} />
+            <ActivateBonusReminder text={reminder} />
             <EdgeBorderComponent />
           </View>
         </ScrollView>

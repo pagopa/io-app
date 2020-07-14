@@ -1,5 +1,22 @@
 ---
 global:
+  accessibility:
+    expanded: Paragrafo espanso
+    collapsed: Paragrafo chiuso
+    activityIndicator:
+      label: Caricamento in corso
+      hint: Attendi il caricamento del contenuto
+    header:
+      label: Header dell'applicazione
+    contextualHelp:
+      close: Chiudi l'help contestuale
+      open:
+        label: Aiuto contestuale
+        hint: Accedi alle informazioni sul contenuto della schermata corrente
+    chat:
+      description: "Messaggi assistenza IO"
+      unread_singular: "{{messages}} nuovo messaggio"
+      unread_plural: "{{messages}} nuovi messaggi"
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -39,6 +56,7 @@ global:
     close: Chiudi
     exit: Esci
     saveSelection: Salva la selezione
+    search: Ricerca
   navigator:
     messages: messaggi
     wallet: pagamenti
@@ -61,6 +79,8 @@ global:
     spidLogin:
       title: Ricordati di accedere ad IO!
       message: Accedi con la tua identità digitale su IO, l’app dei servizi pubblici
+tablet:
+  message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
 rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
   bodyiOS: !include jailbroken_body.md
@@ -117,6 +137,7 @@ profile:
   unknown: SCONOSCIUTO
   logout:
     menulabel: Esci da IO
+    alertMessage: Uscendo da IO ti verrà chiesto nuovamente di accedere. Vuoi Uscire?
     cta:
       header: Come vuoi uscire dall'app?
       keepData:
@@ -179,7 +200,8 @@ profile:
         title: Informativa e condizioni d'uso
         description: Consulta l’Informativa Privacy e le condizioni d’uso di IO
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
-        updated: È necessario prendere visione della nuova versione dell'Informativa
+        updated: Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d'uso
+        infobox: È necessario prendere visione e accettare l'Informativa ed i Termini e condizioni d'uso
         contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
@@ -259,6 +281,7 @@ userMetadata:
 navigation:
   messages: Messaggi
   profile: Profilo
+  accessibility: "Sezione {{section}}, pannello, {{order}} di 4"
 cie:
   title: Appoggia la carta
   layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
@@ -280,6 +303,10 @@ spid:
     line2: Inserisci la tua email per attivarla.
 authentication:
   landing:
+    accessibility:
+      carousel:
+        label: Presentazione di IO
+        hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
@@ -296,6 +323,7 @@ authentication:
     loginSpid: Entra con SPID
     loginCie: Entra con CIE
     loginSpidCie: Accedi con SPID o CIE
+    infoSpidCie: Introduzione a SPID e CIE
     loginSpidCieContent: Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere
     nospid: Non hai SPID? Scopri di più
     nospid-nocie: Non hai SPID o CIE? Scopri di più
@@ -335,6 +363,9 @@ authentication:
       enableNfcHeader: Verifica NFC
       enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
     pin:
+      accessibility:
+        label: Campo di inserimento per pin della Carta di Itentità elettronica
+        hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
       pinCardTitle: Inserisci il PIN della tua carta
       pinCardHeader: Inserisci il PIN
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
@@ -506,6 +537,9 @@ onboarding:
     headerTitle: Attivazione
     accept: Accetta
     error: Errore nel caricamento
+    alert:
+      title: Attenzione
+      message: Devi leggere tutto il contenuto dei Termini di servizio e Privacy policy per continuare.
   unlockCode:
     headerTitle: Attivazione
     contentTitle: Scegli un codice di sblocco
@@ -555,6 +589,7 @@ payment:
   noPsp: Non hai ancora selezionato un PSP
   changePsp: Cambia PSP
   IUV: IUV
+  noticeCode: Codice avviso
   recipientFiscalCode: Codice fiscale beneficiario
   details:
     state:
@@ -858,6 +893,14 @@ cardComponent:
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
 messages:
+  accessibility:
+    message:
+      read: "Messaggio"
+      unread: "Messaggio non letto"
+      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      received_on: "ricevuto il"
+      received_at: "ricevuto alle ore"
+      date_format: "DD MMMM YYYY"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
   contextualHelpContent: !include messages/messages_home.md
   counting:
@@ -1077,6 +1120,11 @@ identification:
     tooManyAttempts: Troppi tentativi di inserimento errati.
     waitMessage: "Riprova tra:"
   unlockCode:
+    accessibility:
+      unlockHint: Hai inserito {{number}} cifre
+      fingerprint: Autenticati con l'impronta digitale
+      faceId: Autenticati con il riconoscimento facciale
+      delete: Cancella l'ultima cifra inserita
     reset:
       button: Hai dimenticato il
       code: codice di sblocco
@@ -1406,8 +1454,7 @@ bonus:
         title: Buone notizie!
         description: "Il tuo nucleo familiare ha diritto al seguente Bonus Vacanze:"
         reminder:
-          text: "Ti ricordiamo che ciascun componente del tuo nucleo famigliare può spendere il bonus. Se le informazioni riportate non ti risultano corrette, ti preghiamo di verificare con il"
-          link: "servizio clienti di INPS."
+          text: "Ciascun componente del tuo nucleo familiare concorre a determinare l'importo e potrà spendere il bonus. Se i dati non sono corretti o aggiornati, per evitare problemi in seguito all'utilizzo del Bonus, ti invitiamo a presentare una nuova DSU prima di procedere con la richiesta."
         discrepancies:
           attention: "Attenzione!"
           text: "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Verifica che sia tutto corretto prima di continuare. Se decidi di proseguire, potresti essere chiamato a fornire la documentazione per provare la completezza e la veridicità dei dati indicati nella DSU Altrimenti, puoi presentare una nuova DSU e richiedere il Bonus in un secondo momento."
@@ -1434,6 +1481,7 @@ bonus:
       eligibilityExpired:
         title: Tempo scaduto.
         body: Le 24 ore utili a proseguire la tua richiesta sono scadute. Ti chiediamo di ricominciare una nuova richiesta.
+        cta: "Richiedi Bonus"
       confirm:
         title: Attenzione
         body: Continuando nel processo, non sarà più possibile annullare la richiesta.
