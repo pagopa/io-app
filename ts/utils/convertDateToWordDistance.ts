@@ -1,5 +1,6 @@
-import { differenceInCalendarDays, format } from "date-fns";
-import { formatDateAsLocal } from "./dates";
+import { differenceInCalendarDays } from "date-fns";
+import I18n from "../i18n";
+import { format, formatDateAsLocal } from "./dates";
 
 /**
  * This function converts the distance from now to date in :
@@ -30,3 +31,22 @@ export function convertDateToWordDistance(
     return formatDateAsLocal(date, true);
   }
 }
+
+/**
+ * Convert a received {@link Date} in an accessible format
+ * @param date
+ */
+export const convertReceivedDateToAccessible = (date: Date) => {
+  const distance = differenceInCalendarDays(new Date(), date);
+  // 0 days, distance < one day
+  if (distance < 1) {
+    return `${I18n.t("messages.accessibility.message.received_at")} ${format(
+      date,
+      "H:mm"
+    )}`;
+  }
+  return `${I18n.t("messages.accessibility.message.received_on")} ${format(
+    date,
+    I18n.t("messages.accessibility.message.date_format")
+  )}`;
+};

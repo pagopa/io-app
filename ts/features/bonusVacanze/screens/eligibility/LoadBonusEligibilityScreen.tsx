@@ -36,7 +36,6 @@ const LoadBonusEligibilityScreen: React.FunctionComponent<Props> = props => {
     <LoadingErrorComponent
       {...props}
       loadingCaption={loadingCaption}
-      loadingOpacity={1}
       onAbort={() => abortBonusRequest(props.onAbort)}
     />
   );
