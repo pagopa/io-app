@@ -1,14 +1,13 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { Platform } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../theme/fonts";
 import customVariables from "../theme/variables";
 import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
 
-type Props = Readonly<{
+type OwnProps = Readonly<{
   text11: string;
   text12: string;
   text2: string;
@@ -19,6 +18,8 @@ type Props = Readonly<{
   isSelectionModeEnabled?: boolean;
   isItemSelected?: boolean;
 }>;
+
+type Props = OwnProps & React.ComponentProps<typeof TouchableDefaultOpacity>;
 
 const styles = StyleSheet.create({
   smallSpacer: {
@@ -100,6 +101,7 @@ export default class DetailedlistItemComponent extends React.PureComponent<
         onPress={this.props.onPressItem}
         onLongPress={this.props.onLongPressItem}
         style={styles.verticalPad}
+        {...this.props}
       >
         <View style={styles.spaced}>
           <Text small={true} dark={true}>
