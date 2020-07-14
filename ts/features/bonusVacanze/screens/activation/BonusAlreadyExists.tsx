@@ -9,7 +9,10 @@ import { useHardwareBackButton } from "../../components/hooks/useHardwareBackBut
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzeStyle } from "../../components/Styles";
-import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
+import {
+  cancelBonusVacanzeRequest,
+  showBonusVacanze
+} from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -41,13 +44,16 @@ const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
         title={title}
         body={body}
       />
-      <FooterStackButton buttons={[confirmButtonProps(props.onCancel, cta)]} />
+      <FooterStackButton
+        buttons={[confirmButtonProps(props.onGoToBonus, cta)]}
+      />
     </SafeAreaView>
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => dispatch(cancelBonusVacanzeRequest())
+  onCancel: () => dispatch(cancelBonusVacanzeRequest()),
+  onGoToBonus: () => dispatch(showBonusVacanze())
 });
 
 export default connect(
