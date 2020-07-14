@@ -160,7 +160,17 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         : ""
     );
     return (
-      <View style={[styles.row, styles.spaced]}>
+      <View
+        style={[styles.row, styles.spaced]}
+        accessible={true}
+        accessibilityLabel={I18n.t("bonus.bonusVacanze.accessibility.card", {
+          code: props.bonus.id,
+          value: props.bonus.dsu_request.max_amount,
+          status: maybeStatusDescription.isSome()
+            ? maybeStatusDescription.value
+            : props.bonus.status
+        })}
+      >
         <View style={{ flexDirection: "column" }}>
           <View spacer={true} small={true} />
           <Text bold={true} style={[styles.colorWhite, styles.fontLarge]}>
@@ -205,7 +215,12 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           </Text>
         </View>
         <View>
-          <View style={styles.flexEnd}>
+          <View
+            style={styles.flexEnd}
+            accessible={true}
+            importantForAccessibility={"no-hide-descendants"}
+            accessibilityElementsHidden={true}
+          >
             <Menu>
               <MenuTrigger>
                 <IconFont name={"io-more"} color={customVariables.colorWhite} />

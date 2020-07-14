@@ -1370,6 +1370,8 @@ faq:
     content: !include bonus/faq/faq76.md
 bonus:
   bonusVacanze:
+    accessibility:
+      card: Your Bonus Vacanze with code {{code}} worth €{{value}} is {{status}}
     statusInfo:
       validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
       bonusRejected: Attention! This Bonus Vacanze has been rejected

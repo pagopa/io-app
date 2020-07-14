@@ -122,6 +122,9 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
             style={styles.modalClose}
             onPress={onClose}
             transparent={true}
+            accessible={true}
+            accessibilityRole={"button"}
+            accessibilityLabel={I18n.t("global.buttons.close")}
           >
             <IconFont
               name="io-close"
