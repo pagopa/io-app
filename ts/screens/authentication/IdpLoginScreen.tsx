@@ -2,8 +2,9 @@ import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, NavState, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
+import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -120,7 +121,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   private setRequestStateToLoading = (): void =>
     this.setState({ requestState: pot.noneLoading });
 
-  private handleNavigationStateChange = (event: NavState): void => {
+  private handleNavigationStateChange = (event: WebViewNavigation): void => {
     if (event.url) {
       const urlChanged = event.url.split("?")[0];
       if (urlChanged !== this.state.loginTrace) {
@@ -138,7 +139,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
     });
   };
 
-  private handleShouldStartLoading = (event: NavState): boolean => {
+  private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
     const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
       this.props.dispatchLoginSuccess
