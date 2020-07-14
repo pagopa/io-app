@@ -132,30 +132,28 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
     const accessibilityHint = this.getUnreadMessagesDescription();
     return (
       <React.Fragment>
-        {canRenderChatsIcon && (
-          <View>
-            <ButtonDefaultOpacity
-              onPress={this.handleIBChatPress}
-              transparent={true}
-              accessibilityLabel={I18n.t(
-                "global.accessibility.chat.description"
-              )}
-              accessibilityHint={accessibilityHint}
-              style={styles.buttonStyle}
-            >
-              <IconFont
-                name="io-chat"
-                color={this.props.color}
-                style={styles.noPadRight}
-              />
-            </ButtonDefaultOpacity>
-            <CustomBadge
-              badgeStyle={styles.badgeStyle}
-              textStyle={styles.textStyle}
-              badgeValue={this.props.badge}
+        {/* {canRenderChatsIcon && ( */}
+        <View>
+          <ButtonDefaultOpacity
+            onPress={this.handleIBChatPress}
+            transparent={true}
+            accessibilityLabel={I18n.t("global.accessibility.chat.description")}
+            accessibilityHint={accessibilityHint}
+            style={styles.buttonStyle}
+          >
+            <IconFont
+              name="io-chat"
+              color={this.props.color}
+              style={styles.noPadRight}
             />
-          </View>
-        )}
+          </ButtonDefaultOpacity>
+          <CustomBadge
+            badgeStyle={styles.badgeStyle}
+            textStyle={styles.textStyle}
+            badgeValue={this.props.badge}
+          />
+        </View>
+        {/* )} */}
       </React.Fragment>
     );
   }

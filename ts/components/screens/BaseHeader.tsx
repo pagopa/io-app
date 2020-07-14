@@ -178,17 +178,19 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           as placeholder where force focus
         */}
           {!isSearchEnabled && (
-            <View style={goBack ? styles.centerItem : [styles.noLeft]}>
-              {this.state.isScreenReaderActive &&
-              maybeAccessibilityLabel.isSome()
-                ? this.renderBodyLabel(
-                    maybeAccessibilityLabel.value,
-                    true,
-                    this.firstElementRef
-                  )
-                : body
-                  ? body
-                  : headerTitle && this.renderHeader()}
+            <View style={goBack ? {} : [styles.noLeft]}>
+              <View style={goBack ? styles.centerItem : {}}>
+                {this.state.isScreenReaderActive &&
+                maybeAccessibilityLabel.isSome()
+                  ? this.renderBodyLabel(
+                      maybeAccessibilityLabel.value,
+                      true,
+                      this.firstElementRef
+                    )
+                  : body
+                    ? body
+                    : headerTitle && this.renderHeader()}
+              </View>
             </View>
           )}
 
@@ -213,7 +215,15 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     return (
       <View style={[styles.rightItem, { flexDirection: "row" }]}>
         {!isSearchEnabled &&
-          showInstabugChat !== false && <InstabugChatsComponent />}
+          showInstabugChat !== false && (
+            <InstabugChatsComponent
+              color={
+                dark || primary
+                  ? customVariables.colorWhite
+                  : customVariables.colorBlack
+              }
+            />
+          )}
         {onShowHelp &&
           !isSearchEnabled && (
             <ButtonDefaultOpacity
