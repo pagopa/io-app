@@ -19,7 +19,7 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
       <Markdown>
         {I18n.t("authentication.landing.cie_unsupported.body")}
       </Markdown>
-      {Platform.OS === "android" && (
+      {Platform.OS === "ios" && (
         <React.Fragment>
           <View spacer={true} />
           <Markdown>
@@ -29,12 +29,12 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
           <List>
             <ListItem>
               <IconFont
-                name="io-tick-big"
+                name={props.hasCieApiLevelSupport ? "io-complete" : "io-error"}
                 size={ICON_SIZE}
                 color={
                   props.hasCieApiLevelSupport
-                    ? customVariables.brandLightGray
-                    : customVariables.contentPrimaryBackground
+                    ? customVariables.brandSuccess
+                    : customVariables.brandDanger
                 }
               />
               <Body>
@@ -47,12 +47,12 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
             </ListItem>
             <ListItem>
               <IconFont
-                name="io-tick-big"
+                name={props.hasCieNFCFeature ? "io-complete" : "io-error"}
                 size={ICON_SIZE}
                 color={
                   props.hasCieNFCFeature
-                    ? customVariables.brandLightGray
-                    : customVariables.contentPrimaryBackground
+                    ? customVariables.brandSuccess
+                    : customVariables.brandDanger
                 }
               />
               <Body>
