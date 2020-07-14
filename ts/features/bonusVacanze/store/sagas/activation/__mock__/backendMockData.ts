@@ -2,23 +2,35 @@ import { Either, left, right } from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
 import { pot } from "italia-ts-commons";
 import { ProblemJson } from "italia-ts-commons/lib/responses";
-import { BonusActivationStatusEnum } from "../../../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
-import { InstanceId } from "../../../../../../../../definitions/bonus_vacanze/InstanceId";
-import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
-import { mockedBonus } from "../../../../../mock/mockData";
+import { NavigationActions } from "react-navigation";
+import { Action } from "redux";
+import { BonusActivationStatusEnum } from "../../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
+import { InstanceId } from "../../../../../../../definitions/bonus_vacanze/InstanceId";
+import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
+import { mockedBonus } from "../../../../mock/mockData";
 import {
   navigateToBonusActivationCompleted,
   navigateToBonusActivationTimeout,
   navigateToBonusActiveDetailScreen,
   navigateToBonusAlreadyExists,
   navigateToEligibilityExpired
-} from "../../../../../navigation/action";
+} from "../../../../navigation/action";
+import {
+  cancelBonusVacanzeRequest,
+  checkBonusVacanzeEligibility,
+  completeBonusVacanzeActivation,
+  showBonusVacanze
+} from "../../../actions/bonusVacanze";
 import {
   ActivationState,
   BonusActivationProgressEnum
-} from "../../../../reducers/activation";
-import { AllActiveState } from "../../../../reducers/allActive";
-import { IExpectedActions } from "../mockData";
+} from "../../../reducers/activation";
+import { AllActiveState } from "../../../reducers/allActive";
+import {
+  completeBonusDefaultActions,
+  IExpectedActions
+} from "./networkingSagaResponseMockData";
 
 const genericServiceUnavailable: Either<Errors, any> = right({
   status: 500,
@@ -90,6 +102,44 @@ interface MockBackendScenario extends IExpectedActions {
   finalState: MockActivationState;
 }
 
+interface IMockUserActions extends IExpectedActions {
+  userAction: Action;
+}
+
+// Mock user actions
+
+const userCancel: IMockUserActions = {
+  displayName: "User Cancel Action",
+  userAction: cancelBonusVacanzeRequest(),
+  expectedActions: [NavigationActions.back()]
+};
+
+const userCompleteActivation: IMockUserActions = {
+  displayName: "User Complete Activation",
+  userAction: completeBonusVacanzeActivation(),
+  expectedActions: []
+};
+
+const userShowBonusVacanze: IMockUserActions = {
+  displayName: "User Show Bonus Vacanze",
+  userAction: showBonusVacanze(),
+  expectedActions: [navigateToWalletHome(), navigationHistoryPop(1)]
+};
+
+const userRestartEligibility: IMockUserActions = {
+  displayName: "User Restart Eligibility",
+  userAction: checkBonusVacanzeEligibility.request(),
+  expectedActions: []
+};
+
+export const possibleUserActions: ReadonlyArray<IMockUserActions> = [
+  userCancel,
+  userCompleteActivation,
+  userShowBonusVacanze,
+  userRestartEligibility
+];
+
+// Mock Backend response
 export const success: MockBackendScenario = {
   displayName: "success",
   responses: [
@@ -100,6 +150,7 @@ export const success: MockBackendScenario = {
   ],
   expectedActions: [
     navigateToBonusActivationCompleted(),
+    navigationHistoryPop(1),
     navigateToBonusActiveDetailScreen({ bonus: mockedBonus }),
     navigationHistoryPop(1)
   ],
@@ -117,7 +168,11 @@ export const eligibilityExpired: MockBackendScenario = {
       getBonusActivationResponseById: right(undefined)
     }
   ],
-  expectedActions: [navigateToEligibilityExpired(), navigationHistoryPop(1)],
+  expectedActions: [
+    navigateToEligibilityExpired(),
+    navigationHistoryPop(1),
+    ...completeBonusDefaultActions
+  ],
   finalState: {
     activation: { status: BonusActivationProgressEnum.ELIGIBILITY_EXPIRED },
     allActive: {}
@@ -132,7 +187,11 @@ export const bonusAlreadyExists: MockBackendScenario = {
       getBonusActivationResponseById: right(undefined)
     }
   ],
-  expectedActions: [navigateToBonusAlreadyExists(), navigationHistoryPop(1)],
+  expectedActions: [
+    navigateToBonusAlreadyExists(),
+    navigationHistoryPop(1),
+    ...completeBonusDefaultActions
+  ],
   finalState: {
     activation: { status: BonusActivationProgressEnum.EXISTS },
     allActive: {}
@@ -150,7 +209,8 @@ export const timeout: MockBackendScenario = {
   ],
   expectedActions: [
     navigateToBonusActivationTimeout(),
-    navigationHistoryPop(1)
+    navigationHistoryPop(1),
+    ...completeBonusDefaultActions
   ],
   finalState: {
     activation: { status: BonusActivationProgressEnum.TIMEOUT },
@@ -194,7 +254,7 @@ export const error: MockBackendScenario = {
       getBonusActivationResponseById: getActivationSuccessBonusError
     }
   ],
-  expectedActions: [],
+  expectedActions: completeBonusDefaultActions,
   finalState: {
     activation: { status: BonusActivationProgressEnum.ERROR },
     allActive: {}
@@ -208,5 +268,3 @@ export const backendIntegrationTestCases: ReadonlyArray<MockBackendScenario> = [
   timeout,
   error
 ];
-
-test.skip("mockDataOnlyFile", () => undefined);

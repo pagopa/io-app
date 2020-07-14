@@ -1449,6 +1449,7 @@ bonus:
       eligibilityExpired:
         title: Time expired.
         body: The 24 hours needed to continue your request have expired. Please, start a new request.
+        cta: Request Bonus
       completed:
         title: Congratulation!
         description: Bonus activated
