@@ -59,6 +59,10 @@ export const cancelBonusVacanzeRequest = createStandardAction(
   "BONUS_VACANZE_REQUEST_CANCEL"
 )<void>();
 
+export const showBonusVacanze = createStandardAction("BONUS_VACANZE_SHOW")<
+  void
+>();
+
 // Complete the bonus activation phase with success
 export const completeBonusVacanzeActivation = createStandardAction(
   "BONUS_VACANZE_ACTIVATION_COMPLETE"
@@ -94,4 +98,5 @@ export type BonusActions =
   | ActionType<typeof startLoadBonusFromIdPolling>
   | ActionType<typeof cancelBonusVacanzeRequest>
   | ActionType<typeof completeBonusVacanzeActivation>
+  | ActionType<typeof showBonusVacanze>
   | ActionType<typeof cancelLoadBonusFromIdPolling>;
