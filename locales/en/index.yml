@@ -1,6 +1,8 @@
 ---
 global:
   accessibility:
+    expanded: Expanded paragraph
+    collapsed: Collapsed paragraph
     activityIndicator:
       label: Loading
       hint: Wait for the content load
@@ -862,6 +864,14 @@ cardComponent:
   detailsAndTransactions: Details and transactions
   pick: Pay with this method
 messages:
+  accessibility:
+    message:
+      read: "Message"
+      unread: "Unread message"
+      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      received_on: "received on"
+      received_at: "received at"
+      date_format: "MMMM Do YYYY"
   contextualHelpTitle: About this section
   contextualHelpContent: !include messages/messages_home.md
   counting:
