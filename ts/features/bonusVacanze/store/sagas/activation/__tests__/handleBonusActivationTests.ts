@@ -1,10 +1,9 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import { NavigationActions } from "react-navigation";
 import { Action } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga-test-plan/matchers";
 import { ActionType } from "typesafe-actions";
-import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import BONUSVACANZE_ROUTES from "../../../../navigation/routes";
 import {
@@ -12,11 +11,11 @@ import {
   cancelBonusVacanzeRequest,
   completeBonusVacanzeActivation
 } from "../../../actions/bonusVacanze";
-import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
 import {
   navigationActions,
   networkingActivationResultActions
-} from "./mockData";
+} from "../__mock__/networkingSagaResponseMockData";
+import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
 
 jest.mock("react-native-background-timer", () => {
   return {
@@ -32,7 +31,7 @@ jest.mock("react-native-share", () => {
 
 type BonusVacanzeReturnType = ActionType<typeof activateBonusVacanze>;
 
-describe("Bonus Activation Saga", () => {
+describe("Bonus Activation Saga, mock networking saga", () => {
   it("Cancel bonus activation saga", () => {
     return expectSaga(handleBonusActivationSaga, mockRemote)
       .provide([
@@ -42,8 +41,7 @@ describe("Bonus Activation Saga", () => {
         ]
       ])
       .dispatch(cancelBonusVacanzeRequest())
-      .put(navigateToWalletHome())
-      .put(navigationHistoryPop(1))
+      .put(NavigationActions.back())
       .run();
   });
   networkingActivationResultActions.map(networkingScenario =>
@@ -85,7 +83,6 @@ const expectSagaFactory = (
       .reduce((acc, val) => acc.put(val), baseSaga)
       // when the last event completeBonusVacanze is received, the navigation stack is popped
       .dispatch(completeBonusVacanzeActivation())
-      .put(navigationHistoryPop(1))
       .run()
       .then(results => {
         expect(results.effects.select.length).toEqual(1);
