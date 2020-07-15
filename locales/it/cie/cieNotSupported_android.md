@@ -1,1 +1,1 @@
-Nello specifico, i casi in cui **non** è possibile accedere con Carta di Identità Elettronica (CIE) su dispositivo Android sono:
+Nello specifico, per **poter accedere** con Carta di Identità Elettronica (CIE), il tuo dispositivo Android deve avere:

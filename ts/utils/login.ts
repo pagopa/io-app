@@ -1,4 +1,4 @@
-import { NavState } from "react-native";
+import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import * as config from "../config";
 import { SessionToken } from "../types/SessionToken";
 /**
@@ -72,7 +72,7 @@ export const getIdpLoginUri = (idpId: string) =>
 export const onLoginUriChanged = (
   onFailure: (errorCode: string | undefined) => void,
   onSuccess: (_: SessionToken) => void
-) => (navState: NavState): boolean => {
+) => (navState: WebViewNavigation): boolean => {
   if (navState.url) {
     // If the url is not related to login this will be `null`
     const loginResult = extractLoginResult(navState.url);
