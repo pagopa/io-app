@@ -334,6 +334,9 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             : [styles.fullText, fullStyle]
         ]}
         selectable={selectable}
+        accessible={true}
+        accessibilityElementsHidden={true}
+        importantForAccessibility={"no-hide-descendants"}
       >
         {content.toUpperCase()}
       </Text>
@@ -449,7 +452,29 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
   public render(): React.ReactNode {
     return (
-      <View>
+      <View
+        accessible={true}
+        accessibilityLabel={
+          this.props.type === "Preview"
+            ? "Preview del codice fiscale"
+            : this.props.getBackSide
+              ? "Retro codice fiscale"
+              : `Fronte del documento: codice fiscale ${
+                  this.props.profile.fiscal_code
+                } di ${this.props.profile.name} ${
+                  this.props.profile.family_name
+                }`
+        }
+        accessibilityHint={
+          this.props.type !== "Landscape"
+            ? this.props.type === "Preview"
+              ? "Attiva per consultare il fac-simile del tuo codice fiscale"
+              : this.props.getBackSide
+                ? "Attiva per ingrandire il BarCode"
+                : "Attiva per ingrandire il contenuto"
+            : ""
+        }
+      >
         <Image
           source={
             this.props.type !== "Preview" && this.props.getBackSide
