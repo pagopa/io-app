@@ -456,22 +456,22 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         accessible={true}
         accessibilityLabel={
           this.props.type === "Preview"
-            ? "Preview del codice fiscale"
+            ? I18n.t("profile.fiscalCode.accessibility.preview.label")
             : this.props.getBackSide
-              ? "Retro codice fiscale"
-              : `Fronte del documento: codice fiscale ${
-                  this.props.profile.fiscal_code
-                } di ${this.props.profile.name} ${
-                  this.props.profile.family_name
-                }`
+              ? I18n.t("profile.fiscalCode.accessibility.rear.label")
+              : I18n.t("profile.fiscalCode.accessibility.front.label", {
+                  code: this.props.profile.fiscal_code,
+                  name: this.props.profile.name,
+                  family_name: this.props.profile.family_name
+                })
         }
         accessibilityHint={
           this.props.type !== "Landscape"
             ? this.props.type === "Preview"
-              ? "Attiva per consultare il fac-simile del tuo codice fiscale"
+              ? I18n.t("profile.fiscalCode.accessibility.preview.hint")
               : this.props.getBackSide
-                ? "Attiva per ingrandire il BarCode"
-                : "Attiva per ingrandire il contenuto"
+                ? I18n.t("profile.fiscalCode.accessibility.rear.hint")
+                : I18n.t("profile.fiscalCode.accessibility.front.hint")
             : ""
         }
       >

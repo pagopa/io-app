@@ -127,6 +127,16 @@ inbox:
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
   fiscalCode:
+    accessibility:
+      preview:
+        label: Anteprima del tuo codice fiscale
+        hint: Attiva per visualizzare il facsimile del tuo codice fiscale
+      front:
+        label: Parte anteriore del documento codice fiscale {{code}} di {{name}} {{family_name}}
+        hint: Attiva per passare alla visualizzazione landscape
+      rear:
+        label: Codice a barre del tuo documento
+        hint: Attiva per passare alla visualizzazione landscape
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
     help: !include profile/profile_fiscal_code.md

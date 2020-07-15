@@ -127,6 +127,16 @@ inbox:
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
   fiscalCode:
+    accessibility:
+      preview:
+        label: Preview of your fiscal code document
+        hint: Activate to show the facsimile of your fiscal code document
+      front:
+        label: Front-side of the document code {{code}} of {{name}} {{family_name}}
+        hint: Activate to show the landscape view
+      rear:
+        label: barcode of your document
+        hint: Activate to show the landscape view
     title: Your personal documents
     fiscalCode: Fiscal code
     help: !include profile/profile_fiscal_code.md
