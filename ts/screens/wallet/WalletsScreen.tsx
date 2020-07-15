@@ -2,7 +2,7 @@
  * This screen shows the list of available payment methods
  * (credit cards for now)
  */
-import { none, fromPredicate } from "fp-ts/lib/Option";
+import { fromPredicate, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Left, Right, Text, View } from "native-base";
 import * as React from "react";
