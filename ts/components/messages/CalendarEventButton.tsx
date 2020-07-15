@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
   },
   oneThird: {
     flex: 5
-  }
+  },
+  marginTop1: { marginTop: 1 }
 });
 
 class CalendarEventButton extends React.PureComponent<Props, State> {
@@ -327,7 +328,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         style={this.props.small ? styles.oneThird : styles.button}
       >
         <IconFont name={iconName} />
-        <Text>{reminderText}</Text>
+        <Text style={styles.marginTop1}>{reminderText}</Text>
       </ButtonDefaultOpacity>
     );
   }

@@ -11,7 +11,10 @@ import StyledIconFont from "../ui/IconFont";
 
 // left -> the string to represent as text
 // right -> the icon to represent with name and size
-type DigitRpr = Either<string, { name: string; size: number }>;
+export type DigitRpr = Either<
+  string,
+  { name: string; size: number; accessibilityLabel: string }
+>;
 type Digit = ITuple2<DigitRpr, () => void> | undefined;
 
 type Props = Readonly<{
@@ -110,6 +113,7 @@ const renderPinCol = (
                     ? customVariables.contentPrimaryBackground
                     : customVariables.colorWhite
                 }
+                accessibilityLabel={ic.accessibilityLabel}
               />
             );
           }

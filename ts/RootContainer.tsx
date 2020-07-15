@@ -134,11 +134,7 @@ class RootContainer extends React.PureComponent<Props> {
     return (
       <Root>
         <StatusBar barStyle={"dark-content"} />
-        {Platform.OS === "android" && (
-          <FlagSecureComponent
-            isFlagSecureEnabled={!this.props.isDebugModeEnabled}
-          />
-        )}
+        {Platform.OS === "android" && <FlagSecureComponent />}
         <Navigation />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <RootModal />
@@ -150,8 +146,7 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   preferredLanguage: preferredLanguageSelector(state),
-  deepLinkState: state.deepLink,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  deepLinkState: state.deepLink
 });
 
 const mapDispatchToProps = {

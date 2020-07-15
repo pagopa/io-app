@@ -8,7 +8,7 @@ import AppHeader from "../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
-import { AVOID_ZOOM_JS } from "../../../utils/webview";
+import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { bonusVacanzeStyle } from "./Styles";
 
 type Props = {
@@ -133,7 +133,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
                 onLoadEnd={handleLoadEnd}
                 onError={handleError}
                 source={{ uri: props.tos_url }}
-                injectedJavaScript={AVOID_ZOOM_JS}
+                injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
               />
             </View>
           )}
