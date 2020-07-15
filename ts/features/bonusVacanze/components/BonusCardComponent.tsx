@@ -166,9 +166,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         accessibilityLabel={I18n.t("bonus.bonusVacanze.accessibility.card", {
           code: props.bonus.id,
           value: props.bonus.dsu_request.max_amount,
-          status: maybeStatusDescription.isSome()
-            ? maybeStatusDescription.value
-            : props.bonus.status
+          status: maybeStatusDescription.getOrElse(props.bonus.status)
         })}
       >
         <View style={{ flexDirection: "column" }}>
