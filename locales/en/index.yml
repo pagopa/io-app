@@ -306,8 +306,8 @@ authentication:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: your operating system does not have a version compatible with CIE authentication
-      nfc_incompatible: your device does not have an NFC antenna compatible with CIE authentication
+      os_version_unsupported: an OS version compatible with CIE authentication (Android 6.0 or higher)
+      nfc_incompatible: an NFC antenna compatible with authentication via CIE
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -809,7 +809,7 @@ wallet:
     byCameraTitle: Notice QR Code
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
       manually insert the transaction-related data (IUV and the entity/company code).
-    setManually: Insert data manually
+    setManually: Enter the data
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
     cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
