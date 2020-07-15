@@ -24,6 +24,7 @@ import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
 
 type Props = Readonly<{
+  accessibilityLabel?: string;
   allowGoBack?: boolean;
   headerBody?: React.ReactNode;
   title?: string;
@@ -104,6 +105,7 @@ export default class DarkLayout extends React.Component<Props> {
   public render() {
     return (
       <TopScreenComponent
+        accessibilityLabel={this.props.accessibilityLabel}
         goBack={this.props.allowGoBack}
         customGoBack={this.props.customGoBack}
         headerTitle={this.props.title ? this.props.title : ""}

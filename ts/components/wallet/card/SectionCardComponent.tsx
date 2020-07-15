@@ -1,6 +1,6 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import { Platform, StyleSheet, ViewStyle } from "react-native";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
@@ -54,10 +54,10 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
+    borderRadius: 8,
     zIndex: -7,
     elevation: -7,
     height: 88,
-    borderRadius: 8,
     marginLeft: 0,
     marginRight: 0
   },
@@ -87,57 +87,71 @@ const styles = StyleSheet.create({
   labelButton: {
     marginLeft: customVariables.fontSizeBase / 4,
     color: customVariables.colorWhite
+  },
+  shadowBox: {
+    marginBottom: -15,
+    borderRadius: 8,
+    borderTopWidth: 8,
+    borderTopColor: "rgba(0,0,0,0.1)",
+    height: 15
   }
 });
 
 const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const { label, onPress, isNew, isError, cardStyle } = props;
   return (
-    <View style={styles.rotateCard}>
-      <TouchableDefaultOpacity onPress={onPress}>
-        <View
-          style={[styles.card, styles.flatBottom, cardStyle || styles.cardGrey]}
-        >
-          <View style={[styles.cardInner]}>
-            <View style={[styles.flexRow]}>
-              <View style={styles.flexRow2}>
-                <Text
-                  style={[styles.brandLightGray, styles.headerText]}
-                  ellipsizeMode="tail"
-                >
-                  {label}
-                </Text>
-                {isNew && (
-                  <Badge style={styles.badgeColor}>
-                    <Text semibold={true} style={styles.badgeText}>
-                      {I18n.t("wallet.methods.newCome")}
+    <>
+      {Platform.OS === "android" && <View style={styles.shadowBox} />}
+      <View style={[styles.rotateCard]}>
+        <TouchableDefaultOpacity onPress={onPress}>
+          <View
+            style={[
+              styles.card,
+              styles.flatBottom,
+              cardStyle || styles.cardGrey
+            ]}
+          >
+            <View style={[styles.cardInner]}>
+              <View style={[styles.flexRow]}>
+                <View style={styles.flexRow2}>
+                  <Text
+                    style={[styles.brandLightGray, styles.headerText]}
+                    ellipsizeMode="tail"
+                  >
+                    {label}
+                  </Text>
+                  {isNew && (
+                    <Badge style={styles.badgeColor}>
+                      <Text semibold={true} style={styles.badgeText}>
+                        {I18n.t("wallet.methods.newCome")}
+                      </Text>
+                    </Badge>
+                  )}
+                </View>
+                {!isError && (
+                  <View style={[styles.button]}>
+                    <IconFont
+                      name="io-plus"
+                      color={customVariables.colorWhite}
+                      size={customVariables.fontSize2}
+                    />
+                    <Text
+                      bold={true}
+                      style={[
+                        styles.labelButton,
+                        { fontSize: customVariables.fontSize1 + 1 }
+                      ]}
+                    >
+                      {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
                     </Text>
-                  </Badge>
+                  </View>
                 )}
               </View>
-              {!isError && (
-                <View style={[styles.button]}>
-                  <IconFont
-                    name="io-plus"
-                    color={customVariables.colorWhite}
-                    size={customVariables.fontSize2}
-                  />
-                  <Text
-                    bold={true}
-                    style={[
-                      styles.labelButton,
-                      { fontSize: customVariables.fontSize1 + 1 }
-                    ]}
-                  >
-                    {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
-                  </Text>
-                </View>
-              )}
             </View>
           </View>
-        </View>
-      </TouchableDefaultOpacity>
-    </View>
+        </TouchableDefaultOpacity>
+      </View>
+    </>
   );
 };
 

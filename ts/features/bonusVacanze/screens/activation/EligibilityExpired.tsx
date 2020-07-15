@@ -2,18 +2,24 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
-import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzeStyle } from "../../components/Styles";
-import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
+import {
+  cancelBonusVacanzeRequest,
+  checkBonusVacanzeEligibility
+} from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const image = require("../../../../../img/wallet/errors/payment-expired-icon.png");
+const image = require("../../../../../img/pictograms/hourglass.png");
 
 /**
  * This screen informs the user that the eligibility data has expired
@@ -32,6 +38,7 @@ const EligibilityExpired: React.FunctionComponent<Props> = props => {
   );
   const body = I18n.t("bonus.bonusVacanze.activation.eligibilityExpired.body");
   const cancel = I18n.t("global.buttons.close");
+  const cta = I18n.t("bonus.bonusVacanze.activation.eligibilityExpired.cta");
 
   useHardwareBackButton(() => {
     props.onCancel();
@@ -45,15 +52,18 @@ const EligibilityExpired: React.FunctionComponent<Props> = props => {
         title={title}
         body={body}
       />
-      <FooterStackButton
-        buttons={[cancelButtonProps(props.onCancel, cancel)]}
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        leftButton={cancelButtonProps(props.onCancel, cancel)}
+        rightButton={confirmButtonProps(props.onRestart, cta)}
       />
     </SafeAreaView>
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => dispatch(cancelBonusVacanzeRequest())
+  onCancel: () => dispatch(cancelBonusVacanzeRequest()),
+  onRestart: () => dispatch(checkBonusVacanzeEligibility.request())
 });
 
 export default connect(
