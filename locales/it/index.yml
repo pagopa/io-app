@@ -1,6 +1,7 @@
 ---
 global:
   accessibility:
+    date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
     activityIndicator:
@@ -911,7 +912,6 @@ messages:
       description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
-      date_format: "DD MMMM YYYY"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
   contextualHelpContent: !include messages/messages_home.md
   counting:

@@ -11,7 +11,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import {
-  AccessibilityRole,
   Dimensions,
   Image,
   StyleProp,
@@ -24,7 +23,9 @@ import { InitializedProfile } from "../../definitions/backend/InitializedProfile
 import { Municipality } from "../../definitions/content/Municipality";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
+import { dateToAccessibilityReadbleFormat } from "../utils/accessibility";
 import { extractFiscalCodeData } from "../utils/profile";
+import { maybeNotNullyString } from "../utils/strings";
 
 interface BaseProps {
   profile: InitializedProfile;
@@ -345,7 +346,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
   }
 
   get accessibilityText(): Record<
-    "accessibilityLabel" | "accessibilityHint" | "accessibilityRole",
+    "accessibilityLabel" | "accessibilityHint",
     string
   > {
     if (this.props.type === "Preview") {
@@ -355,8 +356,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         ),
         accessibilityHint: I18n.t(
           "profile.fiscalCode.accessibility.preview.hint"
-        ),
-        accessibilityRole: "button"
+        )
       };
     }
     const isLandScape = this.props.type === "Landscape";
@@ -367,8 +367,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         ),
         accessibilityHint: isLandScape
           ? ""
-          : I18n.t("profile.fiscalCode.accessibility.rear.hint"),
-        accessibilityRole: isLandScape ? "none" : "button"
+          : I18n.t("profile.fiscalCode.accessibility.rear.hint")
       };
     }
 
@@ -376,6 +375,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
       this.props.profile.fiscal_code,
       this.props.municipality
     );
+    const na = I18n.t("profile.fiscalCode.accessibility.unavailable");
     // goBackSide === false
     return {
       accessibilityLabel: I18n.t(
@@ -384,24 +384,21 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           code: this.props.profile.fiscal_code,
           name: this.props.profile.name,
           family_name: this.props.profile.family_name,
-          gender: fiscalCodeData.gender
-            ? fiscalCodeData.gender
-            : I18n.t("profile.fiscalCode.accessibility.unavailable"),
-          birthDate: fiscalCodeData.birthDate
-            ? fiscalCodeData.birthDate
-            : I18n.t("profile.fiscalCode.accessibility.unavailable"),
-          province: pot.isSome(this.props.municipality)
-            ? fiscalCodeData.siglaProvincia
-            : I18n.t("profile.fiscalCode.accessibility.unavailable"),
-          placeOfBirth: pot.isSome(this.props.municipality)
-            ? fiscalCodeData.denominazione
-            : I18n.t("profile.fiscalCode.accessibility.unavailable")
+          gender: fiscalCodeData.gender ? fiscalCodeData.gender : na,
+          birthDate: fiscalCodeData.birthday
+            ? dateToAccessibilityReadbleFormat(fiscalCodeData.birthday)
+            : na,
+          province: maybeNotNullyString(
+            fiscalCodeData.siglaProvincia
+          ).getOrElse(na),
+          placeOfBirth: maybeNotNullyString(
+            fiscalCodeData.denominazione
+          ).getOrElse(na)
         }
       ),
       accessibilityHint: isLandScape
         ? ""
-        : I18n.t("profile.fiscalCode.accessibility.front.hint"),
-      accessibilityRole: isLandScape ? "none" : "button"
+        : I18n.t("profile.fiscalCode.accessibility.front.hint")
     };
   }
 
@@ -518,9 +515,6 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         accessible={true}
         accessibilityLabel={this.accessibilityText.accessibilityLabel}
         accessibilityHint={this.accessibilityText.accessibilityHint}
-        accessibilityRole={
-          this.accessibilityText.accessibilityRole as AccessibilityRole
-        }
       >
         <Image
           source={

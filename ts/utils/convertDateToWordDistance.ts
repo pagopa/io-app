@@ -1,5 +1,6 @@
 import { differenceInCalendarDays } from "date-fns";
 import I18n from "../i18n";
+import { dateToAccessibilityReadbleFormat } from "./accessibility";
 import { format, formatDateAsLocal } from "./dates";
 
 /**
@@ -45,8 +46,8 @@ export const convertReceivedDateToAccessible = (date: Date) => {
       "H:mm"
     )}`;
   }
-  return `${I18n.t("messages.accessibility.message.received_on")} ${format(
-    date,
-    I18n.t("messages.accessibility.message.date_format")
-  )}`;
+  return (
+    I18n.t("messages.accessibility.message.received_on") +
+    dateToAccessibilityReadbleFormat(date)
+  );
 };
