@@ -1,6 +1,7 @@
 ---
 global:
   accessibility:
+    date_format: MMMM Do YYYY
     expanded: Expanded paragraph
     collapsed: Collapsed paragraph
     activityIndicator:
@@ -127,6 +128,17 @@ inbox:
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
   fiscalCode:
+    accessibility:
+      unavailable: Unavailable
+      preview:
+        label: Preview of your fiscal code document
+        hint: Activate to show the facsimile of your fiscal code document
+      front:
+        label: Front-side of the document code {{code}} of {{name}} {{family_name}}, gender {{gender}}, born in {{placeOfBirth}},{{province}} the {{birthDate}}
+        hint: Activate to show the landscape view
+      rear:
+        label: barcode of your document
+        hint: Activate to show the landscape view
     title: Your personal documents
     fiscalCode: Fiscal code
     help: !include profile/profile_fiscal_code.md
@@ -871,7 +883,6 @@ messages:
       description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "received on"
       received_at: "received at"
-      date_format: "MMMM Do YYYY"
   contextualHelpTitle: About this section
   contextualHelpContent: !include messages/messages_home.md
   counting:
