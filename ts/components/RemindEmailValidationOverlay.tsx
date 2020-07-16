@@ -40,6 +40,7 @@ import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
+import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 
 type OwnProp = {
   closeModalAndNavigateToEmailInsertScreen: () => void;
@@ -235,7 +236,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     );
 
   private customOnboardingGoBack = (
-    <IconFont name={"io-back"} onPress={this.handleOnboardingGoBack} />
+    <TouchableDefaultOpacity
+      onPress={this.handleOnboardingGoBack}
+      accessible={true}
+      accessibilityLabel={I18n.t("global.buttons.back")}
+      accessibilityRole={"button"}
+    >
+      <IconFont name={"io-back"} />
+    </TouchableDefaultOpacity>
   );
 
   private onMainProps: TopScreenComponentProps = {
@@ -335,6 +343,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       <TopScreenComponent
         {...(isOnboardingCompleted ? this.onMainProps : this.onBoardingProps)}
         contextualHelpMarkdown={this.contextualHelpMarkdown}
+        avoidNavigationEventsUsage={true}
       >
         <Content bounces={false}>
           <View spacer={true} extralarge={true} />
