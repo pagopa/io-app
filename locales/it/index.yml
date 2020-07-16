@@ -311,8 +311,8 @@ authentication:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: il tuo sistema operativo non ha una versione compatibile con l'autenticazione tramite CIE
-      nfc_incompatible: il tuo dispositivo non ha una antenna NFC compatibile con l'autenticazione tramite CIE
+      os_version_unsupported: una versione del sistema operativo compatibile con l'autenticazione tramite CIE (Android 6.0 o superiore)
+      nfc_incompatible: una antenna NFC compatibile con l'autenticazione tramite CIE
     contentTitleCie: Non hai SPID o la CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
@@ -836,7 +836,7 @@ wallet:
     cameraUsageInfo:
       Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
       inserisci manualmente i dati identificativi (IUV e codice ente/azienda).
-    setManually: Inserisci i dati manualmente
+    setManually: Inserisci tu i dati
     enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
     cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
@@ -1402,6 +1402,8 @@ faq:
     content: !include bonus/faq/faq76.md
 bonus:
   bonusVacanze:
+    accessibility:
+      card: Il tuo Bonus Vacanze con codice {{code}}, del valore di {{value}} euro è {{status}}
     statusInfo:
       validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
       bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
