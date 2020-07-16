@@ -4,7 +4,7 @@ import customVariables from "../theme/variables";
 
 const defaultActiveOpacity = 1.0;
 
-type Props = NativeBase.Button & React.PropsWithChildren<Button>;
+type Props = NativeBase.Button & React.Props<Button>;
 
 /**
  *
