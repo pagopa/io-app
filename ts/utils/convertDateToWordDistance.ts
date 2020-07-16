@@ -46,8 +46,9 @@ export const convertReceivedDateToAccessible = (date: Date) => {
       "H:mm"
     )}`;
   }
-  return (
-    I18n.t("messages.accessibility.message.received_on") +
-    dateToAccessibilityReadbleFormat(date)
-  );
+  return `
+    ${I18n.t(
+      "messages.accessibility.message.received_on"
+    )} ${dateToAccessibilityReadbleFormat(date)}
+  `;
 };

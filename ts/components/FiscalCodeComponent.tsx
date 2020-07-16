@@ -384,7 +384,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           code: this.props.profile.fiscal_code,
           name: this.props.profile.name,
           family_name: this.props.profile.family_name,
-          gender: fiscalCodeData.gender ? fiscalCodeData.gender : na,
+          gender: fiscalCodeData.gender || na,
           birthDate: fiscalCodeData.birthday
             ? dateToAccessibilityReadbleFormat(fiscalCodeData.birthday)
             : na,
