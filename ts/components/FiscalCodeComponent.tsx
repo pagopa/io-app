@@ -11,6 +11,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import {
+  AccessibilityRole,
   Dimensions,
   Image,
   StyleProp,
@@ -344,7 +345,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
   }
 
   get accessibilityText(): Record<
-    "accessibilityLabel" | "accessibilityHint",
+    "accessibilityLabel" | "accessibilityHint" | "accessibilityRole",
     string
   > {
     if (this.props.type === "Preview") {
@@ -354,7 +355,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         ),
         accessibilityHint: I18n.t(
           "profile.fiscalCode.accessibility.preview.hint"
-        )
+        ),
+        accessibilityRole: "button"
       };
     }
     const isLandScape = this.props.type === "Landscape";
@@ -365,7 +367,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         ),
         accessibilityHint: isLandScape
           ? ""
-          : I18n.t("profile.fiscalCode.accessibility.rear.hint")
+          : I18n.t("profile.fiscalCode.accessibility.rear.hint"),
+        accessibilityRole: isLandScape ? "none" : "button"
       };
     }
 
@@ -397,7 +400,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
       ),
       accessibilityHint: isLandScape
         ? ""
-        : I18n.t("profile.fiscalCode.accessibility.front.hint")
+        : I18n.t("profile.fiscalCode.accessibility.front.hint"),
+      accessibilityRole: isLandScape ? "none" : "button"
     };
   }
 
@@ -514,6 +518,9 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         accessible={true}
         accessibilityLabel={this.accessibilityText.accessibilityLabel}
         accessibilityHint={this.accessibilityText.accessibilityHint}
+        accessibilityRole={
+          this.accessibilityText.accessibilityRole as AccessibilityRole
+        }
       >
         <Image
           source={
