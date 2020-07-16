@@ -128,15 +128,16 @@ inbox:
 profile:
   fiscalCode:
     accessibility:
+      unavailable: Non disponibile
       preview:
         label: Anteprima del tuo codice fiscale
         hint: Attiva per visualizzare il facsimile del tuo codice fiscale
       front:
-        label: Parte anteriore del documento codice fiscale {{code}} di {{name}} {{family_name}}
-        hint: Attiva per passare alla visualizzazione landscape
+        label: Parte anteriore del documento codice fiscale {{code}} di {{name}} {{family_name}}, sesso {{gender}}, nato a {{placeOfBirth}},{{province}} il {{birthDate}}
+        hint: Attiva per passare alla visualizzazione a schermo intero
       rear:
         label: Codice a barre del tuo documento
-        hint: Attiva per passare alla visualizzazione landscape
+        hint: Attiva per passare alla visualizzazione a schermo intero
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
     help: !include profile/profile_fiscal_code.md

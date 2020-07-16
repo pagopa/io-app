@@ -343,6 +343,64 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     );
   }
 
+  get accessibilityText(): Record<
+    "accessibilityLabel" | "accessibilityHint",
+    string
+  > {
+    if (this.props.type === "Preview") {
+      return {
+        accessibilityLabel: I18n.t(
+          "profile.fiscalCode.accessibility.preview.label"
+        ),
+        accessibilityHint: I18n.t(
+          "profile.fiscalCode.accessibility.preview.hint"
+        )
+      };
+    }
+    const isLandScape = this.props.type === "Landscape";
+    if (this.props.getBackSide) {
+      return {
+        accessibilityLabel: I18n.t(
+          "profile.fiscalCode.accessibility.rear.label"
+        ),
+        accessibilityHint: isLandScape
+          ? ""
+          : I18n.t("profile.fiscalCode.accessibility.rear.hint")
+      };
+    }
+
+    const fiscalCodeData = extractFiscalCodeData(
+      this.props.profile.fiscal_code,
+      this.props.municipality
+    );
+    // goBackSide === false
+    return {
+      accessibilityLabel: I18n.t(
+        "profile.fiscalCode.accessibility.front.label",
+        {
+          code: this.props.profile.fiscal_code,
+          name: this.props.profile.name,
+          family_name: this.props.profile.family_name,
+          gender: fiscalCodeData.gender
+            ? fiscalCodeData.gender
+            : I18n.t("profile.fiscalCode.accessibility.unavailable"),
+          birthDate: fiscalCodeData.birthDate
+            ? fiscalCodeData.birthDate
+            : I18n.t("profile.fiscalCode.accessibility.unavailable"),
+          province: pot.isSome(this.props.municipality)
+            ? fiscalCodeData.siglaProvincia
+            : I18n.t("profile.fiscalCode.accessibility.unavailable"),
+          placeOfBirth: pot.isSome(this.props.municipality)
+            ? fiscalCodeData.denominazione
+            : I18n.t("profile.fiscalCode.accessibility.unavailable")
+        }
+      ),
+      accessibilityHint: isLandScape
+        ? ""
+        : I18n.t("profile.fiscalCode.accessibility.front.hint")
+    };
+  }
+
   private renderFrontContent(
     profile: InitializedProfile,
     municipality: pot.Pot<Municipality, Error>,
@@ -454,26 +512,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     return (
       <View
         accessible={true}
-        accessibilityLabel={
-          this.props.type === "Preview"
-            ? I18n.t("profile.fiscalCode.accessibility.preview.label")
-            : this.props.getBackSide
-              ? I18n.t("profile.fiscalCode.accessibility.rear.label")
-              : I18n.t("profile.fiscalCode.accessibility.front.label", {
-                  code: this.props.profile.fiscal_code,
-                  name: this.props.profile.name,
-                  family_name: this.props.profile.family_name
-                })
-        }
-        accessibilityHint={
-          this.props.type !== "Landscape"
-            ? this.props.type === "Preview"
-              ? I18n.t("profile.fiscalCode.accessibility.preview.hint")
-              : this.props.getBackSide
-                ? I18n.t("profile.fiscalCode.accessibility.rear.hint")
-                : I18n.t("profile.fiscalCode.accessibility.front.hint")
-            : ""
-        }
+        accessibilityLabel={this.accessibilityText.accessibilityLabel}
+        accessibilityHint={this.accessibilityText.accessibilityHint}
       >
         <Image
           source={
