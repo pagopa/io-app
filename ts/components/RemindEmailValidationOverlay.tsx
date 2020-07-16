@@ -36,11 +36,11 @@ import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
 } from "./screens/TopScreenComponent";
+import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
-import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 
 type OwnProp = {
   closeModalAndNavigateToEmailInsertScreen: () => void;
