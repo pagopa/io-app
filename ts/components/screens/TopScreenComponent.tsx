@@ -14,6 +14,7 @@ interface OwnProps {
     onPress: () => void;
   };
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  avoidNavigationEventsUsage?: boolean;
 }
 
 type BaseScreenComponentProps =
@@ -48,7 +49,8 @@ class TopScreenComponent extends React.PureComponent<Props> {
       searchType,
       customRightIcon,
       customGoBack,
-      faqCategories
+      faqCategories,
+      avoidNavigationEventsUsage
     } = this.props;
 
     return (
@@ -66,6 +68,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         searchType={searchType}
         customRightIcon={customRightIcon}
         customGoBack={customGoBack}
+        avoidNavigationEventsUsage={avoidNavigationEventsUsage}
       >
         {this.props.children}
       </BaseScreenComponent>
