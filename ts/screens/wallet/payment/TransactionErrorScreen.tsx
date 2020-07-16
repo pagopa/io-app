@@ -60,8 +60,7 @@ const styles = StyleSheet.create({
   },
 
   errorMessageSubtitle: {
-    textAlign: "center",
-    fontSize: customVariables.fontSizeSmall
+    textAlign: "center"
   },
 
   paddedLR: {

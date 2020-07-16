@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
   },
   validUntil: {
     color: variables.brandDarkestGray,
-    fontSize: variables.fontSizeSmall,
     lineHeight: variables.lineHeightSmall,
     paddingVertical: 8
   },
@@ -151,11 +150,9 @@ const styles = StyleSheet.create({
     lineHeight: 21
   },
   commonLabel: {
-    fontSize: variables.fontSizeSmall,
     lineHeight: 18
   },
   disclaimer: {
-    fontSize: customVariables.fontSizeSmall,
     color: customVariables.selectedColor
   }
 });

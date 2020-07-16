@@ -111,8 +111,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   emptyListContentTitle: {
-    paddingBottom: variables.contentPadding / 2,
-    fontSize: variables.fontSizeSmall
+    paddingBottom: variables.contentPadding / 2
   },
   bordercColorBrandGray: {
     borderColor: variables.brandGray
@@ -141,8 +140,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   textStyleHelp: {
-    lineHeight: 18,
-    fontSize: 13
+    lineHeight: 18
   }
 });
 
@@ -327,13 +325,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   ): React.ReactNode => (
     <React.Fragment>
       <View spacer={true} large={true} />
-      <Text xsmall={true} style={alignCenter ? styles.centered : undefined}>
+      <Text style={alignCenter ? styles.centered : undefined}>
         {`${I18n.t("wallet.transactionHelpMessage.text1")} `}
-        <Text
-          xsmall={true}
-          style={alignCenter ? styles.centered : undefined}
-          bold={true}
-        >
+        <Text style={alignCenter ? styles.centered : undefined} bold={true}>
           {I18n.t("wallet.transactionHelpMessage.text2")}
         </Text>
         {` ${I18n.t("wallet.transactionHelpMessage.text3")}`}

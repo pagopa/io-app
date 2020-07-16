@@ -84,9 +84,6 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSize3,
     lineHeight: customVariables.lineHeightH3,
     color: customVariables.colorBlack
-  },
-  disclaimer: {
-    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -197,15 +194,12 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
               <View spacer={true} extralarge={true} />
               <ItemSeparatorComponent noPadded={true} />
               <View spacer={true} extralarge={true} />
-              <Text style={styles.disclaimer} dark={true}>
-                {I18n.t("bonus.bonusVacanze.advice")}
-              </Text>
+              <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
               <TouchableDefaultOpacity
                 onPress={() => handleModalPress(maybeBonusTos.value)}
                 accessibilityRole={"link"}
               >
                 <Text
-                  style={styles.disclaimer}
                   link={true}
                   semibold={true}
                   ellipsizeMode={"tail"}

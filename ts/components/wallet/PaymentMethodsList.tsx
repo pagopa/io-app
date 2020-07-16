@@ -100,7 +100,6 @@ const paymentMethods: ReadonlyArray<IPaymentMethod> = [
 
 const AddMethodStyle = StyleSheet.create({
   transactionText: {
-    fontSize: variables.fontSizeSmaller,
     color: color(variables.colorWhite)
       .darken(0.35)
       .string()
@@ -116,9 +115,9 @@ const AddMethodStyle = StyleSheet.create({
     backgroundColor: variables.brandHighLighter
   },
   notImplementedText: {
-    fontSize: 10,
+    fontSize: 11,
     lineHeight: Platform.OS === "ios" ? 14 : 16,
-    color: customVariables.brandDarkGray
+    color: customVariables.brandLight
   },
   centeredContents: {
     alignItems: "center"
