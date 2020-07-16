@@ -141,15 +141,18 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
     return true;
   };
 
-  private customOnboardingGoBack = (
-    <IconFont
-      name={"io-back"}
-      style={{ color: customVariables.colorWhite }}
-      onPress={async () => {
-        await this.resetAppBrightness();
-        this.goBack();
-      }}
-    />
+  private customGoBack = (
+    <TouchableDefaultOpacity
+      onPress={this.handleBackPress}
+      accessible={true}
+      accessibilityLabel={I18n.t("global.buttons.back")}
+      accessibilityRole={"button"}
+    >
+      <IconFont
+        name={"io-back"}
+        style={{ color: customVariables.colorWhite }}
+      />
+    </TouchableDefaultOpacity>
   );
 
   public render() {
@@ -157,7 +160,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
       <React.Fragment>
         <DarkLayout
           allowGoBack={true}
-          customGoBack={this.customOnboardingGoBack}
+          customGoBack={this.customGoBack}
           headerBody={
             <TouchableDefaultOpacity onPress={this.goBack}>
               <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
