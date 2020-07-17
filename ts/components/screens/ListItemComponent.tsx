@@ -1,12 +1,11 @@
 import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
 import {
+  AccessibilityRole,
   Platform,
   StyleProp,
   StyleSheet,
-  ViewStyle,
-  AccessibilityState,
-  AccessibilityRole
+  ViewStyle
 } from "react-native";
 import Switch from "../../components/ui/Switch";
 import { makeFontStyleObject } from "../../theme/fonts";
