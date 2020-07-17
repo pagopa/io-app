@@ -32,7 +32,7 @@ import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/conten
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
-import { getSpidDescription } from "../../utils/SpidErrorCode";
+import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -120,15 +120,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.props.dispatchLoginFailure(
       new Error(`login failure with code ${errorCode || "n/a"}`)
     );
-    instabugLog(
-      errorCode !== undefined
-        ? `login failed with code (${errorCode}) : ${getSpidDescription(
-            errorCode
-          )}`
-        : "login failed with no error code available",
-      TypeLogs.ERROR,
-      "login"
+    const logText = fromNullable(errorCode).fold(
+      "login failed with no error code available",
+      ec =>
+        `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
     );
+
+    instabugLog(logText, TypeLogs.ERROR, "login");
     Instabug.appendTags([loginFailureTag]);
     this.setState({
       requestState: pot.noneError(ErrorType.LOGIN_ERROR),

@@ -61,5 +61,5 @@ const spidErrorCodeTable = new Map<string, string>([
   ["29", "Identità non erogata"]
 ]);
 
-export const getSpidDescription = (errorCode: string) =>
+export const getSpidErrorCodeDescription = (errorCode: string) =>
   fromNullable(spidErrorCodeTable.get(errorCode)).getOrElse("N/A");
