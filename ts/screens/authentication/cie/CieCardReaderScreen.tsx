@@ -8,7 +8,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text } from "native-base";
 import * as React from "react";
-import { StyleSheet, Vibration, View } from "react-native";
+import { AccessibilityInfo, StyleSheet, Vibration } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
@@ -68,8 +68,6 @@ const accessibityTimeout = 100 as Millisecond;
  *  This screen shown while reading the card
  */
 class CieCardReaderScreen extends React.PureComponent<Props, State> {
-  private contentRef = React.createRef<Text>();
-  private dummyViewRef = React.createRef<View>();
   private subTitleRef = React.createRef<Text>();
 
   constructor(props: Props) {
@@ -96,14 +94,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   get cieAuthorizationUri(): string {
     return this.props.navigation.getParam("authorizationUri");
-  }
-
-  // return an empty view used to move the reader focus when the content we want to read
-  // has been updated
-  get accessibilityViewAlternativeFocus(): React.ReactNode {
-    return (
-      <View accessible={true} ref={this.dummyViewRef} style={{ height: 1 }} />
-    );
   }
 
   private setError = (
@@ -189,12 +179,10 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     this.updateContent();
   };
 
-  private updateAccessibilityFocus = () => {
-    // since the screen reader has to re-read the same Text we set focus on a dummy view (empty) and then
-    // force the focus on the component we want the reader reads (forcing focus to the node already has it doesn't work)
-    setAccessibilityFocus(this.dummyViewRef, accessibityTimeout, () => {
-      setAccessibilityFocus(this.contentRef, accessibityTimeout);
-    });
+  private announceUpdate = () => {
+    if (this.state.content) {
+      AccessibilityInfo.announceForAccessibility(this.state.content);
+    }
   };
 
   private updateContent = () => {
@@ -206,7 +194,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             subtitle: I18n.t("authentication.cie.card.readerCardHeader"),
             content: I18n.t("authentication.cie.card.readerCardFooter")
           },
-          this.updateAccessibilityFocus
+          this.announceUpdate
         );
         break;
       case ReadingState.error:
@@ -218,7 +206,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             ),
             content: this.state.errorMessage
           },
-          this.updateAccessibilityFocus
+          this.announceUpdate
         );
         break;
       case ReadingState.completed:
@@ -231,7 +219,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
               ? I18n.t("authentication.cie.card.cieCardValid")
               : undefined
           },
-          this.updateAccessibilityFocus
+          this.announceUpdate
         );
         break;
       // waiting_card state
@@ -242,7 +230,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
             content: I18n.t("authentication.cie.card.layCardMessageFooter")
           },
-          this.updateAccessibilityFocus
+          this.announceUpdate
         );
     }
   };
@@ -304,9 +292,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             {this.state.subtitle}
           </Text>
           <CieReadingCardAnimation readingState={this.state.readingState} />
-          {this.state.isScreenReaderEnabled &&
-            this.accessibilityViewAlternativeFocus}
-          <Text style={styles.padded} accessible={true} ref={this.contentRef}>
+          <Text style={styles.padded} accessible={true}>
             {this.state.content}
           </Text>
         </Content>
