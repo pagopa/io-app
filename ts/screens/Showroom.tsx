@@ -4,7 +4,6 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 
 import { StyleSheet } from "react-native";
-import { RTron } from "../boot/configureStoreAndPersistor";
 import H4 from "../components/ui/H4";
 import H5 from "../components/ui/H5";
 import customVariables from "../theme/variables";
@@ -27,7 +26,8 @@ export const Showroom: React.FunctionComponent = () => {
 
   useEffect(() => {
     if (ref.current !== null) {
-      RTron.log(JSON.stringify(ref.current.props.style));
+      // tslint:disable-next-line:no-commented-code
+      // RTron.log(JSON.stringify(ref.current.props.style));
     }
   }, []);
 
