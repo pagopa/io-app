@@ -51,6 +51,7 @@ const CIE_PIN_LENGTH = 8;
  */
 class CiePinScreen extends React.PureComponent<Props, State> {
   private continueButtonRef = React.createRef<FooterWithButtons>();
+  private pinPadViewRef = React.createRef<View>();
   constructor(props: Props) {
     super(props);
     this.state = { pin: "" };
@@ -102,6 +103,9 @@ class CiePinScreen extends React.PureComponent<Props, State> {
   public render() {
     return (
       <TopScreenComponent
+        onAccessibilityNavigationHeaderFocus={() => {
+          setAccessibilityFocus(this.pinPadViewRef, 100 as Millisecond);
+        }}
         goBack={true}
         headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
       >
@@ -111,7 +115,11 @@ class CiePinScreen extends React.PureComponent<Props, State> {
             icon={require("../../../../img/icons/icon_insert_cie_pin.png")}
           />
           <View spacer={true} />
-          <View style={styles.container}>
+          <View
+            style={styles.container}
+            accessible={true}
+            ref={this.pinPadViewRef}
+          >
             <CiePinpad
               pin={this.state.pin}
               pinLength={CIE_PIN_LENGTH}
