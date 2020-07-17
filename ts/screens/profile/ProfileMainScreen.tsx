@@ -532,6 +532,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         icon={require("../../../img/icons/profile-illustration.png")}
         topContent={
           <TouchableDefaultOpacity
+            accessibilityRole={"button"}
             onPress={() =>
               this.props.navigation.navigate(ROUTES.PROFILE_FISCAL_CODE)
             }

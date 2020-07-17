@@ -23,7 +23,9 @@ import { InitializedProfile } from "../../definitions/backend/InitializedProfile
 import { Municipality } from "../../definitions/content/Municipality";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
+import { dateToAccessibilityReadbleFormat } from "../utils/accessibility";
 import { extractFiscalCodeData } from "../utils/profile";
+import { maybeNotNullyString } from "../utils/strings";
 
 interface BaseProps {
   profile: InitializedProfile;
@@ -334,10 +336,70 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             : [styles.fullText, fullStyle]
         ]}
         selectable={selectable}
+        accessible={true}
+        accessibilityElementsHidden={true}
+        importantForAccessibility={"no-hide-descendants"}
       >
         {content.toUpperCase()}
       </Text>
     );
+  }
+
+  get accessibilityText(): Record<
+    "accessibilityLabel" | "accessibilityHint",
+    string
+  > {
+    if (this.props.type === "Preview") {
+      return {
+        accessibilityLabel: I18n.t(
+          "profile.fiscalCode.accessibility.preview.label"
+        ),
+        accessibilityHint: I18n.t(
+          "profile.fiscalCode.accessibility.preview.hint"
+        )
+      };
+    }
+    const isLandScape = this.props.type === "Landscape";
+    if (this.props.getBackSide) {
+      return {
+        accessibilityLabel: I18n.t(
+          "profile.fiscalCode.accessibility.rear.label"
+        ),
+        accessibilityHint: isLandScape
+          ? ""
+          : I18n.t("profile.fiscalCode.accessibility.rear.hint")
+      };
+    }
+
+    const fiscalCodeData = extractFiscalCodeData(
+      this.props.profile.fiscal_code,
+      this.props.municipality
+    );
+    const na = I18n.t("profile.fiscalCode.accessibility.unavailable");
+    // goBackSide === false
+    return {
+      accessibilityLabel: I18n.t(
+        "profile.fiscalCode.accessibility.front.label",
+        {
+          code: this.props.profile.fiscal_code,
+          name: this.props.profile.name,
+          family_name: this.props.profile.family_name,
+          gender: fiscalCodeData.gender || na,
+          birthDate: fiscalCodeData.birthday
+            ? dateToAccessibilityReadbleFormat(fiscalCodeData.birthday)
+            : na,
+          province: maybeNotNullyString(
+            fiscalCodeData.siglaProvincia
+          ).getOrElse(na),
+          placeOfBirth: maybeNotNullyString(
+            fiscalCodeData.denominazione
+          ).getOrElse(na)
+        }
+      ),
+      accessibilityHint: isLandScape
+        ? ""
+        : I18n.t("profile.fiscalCode.accessibility.front.hint")
+    };
   }
 
   private renderFrontContent(
@@ -449,7 +511,11 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
   public render(): React.ReactNode {
     return (
-      <View>
+      <View
+        accessible={true}
+        accessibilityLabel={this.accessibilityText.accessibilityLabel}
+        accessibilityHint={this.accessibilityText.accessibilityHint}
+      >
         <Image
           source={
             this.props.type !== "Preview" && this.props.getBackSide
