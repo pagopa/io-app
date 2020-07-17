@@ -19,7 +19,8 @@ import { format } from "./dates";
  */
 export const setAccessibilityFocus = <T extends React.Component>(
   nodeReference: React.RefObject<T>,
-  executionDelay: Millisecond = 0 as Millisecond // default: execute immediately
+  executionDelay: Millisecond = 0 as Millisecond, // default: execute immediately,
+  callback?: () => void
 ) => {
   setTimeout(() => {
     fromNullable(nodeReference && nodeReference.current) // nodeReference could be null or undefined
@@ -34,10 +35,13 @@ export const setAccessibilityFocus = <T extends React.Component>(
             );
             // tslint:disable-next-line:no-empty
           } catch {} // ignore
-          return;
+        } else {
+          // ios
+          AccessibilityInfo.setAccessibilityFocus(reactTag);
         }
-        // ios
-        AccessibilityInfo.setAccessibilityFocus(reactTag);
+        if (callback) {
+          callback();
+        }
       });
   }, executionDelay);
 };
@@ -53,5 +57,6 @@ export const isScreenReaderEnabled = async (): Promise<boolean> => {
   return maybeReaderEnabled.getOrElse(false);
 };
 
+// return a string representing the date in a readable format
 export const dateToAccessibilityReadbleFormat = (date: Date) =>
   `${format(date, I18n.t("global.accessibility.date_format"))}`;

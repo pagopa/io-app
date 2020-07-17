@@ -16,7 +16,6 @@ import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 
 type Props = {
-  ciePin: string;
   onClose: () => void;
   onSuccess: (authorizationUri: string) => void;
 };

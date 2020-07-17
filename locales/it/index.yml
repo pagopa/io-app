@@ -396,7 +396,7 @@ authentication:
       headerTitle: Lettura della CIE
       layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
       layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
-      cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo...
+      cieCardValid: Ok, la tua carta CIE è valida! Puoi rimuoverla.
       readerCardTitle: Tieni ferma la carta per qualche secondo
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo

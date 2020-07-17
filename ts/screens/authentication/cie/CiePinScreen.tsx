@@ -67,14 +67,16 @@ class CiePinScreen extends React.PureComponent<Props, State> {
     });
   };
 
+  private handleAuthenticationOverlayOnClose = () => {
+    this.setState({ pin: "" }, this.props.hideModal);
+  };
+
   private showModal = () => {
     this.props.requestNfcEnabledCheck();
     Keyboard.dismiss();
-
     const component = (
       <CieRequestAuthenticationOverlay
-        ciePin={this.state.pin}
-        onClose={this.props.hideModal}
+        onClose={this.handleAuthenticationOverlayOnClose}
         onSuccess={this.onProceedToCardReaderScreen}
       />
     );
