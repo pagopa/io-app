@@ -286,6 +286,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     this.setState({ isScreenReaderEnabled: srEnabled });
   }
 
+  // focus on subtitle just after set the focus on navigation header title
   private handleOnHeaderFocus = () => {
     setAccessibilityFocus(this.subTitleRef, accessibityTimeout);
   };
