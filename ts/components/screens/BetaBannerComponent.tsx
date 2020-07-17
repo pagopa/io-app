@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     marginTop: 3
   },
   badgeText: {
+    color: customVariables.brandDarkGray,
     fontSize: 6,
     paddingLeft: 3,
     paddingRight: 3,
