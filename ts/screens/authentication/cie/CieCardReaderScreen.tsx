@@ -70,6 +70,7 @@ const accessibityTimeout = 100 as Millisecond;
 class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private contentRef = React.createRef<Text>();
   private dummyViewRef = React.createRef<View>();
+  private subTitleRef = React.createRef<Text>();
 
   constructor(props: Props) {
     super(props);
@@ -285,15 +286,22 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     this.setState({ isScreenReaderEnabled: srEnabled });
   }
 
+  private handleOnHeaderFocus = () => {
+    setAccessibilityFocus(this.subTitleRef, accessibityTimeout);
+  };
+
   public render(): React.ReactNode {
     return (
       <TopScreenComponent
+        onAccessibilityNavigationHeaderFocus={this.handleOnHeaderFocus}
         goBack={true}
         headerTitle={I18n.t("authentication.cie.card.headerTitle")}
       >
         <ScreenContentHeader title={this.state.title} />
         <Content bounces={false} noPadded={true}>
-          <Text style={styles.padded}>{this.state.subtitle}</Text>
+          <Text style={styles.padded} ref={this.subTitleRef}>
+            {this.state.subtitle}
+          </Text>
           <CieReadingCardAnimation readingState={this.state.readingState} />
           {this.state.isScreenReaderEnabled &&
             this.accessibilityViewAlternativeFocus}
