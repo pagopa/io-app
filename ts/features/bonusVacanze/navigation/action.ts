@@ -34,6 +34,11 @@ export const navigateToBonusActivationPending = () =>
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.PENDING
   });
 
+export const navigateToUnderage = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.UNDERAGE
+  });
+
 export const navigateToAvailableBonusScreen = () =>
   NavigationActions.navigate({
     routeName: BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST
