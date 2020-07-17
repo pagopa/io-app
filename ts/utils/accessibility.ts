@@ -12,10 +12,12 @@ import I18n from "../i18n";
 import { format } from "./dates";
 
 /**
- * set the accessibility focus on the given nodeReference
- * use executionDelay to set focus with a delay (to use within componentDidMount)
+ * set the accessibility focus on the given {@param nodeReference}
+ * use {@param executionDelay} to set focus with a delay
+ * when the focus is set (or not) the {@param callback} will be executed
  * @param nodeReference
  * @param executionDelay
+ * @param callback
  */
 export const setAccessibilityFocus = <T extends React.Component>(
   nodeReference: React.RefObject<T>,
@@ -26,21 +28,23 @@ export const setAccessibilityFocus = <T extends React.Component>(
     fromNullable(nodeReference && nodeReference.current) // nodeReference could be null or undefined
       .chain(ref => fromNullable(findNodeHandle(ref)))
       .map(reactTag => {
-        if (Platform.OS === "android") {
-          // could raise an exception
-          try {
+        // could raise an exception
+        try {
+          if (Platform.OS === "android") {
             UIManager.sendAccessibilityEvent(
               reactTag,
               UIManager.AccessibilityEventTypes.typeViewFocused
             );
-            // tslint:disable-next-line:no-empty
-          } catch {} // ignore
-        } else {
-          // ios
-          AccessibilityInfo.setAccessibilityFocus(reactTag);
-        }
-        if (callback) {
-          callback();
+          } else {
+            // ios
+            AccessibilityInfo.setAccessibilityFocus(reactTag);
+          }
+        } catch {
+          // do nothing
+        } finally {
+          if (callback) {
+            callback();
+          }
         }
       });
   }, executionDelay);

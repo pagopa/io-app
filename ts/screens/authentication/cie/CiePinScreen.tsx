@@ -68,6 +68,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
   };
 
   private handleAuthenticationOverlayOnClose = () => {
+    // reset the pin if user abort process during loading
     this.setState({ pin: "" }, this.props.hideModal);
   };
 

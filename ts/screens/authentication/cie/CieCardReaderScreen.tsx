@@ -190,7 +190,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   private updateAccessibilityFocus = () => {
     // since the screen reader has to re-read the same Text we set focus on a dummy view (empty) and then
-    // force the focus on the component we want the reader reads
+    // force the focus on the component we want the reader reads (forcing focus to the node already has it doesn't work)
     setAccessibilityFocus(this.dummyViewRef, accessibityTimeout, () => {
       setAccessibilityFocus(this.contentRef, accessibityTimeout);
     });
