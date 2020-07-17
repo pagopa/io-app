@@ -17,6 +17,10 @@ const calculateSlop = (height: number): number => {
   }
   return Math.ceil(additionalArea / 2);
 };
+
+const smallSlop = calculateSlop(customVariables.btnSmallHeight);
+const xsmallSlop = calculateSlop(customVariables.btnXSmallHeight);
+const defaultSlop = calculateSlop(customVariables.btnHeight);
 /**
  * This is a temporary solution to extend the touchable area using the existing theme system.
  * @deprecated
@@ -24,11 +28,11 @@ const calculateSlop = (height: number): number => {
  */
 const getSlopForCurrentButton = (props: Props) => {
   if (props.small) {
-    return calculateSlop(customVariables.btnSmallHeight);
+    return smallSlop;
   } else if (props.xsmall) {
-    return calculateSlop(customVariables.btnXSmallHeight);
+    return xsmallSlop;
   }
-  return calculateSlop(customVariables.btnHeight);
+  return defaultSlop;
 };
 
 /**
