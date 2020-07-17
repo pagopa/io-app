@@ -4,6 +4,8 @@ global:
     date_format: MMMM Do YYYY
     expanded: Expanded paragraph
     collapsed: Collapsed paragraph
+    active: State active
+    inactive: State inactive
     activityIndicator:
       label: Loading
       hint: Wait for the content load

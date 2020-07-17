@@ -119,6 +119,9 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
             value={this.props.isFingerprintEnabled}
             onValueChange={this.setBiometricPreference}
             disabled={!isFingerprintAvailable}
+            accessible={true}
+            accessibilityRole={"switch"}
+            accessibilityState={{ checked: this.props.isFingerprintEnabled }}
           />
         </View>
         {!isFingerprintAvailable && (
