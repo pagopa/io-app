@@ -4,6 +4,8 @@ global:
     date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
+    active: Stato attivo
+    inactive: Stato non attivo
     activityIndicator:
       label: Caricamento in corso
       hint: Attendi il caricamento del contenuto
