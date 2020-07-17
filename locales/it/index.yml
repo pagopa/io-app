@@ -151,7 +151,8 @@ profile:
   unknown: SCONOSCIUTO
   logout:
     menulabel: Esci da IO
-    alertMessage: Uscendo da IO ti verrà chiesto nuovamente di accedere. Vuoi Uscire?
+    alertMessage: Sei sicuro di voler uscire? Al prossimo accesso sarà necessario un nuovo login con CIE o SPID.
+    exit: Esci
     cta:
       header: Come vuoi uscire dall'app?
       keepData:

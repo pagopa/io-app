@@ -213,7 +213,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           text: I18n.t("global.buttons.cancel")
         },
         {
-          text: I18n.t("global.buttons.confirm"),
+          text: I18n.t("profile.logout.exit"),
           onPress: this.props.logout
         }
       ],
