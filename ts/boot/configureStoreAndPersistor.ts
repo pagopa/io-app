@@ -283,7 +283,7 @@ const logger = createLogger({
 });
 
 // configure Reactotron if the app is running in dev mode
-const RTron = isDevEnv ? configureReactotron() : undefined;
+export const RTron = isDevEnv ? configureReactotron() : undefined;
 // use this object to access ReactTron log functions (USE ONLY in DEV mode when the instance is defined)
 // force a Non-Null Assertion due to a fancy type definitions
 export const RTLog = {
