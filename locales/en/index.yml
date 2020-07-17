@@ -1449,6 +1449,8 @@ bonus:
       activationPending:
         title: The bonus for your family has already been requested and is being activated.
         description: You will receive a message when it is activated.
+      underage:
+        title: "We're sorry. Only citizens of legal age can apply for the Bonus Vacanze"
     activation:
       loading: "We have forwarded your request to the Revenue Agency\nPlease wait."
       goToDetails: Show Bonus Vacanze
