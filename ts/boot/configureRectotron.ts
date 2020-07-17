@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import Reactotron from "reactotron-react-native";
+import { Reactotron } from "reactotron-core-client";
+import ReactotronReactNative from "reactotron-react-native";
 import { reactotronRedux } from "reactotron-redux";
 import sagaPlugin from "reactotron-redux-saga";
 
@@ -7,15 +8,23 @@ import sagaPlugin from "reactotron-redux-saga";
 // use this regex to avoid tracing scheduled pollings
 // ignoredUrls = /backend.json|info/
 const ignoredUrls: RegExp | undefined = undefined;
-export const configureReactotron = () => {
-  return Reactotron.setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `react-native` or `@react-native-community/async-storage` depending on where you get it from
-    .configure({ host: "127.0.0.1" }) // controls connection & communication settings
-    .use(reactotronRedux())
-    .use(sagaPlugin({ except: [] }))
+export const configureReactotron = (): Reactotron => {
+  const rtt = ReactotronReactNative.configure({ host: "127.0.0.1" })
     .useReactNative({
       networking: {
         ignoreUrls: ignoredUrls
       }
-    }) // add all built-in react native plugins
-    .connect(); // let's connect!
+    })
+    .use(reactotronRedux())
+    .use(sagaPlugin({ except: [] }))
+    .connect();
+  if (rtt.setAsyncStorageHandler) {
+    rtt.setAsyncStorageHandler(AsyncStorage);
+  }
+  // Let's clear Reactotron on every time we load the app
+  if (rtt.clear) {
+    rtt.clear();
+  }
+
+  return rtt;
 };
