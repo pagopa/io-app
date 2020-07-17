@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
   badgeText: {
     marginTop: 3,
     fontSize: customVariables.fontSizeSmall,
-    lineHeight: 16
+    lineHeight: 16,
+    color: customVariables.brandDarkGray
   },
   cardInner: {
     paddingBottom: 13,
