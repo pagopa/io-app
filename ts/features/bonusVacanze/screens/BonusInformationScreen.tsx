@@ -1,6 +1,8 @@
+import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Alert, Image, StyleSheet } from "react-native";
 import { NavigationInjectedProps, SafeAreaView } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -20,12 +22,15 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
+import { profileSelector } from "../../../store/reducers/profile";
+import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
 import { bonusVacanzeStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
+import { hasAnotherActiveBonus } from "../store/reducers/allActive";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -35,6 +40,7 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = OwnProps &
   LightModalContextInterface &
+  ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const CSS_STYLE = `
@@ -112,6 +118,24 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusType[getLocalePrimaryWithFallback()];
 
+  const showAlert = () => {
+    if (props.hasAnotherBonus) {
+      Alert.alert("Test", "Test", [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.continue"),
+          style: "default",
+          onPress: () => props.requestBonusActivation
+        }
+      ]);
+    } else {
+      props.requestBonusActivation();
+    }
+  };
+
   const cancelButtonProps = {
     block: true,
     light: true,
@@ -122,7 +146,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const requestButtonProps = {
     block: true,
     primary: true,
-    onPress: props.requestBonusActivation,
+    onPress: showAlert,
     title: `${I18n.t("bonus.bonusVacanze.cta.requestBonus")} ${
       bonusTypeLocalizedContent.name
     }`
@@ -236,6 +260,17 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
+const mapStateToProps = (state: GlobalState) => {
+  const profile = pot.toUndefined(profileSelector(state));
+  const hasAnotherBonus = fromNullable(profile).fold(false, p => {
+    return hasAnotherActiveBonus(p.fiscal_code)(state);
+  });
+
+  return {
+    hasAnotherBonus
+  };
+};
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestBonusActivation: () => {
     dispatch(checkBonusVacanzeEligibility.request());
@@ -245,7 +280,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 export default withLightModalContext(
   connect(
-    undefined,
+    mapStateToProps,
     mapDispatchToProps
   )(BonusInformationScreen)
 );

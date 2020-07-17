@@ -1,5 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { FiscalCode } from "italia-ts-commons/lib/strings";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
@@ -67,6 +68,20 @@ export const allBonusActiveSelector = createSelector<
 >(allBonusActiveByIdSelector, allActiveObj => {
   return Object.keys(allActiveObj).map(k => allActiveObj[k]);
 });
+
+// return true if the current profile fiscal code is already owner of at least another bonus
+export const hasAnotherActiveBonus = (fc: FiscalCode) =>
+  createSelector<
+    GlobalState,
+    ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>,
+    boolean
+  >(allBonusActiveSelector, allActiveArray => {
+    return (
+      allActiveArray.filter(
+        bonus => pot.isSome(bonus) && bonus.value.applicant_fiscal_code === fc
+      ).length > 0
+    );
+  });
 
 // return the bonus from a given ID
 export const bonusActiveDetailByIdSelector = (id: string) =>
