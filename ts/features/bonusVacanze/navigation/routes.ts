@@ -14,6 +14,7 @@ const BONUSVACANZE_ROUTES: BonusVacanzeRouteType = {
     ISEE_NOT_ELIGIBLE: "BONUS_ELIGIBILITY_ISEE_NOT_ELIGIBLE",
     TIMEOUT: "BONUS_ELIGIBILITY_TIMEOUT",
     PENDING: "BONUS_ELIGIBILITY_ACTIVATION_PENDING",
+    UNDERAGE: "BONUS_ELIGIBILITY_UNDERAGE",
     ELIGIBLE: "BONUS_ELIGIBILITY_ELIGIBLE"
   },
   // Grouping the "Bonus Activation" sub-phase
@@ -25,6 +26,21 @@ const BONUSVACANZE_ROUTES: BonusVacanzeRouteType = {
     COMPLETED: "BONUS_ACTIVATION_COMPLETED"
   }
 };
+type Eligibility =
+  | "CHECK_LOADING"
+  | "ISEE_NOT_AVAILABLE"
+  | "ISEE_NOT_ELIGIBLE"
+  | "TIMEOUT"
+  | "PENDING"
+  | "UNDERAGE"
+  | "ELIGIBLE";
+
+type Activation =
+  | "LOADING"
+  | "TIMEOUT"
+  | "ELIGIBILITY_EXPIRED"
+  | "EXISTS"
+  | "COMPLETED";
 
 type BonusVacanzeRouteType = {
   MAIN: string;
@@ -33,8 +49,8 @@ type BonusVacanzeRouteType = {
   BONUS_REQUEST_INFORMATION: string;
   BONUS_TOS_SCREEN: string;
   BONUS_ACTIVE_DETAIL_SCREEN: string;
-  ELIGIBILITY: Record<string, string>;
-  ACTIVATION: Record<string, string>;
+  ELIGIBILITY: Record<Eligibility, string>;
+  ACTIVATION: Record<Activation, string>;
 };
 
 export default BONUSVACANZE_ROUTES;
