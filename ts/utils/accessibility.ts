@@ -8,6 +8,8 @@ import {
   Platform,
   UIManager
 } from "react-native";
+import I18n from "../i18n";
+import { format } from "./dates";
 
 /**
  * set the accessibility focus on the given nodeReference
@@ -50,3 +52,6 @@ export const isScreenReaderEnabled = async (): Promise<boolean> => {
   ).run();
   return maybeReaderEnabled.getOrElse(false);
 };
+
+export const dateToAccessibilityReadbleFormat = (date: Date) =>
+  `${format(date, I18n.t("global.accessibility.date_format"))}`;
