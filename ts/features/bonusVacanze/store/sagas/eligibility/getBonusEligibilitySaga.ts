@@ -165,6 +165,12 @@ export const bonusEligibilitySaga = (
             status: EligibilityRequestProgressEnum.BONUS_ACTIVATION_PENDING
           });
         }
+        // underage
+        else if (startEligibilityResult.value.status === 451) {
+          return checkBonusVacanzeEligibility.success({
+            status: EligibilityRequestProgressEnum.UNDERAGE
+          });
+        }
 
         throw Error(`response status ${startEligibilityResult.value.status}`);
       } else {

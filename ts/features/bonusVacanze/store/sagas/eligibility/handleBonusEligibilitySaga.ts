@@ -14,7 +14,8 @@ import {
   navigateToEligible,
   navigateToIseeNotAvailable,
   navigateToIseeNotEligible,
-  navigateToTimeoutEligibilityCheck
+  navigateToTimeoutEligibilityCheck,
+  navigateToUnderage
 } from "../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
@@ -35,7 +36,8 @@ const eligibilityToNavigate = new Map([
     EligibilityRequestProgressEnum.BONUS_ACTIVATION_PENDING,
     navigateToBonusActivationPending
   ],
-  [EligibilityRequestProgressEnum.CONFLICT, navigateToBonusAlreadyExists]
+  [EligibilityRequestProgressEnum.CONFLICT, navigateToBonusAlreadyExists],
+  [EligibilityRequestProgressEnum.UNDERAGE, navigateToUnderage]
 ]);
 
 type BonusEligibilitySagaType = ReturnType<typeof bonusEligibilitySaga>;

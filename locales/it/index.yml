@@ -1,6 +1,7 @@
 ---
 global:
   accessibility:
+    date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
     activityIndicator:
@@ -127,6 +128,17 @@ inbox:
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
   fiscalCode:
+    accessibility:
+      unavailable: Non disponibile
+      preview:
+        label: Anteprima del tuo codice fiscale
+        hint: Attiva per visualizzare il facsimile del tuo codice fiscale
+      front:
+        label: Parte anteriore del documento codice fiscale {{code}} di {{name}} {{family_name}}, sesso {{gender}}, nato a {{placeOfBirth}},{{province}} il {{birthDate}}
+        hint: Attiva per passare alla visualizzazione a schermo intero
+      rear:
+        label: Codice a barre del tuo documento
+        hint: Attiva per passare alla visualizzazione a schermo intero
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
     help: !include profile/profile_fiscal_code.md
@@ -900,7 +912,6 @@ messages:
       description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
-      date_format: "DD MMMM YYYY"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
   contextualHelpContent: !include messages/messages_home.md
   counting:
@@ -1470,6 +1481,8 @@ bonus:
       activationPending:
         title: Il bonus per il tuo nucleo familiare è già stato richiesto ed è in fase di attivazione.
         description: Riceverai un messaggio quando sarà attivato.
+      underage:
+        title: "Siamo spiacenti. Solo i cittadini maggiorenni possono richiedere il Bonus Vacanze"
     activation:
       loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
       goToDetails: Visualizza Bonus Vacanze
