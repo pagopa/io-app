@@ -151,9 +151,6 @@ const styles = StyleSheet.create({
   },
   commonLabel: {
     lineHeight: 18
-  },
-  disclaimer: {
-    color: customVariables.selectedColor
   }
 });
 
@@ -445,11 +442,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               <TouchableDefaultOpacity
                 onPress={() => handleModalPress(maybeBonusTos.value)}
               >
-                <Text
-                  style={styles.disclaimer}
-                  ellipsizeMode={"tail"}
-                  numberOfLines={1}
-                >
+                <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
                   {I18n.t("bonus.tos.title")}
                 </Text>
               </TouchableDefaultOpacity>

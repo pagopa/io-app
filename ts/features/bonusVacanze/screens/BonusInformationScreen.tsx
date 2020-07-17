@@ -176,7 +176,9 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
               transparent={true}
               onPress={() => handleModalPress(maybeBonusTos.value)}
             >
-              <Text semibold={true}>{I18n.t("bonus.tos.title")}</Text>
+              <Text semibold={true} link={true}>
+                {I18n.t("bonus.tos.title")}
+              </Text>
             </ButtonDefaultOpacity>
           )}
           <View spacer={true} />
