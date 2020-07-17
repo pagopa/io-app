@@ -115,9 +115,9 @@ const AddMethodStyle = StyleSheet.create({
     backgroundColor: variables.brandHighLighter
   },
   notImplementedText: {
-    fontSize: 11,
+    fontSize: 10,
     lineHeight: Platform.OS === "ios" ? 14 : 16,
-    color: customVariables.brandLight
+    color: customVariables.brandDarkGray
   },
   centeredContents: {
     alignItems: "center"
