@@ -284,14 +284,6 @@ const logger = createLogger({
 
 // configure Reactotron if the app is running in dev mode
 export const RTron = isDevEnv ? configureReactotron() : undefined;
-// use this object to access ReactTron log functions (USE ONLY in DEV mode when the instance is defined)
-// force a Non-Null Assertion due to a fancy type definitions
-export const RTLog = {
-  log: RTron!.log!,
-  debug: RTron!.debug!,
-  logImportant: RTron!.logImportant!,
-  warn: RTron!.warn!
-};
 const sagaMiddleware = createSagaMiddleware(
   // cast to any due to a type lacking
   RTron ? { sagaMonitor: (RTron as any).createSagaMonitor() } : {}
