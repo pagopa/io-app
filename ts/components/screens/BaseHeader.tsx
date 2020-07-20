@@ -28,6 +28,9 @@ const styles = StyleSheet.create({
   },
   noLeft: {
     marginLeft: variables.contentPadding - variables.appHeaderPaddingHorizontal
+  },
+  body: {
+    alignItems: "center"
   }
 });
 
@@ -180,7 +183,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           as placeholder where force focus
         */}
         {!isSearchEnabled && (
-          <Body style={goBack ? {} : styles.noLeft}>
+          <Body style={[styles.body, goBack ? {} : styles.noLeft]}>
             {this.state.isScreenReaderActive &&
             maybeAccessibilityLabel.isSome() ? (
               this.renderBodyLabel(
