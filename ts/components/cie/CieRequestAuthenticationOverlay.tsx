@@ -16,7 +16,6 @@ import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 
 type Props = {
-  ciePin: string;
   onClose: () => void;
   onSuccess: (authorizationUri: string) => void;
 };
@@ -107,6 +106,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
   private renderError = () => {
     return (
       <GenericErrorComponent
+        avoidNavigationEvents={true}
         onRetry={this.handleOnRetry}
         onCancel={this.props.onClose}
         image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?

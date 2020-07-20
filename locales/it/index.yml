@@ -4,6 +4,8 @@ global:
     date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
+    active: Stato attivo
+    inactive: Stato non attivo
     activityIndicator:
       label: Caricamento in corso
       hint: Attendi il caricamento del contenuto
@@ -149,7 +151,8 @@ profile:
   unknown: SCONOSCIUTO
   logout:
     menulabel: Esci da IO
-    alertMessage: Uscendo da IO ti verrà chiesto nuovamente di accedere. Vuoi Uscire?
+    alertMessage: Sei sicuro di voler uscire? Al prossimo accesso sarà necessario un nuovo login con CIE o SPID.
+    exit: Esci
     cta:
       header: Come vuoi uscire dall'app?
       keepData:
@@ -396,7 +399,7 @@ authentication:
       headerTitle: Lettura della CIE
       layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
       layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
-      cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo...
+      cieCardValid: Ok, la tua carta CIE è valida! Puoi rimuoverla.
       readerCardTitle: Tieni ferma la carta per qualche secondo
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo

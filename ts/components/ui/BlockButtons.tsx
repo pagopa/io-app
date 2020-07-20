@@ -28,6 +28,7 @@ type OwnButtonProps = {
 
 type CommonProps = Readonly<{
   leftButton: BlockButtonProps;
+  accessible?: boolean;
 }>;
 
 export type BlockButtonProps = ComponentProps<Button> & OwnButtonProps;

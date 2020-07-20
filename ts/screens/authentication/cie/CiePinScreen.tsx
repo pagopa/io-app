@@ -1,3 +1,4 @@
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
 import {
@@ -24,6 +25,7 @@ import ROUTES from "../../../navigation/routes";
 import { nfcIsEnabled } from "../../../store/actions/cie";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -48,6 +50,8 @@ const CIE_PIN_LENGTH = 8;
  * A screen that allow the user to insert the Cie PIN.
  */
 class CiePinScreen extends React.PureComponent<Props, State> {
+  private continueButtonRef = React.createRef<FooterWithButtons>();
+  private pinPadViewRef = React.createRef<View>();
   constructor(props: Props) {
     super(props);
     this.state = { pin: "" };
@@ -64,14 +68,17 @@ class CiePinScreen extends React.PureComponent<Props, State> {
     });
   };
 
+  private handleAuthenticationOverlayOnClose = () => {
+    // reset the pin if user abort process during loading
+    this.setState({ pin: "" }, this.props.hideModal);
+  };
+
   private showModal = () => {
     this.props.requestNfcEnabledCheck();
     Keyboard.dismiss();
-
     const component = (
       <CieRequestAuthenticationOverlay
-        ciePin={this.state.pin}
-        onClose={this.props.hideModal}
+        onClose={this.handleAuthenticationOverlayOnClose}
         onSuccess={this.onProceedToCardReaderScreen}
       />
     );
@@ -80,14 +87,25 @@ class CiePinScreen extends React.PureComponent<Props, State> {
 
   // Method called when the PIN changes
   public handelOnPinChanged = (pin: string) => {
-    this.setState({
-      pin
-    });
+    this.setState(
+      {
+        pin
+      },
+      () => {
+        // set focus on continue button when the pin input is full filled
+        if (this.state.pin.length === CIE_PIN_LENGTH) {
+          setAccessibilityFocus(this.continueButtonRef, 100 as Millisecond);
+        }
+      }
+    );
   };
 
   public render() {
     return (
       <TopScreenComponent
+        onAccessibilityNavigationHeaderFocus={() => {
+          setAccessibilityFocus(this.pinPadViewRef, 100 as Millisecond);
+        }}
         goBack={true}
         headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
       >
@@ -97,7 +115,11 @@ class CiePinScreen extends React.PureComponent<Props, State> {
             icon={require("../../../../img/icons/icon_insert_cie_pin.png")}
           />
           <View spacer={true} />
-          <View style={styles.container}>
+          <View
+            style={styles.container}
+            accessible={true}
+            ref={this.pinPadViewRef}
+          >
             <CiePinpad
               pin={this.state.pin}
               pinLength={CIE_PIN_LENGTH}
@@ -109,6 +131,8 @@ class CiePinScreen extends React.PureComponent<Props, State> {
         </ScrollView>
         {this.state.pin.length === CIE_PIN_LENGTH && (
           <FooterWithButtons
+            accessible={true}
+            ref={this.continueButtonRef}
             type={"SingleButton"}
             leftButton={{
               primary: true,
