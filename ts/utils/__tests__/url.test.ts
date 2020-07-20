@@ -33,7 +33,7 @@ describe("getUrlBasepath", () => {
     expect(getUrlBasepath(url)).toEqual(url);
   });
 
-  it("should return the same url", () => {
+  it("should return the same url even with params and fragments", () => {
     const base = "https://www.google.com/it/hello";
     const suffixes: ReadonlyArray<string> = [
       "?param1=1&param2=2",
