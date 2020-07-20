@@ -103,9 +103,6 @@ const styles = StyleSheet.create({
   bonusCode: {
     ...makeFontStyleObject(Platform.select, "600", undefined, "RobotoMono")
   },
-  codeLabel: {
-    fontSize: customVariables.fontSizeSmaller
-  },
   logo: {
     resizeMode: "contain",
     height: 72,
@@ -205,7 +202,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             )}
           </View>
           <View spacer={true} />
-          <Text style={[styles.colorWhite, styles.codeLabel]}>
+          <Text style={[styles.colorWhite]}>
             {I18n.t("bonus.bonusVacanze.code")}
           </Text>
           <Text style={[styles.colorWhite, styles.fontLarge, styles.bonusCode]}>

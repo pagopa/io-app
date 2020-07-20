@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
     color: customVariables.selectedColor
   },
   uniqueCode: {
-    fontSize: customVariables.fontSizeSmall,
     color: customVariables.textColor
   },
   bonusLogo: {
