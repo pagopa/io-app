@@ -19,7 +19,6 @@ import { PinString } from "../../types/PinString";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { setPin } from "../../utils/keychain";
 import { maybeNotNullyString } from "../../utils/strings";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
 
