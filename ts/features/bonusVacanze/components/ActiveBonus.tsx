@@ -86,7 +86,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
     >
       <View style={styles.spaced}>
         {bonusValidityInterval.isSome() && (
-          <Text small={true}>{`${I18n.t("bonus.bonusVacanze.validity")} ${
+          <Text>{`${I18n.t("bonus.bonusVacanze.validity")} ${
             bonusValidityInterval.value.e1
           } - ${bonusValidityInterval.value.e2}`}</Text>
         )}
@@ -96,7 +96,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
       </View>
       <View small={true} />
       <View style={styles.spaced}>
-        <Text small={true} style={styles.textWhite}>
+        <Text style={styles.textWhite}>
           {I18n.t("bonus.bonusVacanze.taxBenefit")}
         </Text>
         <Text bold={true} style={styles.text12}>
