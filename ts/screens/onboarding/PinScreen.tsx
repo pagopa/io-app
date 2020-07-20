@@ -1,9 +1,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { AccessibilityInfo, Alert, StyleSheet } from "react-native";
+import { NavigationEvents, NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -73,7 +72,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
   body: "onboarding.unlockCode.contextualHelpContent"
 };
-const accessibilityTimeout = 100 as Millisecond;
 /**
  * A screen that allows the user to set the unlock code.
  */
@@ -93,6 +91,14 @@ class PinScreen extends React.PureComponent<Props, State> {
     };
   }
 
+  public announceFirst() {
+    AccessibilityInfo.announceForAccessibility(
+      `${I18n.t("onboarding.unlockCode.contentTitle")}, ${I18n.t(
+        "onboarding.unlockCode.contentSubtitle"
+      )}`
+    );
+  }
+
   // Method called when the first CodeInput is filled
   public onPinFulfill = (code: PinString) => {
     this.setState(
@@ -103,7 +109,13 @@ class PinScreen extends React.PureComponent<Props, State> {
         }
       },
       // set focus on header to read "type inserted pin again..."
-      () => setAccessibilityFocus(this.headerRef, accessibilityTimeout)
+      // () => setAccessibilityFocus(this.headerRef, accessibilityTimeout)
+      () =>
+        AccessibilityInfo.announceForAccessibility(
+          `${I18n.t("onboarding.unlockCode.contentTitleConfirm")}, ${I18n.t(
+            "onboarding.unlockCode.contentTitleConfirmSubtitle"
+          )}`
+        )
     );
   };
 
@@ -133,19 +145,10 @@ class PinScreen extends React.PureComponent<Props, State> {
           ...this.state.pinState,
           state: "PinConfirmError"
         };
-        this.setState(
-          {
-            pinState: pinConfirmError,
-            errorDescription: I18n.t("onboarding.unlockCode.confirmInvalid")
-          },
-          () => {
-            // set focus on label to read about the error
-            setAccessibilityFocus(this.confirmationStatusRef);
-          }
-        );
-      } else if (this.state.pinState.state === "PinConfirmError") {
-        // another pin confirm error, set focus on label to read about the error
-        setAccessibilityFocus(this.confirmationStatusRef);
+        this.setState({
+          pinState: pinConfirmError,
+          errorDescription: I18n.t("onboarding.unlockCode.confirmInvalid")
+        });
       }
       return;
     }
@@ -168,8 +171,8 @@ class PinScreen extends React.PureComponent<Props, State> {
     return maybeNotNullyString(this.state.errorDescription).fold(
       undefined,
       des => {
-        // wait 100ms to set focus
-        setAccessibilityFocus(this.confirmationStatusRef, accessibilityTimeout);
+        // When rendering the error it announces with screen reader too
+        AccessibilityInfo.announceForAccessibility(des);
         return (
           <Text
             ref={this.confirmationStatusRef}
@@ -194,9 +197,12 @@ class PinScreen extends React.PureComponent<Props, State> {
         },
         errorDescription: undefined
       },
-      () => {
-        setAccessibilityFocus(this.headerRef, accessibilityTimeout);
-      }
+      () =>
+        AccessibilityInfo.announceForAccessibility(
+          `${I18n.t("onboarding.unlockCode.contentTitle")}, ${I18n.t(
+            "onboarding.unlockCode.contentSubtitle"
+          )}`
+        )
     );
   }
 
@@ -352,6 +358,7 @@ class PinScreen extends React.PureComponent<Props, State> {
         faqCategories={["onboarding_pin", "unlock"]}
         headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
+        <NavigationEvents onDidFocus={() => this.announceFirst()} />
         {this.renderContent(pinState)}
         {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
       </BaseScreenComponent>
