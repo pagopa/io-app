@@ -10,6 +10,7 @@ import { SingleButton, TwoButtonsInlineHalf } from "../ui/BlockButtons";
 import FooterWithButtons from "../ui/FooterWithButtons";
 
 type Props = Readonly<{
+  avoidNavigationEvents?: boolean;
   onRetry: () => void;
   onCancel?: () => void;
   image?: ImageSourcePropType;
@@ -73,9 +74,11 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
 
     return (
       <React.Fragment>
-        <NavigationEvents
-          onDidFocus={() => setAccessibilityFocus(this.elementRef)}
-        />
+        {this.props.avoidNavigationEvents !== true && (
+          <NavigationEvents
+            onDidFocus={() => setAccessibilityFocus(this.elementRef)}
+          />
+        )}
         <Content bounces={false}>
           <View style={styles.center}>
             <View spacer={true} extralarge={true} />

@@ -41,6 +41,7 @@ export interface ContextualHelpPropsMarkdown {
 }
 
 interface OwnProps {
+  onAccessibilityNavigationHeaderFocus?: () => void;
   avoidNavigationEventsUsage?: boolean;
   accessibilityLabel?: string;
   contextualHelp?: ContextualHelpProps;
@@ -186,6 +187,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       searchType,
       customRightIcon,
       customGoBack,
+      onAccessibilityNavigationHeaderFocus,
       showInstabugChat,
       children,
       faqCategories
@@ -218,6 +220,9 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     return (
       <Container>
         <BaseHeader
+          onAccessibilityNavigationHeaderFocus={
+            onAccessibilityNavigationHeaderFocus
+          }
           avoidNavigationEventsUsage={avoidNavigationEventsUsage}
           accessibilityLabel={accessibilityLabel}
           showInstabugChat={showInstabugChat}

@@ -1,8 +1,11 @@
 ---
 global:
   accessibility:
+    date_format: MMMM Do YYYY
     expanded: Expanded paragraph
     collapsed: Collapsed paragraph
+    active: State active
+    inactive: State inactive
     activityIndicator:
       label: Loading
       hint: Wait for the content load
@@ -127,6 +130,17 @@ inbox:
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
   fiscalCode:
+    accessibility:
+      unavailable: Unavailable
+      preview:
+        label: Preview of your fiscal code document
+        hint: Activate to show the facsimile of your fiscal code document
+      front:
+        label: Front-side of the document code {{code}} of {{name}} {{family_name}}, gender {{gender}}, born in {{placeOfBirth}},{{province}} the {{birthDate}}
+        hint: Activate to show the landscape view
+      rear:
+        label: barcode of your document
+        hint: Activate to show the landscape view
     title: Your personal documents
     fiscalCode: Fiscal code
     help: !include profile/profile_fiscal_code.md
@@ -137,7 +151,8 @@ profile:
   unknown: UNKNOWN
   logout:
     menulabel: Logout from IO
-    alertMessage: By exiting IO you will be asked to log in again. Logout?
+    alertMessage: Are you sure you want to quit? The next time you log in you will need a new login with CIE or SPID.
+    exit: Exit
     cta:
       header: How do you want to quit the app?
       keepData:
@@ -373,7 +388,7 @@ authentication:
       title: Touch the card
       layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
       layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you feel a vibration.
-      cieCardValid: Ok, your card is valid! Wait a few more seconds..
+      cieCardValid: Ok, your card is valid! You can remove it.
       readerCardTitle: Hold the card for a few seconds
       readerCardHeader: We are reading the data of your CIE and verifying its validity.
       readerCardFooter: Hold the card in this position for a few more seconds
@@ -810,7 +825,7 @@ wallet:
     byCameraTitle: Notice QR Code
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
       manually insert the transaction-related data (IUV and the entity/company code).
-    setManually: Insert data manually
+    setManually: Enter the data
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
     cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
@@ -872,7 +887,6 @@ messages:
       description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "received on"
       received_at: "received at"
-      date_format: "MMMM Do YYYY"
   contextualHelpTitle: About this section
   contextualHelpContent: !include messages/messages_home.md
   counting:
@@ -1371,6 +1385,8 @@ faq:
     content: !include bonus/faq/faq76.md
 bonus:
   bonusVacanze:
+    accessibility:
+      card: Your Bonus Vacanze with code {{code}} worth {{value}} euro is {{status}}
     statusInfo:
       validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
       bonusRejected: Attention! This Bonus Vacanze has been rejected
@@ -1437,6 +1453,8 @@ bonus:
       activationPending:
         title: The bonus for your family has already been requested and is being activated.
         description: You will receive a message when it is activated.
+      underage:
+        title: "We're sorry. Only citizens of legal age can apply for the Bonus Vacanze"
     activation:
       loading: "We have forwarded your request to the Revenue Agency\nPlease wait."
       goToDetails: Show Bonus Vacanze

@@ -1,8 +1,11 @@
 ---
 global:
   accessibility:
+    date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
+    active: Stato attivo
+    inactive: Stato non attivo
     activityIndicator:
       label: Caricamento in corso
       hint: Attendi il caricamento del contenuto
@@ -127,6 +130,17 @@ inbox:
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
   fiscalCode:
+    accessibility:
+      unavailable: Non disponibile
+      preview:
+        label: Anteprima del tuo codice fiscale
+        hint: Attiva per visualizzare il facsimile del tuo codice fiscale
+      front:
+        label: Parte anteriore del documento codice fiscale {{code}} di {{name}} {{family_name}}, sesso {{gender}}, nato a {{placeOfBirth}},{{province}} il {{birthDate}}
+        hint: Attiva per passare alla visualizzazione a schermo intero
+      rear:
+        label: Codice a barre del tuo documento
+        hint: Attiva per passare alla visualizzazione a schermo intero
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
     help: !include profile/profile_fiscal_code.md
@@ -137,7 +151,8 @@ profile:
   unknown: SCONOSCIUTO
   logout:
     menulabel: Esci da IO
-    alertMessage: Uscendo da IO ti verrà chiesto nuovamente di accedere. Vuoi Uscire?
+    alertMessage: Sei sicuro di voler uscire? Al prossimo accesso sarà necessario un nuovo login con CIE o SPID.
+    exit: Esci
     cta:
       header: Come vuoi uscire dall'app?
       keepData:
@@ -384,7 +399,7 @@ authentication:
       headerTitle: Lettura della CIE
       layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
       layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
-      cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo...
+      cieCardValid: Ok, la tua carta CIE è valida! Puoi rimuoverla.
       readerCardTitle: Tieni ferma la carta per qualche secondo
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
@@ -837,7 +852,7 @@ wallet:
     cameraUsageInfo:
       Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
       inserisci manualmente i dati identificativi (IUV e codice ente/azienda).
-    setManually: Inserisci i dati manualmente
+    setManually: Inserisci tu i dati
     enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
     cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
@@ -901,7 +916,6 @@ messages:
       description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "ricevuto il"
       received_at: "ricevuto alle ore"
-      date_format: "DD MMMM YYYY"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
   contextualHelpContent: !include messages/messages_home.md
   counting:
@@ -1403,6 +1417,8 @@ faq:
     content: !include bonus/faq/faq76.md
 bonus:
   bonusVacanze:
+    accessibility:
+      card: Il tuo Bonus Vacanze con codice {{code}}, del valore di {{value}} euro è {{status}}
     statusInfo:
       validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
       bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
@@ -1469,6 +1485,8 @@ bonus:
       activationPending:
         title: Il bonus per il tuo nucleo familiare è già stato richiesto ed è in fase di attivazione.
         description: Riceverai un messaggio quando sarà attivato.
+      underage:
+        title: "Siamo spiacenti. Solo i cittadini maggiorenni possono richiedere il Bonus Vacanze"
     activation:
       loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
       goToDetails: Visualizza Bonus Vacanze

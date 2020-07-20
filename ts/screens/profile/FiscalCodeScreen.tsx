@@ -141,15 +141,18 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
     return true;
   };
 
-  private customOnboardingGoBack = (
-    <IconFont
-      name={"io-back"}
-      style={{ color: customVariables.colorWhite }}
-      onPress={async () => {
-        await this.resetAppBrightness();
-        this.goBack();
-      }}
-    />
+  private customGoBack = (
+    <TouchableDefaultOpacity
+      onPress={this.handleBackPress}
+      accessible={true}
+      accessibilityLabel={I18n.t("global.buttons.back")}
+      accessibilityRole={"button"}
+    >
+      <IconFont
+        name={"io-back"}
+        style={{ color: customVariables.colorWhite }}
+      />
+    </TouchableDefaultOpacity>
   );
 
   public render() {
@@ -157,7 +160,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
       <React.Fragment>
         <DarkLayout
           allowGoBack={true}
-          customGoBack={this.customOnboardingGoBack}
+          customGoBack={this.customGoBack}
           headerBody={
             <TouchableDefaultOpacity onPress={this.goBack}>
               <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
@@ -184,7 +187,10 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
                 showsHorizontalScrollIndicator={false}
               >
                 <View style={styles.largeSpacer} />
-                <TouchableDefaultOpacity onPress={() => this.showModal()}>
+                <TouchableDefaultOpacity
+                  onPress={() => this.showModal()}
+                  accessibilityRole={"button"}
+                >
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -195,7 +201,10 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
                   </View>
                 </TouchableDefaultOpacity>
                 <View style={styles.spacer} />
-                <TouchableDefaultOpacity onPress={() => this.showModal(true)}>
+                <TouchableDefaultOpacity
+                  onPress={() => this.showModal(true)}
+                  accessibilityRole={"button"}
+                >
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
