@@ -1451,9 +1451,9 @@ bonus:
     eligibility:
       loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
       iseeNotAvailable:
-        title: "Siamo spiacenti.\n Non hai un ISEE in corso di validità."
+        title: "Siamo spiacenti.\n Non hai un ISEE ordinario o corrente in corso di validità."
         text:
-          first: "E' necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE, prima di richiedere nuovamente il Bonus Vacanze.\n\n
+          first: "E' necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE ordinario o corrente, prima di richiedere nuovamente il Bonus Vacanze.\n\n
                   Puoi fare subito una "
           secondo: "simulazione online"
           third: " sul sito dell'INPS per verificare la tua idoneità, oppure richiedere l'ISEE sui canali previsti da INPS."
