@@ -286,7 +286,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
           transparent={true}
           onPress={this.navigateToSpidCieInformationRequest}
         >
-          <Text style={styles.noPadded}>
+          <Text style={styles.noPadded} link={true}>
             {this.props.isCieSupported
               ? I18n.t("authentication.landing.nospid-nocie")
               : I18n.t("authentication.landing.nospid")}

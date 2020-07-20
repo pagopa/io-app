@@ -100,7 +100,6 @@ const paymentMethods: ReadonlyArray<IPaymentMethod> = [
 
 const AddMethodStyle = StyleSheet.create({
   transactionText: {
-    fontSize: variables.fontSizeSmaller,
     color: color(variables.colorWhite)
       .darken(0.35)
       .string()

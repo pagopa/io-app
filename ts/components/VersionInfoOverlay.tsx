@@ -27,13 +27,13 @@ const styles = StyleSheet.create({
   },
 
   versionText: {
-    fontSize: 12,
+    fontSize: 16,
     lineHeight: 14,
     color: "#000000"
   },
 
   routeText: {
-    fontSize: 10,
+    fontSize: 14,
     lineHeight: 12,
     color: "#000000"
   }
