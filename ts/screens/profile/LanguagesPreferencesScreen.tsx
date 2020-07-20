@@ -92,14 +92,24 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props> {
           <List withContentLateralPadding={true}>
             {availableTransations.map((lang, index) => {
               const isSelectedLanguage = this.isAlreadyPreferred(lang);
+              const languageTitle = I18n.t(`locales.${lang}`, {
+                defaultValue: lang
+              });
               return (
                 <ListItemComponent
                   key={index}
-                  title={I18n.t(`locales.${lang}`, { defaultValue: lang })}
+                  title={languageTitle}
                   hideIcon={!isSelectedLanguage}
                   iconSize={iconSize}
                   iconName={isSelectedLanguage ? "io-tick-big" : undefined}
                   onPress={() => this.onLanguageSelected(lang)}
+                  accessible={true}
+                  accessibilityRole={"radio"}
+                  accessibilityLabel={`${languageTitle}, ${
+                    isSelectedLanguage
+                      ? I18n.t("global.accessibility.active")
+                      : I18n.t("global.accessibility.inactive")
+                  }`}
                 />
               );
             })}

@@ -10,6 +10,7 @@ import { FlatList, Image, Platform, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import I18n from "../../i18n";
 import { makeFontStyleObject } from "../../theme/fonts";
+import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { ContextualHelp } from "../ContextualHelp";
 import { withLightModalContext } from "../helpers/withLightModalContext";
@@ -99,7 +100,6 @@ const paymentMethods: ReadonlyArray<IPaymentMethod> = [
 
 const AddMethodStyle = StyleSheet.create({
   transactionText: {
-    fontSize: variables.fontSizeSmaller,
     color: color(variables.colorWhite)
       .darken(0.35)
       .string()
@@ -116,7 +116,8 @@ const AddMethodStyle = StyleSheet.create({
   },
   notImplementedText: {
     fontSize: 10,
-    lineHeight: Platform.OS === "ios" ? 14 : 16
+    lineHeight: Platform.OS === "ios" ? 14 : 16,
+    color: customVariables.brandDarkGray
   },
   centeredContents: {
     alignItems: "center"

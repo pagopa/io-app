@@ -8,7 +8,6 @@ import ROUTES from "../navigation/routes";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { makeFontStyleObject } from "../theme/fonts";
-import variables from "../theme/variables";
 
 type Routes = keyof typeof ROUTES;
 
@@ -50,8 +49,7 @@ const getLabel = (routeName: string, locale: Locales): string => {
 const styles = StyleSheet.create({
   labelStyle: {
     ...makeFontStyleObject(Platform.select),
-    textAlign: "center",
-    fontSize: variables.fontSizeSmaller
+    textAlign: "center"
   }
 });
 

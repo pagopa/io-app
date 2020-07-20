@@ -157,7 +157,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
           }
         >
           <View style={styles.content}>
-            <Text small={true}>{I18n.t("email.insert.label")}</Text>
+            <Text>{I18n.t("email.insert.label")}</Text>
             <View style={styles.spacerSmall} />
             <View style={styles.emailWithIcon}>
               <IconFont

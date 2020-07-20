@@ -13,8 +13,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     textAlign: "center",
-    paddingTop: customVariables.contentPadding,
-    fontSize: customVariables.fontSizeSmall
+    paddingTop: customVariables.contentPadding
   }
 });
 

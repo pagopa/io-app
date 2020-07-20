@@ -104,16 +104,14 @@ export default class DetailedlistItemComponent extends React.PureComponent<
         {...this.props}
       >
         <View style={styles.spaced}>
-          <Text small={true} dark={true}>
-            {this.props.text11}
-          </Text>
+          <Text dark={true}>{this.props.text11}</Text>
           <Text bold={true} style={styles.text12}>
             {this.props.text12}
           </Text>
         </View>
 
         <View style={styles.viewStyle}>
-          <Text xsmall={true}>{this.props.text2}</Text>
+          <Text>{this.props.text2}</Text>
         </View>
         <View style={styles.smallSpacer} />
         <View style={styles.text3Line}>

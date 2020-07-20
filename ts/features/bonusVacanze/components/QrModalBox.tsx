@@ -1,9 +1,10 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { Animated, Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
@@ -67,7 +68,6 @@ const styles = StyleSheet.create({
     color: customVariables.selectedColor
   },
   uniqueCode: {
-    fontSize: customVariables.fontSizeSmall,
     color: customVariables.textColor
   },
   bonusLogo: {
@@ -118,17 +118,20 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
           <Text style={styles.title} semibold={true}>
             {I18n.t("bonus.bonusVacanze.name")}
           </Text>
-          <Button
+          <ButtonDefaultOpacity
             style={styles.modalClose}
             onPress={onClose}
             transparent={true}
+            accessible={true}
+            accessibilityRole={"button"}
+            accessibilityLabel={I18n.t("global.buttons.close")}
           >
             <IconFont
               name="io-close"
               color={customVariables.lightGray}
               style={styles.icon}
             />
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
         <View spacer={true} large={true} />
         <View style={styles.row}>

@@ -56,8 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   feeText: {
-    color: variables.brandDarkGray,
-    fontSize: variables.fontSizeSmall
+    color: variables.brandDarkGray
   },
 
   flexStart: {

@@ -170,9 +170,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
-        <Text small={true} style={styles.flex}>
-          {label}
-        </Text>
+        <Text style={styles.flex}>{label}</Text>
         <Text bold={true} dark={true}>
           {value}
         </Text>
@@ -239,7 +237,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
           {data.paymentMethodIcon ? (
             <View style={[styles.row, styles.centered]}>
-              <Text small={true}>{I18n.t("wallet.paymentMethod")}</Text>
+              <Text>{I18n.t("wallet.paymentMethod")}</Text>
               <Image
                 style={styles.cardLogo}
                 source={{ uri: data.paymentMethodIcon }}
@@ -258,7 +256,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
           {/** psp logo */}
           {psp && (
             <View style={[styles.row, styles.centered]}>
-              <Text small={true}>{I18n.t("wallet.psp")}</Text>
+              <Text>{I18n.t("wallet.psp")}</Text>
               {psp.logoPSP && psp.logoPSP.length > 0 ? (
                 <Image style={styles.pspLogo} source={{ uri: psp.logoPSP }} />
               ) : psp.businessName ? (
@@ -275,7 +273,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
           {/** Transaction id */}
           <View>
-            <Text small={true}>
+            <Text>
               {I18n.t("wallet.firstTransactionSummary.idTransaction")}
             </Text>
             <View style={styles.row}>

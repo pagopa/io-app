@@ -149,9 +149,6 @@ const styles = StyleSheet.create({
     elevation: 0,
     height: 40
   },
-  tabBarContent: {
-    fontSize: customVariables.fontSizeSmall
-  },
   tabBarUnderline: {
     borderBottomColor: customVariables.tabUnderlineColor,
     borderBottomWidth: customVariables.tabUnderlineHeight
@@ -175,8 +172,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandPrimary
   },
   textStyle: {
-    color: customVariables.brandDarkGray,
-    fontSize: customVariables.fontSizeSmall
+    color: customVariables.brandDarkGray
   },
   center: {
     alignItems: "center"
@@ -190,9 +186,6 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: customVariables.fontSize2,
     paddingTop: customVariables.contentPadding
-  },
-  errorText2: {
-    fontSize: customVariables.fontSizeSmall
   },
   varBar: {
     flexDirection: "row",
@@ -226,7 +219,6 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 0,
     paddingLeft: 10,
-    fontSize: 14,
     lineHeight: 20,
     color: customVariables.brandPrimary
   }

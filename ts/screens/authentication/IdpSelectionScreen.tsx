@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
@@ -133,6 +134,7 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
       return;
     }
     this.props.setSelectedIdp(idp);
+    instabugLog(`IDP selected: ${idp.id}`, TypeLogs.DEBUG, "login");
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
 

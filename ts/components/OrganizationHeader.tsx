@@ -2,7 +2,6 @@ import { Col, Grid, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
-import customVariables from "../theme/variables";
 import { logosForService } from "../utils/services";
 import H5 from "./ui/H5";
 import { MultiImage } from "./ui/MultiImage";
@@ -14,9 +13,6 @@ const styles = StyleSheet.create({
   serviceMultiImage: {
     width: 60,
     height: 60
-  },
-  reducedText: {
-    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -34,7 +30,7 @@ const OrganizationHeader = (props: Props) => {
     <Grid>
       <Col>
         <H5>{service.organization_name}</H5>
-        <Text style={styles.reducedText}>{service.service_name}</Text>
+        <Text>{service.service_name}</Text>
       </Col>
       {service.service_id && (
         <Col style={styles.serviceCol}>
