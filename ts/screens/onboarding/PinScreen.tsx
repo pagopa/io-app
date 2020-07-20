@@ -1,4 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { AccessibilityInfo, Alert, StyleSheet } from "react-native";
@@ -72,6 +73,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
   body: "onboarding.unlockCode.contextualHelpContent"
 };
+
+const accessibilityTimeout = 100 as Millisecond;
+
 /**
  * A screen that allows the user to set the unlock code.
  */
@@ -162,7 +166,7 @@ class PinScreen extends React.PureComponent<Props, State> {
       },
       () => {
         // set focus on "continue" button
-        setAccessibilityFocus(this.continueButtonRef);
+        setAccessibilityFocus(this.continueButtonRef, accessibilityTimeout);
       }
     );
   };
