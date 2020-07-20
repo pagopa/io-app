@@ -88,11 +88,11 @@ class WalletsScreen extends React.Component<Props> {
         wallet={item}
         isFavorite={isFavorite}
         onSetFavorite={(willBeFavorite: boolean) =>
-          fromPredicate(wbf => wbf === true)(willBeFavorite).foldL(
+          fromPredicate(wbf => wbf && this.props.wallets.length > 0)(
+            willBeFavorite
+          ).foldL(
             () => {
-              if (this.props.wallets.length > 0) {
-                Alert.alert(I18n.t("wallet.alert.favourite"));
-              }
+              Alert.alert(I18n.t("wallet.alert.favourite"));
             },
             () => this.props.setFavoriteWallet(item.idWallet)
           )
