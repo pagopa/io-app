@@ -1,6 +1,8 @@
+import { pipe } from "fp-ts/lib/function";
 import { Linking } from "react-native";
 import { clipboardSetStringWithFeedback } from "./clipboard";
 import { openMaps } from "./openMaps";
+import { splitAndTakeFirst } from "./strings";
 
 /**
  * Generic utilities for url parsing
@@ -19,6 +21,17 @@ export function getResourceNameFromUrl(
   const resourceName = splitted[splitted.length - 1].toLowerCase();
   return includeExt ? resourceName : resourceName.split(".")[0];
 }
+
+/**
+ * from a give url return the base path excluding params and fragments
+ * @param url
+ */
+export const getUrlBasepath = (url: string): string =>
+  pipe<string, string, string, string>(
+    u => splitAndTakeFirst(u, "?"),
+    u => splitAndTakeFirst(u, "#"),
+    u => splitAndTakeFirst(u, "&")
+  )(url);
 
 /**
  * Return the function to:

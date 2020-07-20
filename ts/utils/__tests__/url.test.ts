@@ -1,4 +1,4 @@
-import { getResourceNameFromUrl } from "../url";
+import { getResourceNameFromUrl, getUrlBasepath } from "../url";
 
 describe("getResourceNameFromUrl", () => {
   const remoteHost = "https://somedomain.com/somepath/";
@@ -24,5 +24,28 @@ describe("getResourceNameFromUrl", () => {
   it("should return the given input", () => {
     const notAPath = "not a path";
     expect(getResourceNameFromUrl(notAPath)).toEqual(notAPath);
+  });
+});
+
+describe("getUrlBasepath", () => {
+  it("should return the same url", () => {
+    const url = "https://www.google.com/it/hello";
+    expect(getUrlBasepath(url)).toEqual(url);
+  });
+
+  it("should return the same url", () => {
+    const base = "https://www.google.com/it/hello";
+    const suffixes: ReadonlyArray<string> = [
+      "?param1=1&param2=2",
+      "?param1=1&param2=2&params3",
+      "&param1=1?param2=2",
+      "#fragment=1",
+      "?param1=1#fragment=1",
+      "?param1=1&param2=2#fragment=1",
+      "#fragment=1?param1=1&param2=2"
+    ];
+    suffixes.forEach(s => {
+      expect(getUrlBasepath(base + s)).toEqual(base);
+    });
   });
 });
