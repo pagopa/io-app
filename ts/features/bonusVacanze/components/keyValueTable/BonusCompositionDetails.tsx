@@ -18,9 +18,6 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: themeVariables.fontSizeSmall
-  },
   bold: {
     fontWeight: "bold"
   },
@@ -57,11 +54,11 @@ const getRow = (
   ({
     key: {
       text: keyText,
-      style: keyStyle ? keyStyle : styles.text
+      style: keyStyle
     },
     value: {
       text: valueText,
-      style: valueStyle ? valueStyle : styles.text
+      style: valueStyle
     }
   } as KeyValueRow);
 

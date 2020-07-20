@@ -157,7 +157,6 @@ export default class ListItemComponent extends React.Component<Props> {
           {this.props.subTitle && (
             <Text
               numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-              small={true}
               style={[
                 styles.description,
                 {
