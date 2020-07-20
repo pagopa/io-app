@@ -1419,9 +1419,9 @@ bonus:
     eligibility:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
-        title: "We're sorry.\n You don't have a valid ISEE."
+        title: "We're sorry.\n You don't have a valid ISEE \"ordinario or corrente\"."
         text:
-          first: "It is necessary to submit a DSU for the calculation of the ISEE, before requesting the \"Bonus Vacanze\".\n
+          first: "It is necessary to submit a DSU for the calculation of the ISEE \"ordinario or corrente\", before requesting the \"Bonus Vacanze\".\n
                   You can do an "
           secondo: "online simulation"
           third: " on the INPS website to check your eligibility, or request your ISEE through the channels provided by INPS."
