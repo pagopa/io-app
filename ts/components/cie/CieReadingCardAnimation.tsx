@@ -160,7 +160,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
 
   public render() {
     return (
-      <View style={styles.imgContainer}>
+      <View style={styles.imgContainer} accessible={false}>
         {this.props.readingState === ReadingState.waiting_card && (
           <View style={styles.rings}>
             <AnimatedRing

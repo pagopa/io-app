@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
 });
 
 interface OwnProps {
+  onAccessibilityNavigationHeaderFocus?: () => void;
   avoidNavigationEventsUsage?: boolean; // if true NavigationEvents and its events will be excluded (onDidFocus)
   accessibilityLabel?: string; // rendered only if it is defined and a screen reader is active
   dark?: boolean;
@@ -104,7 +105,11 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       .then(isScreenReaderActive => {
         this.setState({ isScreenReaderActive });
         if (isScreenReaderActive && this.props.avoidNavigationEventsUsage) {
-          setAccessibilityFocus(this.firstElementRef, setAccessibilityTimeout);
+          setAccessibilityFocus(
+            this.firstElementRef,
+            setAccessibilityTimeout,
+            this.props.onAccessibilityNavigationHeaderFocus
+          );
         }
       })
       .catch(); // do nothing
@@ -118,7 +123,11 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         this.handleFocus();
         return;
       }
-      setAccessibilityFocus(this.firstElementRef, setAccessibilityTimeout);
+      setAccessibilityFocus(
+        this.firstElementRef,
+        setAccessibilityTimeout,
+        this.props.onAccessibilityNavigationHeaderFocus
+      );
     }, noReferenceTimeout);
   }
 
