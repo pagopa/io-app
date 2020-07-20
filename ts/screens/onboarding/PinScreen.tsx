@@ -19,6 +19,7 @@ import { PinString } from "../../types/PinString";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { setPin } from "../../utils/keychain";
 import { maybeNotNullyString } from "../../utils/strings";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
 
@@ -149,10 +150,22 @@ class PinScreen extends React.PureComponent<Props, State> {
           ...this.state.pinState,
           state: "PinConfirmError"
         };
-        this.setState({
-          pinState: pinConfirmError,
-          errorDescription: I18n.t("onboarding.unlockCode.confirmInvalid")
-        });
+        this.setState(
+          {
+            pinState: pinConfirmError,
+            errorDescription: I18n.t("onboarding.unlockCode.confirmInvalid")
+          },
+          () =>
+            // Announce the error
+            AccessibilityInfo.announceForAccessibility(
+              I18n.t("onboarding.unlockCode.confirmInvalid")
+            )
+        );
+      } else if (this.state.pinState.state === "PinConfirmError") {
+        // Announce again the error if it persists.
+        AccessibilityInfo.announceForAccessibility(
+          maybeNotNullyString(this.state.errorDescription).getOrElse("")
+        );
       }
       return;
     }
@@ -175,8 +188,6 @@ class PinScreen extends React.PureComponent<Props, State> {
     return maybeNotNullyString(this.state.errorDescription).fold(
       undefined,
       des => {
-        // When rendering the error it announces with screen reader too
-        AccessibilityInfo.announceForAccessibility(des);
         return (
           <Text
             ref={this.confirmationStatusRef}
