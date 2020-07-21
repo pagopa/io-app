@@ -15,8 +15,6 @@
  *
  */
 
-import { getVersion, iosGetBuildVersion } from "./version_regex";
-
 const plist = require("plist");
 
 module.exports.readVersion = function(contents) {
@@ -32,6 +30,7 @@ module.exports.readVersion = function(contents) {
 };
 
 module.exports.writeVersion = function(contents, version) {
+  import { getVersion, iosGetBuildVersion } from "./version_regex";
   const infoObj = plist.parse(contents);
   if (!"CFBundleShortVersionString" in infoObj) {
     console.log(
