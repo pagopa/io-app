@@ -7,9 +7,9 @@ import {
 import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
 import { Version } from "../../../../../../definitions/backend/Version";
 import { BonusActivationStatusEnum } from "../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
+import { BonusCode } from "../../../../../../definitions/bonus_vacanze/BonusCode";
 import { mockedBonus } from "../../../mock/mockData";
 import { ownedActiveBonus } from "../allActive";
-import { BonusCode } from "../../../../../../definitions/bonus_vacanze/BonusCode";
 
 const fiscalCode = "ABCDEF83A12L719R" as FiscalCode;
 const profile: InitializedProfile = {
