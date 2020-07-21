@@ -17,7 +17,6 @@ module.exports.readVersion = function(contents) {
  * @return {string}
  */
 function replacer(match, version, p1, p2, p3) {
-  import { iosGetBuildVersion } from "./version_regex";
   const currentProjectVersionValue = iosGetBuildVersion(version, p2);
   return [p1, currentProjectVersionValue, p3].join("");
 }
@@ -29,4 +28,18 @@ module.exports.writeVersion = function(contents, version) {
     replacer(substr, version, ...args)
   );
   return contents;
+};
+
+export const getRC = rawVersion => {
+  return rawVersion.replace(regexVersion, "$3");
+};
+
+export const isRc = rawVersion => {
+  return rawVersion.replace(regexVersion, "$3") !== "";
+};
+
+const iosGetBuildVersion = (rawVersion, currentBuildVersion) => {
+  return isRc(rawVersion)
+    ? getRC(rawVersion)
+    : parseInt(currentBuildVersion, 10) + 1;
 };

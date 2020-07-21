@@ -42,7 +42,7 @@ export const isRc = rawVersion => {
  * @param currentBuildVersion
  * @return {*}
  */
-module.exports.iosGetBuildVersion = (rawVersion, currentBuildVersion) => {
+const iosGetBuildVersion = (rawVersion, currentBuildVersion) => {
   return isRc(rawVersion)
     ? getRC(rawVersion)
     : parseInt(currentBuildVersion, 10) + 1;
