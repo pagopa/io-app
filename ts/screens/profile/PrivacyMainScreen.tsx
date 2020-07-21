@@ -186,7 +186,9 @@ class PrivacyMainScreen extends React.Component<Props, State> {
         pot.map(
           this.props.userDataProcessing[choice],
           v =>
-            v !== undefined && v.status !== UserDataProcessingStatusEnum.CLOSED
+            v !== undefined &&
+            v.status !== UserDataProcessingStatusEnum.CLOSED &&
+            v.status !== UserDataProcessingStatusEnum.ABORTED
         ),
         false
       )
