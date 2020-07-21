@@ -1414,6 +1414,9 @@ faq:
   76:
     title: "L’app mi dice che l’importo massimo del mio Bonus Vacanze è di 500 euro. Cosa succede se il costo del mio soggiorno è inferiore?"
     content: !include bonus/faq/faq76.md
+  77:
+    title: "Qualsiasi tipo di ISEE è valido per richiedere il Bonus Vacanze tramite l’app IO?"
+    content: !include bonus/faq/faq77.md
 bonus:
   bonusVacanze:
     accessibility:
