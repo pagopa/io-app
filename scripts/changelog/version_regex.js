@@ -28,9 +28,9 @@ module.exports.getRC = function(rawVersion) {
  * @param rawVersion
  * @return {boolean}
  */
-module.exports.isRc = function(rawVersion) {
+function isRc(rawVersion) {
   return rawVersion.replace(regexVersion, "$3") !== "";
-};
+}
 
 /**
  * Return the build number for ios. If the new version is RC, return the rc number,
