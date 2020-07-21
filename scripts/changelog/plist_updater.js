@@ -16,8 +16,7 @@
  */
 
 const plist = require("plist");
-const getVersion = require("./version_regex");
-const iosGetBuildVersion = require("./version_regex");
+const versionModule = require("./version_regex.js");
 
 module.exports.readVersion = function(contents) {
   const infoObj = plist.parse(contents);
@@ -42,11 +41,12 @@ module.exports.writeVersion = function(contents, version) {
   // For ios, if the new version is RC, keep the same version.
   // eg: current version 1.2.3, new version 1.3.0-rc.0, write in plist file: 1.3.0, when a new version
   // 1.3.0-rc.1 is released, write: 1.3.0
-  infoObj.CFBundleShortVersionString = getVersion(version);
+
+  infoObj.CFBundleShortVersionString = versionModule.getVersion(version);
 
   // if the new version is a rc, use the rc number as CFBundleVersion
   // Else if the new version is the final version, just increase by one the CFBundleVersion
-  infoObj.CFBundleVersion = iosGetBuildVersion(
+  infoObj.CFBundleVersion = versionModule.iosGetBuildVersion(
     version,
     infoObj.CFBundleVersion
   );
