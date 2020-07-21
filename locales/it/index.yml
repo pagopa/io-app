@@ -1425,6 +1425,7 @@ bonus:
       validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
       bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
       redeemed: Questo Bonus Vacanze è stato utilizzato il {{date}}
+    multipleBonus: Risultano due bonus richiesti e attivati da te. Assicurati di usare quello relativo alla DSU corretta, per evitare che chi utilizza il bonus incorra in successive azioni di recupero.
     usableAmount: Spendibile presso la struttura ricettiva
     taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il
@@ -1515,7 +1516,7 @@ bonus:
       title: Annulla
       body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
       cancel: Continua
-      confirm: Annulla richiesta
+      confirm: Annulla la richiesta
       completed: Richiesta annullata
     composition:
       amount: "Importo massimo"
@@ -1533,6 +1534,9 @@ bonus:
     contextualHelp:
       title: Il bonus vacanze
       body: Qui sono visualizzate tutte le informazioni relative al bonus vacanze, il provvedimento istituito dal Decreto Rilancio per incentivare  il turismo dopo il lockdown dovuto all'emergenza Coronavirus.
+    requestAlert:
+      title: Attenzione
+      content: "Hai già ottenuto un bonus, continua la richiesta solo se la tua situazione si è modificata e hai presentato una nuova DSU per l’aggiornamento dell’ISEE.\n Ti informiamo che l’utilizzo di bonus generati in base a DSU non corrette, determina azioni di recupero dell’agevolazione verso l’utilizzatore.\n Sei sicuro di voler continuare?"
   request: Richiedi un nuovo bonus
   requestLabel: Bonus e sconti
   requestTitle: Richiesta
