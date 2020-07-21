@@ -27,6 +27,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
+import { actionWithAlert } from "../components/alert/ActionWithAlert";
 import { bonusVacanzeStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
@@ -118,23 +119,16 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusType[getLocalePrimaryWithFallback()];
 
-  const showAlert = () => {
-    if (props.hasAnotherBonus) {
-      Alert.alert("Test", "Test", [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.continue"),
-          style: "default",
-          onPress: () => props.requestBonusActivation
-        }
-      ]);
-    } else {
-      props.requestBonusActivation();
-    }
-  };
+  const showAlert = () =>
+    props.hasAnotherBonus
+      ? actionWithAlert({
+          title: I18n.t("bonus.bonusInformation.requestAlert.title"),
+          body: I18n.t("bonus.bonusInformation.requestAlert.content"),
+          confirmText: I18n.t("bonus.bonusVacanze.abort.cancel"),
+          cancelText: I18n.t("bonus.bonusVacanze.abort.confirm"),
+          onConfirmAction: () => props.requestBonusActivation()
+        })
+      : props.requestBonusActivation();
 
   const cancelButtonProps = {
     block: true,

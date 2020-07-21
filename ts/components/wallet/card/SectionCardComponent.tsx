@@ -122,7 +122,11 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                   </Text>
                   {isNew && (
                     <Badge style={styles.badgeColor}>
-                      <Text semibold={true} style={styles.badgeText}>
+                      <Text
+                        semibold={true}
+                        style={styles.badgeText}
+                        dark={true}
+                      >
                         {I18n.t("wallet.methods.newCome")}
                       </Text>
                     </Badge>
