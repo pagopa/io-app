@@ -19,7 +19,6 @@ import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
 import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
-import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
 
 const styles = StyleSheet.create({
@@ -108,40 +107,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     }, noReferenceTimeout);
   }
 
-  /**
-   * if go back is a function it will be returned
-   * otherwise the default goback navigation will be returned
-   */
-  private getGoBackHandler = () => {
-    return typeof this.props.goBack === "function"
-      ? this.props.goBack()
-      : this.props.navigateBack();
-  };
-
-  private renderHeader = () => {
-    const { customGoBack, headerTitle } = this.props;
-
-    // if customGoBack is provided or if the app is in accessibility mode only the header text will be rendered
-    if (customGoBack) {
-      return this.renderBodyLabel(headerTitle, false);
-    }
-    // if no customGoBack is provided also the header text could be press to execute goBack
-    // note goBack could a boolean or a function (check this.getGoBackHandler)
-    return (
-      <TouchableDefaultOpacity
-        onPress={this.getGoBackHandler}
-        accessible={false}
-      >
-        {this.renderBodyLabel(headerTitle)}
-      </TouchableDefaultOpacity>
-    );
-  };
-
-  private renderBodyLabel = (
-    label?: string,
-    accessible: boolean | undefined = undefined,
-    ref?: Ref<Text>
-  ) => {
+  private renderBodyLabel = (label?: string, ref?: Ref<Text>) => {
     return maybeNotNullyString(label).fold(undefined, l => {
       const isWhite = this.props.primary || this.props.dark;
       return (
@@ -149,10 +115,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           ref={ref}
           white={isWhite}
           numberOfLines={1}
-          accessible={accessible}
-          accessibilityElementsHidden={true}
+          accessible={true}
           accessibilityRole={"header"}
-          importantForAccessibility="no-hide-descendants"
         >
           {l}
         </Text>
@@ -183,17 +147,16 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           as placeholder where force focus
         */}
         {!isSearchEnabled && (
-          <Body style={[styles.body, goBack ? {} : styles.noLeft]}>
+          <Body style={[goBack ? styles.body : styles.noLeft]}>
             {this.state.isScreenReaderActive &&
             maybeAccessibilityLabel.isSome() ? (
               this.renderBodyLabel(
                 maybeAccessibilityLabel.value,
-                true,
                 this.firstElementRef
               )
             ) : (
               <View ref={this.firstElementRef} accessible={true}>
-                {body ? body : headerTitle && this.renderHeader()}
+                {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
               </View>
             )}
           </Body>
