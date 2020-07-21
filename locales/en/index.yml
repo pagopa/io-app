@@ -4,6 +4,8 @@ global:
     date_format: MMMM Do YYYY
     expanded: Expanded paragraph
     collapsed: Collapsed paragraph
+    active: State active
+    inactive: State inactive
     activityIndicator:
       label: Loading
       hint: Wait for the content load
@@ -149,7 +151,8 @@ profile:
   unknown: UNKNOWN
   logout:
     menulabel: Logout from IO
-    alertMessage: By exiting IO you will be asked to log in again. Logout?
+    alertMessage: Are you sure you want to quit? The next time you log in you will need a new login with CIE or SPID.
+    exit: Exit
     cta:
       header: How do you want to quit the app?
       keepData:
@@ -385,7 +388,7 @@ authentication:
       title: Touch the card
       layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
       layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you feel a vibration.
-      cieCardValid: Ok, your card is valid! Wait a few more seconds..
+      cieCardValid: Ok, your card is valid! You can remove it.
       readerCardTitle: Hold the card for a few seconds
       readerCardHeader: We are reading the data of your CIE and verifying its validity.
       readerCardFooter: Hold the card in this position for a few more seconds
@@ -1379,6 +1382,9 @@ faq:
   76:
     title: "The app tells me that the maximum amount of my Bonus Vacanze is 500 euros. What happens if the cost of my stay is lower?"
     content: !include bonus/faq/faq76.md
+  77:
+    title: "Is any kind of ISEE right to request the Bonus Vacanze?"
+    content: !include bonus/faq/faq77.md
 bonus:
   bonusVacanze:
     accessibility:
@@ -1417,9 +1423,9 @@ bonus:
     eligibility:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
-        title: "We're sorry.\n You don't have a valid ISEE."
+        title: "We're sorry.\n You don't have a valid ISEE \"ordinario or corrente\"."
         text:
-          first: "It is necessary to submit a DSU for the calculation of the ISEE, before requesting the \"Bonus Vacanze\".\n
+          first: "It is necessary to submit a DSU for the calculation of the ISEE \"ordinario or corrente\", before requesting the \"Bonus Vacanze\".\n
                   You can do an "
           secondo: "online simulation"
           third: " on the INPS website to check your eligibility, or request your ISEE through the channels provided by INPS."

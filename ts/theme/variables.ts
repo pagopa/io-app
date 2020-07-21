@@ -17,6 +17,8 @@ export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 
 // tslint:disable-next-line:no-object-mutation
 const customVariables = Object.assign(materialVariables, {
+  minTouchableHeight: 48,
+
   // Android
   buttonUppercaseAndroidText: false,
 
@@ -24,7 +26,7 @@ const customVariables = Object.assign(materialVariables, {
   btnTextFontWeight: "700" as FontWeight,
   textLightButtonWeight: "600" as FontWeight,
 
-  btnHeight: 48,
+  btnHeight: 40,
   btnWidgetHeight: 24,
   btnFontSize: 16,
   btnIconSize: 24,
@@ -269,7 +271,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // Text
   textColor: "#5C6F82",
-  textLinkColor: "#0063CF",
+  textLinkColor: "#0073E6",
   textMessageDetailLinkColor: "#0073E6",
   textNormalWeight: "400" as FontWeight,
   textBoldWeight: "700" as FontWeight,

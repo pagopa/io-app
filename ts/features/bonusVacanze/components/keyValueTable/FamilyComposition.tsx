@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     paddingRight: themeVariables.spacerWidth
   },
   right: {
-    fontSize: 15,
     fontWeight: "600",
     letterSpacing: 0.5,
     ...makeFontStyleObject(Platform.select, undefined, undefined, "RobotoMono")

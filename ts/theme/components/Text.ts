@@ -95,6 +95,7 @@ export default (): Theme => {
         )
       }
     },
-    lineHeight: variables.lineHeightBase
+    lineHeight: variables.lineHeightBase,
+    fontSize: variables.fontSizeBase
   };
 };

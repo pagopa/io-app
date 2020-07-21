@@ -6,6 +6,7 @@ import BaseScreenComponent from "./BaseScreenComponent";
 
 interface OwnProps {
   accessibilityLabel?: string;
+  onAccessibilityNavigationHeaderFocus?: () => void;
   headerTitle?: string;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
@@ -49,12 +50,16 @@ class TopScreenComponent extends React.PureComponent<Props> {
       searchType,
       customRightIcon,
       customGoBack,
+      onAccessibilityNavigationHeaderFocus,
       faqCategories,
       avoidNavigationEventsUsage
     } = this.props;
 
     return (
       <BaseScreenComponent
+        onAccessibilityNavigationHeaderFocus={
+          onAccessibilityNavigationHeaderFocus
+        }
         accessibilityLabel={accessibilityLabel}
         appLogo={appLogo}
         dark={dark}

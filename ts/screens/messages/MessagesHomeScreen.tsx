@@ -56,9 +56,6 @@ const styles = StyleSheet.create({
     elevation: 0,
     height: 40
   },
-  tabBarContent: {
-    fontSize: customVariables.fontSizeSmall
-  },
   tabBarUnderline: {
     borderBottomColor: customVariables.tabUnderlineColor,
     borderBottomWidth: customVariables.tabUnderlineHeight
@@ -79,8 +76,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandPrimary
   },
   textStyle: {
-    color: customVariables.brandDarkGray,
-    fontSize: customVariables.fontSizeSmall
+    color: customVariables.brandDarkGray
   }
 });
 
