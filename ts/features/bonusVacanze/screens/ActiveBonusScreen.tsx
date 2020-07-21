@@ -41,7 +41,10 @@ import {
   cancelLoadBonusFromIdPolling,
   startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
-import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
+import {
+  bonusActiveDetailByIdSelector,
+  ownedActiveBonus
+} from "../store/reducers/allActive";
 import {
   availableBonusTypesSelectorFromId,
   bonusVacanzeLogo
@@ -52,6 +55,7 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
+import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -378,6 +382,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} extralarge={true} />
           {switchInformationText()}
           <View spacer={true} />
+        </View>
+        {props.hasMoreOwnedActiveBonus && (
+          <ActivateBonusDiscrepancies
+            text={I18n.t("bonus.bonusVacanze.multipleBonus")}
+            attention={I18n.t(
+              "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.attention"
+            )}
+          />
+        )}
+        <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} />
           <BonusCompositionDetails
@@ -456,7 +470,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const bonusFromNav = ownProps.navigation.getParam("bonus");
   const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
+
   return {
+    hasMoreOwnedActiveBonus: ownedActiveBonus(state).length > 1,
     bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus,
     isError: pot.isNone(bonus) && pot.isError(bonus), // error and no bonus data, user should retry to load
