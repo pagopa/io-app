@@ -32,6 +32,11 @@ const bonusDifferentApplicant = pot.some({
   status: BonusActivationStatusEnum.ACTIVE,
   applicant_fiscal_code: "XXXTT83A12L7XXX" as FiscalCode
 });
+const bonusActive = pot.some({
+  ...mockedBonus,
+  status: BonusActivationStatusEnum.ACTIVE,
+  applicant_fiscal_code: fiscalCode
+});
 
 describe("ownedActiveBonus", () => {
   it("should return an empty array", () => {
@@ -65,16 +70,30 @@ describe("ownedActiveBonus", () => {
   });
 
   it("should return the active bonus", () => {
-    const bonusActive = pot.some({
-      ...mockedBonus,
-      status: BonusActivationStatusEnum.ACTIVE,
-      applicant_fiscal_code: fiscalCode
-    });
     expect(
       ownedActiveBonus.resultFunc(
         [bonusDifferentApplicant, bonusActive],
         potProfile
       )
     ).toStrictEqual([bonusActive.value]);
+  });
+
+  it("should return the active bonus", () => {
+    expect(
+      ownedActiveBonus.resultFunc(
+        [bonusDifferentApplicant, bonusActive, pot.none],
+        potProfile
+      )
+    ).toStrictEqual([bonusActive.value]);
+  });
+
+  it("should return the active bonus(2)", () => {
+    const anotherBonusActive = { ...bonusActive, id: "XYZ" };
+    expect(
+      ownedActiveBonus.resultFunc(
+        [bonusDifferentApplicant, bonusActive, anotherBonusActive, pot.none],
+        potProfile
+      )
+    ).toStrictEqual([bonusActive.value, anotherBonusActive.value]);
   });
 });
