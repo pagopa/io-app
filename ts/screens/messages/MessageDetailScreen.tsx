@@ -97,8 +97,7 @@ const styles = StyleSheet.create({
   },
 
   errorStateMessageSubmitBug: {
-    marginTop: 16,
-    fontSize: customVariables.fontSizeSmall
+    marginTop: 16
   },
 
   errorStateFooterWrapper: {

@@ -74,13 +74,11 @@ export default class PaymentHistoryItem extends React.PureComponent<Props> {
       >
         <View style={styles.spaced}>
           <BadgeComponent color={this.props.color} />
-          <Text style={styles.text11} small={true}>
-            {this.props.text11}
-          </Text>
+          <Text style={styles.text11}>{this.props.text11}</Text>
         </View>
 
         <View style={styles.viewStyle}>
-          <Text xsmall={true}>{this.props.text2}</Text>
+          <Text>{this.props.text2}</Text>
         </View>
         <View style={styles.smallSpacer} />
         <View style={styles.text3Line}>

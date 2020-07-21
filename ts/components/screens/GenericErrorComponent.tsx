@@ -25,9 +25,6 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: customVariables.fontSize2,
     paddingTop: customVariables.contentPadding
-  },
-  errorText2: {
-    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -102,11 +99,7 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
             <View spacer={true} extralarge={true} />
             <View spacer={true} extralarge={true} />
 
-            <Text
-              alignCenter={true}
-              style={styles.errorText2}
-              accessible={subTextAccessible}
-            >
+            <Text alignCenter={true} accessible={subTextAccessible}>
               {this.props.subText !== undefined
                 ? this.props.subText
                 : I18n.t("wallet.errorTransaction.submitBugText")}

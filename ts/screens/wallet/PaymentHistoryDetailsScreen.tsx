@@ -149,9 +149,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
   private standardRow = (label: string, value: string) => (
     <View style={styles.row}>
-      <Text small={true} style={styles.flex}>
-        {label}
-      </Text>
+      <Text style={styles.flex}>{label}</Text>
       <Text bold={true} dark={true}>
         {value}
       </Text>
@@ -169,7 +167,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private renderHelper = () => {
     return (
       <View>
-        <Text small={true} alignCenter={true} style={styles.padded}>
+        <Text alignCenter={true} style={styles.padded}>
           {I18n.t("payment.details.info.help")}
         </Text>
         <View spacer={true} />
@@ -212,7 +210,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               />
               {data.errorDetail.isSome() && (
                 <View key={"error"}>
-                  <Text small={true}>{I18n.t("payment.errorDetails")}</Text>
+                  <Text>{I18n.t("payment.errorDetails")}</Text>
                   <Text bold={true} dark={true}>
                     {data.errorDetail.value}
                   </Text>
@@ -258,7 +256,6 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                     style={[styles.bigText, styles.flex]}
                     bold={true}
                     dark={true}
-                    small={true}
                   >
                     {I18n.t("wallet.firstTransactionSummary.total")}
                   </Text>

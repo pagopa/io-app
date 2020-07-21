@@ -36,11 +36,9 @@ const styles = StyleSheet.create({
     resizeMode: "contain"
   },
   note: {
-    fontSize: 12,
     lineHeight: 16
   },
   label: {
-    fontSize: 12,
     lineHeight: 22
   },
   customHeader: {
@@ -101,7 +99,7 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
         </Text>
         {this.getImage(item)}
         {value.isSome() && (
-          <Text small={true} semibold={true} style={{ textAlign: "center" }}>
+          <Text semibold={true} style={{ textAlign: "center" }}>
             {I18n.t("global.symbols.asterisk")}
             {value.value}
             {I18n.t("global.symbols.asterisk")}
