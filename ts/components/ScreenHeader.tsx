@@ -61,6 +61,7 @@ class ScreenHeader extends React.Component<Props> {
       );
       return (
         <IconFont
+          importantForAccessibility={"no-hide-descendants"}
           name={ic.name}
           size={Math.min(ic.size || HEADER_ICON_HEIGHT, HEADER_ICON_HEIGHT)}
           color={imageColor}
@@ -72,8 +73,13 @@ class ScreenHeader extends React.Component<Props> {
   public render() {
     const { heading, dark } = this.props;
     return (
-      <View style={[dark && styles.darkGrayBg, styles.container]}>
-        <View style={styles.text}>{heading}</View>
+      <View
+        accessible={true}
+        style={[dark && styles.darkGrayBg, styles.container]}
+      >
+        <View accessible={true} style={styles.text}>
+          {heading}
+        </View>
         {this.getIcon()}
       </View>
     );

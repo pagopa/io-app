@@ -14,6 +14,7 @@ type GenderType = "M" | "F" | undefined;
  */
 type FiscalCodeDerivedData = Readonly<{
   gender?: GenderType;
+  birthday?: Date;
   birthDate?: ReturnType<typeof dateFnsFormat>;
   denominazione: string;
   siglaProvincia: string;
@@ -79,14 +80,16 @@ export function extractFiscalCodeData(
   const year =
     tempYear +
     (new Date().getFullYear() - (1900 + tempYear) >= 100 ? 2000 : 1900);
-  const birthDate = format(
+  const birthday = new Date(year, month - 1, day);
+  const birthDateRepr = format(
     new Date(year, month - 1, day), // months are 0-index
     "DD/MM/YYYY"
   );
 
   return {
     gender,
-    birthDate,
+    birthday,
+    birthDate: birthDateRepr,
     siglaProvincia,
     denominazione
   };

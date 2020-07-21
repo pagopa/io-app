@@ -1,5 +1,7 @@
 PODS:
   - boost-for-react-native (1.63.0)
+  - BVLinearGradient (2.5.6):
+    - React
   - DoubleConversion (1.1.6)
   - Folly (2018.10.22.00):
     - boost-for-react-native
@@ -12,6 +14,8 @@ PODS:
     - glog
   - glog (0.3.5)
   - instabug-reactnative (8.7.0):
+    - React
+  - jail-monkey (2.3.2):
     - React
   - Mixpanel (3.6.0)
   - QrCode (1.0.2):
@@ -140,10 +144,12 @@ PODS:
   - yoga (0.60.5.React)
 
 DEPENDENCIES:
+  - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - instabug-reactnative (from `../node_modules/instabug-reactnative`)
+  - jail-monkey (from `../node_modules/jail-monkey`)
   - QrCode (from `../node_modules/react-native-lewin-qrcode/ios`)
   - React (from `../node_modules/react-native/`)
   - React-Core (from `../node_modules/react-native/React`)
@@ -193,6 +199,8 @@ SPEC REPOS:
     - Mixpanel
 
 EXTERNAL SOURCES:
+  BVLinearGradient:
+    :path: "../node_modules/react-native-linear-gradient"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   Folly:
@@ -201,6 +209,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   instabug-reactnative:
     :path: "../node_modules/instabug-reactnative"
+  jail-monkey:
+    :path: "../node_modules/jail-monkey"
   QrCode:
     :path: "../node_modules/react-native-lewin-qrcode/ios"
   React:
@@ -288,10 +298,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
   instabug-reactnative: 6a4b20152fee125f9b884371ef10ccbf721dff1e
+  jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
   Mixpanel: 446b6e7713aa34a9a3516ff7648d56551384fc94
   QrCode: d288f3c041248649031e1d7ef6b14319242cf76a
   React: 53c53c4d99097af47cf60594b8706b4e3321e722
@@ -336,6 +348,6 @@ SPEC CHECKSUMS:
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
-PODFILE CHECKSUM: 144d1674992015df629f48661e7b91bde53204e6
+PODFILE CHECKSUM: 46c823e80d21a24ff4270589ea6ae6996f97d25d
 
 COCOAPODS: 1.9.1

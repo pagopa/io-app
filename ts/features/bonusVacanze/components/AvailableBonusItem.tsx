@@ -2,8 +2,11 @@ import { Badge, Grid, ListItem, Row, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
+import { BonusAvailableContent } from "../../../../definitions/content/BonusAvailableContent";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
+import { getLocalePrimaryWithFallback } from "../../../utils/locale";
+import { maybeNotNullyString } from "../../../utils/strings";
 
 type Props = {
   bonusItem: BonusAvailable;
@@ -23,7 +26,6 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   methodTitle: {
-    fontSize: 16,
     color: variables.colorBlack
   },
   methodImage: {
@@ -47,14 +49,12 @@ const styles = StyleSheet.create({
     backgroundColor: variables.lightGray
   },
   notImplementedText: {
-    fontSize: 10,
     lineHeight: Platform.OS === "ios" ? 14 : 16
   },
   centeredContents: {
     alignItems: "center"
   },
   servicesName: {
-    fontSize: variables.fontSizeSmall,
     color: variables.textColor
   }
 });
@@ -70,6 +70,11 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
   const { bonusItem } = props;
   const isComingSoon = !bonusItem.is_active;
   const disabledStyle = isComingSoon ? styles.disabled : {};
+  const bonusTypeLocalizedContent: BonusAvailableContent =
+    bonusItem[getLocalePrimaryWithFallback()];
+  const maybeSponsorDescription = maybeNotNullyString(
+    bonusItem.sponsorship_description
+  );
   return (
     <ListItem
       style={styles.listItem}
@@ -80,7 +85,7 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
           <Row>
             <View style={styles.bonusItem}>
               <Text bold={true} style={[disabledStyle, styles.methodTitle]}>
-                {bonusItem.name}
+                {bonusTypeLocalizedContent.name}
               </Text>
               {isComingSoon && (
                 <Badge style={styles.notImplementedBadge}>
@@ -91,11 +96,13 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
               )}
             </View>
           </Row>
-          <Row>
-            <Text style={[styles.servicesName, disabledStyle]}>
-              {bonusItem.subtitle}
-            </Text>
-          </Row>
+          {maybeSponsorDescription.isSome() && (
+            <Row>
+              <Text style={[styles.servicesName, disabledStyle]}>
+                {maybeSponsorDescription.value}
+              </Text>
+            </Row>
+          )}
         </Grid>
       </View>
       <View style={styles.columnRight}>

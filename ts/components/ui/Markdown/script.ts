@@ -29,7 +29,7 @@ document.body.onclick = function(e) {
     return false;
   }
 };
-true;`;
+`;
 
 // Script to notify the height of the body to the react WebView component
 export const NOTIFY_BODY_HEIGHT_SCRIPT = `
@@ -40,4 +40,4 @@ const message = {
   }
 };
 window.ReactNativeWebView.postMessage(JSON.stringify(message));
-true;`;
+`;

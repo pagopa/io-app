@@ -27,8 +27,10 @@ import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
 
 type Props = Readonly<{
+  accessibilityLabel?: string;
   title: string;
   allowGoBack: boolean;
+  topContentHeight?: number;
   hasDynamicSubHeader: boolean;
   topContent?: React.ReactNode;
   hideHeader?: boolean;
@@ -39,6 +41,8 @@ type Props = Readonly<{
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   appLogo?: boolean;
+  gradientHeader?: boolean;
+  headerPaddingMin?: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -99,6 +103,7 @@ export default class WalletLayout extends React.Component<Props> {
   public render(): React.ReactNode {
     const {
       title,
+      accessibilityLabel,
       allowGoBack,
       hideHeader,
       footerContent,
@@ -108,6 +113,7 @@ export default class WalletLayout extends React.Component<Props> {
 
     return (
       <DarkLayout
+        accessibilityLabel={accessibilityLabel}
         bounces={false}
         allowGoBack={allowGoBack}
         title={title ? title : I18n.t("wallet.wallet")}
@@ -116,7 +122,7 @@ export default class WalletLayout extends React.Component<Props> {
         contentStyle={contentStyle}
         hasDynamicSubHeader={this.props.hasDynamicSubHeader}
         dynamicSubHeader={this.dynamicSubHeader()}
-        topContentHeight={250}
+        topContentHeight={this.props.topContentHeight}
         topContent={this.props.topContent}
         hideHeader={hideHeader}
         footerContent={footerContent}
@@ -124,6 +130,8 @@ export default class WalletLayout extends React.Component<Props> {
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
         contentRefreshControl={this.props.refreshControl}
         faqCategories={this.props.faqCategories}
+        gradientHeader={this.props.gradientHeader}
+        headerPaddingMin={this.props.headerPaddingMin}
       >
         {this.props.children}
       </DarkLayout>

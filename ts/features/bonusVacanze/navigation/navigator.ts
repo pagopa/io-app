@@ -1,15 +1,20 @@
 import { createStackNavigator } from "react-navigation";
+import ActivateBonusCompletedScreen from "../screens/activation/ActivateBonusCompletedScreen";
+import BonusAlreadyExists from "../screens/activation/BonusAlreadyExists";
+import EligibilityExpired from "../screens/activation/EligibilityExpired";
+import LoadActivateBonusScreen from "../screens/activation/LoadActivateBonusScreen";
+import ActivateBonusRequestScreen from "../screens/activation/request/ActivateBonusRequestScreen";
+import TimeoutActivationInfoScreen from "../screens/activation/TimeoutActivationInfoScreen";
 import ActiveBonusScreen from "../screens/ActiveBonusScreen";
 import AvailableBonusScreen from "../screens/AvailableBonusScreen";
+import BonusCTAEligibilityStartScreen from "../screens/BonusCTAEligibilityStartScreen";
 import BonusInformationScreen from "../screens/BonusInformationScreen";
-import ActivateBonusCompletedScreen from "../screens/eligibility/ActivateBonus/ActivateBonusCompletedScreen";
-import LoadActivateBonusScreen from "../screens/eligibility/ActivateBonus/LoadActivateBonusScreen";
-import ActivateBonusRequestScreen from "../screens/eligibility/ActivateBonus/request/ActivateBonusRequestScreen";
-import { TimeoutActivationInfoScreen } from "../screens/eligibility/ActivateBonus/TimeoutActivationInfoScreen";
+import BonusActivationPending from "../screens/eligibility/BonusActivationPending";
 import IseeNotAvailableScreen from "../screens/eligibility/isee/IseeNotAvailableScreen";
 import IseeNotEligibleScreen from "../screens/eligibility/isee/IseeNotEligibleScreen";
 import LoadBonusEligibilityScreen from "../screens/eligibility/LoadBonusEligibilityScreen";
-import { TimeoutEligibilityCheckInfoScreen } from "../screens/eligibility/TimeoutEligibilityCheckInfoScreen";
+import TimeoutEligibilityCheckInfoScreen from "../screens/eligibility/TimeoutEligibilityCheckInfoScreen";
+import UnderageScreen from "../screens/eligibility/UnderageScreen";
 import BONUSVACANZE_ROUTES from "./routes";
 
 const BonusVacanzeNavigator = createStackNavigator(
@@ -32,20 +37,35 @@ const BonusVacanzeNavigator = createStackNavigator(
     [BONUSVACANZE_ROUTES.ELIGIBILITY.ISEE_NOT_ELIGIBLE]: {
       screen: IseeNotEligibleScreen
     },
-    [BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_REQUEST]: {
+    [BONUSVACANZE_ROUTES.ELIGIBILITY.ELIGIBLE]: {
       screen: ActivateBonusRequestScreen
     },
     [BONUSVACANZE_ROUTES.ELIGIBILITY.TIMEOUT]: {
       screen: TimeoutEligibilityCheckInfoScreen
     },
-    [BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_LOADING]: {
+    [BONUSVACANZE_ROUTES.ELIGIBILITY.PENDING]: {
+      screen: BonusActivationPending
+    },
+    [BONUSVACANZE_ROUTES.ELIGIBILITY.UNDERAGE]: {
+      screen: UnderageScreen
+    },
+    [BONUSVACANZE_ROUTES.ACTIVATION.LOADING]: {
       screen: LoadActivateBonusScreen
     },
-    [BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_TIMEOUT]: {
+    [BONUSVACANZE_ROUTES.ACTIVATION.TIMEOUT]: {
       screen: TimeoutActivationInfoScreen
     },
-    [BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_COMPLETED]: {
+    [BONUSVACANZE_ROUTES.ACTIVATION.EXISTS]: {
+      screen: BonusAlreadyExists
+    },
+    [BONUSVACANZE_ROUTES.ACTIVATION.ELIGIBILITY_EXPIRED]: {
+      screen: EligibilityExpired
+    },
+    [BONUSVACANZE_ROUTES.ACTIVATION.COMPLETED]: {
       screen: ActivateBonusCompletedScreen
+    },
+    [BONUSVACANZE_ROUTES.BONUS_CTA_ELIGILITY_START]: {
+      screen: BonusCTAEligibilityStartScreen
     }
   },
   {

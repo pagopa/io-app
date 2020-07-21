@@ -1,23 +1,31 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationInjectedProps, SafeAreaView } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
+import { BonusAvailableContent } from "../../../../definitions/content/BonusAvailableContent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
+import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
+import { getLocalePrimaryWithFallback } from "../../../utils/locale";
+import { maybeNotNullyString } from "../../../utils/strings";
+import { bonusVacanzeStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
-import { navigateToBonusEligibilityLoading } from "../navigation/action";
+import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -29,6 +37,17 @@ type Props = OwnProps &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps>;
 
+const CSS_STYLE = `
+body {
+  font-size: ${customVariables.fontSizeSmall}px;
+  color: ${customVariables.brandDarkestGray}
+}
+
+h4 {
+  font-size: ${customVariables.fontSize1}px;
+}
+`;
+
 const styles = StyleSheet.create({
   noPadded: {
     paddingLeft: 0,
@@ -38,10 +57,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   flexEnd: {
-    alignSelf: "flex-end"
+    alignSelf: "center"
   },
   flexStart: {
-    alignSelf: "flex-start"
+    alignSelf: "center"
   },
   cover: {
     resizeMode: "contain",
@@ -54,6 +73,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between"
   },
   orgName: {
@@ -67,15 +87,27 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "bonus.bonusInformation.contextualHelp.title",
+  body: "bonus.bonusInformation.contextualHelp.body"
+};
+
+// the number of markdown component inside BonusInformationScreen
+const markdownComponents = 1;
+const loadingOpacity = 0.9;
+// for long content markdown computed height should be not enough
+const extraMarkdownBodyHeight = 20;
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
  */
 const BonusInformationScreen: React.FunctionComponent<Props> = props => {
-  const [isMarkdownLoaded, setMarkdownLoaded] = React.useState(false);
+  const [markdownLoaded, setMarkdownLoaded] = React.useState(0);
 
   const getBonusItem = () => props.navigation.getParam("bonusItem");
 
-  const bonusItem = getBonusItem();
+  const bonusType = getBonusItem();
+  const bonusTypeLocalizedContent: BonusAvailableContent =
+    bonusType[getLocalePrimaryWithFallback()];
 
   const cancelButtonProps = {
     block: true,
@@ -88,77 +120,122 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
     block: true,
     primary: true,
     onPress: props.requestBonusActivation,
-    title: `${I18n.t("bonus.bonusVacanza.request")} ${bonusItem.name}`
+    title: `${I18n.t("bonus.bonusVacanze.cta.requestBonus")} ${
+      bonusTypeLocalizedContent.name
+    }`
   };
 
-  const handleModalPress = () =>
-    props.showModal(<TosBonusComponent onClose={props.hideModal} />);
-
+  const handleModalPress = (tos: string) =>
+    props.showModal(
+      <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
+    );
+  const onMarkdownLoaded = () => {
+    setMarkdownLoaded(c => Math.min(c + 1, markdownComponents));
+  };
+  const isMarkdownLoaded = markdownLoaded === markdownComponents;
+  const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
+  const maybeCover = maybeNotNullyString(bonusType.cover);
+  const maybeSponsorshipDescription = maybeNotNullyString(
+    bonusType.sponsorship_description
+  );
   const ContainerComponent = withLoadingSpinner(() => (
-    <BaseScreenComponent goBack={true} headerTitle={bonusItem.name}>
-      <Content>
-        <View style={styles.row}>
-          <View style={styles.flexStart}>
-            {bonusItem.sponsorship_cover && (
-              <Image
-                style={styles.bonusImage}
-                source={{ uri: bonusItem.sponsorship_cover }}
-              />
-            )}
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={bonusTypeLocalizedContent.name}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["bonus_information"]}
+    >
+      <SafeAreaView style={bonusVacanzeStyle.flex}>
+        <Content>
+          <View style={styles.row}>
+            <View style={styles.flexStart}>
+              {maybeSponsorshipDescription.isSome() && (
+                <Text dark={true} style={styles.orgName} semibold={true}>
+                  {maybeSponsorshipDescription.value}
+                </Text>
+              )}
+
+              <Text bold={true} dark={true} style={styles.title}>
+                {bonusTypeLocalizedContent.title}
+              </Text>
+            </View>
+            <View style={styles.flexEnd}>
+              {maybeCover.isSome() && (
+                <Image
+                  source={{ uri: maybeCover.value }}
+                  style={styles.cover}
+                />
+              )}
+            </View>
           </View>
-          <View style={styles.flexEnd}>
-            {bonusItem.cover && (
-              <Image source={{ uri: bonusItem.cover }} style={styles.cover} />
-            )}
-          </View>
-        </View>
-        <View spacer={true} />
-        <Text dark={true} style={styles.orgName}>
-          {bonusItem.subtitle}
-        </Text>
-        <Text bold={true} dark={true} style={styles.title}>{`${I18n.t(
-          "bonus.requestTitle"
-        )} ${bonusItem.name}`}</Text>
-        <View spacer={true} large={true} />
-        <Text dark={true}>{bonusItem.content}</Text>
-        <ButtonDefaultOpacity
-          style={styles.noPadded}
-          small={true}
-          transparent={true}
-          onPress={handleModalPress}
-        >
-          <Text>{I18n.t("bonus.tos.title")}</Text>
-        </ButtonDefaultOpacity>
-        <View spacer={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} />
-        <Markdown onLoadEnd={() => setMarkdownLoaded(true)}>
-          {/* TODO Replace with correct text of bonus */
-          I18n.t("profile.main.privacy.exportData.info.body")}
-        </Markdown>
-        <View spacer={true} extralarge={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} extralarge={true} />
-        <Text dark={true}>{I18n.t("bonus.bonusVacanza.advice")}</Text>
-        <View spacer={true} extralarge={true} />
-        <View spacer={true} extralarge={true} />
-        <View spacer={true} large={true} />
-      </Content>
-      {isMarkdownLoaded && (
-        <FooterWithButtons
-          type="TwoButtonsInlineThird"
-          leftButton={cancelButtonProps}
-          rightButton={requestButtonProps}
-        />
-      )}
+          <View spacer={true} large={true} />
+          <Text dark={true}>{bonusTypeLocalizedContent.subtitle}</Text>
+          {maybeBonusTos.isSome() && (
+            <ButtonDefaultOpacity
+              style={styles.noPadded}
+              transparent={true}
+              onPress={() => handleModalPress(maybeBonusTos.value)}
+            >
+              <Text semibold={true} link={true}>
+                {I18n.t("bonus.tos.title")}
+              </Text>
+            </ButtonDefaultOpacity>
+          )}
+          <View spacer={true} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} />
+          <Markdown
+            cssStyle={CSS_STYLE}
+            extraBodyHeight={extraMarkdownBodyHeight}
+            onLoadEnd={onMarkdownLoaded}
+          >
+            {bonusTypeLocalizedContent.content}
+          </Markdown>
+          {maybeBonusTos.isSome() && (
+            <>
+              <View spacer={true} extralarge={true} />
+              <ItemSeparatorComponent noPadded={true} />
+              <View spacer={true} extralarge={true} />
+              <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
+              <TouchableDefaultOpacity
+                onPress={() => handleModalPress(maybeBonusTos.value)}
+                accessibilityRole={"link"}
+              >
+                <Text
+                  link={true}
+                  semibold={true}
+                  ellipsizeMode={"tail"}
+                  numberOfLines={1}
+                >
+                  {I18n.t("bonus.tos.title")}
+                </Text>
+              </TouchableDefaultOpacity>
+            </>
+          )}
+          {isMarkdownLoaded && <EdgeBorderComponent />}
+        </Content>
+        {isMarkdownLoaded && (
+          <FooterWithButtons
+            type="TwoButtonsInlineThird"
+            leftButton={cancelButtonProps}
+            rightButton={requestButtonProps}
+          />
+        )}
+      </SafeAreaView>
     </BaseScreenComponent>
   ));
-  return <ContainerComponent isLoading={!isMarkdownLoaded} />;
+  return (
+    <ContainerComponent
+      isLoading={!isMarkdownLoaded}
+      loadingOpacity={loadingOpacity}
+    />
+  );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO add bonus request action or just navigate to TOS screen (?)
-  requestBonusActivation: () => dispatch(navigateToBonusEligibilityLoading()),
+  requestBonusActivation: () => {
+    dispatch(checkBonusVacanzeEligibility.request());
+  },
   navigateBack: () => dispatch(navigateBack())
 });
 

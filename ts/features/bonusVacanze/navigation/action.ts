@@ -19,14 +19,24 @@ export const navigateToIseeNotAvailable = () =>
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ISEE_NOT_AVAILABLE
   });
 
-export const navigateToActivateBonus = () =>
+export const navigateToEligible = () =>
   NavigationActions.navigate({
-    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_REQUEST
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ELIGIBLE
   });
 
 export const navigateToTimeoutEligibilityCheck = () =>
   NavigationActions.navigate({
     routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.TIMEOUT
+  });
+
+export const navigateToBonusActivationPending = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.PENDING
+  });
+
+export const navigateToUnderage = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.UNDERAGE
   });
 
 export const navigateToAvailableBonusScreen = () =>
@@ -50,17 +60,26 @@ export const navigateToBonusActiveDetailScreen = (
     params
   });
 
-export const navigateToActivationLoading = () =>
+export const navigateToBonusActivationLoading = () =>
   NavigationActions.navigate({
-    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_LOADING
+    routeName: BONUSVACANZE_ROUTES.ACTIVATION.LOADING
   });
 
-export const navigateToActivationTimeout = () =>
+export const navigateToBonusActivationTimeout = () =>
   NavigationActions.navigate({
-    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_TIMEOUT
+    routeName: BONUSVACANZE_ROUTES.ACTIVATION.TIMEOUT
   });
 
-export const navigateToActivationCompleted = () =>
+export const navigateToBonusAlreadyExists = () =>
   NavigationActions.navigate({
-    routeName: BONUSVACANZE_ROUTES.ELIGIBILITY.ACTIVATION_COMPLETED
+    routeName: BONUSVACANZE_ROUTES.ACTIVATION.EXISTS
+  });
+
+export const navigateToEligibilityExpired = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ACTIVATION.ELIGIBILITY_EXPIRED
+  });
+export const navigateToBonusActivationCompleted = () =>
+  NavigationActions.navigate({
+    routeName: BONUSVACANZE_ROUTES.ACTIVATION.COMPLETED
   });

@@ -1,0 +1,1 @@
+No. After submitting the Single Substitute Declaration (DSU) to INPS for the calculation of the ISEE, there is no need to do anything else to claim the Bonus via IO. At the time of the request, the app itself verifies directly with INPS systems that your ISEE is below the threshold.  

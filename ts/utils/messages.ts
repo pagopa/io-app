@@ -2,11 +2,28 @@
  * Generic utilities for messages
  */
 
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import {
+  fromNullable,
+  fromPredicate,
+  none,
+  Option,
+  some
+} from "fp-ts/lib/Option";
+import FM from "front-matter";
+import { Linking } from "react-native";
+import { Dispatch } from "redux";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
+import {
+  getInternalRoute,
+  handleInternalLink
+} from "../components/ui/Markdown/handlers/internalLink";
+import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link";
+import { CTA, CTAS, MessageCTA } from "../types/MessageCTA";
 import { getExpireStatus } from "./dates";
+import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
 export function messageContainsText(
@@ -34,8 +51,24 @@ export function messageNeedsPaymentCTA(
 export function messageNeedsCTABar(
   message: CreatedMessageWithContentAndAttachments
 ): boolean {
-  return messageNeedsDueDateCTA(message) || messageNeedsPaymentCTA(message);
+  return (
+    messageNeedsDueDateCTA(message) ||
+    messageNeedsPaymentCTA(message) ||
+    getCTA(message).isSome()
+  );
 }
+
+export const handleCtaAction = (cta: CTA, dispatch: Dispatch) => {
+  const maybeInternalLink = getInternalRoute(cta.action);
+  if (maybeInternalLink.isSome()) {
+    handleInternalLink(dispatch, cta.action);
+  } else {
+    const maybeHandledAction = deriveCustomHandledLink(cta.action);
+    if (maybeHandledAction.isSome()) {
+      Linking.openURL(maybeHandledAction.value).catch(() => 0);
+    }
+  }
+};
 
 export const hasPrescriptionData = (
   message: CreatedMessageWithContentAndAttachments
@@ -145,4 +178,64 @@ export const getPrescriptionDataFromName = (
     }
     return none;
   });
+};
+
+/**
+ * extract the CTAs if they are nested inside the message markdown content
+ * if some CTAs are been found, the localized version will be returned
+ * @param message
+ * @param locale
+ */
+export const getCTA = (message: CreatedMessageWithContent): Option<CTAS> => {
+  return fromPredicate((t: string) => FM.test(t))(message.content.markdown)
+    .map(m => FM<MessageCTA>(m).attributes)
+    .chain(attrs =>
+      CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
+        _ => none,
+        // check if the decoded actions are valid
+        cta => (hasCtaValidActions(cta) ? some(cta) : none)
+      )
+    );
+};
+
+/**
+ * return a boolean indicating if the cta action is valid or not
+ * @param cta
+ */
+export const isCtaActionValid = (cta: CTA): boolean => {
+  // check if it is an internal navigation
+  if (getInternalRoute(cta.action).isSome()) {
+    return true;
+  }
+  const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
+  // check if it is a custom action (it should be composed in a specific format)
+  if (maybeCustomHandledAction.isSome()) {
+    return true;
+  }
+  return false;
+};
+
+/**
+ * return true if at least one of the CTAs is valid
+ * @param ctas
+ */
+export const hasCtaValidActions = (ctas: CTAS): boolean => {
+  const isCTA1Valid = isCtaActionValid(ctas.cta_1);
+  if (ctas.cta_2 === undefined) {
+    return isCTA1Valid;
+  }
+  const isCTA2Valid = isCtaActionValid(ctas.cta_2);
+  return isCTA1Valid || isCTA2Valid;
+};
+
+/**
+ * remove the cta front-matter if it is nested inside the markdown
+ * @param cta
+ */
+export const cleanMarkdownFromCTAs = (
+  markdown: MessageBodyMarkdown
+): string => {
+  return fromPredicate((t: string) => FM.test(t))(markdown)
+    .map(m => FM(m).body)
+    .getOrElse(markdown as string);
 };

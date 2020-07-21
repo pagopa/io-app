@@ -1,6 +1,12 @@
 import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
-import { Platform, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import {
+  AccessibilityRole,
+  Platform,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
 import Switch from "../../components/ui/Switch";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
@@ -31,6 +37,9 @@ type Props = Readonly<{
   switchDisabled?: boolean;
   keySwitch?: string;
   isLongPressEnabled?: boolean;
+  accessible?: boolean;
+  accessibilityLabel?: string;
+  accessibilityRole?: AccessibilityRole;
 }>;
 const DEFAULT_ICON_SIZE = 24;
 const PADDING_R_DESCRIPTION = 24;
@@ -102,6 +111,9 @@ export default class ListItemComponent extends React.Component<Props> {
         onLongPress={this.props.onLongPress}
         first={this.props.isFirstItem}
         last={this.props.isLastItem || this.props.hideSeparator}
+        accessible={this.props.accessible}
+        accessibilityLabel={this.props.accessibilityLabel}
+        accessibilityRole={this.props.accessibilityRole}
       >
         <View style={styles.flexColumn}>
           <View style={styles.flexRow}>
@@ -145,7 +157,6 @@ export default class ListItemComponent extends React.Component<Props> {
           {this.props.subTitle && (
             <Text
               numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-              small={true}
               style={[
                 styles.description,
                 {

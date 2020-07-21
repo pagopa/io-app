@@ -10,6 +10,8 @@ import {
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
 import {
+  getAllBonusActivationsDefaultDecoder,
+  GetAllBonusActivationsT,
   getBonusEligibilityCheckDefaultDecoder,
   GetBonusEligibilityCheckT,
   getLatestBonusActivationByIdDefaultDecoder,
@@ -29,6 +31,14 @@ type GetBonusListT = IGetApiRequestType<
   BasicResponseType<BonusesAvailable>
 >;
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
+
+const getAllBonusActivations: GetAllBonusActivationsT = {
+  method: "get",
+  url: () => `/api/v1/bonus/vacanze/activations`,
+  query: _ => ({}),
+  headers: tokenHeaderProducer,
+  response_decoder: getAllBonusActivationsDefaultDecoder()
+};
 
 const getLatestBonusFromIdT: GetLatestBonusActivationByIdT = {
   method: "get",
@@ -126,6 +136,9 @@ export function BackendBonusVacanze(
     ),
     startBonusActivationProcedure: withBearerToken(
       createFetchRequestForApi(startBonusActivationProcedure, options)
+    ),
+    getAllBonusActivations: withBearerToken(
+      createFetchRequestForApi(getAllBonusActivations, options)
     )
   };
 }

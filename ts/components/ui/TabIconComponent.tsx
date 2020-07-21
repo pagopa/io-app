@@ -42,7 +42,8 @@ class TabIconComponent extends React.PureComponent<Props> {
   public render() {
     const { color, badgeValue, iconName } = this.props;
     return (
-      <View>
+      // accessibilityLabel={""} in order to read the font icon, without modify the library element
+      <View accessibilityLabel={""}>
         <IconFont name={iconName} size={variables.iconSize3} color={color} />
         {badgeValue && badgeValue > 0 ? (
           <CustomBadge
