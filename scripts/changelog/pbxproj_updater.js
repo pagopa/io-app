@@ -32,11 +32,11 @@ module.exports.writeVersion = function(contents, version) {
 
 const regexVersion = /([0-9.]+)(-rc.(\d+))?/gm;
 
-export const getRC = rawVersion => {
+const getRC = rawVersion => {
   return rawVersion.replace(regexVersion, "$3");
 };
 
-export const isRc = rawVersion => {
+const isRc = rawVersion => {
   return rawVersion.replace(regexVersion, "$3") !== "";
 };
 
