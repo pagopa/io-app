@@ -73,8 +73,8 @@ export const allBonusActiveSelector = createSelector<
   return Object.keys(allActiveObj).map(k => allActiveObj[k]);
 });
 
-// return true if the current profile fiscal code is already owner of at least another bonus
-export const hasAnotherActiveBonus = createSelector<
+// return the list of the active bonus of which the current profile is the applicant
+export const ownedActiveBonus = createSelector<
   GlobalState,
   ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>,
   ProfileState,

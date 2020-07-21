@@ -43,7 +43,7 @@ import {
 } from "../store/actions/bonusVacanze";
 import {
   bonusActiveDetailByIdSelector,
-  hasAnotherActiveBonus
+  ownedActiveBonus
 } from "../store/reducers/allActive";
 import {
   availableBonusTypesSelectorFromId,
@@ -391,7 +391,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           {switchInformationText()}
           <View spacer={true} />
         </View>
-        {props.hasAnotherBonus && (
+        {props.hasMoreOwnedActiveBonus && (
           <ActivateBonusDiscrepancies
             text={I18n.t("bonus.bonusVacanze.multipleBonus")}
             attention={I18n.t(
@@ -480,7 +480,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
 
   return {
-    hasAnotherBonus: hasAnotherActiveBonus(state).length > 1,
+    hasMoreOwnedActiveBonus: ownedActiveBonus(state).length > 1,
     bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus,
     isError: pot.isNone(bonus) && pot.isError(bonus), // error and no bonus data, user should retry to load

@@ -28,7 +28,7 @@ import { actionWithAlert } from "../components/alert/ActionWithAlert";
 import { bonusVacanzeStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
-import { hasAnotherActiveBonus } from "../store/reducers/allActive";
+import { ownedActiveBonus } from "../store/reducers/allActive";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -113,14 +113,15 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusType[getLocalePrimaryWithFallback()];
 
-  const showAlert = () =>
-    props.hasAnotherBonus
+  // if the current profile owns other active bonus, show an alert informing about that
+  const handleBonusRequestOnPress = () =>
+    props.hasOwnedActiveBonus
       ? actionWithAlert({
           title: I18n.t("bonus.bonusInformation.requestAlert.title"),
           body: I18n.t("bonus.bonusInformation.requestAlert.content"),
           confirmText: I18n.t("bonus.bonusVacanze.abort.cancel"),
           cancelText: I18n.t("bonus.bonusVacanze.abort.confirm"),
-          onConfirmAction: () => props.requestBonusActivation()
+          onConfirmAction: props.requestBonusActivation
         })
       : props.requestBonusActivation();
 
@@ -134,7 +135,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const requestButtonProps = {
     block: true,
     primary: true,
-    onPress: showAlert,
+    onPress: handleBonusRequestOnPress,
     title: `${I18n.t("bonus.bonusVacanze.cta.requestBonus")} ${
       bonusTypeLocalizedContent.name
     }`
@@ -248,7 +249,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  hasAnotherBonus: hasAnotherActiveBonus(state).length > 0
+  hasOwnedActiveBonus: ownedActiveBonus(state).length > 0
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
