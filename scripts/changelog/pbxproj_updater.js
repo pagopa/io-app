@@ -3,6 +3,8 @@
  * for pbxproj files. The value will follow the same rules applyied for CFBundleVersion in "plist_updater"
  */
 
+const versionModule = require("./version_utility.js");
+
 module.exports.readVersion = function(contents) {
   return "-";
 };
@@ -17,7 +19,10 @@ module.exports.readVersion = function(contents) {
  * @return {string}
  */
 function replacer(match, version, p1, p2, p3) {
-  const currentProjectVersionValue = iosGetBuildVersion(version, p2);
+  const currentProjectVersionValue = versionModule.iosGetBuildVersion(
+    version,
+    p2
+  );
   return [p1, currentProjectVersionValue, p3].join("");
 }
 
@@ -28,20 +33,4 @@ module.exports.writeVersion = function(contents, version) {
     replacer(substr, version, ...args)
   );
   return contents;
-};
-
-const regexVersion = /([0-9.]+)(-rc.(\d+))?/gm;
-
-const getRC = rawVersion => {
-  return rawVersion.replace(regexVersion, "$3");
-};
-
-const isRc = rawVersion => {
-  return rawVersion.replace(regexVersion, "$3") !== "";
-};
-
-const iosGetBuildVersion = (rawVersion, currentBuildVersion) => {
-  return isRc(rawVersion)
-    ? getRC(rawVersion)
-    : parseInt(currentBuildVersion, 10) + 1;
 };

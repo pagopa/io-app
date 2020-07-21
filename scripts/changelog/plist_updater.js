@@ -16,7 +16,7 @@
  */
 
 const plist = require("plist");
-const versionModule = require("./version_regex.js");
+const versionModule = require("./version_utility.js");
 
 module.exports.readVersion = function(contents) {
   const infoObj = plist.parse(contents);
