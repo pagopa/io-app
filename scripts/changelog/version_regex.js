@@ -6,7 +6,7 @@ const regexVersion = /([0-9.]+)(-rc.(\d+))?/gm;
  * @param rawVersion
  * @return {string}
  */
-export const getVersion = rawVersion => {
+module.exports.getVersion = rawVersion => {
   return rawVersion.replace(regexVersion, "$1");
 };
 
@@ -16,7 +16,7 @@ export const getVersion = rawVersion => {
  * @param rawVersion
  * @return {string}
  */
-export const getRC = rawVersion => {
+module.exports.getRC = rawVersion => {
   return rawVersion.replace(regexVersion, "$3");
 };
 
@@ -28,7 +28,7 @@ export const getRC = rawVersion => {
  * @param rawVersion
  * @return {boolean}
  */
-export const isRc = rawVersion => {
+module.exports.isRc = rawVersion => {
   return rawVersion.replace(regexVersion, "$3") !== "";
 };
 
@@ -42,7 +42,7 @@ export const isRc = rawVersion => {
  * @param currentBuildVersion
  * @return {*}
  */
-const iosGetBuildVersion = (rawVersion, currentBuildVersion) => {
+module.exports.iosGetBuildVersion = (rawVersion, currentBuildVersion) => {
   return isRc(rawVersion)
     ? getRC(rawVersion)
     : parseInt(currentBuildVersion, 10) + 1;
