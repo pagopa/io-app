@@ -1536,7 +1536,7 @@ bonus:
       body: Qui sono visualizzate tutte le informazioni relative al bonus vacanze, il provvedimento istituito dal Decreto Rilancio per incentivare  il turismo dopo il lockdown dovuto all'emergenza Coronavirus.
     requestAlert:
       title: Attenzione
-      content: "Hai già ottenuto un bonus, continua la richiesta solo se la tua situazione si è modifcata e hai presentato una nuova DSU per l’aggiornamento dell’ISEE.\n Ti informiamo che l’utilizzo di bonus generati in base a DSU non corrette, determina azioni di recupero dell’agevolazione verso l’utilizzatore.\n Sei sicuro di voler continuare?"
+      content: "Hai già ottenuto un bonus, continua la richiesta solo se la tua situazione si è modificata e hai presentato una nuova DSU per l’aggiornamento dell’ISEE.\n Ti informiamo che l’utilizzo di bonus generati in base a DSU non corrette, determina azioni di recupero dell’agevolazione verso l’utilizzatore.\n Sei sicuro di voler continuare?"
   request: Richiedi un nuovo bonus
   requestLabel: Bonus e sconti
   requestTitle: Richiesta
