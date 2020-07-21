@@ -43,9 +43,9 @@ import {
   startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
 import {
+  allBonusActiveSelector,
   bonusActiveDetailByIdSelector,
-  hasAnotherActiveBonus,
-  allBonusActiveSelector
+  hasAnotherActiveBonus
 } from "../store/reducers/allActive";
 import {
   availableBonusTypesSelectorFromId,
