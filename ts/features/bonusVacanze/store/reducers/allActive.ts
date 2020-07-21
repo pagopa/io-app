@@ -1,10 +1,14 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { FiscalCode } from "italia-ts-commons/lib/strings";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { Action } from "../../../../store/actions/types";
+import {
+  profileSelector,
+  ProfileState
+} from "../../../../store/reducers/profile";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   activateBonusVacanze,
@@ -70,18 +74,31 @@ export const allBonusActiveSelector = createSelector<
 });
 
 // return true if the current profile fiscal code is already owner of at least another bonus
-export const hasAnotherActiveBonus = (fc: FiscalCode) =>
-  createSelector<
-    GlobalState,
-    ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>,
-    boolean
-  >(allBonusActiveSelector, allActiveArray => {
-    return (
-      allActiveArray.filter(
-        bonus => pot.isSome(bonus) && bonus.value.applicant_fiscal_code === fc
-      ).length > 0
-    );
-  });
+export const hasAnotherActiveBonus = createSelector<
+  GlobalState,
+  ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>,
+  ProfileState,
+  ReadonlyArray<BonusActivationWithQrCode>
+>([allBonusActiveSelector, profileSelector], (allActiveArray, profile) => {
+  return pot.toOption(profile).fold([], p =>
+    allActiveArray.reduce(
+      (
+        acc: ReadonlyArray<BonusActivationWithQrCode>,
+        curr: pot.Pot<BonusActivationWithQrCode, Error>
+      ) => {
+        if (
+          pot.isSome(curr) &&
+          curr.value.applicant_fiscal_code === p.fiscal_code &&
+          curr.value.status === BonusActivationStatusEnum.ACTIVE
+        ) {
+          return [...acc, curr.value];
+        }
+        return acc;
+      },
+      []
+    )
+  );
+});
 
 // return the bonus from a given ID
 export const bonusActiveDetailByIdSelector = (id: string) =>

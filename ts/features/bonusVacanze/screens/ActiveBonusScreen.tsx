@@ -24,7 +24,6 @@ import {
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { profileSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
@@ -43,7 +42,6 @@ import {
   startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
 import {
-  allBonusActiveSelector,
   bonusActiveDetailByIdSelector,
   hasAnotherActiveBonus
 } from "../store/reducers/allActive";
@@ -480,15 +478,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const bonusFromNav = ownProps.navigation.getParam("bonus");
   const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
-  const profile = pot.toUndefined(profileSelector(state));
-  const hasAnotherBonus = fromNullable(profile).fold(false, p => {
-    return hasAnotherActiveBonus(p.fiscal_code)(state);
-  });
-
-  const allActiveBonuses = allBonusActiveSelector(state);
 
   return {
-    hasAnotherBonus: hasAnotherBonus && allActiveBonuses.length > 1,
+    hasAnotherBonus: hasAnotherActiveBonus(state).length > 1,
     bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus,
     isError: pot.isNone(bonus) && pot.isError(bonus), // error and no bonus data, user should retry to load

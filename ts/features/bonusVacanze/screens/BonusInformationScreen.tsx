@@ -1,5 +1,3 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
@@ -22,7 +20,6 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
-import { profileSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
@@ -250,16 +247,9 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => {
-  const profile = pot.toUndefined(profileSelector(state));
-  const hasAnotherBonus = fromNullable(profile).fold(false, p => {
-    return hasAnotherActiveBonus(p.fiscal_code)(state);
-  });
-
-  return {
-    hasAnotherBonus
-  };
-};
+const mapStateToProps = (state: GlobalState) => ({
+  hasAnotherBonus: hasAnotherActiveBonus(state).length > 0
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestBonusActivation: () => {
