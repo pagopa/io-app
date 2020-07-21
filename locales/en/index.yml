@@ -1382,6 +1382,9 @@ faq:
   76:
     title: "The app tells me that the maximum amount of my Bonus Vacanze is 500 euros. What happens if the cost of my stay is lower?"
     content: !include bonus/faq/faq76.md
+  77:
+    title: "Is any kind of ISEE right to request the Bonus Vacanze?"
+    content: !include bonus/faq/faq77.md
 bonus:
   bonusVacanze:
     accessibility:
@@ -1390,6 +1393,7 @@ bonus:
       validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
       bonusRejected: Attention! This Bonus Vacanze has been rejected
       redeemed: This Bonus Vacanze has been consumed on {{date}}
+    multipleBonus: Two bonuses requested and activated by you. Make sure you use the correct DSU to prevent the bonus user from incurring subsequent recovery actions.
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return
     request: Request the
@@ -1480,7 +1484,7 @@ bonus:
       title: Cancel
       body: Do you really want to quit? To request the "Bonus Vacanze" you will have to repeat the process from the beginning.
       cancel: Continue
-      confirm: Abort request
+      confirm: Abort the request
       completed: Request aborted
     composition:
       amount: "Maximum amount"
@@ -1498,6 +1502,9 @@ bonus:
     contextualHelp:
       title: The Bonus Vacanze
       body: Here you can see all the information related to the Bonus Vacanze, the measure established by the Decreto Rilancio to encourage tourism after the lockdown due to the Coronavirus emergency.
+    requestAlert:
+      title: Attention
+      content: "You have already obtained a bonus, continue the request only if your situation has changed and you have submitted a new DSU to update ISEE.\n Please note that the use of bonuses generated on the basis of incorrect DSU, determines actions to recover the benefit to the user.\n Are you sure you want to continue?"
   request: Request a new bonus
   requestLabel: Bonuses and discounts
   requestTitle: Request
