@@ -1,3 +1,4 @@
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
@@ -16,8 +17,9 @@ export function* checkSession(
       getSessionValidity,
       {}
     );
+
     if (response.isLeft()) {
-      throw response.value;
+      throw Error(readableReport(response.value));
     } else {
       // On response we check the current status if 401 the session is invalid
       // the result will be false and then put the session expired action
