@@ -20,12 +20,15 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
+import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
+import { actionWithAlert } from "../components/alert/ActionWithAlert";
 import { bonusVacanzeStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
+import { ownedActiveBonus } from "../store/reducers/allActive";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -35,6 +38,7 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = OwnProps &
   LightModalContextInterface &
+  ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const CSS_STYLE = `
@@ -109,6 +113,18 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusType[getLocalePrimaryWithFallback()];
 
+  // if the current profile owns other active bonus, show an alert informing about that
+  const handleBonusRequestOnPress = () =>
+    props.hasOwnedActiveBonus
+      ? actionWithAlert({
+          title: I18n.t("bonus.bonusInformation.requestAlert.title"),
+          body: I18n.t("bonus.bonusInformation.requestAlert.content"),
+          confirmText: I18n.t("bonus.bonusVacanze.abort.cancel"),
+          cancelText: I18n.t("bonus.bonusVacanze.abort.confirm"),
+          onConfirmAction: props.requestBonusActivation
+        })
+      : props.requestBonusActivation();
+
   const cancelButtonProps = {
     block: true,
     light: true,
@@ -119,7 +135,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const requestButtonProps = {
     block: true,
     primary: true,
-    onPress: props.requestBonusActivation,
+    onPress: handleBonusRequestOnPress,
     title: `${I18n.t("bonus.bonusVacanze.cta.requestBonus")} ${
       bonusTypeLocalizedContent.name
     }`
@@ -232,6 +248,10 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
+const mapStateToProps = (state: GlobalState) => ({
+  hasOwnedActiveBonus: ownedActiveBonus(state).length > 0
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestBonusActivation: () => {
     dispatch(checkBonusVacanzeEligibility.request());
@@ -241,7 +261,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 export default withLightModalContext(
   connect(
-    undefined,
+    mapStateToProps,
     mapDispatchToProps
   )(BonusInformationScreen)
 );
