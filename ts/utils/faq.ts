@@ -25,7 +25,7 @@ export const FAQs: Record<
   payment: [43, 44, 45, 46],
   services: [47, 48, 49],
   services_detail: [50, 51, 52],
-  bonus_information: [58, 59, 67, 68, 69, 70, 71, 72],
+  bonus_information: [58, 59, 67, 68, 69, 70, 71, 72, 77],
   bonus_eligible: [60, 61, 69, 71, 72, 73, 75],
   bonus_eligible_discrepancies: [62],
   bonus_detail: [63, 64, 65, 76],

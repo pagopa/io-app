@@ -1382,6 +1382,9 @@ faq:
   76:
     title: "The app tells me that the maximum amount of my Bonus Vacanze is 500 euros. What happens if the cost of my stay is lower?"
     content: !include bonus/faq/faq76.md
+  77:
+    title: "Is any kind of ISEE right to request the Bonus Vacanze?"
+    content: !include bonus/faq/faq77.md
 bonus:
   bonusVacanze:
     accessibility:
