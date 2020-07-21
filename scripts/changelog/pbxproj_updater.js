@@ -1,8 +1,9 @@
 /**
  * This is an updater for the utility "standard-version" that increase the CURRENT_PROJECT_VERSION value
- * for pbxproj files. Instead of set a specific version, like an usual updater, this module increase only
- * the value of CURRENT_PROJECT_VERSION by one.
+ * for pbxproj files. The value will follow the same rules applyied for CFBundleVersion in "plist_updater"
  */
+
+import { getRC, iosGetBuildVersion, regexVersion } from "./version_regex";
 
 module.exports.readVersion = function(contents) {
   return "-";
@@ -11,20 +12,22 @@ module.exports.readVersion = function(contents) {
 /***
  *
  * @param match
+ * @param version
  * @param p1: the key CURRENT_PROJECT_VERSION
  * @param p2: the value
  * @param p3: the ";"
- * @param _
- * @param _
  * @return {string}
  */
-function replacer(match, p1, p2, p3, _, _) {
-  const currentProjectVersionValue = parseInt(p2, 10) + 1;
+function replacer(match, version, p1, p2, p3) {
+  const currentProjectVersionValue = iosGetBuildVersion(version, p2);
   return [p1, currentProjectVersionValue, p3].join("");
 }
 
 module.exports.writeVersion = function(contents, version) {
   const regex = /(CURRENT_PROJECT_VERSION\s?=\s?)(\d+)(;)/gm;
-  contents = contents.replace(regex, replacer);
+
+  contents = contents.replace(regex, (substr, ...args) =>
+    replacer(substr, version, ...args)
+  );
   return contents;
 };

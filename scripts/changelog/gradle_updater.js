@@ -1,6 +1,12 @@
 /**
  * This is an updater for the utility "standard-version" that increase the versionName value
  * for gradle files.
+ * Replace the line
+ *
+ * versionName "$VERSION"
+ *
+ * with the new generated version.
+ *
  */
 
 const versionNameRegex = /(versionName ")(.+)(")/gm;
@@ -10,7 +16,7 @@ module.exports.readVersion = function(contents) {
   return versionNameRegex.exec(contents)[2];
 };
 
-function replaceVersionName(match, version, p1, p2, p3, _, _) {
+function replaceVersionName(match, version, p1, p2, p3) {
   return [p1, version, p3].join("");
 }
 
