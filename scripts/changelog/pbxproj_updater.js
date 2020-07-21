@@ -3,7 +3,7 @@
  * for pbxproj files. The value will follow the same rules applyied for CFBundleVersion in "plist_updater"
  */
 
-import { getRC, iosGetBuildVersion, regexVersion } from "./version_regex";
+import { iosGetBuildVersion } from "./version_regex";
 
 module.exports.readVersion = function(contents) {
   return "-";

@@ -15,13 +15,7 @@
  *
  */
 
-import {
-  getRC,
-  getVersion,
-  iosGetBuildVersion,
-  isRc,
-  regexVersion
-} from "./version_regex";
+import { getVersion, iosGetBuildVersion } from "./version_regex";
 
 const plist = require("plist");
 
