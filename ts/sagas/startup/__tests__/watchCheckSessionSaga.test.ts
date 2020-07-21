@@ -66,7 +66,7 @@ describe("checkSession", () => {
       .next(responeLeft)
       .put(
         checkCurrentSession.failure(
-          Error(
+          new Error(
             'value ["some error occurred"] at [root] is not a valid [string]'
           )
         )
