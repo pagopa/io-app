@@ -9,6 +9,7 @@ import { Version } from "../../../../../../definitions/backend/Version";
 import { BonusActivationStatusEnum } from "../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { mockedBonus } from "../../../mock/mockData";
 import { ownedActiveBonus } from "../allActive";
+import { BonusCode } from "../../../../../../definitions/bonus_vacanze/BonusCode";
 
 const fiscalCode = "ABCDEF83A12L719R" as FiscalCode;
 const profile: InitializedProfile = {
@@ -88,7 +89,10 @@ describe("ownedActiveBonus", () => {
   });
 
   it("should return the active bonus(2)", () => {
-    const anotherBonusActive = { ...bonusActive, id: "XYZ" };
+    const anotherBonusActive = pot.some({
+      ...bonusActive.value,
+      id: "XYZ" as BonusCode
+    });
     expect(
       ownedActiveBonus.resultFunc(
         [bonusDifferentApplicant, bonusActive, anotherBonusActive, pot.none],
