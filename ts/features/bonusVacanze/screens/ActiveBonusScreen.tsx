@@ -82,10 +82,6 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1
   },
-  title: {
-    color: variables.lightGray,
-    fontSize: variables.fontSize1
-  },
   image: {
     position: "absolute",
     top: -144,
@@ -366,11 +362,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   return !props.isError && bonus ? (
     <DarkLayout
       bounces={false}
-      headerBody={
-        <TouchableDefaultOpacity onPress={props.goBack} style={styles.center}>
-          <Text style={styles.title}>{I18n.t("bonus.bonusVacanze.name")}</Text>
-        </TouchableDefaultOpacity>
-      }
+      title={I18n.t("bonus.bonusVacanze.name")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["bonus_detail"]}
       allowGoBack={true}
