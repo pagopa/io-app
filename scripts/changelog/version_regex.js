@@ -16,9 +16,9 @@ module.exports.getVersion = function(rawVersion) {
  * @param rawVersion
  * @return {string}
  */
-module.exports.getRC = function(rawVersion) {
+function getRC(rawVersion) {
   return rawVersion.replace(regexVersion, "$3");
-};
+}
 
 /**
  * Return true if the version is rc.
