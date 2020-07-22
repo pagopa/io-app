@@ -23,7 +23,7 @@ export function getResourceNameFromUrl(
 }
 
 /**
- * from a given url return the base path excluding params and fragments
+ * from a given url return the base path excluding query string and fragments
  * @param url
  */
 export const getUrlBasepath = (url: string): string => {
