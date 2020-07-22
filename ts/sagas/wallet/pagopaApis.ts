@@ -1,5 +1,5 @@
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
-import { call, Effect, put, select, take } from "redux-saga/effects";
+import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 
 import { fromNullable } from "fp-ts/lib/Option";
