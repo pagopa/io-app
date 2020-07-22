@@ -21,6 +21,7 @@ import GoBackButton from "../GoBackButton";
 import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -225,9 +226,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             </ButtonDefaultOpacity>
           )}
         {fromNullable(this.props.accessibilityEvents).fold(
-          false,
+          true,
           ({ avoidNavigationEventsUsage, disableAccessibilityFocus }) =>
-            !avoidNavigationEventsUsage && !disableAccessibilityFocus
+            !(avoidNavigationEventsUsage && disableAccessibilityFocus)
         ) && <NavigationEvents onDidFocus={this.handleFocus} />}
       </Right>
     );
