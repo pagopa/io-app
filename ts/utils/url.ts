@@ -26,13 +26,21 @@ export function getResourceNameFromUrl(
  * from a given url return the base path excluding params and fragments
  * @param url
  */
-export const getUrlBasepath = (url: string): string =>
-  pipe<string, string, string, string, string>(
-    u => decodeURIComponent(u),
+export const getUrlBasepath = (url: string): string => {
+  const sharpIndex = url.indexOf("#");
+  const qmIndex = url.indexOf("?");
+  const ampIndex = url.indexOf("&");
+  const comesBeforeQm = qmIndex === -1 || ampIndex < qmIndex;
+  const comesBeforeSharp = sharpIndex === -1 || ampIndex < sharpIndex;
+  // if '&' (sub-delimiter) comes before '?' or '#' (query string and fragment) return the url as it is
+  if (ampIndex !== -1 && comesBeforeQm && comesBeforeSharp) {
+    return url;
+  }
+  return pipe<string, string, string>(
     u => splitAndTakeFirst(u, "?"),
-    u => splitAndTakeFirst(u, "#"),
-    u => splitAndTakeFirst(u, "&")
+    u => splitAndTakeFirst(u, "#")
   )(url);
+};
 
 /**
  * Return the function to:

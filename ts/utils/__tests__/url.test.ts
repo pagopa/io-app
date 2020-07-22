@@ -35,19 +35,25 @@ describe("getUrlBasepath", () => {
 
   it("should return the same url even with params and fragments", () => {
     const base = "https://www.google.com/it/hello";
-    const suffixes: ReadonlyArray<string> = [
+    const suffixesToRemove: ReadonlyArray<string> = [
       "?param1=1&param2=2",
       "?param1=1&param2=2&params3",
-      "&param1=1?param2=2",
       "#fragment=1",
       "?param1=1#fragment=1",
       "?param1=1&param2=2#fragment=1",
-      "#fragment=1?param1=1&param2=2",
+      "#fragment=1?param1=1&param2=2"
+    ];
+    suffixesToRemove.forEach(s => {
+      expect(getUrlBasepath(base + s)).toEqual(base);
+    });
+    const suffixesToNotRemove: ReadonlyArray<string> = [
+      "&param1=1?param2=2",
+      "&param1=1?param2=2#fragment=3",
       "%3Fparam1%3D1%26param2%3D2%23fragment%3D1",
       "%3Fparam1%3D1%26param2%3D2"
     ];
-    suffixes.forEach(s => {
-      expect(getUrlBasepath(base + s)).toEqual(base);
+    suffixesToNotRemove.forEach(s => {
+      expect(getUrlBasepath(base + s)).toEqual(base + s);
     });
   });
 });
