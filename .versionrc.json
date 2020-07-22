@@ -31,4 +31,5 @@
       "updater": "scripts/changelog/gradle_updater.js"
     }
   ]
+
 }
