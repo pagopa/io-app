@@ -113,6 +113,9 @@ def test_availability(uri):
         if r.ok:
             return None
         return "status code %d" % r.status_code
+    except requests.exceptions.SSLError:
+        # this is not an issue for the url availability
+        return None
     except requests.ConnectionError as e:
         return "Connection Error - " + str(e)
     except requests.Timeout as e:
