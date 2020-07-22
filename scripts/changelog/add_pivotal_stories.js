@@ -13,21 +13,21 @@ function skipStoryCheck(id, url) {
   return url.includes("pivotaltracker.com") || id.length < 9;
 }
 
-async function replacePivotalUrl(match, p1, p2, p3) {
+async function replacePivotalUrl(match, storyId, url) {
   try {
     // avoid to use the api if story is already linked to pivotal
-    if (skipStoryCheck(p1, p2)) {
-      return `[${p1}](${p2})`;
+    if (skipStoryCheck(storyId, url)) {
+      return `[${storyId}](${url})`;
     }
     // try to get the story with the specified id
-    const story = await getStory(p1.substr(1));
+    const story = await getStory(storyId.substr(1));
 
     // if the story doesn't exists (aka is a gitlab pull request id) use the same link
     // else use the story url
-    const url = story.url !== undefined ? story.url : p2;
-    return `[${p1}](${url})`;
+    const url = story.url !== undefined ? story.url : url;
+    return `[${storyId}](${url})`;
   } catch (err) {
-    return `[${p1}](${p2})`;
+    return `[${storyId}](${url})`;
   }
 }
 
