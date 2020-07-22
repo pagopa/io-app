@@ -8342,6 +8342,7 @@ pirates@^4.0.0, pirates@^4.0.1:
 pivotaljs@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/pivotaljs/-/pivotaljs-1.0.3.tgz#fafd4bac7bb921ca4509e6e768f3c10772a1f34f"
+  integrity sha1-+v1LrHu5IcpFCebnaPPBB3Kh808=
   dependencies:
     request latest
     underscore latest
