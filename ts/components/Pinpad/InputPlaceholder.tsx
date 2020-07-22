@@ -2,7 +2,6 @@ import { range } from "fp-ts/lib/Array";
 import { View } from "native-base";
 import * as React from "react";
 import { Dimensions, StyleSheet, ViewStyle } from "react-native";
-import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { Baseline, Bullet } from "./Placeholders";
 
@@ -12,6 +11,8 @@ type Props = Readonly<{
   inactiveColor: string;
   inputValue: string;
   customHorizontalMargin?: number;
+  accessibilityLabel: string;
+  accessibilityHint: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -67,13 +68,8 @@ const InputPlaceHolder: React.FunctionComponent<Props> = (props: Props) => {
     <View
       style={styles.placeholderContainer}
       accessible={true}
-      accessibilityLabel={I18n.t("identification.unlockCode.reset.code")}
-      accessibilityHint={I18n.t(
-        "identification.unlockCode.accessibility.unlockHint",
-        {
-          number: props.inputValue.length
-        }
-      )}
+      accessibilityLabel={props.accessibilityLabel}
+      accessibilityHint={props.accessibilityHint}
     >
       {placeholderPositions.map(renderPlaceholder)}
     </View>

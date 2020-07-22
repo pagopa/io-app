@@ -306,6 +306,13 @@ class Pinpad extends React.PureComponent<Props, State> {
           inactiveColor={this.props.inactiveColor}
           inputValue={this.state.value}
           customHorizontalMargin={INPUT_MARGIN}
+          accessibilityLabel={I18n.t("identification.unlockCode.reset.code")}
+          accessibilityHint={I18n.t(
+            "identification.unlockCode.accessibility.unlockHint",
+            {
+              number: this.state.value.length
+            }
+          )}
         />
         <View spacer={true} />
         {this.props.onPinResetHandler !== undefined && (
