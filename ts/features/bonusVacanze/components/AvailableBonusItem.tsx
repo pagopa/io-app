@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   methodTitle: {
-    fontSize: 16,
     color: variables.colorBlack
   },
   methodImage: {
@@ -50,14 +49,12 @@ const styles = StyleSheet.create({
     backgroundColor: variables.lightGray
   },
   notImplementedText: {
-    fontSize: 10,
     lineHeight: Platform.OS === "ios" ? 14 : 16
   },
   centeredContents: {
     alignItems: "center"
   },
   servicesName: {
-    fontSize: variables.fontSizeSmall,
     color: variables.textColor
   }
 });

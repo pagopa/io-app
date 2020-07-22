@@ -278,7 +278,7 @@ const mapDispatchToProps = (
     } else {
       dispatch(
         navigateToWalletHome({
-          newMethodAdded: true,
+          newMethodAdded: maybeWallet.isSome(),
           keyFrom: props.navigation.getParam("keyFrom")
         })
       );

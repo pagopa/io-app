@@ -87,6 +87,15 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
                   iconSize={12}
                   iconName={isDefaultCalendar ? "io-tick-big" : undefined}
                   onPress={() => this.props.onCalendarSelected(calendar)}
+                  accessible={true}
+                  accessibilityRole={"radio"}
+                  accessibilityLabel={`${convertLocalCalendarName(
+                    calendar.title
+                  )}, ${
+                    isDefaultCalendar
+                      ? I18n.t("global.accessibility.active")
+                      : I18n.t("global.accessibility.inactive")
+                  }`}
                 />
               );
             })}

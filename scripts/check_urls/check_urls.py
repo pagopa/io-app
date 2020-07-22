@@ -1,6 +1,8 @@
 import os
 import re
 import ssl
+from typing import List
+
 import certifi
 import requests
 import urllib3
@@ -25,7 +27,8 @@ SLACK_CHANNEL = "#io_status"
 
 # a list of remote uris consumed by the app for content presentation
 remote_content_uri = ["https://raw.githubusercontent.com/pagopa/io-services-metadata/master/services.yml",
-                      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/bonuses_available.json"]
+                      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/bonuses_available.json",
+                      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/contextualhelp/data.json"]
 
 
 class IOUrl(object):
@@ -110,12 +113,15 @@ def test_availability(uri):
         if r.ok:
             return None
         return "status code %d" % r.status_code
-    except requests.ConnectionError:
-        return "Connection Error"
+    except requests.exceptions.SSLError:
+        # this is not an issue for the url availability
+        return None
+    except requests.ConnectionError as e:
+        return "Connection Error - " + str(e)
     except requests.Timeout as e:
-        return "Timeout"
-    except requests.RequestException:
-        return "General Error"
+        return "Timeout - " + str(e)
+    except requests.RequestException as e:
+        return "General Error - " + str(e)
     except Exception as e:
         return str(e)
 
@@ -130,7 +136,7 @@ def test_http_uri(io_url: IOUrl):
     return io_url
 
 
-def send_slack_message(invalid_uris):
+def send_slack_message(invalid_uris: List[IOUrl]):
     """
     Sends the report of the check to slack to notify the status of the static texts of the app
     :return:
@@ -143,7 +149,7 @@ def send_slack_message(invalid_uris):
         )
         if len(invalid_uris) > 0:
             tags = " ".join(tagged_people)
-            message = "%s :warning: There are uris in *IO App* that are not working" % tags
+            message = ":warning: %s There are %d uris in *IO App* that are not working" % (tags,len(invalid_uris))
             message_blocks = []
             message_blocks.append({
                 "type": "section",
@@ -156,6 +162,7 @@ def send_slack_message(invalid_uris):
                 channel=SLACK_CHANNEL,
                 blocks=message_blocks
             )
+            message_blocks = []
             for iu in invalid_uris:
                 message = "`%s` `%s` -> ```%s```" % (iu.source, iu.error, iu.uri)
                 message_blocks.append({
@@ -165,10 +172,10 @@ def send_slack_message(invalid_uris):
                         "text": message
                     }
                 })
-                rtm_client.chat_postMessage(
-                    channel=SLACK_CHANNEL,
-                    blocks=message_blocks
-                )
+            rtm_client.chat_postMessage(
+                channel=SLACK_CHANNEL,
+                blocks=message_blocks
+            )
 
     except SlackApiError as e:
         # You will get a SlackApiError if "ok" is False

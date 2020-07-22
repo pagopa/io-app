@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
   badgeText: {
     marginTop: 3,
     fontSize: customVariables.fontSizeSmall,
-    lineHeight: 16
+    lineHeight: 16,
+    color: customVariables.brandDarkGray
   },
   cardInner: {
     paddingBottom: 13,
@@ -122,7 +123,11 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                   </Text>
                   {isNew && (
                     <Badge style={styles.badgeColor}>
-                      <Text semibold={true} style={styles.badgeText}>
+                      <Text
+                        semibold={true}
+                        style={styles.badgeText}
+                        dark={true}
+                      >
                         {I18n.t("wallet.methods.newCome")}
                       </Text>
                     </Badge>

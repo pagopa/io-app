@@ -119,15 +119,15 @@ class MessageDetailData extends React.PureComponent<Props> {
 
             <Text bold={true}>{I18n.t("messageDetails.question")}</Text>
             <View spacer={true} xsmall={true} />
-            <Text small={true}>{I18n.t("messageDetails.answer")}</Text>
+            <Text>{I18n.t("messageDetails.answer")}</Text>
 
             <View spacer={true} />
 
             <React.Fragment>
               <View style={styles.row}>
-                <Text xsmall={true} style={styles.flex}>{`${I18n.t(
-                  "messageDetails.id"
-                )} ${this.props.message.id}`}</Text>
+                <Text style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
+                  this.props.message.id
+                }`}</Text>
                 <CopyButtonComponent textToCopy={this.props.message.id} />
               </View>
               <View spacer={true} />
