@@ -21,7 +21,6 @@ import GoBackButton from "../GoBackButton";
 import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 const styles = StyleSheet.create({
   helpButton: {
