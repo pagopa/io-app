@@ -46,9 +46,8 @@ module.exports.writeVersion = function(contents, version) {
 
   // if the new version is a rc, use the rc number as CFBundleVersion
   // Else if the new version is the final version, just increase by one the CFBundleVersion
-  infoObj.CFBundleVersion = versionModule.iosGetBuildVersion(
-    version,
-    infoObj.CFBundleVersion
-  );
+  infoObj.CFBundleVersion = versionModule
+    .iosGetBuildVersion(version, infoObj.CFBundleVersion)
+    .toString();
   return plist.build(infoObj);
 };
