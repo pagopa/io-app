@@ -2,6 +2,7 @@ import * as React from "react";
 import { ComponentProps } from "../../types/react";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { SearchType } from "../search/SearchButton";
+import { AccessibilityEvents } from "./BaseHeader";
 import BaseScreenComponent from "./BaseScreenComponent";
 
 interface OwnProps {
@@ -15,7 +16,7 @@ interface OwnProps {
     onPress: () => void;
   };
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
-  avoidNavigationEventsUsage?: boolean;
+  accessibilityEvents?: AccessibilityEvents;
 }
 
 type BaseScreenComponentProps =
@@ -52,7 +53,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
       customGoBack,
       onAccessibilityNavigationHeaderFocus,
       faqCategories,
-      avoidNavigationEventsUsage
+      accessibilityEvents
     } = this.props;
 
     return (
@@ -73,7 +74,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         searchType={searchType}
         customRightIcon={customRightIcon}
         customGoBack={customGoBack}
-        avoidNavigationEventsUsage={avoidNavigationEventsUsage}
+        accessibilityEvents={accessibilityEvents}
       >
         {this.props.children}
       </BaseScreenComponent>

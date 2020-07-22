@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Body, Left, Right, Text, View } from "native-base";
 import { Ref } from "react";
@@ -33,9 +34,14 @@ const styles = StyleSheet.create({
   }
 });
 
+export type AccessibilityEvents = {
+  avoidNavigationEventsUsage?: boolean; // if true NavigationEvents and its events will be excluded (onDidFocus)
+  disableAccessibilityFocus?: boolean; // if true the setAccessibilityFocus is not triggered
+};
+
 interface OwnProps {
   onAccessibilityNavigationHeaderFocus?: () => void;
-  avoidNavigationEventsUsage?: boolean; // if true NavigationEvents and its events will be excluded (onDidFocus)
+  accessibilityEvents?: AccessibilityEvents;
   accessibilityLabel?: string; // rendered only if it is defined and a screen reader is active
   dark?: boolean;
   headerTitle?: string;
@@ -80,7 +86,14 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     AccessibilityInfo.isScreenReaderEnabled()
       .then(isScreenReaderActive => {
         this.setState({ isScreenReaderActive });
-        if (isScreenReaderActive && this.props.avoidNavigationEventsUsage) {
+        if (
+          isScreenReaderActive &&
+          fromNullable(this.props.accessibilityEvents).fold(
+            false,
+            ({ avoidNavigationEventsUsage, disableAccessibilityFocus }) =>
+              avoidNavigationEventsUsage && !disableAccessibilityFocus
+          )
+        ) {
           setAccessibilityFocus(
             this.firstElementRef,
             setAccessibilityTimeout,
@@ -211,9 +224,11 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
               <IconFont name={customRightIcon.iconName} />
             </ButtonDefaultOpacity>
           )}
-        {!this.props.avoidNavigationEventsUsage && (
-          <NavigationEvents onDidFocus={this.handleFocus} />
-        )}
+        {fromNullable(this.props.accessibilityEvents).fold(
+          false,
+          ({ avoidNavigationEventsUsage, disableAccessibilityFocus }) =>
+            !avoidNavigationEventsUsage && !disableAccessibilityFocus
+        ) && <NavigationEvents onDidFocus={this.handleFocus} />}
       </Right>
     );
   };
