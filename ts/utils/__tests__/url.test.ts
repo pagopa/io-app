@@ -43,6 +43,7 @@ describe("getUrlBasepath", () => {
       "?param1=1#fragment=1",
       "?param1=1&param2=2#fragment=1",
       "#fragment=1?param1=1&param2=2",
+      "%3Fparam1%3D1%26param2%3D2%23fragment%3D1",
       "%3Fparam1%3D1%26param2%3D2"
     ];
     suffixes.forEach(s => {
