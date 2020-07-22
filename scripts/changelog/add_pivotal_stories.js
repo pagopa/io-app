@@ -23,10 +23,10 @@ async function replacePivotalUrl(match, storyId, url) {
     // try to get the story with the specified id
     const story = await getStory(storyId.substr(1));
 
-    // if the story doesn't exists (aka is a gitlab pull request id) use the same link
-    // else use the story url
-    const url = story.url !== undefined ? story.url : url;
-    return `[${storyId}](${url})`;
+    // if the story doesn't exists (eg: story deleted) remove the markdown link
+    return story.url !== undefined
+      ? `[${storyId}](${story.url})`
+      : `${storyId}`;
   } catch (err) {
     return sameUrl;
   }
@@ -35,7 +35,7 @@ async function replacePivotalUrl(match, storyId, url) {
 async function replacePivotalStories() {
   // read changelog
   const content = fs.readFileSync("CHANGELOG.md").toString("utf8");
-  // identify the pattern [#XXXXX](url)
+  // identify the pattern [#XXXXX](url) for markdown link
   const pivotalTagRegex = /\[(#\d+)\]\(([a-zA-z:\/\.\d-@:%._\+~#=]+)\)/g;
 
   // check for all the matches if is a pivotal story and update the url
