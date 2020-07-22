@@ -28,7 +28,7 @@ type GetServiceT = IGetApiRequestType<
 
 const getServiceT: GetServiceT = {
   method: "get",
-  url: params => `/services-data/${params.serviceId.toUpperCase()}.json`,
+  url: params => `/services/${params.serviceId.toLocaleLowerCase()}.json`,
   query: _ => ({}),
   headers: _ => ({}),
   response_decoder: basicResponseDecoder(ServiceMetadata)
