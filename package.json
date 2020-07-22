@@ -207,5 +207,10 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pagopa/io-app.git"
+  },
+  "standard-version": {
+    "scripts": {
+      "postchangelog": "scripts/changelog/add_pivotal_stories.js"
+    }
   }
 }
