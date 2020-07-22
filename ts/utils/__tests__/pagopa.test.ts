@@ -49,16 +49,6 @@ describe("cisSuccessTransaction", () => {
     ).toBeFalsy();
   });
 
-  it("should return false", () => {
-    expect(
-      isSuccessTransaction({
-        ...transaction,
-        accountingStatus: undefined,
-        idStatus: undefined
-      })
-    ).toBeFalsy();
-  });
-
   it("should return true", () => {
     expect(
       isSuccessTransaction({
