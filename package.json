@@ -210,7 +210,7 @@
   },
   "standard-version": {
     "scripts": {
-      "postchangelog": "scripts/changelog/add_pivotal_stories.js"
+      "postchangelog": "node scripts/changelog/add_pivotal_stories.js"
     }
   }
 }
