@@ -301,6 +301,7 @@ cie:
   title: Appoggia la carta
   layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
   layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti un suono.
+  booking_url: https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/
 spid:
   login: ACCEDI
   loginButton: ENTRA CON
