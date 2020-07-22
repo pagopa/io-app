@@ -1138,7 +1138,7 @@ identification:
     waitMessage: "Riprova tra:"
   unlockCode:
     accessibility:
-      unlockHint: Hai inserito {{number}} cifre on {{length}}
+      unlockHint: Hai inserito {{number}} cifre di {{length}}
       fingerprint: Autenticati con l'impronta digitale
       faceId: Autenticati con il riconoscimento facciale
       delete: Cancella l'ultima cifra inserita
