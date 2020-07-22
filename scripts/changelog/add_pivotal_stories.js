@@ -14,10 +14,11 @@ function skipStoryCheck(id, url) {
 }
 
 async function replacePivotalUrl(match, storyId, url) {
+  const sameUrl = `[${storyId}](${url})`;
   try {
     // avoid to use the api if story is already linked to pivotal
     if (skipStoryCheck(storyId, url)) {
-      return `[${storyId}](${url})`;
+      return sameUrl;
     }
     // try to get the story with the specified id
     const story = await getStory(storyId.substr(1));
@@ -27,7 +28,7 @@ async function replacePivotalUrl(match, storyId, url) {
     const url = story.url !== undefined ? story.url : url;
     return `[${storyId}](${url})`;
   } catch (err) {
-    return `[${storyId}](${url})`;
+    return sameUrl;
   }
 }
 
