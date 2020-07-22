@@ -11,11 +11,8 @@ import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
 
 type Props = NavigationInjectedProps & ReduxProps;
-
-const browseToLink = () =>
-  openLink(
-    "https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/"
-  );
+const bookingUrl = I18n.t("cie.booking_url");
+const browseToLink = () => openLink(bookingUrl);
 
 class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
   constructor(props: Props) {

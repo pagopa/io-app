@@ -301,6 +301,7 @@ cie:
   title: Appoggia la carta
   layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
   layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti un suono.
+  booking_url: https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/
 spid:
   login: ACCEDI
   loginButton: ENTRA CON
@@ -636,6 +637,7 @@ wallet:
     titlePagoPaUpdateApp: Aggiornamento richiesto
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
     btnUpdateApp: Aggiorna l'app IO
+    favourite: Non è possibile rimuovere un metodo di pagamento preferito, per modificarlo selezionane un altro
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Carte di Credito
@@ -1414,6 +1416,9 @@ faq:
   76:
     title: "L’app mi dice che l’importo massimo del mio Bonus Vacanze è di 500 euro. Cosa succede se il costo del mio soggiorno è inferiore?"
     content: !include bonus/faq/faq76.md
+  77:
+    title: "Qualsiasi tipo di ISEE è valido per richiedere il Bonus Vacanze tramite l’app IO?"
+    content: !include bonus/faq/faq77.md
 bonus:
   bonusVacanze:
     accessibility:
@@ -1422,6 +1427,7 @@ bonus:
       validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
       bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
       redeemed: Questo Bonus Vacanze è stato utilizzato il {{date}}
+    multipleBonus: Risultano due bonus richiesti e attivati da te. Assicurati di usare quello relativo alla DSU corretta, per evitare che chi utilizza il bonus incorra in successive azioni di recupero.
     usableAmount: Spendibile presso la struttura ricettiva
     taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il
@@ -1512,7 +1518,7 @@ bonus:
       title: Annulla
       body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
       cancel: Continua
-      confirm: Annulla richiesta
+      confirm: Annulla la richiesta
       completed: Richiesta annullata
     composition:
       amount: "Importo massimo"
@@ -1530,6 +1536,9 @@ bonus:
     contextualHelp:
       title: Il bonus vacanze
       body: Qui sono visualizzate tutte le informazioni relative al bonus vacanze, il provvedimento istituito dal Decreto Rilancio per incentivare  il turismo dopo il lockdown dovuto all'emergenza Coronavirus.
+    requestAlert:
+      title: Attenzione
+      content: "Hai già ottenuto un bonus, continua la richiesta solo se la tua situazione si è modificata e hai presentato una nuova DSU per l’aggiornamento dell’ISEE.\n Ti informiamo che l’utilizzo di bonus generati in base a DSU non corrette, determina azioni di recupero dell’agevolazione verso l’utilizzatore.\n Sei sicuro di voler continuare?"
   request: Richiedi un nuovo bonus
   requestLabel: Bonus e sconti
   requestTitle: Richiesta
