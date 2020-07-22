@@ -27,7 +27,8 @@ export function getResourceNameFromUrl(
  * @param url
  */
 export const getUrlBasepath = (url: string): string =>
-  pipe<string, string, string, string>(
+  pipe<string, string, string, string, string>(
+    u => decodeURIComponent(u),
     u => splitAndTakeFirst(u, "?"),
     u => splitAndTakeFirst(u, "#"),
     u => splitAndTakeFirst(u, "&")
