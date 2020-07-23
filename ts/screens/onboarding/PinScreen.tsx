@@ -334,7 +334,7 @@ class PinScreen extends React.PureComponent<Props, State> {
             <ButtonDefaultOpacity
               block={true}
               bordered={true}
-              onPress={() => this.onPinReset()}
+              onPress={this.onPinReset}
               // small={true} TODO: it should be height 40 and text 16 - conflict with message cta style
             >
               <Text>{I18n.t("onboarding.unlockCode.reset")}</Text>
@@ -372,7 +372,7 @@ class PinScreen extends React.PureComponent<Props, State> {
         faqCategories={["onboarding_pin", "unlock"]}
         headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
-        <NavigationEvents onDidFocus={() => this.announceFirst()} />
+        <NavigationEvents onDidFocus={this.announceFirst} />
         {this.renderContent(pinState)}
         {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
       </BaseScreenComponent>
