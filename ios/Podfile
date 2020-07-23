@@ -4,6 +4,7 @@ platform :ios, '10.0'
 
 target 'ItaliaApp' do
   config = use_native_modules!
+  pod 'RNInputMask', :path => '../node_modules/react-native-text-input-mask/ios/InputMask'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
   pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
   use_react_native!(:path => config["reactNativePath"])
