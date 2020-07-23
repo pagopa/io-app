@@ -13,7 +13,7 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  paymentFetchPspsForPaymentId,
+  paymentFetchAllPspsForPaymentId,
   paymentUpdateWalletPsp
 } from "../../../store/actions/wallet/payment";
 import { Psp, Wallet } from "../../../types/pagopa";
@@ -83,11 +83,11 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
     // there's no need to ask to select a wallet - we can ask pagopa for the
     // PSPs that we can use with this wallet.
     dispatch(
-      paymentFetchPspsForPaymentId.request({
+      paymentFetchAllPspsForPaymentId.request({
         idPayment,
         // provide the idWallet to the getPsps request only if the wallet has
         // a preferred PSP
-        idWallet: selectedWallet.psp ? selectedWallet.idWallet : undefined,
+        idWallet: selectedWallet.idWallet.toString(),
         onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
         onSuccess: successAction => {
           // filter PSPs for the current locale only (the list will contain

@@ -19,6 +19,8 @@ export function getLocalePrimary(
     .map(_ => _[0]);
 }
 
+export const getCurrentLocale = (): Locales => I18n.currentLocale();
+
 export const getLocalePrimaryWithFallback = (fallback: Locales = "en") =>
   getLocalePrimary(I18n.currentLocale())
     .filter(l => translations.some(t => t === l))
