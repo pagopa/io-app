@@ -38,16 +38,6 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
     };
   }
 
-  private onCalendarSelected = (calendar: Calendar) => {
-    this.props.preferredCalendarSaveSuccess(calendar);
-    this.props.navigation.goBack();
-  };
-
-  private onCalendarRemove = () => {
-    this.props.preferredCalendarRemoveSuccess();
-    this.props.navigation.goBack();
-  };
-
   private onCalendarsLoaded = () => {
     this.setState({ isLoading: false });
   };
@@ -66,8 +56,8 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
             subtitle={I18n.t("messages.cta.reminderCalendarSelect")}
           >
             <CalendarsListContainer
-              onCalendarSelected={this.onCalendarSelected}
-              onCalendarRemove={this.onCalendarRemove}
+              onCalendarSelected={this.props.preferredCalendarSaveSuccess}
+              onCalendarRemove={this.props.preferredCalendarRemoveSuccess}
               onCalendarsLoaded={this.onCalendarsLoaded}
             />
           </ScreenContent>
