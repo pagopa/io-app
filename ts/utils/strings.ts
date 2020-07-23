@@ -96,3 +96,11 @@ export const addEvery = (text: string, toAdd: string, every: number): string =>
   text
     .replace(/\W/gi, "")
     .replace(new RegExp(`(.{${every}})`, "g"), `$1${toAdd}`);
+
+/**
+ * split text using the specified splitter and return the first substring
+ * @param text
+ * @param splitter
+ */
+export const splitAndTakeFirst = (text: string, splitter: string) =>
+  text.split(splitter)[0];

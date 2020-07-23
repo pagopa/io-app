@@ -33,6 +33,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
+import { getUrlBasepath } from "../../utils/url";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -145,7 +146,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleNavigationStateChange = (event: WebViewNavigation): void => {
     if (event.url) {
-      const urlChanged = event.url.split("?")[0];
+      const urlChanged = getUrlBasepath(event.url);
       if (urlChanged !== this.state.loginTrace) {
         this.props.dispatchIdpLoginUrlChanged(urlChanged);
         this.updateLoginTrace(urlChanged);
