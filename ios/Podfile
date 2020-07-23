@@ -17,14 +17,12 @@ target 'ItaliaApp' do
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
   use_flipper!
-  post_install do |installer|
-    flipper_post_install(installer)
-  end
 end
 
 # Fix a open bug in react-native-config
 # @see https://github.com/luggit/react-native-config/issues/125
 post_install do |installer|
+  flipper_post_install(installer)
   installer.pods_project.targets.each do |target|
     if target.name == "React"
       target.remove_from_project
