@@ -1,5 +1,5 @@
 import { left, right } from "fp-ts/lib/Either";
-import { ValidationError } from "io-ts";
+import * as t from "io-ts";
 import { testSaga } from "redux-saga-test-plan";
 import {
   checkCurrentSession,
@@ -55,12 +55,22 @@ describe("checkSession", () => {
   });
 
   it("if response is a left throws an error", () => {
-    const responeLeft = left([{ value: "Error" }]);
+    const validatorError = {
+      value: "some error occurred",
+      context: [{ key: "", type: t.string }]
+    };
+    const responeLeft = left([validatorError]);
     testSaga(checkSession, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(responeLeft)
-      .put(checkCurrentSession.failure([{ value: "Error" } as ValidationError]))
+      .put(
+        checkCurrentSession.failure(
+          new Error(
+            'value ["some error occurred"] at [root] is not a valid [string]'
+          )
+        )
+      )
       .next()
       .isDone();
   });
