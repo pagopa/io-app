@@ -2,7 +2,6 @@
   {"type": "feat", "section": "Features"},
   {"type": "fix", "section": "Bug Fixes"},
   {"type": "chore", "section": "Chores"},
-  {"type": "text", "section": "Text Changes"},
   {"type": "docs", "hidden": true},
   {"type": "style",  "hidden": true},
   {"type": "refactor",  "hidden": true},
