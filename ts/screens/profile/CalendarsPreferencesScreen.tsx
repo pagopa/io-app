@@ -8,7 +8,10 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
-import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
+import {
+  preferredCalendarRemoveSuccess,
+  preferredCalendarSaveSuccess
+} from "../../store/actions/persistedPreferences";
 import { Dispatch } from "../../store/actions/types";
 
 type OwnProps = NavigationInjectedProps;
@@ -40,6 +43,11 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
     this.props.navigation.goBack();
   };
 
+  private onCalendarRemove = () => {
+    this.props.preferredCalendarRemoveSuccess();
+    this.props.navigation.goBack();
+  };
+
   private onCalendarsLoaded = () => {
     this.setState({ isLoading: false });
   };
@@ -59,6 +67,7 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
           >
             <CalendarsListContainer
               onCalendarSelected={this.onCalendarSelected}
+              onCalendarRemove={this.onCalendarRemove}
               onCalendarsLoaded={this.onCalendarsLoaded}
             />
           </ScreenContent>
@@ -74,7 +83,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       preferredCalendarSaveSuccess({
         preferredCalendar: calendar
       })
-    )
+    ),
+  preferredCalendarRemoveSuccess: () =>
+    dispatch(preferredCalendarRemoveSuccess())
 });
 
 export default connect(

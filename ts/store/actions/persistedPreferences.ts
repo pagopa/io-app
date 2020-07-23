@@ -13,6 +13,10 @@ export const preferredCalendarSaveSuccess = createStandardAction(
   "PREFERENCES_CALENDAR_SAVE_SUCCESS"
 )<{ preferredCalendar: Calendar }>();
 
+export const preferredCalendarRemoveSuccess = createStandardAction(
+  "PREFERENCES_CALENDAR_REMOVE_SUCCESS"
+)();
+
 export const preferredLanguageSaveSuccess = createStandardAction(
   "PREFERENCES_LANGUAGE_SAVE_SUCCESS"
 )<{ preferredLanguage: Locales }>();
@@ -41,6 +45,7 @@ export type PersistedPreferencesActions = ActionType<
   // tslint:disable-next-line: max-union-size
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
+  | typeof preferredCalendarRemoveSuccess
   | typeof preferredLanguageSaveSuccess
   | typeof serviceAlertDisplayedOnceSuccess
   | typeof preferencesPagoPaTestEnvironmentSetEnabled

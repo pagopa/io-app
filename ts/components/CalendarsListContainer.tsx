@@ -15,6 +15,7 @@ import { convertLocalCalendarName } from "../utils/calendar";
 
 type OwnProps = {
   onCalendarSelected: (calendar: Calendar) => void;
+  onCalendarRemove: () => void;
   onCalendarsLoaded: (
     calendars: pot.Pot<ReadonlyArray<Calendar>, ResourceError>
   ) => void;
@@ -86,7 +87,11 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
                   hideIcon={!isDefaultCalendar}
                   iconSize={12}
                   iconName={isDefaultCalendar ? "io-tick-big" : undefined}
-                  onPress={() => this.props.onCalendarSelected(calendar)}
+                  onPress={() =>
+                    isDefaultCalendar
+                      ? this.props.onCalendarRemove()
+                      : this.props.onCalendarSelected(calendar)
+                  }
                   accessible={true}
                   accessibilityRole={"radio"}
                   accessibilityLabel={`${convertLocalCalendarName(
