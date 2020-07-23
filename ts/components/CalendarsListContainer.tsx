@@ -15,11 +15,11 @@ import { convertLocalCalendarName } from "../utils/calendar";
 
 type OwnProps = {
   onCalendarSelected: (calendar: Calendar) => void;
-  onCalendarRemove: () => void;
   onCalendarsLoaded: (
     calendars: pot.Pot<ReadonlyArray<Calendar>, ResourceError>
   ) => void;
   lastListItem?: React.ReactNode;
+  onCalendarRemove?: () => void;
 };
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -88,7 +88,7 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
                   iconSize={12}
                   iconName={isDefaultCalendar ? "io-tick-big" : undefined}
                   onPress={() =>
-                    isDefaultCalendar
+                    isDefaultCalendar && this.props.onCalendarRemove
                       ? this.props.onCalendarRemove()
                       : this.props.onCalendarSelected(calendar)
                   }
