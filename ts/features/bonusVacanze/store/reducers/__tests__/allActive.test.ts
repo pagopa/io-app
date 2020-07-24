@@ -9,7 +9,7 @@ import { Version } from "../../../../../../definitions/backend/Version";
 import { BonusActivationStatusEnum } from "../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusCode } from "../../../../../../definitions/bonus_vacanze/BonusCode";
 import { mockedBonus } from "../../../mock/mockData";
-import { ownedActiveBonus } from "../allActive";
+import { ownedActiveOrRedeemedBonus } from "../allActive";
 
 const fiscalCode = "ABCDEF83A12L719R" as FiscalCode;
 const profile: InitializedProfile = {
@@ -39,14 +39,22 @@ const bonusActive = pot.some({
   applicant_fiscal_code: fiscalCode
 });
 
-describe("ownedActiveBonus", () => {
+const bonusRedeemed = pot.some({
+  ...mockedBonus,
+  status: BonusActivationStatusEnum.REDEEMED,
+  applicant_fiscal_code: fiscalCode
+});
+
+describe("ownedActiveOrRedeemedBonus", () => {
   it("should return an empty array", () => {
-    expect(ownedActiveBonus.resultFunc([], potProfile)).toStrictEqual([]);
+    expect(ownedActiveOrRedeemedBonus.resultFunc([], potProfile)).toStrictEqual(
+      []
+    );
   });
 
   it("should return an empty array", () => {
     expect(
-      ownedActiveBonus.resultFunc(
+      ownedActiveOrRedeemedBonus.resultFunc(
         [pot.none, pot.none, pot.noneError(new Error("some error"))],
         potProfile
       )
@@ -55,24 +63,51 @@ describe("ownedActiveBonus", () => {
 
   it("should return an empty array (different applicant)", () => {
     expect(
-      ownedActiveBonus.resultFunc([bonusDifferentApplicant], potProfile)
+      ownedActiveOrRedeemedBonus.resultFunc(
+        [bonusDifferentApplicant],
+        potProfile
+      )
     ).toStrictEqual([]);
   });
 
-  it("should return an empty array (status !== ACTIVE)", () => {
-    const bonusRedeemed = pot.some({
+  it("should return the bonus redeemed", () => {
+    expect(
+      ownedActiveOrRedeemedBonus.resultFunc([bonusRedeemed], potProfile)
+    ).toStrictEqual([bonusRedeemed.value]);
+  });
+
+  it("should return the bonus redeemed and active", () => {
+    expect(
+      ownedActiveOrRedeemedBonus.resultFunc(
+        [bonusRedeemed, bonusActive],
+        potProfile
+      )
+    ).toStrictEqual([bonusRedeemed.value, bonusActive.value]);
+  });
+
+  it("should return the bonus redeemed and active", () => {
+    expect(
+      ownedActiveOrRedeemedBonus.resultFunc(
+        [bonusRedeemed, bonusActive, pot.none, bonusDifferentApplicant],
+        potProfile
+      )
+    ).toStrictEqual([bonusRedeemed.value, bonusActive.value]);
+  });
+
+  it("should return an empty array (status !== ACTIVE|REDEEMED)", () => {
+    const bonusProcessing = pot.some({
       ...mockedBonus,
-      status: BonusActivationStatusEnum.REDEEMED,
+      status: BonusActivationStatusEnum.PROCESSING,
       applicant_fiscal_code: fiscalCode
     });
     expect(
-      ownedActiveBonus.resultFunc([bonusRedeemed], potProfile)
+      ownedActiveOrRedeemedBonus.resultFunc([bonusProcessing], potProfile)
     ).toStrictEqual([]);
   });
 
   it("should return the active bonus", () => {
     expect(
-      ownedActiveBonus.resultFunc(
+      ownedActiveOrRedeemedBonus.resultFunc(
         [bonusDifferentApplicant, bonusActive],
         potProfile
       )
@@ -81,7 +116,7 @@ describe("ownedActiveBonus", () => {
 
   it("should return the active bonus", () => {
     expect(
-      ownedActiveBonus.resultFunc(
+      ownedActiveOrRedeemedBonus.resultFunc(
         [bonusDifferentApplicant, bonusActive, pot.none],
         potProfile
       )
@@ -94,7 +129,7 @@ describe("ownedActiveBonus", () => {
       id: "XYZ" as BonusCode
     });
     expect(
-      ownedActiveBonus.resultFunc(
+      ownedActiveOrRedeemedBonus.resultFunc(
         [bonusDifferentApplicant, bonusActive, anotherBonusActive, pot.none],
         potProfile
       )

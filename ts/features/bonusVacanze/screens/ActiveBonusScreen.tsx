@@ -43,7 +43,7 @@ import {
 } from "../store/actions/bonusVacanze";
 import {
   bonusActiveDetailByIdSelector,
-  ownedActiveBonus
+  ownedActiveOrRedeemedBonus
 } from "../store/reducers/allActive";
 import {
   availableBonusTypesSelectorFromId,
@@ -474,7 +474,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
 
   return {
-    hasMoreOwnedActiveBonus: ownedActiveBonus(state).length > 1,
+    hasMoreOwnedActiveBonus: ownedActiveOrRedeemedBonus(state).length > 1,
     bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus,
     isError: pot.isNone(bonus) && pot.isError(bonus), // error and no bonus data, user should retry to load
