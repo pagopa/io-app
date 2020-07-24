@@ -502,21 +502,21 @@ workflows:
 
   release:
     jobs:
-      - compile-typescript
+      - compile-typescript:
           filters:
             tags:
               only: /^config-test.*/
             branches:
               ignore: /.*/
 
-      - run-tests
+      - run-tests:
           filters:
             tags:
               only: /^config-test.*/
             branches:
               ignore: /.*/
 
-      - lint-typescript
+      - lint-typescript:
           filters:
             tags:
               only: /^config-test.*/
