@@ -25,8 +25,12 @@ function replaceVersionName(match, version, p1, p2, p3) {
 module.exports.writeVersion = function(contents, version) {
   // replace the old version (match #2 group) of regex, with the new version
 
+  const versionClean = versionModule.getVersion(version);
   const buildNumber = versionModule.androidGetBuildVersion(version);
-  version = buildNumber !== undefined ? version + `.${buildNumber}` : version;
+  version =
+    buildNumber !== undefined
+      ? version + `${versionClean}.${buildNumber}`
+      : version;
 
   contents = contents.replace(versionNameRegex, (substr, ...args) =>
     replaceVersionName(substr, version, ...args)
