@@ -366,9 +366,10 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["bonus_detail"]}
       allowGoBack={true}
-      topContent={<View style={{ height: 90 }} />}
+      topContent={<View style={{ height: 154 }} />}
       footerContent={renderFooterButtons()}
       gradientHeader={true}
+      hideHeader={true}
     >
       <View>
         <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
