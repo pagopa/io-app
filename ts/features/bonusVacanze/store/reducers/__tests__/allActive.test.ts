@@ -9,7 +9,7 @@ import { Version } from "../../../../../../definitions/backend/Version";
 import { BonusActivationStatusEnum } from "../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusCode } from "../../../../../../definitions/bonus_vacanze/BonusCode";
 import { mockedBonus } from "../../../mock/mockData";
-import { ownedActiveBonus } from "../allActive";
+import { ownedActiveOrRedeemedBonus } from "../allActive";
 
 const fiscalCode = "ABCDEF83A12L719R" as FiscalCode;
 const profile: InitializedProfile = {
@@ -39,14 +39,16 @@ const bonusActive = pot.some({
   applicant_fiscal_code: fiscalCode
 });
 
-describe("ownedActiveBonus", () => {
+describe("ownedActiveOrRedeemedBonus", () => {
   it("should return an empty array", () => {
-    expect(ownedActiveBonus.resultFunc([], potProfile)).toStrictEqual([]);
+    expect(ownedActiveOrRedeemedBonus.resultFunc([], potProfile)).toStrictEqual(
+      []
+    );
   });
 
   it("should return an empty array", () => {
     expect(
-      ownedActiveBonus.resultFunc(
+      ownedActiveOrRedeemedBonus.resultFunc(
         [pot.none, pot.none, pot.noneError(new Error("some error"))],
         potProfile
       )
@@ -55,7 +57,10 @@ describe("ownedActiveBonus", () => {
 
   it("should return an empty array (different applicant)", () => {
     expect(
-      ownedActiveBonus.resultFunc([bonusDifferentApplicant], potProfile)
+      ownedActiveOrRedeemedBonus.resultFunc(
+        [bonusDifferentApplicant],
+        potProfile
+      )
     ).toStrictEqual([]);
   });
 
@@ -66,13 +71,13 @@ describe("ownedActiveBonus", () => {
       applicant_fiscal_code: fiscalCode
     });
     expect(
-      ownedActiveBonus.resultFunc([bonusRedeemed], potProfile)
-    ).toStrictEqual([]);
+      ownedActiveOrRedeemedBonus.resultFunc([bonusRedeemed], potProfile)
+    ).toStrictEqual([bonusRedeemed.value]);
   });
 
   it("should return the active bonus", () => {
     expect(
-      ownedActiveBonus.resultFunc(
+      ownedActiveOrRedeemedBonus.resultFunc(
         [bonusDifferentApplicant, bonusActive],
         potProfile
       )
@@ -81,7 +86,7 @@ describe("ownedActiveBonus", () => {
 
   it("should return the active bonus", () => {
     expect(
-      ownedActiveBonus.resultFunc(
+      ownedActiveOrRedeemedBonus.resultFunc(
         [bonusDifferentApplicant, bonusActive, pot.none],
         potProfile
       )
@@ -94,7 +99,7 @@ describe("ownedActiveBonus", () => {
       id: "XYZ" as BonusCode
     });
     expect(
-      ownedActiveBonus.resultFunc(
+      ownedActiveOrRedeemedBonus.resultFunc(
         [bonusDifferentApplicant, bonusActive, anotherBonusActive, pot.none],
         potProfile
       )

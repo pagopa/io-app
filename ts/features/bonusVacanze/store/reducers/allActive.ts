@@ -74,7 +74,7 @@ export const allBonusActiveSelector = createSelector<
 });
 
 // return the list of the active bonus of which the current profile is the applicant
-export const ownedActiveBonus = createSelector<
+export const ownedActiveOrRedeemedBonus = createSelector<
   GlobalState,
   ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>,
   ProfileState,
