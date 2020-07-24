@@ -151,7 +151,8 @@ const styles = StyleSheet.create({
   },
   commonLabel: {
     lineHeight: 18
-  }
+  },
+  headerSpacer: { height: 154 }
 });
 
 async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
@@ -366,7 +367,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["bonus_detail"]}
       allowGoBack={true}
-      topContent={<View style={{ height: 154 }} />}
+      topContent={<View style={styles.headerSpacer} />}
       footerContent={renderFooterButtons()}
       gradientHeader={true}
       hideHeader={true}
