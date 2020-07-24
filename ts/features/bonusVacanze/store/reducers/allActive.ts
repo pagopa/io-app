@@ -89,7 +89,8 @@ export const ownedActiveBonus = createSelector<
         if (
           pot.isSome(curr) &&
           curr.value.applicant_fiscal_code === p.fiscal_code &&
-          curr.value.status === BonusActivationStatusEnum.ACTIVE
+          (curr.value.status === BonusActivationStatusEnum.ACTIVE ||
+            curr.value.status === BonusActivationStatusEnum.REDEEMED)
         ) {
           return [...acc, curr.value];
         }
