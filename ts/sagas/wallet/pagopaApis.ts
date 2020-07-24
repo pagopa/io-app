@@ -5,6 +5,7 @@ import { ActionType } from "typesafe-actions";
 import { fromNullable } from "fp-ts/lib/Option";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
+import { checkCurrentSession } from "../../store/actions/authentication";
 import {
   paymentAttiva,
   paymentCheck,
@@ -47,6 +48,11 @@ import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 
+// check if the current session is still valid, if not an sessionExpired will be dispatched
+function* checkSession(): IterableIterator<Effect> {
+  yield put(checkCurrentSession.request());
+}
+
 //
 // Payment Manager APIs
 //
@@ -59,6 +65,7 @@ export function* fetchWalletsRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>
 ): Iterator<Effect> {
+  yield call(checkSession);
   const request = pmSessionManager.withRefresh(pagoPaClient.getWallets);
   try {
     const getResponse: SagaCallReturnType<typeof request> = yield call(request);
@@ -84,6 +91,7 @@ export function* fetchTransactionsRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchTransactionsRequest>
 ): Iterator<Effect> {
+  yield call(checkSession);
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getTransactions(action.payload.start)
   );

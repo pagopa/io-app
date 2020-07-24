@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import {
   ReplaceProp1,
@@ -146,13 +147,19 @@ export type Transaction = t.TypeOf<typeof Transaction>;
 
 export const isCompletedTransaction = (tx: Transaction) => tx.idStatus === 3;
 
+const idStatusSuccessTransaction: ReadonlyArray<number> = [8, 9];
 /**
- * accountingStatus === 1 means the transaction has been
- * confirmed and the payment has been successfully
- * completed
+ * to determine if a transaction is successfully completed we have to consider 2 cases
+ * 1. payed /w CREDIT CARD: accountingStatus is not undefined AND accountingStatus === 1 means the transaction has been
+ * confirmed and the payment has been successfully completed
+ * 2.payed /w other methods: accountingStatus is undefined AND id_status = 8 (Confermato mod1) or id_status = 9 (Confermato mod2)
+ * ref: https://www.pivotaltracker.com/story/show/173850410
  */
 export const isSuccessTransaction = (tx: Transaction) =>
-  tx.accountingStatus === 1;
+  fromNullable(tx.accountingStatus).foldL(
+    () => idStatusSuccessTransaction.some(ids => ids === tx.idStatus),
+    as => as === 1
+  );
 
 /**
  * A refined TransactionListResponse
