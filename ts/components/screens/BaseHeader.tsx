@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 });
 
 export type AccessibilityEvents = {
-  avoidNavigationEventsUsage?: boolean; // if true NavigationEvents and its events will be excluded (onDidFocus)
+  avoidNavigationEventsUsage?: boolean; // if true NavigationEvents won't be included and the focus will be done on componentDidMount
   disableAccessibilityFocus?: boolean; // if true the setAccessibilityFocus is not triggered
 };
 
