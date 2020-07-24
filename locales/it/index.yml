@@ -1428,7 +1428,7 @@ bonus:
       validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
       bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
       redeemed: Questo Bonus Vacanze è stato utilizzato il {{date}}
-    multipleBonus: Risultano due bonus richiesti e attivati da te. Assicurati di usare quello relativo alla DSU corretta, per evitare che chi utilizza il bonus incorra in successive azioni di recupero.
+    multipleBonus: Risultano due o più bonus richiesti e attivati da te. Assicurati di usare quello relativo alla DSU corretta, per evitare che chi utilizza il bonus incorra in successive azioni di recupero.
     usableAmount: Spendibile presso la struttura ricettiva
     taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il

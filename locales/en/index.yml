@@ -1396,7 +1396,7 @@ bonus:
       validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
       bonusRejected: Attention! This Bonus Vacanze has been rejected
       redeemed: This Bonus Vacanze has been consumed on {{date}}
-    multipleBonus: Two bonuses requested and activated by you. Make sure you use the correct DSU to prevent the bonus user from incurring subsequent recovery actions.
+    multipleBonus: Two or more bonuses requested and activated by you. Make sure you use the correct DSU to prevent the bonus user from incurring subsequent recovery actions.
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return
     request: Request the
