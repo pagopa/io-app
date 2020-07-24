@@ -14,6 +14,7 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentFetchAllPspsForPaymentId,
+  paymentFetchPspsForPaymentId,
   paymentUpdateWalletPsp
 } from "../../../store/actions/wallet/payment";
 import { Psp, Wallet } from "../../../types/pagopa";
@@ -83,15 +84,15 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
     // there's no need to ask to select a wallet - we can ask pagopa for the
     // PSPs that we can use with this wallet.
     dispatch(
-      paymentFetchAllPspsForPaymentId.request({
+      paymentFetchPspsForPaymentId.request({
         idPayment,
         // provide the idWallet to the getPsps request only if the wallet has
         // a preferred PSP
-        idWallet: selectedWallet.idWallet.toString(),
+        idWallet: selectedWallet.psp ? selectedWallet.idWallet : undefined,
         onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
         onSuccess: successAction => {
           // filter PSPs for the current locale only (the list will contain
-          // duspliacates for all the supported languages)
+          // duplicates for all the supported languages)
           const psps = pspsForLocale(successAction.payload);
           if (psps.length === 0) {
             // this payment method cannot be used!

@@ -27,6 +27,8 @@ import { Psp, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
+import { allPspsSelector } from "../../../store/reducers/wallet/payment";
+import { paymentFetchAllPspsForPaymentId } from "../../../store/actions/wallet/payment";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -89,6 +91,15 @@ class PickPspScreen extends React.Component<Props> {
     );
   };
 
+  public componentDidMount() {
+    // load all psp in order to offer to the user the complete psp list choice
+    const idWallet = this.props.navigation
+      .getParam("wallet")
+      .idWallet.toString();
+    const idPayment = this.props.navigation.getParam("idPayment");
+    this.props.loadAllPsp(idWallet, idPayment);
+  }
+
   private getListItem = (psp: ListRenderItemInfo<Psp>) => {
     const { item } = psp;
     return (
@@ -119,7 +130,7 @@ class PickPspScreen extends React.Component<Props> {
   };
 
   public render(): React.ReactNode {
-    const availablePsps = this.props.navigation.getParam("psps");
+    const availablePsps = this.props.allPsps;
 
     return (
       <BaseScreenComponent
@@ -155,12 +166,26 @@ class PickPspScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  isLoading: pot.isLoading(state.wallet.wallets.walletById)
-});
+const mapStateToProps = (state: GlobalState) => {
+  const psps = allPspsSelector(state);
+  return {
+    isLoading:
+      pot.isLoading(state.wallet.wallets.walletById) || pot.isLoading(psps),
+    allPsps: pot.getOrElse(psps, [])
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   return {
+    loadAllPsp: (idWallet: string, idPayment: string) => {
+      // load all psp in order to offer to the user the complete psp list choice
+      dispatch(
+        paymentFetchAllPspsForPaymentId.request({
+          idWallet,
+          idPayment
+        })
+      );
+    },
     pickPsp: (idPsp: number) =>
       dispatchUpdatePspForWalletAndConfirm(dispatch)(
         idPsp,
