@@ -507,9 +507,9 @@ workflows:
           #  - compile-typescript
           #  - run-tests
           #  - lint-typescript
-        filters:
-          tags:
-            only: ciao
+          filters:
+            tags:
+              only: /^config-test.*/
 #              only: \d\.\d\.\d(\.rc-\d+)?
           #  branches:
           #    only: 173984610-create-android-build-with-tag-only
