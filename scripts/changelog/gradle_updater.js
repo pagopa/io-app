@@ -28,9 +28,7 @@ module.exports.writeVersion = function(contents, version) {
   const versionClean = versionModule.getVersion(version);
   const buildNumber = versionModule.androidGetBuildVersion(version);
   version =
-    buildNumber !== undefined
-      ? version + `${versionClean}.${buildNumber}`
-      : version;
+    buildNumber !== undefined ? `${versionClean}.${buildNumber}` : version;
 
   contents = contents.replace(versionNameRegex, (substr, ...args) =>
     replaceVersionName(substr, version, ...args)
