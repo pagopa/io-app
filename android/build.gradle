@@ -40,6 +40,9 @@ allprojects {
         }
         google()
         jcenter() 
+      	maven {
+      	    url "https://sdks.instabug.com/nexus/repository/instabug-cp"
+       	}  
       }
     configurations.all {
         resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"

@@ -69,7 +69,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - instabug-reactnative (8.7.0):
+  - instabug-reactnative (9.1.6):
     - React
   - jail-monkey (2.3.2):
     - React
@@ -606,7 +606,7 @@ SPEC CHECKSUMS:
   FlipperKit: bc68102cd4952a258a23c9c1b316c7bec1fecf83
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
-  instabug-reactnative: 6a4b20152fee125f9b884371ef10ccbf721dff1e
+  instabug-reactnative: aae9da235f22a48455fd837f5983c144d169330c
   jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
   Mixpanel: 61e6d8c0717c8e94ccc6d3a1ae8677b9a78f64c5
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355

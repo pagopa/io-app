@@ -41,7 +41,7 @@
     "fp-ts": "1.12.0",
     "front-matter": "^4.0.2",
     "hoist-non-react-statics": "^3.0.1",
-    "instabug-reactnative": "8.7.0",
+    "instabug-reactnative": "^9.1.6",
     "io-ts": "1.8.5",
     "italia-pagopa-commons": "^1.2.0",
     "italia-ts-commons": "5.1.11",

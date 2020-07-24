@@ -5835,10 +5835,10 @@ inquirer@^7.0.0:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
-instabug-reactnative@8.7.0:
-  version "8.7.0"
-  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-8.7.0.tgz#ee37d6bdd59c5f3930f6db9795ff281d7bb71e03"
-  integrity sha512-us7SVX3dLu2SbbBssGlQE7tIAtW7kvEyhZZ/JxXrEYfkrSGcKnQOLKM+RgvHnb4iESuHfT6SlDQEMV+5P5GHGg==
+instabug-reactnative@^9.1.6:
+  version "9.1.6"
+  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-9.1.6.tgz#23f2b00060127c10f09b3ced159dd4684d45ec13"
+  integrity sha512-Zu7wIAHZW1JXzGREwixn02skxPv2tOQzHNZOK++Ota+6VL4x4PsAetCfnQgIhMotMeBW0Lj0qVcCcc1cDkfh8g==
 
 internal-slot@^1.0.2:
   version "1.0.2"
