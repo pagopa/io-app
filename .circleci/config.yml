@@ -511,8 +511,8 @@ workflows:
             tags:
               only: /^config-test.*/
 #              only: \d\.\d\.\d(\.rc-\d+)?
-          branches:
-              only: master
+            branches:
+                only: master
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
   # a slack notification will be sent on channel #io-status
