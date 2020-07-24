@@ -13,6 +13,7 @@ import {
   preferenceFingerprintIsEnabledSaveSuccess,
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
+  preferredCalendarRemoveSuccess,
   preferredCalendarSaveSuccess,
   preferredLanguageSaveSuccess,
   serviceAlertDisplayedOnceSuccess
@@ -58,6 +59,12 @@ export default function preferencesReducer(
     return {
       ...state,
       preferredCalendar: action.payload.preferredCalendar
+    };
+  }
+  if (isActionOf(preferredCalendarRemoveSuccess, action)) {
+    return {
+      ...state,
+      preferredCalendar: initialPreferencesState.preferredCalendar
     };
   }
   if (isActionOf(preferredLanguageSaveSuccess, action)) {
