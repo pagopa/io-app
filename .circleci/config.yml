@@ -503,15 +503,13 @@ workflows:
       # Build Android alpha release only on master branch when a new tag is pushed
 #      - alpha-release-android:
       - io_check_uris:
-          requires:
-            - compile-typescript
-            - run-tests
-            - lint-typescript
+          #requires:
+          #  - compile-typescript
+          #  - run-tests
+          #  - lint-typescript
           filters:
             tags:
               only: \d\.\d\.\d(\.rc-\d+)?
-            branches:
-              only: 173984610-create-android-build-with-tag-only
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
   # a slack notification will be sent on channel #io-status
