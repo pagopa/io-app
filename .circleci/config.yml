@@ -468,6 +468,8 @@ workflows:
 
       - run-danger:
           filters:
+            tags:
+              only: /.*/
             branches:
               ignore: master
 
@@ -480,6 +482,8 @@ workflows:
             - run-tests
             - lint-typescript
           filters:
+            tags:
+              only: /.*/
             branches:
               ignore: master
 
@@ -511,8 +515,8 @@ workflows:
             tags:
               only: /^config-test.*/
 #              only: \d\.\d\.\d(\.rc-\d+)?
-            branches:
-                only: master
+          #  branches:
+          #    only: 173984610-create-android-build-with-tag-only
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
   # a slack notification will be sent on channel #io-status
