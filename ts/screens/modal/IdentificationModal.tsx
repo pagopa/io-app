@@ -34,9 +34,9 @@ import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPref
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import { authenticateConfig } from "../../utils/biometric";
 import { maybeNotNullyString } from "../../utils/strings";
-import { setAccessibilityFocus } from "../../utils/accessibility";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
