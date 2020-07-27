@@ -85,20 +85,6 @@ export default class TransactionsList extends React.Component<Props, State> {
     }
   }
 
-  private announceLabel = (transaction: Transaction, isNew: boolean) => {
-    return I18n.t("wallet.accessibility.transactionListItem.label", {
-      merchant: transaction.merchant,
-      amount: transaction.amount,
-      datetime: `${formatDateAsLocal(
-        transaction.created,
-        true,
-        true
-      )} - ${transaction.created.toLocaleTimeString()}`,
-      reason: cleanTransactionDescription(transaction.description),
-      isNew
-    });
-  };
-
   private renderTransaction = (info: ListRenderItemInfo<Transaction>) => {
     const item = info.item;
     const paymentReason = cleanTransactionDescription(item.description);
