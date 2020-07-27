@@ -43,12 +43,12 @@ type Props = OwnProps &
 
 const CSS_STYLE = `
 body {
-  font-size: ${customVariables.fontSizeSmall}px;
+  font-size: ${customVariables.fontSize1}px;
   color: ${customVariables.brandDarkestGray}
 }
 
 h4 {
-  font-size: ${customVariables.fontSize1}px;
+  font-size: ${customVariables.fontSize2}px;
 }
 `;
 

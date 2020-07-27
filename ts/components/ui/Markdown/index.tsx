@@ -25,6 +25,7 @@ import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { handleLinkMessage } from "./handlers/link";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 import { WebViewMessage } from "./types";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 const INJECTED_JAVASCRIPT = `
 ${NOTIFY_LINK_CLICK_SCRIPT}
@@ -71,7 +72,7 @@ body {
   margin: 0;
   padding: 0;
   color: ${customVariables.textColor};
-  font-size: 16px;
+  font-size: ${customVariables.fontSize1}px;
   font-family: 'Titillium Web';
 }
 
@@ -81,6 +82,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-block-start: 0;
+  font-size: ${customVariables.fontSize1}px;
 }
 
 ul, ol {
@@ -306,6 +308,7 @@ class Markdown extends React.PureComponent<Props, State> {
     const isLoading =
       html === undefined || (html !== "" && htmlBodyHeight === 0);
 
+    RTron.log(html);
     return (
       <React.Fragment>
         {isLoading && (
