@@ -12,9 +12,9 @@ import I18n from "../i18n";
 import { preferredCalendarSaveSuccess } from "../store/actions/persistedPreferences";
 import { Dispatch } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
+import customVariables from "../theme/variables";
 import { convertLocalCalendarName } from "../utils/calendar";
 import SectionHeaderComponent from "./screens/SectionHeaderComponent";
-import customVariables from "../theme/variables";
 
 type CalendarByAccount = Readonly<{
   title: string;
@@ -25,9 +25,7 @@ type CalendarsByAccount = ReadonlyArray<CalendarByAccount>;
 
 type OwnProps = {
   onCalendarSelected: (calendar: Calendar) => void;
-  onCalendarsLoaded: (
-    calendars: pot.Pot<ReadonlyArray<Calendar>, ResourceError>
-  ) => void;
+  onCalendarsLoaded: () => void;
   lastListItem?: React.ReactNode;
   onCalendarRemove?: () => void;
 };
@@ -150,17 +148,12 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
 
   private fetchCalendars = () => {
     this.setState({
-      calendars: pot.noneLoading,
       calendarsByAccount: pot.noneLoading
     });
     // Fetch user calendars.
     RNCalendarEvents.findCalendars()
       .then(calendars => {
         // Filter out only calendars that allow modifications
-        const editableCalendars = pot.some(
-          calendars.filter(calendar => calendar.allowsModifications)
-        );
-
         const organizedCalendars = pot.some(
           getCalendarsByAccount(
             calendars.filter(calendar => calendar.allowsModifications)
@@ -169,30 +162,24 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
 
         this.setState(
           {
-            calendars: editableCalendars,
             calendarsByAccount: organizedCalendars
           },
-          () => this.props.onCalendarsLoaded(editableCalendars)
+          () => this.props.onCalendarsLoaded()
         );
       })
       .catch(_ => {
         const fetchError: FetchError = {
           kind: "FETCH_ERROR"
         };
-        const calendars: pot.Pot<
-          ReadonlyArray<Calendar>,
-          ResourceError
-        > = pot.toError(pot.none, fetchError);
         const calendarsByAccount: pot.Pot<
           ReadonlyArray<CalendarByAccount>,
           ResourceError
         > = pot.toError(pot.none, fetchError);
         this.setState(
           {
-            calendars,
             calendarsByAccount
           },
-          () => this.props.onCalendarsLoaded(calendars)
+          () => this.props.onCalendarsLoaded()
         );
       });
   };
