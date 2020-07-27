@@ -505,28 +505,28 @@ workflows:
       - compile-typescript:
           filters:
             tags:
-              only: /^config-test.*/
+              only: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
             branches:
               ignore: /.*/
 
       - run-tests:
           filters:
             tags:
-              only: /^config-test.*/
+              only: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
             branches:
               ignore: /.*/
 
       - lint-typescript:
           filters:
             tags:
-              only: /^config-test.*/
+              only: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
             branches:
               ignore: /.*/
 
       - run-danger:
           filters:
             tags:
-              only: /^config-test.*/
+              only: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
             branches:
               ignore: /.*/
 
@@ -539,7 +539,7 @@ workflows:
             - lint-typescript
           filters:
             tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?/
+              only: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
             branches:
               ignore: /.*/
           #              only: \d\.\d\.\d(\.rc-\d+)?
