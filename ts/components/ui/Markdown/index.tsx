@@ -71,7 +71,7 @@ body {
   margin: 0;
   padding: 0;
   color: ${customVariables.textColor};
-  font-size: 16px;
+  font-size: ${customVariables.fontSize1}px;
   font-family: 'Titillium Web';
 }
 
@@ -81,6 +81,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-block-start: 0;
+  font-size: ${customVariables.fontSize1}px;
 }
 
 ul, ol {
