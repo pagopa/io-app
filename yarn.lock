@@ -1372,6 +1372,15 @@
   resolved "https://npm.pkg.github.com/download/@pagopa/react-native-cie/0.2.2/5594a38025e8a0ea446e1b933a966f767679975bee47707234585bd9598b092f#ecc644b4da611b03ef0c26f0ff3872ccfb8c1757"
   integrity sha512-+OS7spye20HjI6G1/sF+sY+tVoTfvxPkmELYPXMRzr9gRym5bGpUro/smZqFxNEaFrNbp9rXS5Sa/e3gAe4fMA==
 
+"@react-native-community/art@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/art/-/art-1.2.0.tgz#386d95393f6042d9006f9d4bc6063fb898794460"
+  integrity sha512-a+ZcRGl/BzLa89yi33Mbn5SHavsEXqKUMdbfLf3U8MDLElndPqUetoJyGkv63+BcPO49UMWiQRP1YUz6/zfJ+A==
+  dependencies:
+    art "^0.10.3"
+    invariant "^2.2.4"
+    prop-types "^15.7.2"
+
 "@react-native-community/async-storage@^1.6.1":
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.6.1.tgz#19be07fc1d65c77bdeb20f46108ba12076aad1c5"
@@ -2315,6 +2324,11 @@ array-unique@^0.3.2:
 arrify@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
+
+art@^0.10.3:
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/art/-/art-0.10.3.tgz#b01d84a968ccce6208df55a733838c96caeeaea2"
+  integrity sha512-HXwbdofRTiJT6qZX/FnchtldzJjS3vkLJxQilc3Xj+ma2MXjY4UAyQ0ls1XZYVnDvVIBiFZbC6QsvtW86TD6tQ==
 
 asap@^2.0.3, asap@~2.0.3, asap@~2.0.6:
   version "2.0.6"
@@ -9242,11 +9256,12 @@ react-native-background-timer@2.1.1:
   resolved "https://registry.yarnpkg.com/react-native-background-timer/-/react-native-background-timer-2.1.1.tgz#9a2489681ab2f8033c213c73272e9d4c47572cd5"
   integrity sha512-cuXIIv+dcG8a8qkTD8pMzeqOEZCO+UGKglZWIe1osve+yJslmCowYQff+bI9xa7NOt2w+Vtd4L3d9JonlSqODg==
 
-react-native-barcode-builder@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/react-native-barcode-builder/-/react-native-barcode-builder-1.0.5.tgz#dcc93b6afeec56148b8b3c4e5fb9136a532f7883"
-  integrity sha1-3Mk7av7sVhSLizxOX7kTalMveIM=
+react-native-barcode-builder@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-barcode-builder/-/react-native-barcode-builder-2.0.0.tgz#17e898de7325c9b2fffd6e5e0be3760a05571115"
+  integrity sha512-hOpP321behSPlpWNGcowN66P9Z2Xv6kQwa2I8SdfSGMFmJlll1b22R63xQSIAi72RC/gZe1cWBBz03J686e9JA==
   dependencies:
+    "@react-native-community/art" "^1.2.0"
     jsbarcode "^3.8.0"
 
 react-native-calendar-events@1.7.1:
