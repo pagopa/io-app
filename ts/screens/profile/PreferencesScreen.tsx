@@ -47,7 +47,10 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
-import { getLocalePrimary } from "../../utils/locale";
+import {
+  getLocalePrimary,
+  getLocalePrimaryWithFallback
+} from "../../utils/locale";
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -167,7 +170,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     const maybePhoneNumber = this.props.optionMobilePhone;
 
     const language = this.props.preferredLanguage.fold(
-      translateLocale(I18n.locale),
+      translateLocale(getLocalePrimaryWithFallback()),
       l => translateLocale(l)
     );
 

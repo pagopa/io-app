@@ -57,7 +57,13 @@ export default class SectionHeaderComponent extends React.Component<Props> {
         {this.props.logoUri && (
           <OrganizationLogo logoUri={this.props.logoUri} />
         )}
-        <H5 style={styles.sectionTitle}>{this.props.sectionHeader}</H5>
+        <H5
+          style={styles.sectionTitle}
+          accessible={true}
+          accessibilityRole={"text"}
+        >
+          {this.props.sectionHeader}
+        </H5>
         {this.props.rightItem}
       </View>
     );

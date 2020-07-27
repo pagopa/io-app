@@ -9,6 +9,7 @@ import { checkSession, checkSessionResult } from "../watchCheckSessionSaga";
 
 describe("checkSession", () => {
   const getSessionValidity = jest.fn();
+
   it("if response is 200 the session is valid", () => {
     const responseOK = right({ status: 200 });
     testSaga(checkSession, getSessionValidity)
