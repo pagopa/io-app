@@ -1,7 +1,6 @@
 /**
  * This component displays a list of transactions
  */
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -11,6 +10,7 @@ import {
   ListRenderItemInfo,
   StyleSheet
 } from "react-native";
+import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
@@ -85,6 +85,20 @@ export default class TransactionsList extends React.Component<Props, State> {
     }
   }
 
+  private announceLabel = (transaction: Transaction, isNew: boolean) => {
+    return I18n.t("wallet.accessibility.transactionListItem.label", {
+      merchant: transaction.merchant,
+      amount: transaction.amount,
+      datetime: `${formatDateAsLocal(
+        transaction.created,
+        true,
+        true
+      )} - ${transaction.created.toLocaleTimeString()}`,
+      reason: cleanTransactionDescription(transaction.description),
+      isNew
+    });
+  };
+
   private renderTransaction = (info: ListRenderItemInfo<Transaction>) => {
     const item = info.item;
     const paymentReason = cleanTransactionDescription(item.description);
@@ -106,6 +120,22 @@ export default class TransactionsList extends React.Component<Props, State> {
         text2={datetime}
         text3={paymentReason}
         onPressItem={() => this.props.navigateToTransactionDetails(item)}
+        accessible={true}
+        accessibilityRole={"button"}
+        accessibilityLabel={I18n.t(
+          "wallet.accessibility.transactionListItem.label",
+          {
+            payment: isNew
+              ? I18n.t(
+                  "wallet.accessibility.transactionListItem.payment.unread"
+                )
+              : I18n.t("wallet.accessibility.transactionListItem.payment.read"),
+            merchant: recipient,
+            amount,
+            datetime,
+            reason: paymentReason
+          }
+        )}
       />
     );
   };
