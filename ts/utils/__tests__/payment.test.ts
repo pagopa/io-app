@@ -1,13 +1,15 @@
 // tslint:disable:no-useless-cast
 
-import { isSome } from "fp-ts/lib/Option";
+import { isSome, none, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 
+import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { PaymentAmount } from "../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeNumber";
-
+import { cleanTransactionDescription } from "../payment";
 import {
+  decodePagoPaQrCode,
   getAmountFromPaymentAmount,
   getRptIdFromNoticeNumber
 } from "../payment";
@@ -49,8 +51,6 @@ describe("getRptIdFromNoticeNumber", () => {
   });
 });
 
-import { cleanTransactionDescription } from "../payment";
-
 describe("cleanTransactionDescription", () => {
   it("should remove the tag returning just the description", () => {
     [
@@ -73,6 +73,44 @@ describe("cleanTransactionDescription", () => {
       ["actual description", "actual description"]
     ].forEach(([dirty, cleaned]) => {
       expect(cleanTransactionDescription(dirty)).toEqual(cleaned);
+    });
+  });
+});
+
+describe("decodePagoPaQrCode", () => {
+  it("should decode a string encoded into a pagoPa QRcode", () => {
+    [
+      Tuple2(
+        "PAGOPA|002|322201151398574181|81005750021|01",
+        some(
+          Tuple2(
+            {
+              organizationFiscalCode: "81005750021",
+              paymentNoticeNumber: {
+                auxDigit: "3",
+                checkDigit: "81",
+                iuv13: "2011513985741",
+                segregationCode: "22"
+              }
+            },
+            "01"
+          )
+        )
+      ),
+      // not supported version
+      Tuple2("PAGOPA|003|322201151398574181|810057500211|01A", none),
+      // invalid amount
+      Tuple2("PAGOPA|002|322201151398574181|810057500211|01A", none),
+      // invalid amount
+      Tuple2("PAGOPA|002|322201151398574181|810057500211|01A", none),
+      // invalid header
+      Tuple2("PAPAGO|002|322201151398574181|810057500211|01", none),
+      // invalid amount (1 digit instead of >= 2)
+      Tuple2("PAGOPA|002|322201151398574181|81005750021|1", none),
+      // invalid organization fiscal code (12 digit instead of 11)
+      Tuple2("PAGOPA|002|322201151398574181|810057500211|01", none)
+    ].forEach(tuple => {
+      expect(decodePagoPaQrCode(tuple.e1)).toEqual(tuple.e2);
     });
   });
 });
