@@ -1106,7 +1106,7 @@ identification:
     waitMessage: "Try again in:"
   unlockCode:
     accessibility:
-      unlockHint: You entered {{number}} digits on {{length}}
+      unlockHint: You entered {{number}} digits of {{length}}
       fingerprint: Login with your fingerprint
       faceId: Login with the Face ID
       delete: Remove last inserted digit
