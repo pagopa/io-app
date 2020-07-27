@@ -117,6 +117,7 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
 
   public render() {
     const { calendarsByAccount } = this.state;
+    const { defaultCalendar } = this.props;
 
     return (
       <React.Fragment>
@@ -131,6 +132,7 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
         <View style={{ paddingHorizontal: customVariables.contentPadding }}>
           {pot.isSome(calendarsByAccount) && (
             <SectionList
+              extraData={{ defaultCalendar }}
               sections={calendarsByAccount.value}
               renderSectionHeader={this.renderSectionHeader}
               renderItem={this.renderListItem}
