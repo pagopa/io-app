@@ -160,6 +160,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     const { isFingerprintEnabled } = this.props;
+    setAccessibilityFocus(this.headerRef);
     if (isFingerprintEnabled) {
       getFingerprintSettings().then(
         biometryType =>
@@ -173,9 +174,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       );
     } else {
       // if the biometric is not available unlock the unlock code insertion
-      this.setState({ biometryAuthAvailable: false }, () =>
-        setAccessibilityFocus(this.headerRef)
-      );
+      this.setState({ biometryAuthAvailable: false });
     }
 
     // first time the component is mounted, need to calculate the state value for `canInsertPinTooManyAttempts`
@@ -259,6 +258,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         updateBiometrySupportProp:
           prevProps.appState !== "active" && this.props.appState === "active"
       });
+      setAccessibilityFocus(this.headerRef);
     }
 
     const previousAttempts = prevProps.identificationFailState.fold(
@@ -449,6 +449,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     ) : (
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
+          accessibilityLabel={I18n.t("identification.title")}
           avoidNavigationEventsUsage={true}
           primary={!isValidatingTask}
           contextualHelpMarkdown={contextualHelpMarkdown}
