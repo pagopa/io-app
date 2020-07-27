@@ -7,7 +7,6 @@ import {
   applicationChangeState,
   ApplicationState
 } from "../../store/actions/application";
-import { checkCurrentSession } from "../../store/actions/authentication";
 import { identificationRequest } from "../../store/actions/identification";
 import { navSelector } from "../../store/reducers/navigationHistory";
 import { getCurrentRouteName } from "../../utils/navigation";
