@@ -28,7 +28,7 @@ SLACK_CHANNEL = "#io_status"
 # a list of remote uris consumed by the app for content presentation
 remote_content_uri = ["https://assets.cdn.io.italia.it/services.yml",
                       "https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
-                      "https://assets.cdn.io.italia.it//contextualhelp/data.json"]
+                      "https://assets.cdn.io.italia.it/contextualhelp/data.json"]
 
 
 class IOUrl(object):
