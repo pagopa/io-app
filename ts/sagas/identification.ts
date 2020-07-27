@@ -81,11 +81,8 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
       return IdentificationResult.pinreset;
     }
 
-    /**
-     * When the user access with the Pin or Biometric recognition we check the current stored session
-     * to logout the user if it's no more valid.
-     */
     case getType(identificationSuccess): {
+      // if the identification has been successfully, check if the current session is still valid
       yield put(checkCurrentSession.request());
       return IdentificationResult.success;
     }
