@@ -359,7 +359,7 @@ PODS:
     - React
   - RNFS (2.14.1):
     - React
-  - RNGestureHandler (1.2.1):
+  - RNGestureHandler (1.7.0):
     - React
   - RNI18n (2.0.15):
     - React
@@ -372,7 +372,7 @@ PODS:
     - React
   - RNSVG (12.1.0):
     - React
-  - RNVectorIcons (6.6.0):
+  - RNVectorIcons (7.0.0):
     - React
   - TouchID (4.4.1):
     - React
@@ -648,14 +648,14 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
   RNDeviceInfo: 310c1f43d418d950a193c7650de2f9559c906048
   RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
-  RNGestureHandler: aea90f0ad8e35fec23438db6fc3ad79be58bb734
+  RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNInputMask: 815461ebdf396beb62cf58916c35cf6930adb991
   RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNShare: bd6518701db274b8ba282b33620885f2225a5bcf
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
-  RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
+  RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
