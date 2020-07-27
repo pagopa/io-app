@@ -15,6 +15,8 @@ android_jars_cache_key: &android_jars_cache_key jars-{{ checksum "android/build.
 
 ios_gems_cache_key: &ios_gems_cache_key ruby-{{ checksum "Gemfile.lock" }}
 
+release_tag: &release_tag /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
+
 # nodejs builds
 defaults_js: &defaults_js
   <<: *defaults
@@ -505,28 +507,28 @@ workflows:
       - compile-typescript:
           filters:
             tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
+              only: *release_tag
             branches:
               ignore: /.*/
 
       - run-tests:
           filters:
             tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
+              only: *release_tag
             branches:
               ignore: /.*/
 
       - lint-typescript:
           filters:
             tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
+              only: *release_tag
             branches:
               ignore: /.*/
 
       - run-danger:
           filters:
             tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
+              only: *release_tag
             branches:
               ignore: /.*/
 
@@ -539,7 +541,7 @@ workflows:
             - lint-typescript
           filters:
             tags:
-              only: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
+              only: *release_tag
             branches:
               ignore: /.*/
           #              only: \d\.\d\.\d(\.rc-\d+)?
