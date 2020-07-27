@@ -2,7 +2,7 @@ diff --git a/node_modules/react-native-touch-id/TouchID.m b/node_modules/react-n
 index da37735..50888b5 100644
 --- a/node_modules/react-native-touch-id/TouchID.m
 +++ b/node_modules/react-native-touch-id/TouchID.m
-@@ -22,14 +22,18 @@ @implementation TouchID
+@@ -22,14 +22,18 @@ RCT_EXPORT_METHOD(isSupported: (NSDictionary *)options
          
          // No error found, proceed
          callback(@[[NSNull null], [self getBiometryType:context]]);
@@ -25,7 +25,7 @@ index da37735..50888b5 100644
              NSLog(@"Authentication failed: %@", errorReason);
              
 diff --git a/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintAuthModule.java b/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintAuthModule.java
-index dc54bab..f7d216a 100644
+index dc54bab..12ea224 100644
 --- a/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintAuthModule.java
 +++ b/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintAuthModule.java
 @@ -6,6 +6,7 @@ import android.app.KeyguardManager;
@@ -99,8 +99,65 @@ index dc54bab..f7d216a 100644
      }
  
      @Override
+diff --git a/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintDialog.java b/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintDialog.java
+index c4876af..a998877 100644
+--- a/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintDialog.java
++++ b/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintDialog.java
+@@ -34,12 +34,13 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
+     private String sensorDescription = "";
+     private String sensorErrorDescription = "";
+     private String errorText = "";
++    private String authenticationFailedText = "Not recognized. Try again.";
+ 
+     @Override
+     public void onAttach(Context context) {
+         super.onAttach(context);
+ 
+-        this.mFingerprintHandler = new FingerprintHandler(context, this);
++        this.mFingerprintHandler = new FingerprintHandler(context, this, this.authenticationFailedText);
+     }
+ 
+     @Override
+@@ -153,6 +154,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
+         if (config.hasKey("imageErrorColor")) {
+             this.imageErrorColor = config.getInt("imageErrorColor");
+         }
++
++        if (config.hasKey("authenticationFailedText")) {
++            this.authenticationFailedText = config.getString("authenticationFailedText");
++        }
+     }
+ 
+     public interface DialogResultListener {
+diff --git a/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintHandler.java b/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintHandler.java
+index 1ae00e6..2eb0983 100644
+--- a/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintHandler.java
++++ b/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintHandler.java
+@@ -14,10 +14,12 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
+ 
+     private final FingerprintManager mFingerprintManager;
+     private final Callback mCallback;
++    private String mAuthenticationFailedText;
+ 
+-    public FingerprintHandler(Context context, Callback callback) {
++    public FingerprintHandler(Context context, Callback callback, String authenticationFailedText) {
+         mFingerprintManager = context.getSystemService(FingerprintManager.class);
+         mCallback = callback;
++        mAuthenticationFailedText = authenticationFailedText;
+     }
+ 
+     public void startAuth(FingerprintManager.CryptoObject cryptoObject) {
+@@ -40,7 +42,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
+ 
+     @Override
+     public void onAuthenticationFailed() {
+-        mCallback.onError("Not recognized. Try again.", FingerprintAuthConstants.AUTHENTICATION_FAILED);
++        mCallback.onError(mAuthenticationFailedText, FingerprintAuthConstants.AUTHENTICATION_FAILED);
+     }
+ 
+     @Override
 diff --git a/node_modules/react-native-touch-id/index.d.ts b/node_modules/react-native-touch-id/index.d.ts
-index 797233a..09ef4a3 100644
+index 797233a..9604b79 100644
 --- a/node_modules/react-native-touch-id/index.d.ts
 +++ b/node_modules/react-native-touch-id/index.d.ts
 @@ -2,12 +2,12 @@ declare module 'react-native-touch-id' {
@@ -117,4 +174,15 @@ index 797233a..09ef4a3 100644
 +    export interface IsSupportedConfig {
        /**
         * Return unified error messages
+        */
+@@ -38,6 +38,10 @@ declare module 'react-native-touch-id' {
+        * **Android only** - Text shown next to the fingerprint image after failed attempt
+        */
+       sensorErrorDescription?: string;
++      /**
++       * Text shown below the fingerprint image when the fingerprint is not recognized
++       */
++      authenticationFailedText?: string;
+       /**
+        * **Android only** - Cancel button text
         */

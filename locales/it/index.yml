@@ -1115,7 +1115,7 @@ serviceDetail:
   disabled: disabilitato
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
-  title: Sblocca l'app
+  title: Sblocca l’app
   titleValidation: Conferma l'operazione
   subtitleCode: inserisci il codice di sblocco
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
@@ -1124,10 +1124,12 @@ identification:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale
     title: Identificazione Biometrica
+    reason_disable: Disattiva riconoscimento biometrico
     popup:
-      reason: Identificazione tramite touch ID non riuscita
       title: Identificazione richiesta
       sensorDescription: Tocca il sensore
+      sensorErrorDescription: Impronta non riconosciuta
+      authenticationFailedText: Impronta non riconosciuta, riprova
       fallbackLabel: Usa il codice di sblocco
   fail:
     wrongCode: Codice errato

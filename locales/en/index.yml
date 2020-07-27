@@ -1092,10 +1092,12 @@ identification:
     failure: Identification failed
     fingerprintType: Fingerprint
     title: Biometric identification
+    reason_disable: Disable biometric recognition
     popup:
-      reason: Identification by touch ID failed
       title: Identification required
       sensorDescription: Touch sensor
+      sensorErrorDescription: Failed
+      authenticationFailedText: Fingerprint not recognized, try again
       fallbackLabel: Use the unlock code
   fail:
     wrongCode: Wrong code

@@ -534,8 +534,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     onIdentificationSuccessHandler: () => void
   ) => {
     TouchID.authenticate(
-      I18n.t("identification.biometric.popup.reason"),
-      authenticateConfig
+      I18n.t("identification.title"),
+      authenticateConfig()
     )
       .then(() => {
         this.setState({
