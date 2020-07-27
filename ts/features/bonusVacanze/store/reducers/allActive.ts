@@ -73,8 +73,8 @@ export const allBonusActiveSelector = createSelector<
   return Object.keys(allActiveObj).map(k => allActiveObj[k]);
 });
 
-// return the list of the active bonus of which the current profile is the applicant
-export const ownedActiveBonus = createSelector<
+// return the list of the active or redeemed bonus of which the current profile is the applicant
+export const ownedActiveOrRedeemedBonus = createSelector<
   GlobalState,
   ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>,
   ProfileState,
@@ -89,7 +89,8 @@ export const ownedActiveBonus = createSelector<
         if (
           pot.isSome(curr) &&
           curr.value.applicant_fiscal_code === p.fiscal_code &&
-          curr.value.status === BonusActivationStatusEnum.ACTIVE
+          (curr.value.status === BonusActivationStatusEnum.ACTIVE ||
+            curr.value.status === BonusActivationStatusEnum.REDEEMED)
         ) {
           return [...acc, curr.value];
         }

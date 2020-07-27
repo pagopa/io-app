@@ -114,7 +114,7 @@ platform :ios do
     ensure_git_status_clean
 
     # Increment the build number
-    build_number = increment_build_number
+    build_number = get_build_number
 
     # Get the current version from the project
     version_number = get_version_number
@@ -138,15 +138,15 @@ platform :ios do
       "ItaliaApp/Info.plist",
       "ItaliaAppTests/Info.plist"
     ]
-    git_add(path: versioning_paths)
-    git_commit(path: versioning_paths, message: "[fastlane] New iOS/HockeyApp build v#{version_number} (build #{build_number})")
+    # git_add(path: versioning_paths)
+    # git_commit(path: versioning_paths, message: "[fastlane] New iOS/HockeyApp build v#{version_number} (build #{build_number})")
 
     # Add a git tag for this build. This will automatically
     # use an appropriate git tag name
-    add_git_tag(tag: "ios/beta/#{version_number}/#{build_number}")
+    # add_git_tag(tag: "ios/beta/#{version_number}/#{build_number}")
 
     # Push the new commit and tag back to your git remote
-    push_to_git_remote
+    # push_to_git_remote
 
     # upload to HockeyApp
     hockey(
@@ -161,7 +161,7 @@ platform :ios do
     ensure_git_status_clean
 
     # Increment the build number
-    build_number = increment_build_number
+    build_number = get_build_number
 
     # Get the current version from the project
     version_number = get_version_number
@@ -178,15 +178,15 @@ platform :ios do
       "ItaliaApp/Info.plist",
       "ItaliaAppTests/Info.plist"
     ]
-    git_add(path: versioning_paths)
-    git_commit(path: versioning_paths, message: "[fastlane] New iOS/TestFlight build v#{version_number} (build #{build_number}) [skip ci]")
+    # git_add(path: versioning_paths)
+    # git_commit(path: versioning_paths, message: "[fastlane] New iOS/TestFlight build v#{version_number} (build #{build_number}) [skip ci]")
 
     # Add a git tag for this build. This will automatically
     # use an appropriate git tag name
-    add_git_tag(tag: "ios/testflight/#{version_number}/#{build_number}")
+    # add_git_tag(tag: "ios/testflight/#{version_number}/#{build_number}")
 
     # Push the new commit and tag back to your git remote
-    push_to_git_remote
+    # push_to_git_remote
 
     # upload to itunes store
     pilot(

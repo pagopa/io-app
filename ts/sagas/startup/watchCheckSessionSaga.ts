@@ -1,3 +1,4 @@
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
@@ -13,22 +14,21 @@ export function* checkSession(
   getSessionValidity: ReturnType<typeof BackendClient>["getProfile"]
 ): SagaIterator {
   try {
-    const isSessionExpired = yield select(isSessionExpiredSelector);
-    if (!isSessionExpired) {
-      const response: SagaCallReturnType<
-        typeof getSessionValidity
-      > = yield call(getSessionValidity, {});
-      if (response.isLeft()) {
-        throw response.value;
-      } else {
-        // On response we check the current status if 401 the session is invalid
-        // the result will be false and then put the session expired action
-        yield put(
-          checkCurrentSession.success({
-            isSessionValid: response.value.status !== 401
-          })
-        );
-      }
+    const response: SagaCallReturnType<typeof getSessionValidity> = yield call(
+      getSessionValidity,
+      {}
+    );
+
+    if (response.isLeft()) {
+      throw Error(readableReport(response.value));
+    } else {
+      // On response we check the current status if 401 the session is invalid
+      // the result will be false and then put the session expired action
+      yield put(
+        checkCurrentSession.success({
+          isSessionValid: response.value.status !== 401
+        })
+      );
     }
   } catch (error) {
     yield put(checkCurrentSession.failure(error));
