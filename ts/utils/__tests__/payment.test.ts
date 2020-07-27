@@ -101,8 +101,6 @@ describe("decodePagoPaQrCode", () => {
       Tuple2("PAGOPA|003|322201151398574181|810057500211|01A", none),
       // invalid amount
       Tuple2("PAGOPA|002|322201151398574181|810057500211|01A", none),
-      // invalid amount
-      Tuple2("PAGOPA|002|322201151398574181|810057500211|01A", none),
       // invalid header
       Tuple2("PAPAGO|002|322201151398574181|810057500211|01", none),
       // invalid amount (1 digit instead of >= 2)
