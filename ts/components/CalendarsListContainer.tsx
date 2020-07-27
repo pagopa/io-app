@@ -66,12 +66,11 @@ const getCalendarsByAccount = (calendars: ReadonlyArray<Calendar>) => {
   const accounts: ReadonlyArray<string> = [
     ...new Set(calendars.map(cal => cal.source))
   ];
-  const result: CalendarsByAccount = accounts.map(acc => ({
+
+  return accounts.map(acc => ({
     title: acc,
     data: calendars.filter(cal => cal.source === acc)
   }));
-
-  return result;
 };
 
 /**
