@@ -36,6 +36,7 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { authenticateConfig } from "../../utils/biometric";
 import { maybeNotNullyString } from "../../utils/strings";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -118,6 +119,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
   }
 
+  private headerRef = React.createRef<Text>();
+  private errorStatusRef = React.createRef<Text>();
+
   private idUpdateCanInsertPinTooManyAttempts?: number;
 
   /**
@@ -169,7 +173,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       );
     } else {
       // if the biometric is not available unlock the unlock code insertion
-      this.setState({ biometryAuthAvailable: false });
+      this.setState({ biometryAuthAvailable: false }, () =>
+        setAccessibilityFocus(this.headerRef)
+      );
     }
 
     // first time the component is mounted, need to calculate the state value for `canInsertPinTooManyAttempts`
@@ -330,6 +336,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             white={true}
             primary={false}
             accessible={true}
+            ref={this.errorStatusRef}
           >
             {des}
           </Text>
@@ -413,6 +420,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             style={styles.header}
             white={!isValidatingTask}
             dark={isValidatingTask}
+            accessible={true}
+            ref={this.headerRef}
           >
             {I18n.t(
               isValidatingTask
@@ -522,9 +531,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       });
       onIdentificationSuccessHandler();
     } else {
-      this.setState({
-        identificationByPinState: "failure"
-      });
+      this.setState(
+        {
+          identificationByPinState: "failure"
+        },
+        () => setAccessibilityFocus(this.errorStatusRef)
+      );
 
       onIdentificationFailureHandler();
     }
