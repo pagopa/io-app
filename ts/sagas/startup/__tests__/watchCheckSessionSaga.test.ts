@@ -5,26 +5,15 @@ import {
   checkCurrentSession,
   sessionExpired
 } from "../../../store/actions/authentication";
-import { isSessionExpiredSelector } from "../../../store/reducers/authentication";
 import { checkSession, checkSessionResult } from "../watchCheckSessionSaga";
 
 describe("checkSession", () => {
   const getSessionValidity = jest.fn();
 
-  it("if session is already expired or user is not logged in it does nothing", () => {
-    testSaga(checkSession, getSessionValidity)
-      .next()
-      .select(isSessionExpiredSelector)
-      .next(true)
-      .isDone();
-  });
-
   it("if response is 200 the session is valid", () => {
     const responseOK = right({ status: 200 });
     testSaga(checkSession, getSessionValidity)
       .next()
-      .select(isSessionExpiredSelector)
-      .next(false)
       .call(getSessionValidity, {})
       .next(responseOK)
       .put(
@@ -40,8 +29,6 @@ describe("checkSession", () => {
     const responseUnauthorized = right({ status: 401 });
     testSaga(checkSession, getSessionValidity)
       .next()
-      .select(isSessionExpiredSelector)
-      .next(false)
       .call(getSessionValidity, {})
       .next(responseUnauthorized)
       .put(
@@ -57,8 +44,6 @@ describe("checkSession", () => {
     const response500 = right({ status: 500 });
     testSaga(checkSession, getSessionValidity)
       .next()
-      .select(isSessionExpiredSelector)
-      .next(false)
       .call(getSessionValidity, {})
       .next(response500)
       .put(
@@ -78,8 +63,6 @@ describe("checkSession", () => {
     const responeLeft = left([validatorError]);
     testSaga(checkSession, getSessionValidity)
       .next()
-      .select(isSessionExpiredSelector)
-      .next(false)
       .call(getSessionValidity, {})
       .next(responeLeft)
       .put(
