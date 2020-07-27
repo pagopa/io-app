@@ -1,13 +1,12 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
   checkCurrentSession,
   sessionExpired
 } from "../../store/actions/authentication";
-import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { SagaCallReturnType } from "../../types/utils";
 
 export function* checkSession(
