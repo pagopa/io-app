@@ -47,3 +47,7 @@ module.exports.iosGetBuildVersion = function(rawVersion, currentBuildVersion) {
     ? getRC(rawVersion)
     : parseInt(currentBuildVersion, 10) + 1;
 };
+
+module.exports.androidGetBuildVersion = function(rawVersion) {
+  return isRc(rawVersion) ? getRC(rawVersion) : undefined;
+};
