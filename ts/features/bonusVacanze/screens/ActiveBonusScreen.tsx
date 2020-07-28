@@ -41,7 +41,10 @@ import {
   cancelLoadBonusFromIdPolling,
   startLoadBonusFromIdPolling
 } from "../store/actions/bonusVacanze";
-import { bonusActiveDetailByIdSelector } from "../store/reducers/allActive";
+import {
+  bonusActiveDetailByIdSelector,
+  ownedActiveOrRedeemedBonus
+} from "../store/reducers/allActive";
 import {
   availableBonusTypesSelectorFromId,
   bonusVacanzeLogo
@@ -52,6 +55,7 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
+import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -78,10 +82,6 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1
   },
-  title: {
-    color: variables.lightGray,
-    fontSize: variables.fontSize1
-  },
   image: {
     position: "absolute",
     top: -144,
@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
   },
   validUntil: {
     color: variables.brandDarkestGray,
-    fontSize: variables.fontSizeSmall,
     lineHeight: variables.lineHeightSmall,
     paddingVertical: 8
   },
@@ -151,13 +150,9 @@ const styles = StyleSheet.create({
     lineHeight: 21
   },
   commonLabel: {
-    fontSize: variables.fontSizeSmall,
     lineHeight: 18
   },
-  disclaimer: {
-    fontSize: customVariables.fontSizeSmall,
-    color: customVariables.selectedColor
-  }
+  headerSpacer: { height: 154 }
 });
 
 async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
@@ -368,17 +363,14 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   return !props.isError && bonus ? (
     <DarkLayout
       bounces={false}
-      headerBody={
-        <TouchableDefaultOpacity onPress={props.goBack} style={styles.center}>
-          <Text style={styles.title}>{I18n.t("bonus.bonusVacanze.name")}</Text>
-        </TouchableDefaultOpacity>
-      }
+      title={I18n.t("bonus.bonusVacanze.name")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["bonus_detail"]}
       allowGoBack={true}
-      topContent={<View style={{ height: 90 }} />}
+      topContent={<View style={styles.headerSpacer} />}
       footerContent={renderFooterButtons()}
       gradientHeader={true}
+      hideHeader={true}
     >
       <View>
         <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
@@ -392,6 +384,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} extralarge={true} />
           {switchInformationText()}
           <View spacer={true} />
+        </View>
+        {props.hasMoreOwnedActiveBonus && (
+          <ActivateBonusDiscrepancies
+            text={I18n.t("bonus.bonusVacanze.multipleBonus")}
+            attention={I18n.t(
+              "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.attention"
+            )}
+          />
+        )}
+        <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} />
           <BonusCompositionDetails
@@ -448,11 +450,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               <TouchableDefaultOpacity
                 onPress={() => handleModalPress(maybeBonusTos.value)}
               >
-                <Text
-                  style={styles.disclaimer}
-                  ellipsizeMode={"tail"}
-                  numberOfLines={1}
-                >
+                <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
                   {I18n.t("bonus.tos.title")}
                 </Text>
               </TouchableDefaultOpacity>
@@ -474,7 +472,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const bonusFromNav = ownProps.navigation.getParam("bonus");
   const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
+
   return {
+    hasMoreOwnedActiveBonus: ownedActiveOrRedeemedBonus(state).length > 1,
     bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus,
     isError: pot.isNone(bonus) && pot.isError(bonus), // error and no bonus data, user should retry to load

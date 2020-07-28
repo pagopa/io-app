@@ -2,8 +2,13 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { Action } from "../../../../store/actions/types";
+import {
+  profileSelector,
+  ProfileState
+} from "../../../../store/reducers/profile";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   activateBonusVacanze,
@@ -66,6 +71,34 @@ export const allBonusActiveSelector = createSelector<
   ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>
 >(allBonusActiveByIdSelector, allActiveObj => {
   return Object.keys(allActiveObj).map(k => allActiveObj[k]);
+});
+
+// return the list of the active or redeemed bonus of which the current profile is the applicant
+export const ownedActiveOrRedeemedBonus = createSelector<
+  GlobalState,
+  ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>,
+  ProfileState,
+  ReadonlyArray<BonusActivationWithQrCode>
+>([allBonusActiveSelector, profileSelector], (allActiveArray, profile) => {
+  return pot.toOption(profile).fold([], p =>
+    allActiveArray.reduce(
+      (
+        acc: ReadonlyArray<BonusActivationWithQrCode>,
+        curr: pot.Pot<BonusActivationWithQrCode, Error>
+      ) => {
+        if (
+          pot.isSome(curr) &&
+          curr.value.applicant_fiscal_code === p.fiscal_code &&
+          (curr.value.status === BonusActivationStatusEnum.ACTIVE ||
+            curr.value.status === BonusActivationStatusEnum.REDEEMED)
+        ) {
+          return [...acc, curr.value];
+        }
+        return acc;
+      },
+      []
+    )
+  );
 });
 
 // return the bonus from a given ID

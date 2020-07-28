@@ -18,9 +18,6 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: themeVariables.fontSizeSmall
-  },
   bold: {
     fontWeight: "bold"
   },
@@ -35,7 +32,7 @@ const styles = StyleSheet.create({
  * @param value
  */
 const header = (key: string, value: string) => (
-  <View style={keyValueTableStyle.baseRow}>
+  <View style={keyValueTableStyle.baseRow} accessible={true}>
     <H6>{key}</H6>
     <H5>{value}</H5>
   </View>
@@ -57,11 +54,11 @@ const getRow = (
   ({
     key: {
       text: keyText,
-      style: keyStyle ? keyStyle : styles.text
+      style: keyStyle
     },
     value: {
       text: valueText,
-      style: valueStyle ? valueStyle : styles.text
+      style: valueStyle
     }
   } as KeyValueRow);
 

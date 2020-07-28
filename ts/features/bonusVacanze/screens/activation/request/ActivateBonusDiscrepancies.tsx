@@ -18,9 +18,6 @@ const styles = StyleSheet.create({
   },
   discrepanciesBox: {
     backgroundColor: themeVariables.brandHighlight
-  },
-  discrepancies: {
-    color: themeVariables.colorWhite
   }
 });
 
@@ -42,17 +39,10 @@ export const ActivateBonusDiscrepancies: React.FunctionComponent<
         bonusVacanzeStyle.horizontalPadding
       ]}
     >
-      <IconFont
-        name={"io-notice"}
-        size={iconSize}
-        color={themeVariables.colorWhite}
-      />
+      <IconFont name={"io-notice"} size={iconSize} />
       <View hspacer={true} />
-      <Text style={[styles.discrepancies, activateBonusStyle.boxText]}>
-        <Text
-          bold={true}
-          style={[styles.discrepancies, activateBonusStyle.boxText]}
-        >
+      <Text style={activateBonusStyle.boxText} dark={true}>
+        <Text bold={true} style={activateBonusStyle.boxText} dark={true}>
           {`${props.attention} `}
         </Text>
         {props.text}

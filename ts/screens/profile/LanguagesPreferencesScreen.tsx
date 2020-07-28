@@ -15,7 +15,7 @@ import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPrefe
 import { Dispatch } from "../../store/actions/types";
 import { preferredLanguageSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { getLocalePrimary } from "../../utils/locale";
+import { getLocalePrimaryWithFallback } from "../../utils/locale";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
@@ -36,9 +36,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props> {
     // if the preferred Lanuage is not set, we check if language is the same in use
     return this.props.preferredLanguage
       .map(l => l === language)
-      .getOrElse(
-        getLocalePrimary(I18n.locale).fold(false, l => l === language)
-      );
+      .getOrElse(getLocalePrimaryWithFallback() === language);
   };
 
   private onLanguageSelected = (language: Locales) => {
@@ -92,14 +90,24 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props> {
           <List withContentLateralPadding={true}>
             {availableTransations.map((lang, index) => {
               const isSelectedLanguage = this.isAlreadyPreferred(lang);
+              const languageTitle = I18n.t(`locales.${lang}`, {
+                defaultValue: lang
+              });
               return (
                 <ListItemComponent
                   key={index}
-                  title={I18n.t(`locales.${lang}`, { defaultValue: lang })}
+                  title={languageTitle}
                   hideIcon={!isSelectedLanguage}
                   iconSize={iconSize}
                   iconName={isSelectedLanguage ? "io-tick-big" : undefined}
                   onPress={() => this.onLanguageSelected(lang)}
+                  accessible={true}
+                  accessibilityRole={"radio"}
+                  accessibilityLabel={`${languageTitle}, ${
+                    isSelectedLanguage
+                      ? I18n.t("global.accessibility.active")
+                      : I18n.t("global.accessibility.inactive")
+                  }`}
                 />
               );
             })}

@@ -1,11 +1,14 @@
 import { fromNullable, none } from "fp-ts/lib/Option";
+import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, NavState, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
+import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -14,8 +17,11 @@ import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomCo
 import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import I18n from "../../i18n";
-import { idpLoginUrlChanged } from "../../store/actions/authentication";
-import { loginFailure, loginSuccess } from "../../store/actions/authentication";
+import {
+  idpLoginUrlChanged,
+  loginFailure,
+  loginSuccess
+} from "../../store/actions/authentication";
 import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
@@ -26,6 +32,8 @@ import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/conten
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
+import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
+import { getUrlBasepath } from "../../utils/url";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -41,6 +49,8 @@ type State = {
   errorCode?: string;
   loginTrace?: string;
 };
+
+const loginFailureTag = "spid-login-failure";
 
 const brokenLinkImage = require("../../../img/broken-link.png");
 
@@ -111,18 +121,32 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.props.dispatchLoginFailure(
       new Error(`login failure with code ${errorCode || "n/a"}`)
     );
+    const logText = fromNullable(errorCode).fold(
+      "login failed with no error code available",
+      ec =>
+        `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
+    );
+
+    instabugLog(logText, TypeLogs.ERROR, "login");
+    Instabug.appendTags([loginFailureTag]);
     this.setState({
       requestState: pot.noneError(ErrorType.LOGIN_ERROR),
       errorCode
     });
   };
 
+  private handleLoginSuccess = (token: SessionToken) => {
+    instabugLog(`login success`, TypeLogs.DEBUG, "login");
+    Instabug.resetTags();
+    this.props.dispatchLoginSuccess(token);
+  };
+
   private setRequestStateToLoading = (): void =>
     this.setState({ requestState: pot.noneLoading });
 
-  private handleNavigationStateChange = (event: NavState): void => {
+  private handleNavigationStateChange = (event: WebViewNavigation): void => {
     if (event.url) {
-      const urlChanged = event.url.split("?")[0];
+      const urlChanged = getUrlBasepath(event.url);
       if (urlChanged !== this.state.loginTrace) {
         this.props.dispatchIdpLoginUrlChanged(urlChanged);
         this.updateLoginTrace(urlChanged);
@@ -138,10 +162,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
     });
   };
 
-  private handleShouldStartLoading = (event: NavState): boolean => {
+  private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
     const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
-      this.props.dispatchLoginSuccess
+      this.handleLoginSuccess
     )(event);
     // URL can be loaded if it's not the login URL containing the session token - this avoids
     // making a (useless) GET request with the session in the URL

@@ -161,6 +161,7 @@ class TosScreen extends React.PureComponent<Props, State> {
     if (this.state.scrollEnd) {
       return;
     }
+
     // We validate the format of the message with a dedicated codec
     const messageOrErrors = WebViewMessage.decode(
       JSON.parse(event.nativeEvent.data)
@@ -193,13 +194,15 @@ class TosScreen extends React.PureComponent<Props, State> {
         }
       >
         <SafeAreaView style={styles.webViewContainer}>
-          <View style={styles.alert}>
-            <Text>
-              {this.props.hasAcceptedOldTosVersion
-                ? I18n.t("profile.main.privacy.privacyPolicy.updated")
-                : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
-            </Text>
-          </View>
+          {!this.props.hasAcceptedCurrentTos && (
+            <View style={styles.alert}>
+              <Text>
+                {this.props.hasAcceptedOldTosVersion
+                  ? I18n.t("profile.main.privacy.privacyPolicy.updated")
+                  : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
+              </Text>
+            </View>
+          )}
           {this.renderError()}
           {!this.state.hasError && (
             <TosWebviewComponent
@@ -245,6 +248,10 @@ function mapStateToProps(state: GlobalState) {
   return {
     isOnbardingCompleted: isOnboardingCompletedSelector(state),
     isLoading: pot.isUpdating(potProfile),
+    hasAcceptedCurrentTos: pot.getOrElse(
+      pot.map(potProfile, p => p.accepted_tos_version === tosVersion),
+      false
+    ),
     hasAcceptedOldTosVersion: pot.getOrElse(
       pot.map(
         potProfile,

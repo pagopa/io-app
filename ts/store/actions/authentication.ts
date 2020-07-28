@@ -9,7 +9,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { Errors } from "io-ts";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
@@ -75,7 +74,7 @@ export const checkCurrentSession = createAsyncAction(
   "CHECK_CURRENT_SESSION_REQUEST",
   "CHECK_CURRENT_SESSION_SUCCESS",
   "CHECK_CURRENT_SESSION_FAILURE"
-)<void, CheckSessionResult, Errors>();
+)<void, CheckSessionResult, Error>();
 
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 

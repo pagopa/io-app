@@ -20,13 +20,15 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../store/actions/navigationHistory";
+import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
+import { actionWithAlert } from "../components/alert/ActionWithAlert";
 import { bonusVacanzeStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
+import { ownedActiveOrRedeemedBonus } from "../store/reducers/allActive";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -36,16 +38,17 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = OwnProps &
   LightModalContextInterface &
+  ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const CSS_STYLE = `
 body {
-  font-size: ${customVariables.fontSizeSmall}px;
+  font-size: ${customVariables.fontSize1}px;
   color: ${customVariables.brandDarkestGray}
 }
 
 h4 {
-  font-size: ${customVariables.fontSize1}px;
+  font-size: ${customVariables.fontSize2}px;
 }
 `;
 
@@ -85,9 +88,6 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSize3,
     lineHeight: customVariables.lineHeightH3,
     color: customVariables.colorBlack
-  },
-  disclaimer: {
-    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -113,6 +113,18 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusType[getLocalePrimaryWithFallback()];
 
+  // if the current profile owns other active bonus, show an alert informing about that
+  const handleBonusRequestOnPress = () =>
+    props.hasOwnedActiveBonus
+      ? actionWithAlert({
+          title: I18n.t("bonus.bonusInformation.requestAlert.title"),
+          body: I18n.t("bonus.bonusInformation.requestAlert.content"),
+          confirmText: I18n.t("bonus.bonusVacanze.abort.cancel"),
+          cancelText: I18n.t("bonus.bonusVacanze.abort.confirm"),
+          onConfirmAction: props.requestBonusActivation
+        })
+      : props.requestBonusActivation();
+
   const cancelButtonProps = {
     block: true,
     light: true,
@@ -123,7 +135,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const requestButtonProps = {
     block: true,
     primary: true,
-    onPress: props.requestBonusActivation,
+    onPress: handleBonusRequestOnPress,
     title: `${I18n.t("bonus.bonusVacanze.cta.requestBonus")} ${
       bonusTypeLocalizedContent.name
     }`
@@ -180,7 +192,9 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
               transparent={true}
               onPress={() => handleModalPress(maybeBonusTos.value)}
             >
-              <Text semibold={true}>{I18n.t("bonus.tos.title")}</Text>
+              <Text semibold={true} link={true}>
+                {I18n.t("bonus.tos.title")}
+              </Text>
             </ButtonDefaultOpacity>
           )}
           <View spacer={true} />
@@ -198,14 +212,12 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
               <View spacer={true} extralarge={true} />
               <ItemSeparatorComponent noPadded={true} />
               <View spacer={true} extralarge={true} />
-              <Text style={styles.disclaimer} dark={true}>
-                {I18n.t("bonus.bonusVacanze.advice")}
-              </Text>
+              <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
               <TouchableDefaultOpacity
                 onPress={() => handleModalPress(maybeBonusTos.value)}
+                accessibilityRole={"link"}
               >
                 <Text
-                  style={styles.disclaimer}
                   link={true}
                   semibold={true}
                   ellipsizeMode={"tail"}
@@ -236,17 +248,20 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
+const mapStateToProps = (state: GlobalState) => ({
+  hasOwnedActiveBonus: ownedActiveOrRedeemedBonus(state).length > 0
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestBonusActivation: () => {
     dispatch(checkBonusVacanzeEligibility.request());
-    dispatch(navigationHistoryPop(1));
   },
   navigateBack: () => dispatch(navigateBack())
 });
 
 export default withLightModalContext(
   connect(
-    undefined,
+    mapStateToProps,
     mapDispatchToProps
   )(BonusInformationScreen)
 );

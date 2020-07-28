@@ -21,7 +21,8 @@ export enum EligibilityRequestProgressEnum {
   "TIMEOUT" = "TIMEOUT", // too long to complete the request
   "ERROR" = "ERROR", // generic error / network error
   "BONUS_ACTIVATION_PENDING" = "BONUS_ACTIVATION_PENDING", // there's already an activation bonus running
-  "CONFLICT" = "CONFLICT" // eligibility check succeeded but there's already a bonus found for this set of family members.
+  "CONFLICT" = "CONFLICT", // eligibility check succeeded but there's already a bonus found for this set of family members.
+  "UNDERAGE" = "UNDERAGE" // only citizens of legal age can apply
 }
 
 export type EligibilityCheckRequest = {

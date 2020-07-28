@@ -1,6 +1,7 @@
 import { range } from "fp-ts/lib/Array";
 import { left, right } from "fp-ts/lib/Either";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { debounce, shuffle } from "lodash";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -21,7 +22,6 @@ interface Props {
   clearOnInvalid?: boolean;
   shufflePad?: boolean;
   isFingerprintEnabled?: any;
-  codeInsertionStatus?: string;
   isValidatingTask?: boolean;
   biometryType?: any;
   compareWithCode?: string;
@@ -59,7 +59,7 @@ const screenWidth = Dimensions.get("window").width;
 
 const SMALL_ICON_WIDTH = 17;
 const ICON_WIDTH = 48;
-
+const SHAKE_ANIMATION_DURATION = 600 as Millisecond;
 const INPUT_MARGIN = 36;
 
 /**
@@ -297,20 +297,6 @@ class Pinpad extends React.PureComponent<Props, State> {
     this.setState({ value: "" });
   }, 100);
 
-  private renderCodeInsertionStatus = () => {
-    return (
-      <Text
-        alignCenter={true}
-        bold={true}
-        white={this.props.buttonType === "primary"}
-        primary={this.props.buttonType === "light"}
-        accessible={true}
-      >
-        {this.props.codeInsertionStatus}
-      </Text>
-    );
-  };
-
   public render() {
     return (
       <React.Fragment>
@@ -320,9 +306,9 @@ class Pinpad extends React.PureComponent<Props, State> {
           inactiveColor={this.props.inactiveColor}
           inputValue={this.state.value}
           customHorizontalMargin={INPUT_MARGIN}
+          accessibilityLabel={I18n.t("identification.unlockCode.reset.code")}
         />
         <View spacer={true} />
-        {this.renderCodeInsertionStatus()}
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
             <Text
@@ -345,7 +331,10 @@ class Pinpad extends React.PureComponent<Props, State> {
           </React.Fragment>
         )}
         <View spacer={true} />
-        <ShakeAnimation duration={600} ref={this.shakeAnimationRef}>
+        <ShakeAnimation
+          duration={SHAKE_ANIMATION_DURATION}
+          ref={this.shakeAnimationRef}
+        >
           <KeyPad
             digits={this.pinPadDigits()}
             buttonType={this.props.buttonType}

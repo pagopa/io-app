@@ -1,4 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, race, select, take } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
@@ -13,13 +14,15 @@ import {
   navigateToEligible,
   navigateToIseeNotAvailable,
   navigateToIseeNotEligible,
-  navigateToTimeoutEligibilityCheck
+  navigateToTimeoutEligibilityCheck,
+  navigateToUnderage
 } from "../../../navigation/action";
 import BONUSVACANZE_ROUTES from "../../../navigation/routes";
 import {
   activateBonusVacanze,
   cancelBonusVacanzeRequest,
-  checkBonusVacanzeEligibility
+  checkBonusVacanzeEligibility,
+  showBonusVacanze
 } from "../../actions/bonusVacanze";
 import { EligibilityRequestProgressEnum } from "../../reducers/eligibility";
 import { bonusEligibilitySaga } from "./getBonusEligibilitySaga";
@@ -33,7 +36,8 @@ const eligibilityToNavigate = new Map([
     EligibilityRequestProgressEnum.BONUS_ACTIVATION_PENDING,
     navigateToBonusActivationPending
   ],
-  [EligibilityRequestProgressEnum.CONFLICT, navigateToBonusAlreadyExists]
+  [EligibilityRequestProgressEnum.CONFLICT, navigateToBonusAlreadyExists],
+  [EligibilityRequestProgressEnum.UNDERAGE, navigateToUnderage]
 ]);
 
 type BonusEligibilitySagaType = ReturnType<typeof bonusEligibilitySaga>;
@@ -63,6 +67,7 @@ export function* eligibilityWorker(eligibilitySaga: BonusEligibilitySagaType) {
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
     // show the loading page for the check eligibility
     yield put(navigateToBonusEligibilityLoading());
+    yield put(navigationHistoryPop(1));
   }
 
   // start and wait for network request
@@ -93,13 +98,15 @@ export function* handleBonusEligibilitySaga(
 ): SagaIterator {
   // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
 
-  const { cancelAction } = yield race({
+  const { cancelAction, showAction } = yield race({
     eligibility: call(eligibilityWorker, eligibilitySaga),
-    cancelAction: take(cancelBonusVacanzeRequest)
+    cancelAction: take(cancelBonusVacanzeRequest),
+    showAction: take(showBonusVacanze)
   });
   if (cancelAction) {
+    yield put(NavigationActions.back());
+  } else if (showAction) {
     yield put(navigateToWalletHome());
+    yield put(navigationHistoryPop(1));
   }
-  // remove the eligibility detail info screen from the navigation stack
-  yield put(navigationHistoryPop(1));
 }

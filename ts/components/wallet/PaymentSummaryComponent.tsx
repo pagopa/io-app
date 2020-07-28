@@ -11,7 +11,7 @@ type Props = Readonly<{
   title: string;
   recipient?: string;
   description?: string;
-  iuv?: string;
+  codiceAvviso?: string;
   error?: string;
   dateTime?: string;
   dark?: boolean;
@@ -66,9 +66,7 @@ export const PaymentSummaryComponent = (props: Props) => {
     }
     return (
       <React.Fragment>
-        <Text small={true} style={props.dark && styles.lighterGray}>
-          {label}
-        </Text>
+        <Text style={props.dark && styles.lighterGray}>{label}</Text>
         <Text bold={true} dark={!props.dark} white={props.dark}>
           {value}
         </Text>
@@ -82,7 +80,7 @@ export const PaymentSummaryComponent = (props: Props) => {
       <View style={styles.paymentOutcome}>
         <BadgeComponent color={props.paymentStatus.color} />
         <View hspacer={true} small={true} />
-        <Text small={true}>{props.paymentStatus.description}</Text>
+        <Text>{props.paymentStatus.description}</Text>
       </View>
       <View spacer={true} />
     </React.Fragment>
@@ -116,7 +114,7 @@ export const PaymentSummaryComponent = (props: Props) => {
             props.description
           )}
 
-          {renderItem(I18n.t("payment.IUV"), props.iuv)}
+          {renderItem(I18n.t("payment.noticeCode"), props.codiceAvviso)}
         </View>
 
         {props.image !== undefined && <Image source={props.image} />}

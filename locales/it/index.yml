@@ -1,6 +1,11 @@
 ---
 global:
   accessibility:
+    date_format: DD MMMM YYYY
+    expanded: Paragrafo espanso
+    collapsed: Paragrafo chiuso
+    active: Stato attivo
+    inactive: Stato non attivo
     activityIndicator:
       label: Caricamento in corso
       hint: Attendi il caricamento del contenuto
@@ -11,6 +16,10 @@ global:
       open:
         label: Aiuto contestuale
         hint: Accedi alle informazioni sul contenuto della schermata corrente
+    chat:
+      description: "Messaggi assistenza IO"
+      unread_singular: "{{messages}} nuovo messaggio"
+      unread_plural: "{{messages}} nuovi messaggi"
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -50,6 +59,7 @@ global:
     close: Chiudi
     exit: Esci
     saveSelection: Salva la selezione
+    search: Ricerca
   navigator:
     messages: messaggi
     wallet: pagamenti
@@ -120,6 +130,17 @@ inbox:
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
   fiscalCode:
+    accessibility:
+      unavailable: Non disponibile
+      preview:
+        label: Anteprima del tuo codice fiscale
+        hint: Attiva per visualizzare il facsimile del tuo codice fiscale
+      front:
+        label: Parte anteriore del documento codice fiscale {{code}} di {{name}} {{family_name}}, sesso {{gender}}, nato a {{placeOfBirth}},{{province}} il {{birthDate}}
+        hint: Attiva per passare alla visualizzazione a schermo intero
+      rear:
+        label: Codice a barre del tuo documento
+        hint: Attiva per passare alla visualizzazione a schermo intero
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
     help: !include profile/profile_fiscal_code.md
@@ -130,7 +151,8 @@ profile:
   unknown: SCONOSCIUTO
   logout:
     menulabel: Esci da IO
-    alertMessage: Uscendo da IO ti verrà chiesto nuovamente di accedere. Vuoi Uscire?
+    alertMessage: Sei sicuro di voler uscire? Al prossimo accesso sarà necessario un nuovo login con CIE o SPID.
+    exit: Esci
     cta:
       header: Come vuoi uscire dall'app?
       keepData:
@@ -274,10 +296,12 @@ userMetadata:
 navigation:
   messages: Messaggi
   profile: Profilo
+  accessibility: "Sezione {{section}}, pannello, {{order}} di 4"
 cie:
   title: Appoggia la carta
   layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
   layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti un suono.
+  booking_url: https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/
 spid:
   login: ACCEDI
   loginButton: ENTRA CON
@@ -303,8 +327,8 @@ authentication:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: il tuo sistema operativo non ha una versione compatibile con l'autenticazione tramite CIE
-      nfc_incompatible: il tuo dispositivo non ha una antenna NFC compatibile con l'autenticazione tramite CIE
+      os_version_unsupported: una versione del sistema operativo compatibile con l'autenticazione tramite CIE (Android 6.0 o superiore)
+      nfc_incompatible: una antenna NFC compatibile con l'autenticazione tramite CIE
     contentTitleCie: Non hai SPID o la CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
@@ -356,6 +380,7 @@ authentication:
       enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
     pin:
       accessibility:
+        placeholderLabel: PIN della Carta di identità elettronica
         label: Campo di inserimento per pin della Carta di Itentità elettronica
         hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
       pinCardTitle: Inserisci il PIN della tua carta
@@ -376,7 +401,7 @@ authentication:
       headerTitle: Lettura della CIE
       layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
       layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
-      cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo...
+      cieCardValid: Ok, la tua carta CIE è valida! Puoi rimuoverla.
       readerCardTitle: Tieni ferma la carta per qualche secondo
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
@@ -581,6 +606,7 @@ payment:
   noPsp: Non hai ancora selezionato un PSP
   changePsp: Cambia PSP
   IUV: IUV
+  noticeCode: Codice avviso
   recipientFiscalCode: Codice fiscale beneficiario
   details:
     state:
@@ -612,6 +638,7 @@ wallet:
     titlePagoPaUpdateApp: Aggiornamento richiesto
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
     btnUpdateApp: Aggiorna l'app IO
+    favourite: Non è possibile rimuovere un metodo di pagamento preferito, per modificarlo selezionane un altro
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Carte di Credito
@@ -827,7 +854,7 @@ wallet:
     cameraUsageInfo:
       Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
       inserisci manualmente i dati identificativi (IUV e codice ente/azienda).
-    setManually: Inserisci i dati manualmente
+    setManually: Inserisci tu i dati
     enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
     cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
@@ -884,6 +911,13 @@ cardComponent:
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
 messages:
+  accessibility:
+    message:
+      read: "Messaggio"
+      unread: "Messaggio non letto"
+      description: "{{newMessage}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      received_on: "ricevuto il"
+      received_at: "ricevuto alle ore"
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
   contextualHelpContent: !include messages/messages_home.md
   counting:
@@ -1104,7 +1138,7 @@ identification:
     waitMessage: "Riprova tra:"
   unlockCode:
     accessibility:
-      unlockHint: Hai inserito {{number}} cifre
+      unlockHint: Hai inserito {{number}} cifre di {{length}}
       fingerprint: Autenticati con l'impronta digitale
       faceId: Autenticati con il riconoscimento facciale
       delete: Cancella l'ultima cifra inserita
@@ -1383,12 +1417,18 @@ faq:
   76:
     title: "L’app mi dice che l’importo massimo del mio Bonus Vacanze è di 500 euro. Cosa succede se il costo del mio soggiorno è inferiore?"
     content: !include bonus/faq/faq76.md
+  77:
+    title: "Qualsiasi tipo di ISEE è valido per richiedere il Bonus Vacanze tramite l’app IO?"
+    content: !include bonus/faq/faq77.md
 bonus:
   bonusVacanze:
+    accessibility:
+      card: Il tuo Bonus Vacanze con codice {{code}}, del valore di {{value}} euro è {{status}}
     statusInfo:
       validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
       bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
       redeemed: Questo Bonus Vacanze è stato utilizzato il {{date}}
+    multipleBonus: Risultano due o più bonus richiesti e attivati da te. Assicurati di usare quello relativo alla DSU corretta, per evitare che chi utilizza il bonus incorra in successive azioni di recupero.
     usableAmount: Spendibile presso la struttura ricettiva
     taxBenefit: Detraibile in dichiarazione dei redditi
     request: Richiedi il
@@ -1418,9 +1458,9 @@ bonus:
     eligibility:
       loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
       iseeNotAvailable:
-        title: "Siamo spiacenti.\n Non hai un ISEE in corso di validità."
+        title: "Siamo spiacenti.\n Non hai un ISEE ordinario o corrente in corso di validità."
         text:
-          first: "E' necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE, prima di richiedere nuovamente il Bonus Vacanze.\n\n
+          first: "E' necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE ordinario o corrente, prima di richiedere nuovamente il Bonus Vacanze.\n\n
                   Puoi fare subito una "
           secondo: "simulazione online"
           third: " sul sito dell'INPS per verificare la tua idoneità, oppure richiedere l'ISEE sui canali previsti da INPS."
@@ -1437,8 +1477,7 @@ bonus:
         title: Buone notizie!
         description: "Il tuo nucleo familiare ha diritto al seguente Bonus Vacanze:"
         reminder:
-          text: "Ti ricordiamo che ciascun componente del tuo nucleo famigliare può spendere il bonus. Se le informazioni riportate non ti risultano corrette, ti preghiamo di verificare con il"
-          link: "servizio clienti di INPS."
+          text: "Ciascun componente del tuo nucleo familiare concorre a determinare l'importo e potrà spendere il bonus. Se i dati non sono corretti o aggiornati, per evitare problemi in seguito all'utilizzo del Bonus, ti invitiamo a presentare una nuova DSU prima di procedere con la richiesta."
         discrepancies:
           attention: "Attenzione!"
           text: "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Verifica che sia tutto corretto prima di continuare. Se decidi di proseguire, potresti essere chiamato a fornire la documentazione per provare la completezza e la veridicità dei dati indicati nella DSU Altrimenti, puoi presentare una nuova DSU e richiedere il Bonus in un secondo momento."
@@ -1452,6 +1491,8 @@ bonus:
       activationPending:
         title: Il bonus per il tuo nucleo familiare è già stato richiesto ed è in fase di attivazione.
         description: Riceverai un messaggio quando sarà attivato.
+      underage:
+        title: "Siamo spiacenti. Solo i cittadini maggiorenni possono richiedere il Bonus Vacanze"
     activation:
       loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
       goToDetails: Visualizza Bonus Vacanze
@@ -1465,6 +1506,7 @@ bonus:
       eligibilityExpired:
         title: Tempo scaduto.
         body: Le 24 ore utili a proseguire la tua richiesta sono scadute. Ti chiediamo di ricominciare una nuova richiesta.
+        cta: "Richiedi Bonus"
       confirm:
         title: Attenzione
         body: Continuando nel processo, non sarà più possibile annullare la richiesta.
@@ -1477,7 +1519,7 @@ bonus:
       title: Annulla
       body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
       cancel: Continua
-      confirm: Annulla richiesta
+      confirm: Annulla la richiesta
       completed: Richiesta annullata
     composition:
       amount: "Importo massimo"
@@ -1495,6 +1537,9 @@ bonus:
     contextualHelp:
       title: Il bonus vacanze
       body: Qui sono visualizzate tutte le informazioni relative al bonus vacanze, il provvedimento istituito dal Decreto Rilancio per incentivare  il turismo dopo il lockdown dovuto all'emergenza Coronavirus.
+    requestAlert:
+      title: Attenzione
+      content: "Hai già ottenuto un bonus, continua la richiesta solo se la tua situazione si è modificata e hai presentato una nuova DSU per l’aggiornamento dell’ISEE.\n Ti informiamo che l’utilizzo di bonus generati in base a DSU non corrette, determina azioni di recupero dell’agevolazione verso l’utilizzatore.\n Sei sicuro di voler continuare?"
   request: Richiedi un nuovo bonus
   requestLabel: Bonus e sconti
   requestTitle: Richiesta

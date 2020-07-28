@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
@@ -39,49 +40,49 @@ const TAPS_TO_OPEN_TESTIDP = 5;
 const idps: ReadonlyArray<IdentityProvider> = [
   {
     id: "arubaid",
-    name: "Aruba ID",
+    name: "Aruba",
     logo: require("../../../img/spid-idp-arubaid.png"),
     entityID: "arubaid",
     profileUrl: "http://selfcarespid.aruba.it"
   },
   {
     id: "infocertid",
-    name: "Infocert ID",
+    name: "Infocert",
     logo: require("../../../img/spid-idp-infocertid.png"),
     entityID: "infocertid",
     profileUrl: "https://my.infocert.it/selfcare"
   },
   {
     id: "intesaid",
-    name: "Intesa ID",
+    name: "Intesa",
     logo: require("../../../img/spid-idp-intesaid.png"),
     entityID: "intesaid",
     profileUrl: "https://spid.intesa.it"
   },
   {
     id: "lepidaid",
-    name: "Lepida ID",
+    name: "Lepida",
     logo: require("../../../img/spid-idp-lepidaid.png"),
     entityID: "lepidaid",
     profileUrl: "https://id.lepida.it/"
   },
   {
     id: "namirialid",
-    name: "Namirial ID",
+    name: "Namirial",
     logo: require("../../../img/spid-idp-namirialid.png"),
     entityID: "namirialid",
     profileUrl: "https://idp.namirialtsp.com/idp"
   },
   {
     id: "posteid",
-    name: "Poste ID",
+    name: "Poste",
     logo: require("../../../img/spid-idp-posteid.png"),
     entityID: "posteid",
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
   },
   {
     id: "sielteid",
-    name: "Sielte ID",
+    name: "Sielte",
     logo: require("../../../img/spid-idp-sielteid.png"),
     entityID: "sielteid",
     profileUrl: "https://myid.sieltecloud.it/profile/"
@@ -127,12 +128,13 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
 
   private onIdpSelected = (idp: IdentityProvider) => {
     const { counter } = this.state;
-    if (idp.isTestIdp === true && counter < 5) {
+    if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
       const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
       this.setState({ counter: newValue });
       return;
     }
     this.props.setSelectedIdp(idp);
+    instabugLog(`IDP selected: ${idp.id}`, TypeLogs.DEBUG, "login");
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
 

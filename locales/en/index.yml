@@ -1,6 +1,11 @@
 ---
 global:
   accessibility:
+    date_format: MMMM Do YYYY
+    expanded: Expanded paragraph
+    collapsed: Collapsed paragraph
+    active: State active
+    inactive: State inactive
     activityIndicator:
       label: Loading
       hint: Wait for the content load
@@ -11,6 +16,10 @@ global:
       open:
         label: Contextual Help
         hint: Access information about the contents of the current screen
+    chat:
+      description: "IO assistance messages"
+      unread_singular: "{{message}} new message"
+      unread_plural: "{{message}} new messages"
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -50,6 +59,7 @@ global:
     close: Close
     exit: Exit
     saveSelection: Save the selection
+    search: Search
   navigator:
     messages: messages
     wallet: payments
@@ -120,6 +130,17 @@ inbox:
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
   fiscalCode:
+    accessibility:
+      unavailable: Unavailable
+      preview:
+        label: Preview of your fiscal code document
+        hint: Activate to show the facsimile of your fiscal code document
+      front:
+        label: Front-side of the document code {{code}} of {{name}} {{family_name}}, gender {{gender}}, born in {{placeOfBirth}},{{province}} the {{birthDate}}
+        hint: Activate to show the landscape view
+      rear:
+        label: barcode of your document
+        hint: Activate to show the landscape view
     title: Your personal documents
     fiscalCode: Fiscal code
     help: !include profile/profile_fiscal_code.md
@@ -130,7 +151,8 @@ profile:
   unknown: UNKNOWN
   logout:
     menulabel: Logout from IO
-    alertMessage: By exiting IO you will be asked to log in again. Logout?
+    alertMessage: Are you sure you want to quit? The next time you log in you will need a new login with CIE or SPID.
+    exit: Exit
     cta:
       header: How do you want to quit the app?
       keepData:
@@ -272,10 +294,12 @@ userMetadata:
 navigation:
   messages: Messages
   profile: Profile
+  accessibility: "Section {{section}}, panel, {{order}} of 4"
 cie:
   title: Touch the card
   layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
   layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.
+  booking_url: https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/
 spid:
   login: LOGIN
   loginButton: LOGIN WITH
@@ -298,8 +322,8 @@ authentication:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: your operating system does not have a version compatible with CIE authentication
-      nfc_incompatible: your device does not have an NFC antenna compatible with CIE authentication
+      os_version_unsupported: an OS version compatible with CIE authentication (Android 6.0 or higher)
+      nfc_incompatible: an NFC antenna compatible with authentication via CIE
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -345,6 +369,7 @@ authentication:
       enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
     pin:
       accessibility:
+        placeholderLabel: PIN of Electronic Identity Card
         label: Insertion field for Electronic Identity Card pins
         hint: Enter the 8 digits pin of your Electronic Identity Card in this field.
       pinCardTitle: Enter the PIN of your card
@@ -365,7 +390,7 @@ authentication:
       title: Touch the card
       layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
       layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you feel a vibration.
-      cieCardValid: Ok, your card is valid! Wait a few more seconds..
+      cieCardValid: Ok, your card is valid! You can remove it.
       readerCardTitle: Hold the card for a few seconds
       readerCardHeader: We are reading the data of your CIE and verifying its validity.
       readerCardFooter: Hold the card in this position for a few more seconds
@@ -560,6 +585,7 @@ payment:
   noPsp: You have yet to select a PSP
   changePsp: Change PSP
   IUV: IUV
+  noticeCode: Notice code
   recipientFiscalCode: Recipient fiscal code
   details:
     state:
@@ -591,6 +617,7 @@ wallet:
     titlePagoPaUpdateApp: Update required
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
     btnUpdateApp: Update the IO app
+    favourite: It is not possible to remove a favourite payment method, to edit it select another one
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
@@ -800,7 +827,7 @@ wallet:
     byCameraTitle: Notice QR Code
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
       manually insert the transaction-related data (IUV and the entity/company code).
-    setManually: Insert data manually
+    setManually: Enter the data
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
     cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
@@ -855,6 +882,13 @@ cardComponent:
   detailsAndTransactions: Details and transactions
   pick: Pay with this method
 messages:
+  accessibility:
+    message:
+      read: "Message"
+      unread: "Unread message"
+      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      received_on: "received on"
+      received_at: "received at"
   contextualHelpTitle: About this section
   contextualHelpContent: !include messages/messages_home.md
   counting:
@@ -1072,7 +1106,7 @@ identification:
     waitMessage: "Try again in:"
   unlockCode:
     accessibility:
-      unlockHint: You entered {{number}} digits
+      unlockHint: You entered {{number}} digits of {{length}}
       fingerprint: Login with your fingerprint
       faceId: Login with the Face ID
       delete: Remove last inserted digit
@@ -1351,12 +1385,18 @@ faq:
   76:
     title: "The app tells me that the maximum amount of my Bonus Vacanze is 500 euros. What happens if the cost of my stay is lower?"
     content: !include bonus/faq/faq76.md
+  77:
+    title: "Is any kind of ISEE right to request the Bonus Vacanze?"
+    content: !include bonus/faq/faq77.md
 bonus:
   bonusVacanze:
+    accessibility:
+      card: Your Bonus Vacanze with code {{code}} worth {{value}} euro is {{status}}
     statusInfo:
       validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
       bonusRejected: Attention! This Bonus Vacanze has been rejected
       redeemed: This Bonus Vacanze has been consumed on {{date}}
+    multipleBonus: Two or more bonuses requested and activated by you. Make sure you use the correct DSU to prevent the bonus user from incurring subsequent recovery actions.
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return
     request: Request the
@@ -1386,9 +1426,9 @@ bonus:
     eligibility:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
       iseeNotAvailable:
-        title: "We're sorry.\n You don't have a valid ISEE."
+        title: "We're sorry.\n You don't have a valid ISEE \"ordinario or corrente\"."
         text:
-          first: "It is necessary to submit a DSU for the calculation of the ISEE, before requesting the \"Bonus Vacanze\".\n
+          first: "It is necessary to submit a DSU for the calculation of the ISEE \"ordinario or corrente\", before requesting the \"Bonus Vacanze\".\n
                   You can do an "
           secondo: "online simulation"
           third: " on the INPS website to check your eligibility, or request your ISEE through the channels provided by INPS."
@@ -1405,8 +1445,7 @@ bonus:
         title: Good news!
         description: "Your family is entitled to the following Bonus Vacanze:"
         reminder:
-          text: "We remind you that each member of your household can spend the bonus. If the information shown is incorrect, please check with the"
-          link: "INPS customer service."
+          text: "Each member of your family helps determine the amount and can spend the bonus. If the data is incorrect or updated, to avoid problems following the use of the Bonus, we invite you to submit a new DSU before proceeding with the request."
         discrepancies:
           attention: "Warning!"
           text: "INPS has reported some omissions or discrepancies in your ISEE. Check that everything is correct before continuing. If you decide to continue, you may be called to provide documentation to prove the completeness and truthfulness of the data indicated in the DSU. Otherwise, you can present a new DSU and check the bonus at a later time."
@@ -1420,6 +1459,8 @@ bonus:
       activationPending:
         title: The bonus for your family has already been requested and is being activated.
         description: You will receive a message when it is activated.
+      underage:
+        title: "We're sorry. Only citizens of legal age can apply for the Bonus Vacanze"
     activation:
       loading: "We have forwarded your request to the Revenue Agency\nPlease wait."
       goToDetails: Show Bonus Vacanze
@@ -1433,6 +1474,7 @@ bonus:
       eligibilityExpired:
         title: Time expired.
         body: The 24 hours needed to continue your request have expired. Please, start a new request.
+        cta: Request Bonus
       completed:
         title: Congratulation!
         description: Bonus activated
@@ -1445,7 +1487,7 @@ bonus:
       title: Cancel
       body: Do you really want to quit? To request the "Bonus Vacanze" you will have to repeat the process from the beginning.
       cancel: Continue
-      confirm: Abort request
+      confirm: Abort the request
       completed: Request aborted
     composition:
       amount: "Maximum amount"
@@ -1463,6 +1505,9 @@ bonus:
     contextualHelp:
       title: The Bonus Vacanze
       body: Here you can see all the information related to the Bonus Vacanze, the measure established by the Decreto Rilancio to encourage tourism after the lockdown due to the Coronavirus emergency.
+    requestAlert:
+      title: Attention
+      content: "You have already obtained a bonus, continue the request only if your situation has changed and you have submitted a new DSU to update ISEE.\n Please note that the use of bonuses generated on the basis of incorrect DSU, determines actions to recover the benefit to the user.\n Are you sure you want to continue?"
   request: Request a new bonus
   requestLabel: Bonuses and discounts
   requestTitle: Request

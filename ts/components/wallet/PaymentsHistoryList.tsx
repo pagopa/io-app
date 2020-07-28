@@ -2,12 +2,12 @@
  * This component displays a list of payments
  */
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import {
+  getIuv,
   isPaymentDoneSuccessfully,
   PaymentHistory,
   PaymentsHistoryState
@@ -40,20 +40,6 @@ const styles = StyleSheet.create({
     color: variables.brandDarkGray
   }
 });
-
-export const getIuv = (data: RptId): string => {
-  switch (data.paymentNoticeNumber.auxDigit) {
-    case "0":
-    case "3":
-      return data.paymentNoticeNumber.iuv13;
-    case "1":
-      return data.paymentNoticeNumber.iuv17;
-    case "2":
-      return data.paymentNoticeNumber.iuv15;
-    default:
-      return "";
-  }
-};
 
 const notAvailable = I18n.t("global.remoteStates.notAvailable");
 export const getPaymentHistoryInfo = (

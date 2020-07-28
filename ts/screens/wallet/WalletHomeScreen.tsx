@@ -45,6 +45,7 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
+  clearTransactions,
   fetchTransactionsRequest,
   readTransaction
 } from "../../store/actions/wallet/transactions";
@@ -110,8 +111,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   emptyListContentTitle: {
-    paddingBottom: variables.contentPadding / 2,
-    fontSize: variables.fontSizeSmall
+    paddingBottom: variables.contentPadding / 2
   },
   bordercColorBrandGray: {
     borderColor: variables.brandGray
@@ -140,8 +140,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   textStyleHelp: {
-    lineHeight: 18,
-    fontSize: 13
+    lineHeight: 18
   }
 });
 
@@ -326,13 +325,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   ): React.ReactNode => (
     <React.Fragment>
       <View spacer={true} large={true} />
-      <Text xsmall={true} style={alignCenter ? styles.centered : undefined}>
+      <Text style={alignCenter ? styles.centered : undefined}>
         {`${I18n.t("wallet.transactionHelpMessage.text1")} `}
-        <Text
-          xsmall={true}
-          style={alignCenter ? styles.centered : undefined}
-          bold={true}
-        >
+        <Text style={alignCenter ? styles.centered : undefined} bold={true}>
           {I18n.t("wallet.transactionHelpMessage.text2")}
         </Text>
         {` ${I18n.t("wallet.transactionHelpMessage.text3")}`}
@@ -453,7 +448,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   // triggered on pull to refresh
   private handleOnRefresh = () => {
     this.loadBonusVacanze();
-    this.props.loadTransactions(this.props.transactionsLoadedLength);
+    this.props.refreshTransactions();
     this.props.loadWallets();
   };
 
@@ -487,6 +482,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
     return (
       <WalletLayout
+        accessibilityLabel={I18n.t("wallet.wallet")}
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
         appLogo={true}
@@ -560,6 +556,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo })),
   navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
+  refreshTransactions: () => {
+    dispatch(clearTransactions());
+    dispatch(fetchTransactionsRequest({ start: 0 }));
+  },
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),
   loadWallets: () => dispatch(fetchWalletsRequest())
