@@ -19,10 +19,17 @@ export function getLocalePrimary(
     .map(_ => _[0]);
 }
 
+// return the current locale set in the device (this could be different from the app supported languages)
 export const getCurrentLocale = (): Locales => I18n.currentLocale();
 
+/**
+ * return the primary component of the current locale (i.e: it-US -> it)
+ * if the current locale (the language set in the device) is not a language supported by the app
+ * the fallback will returned
+ * @param fallback
+ */
 export const getLocalePrimaryWithFallback = (fallback: Locales = "en") =>
-  getLocalePrimary(I18n.currentLocale())
-    .filter(l => translations.some(t => t === l))
+  getLocalePrimary(getCurrentLocale())
+    .filter(l => translations.some(t => t.toLowerCase() === l.toLowerCase()))
     .map(s => s as Locales)
     .getOrElse(fallback);
