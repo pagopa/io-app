@@ -12,6 +12,7 @@ type Props = Readonly<{
   inactiveColor: string;
   inputValue: string;
   customHorizontalMargin?: number;
+  accessibilityLabel: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -67,11 +68,12 @@ const InputPlaceHolder: React.FunctionComponent<Props> = (props: Props) => {
     <View
       style={styles.placeholderContainer}
       accessible={true}
-      accessibilityLabel={I18n.t("identification.unlockCode.reset.code")}
+      accessibilityLabel={props.accessibilityLabel}
       accessibilityHint={I18n.t(
         "identification.unlockCode.accessibility.unlockHint",
         {
-          number: props.inputValue.length
+          number: props.inputValue.length,
+          length: props.digits
         }
       )}
     >
