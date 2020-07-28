@@ -1,0 +1,17 @@
+diff --git a/node_modules/reactotron-redux-saga/reactotron-redux-saga.d.ts b/node_modules/reactotron-redux-saga/reactotron-redux-saga.d.ts
+index 5ee033d..863a35e 100644
+--- a/node_modules/reactotron-redux-saga/reactotron-redux-saga.d.ts
++++ b/node_modules/reactotron-redux-saga/reactotron-redux-saga.d.ts
+@@ -1,12 +1,3 @@
+-// Module Augmentation for plugin
+-declare module 'reactotron-react-native' {
+-    import { Monitor } from 'redux-saga';
+-
+-    export interface Reactotron {
+-        createSagaMonitor(): Monitor;
+-    }
+-}
+-
+ declare module 'reactotron-redux-saga' {
+     import { ReactotronPlugin, Reactotron } from 'reactotron-react-native';
+ 
