@@ -61,7 +61,7 @@
     "react-native-device-info": "5.5.3",
     "react-native-exception-handler": "^2.10.8",
     "react-native-flag-secure-android": "git://github.com/pagopa/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795",
-    "react-native-fs": "^2.14.1",
+    "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.7.0",
     "react-native-i18n": "^2.0.15",
     "react-native-image-pan-zoom": "^2.1.11",
