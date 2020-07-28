@@ -380,6 +380,7 @@ authentication:
       enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
     pin:
       accessibility:
+        placeholderLabel: PIN della Carta di identità elettronica
         label: Campo di inserimento per pin della Carta di Itentità elettronica
         hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
       pinCardTitle: Inserisci il PIN della tua carta
@@ -1137,7 +1138,7 @@ identification:
     waitMessage: "Riprova tra:"
   unlockCode:
     accessibility:
-      unlockHint: Hai inserito {{number}} cifre
+      unlockHint: Hai inserito {{number}} cifre di {{length}}
       fingerprint: Autenticati con l'impronta digitale
       faceId: Autenticati con il riconoscimento facciale
       delete: Cancella l'ultima cifra inserita

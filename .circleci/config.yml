@@ -475,32 +475,32 @@ workflows:
 
       # To avoid running too many (long) native builds and tests, this step
       # waits the approval for the Android native tests.
-      - hold-android-native:
-          type: approval
-          requires:
-            - compile-typescript
-            - run-tests
-            - lint-typescript
-          filters:
-            branches:
-              ignore: master
+#      - hold-android-native:
+#          type: approval
+#          requires:
+#            - compile-typescript
+#            - run-tests
+#            - lint-typescript
+#          filters:
+#            branches:
+#              ignore: master
 
       # Build Android release
-      - android-release:
-          requires:
-            - hold-android-native
+#      - android-release:
+#          requires:
+#            - hold-android-native
 
       # Native iOS e2e tests
-      - hold-ios-e2e-tests:
-          type: approval
-          requires:
-            - compile-typescript
-      - test-ios-e2e-build:
-          requires:
-            - hold-ios-e2e-tests
-      - test-ios-e2e-run:
-          requires:
-            - test-ios-e2e-build
+#      - hold-ios-e2e-tests:
+#          type: approval
+#          requires:
+#            - compile-typescript
+#      - test-ios-e2e-build:
+#          requires:
+#            - hold-ios-e2e-tests
+#      - test-ios-e2e-run:
+#          requires:
+#            - test-ios-e2e-build
 
   # Release workflow triggered only when a new release tag is pushed
   release:
