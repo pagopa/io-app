@@ -8,6 +8,7 @@ target 'ItaliaApp' do
   pod 'RNInputMask', :path => '../node_modules/react-native-text-input-mask/ios/InputMask'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
   pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+  pod 'ReactNativeART', :podspec => '../node_modules/@react-native-community/art/ReactNativeART.podspec'
   use_react_native!(:path => config["reactNativePath"])
 
   target 'ItaliaAppTests' do

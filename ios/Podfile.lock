@@ -349,6 +349,8 @@ PODS:
     - React-Core (= 0.63.2)
     - React-cxxreact (= 0.63.2)
     - React-jsi (= 0.63.2)
+  - ReactNativeART (1.2.0):
+    - React
   - ReactNativeExceptionHandler (2.10.8):
     - React
   - ReactNativePermissions (1.1.1):
@@ -443,6 +445,7 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "ReactNativeART (from `../node_modules/@react-native-community/art/ReactNativeART.podspec`)"
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
@@ -558,6 +561,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativeART:
+    :podspec: "../node_modules/@react-native-community/art/ReactNativeART.podspec"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
   ReactNativePermissions:
@@ -643,6 +648,7 @@ SPEC CHECKSUMS:
   React-RCTText: 1b6773e776e4b33f90468c20fe3b16ca3e224bb8
   React-RCTVibration: 4d2e726957f4087449739b595f107c0d4b6c2d2d
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
+  ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
@@ -660,6 +666,6 @@ SPEC CHECKSUMS:
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 18340c29a5ae54f2411d579223bca0ba6ecd06da
+PODFILE CHECKSUM: df2854993496f5271d14f889f9ba5574573f846b
 
 COCOAPODS: 1.9.3
