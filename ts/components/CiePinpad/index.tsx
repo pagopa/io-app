@@ -63,6 +63,9 @@ const CiePinpad = (props: Props) => {
         activeColor={customVariables.colorBlack}
         inactiveColor={variables.brandLightGray}
         inputValue={props.pin || ""}
+        accessibilityLabel={I18n.t(
+          "authentication.cie.pin.accessibility.placeholderLabel"
+        )}
       />
       <TextInput
         style={styles.input}

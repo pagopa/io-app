@@ -28,7 +28,7 @@ import { actionWithAlert } from "../components/alert/ActionWithAlert";
 import { bonusVacanzeStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
-import { ownedActiveBonus } from "../store/reducers/allActive";
+import { ownedActiveOrRedeemedBonus } from "../store/reducers/allActive";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -43,12 +43,12 @@ type Props = OwnProps &
 
 const CSS_STYLE = `
 body {
-  font-size: ${customVariables.fontSizeSmall}px;
+  font-size: ${customVariables.fontSize1}px;
   color: ${customVariables.brandDarkestGray}
 }
 
 h4 {
-  font-size: ${customVariables.fontSize1}px;
+  font-size: ${customVariables.fontSize2}px;
 }
 `;
 
@@ -249,7 +249,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  hasOwnedActiveBonus: ownedActiveBonus(state).length > 0
+  hasOwnedActiveBonus: ownedActiveOrRedeemedBonus(state).length > 0
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
