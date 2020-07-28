@@ -127,7 +127,7 @@ export const paymentsHistorySelector = (state: GlobalState) =>
 /**
  * return some(true) if payment ends successfully
  * return some(false) if payment ends with a failure
- * return none if payements didn't end (no data to say failure or success)
+ * return none if payments didn't end (no data to say failure or success)
  * @param payment
  */
 export const isPaymentDoneSuccessfully = (
