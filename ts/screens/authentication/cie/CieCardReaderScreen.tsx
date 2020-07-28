@@ -26,6 +26,7 @@ import {
   isScreenReaderEnabled,
   setAccessibilityFocus
 } from "../../../utils/accessibility";
+import {RTron} from "../../../boot/configureStoreAndPersistor";
 
 type NavigationParams = {
   ciePin: string;
@@ -259,9 +260,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     cieManager.onEvent(this.handleCieEvent);
     cieManager.onError(this.handleCieError);
     cieManager.onSuccess(this.handleCieSuccess);
-    console.warn(this.ciePin);
-    console.warn(this.cieAuthorizationUri);
-    return;
+    RTron.log(this.cieAuthorizationUri);
+
     await cieManager.setPin(this.ciePin);
     cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
     cieManager

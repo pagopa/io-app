@@ -32,7 +32,7 @@
 		8C7948EB37334D2DADB1E7AE /* TitilliumWeb-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE4F83DB63254F5285C36A40 /* TitilliumWeb-ExtraLight.ttf */; };
 		8D109BF3B47F46FDA6B105CE /* TitilliumWeb-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E4EECD1122B401CAC190472 /* TitilliumWeb-BoldItalic.ttf */; };
 		8E7BB01F1A6D4D79B17B4210 /* RobotoMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A1DC2C4323E417BBBAE8817 /* RobotoMono-BoldItalic.ttf */; };
-		9504C9D02475C99700ABD334 /* libRNNativeCiesdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C6C656243E3B830031DD75 /* libRNNativeCiesdk.a */; };
+		9552378524D057480075E682 /* libRNNativeCiesdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C6C656243E3B830031DD75 /* libRNNativeCiesdk.a */; };
 		95C6C65B243E3E2B0031DD75 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C6C65A243E3E2B0031DD75 /* File.swift */; };
 		9975E38DE95949D28D07A275 /* RobotoMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */; };
 		BE1A42156484487BABBC4DED /* TitilliumWeb-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 309BA0207AA24FE9A0EBE61C /* TitilliumWeb-Bold.ttf */; };
@@ -461,7 +461,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9504C9D02475C99700ABD334 /* libRNNativeCiesdk.a in Frameworks */,
+				9552378524D057480075E682 /* libRNNativeCiesdk.a in Frameworks */,
 				F0625E7E2326824D00EDEF90 /* libART.a in Frameworks */,
 				F0625E7F2326825600EDEF90 /* JavaScriptCore.framework in Frameworks */,
 				F0625E802326826400EDEF90 /* libRCTPushNotification.a in Frameworks */,
