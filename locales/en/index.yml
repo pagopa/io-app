@@ -2,6 +2,7 @@
 global:
   accessibility:
     date_format: MMMM Do YYYY
+    dateTime_format: "MMMM Do YYYY HH:mm"
     expanded: Expanded paragraph
     collapsed: Collapsed paragraph
     active: State active
@@ -615,8 +616,8 @@ wallet:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
       payment:
-        read: Payment made
-        unread: New payment made
+        read: Transaction
+        unread: Unread transaction
       label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} with reason {{reason}}. Activate for the full detail"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"

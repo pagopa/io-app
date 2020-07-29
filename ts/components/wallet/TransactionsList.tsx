@@ -23,6 +23,7 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
+import { dateToAccessibilityReadbleFormat } from "../../utils/accessibility";
 
 type State = {
   loadingMore: boolean;
@@ -118,7 +119,7 @@ export default class TransactionsList extends React.Component<Props, State> {
               : I18n.t("wallet.accessibility.transactionListItem.payment.read"),
             merchant: recipient,
             amount,
-            datetime,
+            datetime: dateToAccessibilityReadbleFormat(item.created, true),
             reason: paymentReason
           }
         )}
