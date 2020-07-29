@@ -90,22 +90,27 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           isScreenReaderActive &&
           fromNullable(this.props.accessibilityEvents).fold(
             false,
-            ({ avoidNavigationEventsUsage, disableAccessibilityFocus }) =>
-              avoidNavigationEventsUsage && !disableAccessibilityFocus
+            ({ avoidNavigationEventsUsage }) => avoidNavigationEventsUsage
           )
         ) {
-          setAccessibilityFocus(
-            this.firstElementRef,
-            setAccessibilityTimeout,
-            this.props.onAccessibilityNavigationHeaderFocus
-          );
+          this.handleFocus();
         }
       })
       .catch(); // do nothing
   }
 
+  get canHandleFocus() {
+    return fromNullable(this.props.accessibilityEvents).fold(
+      true,
+      ae => ae.disableAccessibilityFocus !== true
+    );
+  }
+
   // set accessibility focus when this view comes visible
   public handleFocus() {
+    if (!this.canHandleFocus) {
+      return;
+    }
     setTimeout(() => {
       // retry until the reference is defined
       if (this.firstElementRef === undefined) {
@@ -226,8 +231,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           )}
         {fromNullable(this.props.accessibilityEvents).fold(
           true,
-          ({ avoidNavigationEventsUsage, disableAccessibilityFocus }) =>
-            !(avoidNavigationEventsUsage && disableAccessibilityFocus)
+          ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
         ) && <NavigationEvents onDidFocus={this.handleFocus} />}
       </Right>
     );
