@@ -33,12 +33,12 @@ describe("check if app version is supported by backend version", () => {
     Tuple3("1.4", "1.5.57", true),
     Tuple3("1.4", "1.4.0.1", true),
     Tuple3("1.4.0.2", "1.4.0.3", true),
+    Tuple3("1.4.0.2", "1.4.0.1", false),
     Tuple3("1.4.5", "1.4.1", false),
     Tuple3("5", "1.4.1", false),
     Tuple3("3.0", "1.4.1", false),
     Tuple3("1.1.23", "1.1.21", false),
     Tuple3("1.1.2.23", "1.1.1", false),
-    Tuple3("1.4.0.2", "1.4.0.3", true),
     Tuple3("SOME STRANGE DATA", "1.4.1", true)
   ].forEach(t => {
     it(`appversion ${t.e2} compared with minSupportedVersion ${
