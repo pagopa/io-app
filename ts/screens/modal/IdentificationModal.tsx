@@ -34,6 +34,7 @@ import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPref
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import { authenticateConfig } from "../../utils/biometric";
 import { maybeNotNullyString } from "../../utils/strings";
 
@@ -118,6 +119,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
   }
 
+  private headerRef = React.createRef<Text>();
+  private errorStatusRef = React.createRef<Text>();
+
   private idUpdateCanInsertPinTooManyAttempts?: number;
 
   /**
@@ -156,6 +160,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     const { isFingerprintEnabled } = this.props;
+    setAccessibilityFocus(this.headerRef);
     if (isFingerprintEnabled) {
       getFingerprintSettings().then(
         biometryType =>
@@ -253,6 +258,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         updateBiometrySupportProp:
           prevProps.appState !== "active" && this.props.appState === "active"
       });
+      setAccessibilityFocus(this.headerRef);
     }
 
     const previousAttempts = prevProps.identificationFailState.fold(
@@ -330,6 +336,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             white={true}
             primary={false}
             accessible={true}
+            ref={this.errorStatusRef}
           >
             {des}
           </Text>
@@ -413,6 +420,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             style={styles.header}
             white={!isValidatingTask}
             dark={isValidatingTask}
+            accessible={true}
+            ref={this.headerRef}
           >
             {I18n.t(
               isValidatingTask
@@ -440,6 +449,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     ) : (
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
+          accessibilityLabel={I18n.t("identification.title")}
           avoidNavigationEventsUsage={true}
           primary={!isValidatingTask}
           contextualHelpMarkdown={contextualHelpMarkdown}
@@ -522,9 +532,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       });
       onIdentificationSuccessHandler();
     } else {
-      this.setState({
-        identificationByPinState: "failure"
-      });
+      this.setState(
+        {
+          identificationByPinState: "failure"
+        },
+        () => setAccessibilityFocus(this.errorStatusRef)
+      );
 
       onIdentificationFailureHandler();
     }
