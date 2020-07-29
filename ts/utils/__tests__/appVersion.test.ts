@@ -32,6 +32,7 @@ describe("check if app version is supported by backend version", () => {
     Tuple3("1.1.0", "1.1.0", true),
     Tuple3("1.4", "1.5.57", true),
     Tuple3("1.4", "1.4.0.1", true),
+    Tuple3("1.4.0.1", "1.4.0.a", true),
     Tuple3("1.4.0.2", "1.4.0.3", true),
     Tuple3("1.4.0.2", "1.4.0.1", false),
     Tuple3("1.4.5", "1.4.1", false),

@@ -1,9 +1,9 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import * as t from "io-ts";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import semver from "semver";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
+import { NumberFromString } from "./number";
 export const storeUrl = Platform.select({
   ios: "itms-apps://itunes.apple.com/it/app/io/id1501681835",
   android: "market://details?id=it.pagopa.io.app"
@@ -33,13 +33,15 @@ export const isVersionAppSupported = (
     minAppVersionSplitted.length === 4 &&
     currentAppVersionSplitted.length === 4
   ) {
-    const fourthMinAppDigit = t.number
-      .decode(parseInt(minAppVersionSplitted[3], 10))
-      .getOrElse(0);
-    const fourthCurrentAppDigit = t.number
-      .decode(parseInt(currentAppVersionSplitted[3], 10))
-      .getOrElse(0);
-    return semSatifies && fourthMinAppDigit <= fourthCurrentAppDigit;
+    // if can't decode one of the two fourth digit, we assume true (can't say nothing)
+    const forthDigitSatifies = NumberFromString.decode(minAppVersionSplitted[3])
+      .map(a =>
+        NumberFromString.decode(currentAppVersionSplitted[3])
+          .map(b => a <= b)
+          .getOrElse(true)
+      )
+      .getOrElse(true);
+    return semSatifies && forthDigitSatifies;
   }
   return semSatifies;
 };
