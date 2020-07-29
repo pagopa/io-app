@@ -24,7 +24,7 @@ export const isVersionAppSupported = (
   if (!minVersion || !currentAppVersion) {
     return true;
   }
-  const semSatifies = semver.satisfies(minVersion, `<=${currentAppVersion}`);
+  const semSatisfies = semver.satisfies(minVersion, `<=${currentAppVersion}`);
   const minAppVersionSplitted = minAppVersion.split(".");
   const currentAppVersionSplitted = appVersion.split(".");
   // since semantic version consider only major.minor.path
@@ -34,16 +34,18 @@ export const isVersionAppSupported = (
     currentAppVersionSplitted.length === 4
   ) {
     // if can't decode one of the two fourth digit, we assume true (can't say nothing)
-    const forthDigitSatifies = NumberFromString.decode(minAppVersionSplitted[3])
+    const forthDigitSatisfies = NumberFromString.decode(
+      minAppVersionSplitted[3]
+    )
       .map(a =>
         NumberFromString.decode(currentAppVersionSplitted[3])
           .map(b => a <= b)
           .getOrElse(true)
       )
       .getOrElse(true);
-    return semSatifies && forthDigitSatifies;
+    return semSatisfies && forthDigitSatisfies;
   }
-  return semSatifies;
+  return semSatisfies;
 };
 
 export const getAppVersion = () => DeviceInfo.getReadableVersion();
