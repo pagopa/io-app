@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import I18n from "../i18n";
 import { format } from "./dates";
-import { RTron } from "../boot/configureStoreAndPersistor";
 
 /**
  * set the accessibility focus on the given {@param nodeReference}
