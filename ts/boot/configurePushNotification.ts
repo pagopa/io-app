@@ -1,10 +1,11 @@
 /**
  * Set the basic PushNotification configuration
  */
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
-import { Alert, PushNotificationIOS } from "react-native";
+import { Alert } from "react-native";
 import PushNotification from "react-native-push-notification";
 
 import { store } from "../App";

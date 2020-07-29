@@ -180,14 +180,6 @@ PODS:
     - React-jsi (= 0.63.2)
     - React-jsiexecutor (= 0.63.2)
     - Yoga
-  - React-Core/RCTPushNotificationHeaders (0.63.2):
-    - Folly (= 2020.01.13.00)
-    - glog
-    - React-Core/Default
-    - React-cxxreact (= 0.63.2)
-    - React-jsi (= 0.63.2)
-    - React-jsiexecutor (= 0.63.2)
-    - Yoga
   - React-Core/RCTSettingsHeaders (0.63.2):
     - Folly (= 2020.01.13.00)
     - glog
@@ -320,12 +312,6 @@ PODS:
     - React-Core/RCTNetworkHeaders (= 0.63.2)
     - React-jsi (= 0.63.2)
     - ReactCommon/turbomodule/core (= 0.63.2)
-  - React-RCTPushNotification (0.63.2):
-    - FBReactNativeSpec (= 0.63.2)
-    - RCTTypeSafety (= 0.63.2)
-    - React-Core/RCTPushNotificationHeaders (= 0.63.2)
-    - React-jsi (= 0.63.2)
-    - ReactCommon/turbomodule/core (= 0.63.2)
   - React-RCTSettings (0.63.2):
     - FBReactNativeSpec (= 0.63.2)
     - Folly (= 2020.01.13.00)
@@ -356,6 +342,8 @@ PODS:
   - ReactNativePermissions (1.1.1):
     - React
   - RNCAsyncStorage (1.6.1):
+    - React
+  - RNCPushNotificationIOS (1.4.0):
     - React
   - RNDeviceInfo (5.5.3):
     - React
@@ -440,7 +428,6 @@ DEPENDENCIES:
   - React-RCTImage (from `../node_modules/react-native/Libraries/Image`)
   - React-RCTLinking (from `../node_modules/react-native/Libraries/LinkingIOS`)
   - React-RCTNetwork (from `../node_modules/react-native/Libraries/Network`)
-  - React-RCTPushNotification (from `../node_modules/react-native/Libraries/PushNotificationIOS`)
   - React-RCTSettings (from `../node_modules/react-native/Libraries/Settings`)
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
@@ -449,6 +436,7 @@ DEPENDENCIES:
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -551,8 +539,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/LinkingIOS"
   React-RCTNetwork:
     :path: "../node_modules/react-native/Libraries/Network"
-  React-RCTPushNotification:
-    :path: "../node_modules/react-native/Libraries/PushNotificationIOS"
   React-RCTSettings:
     :path: "../node_modules/react-native/Libraries/Settings"
   React-RCTText:
@@ -569,6 +555,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-permissions"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFS:
@@ -643,7 +631,6 @@ SPEC CHECKSUMS:
   React-RCTImage: de355d738727b09ad3692f2a979affbd54b5f378
   React-RCTLinking: 8122f221d395a63364b2c0078ce284214bd04575
   React-RCTNetwork: 8f96c7b49ea6a0f28f98258f347b6ad218bc0830
-  React-RCTPushNotification: dd814b42fa8b6676ce952c5b5e3225e78966ed22
   React-RCTSettings: 8a49622aff9c1925f5455fa340b6fe4853d64ab6
   React-RCTText: 1b6773e776e4b33f90468c20fe3b16ca3e224bb8
   React-RCTVibration: 4d2e726957f4087449739b595f107c0d4b6c2d2d
@@ -652,6 +639,7 @@ SPEC CHECKSUMS:
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
+  RNCPushNotificationIOS: dc1c0c6aa18a128df123598149f42e848d26a4ac
   RNDeviceInfo: 310c1f43d418d950a193c7650de2f9559c906048
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
@@ -666,6 +654,6 @@ SPEC CHECKSUMS:
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: df2854993496f5271d14f889f9ba5574573f846b
+PODFILE CHECKSUM: b16c830bc3b4105fb9999da1b8e6d975c421ae90
 
 COCOAPODS: 1.9.3
