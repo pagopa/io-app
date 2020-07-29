@@ -105,12 +105,11 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
           // we force handling here. The timeout is due to wait until the modal is completely hidden
           // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
-          if (Platform.OS === "android") {
-            setTimeout(
-              this.handleOnContextualHelpDismissed,
-              ANDROID_OPEN_REPORT_DELAY
-            );
-          }
+          // TODO: To complete the porting to 0.63.x, both iOS and Android will use the timeout.
+          setTimeout(
+            this.handleOnContextualHelpDismissed,
+            ANDROID_OPEN_REPORT_DELAY
+          );
           this.setState({ contextualHelpModalAnimation: "slide" });
         });
       });
