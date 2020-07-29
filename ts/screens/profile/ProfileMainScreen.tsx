@@ -47,10 +47,10 @@ import { notificationsInstallationSelector } from "../../store/reducers/notifica
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { getAppVersion } from "../../utils/appVersion";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
