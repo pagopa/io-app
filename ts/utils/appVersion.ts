@@ -28,7 +28,7 @@ export const isVersionAppSupported = (
   const minAppVersionSplitted = minAppVersion.split(".");
   const currentAppVersionSplitted = appVersion.split(".");
   // since semantic version consider only major.minor.path
-  // if both versions have fourth digit let's compare also these value
+  // if both versions have fourth digit let's compare also these values
   if (
     minAppVersionSplitted.length === 4 &&
     currentAppVersionSplitted.length === 4
