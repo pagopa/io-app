@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import I18n from "../i18n";
 import { format } from "./dates";
+import { RTron } from "../boot/configureStoreAndPersistor";
 
 /**
  * set the accessibility focus on the given {@param nodeReference}
@@ -69,6 +70,6 @@ export const dateToAccessibilityReadbleFormat = (
   `${format(
     date,
     readTime
-      ? I18n.t("global.accessibility.date_format")
-      : I18n.t("global.accessibility.dateTime_format")
+      ? I18n.t("global.accessibility.dateTime_format")
+      : I18n.t("global.accessibility.date_format")
   )}`;

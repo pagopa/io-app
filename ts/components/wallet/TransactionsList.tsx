@@ -14,6 +14,7 @@ import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
+import { dateToAccessibilityReadbleFormat } from "../../utils/accessibility";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
@@ -23,7 +24,6 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
-import { dateToAccessibilityReadbleFormat } from "../../utils/accessibility";
 
 type State = {
   loadingMore: boolean;
