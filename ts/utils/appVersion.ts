@@ -27,14 +27,7 @@ export const isVersionAppSupported = (
   return semver.satisfies(minVersion, `<=${currentAppVersion}`);
 };
 
-export const getAppVersion = () => {
-  const version = DeviceInfo.getVersion();
-  // if the version includes only major.minor (we manually ad the buildnumber as patch number)
-  if (version.split(".").length === 2) {
-    return `${version}.${DeviceInfo.getBuildNumber()}`;
-  }
-  return version;
-};
+export const getAppVersion = () => DeviceInfo.getReadableVersion();
 
 /**
  * return true if the app must be updated
