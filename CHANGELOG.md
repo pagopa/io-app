@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0-rc.2](https://github.com/pagopa/io-app/compare/1.4.0-rc.1...1.4.0-rc.2) (2020-07-28)
+
+
+### Features
+
+* [[#172455914](https://www.pivotaltracker.com/story/show/172455914)] Organize available calendars by account ([#2098](https://github.com/pagopa/io-app/issues/2098)) ([8d5fbe5](https://github.com/pagopa/io-app/commit/8d5fbe52eaf50c292e7ac7bdf8519911a51fea75))
+* [[#172519295](https://www.pivotaltracker.com/story/show/172519295)] Adds the check session on application state changes and on pin success insertion ([#1745](https://github.com/pagopa/io-app/issues/1745)) ([5db8cd1](https://github.com/pagopa/io-app/commit/5db8cd13d107f55e8d9ba5e2959445f84207a6e8))
+* [[#173848517](https://www.pivotaltracker.com/story/show/173848517)] Parametric label and hint on inputPlaceholder ([#2088](https://github.com/pagopa/io-app/issues/2088)) ([a2b15be](https://github.com/pagopa/io-app/commit/a2b15be3dc6737d3bb3f7cfd9307a393e729103e))
+* [[#173984179](https://www.pivotaltracker.com/story/show/173984179)] forces the focus on identification modal ([#2101](https://github.com/pagopa/io-app/issues/2101)) ([5a7f1ee](https://github.com/pagopa/io-app/commit/5a7f1ee36c8cbbde1045a9eb31ee02d1241fd0f5))
+
+
+### Bug Fixes
+
+* )[[#174005728](https://www.pivotaltracker.com/story/show/174005728),[#174005947](https://www.pivotaltracker.com/story/show/174005947)] All psp are filtered  ([#2099](https://github.com/pagopa/io-app/issues/2099)) ([8c6bca0](https://github.com/pagopa/io-app/commit/8c6bca0a436c66ae95a10748cfd41e4ea05c17df))
+* [[#173984610](https://www.pivotaltracker.com/story/show/173984610)] Android alpha build is created at each master commit ([#2097](https://github.com/pagopa/io-app/issues/2097)) ([ae0a28d](https://github.com/pagopa/io-app/commit/ae0a28d1ee07ff53210548f9ef8e5ffa755f7972))
+* disable fastlane tag creation ([#2095](https://github.com/pagopa/io-app/issues/2095)) ([06f4fc7](https://github.com/pagopa/io-app/commit/06f4fc7492d396bc77ea072c9cf2edcc944757be))
+
+
+### Chores
+
+* [[#173984555](https://www.pivotaltracker.com/story/show/173984555)] Change Android gradle versionName format ([#2096](https://github.com/pagopa/io-app/issues/2096)) ([a7d56ca](https://github.com/pagopa/io-app/commit/a7d56ca362838bf8f3f04cab2521fa6d1655958e))
+* [[#173998756](https://www.pivotaltracker.com/story/show/173998756)] Fixes font-size on Markdown component ([#2100](https://github.com/pagopa/io-app/issues/2100)) ([78f571d](https://github.com/pagopa/io-app/commit/78f571d1d75c1972aa2df2b5d2ef5f243d667b6b))
+* [[#174024289](https://www.pivotaltracker.com/story/show/174024289)] Disable e2e tests manual trigger for "build" workflow [#2105](https://github.com/pagopa/io-app/issues/2105) ([43c6de3](https://github.com/pagopa/io-app/commit/43c6de3173219e968e4d8e04b68196ec6fbee309))
+
 ## 1.4.0-rc.1 (2020-07-24)
 
 

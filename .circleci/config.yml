@@ -15,6 +15,8 @@ android_jars_cache_key: &android_jars_cache_key jars-{{ checksum "android/build.
 
 ios_gems_cache_key: &ios_gems_cache_key ruby-{{ checksum "Gemfile.lock" }}
 
+release_tag: &release_tag /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
+
 # nodejs builds
 defaults_js: &defaults_js
   <<: *defaults
@@ -473,44 +475,76 @@ workflows:
 
       # To avoid running too many (long) native builds and tests, this step
       # waits the approval for the Android native tests.
-      - hold-android-native:
-          type: approval
+#      - hold-android-native:
+#          type: approval
+#          requires:
+#            - compile-typescript
+#            - run-tests
+#            - lint-typescript
+#          filters:
+#            branches:
+#              ignore: master
+
+      # Build Android release
+#      - android-release:
+#          requires:
+#            - hold-android-native
+
+      # Native iOS e2e tests
+#      - hold-ios-e2e-tests:
+#          type: approval
+#          requires:
+#            - compile-typescript
+#      - test-ios-e2e-build:
+#          requires:
+#            - hold-ios-e2e-tests
+#      - test-ios-e2e-run:
+#          requires:
+#            - test-ios-e2e-build
+
+  # Release workflow triggered only when a new release tag is pushed
+  release:
+    jobs:
+      - compile-typescript:
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
+
+      - run-tests:
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
+
+      - lint-typescript:
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
+
+      - run-danger:
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
+
+      # Build Android alpha release & submit to play store
+      - alpha-release-android:
           requires:
             - compile-typescript
             - run-tests
             - lint-typescript
           filters:
+            tags:
+              only: *release_tag
             branches:
-              ignore: master
+              ignore: /.*/
 
-      # Build Android release
-      - android-release:
-          requires:
-            - hold-android-native
-
-      # Native iOS e2e tests
-      - hold-ios-e2e-tests:
-          type: approval
-          requires:
-            - compile-typescript
-      - test-ios-e2e-build:
-          requires:
-            - hold-ios-e2e-tests
-      - test-ios-e2e-run:
-          requires:
-            - test-ios-e2e-build
-
-      # Build Android alpha release only on master branch when a new tag is pushed
-      #- alpha-release-android:
-      #    requires:
-      #      - compile-typescript
-      #      - run-tests
-      #      - lint-typescript
-      #    filters:
-      #      tags:
-      #        only: \d\.\d\.\d(\.rc-\d+)?
-      #      branches:
-      #        only: master
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
   # a slack notification will be sent on channel #io-status
