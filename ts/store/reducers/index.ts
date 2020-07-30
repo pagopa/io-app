@@ -146,7 +146,8 @@ export function createRootReducer(
           (isActionOf(logoutFailure, action) &&
             !action.payload.options.keepUserData))
           ? ({
-              authentication: { _persist: state.authentication._persist }
+              authentication: { _persist: state.authentication._persist },
+              entities: { messagesStatus: state.entities.messagesStatus }
             } as GlobalState)
           : state;
     }

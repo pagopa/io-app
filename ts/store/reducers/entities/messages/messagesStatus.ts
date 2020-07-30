@@ -7,6 +7,7 @@ import {
   setMessageReadState,
   setMessagesArchivedState
 } from "../../../actions/messages";
+import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -82,6 +83,8 @@ const reducer = (
         }
         return { ...acc, [curr]: state[curr] };
       }, {});
+    case getType(clearCache):
+      return INITIAL_STATE;
     default:
       return state;
   }
