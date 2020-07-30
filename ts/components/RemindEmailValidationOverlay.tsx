@@ -348,7 +348,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       <TopScreenComponent
         {...(isOnboardingCompleted ? this.onMainProps : this.onBoardingProps)}
         contextualHelpMarkdown={this.contextualHelpMarkdown}
-        avoidNavigationEventsUsage={true}
+        accessibilityEvents={{ avoidNavigationEventsUsage: true }}
       >
         <Content bounces={false}>
           <View spacer={true} extralarge={true} />

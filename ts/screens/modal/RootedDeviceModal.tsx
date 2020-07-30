@@ -124,7 +124,10 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
     default: I18n.t("rooted.bodyAndroid")
   });
   const ComponentWithLoading = withLoadingSpinner(() => (
-    <BaseScreenComponent goBack={false} avoidNavigationEventsUsage={true}>
+    <BaseScreenComponent
+      goBack={false}
+      accessibilityEvents={{ avoidNavigationEventsUsage: true }}
+    >
       <Container>
         <SafeAreaView style={styles.flex}>
           <Content>
