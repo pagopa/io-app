@@ -83,8 +83,6 @@ const reducer = (
         }
         return { ...acc, [curr]: state[curr] };
       }, {});
-    case getType(clearCache):
-      return INITIAL_STATE;
     default:
       return state;
   }
