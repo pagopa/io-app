@@ -163,6 +163,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         )}
 
         {this.renderRight()}
+        {!this.props.avoidNavigationEventsUsage && (
+          <NavigationEvents onDidFocus={this.handleFocus} />
+        )}
       </AppHeader>
     );
   }
@@ -211,9 +214,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
               <IconFont name={customRightIcon.iconName} />
             </ButtonDefaultOpacity>
           )}
-        {!this.props.avoidNavigationEventsUsage && (
-          <NavigationEvents onDidFocus={this.handleFocus} />
-        )}
+        {!onShowHelp &&
+          !customRightIcon && <View hspacer={true} extralarge={true} />}
       </Right>
     );
   };
