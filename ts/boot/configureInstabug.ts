@@ -11,6 +11,7 @@ import { instabugToken } from "../config";
 import I18n from "../i18n";
 import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
+import { getAppVersion } from "../utils/appVersion";
 import { isDevEnv } from "../utils/environment";
 
 type InstabugLocales = { [k in Locales]: Instabug.locale };
@@ -21,6 +22,7 @@ type InstabugUserAttributeKeys =
   | "fiscalcode"
   | "identityProvider"
   | "lastSeenMessageID"
+  | "appVersion"
   | "blockedPaymentRptId";
 
 const instabugLocales: InstabugLocales = {
@@ -59,7 +61,6 @@ export const initialiseInstabug = () => {
 
   // Set primary color for iOS. The Android's counterpart is inside MainApplication.java
   Instabug.setPrimaryColor(variables.contentPrimaryBackground);
-
   Instabug.setColorTheme(Instabug.colorTheme.light);
 
   // Set the language for Instabug ui/screens
@@ -68,6 +69,7 @@ export const initialiseInstabug = () => {
       ? instabugLocales.it
       : instabugLocales.en
   );
+  setInstabugUserAttribute("appVersion", getAppVersion());
 };
 
 export const openInstabugBugReport = () => {

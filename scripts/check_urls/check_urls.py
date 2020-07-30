@@ -19,16 +19,16 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
 }
-MAX_TIMEOUT = 12
+MAX_TIMEOUT = 20
 global_uris = set()
 SLACK_TOKEN = os.environ.get("IO_APP_SLACK_TOKEN_CHECK_URLS", None)
 tagged_people = ["<@UTVS9R0SF>"]
 SLACK_CHANNEL = "#io_status"
 
 # a list of remote uris consumed by the app for content presentation
-remote_content_uri = ["https://raw.githubusercontent.com/pagopa/io-services-metadata/master/services.yml",
-                      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/bonuses_available.json",
-                      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/contextualhelp/data.json"]
+remote_content_uri = ["https://assets.cdn.io.italia.it/services.yml",
+                      "https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
+                      "https://assets.cdn.io.italia.it/contextualhelp/data.json"]
 
 
 class IOUrl(object):

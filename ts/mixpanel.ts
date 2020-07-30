@@ -2,6 +2,7 @@ import DeviceInfo from "react-native-device-info";
 import { MixpanelInstance } from "react-native-mixpanel";
 import { mixpanelToken } from "./config";
 import { isScreenReaderEnabled } from "./utils/accessibility";
+import { getAppVersion } from "./utils/appVersion";
 
 // tslint:disable-next-line:no-let
 export let mixpanel: MixpanelInstance | undefined;
@@ -26,6 +27,6 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   await mp.registerSuperProperties({
     isScreenReaderEnabled: screenReaderEnabled,
     fontScale: DeviceInfo.getFontScaleSync(),
-    appReadableVersion: DeviceInfo.getReadableVersion()
+    appReadableVersion: getAppVersion()
   });
 };
