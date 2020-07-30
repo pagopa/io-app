@@ -14,13 +14,6 @@ Created on **29/07/2020**
 - Missing accessibility types
 
 
-### react-native-base+2.13.8
-Created on **11/12/2019**
-
-#### Reason:
-- ????
-
-
 ### react-native-lewin-qrcode+1.0.2
 Created on **04/03/2020**
 
@@ -54,3 +47,10 @@ Created on **13/12/2019**
 
 #### Reason:
 - ????
+
+
+### native-base+2.13.13
+Created on **30/07/2020**
+
+#### Reason:
+- Integrate the pr https://github.com/GeekyAnts/NativeBase/pull/3200 waiting the official release. (remove this patch after the release)
