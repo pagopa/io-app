@@ -1,8 +1,7 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
-import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
-import DeviceInfo from "react-native-device-info";
+import { Alert, ScrollView, StyleSheet } from "react-native";
 import {
   NavigationEvents,
   NavigationEventSubscription,
@@ -48,6 +47,7 @@ import { notificationsInstallationSelector } from "../../store/reducers/notifica
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
@@ -104,12 +104,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
-
-const getAppLongVersion = () => {
-  const buildNumber =
-    Platform.OS === "ios" ? ` (${DeviceInfo.getBuildNumber()})` : "";
-  return `${DeviceInfo.getVersion()}${buildNumber}`;
-};
 
 /**
  * A screen to show all the options related to the user profile
@@ -429,7 +423,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             />
 
             {this.debugListItem(
-              `${I18n.t("profile.main.appVersion")} ${getAppLongVersion()}`,
+              `${I18n.t("profile.main.appVersion")} ${getAppVersion()}`,
               this.onTapAppVersion,
               false
             )}
