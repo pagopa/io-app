@@ -148,7 +148,7 @@ class UpdateAppModal extends React.PureComponent<never, State> {
         <BaseScreenComponent
           appLogo={true}
           goBack={false}
-          avoidNavigationEventsUsage={true}
+          accessibilityEvents={{ avoidNavigationEventsUsage: true }}
         >
           <Container>
             <View style={styles.container}>
