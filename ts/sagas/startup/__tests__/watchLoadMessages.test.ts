@@ -15,9 +15,9 @@ import {
   messagesStateByIdSelector,
   MessageState
 } from "../../../store/reducers/entities/messages/messagesById";
+import { messagesStatusSelector } from "../../../store/reducers/entities/messages/messagesStatus";
 import { servicesByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { loadMessages } from "../../startup/watchLoadMessagesSaga";
-import { messagesStatusSelector } from "../../../store/reducers/entities/messages/messagesStatus";
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testMessageId2 = "01CD4QN3Q2KS2T791PPMT2H9DM";
