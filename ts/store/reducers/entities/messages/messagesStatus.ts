@@ -77,12 +77,15 @@ const reducer = (
     }
     case getType(removeMessages):
       const idsToRemove = action.payload;
-      return Object.keys(state).reduce((acc: MessagesStatus, curr: string) => {
-        if (idsToRemove.indexOf(curr) !== -1) {
-          return acc;
-        }
-        return { ...acc, [curr]: state[curr] };
-      }, {});
+      return Object.keys(state).reduce<MessagesStatus>(
+        (acc: MessagesStatus, curr: string) => {
+          if (idsToRemove.indexOf(curr) !== -1) {
+            return acc;
+          }
+          return { ...acc, [curr]: state[curr] };
+        },
+        {} as MessagesStatus
+      );
     case getType(clearCache):
       return INITIAL_STATE;
     default:
