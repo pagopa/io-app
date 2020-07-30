@@ -289,8 +289,8 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
           // If the user denied permission previously (not in this session)
           // prompt an alert to inform that his calendar permissions could have been turned off
           Alert.alert(
+            I18n.t("global.genericAlert"),
             I18n.t("messages.cta.calendarPermDenied.title"),
-            undefined,
             [
               {
                 text: I18n.t("messages.cta.calendarPermDenied.cancel"),
