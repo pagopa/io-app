@@ -16,6 +16,7 @@ import { SagaCallReturnType } from "../types/utils";
 
 const notificationsPlatform: PlatformEnum = Platform.select<PlatformEnum>({
   ios: PlatformEnum.apns,
+  android: PlatformEnum.gcm,
   default: PlatformEnum.gcm
 });
 
