@@ -62,6 +62,7 @@ export const isScreenReaderEnabled = async (): Promise<boolean> => {
   return maybeReaderEnabled.getOrElse(false);
 };
 
+// return the state of the screen reader when the caller component is mounted
 export const useScreenReaderEnabled = () => {
   const [screenReaderEnabled, setIscreenReaderEnabled] = useState(false);
 
