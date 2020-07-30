@@ -181,9 +181,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         )}
 
         {this.renderRight()}
-        {!this.props.avoidNavigationEventsUsage && (
-          <NavigationEvents onDidFocus={this.handleFocus} />
-        )}
       </AppHeader>
     );
   }
