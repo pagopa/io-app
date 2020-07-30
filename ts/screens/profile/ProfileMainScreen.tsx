@@ -420,6 +420,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               subTitle={I18n.t("profile.logout.menulabel")}
               onPress={this.onLogoutPress}
               isLastItem={true}
+              hideIcon={true}
             />
 
             {this.debugListItem(
