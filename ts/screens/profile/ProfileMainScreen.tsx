@@ -412,6 +412,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               title={I18n.t("identification.unlockCode.reset.button_short")}
               subTitle={I18n.t("identification.unlockCode.reset.tip_short")}
               onPress={this.confirmResetAlert}
+              hideIcon={true}
             />
 
             {/* Logout/Exit */}
@@ -419,6 +420,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               title={I18n.t("profile.main.logout")}
               subTitle={I18n.t("profile.logout.menulabel")}
               onPress={this.onLogoutPress}
+              hideIcon={true}
               isLastItem={true}
             />
 

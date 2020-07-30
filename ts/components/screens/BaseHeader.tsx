@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Body, Left, Right, Text, View } from "native-base";
 import { Ref } from "react";
@@ -33,9 +34,14 @@ const styles = StyleSheet.create({
   }
 });
 
+export type AccessibilityEvents = {
+  avoidNavigationEventsUsage?: boolean; // if true NavigationEvents won't be included and the focus will be done on componentDidMount
+  disableAccessibilityFocus?: boolean; // if true the setAccessibilityFocus is not triggered
+};
+
 interface OwnProps {
   onAccessibilityNavigationHeaderFocus?: () => void;
-  avoidNavigationEventsUsage?: boolean; // if true NavigationEvents and its events will be excluded (onDidFocus)
+  accessibilityEvents?: AccessibilityEvents;
   accessibilityLabel?: string; // rendered only if it is defined and a screen reader is active
   dark?: boolean;
   headerTitle?: string;
@@ -80,19 +86,31 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     AccessibilityInfo.isScreenReaderEnabled()
       .then(isScreenReaderActive => {
         this.setState({ isScreenReaderActive });
-        if (isScreenReaderActive && this.props.avoidNavigationEventsUsage) {
-          setAccessibilityFocus(
-            this.firstElementRef,
-            setAccessibilityTimeout,
-            this.props.onAccessibilityNavigationHeaderFocus
-          );
+        if (
+          isScreenReaderActive &&
+          fromNullable(this.props.accessibilityEvents).fold(
+            false,
+            ({ avoidNavigationEventsUsage }) => avoidNavigationEventsUsage
+          )
+        ) {
+          this.handleFocus();
         }
       })
       .catch(); // do nothing
   }
 
+  get canHandleFocus() {
+    return fromNullable(this.props.accessibilityEvents).fold(
+      true,
+      ae => ae.disableAccessibilityFocus !== true
+    );
+  }
+
   // set accessibility focus when this view comes visible
   public handleFocus() {
+    if (!this.canHandleFocus) {
+      return;
+    }
     setTimeout(() => {
       // retry until the reference is defined
       if (this.firstElementRef === undefined) {
@@ -216,6 +234,10 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           )}
         {!onShowHelp &&
           !customRightIcon && <View hspacer={true} extralarge={true} />}
+        {fromNullable(this.props.accessibilityEvents).fold(
+          true,
+          ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
+        ) && <NavigationEvents onDidFocus={this.handleFocus} />}
       </Right>
     );
   };

@@ -54,11 +54,7 @@ export const setAccessibilityFocus = <T extends React.Component>(
  * return a Promise where true means there is a screen reader active (VoiceOver / TalkBack)
  */
 export const isScreenReaderEnabled = async (): Promise<boolean> => {
-  const maybeReaderEnabled = await tryCatch(
-    () => AccessibilityInfo.isScreenReaderEnabled(),
-    errorMsg => new Error(String(errorMsg))
-  ).run();
-  return maybeReaderEnabled.getOrElse(false);
+  return Promise.resolve(true);
 };
 
 // return a string representing the date in a readable format
