@@ -6,6 +6,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   instabugLog,
@@ -40,6 +41,7 @@ import {
   getPaymentHistoryDetails
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
+import { isStringNullyOrEmpty } from "../../utils/strings";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -65,7 +67,20 @@ const styles = StyleSheet.create({
 });
 
 const notAvailable = I18n.t("global.remoteStates.notAvailable");
-
+const renderItem = (label: string, value?: string) => {
+  if (isStringNullyOrEmpty(value)) {
+    return null;
+  }
+  return (
+    <React.Fragment>
+      <Text>{label}</Text>
+      <Text bold={true} white={false}>
+        {value}
+      </Text>
+      <View spacer={true} />
+    </React.Fragment>
+  );
+};
 /**
  * Payment Details
  */
@@ -132,15 +147,29 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       m => m
     ).fold(notAvailable, id => `${id}`);
 
+    const fee = maybeInnerProperty<Transaction, "fee", number>(
+      payment.transaction,
+      "fee",
+      m => (m !== undefined ? m.amount : 0)
+    ).getOrElse(0);
+
+    const enteBeneficiario = maybeInnerProperty<
+      PaymentRequestsGetResponse,
+      "enteBeneficiario",
+      EnteBeneficiario | undefined
+    >(payment.verified_data, "enteBeneficiario", m => m).getOrElse(undefined);
+
     return {
       recipient,
       reason,
+      enteBeneficiario,
       codiceAvviso,
       paymentOutcome,
       paymentInfo,
       paymentStatus,
       dateTime,
       amount,
+      fee,
       grandTotal,
       errorDetail,
       idTransaction
@@ -208,6 +237,13 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 codiceAvviso={data.codiceAvviso}
                 paymentStatus={data.paymentStatus}
               />
+              {data.enteBeneficiario &&
+                renderItem(
+                  I18n.t("payment.details.info.enteCreditore"),
+                  `${data.enteBeneficiario.denominazioneBeneficiario}\n${
+                    data.enteBeneficiario.identificativoUnivocoBeneficiario
+                  }`
+                )}
               {data.errorDetail.isSome() && (
                 <View key={"error"}>
                   <Text>{I18n.t("payment.errorDetails")}</Text>
@@ -220,7 +256,6 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
           )}
 
           <View spacer={true} xsmall={true} />
-          <View spacer={true} large={true} />
           {this.standardRow(
             I18n.t("payment.details.info.dateAndTime"),
             data.dateTime
@@ -240,13 +275,11 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 )}
 
                 {/** fee */}
-                {this.standardRow(
-                  I18n.t("wallet.firstTransactionSummary.fee"),
-                  formatNumberCentsToAmount(
-                    data.grandTotal.value - data.amount.value,
-                    true
-                  )
-                )}
+                {data.fee > 0 &&
+                  this.standardRow(
+                    I18n.t("wallet.firstTransactionSummary.fee"),
+                    formatNumberCentsToAmount(data.fee, true)
+                  )}
 
                 <View spacer={true} />
 
