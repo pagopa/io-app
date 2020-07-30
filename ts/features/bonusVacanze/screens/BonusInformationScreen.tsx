@@ -22,6 +22,7 @@ import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
+import { useScreenReaderEnabled } from "../../../utils/accessibility";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
 import { actionWithAlert } from "../components/alert/ActionWithAlert";
@@ -29,7 +30,6 @@ import { bonusVacanzeStyle } from "../components/Styles";
 import TosBonusComponent from "../components/TosBonusComponent";
 import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
 import { ownedActiveOrRedeemedBonus } from "../store/reducers/allActive";
-import { useScreenReaderEnabled } from "../../../utils/accessibility";
 
 type NavigationParams = Readonly<{
   bonusItem: BonusAvailable;
