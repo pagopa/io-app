@@ -4,6 +4,7 @@ import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
+import { checkCurrentSession } from "../../store/actions/authentication";
 import {
   paymentAttiva,
   paymentCheck,
@@ -46,6 +47,11 @@ import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 
+// check if the current session is still valid, if not an sessionExpired will be dispatched
+function* checkSession(): IterableIterator<Effect> {
+  yield put(checkCurrentSession.request());
+}
+
 //
 // Payment Manager APIs
 //
@@ -58,6 +64,7 @@ export function* fetchWalletsRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>
 ): Iterator<Effect> {
+  yield call(checkSession);
   const request = pmSessionManager.withRefresh(pagoPaClient.getWallets);
   try {
     const getResponse: SagaCallReturnType<typeof request> = yield call(request);
@@ -83,6 +90,7 @@ export function* fetchTransactionsRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchTransactionsRequest>
 ): Iterator<Effect> {
+  yield call(checkSession);
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getTransactions(action.payload.start)
   );
@@ -653,7 +661,7 @@ export function* paymentAttivaRequestHandler(
  * Polls the backend for the paymentId linked to the payment context code
  */
 export function* paymentIdPollingRequestHandler(
-  getPaymentIdApi: ReturnType<typeof BackendClient>["getPaymentId"],
+  getPaymentIdApi: ReturnType<ReturnType<typeof BackendClient>["getPaymentId"]>,
   action: ActionType<typeof paymentIdPolling["request"]>
 ) {
   // successfully request the payment activation
@@ -664,8 +672,9 @@ export function* paymentIdPollingRequestHandler(
       typeof isPagoPATestEnabledSelector
     > = yield select<GlobalState>(isPagoPATestEnabledSelector);
 
-    const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
-      getPaymentIdApi,
+    const getPaymentId = getPaymentIdApi.e2;
+    const response: SagaCallReturnType<typeof getPaymentId> = yield call(
+      getPaymentId,
       {
         codiceContestoPagamento: action.payload.codiceContestoPagamento,
         test: isPagoPATestEnabled

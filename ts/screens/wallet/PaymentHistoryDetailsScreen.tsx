@@ -6,7 +6,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { DetailEnum } from "../../../definitions/backend/PaymentProblemJson";
+import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   instabugLog,
@@ -18,10 +18,7 @@ import CopyButtonComponent from "../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-import {
-  getIuv,
-  getPaymentHistoryInfo
-} from "../../components/wallet/PaymentsHistoryList";
+import { getPaymentHistoryInfo } from "../../components/wallet/PaymentsHistoryList";
 import {
   paymentStatusType,
   PaymentSummaryComponent
@@ -29,6 +26,7 @@ import {
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
 import {
+  getCodiceAvviso,
   isPaymentDoneSuccessfully,
   PaymentHistory
 } from "../../store/reducers/payments/history";
@@ -38,8 +36,12 @@ import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { maybeInnerProperty } from "../../utils/options";
-import { getPaymentHistoryDetails } from "../../utils/payment";
+import {
+  getErrorDescription,
+  getPaymentHistoryDetails
+} from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
+import { isStringNullyOrEmpty } from "../../utils/strings";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -65,33 +67,20 @@ const styles = StyleSheet.create({
 });
 
 const notAvailable = I18n.t("global.remoteStates.notAvailable");
-
-const renderErrorTransactionMessage = (
-  error?: keyof typeof DetailEnum
-): string | undefined => {
-  if (error === undefined) {
-    return undefined;
+const renderItem = (label: string, value?: string) => {
+  if (isStringNullyOrEmpty(value)) {
+    return null;
   }
-  switch (error) {
-    case "PAYMENT_DUPLICATED":
-      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
-    case "INVALID_AMOUNT":
-      return I18n.t("wallet.errors.INVALID_AMOUNT");
-    case "PAYMENT_ONGOING":
-      return I18n.t("wallet.errors.PAYMENT_ONGOING");
-    case "PAYMENT_EXPIRED":
-      return I18n.t("wallet.errors.PAYMENT_EXPIRED");
-    case "PAYMENT_UNAVAILABLE":
-      return I18n.t("wallet.errors.PAYMENT_UNAVAILABLE");
-    case "PAYMENT_UNKNOWN":
-      return I18n.t("wallet.errors.PAYMENT_UNKNOWN");
-    case "DOMAIN_UNKNOWN":
-      return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
-    default:
-      return undefined;
-  }
+  return (
+    <React.Fragment>
+      <Text>{label}</Text>
+      <Text bold={true} white={false}>
+        {value}
+      </Text>
+      <View spacer={true} />
+    </React.Fragment>
+  );
 };
-
 /**
  * Payment Details
  */
@@ -109,16 +98,14 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
   private getData = () => {
     const payment = this.props.navigation.getParam("payment");
-
+    const codiceAvviso = getCodiceAvviso(payment.data);
     const paymentCheckout = isPaymentDoneSuccessfully(payment);
     const paymentInfo = getPaymentHistoryInfo(payment, paymentCheckout);
     const paymentStatus: paymentStatusType = {
       color: paymentInfo.color,
       description: paymentInfo.text11
     };
-    const errorDetail = fromNullable(
-      renderErrorTransactionMessage(payment.failure)
-    );
+    const errorDetail = fromNullable(getErrorDescription(payment.failure));
 
     const paymentOutcome = isPaymentDoneSuccessfully(payment);
 
@@ -143,8 +130,6 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       m => m
     ).fold(notAvailable, c => c);
 
-    const iuv = getIuv(payment.data);
-
     const amount = maybeInnerProperty<Transaction, "amount", number>(
       payment.transaction,
       "amount",
@@ -162,15 +147,29 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       m => m
     ).fold(notAvailable, id => `${id}`);
 
+    const fee = maybeInnerProperty<Transaction, "fee", number>(
+      payment.transaction,
+      "fee",
+      m => (m !== undefined ? m.amount : 0)
+    ).getOrElse(0);
+
+    const enteBeneficiario = maybeInnerProperty<
+      PaymentRequestsGetResponse,
+      "enteBeneficiario",
+      EnteBeneficiario | undefined
+    >(payment.verified_data, "enteBeneficiario", m => m).getOrElse(undefined);
+
     return {
       recipient,
       reason,
-      iuv,
+      enteBeneficiario,
+      codiceAvviso,
       paymentOutcome,
       paymentInfo,
       paymentStatus,
       dateTime,
       amount,
+      fee,
       grandTotal,
       errorDetail,
       idTransaction
@@ -179,9 +178,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
   private standardRow = (label: string, value: string) => (
     <View style={styles.row}>
-      <Text small={true} style={styles.flex}>
-        {label}
-      </Text>
+      <Text style={styles.flex}>{label}</Text>
       <Text bold={true} dark={true}>
         {value}
       </Text>
@@ -199,7 +196,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private renderHelper = () => {
     return (
       <View>
-        <Text small={true} alignCenter={true} style={styles.padded}>
+        <Text alignCenter={true} style={styles.padded}>
           {I18n.t("payment.details.info.help")}
         </Text>
         <View spacer={true} />
@@ -237,12 +234,19 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
             <React.Fragment>
               <PaymentSummaryComponent
                 title={I18n.t("payment.details.info.title")}
-                iuv={data.iuv}
+                codiceAvviso={data.codiceAvviso}
                 paymentStatus={data.paymentStatus}
               />
+              {data.enteBeneficiario &&
+                renderItem(
+                  I18n.t("payment.details.info.enteCreditore"),
+                  `${data.enteBeneficiario.denominazioneBeneficiario}\n${
+                    data.enteBeneficiario.identificativoUnivocoBeneficiario
+                  }`
+                )}
               {data.errorDetail.isSome() && (
                 <View key={"error"}>
-                  <Text small={true}>{I18n.t("payment.errorDetails")}</Text>
+                  <Text>{I18n.t("payment.errorDetails")}</Text>
                   <Text bold={true} dark={true}>
                     {data.errorDetail.value}
                   </Text>
@@ -252,7 +256,6 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
           )}
 
           <View spacer={true} xsmall={true} />
-          <View spacer={true} large={true} />
           {this.standardRow(
             I18n.t("payment.details.info.dateAndTime"),
             data.dateTime
@@ -272,13 +275,11 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 )}
 
                 {/** fee */}
-                {this.standardRow(
-                  I18n.t("wallet.firstTransactionSummary.fee"),
-                  formatNumberCentsToAmount(
-                    data.grandTotal.value - data.amount.value,
-                    true
-                  )
-                )}
+                {data.fee > 0 &&
+                  this.standardRow(
+                    I18n.t("wallet.firstTransactionSummary.fee"),
+                    formatNumberCentsToAmount(data.fee, true)
+                  )}
 
                 <View spacer={true} />
 
@@ -288,7 +289,6 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                     style={[styles.bigText, styles.flex]}
                     bold={true}
                     dark={true}
-                    small={true}
                   >
                     {I18n.t("wallet.firstTransactionSummary.total")}
                   </Text>

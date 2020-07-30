@@ -56,9 +56,6 @@ const styles = StyleSheet.create({
     elevation: 0,
     height: 40
   },
-  tabBarContent: {
-    fontSize: customVariables.fontSizeSmall
-  },
   tabBarUnderline: {
     borderBottomColor: customVariables.tabUnderlineColor,
     borderBottomWidth: customVariables.tabUnderlineHeight
@@ -79,8 +76,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandPrimary
   },
   textStyle: {
-    color: customVariables.brandDarkGray,
-    fontSize: customVariables.fontSizeSmall
+    color: customVariables.brandDarkGray
   }
 });
 
@@ -149,6 +145,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
     return (
       <TopScreenComponent
+        accessibilityLabel={I18n.t("messages.contentTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["messages"]}
         headerTitle={I18n.t("messages.contentTitle")}

@@ -3,15 +3,22 @@ import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { apiUrlPrefix, contentRepoUrl } from "../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
+import { ID_BONUS_VACANZE_TYPE } from "../../utils/bonus";
 import {
-  availableBonusesLoad,
-  bonusVacanzeActivation,
-  checkBonusEligibility,
-  loadBonusVacanzeFromId
+  activateBonusVacanze,
+  checkBonusVacanzeEligibility,
+  loadAllBonusActivations,
+  loadAvailableBonuses,
+  loadBonusVacanzeFromId,
+  startLoadBonusFromIdPolling
 } from "../actions/bonusVacanze";
-import { startBonusActivationSaga } from "./bonusActivation/handleStartBonusActivationSaga";
+import { bonusActivationSaga } from "./activation/getBonusActivationSaga";
+import { handleBonusActivationSaga } from "./activation/handleBonusActivationSaga";
 import { bonusEligibilitySaga } from "./eligibility/getBonusEligibilitySaga";
 import { handleBonusEligibilitySaga } from "./eligibility/handleBonusEligibilitySaga";
+import { handleBonusFromIdPollingSaga } from "./handleBonusFromIdPolling";
+import { handleForceBonusServiceActivation } from "./handleForceBonusServiceActivation";
+import { handleLoadAllBonusActivations } from "./handleLoadAllBonusActivationSaga";
 import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
 import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
 
@@ -25,14 +32,17 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
   );
   // available bonus list request
   yield takeLatest(
-    getType(availableBonusesLoad.request),
+    getType(loadAvailableBonuses.request),
     handleLoadAvailableBonuses,
     backendBonusVacanzeClient.getAvailableBonuses
   );
 
+  // start polling bonus from id
+  yield takeLatest(startLoadBonusFromIdPolling, handleBonusFromIdPollingSaga);
+
   // handle bonus vacanze eligibility
   yield takeLatest(
-    getType(checkBonusEligibility.request),
+    getType(checkBonusVacanzeEligibility.request),
     handleBonusEligibilitySaga,
     bonusEligibilitySaga(
       backendBonusVacanzeClient.startBonusEligibilityCheck,
@@ -47,11 +57,30 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
     backendBonusVacanzeClient.getLatestBonusVacanzeFromId
   );
 
+  // handle the all bonus activation loading request
+  yield takeLatest(
+    getType(loadAllBonusActivations.request),
+    handleLoadAllBonusActivations,
+    backendBonusVacanzeClient.getAllBonusActivations
+  );
+
   // handle bonus vacanze activation
   yield takeEvery(
-    getType(bonusVacanzeActivation.request),
-    startBonusActivationSaga,
-    backendBonusVacanzeClient.startBonusActivationProcedure,
-    backendBonusVacanzeClient.getLatestBonusVacanzeFromId
+    getType(activateBonusVacanze.request),
+    handleBonusActivationSaga,
+    bonusActivationSaga(
+      backendBonusVacanzeClient.startBonusActivationProcedure,
+      backendBonusVacanzeClient.getLatestBonusVacanzeFromId
+    )
+  );
+
+  // force bonus vacanze service activation when eligibility or activation starts
+  yield takeLatest(
+    [
+      getType(activateBonusVacanze.request),
+      getType(checkBonusVacanzeEligibility.request)
+    ],
+    handleForceBonusServiceActivation,
+    ID_BONUS_VACANZE_TYPE
   );
 }

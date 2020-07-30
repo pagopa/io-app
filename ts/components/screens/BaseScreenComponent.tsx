@@ -21,7 +21,7 @@ import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { handleItemOnPress } from "../../utils/url";
-import { ContextualHelpModal } from "../ContextualHelpModal";
+import ContextualHelpModal from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
 import {
@@ -41,6 +41,9 @@ export interface ContextualHelpPropsMarkdown {
 }
 
 interface OwnProps {
+  onAccessibilityNavigationHeaderFocus?: () => void;
+  avoidNavigationEventsUsage?: boolean;
+  accessibilityLabel?: string;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
@@ -170,6 +173,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const {
+      avoidNavigationEventsUsage,
+      accessibilityLabel,
       dark,
       appLogo,
       contextualHelp,
@@ -182,6 +187,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       searchType,
       customRightIcon,
       customGoBack,
+      onAccessibilityNavigationHeaderFocus,
       showInstabugChat,
       children,
       faqCategories
@@ -214,6 +220,11 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     return (
       <Container>
         <BaseHeader
+          onAccessibilityNavigationHeaderFocus={
+            onAccessibilityNavigationHeaderFocus
+          }
+          avoidNavigationEventsUsage={avoidNavigationEventsUsage}
+          accessibilityLabel={accessibilityLabel}
           showInstabugChat={showInstabugChat}
           primary={primary}
           dark={dark}

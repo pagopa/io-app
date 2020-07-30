@@ -1,8 +1,7 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { H3, List, ListItem, Text, Toast, View } from "native-base";
+import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
-import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
-import DeviceInfo from "react-native-device-info";
+import { Alert, ScrollView, StyleSheet } from "react-native";
 import {
   NavigationEvents,
   NavigationEventSubscription,
@@ -20,7 +19,6 @@ import DarkLayout from "../../components/screens/DarkLayout";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
-import SelectLogoutOption from "../../components/SelectLogoutOption";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -28,7 +26,10 @@ import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { sessionExpired } from "../../store/actions/authentication";
+import {
+  logoutRequest,
+  sessionExpired
+} from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesExperimentalFeaturesSetEnabled,
@@ -46,6 +47,7 @@ import { notificationsInstallationSelector } from "../../store/reducers/notifica
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
@@ -102,12 +104,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
-
-const getAppLongVersion = () => {
-  const buildNumber =
-    Platform.OS === "ios" ? ` (${DeviceInfo.getBuildNumber()})` : "";
-  return `${DeviceInfo.getVersion()}${buildNumber}`;
-};
 
 /**
  * A screen to show all the options related to the user profile
@@ -203,19 +199,19 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   }
 
   private onLogoutPress = () => {
-    // Show a modal to let the user select a calendar
-    this.props.showModal(
-      <SelectLogoutOption
-        onCancel={this.props.hideModal}
-        header={
-          <View>
-            <H3 style={styles.modalHeader}>
-              {I18n.t("profile.logout.cta.header")}
-            </H3>
-            <View spacer={true} large={true} />
-          </View>
+    Alert.alert(
+      I18n.t("profile.logout.menulabel"),
+      I18n.t("profile.logout.alertMessage"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel")
+        },
+        {
+          text: I18n.t("profile.logout.exit"),
+          onPress: this.props.logout
         }
-      />
+      ],
+      { cancelable: true }
     );
   };
 
@@ -427,7 +423,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             />
 
             {this.debugListItem(
-              `${I18n.t("profile.main.appVersion")} ${getAppLongVersion()}`,
+              `${I18n.t("profile.main.appVersion")} ${getAppVersion()}`,
               this.onTapAppVersion,
               false
             )}
@@ -523,12 +519,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     return (
       <DarkLayout
+        accessibilityLabel={I18n.t("profile.main.title")}
         bounces={false}
         appLogo={true}
         title={I18n.t("profile.main.title")}
         icon={require("../../../img/icons/profile-illustration.png")}
         topContent={
           <TouchableDefaultOpacity
+            accessibilityRole={"button"}
             onPress={() =>
               this.props.navigation.navigate(ROUTES.PROFILE_FISCAL_CODE)
             }
@@ -562,6 +560,8 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  // hard-logout
+  logout: () => dispatch(logoutRequest({ keepUserData: false })),
   resetPin: () => dispatch(startPinReset()),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>

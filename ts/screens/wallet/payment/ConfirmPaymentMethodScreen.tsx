@@ -175,7 +175,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             style={styles.alertIcon}
             name={"io-notice"}
             size={24}
-            color={customVariables.colorWhite}
+            color={customVariables.brandDarkGray}
           />
           <Text white={true} style={styles.flex}>
             <Text bold={true} white={true}>

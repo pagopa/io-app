@@ -1,8 +1,10 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Button, Text, View } from "native-base";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Animated, Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
@@ -12,13 +14,14 @@ import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 type Props = {
   onClose: () => void;
   qrCode: string;
-  secretCode: string;
+  logo?: string;
+  codeToCopy: string;
+  codeToDisplay: string;
 };
 
 const styles = StyleSheet.create({
   modalBackdrop: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)"
+    flex: 1
   },
   modalBox: {
     position: "absolute",
@@ -65,7 +68,6 @@ const styles = StyleSheet.create({
     color: customVariables.selectedColor
   },
   uniqueCode: {
-    fontSize: customVariables.fontSizeSmall,
     color: customVariables.textColor
   },
   bonusLogo: {
@@ -82,55 +84,81 @@ const renderQRCode = (base64: string) =>
     <SvgXml xml={s} height={249} width={249} />
   ));
 
-const bonusVacanzeImage = require("../../../../img/bonus/bonusVacanze/vacanze.png");
-
+const opacityAnimationDuration = 800 as Millisecond;
 const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
-  const { onClose, qrCode, secretCode } = props;
+  const { onClose, qrCode, codeToDisplay, codeToCopy } = props;
+
+  const [opacity] = React.useState(new Animated.Value(0));
+
   useHardwareBackButton(() => {
     onClose();
     return true;
   });
+
+  const color = opacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["rgba(0,0,0,0)", "rgba(0,0,0,0.5)"]
+  });
+
+  const modalBackdrop = {
+    backgroundColor: color
+  };
+
+  React.useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: opacityAnimationDuration
+    }).start();
+  });
+
   return (
-    <View style={styles.modalBackdrop}>
+    <Animated.View style={[styles.modalBackdrop, modalBackdrop]}>
       <View style={styles.modalBox}>
         <View style={styles.row}>
           <Text style={styles.title} semibold={true}>
-            {I18n.t("bonus.bonusVacanza.name")}
+            {I18n.t("bonus.bonusVacanze.name")}
           </Text>
-          <Button
+          <ButtonDefaultOpacity
             style={styles.modalClose}
             onPress={onClose}
             transparent={true}
+            accessible={true}
+            accessibilityRole={"button"}
+            accessibilityLabel={I18n.t("global.buttons.close")}
           >
             <IconFont
               name="io-close"
               color={customVariables.lightGray}
               style={styles.icon}
             />
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
         <View spacer={true} large={true} />
         <View style={styles.row}>
           <View>
-            <Text style={styles.uniqueCode}>Codice univoco</Text>
+            <Text style={styles.uniqueCode}>
+              {I18n.t("bonus.bonusVacanze.uniqueCode")}
+            </Text>
             <View style={styles.row}>
               <Text style={styles.codeText} bold={true}>
-                {secretCode}
+                {codeToDisplay}
               </Text>
               <View hspacer={true} />
-              <CopyButtonComponent textToCopy={secretCode.toString()} />
+              <CopyButtonComponent textToCopy={codeToCopy} />
             </View>
           </View>
-          <Image
-            source={bonusVacanzeImage}
-            resizeMode={"contain"}
-            style={styles.bonusLogo}
-          />
+          {props.logo && (
+            <Image
+              source={{ uri: props.logo }}
+              resizeMode={"contain"}
+              style={styles.bonusLogo}
+            />
+          )}
         </View>
         <View spacer={true} extralarge={true} />
         <View style={styles.image}>{renderQRCode(qrCode)}</View>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

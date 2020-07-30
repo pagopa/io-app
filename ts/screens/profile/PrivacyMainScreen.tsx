@@ -94,7 +94,8 @@ class PrivacyMainScreen extends React.Component<Props, State> {
     if (
       pot.isSome(requestState) &&
       (requestState.value === undefined ||
-        requestState.value.status === UserDataProcessingStatusEnum.CLOSED)
+        requestState.value.status === UserDataProcessingStatusEnum.CLOSED ||
+        requestState.value.status === UserDataProcessingStatusEnum.ABORTED)
     ) {
       // if user asks for download, navigate to a screen to inform about the process
       // there he/she can request to download his/her data
@@ -123,7 +124,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
     }
   };
 
-  // show an alert to confirm the request sumbission
+  // show an alert to confirm the request submission
   private handleConfirmAlert = (choice: UserDataProcessingChoiceEnum) => {
     Alert.alert(confirmAlertTitle[choice], confirmAlertSubtitle[choice]);
   };
@@ -186,7 +187,9 @@ class PrivacyMainScreen extends React.Component<Props, State> {
         pot.map(
           this.props.userDataProcessing[choice],
           v =>
-            v !== undefined && v.status !== UserDataProcessingStatusEnum.CLOSED
+            v !== undefined &&
+            v.status !== UserDataProcessingStatusEnum.CLOSED &&
+            v.status !== UserDataProcessingStatusEnum.ABORTED
         ),
         false
       )
@@ -221,7 +224,8 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               useExtendedSubTitle={true}
             />
 
-            {/* Remove account */}
+            {/* Remove account - temporary disabled https://www.pivotaltracker.com/story/show/173418452
+
             <ListItemComponent
               title={I18n.t("profile.main.privacy.removeAccount.title")}
               subTitle={I18n.t(
@@ -241,7 +245,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                   : undefined
               }
             />
-
+            */}
             {/* Export your data */}
             <ListItemComponent
               title={I18n.t("profile.main.privacy.exportData.title")}

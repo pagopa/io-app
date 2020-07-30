@@ -34,7 +34,9 @@ import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPref
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import { authenticateConfig } from "../../utils/biometric";
+import { maybeNotNullyString } from "../../utils/strings";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -56,6 +58,7 @@ type State = {
   biometryAuthAvailable: boolean;
   canInsertPinTooManyAttempts: boolean;
   countdown?: Millisecond;
+  errorDescription?: string;
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -116,6 +119,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
   }
 
+  private headerRef = React.createRef<Text>();
+  private errorStatusRef = React.createRef<Text>();
+
   private idUpdateCanInsertPinTooManyAttempts?: number;
 
   /**
@@ -154,6 +160,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     const { isFingerprintEnabled } = this.props;
+    setAccessibilityFocus(this.headerRef);
     if (isFingerprintEnabled) {
       getFingerprintSettings().then(
         biometryType =>
@@ -251,6 +258,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         updateBiometrySupportProp:
           prevProps.appState !== "active" && this.props.appState === "active"
       });
+      setAccessibilityFocus(this.headerRef);
     }
 
     const previousAttempts = prevProps.identificationFailState.fold(
@@ -315,6 +323,26 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     } else {
       this.props.onIdentificationFailure();
     }
+  };
+
+  private renderErrorDescription = () => {
+    return maybeNotNullyString(this.getCodeInsertionStatus()).fold(
+      undefined,
+      des => {
+        return (
+          <Text
+            alignCenter={true}
+            bold={true}
+            white={true}
+            primary={false}
+            accessible={true}
+            ref={this.errorStatusRef}
+          >
+            {des}
+          </Text>
+        );
+      }
+    );
   };
 
   private getCodeInsertionStatus = () => {
@@ -392,6 +420,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             style={styles.header}
             white={!isValidatingTask}
             dark={isValidatingTask}
+            accessible={true}
+            ref={this.headerRef}
           >
             {I18n.t(
               isValidatingTask
@@ -419,6 +449,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     ) : (
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
+          accessibilityLabel={I18n.t("identification.title")}
+          avoidNavigationEventsUsage={true}
           primary={!isValidatingTask}
           contextualHelpMarkdown={contextualHelpMarkdown}
           faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}
@@ -430,12 +462,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           />
           <Content primary={!isValidatingTask}>
             {renderHeader()}
-
+            {this.renderErrorDescription()}
             <Pinpad
               onPinResetHandler={this.props.onPinResetHandler}
               isValidatingTask={isValidatingTask}
               isFingerprintEnabled={isFingerprintEnabled}
-              codeInsertionStatus={this.getCodeInsertionStatus()}
               biometryType={biometryType}
               onFingerPrintReq={() =>
                 this.onFingerprintRequest(this.onIdentificationSuccessHandler)
@@ -501,9 +532,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       });
       onIdentificationSuccessHandler();
     } else {
-      this.setState({
-        identificationByPinState: "failure"
-      });
+      this.setState(
+        {
+          identificationByPinState: "failure"
+        },
+        () => setAccessibilityFocus(this.errorStatusRef)
+      );
 
       onIdentificationFailureHandler();
     }

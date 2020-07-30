@@ -13,6 +13,7 @@ import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
+import variables from "../../../theme/variables";
 
 type Props = NavigationScreenProps & ReduxProps;
 
@@ -37,6 +38,7 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
     };
     const retryButtonProps = {
       primary: true,
+      iconColor: variables.colorWhite,
       iconName: "io-cie",
       onPress: this.goToCieID, // TODO: if the app is installed, redirect to the page dedicated to rpin recovery
       title: I18n.t("authentication.cie.pinTempLocked.button")

@@ -13,6 +13,10 @@ export const preferredCalendarSaveSuccess = createStandardAction(
   "PREFERENCES_CALENDAR_SAVE_SUCCESS"
 )<{ preferredCalendar: Calendar }>();
 
+export const preferredCalendarRemoveSuccess = createStandardAction(
+  "PREFERENCES_CALENDAR_REMOVE_SUCCESS"
+)();
+
 export const preferredLanguageSaveSuccess = createStandardAction(
   "PREFERENCES_LANGUAGE_SAVE_SUCCESS"
 )<{ preferredLanguage: Locales }>();
@@ -33,13 +37,19 @@ export const customEmailChannelSetEnabled = createStandardAction(
   "CUSTOM_EMAIL_CHANNEL_SET_ENABLED"
 )<boolean>();
 
+export const continueWithRootOrJailbreak = createStandardAction(
+  "CONTINUE_WITH_ROOT_OR_JAILBREAK"
+)<boolean>();
+
 export type PersistedPreferencesActions = ActionType<
   // tslint:disable-next-line: max-union-size
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
+  | typeof preferredCalendarRemoveSuccess
   | typeof preferredLanguageSaveSuccess
   | typeof serviceAlertDisplayedOnceSuccess
   | typeof preferencesPagoPaTestEnvironmentSetEnabled
   | typeof preferencesExperimentalFeaturesSetEnabled
   | typeof customEmailChannelSetEnabled
+  | typeof continueWithRootOrJailbreak
 >;

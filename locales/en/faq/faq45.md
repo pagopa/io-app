@@ -1,1 +1,1 @@
-Ogni istituto che gestisce i pagamenti con pagoPA (Prestatori di Servizi a Pagamento) può applicare autonomamente differenti costi, a seconda delle proprie politiche commerciali e delle condizioni contrattuali dell’utente.
+Each institution that manages payments within pagoPA (Paying Service Provider) may independently apply different transaction fees, depending on its own commercial policies and the contractual terms they set with the user.

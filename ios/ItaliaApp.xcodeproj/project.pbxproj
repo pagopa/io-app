@@ -44,7 +44,7 @@
 		F0625E8E2326832500EDEF90 /* libRNTextInputMask.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CC92F521357FDE00206602 /* libRNTextInputMask.a */; };
 		F0625E902326833000EDEF90 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0625E8F2326833000EDEF90 /* libPods-ItaliaApp.a */; };
 		F09FEB3C231818E3007071DB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F09FEB0D231818E3007071DB /* Localizable.strings */; };
-		E4B7E7371E9D4257914E3BF0 /* io-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71D89A4BF5744BAB927798CA /* io-icon-font.ttf */; };
+		202B8C1DFC5C405E80F874E3 /* io-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE88E1E00C1C4493BB832A6F /* io-icon-font.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -434,7 +434,7 @@
 		F5F65895457F4A8593B7110D /* libRNTextInputMask.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNTextInputMask.a; sourceTree = "<group>"; };
 		F709D4AE20E44EFAAB255A8E /* TitilliumWeb-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Italic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Italic.ttf"; sourceTree = "<group>"; };
 		FBD4A950A9AC909A1EDCDA70 /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
-		71D89A4BF5744BAB927798CA /* io-icon-font.ttf */ = {isa = PBXFileReference; name = "io-icon-font.ttf"; path = "../assets/fonts/io-icon-font/io-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DE88E1E00C1C4493BB832A6F /* io-icon-font.ttf */ = {isa = PBXFileReference; name = "io-icon-font.ttf"; path = "../assets/fonts/io-icon-font/io-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -613,7 +613,7 @@
 				640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */,
 				76E4CEA78E3F4060ABB59808 /* RobotoMono-Regular.ttf */,
 				5389C36762A04AE69D762289 /* RobotoMono-RegularItalic.ttf */,
-				71D89A4BF5744BAB927798CA /* io-icon-font.ttf */,
+				DE88E1E00C1C4493BB832A6F /* io-icon-font.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -797,11 +797,7 @@
 				616E1A2BB64E72519DD7C30F /* Strip Frameworks */,
 				EB0FFA733F5451135571F869 /* [CP] Copy Pods Resources */,
 				F98B07D8659B8C347D85D18A /* [CP] Embed Pods Frameworks */,
-				35B11A4C5C4EA73ED6B6EBA0 /* Upload Sourcemap */,
 				9469A4BBA8323D8A13EEF44B /* Upload Sourcemap */,
-				4D6E88D58183BEB136ED8338 /* Upload Sourcemap */,
-				2515FF0907EF87DC1D211C07 /* Upload Sourcemap */,
-				204462674DF49F23E5489CA4 /* Upload Sourcemap */,
 			);
 			buildRules = (
 			);
@@ -1239,7 +1235,7 @@
 				C2CF038002D24FEEAB41B336 /* RobotoMono-LightItalic.ttf in Resources */,
 				16E38CBD19D4437A9C020B21 /* RobotoMono-Regular.ttf in Resources */,
 				28E4866232804051B865FC10 /* RobotoMono-RegularItalic.ttf in Resources */,
-				E4B7E7371E9D4257914E3BF0 /* io-icon-font.ttf in Resources */,
+				202B8C1DFC5C405E80F874E3 /* io-icon-font.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1258,79 +1254,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
-		};
-		204462674DF49F23E5489CA4 /* Upload Sourcemap */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Upload Sourcemap";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "bash \"../node_modules/instabug-reactnative/ios/upload_sourcemap.sh\"\n";
-		};
-		2515FF0907EF87DC1D211C07 /* Upload Sourcemap */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Upload Sourcemap";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "bash \"../node_modules/instabug-reactnative/ios/upload_sourcemap.sh\"\n";
-		};
-		35B11A4C5C4EA73ED6B6EBA0 /* Upload Sourcemap */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Upload Sourcemap";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "export INSTABUG_APP_TOKEN=\"YOUR_APP_TOKEN\"\nbash \"../node_modules/instabug-reactnative/ios/upload_sourcemap.sh\"\n";
-		};
-		4D6E88D58183BEB136ED8338 /* Upload Sourcemap */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Upload Sourcemap";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "bash \"../node_modules/instabug-reactnative/ios/upload_sourcemap.sh\"\n";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		616E1A2BB64E72519DD7C30F /* Strip Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1664,7 +1588,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 40000;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1680,6 +1604,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1703,7 +1628,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 40000;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1718,6 +1643,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

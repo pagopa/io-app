@@ -29,6 +29,6 @@
       "filename": "android/app/build.gradle",
       "updater": "scripts/changelog/gradle_updater.js"
     }
-  ],
-  "issueUrlFormat": "https://www.pivotaltracker.com/n/projects/2048617/stories/{{id}}"
+  ]
+
 }

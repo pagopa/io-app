@@ -8,7 +8,6 @@ import ROUTES from "../navigation/routes";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { makeFontStyleObject } from "../theme/fonts";
-import variables from "../theme/variables";
 
 type Routes = keyof typeof ROUTES;
 
@@ -32,6 +31,13 @@ const ROUTE_LABEL: RouteLabelMap = {
 };
 const fallbackLabel = "unknown"; // fallback label
 
+const routeOrder = new Map<Routes, number>([
+  ["MESSAGES_NAVIGATOR", 1],
+  ["WALLET_HOME", 2],
+  ["SERVICES_NAVIGATOR", 3],
+  ["PROFILE_NAVIGATOR", 4]
+]);
+
 const getLabel = (routeName: string, locale: Locales): string => {
   // "routeName as Routes" is assumed to be safe as explained @https://github.com/pagopa/io-app/pull/193#discussion_r192347234
   // adding fallback anyway -- better safe than sorry
@@ -43,8 +49,7 @@ const getLabel = (routeName: string, locale: Locales): string => {
 const styles = StyleSheet.create({
   labelStyle: {
     ...makeFontStyleObject(Platform.select),
-    textAlign: "center",
-    fontSize: variables.fontSizeSmaller
+    textAlign: "center"
   }
 });
 
@@ -56,6 +61,9 @@ const styles = StyleSheet.create({
 const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
   const { options, routeName, preferredLanguage } = props;
   const locale: Locales = preferredLanguage.fold(I18n.locale, l => l);
+  const label = getLabel(routeName, locale);
+  const maybeOrder = fromNullable(routeOrder.get(routeName as Routes));
+
   return (
     <Text
       style={[
@@ -64,8 +72,12 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
           color: options.tintColor === null ? undefined : options.tintColor
         }
       ]}
+      accessibilityLabel={I18n.t("navigation.accessibility", {
+        section: label,
+        order: maybeOrder.getOrElse(0)
+      })}
     >
-      {getLabel(routeName, locale)}
+      {label}
     </Text>
   );
 };

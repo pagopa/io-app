@@ -6,7 +6,7 @@ import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { formatNumberAmount } from "../../../utils/stringBuilder";
 import { validityInterval } from "../utils/bonus";
 
 type Props = {
@@ -37,12 +37,13 @@ const styles = StyleSheet.create({
   },
   text3: {
     fontSize: 18,
-    color: customVariables.brandDarkestGray
+    color: customVariables.colorWhite
   },
   text12: {
     lineHeight: 18,
     marginBottom: -4,
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    color: customVariables.colorWhite
   },
   icon: {
     width: 64,
@@ -57,6 +58,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     minHeight: 24
+  },
+  textWhite: {
+    color: customVariables.colorWhite
+  },
+  containerColor: {
+    padding: customVariables.appHeaderPaddingHorizontal,
+    backgroundColor: "#2C489D",
+    color: customVariables.colorWhite
   }
 });
 
@@ -72,25 +81,26 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <TouchableDefaultOpacity
+      style={styles.containerColor}
       onPress={() => props.onPress(props.bonus, props.validFrom, props.validTo)}
     >
       <View style={styles.spaced}>
         {bonusValidityInterval.isSome() && (
-          <Text small={true}>{`${I18n.t("bonus.bonusVacanza.validity")} ${
+          <Text>{`${I18n.t("bonus.bonusVacanze.validity")} ${
             bonusValidityInterval.value.e1
           } - ${bonusValidityInterval.value.e2}`}</Text>
         )}
         <Text bold={true} style={styles.text12}>
-          {formatNumberCentsToAmount(props.bonus.dsu_request.max_amount)}
+          {formatNumberAmount(props.bonus.dsu_request.max_amount, true)}
         </Text>
       </View>
       <View small={true} />
       <View style={styles.spaced}>
-        <Text small={true} dark={true}>
-          {I18n.t("bonus.bonusVacanza.taxBenefit")}
+        <Text style={styles.textWhite}>
+          {I18n.t("bonus.bonusVacanze.taxBenefit")}
         </Text>
         <Text bold={true} style={styles.text12}>
-          {formatNumberCentsToAmount(props.bonus.dsu_request.max_tax_benefit)}
+          {formatNumberAmount(props.bonus.dsu_request.max_tax_benefit, true)}
         </Text>
       </View>
       <View style={styles.smallSpacer} />
@@ -105,7 +115,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
           <IconFont
             name="io-right"
             size={ICON_WIDTH}
-            color={customVariables.contentPrimaryBackground}
+            color={customVariables.colorWhite}
           />
         </View>
       </View>
