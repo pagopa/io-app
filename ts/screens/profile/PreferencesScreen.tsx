@@ -47,7 +47,10 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
-import { getLocalePrimary } from "../../utils/locale";
+import {
+  getLocalePrimary,
+  getLocalePrimaryWithFallback
+} from "../../utils/locale";
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -121,8 +124,8 @@ class PreferencesScreen extends React.Component<Props, State> {
           // If the user denied permission previously (not in this session)
           // prompt an alert to inform that his calendar permissions could have been turned off
           Alert.alert(
+            I18n.t("global.genericAlert"),
             I18n.t("messages.cta.calendarPermDenied.title"),
-            undefined,
             [
               {
                 text: I18n.t("messages.cta.calendarPermDenied.cancel"),
@@ -167,7 +170,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     const maybePhoneNumber = this.props.optionMobilePhone;
 
     const language = this.props.preferredLanguage.fold(
-      translateLocale(I18n.locale),
+      translateLocale(getLocalePrimaryWithFallback()),
       l => translateLocale(l)
     );
 

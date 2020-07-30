@@ -3,7 +3,10 @@ import { call, put, select, take, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { startApplicationInitialization } from "../store/actions/application";
-import { sessionInvalid } from "../store/actions/authentication";
+import {
+  checkCurrentSession,
+  sessionInvalid
+} from "../store/actions/authentication";
 import {
   identificationCancel,
   identificationForceLogout,
@@ -79,6 +82,8 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
     }
 
     case getType(identificationSuccess): {
+      // if the identification has been successfully, check if the current session is still valid
+      yield put(checkCurrentSession.request());
       return IdentificationResult.success;
     }
 

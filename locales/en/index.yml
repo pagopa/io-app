@@ -369,6 +369,7 @@ authentication:
       enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
     pin:
       accessibility:
+        placeholderLabel: PIN of Electronic Identity Card
         label: Insertion field for Electronic Identity Card pins
         hint: Enter the 8 digits pin of your Electronic Identity Card in this field.
       pinCardTitle: Enter the PIN of your card
@@ -1105,7 +1106,7 @@ identification:
     waitMessage: "Try again in:"
   unlockCode:
     accessibility:
-      unlockHint: You entered {{number}} digits
+      unlockHint: You entered {{number}} digits of {{length}}
       fingerprint: Login with your fingerprint
       faceId: Login with the Face ID
       delete: Remove last inserted digit
@@ -1395,7 +1396,7 @@ bonus:
       validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
       bonusRejected: Attention! This Bonus Vacanze has been rejected
       redeemed: This Bonus Vacanze has been consumed on {{date}}
-    multipleBonus: Two bonuses requested and activated by you. Make sure you use the correct DSU to prevent the bonus user from incurring subsequent recovery actions.
+    multipleBonus: Two or more bonuses requested and activated by you. Make sure you use the correct DSU to prevent the bonus user from incurring subsequent recovery actions.
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return
     request: Request the
