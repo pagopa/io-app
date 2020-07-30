@@ -20,7 +20,7 @@ import {
   getCodiceAvviso,
   PaymentHistory
 } from "../store/reducers/payments/history";
-import { Psp, Wallet } from "../types/pagopa";
+import { CreditCard, CreditCardType, Psp, Wallet } from "../types/pagopa";
 import { formatDateAsReminder } from "./dates";
 
 /**
@@ -190,3 +190,14 @@ export const getPaymentHistoryDetails = (
     failureDetails
   );
 };
+
+/**
+ * This function controls if card owns the specified brand.
+ */
+export const hasCardBrand = (
+  card: CreditCard,
+  brand: CreditCardType
+): boolean =>
+  fromNullable(card.brand)
+    .map(cb => cb.toLocaleLowerCase() === brand.toLocaleLowerCase())
+    .getOrElse(false);
