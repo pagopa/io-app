@@ -7,7 +7,6 @@ import {
   setMessageReadState,
   setMessagesArchivedState
 } from "../../../actions/messages";
-import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 

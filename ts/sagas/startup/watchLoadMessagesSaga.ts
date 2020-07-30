@@ -31,11 +31,11 @@ import {
 import { loadServiceDetail } from "../../store/actions/services";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
 import { messagesStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
+import { messagesStatusSelector } from "../../store/reducers/entities/messages/messagesStatus";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
-import { messagesStatusSelector } from "../../store/reducers/entities/messages/messagesStatus";
 
 /**
  * A generator to load messages from the Backend.
@@ -97,6 +97,8 @@ export function* loadMessages(
           _ => responseItemsIds.indexOf(_) < 0
         );
 
+        // Calculate the ids of the message no more visible that we need
+        // to remove from the messagesStatus cache.
         const messagesIdsToRemoveFromCache = Array.from(
           new Set([...messageIds, ...messagesStatusIds])
         );
