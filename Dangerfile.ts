@@ -10,8 +10,10 @@ checkDangers();
 
 danger.github.api.pulls
   .update({
-    ...danger.github.thisPR,
+    owner: danger.github.thisPR.owner,
+    repo: danger.github.thisPR.repo,
+    pull_number: danger.github.thisPR.number,
     title: "danger test!"
   })
-  .then(res => console.log(res))
-  .catch(ex => console.log(ex));
+  .then(res => console.log("complete " + res))
+  .catch(ex => console.log("except: " + ex));
