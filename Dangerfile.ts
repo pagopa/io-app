@@ -8,6 +8,8 @@ declare var danger: DangerDSLType;
 
 checkDangers();
 
+console.log("thisPR: " + danger.github.thisPR);
+
 danger.github.api.pulls
   .update({
     owner: danger.github.thisPR.owner,
