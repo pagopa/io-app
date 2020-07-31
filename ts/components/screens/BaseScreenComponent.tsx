@@ -28,7 +28,7 @@ import {
   deriveCustomHandledLink,
   isIoInternalLink
 } from "../ui/Markdown/handlers/link";
-import { BaseHeader } from "./BaseHeader";
+import { AccessibilityEvents, BaseHeader } from "./BaseHeader";
 
 export interface ContextualHelpProps {
   title: string;
@@ -42,7 +42,7 @@ export interface ContextualHelpPropsMarkdown {
 
 interface OwnProps {
   onAccessibilityNavigationHeaderFocus?: () => void;
-  avoidNavigationEventsUsage?: boolean;
+  accessibilityEvents?: AccessibilityEvents;
   accessibilityLabel?: string;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
@@ -173,7 +173,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const {
-      avoidNavigationEventsUsage,
+      accessibilityEvents,
       accessibilityLabel,
       dark,
       appLogo,
@@ -223,7 +223,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           onAccessibilityNavigationHeaderFocus={
             onAccessibilityNavigationHeaderFocus
           }
-          avoidNavigationEventsUsage={avoidNavigationEventsUsage}
+          accessibilityEvents={accessibilityEvents}
           accessibilityLabel={accessibilityLabel}
           showInstabugChat={showInstabugChat}
           primary={primary}
