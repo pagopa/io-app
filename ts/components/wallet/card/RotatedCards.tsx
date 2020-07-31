@@ -78,7 +78,12 @@ export class RotatedCards extends React.PureComponent<Props, {}> {
         </View> 
       ) : (
         <View style={styles.container}>
-          <TouchableDefaultOpacity onPress={onClick}>
+          <TouchableDefaultOpacity 
+            onPress={onClick}
+            accessible={true}
+            accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
+            accessibilityRole={"button"}
+          >
             {Platform.OS === "android" && <View
               style={styles.shadowBox}
             />}

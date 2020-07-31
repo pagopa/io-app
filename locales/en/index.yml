@@ -612,6 +612,13 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Payments
+  accessibility:
+    cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
+    transactionListItem:
+      payment:
+        read: Transaction
+        unread: Unread transaction
+      label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} at {{hours}} with reason {{reason}}. Activate for the full detail"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
