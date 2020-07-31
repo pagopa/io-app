@@ -121,8 +121,9 @@ export default class TransactionsList extends React.Component<Props, State> {
             amount,
             datetime: dateToAccessibilityReadbleFormat(
               item.created,
-              I18n.t("global.accessibility.dateTime_format")
+              I18n.t("global.accessibility.date_format")
             ),
+            hours: dateToAccessibilityReadbleFormat(item.created, "HH:mm"),
             reason: paymentReason
           }
         )}

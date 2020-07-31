@@ -2,7 +2,6 @@
 global:
   accessibility:
     date_format: DD MMMM YYYY
-    dateTime_format: "DD MMMM YYYY HH:mm"
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
     active: Stato attivo
@@ -640,7 +639,7 @@ wallet:
       payment:
         read: Transazione
         unread: Transazione da leggere
-      label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} con causale {{reason}}. Attiva per il dettaglio completo"
+      label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto

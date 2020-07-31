@@ -2,7 +2,6 @@
 global:
   accessibility:
     date_format: MMMM Do YYYY
-    dateTime_format: "MMMM Do YYYY HH:mm"
     expanded: Expanded paragraph
     collapsed: Collapsed paragraph
     active: State active
@@ -619,7 +618,7 @@ wallet:
       payment:
         read: Transaction
         unread: Unread transaction
-      label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} with reason {{reason}}. Activate for the full detail"
+      label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} at {{hours}} with reason {{reason}}. Activate for the full detail"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
