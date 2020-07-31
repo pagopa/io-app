@@ -1,11 +1,11 @@
 import { Tuple3 } from "italia-ts-commons/lib/tuples";
 
-const appVersionMock = jest
-  .fn()
-  .mockReturnValueOnce("1.1.3")
-  .mockReturnValueOnce("1.1.9")
-  .mockReturnValueOnce("1.2.3.4");
 jest.mock("react-native-device-info", () => {
+  const appVersionMock = jest
+    .fn()
+    .mockReturnValueOnce("1.1.3")
+    .mockReturnValueOnce("1.1.9")
+    .mockReturnValueOnce("1.2.3.4");
   return {
     getReadableVersion: appVersionMock,
     getAppVersion: appVersionMock,
