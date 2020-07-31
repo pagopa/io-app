@@ -8,19 +8,9 @@ declare var danger: DangerDSLType;
 
 checkDangers();
 
-console.log(
-  "thisPR: " +
-    danger.github.thisPR.owner +
-    danger.github.thisPR.repo +
-    danger.github.thisPR.number
-);
-
-danger.github.api.pulls
-  .update({
-    owner: danger.github.thisPR.owner,
-    repo: danger.github.thisPR.repo,
-    pull_number: danger.github.thisPR.number,
-    title: "danger test!"
-  })
-  .then(res => console.log("complete " + res))
-  .catch(ex => console.log("except: " + ex));
+danger.github.api.pulls.update({
+  owner: danger.github.thisPR.owner,
+  repo: danger.github.thisPR.repo,
+  pull_number: danger.github.thisPR.number,
+  title: "danger test!"
+});
