@@ -30,6 +30,7 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { whereAmIFrom } from "../../utils/navigation";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -100,7 +101,12 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 
   private handleBackPress = () => {
-    if (whereAmIFrom(this.props.nav).fold(false, r => r === "WALLET_HOME")) {
+    if (
+      whereAmIFrom(this.props.nav).fold(
+        false,
+        r => r === "WALLET_HOME" || r === "WALLET_CARD_TRANSACTION"
+      )
+    ) {
       return this.props.navigation.goBack();
     } else {
       this.props.navigateBackToEntrypointPayment();
