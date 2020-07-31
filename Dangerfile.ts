@@ -13,5 +13,5 @@ danger.github.api.pulls
     ...danger.github.thisPR,
     title: "danger test!"
   })
-  .then()
-  .catch();
+  .then(res => console.log(res))
+  .catch(ex => console.log(ex));
