@@ -23,7 +23,7 @@ import { InitializedProfile } from "../../definitions/backend/InitializedProfile
 import { Municipality } from "../../definitions/content/Municipality";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
-import { dateToAccessibilityReadbleFormat } from "../utils/accessibility";
+import { dateToAccessibilityReadableFormat } from "../utils/accessibility";
 import { extractFiscalCodeData } from "../utils/profile";
 import { maybeNotNullyString } from "../utils/strings";
 
@@ -386,7 +386,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           family_name: this.props.profile.family_name,
           gender: fiscalCodeData.gender || na,
           birthDate: fiscalCodeData.birthday
-            ? dateToAccessibilityReadbleFormat(fiscalCodeData.birthday)
+            ? dateToAccessibilityReadableFormat(fiscalCodeData.birthday)
             : na,
           province: maybeNotNullyString(
             fiscalCodeData.siglaProvincia

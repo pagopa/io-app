@@ -127,7 +127,9 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     >
       <Container>
         <BaseHeader
-          avoidNavigationEventsUsage={true}
+          accessibilityEvents={{
+            avoidNavigationEventsUsage: true
+          }}
           headerTitle={I18n.t("contextualHelp.title")}
           customRightIcon={{
             iconName: "io-close",

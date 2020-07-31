@@ -47,7 +47,7 @@ class SystemOffModal extends React.PureComponent<Props> {
         <BaseScreenComponent
           appLogo={true}
           goBack={false}
-          avoidNavigationEventsUsage={true}
+          accessibilityEvents={{ avoidNavigationEventsUsage: true }}
         >
           <Container>
             <View style={styles.container}>
