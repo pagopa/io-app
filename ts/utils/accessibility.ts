@@ -62,7 +62,10 @@ export const isScreenReaderEnabled = async (): Promise<boolean> => {
 };
 
 // return a string representing the date in a readable format
-export const dateToAccessibilityReadbleFormat = (
+export const dateToAccessibilityReadableFormat = (
   date: Date,
   dateFormat: string = I18n.t("global.accessibility.date_format")
 ) => `${format(date, dateFormat)}`;
+
+export const hoursAndMinutesToAccessibilityReadableFormat = (date: Date) =>
+  dateToAccessibilityReadableFormat(date, "HH:mm");

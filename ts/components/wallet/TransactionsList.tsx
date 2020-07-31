@@ -14,7 +14,10 @@ import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
-import { dateToAccessibilityReadbleFormat } from "../../utils/accessibility";
+import {
+  dateToAccessibilityReadableFormat,
+  hoursAndMinutesToAccessibilityReadableFormat
+} from "../../utils/accessibility";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
@@ -119,8 +122,8 @@ export default class TransactionsList extends React.Component<Props, State> {
               : I18n.t("wallet.accessibility.transactionListItem.payment.read"),
             merchant: recipient,
             amount,
-            datetime: dateToAccessibilityReadbleFormat(item.created),
-            hours: dateToAccessibilityReadbleFormat(item.created, "HH:mm"),
+            datetime: dateToAccessibilityReadableFormat(item.created),
+            hours: hoursAndMinutesToAccessibilityReadableFormat(item.created),
             reason: paymentReason
           }
         )}
