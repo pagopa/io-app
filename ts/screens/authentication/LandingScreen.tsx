@@ -111,7 +111,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   noCie: {
-    opacity: 0.35
+    backgroundColor: "#789ccd"
+  },
+  fullOpacity: {
+    backgroundColor: variables.brandPrimary
   }
 });
 
@@ -211,90 +214,95 @@ class LandingScreen extends React.PureComponent<Props, State> {
     this.props.dispatchContinueWithRootOrJailbreak(continueWith);
   };
 
-  private renderLandingScreen = () => (
-    <BaseScreenComponent
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={
-        this.props.isCieSupported
-          ? ["landing_SPID", "landing_CIE"]
-          : ["landing_SPID"]
-      }
-    >
-      {isDevEnv && <DevScreenButton onPress={this.navigateToMarkdown} />}
+  private renderLandingScreen = () => {
+    const secondButtonStyle = this.props.isCieSupported
+      ? styles.fullOpacity
+      : styles.noCie;
+    return (
+      <BaseScreenComponent
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={
+          this.props.isCieSupported
+            ? ["landing_SPID", "landing_CIE"]
+            : ["landing_SPID"]
+        }
+      >
+        {isDevEnv && <DevScreenButton onPress={this.navigateToMarkdown} />}
 
-      <Content contentContainerStyle={styles.flex} noPadded={true}>
-        <HorizontalScroll cards={this.renderCardComponents()} />
-      </Content>
+        <Content contentContainerStyle={styles.flex} noPadded={true}>
+          <HorizontalScroll cards={this.renderCardComponents()} />
+        </Content>
 
-      <View footer={true}>
-        <ButtonDefaultOpacity
-          block={true}
-          primary={true}
-          iconLeft={true}
-          onPress={
-            this.props.isCieSupported
-              ? this.navigateToCiePinScreen
-              : this.navigateToIdpSelection
-          }
-          testID={
-            this.props.isCieSupported
-              ? "landing-button-login-cie"
-              : "landing-button-login-spid"
-          }
-        >
-          <IconFont
-            name={this.props.isCieSupported ? "io-cie" : "io-profilo"}
-            color={variables.colorWhite}
-          />
-          <Text>
-            {this.props.isCieSupported
-              ? I18n.t("authentication.landing.loginCie")
-              : I18n.t("authentication.landing.loginSpid")}
-          </Text>
-        </ButtonDefaultOpacity>
-        <View spacer={true} />
-        <ButtonDefaultOpacity
-          style={!this.props.isCieSupported ? styles.noCie : undefined}
-          block={true}
-          primary={true}
-          iconLeft={true}
-          onPress={
-            this.props.isCieSupported
-              ? this.navigateToIdpSelection
-              : this.navigateToCiePinScreen
-          }
-          testID={
-            this.props.isCieSupported
-              ? "landing-button-login-spid"
-              : "landing-button-login-cie"
-          }
-        >
-          <IconFont
-            name={this.props.isCieSupported ? "io-profilo" : "io-cie"}
-            color={variables.colorWhite}
-          />
-          <Text>
-            {this.props.isCieSupported
-              ? I18n.t("authentication.landing.loginSpid")
-              : I18n.t("authentication.landing.loginCie")}
-          </Text>
-        </ButtonDefaultOpacity>
-        <View spacer={true} />
-        <ButtonDefaultOpacity
-          block={true}
-          small={true}
-          transparent={true}
-          onPress={this.navigateToSpidCieInformationRequest}
-        >
-          <Text style={styles.noPadded} link={true}>
-            {this.props.isCieSupported
-              ? I18n.t("authentication.landing.nospid-nocie")
-              : I18n.t("authentication.landing.nospid")}
-          </Text>
-        </ButtonDefaultOpacity>
-      </View>
-    </BaseScreenComponent>
-  );
+        <View footer={true}>
+          <ButtonDefaultOpacity
+            block={true}
+            primary={true}
+            iconLeft={true}
+            onPress={
+              this.props.isCieSupported
+                ? this.navigateToCiePinScreen
+                : this.navigateToIdpSelection
+            }
+            testID={
+              this.props.isCieSupported
+                ? "landing-button-login-cie"
+                : "landing-button-login-spid"
+            }
+          >
+            <IconFont
+              name={this.props.isCieSupported ? "io-cie" : "io-profilo"}
+              color={variables.colorWhite}
+            />
+            <Text>
+              {this.props.isCieSupported
+                ? I18n.t("authentication.landing.loginCie")
+                : I18n.t("authentication.landing.loginSpid")}
+            </Text>
+          </ButtonDefaultOpacity>
+          <View spacer={true} />
+          <ButtonDefaultOpacity
+            style={secondButtonStyle}
+            block={true}
+            primary={true}
+            iconLeft={true}
+            onPress={
+              this.props.isCieSupported
+                ? this.navigateToIdpSelection
+                : this.navigateToCiePinScreen
+            }
+            testID={
+              this.props.isCieSupported
+                ? "landing-button-login-spid"
+                : "landing-button-login-cie"
+            }
+          >
+            <IconFont
+              name={this.props.isCieSupported ? "io-profilo" : "io-cie"}
+              color={variables.colorWhite}
+            />
+            <Text>
+              {this.props.isCieSupported
+                ? I18n.t("authentication.landing.loginSpid")
+                : I18n.t("authentication.landing.loginCie")}
+            </Text>
+          </ButtonDefaultOpacity>
+          <View spacer={true} />
+          <ButtonDefaultOpacity
+            block={true}
+            small={true}
+            transparent={true}
+            onPress={this.navigateToSpidCieInformationRequest}
+          >
+            <Text style={styles.noPadded} link={true}>
+              {this.props.isCieSupported
+                ? I18n.t("authentication.landing.nospid-nocie")
+                : I18n.t("authentication.landing.nospid")}
+            </Text>
+          </ButtonDefaultOpacity>
+        </View>
+      </BaseScreenComponent>
+    );
+  };
 
   // Screen displayed during the async loading of the JailMonkey.isJailBroken()
   private renderLoadingScreen = () => (
