@@ -2,6 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { tryCatch } from "fp-ts/lib/Task";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import {
   AccessibilityInfo,
   findNodeHandle,
@@ -59,6 +60,18 @@ export const isScreenReaderEnabled = async (): Promise<boolean> => {
     errorMsg => new Error(String(errorMsg))
   ).run();
   return maybeReaderEnabled.getOrElse(false);
+};
+
+// return the state of the screen reader when the caller component is mounted
+export const useScreenReaderEnabled = () => {
+  const [screenReaderEnabled, setIscreenReaderEnabled] = useState(false);
+
+  useEffect(() => {
+    isScreenReaderEnabled()
+      .then(setIscreenReaderEnabled)
+      .catch(_ => setIscreenReaderEnabled(false));
+  }, []);
+  return screenReaderEnabled;
 };
 
 // return a string representing the date in a readable format
