@@ -449,8 +449,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     ) : (
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
+          accessibilityEvents={{ avoidNavigationEventsUsage: true }}
           accessibilityLabel={I18n.t("identification.title")}
-          avoidNavigationEventsUsage={true}
           primary={!isValidatingTask}
           contextualHelpMarkdown={contextualHelpMarkdown}
           faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}

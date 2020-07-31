@@ -1,7 +1,6 @@
 /**
  * This component displays a list of transactions
  */
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -11,9 +10,14 @@ import {
   ListRenderItemInfo,
   StyleSheet
 } from "react-native";
+import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
+import {
+  dateToAccessibilityReadableFormat,
+  hoursAndMinutesToAccessibilityReadableFormat
+} from "../../utils/accessibility";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
@@ -106,6 +110,23 @@ export default class TransactionsList extends React.Component<Props, State> {
         text2={datetime}
         text3={paymentReason}
         onPressItem={() => this.props.navigateToTransactionDetails(item)}
+        accessible={true}
+        accessibilityRole={"button"}
+        accessibilityLabel={I18n.t(
+          "wallet.accessibility.transactionListItem.label",
+          {
+            payment: isNew
+              ? I18n.t(
+                  "wallet.accessibility.transactionListItem.payment.unread"
+                )
+              : I18n.t("wallet.accessibility.transactionListItem.payment.read"),
+            merchant: recipient,
+            amount,
+            datetime: dateToAccessibilityReadableFormat(item.created),
+            hours: hoursAndMinutesToAccessibilityReadableFormat(item.created),
+            reason: paymentReason
+          }
+        )}
       />
     );
   };
