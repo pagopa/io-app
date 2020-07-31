@@ -30,7 +30,6 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { whereAmIFrom } from "../../utils/navigation";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
