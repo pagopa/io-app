@@ -8,7 +8,10 @@ declare var danger: DangerDSLType;
 
 checkDangers();
 
-danger.github.api.pullRequests.update({
-  ...danger.github.thisPR,
-  title: "danger test!"
-});
+// danger.github.api.pullRequests
+//   .update({
+//     ...danger.github.thisPR,
+//     title: "danger test!"
+//   })
+//   .then()
+//   .catch();
