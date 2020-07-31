@@ -101,11 +101,6 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
     });
   };
 
-  public componentDidUpdate(_: Props) {
-    // check if instabug has new chats
-    this.checkInstabugChats();
-  }
-
   private getUnreadMessagesDescription = () => {
     if (this.props.badge === 0) {
       return "";
