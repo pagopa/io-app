@@ -119,7 +119,10 @@ export default class TransactionsList extends React.Component<Props, State> {
               : I18n.t("wallet.accessibility.transactionListItem.payment.read"),
             merchant: recipient,
             amount,
-            datetime: dateToAccessibilityReadbleFormat(item.created, true),
+            datetime: dateToAccessibilityReadbleFormat(
+              item.created,
+              I18n.t("global.accessibility.dateTime_format")
+            ),
             reason: paymentReason
           }
         )}
