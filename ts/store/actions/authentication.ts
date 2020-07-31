@@ -12,6 +12,7 @@ import {
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
+import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
 
 export type LogoutOption = {
   keepUserData: boolean;
@@ -29,6 +30,12 @@ export type CheckSessionResult = {
 export const idpSelected = createStandardAction("IDP_SELECTED")<
   IdentityProvider
 >();
+
+export const testLogin = createAsyncAction(
+  "TEST_LOGIN_REQUEST",
+  "TEST_LOGIN_SUCCESS",
+  "TEST_LOGIN_FAILURE"
+)<PasswordLogin, void, Error>();
 
 //
 // Action about IDP Login phase
@@ -83,6 +90,7 @@ export const sessionInvalid = createStandardAction("SESSION_INVALID")();
 export type AuthenticationActions =
   | ActionType<typeof idpSelected>
   | ActionType<typeof idpLoginUrlChanged>
+  | ActionType<typeof testLogin>
   | ActionType<typeof loginSuccess>
   | ActionType<typeof loginFailure>
   | ActionType<typeof logoutRequest>

@@ -141,7 +141,7 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
   public componentDidUpdate() {
     if (this.state.counter === TAPS_TO_OPEN_TESTIDP) {
       this.props.setSelectedIdp(testIdp);
-      this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
+      this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_TEST);
     }
   }
 
