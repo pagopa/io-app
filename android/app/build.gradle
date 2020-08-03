@@ -202,6 +202,8 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"
 
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
@@ -214,7 +216,7 @@ dependencies {
         exclude group:'com.facebook.flipper'
     }
 
-    compile project(':react-native-cie')
+    implementation project(':react-native-cie')
     // compile "com.squareup.okhttp3:okhttp:4.2.1"
     // compile "com.squareup.okhttp3:logging-interceptor:4.2.1"
     // compile "com.squareup.okhttp3:okhttp-urlconnection:4.2.1"
