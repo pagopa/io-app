@@ -15,6 +15,7 @@ import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
+import { isDevEnv } from "../utils/environment";
 
 /**
  * Helper type used to validate the notification payload.
@@ -28,6 +29,10 @@ const NotificationPayload = t.partial({
 });
 
 function configurePushNotifications() {
+  // if isDevEnv, disable push notification to avoid crash for missing firebase settings
+  if (isDevEnv) {
+    return;
+  }
   PushNotification.configure({
     // Called when token is generated
     onRegister: token => {
