@@ -104,7 +104,11 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
     <>
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
       <View style={[styles.rotateCard]}>
-        <TouchableDefaultOpacity onPress={onPress}>
+        <TouchableDefaultOpacity
+          onPress={onPress}
+          accessible={true}
+          accessibilityRole={"button"}
+        >
           <View
             style={[
               styles.card,
