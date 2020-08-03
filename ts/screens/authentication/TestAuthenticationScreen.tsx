@@ -7,7 +7,7 @@ import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
-import { testLogin } from "../../store/actions/authentication";
+import { testLoginRequest } from "../../store/actions/authentication";
 import { Dispatch } from "../../store/actions/types";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -21,7 +21,9 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
   const confirmButton = {
     block: true,
     primary: true,
-    onPress: () => props.requestLogin({ username, password } as PasswordLogin),
+    onPress: () => {
+      props.requestLogin({ username, password } as PasswordLogin);
+    },
     title: I18n.t("global.buttons.confirm")
   };
 
@@ -31,11 +33,11 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
         <Content>
           <LabelledItem
             type={"text"}
-            label={I18n.t("wallet.dummyCard.labels.holder")}
+            label={I18n.t("profile.fiscalCode.fiscalCode")}
             icon="io-titolare"
             inputProps={{
               value: username,
-              placeholder: I18n.t("wallet.dummyCard.values.holder"),
+              placeholder: I18n.t("profile.fiscalCode.fiscalCode"),
               returnKeyType: "done",
               onChangeText: (value: string) => setUsername(value)
             }}
@@ -45,11 +47,11 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
 
           <LabelledItem
             type={"text"}
-            label={I18n.t("wallet.dummyCard.labels.holder")}
+            label={I18n.t("global.password")}
             icon="io-lucchetto"
             inputProps={{
               value: password,
-              placeholder: I18n.t("wallet.dummyCard.values.holder"),
+              placeholder: I18n.t("global.password"),
               returnKeyType: "done",
               secureTextEntry: true,
               onChangeText: (value: string) => setPassword(value)
@@ -64,7 +66,7 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestLogin: (passwordLogin: PasswordLogin) =>
-    dispatch(testLogin.request(passwordLogin))
+    dispatch(testLoginRequest(passwordLogin))
 });
 
 export default connect(

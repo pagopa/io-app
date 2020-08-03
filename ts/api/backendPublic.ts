@@ -89,24 +89,6 @@ export function BackendPublicClient(
     response_decoder: basicResponseDecoder(ServerInfo)
   };
 
-  return {
-    getServerInfo: createFetchRequestForApi(getServerInfoT, options)
-  };
-}
-
-//
-// Create Test Login Client
-//
-
-export function TestLoginClient(
-  baseUrl: string,
-  fetchApi: typeof fetch = defaultRetryingFetch()
-) {
-  const options = {
-    baseUrl,
-    fetchApi
-  };
-
   const postLoginTestT: PostTestLoginT = {
     method: "post",
     url: () => `/test-login`,
@@ -117,6 +99,7 @@ export function TestLoginClient(
   };
 
   return {
+    getServerInfo: createFetchRequestForApi(getServerInfoT, options),
     postTestLogin: createFetchRequestForApi(postLoginTestT, options)
   };
 }
