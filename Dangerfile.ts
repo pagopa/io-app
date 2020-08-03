@@ -1,12 +1,13 @@
 // Import custom DangerJS rules.
 // See http://danger.systems/js
 // See https://github.com/teamdigitale/danger-plugin-digitalcitizenship/
-import checkDangers, { warn } from "danger-plugin-digitalcitizenship";
+import checkDangers from "danger-plugin-digitalcitizenship";
 import {
   getPivotalStories,
   getPivotalStoryIDs
 } from "danger-plugin-digitalcitizenship/dist/utils";
 
+import { warn } from "danger";
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
 import { fromNullable } from "fp-ts/lib/Option";
 declare var danger: DangerDSLType;
