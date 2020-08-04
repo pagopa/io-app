@@ -125,14 +125,17 @@ class TransactionDetailsScreen extends React.Component<Props> {
   private getData = () => {
     const transaction = this.props.navigation.getParam("transaction");
     const amount = formatNumberCentsToAmount(transaction.amount.amount, true);
-    const fee = formatNumberCentsToAmount(
-      maybeInnerProperty<Transaction, "fee", number>(
-        transaction,
-        "fee",
-        m => (m !== undefined ? m.amount : 0)
-      ).getOrElse(0),
-      true
-    );
+
+    // fee
+    const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
+      transaction,
+      "fee",
+      m => (m !== undefined ? m.amount : 0)
+    ).getOrElse(undefined);
+    const fee = fromNullable(maybeFee)
+      .map(f => formatNumberCentsToAmount(f, true))
+      .toNullable();
+
     const totalAmount = formatNumberCentsToAmount(
       transaction.grandTotal.amount,
       true
@@ -217,8 +220,16 @@ class TransactionDetailsScreen extends React.Component<Props> {
             I18n.t("wallet.firstTransactionSummary.amount"),
             data.amount
           )}
-          <View spacer={true} small={true} />
-          {standardRow(I18n.t("wallet.firstTransactionSummary.fee"), data.fee)}
+
+          {data.fee && (
+            <>
+              <View spacer={true} small={true} />
+              {standardRow(
+                I18n.t("wallet.firstTransactionSummary.fee"),
+                data.fee
+              )}
+            </>
+          )}
 
           <View spacer={true} />
 
