@@ -28,18 +28,19 @@ const storyOrder = new Map<StoryType, number>([
 
 const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
 
+/**
+ * Append the changelog tag to the pull request title
+ */
 const updatePrTitleForChangelog = async () => {
+  // detect stories id from the pr title and load the story from pivotal
   const storyIDs = getPivotalStoryIDs(danger.github.pr.title);
-  console.log("story_IDs " + storyIDs[0]);
   const stories = (await getPivotalStories(storyIDs)).filter(
     s => s.story_type !== undefined
   );
-  console.log("stories " + stories[0]);
+  // check if all the stories are of the same type
   const allStoriesSameType = stories.every(
     (val, _, arr) => val.story_type === arr[0].story_type
   );
-  console.log("allStoriesSameType " + allStoriesSameType);
-
   if (!allStoriesSameType) {
     warn(
       "Multiple stories with different types are associated to this Pull request. " +
@@ -47,6 +48,7 @@ const updatePrTitleForChangelog = async () => {
     );
   }
 
+  // In case of multiple stories, only one tag can be added, following the order feature > bug > chore
   const storyType = stories.reduce((acc, val) => {
     const currentStoryOrder = fromNullable(storyOrder.get(val.story_type));
     const prevStoryOrder = fromNullable(storyOrder.get(acc));
@@ -61,13 +63,12 @@ const updatePrTitleForChangelog = async () => {
     return acc;
   }, undefined);
 
-  console.log("storyType" + storyType);
-
+  // clean the title from existing tags (multiple commit on the same branch)
   const rawTitle = danger.github.pr.title.match(cleanChangelogRegex)!.pop();
   const title = rawTitle !== undefined ? rawTitle : danger.github.pr.title;
 
+  // If a tag can be associated to a story, update the pr title
   const maybeStoryTag = fromNullable(storyTag.get(storyType));
-  console.log("maybeStoryTag" + maybeStoryTag);
   maybeStoryTag.map(tag =>
     danger.github.api.pulls.update({
       owner: danger.github.thisPR.owner,
