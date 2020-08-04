@@ -19,6 +19,7 @@ import { watchTestLoginRequestSaga } from "../testLoginSaga";
 export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   yield put(analyticsAuthenticationStarted());
 
+  // Watch for the test login
   const watchTestLogin = yield fork(watchTestLoginRequestSaga);
   // Watch for login by CIE
   const watchCieAuthentication = yield fork(watchCieAuthenticationSaga);
