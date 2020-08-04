@@ -28,9 +28,9 @@ import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { whereAmIFrom } from "../../utils/navigation";
+import { maybeInnerProperty } from "../../utils/options";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
-import { maybeInnerProperty } from "../../utils/options";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
