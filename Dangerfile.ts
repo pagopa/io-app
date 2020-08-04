@@ -43,7 +43,7 @@ const updatePrTitleForChangelog = async () => {
   );
   if (!allStoriesSameType) {
     warn(
-      "Multiple stories with different types are associated to this Pull request. " +
+      "Multiple stories with different types are associated with this Pull request. " +
         "Only one tag will be added, following the order: feature > bug > chore"
     );
   }
