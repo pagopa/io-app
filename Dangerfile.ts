@@ -26,7 +26,7 @@ const storyOrder = new Map<StoryType, number>([
   ["chore", 0]
 ]);
 
-const cleanChangelogRegex = /^(fix(\(.*\))?!?: |feat(\(.*\))?!?: |chore(\(.*\))?!?: )?(.*)$/gm;
+const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
 
 const updatePrTitleForChangelog = async () => {
   const storyIDs = getPivotalStoryIDs(danger.github.pr.title);
