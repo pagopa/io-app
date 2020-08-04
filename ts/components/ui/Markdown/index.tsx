@@ -382,12 +382,10 @@ class Markdown extends React.PureComponent<Props, State> {
     messageOrErrors.map(message => {
       switch (message.type) {
         case "LINK_MESSAGE":
-          if (message.payload.href.length > 0) {
-            handleLinkMessage(dispatch, message.payload.href);
-            fromNullable(this.props.onLinkClicked).map(s =>
-              s(message.payload.href)
-            );
-          }
+          handleLinkMessage(dispatch, message.payload.href);
+          fromNullable(this.props.onLinkClicked).map(s =>
+            s(message.payload.href)
+          );
           break;
 
         case "RESIZE_MESSAGE":
