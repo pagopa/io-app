@@ -4,6 +4,7 @@ import I18n from "../../../../i18n";
 import { Dispatch } from "../../../../store/actions/types";
 import { showToast } from "../../../../utils/showToast";
 import { handleInternalLink, IO_INTERNAL_LINK_PREFIX } from "./internalLink";
+import { safeOpenUrl } from "../../../../utils/url";
 
 export const isIoInternalLink = (href: string): boolean =>
   href.startsWith(IO_INTERNAL_LINK_PREFIX);
@@ -26,7 +27,7 @@ export function handleLinkMessage(dispatch: Dispatch, href: string) {
   } else {
     // External urls must be opened with the OS browser.
     // FIXME: Whitelist allowed domains: https://www.pivotaltracker.com/story/show/158470128
-    Linking.openURL(href).catch(() => 0);
+    safeOpenUrl(href);
   }
 }
 
