@@ -1,4 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import { Linking } from "react-native";
 import { clipboardSetStringWithFeedback } from "./clipboard";
@@ -86,5 +86,5 @@ export const safeOpenUrl = (url: string) => {
       })
   )({})
     .run()
-    .then(() => 0, () => 0);
+    .then(constNull, constNull);
 };
