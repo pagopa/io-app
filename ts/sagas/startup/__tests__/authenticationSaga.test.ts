@@ -11,6 +11,7 @@ import { loginSuccess } from "../../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { SessionToken } from "../../../types/SessionToken";
 import { stopCieManager, watchCieAuthenticationSaga } from "../../cie";
+import { watchTestLoginRequestSaga } from "../../testLoginSaga";
 import { authenticationSaga } from "../authenticationSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
@@ -24,17 +25,22 @@ jest.mock("react-native-background-timer", () => {
 describe("authenticationSaga", () => {
   it("should always navigate to authentication screen and return the session token on login success", () => {
     const watchCieAuthentication: Task = createMockTask();
+    const watchTestLoginRequest: Task = createMockTask();
 
     testSaga(authenticationSaga)
       .next()
       .put(analyticsAuthenticationStarted())
       .next()
+      .fork(watchTestLoginRequestSaga)
+      .next(watchTestLoginRequest)
       .fork(watchCieAuthenticationSaga)
       .next(watchCieAuthentication)
       .put(resetToAuthenticationRoute)
       .next()
       .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
+      .cancel(watchTestLoginRequest)
+      .next()
       .cancel(watchCieAuthentication)
       .next()
       .call(stopCieManager)
