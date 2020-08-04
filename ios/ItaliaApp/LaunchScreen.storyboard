@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -12,47 +11,85 @@
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Dji-FG-dfn"/>
+                        <viewControllerLayoutGuide type="bottom" id="BW8-EI-1Nz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="obG-Y5-kRd">
-                                <rect key="frame" x="0.0" y="647" width="375" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RnDiffApp" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
-                                <rect key="frame" x="0.0" y="202" width="375" height="43"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by React Native" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="MN2-I3-ftu">
-                                <rect key="frame" x="0.0" y="626" width="375" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="sfondo" translatesAutoresizingMaskIntoConstraints="NO" id="DPp-fO-Sok">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sh2-hc-8cp" userLabel="View IO Logo">
+                                <rect key="frame" x="0.0" y="120" width="375" height="152"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_io" translatesAutoresizingMaskIntoConstraints="NO" id="pdm-K5-7Ya">
+                                        <rect key="frame" x="155.5" y="20" width="64" height="52"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZQ-jS-lo4">
+                                        <rect key="frame" x="96" y="89" width="183" height="21"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="l’app dei servizi pubblici">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" metaFont="system" size="17"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="pdm-K5-7Ya" firstAttribute="centerX" secondItem="sh2-hc-8cp" secondAttribute="centerX" id="6lo-7S-d71"/>
+                                    <constraint firstItem="JZQ-jS-lo4" firstAttribute="centerX" secondItem="sh2-hc-8cp" secondAttribute="centerX" id="Syg-oQ-nUu"/>
+                                    <constraint firstItem="JZQ-jS-lo4" firstAttribute="top" secondItem="pdm-K5-7Ya" secondAttribute="bottom" constant="17" id="dVa-pS-pez"/>
+                                    <constraint firstItem="pdm-K5-7Ya" firstAttribute="top" secondItem="sh2-hc-8cp" secondAttribute="top" constant="20" id="zEx-ee-gfl"/>
+                                </constraints>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_consiglio_ministri" translatesAutoresizingMaskIntoConstraints="NO" id="Tei-FP-Id0">
+                                <rect key="frame" x="148.5" y="345" width="78" height="87"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDT-aS-WNn" userLabel="Separator">
+                                <rect key="frame" x="97" y="462" width="181" height="2"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_pagopa" translatesAutoresizingMaskIntoConstraints="NO" id="ur6-nk-fTh" userLabel="PagoPa logo">
+                                <rect key="frame" x="128" y="494" width="119" height="33"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="obG-Y5-kRd" secondAttribute="centerX" id="5cz-MP-9tL"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="MN2-I3-ftu" secondAttribute="bottom" constant="20" id="OZV-Vh-mqD"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="GJd-Yh-RWb" secondAttribute="centerX" id="Q3B-4B-g5h"/>
-                            <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="SfN-ll-jLj"/>
-                            <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="Y44-ml-fuU"/>
-                            <constraint firstItem="MN2-I3-ftu" firstAttribute="centerX" secondItem="Bcu-3y-fUS" secondAttribute="centerX" id="akx-eg-2ui"/>
-                            <constraint firstItem="MN2-I3-ftu" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="i1E-0Y-4RG"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="bottom" multiplier="1/3" constant="1" id="moa-c2-u7t"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="x7j-FC-K8j"/>
+                            <constraint firstItem="sh2-hc-8cp" firstAttribute="top" secondItem="Dji-FG-dfn" secondAttribute="bottom" constant="120" id="2J8-zi-fZC"/>
+                            <constraint firstItem="BW8-EI-1Nz" firstAttribute="top" secondItem="sh2-hc-8cp" secondAttribute="bottom" constant="395" id="CvU-ld-sm6"/>
+                            <constraint firstItem="aDT-aS-WNn" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="D5X-Aq-dcR"/>
+                            <constraint firstItem="BW8-EI-1Nz" firstAttribute="top" secondItem="aDT-aS-WNn" secondAttribute="bottom" constant="203" id="Dfx-e8-9TM"/>
+                            <constraint firstItem="ur6-nk-fTh" firstAttribute="top" secondItem="aDT-aS-WNn" secondAttribute="bottom" constant="30" id="IAi-xh-JJC"/>
+                            <constraint firstItem="sh2-hc-8cp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="MS3-Vt-5kh"/>
+                            <constraint firstAttribute="trailing" secondItem="DPp-fO-Sok" secondAttribute="trailing" id="MgL-AC-X2a"/>
+                            <constraint firstItem="Tei-FP-Id0" firstAttribute="top" secondItem="sh2-hc-8cp" secondAttribute="bottom" constant="73" id="Q6O-va-6Hj"/>
+                            <constraint firstItem="Tei-FP-Id0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="TAl-7b-NdJ"/>
+                            <constraint firstItem="DPp-fO-Sok" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="TOF-qK-UX1"/>
+                            <constraint firstItem="sh2-hc-8cp" firstAttribute="leading" secondItem="DPp-fO-Sok" secondAttribute="leading" id="The-ae-ODv"/>
+                            <constraint firstItem="DPp-fO-Sok" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Ylg-bg-Ae3"/>
+                            <constraint firstItem="aDT-aS-WNn" firstAttribute="top" secondItem="Tei-FP-Id0" secondAttribute="bottom" constant="30" id="aFY-k0-pLn"/>
+                            <constraint firstItem="ur6-nk-fTh" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="bMt-9m-Lph"/>
+                            <constraint firstAttribute="bottom" secondItem="DPp-fO-Sok" secondAttribute="bottom" id="tET-pj-opH"/>
+                            <constraint firstItem="aDT-aS-WNn" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="81" id="tWG-U3-hH4"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52.173913043478265" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo_consiglio_ministri" width="78" height="87"/>
+        <image name="logo_io" width="64" height="52"/>
+        <image name="logo_pagopa" width="119" height="33"/>
+        <image name="sfondo" width="375" height="667"/>
+    </resources>
 </document>
