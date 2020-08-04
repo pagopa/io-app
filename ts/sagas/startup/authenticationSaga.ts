@@ -19,7 +19,7 @@ import { watchTestLoginRequestSaga } from "../testLoginSaga";
 export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   yield put(analyticsAuthenticationStarted());
 
-  yield fork(watchTestLoginRequestSaga);
+  const watchTestLogin = yield fork(watchTestLoginRequestSaga);
   // Watch for login by CIE
   const watchCieAuthentication = yield fork(watchCieAuthenticationSaga);
 
@@ -33,6 +33,8 @@ export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   );
 
   yield cancel(watchCieAuthentication);
+  yield cancel(watchTestLogin);
+
   // stop cie manager from listening nfc
   yield call(stopCieManager);
 

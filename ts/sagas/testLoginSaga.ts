@@ -1,10 +1,7 @@
-import { left } from "fp-ts/lib/Either";
-import * as t from "io-ts";
-import { BasicResponseType } from "italia-ts-commons/lib/requests";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Effect } from "redux-saga";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
 import { BackendPublicClient } from "../api/backendPublic";
 import { apiUrlPrefix } from "../config";
 import {
@@ -19,26 +16,23 @@ import { SagaCallReturnType } from "../types/utils";
 function* handleTestLogin({
   payload
 }: ActionType<typeof testLoginRequest>): IterableIterator<Effect> {
-  const backendPublicClient = BackendPublicClient(apiUrlPrefix);
+  try {
+    const backendPublicClient = BackendPublicClient(apiUrlPrefix);
 
-  function postTestLogin(
-    body: PasswordLogin
-  ): Promise<t.Validation<BasicResponseType<SessionToken>>> {
-    return new Promise((resolve, _) =>
-      backendPublicClient
-        .postTestLogin(body)
-        .then(resolve, e => resolve(left([{ context: [], value: e }])))
-    );
-  }
+    const testLoginResponse: SagaCallReturnType<
+      typeof backendPublicClient.postTestLogin
+    > = yield call(backendPublicClient.postTestLogin, payload);
 
-  const testLoginResponse: SagaCallReturnType<
-    typeof postTestLogin
-  > = yield call(postTestLogin, payload);
-
-  if (testLoginResponse.isRight() && testLoginResponse.value.status === 200) {
-    yield put(loginSuccess(testLoginResponse.value.value));
-  } else {
-    yield put(loginFailure(new Error(testLoginResponse.value.toString())));
+    if (testLoginResponse.isRight()) {
+      if (testLoginResponse.value.status === 200) {
+        yield put(loginSuccess(testLoginResponse.value.value as SessionToken));
+        return;
+      }
+      throw Error(`response status ${testLoginResponse.value.status}`);
+    }
+    throw new Error(readableReport(testLoginResponse.value));
+  } catch (e) {
+    yield put(loginFailure(e));
   }
 }
 
