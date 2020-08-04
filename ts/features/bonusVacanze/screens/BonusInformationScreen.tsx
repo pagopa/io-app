@@ -22,6 +22,7 @@ import I18n from "../../../i18n";
 import { navigateBack } from "../../../store/actions/navigation";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
+import { useScreenReaderEnabled } from "../../../utils/accessibility";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { maybeNotNullyString } from "../../../utils/strings";
 import { actionWithAlert } from "../components/alert/ActionWithAlert";
@@ -96,8 +97,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "bonus.bonusInformation.contextualHelp.body"
 };
 
-// the number of markdown component inside BonusInformationScreen
-const markdownComponents = 1;
 const loadingOpacity = 0.9;
 // for long content markdown computed height should be not enough
 const extraMarkdownBodyHeight = 20;
@@ -105,8 +104,8 @@ const extraMarkdownBodyHeight = 20;
  * A screen to explain how the bonus activation works and how it will be assigned
  */
 const BonusInformationScreen: React.FunctionComponent<Props> = props => {
-  const [markdownLoaded, setMarkdownLoaded] = React.useState(0);
-
+  const [isMarkdownLoaded, setMarkdownLoaded] = React.useState(false);
+  const isScreenReaderEnabled = useScreenReaderEnabled();
   const getBonusItem = () => props.navigation.getParam("bonusItem");
 
   const bonusType = getBonusItem();
@@ -146,13 +145,19 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
       <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
     );
   const onMarkdownLoaded = () => {
-    setMarkdownLoaded(c => Math.min(c + 1, markdownComponents));
+    setMarkdownLoaded(true);
   };
-  const isMarkdownLoaded = markdownLoaded === markdownComponents;
   const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
   const maybeCover = maybeNotNullyString(bonusType.cover);
   const maybeSponsorshipDescription = maybeNotNullyString(
     bonusType.sponsorship_description
+  );
+  const footerComponent = (
+    <FooterWithButtons
+      type="TwoButtonsInlineThird"
+      leftButton={cancelButtonProps}
+      rightButton={requestButtonProps}
+    />
   );
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent
@@ -162,6 +167,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
       faqCategories={["bonus_information"]}
     >
       <SafeAreaView style={bonusVacanzeStyle.flex}>
+        {isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
         <Content>
           <View style={styles.row}>
             <View style={styles.flexStart}>
@@ -230,13 +236,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
           )}
           {isMarkdownLoaded && <EdgeBorderComponent />}
         </Content>
-        {isMarkdownLoaded && (
-          <FooterWithButtons
-            type="TwoButtonsInlineThird"
-            leftButton={cancelButtonProps}
-            rightButton={requestButtonProps}
-          />
-        )}
+        {!isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
       </SafeAreaView>
     </BaseScreenComponent>
   ));

@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import {
   loadMessage,
+  removeMessages,
   setMessageReadState,
   setMessagesArchivedState
 } from "../../../actions/messages";
@@ -59,21 +60,32 @@ const reducer = (
       const updatedMessageStates = ids.reduce<{
         [key: string]: MessageStatus;
       }>((accumulator, id) => {
-        const prevState = state[id];
-        if (prevState !== undefined) {
-          // tslint:disable-next-line:no-object-mutation
-          accumulator[id] = {
+        // if misses, set the default values for given message
+        const prevState = state[id] || EMPTY_MESSAGE_STATUS;
+        return {
+          ...accumulator,
+          [id]: {
             ...prevState,
             isArchived: archived
-          };
-        }
-        return accumulator;
+          }
+        };
       }, {});
       return {
         ...state,
         ...updatedMessageStates
       };
     }
+    case getType(removeMessages):
+      const idsToRemove = action.payload;
+      return Object.keys(state).reduce<MessagesStatus>(
+        (acc: MessagesStatus, curr: string) => {
+          if (idsToRemove.indexOf(curr) !== -1) {
+            return acc;
+          }
+          return { ...acc, [curr]: state[curr] };
+        },
+        {} as MessagesStatus
+      );
     case getType(clearCache):
       return INITIAL_STATE;
     default:

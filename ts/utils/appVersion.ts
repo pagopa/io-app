@@ -49,7 +49,11 @@ export const isVersionAppSupported = (
   return semSatisfies;
 };
 
-export const getAppVersion = () => DeviceInfo.getReadableVersion();
+export const getAppVersion = () =>
+  Platform.select({
+    ios: DeviceInfo.getReadableVersion(),
+    default: DeviceInfo.getVersion()
+  });
 
 /**
  * return true if the app must be updated
