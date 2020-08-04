@@ -633,6 +633,13 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Pagamenti
+  accessibility:
+    cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
+    transactionListItem:
+      payment:
+        read: Transazione
+        unread: Transazione da leggere
+      label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto

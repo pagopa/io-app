@@ -100,7 +100,12 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 
   private handleBackPress = () => {
-    if (whereAmIFrom(this.props.nav).fold(false, r => r === "WALLET_HOME")) {
+    if (
+      whereAmIFrom(this.props.nav).fold(
+        false,
+        r => r === "WALLET_HOME" || r === "WALLET_CARD_TRANSACTION"
+      )
+    ) {
       return this.props.navigation.goBack();
     } else {
       this.props.navigateBackToEntrypointPayment();
