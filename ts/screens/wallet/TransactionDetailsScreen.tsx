@@ -30,6 +30,7 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { whereAmIFrom } from "../../utils/navigation";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
+import { maybeInnerProperty } from "../../utils/options";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -125,9 +126,11 @@ class TransactionDetailsScreen extends React.Component<Props> {
     const transaction = this.props.navigation.getParam("transaction");
     const amount = formatNumberCentsToAmount(transaction.amount.amount, true);
     const fee = formatNumberCentsToAmount(
-      transaction.fee === undefined
-        ? transaction.grandTotal.amount - transaction.amount.amount
-        : transaction.fee.amount,
+      maybeInnerProperty<Transaction, "fee", number>(
+        transaction,
+        "fee",
+        m => (m !== undefined ? m.amount : 0)
+      ).getOrElse(0),
       true
     );
     const totalAmount = formatNumberCentsToAmount(
