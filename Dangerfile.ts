@@ -26,6 +26,8 @@ const storyOrder = new Map<StoryType, number>([
   ["chore", 0]
 ]);
 
+const cleanChangelogRegex = /^(fix(\(.*\))?!?: |feat(\(.*\))?!?: |chore(\(.*\))?!?: )?(.*)$/gm;
+
 const updatePrTitleForChangelog = async () => {
   const storyIDs = getPivotalStoryIDs(danger.github.pr.title);
   console.log("story_IDs " + storyIDs[0]);
@@ -61,6 +63,9 @@ const updatePrTitleForChangelog = async () => {
 
   console.log("storyType" + storyType);
 
+  const rawTitle = danger.github.pr.title.match(cleanChangelogRegex)!.pop();
+  const title = rawTitle !== undefined ? rawTitle : danger.github.pr.title;
+
   const maybeStoryTag = fromNullable(storyTag.get(storyType));
   console.log("maybeStoryTag" + maybeStoryTag);
   maybeStoryTag.map(tag =>
@@ -68,7 +73,7 @@ const updatePrTitleForChangelog = async () => {
       owner: danger.github.thisPR.owner,
       repo: danger.github.thisPR.repo,
       pull_number: danger.github.thisPR.number,
-      title: `${tag}${danger.github.pr.title}`
+      title: `${tag}${title}`
     })
   );
 };
