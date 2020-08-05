@@ -106,6 +106,7 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
 
   React.useEffect(() => {
     Animated.timing(opacity, {
+      useNativeDriver: false,
       toValue: 1,
       duration: opacityAnimationDuration
     }).start();

@@ -174,11 +174,11 @@ const ItemSeparator = () => <ItemSeparatorComponent noPadded={true} />;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 class MessageList extends React.Component<Props, State> {
-  private flatListRef = React.createRef<typeof AnimatedFlatList>();
+  private flatListRef = React.createRef<FlatList>();
 
   private scrollTo = (index: number, animated: boolean = false) => {
     if (this.flatListRef.current && this.props.messageStates.length > 0) {
-      this.flatListRef.current.getNode().scrollToIndex({ animated, index });
+      this.flatListRef.current.scrollToIndex({ animated, index });
     }
   };
 
