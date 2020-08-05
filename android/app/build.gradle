@@ -21,7 +21,9 @@ import com.android.build.OutputFile
  *   // the name of the generated asset file containing your JS bundle
  *   bundleAssetName: "index.android.bundle",
  *
- *   // the entry file for bundle generation
+ *   // the entry file for bundle generation. If none specified and
+ *   // "index.android.js" exists, it will be used. Otherwise "index.js" is
+ *   // default. Can be overridden with ENTRY_FILE environment variable.
  *   entryFile: "index.android.js",
  *
  *   // whether to bundle JS and assets in debug mode
@@ -79,7 +81,6 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-  entryFile: "index.js",
   enableHermes: false
 ]
 
@@ -188,15 +189,6 @@ android {
             enableSplit = true
         }
     }
-
-    packagingOptions {
-        pickFirst '**/armeabi-v7a/libc++_shared.so'
-        pickFirst '**/x86/libc++_shared.so'
-        pickFirst '**/arm64-v8a/libc++_shared.so'
-        pickFirst '**/x86_64/libc++_shared.so'
-        pickFirst '**/x86/libjsc.so'
-        pickFirst '**/armeabi-v7a/libjsc.so'
-    }
 }
 
 def jscFlavor = 'org.webkit:android-jsc:+'
@@ -207,8 +199,24 @@ dependencies {
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-share')
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"
-    compile project(':react-native-cie')
+
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
+      exclude group:'com.facebook.fbjni'
+    }
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
+        exclude group:'com.facebook.flipper'
+        exclude group:'com.squareup.okhttp3', module:'okhttp'
+    }
+    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
+        exclude group:'com.facebook.flipper'
+    }
+
+    implementation project(':react-native-cie')
     // compile "com.squareup.okhttp3:okhttp:4.2.1"
     // compile "com.squareup.okhttp3:logging-interceptor:4.2.1"
     // compile "com.squareup.okhttp3:okhttp-urlconnection:4.2.1"
@@ -218,7 +226,7 @@ dependencies {
     }
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.12'
     if (enableHermes) {
-        def hermesPath = "../../node_modules/hermesvm/android/";
+        def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")
         releaseImplementation files(hermesPath + "hermes-release.aar")
     } else {

@@ -29,7 +29,8 @@ type Props = Readonly<{
 
 const globalHeaderHeight: number = Platform.select({
   ios: customVariables.appHeaderHeight + (isIphoneX() ? 42 : 18),
-  android: customVariables.appHeaderHeight
+  android: customVariables.appHeaderHeight,
+  default: -1
 });
 
 const styles = StyleSheet.create({

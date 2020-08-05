@@ -14,6 +14,7 @@ import {
   SectionListData,
   SectionListRenderItem,
   SectionListScrollParams,
+  SectionListStatic,
   StyleSheet
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -156,7 +157,7 @@ export type ItemLayout = {
 };
 
 type SelectedSectionListProps = Pick<
-  ComponentProps<SectionList<MessageAgendaSection>>,
+  ComponentProps<SectionListStatic<MessageAgendaSection>>,
   "refreshing" | "onContentSizeChange"
 >;
 
