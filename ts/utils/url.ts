@@ -77,7 +77,10 @@ const taskCanOpenUrl = (url: string) =>
     _ => `cannot check if can open url ${url}`
   );
 
-// open the url if it can ben opened and if it has a valid protocol (http/https)
+/**
+ * open the url if it can ben opened and if it has a valid protocol (http/https)
+ * it should be used in place of direct call of Linking.openURL(url)
+ */
 export const openUrl = (url: string, onError: () => void = constNull) => {
   pipe(
     () => taskCanOpenUrl(url),
