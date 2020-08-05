@@ -3,11 +3,12 @@ import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import semver from "semver";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
+import { ioWebSiteUrl } from "./global";
 import { NumberFromString } from "./number";
 export const storeUrl = Platform.select({
   ios: "itms-apps://itunes.apple.com/it/app/io/id1501681835",
   android: "market://details?id=it.pagopa.io.app",
-  default: "undefined"
+  default: ioWebSiteUrl
 });
 
 /**
