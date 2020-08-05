@@ -59,7 +59,7 @@ export function handleItemOnPress(
     case "COPY":
       return () => clipboardSetStringWithFeedback(value);
     default:
-      return () => Linking.openURL(value).then(() => 0, () => 0);
+      return () => openUrl(value);
   }
 }
 
@@ -77,7 +77,8 @@ const taskCanOpenUrl = (url: string) =>
     _ => `cannot check if can open url ${url}`
   );
 
-export const safeOpenUrl = (url: string) => {
+// open the url if it can ben opened and if it has a valid protocol (http/https)
+export const openUrl = (url: string, onError: () => void = constNull) => {
   pipe(
     () => taskCanOpenUrl(url),
     te =>
@@ -86,5 +87,5 @@ export const safeOpenUrl = (url: string) => {
       })
   )({})
     .run()
-    .then(constNull, constNull);
+    .then(ei => ei.fold(onError, constNull), onError);
 };

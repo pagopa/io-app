@@ -1,9 +1,8 @@
 import { Option, some } from "fp-ts/lib/Option";
-import { Linking } from "react-native";
 import I18n from "../../../../i18n";
 import { Dispatch } from "../../../../store/actions/types";
 import { showToast } from "../../../../utils/showToast";
-import { safeOpenUrl } from "../../../../utils/url";
+import { openUrl } from "../../../../utils/url";
 import { handleInternalLink, IO_INTERNAL_LINK_PREFIX } from "./internalLink";
 
 export const isIoInternalLink = (href: string): boolean =>
@@ -27,7 +26,7 @@ export function handleLinkMessage(dispatch: Dispatch, href: string) {
   } else {
     // External urls must be opened with the OS browser.
     // FIXME: Whitelist allowed domains: https://www.pivotaltracker.com/story/show/158470128
-    safeOpenUrl(href);
+    openUrl(href);
   }
 }
 
@@ -36,17 +35,9 @@ export const removeProtocol = (link: string): string => {
   return link.replace(new RegExp(/https?:\/\//gi), "");
 };
 
+// try to open the given url. If it fails an error toast will shown
 export function openLink(url: string, customError?: string) {
   const error = customError || I18n.t("global.genericError");
   const getErrorToast = () => showToast(error);
-
-  Linking.canOpenURL(url)
-    .then(supported => {
-      if (supported) {
-        Linking.openURL(url).catch(getErrorToast);
-      } else {
-        showToast(I18n.t("global.genericError"));
-      }
-    })
-    .catch(getErrorToast);
+  openUrl(url, getErrorToast);
 }
