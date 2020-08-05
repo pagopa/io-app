@@ -173,7 +173,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
                 <Text>
                   {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
                   <TouchableWithoutFeedback
-                    onPress={() => openLink("google.it")}
+                    onPress={() => openLink(I18n.t("global.ioWebSite"))}
                   >
                     <Text link={true}>{I18n.t("global.ioWebSite")}</Text>
                   </TouchableWithoutFeedback>
