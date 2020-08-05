@@ -4,7 +4,7 @@ This file describes the reason for the patches applied.
 Created on **29/07/2020**
 
 #### Reason:
-- Missing accessibility types
+- Missing accessibility types.
 
 
 ### react-native-mixpanel+1.2.0
@@ -25,14 +25,14 @@ Created on **27/07/2020**
 Created on **09/05/2019** and **20/12/2019**
 
 #### Reason:
-- Solve crash on Android and export types
+- Solve crash on Android and export types.
 
 
 ### reactotron-redux-saga+2.1.4
 Created on **13/12/2019**
 
 #### Reason:
-- Change type export
+- Change type export.
 
 
 ### native-base+2.13.13
