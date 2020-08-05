@@ -49,3 +49,9 @@ Created on **03/08/2020**
 - Revert the change to the notification parser to allows compatibility to the legacy GCM format used atm. (revert the change https://github.com/zo0r/react-native-push-notification/pull/1212 )
 also discussed here https://github.com/zo0r/react-native-push-notification/issues/1452.
 The new notification format should follow https://firebase.google.com/docs/cloud-messaging/http-server-ref, https://firebase.google.com/docs/cloud-messaging/concept-options#notifications_and_data_messages
+
+### react-native-i18n+2.0.15
+Created on **05/08/2020**
+
+#### Reason:
+- Removed minSdkVersion from gradle to allow the compilation on Android. 
