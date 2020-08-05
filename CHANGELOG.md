@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0-rc.1](https://github.com/pagopa/io-app/compare/1.4.0-rc.2...1.5.0-rc.1) (2020-08-05)
+
+
+### Features
+
+* [[#173890674](https://www.pivotaltracker.com/story/show/173890674)] Refactoring props for accessibility events on base header ([#2087](https://github.com/pagopa/io-app/issues/2087)) ([d2f421e](https://github.com/pagopa/io-app/commit/d2f421e0bfc8e1c83b4a0a7931ab68a3d51a600f))
+* [[#173984252](https://www.pivotaltracker.com/story/show/173984252)] Improves accessibility on wallet home ([#2104](https://github.com/pagopa/io-app/issues/2104)) ([b9eeb06](https://github.com/pagopa/io-app/commit/b9eeb06588de18132dd94430034b543bc11e5eb5)), closes [#174115403](https://www.pivotaltracker.com/story/show/174115403) [#174115403](https://www.pivotaltracker.com/story/show/174115403) [#174115403](https://www.pivotaltracker.com/story/show/174115403) [#174115403](https://www.pivotaltracker.com/story/show/174115403)
+* [[#174033394](https://www.pivotaltracker.com/story/show/174033394)] display ente beneficiario data ([#2106](https://github.com/pagopa/io-app/issues/2106)) ([73aeb26](https://github.com/pagopa/io-app/commit/73aeb26e5978898e1480c7bbf9396ad5311d2b2f))
+* [[#174089908](https://www.pivotaltracker.com/story/show/174089908)] Improve accessibility bonus description screen ([#2118](https://github.com/pagopa/io-app/issues/2118)) ([b3dcb7b](https://github.com/pagopa/io-app/commit/b3dcb7b54e9255b79760359b01ac0cbd271d52d2))
+
+
+### Bug Fixes
+
+* [[#173263990](https://www.pivotaltracker.com/story/show/173263990)] Fixes wrong defined faq 8 text ([#2109](https://github.com/pagopa/io-app/issues/2109)) ([3366db5](https://github.com/pagopa/io-app/commit/3366db5db8ef0b39bd63378cf4b43138cff02b92))
+* [[#173529079](https://www.pivotaltracker.com/story/show/173529079)] Alert text display cut on calendar perms ([#2110](https://github.com/pagopa/io-app/issues/2110)) ([46fe9c9](https://github.com/pagopa/io-app/commit/46fe9c9085661c0448e662fb3a8fc3d422ae6678))
+* [[#174085364](https://www.pivotaltracker.com/story/show/174085364)] messagesStatus store section cleaning ([#2114](https://github.com/pagopa/io-app/issues/2114)) ([fbed0bf](https://github.com/pagopa/io-app/commit/fbed0bfde58ba7ad2a5298f87809086733ff6eff)), closes [#174033394](https://www.pivotaltracker.com/story/show/174033394)
+* [[#174099632](https://www.pivotaltracker.com/story/show/174099632)] Fix the back handler from transaction detail to cards transactions ([#2120](https://github.com/pagopa/io-app/issues/2120)) ([71895c7](https://github.com/pagopa/io-app/commit/71895c7a6006bd2fbdabb16bfc96b0124cb31836))
+* [[#174115403](https://www.pivotaltracker.com/story/show/174115403)] add useCleartextTraffic to true ([#2119](https://github.com/pagopa/io-app/issues/2119)) ([7ceda47](https://github.com/pagopa/io-app/commit/7ceda474c3d0c018baf4891e758d3a58467653e3))
+* [[#174119099](https://www.pivotaltracker.com/story/show/174119099)] Display app version ([#2122](https://github.com/pagopa/io-app/issues/2122)) ([4dd9763](https://github.com/pagopa/io-app/commit/4dd97634bcd69a294dff6d397fe3d8ae6211ea24))
+* Don't use the arrows if there's no submenu. ([#2117](https://github.com/pagopa/io-app/issues/2117)) ([0ecd486](https://github.com/pagopa/io-app/commit/0ecd4868c65ce631179cfc9ff590b05c26cbbff6))
+
+
+### Chores
+
+* [[#173888215](https://www.pivotaltracker.com/story/show/173888215)] Upgrade React Native to 0.63.2 ([#2107](https://github.com/pagopa/io-app/issues/2107)) ([8decb5a](https://github.com/pagopa/io-app/commit/8decb5a90e43ffbf9ca09d8bface3ce290a4c7c2))
+* [[#173987881](https://www.pivotaltracker.com/story/show/173987881)] Unify app version display ([#2111](https://github.com/pagopa/io-app/issues/2111)) ([9c4c04b](https://github.com/pagopa/io-app/commit/9c4c04b1416aec21f2c3002240546f7fe57ac659)), closes [#174033394](https://www.pivotaltracker.com/story/show/174033394) [#174033394](https://www.pivotaltracker.com/story/show/174033394) [#174033394](https://www.pivotaltracker.com/story/show/174033394)
+* [[#174010680](https://www.pivotaltracker.com/story/show/174010680)] Change checked urls with IO-cdn ([#2103](https://github.com/pagopa/io-app/issues/2103)) ([4c3a859](https://github.com/pagopa/io-app/commit/4c3a8599a3f97ef114818b17048bc3fe72458fd3))
+
 ## [1.4.0-rc.2](https://github.com/pagopa/io-app/compare/1.4.0-rc.1...1.4.0-rc.2) (2020-07-28)
 
 
