@@ -521,6 +521,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           extraData={{ servicesById, paymentsByRptId }}
           inverted={false}
           bounces={false}
+          stickySectionHeadersEnabled={true}
           keyExtractor={keyExtractor}
           ref={this.sectionListRef}
           onScroll={this.onScrollHandler}
