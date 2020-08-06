@@ -13,7 +13,6 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  paymentFetchAllPspsForPaymentId,
   paymentFetchPspsForPaymentId,
   paymentUpdateWalletPsp
 } from "../../../store/actions/wallet/payment";
