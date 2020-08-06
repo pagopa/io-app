@@ -52,12 +52,14 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
 
     // Animation to elapse the header height from 0 to HEADER_HEIGHT
     this.elapse = Animated.timing(this.heightAnimation, {
+      useNativeDriver: false,
       toValue: HEADER_HEIGHT,
       duration: HEADER_ANIMATION_DURATION
     });
 
     // Animation to collapse the header height from HEADER_HEIGHT to 0
     this.collapse = Animated.timing(this.heightAnimation, {
+      useNativeDriver: false,
       toValue: 0,
       duration: HEADER_ANIMATION_DURATION
     });

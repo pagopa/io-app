@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const AnimatedScreenContentHeader: typeof ScreenContentHeader = Animated.createAnimatedComponent(
+const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
   ScreenContentHeader
 );
 
