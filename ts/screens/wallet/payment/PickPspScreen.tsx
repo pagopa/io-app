@@ -92,7 +92,7 @@ class PickPspScreen extends React.Component<Props> {
   };
 
   public componentDidMount() {
-    // load all psp in order to offer to the user the complete psp list choice
+    // load all psp in order to offer to the user the complete psps list
     const idWallet = this.props.navigation
       .getParam("wallet")
       .idWallet.toString();
@@ -178,7 +178,6 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   return {
     loadAllPsp: (idWallet: string, idPayment: string) => {
-      // load all psp in order to offer to the user the complete psp list choice
       dispatch(
         paymentFetchAllPspsForPaymentId.request({
           idWallet,
