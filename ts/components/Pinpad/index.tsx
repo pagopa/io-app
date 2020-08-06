@@ -291,7 +291,9 @@ class Pinpad extends React.PureComponent<Props, State> {
   };
 
   private handlePinDigit = (digit: string) =>
-    this.handleChangeText(`${this.state.value}${digit}`);
+    this.handleChangeText(
+      `${this.state.value}${digit}`.substr(0, this.state.pinLength)
+    );
 
   public debounceClear = debounce(() => {
     this.setState({ value: "" });
