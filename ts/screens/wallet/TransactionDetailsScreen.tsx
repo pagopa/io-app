@@ -130,7 +130,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
     const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
       transaction,
       "fee",
-      m => (m !== undefined ? m.amount : 0)
+      m => (m ? m.amount : undefined)
     ).getOrElse(undefined);
     const fee = fromNullable(maybeFee)
       .map(f => formatNumberCentsToAmount(f, true))
