@@ -47,7 +47,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-  itemConteiner: {
+  itemContainer: {
     paddingVertical: 16,
     paddingHorizontal: customVariables.contentPadding,
     flexDirection: "column"
@@ -104,8 +104,8 @@ class PickPspScreen extends React.Component<Props> {
     const { item } = psp;
     return (
       <TouchableDefaultOpacity
-        onPress={() => this.props.pickPsp(item.id)}
-        style={styles.itemConteiner}
+        onPress={() => this.props.pickPsp(item.id, this.props.allPsps)}
+        style={styles.itemContainer}
       >
         <View style={styles.line1}>
           <Image
@@ -185,7 +185,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         })
       );
     },
-    pickPsp: (idPsp: number) =>
+    pickPsp: (idPsp: number, psps: ReadonlyArray<Psp>) =>
       dispatchUpdatePspForWalletAndConfirm(dispatch)(
         idPsp,
         props.navigation.getParam("wallet"),
@@ -193,7 +193,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         props.navigation.getParam("initialAmount"),
         props.navigation.getParam("verifica"),
         props.navigation.getParam("idPayment"),
-        props.navigation.getParam("psps"),
+        psps,
         () =>
           showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger")
       )
