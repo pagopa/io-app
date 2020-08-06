@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
 });
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
-const AnimatedScreenContentHeader: typeof ScreenContentHeader = Animated.createAnimatedComponent(
+const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
   ScreenContentHeader
 );
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
