@@ -20,15 +20,15 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
+import { paymentFetchAllPspsForPaymentId } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
+import { allPspsSelector } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
-import { allPspsSelector } from "../../../store/reducers/wallet/payment";
-import { paymentFetchAllPspsForPaymentId } from "../../../store/actions/wallet/payment";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
