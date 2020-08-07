@@ -45,7 +45,7 @@
     "hoist-non-react-statics": "^3.0.1",
     "instabug-reactnative": "^9.1.6",
     "io-ts": "1.8.5",
-    "italia-pagopa-commons": "^1.2.0",
+    "italia-pagopa-commons": "^1.3.0",
     "italia-ts-commons": "5.1.11",
     "jail-monkey": "^2.3.2",
     "lodash": "^4.17.19",

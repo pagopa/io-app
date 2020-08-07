@@ -6919,10 +6919,10 @@ istanbul-reports@^3.0.2:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
 
-italia-pagopa-commons@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/italia-pagopa-commons/-/italia-pagopa-commons-1.2.0.tgz#ee8b12ed380556f724941dacd17dcb9297b27d8a"
-  integrity sha512-Li5hs+TaCxxefMBuNVO1hxnj7ByFvRZf3GKOvBHsSgwjxgVVqo6JYHRVrcOS7nV3mJmWbY67Msq7Q0QWw7wRSQ==
+italia-pagopa-commons@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/italia-pagopa-commons/-/italia-pagopa-commons-1.3.0.tgz#c5172b1d6216a7582a443c103a2ae32e7a323934"
+  integrity sha512-8QWXRQTw5og4vVBYOCEWhaz8GpcsgpRzw2+tDobYSuS3IgxWbEQA5dektc/XsxooqSu93NnUHyQeSJ66dSWS4w==
   dependencies:
     io-ts "1.8.5"
     italia-ts-commons "5.1.1"

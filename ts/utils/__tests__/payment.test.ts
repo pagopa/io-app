@@ -103,8 +103,24 @@ describe("decodePagoPaQrCode", () => {
       Tuple2("PAGOPA|002|322201151398574181|810057500211|01A", none),
       // invalid header
       Tuple2("PAPAGO|002|322201151398574181|810057500211|01", none),
-      // invalid amount (1 digit instead of >= 2)
-      Tuple2("PAGOPA|002|322201151398574181|81005750021|1", none),
+      // this is valid
+      Tuple2(
+        "PAGOPA|002|322201151398574181|81005750021|1",
+        some(
+          Tuple2(
+            {
+              organizationFiscalCode: "81005750021",
+              paymentNoticeNumber: {
+                auxDigit: "3",
+                checkDigit: "81",
+                iuv13: "2011513985741",
+                segregationCode: "22"
+              }
+            },
+            "1"
+          )
+        )
+      ),
       // invalid organization fiscal code (12 digit instead of 11)
       Tuple2("PAGOPA|002|322201151398574181|810057500211|01", none)
     ].forEach(tuple => {
