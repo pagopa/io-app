@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -37,8 +38,6 @@ import customVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { authenticateConfig } from "../../utils/biometric";
 import { maybeNotNullyString } from "../../utils/strings";
-import { RTron } from "../../boot/configureStoreAndPersistor";
-import { fromNullable } from "fp-ts/lib/Option";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -400,11 +399,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const canInsertPin =
       !this.state.biometryAuthAvailable &&
       this.state.canInsertPinTooManyAttempts;
-    RTron.log(
-      !canInsertPin,
-      !this.state.biometryAuthAvailable,
-      this.state.canInsertPinTooManyAttempts
-    );
+
     // display the remaining attempts number only if start to lock the application for too many attempts
     const displayRemainingAttempts = this.props.identificationFailState.fold(
       undefined,
