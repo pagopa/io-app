@@ -14,13 +14,6 @@ Created on **20/03/2020**
 - Change the endpoint to european server.
 
 
-### react-native-safe-area-view+0.12.0
-Created on **27/07/2020**
-
-#### Reason:
-- Temporary fix, in order to execute the application after the porting to 0.63.x, waiting to replace react-navigation and remove this patch.
-
-
 ### react-native-touch-id+4.4.1
 Created on **09/05/2019** and **20/12/2019**
 
