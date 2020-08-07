@@ -121,6 +121,7 @@ export const ScaleAnimation = {
 
 const fadeAnim = new Animated.Value(0);
 const FadeInAnimation = Animated.timing(fadeAnim, {
+  useNativeDriver: false,
   toValue: 1,
   duration: 250
 });
@@ -160,7 +161,7 @@ export class LightModalProvider extends React.Component<Props, State> {
   public showModalFadeInAnimation = async (childComponent: React.ReactNode) => {
     const isScreenReaderActive = await isScreenReaderEnabled();
     const component = (
-      <Animated.View style={styles.container} opacity={fadeAnim}>
+      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
         {isScreenReaderActive ? (
           <Modal>{childComponent}</Modal>
         ) : (

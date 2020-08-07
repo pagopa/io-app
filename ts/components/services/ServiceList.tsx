@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 
 const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
 class ServiceList extends React.Component<Props> {
-  private sectionListRef = React.createRef<typeof AnimatedSectionList>();
+  private sectionListRef = React.createRef<SectionList>();
 
   private handleLongPressItem = () => {
     if (this.props.onLongPressItem) {
