@@ -1585,10 +1585,10 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-native-text-input-mask@^0.7.2":
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/@types/react-native-text-input-mask/-/react-native-text-input-mask-0.7.4.tgz#f21f852afe02b3c1f71bfbb0eb0938e443837970"
-  integrity sha512-Ie1Hf1D5DqtP2dfuVWSB6wKlU1N7An+EJlWSdLUsjZELgYiugOsM6nsFrjvbwqLmB3McQLlWXOD2YiO3EZgf7Q==
+"@types/react-native-text-input-mask@0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@types/react-native-text-input-mask/-/react-native-text-input-mask-0.7.2.tgz#a70bb2ab74a4f178f404abaf35853ce29b5f7c57"
+  integrity sha512-896mNmRr8uPE5rtrUZYsbjVJvEqtNiFB6uvGthWVME/5Am66f/IgBqcuU2kNUXe59/cuQRNRtvEVJths4uVC4g==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
