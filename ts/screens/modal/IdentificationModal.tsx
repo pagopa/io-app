@@ -37,6 +37,8 @@ import customVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { authenticateConfig } from "../../utils/biometric";
 import { maybeNotNullyString } from "../../utils/strings";
+import { RTron } from "../../boot/configureStoreAndPersistor";
+import { fromNullable } from "fp-ts/lib/Option";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -211,7 +213,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     if (identificationProgressState.kind !== "started") {
       return;
     }
-
     // Check for global properties to know if biometric recognition is enabled
     if (isFingerprintEnabled) {
       getFingerprintSettings()
@@ -259,6 +260,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           prevProps.appState !== "active" && this.props.appState === "active"
       });
       setAccessibilityFocus(this.headerRef);
+    }
+
+    // Added to solve the issue https://www.pivotaltracker.com/story/show/173217033
+    if (prevProps.isFingerprintEnabled !== this.props.isFingerprintEnabled) {
+      this.setState({
+        biometryAuthAvailable: fromNullable(
+          this.props.isFingerprintEnabled
+        ).getOrElse(false)
+      });
     }
 
     const previousAttempts = prevProps.identificationFailState.fold(
@@ -390,7 +400,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const canInsertPin =
       !this.state.biometryAuthAvailable &&
       this.state.canInsertPinTooManyAttempts;
-
+    RTron.log(
+      !canInsertPin,
+      !this.state.biometryAuthAvailable,
+      this.state.canInsertPinTooManyAttempts
+    );
     // display the remaining attempts number only if start to lock the application for too many attempts
     const displayRemainingAttempts = this.props.identificationFailState.fold(
       undefined,
