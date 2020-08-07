@@ -304,6 +304,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     rptId: RptId,
     initialAmount: AmountInEuroCents
   ) => {
+    Keyboard.dismiss();
     dispatch(paymentInitializeState());
     dispatch(
       navigateToPaymentTransactionSummaryScreen({

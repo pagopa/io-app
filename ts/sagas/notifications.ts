@@ -14,9 +14,10 @@ import { notificationsInstallationSelector } from "../store/reducers/notificatio
 import { GlobalState } from "../store/reducers/types";
 import { SagaCallReturnType } from "../types/utils";
 
-const notificationsPlatform: PlatformEnum = Platform.select({
+const notificationsPlatform: PlatformEnum = Platform.select<PlatformEnum>({
   ios: PlatformEnum.apns,
-  android: PlatformEnum.gcm
+  android: PlatformEnum.gcm,
+  default: PlatformEnum.gcm
 });
 
 /**

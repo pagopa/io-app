@@ -1,9 +1,9 @@
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as TE from "fp-ts/lib/TaskEither";
 import { Linking } from "react-native";
 import { clipboardSetStringWithFeedback } from "./clipboard";
 import { openMaps } from "./openMaps";
 import { splitAndTakeFirst } from "./strings";
-
 /**
  * Generic utilities for url parsing
  */
@@ -59,6 +59,36 @@ export function handleItemOnPress(
     case "COPY":
       return () => clipboardSetStringWithFeedback(value);
     default:
-      return () => Linking.openURL(value).then(() => 0, () => 0);
+      return () => openUrl(value);
   }
 }
+
+const isHttp = (url: string): boolean => {
+  const urlLower = url.trim().toLocaleLowerCase();
+  return urlLower.match(/http(s)?:\/\//gm) !== null;
+};
+
+const taskLinking = (url: string) =>
+  TE.tryCatch(() => Linking.openURL(url), _ => `cannot open url ${url}`);
+
+const taskCanOpenUrl = (url: string) =>
+  TE.tryCatch(
+    () => (!isHttp(url) ? Promise.resolve(false) : Linking.canOpenURL(url)),
+    _ => `cannot check if can open url ${url}`
+  );
+
+/**
+ * open the url if it can ben opened and if it has a valid protocol (http/https)
+ * it should be used in place of direct call of Linking.openURL(url)
+ */
+export const openUrl = (url: string, onError: () => void = constNull) => {
+  pipe(
+    () => taskCanOpenUrl(url),
+    te =>
+      te.chain(v => {
+        return v ? taskLinking(url) : TE.fromLeft("error");
+      })
+  )({})
+    .run()
+    .then(ei => ei.fold(onError, constNull), onError);
+};
