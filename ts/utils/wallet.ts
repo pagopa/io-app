@@ -1,4 +1,7 @@
+import { fromPredicate } from "fp-ts/lib/Option";
 import * as t from "io-ts";
+import { Alert } from "react-native";
+import I18n from "../i18n";
 import { CreditCard } from "../types/pagopa";
 import { isExpired } from "./dates";
 import { NumberFromString } from "./number";
@@ -50,3 +53,20 @@ export const fixWalletPspTagsValues = (w: unknown) => {
     }
   };
 };
+
+/**
+ * This function handles the set favourite method on wallet section:
+ * - if it is already a favourite it displays an alert for the user suggesting to select another favourite method
+ * - if it is not a favourite it saves it as one
+ * more informations at https://www.pivotaltracker.com/story/show/172762258
+ * @param willBeFavorite defines if the method will  be the favourite selected by the user
+ * @param callback callback method to invoke for saving the method
+ */
+export const handleSetFavourite = (
+  willBeFavorite: boolean,
+  callback: () => void
+) =>
+  fromPredicate(wbf => wbf === true)(willBeFavorite).foldL(
+    () => Alert.alert(I18n.t("wallet.alert.favourite")),
+    () => callback()
+  );
