@@ -103,8 +103,13 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     };
   }
 
+  private handleHardwareBack = () => {
+    this.props.navigateBack();
+    return undefined;
+  };
+
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.props.navigateBack);
+    BackHandler.addEventListener("hardwareBackPress", this.handleHardwareBack);
     // Periodically check if the user validate his own email address
     // tslint:disable-next-line: no-object-mutation
     this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
@@ -116,7 +121,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   public componentWillUnmount() {
     BackHandler.removeEventListener(
       "hardwareBackPress",
-      this.props.navigateBack
+      this.handleHardwareBack
     );
     // if a timeout is running we have to stop it
     if (this.idTimeout !== undefined) {
@@ -343,7 +348,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       <TopScreenComponent
         {...(isOnboardingCompleted ? this.onMainProps : this.onBoardingProps)}
         contextualHelpMarkdown={this.contextualHelpMarkdown}
-        avoidNavigationEventsUsage={true}
+        accessibilityEvents={{ avoidNavigationEventsUsage: true }}
       >
         <Content bounces={false}>
           <View spacer={true} extralarge={true} />

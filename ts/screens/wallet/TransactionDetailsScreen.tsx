@@ -28,6 +28,7 @@ import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { whereAmIFrom } from "../../utils/navigation";
+import { maybeInnerProperty } from "../../utils/options";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
@@ -100,7 +101,12 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 
   private handleBackPress = () => {
-    if (whereAmIFrom(this.props.nav).fold(false, r => r === "WALLET_HOME")) {
+    if (
+      whereAmIFrom(this.props.nav).fold(
+        false,
+        r => r === "WALLET_HOME" || r === "WALLET_CARD_TRANSACTION"
+      )
+    ) {
       return this.props.navigation.goBack();
     } else {
       this.props.navigateBackToEntrypointPayment();
@@ -119,12 +125,17 @@ class TransactionDetailsScreen extends React.Component<Props> {
   private getData = () => {
     const transaction = this.props.navigation.getParam("transaction");
     const amount = formatNumberCentsToAmount(transaction.amount.amount, true);
-    const fee = formatNumberCentsToAmount(
-      transaction.fee === undefined
-        ? transaction.grandTotal.amount - transaction.amount.amount
-        : transaction.fee.amount,
-      true
-    );
+
+    // fee
+    const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
+      transaction,
+      "fee",
+      m => (m ? m.amount : undefined)
+    ).getOrElse(undefined);
+    const fee = fromNullable(maybeFee)
+      .map(f => formatNumberCentsToAmount(f, true))
+      .toNullable();
+
     const totalAmount = formatNumberCentsToAmount(
       transaction.grandTotal.amount,
       true
@@ -209,8 +220,16 @@ class TransactionDetailsScreen extends React.Component<Props> {
             I18n.t("wallet.firstTransactionSummary.amount"),
             data.amount
           )}
-          <View spacer={true} small={true} />
-          {standardRow(I18n.t("wallet.firstTransactionSummary.fee"), data.fee)}
+
+          {data.fee && (
+            <>
+              <View spacer={true} small={true} />
+              {standardRow(
+                I18n.t("wallet.firstTransactionSummary.fee"),
+                data.fee
+              )}
+            </>
+          )}
 
           <View spacer={true} />
 

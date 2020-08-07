@@ -14,6 +14,8 @@ NativeModules.RNGestureHandlerModule = {
   Directions: {}
 };
 
+jest.mock("@react-native-community/push-notification-ios", jest.fn());
+
 NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
   forceTouchAvailable: false
 };

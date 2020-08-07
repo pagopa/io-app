@@ -1,0 +1,40 @@
+diff --git a/node_modules/react-native-push-notification/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java b/node_modules/react-native-push-notification/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java
+index 13402c1..624f60a 100644
+--- a/node_modules/react-native-push-notification/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java
++++ b/node_modules/react-native-push-notification/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java
+@@ -54,7 +54,9 @@ public class RNReceivedMessageHandler {
+         if (notificationData.containsKey("twi_body")) {
+             bundle.putString("message", notificationData.get("twi_body"));
+         }
+-        JSONObject data = getPushData(notificationData.get("data"));
++
++        // maybe a bug? see https://www.pivotaltracker.com/story/show/174150612
++        JSONObject data = getPushData(notificationData);
+ 
+         if (data != null) {
+             if (!bundle.containsKey("message")) {
+@@ -76,11 +78,9 @@ public class RNReceivedMessageHandler {
+             }
+         }
+ 
+-        Bundle dataBundle = new Bundle();
+         for(Map.Entry<String, String> entry : notificationData.entrySet()) {
+-            dataBundle.putString(entry.getKey(), entry.getValue());
++            bundle.putString(entry.getKey(), entry.getValue());
+         }
+-        bundle.putParcelable("data", dataBundle);
+ 
+         Log.v(LOG_TAG, "onMessageReceived: " + bundle);
+ 
+@@ -113,9 +113,9 @@ public class RNReceivedMessageHandler {
+         });
+     }
+ 
+-    private JSONObject getPushData(String dataString) {
++    private JSONObject getPushData(Map<String,String> mapdata) {
+         try {
+-            return new JSONObject(dataString);
++            return new JSONObject(mapdata);
+         } catch (Exception e) {
+             return null;
+         }

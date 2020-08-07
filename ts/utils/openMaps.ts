@@ -23,5 +23,7 @@ export function openMaps(
           android: `${intentScheme}${label}`
         });
 
-  openLink(url, I18n.t("openMaps.genericError"));
+  if (url !== undefined) {
+    openLink(url, I18n.t("openMaps.genericError"));
+  }
 }

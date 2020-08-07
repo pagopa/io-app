@@ -1,5 +1,5 @@
 import { none, Option, some } from "fp-ts/lib/Option";
-import { BugReporting, Replies } from "instabug-reactnative";
+import { BugReporting, dismissType, Replies } from "instabug-reactnative";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
@@ -17,6 +17,7 @@ import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import CustomBadge from "./ui/CustomBadge";
 import IconFont from "./ui/IconFont";
+import reportType = BugReporting.reportType;
 
 interface OwnProps {
   color?: string;
@@ -78,7 +79,7 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
     // Register to the instabug dismiss event. (https://docs.instabug.com/docs/react-native-bug-reporting-event-handlers#section-after-dismissing-instabug)
     // This event is fired when chat or bug screen is dismissed
     BugReporting.onSDKDismissedHandler(
-      (dismiss: string, _: string): void => {
+      (dismiss: dismissType, _: reportType): void => {
         // Due an Instabug library bug, we can't use the report parameter because it always has "bug" as value.
         // We need to differentiate the type of report then use instabugReportType
         if (this.state.instabugReportType.isSome()) {
@@ -100,11 +101,6 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
       this.setState({ hasChats });
     });
   };
-
-  public componentDidUpdate(_: Props) {
-    // check if instabug has new chats
-    this.checkInstabugChats();
-  }
 
   private getUnreadMessagesDescription = () => {
     if (this.props.badge === 0) {
@@ -156,7 +152,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIBReportOpen: (type: BugReporting.reportType) =>
     dispatch(instabugReportOpened({ type })),
-  dispatchIBReportClosed: (type: BugReporting.reportType, how: string) =>
+  dispatchIBReportClosed: (type: BugReporting.reportType, how: dismissType) =>
     dispatch(instabugReportClosed({ type, how })),
   dispatchUpdateInstabugUnreadMessagesCounter: () =>
     dispatch(updateInstabugUnreadMessages())

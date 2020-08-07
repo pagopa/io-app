@@ -7,6 +7,11 @@ jest.mock("react-native-device-info", () => {
       .mockReturnValueOnce("1.1.3")
       .mockReturnValueOnce("1.1.9")
       .mockReturnValueOnce("1.2.3.4"),
+    getVersion: jest
+      .fn()
+      .mockReturnValueOnce("1.1.3")
+      .mockReturnValueOnce("1.1.9")
+      .mockReturnValueOnce("1.2.3.4"),
     getBuildNumber: () => 3
   };
 });

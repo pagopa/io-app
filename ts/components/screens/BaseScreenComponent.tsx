@@ -28,7 +28,7 @@ import {
   deriveCustomHandledLink,
   isIoInternalLink
 } from "../ui/Markdown/handlers/link";
-import { BaseHeader } from "./BaseHeader";
+import { AccessibilityEvents, BaseHeader } from "./BaseHeader";
 
 export interface ContextualHelpProps {
   title: string;
@@ -42,7 +42,7 @@ export interface ContextualHelpPropsMarkdown {
 
 interface OwnProps {
   onAccessibilityNavigationHeaderFocus?: () => void;
-  avoidNavigationEventsUsage?: boolean;
+  accessibilityEvents?: AccessibilityEvents;
   accessibilityLabel?: string;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
@@ -105,12 +105,11 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
           // we force handling here. The timeout is due to wait until the modal is completely hidden
           // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
-          if (Platform.OS === "android") {
-            setTimeout(
-              this.handleOnContextualHelpDismissed,
-              ANDROID_OPEN_REPORT_DELAY
-            );
-          }
+          // TODO: To complete the porting to 0.63.x, both iOS and Android will use the timeout. https://www.pivotaltracker.com/story/show/174195300
+          setTimeout(
+            this.handleOnContextualHelpDismissed,
+            ANDROID_OPEN_REPORT_DELAY
+          );
           this.setState({ contextualHelpModalAnimation: "slide" });
         });
       });
@@ -173,7 +172,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const {
-      avoidNavigationEventsUsage,
+      accessibilityEvents,
       accessibilityLabel,
       dark,
       appLogo,
@@ -223,7 +222,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           onAccessibilityNavigationHeaderFocus={
             onAccessibilityNavigationHeaderFocus
           }
-          avoidNavigationEventsUsage={avoidNavigationEventsUsage}
+          accessibilityEvents={accessibilityEvents}
           accessibilityLabel={accessibilityLabel}
           showInstabugChat={showInstabugChat}
           primary={primary}
