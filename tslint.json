@@ -8,6 +8,7 @@
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
     "no-unused-variable": false,
-    "no-use-before-declare": false
+    "no-use-before-declare": false,
+    "jsx-wrap-multiline": false
   }
 }
