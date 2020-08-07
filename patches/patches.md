@@ -55,3 +55,9 @@ Created on **05/08/2020**
 
 #### Reason:
 - Removed minSdkVersion from gradle to allow the compilation on Android. 
+
+### danger-plugin-digitalcitizenship+0.3.1
+Created on **06/08/2020**
+
+#### Reason:
+- Recognizes the ids of pivotal stories even if they are not at the beginning of the line

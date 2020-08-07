@@ -149,7 +149,7 @@
     "babel-jest": "^25.1.0",
     "babel-preset-react-native": "^4.0.1",
     "chalk": "^2.4.1",
-    "danger": "^3.8.0",
+    "danger": "^10.3.0",
     "danger-plugin-digitalcitizenship": "^0.3.1",
     "eslint": "^6.5.1",
     "fs-extra": "^7.0.0",

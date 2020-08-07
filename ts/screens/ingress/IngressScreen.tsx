@@ -2,29 +2,22 @@
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  Body,
-  CheckBox,
-  Container,
-  List,
-  ListItem,
-  Spinner,
-  Text
-} from "native-base";
+import { Body, Container, List, ListItem, Spinner, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import ConnectionBar from "../components/ConnectionBar";
-import I18n from "../i18n";
-import { startApplicationInitialization } from "../store/actions/application";
-import { ReduxProps } from "../store/actions/types";
+import ConnectionBar from "../../components/ConnectionBar";
+import I18n from "../../i18n";
+import { startApplicationInitialization } from "../../store/actions/application";
+import { ReduxProps } from "../../store/actions/types";
 import {
   sessionInfoSelector,
   sessionTokenSelector
-} from "../store/reducers/authentication";
-import { profileSelector } from "../store/reducers/profile";
-import { GlobalState } from "../store/reducers/types";
-import variables from "../theme/variables";
+} from "../../store/reducers/authentication";
+import { profileSelector } from "../../store/reducers/profile";
+import { GlobalState } from "../../store/reducers/types";
+import variables from "../../theme/variables";
+import { IngressCheckBox } from "./CheckBox";
 
 type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
 
@@ -67,7 +60,7 @@ class IngressScreen extends React.PureComponent<Props> {
         <List withContentLateralPadding={true}>
           {items.map((item, index) => (
             <ListItem key={`item-${index}`}>
-              <CheckBox checked={item.enabled} />
+              <IngressCheckBox checked={item.enabled} />
               <Body>
                 <Text white={true} bold={item.enabled}>
                   {item.label}
