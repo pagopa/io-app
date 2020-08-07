@@ -147,11 +147,14 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       m => m
     ).fold(notAvailable, id => `${id}`);
 
-    const fee = maybeInnerProperty<Transaction, "fee", number>(
+    const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
       payment.transaction,
       "fee",
-      m => (m !== undefined ? m.amount : 0)
-    ).getOrElse(0);
+      m => (m ? m.amount : undefined)
+    ).getOrElse(undefined);
+    const fee = fromNullable(maybeFee)
+      .map(f => formatNumberCentsToAmount(f, true))
+      .toNullable();
 
     const enteBeneficiario = maybeInnerProperty<
       PaymentRequestsGetResponse,
@@ -275,10 +278,10 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 )}
 
                 {/** fee */}
-                {data.fee > 0 &&
+                {data.fee &&
                   this.standardRow(
                     I18n.t("wallet.firstTransactionSummary.fee"),
-                    formatNumberCentsToAmount(data.fee, true)
+                    data.fee
                   )}
 
                 <View spacer={true} />
