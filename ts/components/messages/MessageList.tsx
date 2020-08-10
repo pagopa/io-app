@@ -193,7 +193,7 @@ class MessageList extends React.Component<Props, State> {
     this.state = {
       itemLayouts: [],
       longPressedItemIndex: none,
-      isFirstLoad: Platform.OS === "ios"
+      isFirstLoad: Platform.OS === "ios" // considering firstLoad only when running device is iOS
     };
   }
 
