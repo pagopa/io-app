@@ -28,8 +28,10 @@ import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { whereAmIFrom } from "../../utils/navigation";
-import { maybeInnerProperty } from "../../utils/options";
-import { cleanTransactionDescription } from "../../utils/payment";
+import {
+  cleanTransactionDescription,
+  getTransactionFee
+} from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
@@ -127,14 +129,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
     const amount = formatNumberCentsToAmount(transaction.amount.amount, true);
 
     // fee
-    const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
-      transaction,
-      "fee",
-      m => (m ? m.amount : undefined)
-    ).getOrElse(undefined);
-    const fee = fromNullable(maybeFee)
-      .map(f => formatNumberCentsToAmount(f, true))
-      .toNullable();
+    const fee = getTransactionFee(transaction);
 
     const totalAmount = formatNumberCentsToAmount(
       transaction.grandTotal.amount,

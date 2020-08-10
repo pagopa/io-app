@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -211,7 +212,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     if (identificationProgressState.kind !== "started") {
       return;
     }
-
     // Check for global properties to know if biometric recognition is enabled
     if (isFingerprintEnabled) {
       getFingerprintSettings()
@@ -259,6 +259,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           prevProps.appState !== "active" && this.props.appState === "active"
       });
       setAccessibilityFocus(this.headerRef);
+    }
+
+    // Added to solve the issue https://www.pivotaltracker.com/story/show/173217033
+    if (prevProps.isFingerprintEnabled !== this.props.isFingerprintEnabled) {
+      this.setState({
+        biometryAuthAvailable: fromNullable(
+          this.props.isFingerprintEnabled
+        ).getOrElse(false)
+      });
     }
 
     const previousAttempts = prevProps.identificationFailState.fold(
