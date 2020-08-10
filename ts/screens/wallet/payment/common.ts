@@ -91,7 +91,7 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
         onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
         onSuccess: successAction => {
           // filter PSPs for the current locale only (the list will contain
-          // duspliacates for all the supported languages)
+          // duplicates for all the supported languages)
           const psps = pspsForLocale(successAction.payload);
           if (psps.length === 0) {
             // this payment method cannot be used!

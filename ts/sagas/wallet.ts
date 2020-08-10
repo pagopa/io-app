@@ -34,6 +34,7 @@ import {
   paymentCheck,
   paymentDeletePayment,
   paymentExecutePayment,
+  paymentFetchAllPspsForPaymentId,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
@@ -100,6 +101,7 @@ import {
   paymentCheckRequestHandler,
   paymentDeletePaymentRequestHandler,
   paymentExecutePaymentRequestHandler,
+  paymentFetchAllPspsForWalletRequestHandler,
   paymentFetchPspsForWalletRequestHandler,
   paymentIdPollingRequestHandler,
   paymentVerificaRequestHandler,
@@ -643,6 +645,13 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(paymentFetchPspsForPaymentId.request),
     paymentFetchPspsForWalletRequestHandler,
+    paymentManagerClient,
+    pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(paymentFetchAllPspsForPaymentId.request),
+    paymentFetchAllPspsForWalletRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );

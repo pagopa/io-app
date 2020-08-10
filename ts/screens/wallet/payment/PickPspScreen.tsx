@@ -20,7 +20,9 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
+import { paymentFetchAllPspsForPaymentId } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
+import { allPspsSelector } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
@@ -45,7 +47,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-  itemConteiner: {
+  itemContainer: {
     paddingVertical: 16,
     paddingHorizontal: customVariables.contentPadding,
     flexDirection: "column"
@@ -89,12 +91,21 @@ class PickPspScreen extends React.Component<Props> {
     );
   };
 
+  public componentDidMount() {
+    // load all psp in order to offer to the user the complete psps list
+    const idWallet = this.props.navigation
+      .getParam("wallet")
+      .idWallet.toString();
+    const idPayment = this.props.navigation.getParam("idPayment");
+    this.props.loadAllPsp(idWallet, idPayment);
+  }
+
   private getListItem = (psp: ListRenderItemInfo<Psp>) => {
     const { item } = psp;
     return (
       <TouchableDefaultOpacity
-        onPress={() => this.props.pickPsp(item.id)}
-        style={styles.itemConteiner}
+        onPress={() => this.props.pickPsp(item.id, this.props.allPsps)}
+        style={styles.itemContainer}
       >
         <View style={styles.line1}>
           <Image
@@ -119,7 +130,7 @@ class PickPspScreen extends React.Component<Props> {
   };
 
   public render(): React.ReactNode {
-    const availablePsps = this.props.navigation.getParam("psps");
+    const availablePsps = this.props.allPsps;
 
     return (
       <BaseScreenComponent
@@ -155,13 +166,26 @@ class PickPspScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  isLoading: pot.isLoading(state.wallet.wallets.walletById)
-});
+const mapStateToProps = (state: GlobalState) => {
+  const psps = allPspsSelector(state);
+  return {
+    isLoading:
+      pot.isLoading(state.wallet.wallets.walletById) || pot.isLoading(psps),
+    allPsps: pot.getOrElse(psps, [])
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   return {
-    pickPsp: (idPsp: number) =>
+    loadAllPsp: (idWallet: string, idPayment: string) => {
+      dispatch(
+        paymentFetchAllPspsForPaymentId.request({
+          idWallet,
+          idPayment
+        })
+      );
+    },
+    pickPsp: (idPsp: number, psps: ReadonlyArray<Psp>) =>
       dispatchUpdatePspForWalletAndConfirm(dispatch)(
         idPsp,
         props.navigation.getParam("wallet"),
@@ -169,7 +193,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         props.navigation.getParam("initialAmount"),
         props.navigation.getParam("verifica"),
         props.navigation.getParam("idPayment"),
-        props.navigation.getParam("psps"),
+        psps,
         () =>
           showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger")
       )

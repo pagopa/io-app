@@ -38,7 +38,8 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { maybeInnerProperty } from "../../utils/options";
 import {
   getErrorDescription,
-  getPaymentHistoryDetails
+  getPaymentHistoryDetails,
+  getTransactionFee
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
@@ -147,11 +148,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       m => m
     ).fold(notAvailable, id => `${id}`);
 
-    const fee = maybeInnerProperty<Transaction, "fee", number>(
-      payment.transaction,
-      "fee",
-      m => (m !== undefined ? m.amount : 0)
-    ).getOrElse(0);
+    const fee = getTransactionFee(payment.transaction);
 
     const enteBeneficiario = maybeInnerProperty<
       PaymentRequestsGetResponse,
@@ -275,10 +272,10 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 )}
 
                 {/** fee */}
-                {data.fee > 0 &&
+                {data.fee &&
                   this.standardRow(
                     I18n.t("wallet.firstTransactionSummary.fee"),
-                    formatNumberCentsToAmount(data.fee, true)
+                    data.fee
                   )}
 
                 <View spacer={true} />

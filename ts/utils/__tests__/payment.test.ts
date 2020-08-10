@@ -7,7 +7,8 @@ import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { PaymentAmount } from "../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeNumber";
-import { cleanTransactionDescription } from "../payment";
+import { Transaction } from "../../types/pagopa";
+import { cleanTransactionDescription, getTransactionFee } from "../payment";
 import {
   decodePagoPaQrCode,
   getAmountFromPaymentAmount,
@@ -103,12 +104,65 @@ describe("decodePagoPaQrCode", () => {
       Tuple2("PAGOPA|002|322201151398574181|810057500211|01A", none),
       // invalid header
       Tuple2("PAPAGO|002|322201151398574181|810057500211|01", none),
-      // invalid amount (1 digit instead of >= 2)
-      Tuple2("PAGOPA|002|322201151398574181|81005750021|1", none),
+      // this is valid
+      Tuple2(
+        "PAGOPA|002|322201151398574181|81005750021|1",
+        some(
+          Tuple2(
+            {
+              organizationFiscalCode: "81005750021",
+              paymentNoticeNumber: {
+                auxDigit: "3",
+                checkDigit: "81",
+                iuv13: "2011513985741",
+                segregationCode: "22"
+              }
+            },
+            "1"
+          )
+        )
+      ),
       // invalid organization fiscal code (12 digit instead of 11)
       Tuple2("PAGOPA|002|322201151398574181|810057500211|01", none)
     ].forEach(tuple => {
       expect(decodePagoPaQrCode(tuple.e1)).toEqual(tuple.e2);
     });
+  });
+});
+
+const mockTranction: Transaction = {
+  accountingStatus: 1,
+  amount: { amount: 20000 },
+  created: new Date(2018, 10, 30, 13, 12, 22, 30),
+  description: `hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world`,
+  error: false,
+  fee: { amount: 123 },
+  grandTotal: { amount: 32100 },
+  id: 1,
+  idPayment: 1,
+  idPsp: 43188,
+  idStatus: 3,
+  idWallet: 12345,
+  merchant: "merchant",
+  nodoIdPayment: "nodoIdPayment",
+  paymentModel: 5,
+  spcNodeDescription: "spcNodeDescription",
+  spcNodeStatus: 6,
+  statusMessage: "statusMessage",
+  success: true,
+  token: "token",
+  updated: undefined,
+  urlCheckout3ds: "urlCheckout3ds",
+  urlRedirectPSP: "urlRedirectPSP"
+};
+
+describe("getTransactionFee", () => {
+  [
+    Tuple2(mockTranction, `${123}`),
+    Tuple2({ ...mockTranction, fee: undefined }, null),
+    Tuple2({ ...mockTranction, fee: { amount: 54321 } }, `${54321}`),
+    Tuple2({ ...mockTranction, fee: { amount: 0 } }, `${0}`)
+  ].forEach(tuple => {
+    expect(getTransactionFee(tuple.e1, f => `${f}`)).toEqual(tuple.e2);
   });
 });
