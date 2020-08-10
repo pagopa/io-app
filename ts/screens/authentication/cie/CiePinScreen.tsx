@@ -26,6 +26,7 @@ import { nfcIsEnabled } from "../../../store/actions/cie";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
+import AdviceComponent from "../../../components/AdviceComponent";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -126,6 +127,11 @@ class CiePinScreen extends React.PureComponent<Props, State> {
               description={I18n.t("authentication.cie.pin.pinCardContent")}
               onPinChanged={this.handelOnPinChanged}
               onSubmit={this.showModal}
+            />
+            <View spacer={true} />
+            <AdviceComponent
+              adviceMessage={I18n.t("login.expiration_info")}
+              adviceIconColor={"black"}
             />
           </View>
         </ScrollView>

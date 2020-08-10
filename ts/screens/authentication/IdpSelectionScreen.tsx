@@ -16,6 +16,7 @@ import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import variables from "../../theme/variables";
+import AdviceComponent from "../../components/AdviceComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> & NavigationScreenProps;
 
@@ -168,6 +169,13 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </ButtonDefaultOpacity>
+          </View>
+          <View style={{ padding: variables.contentPadding }}>
+            <View spacer={true} />
+            <AdviceComponent
+              adviceMessage={I18n.t("login.expiration_info")}
+              adviceIconColor={"black"}
+            />
           </View>
         </Content>
       </BaseScreenComponent>
