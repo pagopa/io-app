@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import AdviceComponent from "../../../components/AdviceComponent";
 import CieRequestAuthenticationOverlay from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
@@ -26,7 +27,6 @@ import { nfcIsEnabled } from "../../../store/actions/cie";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import AdviceComponent from "../../../components/AdviceComponent";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
