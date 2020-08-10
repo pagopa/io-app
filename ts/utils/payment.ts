@@ -20,8 +20,10 @@ import {
   getCodiceAvviso,
   PaymentHistory
 } from "../store/reducers/payments/history";
-import { Psp, Wallet } from "../types/pagopa";
+import { Psp, Transaction, Wallet } from "../types/pagopa";
 import { formatDateAsReminder } from "./dates";
+import { maybeInnerProperty } from "./options";
+import { formatNumberCentsToAmount } from "./stringBuilder";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -189,4 +191,20 @@ export const getPaymentHistoryDetails = (
     separator,
     failureDetails
   );
+};
+
+// return the transaction fee it transaction is defined and its fee property too
+export const getTransactionFee = (
+  transaction?: Transaction,
+  formatFunc: (fee: number) => string = (f: number) =>
+    formatNumberCentsToAmount(f, true)
+): string | null => {
+  const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
+    transaction,
+    "fee",
+    m => (m ? m.amount : undefined)
+  ).getOrElse(undefined);
+  return fromNullable(maybeFee)
+    .map(formatFunc)
+    .toNullable();
 };
