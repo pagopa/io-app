@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 
 const iconSize = 18;
 /**
- * This component displays a box with an icon and some text
+ * This component displays an info icon on top-left and a text message
  * @constructor
  */
 const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => {
