@@ -491,9 +491,6 @@ export function* paymentFetchAllPspsForWalletRequestHandler(
           response.value.value.data
         );
         yield put(successAction);
-        if (action.payload.onSuccess) {
-          action.payload.onSuccess(successAction);
-        }
       } else {
         throw Error(`response status ${response.value.status}`);
       }
@@ -503,9 +500,6 @@ export function* paymentFetchAllPspsForWalletRequestHandler(
   } catch (e) {
     const failureAction = paymentFetchAllPspsForPaymentId.failure(e);
     yield put(failureAction);
-    if (action.payload.onFailure) {
-      action.payload.onFailure(failureAction);
-    }
   }
 }
 
