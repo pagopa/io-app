@@ -77,6 +77,22 @@ PODS:
   - OpenSSL-Universal (1.0.2.19):
     - OpenSSL-Universal/Static (= 1.0.2.19)
   - OpenSSL-Universal/Static (1.0.2.19)
+  - Permission-Calendars (2.1.5):
+    - RNPermissions
+  - Permission-Camera (2.1.5):
+    - RNPermissions
+  - Permission-Contacts (2.1.5):
+    - RNPermissions
+  - Permission-FaceID (2.1.5):
+    - RNPermissions
+  - Permission-MediaLibrary (2.1.5):
+    - RNPermissions
+  - Permission-Notifications (2.1.5):
+    - RNPermissions
+  - Permission-PhotoLibrary (2.1.5):
+    - RNPermissions
+  - Permission-Reminders (2.1.5):
+    - RNPermissions
   - QrCode (1.1.0):
     - React
   - RCTRequired (0.63.2)
@@ -249,13 +265,13 @@ PODS:
     - React
   - react-native-calendar-events (1.7.1):
     - React
-  - react-native-camera (3.26.0):
+  - react-native-camera (3.35.0):
     - React
-    - react-native-camera/RCT (= 3.26.0)
-    - react-native-camera/RN (= 3.26.0)
-  - react-native-camera/RCT (3.26.0):
+    - react-native-camera/RCT (= 3.35.0)
+    - react-native-camera/RN (= 3.35.0)
+  - react-native-camera/RCT (3.35.0):
     - React
-  - react-native-camera/RN (3.26.0):
+  - react-native-camera/RN (3.35.0):
     - React
   - react-native-config (1.0.0):
     - React
@@ -264,7 +280,7 @@ PODS:
   - react-native-mixpanel (1.2.0):
     - Mixpanel (~> 3.6.0)
     - React
-  - react-native-netinfo (4.2.2):
+  - react-native-netinfo (4.7.0):
     - React
   - react-native-screen-brightness (2.0.0-alpha):
     - React
@@ -339,9 +355,7 @@ PODS:
     - React
   - ReactNativeExceptionHandler (2.10.8):
     - React
-  - ReactNativePermissions (1.1.1):
-    - React
-  - RNCAsyncStorage (1.6.1):
+  - RNCAsyncStorage (1.11.0):
     - React
   - RNCPushNotificationIOS (1.4.0):
     - React
@@ -356,9 +370,13 @@ PODS:
   - RNInputMask (4.1.0)
   - RNKeychain (3.1.3):
     - React
+  - RNPermissions (2.1.5):
+    - React
+  - RNScreens (2.10.1):
+    - React
   - RNSha256 (1.2.3):
     - React
-  - RNShare (3.3.2):
+  - RNShare (3.7.0):
     - React
   - RNSVG (12.1.0):
     - React
@@ -398,6 +416,14 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - instabug-reactnative (from `../node_modules/instabug-reactnative`)
   - jail-monkey (from `../node_modules/jail-monkey`)
+  - Permission-Calendars (from `../node_modules/react-native-permissions/ios/Calendars.podspec`)
+  - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera.podspec`)
+  - Permission-Contacts (from `../node_modules/react-native-permissions/ios/Contacts.podspec`)
+  - Permission-FaceID (from `../node_modules/react-native-permissions/ios/FaceID.podspec`)
+  - Permission-MediaLibrary (from `../node_modules/react-native-permissions/ios/MediaLibrary.podspec`)
+  - Permission-Notifications (from `../node_modules/react-native-permissions/ios/Notifications.podspec`)
+  - Permission-PhotoLibrary (from `../node_modules/react-native-permissions/ios/PhotoLibrary.podspec`)
+  - Permission-Reminders (from `../node_modules/react-native-permissions/ios/Reminders.podspec`)
   - QrCode (from `../node_modules/react-native-lewin-qrcode/ios`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -434,7 +460,6 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "ReactNativeART (from `../node_modules/@react-native-community/art/ReactNativeART.podspec`)"
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
-  - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -443,6 +468,8 @@ DEPENDENCIES:
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNInputMask (from `../node_modules/react-native-text-input-mask/ios/InputMask`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
+  - RNPermissions (from `../node_modules/react-native-permissions/`)
+  - RNScreens (from `../node_modules/react-native-screens`)
   - RNSha256 (from `../node_modules/react-native-sha256`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -483,6 +510,22 @@ EXTERNAL SOURCES:
     :path: "../node_modules/instabug-reactnative"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
+  Permission-Calendars:
+    :path: "../node_modules/react-native-permissions/ios/Calendars.podspec"
+  Permission-Camera:
+    :path: "../node_modules/react-native-permissions/ios/Camera.podspec"
+  Permission-Contacts:
+    :path: "../node_modules/react-native-permissions/ios/Contacts.podspec"
+  Permission-FaceID:
+    :path: "../node_modules/react-native-permissions/ios/FaceID.podspec"
+  Permission-MediaLibrary:
+    :path: "../node_modules/react-native-permissions/ios/MediaLibrary.podspec"
+  Permission-Notifications:
+    :path: "../node_modules/react-native-permissions/ios/Notifications.podspec"
+  Permission-PhotoLibrary:
+    :path: "../node_modules/react-native-permissions/ios/PhotoLibrary.podspec"
+  Permission-Reminders:
+    :path: "../node_modules/react-native-permissions/ios/Reminders.podspec"
   QrCode:
     :path: "../node_modules/react-native-lewin-qrcode/ios"
   RCTRequired:
@@ -551,8 +594,6 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/@react-native-community/art/ReactNativeART.podspec"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
-  ReactNativePermissions:
-    :path: "../node_modules/react-native-permissions"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCPushNotificationIOS:
@@ -569,6 +610,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-text-input-mask/ios/InputMask"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions/"
+  RNScreens:
+    :path: "../node_modules/react-native-screens"
   RNSha256:
     :path: "../node_modules/react-native-sha256"
   RNShare:
@@ -603,6 +648,14 @@ SPEC CHECKSUMS:
   jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
   Mixpanel: 61e6d8c0717c8e94ccc6d3a1ae8677b9a78f64c5
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
+  Permission-Calendars: dc345e3388149514603309c621151ff3cfd5816a
+  Permission-Camera: afad27bf90337684d4a86f3825112d648c8c4d3b
+  Permission-Contacts: edde2d433382b3118f0d4c9ebc7708d5d87c4f17
+  Permission-FaceID: fbdeb41087f35887f0cade55396007fadee3a234
+  Permission-MediaLibrary: dd1c48888cd95961fbfebdaebf8d4127c6e92e7d
+  Permission-Notifications: 231d0e1db2300b686548587d384ba414e6a93332
+  Permission-PhotoLibrary: 4d2eff62c8f4b8a27bcf045c0e36f5047efbbf20
+  Permission-Reminders: 330cfafecc259594cfd7845a035580b623f771ae
   QrCode: 1212ff8b8fae1a0e2c698d1c42560abcc0c9019b
   RCTRequired: f13f25e7b12f925f1f6a6a8c69d929a03c0129fe
   RCTTypeSafety: 44982c5c8e43ff4141eb519a8ddc88059acd1f3a
@@ -616,11 +669,11 @@ SPEC CHECKSUMS:
   React-jsinspector: b14e62ebe7a66e9231e9581279909f2fc3db6606
   react-native-background-timer: 1b6e6b4e10f1b74c367a1fdc3c72b67c619b222b
   react-native-calendar-events: 667f4141959b3f90c44cd328396c1488f216922d
-  react-native-camera: 2b74be8edc1103c4c46d1f4e5f41723d9ff052cc
+  react-native-camera: d9e7b66e40420dcef111f3265a00f01eea54c52c
   react-native-config: 7db9b96479164dfd7b2be68eb9079e08279511c4
   react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
-  react-native-netinfo: 2bb2e5094edcfecfb340a85053608526cb20f185
+  react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-text-input-mask: 07227297075f9653315f43b0424d596423a01736
@@ -637,8 +690,7 @@ SPEC CHECKSUMS:
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
-  ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
-  RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
+  RNCAsyncStorage: d059c3ee71738c39834a627476322a5a8cd5bf36
   RNCPushNotificationIOS: dc1c0c6aa18a128df123598149f42e848d26a4ac
   RNDeviceInfo: 310c1f43d418d950a193c7650de2f9559c906048
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
@@ -646,14 +698,16 @@ SPEC CHECKSUMS:
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNInputMask: 815461ebdf396beb62cf58916c35cf6930adb991
   RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
+  RNPermissions: ad71dd4f767ec254f2cd57592fbee02afee75467
+  RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
-  RNShare: bd6518701db274b8ba282b33620885f2225a5bcf
+  RNShare: a1d5064df7a0ebe778d001869b3f0a124bf0a491
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 569002f6327e25ef7644243ba2f16f565054a274
+PODFILE CHECKSUM: b184c97cdae2b2213f425ebbe9a11108a3138980
 
 COCOAPODS: 1.9.3
