@@ -80,7 +80,6 @@ export async function readLocaleDoc(
   const content = await fs.readFile(filename);
   const doc = yaml.safeLoad(content.toString(), {
     filename,
-    strict: true,
     json: false,
     schema: yaml.Schema.create(IncludeYamlType(localePath))
   });
