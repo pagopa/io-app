@@ -5,9 +5,9 @@ import themeVariables from "../theme/variables";
 import IconFont from "./ui/IconFont";
 
 type Props = {
-  adviceMessage: string;
-  adviceIconName?: string;
-  adviceIconColor?: string;
+  text: string;
+  iconName?: string;
+  iconColor?: string;
 };
 const styles = StyleSheet.create({
   container: {
@@ -33,11 +33,11 @@ const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => {
     <View style={styles.container}>
       <IconFont
         style={styles.icon}
-        name={props.adviceIconName || "io-notice"}
+        name={props.iconName || "io-notice"}
         size={iconSize}
-        color={props.adviceIconColor || themeVariables.brandPrimary}
+        color={props.iconColor || themeVariables.brandPrimary}
       />
-      <Text style={styles.text}>{props.adviceMessage}</Text>
+      <Text style={styles.text}>{props.text}</Text>
     </View>
   );
 };

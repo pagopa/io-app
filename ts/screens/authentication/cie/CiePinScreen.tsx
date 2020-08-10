@@ -130,8 +130,8 @@ class CiePinScreen extends React.PureComponent<Props, State> {
             />
             <View spacer={true} />
             <AdviceComponent
-              adviceMessage={I18n.t("login.expiration_info")}
-              adviceIconColor={"black"}
+              text={I18n.t("login.expiration_info")}
+              iconColor={"black"}
             />
           </View>
         </ScrollView>

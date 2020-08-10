@@ -5,6 +5,7 @@ import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
+import AdviceComponent from "../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
@@ -16,7 +17,6 @@ import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import variables from "../../theme/variables";
-import AdviceComponent from "../../components/AdviceComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> & NavigationScreenProps;
 
@@ -173,8 +173,8 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
           <View style={{ padding: variables.contentPadding }}>
             <View spacer={true} />
             <AdviceComponent
-              adviceMessage={I18n.t("login.expiration_info")}
-              adviceIconColor={"black"}
+              text={I18n.t("login.expiration_info")}
+              iconColor={"black"}
             />
           </View>
         </Content>

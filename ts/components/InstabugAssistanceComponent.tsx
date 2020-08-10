@@ -24,7 +24,7 @@ class InstabugAssistanceComponent extends React.PureComponent<Props> {
         <Text>{I18n.t("instabug.contextualHelp.descriptionChat")}</Text>
         <View spacer={true} large={true} />
         <AdviceComponent
-          adviceMessage={I18n.t("instabug.contextualHelp.assistanceWorkHours")}
+          text={I18n.t("instabug.contextualHelp.assistanceWorkHours")}
         />
         <View spacer={true} />
         <ButtonWithImage
