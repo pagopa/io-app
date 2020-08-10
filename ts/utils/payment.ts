@@ -194,13 +194,17 @@ export const getPaymentHistoryDetails = (
 };
 
 // return the transaction fee it transaction is defined and its fee property too
-export const getTransactionFee = (transaction?: Transaction): string | null => {
+export const getTransactionFee = (
+  transaction?: Transaction,
+  formatFunc: (fee: number) => string = (f: number) =>
+    formatNumberCentsToAmount(f, true)
+): string | null => {
   const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
     transaction,
     "fee",
     m => (m ? m.amount : undefined)
   ).getOrElse(undefined);
   return fromNullable(maybeFee)
-    .map(f => formatNumberCentsToAmount(f, true))
+    .map(formatFunc)
     .toNullable();
 };
