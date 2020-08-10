@@ -38,7 +38,8 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { maybeInnerProperty } from "../../utils/options";
 import {
   getErrorDescription,
-  getPaymentHistoryDetails
+  getPaymentHistoryDetails,
+  getTransactionFee
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
@@ -147,14 +148,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       m => m
     ).fold(notAvailable, id => `${id}`);
 
-    const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
-      payment.transaction,
-      "fee",
-      m => (m ? m.amount : undefined)
-    ).getOrElse(undefined);
-    const fee = fromNullable(maybeFee)
-      .map(f => formatNumberCentsToAmount(f, true))
-      .toNullable();
+    const fee = getTransactionFee(payment.transaction);
 
     const enteBeneficiario = maybeInnerProperty<
       PaymentRequestsGetResponse,
