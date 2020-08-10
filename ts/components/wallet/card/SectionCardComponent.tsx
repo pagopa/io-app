@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
+  topSpacing: {
+    marginTop: 2
+  },
   flexRow2: {
     flexDirection: "row",
     flex: 1,
@@ -117,7 +120,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             ]}
           >
             <View style={[styles.cardInner]}>
-              <View style={[styles.flexRow]}>
+              <View style={[styles.flexRow, styles.topSpacing]}>
                 <View style={styles.flexRow2}>
                   <Text
                     style={[styles.brandLightGray, styles.headerText]}
