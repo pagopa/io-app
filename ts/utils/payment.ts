@@ -22,6 +22,7 @@ import {
 } from "../store/reducers/payments/history";
 import { Psp, Transaction, Wallet } from "../types/pagopa";
 import { formatDateAsReminder } from "./dates";
+import { getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 
@@ -80,7 +81,7 @@ export function decodePagoPaQrCode(
  */
 export const pspsForLocale = (
   psps: ReadonlyArray<Psp>,
-  locale: string = I18n.locale.slice(0, 2)
+  locale: string = getLocalePrimaryWithFallback()
 ) => psps.filter(_ => (_.lingua ? _.lingua.toLowerCase() === locale : true));
 
 /**
