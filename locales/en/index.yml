@@ -124,6 +124,7 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
+  expiration_info: For security reasons, after 30 days from the last login, we will ask you to log in again to use IO
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
