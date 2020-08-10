@@ -65,7 +65,7 @@ export const dsuData: Dsu = {
   request_id: 1,
   isee_type: "isee_id",
   dsu_protocol_id: "dsu_protocol_id" as NonEmptyString,
-  dsu_created_at: "2020-05-25T00:00:00.000Z",
+  dsu_created_at: new Date("2020-05-25T00:00:00.000Z"),
   has_discrepancies: false,
   family_members: familyMembers,
   max_amount: 499,

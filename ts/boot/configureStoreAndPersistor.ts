@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-import { applyMiddleware, compose, createStore, Reducer } from "redux";
+import { applyMiddleware, compose, createStore, Reducer, Store } from "redux";
 import { createLogger } from "redux-logger";
 import {
   createMigrate,
@@ -15,7 +15,7 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "../sagas";
-import { Action, Store, StoreEnhancer } from "../store/actions/types";
+import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
 import { createNavigationHistoryMiddleware } from "../store/middlewares/navigationHistory";
 import { addMessagesIdsByServiceId } from "../store/migrations/addMessagesIdsByServiceId";
