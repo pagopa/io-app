@@ -1,9 +1,14 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import I18n from "../i18n";
 import themeVariables from "../theme/variables";
 import IconFont from "./ui/IconFont";
+
+type Props = {
+  text: string;
+  iconName?: string;
+  iconColor?: string;
+};
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row"
@@ -20,23 +25,21 @@ const styles = StyleSheet.create({
 
 const iconSize = 18;
 /**
- * This component displays a box with an icon and some text to inform about assistance work days/hours
+ * This component displays an info icon on top-left and a text message
  * @constructor
  */
-const AssistanceAdviceComponent: React.FunctionComponent<{}> = () => {
+const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <View style={styles.container}>
       <IconFont
         style={styles.icon}
-        name={"io-notice"}
+        name={props.iconName || "io-notice"}
         size={iconSize}
-        color={themeVariables.brandPrimary}
+        color={props.iconColor || themeVariables.brandPrimary}
       />
-      <Text style={styles.text}>
-        {I18n.t("instabug.contextualHelp.assistanceWorkHours")}
-      </Text>
+      <Text style={styles.text}>{props.text}</Text>
     </View>
   );
 };
 
-export default React.memo(AssistanceAdviceComponent);
+export default React.memo(AdviceComponent);
