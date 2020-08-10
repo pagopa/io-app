@@ -691,6 +691,7 @@ wallet:
     newCode: Richiedi nuovo codice
     info: Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono
   transactionDetails: Dettagli della transazione
+  transactionFullReason: Causale completa
   detailsTransaction:
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
