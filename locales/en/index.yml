@@ -770,6 +770,7 @@ wallet:
   errorTransaction:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
+  transactionFullReason: Full reason
   detailsTransaction:
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   total: Total
