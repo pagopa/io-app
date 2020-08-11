@@ -170,7 +170,7 @@
     "prettier": "1.14.2",
     "react-native-typescript-transformer": "^1.2.12",
     "react-test-renderer": "16.13.1",
-    "redux-saga-test-plan": "^3.7.0",
+    "redux-saga-test-plan": "4.0.0-rc.3",
     "rn-nodeify": "^10.0.1",
     "standard-version": "^8.0.2",
     "ts-jest": "^25.1.0",
