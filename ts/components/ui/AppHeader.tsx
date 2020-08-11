@@ -1,23 +1,24 @@
 /**
  * A customized Header component.
  */
-import { Header, NativeBase } from "native-base";
+import { Header, NativeBase, View } from "native-base";
 import * as React from "react";
+import { ViewProps } from "react-native";
 import variables from "../../theme/variables";
 import ConnectionBar from "../ConnectionBar";
 
-type Props = NativeBase.Header;
+type Props = NativeBase.Header & ViewProps;
 
-const AppHeader: React.SFC<Props> = props => {
+const AppHeader = (props: React.PropsWithChildren<Props>) => {
   return (
-    <React.Fragment>
+    <View>
       <Header
         androidStatusBarColor={variables.androidStatusBarColor}
         iosBarStyle={"dark-content"}
         {...props}
       />
       <ConnectionBar />
-    </React.Fragment>
+    </View>
   );
 };
 

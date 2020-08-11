@@ -9,6 +9,7 @@ import {
   IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
 import { ServiceId } from "../../definitions/backend/ServiceId";
+import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ServicesByScope } from "../../definitions/content/ServicesByScope";
@@ -68,6 +69,21 @@ const getServicesByScopeT: GetServicesByScopeT = {
   response_decoder: basicResponseDecoder(ServicesByScope)
 };
 
+type GetContextualHelpT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<ContextualHelp>
+>;
+
+const getContextualHelpT: GetContextualHelpT = {
+  method: "get",
+  url: () => `/contextualhelp/data.json`,
+  query: _ => ({}),
+  headers: _ => ({}),
+  response_decoder: basicResponseDecoder(ContextualHelp)
+};
+
 /**
  * A client for the static content
  */
@@ -80,6 +96,7 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
   return {
     getService: createFetchRequestForApi(getServiceT, options),
     getMunicipality: createFetchRequestForApi(getMunicipalityT, options),
-    getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options)
+    getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options),
+    getContextualHelp: createFetchRequestForApi(getContextualHelpT, options)
   };
 }

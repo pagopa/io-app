@@ -3,7 +3,10 @@ import { call, put, select, take, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { startApplicationInitialization } from "../store/actions/application";
-import { sessionInvalid } from "../store/actions/authentication";
+import {
+  checkCurrentSession,
+  sessionInvalid
+} from "../store/actions/authentication";
 import {
   identificationCancel,
   identificationForceLogout,
@@ -16,12 +19,17 @@ import {
 import { navigateToMessageDetailScreenAction } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import {
+  paymentDeletePayment,
+  runDeleteActivePaymentSaga
+} from "../store/actions/wallet/payment";
+import {
   IdentificationCancelData,
   IdentificationGenericData,
   IdentificationResult,
   IdentificationSuccessData
 } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
+import { paymentsCurrentStateSelector } from "../store/reducers/payments/current";
 import { GlobalState } from "../store/reducers/types";
 import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
@@ -47,6 +55,19 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
       return IdentificationResult.cancel;
 
     case getType(identificationPinReset): {
+      // If a payment is occurring, delete the active payment from pagoPA
+      const paymentState: ReturnType<
+        typeof paymentsCurrentStateSelector
+      > = yield select(paymentsCurrentStateSelector);
+      if (paymentState.kind === "ACTIVATED") {
+        yield put(runDeleteActivePaymentSaga());
+        // we try to wait untinl the payment deactivation is completed. If the request to backend fails for any reason, we proceed anyway with session invalidation
+        yield take([
+          paymentDeletePayment.failure,
+          paymentDeletePayment.success
+        ]);
+      }
+
       // Invalidate the session
       yield put(sessionInvalid());
 
@@ -61,6 +82,8 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
     }
 
     case getType(identificationSuccess): {
+      // if the identification has been successfully, check if the current session is still valid
+      yield put(checkCurrentSession.request());
       return IdentificationResult.success;
     }
 
@@ -83,6 +106,7 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
 export function* startAndReturnIdentificationResult(
   pin: PinString,
   canResetPin: boolean = true,
+  isValidatingTask: boolean = false,
   identificationGenericData?: IdentificationGenericData,
   identificationCancelData?: IdentificationCancelData,
   identificationSuccessData?: IdentificationSuccessData,
@@ -92,6 +116,7 @@ export function* startAndReturnIdentificationResult(
     identificationStart(
       pin,
       canResetPin,
+      isValidatingTask,
       identificationGenericData,
       identificationCancelData,
       identificationSuccessData,
@@ -111,6 +136,7 @@ function* startAndHandleIdentificationResult(
     identificationStart(
       pin,
       identificationRequestAction.payload.canResetPin,
+      identificationRequestAction.payload.isValidatingTask,
       identificationRequestAction.payload.identificationGenericData,
       identificationRequestAction.payload.identificationCancelData,
       identificationRequestAction.payload.identificationSuccessData,

@@ -36,6 +36,11 @@ type Props = NavigationScreenProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+type State = {
+  // flag to know if we are loading data from an user choice
+  requestProcess: boolean;
+};
+
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitle",
   body: "profile.main.privacy.privacyPolicy.contextualHelpContent"
@@ -68,7 +73,19 @@ const needValidatedEmailSubtitle = I18n.t(
   "profile.alerts.emailNotValidated.subtitle"
 );
 
-class PrivacyMainScreen extends React.PureComponent<Props> {
+class PrivacyMainScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { requestProcess: false };
+  }
+
+  public componentDidMount() {
+    // get a fresh info about DOWNLOAD/DELETE state
+    // if any of these is WIP a relative badge will be displayed
+    this.props.loadUserDataRequest(UserDataProcessingChoiceEnum.DELETE);
+    this.props.loadUserDataRequest(UserDataProcessingChoiceEnum.DOWNLOAD);
+  }
+
   // Show an alert reporting the request has been submitted
   private handleUserDataRequestAlert = (
     choice: UserDataProcessingChoiceEnum
@@ -77,8 +94,17 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
     if (
       pot.isSome(requestState) &&
       (requestState.value === undefined ||
-        requestState.value.status === UserDataProcessingStatusEnum.CLOSED)
+        requestState.value.status === UserDataProcessingStatusEnum.CLOSED ||
+        requestState.value.status === UserDataProcessingStatusEnum.ABORTED)
     ) {
+      // if user asks for download, navigate to a screen to inform about the process
+      // there he/she can request to download his/her data
+      if (choice === UserDataProcessingChoiceEnum.DOWNLOAD) {
+        this.props.navigation.navigate({
+          routeName: ROUTES.PROFILE_DOWNLOAD_DATA
+        });
+        return;
+      }
       Alert.alert(requestAlertTitle[choice], requestAlertSubtitle[choice], [
         {
           text: I18n.t("global.buttons.cancel"),
@@ -98,7 +124,7 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
     }
   };
 
-  // show an alert to confirm the request sumbission
+  // show an alert to confirm the request submission
   private handleConfirmAlert = (choice: UserDataProcessingChoiceEnum) => {
     Alert.alert(confirmAlertTitle[choice], confirmAlertSubtitle[choice]);
   };
@@ -108,9 +134,11 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
   private handleDownloadOrDeletePress = (
     choice: UserDataProcessingChoiceEnum
   ): void => {
-    !this.props.isEmailValidated
-      ? Alert.alert(needValidatedEmailTitle, needValidatedEmailSubtitle)
-      : this.props.loadUserDataRequest(choice);
+    if (!this.props.isEmailValidated) {
+      Alert.alert(needValidatedEmailTitle, needValidatedEmailSubtitle);
+      return;
+    }
+    this.props.loadUserDataRequest(choice);
   };
 
   public componentDidUpdate(prevProps: Props) {
@@ -127,12 +155,18 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
       ) {
         if (pot.isError(currentState)) {
           showToast(errorMessage);
-        } else if (pot.isNone(prevProps.userDataProcessing[choice])) {
-          this.handleUserDataRequestAlert(choice);
+        }
+        // if user ask for download/delete prompt an alert to get confirmation
+        else if (
+          this.state.requestProcess &&
+          pot.isNone(prevProps.userDataProcessing[choice])
+        ) {
+          this.setState({ requestProcess: false }, () => {
+            this.handleUserDataRequestAlert(choice);
+          });
         }
       }
     };
-
     checkUpdate(
       I18n.t("profile.main.privacy.exportData.error"),
       UserDataProcessingChoiceEnum.DOWNLOAD
@@ -153,7 +187,9 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
         pot.map(
           this.props.userDataProcessing[choice],
           v =>
-            v !== undefined && v.status !== UserDataProcessingStatusEnum.CLOSED
+            v !== undefined &&
+            v.status !== UserDataProcessingStatusEnum.CLOSED &&
+            v.status !== UserDataProcessingStatusEnum.ABORTED
         ),
         false
       )
@@ -188,15 +224,18 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
               useExtendedSubTitle={true}
             />
 
-            {/* Remove account */}
+            {/* Remove account - temporary disabled https://www.pivotaltracker.com/story/show/173418452
+
             <ListItemComponent
               title={I18n.t("profile.main.privacy.removeAccount.title")}
               subTitle={I18n.t(
                 "profile.main.privacy.removeAccount.description"
               )}
               onPress={() =>
-                this.handleDownloadOrDeletePress(
-                  UserDataProcessingChoiceEnum.DELETE
+                this.setState({ requestProcess: true }, () =>
+                  this.handleDownloadOrDeletePress(
+                    UserDataProcessingChoiceEnum.DELETE
+                  )
                 )
               }
               useExtendedSubTitle={true}
@@ -206,14 +245,16 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
                   : undefined
               }
             />
-
+            */}
             {/* Export your data */}
             <ListItemComponent
               title={I18n.t("profile.main.privacy.exportData.title")}
               subTitle={I18n.t("profile.main.privacy.exportData.description")}
               onPress={() =>
-                this.handleDownloadOrDeletePress(
-                  UserDataProcessingChoiceEnum.DOWNLOAD
+                this.setState({ requestProcess: true }, () =>
+                  this.handleDownloadOrDeletePress(
+                    UserDataProcessingChoiceEnum.DOWNLOAD
+                  )
                 )
               }
               useExtendedSubTitle={true}
@@ -232,7 +273,7 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
       <ContentComponent
         loadingCaption={I18n.t("profile.main.privacy.loading")}
         loadingOpacity={0.9}
-        isLoading={this.props.isLoading}
+        isLoading={this.props.isLoading && this.state.requestProcess}
       />
     );
   }

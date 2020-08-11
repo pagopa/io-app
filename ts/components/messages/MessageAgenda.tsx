@@ -14,6 +14,7 @@ import {
   SectionListData,
   SectionListRenderItem,
   SectionListScrollParams,
+  SectionListStatic,
   StyleSheet
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -156,7 +157,7 @@ export type ItemLayout = {
 };
 
 type SelectedSectionListProps = Pick<
-  ComponentProps<SectionList<MessageAgendaSection>>,
+  ComponentProps<SectionListStatic<MessageAgendaSection>>,
   "refreshing" | "onContentSizeChange"
 >;
 
@@ -520,6 +521,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           extraData={{ servicesById, paymentsByRptId }}
           inverted={false}
           bounces={false}
+          stickySectionHeadersEnabled={true}
           keyExtractor={keyExtractor}
           ref={this.sectionListRef}
           onScroll={this.onScrollHandler}

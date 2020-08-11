@@ -7,13 +7,12 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Modal, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import Checkout3DsComponent from "../../components/Checkout3DsComponent";
 import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import NoticeBox from "../../components/NoticeBox";
@@ -38,6 +37,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
+import Checkout3DsComponent from "../modal/Checkout3DsModal";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 type NavigationParams = Readonly<{
@@ -48,6 +48,7 @@ type NavigationParams = Readonly<{
     verifica: PaymentRequestsGetResponse;
     idPayment: string;
   }>;
+  keyFrom?: string;
 }>;
 
 type ReduxMergedProps = Readonly<{
@@ -189,18 +190,12 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             rightButton={primaryButtonProps}
           />
         )}
-        <Modal
-          animationType="fade"
-          transparent={false}
-          visible={this.props.checkout3dsUrl.isSome()}
-        >
-          {this.props.checkout3dsUrl.isSome() && (
-            <Checkout3DsComponent
-              url={this.props.checkout3dsUrl.value}
-              onCheckout3dsSuccess={this.props.creditCardCheckout3dsSuccess}
-            />
-          )}
-        </Modal>
+        {this.props.checkout3dsUrl.isSome() && (
+          <Checkout3DsComponent
+            url={this.props.checkout3dsUrl.value}
+            onCheckout3dsSuccess={this.props.creditCardCheckout3dsSuccess}
+          />
+        )}
       </BaseScreenComponent>
     );
   }
@@ -281,7 +276,12 @@ const mapDispatchToProps = (
         }
       );
     } else {
-      dispatch(navigateToWalletHome({ newMethodAdded: true }));
+      dispatch(
+        navigateToWalletHome({
+          newMethodAdded: maybeWallet.isSome(),
+          keyFrom: props.navigation.getParam("keyFrom")
+        })
+      );
     }
   };
   return {

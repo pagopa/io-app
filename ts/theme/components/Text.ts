@@ -9,13 +9,14 @@ declare module "native-base" {
     interface Text extends TextProperties {
       link?: boolean;
       bold?: boolean;
+      semibold?: boolean;
       italic?: boolean;
+      underlined?: boolean;
       leftAlign?: boolean;
       rightAlign?: boolean;
-      alternativeBold?: boolean;
+      alignCenter?: boolean;
       white?: boolean;
       dark?: boolean;
-      alignCenter?: boolean;
       primary?: boolean;
       badge?: boolean;
       robotomono?: boolean;
@@ -44,20 +45,20 @@ export default (): Theme => {
     ".bold": {
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
+    ".semibold": {
+      ...makeFontStyleObject(Platform.select, variables.textLinkWeight)
+    },
     ".italic": {
       ...makeFontStyleObject(Platform.select, variables.textNormalWeight, true)
+    },
+    ".underlined": {
+      textDecorationLine: "underline"
     },
     ".leftAlign": {
       textAlign: "left"
     },
     ".rightAlign": {
       textAlign: "right"
-    },
-    ".alternativeBold": {
-      lineHeight: variables.lineHeight2,
-      fontWeight: variables.textBoldWeight,
-      color: variables.h1Color,
-      ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
     ".white": {
       color: variables.colorWhite
@@ -94,6 +95,7 @@ export default (): Theme => {
         )
       }
     },
-    lineHeight: variables.lineHeightBase
+    lineHeight: variables.lineHeightBase,
+    fontSize: variables.fontSizeBase
   };
 };

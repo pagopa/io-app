@@ -2,7 +2,7 @@ import { right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { put } from "redux-saga/effects";
-import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import {
   loadMessage as loadMessageAction,
@@ -15,6 +15,7 @@ import {
   messagesStateByIdSelector,
   MessageState
 } from "../../../store/reducers/entities/messages/messagesById";
+import { messagesStatusSelector } from "../../../store/reducers/entities/messages/messagesStatus";
 import { servicesByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { loadMessages } from "../../startup/watchLoadMessagesSaga";
 
@@ -22,7 +23,7 @@ const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testMessageId2 = "01CD4QN3Q2KS2T791PPMT2H9DM";
 const testServiceId1 = "5a563817fcc896087002ea46c49a";
 
-const testMessageWithContent1: CreatedMessageWithContent = {
+const testMessageWithContent1: CreatedMessageWithContentAndAttachments = {
   id: testMessageId1,
   fiscal_code: "" as any,
   created_at: new Date(),
@@ -43,7 +44,7 @@ const testMessageMeta1: MessageState = {
   message: pot.some(testMessageWithContent1)
 };
 
-const testMessageWithContent2: CreatedMessageWithContent = {
+const testMessageWithContent2: CreatedMessageWithContentAndAttachments = {
   id: testMessageId2,
   fiscal_code: "" as any,
   created_at: new Date(),
@@ -108,14 +109,10 @@ describe("watchLoadMessages", () => {
       const getService = jest.fn();
       testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
-        .select(messagesAllIdsSelector)
-        // Return an empty pot array as messagesAllIdsSelector response
-        .next(pot.some([]))
         .call(getMessages, {})
         // Return an error message as getMessages response
         .next(right({ status: 500, value: { title: "Backend error" } }))
         .put(loadMessagesAction.failure(Error("Backend error")))
-        .next()
         .next()
         .next()
         .isDone();
@@ -127,14 +124,17 @@ describe("watchLoadMessages", () => {
       const getService = jest.fn();
       testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
-        .select(messagesAllIdsSelector)
-        // Return an empty pot array as messagesAllIdsSelector response
-        .next(pot.some([]))
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next(right({ status: 200, value: testMessages }))
         .put(loadMessagesAction.success(testMessages.items.map(_ => _.id)))
         .next()
+        .select(messagesAllIdsSelector)
+        // Return an empty pot array as messagesAllIdsSelector response
+        .next(pot.some([]))
+        .select(messagesStatusSelector)
+        // Return an empty pot array as messagesAllIdsSelector response
+        .next({})
         .select(messagesStateByIdSelector)
         // Return an empty object as messagesByIdSelectors response (no message already stored)
         .next({})
@@ -155,14 +155,17 @@ describe("watchLoadMessages", () => {
       const getService = jest.fn();
       testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
-        .select(messagesAllIdsSelector)
-        // Return an empty pot array as messagesAllIdsSelector response
-        .next(pot.some([]))
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next(right({ status: 200, value: testMessages }))
         .put(loadMessagesAction.success(testMessages.items.map(_ => _.id)))
         .next()
+        .select(messagesAllIdsSelector)
+        // Return an empty pot array as messagesAllIdsSelector response
+        .next(pot.some([]))
+        .select(messagesStatusSelector)
+        // Return an empty pot array as messagesAllIdsSelector response
+        .next({})
         .select(messagesStateByIdSelector)
         // Return an object as messagesByIdSelectors response
         .next({
@@ -183,14 +186,23 @@ describe("watchLoadMessages", () => {
       const getService = jest.fn();
       testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
-        .select(messagesAllIdsSelector)
-        // Return an empty pot array as messagesAllIdsSelector response
-        .next(pot.some(cachedMessagesAllIds))
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next(right({ status: 200, value: testOneMessage }))
         .put(loadMessagesAction.success(testOneMessage.items.map(_ => _.id)))
         .next()
+        .select(messagesAllIdsSelector)
+        // Return an empty pot array as messagesAllIdsSelector response
+        .next(
+          pot.some(
+            cachedMessagesAllIds.filter(
+              id => testOneMessage.items.map(_ => _.id).indexOf(id) === -1
+            )
+          )
+        )
+        .select(messagesStatusSelector)
+        // Return an empty pot array as messagesAllIdsSelector response
+        .next({})
         .put(removeMessagesAction([testMessageMeta2.meta.id]))
         .next()
         .select(messagesStateByIdSelector)

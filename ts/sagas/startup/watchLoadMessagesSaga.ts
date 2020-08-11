@@ -31,6 +31,7 @@ import {
 import { loadServiceDetail } from "../../store/actions/services";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
 import { messagesStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
+import { messagesStatusSelector } from "../../store/reducers/entities/messages/messagesStatus";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
@@ -48,12 +49,6 @@ export function* loadMessages(
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
   try {
-    // Load already cached messages ids from the store
-    const potCachedMessagesAllIds: ReturnType<
-      typeof messagesAllIdsSelector
-    > = yield select<GlobalState>(messagesAllIdsSelector);
-    const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
-
     // Request the list of messages from the Backend
     const response: SagaCallReturnType<typeof getMessages> = yield call(
       getMessages,
@@ -82,11 +77,32 @@ export function* loadMessages(
 
         yield put(loadMessagesAction.success(responseItemsIds));
 
+        // Load already cached messages ids from the store
+        const potCachedMessagesAllIds: ReturnType<
+          typeof messagesAllIdsSelector
+        > = yield select<GlobalState>(messagesAllIdsSelector);
+        const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
+
         // Calculate the ids of the message no more visible that we need
         // to remove from the cache.
-        const messagesIdsToRemoveFromCache = cachedMessagesAllIds.filter(
+        const messageIds = cachedMessagesAllIds.filter(
           _ => responseItemsIds.indexOf(_) < 0
         );
+
+        // Load already cached messages status ids from the store
+        const messagesStatusMapping: ReturnType<
+          typeof messagesStatusSelector
+        > = yield select<GlobalState>(messagesStatusSelector);
+        const messagesStatusIds = Object.keys(messagesStatusMapping).filter(
+          _ => responseItemsIds.indexOf(_) < 0
+        );
+
+        // Calculate the ids of the message no more visible that we need
+        // to remove from the messagesStatus cache.
+        const messagesIdsToRemoveFromCache = Array.from(
+          new Set([...messageIds, ...messagesStatusIds])
+        );
+
         // Remove the details of the no more visible messages from the
         // redux store.
         if (messagesIdsToRemoveFromCache.length > 0) {

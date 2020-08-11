@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
   },
   oneThird: {
     flex: 5
-  }
+  },
+  marginTop1: { marginTop: 1 }
 });
 
 class CalendarEventButton extends React.PureComponent<Props, State> {
@@ -195,8 +196,8 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
     searchEventInCalendar(dueDate, title)
       .then(mayBeEventId =>
         mayBeEventId.foldL(
-          async () => {
-            await saveCalendarEvent(
+          () => {
+            saveCalendarEvent(
               calendar,
               message,
               dueDate,
@@ -288,8 +289,8 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
           // If the user denied permission previously (not in this session)
           // prompt an alert to inform that his calendar permissions could have been turned off
           Alert.alert(
+            I18n.t("global.genericAlert"),
             I18n.t("messages.cta.calendarPermDenied.title"),
-            undefined,
             [
               {
                 text: I18n.t("messages.cta.calendarPermDenied.cancel"),
@@ -327,7 +328,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         style={this.props.small ? styles.oneThird : styles.button}
       >
         <IconFont name={iconName} />
-        <Text>{reminderText}</Text>
+        <Text style={styles.marginTop1}>{reminderText}</Text>
       </ButtonDefaultOpacity>
     );
   }

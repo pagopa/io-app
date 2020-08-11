@@ -19,6 +19,9 @@ const deltaTimespanBetweenAttempts = 30;
 
 export const maxAttempts = 8;
 
+const maxDeltaTimespan =
+  (maxAttempts - freeAttempts - 1) * deltaTimespanBetweenAttempts;
+
 export enum IdentificationResult {
   "cancel" = "cancel",
   "pinreset" = "pinreset",
@@ -42,6 +45,7 @@ type IdentificationStartedState = {
   kind: "started";
   pin: PinString;
   canResetPin: boolean;
+  isValidatingTask: boolean; // it is true if the identification process is occurring to confirm a task (eg. a payment)
   identificationGenericData?: IdentificationGenericData;
   identificationCancelData?: IdentificationCancelData;
   identificationSuccessData?: IdentificationSuccessData;
@@ -82,13 +86,19 @@ const INITIAL_STATE: IdentificationState = {
 const nextErrorData = (
   errorData: IdentificationFailData
 ): IdentificationFailData => {
+  // avoid overflow of remaining attempts
+  const nextRemainingAttempts = Math.max(1, errorData.remainingAttempts - 1);
+
   const newTimespan =
-    maxAttempts - errorData.remainingAttempts + 1 > freeAttempts
-      ? errorData.timespanBetweenAttempts + deltaTimespanBetweenAttempts
+    maxAttempts - nextRemainingAttempts > freeAttempts
+      ? Math.min(
+          maxDeltaTimespan,
+          errorData.timespanBetweenAttempts + deltaTimespanBetweenAttempts
+        )
       : 0;
   return {
     nextLegalAttempt: new Date(Date.now() + newTimespan * 1000),
-    remainingAttempts: errorData.remainingAttempts - 1,
+    remainingAttempts: nextRemainingAttempts,
     timespanBetweenAttempts: newTimespan
   };
 };
@@ -144,7 +154,11 @@ const reducer = (
   }
 };
 
+export default reducer;
+
+// Selectors
 export const identificationFailSelector = (state: GlobalState) =>
   fromNullable(state.identification.fail);
 
-export default reducer;
+export const progressSelector = (state: GlobalState) =>
+  state.identification.progress;

@@ -3,10 +3,11 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import { BackHandler, NavState, StyleSheet } from "react-native";
+import { BackHandler, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
+  WebViewNavigation,
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
 import I18n from "../../i18n";
@@ -15,7 +16,6 @@ import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 
 type Props = {
-  ciePin: string;
   onClose: () => void;
   onSuccess: (authorizationUri: string) => void;
 };
@@ -40,7 +40,10 @@ const CIE_IDP_ID = "xx_servizicie";
 // this value assignment tries to decrease the sleeping time of a script
 // sleeping is due to allow user to read page content until the content changes to an
 // automatic redirect
-const injectJs = "seconds = 0;";
+const injectJs = `
+  seconds = 0;
+  true;
+`;
 
 export default class CieRequestAuthenticationOverlay extends React.PureComponent<
   Props,
@@ -76,7 +79,9 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     });
   };
 
-  private handleOnShouldStartLoadWithRequest = (event: NavState): boolean => {
+  private handleOnShouldStartLoadWithRequest = (
+    event: WebViewNavigation
+  ): boolean => {
     if (this.state.findOpenApp) {
       return false;
     }
@@ -101,6 +106,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
   private renderError = () => {
     return (
       <GenericErrorComponent
+        avoidNavigationEvents={true}
         onRetry={this.handleOnRetry}
         onCancel={this.props.onClose}
         image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?

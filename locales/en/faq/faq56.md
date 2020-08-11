@@ -1,2 +1,1 @@
-Puoi richiedere di cancellare tutti i tuoi dati personali associati all'app IO. Al termine dell'operazione di eliminazione dei dati, riceverai un messaggio di conferma al tuo inirizzo email associato all'app.
-Questo non significa che non potrai più utilizzare IO: potrai accedere nuovamente all'app ma come un nuovo utente.
+You can request to delete your account and all the personal data associated with the IO app. When the deletion is completed, you will receive a confirmation message to your email address associated with the app. This does not mean that you will no longer be able to use IO: you will be able to access the app again, as if you were a new user.

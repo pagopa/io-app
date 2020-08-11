@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
   },
 
   level1: {
-    zIndex: -1
+    zIndex: Platform.OS === "android" ? 1 : -1
   },
 
   level2: {
-    zIndex: -2
+    zIndex: Platform.OS === "android" ? 1 : -2
   },
 
   animatedDarkItem: {
@@ -149,6 +149,7 @@ export default class AnimatedScreenContent extends React.Component<
             <ScreenContentHeader
               title={this.props.title}
               icon={this.props.icon}
+              iconFont={this.props.iconFont}
               dark={this.props.dark}
             />
           )}

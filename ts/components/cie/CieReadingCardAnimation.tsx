@@ -82,12 +82,14 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     // color up to progressThreshold, the second up to 100
     // from 0 to 60 in 8 secs
     const firstAnim = Animated.timing(this.progressAnimatedValue, {
+      useNativeDriver: false,
       toValue: progressThreshold,
       easing: Easing.linear,
       duration: 8000
     });
     // from 60 to 100 in 10 secs
     const secondAnim = Animated.timing(this.progressAnimatedValue, {
+      useNativeDriver: false,
       toValue: 100,
       easing: Easing.linear,
       duration: 10000
@@ -160,7 +162,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
 
   public render() {
     return (
-      <View style={styles.imgContainer}>
+      <View style={styles.imgContainer} accessible={false}>
         {this.props.readingState === ReadingState.waiting_card && (
           <View style={styles.rings}>
             <AnimatedRing
