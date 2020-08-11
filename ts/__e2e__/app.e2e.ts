@@ -10,7 +10,7 @@ declare const by: Detox.Matchers;
 
 import * as detox from "detox";
 import adapter from "detox/runners/jest/adapter";
-import { delay } from "redux-saga";
+import { delay } from "redux-saga/effects";
 
 const config = require("package.json").detox;
 

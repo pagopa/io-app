@@ -1,7 +1,7 @@
 // tslint:disable:readonly-array
 
 import { Pot } from "italia-ts-commons/lib/pot";
-import { Effect } from "redux-saga";
+import { Effect } from "redux-saga/effects";
 import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";
 
 export type SagaCallReturnType<

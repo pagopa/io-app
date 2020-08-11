@@ -5,7 +5,7 @@ import { Function1, Lazy } from "fp-ts/lib/function";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { IResponseType } from "italia-ts-commons/lib/requests";
-import { delay } from "redux-saga";
+import { delay } from "redux-saga/effects";
 
 /**
  * Provides the logic for caching and updating a session token by wrapping

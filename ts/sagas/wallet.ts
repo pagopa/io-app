@@ -6,9 +6,11 @@
 
 import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { delay } from "redux-saga";
+
+import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import {
   call,
+  delay,
   Effect,
   fork,
   put,
@@ -27,7 +29,9 @@ import {
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
+import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
+import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import {
   backToEntrypointPayment,
   paymentAttiva,
@@ -71,6 +75,7 @@ import {
   setFavouriteWalletRequest,
   setWalletSessionEnabled
 } from "../store/actions/wallet/wallets";
+import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 
 import {
@@ -81,11 +86,6 @@ import {
 import { SessionToken } from "../types/SessionToken";
 
 import { defaultRetryingFetch } from "../utils/fetch";
-
-import { DeferredPromise } from "italia-ts-commons/lib/promises";
-import ROUTES from "../navigation/routes";
-import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
-import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
 import { SessionManager } from "../utils/SessionManager";
 import { paymentsDeleteUncompletedSaga } from "./payments";
@@ -156,7 +156,7 @@ function* startOrResumeAddCreditCardSaga(
   while (true) {
     // before each step we select the updated payment state to know what has
     // been already done.
-    const state: GlobalState["wallet"]["wallets"] = yield select<GlobalState>(
+    const state: GlobalState["wallet"]["wallets"] = yield select(
       _ => _.wallet.wallets
     );
 
@@ -331,9 +331,9 @@ function* startOrResumePaymentActivationSaga(
   while (true) {
     // before each step we select the updated payment state to know what has
     // been already done.
-    const paymentState: GlobalState["wallet"]["payment"] = yield select<
-      GlobalState
-    >(_ => _.wallet.payment);
+    const paymentState: GlobalState["wallet"]["payment"] = yield select(
+      _ => _.wallet.payment
+    );
 
     // first step: Attiva
     if (pot.isNone(paymentState.attiva)) {
@@ -453,9 +453,9 @@ function* pollTransactionSaga(
  * This is a best effort operation as the result is actually ignored.
  */
 function* deleteActivePaymentSaga() {
-  const potPaymentId: GlobalState["wallet"]["payment"]["paymentId"] = yield select<
-    GlobalState
-  >(_ => _.wallet.payment.paymentId);
+  const potPaymentId: GlobalState["wallet"]["payment"]["paymentId"] = yield select(
+    _ => _.wallet.payment.paymentId
+  );
   const maybePaymentId = pot.toOption(potPaymentId);
   // stop polling
   shouldAbortPaymentIdPollingRequest.e2(true);
@@ -528,7 +528,7 @@ export function* watchWalletSaga(
   // has an email address validated
   const isEmailValidated: ReturnType<
     typeof isProfileEmailValidatedSelector
-  > = yield select<GlobalState>(isProfileEmailValidatedSelector);
+  > = yield select(isProfileEmailValidatedSelector);
   yield call(pmSessionManager.setSessionEnabled, isEmailValidated);
   //
   // Sagas
@@ -729,7 +729,7 @@ function* setWalletSessionEnabledSaga(
  */
 export function* watchPaymentInitializeSaga(): Iterator<Effect> {
   yield takeEvery(getType(paymentInitializeState), function*() {
-    const nav: GlobalState["nav"] = yield select<GlobalState>(_ => _.nav);
+    const nav: GlobalState["nav"] = yield select(_ => _.nav);
     const currentRouteName = getCurrentRouteName(nav);
     const currentRouteKey = getCurrentRouteKey(nav);
     if (currentRouteName !== undefined && currentRouteKey !== undefined) {
@@ -750,9 +750,9 @@ export function* watchPaymentInitializeSaga(): Iterator<Effect> {
  */
 export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
   yield takeEvery(getType(backToEntrypointPayment), function*() {
-    const entrypointRoute: GlobalState["wallet"]["payment"]["entrypointRoute"] = yield select<
-      GlobalState
-    >(_ => _.wallet.payment.entrypointRoute);
+    const entrypointRoute: GlobalState["wallet"]["payment"]["entrypointRoute"] = yield select(
+      _ => _.wallet.payment.entrypointRoute
+    );
     if (entrypointRoute !== undefined) {
       const key = entrypointRoute ? entrypointRoute.key : undefined;
       const routeName = entrypointRoute ? entrypointRoute.name : undefined;

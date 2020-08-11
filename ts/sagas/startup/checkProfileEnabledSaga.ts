@@ -1,4 +1,4 @@
-import { Effect } from "redux-saga";
+import { Effect } from "redux-saga/effects";
 import { put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 

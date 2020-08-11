@@ -4,7 +4,6 @@ import { ApplicationState } from "../../store/actions/application";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../../store/actions/notifications";
 import { pendingMessageStateSelector } from "../../store/reducers/notifications/pendingMessage";
-import { GlobalState } from "../../store/reducers/types";
 import { isPaymentOngoingSelector } from "../../store/reducers/wallet/payment";
 
 /**
@@ -21,12 +20,12 @@ export function* watchNotificationSaga(
     // Check if there is a payment ongoing
     const isPaymentOngoing: ReturnType<
       typeof isPaymentOngoingSelector
-    > = yield select<GlobalState>(isPaymentOngoingSelector);
+    > = yield select(isPaymentOngoingSelector);
 
     // Check if we have a pending notification message
     const pendingMessageState: ReturnType<
       typeof pendingMessageStateSelector
-    > = yield select<GlobalState>(pendingMessageStateSelector);
+    > = yield select(pendingMessageStateSelector);
 
     // We only navigate to the new message from a push if we're not in a
     // payment flow
