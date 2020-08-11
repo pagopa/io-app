@@ -1,6 +1,8 @@
 import * as React from "react";
 import { ComponentProps } from "react";
 import { ImageSourcePropType, SafeAreaView } from "react-native";
+import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../i18n";
@@ -9,8 +11,6 @@ import {
   confirmButtonProps
 } from "../../../components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../../components/hooks/useHardwareBackButton";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzeStyle } from "../../../components/Styles";
 
 const inpsDsuHomeUrl =

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Dimensions, Image, ImageSourcePropType } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
-import IconFont from "../../../../components/ui/IconFont";
-import customVariables from "../../../../theme/variables";
+import customVariables from "../../theme/variables";
+import IconFont from "../ui/IconFont";
 
 import { StyleSheet } from "react-native";
 
