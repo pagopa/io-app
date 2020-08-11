@@ -324,6 +324,9 @@ authentication:
       carousel:
         label: Presentazione di IO
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
+    session_expired:
+      title: La tua sessione è scaduta
+      body: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso, ti chiediamo di effettuare una nuova login con SPID o CIE per utilizzare IO.
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
