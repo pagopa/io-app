@@ -138,7 +138,7 @@ function renderInformationRow(
   );
 }
 
-const renderIfDefinedAndNotEmpty = (
+const renderRowWithDefinedValue = (
   data: string | undefined,
   header: string,
   linkingPrefix?: string,
@@ -381,24 +381,24 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       const metadata = potServiceMetadata.value;
       return (
         <React.Fragment>
-          {renderIfDefinedAndNotEmpty(
+          {renderRowWithDefinedValue(
             metadata.address,
             I18n.t("services.contactAddress"),
             undefined,
             "MAP"
           )}
-          {renderIfDefinedAndNotEmpty(
+          {renderRowWithDefinedValue(
             metadata.support_url,
             I18n.t("services.contactSupport")
           )}
-          {renderIfDefinedAndNotEmpty(
+          {renderRowWithDefinedValue(
             metadata.phone,
             I18n.t("services.contactPhone"),
             "tel:"
           )}
-          {renderIfDefinedAndNotEmpty(metadata.email, "Email", "mailto:")}
-          {renderIfDefinedAndNotEmpty(metadata.pec, "PEC", "mailto:")}
-          {renderIfDefinedAndNotEmpty(metadata.web_url, "Web")}
+          {renderRowWithDefinedValue(metadata.email, "Email", "mailto:")}
+          {renderRowWithDefinedValue(metadata.pec, "PEC", "mailto:")}
+          {renderRowWithDefinedValue(metadata.web_url, "Web")}
         </React.Fragment>
       );
     }
