@@ -10,7 +10,8 @@ declare const by: Detox.Matchers;
 
 import * as detox from "detox";
 import adapter from "detox/runners/jest/adapter";
-import { delay } from "redux-saga/effects";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { delayAsync } from "../utils/timer";
 
 const config = require("package.json").detox;
 
@@ -76,6 +77,7 @@ describe("e2e app", () => {
       .toBeVisible()
       .withTimeout(WAIT_TIMEOUT_MS);
     await expect(element(by.id("back-button"))).toBeVisible();
-    await delay(5 * 1000); // wait 10s to let webview load
+    const waitTime = (5 * 1000) as Millisecond;
+    await delayAsync(waitTime); // wait 10s to let webview load
   });
 });

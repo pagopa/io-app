@@ -5,7 +5,8 @@ import { Function1, Lazy } from "fp-ts/lib/function";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { IResponseType } from "italia-ts-commons/lib/requests";
-import { delay } from "redux-saga/effects";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { delayAsync } from "./timer";
 
 /**
  * Provides the logic for caching and updating a session token by wrapping
@@ -58,7 +59,7 @@ export class SessionManager<T> {
   private setEnabledSession = async (enabled: boolean) => {
     await this.mutex.runExclusive(() => {
       this.isSessionEnabled = enabled;
-      if (this.isSessionEnabled === false) {
+      if (!this.isSessionEnabled) {
         this.token = undefined;
       }
     });
@@ -90,7 +91,7 @@ export class SessionManager<T> {
     return async () => {
       let count = 0;
       while (count <= this.maxRetries) {
-        if (this.isSessionEnabled === false) {
+        if (!this.isSessionEnabled) {
           throw new Error(
             "cant perform any requests cause the session is not enabled"
           );
@@ -100,7 +101,10 @@ export class SessionManager<T> {
         if (this.token === undefined) {
           // if the token is still undefined, the refresh failed, try again
           // with a random delay to prevent the dogpile effect
-          await delay(Math.ceil(Math.random() * 100) + 50);
+          const waitSeconds = (Math.ceil(Math.random() * 100) +
+            50) as Millisecond;
+
+          await delayAsync(waitSeconds);
           // TODO: add customizable retry/backoff policy (https://www.pivotaltracker.com/story/show/170819459)
           continue;
         }
