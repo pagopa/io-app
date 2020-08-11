@@ -148,7 +148,7 @@ const renderRowWithDefinedValue = (
     renderInformationRow(
       header,
       value,
-      `${fromNullable(linkingPrefix).getOrElse("")}${value}`,
+      `${linkingPrefix || ""}${value}`,
       valueType
     )
   );
