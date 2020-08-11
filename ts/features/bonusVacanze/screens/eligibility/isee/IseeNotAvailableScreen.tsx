@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 
-import I18n from "../../../../../i18n";
 import { InfoScreenStyle } from "../../../../../components/infoScreen/InfoScreenComponent";
+import I18n from "../../../../../i18n";
 import { cancelBonusVacanzeRequest } from "../../../store/actions/bonusVacanze";
 import { BaseIseeErrorComponent } from "./BaseIseeErrorComponent";
 
@@ -63,4 +63,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
-export default connect(null, mapDispatchToProps)(IseeNotAvailableScreen);
+export default connect(
+  null,
+  mapDispatchToProps
+)(IseeNotAvailableScreen);

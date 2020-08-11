@@ -3,9 +3,9 @@ import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { ActivityIndicator, SafeAreaView } from "react-native";
+import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzeStyle } from "../Styles";
 
 export type LoadingErrorProps = {
@@ -57,10 +57,15 @@ const delay = 100 as Millisecond;
  * @param props
  * @constructor
  */
-export const LoadingErrorComponent: React.FunctionComponent<LoadingErrorProps> = props => {
-  useEffect(() => {
-    setAccessibilityFocus(props.isLoading ? loadingRef : errorRef, delay);
-  }, [props.isLoading]);
+export const LoadingErrorComponent: React.FunctionComponent<
+  LoadingErrorProps
+> = props => {
+  useEffect(
+    () => {
+      setAccessibilityFocus(props.isLoading ? loadingRef : errorRef, delay);
+    },
+    [props.isLoading]
+  );
 
   return (
     <SafeAreaView style={bonusVacanzeStyle.flex}>

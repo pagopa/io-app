@@ -2,12 +2,12 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../i18n";
 import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
-import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzeStyle } from "../../components/Styles";
 import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
@@ -55,4 +55,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
-export default connect(null, mapDispatchToProps)(BonusActivationPending);
+export default connect(
+  null,
+  mapDispatchToProps
+)(BonusActivationPending);
