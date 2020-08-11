@@ -52,7 +52,7 @@ import {
   getEnabledChannelsForService
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import { capitalize } from "../../utils/strings";
+import { capitalize, maybeNotNullyString } from "../../utils/strings";
 import { handleItemOnPress } from "../../utils/url";
 
 type NavigationParams = Readonly<{
@@ -137,6 +137,21 @@ function renderInformationRow(
     </View>
   );
 }
+
+const renderIfDefinedAndNotEmpty = (
+  data: string | undefined,
+  header: string,
+  linkingPrefix?: string,
+  valueType?: "MAP" | "COPY" | "LINK"
+) =>
+  maybeNotNullyString(data).fold(undefined, value =>
+    renderInformationRow(
+      header,
+      value,
+      `${fromNullable(linkingPrefix).getOrElse("")}${value}`,
+      valueType
+    )
+  );
 
 // Renders a row in the service information panel as a link
 function renderInformationLinkRow(
@@ -366,29 +381,24 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       const metadata = potServiceMetadata.value;
       return (
         <React.Fragment>
-          {metadata.address &&
-            renderInformationRow(
-              I18n.t("services.contactAddress"),
-              metadata.address,
-              metadata.address,
-              "MAP"
-            )}
-          {metadata.phone &&
-            renderInformationRow(
-              I18n.t("services.contactPhone"),
-              metadata.phone,
-              `tel:${metadata.phone}`
-            )}
-          {metadata.email &&
-            renderInformationRow(
-              "Email",
-              metadata.email,
-              `mailto:${metadata.email}`
-            )}
-          {metadata.pec &&
-            renderInformationRow("PEC", metadata.pec, `mailto:${metadata.pec}`)}
-          {metadata.web_url &&
-            renderInformationRow("Web", metadata.web_url, metadata.web_url)}
+          {renderIfDefinedAndNotEmpty(
+            metadata.address,
+            I18n.t("services.contactAddress"),
+            undefined,
+            "MAP"
+          )}
+          {renderIfDefinedAndNotEmpty(
+            metadata.support_url,
+            I18n.t("services.contactSupport")
+          )}
+          {renderIfDefinedAndNotEmpty(
+            metadata.phone,
+            I18n.t("services.contactPhone"),
+            "tel:"
+          )}
+          {renderIfDefinedAndNotEmpty(metadata.email, "Email", "mailto:")}
+          {renderIfDefinedAndNotEmpty(metadata.pec, "PEC", "mailto:")}
+          {renderIfDefinedAndNotEmpty(metadata.web_url, "Web")}
         </React.Fragment>
       );
     }
