@@ -124,6 +124,7 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
+  expiration_info: For security reasons, after 30 days from the last login, we will ask you to log in again to use IO
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -769,6 +770,7 @@ wallet:
   errorTransaction:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
+  transactionFullReason: Full reason
   detailsTransaction:
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   total: Total

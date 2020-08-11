@@ -6,14 +6,20 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Container, H2, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, Modal, Platform, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  Image,
+  Linking,
+  Modal,
+  Platform,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { storeUrl } from "../../utils/appVersion";
-import { openUrl } from "../../utils/url";
 
 const timeoutErrorMsg: Millisecond = 5000 as Millisecond;
 
@@ -70,7 +76,8 @@ class UpdateAppModal extends React.PureComponent<never, State> {
     if (this.state.hasError) {
       return;
     }
-    openUrl(storeUrl, () => {
+    // storeUrl is not a webUrl, try to open it
+    Linking.openURL(storeUrl).catch(() => {
       // Change state to show the error message
       this.setState({
         hasError: true

@@ -42,6 +42,7 @@ import {
   DeleteWalletUsingDELETET,
   favouriteWalletUsingPOSTDecoder,
   FavouriteWalletUsingPOSTT,
+  GetAllPspsUsingGETT,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
   getPspUsingGETDecoder,
@@ -61,6 +62,7 @@ import {
 } from "../../definitions/pagopa/requestTypes";
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
+
 /**
  * A decoder that ignores the content of the payload and only decodes the status
  */
@@ -239,6 +241,24 @@ const getPspList: GetPspListUsingGETTExtra = {
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
 };
 
+type GetAllPspListUsingGETTExtra = MapResponseType<
+  GetAllPspsUsingGETT,
+  200,
+  PspListResponse
+>;
+
+const getAllPspList: GetAllPspListUsingGETTExtra = {
+  method: "get",
+  url: () => "/v1/psps/all",
+  query: ({ idPayment, idWallet, language }) => ({
+    idPayment,
+    idWallet,
+    language
+  }),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getPspListUsingGETDecoder(PspListResponse)
+};
+
 type GetPspUsingGETTExtra = MapResponseType<GetPspUsingGETT, 200, PspResponse>;
 
 const getPsp: GetPspUsingGETTExtra = {
@@ -407,6 +427,19 @@ export function PaymentManagerClient(
             }
           : { idPayment, language: getLocalePrimaryWithFallback() }
       ),
+    getAllPspList: (
+      idPayment: TypeofApiParams<GetAllPspsUsingGETT>["idPayment"],
+      idWallet: TypeofApiParams<GetAllPspsUsingGETT>["idWallet"]
+    ) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(getAllPspList, options)
+        )
+      )({
+        idPayment,
+        idWallet,
+        language: getLocalePrimaryWithFallback()
+      }),
     getPsp: (id: TypeofApiParams<GetPspUsingGETT>["id"]) =>
       flip(withPaymentManagerToken(createFetchRequestForApi(getPsp, options)))({
         id

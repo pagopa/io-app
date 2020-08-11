@@ -187,7 +187,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <ButtonDefaultOpacity
             block={true}
             primary={true}
-            onPress={() => this.props.runAuthorizationAndPayment()}
+            onPress={this.props.runAuthorizationAndPayment}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </ButtonDefaultOpacity>

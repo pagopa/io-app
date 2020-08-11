@@ -8,7 +8,11 @@ import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { PaymentAmount } from "../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeNumber";
 import { Transaction } from "../../types/pagopa";
-import { cleanTransactionDescription, getTransactionFee } from "../payment";
+import {
+  cleanTransactionDescription,
+  getTransactionCodiceAvviso,
+  getTransactionFee
+} from "../payment";
 import {
   decodePagoPaQrCode,
   getAmountFromPaymentAmount,
@@ -164,5 +168,31 @@ describe("getTransactionFee", () => {
     Tuple2({ ...mockTranction, fee: { amount: 0 } }, `${0}`)
   ].forEach(tuple => {
     expect(getTransactionFee(tuple.e1, f => `${f}`)).toEqual(tuple.e2);
+  });
+});
+
+describe("getTransactionCodiceAvviso", () => {
+  [
+    Tuple2(
+      "/RFB/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
+      some("02000000000495213")
+    ),
+    Tuple2(
+      "RFB/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
+      some("02000000000495213")
+    ),
+    Tuple2(
+      "/RFA/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
+      some("02000000000495213")
+    ),
+    Tuple2(
+      "RFA/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
+      some("02000000000495213")
+    ),
+    Tuple2("", none),
+    Tuple2("RFC/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION", none),
+    Tuple2("RFB/", none)
+  ].forEach(tuple => {
+    expect(getTransactionCodiceAvviso(tuple.e1)).toEqual(tuple.e2);
   });
 });

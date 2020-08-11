@@ -124,6 +124,7 @@ login:
   welcome:
     line1: benvenuto nella tua
     line2: Cittadinanza Digitale
+  expiration_info: Ti informiamo che per ragioni di sicurezza, dopo 30 giorni dall’ultimo accesso, ti chiederemo di effettuare un nuovo login per utilizzare IO.
 inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
@@ -691,6 +692,7 @@ wallet:
     newCode: Richiedi nuovo codice
     info: Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono
   transactionDetails: Dettagli della transazione
+  transactionFullReason: Causale completa
   detailsTransaction:
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:

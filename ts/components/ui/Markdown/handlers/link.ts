@@ -2,7 +2,7 @@ import { Option, some } from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { Dispatch } from "../../../../store/actions/types";
 import { showToast } from "../../../../utils/showToast";
-import { openUrl } from "../../../../utils/url";
+import { openWebUrl } from "../../../../utils/url";
 import { handleInternalLink, IO_INTERNAL_LINK_PREFIX } from "./internalLink";
 
 export const isIoInternalLink = (href: string): boolean =>
@@ -26,7 +26,7 @@ export function handleLinkMessage(dispatch: Dispatch, href: string) {
   } else {
     // External urls must be opened with the OS browser.
     // FIXME: Whitelist allowed domains: https://www.pivotaltracker.com/story/show/158470128
-    openUrl(href);
+    openWebUrl(href);
   }
 }
 
@@ -39,5 +39,5 @@ export const removeProtocol = (link: string): string => {
 export function openLink(url: string, customError?: string) {
   const error = customError || I18n.t("global.genericError");
   const getErrorToast = () => showToast(error);
-  openUrl(url, getErrorToast);
+  openWebUrl(url, getErrorToast);
 }
