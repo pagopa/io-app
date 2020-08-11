@@ -53,7 +53,7 @@ import {
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
 import { capitalize, maybeNotNullyString } from "../../utils/strings";
-import { handleItemOnPress } from "../../utils/url";
+import { handleItemOnPress, ItemAction } from "../../utils/url";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -120,7 +120,7 @@ function renderInformationRow(
   label: string,
   info: string,
   value: string,
-  valueType?: "MAP" | "COPY" | "LINK"
+  valueType?: ItemAction
 ) {
   return (
     <View style={styles.infoItem}>
@@ -142,7 +142,7 @@ const renderRowWithDefinedValue = (
   data: string | undefined,
   header: string,
   linkingPrefix?: string,
-  valueType?: "MAP" | "COPY" | "LINK"
+  valueType?: ItemAction
 ) =>
   maybeNotNullyString(data).fold(undefined, value =>
     renderInformationRow(
