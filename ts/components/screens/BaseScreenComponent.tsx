@@ -19,13 +19,16 @@ import {
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
-import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { ContextualHelpModal } from "../ContextualHelpModal";
+import { handleItemOnPress } from "../../utils/url";
+import ContextualHelpModal from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
-import { isIoInternalLink } from "../ui/Markdown/handlers/link";
-import { BaseHeader } from "./BaseHeader";
+import {
+  deriveCustomHandledLink,
+  isIoInternalLink
+} from "../ui/Markdown/handlers/link";
+import { AccessibilityEvents, BaseHeader } from "./BaseHeader";
 
 export interface ContextualHelpProps {
   title: string;
@@ -38,31 +41,20 @@ export interface ContextualHelpPropsMarkdown {
 }
 
 interface OwnProps {
+  onAccessibilityNavigationHeaderFocus?: () => void;
+  accessibilityEvents?: AccessibilityEvents;
+  accessibilityLabel?: string;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
   appLogo?: boolean;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
-  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }
 
-type BaseHeaderProps =
-  | "dark"
-  | "appLogo"
-  | "primary"
-  | "goBack"
-  | "headerTitle"
-  | "onShowHelp"
-  | "body"
-  | "isSearchAvailable"
-  | "showInstabugChat"
-  | "searchType"
-  | "customRightIcon"
-  | "customGoBack";
-
 type Props = OwnProps &
-  Pick<React.ComponentProps<typeof BaseHeader>, BaseHeaderProps>;
+  React.ComponentProps<typeof BaseHeader> &
+  Pick<React.ComponentProps<typeof ContextualHelpModal>, "faqCategories">;
 
 interface State {
   isHelpVisible: boolean;
@@ -113,12 +105,11 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
           // we force handling here. The timeout is due to wait until the modal is completely hidden
           // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
-          if (Platform.OS === "android") {
-            setTimeout(
-              this.handleOnContextualHelpDismissed,
-              ANDROID_OPEN_REPORT_DELAY
-            );
-          }
+          // TODO: To complete the porting to 0.63.x, both iOS and Android will use the timeout. https://www.pivotaltracker.com/story/show/174195300
+          setTimeout(
+            this.handleOnContextualHelpDismissed,
+            ANDROID_OPEN_REPORT_DELAY
+          );
           this.setState({ contextualHelpModalAnimation: "slide" });
         });
       });
@@ -168,13 +159,21 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   };
 
   private handleOnLinkClicked = (url: string) => {
+    // manage links with IO_INTERNAL_LINK_PREFIX as prefix
     if (isIoInternalLink(url)) {
       this.hideHelp();
+      return;
     }
+
+    // manage links with IO_CUSTOM_HANDLED_PRESS_PREFIX as prefix
+    const customHandledLink = deriveCustomHandledLink(url);
+    customHandledLink.map(link => handleItemOnPress(link)());
   };
 
   public render() {
     const {
+      accessibilityEvents,
+      accessibilityLabel,
       dark,
       appLogo,
       contextualHelp,
@@ -187,8 +186,17 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       searchType,
       customRightIcon,
       customGoBack,
-      showInstabugChat
+      onAccessibilityNavigationHeaderFocus,
+      showInstabugChat,
+      children,
+      faqCategories
     } = this.props;
+
+    const {
+      isHelpVisible,
+      contextualHelpModalAnimation,
+      markdownContentLoaded
+    } = this.state;
 
     const ch = contextualHelp
       ? { body: contextualHelp.body, title: contextualHelp.title }
@@ -211,6 +219,11 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     return (
       <Container>
         <BaseHeader
+          onAccessibilityNavigationHeaderFocus={
+            onAccessibilityNavigationHeaderFocus
+          }
+          accessibilityEvents={accessibilityEvents}
+          accessibilityLabel={accessibilityLabel}
           showInstabugChat={showInstabugChat}
           primary={primary}
           dark={dark}
@@ -226,18 +239,18 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           customRightIcon={customRightIcon}
           customGoBack={customGoBack}
         />
-        {this.props.children}
+        {children}
         {ch && (
           <ContextualHelpModal
             title={ch.title}
             onLinkClicked={this.handleOnLinkClicked}
             body={ch.body}
-            isVisible={this.state.isHelpVisible}
-            modalAnimation={this.state.contextualHelpModalAnimation}
+            isVisible={isHelpVisible}
+            modalAnimation={contextualHelpModalAnimation}
             onRequestAssistance={this.handleOnRequestAssistance}
             close={this.hideHelp}
-            contentLoaded={this.state.markdownContentLoaded.fold(true, s => s)}
-            faqCategories={this.props.faqCategories}
+            contentLoaded={markdownContentLoaded.fold(true, s => s)}
+            faqCategories={faqCategories}
           />
         )}
       </Container>

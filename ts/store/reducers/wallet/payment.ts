@@ -7,6 +7,7 @@ import {
   paymentAttiva,
   paymentCheck,
   paymentExecutePayment,
+  paymentFetchAllPspsForPaymentId,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
@@ -49,6 +50,10 @@ export type PaymentState = Readonly<{
     typeof paymentFetchPspsForPaymentId["success"],
     typeof paymentFetchPspsForPaymentId["failure"]
   >;
+  allPsps: PotFromActions<
+    typeof paymentFetchAllPspsForPaymentId["success"],
+    typeof paymentFetchAllPspsForPaymentId["failure"]
+  >;
   transaction: PotFromActions<
     typeof paymentExecutePayment["success"],
     typeof paymentExecutePayment["failure"]
@@ -66,6 +71,9 @@ export type PaymentState = Readonly<{
 const getPaymentIdFromGlobalState = (state: GlobalState) =>
   pot.toOption(state.wallet.payment.paymentId);
 
+export const allPspsSelector = (state: GlobalState) =>
+  state.wallet.payment.allPsps;
+
 export const isPaymentOngoingSelector = (state: GlobalState) =>
   getPaymentIdFromGlobalState(state).isSome();
 
@@ -78,6 +86,7 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   paymentId: pot.none,
   check: pot.none,
   psps: pot.none,
+  allPsps: pot.none,
   transaction: pot.none,
   confirmedTransaction: pot.none,
   entrypointRoute: undefined
@@ -198,6 +207,26 @@ const reducer = (
       return {
         ...state,
         psps: pot.noneError(action.payload)
+      };
+
+    //
+    // fetch all available psps
+    //
+    case getType(paymentFetchAllPspsForPaymentId.request):
+      return {
+        ...state,
+        allPsps: pot.noneLoading
+      };
+    case getType(paymentFetchAllPspsForPaymentId.success):
+      // before storing the PSPs, filter only the PSPs for the current locale
+      return {
+        ...state,
+        allPsps: pot.some(pspsForLocale(action.payload))
+      };
+    case getType(paymentFetchAllPspsForPaymentId.failure):
+      return {
+        ...state,
+        allPsps: pot.noneError(action.payload)
       };
 
     //

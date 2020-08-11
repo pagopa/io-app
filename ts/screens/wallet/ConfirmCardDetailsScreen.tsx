@@ -48,6 +48,7 @@ type NavigationParams = Readonly<{
     verifica: PaymentRequestsGetResponse;
     idPayment: string;
   }>;
+  keyFrom?: string;
 }>;
 
 type ReduxMergedProps = Readonly<{
@@ -275,7 +276,12 @@ const mapDispatchToProps = (
         }
       );
     } else {
-      dispatch(navigateToWalletHome({ newMethodAdded: true }));
+      dispatch(
+        navigateToWalletHome({
+          newMethodAdded: maybeWallet.isSome(),
+          keyFrom: props.navigation.getParam("keyFrom")
+        })
+      );
     }
   };
   return {

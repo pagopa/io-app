@@ -1,6 +1,3 @@
-/**
- * The main container of the application with the IdentificationModal and the Navigator
- */
 import { Root } from "native-base";
 import * as React from "react";
 import {
@@ -18,7 +15,6 @@ import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { shouldDisplayVersionInfoOverlay } from "./config";
-import IdentificationModal from "./IdentificationModal";
 import Navigation from "./navigation";
 import {
   applicationChangeState,
@@ -26,19 +22,23 @@ import {
 } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
-import { isBackendServicesStatusOffSelector } from "./store/reducers/backendStatus";
 import { GlobalState } from "./store/reducers/types";
-import SystemOffModal from "./SystemOffModal";
-import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
-import { fromNullable } from "fp-ts/lib/Option";
-import { serverInfoDataSelector } from "./store/reducers/backendInfo";
-// Check min version app supported
-import { isUpdateNeeded } from "./utils/appVersion";
+import { setLocale } from "./i18n";
+import RootModal from "./screens/modal/RootModal";
+import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
+/**
+ * The main container of the application with:
+ * - the Navigator
+ * - the IdentificationModal, for authenticating user after login by CIE/SPID
+ * - the SystemOffModal, shown if backend is unavailable
+ * - the UpdateAppModal, if the backend is not compatible with the installed app version
+ * - the root for displaying light modals
+ */
 class RootContainer extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
@@ -68,6 +68,8 @@ class RootContainer extends React.PureComponent<Props> {
   };
 
   public componentDidMount() {
+    const { preferredLanguage } = this.props;
+
     initialiseInstabug();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
@@ -81,6 +83,14 @@ class RootContainer extends React.PureComponent<Props> {
     // boot: send the status of the application
     this.handleApplicationActivity(AppState.currentState);
     AppState.addEventListener("change", this.handleApplicationActivity);
+
+    /**
+     * If preferred language is set in the Persisted Store it sets the app global Locale
+     * otherwise it continues using the default locale set from the SO
+     */
+    preferredLanguage.map(l => {
+      setLocale(l);
+    });
     // Hide splash screen
     SplashScreen.hide();
   }
@@ -114,21 +124,6 @@ class RootContainer extends React.PureComponent<Props> {
     }
   }
 
-  private get getModal() {
-    // avoid app usage if backend systems are OFF
-    if (this.props.isBackendServicesStatusOff) {
-      return <SystemOffModal />;
-    }
-    const isAppOutOfDate = fromNullable(this.props.backendInfo)
-      .map(bi => isUpdateNeeded(bi, "min_app_version"))
-      .getOrElse(false);
-    // if the app is out of date, force a screen to update it
-    if (isAppOutOfDate) {
-      return <UpdateAppModal />;
-    }
-    return <IdentificationModal />;
-  }
-
   public render() {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
@@ -139,14 +134,10 @@ class RootContainer extends React.PureComponent<Props> {
     return (
       <Root>
         <StatusBar barStyle={"dark-content"} />
-        {Platform.OS === "android" && (
-          <FlagSecureComponent
-            isFlagSecureEnabled={!this.props.isDebugModeEnabled}
-          />
-        )}
+        {Platform.OS === "android" && <FlagSecureComponent />}
         <Navigation />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
-        {this.getModal}
+        <RootModal />
         <LightModalRoot />
       </Root>
     );
@@ -154,10 +145,8 @@ class RootContainer extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  deepLinkState: state.deepLink,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled,
-  isBackendServicesStatusOff: isBackendServicesStatusOffSelector(state),
-  backendInfo: serverInfoDataSelector(state)
+  preferredLanguage: preferredLanguageSelector(state),
+  deepLinkState: state.deepLink
 });
 
 const mapDispatchToProps = {

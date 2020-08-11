@@ -10,6 +10,8 @@ import {
   ViewStyle
 } from "react-native";
 import { StyleSheet } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
@@ -22,10 +24,12 @@ import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
 
 type Props = Readonly<{
+  accessibilityLabel?: string;
   allowGoBack?: boolean;
   headerBody?: React.ReactNode;
   title?: string;
   icon?: ImageSourcePropType;
+  iconFont?: IconProps;
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
   appLogo?: boolean;
@@ -39,12 +43,17 @@ type Props = Readonly<{
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   contentRefreshControl?: React.ReactElement<RefreshControlProps>;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  customGoBack?: React.ReactNode;
+  gradientHeader?: boolean;
+  headerPaddingMin?: boolean;
 }>;
 
 const styles = StyleSheet.create({
   headerContents: {
-    backgroundColor: customVariables.brandDarkGray,
     paddingHorizontal: customVariables.contentPadding
+  },
+  headerContentsMin: {
+    paddingHorizontal: 16
   }
 });
 
@@ -57,12 +66,38 @@ export default class DarkLayout extends React.Component<Props> {
   }
 
   private screenContent() {
+    const wrapper = (childer: React.ReactNode) =>
+      this.props.gradientHeader ? (
+        <LinearGradient
+          colors={[customVariables.brandDarkGray, "#42484F"]}
+          style={
+            this.props.headerPaddingMin
+              ? styles.headerContentsMin
+              : styles.headerContents
+          }
+        >
+          {childer}
+        </LinearGradient>
+      ) : (
+        <View
+          style={[
+            this.props.headerPaddingMin
+              ? styles.headerContentsMin
+              : styles.headerContents,
+            { backgroundColor: customVariables.brandDarkGray }
+          ]}
+        >
+          {childer}
+        </View>
+      );
     return (
       <React.Fragment>
-        <View style={styles.headerContents}>
-          <View spacer={true} />
-          {this.props.topContent}
-        </View>
+        {wrapper(
+          <React.Fragment>
+            <View spacer={true} />
+            {this.props.topContent}
+          </React.Fragment>
+        )}
         {this.props.children}
       </React.Fragment>
     );
@@ -70,7 +105,9 @@ export default class DarkLayout extends React.Component<Props> {
   public render() {
     return (
       <TopScreenComponent
+        accessibilityLabel={this.props.accessibilityLabel}
         goBack={this.props.allowGoBack}
+        customGoBack={this.props.customGoBack}
         headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}
@@ -84,6 +121,7 @@ export default class DarkLayout extends React.Component<Props> {
             hideHeader={this.props.hideHeader}
             title={this.props.title ? this.props.title : ""}
             icon={this.props.icon}
+            iconFont={this.props.iconFont}
             dark={true}
             contentStyle={this.props.contentStyle}
             dynamicSubHeader={this.props.dynamicSubHeader}
@@ -100,6 +138,7 @@ export default class DarkLayout extends React.Component<Props> {
             hideHeader={this.props.hideHeader}
             title={this.props.title ? this.props.title : ""}
             icon={this.props.icon}
+            iconFont={this.props.iconFont}
             dark={true}
             contentStyle={this.props.contentStyle}
             bounces={

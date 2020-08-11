@@ -4,18 +4,21 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaidReason } from "../../store/reducers/entities/payments";
-import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import { messageNeedsCTABar } from "../../utils/messages";
+import {
+  convertDateToWordDistance,
+  convertReceivedDateToAccessible
+} from "../../utils/convertDateToWordDistance";
+import { hasPrescriptionData, messageNeedsCTABar } from "../../utils/messages";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
 import MessageListCTABar from "./MessageListCTABar";
 
 type Props = {
   isRead: boolean;
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   service?: ServicePublic;
   payment?: PaidReason;
   onPress: (id: string) => void;
@@ -23,6 +26,12 @@ type Props = {
   isSelectionModeEnabled: boolean;
   isSelected: boolean;
 };
+
+type Message = {
+  isRead: boolean;
+  organizationName: string;
+  serviceName: string;
+} & CreatedMessageWithContentAndAttachments;
 
 const UNKNOWN_SERVICE_DATA = {
   organizationName: I18n.t("messages.errorLoading.senderInfo"),
@@ -36,6 +45,20 @@ class MessageListItem extends React.PureComponent<Props> {
 
   private handleLongPress = () => {
     this.props.onLongPress(this.props.message.id);
+  };
+
+  private announceMessage = (message: Message) => {
+    const newMessage = message.isRead
+      ? I18n.t("messages.accessibility.message.read")
+      : I18n.t("messages.accessibility.message.unread");
+
+    return I18n.t("messages.accessibility.message.description", {
+      newMessage,
+      organizationName: message.organizationName,
+      serviceName: message.serviceName,
+      subject: message.content.subject,
+      receivedAt: convertReceivedDateToAccessible(message.created_at)
+    });
   };
 
   public render() {
@@ -69,18 +92,25 @@ class MessageListItem extends React.PureComponent<Props> {
         onLongPressItem={this.handleLongPress}
         isSelectionModeEnabled={isSelectionModeEnabled}
         isItemSelected={isSelected}
+        accessible={true}
+        accessibilityLabel={this.announceMessage({
+          isRead,
+          ...message,
+          ...uiService
+        })}
       >
-        {messageNeedsCTABar(message) && (
-          <React.Fragment>
-            <View spacer={true} large={true} />
-            <MessageListCTABar
-              message={message}
-              service={service}
-              payment={payment}
-              disabled={isSelectionModeEnabled}
-            />
-          </React.Fragment>
-        )}
+        {!hasPrescriptionData(message) &&
+          messageNeedsCTABar(message) && (
+            <React.Fragment>
+              <View spacer={true} large={true} />
+              <MessageListCTABar
+                message={message}
+                service={service}
+                payment={payment}
+                disabled={isSelectionModeEnabled}
+              />
+            </React.Fragment>
+          )}
       </DetailedlistItemComponent>
     );
   }

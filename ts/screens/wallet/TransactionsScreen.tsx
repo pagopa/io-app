@@ -41,6 +41,7 @@ import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
+import { handleSetFavourite } from "../../utils/wallet";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -90,6 +91,8 @@ const ListEmptyComponent = (
   </Content>
 );
 
+const HEADER_HEIGHT = 250;
+
 class TransactionsScreen extends React.Component<Props> {
   private headerContent(
     selectedWallet: Wallet,
@@ -111,8 +114,8 @@ class TransactionsScreen extends React.Component<Props> {
           hideMenu={false}
           isFavorite={isFavorite}
           onSetFavorite={(willBeFavorite: boolean) =>
-            this.props.setFavoriteWallet(
-              willBeFavorite ? selectedWallet.idWallet : undefined
+            handleSetFavourite(willBeFavorite, () =>
+              this.props.setFavoriteWallet(selectedWallet.idWallet)
             )
           }
           onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
@@ -153,6 +156,7 @@ class TransactionsScreen extends React.Component<Props> {
         topContent={this.headerContent(selectedWallet, isFavorite)}
         hideHeader={true}
         hasDynamicSubHeader={true}
+        topContentHeight={HEADER_HEIGHT}
         refreshControl={transactionsRefreshControl}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_transaction"]}

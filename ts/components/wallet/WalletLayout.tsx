@@ -25,11 +25,12 @@ import {
 } from "../screens/BaseScreenComponent";
 import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
-import PagoPALogo from "./PagoPALogo";
 
 type Props = Readonly<{
+  accessibilityLabel?: string;
   title: string;
   allowGoBack: boolean;
+  topContentHeight?: number;
   hasDynamicSubHeader: boolean;
   topContent?: React.ReactNode;
   hideHeader?: boolean;
@@ -39,6 +40,9 @@ type Props = Readonly<{
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  appLogo?: boolean;
+  gradientHeader?: boolean;
+  headerPaddingMin?: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -99,23 +103,26 @@ export default class WalletLayout extends React.Component<Props> {
   public render(): React.ReactNode {
     const {
       title,
+      accessibilityLabel,
       allowGoBack,
       hideHeader,
       footerContent,
-      contentStyle
+      contentStyle,
+      appLogo
     } = this.props;
 
     return (
       <DarkLayout
+        accessibilityLabel={accessibilityLabel}
         bounces={false}
         allowGoBack={allowGoBack}
-        headerBody={<PagoPALogo />}
         title={title ? title : I18n.t("wallet.wallet")}
-        icon={require("../../../img/wallet/bank.png")}
+        iconFont={{ name: "io-pagopa" }}
+        appLogo={appLogo}
         contentStyle={contentStyle}
         hasDynamicSubHeader={this.props.hasDynamicSubHeader}
         dynamicSubHeader={this.dynamicSubHeader()}
-        topContentHeight={250}
+        topContentHeight={this.props.topContentHeight}
         topContent={this.props.topContent}
         hideHeader={hideHeader}
         footerContent={footerContent}
@@ -123,6 +130,8 @@ export default class WalletLayout extends React.Component<Props> {
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
         contentRefreshControl={this.props.refreshControl}
         faqCategories={this.props.faqCategories}
+        gradientHeader={this.props.gradientHeader}
+        headerPaddingMin={this.props.headerPaddingMin}
       >
         {this.props.children}
       </DarkLayout>

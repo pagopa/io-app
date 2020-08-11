@@ -23,10 +23,12 @@ type OwnButtonProps = {
   title: string;
   buttonFontSize?: number;
   iconName?: string;
+  iconColor?: string;
 };
 
 type CommonProps = Readonly<{
   leftButton: BlockButtonProps;
+  accessible?: boolean;
 }>;
 
 export type BlockButtonProps = ComponentProps<Button> & OwnButtonProps;
@@ -130,7 +132,14 @@ export default class BlockButtons extends React.Component<Props, never> {
   ) => {
     return (
       <ButtonDefaultOpacity style={style} {...props}>
-        {props.iconName && <IconFont name={props.iconName} />}
+        {props.iconName && (
+          <IconFont
+            name={props.iconName}
+            style={fromNullable(props.iconColor).fold(undefined, c => ({
+              color: c
+            }))}
+          />
+        )}
         <Text
           style={fromNullable(props.buttonFontSize).fold(undefined, fs => {
             return { fontSize: fs };

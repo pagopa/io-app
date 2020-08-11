@@ -42,8 +42,11 @@ export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 export const instabugToken: string = Config.INSTABUG_TOKEN;
 
+export const bonusVacanzeEnabled: boolean =
+  Config.BONUS_VACANZE_ENABLED === "YES";
+
 // version of ToS
-export const tosVersion: NonNegativeNumber = 1 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 2 as NonNegativeNumber;
 
 export const fetchTimeout = t.Integer.decode(
   parseInt(Config.FETCH_TIMEOUT_MS, 10)

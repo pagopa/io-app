@@ -1,1 +1,2 @@
-Disattivare un servizio significa non ricevere più le comunicazioni di quello specifico servizio nell'app IO. L'ente che eroga il servizio potrà comunque contattarti o essere contattato attraverso altri canali quali sito, email, numero di telefono o ufficio di pertinenza.
+Disabling a service means you will no longer receive communications from that specific service within the app IO. 
+The entity that provides the service may still contact you or be contacted through other channels such as website, email, phone number or office.

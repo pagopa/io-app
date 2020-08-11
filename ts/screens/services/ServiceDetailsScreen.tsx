@@ -1,7 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Col, Content, Grid, H2, Row, Text, View } from "native-base";
+import { Content, Grid, Row, Text, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { NotificationChannelEnum } from "../../../definitions/backend/NotificationChannel";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import OrganizationHeader from "../../components/OrganizationHeader";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -23,7 +24,6 @@ import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H4 from "../../components/ui/H4";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
-import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -51,7 +51,6 @@ import {
   getBlockedChannels,
   getEnabledChannelsForService
 } from "../../utils/profile";
-import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { capitalize } from "../../utils/strings";
 import { handleItemOnPress } from "../../utils/url";
@@ -266,9 +265,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     .mapNullable(_ => (_.has_profile ? _.version : null))
     .getOrElse(0 as NonNegativeInteger);
 
-  // URIs for the service logo
-  private logoUris = logosForService(this.service);
-
   /**
    * Dispatches a profileUpsertRequest to trigger an asynchronous update of the
    * profile with the new enabled channels
@@ -436,22 +432,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
   private navigateToEmailPreferences = () =>
     this.props.navigation.navigate(ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING);
-
-  // TODO: unify to the ScreenContentHeader
-  private getScreenHeader = (
-    <Row>
-      <Col>
-        <H4>{this.service.organization_name}</H4>
-        <H2>{this.service.service_name}</H2>
-      </Col>
-      <Col style={styles.imageWidth}>
-        <MultiImage
-          style={[styles.imageHeight, styles.imageWidth]}
-          source={this.logoUris}
-        />
-      </Col>
-    </Row>
-  );
 
   private getInboxSwitchRow = () => {
     const isDisabled =
@@ -669,7 +649,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       >
         <Content>
           <Grid>
-            {this.getScreenHeader}
+            <OrganizationHeader service={service} />
             <View spacer={true} large={true} />
             {this.getInboxSwitchRow()}
             {this.getPushSwitchRow()}

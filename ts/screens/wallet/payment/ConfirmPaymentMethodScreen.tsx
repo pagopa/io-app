@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   padded: { paddingHorizontal: customVariables.contentPadding },
   alert: {
-    backgroundColor: customVariables.alertColor,
+    backgroundColor: customVariables.brandHighLighter,
     paddingHorizontal: customVariables.contentPadding,
     paddingVertical: 11,
     flexDirection: "row"
@@ -173,7 +173,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             style={styles.alertIcon}
             name={"io-notice"}
             size={24}
-            color={customVariables.colorWhite}
+            color={customVariables.brandDarkGray}
           />
           <Text white={true} style={styles.flex}>
             <Text bold={true} white={true}>
@@ -187,7 +187,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <ButtonDefaultOpacity
             block={true}
             primary={true}
-            onPress={() => this.props.runAuthorizationAndPayment()}
+            onPress={this.props.runAuthorizationAndPayment}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
           </ButtonDefaultOpacity>
@@ -285,6 +285,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatch(
       identificationRequest(
         false,
+        true,
         {
           message: I18n.t("wallet.ConfirmPayment.identificationMessage")
         },

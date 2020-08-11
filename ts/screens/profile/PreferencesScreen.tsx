@@ -27,10 +27,14 @@ import {
   navigateToEmailForwardingPreferenceScreen,
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen,
-  navigateToFingerprintPreferenceScreen
+  navigateToFingerprintPreferenceScreen,
+  navigateToLanguagePreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
+import {
+  isCustomEmailChannelEnabledSelector,
+  preferredLanguageSelector
+} from "../../store/reducers/persistedPreferences";
 import {
   hasProfileEmailSelector,
   isEmailEnabledSelector,
@@ -38,13 +42,15 @@ import {
   isProfileEmailValidatedSelector,
   profileEmailSelector,
   profileMobilePhoneSelector,
-  profileSelector,
   profileSpidEmailSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
-import { getLocalePrimary } from "../../utils/locale";
+import {
+  getLocalePrimary,
+  getLocalePrimaryWithFallback
+} from "../../utils/locale";
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -118,8 +124,8 @@ class PreferencesScreen extends React.Component<Props, State> {
           // If the user denied permission previously (not in this session)
           // prompt an alert to inform that his calendar permissions could have been turned off
           Alert.alert(
+            I18n.t("global.genericAlert"),
             I18n.t("messages.cta.calendarPermDenied.title"),
-            undefined,
             [
               {
                 text: I18n.t("messages.cta.calendarPermDenied.cancel"),
@@ -163,10 +169,10 @@ class PreferencesScreen extends React.Component<Props, State> {
     const maybeSpidEmail = this.props.optionSpidEmail;
     const maybePhoneNumber = this.props.optionMobilePhone;
 
-    const languages = this.props.languages
-      .filter(_ => _.length > 0)
-      .map(_ => translateLocale(_[0]))
-      .getOrElse(I18n.t("global.remoteStates.notAvailable"));
+    const language = this.props.preferredLanguage.fold(
+      translateLocale(getLocalePrimaryWithFallback()),
+      l => translateLocale(l)
+    );
 
     const showModal = (title: TranslationKeys, body: TranslationKeys) => {
       this.props.showModal(
@@ -267,13 +273,8 @@ class PreferencesScreen extends React.Component<Props, State> {
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
-              subTitle={languages}
-              onPress={() =>
-                showModal(
-                  "profile.preferences.language.contextualHelpTitle",
-                  "profile.preferences.language.contextualHelpContent"
-                )
-              }
+              subTitle={language}
+              onPress={this.props.navigateToLanguagePreferenceScreen}
             />
 
             <EdgeBorderComponent />
@@ -286,8 +287,8 @@ class PreferencesScreen extends React.Component<Props, State> {
 
 function mapStateToProps(state: GlobalState) {
   return {
+    preferredLanguage: preferredLanguageSelector(state),
     languages: fromNullable(state.preferences.languages),
-    potProfile: pot.toOption(profileSelector(state)),
     optionEmail: profileEmailSelector(state),
     optionSpidEmail: profileSpidEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
@@ -308,6 +309,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToEmailForwardingPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
     dispatch(navigateToCalendarPreferenceScreen()),
+  navigateToLanguagePreferenceScreen: () =>
+    dispatch(navigateToLanguagePreferenceScreen()),
   navigateToEmailReadScreen: () => dispatch(navigateToEmailReadScreen()),
   navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen())
 });

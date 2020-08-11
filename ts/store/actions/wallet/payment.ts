@@ -124,6 +124,17 @@ export const paymentFetchPspsForPaymentId = createAsyncAction(
   "PAYMENT_FETCH_PSPS_FOR_PAYMENT_ID_FAILURE"
 )<PaymentFetchPspsForPaymentIdRequestPayload, ReadonlyArray<Psp>, Error>();
 
+type PaymentFetchAllPspsForPaymentIdRequestPayload = Readonly<{
+  idPayment: string;
+  idWallet: string;
+}>;
+
+export const paymentFetchAllPspsForPaymentId = createAsyncAction(
+  "PAYMENT_FETCH_ALL_PSPS_FOR_PAYMENT_ID_REQUEST",
+  "PAYMENT_FETCH_ALL_PSPS_FOR_PAYMENT_ID_SUCCESS",
+  "PAYMENT_FETCH_ALL_PSPS_FOR_PAYMENT_ID_FAILURE"
+)<PaymentFetchAllPspsForPaymentIdRequestPayload, ReadonlyArray<Psp>, Error>();
+
 //
 // Update Wallet PSP request and responses
 //
@@ -244,4 +255,5 @@ export type PaymentActions =
   | ActionType<typeof paymentCompletedFailure>
   | ActionType<typeof paymentDeletePayment>
   | ActionType<typeof runDeleteActivePaymentSaga>
+  | ActionType<typeof paymentFetchAllPspsForPaymentId>
   | ActionType<typeof runStartOrResumePaymentActivationSaga>;

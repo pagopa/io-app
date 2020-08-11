@@ -38,7 +38,7 @@ const ExperimentalFeaturesBanner = (
       />
     </View>
     <View style={styles.experimentalFeaturesBannerRight}>
-      <Text style={styles.experimentalFeaturesBannerMessage} small={true}>
+      <Text style={styles.experimentalFeaturesBannerMessage}>
         {I18n.t("profile.main.experimentalFeatures.bannerMessage")}
       </Text>
     </View>

@@ -22,6 +22,7 @@
  *
  */
 import { Option } from "fp-ts/lib/Option";
+import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
@@ -148,9 +149,6 @@ const styles = StyleSheet.create({
     elevation: 0,
     height: 40
   },
-  tabBarContent: {
-    fontSize: customVariables.fontSizeSmall
-  },
   tabBarUnderline: {
     borderBottomColor: customVariables.tabUnderlineColor,
     borderBottomWidth: customVariables.tabUnderlineHeight
@@ -174,8 +172,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandPrimary
   },
   textStyle: {
-    color: customVariables.brandDarkGray,
-    fontSize: customVariables.fontSizeSmall
+    color: customVariables.brandDarkGray
   },
   center: {
     alignItems: "center"
@@ -189,9 +186,6 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: customVariables.fontSize2,
     paddingTop: customVariables.contentPadding
-  },
-  errorText2: {
-    fontSize: customVariables.fontSizeSmall
   },
   varBar: {
     flexDirection: "row",
@@ -225,7 +219,6 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 0,
     paddingLeft: 10,
-    fontSize: 14,
     lineHeight: 20,
     color: customVariables.brandPrimary
   }
@@ -345,26 +338,31 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     openInstabugBugReport();
   };
   /*TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
+  private instabugReportTag = "services-loading-error";
   private sendDataToInstabug() {
+    Instabug.appendTags([this.instabugReportTag]);
     instabugLog(
-      "userMetadata: " + JSON.stringify(this.props.potUserMetadata),
-      TypeLogs.INFO
+      JSON.stringify(this.props.potUserMetadata),
+      TypeLogs.INFO,
+      "userMetadata"
     );
 
     instabugLog(
-      "services: " + JSON.stringify(this.props.debugONLYServices),
-      TypeLogs.INFO
+      JSON.stringify(this.props.debugONLYServices),
+      TypeLogs.INFO,
+      "services"
     );
 
     instabugLog(
-      `Internal component state: isInnerContentRendered=${
+      `isInnerContentRendered=${
         this.state.isInnerContentRendered
       }  visibleServicesContentLoadState=${JSON.stringify(
         this.props.visibleServicesContentLoadState
       )} loadDataFailure=${JSON.stringify(
         this.props.loadDataFailure
       )} servicesByScope=${JSON.stringify(this.props.servicesByScope)}`,
-      TypeLogs.INFO
+      TypeLogs.INFO,
+      "Internal component state"
     );
   }
 
@@ -594,6 +592,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       >
         <View style={styles.topScreenContainer}>
           <TopScreenComponent
+            accessibilityLabel={I18n.t("services.title")}
             headerTitle={I18n.t("services.title")}
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
@@ -609,7 +608,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               <React.Fragment>
                 <AnimatedScreenContentHeader
                   title={I18n.t("services.title")}
-                  icon={require("../../../img/icons/services-icon.png")}
+                  iconFont={{ name: "io-home-servizi" }}
                   dynamicHeight={this.getHeaderHeight()}
                 />
                 {this.renderInnerContent()}

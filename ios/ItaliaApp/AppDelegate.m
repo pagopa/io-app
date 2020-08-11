@@ -10,10 +10,29 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import <React/RCTPushNotificationManager.h>
 #import <React/RCTLinkingManager.h>
+#import <UserNotifications/UserNotifications.h>
+#import <RNCPushNotificationIOS.h>
 
 #import "RNSplashScreen.h"
+
+#ifdef FB_SONARKIT_ENABLED
+#import <FlipperKit/FlipperClient.h>
+#import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
+#import <FlipperKitUserDefaultsPlugin/FKUserDefaultsPlugin.h>
+#import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
+#import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
+#import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
+static void InitializeFlipper(UIApplication *application) {
+  FlipperClient *client = [FlipperClient sharedClient];
+  SKDescriptorMapper *layoutDescriptorMapper = [[SKDescriptorMapper alloc] initWithDefaults];
+  [client addPlugin:[[FlipperKitLayoutPlugin alloc] initWithRootNode:application withDescriptorMapper:layoutDescriptorMapper]];
+  [client addPlugin:[[FKUserDefaultsPlugin alloc] initWithSuiteName:nil]];
+  [client addPlugin:[FlipperKitReactPlugin new]];
+  [client addPlugin:[[FlipperKitNetworkPlugin alloc] initWithNetworkAdapter:[SKIOSNetworkAdapter new]]];
+  [client start];
+}
+#endif
 
 @implementation AppDelegate
 
@@ -26,22 +45,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    if ([self isDeviceJailBroken]) {
-      self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-      UIViewController *rootViewController = [UIViewController new];
-      rootViewController.view.backgroundColor = UIColor.whiteColor;
-      self.window.rootViewController = rootViewController;
-      [self.window makeKeyAndVisible];
-      //show popup
-      UIAlertController * alert=   [UIAlertController
-                                    alertControllerWithTitle:NSLocalizedString(@"ALERT_DEVICE_ROOTED_TITLE", @"")
-                                    message:NSLocalizedString(@"ALERT_DEVICE_ROOTED_DESC", @"")
-                                    preferredStyle:UIAlertControllerStyleAlert];
-      
-      UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-      [vc presentViewController:alert animated:YES completion:nil];
-    } else {
-      //continue
+#ifdef FB_SONARKIT_ENABLED
+  InitializeFlipper(application);
+#endif
       RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
       RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                        moduleName:@"ItaliaApp"
@@ -57,7 +63,10 @@
       
       // see https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
       [RNSplashScreen show];
-    }
+  
+  // Define UNUserNotificationCenter
+  UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+  center.delegate = self;
   
   return YES;
 }
@@ -75,69 +84,46 @@
 // Required to register for notifications
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
-  [RCTPushNotificationManager didRegisterUserNotificationSettings:notificationSettings];
+  [RNCPushNotificationIOS didRegisterUserNotificationSettings:notificationSettings];
 }
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-  [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+  [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 // Required for the notification event. You must call the completion handler after handling the remote notification.
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-  [RCTPushNotificationManager didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+  [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 }
 // Required for the registrationError event.
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-  [RCTPushNotificationManager didFailToRegisterForRemoteNotificationsWithError:error];
-}
-// Required for the localNotification event.
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-  [RCTPushNotificationManager didReceiveLocalNotification:notification];
+  [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
-// Check if the device is jailbroken
--(BOOL)isDeviceJailBroken
+// IOS 10+ Required for localNotification event
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)(void))completionHandler
 {
-  #if !(TARGET_IPHONE_SIMULATOR)
-    // Check 1 : existence of files that are common for jailbroken devices
-    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/Applications/Cydia.app"] ||
-        [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/MobileSubstrate.dylib"] ||
-        [[NSFileManager defaultManager] fileExistsAtPath:@"/bin/bash"] ||
-        [[NSFileManager defaultManager] fileExistsAtPath:@"/usr/sbin/sshd"] ||
-        [[NSFileManager defaultManager] fileExistsAtPath:@"/etc/apt"] ||
-        [[NSFileManager defaultManager] fileExistsAtPath:@"/private/var/lib/apt/"] ||
-        [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://package/com.example.package"]]) {
-          return YES;
-    }
-    FILE *f = NULL ;
-    if ((f = fopen("/bin/bash", "r")) ||
-        (f = fopen("/Applications/Cydia.app", "r")) ||
-        (f = fopen("/Library/MobileSubstrate/MobileSubstrate.dylib", "r")) ||
-        (f = fopen("/usr/sbin/sshd", "r")) ||
-        (f = fopen("/usr/bin/ssh", "r")) ||
-        (f = fopen("/etc/apt", "r"))) {
-          fclose(f);
-          return YES;
-    }
-    fclose(f);
-    // Check 2 : Reading and writing in system directories (sandbox violation)
-    NSError *error;
-    NSString *stringToBeWritten = @"Jailbreak Test.";
-    [stringToBeWritten writeToFile:@"/private/jailbreak.txt" atomically:YES
-                          encoding:NSUTF8StringEncoding error:&error];
-    if(error==nil){
-      //Device is jailbroken
-      return YES;
-    } else {
-      [[NSFileManager defaultManager] removeItemAtPath:@"/private/jailbreak.txt" error:nil];
-    }
-  #endif
-  return NO;
+  [RNCPushNotificationIOS didReceiveNotificationResponse:response];
+  completionHandler();
+}
+
+
+// IOS 4-10 Required for the localNotification event.
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+  [RNCPushNotificationIOS didReceiveLocalNotification:notification];
   
+}
+
+//Called when a notification is delivered to a foreground app.
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+  completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
 }
 
 

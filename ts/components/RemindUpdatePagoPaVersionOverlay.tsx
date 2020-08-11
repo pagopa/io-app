@@ -51,6 +51,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<{}, State> {
     if (this.state.hasError) {
       return;
     }
+    // storeUrl is not a webUrl, try to open it
     Linking.openURL(storeUrl).catch(() => {
       // Change state to show the error message
       this.setState({
