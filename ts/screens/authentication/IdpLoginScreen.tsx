@@ -1,33 +1,39 @@
-/**
- * A screen that allows the user to login with an IDP.
- * The IDP page is opened in a WebView
- */
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
+import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, NavState, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
+import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
+import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import I18n from "../../i18n";
-import { loginFailure, loginSuccess } from "../../store/actions/authentication";
-import { idpLoginUrlChanged } from "../../store/actions/authentication";
+import {
+  idpLoginUrlChanged,
+  loginFailure,
+  loginSuccess
+} from "../../store/actions/authentication";
 import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
-  isLoggedOutWithIdp
+  isLoggedOutWithIdp,
+  selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
+import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
+import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
+import { getUrlBasepath } from "../../utils/url";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -44,6 +50,8 @@ type State = {
   loginTrace?: string;
 };
 
+const loginFailureTag = "spid-login-failure";
+
 const brokenLinkImage = require("../../../img/broken-link.png");
 
 const styles = StyleSheet.create({
@@ -57,25 +65,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 1000
   },
-
   errorContainer: {
     padding: 20,
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },
-
   errorTitle: {
     fontSize: 20,
     marginTop: 10
   },
-
   errorBody: {
     marginTop: 10,
     marginBottom: 10,
     textAlign: "center"
   },
-
   errorButtonsContainer: {
     position: "absolute",
     bottom: 30,
@@ -85,14 +89,16 @@ const styles = StyleSheet.create({
   cancelButtonStyle: {
     flex: 1,
     marginEnd: 10
+  },
+  flex2: {
+    flex: 2
   }
 });
 
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "authentication.idp_login.contextualHelpTitle",
-  body: "authentication.idp_login.contextualHelpContent"
-};
-
+/**
+ * A screen that allows the user to login with an IDP.
+ * The IDP page is opened in a WebView
+ */
 class IdpLoginScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -115,20 +121,32 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.props.dispatchLoginFailure(
       new Error(`login failure with code ${errorCode || "n/a"}`)
     );
+    const logText = fromNullable(errorCode).fold(
+      "login failed with no error code available",
+      ec =>
+        `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
+    );
+
+    instabugLog(logText, TypeLogs.ERROR, "login");
+    Instabug.appendTags([loginFailureTag]);
     this.setState({
       requestState: pot.noneError(ErrorType.LOGIN_ERROR),
       errorCode
     });
   };
 
-  private goBack = this.props.navigation.goBack;
+  private handleLoginSuccess = (token: SessionToken) => {
+    instabugLog(`login success`, TypeLogs.DEBUG, "login");
+    Instabug.resetTags();
+    this.props.dispatchLoginSuccess(token);
+  };
 
   private setRequestStateToLoading = (): void =>
     this.setState({ requestState: pot.noneLoading });
 
-  private handleNavigationStateChange = (event: NavState): void => {
+  private handleNavigationStateChange = (event: WebViewNavigation): void => {
     if (event.url) {
-      const urlChanged = event.url.split("?")[0];
+      const urlChanged = getUrlBasepath(event.url);
       if (urlChanged !== this.state.loginTrace) {
         this.props.dispatchIdpLoginUrlChanged(urlChanged);
         this.updateLoginTrace(urlChanged);
@@ -144,10 +162,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
     });
   };
 
-  private handleShouldStartLoading = (event: NavState): boolean => {
+  private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
     const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
-      this.props.dispatchLoginSuccess
+      this.handleLoginSuccess
     )(event);
     // URL can be loaded if it's not the login URL containing the session token - this avoids
     // making a (useless) GET request with the session in the URL
@@ -188,7 +206,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
           <View style={styles.errorButtonsContainer}>
             <ButtonDefaultOpacity
-              onPress={this.goBack}
+              onPress={this.props.navigation.goBack}
               style={styles.cancelButtonStyle}
               block={true}
               light={true}
@@ -198,7 +216,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               onPress={this.setRequestStateToLoading}
-              style={{ flex: 2 }}
+              style={styles.flex2}
               block={true}
               primary={true}
             >
@@ -211,6 +229,23 @@ class IdpLoginScreen extends React.Component<Props, State> {
     // loading complete, no mask needed
     return null;
   };
+
+  get contextualHelp() {
+    const { selectedIdpTextData } = this.props;
+
+    if (selectedIdpTextData.isNone()) {
+      return {
+        title: I18n.t("authentication.idp_login.contextualHelpTitle"),
+        body: () => (
+          <Markdown>
+            {I18n.t("authentication.idp_login.contextualHelpContent")}
+          </Markdown>
+        )
+      };
+    }
+    const idpTextData = selectedIdpTextData.value;
+    return IdpCustomContextualHelpContent(idpTextData);
+  }
 
   public render() {
     const { loggedOutWithIdpAuth, loggedInAuth } = this.props;
@@ -230,8 +265,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent
         goBack={true}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["authentication_SPID", "authentication_CIE"]}
+        contextualHelp={this.contextualHelp}
+        faqCategories={["authentication_SPID"]}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
           loggedOutWithIdpAuth.idp.name
         }`}
@@ -252,14 +287,23 @@ class IdpLoginScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  loggedOutWithIdpAuth: isLoggedOutWithIdp(state.authentication)
-    ? state.authentication
-    : undefined,
-  loggedInAuth: isLoggedIn(state.authentication)
-    ? state.authentication
-    : undefined
-});
+const mapStateToProps = (state: GlobalState) => {
+  const selectedtIdp = selectedIdentityProviderSelector(state);
+
+  const selectedIdpTextData = fromNullable(selectedtIdp).fold(none, idp =>
+    idpContextualHelpDataFromIdSelector(idp.id)(state)
+  );
+
+  return {
+    loggedOutWithIdpAuth: isLoggedOutWithIdp(state.authentication)
+      ? state.authentication
+      : undefined,
+    loggedInAuth: isLoggedIn(state.authentication)
+      ? state.authentication
+      : undefined,
+    selectedIdpTextData
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIdpLoginUrlChanged: (url: string) =>

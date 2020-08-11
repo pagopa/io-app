@@ -2,9 +2,12 @@ import * as React from "react";
 import { ComponentProps } from "../../types/react";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { SearchType } from "../search/SearchButton";
+import { AccessibilityEvents } from "./BaseHeader";
 import BaseScreenComponent from "./BaseScreenComponent";
 
 interface OwnProps {
+  accessibilityLabel?: string;
+  onAccessibilityNavigationHeaderFocus?: () => void;
   headerTitle?: string;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
@@ -13,6 +16,7 @@ interface OwnProps {
     onPress: () => void;
   };
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  accessibilityEvents?: AccessibilityEvents;
 }
 
 type BaseScreenComponentProps =
@@ -39,6 +43,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
       appLogo,
       goBack,
       headerTitle,
+      accessibilityLabel,
       contextualHelp,
       contextualHelpMarkdown,
       headerBody,
@@ -46,11 +51,17 @@ class TopScreenComponent extends React.PureComponent<Props> {
       searchType,
       customRightIcon,
       customGoBack,
-      faqCategories
+      onAccessibilityNavigationHeaderFocus,
+      faqCategories,
+      accessibilityEvents
     } = this.props;
 
     return (
       <BaseScreenComponent
+        onAccessibilityNavigationHeaderFocus={
+          onAccessibilityNavigationHeaderFocus
+        }
+        accessibilityLabel={accessibilityLabel}
         appLogo={appLogo}
         dark={dark}
         goBack={goBack}
@@ -63,6 +74,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         searchType={searchType}
         customRightIcon={customRightIcon}
         customGoBack={customGoBack}
+        accessibilityEvents={accessibilityEvents}
       >
         {this.props.children}
       </BaseScreenComponent>

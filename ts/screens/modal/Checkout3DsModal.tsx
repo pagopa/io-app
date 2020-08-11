@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Alert, Modal, NavState, StyleSheet, View } from "react-native";
+import { Alert, Modal, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
+import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import { NavigationInjectedProps, withNavigation } from "react-navigation";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -44,7 +45,7 @@ class Checkout3DsModal extends React.Component<Props, State> {
   private updateLoadingState = (isLoading: boolean) =>
     this.setState({ isWebViewLoading: isLoading });
 
-  private navigationStateChanged = (navState: NavState) => {
+  private navigationStateChanged = (navState: WebViewNavigation) => {
     // pagoPA-designated URL for exiting the webview
     // (visisted when the user taps the "close" button)
     const exitUrl = "/wallet/loginMethod";

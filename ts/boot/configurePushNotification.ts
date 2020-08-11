@@ -1,10 +1,11 @@
 /**
  * Set the basic PushNotification configuration
  */
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
-import { Alert, PushNotificationIOS } from "react-native";
+import { Alert } from "react-native";
 import PushNotification from "react-native-push-notification";
 
 import { store } from "../App";
@@ -14,6 +15,7 @@ import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
+import { isDevEnv } from "../utils/environment";
 
 /**
  * Helper type used to validate the notification payload.
@@ -27,6 +29,10 @@ const NotificationPayload = t.partial({
 });
 
 function configurePushNotifications() {
+  // if isDevEnv, disable push notification to avoid crash for missing firebase settings
+  if (isDevEnv) {
+    return;
+  }
   PushNotification.configure({
     // Called when token is generated
     onRegister: token => {

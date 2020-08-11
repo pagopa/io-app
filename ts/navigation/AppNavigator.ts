@@ -1,7 +1,7 @@
 import { createStackNavigator, TransitionConfig } from "react-navigation";
 
 import BackgroundScreen from "../screens/BackgroundScreen";
-import IngressScreen from "../screens/IngressScreen";
+import IngressScreen from "../screens/ingress/IngressScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";

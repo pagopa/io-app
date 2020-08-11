@@ -1,20 +1,20 @@
 import { range } from "fp-ts/lib/Array";
+import { left, right } from "fp-ts/lib/Either";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { debounce, shuffle } from "lodash";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Dimensions, StyleSheet, ViewStyle } from "react-native";
-
-import { fromNullable } from "fp-ts/lib/Option";
-import { debounce, shuffle } from "lodash";
 import I18n from "../../i18n";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
-import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
-import { KeyPad } from "./KeyPad";
-import { Baseline, Bullet } from "./Placeholders";
+import InputPlaceHolder from "./InputPlaceholder";
+import { DigitRpr, KeyPad } from "./KeyPad";
 
 interface Props {
   activeColor: string;
@@ -22,6 +22,7 @@ interface Props {
   clearOnInvalid?: boolean;
   shufflePad?: boolean;
   isFingerprintEnabled?: any;
+  isValidatingTask?: boolean;
   biometryType?: any;
   compareWithCode?: string;
   inactiveColor: string;
@@ -48,18 +49,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center"
   },
-  text: {
-    alignSelf: "center",
-    justifyContent: "center",
-    color: variables.colorWhite
+  mediumText: {
+    fontSize: 18,
+    lineHeight: 21
   }
 });
 
 const screenWidth = Dimensions.get("window").width;
-// Placeholders values
-const width = 36;
-const sideMargin = 32;
-const margin = 12;
+
+const SMALL_ICON_WIDTH = 17;
+const ICON_WIDTH = 48;
+const SHAKE_ANIMATION_DURATION = 600 as Millisecond;
+const INPUT_MARGIN = 36;
 
 /**
  * A customized CodeInput component.
@@ -70,19 +71,30 @@ class Pinpad extends React.PureComponent<Props, State> {
   private shakeAnimationRef = React.createRef<ShakeAnimation>();
 
   /**
-   * Print the only BiometrySimplePrintableType values that are passed to the UI
-   * @param biometrySimplePrintableType
+   * Get the name of the icon (from icon font) to represent depending on
+   * the available biometry functionality available on the device
    */
-  private renderBiometryType(
+  private getBiometryIconName(
     biometryPrintableSimpleType: BiometryPrintableSimpleType
-  ): string {
+  ): DigitRpr {
     switch (biometryPrintableSimpleType) {
       case "FINGERPRINT":
-        return "fingerprint-onboarding-icon.png";
-      case "FACE_ID":
-        return "faceid-onboarding-icon.png";
       case "TOUCH_ID":
-        return "fingerprint-onboarding-icon.png";
+        return right({
+          name: "io-fingerprint",
+          size: ICON_WIDTH,
+          accessibilityLabel: I18n.t(
+            "identification.unlockCode.accessibility.fingerprint"
+          )
+        });
+      case "FACE_ID":
+        return right({
+          name: "io-face-id",
+          size: ICON_WIDTH,
+          accessibilityLabel: I18n.t(
+            "identification.unlockCode.accessibility.faceId"
+          )
+        });
     }
   }
 
@@ -98,50 +110,83 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   };
 
+  /**
+   * the pad can be componed by
+   * - strings
+   * - chars
+   * - icons (from icon font): they has to be declared as 'icon:<ICONAME>' (width 48) or 'sicon:<ICONAME>' (width 17)
+   */
   private pinPadDigits = (): ComponentProps<typeof KeyPad>["digits"] => {
     const { pinPadValues } = this.state;
 
     return [
       [
-        Tuple2(pinPadValues[1], () => this.handlePinDigit(pinPadValues[1])),
-        Tuple2(pinPadValues[2], () => this.handlePinDigit(pinPadValues[2])),
-        Tuple2(pinPadValues[3], () => this.handlePinDigit(pinPadValues[3]))
+        Tuple2(left(pinPadValues[1]), () =>
+          this.handlePinDigit(pinPadValues[1])
+        ),
+        Tuple2(left(pinPadValues[2]), () =>
+          this.handlePinDigit(pinPadValues[2])
+        ),
+        Tuple2(left(pinPadValues[3]), () =>
+          this.handlePinDigit(pinPadValues[3])
+        )
       ],
       [
-        Tuple2(pinPadValues[4], () => this.handlePinDigit(pinPadValues[4])),
-        Tuple2(pinPadValues[5], () => this.handlePinDigit(pinPadValues[5])),
-        Tuple2(pinPadValues[6], () => this.handlePinDigit(pinPadValues[6]))
+        Tuple2(left(pinPadValues[4]), () =>
+          this.handlePinDigit(pinPadValues[4])
+        ),
+        Tuple2(left(pinPadValues[5]), () =>
+          this.handlePinDigit(pinPadValues[5])
+        ),
+        Tuple2(left(pinPadValues[6]), () =>
+          this.handlePinDigit(pinPadValues[6])
+        )
       ],
       [
-        Tuple2(pinPadValues[7], () => this.handlePinDigit(pinPadValues[7])),
-        Tuple2(pinPadValues[8], () => this.handlePinDigit(pinPadValues[8])),
-        Tuple2(pinPadValues[9], () => this.handlePinDigit(pinPadValues[9]))
+        Tuple2(left(pinPadValues[7]), () =>
+          this.handlePinDigit(pinPadValues[7])
+        ),
+        Tuple2(left(pinPadValues[8]), () =>
+          this.handlePinDigit(pinPadValues[8])
+        ),
+        Tuple2(left(pinPadValues[9]), () =>
+          this.handlePinDigit(pinPadValues[9])
+        )
       ],
       [
-        this.props.onCancel
+        this.props.isFingerprintEnabled &&
+        this.props.biometryType &&
+        this.props.onFingerPrintReq
           ? Tuple2(
-              I18n.t("global.buttons.cancel").toUpperCase(),
-              this.props.onCancel
+              this.getBiometryIconName(this.props.biometryType),
+              this.props.onFingerPrintReq
             )
-          : this.props.isFingerprintEnabled &&
-            this.props.biometryType &&
-            this.props.onFingerPrintReq
-            ? Tuple2(
-                // set the image name
-                this.renderBiometryType(this.props.biometryType),
-                this.props.onFingerPrintReq
-              )
-            : undefined,
-        Tuple2(pinPadValues[0], () => this.handlePinDigit(pinPadValues[0])),
-        Tuple2("<", this.deleteLastDigit)
+          : undefined,
+        Tuple2(left(pinPadValues[0]), () =>
+          this.handlePinDigit(pinPadValues[0])
+        ),
+        Tuple2(
+          right({
+            name: "io-cancel",
+            size: SMALL_ICON_WIDTH,
+            accessibilityLabel: I18n.t(
+              "identification.unlockCode.accessibility.delete"
+            )
+          }),
+          this.deleteLastDigit
+        )
       ]
     ];
   };
 
   private confirmResetAlert = () =>
     Alert.alert(
-      I18n.t("pin_login.forgetPin.confirmTitle"),
-      I18n.t("pin_login.forgetPin.confirmMsg"),
+      I18n.t("identification.forgetCode.confirmTitle"),
+      I18n.t(
+        this.props.isValidatingTask
+          ? "identification.forgetCode.confirmMsgWithTask"
+          : "identification.forgetCode.confirmMsg"
+      ),
       [
         {
           text: I18n.t("global.buttons.confirm"),
@@ -179,14 +224,13 @@ class Pinpad extends React.PureComponent<Props, State> {
     const newPinPadValue =
       this.props.shufflePad !== true ? pinPadValues : shuffle(pinPadValues);
 
-    // compute width placeholder
-    const totalMargins = margin * 2 * (pinLength - 1) + sideMargin * 2;
-    const widthNeeded = width * pinLength + totalMargins;
-
-    const placeholderWidth = (screenWidth - totalMargins) / pinLength;
-
     const scalableDimension: ViewStyle = {
-      width: widthNeeded > screenWidth ? placeholderWidth : width
+      width:
+        (screenWidth -
+          customVariables.spacerWidth * (pinLength - 1) -
+          customVariables.contentPadding * 2 -
+          INPUT_MARGIN * 2) /
+        pinLength
     };
 
     this.setState({
@@ -247,82 +291,71 @@ class Pinpad extends React.PureComponent<Props, State> {
   };
 
   private handlePinDigit = (digit: string) =>
-    this.handleChangeText(`${this.state.value}${digit}`);
-
-  private renderPlaceholder = (i: number) => {
-    const isPlaceholderPopulated = i <= this.state.value.length - 1;
-    const { activeColor, inactiveColor } = this.props;
-    const { scalableDimension } = this.state;
-
-    return isPlaceholderPopulated ? (
-      <Bullet
-        color={activeColor}
-        scalableDimension={scalableDimension}
-        key={`baseline-${i}`}
-      />
-    ) : (
-      <Baseline
-        color={inactiveColor}
-        scalableDimension={scalableDimension}
-        key={`baseline-${i}`}
-      />
+    this.handleChangeText(
+      `${this.state.value}${digit}`.substr(0, this.state.pinLength)
     );
-  };
 
   public debounceClear = debounce(() => {
     this.setState({ value: "" });
   }, 100);
 
-  private renderRemainingAttempts = (remainingAttempts: number) => {
-    const wrongCode = I18n.t("identification.fail.wrongCode");
-    const remainingAttemptsString = I18n.t(
-      remainingAttempts > 1
-        ? "identification.fail.remainingAttempts"
-        : "identification.fail.remainingAttemptSingle",
-      { attempts: remainingAttempts }
-    );
-
-    return (
-      <Text primary={true} style={styles.text} bold={true}>
-        {wrongCode}. {remainingAttemptsString}
-      </Text>
-    );
-  };
-
   public render() {
-    const placeholderPositions = range(0, this.state.pinLength - 1);
-    const remainingAttemptsMessage = fromNullable(
-      this.props.remainingAttempts
-    ).fold(null, x => this.renderRemainingAttempts(x));
-
     return (
       <React.Fragment>
-        <View style={styles.placeholderContainer}>
-          {placeholderPositions.map(this.renderPlaceholder)}
-        </View>
+        <InputPlaceHolder
+          digits={this.state.pinLength}
+          activeColor={this.props.activeColor}
+          inactiveColor={this.props.inactiveColor}
+          inputValue={this.state.value}
+          customHorizontalMargin={INPUT_MARGIN}
+          accessibilityLabel={I18n.t("identification.unlockCode.reset.code")}
+        />
         <View spacer={true} />
-        {remainingAttemptsMessage}
-
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
             <Text
-              primary={true}
+              white={this.props.buttonType === "primary"}
               onPress={this.confirmResetAlert}
-              style={styles.text}
+              alignCenter={true}
             >
-              {I18n.t("pin_login.pin.reset.button")}
+              {`${I18n.t("identification.unlockCode.reset.button")} `}
+              <Text
+                underlined={true}
+                white={this.props.buttonType === "primary"}
+              >
+                {I18n.t("identification.unlockCode.reset.code")}
+              </Text>
+              <Text white={this.props.buttonType === "primary"}>
+                {I18n.t("global.symbols.question")}
+              </Text>
             </Text>
             <View spacer={true} />
           </React.Fragment>
         )}
         <View spacer={true} />
-        <ShakeAnimation duration={600} ref={this.shakeAnimationRef}>
+        <ShakeAnimation
+          duration={SHAKE_ANIMATION_DURATION}
+          ref={this.shakeAnimationRef}
+        >
           <KeyPad
             digits={this.pinPadDigits()}
             buttonType={this.props.buttonType}
             isDisabled={this.state.isDisabled}
           />
         </ShakeAnimation>
+        {this.props.onCancel && (
+          <React.Fragment>
+            <View spacer={true} large={true} />
+            <Text
+              style={styles.mediumText}
+              alignCenter={true}
+              link={true}
+              onPress={this.props.onCancel}
+            >
+              {I18n.t("global.buttons.cancel")}
+            </Text>
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   }

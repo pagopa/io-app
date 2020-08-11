@@ -127,7 +127,7 @@ export const paymentsHistorySelector = (state: GlobalState) =>
 /**
  * return some(true) if payment ends successfully
  * return some(false) if payment ends with a failure
- * return none if payements didn't end (no data to say failure or success)
+ * return none if payments didn't end (no data to say failure or success)
  * @param payment
  */
 export const isPaymentDoneSuccessfully = (
@@ -139,6 +139,41 @@ export const isPaymentDoneSuccessfully = (
   return fromNullable(payment.transaction).map(
     t => t !== undefined && isSuccessTransaction(t)
   );
+};
+
+export const getIuv = (data: RptId): string => {
+  switch (data.paymentNoticeNumber.auxDigit) {
+    case "0":
+    case "3":
+      return data.paymentNoticeNumber.iuv13;
+    case "1":
+      return data.paymentNoticeNumber.iuv17;
+    case "2":
+      return data.paymentNoticeNumber.iuv15;
+    default:
+      return "";
+  }
+};
+
+// return the notice code from the given rptId
+export const getCodiceAvviso = (rptId: RptId) => {
+  const pnn = rptId.paymentNoticeNumber;
+  switch (pnn.auxDigit) {
+    case "0":
+      return `${pnn.auxDigit}${pnn.applicationCode}${pnn.iuv13}${
+        pnn.checkDigit
+      }`;
+    case "1":
+      return `${pnn.auxDigit}${pnn.iuv17}`;
+    case "2":
+      return `${pnn.auxDigit}${pnn.iuv15}${pnn.checkDigit}`;
+    case "3":
+      return `${pnn.auxDigit}${pnn.iuv13}${pnn.checkDigit}${
+        pnn.segregationCode
+      }`;
+    default:
+      return "";
+  }
 };
 
 export default reducer;

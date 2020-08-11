@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-import { applyMiddleware, compose, createStore, Reducer } from "redux";
+import { applyMiddleware, compose, createStore, Reducer, Store } from "redux";
 import { createLogger } from "redux-logger";
 import {
   createMigrate,
@@ -15,7 +15,7 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "../sagas";
-import { Action, Store, StoreEnhancer } from "../store/actions/types";
+import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
 import { createNavigationHistoryMiddleware } from "../store/middlewares/navigationHistory";
 import { addMessagesIdsByServiceId } from "../store/migrations/addMessagesIdsByServiceId";
@@ -23,6 +23,7 @@ import {
   authenticationPersistConfig,
   createRootReducer
 } from "../store/reducers";
+import { ContentState } from "../store/reducers/content";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
@@ -34,7 +35,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 12;
+const CURRENT_REDUX_STORE_VERSION = 14;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -210,6 +211,34 @@ const migrations: MigrationManifest = {
         isDebugModeEnabled: false
       }
     };
+  },
+  // Version 13
+  // add content.idpTextData
+  // set default value
+  "13": (state: PersistedState) => {
+    return {
+      ...state,
+      content: {
+        ...(state as PersistedGlobalState).content,
+        idpTextData: pot.none
+      }
+    };
+  },
+  // Version 14
+  // remove content.idpTextData
+  // add context.contextualHelp
+  "14": (state: PersistedState) => {
+    const content = (state as PersistedGlobalState).content;
+    const newContent: ContentState = {
+      servicesMetadata: content.servicesMetadata,
+      municipality: content.municipality,
+      servicesByScope: content.servicesByScope,
+      contextualHelp: pot.none
+    };
+    return {
+      ...state,
+      content: newContent
+    };
   }
 };
 
@@ -254,9 +283,10 @@ const logger = createLogger({
 });
 
 // configure Reactotron if the app is running in dev mode
-export const RTron = isDevEnv ? configureReactotron() : {};
+export const RTron = isDevEnv ? configureReactotron() : undefined;
 const sagaMiddleware = createSagaMiddleware(
-  isDevEnv ? { sagaMonitor: RTron.createSagaMonitor() } : {}
+  // cast to any due to a type lacking
+  RTron ? { sagaMonitor: (RTron as any).createSagaMonitor() } : {}
 );
 
 /**
@@ -293,9 +323,11 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
     analytics.screenTracking // tracks screen navigation,
   );
   // add Reactotron enhancer if the app is running in dev mode
-  const enhancer: StoreEnhancer = isDevEnv
-    ? composeEnhancers(middlewares, RTron.createEnhancer())
-    : composeEnhancers(middlewares);
+
+  const enhancer: StoreEnhancer =
+    RTron && RTron.createEnhancer
+      ? composeEnhancers(middlewares, RTron.createEnhancer())
+      : composeEnhancers(middlewares);
 
   const store: Store = createStore<PersistedGlobalState, Action, {}, {}>(
     persistedReducer,

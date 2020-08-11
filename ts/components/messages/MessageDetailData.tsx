@@ -11,9 +11,8 @@ import { ServiceMetadataState } from "../../store/reducers/content";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import { format, formatDateAsLocal } from "../../utils/dates";
-import { handleItemOnPress } from "../../utils/url";
 import CopyButtonComponent from "../CopyButtonComponent";
-import BlockButtons, { BlockButtonProps } from "../ui/BlockButtons";
+import EmailCallCTA from "../screens/EmailCallCTA";
 
 const styles = StyleSheet.create({
   container: {
@@ -50,13 +49,8 @@ type MessageData = {
  * If data are available, the user can start a call or send and email to the service
  */
 class MessageDetailData extends React.PureComponent<Props> {
-  private dateFormat = formatDateAsLocal(
-    this.props.message.created_at,
-    true,
-    true
-  );
-  private date = format(this.props.message.created_at, this.dateFormat);
-  private time = format(this.props.message.created_at, "hh:mm");
+  private date = formatDateAsLocal(this.props.message.created_at);
+  private time = format(this.props.message.created_at, "HH.mm");
 
   get data(): MessageData {
     const serviceDetail = pot.toOption(this.props.serviceDetail);
@@ -81,20 +75,6 @@ class MessageDetailData extends React.PureComponent<Props> {
     );
   }
 
-  private callService = () =>
-    this.data.metadata.map(p => {
-      fromNullable(p.phone).map(phoneNumber =>
-        handleItemOnPress(`tel:${phoneNumber}`)()
-      );
-    });
-
-  private sendEmailToService = () =>
-    this.data.metadata.map(p => {
-      fromNullable(p.email).map(email =>
-        handleItemOnPress(`mailto:${email}`)()
-      );
-    });
-
   private renderButtons = () => {
     if (!this.hasEmailOrPhone) {
       return undefined;
@@ -102,40 +82,7 @@ class MessageDetailData extends React.PureComponent<Props> {
     const phone = this.data.metadata.fold(undefined, m => m.phone);
     const email = this.data.metadata.fold(undefined, m => m.email);
 
-    const callButton: BlockButtonProps = {
-      bordered: true,
-      small: true,
-      lightText: true,
-      title: I18n.t("messageDetails.call"),
-      iconName: "io-phone",
-      onPress: this.callService
-    };
-
-    const emailButton: BlockButtonProps = {
-      bordered: true,
-      small: true,
-      lightText: true,
-      title: I18n.t("messageDetails.write"),
-      iconName: "io-envelope",
-      onPress: this.sendEmailToService
-    };
-
-    if (phone === undefined || email === undefined) {
-      return (
-        <BlockButtons
-          type={"SingleButton"}
-          leftButton={phone ? callButton : emailButton}
-        />
-      );
-    }
-
-    return (
-      <BlockButtons
-        type={"TwoButtonsInlineHalf"}
-        leftButton={callButton}
-        rightButton={emailButton}
-      />
-    );
+    return <EmailCallCTA phone={phone} email={email} />;
   };
 
   public render() {
@@ -172,15 +119,15 @@ class MessageDetailData extends React.PureComponent<Props> {
 
             <Text bold={true}>{I18n.t("messageDetails.question")}</Text>
             <View spacer={true} xsmall={true} />
-            <Text small={true}>{I18n.t("messageDetails.answer")}</Text>
+            <Text>{I18n.t("messageDetails.answer")}</Text>
 
             <View spacer={true} />
 
             <React.Fragment>
               <View style={styles.row}>
-                <Text xsmall={true} style={styles.flex}>{`${I18n.t(
-                  "messageDetails.id"
-                )} ${this.props.message.id}`}</Text>
+                <Text style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
+                  this.props.message.id
+                }`}</Text>
                 <CopyButtonComponent textToCopy={this.props.message.id} />
               </View>
               <View spacer={true} />

@@ -64,6 +64,13 @@ function renderListItem(
       iconOnTop={true}
       useExtendedSubTitle={true}
       onPress={onPress}
+      accessible={true}
+      accessibilityRole={"radio"}
+      accessibilityLabel={`${title} ${subTitle}, ${
+        isActive
+          ? I18n.t("global.accessibility.active")
+          : I18n.t("global.accessibility.inactive")
+      }`}
     />
   );
 }

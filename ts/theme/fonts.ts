@@ -49,6 +49,7 @@ const makeFontFamilyName = (
   isItalic: boolean = false
 ): string =>
   osSelect({
+    default: "undefined",
     android: `${fonts[font]}-${fontWeights[weight || "400"]}${
       isItalic ? "Italic" : ""
     }`,
@@ -66,6 +67,9 @@ export const makeFontStyleObject = (
   font: FontFamily | undefined = "TitilliumWeb"
 ): FontStyleObject =>
   osSelect({
+    default: {
+      fontFamily: "undefined"
+    },
     android: {
       fontFamily: makeFontFamilyName(osSelect, font, weight, isItalic)
     },

@@ -15,6 +15,7 @@ import { isIphoneX } from "react-native-iphone-x-helper";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
 import IconFont from "../components/ui/IconFont";
+import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
@@ -28,7 +29,8 @@ type Props = Readonly<{
 
 const globalHeaderHeight: number = Platform.select({
   ios: customVariables.appHeaderHeight + (isIphoneX() ? 42 : 18),
-  android: customVariables.appHeaderHeight
+  android: customVariables.appHeaderHeight,
+  default: -1
 });
 
 const styles = StyleSheet.create({
@@ -126,7 +128,13 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
           <View spacer={true} large={true} />
         </ScrollView>
         <View style={styles.closeButton}>
-          <Button transparent={true} onPress={this.props.onCancel}>
+          <Button
+            transparent={true}
+            onPress={this.props.onCancel}
+            accessible={true}
+            accessibilityRole={"button"}
+            accessibilityLabel={I18n.t("global.buttons.close")}
+          >
             <IconFont name="io-close" color={customVariables.colorWhite} />
           </Button>
         </View>

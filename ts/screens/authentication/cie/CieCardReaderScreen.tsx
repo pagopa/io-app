@@ -8,7 +8,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text } from "native-base";
 import * as React from "react";
-import { StyleSheet, Vibration } from "react-native";
+import { AccessibilityInfo, StyleSheet, Vibration } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
@@ -24,6 +24,10 @@ import { Dispatch } from "../../../store/actions/types";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
+import {
+  isScreenReaderEnabled,
+  setAccessibilityFocus
+} from "../../../utils/accessibility";
 
 type NavigationParams = {
   ciePin: string;
@@ -54,15 +58,21 @@ type State = {
   subtitle: string;
   content?: string;
   errorMessage?: string;
+  isScreenReaderEnabled: boolean;
 };
 
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
+const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
 const VIBRATION = 100 as Millisecond;
+const accessibityTimeout = 100 as Millisecond;
+
 /**
  *  This screen shown while reading the card
  */
 class CieCardReaderScreen extends React.PureComponent<Props, State> {
+  private subTitleRef = React.createRef<Text>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -76,7 +86,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       readingState: ReadingState.waiting_card,
       title: I18n.t("authentication.cie.card.title"),
       subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
-      content: I18n.t("authentication.cie.card.layCardMessageFooter")
+      content: I18n.t("authentication.cie.card.layCardMessageFooter"),
+      isScreenReaderEnabled: false
     };
   }
 
@@ -181,38 +192,59 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     this.updateContent();
   };
 
+  private announceUpdate = () => {
+    if (this.state.content) {
+      AccessibilityInfo.announceForAccessibility(this.state.content);
+    }
+  };
+
   private updateContent = () => {
     switch (this.state.readingState) {
       case ReadingState.reading:
-        this.setState({
-          title: I18n.t("authentication.cie.card.readerCardTitle"),
-          subtitle: I18n.t("authentication.cie.card.readerCardHeader"),
-          content: I18n.t("authentication.cie.card.readerCardFooter")
-        });
+        this.setState(
+          {
+            title: I18n.t("authentication.cie.card.readerCardTitle"),
+            subtitle: I18n.t("authentication.cie.card.readerCardHeader"),
+            content: I18n.t("authentication.cie.card.readerCardFooter")
+          },
+          this.announceUpdate
+        );
         break;
       case ReadingState.error:
-        this.setState({
-          title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-          subtitle: I18n.t(
-            "authentication.cie.card.error.readerCardLostHeader"
-          ),
-          content: this.state.errorMessage
-        });
+        this.setState(
+          {
+            title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
+            subtitle: I18n.t(
+              "authentication.cie.card.error.readerCardLostHeader"
+            ),
+            content: this.state.errorMessage
+          },
+          this.announceUpdate
+        );
         break;
       case ReadingState.completed:
-        this.setState({
-          title: I18n.t("global.buttons.ok2"),
-          subtitle: I18n.t("authentication.cie.card.cieCardValid"),
-          content: undefined
-        });
+        this.setState(
+          {
+            title: I18n.t("global.buttons.ok2"),
+            subtitle: I18n.t("authentication.cie.card.cieCardValid"),
+            // duplicate message so screen reader can read the updated message
+            content: this.state.isScreenReaderEnabled
+              ? I18n.t("authentication.cie.card.cieCardValid")
+              : undefined
+          },
+          this.announceUpdate
+        );
         break;
       // waiting_card state
       default:
-        this.setState({
-          title: I18n.t("authentication.cie.card.title"),
-          subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
-          content: I18n.t("authentication.cie.card.layCardMessageFooter")
-        });
+        this.setState(
+          {
+            title: I18n.t("authentication.cie.card.title"),
+            subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
+            content: I18n.t("authentication.cie.card.layCardMessageFooter")
+          },
+          this.announceUpdate
+        );
     }
   };
 
@@ -232,11 +264,12 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
           cieConsentUri
         });
-      }, WAIT_TIMEOUT_NAVIGATION);
+        // if screen reader is enabled, give more time to read the success message
+      }, this.state.isScreenReaderEnabled ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY : WAIT_TIMEOUT_NAVIGATION);
     });
   };
 
-  public componentDidMount() {
+  public async componentDidMount() {
     cieManager
       .start()
       .then(async () => {
@@ -251,21 +284,31 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       .catch(() => {
         this.setState({ readingState: ReadingState.error });
       });
+    const srEnabled = await isScreenReaderEnabled();
+    this.setState({ isScreenReaderEnabled: srEnabled });
   }
+
+  // focus on subtitle just after set the focus on navigation header title
+  private handleOnHeaderFocus = () => {
+    setAccessibilityFocus(this.subTitleRef, accessibityTimeout);
+  };
 
   public render(): React.ReactNode {
     return (
       <TopScreenComponent
+        onAccessibilityNavigationHeaderFocus={this.handleOnHeaderFocus}
         goBack={true}
         headerTitle={I18n.t("authentication.cie.card.headerTitle")}
       >
         <ScreenContentHeader title={this.state.title} />
         <Content bounces={false} noPadded={true}>
-          <Text style={styles.padded}>{this.state.subtitle}</Text>
+          <Text style={styles.padded} ref={this.subTitleRef}>
+            {this.state.subtitle}
+          </Text>
           <CieReadingCardAnimation readingState={this.state.readingState} />
-          {this.state.content && (
-            <Text style={styles.padded}>{this.state.content}</Text>
-          )}
+          <Text style={styles.padded} accessible={true}>
+            {this.state.content}
+          </Text>
         </Content>
         {this.state.readingState !== ReadingState.completed && ( // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
           <FooterWithButtons

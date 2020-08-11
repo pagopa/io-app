@@ -1,4 +1,4 @@
-import { fromEither, fromNullable, Option } from "fp-ts/lib/Option";
+import { fromEither, fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -15,9 +15,16 @@ import I18n from "../i18n";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
-import { PaymentHistory } from "../store/reducers/payments/history";
-import { Psp, Wallet } from "../types/pagopa";
+import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
+import {
+  getCodiceAvviso,
+  PaymentHistory
+} from "../store/reducers/payments/history";
+import { Psp, Transaction, Wallet } from "../types/pagopa";
 import { formatDateAsReminder } from "./dates";
+import { getLocalePrimaryWithFallback } from "./locale";
+import { maybeInnerProperty } from "./options";
+import { formatNumberCentsToAmount } from "./stringBuilder";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -74,7 +81,7 @@ export function decodePagoPaQrCode(
  */
 export const pspsForLocale = (
   psps: ReadonlyArray<Psp>,
-  locale: string = I18n.locale.slice(0, 2)
+  locale: string = getLocalePrimaryWithFallback()
 ) => psps.filter(_ => (_.lingua ? _.lingua.toLowerCase() === locale : true));
 
 /**
@@ -102,6 +109,12 @@ export function walletHasFavoriteAvailablePsp(
   return walletPspInPsps !== undefined;
 }
 
+const hasDescriptionPrefix = (description: string) =>
+  description.startsWith("/RFA/") ||
+  description.startsWith("/RFB/") ||
+  description.startsWith("RFA/") ||
+  description.startsWith("RFB/");
+
 /**
  * This function removes the tag from payment description of a PagoPA transaction.
  * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
@@ -110,12 +123,7 @@ export const cleanTransactionDescription = (description: string): string => {
   // detect description in pagoPA format - note that we also check for cases
   // without the leading slash since some services don't add it (mistake on
   // their side)
-  if (
-    !description.startsWith("/RFA/") &&
-    !description.startsWith("/RFB/") &&
-    !description.startsWith("RFA/") &&
-    !description.startsWith("RFB/")
-  ) {
+  if (!hasDescriptionPrefix(description)) {
     // not a description in the pagoPA format, return the description unmodified
     return description;
   }
@@ -127,6 +135,32 @@ export const cleanTransactionDescription = (description: string): string => {
     : "";
 };
 
+export const getErrorDescription = (
+  error?: keyof typeof DetailEnum
+): string | undefined => {
+  if (error === undefined) {
+    return undefined;
+  }
+  switch (error) {
+    case "PAYMENT_DUPLICATED":
+      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
+    case "INVALID_AMOUNT":
+      return I18n.t("wallet.errors.INVALID_AMOUNT");
+    case "PAYMENT_ONGOING":
+      return I18n.t("wallet.errors.PAYMENT_ONGOING");
+    case "PAYMENT_EXPIRED":
+      return I18n.t("wallet.errors.PAYMENT_EXPIRED");
+    case "PAYMENT_UNAVAILABLE":
+      return I18n.t("wallet.errors.PAYMENT_UNAVAILABLE");
+    case "PAYMENT_UNKNOWN":
+      return I18n.t("wallet.errors.PAYMENT_UNKNOWN");
+    case "DOMAIN_UNKNOWN":
+      return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
+    default:
+      return undefined;
+  }
+};
+
 export const getPaymentHistoryDetails = (
   payment: PaymentHistory,
   profile: InitializedProfile
@@ -134,25 +168,57 @@ export const getPaymentHistoryDetails = (
   const separator = " / ";
   const profileDetails = `- spid_email: ${fromNullable(
     profile.spid_email as string
-  ).getOrElse("n/a")}${separator}- email: ${fromNullable(
+  ).getOrElse("spid email: n/a")}${separator}- email: ${fromNullable(
     profile.email as string
-  ).getOrElse("n/a")}${separator}- cf: ${profile.fiscal_code as string}`;
+  ).getOrElse("email: n/a")}${separator}- cf: ${profile.fiscal_code as string}`;
   const paymentDetails = `- payment start time: ${formatDateAsReminder(
     new Date(payment.started_at)
   )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;
+  const codiceAvviso = `- codice avviso: ${getCodiceAvviso(payment.data)}`;
   const ccp = fromNullable(payment.verified_data)
     .map(pv => `- ccp: ${pv.codiceContestoPagamento}`)
-    .getOrElse("");
+    .getOrElse("ccp: n/a");
   const failureDetails = fromNullable(payment.failure)
-    .map(pf => `- errore: ${pf}`)
-    .getOrElse("");
+    .map(
+      pf => `- errore: ${pf} (descrizione errore: ${getErrorDescription(pf)})`
+    )
+    .getOrElse("errore: n/a");
   return profileDetails.concat(
     separator,
-    paymentDetails,
+    codiceAvviso,
+    separator,
     paymentDetails,
     separator,
     ccp,
     separator,
     failureDetails
   );
+};
+
+// return the transaction fee it transaction is defined and its fee property too
+export const getTransactionFee = (
+  transaction?: Transaction,
+  formatFunc: (fee: number) => string = (f: number) =>
+    formatNumberCentsToAmount(f, true)
+): string | null => {
+  const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
+    transaction,
+    "fee",
+    m => (m ? m.amount : undefined)
+  ).getOrElse(undefined);
+  return fromNullable(maybeFee)
+    .map(formatFunc)
+    .toNullable();
+};
+
+// try to extract codice avviso from transaction description
+export const getTransactionCodiceAvviso = (
+  transactionDescription: string
+): Option<string> => {
+  const description = transactionDescription.trim();
+  if (!hasDescriptionPrefix(description)) {
+    return none;
+  }
+  const splitted = description.split("/").filter(i => i.trim().length > 0);
+  return splitted.length > 1 ? some(splitted[1]) : none;
 };

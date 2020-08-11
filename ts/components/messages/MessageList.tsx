@@ -3,18 +3,20 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import React from "react";
 import {
+  ActivityIndicator,
   Animated,
   FlatList,
   ListRenderItemInfo,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Platform,
   RefreshControl,
   StyleSheet,
   Vibration
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
@@ -62,6 +64,7 @@ type State = {
   prevMessageStates?: ReadonlyArray<MessageState>;
   itemLayouts: ReadonlyArray<ItemLayout>;
   longPressedItemIndex: Option<number>;
+  isFirstLoad: boolean;
 };
 
 const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
@@ -95,6 +98,9 @@ const styles = StyleSheet.create({
   },
   padded: {
     paddingHorizontal: customVariables.contentPadding
+  },
+  activityIndicator: {
+    padding: 12
   }
 });
 
@@ -174,11 +180,11 @@ const ItemSeparator = () => <ItemSeparatorComponent noPadded={true} />;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 class MessageList extends React.Component<Props, State> {
-  private flatListRef = React.createRef<typeof AnimatedFlatList>();
+  private flatListRef = React.createRef<FlatList>();
 
   private scrollTo = (index: number, animated: boolean = false) => {
     if (this.flatListRef.current && this.props.messageStates.length > 0) {
-      this.flatListRef.current.getNode().scrollToIndex({ animated, index });
+      this.flatListRef.current.scrollToIndex({ animated, index });
     }
   };
 
@@ -186,7 +192,8 @@ class MessageList extends React.Component<Props, State> {
     super(props);
     this.state = {
       itemLayouts: [],
-      longPressedItemIndex: none
+      longPressedItemIndex: none,
+      isFirstLoad: Platform.OS === "ios" // considering firstLoad only when running device is iOS
     };
   }
 
@@ -229,7 +236,7 @@ class MessageList extends React.Component<Props, State> {
           // CreatedMessageWithContent cast is needed because of the lack of
           // "markdown" required property. It is not passed because it's not
           // needed for giving feedback in the messsage list
-        } as CreatedMessageWithContent)
+        } as CreatedMessageWithContentAndAttachments)
       : potMessage.value;
 
     const service =
@@ -308,18 +315,38 @@ class MessageList extends React.Component<Props, State> {
     } = this.props;
 
     const refreshControl = (
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      <RefreshControl
+        refreshing={refreshing}
+        onRefresh={() => {
+          if (this.state.isFirstLoad) {
+            this.setState({ isFirstLoad: false });
+          }
+          onRefresh();
+        }}
+      />
     );
-
     return (
       <React.Fragment>
         <NavigationEvents onWillFocus={() => this.scrollTo(0)} />
+        {/* in iOS refresh indicator is shown only when user does pull to refresh on list
+          so only for iOS devices the ActivityIndicator is shown in place of RefreshControl
+          see https://stackoverflow.com/questions/50307314/react-native-flatlist-refreshing-not-showing-when-its-true-during-first-load
+          see https://github.com/facebook/react-native/issues/15892
+        */}
+        {refreshing &&
+          this.state.isFirstLoad && (
+            <ActivityIndicator
+              animating={true}
+              style={styles.activityIndicator}
+            />
+          )}
         <AnimatedFlatList
           ref={this.flatListRef}
           style={styles.padded}
           scrollEnabled={true}
           data={messageStates}
-          extraData={{ servicesById, paymentsByRptId }}
+          extraData={{ servicesById, paymentsByRptId, refreshing }}
+          refreshing={refreshing}
           keyExtractor={keyExtractor}
           refreshControl={refreshControl}
           initialNumToRender={10}

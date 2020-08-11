@@ -40,7 +40,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import { HEADER_HEIGHT } from "../../utils/constants";
+import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type Props = NavigationScreenProps &
@@ -55,9 +55,6 @@ const styles = StyleSheet.create({
   tabBarContainer: {
     elevation: 0,
     height: 40
-  },
-  tabBarContent: {
-    fontSize: customVariables.fontSizeSmall
   },
   tabBarUnderline: {
     borderBottomColor: customVariables.tabUnderlineColor,
@@ -79,8 +76,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandPrimary
   },
   textStyle: {
-    color: customVariables.brandDarkGray,
-    fontSize: customVariables.fontSizeSmall
+    color: customVariables.brandDarkGray
   }
 });
 
@@ -149,6 +145,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
     return (
       <TopScreenComponent
+        accessibilityLabel={I18n.t("messages.contentTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["messages"]}
         headerTitle={I18n.t("messages.contentTitle")}
@@ -160,7 +157,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <React.Fragment>
             <AnimatedScreenContentHeader
               title={I18n.t("messages.contentTitle")}
-              icon={require("../../../img/icons/message-icon.png")}
+              iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
               dynamicHeight={this.getHeaderHeight()}
             />
             {this.renderTabs()}

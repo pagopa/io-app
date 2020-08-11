@@ -1,0 +1,1 @@
+Not yet. This is just a preview of the royal bonus. If you want to continue the request, click the "Activate Bonus" button at the bottom of the page. 

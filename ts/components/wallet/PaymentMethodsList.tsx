@@ -10,9 +10,11 @@ import { FlatList, Image, Platform, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import I18n from "../../i18n";
 import { makeFontStyleObject } from "../../theme/fonts";
+import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { ContextualHelp } from "../ContextualHelp";
 import { withLightModalContext } from "../helpers/withLightModalContext";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
@@ -30,6 +32,8 @@ type IPaymentMethod = Readonly<{
   icon?: any;
   image?: any;
   implemented: boolean;
+  isNew?: boolean;
+  onPress?: () => void;
 }>;
 
 const underlayColor = "transparent";
@@ -68,6 +72,7 @@ const implementedMethod: IPaymentMethod = {
   icon: "io-48-card",
   implemented: true
 };
+
 const paymentMethods: ReadonlyArray<IPaymentMethod> = [
   {
     name: I18n.t("wallet.methods.satispay.name"),
@@ -95,7 +100,6 @@ const paymentMethods: ReadonlyArray<IPaymentMethod> = [
 
 const AddMethodStyle = StyleSheet.create({
   transactionText: {
-    fontSize: variables.fontSizeSmaller,
     color: color(variables.colorWhite)
       .darken(0.35)
       .string()
@@ -105,9 +109,15 @@ const AddMethodStyle = StyleSheet.create({
     marginTop: 2,
     backgroundColor: variables.lightGray
   },
+  newImplementedBadge: {
+    height: 18,
+    marginTop: 2,
+    backgroundColor: variables.brandHighLighter
+  },
   notImplementedText: {
     fontSize: 10,
-    lineHeight: Platform.OS === "ios" ? 14 : 16
+    lineHeight: Platform.OS === "ios" ? 14 : 16,
+    color: customVariables.colorWhite
   },
   centeredContents: {
     alignItems: "center"
@@ -127,24 +137,28 @@ class PaymentMethodsList extends React.Component<Props, never> {
   };
 
   public render(): React.ReactNode {
+    const methods: ReadonlyArray<IPaymentMethod> = [
+      {
+        ...implementedMethod,
+        onPress: this.props.navigateToAddCreditCard
+      },
+      ...paymentMethods
+    ];
     return (
       <View>
         <View spacer={true} large={true} />
         <FlatList
           removeClippedSubviews={false}
-          data={[implementedMethod, ...paymentMethods]}
+          data={methods}
           keyExtractor={item => item.name}
           renderItem={itemInfo => {
             const isItemDisabled = !itemInfo.item.implemented;
             const disabledStyle = isItemDisabled ? styles.disabled : {};
+            const isItemNew = itemInfo.item.implemented && itemInfo.item.isNew;
             return (
               <ListItem
                 style={styles.listItem}
-                onPress={() => {
-                  if (itemInfo.item.implemented) {
-                    this.props.navigateToAddCreditCard();
-                  }
-                }}
+                onPress={itemInfo.item.onPress}
                 underlayColor={underlayColor}
               >
                 <View style={styles.columnLeft}>
@@ -161,6 +175,13 @@ class PaymentMethodsList extends React.Component<Props, never> {
                           <Badge style={AddMethodStyle.notImplementedBadge}>
                             <Text style={AddMethodStyle.notImplementedText}>
                               {I18n.t("wallet.methods.comingSoon")}
+                            </Text>
+                          </Badge>
+                        )}
+                        {isItemNew && (
+                          <Badge style={AddMethodStyle.newImplementedBadge}>
+                            <Text style={AddMethodStyle.notImplementedText}>
+                              {I18n.t("wallet.methods.newCome")}
                             </Text>
                           </Badge>
                         )}
@@ -208,7 +229,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
         <TouchableDefaultOpacity onPress={this.showHelp}>
           <Text link={true}>{I18n.t("wallet.whyAFee.title")}</Text>
         </TouchableDefaultOpacity>
-        <View spacer={true} large={true} />
+        {methods.length > 0 && <EdgeBorderComponent />}
       </View>
     );
   }

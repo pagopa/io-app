@@ -3,6 +3,18 @@ import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
+import {
+  activateBonusVacanze,
+  cancelBonusVacanzeRequest,
+  checkBonusVacanzeEligibility,
+  loadAllBonusActivations,
+  loadAvailableBonuses,
+  storeEligibilityRequestId
+} from "../../features/bonusVacanze/store/actions/bonusVacanze";
+import {
+  isActivationResponseTrackable,
+  isEligibilityResponseTrackable
+} from "../../features/bonusVacanze/utils/bonus";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
@@ -140,9 +152,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         SPID_URL: action.payload.url
       });
 
-    case getType(profileFirstLogin):
-      return mp.track(action.type, action.payload);
-
     // dispatch to mixpanel when the email is validated
     case getType(profileEmailValidationChanged):
       return mp.track(action.type, { isEmailValidated: action.payload });
@@ -251,6 +260,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentDeletePayment.failure):
     case getType(paymentUpdateWalletPsp.failure):
     case getType(updateNotificationInstallationFailure):
+    // Bonus vacanze
+    case getType(loadAllBonusActivations.failure):
+    case getType(loadAvailableBonuses.failure):
+    case getType(checkBonusVacanzeEligibility.failure):
+    case getType(activateBonusVacanze.failure):
       return mp.track(action.type, {
         reason: action.payload.message
       });
@@ -344,16 +358,42 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
 
+    //  profile First time Login
+    case getType(profileFirstLogin):
     // other
     case getType(updateNotificationsInstallationToken):
+    // bonus vacanze
+    case getType(loadAllBonusActivations.request):
+    case getType(loadAllBonusActivations.success):
+    case getType(loadAvailableBonuses.success):
+    case getType(loadAvailableBonuses.request):
+    case getType(checkBonusVacanzeEligibility.request):
+    case getType(cancelBonusVacanzeRequest):
+    case getType(storeEligibilityRequestId):
       return mp.track(action.type);
 
     // events from CIE Manager
     case getType(cieEventEmit):
       return mp.track(`CIE_${action.payload}`);
+    // bonus vacanze
+    case getType(checkBonusVacanzeEligibility.success):
+      if (isEligibilityResponseTrackable(action.payload)) {
+        return mp.track(action.type, {
+          status: action.payload.status
+        });
+      }
+      break;
+    case getType(activateBonusVacanze.success):
+      if (isActivationResponseTrackable(action.payload)) {
+        return mp.track(action.type, {
+          status: action.payload.status
+        });
+      }
+      break;
   }
   return Promise.resolve();
 };
+
 /*
  * The middleware acts as a general hook in order to track any meaningful action
  */

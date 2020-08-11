@@ -3,8 +3,9 @@
  * to backend and proceed with the onbording process
  */
 import * as React from "react";
-import { Alert, BackHandler, NavState } from "react-native";
+import { Alert, BackHandler } from "react-native";
 import WebView from "react-native-webview";
+import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import {
   NavigationScreenProp,
   NavigationScreenProps,
@@ -97,7 +98,7 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
     this.props.loginSuccess(token);
   };
 
-  private handleShouldStartLoading = (event: NavState): boolean => {
+  private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
     const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
       this.handleLoginSuccess

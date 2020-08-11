@@ -15,7 +15,6 @@ export const CreditCardStyles = StyleSheet.create({
     color: variables.cardFontColor
   },
   smallTextStyle: {
-    fontSize: variables.fontSizeSmall,
     color: variables.brandDarkGray
   },
   expiredTextStyle: {

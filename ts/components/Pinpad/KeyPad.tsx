@@ -1,11 +1,21 @@
+import { Either } from "fp-ts/lib/Either";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
+import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import StyledIconFont from "../ui/IconFont";
 
-type Digit = ITuple2<string, () => void> | undefined;
+// left -> the string to represent as text
+// right -> the icon to represent with name and size
+export type DigitRpr = Either<
+  string,
+  { name: string; size: number; accessibilityLabel: string }
+>;
+type Digit = ITuple2<DigitRpr, () => void> | undefined;
 
 type Props = Readonly<{
   digits: ReadonlyArray<ReadonlyArray<Digit>>;
@@ -13,46 +23,48 @@ type Props = Readonly<{
   isDisabled: boolean;
 }>;
 
-// TODO: make it variable based on screen width
-const radius = 20;
+// it generate buttons width of 56
+const radius = 18;
+const BUTTON_DIAMETER = 56;
 
 const styles = StyleSheet.create({
   roundButton: {
     paddingTop: 0,
     paddingBottom: 0,
+    paddingRight: 0,
+    paddingLeft: 0,
     marginBottom: 16,
     alignSelf: "center",
     justifyContent: "center",
-    width: (radius + 10) * 2,
-    height: (radius + 10) * 2,
-    borderRadius: radius + 10,
-    shadowOffset: { height: 0, width: 0 },
-    shadowOpacity: 0,
-    elevation: 0
+    width: BUTTON_DIAMETER,
+    height: BUTTON_DIAMETER,
+    borderRadius: BUTTON_DIAMETER / 2
   },
-
+  transparent: {
+    backgroundColor: "transparent"
+  },
   buttonTextBase: {
-    margin: 0,
-    paddingTop: Math.round(radius / 2) + 4,
-    lineHeight: radius + 10,
-    fontWeight: "200"
+    ...makeFontStyleObject(Platform.select, "300"),
+    fontSize: 30,
+    lineHeight: 32,
+    marginBottom: -10
   },
-
+  white: {
+    color: variables.colorWhite
+  },
   buttonTextDigit: {
     fontSize: radius + 10
   },
-
   buttonTextLabel: {
     fontSize: radius - 5
   },
-
-  white: {
-    color: variables.colorWhite
+  noPadded: {
+    paddingRight: 0
   }
 });
 
 const renderPinCol = (
-  label: string,
+  label: DigitRpr,
   handler: () => void,
   style: "digit" | "label",
   key: string,
@@ -63,10 +75,9 @@ const renderPinCol = (
     style === "digit"
       ? styles.roundButton
       : style === "label"
-        ? {
-            backgroundColor: "transparent"
-          }
-        : {};
+        ? [styles.roundButton, styles.transparent]
+        : undefined;
+
   return (
     <Col key={key}>
       <ButtonDefaultOpacity
@@ -75,30 +86,37 @@ const renderPinCol = (
         style={buttonStyle}
         block={style === "label"}
         primary={buttonType === "primary"}
-        light={buttonType === "light"}
+        unNamed={buttonType === "light"}
       >
-        {!label.endsWith(".png") ? (
-          <Text
-            style={[
-              styles.buttonTextBase,
-              style === "digit"
-                ? styles.buttonTextDigit
-                : styles.buttonTextLabel,
-              style === "label" && buttonType === "primary" ? styles.white : {}
-            ]}
-          >
-            {label}
-          </Text>
-        ) : label === "faceid-onboarding-icon.png" ? (
-          <Image
-            source={require("../../../img/icons/faceid-onboarding-icon.png")}
-            style={{ width: 40, height: 48 }}
-          />
-        ) : (
-          <Image
-            source={require("../../../img/icons/fingerprint-onboarding-icon.png")}
-            style={{ width: 40, height: 48 }}
-          />
+        {label.fold(
+          l => {
+            return (
+              <Text
+                white={style === "label" && buttonType === "primary"}
+                style={[
+                  styles.buttonTextBase,
+                  style === "label" && styles.buttonTextLabel
+                ]}
+              >
+                {l}
+              </Text>
+            );
+          },
+          ic => {
+            return (
+              <StyledIconFont
+                name={ic.name}
+                size={ic.size}
+                style={[styles.noPadded]}
+                color={
+                  buttonType === "light"
+                    ? customVariables.contentPrimaryBackground
+                    : customVariables.colorWhite
+                }
+                accessibilityLabel={ic.accessibilityLabel}
+              />
+            );
+          }
         )}
       </ButtonDefaultOpacity>
     </Col>
@@ -118,7 +136,7 @@ const renderPinRow = (
           renderPinCol(
             el.e1,
             el.e2,
-            el.e1.length === 1 ? "digit" : "label",
+            el.e1.isLeft() ? "digit" : "label",
             `pinpad-digit-${el.e2}`,
             buttonType,
             isDisabled

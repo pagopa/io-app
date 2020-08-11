@@ -42,6 +42,7 @@ import {
   DeleteWalletUsingDELETET,
   favouriteWalletUsingPOSTDecoder,
   FavouriteWalletUsingPOSTT,
+  GetAllPspsUsingGETT,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
   getPspUsingGETDecoder,
@@ -59,7 +60,9 @@ import {
   updateWalletUsingPUTDecoder,
   UpdateWalletUsingPUTT
 } from "../../definitions/pagopa/requestTypes";
+import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
+
 /**
  * A decoder that ignores the content of the payload and only decodes the status
  */
@@ -209,7 +212,10 @@ type GetPspListUsingGETTExtra = MapResponseType<
   ReplaceRequestParams<
     GetPspListUsingGETT,
     // TODO: temporary patch, see https://www.pivotaltracker.com/story/show/161475199
-    TypeofApiParams<GetPspListUsingGETT> & { idWallet?: number }
+    TypeofApiParams<GetPspListUsingGETT> & {
+      idWallet?: number;
+      language?: string;
+    }
   >,
   200,
   PspListResponse
@@ -218,17 +224,37 @@ type GetPspListUsingGETTExtra = MapResponseType<
 const getPspList: GetPspListUsingGETTExtra = {
   method: "get",
   url: () => "/v1/psps",
-  query: ({ idPayment, idWallet }) =>
+  query: ({ idPayment, idWallet, language }) =>
     idWallet
       ? {
           paymentType: "CREDIT_CARD",
           idPayment,
-          idWallet
+          idWallet,
+          language
         }
       : {
           paymentType: "CREDIT_CARD",
-          idPayment
+          idPayment,
+          language
         },
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getPspListUsingGETDecoder(PspListResponse)
+};
+
+type GetAllPspListUsingGETTExtra = MapResponseType<
+  GetAllPspsUsingGETT,
+  200,
+  PspListResponse
+>;
+
+const getAllPspList: GetAllPspListUsingGETTExtra = {
+  method: "get",
+  url: () => "/v1/psps/all",
+  query: ({ idPayment, idWallet, language }) => ({
+    idPayment,
+    idWallet,
+    language
+  }),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
 };
@@ -396,10 +422,24 @@ export function PaymentManagerClient(
         idWallet
           ? {
               idPayment,
-              idWallet
+              idWallet,
+              language: getLocalePrimaryWithFallback()
             }
-          : { idPayment }
+          : { idPayment, language: getLocalePrimaryWithFallback() }
       ),
+    getAllPspList: (
+      idPayment: TypeofApiParams<GetAllPspsUsingGETT>["idPayment"],
+      idWallet: TypeofApiParams<GetAllPspsUsingGETT>["idWallet"]
+    ) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(getAllPspList, options)
+        )
+      )({
+        idPayment,
+        idWallet,
+        language: getLocalePrimaryWithFallback()
+      }),
     getPsp: (id: TypeofApiParams<GetPspUsingGETT>["id"]) =>
       flip(withPaymentManagerToken(createFetchRequestForApi(getPsp, options)))({
         id
