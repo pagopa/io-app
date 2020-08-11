@@ -2,8 +2,8 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationEvents } from "react-navigation";
-import themeVariables from "../../../../theme/variables";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import themeVariables from "../../theme/variables";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 
 type Props = {
   image: React.ReactNode;
