@@ -9,4 +9,4 @@ export function startTimer(t: number): Promise<never> {
 }
 
 export const delayAsync = (milliseconds: Millisecond) =>
-  new Promise(r => setTimeout(r, milliseconds));
+  new Promise<void>(r => setTimeout(r, milliseconds));
