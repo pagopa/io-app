@@ -1061,6 +1061,7 @@ services:
   contactsAndInfo: Contacts and info
   contactAddress: Address
   contactPhone: Phone
+  contactSupport: Support
   areasOfInterest:
     selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
     selectMessageEmptyOrgs: At the moment it is not possible to add a location. Please pull down to refresh the data and try again.

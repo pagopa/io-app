@@ -1,6 +1,6 @@
-import { Platform } from "react-native";
-import { openLink } from "../components/ui/Markdown/handlers/link";
+import { Linking, Platform } from "react-native";
 import I18n from "../i18n";
+import { showToast } from "./showToast";
 
 export function openMaps(
   streetName: string,
@@ -24,6 +24,8 @@ export function openMaps(
         });
 
   if (url !== undefined) {
-    openLink(url, I18n.t("openMaps.genericError"));
+    Linking.openURL(url).catch(() =>
+      showToast(I18n.t("openMaps.genericError"))
+    );
   }
 }
