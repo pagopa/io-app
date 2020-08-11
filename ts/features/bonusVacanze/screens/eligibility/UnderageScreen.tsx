@@ -6,8 +6,8 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
-import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzeStyle } from "../../components/Styles";
 import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
@@ -47,7 +47,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(UnderageScreen);
+export default connect(null, mapDispatchToProps)(UnderageScreen);

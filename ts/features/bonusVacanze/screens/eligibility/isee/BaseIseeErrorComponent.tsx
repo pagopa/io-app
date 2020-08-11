@@ -9,8 +9,8 @@ import {
   confirmButtonProps
 } from "../../../components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../../components/hooks/useHardwareBackButton";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzeStyle } from "../../../components/Styles";
 
 const inpsDsuHomeUrl =

@@ -3,8 +3,8 @@ import { SafeAreaView } from "react-native";
 import I18n from "../../../i18n";
 import { cancelButtonProps } from "./buttons/ButtonConfigurations";
 import { FooterStackButton } from "./buttons/FooterStackButtons";
-import { renderInfoRasterImage } from "./infoScreen/imageRendering";
-import { InfoScreenComponent } from "./infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzeStyle } from "./Styles";
 
 type Props = {

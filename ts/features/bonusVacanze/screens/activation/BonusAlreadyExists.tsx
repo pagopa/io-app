@@ -6,8 +6,8 @@ import I18n from "../../../../i18n";
 import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
-import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { bonusVacanzeStyle } from "../../components/Styles";
 import {
   cancelBonusVacanzeRequest,
@@ -56,7 +56,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onGoToBonus: () => dispatch(showBonusVacanze())
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(BonusAlreadyExists);
+export default connect(null, mapDispatchToProps)(BonusAlreadyExists);

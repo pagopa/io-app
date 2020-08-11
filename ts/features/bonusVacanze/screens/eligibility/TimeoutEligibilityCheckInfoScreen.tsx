@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { BaseTimeoutScreen } from "../../components/BaseTimeoutScreen";
 import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
-import { InfoScreenStyle } from "../../components/infoScreen/InfoScreenComponent";
+import { InfoScreenStyle } from "../../../../components/infoScreen/InfoScreenComponent";
 import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -24,9 +24,7 @@ const renderBody = (first: string, second: string, third: string) => (
   </Text>
 );
 
-const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
-  Props
-> = props => {
+const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<Props> = props => {
   const title = I18n.t("bonus.bonusVacanze.eligibility.timeout.title");
   const first = I18n.t(
     "bonus.bonusVacanze.eligibility.timeout.description.first"
