@@ -435,7 +435,7 @@ function* pollTransactionSaga(
     // on failure, try again after a delay
 
     // tslint:disable-next-line:saga-yield-return-type
-    yield call(delay, POLL_TRANSACTION_DELAY_MILLIS);
+    yield delay(POLL_TRANSACTION_DELAY_MILLIS);
 
     count -= 1;
   }

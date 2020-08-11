@@ -26,7 +26,7 @@ export function* bonusFromIdWorker(bonusId: string): SagaIterator {
     if (isActionOf(loadBonusVacanzeFromId.failure, resultAction)) {
       yield put(cancelLoadBonusFromIdPolling());
     }
-    yield call(delay, POLLING_FREQ_TIMEOUT);
+    yield delay(POLLING_FREQ_TIMEOUT);
   }
 }
 /**
