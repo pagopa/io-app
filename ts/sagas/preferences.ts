@@ -10,8 +10,7 @@ import { SagaCallReturnType } from "../types/utils";
  */
 export function* loadSystemPreferencesSaga(): IterableIterator<Effect> {
   const languages: SagaCallReturnType<typeof getLanguages> = yield call(
-    getLanguages,
-    {}
+    getLanguages
   );
 
   yield put(preferencesLanguagesLoadSuccess(languages));

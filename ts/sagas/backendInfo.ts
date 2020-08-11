@@ -38,7 +38,7 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
     try {
       const backendInfoResponse: SagaCallReturnType<
         typeof getServerInfo
-      > = yield call(getServerInfo, {});
+      > = yield call(getServerInfo);
       if (
         backendInfoResponse.isRight() &&
         backendInfoResponse.value.status === 200
