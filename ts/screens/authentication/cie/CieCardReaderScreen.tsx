@@ -52,14 +52,17 @@ export enum ReadingState {
 }
 
 // A subset of Cie Events (errors) which is of interest to analytics
-const analyticActions = new Set([
+const analyticActions = new Set<CEvent["event"]>([
   "ON_TAG_DISCOVERED_NOT_CIE",
   "ON_CARD_PIN_LOCKED",
   "ON_PIN_ERROR",
+  "PIN_INPUT_ERROR",
   "CERTIFICATE_EXPIRED",
   "CERTIFICATE_REVOKED",
   "AUTHENTICATION_ERROR",
-  "ON_NO_INTERNET_CONNECTION"
+  "ON_NO_INTERNET_CONNECTION",
+  "STOP_NFC_ERROR",
+  "START_NFC_ERROR"
 ]);
 
 type State = {
@@ -131,12 +134,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private dispatchAnalyticEvent = (message: string) => {
-    this.props.dispatch(
-      cieAuthenticationError({
-        message,
-        name: message
-      })
-    );
+    this.props.dispatch(cieAuthenticationError(Error(message)));
   };
 
   private handleCieEvent = async (event: CEvent) => {
@@ -265,10 +263,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
-    this.setState({
-      readingState: ReadingState.error,
-      errorMessage: error.message
-    });
+    this.setError(error.message);
   };
 
   private handleCieSuccess = (cieConsentUri: string) => {
