@@ -15,6 +15,7 @@ import I18n from "../../../i18n";
 import { makeFontStyleObject } from "../../../theme/fonts";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
+import { isShareEnabled } from "../../../utils/share";
 import { maybeNotNullyString } from "../../../utils/strings";
 import { getBonusCodeFormatted, isBonusActive } from "../utils/bonus";
 
@@ -237,12 +238,16 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                         {I18n.t("bonus.bonusVacanze.cta.openQRCode")}
                       </Text>
                     </MenuOption>
-                    <ItemSeparatorComponent />
-                    <MenuOption onSelect={props.share}>
-                      <Text style={styles.actions}>
-                        {I18n.t("global.buttons.share")}
-                      </Text>
-                    </MenuOption>
+                    {isShareEnabled() ? (
+                      <>
+                        <ItemSeparatorComponent />
+                        <MenuOption onSelect={props.share}>
+                          <Text style={styles.actions}>
+                            {I18n.t("global.buttons.share")}
+                          </Text>
+                        </MenuOption>
+                      </>
+                    ) : null}
                   </>
                 )}
               </MenuOptions>

@@ -1,4 +1,5 @@
 import { tryCatch } from "fp-ts/lib/TaskEither";
+import { Platform } from "react-native";
 import Share from "react-native-share";
 
 /**
@@ -21,3 +22,13 @@ export const shareBase64Content = (
     errorMsg => new Error(String(errorMsg))
   );
 };
+
+/***
+ * Return true if the share is available
+ */
+export const isShareEnabled = () =>
+  Platform.select({
+    android: Platform.Version >= 21,
+    ios: true,
+    default: false
+  });
