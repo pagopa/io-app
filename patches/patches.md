@@ -40,7 +40,7 @@ Created on **30/07/2020**
 
 #### Reason:
 - Integrate the pr https://github.com/GeekyAnts/NativeBase/pull/3200 waiting the official release. (remove this patch after the release)
-
+- Use TouchableHighlight instead of TouchableNativeFeedback on Android sdk < 19 to avoid crash.
 
 ### react-native-push-notification+4.0.0
 Created on **03/08/2020**
