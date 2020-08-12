@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0-rc.2](https://github.com/pagopa/io-app/compare/1.5.0-rc.1...1.5.0-rc.2) (2020-08-11)
+
+
+### Features
+
+* [[#172371297](https://www.pivotaltracker.com/story/show/172371297)] forwards additional events (identification/CIE) to mixpanel ([#1729](https://github.com/pagopa/io-app/issues/1729)) ([628fab6](https://github.com/pagopa/io-app/commit/628fab6299c8ebe6ff2126f1c6f45dca841986c2))
+* [[#173735284](https://www.pivotaltracker.com/story/show/173735284)] Display support_url metadata ([#2149](https://github.com/pagopa/io-app/issues/2149)) ([1b65baa](https://github.com/pagopa/io-app/commit/1b65baa7635566669bc273dc72af25e31aa2499d))
+* [[#174034065](https://www.pivotaltracker.com/story/show/174034065)] Add info about session expiration ([#2142](https://github.com/pagopa/io-app/issues/2142)) ([f93f804](https://github.com/pagopa/io-app/commit/f93f804a0ec29bb355088c2ba49f846217056caa))
+* [[#174034065](https://www.pivotaltracker.com/story/show/174034065)] Show details about session expired ([#2150](https://github.com/pagopa/io-app/issues/2150)) ([1c6b6b6](https://github.com/pagopa/io-app/commit/1c6b6b62db31ddd8819169bef86a9ec369e684ba)), closes [#173735284](https://www.pivotaltracker.com/story/show/173735284)
+* [[#174213277](https://www.pivotaltracker.com/story/show/174213277)] Add more details in TransactionDetailScreen ([#2145](https://github.com/pagopa/io-app/issues/2145)) ([46b95a9](https://github.com/pagopa/io-app/commit/46b95a981d83aa7b1fd7eb527d74c38e9a5d5fcd))
+
+
+### Bug Fixes
+
+* [[#172625344](https://www.pivotaltracker.com/story/show/172625344)] Change icons order for base header [#1812](https://github.com/pagopa/io-app/issues/1812) ([e2f6a3f](https://github.com/pagopa/io-app/commit/e2f6a3ffb8f45d2ea27d442bbc309e83bc976e6c))
+* [[#173217033](https://www.pivotaltracker.com/story/show/173217033)] Restores pin insertion when disabling the biometry ([#2140](https://github.com/pagopa/io-app/issues/2140)) ([bbfee11](https://github.com/pagopa/io-app/commit/bbfee1102d24135e3fa67adc8c960a8b1afc07e2))
+* [[#173937093](https://www.pivotaltracker.com/story/show/173937093)] Add /v1/psps/all API ([#2091](https://github.com/pagopa/io-app/issues/2091)) ([63fa72f](https://github.com/pagopa/io-app/commit/63fa72f976222976bf7ab9cb77c4ee92d7b5edc3)), closes [#174161476](https://www.pivotaltracker.com/story/show/174161476)
+* [[#173937093](https://www.pivotaltracker.com/story/show/173937093)] Messages: refresh indicator not shown on iOS devices ([#2131](https://github.com/pagopa/io-app/issues/2131)) ([eb4b59f](https://github.com/pagopa/io-app/commit/eb4b59f9228e4909fe83f443b68f61c3f6078395)), closes [#174208198](https://www.pivotaltracker.com/story/show/174208198)
+* [[#173964550](https://www.pivotaltracker.com/story/show/173964550)] Fixes the calculation of the fee ([#2124](https://github.com/pagopa/io-app/issues/2124)) ([cd43abe](https://github.com/pagopa/io-app/commit/cd43abed705db7217af3c0033792543c7e4fee0f))
+* [[#174160605](https://www.pivotaltracker.com/story/show/174160605)] Empty urls causes crash [Android] ([#2125](https://github.com/pagopa/io-app/issues/2125)) ([8df2082](https://github.com/pagopa/io-app/commit/8df208219289575a22348be21f3b9d4540953028))
+* [[#174179069](https://www.pivotaltracker.com/story/show/174179069)] fix pin insertion overflow ([#2127](https://github.com/pagopa/io-app/issues/2127)) ([c3fc106](https://github.com/pagopa/io-app/commit/c3fc106ed64b2313da978724129cf4a9f3f087d0))
+* [[#174186215](https://www.pivotaltracker.com/story/show/174186215)] wrong checkbox rendering in IngressScreen ([#2135](https://github.com/pagopa/io-app/issues/2135)) ([b0ea88d](https://github.com/pagopa/io-app/commit/b0ea88dd6891533d0a2c7f31226d2f883528c2c6))
+* [[#174193232](https://www.pivotaltracker.com/story/show/174193232)] Keyboard remaining opened after confirm a manual payment on Android [#2136](https://github.com/pagopa/io-app/issues/2136) ([c6a0bb7](https://github.com/pagopa/io-app/commit/c6a0bb79bc995ea13c087dd1d7f93628e1d2e6e5))
+* [[#174193291](https://www.pivotaltracker.com/story/show/174193291)] Fixes the sticky headers on message deadlines component ([#2129](https://github.com/pagopa/io-app/issues/2129)) ([1543a83](https://github.com/pagopa/io-app/commit/1543a834b4dc911e91f42a28f638cad7108a2576))
+* [[#174193708](https://www.pivotaltracker.com/story/show/174193708),[#174004231](https://www.pivotaltracker.com/story/show/174004231)] Update italia-pagopa-commons from 1.2.0 to 1.3.0 ([#2132](https://github.com/pagopa/io-app/issues/2132)) ([98b0496](https://github.com/pagopa/io-app/commit/98b0496fac3489d6ee5e7ea6edd4a1e236904f60))
+* [[#174212731](https://www.pivotaltracker.com/story/show/174212731)] Fixes the top spacing on section cards component [#2139](https://github.com/pagopa/io-app/issues/2139) ([2ef24d7](https://github.com/pagopa/io-app/commit/2ef24d761da99f86db03981b28a66ae47e2ca6a2))
+* [[#174212919](https://www.pivotaltracker.com/story/show/174212919)] Show alert when deselecting a favourite method on method detail screen ([#2137](https://github.com/pagopa/io-app/issues/2137)) ([5884615](https://github.com/pagopa/io-app/commit/5884615c5a3e565a2923bf427ea79bf0acf5847e)), closes [#174193708](https://www.pivotaltracker.com/story/show/174193708)
+* [[#174252923](https://www.pivotaltracker.com/story/show/174252923)] Profile tab becomes untouchable after following specific navigation paths [#2144](https://github.com/pagopa/io-app/issues/2144) ([5aea422](https://github.com/pagopa/io-app/commit/5aea42214775414edc8feccc424450b03c77d016))
+
+
+### Chores
+
+* [[#174006281](https://www.pivotaltracker.com/story/show/174006281)] automatically append changelog prefix to pr title ([#2133](https://github.com/pagopa/io-app/issues/2133)) ([793e8e4](https://github.com/pagopa/io-app/commit/793e8e4cf7d031a56d60243cc6f6d5a7b93a8a88))
+* [[#174161476](https://www.pivotaltracker.com/story/show/174161476)] Create unique fee showing conditions ([#2141](https://github.com/pagopa/io-app/issues/2141)) ([f9aa91e](https://github.com/pagopa/io-app/commit/f9aa91e602a3d1eff6ea29f365f0ff52cba8eb52))
+* [[#174208450](https://www.pivotaltracker.com/story/show/174208450)] clean pod file ([#2130](https://github.com/pagopa/io-app/issues/2130)) ([a26b0ec](https://github.com/pagopa/io-app/commit/a26b0ec699593c61b0229ddad9ab4edb58420d31))
+* [[#174212106](https://www.pivotaltracker.com/story/show/174212106)] Refactor openUrl ([#2143](https://github.com/pagopa/io-app/issues/2143)) ([bb1a5af](https://github.com/pagopa/io-app/commit/bb1a5af555b440d53b12586cbcd595d041f07460))
+* [[#174228888](https://www.pivotaltracker.com/story/show/174228888)] Restore clean installation ([#2138](https://github.com/pagopa/io-app/issues/2138)) ([3dfee5f](https://github.com/pagopa/io-app/commit/3dfee5f069babbb7230b9d4114d3bd71d319f2a0))
+
 ## [1.5.0-rc.1](https://github.com/pagopa/io-app/compare/1.4.0-rc.2...1.5.0-rc.1) (2020-08-05)
 
 
