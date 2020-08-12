@@ -168,7 +168,6 @@
     "plist": "^3.0.1",
     "postinstall-postinstall": "^1.0.0",
     "prettier": "1.14.2",
-    "react-native-typescript-transformer": "^1.2.12",
     "react-test-renderer": "16.13.1",
     "redux-saga-test-plan": "4.0.0-rc.3",
     "rn-nodeify": "^10.0.1",
