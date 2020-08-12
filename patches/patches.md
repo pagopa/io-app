@@ -61,3 +61,10 @@ Created on **06/08/2020**
 
 #### Reason:
 - Recognizes the ids of pivotal stories even if they are not at the beginning of the line
+
+
+### react-native-popup-menu+0.14.2
+Created on **12/08/2020**
+
+#### Reason:
+- Use TouchableHighlight instead of TouchableNativeFeedback on Android sdk < 19 to avoid crash.
