@@ -16,7 +16,7 @@ export function* loadMessageWithRelationsSaga(
   messageWithRelationsLoadRequest: ActionType<
     typeof loadMessageWithRelations["request"]
   >
-): IterableIterator<Effect> {
+): Generator<Effect, void, any> {
   // Extract the message id from the action payload
   const messageId = messageWithRelationsLoadRequest.payload;
 

@@ -36,7 +36,11 @@ function* getBonusActivation(
     typeof BackendBonusVacanze
   >["getLatestBonusVacanzeFromId"],
   bonusId: string
-): IterableIterator<Effect | Either<Option<Error>, BonusActivationWithQrCode>> {
+): Generator<
+  Effect,
+  Either<Option<Error>, BonusActivationWithQrCode>,
+  SagaCallReturnType<typeof getLatestBonusVacanzeFromId>
+> {
   try {
     const getLatestBonusVacanzeFromIdResult: SagaCallReturnType<
       typeof getLatestBonusVacanzeFromId
@@ -87,8 +91,10 @@ export const bonusActivationSaga = (
     typeof BackendBonusVacanze
   >["getLatestBonusVacanzeFromId"]
 ) =>
-  function* startBonusActivationSaga(): IterableIterator<
-    Effect | ActionType<typeof activateBonusVacanze>
+  function* startBonusActivationSaga(): Generator<
+    Effect,
+    ActionType<typeof activateBonusVacanze>,
+    any
   > {
     try {
       const startBonusActivationProcedureResult: SagaCallReturnType<

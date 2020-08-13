@@ -12,7 +12,12 @@ import {
 
 export function* checkProfileEnabledSaga(
   profile: InitializedProfile
-): IterableIterator<Effect> {
+): Generator<
+  Effect,
+  void,
+  | ActionType<typeof profileUpsert["success"]>
+  | ActionType<typeof profileUpsert["failure"]>
+> {
   if (
     isProfileFirstOnBoarding(profile) &&
     (!hasProfileEmail(profile) ||
@@ -26,9 +31,7 @@ export function* checkProfileEnabledSaga(
         is_webhook_enabled: true
       })
     );
-    const action:
-      | ActionType<typeof profileUpsert["success"]>
-      | ActionType<typeof profileUpsert["failure"]> = yield take([
+    const action = yield take([
       getType(profileUpsert.success),
       getType(profileUpsert.failure)
     ]);

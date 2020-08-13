@@ -484,7 +484,7 @@ export function* watchWalletSaga(
   sessionToken: SessionToken,
   walletToken: string,
   paymentManagerUrlPrefix: string
-): Iterator<Effect> {
+): Generator<Effect, void, boolean> {
   // Builds a backend client specifically for the pagopa-proxy endpoints that
   // need a fetch instance that doesn't retry requests and have longer timeout
   const pagopaNodoClient = BackendClient(
@@ -526,9 +526,7 @@ export function* watchWalletSaga(
   const pmSessionManager = new SessionManager(getPaymentManagerSession);
   // check if the current profile (this saga starts only when the user is logged in)
   // has an email address validated
-  const isEmailValidated: ReturnType<
-    typeof isProfileEmailValidatedSelector
-  > = yield select(isProfileEmailValidatedSelector);
+  const isEmailValidated = yield select(isProfileEmailValidatedSelector);
   yield call(pmSessionManager.setSessionEnabled, isEmailValidated);
   //
   // Sagas

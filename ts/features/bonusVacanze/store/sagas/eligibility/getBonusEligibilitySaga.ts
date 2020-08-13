@@ -58,7 +58,11 @@ function* getCheckBonusEligibilitySaga(
   getBonusEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze
   >["getBonusEligibilityCheck"]
-): IterableIterator<Effect | Either<Option<Error>, EligibilityCheck>> {
+): Generator<
+  Effect,
+  Either<Option<Error>, EligibilityCheck>,
+  SagaCallReturnType<typeof getBonusEligibilityCheck>
+> {
   try {
     const eligibilityCheckResult: SagaCallReturnType<
       typeof getBonusEligibilityCheck
@@ -105,8 +109,10 @@ export const bonusEligibilitySaga = (
     typeof BackendBonusVacanze
   >["getBonusEligibilityCheck"]
 ) =>
-  function* getBonusEligibilitySaga(): IterableIterator<
-    Effect | ActionType<typeof checkBonusVacanzeEligibility>
+  function* getBonusEligibilitySaga(): Generator<
+    Effect,
+    ActionType<typeof checkBonusVacanzeEligibility>,
+    any
   > {
     try {
       const startEligibilityResult: SagaCallReturnType<

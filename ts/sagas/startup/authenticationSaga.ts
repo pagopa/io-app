@@ -14,7 +14,11 @@ import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
  * A saga that makes the user go through the authentication process until
  * a SessionToken gets produced.
  */
-export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
+export function* authenticationSaga(): Generator<
+  Effect,
+  SessionToken,
+  ActionType<typeof loginSuccess>
+> {
   yield put(analyticsAuthenticationStarted());
 
   // Watch for login by CIE
@@ -25,9 +29,7 @@ export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?
-  const action: ActionType<typeof loginSuccess> = yield take(
-    getType(loginSuccess)
-  );
+  const action = yield take(getType(loginSuccess));
 
   yield cancel(watchCieAuthentication);
   // stop cie manager from listening nfc

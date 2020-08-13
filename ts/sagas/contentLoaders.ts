@@ -140,7 +140,11 @@ function* watchServiceMetadataLoadSaga(
 function* fetchMunicipalityMetadata(
   getMunicipality: ReturnType<typeof ContentClient>["getMunicipality"],
   codiceCatastale: CodiceCatastale
-): IterableIterator<Effect | Either<Error, MunicipalityMedadata>> {
+): Generator<
+  Effect,
+  Either<Error, MunicipalityMedadata>,
+  SagaCallReturnType<typeof getMunicipality>
+> {
   try {
     const response: SagaCallReturnType<typeof getMunicipality> = yield call(
       getMunicipality,

@@ -22,13 +22,14 @@ import { SagaCallReturnType } from "../../types/utils";
  */
 export function* loadSessionInformationSaga(
   getSession: ReturnType<typeof BackendClient>["getSession"]
-): IterableIterator<Effect | Option<PublicSession>> {
+): Generator<
+  Effect,
+  Option<PublicSession>,
+  SagaCallReturnType<typeof getSession>
+> {
   try {
     // Call the Backend service
-    const response: SagaCallReturnType<typeof getSession> = yield call(
-      getSession,
-      {}
-    );
+    const response = yield call(getSession, {});
     // Ko we got an error
     if (response.isLeft()) {
       throw readableReport(response.value);

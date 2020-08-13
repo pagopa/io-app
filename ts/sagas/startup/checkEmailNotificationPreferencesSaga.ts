@@ -26,12 +26,14 @@ import { profileSelector, ProfileState } from "../../store/reducers/profile";
  * A saga to match at the first startup if the user has customized settings related to the
  * forwarding of notifications on the verified email within previous installations
  */
-export function* watchEmailNotificationPreferencesSaga(): IterableIterator<
-  Effect
+export function* watchEmailNotificationPreferencesSaga(): Generator<
+  Effect,
+  void,
+  ReturnType<typeof isCustomEmailChannelEnabledSelector>
 > {
-  const isCustomEmailChannelEnabled: ReturnType<
-    typeof isCustomEmailChannelEnabledSelector
-  > = yield select(isCustomEmailChannelEnabledSelector);
+  const isCustomEmailChannelEnabled = yield select(
+    isCustomEmailChannelEnabledSelector
+  );
 
   // if we know about user choice do nothing
   if (pot.isSome(isCustomEmailChannelEnabled)) {

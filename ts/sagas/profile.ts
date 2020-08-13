@@ -25,12 +25,13 @@ import { SagaCallReturnType } from "../types/utils";
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
-): Iterator<Effect | Option<InitializedProfile>> {
+): Generator<
+  Effect,
+  Option<InitializedProfile>,
+  SagaCallReturnType<typeof getProfile>
+> {
   try {
-    const response: SagaCallReturnType<typeof getProfile> = yield call(
-      getProfile,
-      {}
-    );
+    const response = yield call(getProfile, {});
     // we got an error, throw it
     if (response.isLeft()) {
       throw Error(readableReport(response.value));
@@ -63,7 +64,7 @@ function* createOrUpdateProfileSaga(
     typeof BackendClient
   >["createOrUpdateProfile"],
   action: ActionType<typeof profileUpsert["request"]>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   // Get the current Profile from the state
   const profileState: ReturnType<typeof profileSelector> = yield select(
     profileSelector
@@ -166,11 +167,13 @@ export function* startEmailValidationProcessSaga(
   startEmailValidationProcess: ReturnType<
     typeof BackendClient
   >["startEmailValidationProcess"]
-): Iterator<Effect | Option<InitializedProfile>> {
+): Generator<
+  Effect,
+  Option<InitializedProfile>,
+  SagaCallReturnType<typeof startEmailValidationProcess>
+> {
   try {
-    const response: SagaCallReturnType<
-      typeof startEmailValidationProcess
-    > = yield call(startEmailValidationProcess, {});
+    const response = yield call(startEmailValidationProcess, {});
     // we got an error, throw it
     if (response.isLeft()) {
       throw Error(readableReport(response.value));

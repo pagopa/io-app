@@ -17,11 +17,14 @@ import { readablePrivacyReport } from "../../utils/reporters";
 /**
  * A saga to fetch a message from the Backend and save it in the redux store.
  */
+
 export function* loadMessage(
   getMessage: ReturnType<typeof BackendClient>["getMessage"],
   meta: CreatedMessageWithoutContent
-): IterableIterator<
-  Effect | Either<Error, CreatedMessageWithContentAndAttachments>
+): Generator<
+  Effect,
+  Either<Error, CreatedMessageWithContentAndAttachments>,
+  any
 > {
   // Load the messages already in the redux store
   const cachedMessage: ReturnType<
@@ -63,8 +66,10 @@ export function* loadMessage(
 export function* fetchMessage(
   getMessage: ReturnType<typeof BackendClient>["getMessage"],
   meta: CreatedMessageWithoutContent
-): IterableIterator<
-  Effect | Either<Error, CreatedMessageWithContentAndAttachments>
+): Generator<
+  Effect,
+  Either<Error, CreatedMessageWithContentAndAttachments>,
+  any
 > {
   try {
     const response: SagaCallReturnType<typeof getMessage> = yield call(
