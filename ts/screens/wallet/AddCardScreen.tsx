@@ -9,6 +9,7 @@ import { Content, Item, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
+import TextInputMask from "react-native-text-input-mask";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -17,7 +18,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import MaskedInput from "../../components/ui/MaskedInput";
 import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
@@ -147,9 +147,9 @@ const displayedCards: { [key: string]: any } = {
 };
 
 class AddCardScreen extends React.Component<Props, State> {
-  private panRef = React.createRef<typeof MaskedInput>();
-  private expirationDateRef = React.createRef<typeof MaskedInput>();
-  private securityCodeRef = React.createRef<typeof MaskedInput>();
+  private panRef = React.createRef<TextInputMask>();
+  private expirationDateRef = React.createRef<TextInputMask>();
+  private securityCodeRef = React.createRef<TextInputMask>();
 
   constructor(props: Props) {
     super(props);

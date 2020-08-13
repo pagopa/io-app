@@ -3,7 +3,6 @@
 import { Pot } from "italia-ts-commons/lib/pot";
 import { Effect } from "redux-saga/effects";
 import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";
-import { loadMessage } from "../sagas/messages/messages";
 
 export type SagaCallReturnType<
   T extends (...args: any[]) => any,
