@@ -12,6 +12,7 @@ import {
   completeBonusVacanzeActivation
 } from "../../../actions/bonusVacanze";
 import {
+  activationSuccess,
   navigationActions,
   networkingActivationResultActions
 } from "../__mock__/networkingSagaResponseMockData";
@@ -33,7 +34,10 @@ type BonusVacanzeReturnType = ActionType<typeof activateBonusVacanze>;
 
 describe("Bonus Activation Saga, mock networking saga", () => {
   it("Cancel bonus activation saga", () => {
-    return expectSaga(handleBonusActivationSaga, mockRemote)
+    return expectSaga(
+      handleBonusActivationSaga,
+      mockRemote(activationSuccess.results)
+    )
       .provide([
         [
           select(navigationCurrentRouteSelector),

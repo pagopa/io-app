@@ -20,7 +20,6 @@ import {
   startEmailValidation
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
-import { GlobalState } from "../store/reducers/types";
 import { SagaCallReturnType } from "../types/utils";
 
 // A saga to load the Profile.
@@ -66,9 +65,9 @@ function* createOrUpdateProfileSaga(
   action: ActionType<typeof profileUpsert["request"]>
 ): Iterator<Effect> {
   // Get the current Profile from the state
-  const profileState: ReturnType<typeof profileSelector> = yield select<
-    GlobalState
-  >(profileSelector);
+  const profileState: ReturnType<typeof profileSelector> = yield select(
+    profileSelector
+  );
 
   if (pot.isNone(profileState)) {
     // somewhing's wrong, we don't even have an AuthenticatedProfile meaning

@@ -11,7 +11,7 @@ import { handleServiceReadabilitySaga } from "../services/handleServiceReadabili
  * A generator to load the service details from the Backend
  *
  * @param {function} getService - The function that makes the Backend request
- * @param {string} id - The id of the service to load
+ * @param action
  * @returns {IterableIterator<Effect | Either<Error, ServicePublic>>}
  */
 export function* loadServiceDetailRequestHandler(

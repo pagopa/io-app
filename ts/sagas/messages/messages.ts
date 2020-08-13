@@ -11,7 +11,6 @@ import { CreatedMessageWithoutContent } from "../../../definitions/backend/Creat
 import { BackendClient } from "../../api/backend";
 import { loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
-import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 
@@ -27,7 +26,7 @@ export function* loadMessage(
   // Load the messages already in the redux store
   const cachedMessage: ReturnType<
     ReturnType<typeof messageStateByIdSelector>
-  > = yield select<GlobalState>(messageStateByIdSelector(meta.id));
+  > = yield select(messageStateByIdSelector(meta.id));
 
   // If we already have the message in the store just return it
   if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {

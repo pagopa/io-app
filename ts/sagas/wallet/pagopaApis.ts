@@ -1,8 +1,7 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-
-import { fromNullable } from "fp-ts/lib/Option";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import { checkCurrentSession } from "../../store/actions/authentication";
@@ -43,7 +42,6 @@ import {
   setFavouriteWalletSuccess
 } from "../../store/actions/wallet/wallets";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { GlobalState } from "../../store/reducers/types";
 import { PaymentManagerToken } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
@@ -617,7 +615,7 @@ export function* paymentVerificaRequestHandler(
   try {
     const isPagoPATestEnabled: ReturnType<
       typeof isPagoPATestEnabledSelector
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    > = yield select(isPagoPATestEnabledSelector);
 
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
@@ -656,7 +654,7 @@ export function* paymentAttivaRequestHandler(
   try {
     const isPagoPATestEnabled: ReturnType<
       typeof isPagoPATestEnabledSelector
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    > = yield select(isPagoPATestEnabledSelector);
 
     const response: SagaCallReturnType<typeof postAttivaRpt> = yield call(
       postAttivaRpt,
@@ -705,7 +703,7 @@ export function* paymentIdPollingRequestHandler(
   try {
     const isPagoPATestEnabled: ReturnType<
       typeof isPagoPATestEnabledSelector
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    > = yield select(isPagoPATestEnabledSelector);
 
     const getPaymentId = getPaymentIdApi.e2;
     const response: SagaCallReturnType<typeof getPaymentId> = yield call(

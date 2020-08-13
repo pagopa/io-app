@@ -26,7 +26,7 @@ describe("messages", () => {
   describe("fetchMessage test plan", () => {
     it("should call getMessage with the right parameters", () => {
       const getMessage = jest.fn();
-      testSaga(fetchMessage, getMessage, { id: testMessageId1 })
+      testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
         .call(getMessage, { id: testMessageId1 });
     });
@@ -37,7 +37,7 @@ describe("messages", () => {
         value: "some error occurred",
         context: [{ key: "", type: t.string }]
       };
-      testSaga(fetchMessage, getMessage, { id: testMessageId1 })
+      testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
         // Return a new `Either` holding a `Left` validatorError as getMessage response
         .next(left([validatorError]))
@@ -47,7 +47,7 @@ describe("messages", () => {
     it("should only return the error if the getMessage response status is not 200", () => {
       const getMessage = jest.fn();
       const error = Error("Backend error");
-      testSaga(fetchMessage, getMessage, { id: testMessageId1 })
+      testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
         // Return 500 with an error message as getMessage response
         .next(right({ status: 500, value: { title: error.message } }))
@@ -56,7 +56,7 @@ describe("messages", () => {
 
     it("should return the message if the getMessage response status is 200", () => {
       const getMessage = jest.fn();
-      testSaga(fetchMessage, getMessage, { id: testMessageId1 })
+      testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
         // Return 200 with a valid value as getMessage response
         .next(right({ status: 200, value: testMessageWithContent1 }))
@@ -67,7 +67,7 @@ describe("messages", () => {
   describe("loadMessage test plan", () => {
     it("should return the cached message if the message is in the cache", () => {
       const getMessage = jest.fn();
-      testSaga(loadMessage, getMessage, { id: testMessageId1 })
+      testSaga(loadMessage, getMessage, testMessageWithContent1)
         .next()
         .next({
           message: pot.some(testMessageWithContent1)
@@ -81,18 +81,18 @@ describe("messages", () => {
 
     it("should call fetchMessage with the right parameters", () => {
       const getMessage = jest.fn();
-      testSaga(loadMessage, getMessage, { id: testMessageId1 })
+      testSaga(loadMessage, getMessage, testMessageWithContent1)
         .next()
         .next()
-        .call(fetchMessage, getMessage, { id: testMessageId1 });
+        .call(fetchMessage, getMessage, testMessageWithContent1);
     });
 
     it("should put MESSAGE_LOAD_FAILURE and return the error if the message can't be fetched", () => {
       const getMessage = jest.fn();
-      testSaga(loadMessage, getMessage, { id: testMessageId1 })
+      testSaga(loadMessage, getMessage, testMessageWithContent1)
         .next()
         .next()
-        .call(fetchMessage, getMessage, { id: testMessageId1 })
+        .call(fetchMessage, getMessage, testMessageWithContent1)
         // Return 200 with a valid message as getMessage response
         .next(left(Error("Error")))
         .put(
@@ -107,10 +107,10 @@ describe("messages", () => {
 
     it("should put MESSAGE_LOAD_SUCCESS and return the message if the message is fetched sucessfully", () => {
       const getMessage = jest.fn();
-      testSaga(loadMessage, getMessage, { id: testMessageId1 })
+      testSaga(loadMessage, getMessage, testMessageWithContent1)
         .next()
         .next()
-        .call(fetchMessage, getMessage, { id: testMessageId1 })
+        .call(fetchMessage, getMessage, testMessageWithContent1)
         // Return 200 with a valid message as getMessage response
         .next(right(testMessageWithContent1))
         .put(loadMessageAction.success(testMessageWithContent1))
