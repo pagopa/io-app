@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0-rc.3](https://github.com/pagopa/io-app/compare/1.5.0-rc.2...1.5.0-rc.3) (2020-08-12)
+
+
+### Bug Fixes
+
+* [[#174295714](https://www.pivotaltracker.com/story/show/174295714)] Crash on android 19 & share capability disabled on Android sdk <= 19 ([#2152](https://github.com/pagopa/io-app/issues/2152)) ([94f22c5](https://github.com/pagopa/io-app/commit/94f22c54f0368733081b56dbb9a1718ff396dc42))
+
 ## [1.5.0-rc.2](https://github.com/pagopa/io-app/compare/1.5.0-rc.1...1.5.0-rc.2) (2020-08-11)
 
 
