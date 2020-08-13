@@ -1,9 +1,9 @@
 import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Badge, Text, View } from "native-base";
+import { Badge, Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, ViewStyle } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
@@ -58,6 +58,9 @@ import {
   validityInterval
 } from "../utils/bonus";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
+import ViewShot from "react-native-view-shot";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
+import Share from "react-native-share";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -83,6 +86,10 @@ const styles = StyleSheet.create({
   emptyHeader: { height: 90 },
   flex: {
     flex: 1
+  },
+  imagePrintable: {
+    position: "relative",
+    top: 10
   },
   image: {
     position: "absolute",
@@ -201,6 +208,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
   const bonusFromNav = props.navigation.getParam("bonus");
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
+  const screenShotRef = React.createRef<ViewShot>();
+  const [bonusImageStyle, setBonusImageStyle] = React.useState<
+    ViewStyle | undefined
+  >(undefined);
+  const [screenShotUri, setScreenShotUri] = React.useState<string | undefined>(
+    undefined
+  );
 
   React.useEffect(() => {
     // start refresh polling after startRefreshPollingAfter
@@ -221,6 +235,38 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     };
   }, []);
 
+  React.useEffect(
+    () => {
+      if (bonusImageStyle === styles.imagePrintable) {
+        if (
+          screenShotRef &&
+          screenShotRef.current &&
+          screenShotRef.current.capture
+        ) {
+          setBonusImageStyle(styles.imagePrintable);
+          screenShotRef.current.capture().then(uri => {
+            setScreenShotUri(uri);
+            setBonusImageStyle(styles.image);
+          });
+          return;
+        }
+      }
+    },
+    [bonusImageStyle]
+  );
+
+  React.useEffect(
+    () => {
+      if (screenShotUri) {
+        RTron.log("sharing");
+        Share.open({
+          url: `file://${screenShotUri}`
+        }).then(() => 0);
+      }
+    },
+    [screenShotUri]
+  );
+
   // translate the bonus status. If no mapping found -> empty string
   const maybeStatusDescription = maybeNotNullyString(
     bonus
@@ -231,6 +277,15 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   const openModalBox = () => {
+    if (
+      screenShotRef &&
+      screenShotRef.current &&
+      screenShotRef.current.capture
+    ) {
+      setBonusImageStyle(styles.imagePrintable);
+      return;
+    }
+
     const modalBox = (
       <QrModalBox
         codeToDisplay={getBonusCodeFormatted(bonus)}
@@ -388,93 +443,101 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       gradientHeader={true}
       hideHeader={true}
     >
-      <View>
-        <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
-          <View style={styles.image}>
-            <BonusCardComponent
-              bonus={bonus}
-              viewQR={openModalBox}
-              share={handleShare}
-            />
-          </View>
-          <View spacer={true} extralarge={true} />
-          {switchInformationText()}
-          <View spacer={true} />
-        </View>
-        {props.hasMoreOwnedActiveBonus && (
-          <ActivateBonusDiscrepancies
-            text={I18n.t("bonus.bonusVacanze.multipleBonus")}
-            attention={I18n.t(
-              "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.attention"
-            )}
-          />
-        )}
-        <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} />
-          <BonusCompositionDetails
-            bonusAmount={bonus.dsu_request.max_amount}
-            taxBenefit={bonus.dsu_request.max_tax_benefit}
-          />
-          <View spacer={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} />
-          <FamilyComposition familyMembers={bonus.dsu_request.family_members} />
-          <View spacer={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} />
-          {maybeStatusDescription.isSome() && (
-            <View style={styles.rowBlock}>
-              <Text
-                semibold={true}
-                style={[styles.sectionLabel, styles.colorDarkest]}
-              >
-                {I18n.t("bonus.bonusVacanze.status")}
-              </Text>
-              <Badge
-                style={
-                  isBonusActive(bonus)
-                    ? styles.statusBadgeActive
-                    : styles.statusBadgeRevoked
-                }
-              >
-                <Text style={styles.statusText} semibold={true}>
-                  {maybeStatusDescription.value}
-                </Text>
-              </Badge>
+      <ViewShot
+        ref={screenShotRef}
+        style={{ flex: 1, backgroundColor: "white" }}
+        options={{ format: "jpg", quality: 0.9 }}
+      >
+        <View>
+          <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
+            <View style={[styles.image, bonusImageStyle]}>
+              <BonusCardComponent
+                bonus={bonus}
+                viewQR={openModalBox}
+                share={handleShare}
+              />
             </View>
-          )}
-          <View spacer={true} />
-          <View style={styles.rowBlock}>
-            <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {I18n.t("bonus.bonusVacanze.requestedAt")}
-            </Text>
-            <Text style={[styles.colorGrey, styles.commonLabel]}>
-              {isBonusActive(bonus)
-                ? formatDateAsLocal(bonus.created_at, true)
-                : fromNullable(bonus.redeemed_at).fold(
-                    formatDateAsLocal(bonus.created_at, true),
-                    d => formatDateAsLocal(d, true)
-                  )}
-            </Text>
+            <View spacer={true} extralarge={true} />
+            {switchInformationText()}
+            <View spacer={true} />
           </View>
-          {maybeBonusTos.isSome() && (
-            <>
-              <View spacer={true} />
-              <ItemSeparatorComponent noPadded={true} />
-              <View spacer={true} large={true} />
-              <TouchableDefaultOpacity
-                onPress={() => handleModalPress(maybeBonusTos.value)}
-              >
-                <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
-                  {I18n.t("bonus.tos.title")}
-                </Text>
-              </TouchableDefaultOpacity>
-            </>
+          {props.hasMoreOwnedActiveBonus && (
+            <ActivateBonusDiscrepancies
+              text={I18n.t("bonus.bonusVacanze.multipleBonus")}
+              attention={I18n.t(
+                "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.attention"
+              )}
+            />
           )}
-          <EdgeBorderComponent />
+          <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} />
+            <BonusCompositionDetails
+              bonusAmount={bonus.dsu_request.max_amount}
+              taxBenefit={bonus.dsu_request.max_tax_benefit}
+            />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} />
+            <FamilyComposition
+              familyMembers={bonus.dsu_request.family_members}
+            />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} />
+            {maybeStatusDescription.isSome() && (
+              <View style={styles.rowBlock}>
+                <Text
+                  semibold={true}
+                  style={[styles.sectionLabel, styles.colorDarkest]}
+                >
+                  {I18n.t("bonus.bonusVacanze.status")}
+                </Text>
+                <Badge
+                  style={
+                    isBonusActive(bonus)
+                      ? styles.statusBadgeActive
+                      : styles.statusBadgeRevoked
+                  }
+                >
+                  <Text style={styles.statusText} semibold={true}>
+                    {maybeStatusDescription.value}
+                  </Text>
+                </Badge>
+              </View>
+            )}
+            <View spacer={true} />
+            <View style={styles.rowBlock}>
+              <Text style={[styles.colorGrey, styles.commonLabel]}>
+                {I18n.t("bonus.bonusVacanze.requestedAt")}
+              </Text>
+              <Text style={[styles.colorGrey, styles.commonLabel]}>
+                {isBonusActive(bonus)
+                  ? formatDateAsLocal(bonus.created_at, true)
+                  : fromNullable(bonus.redeemed_at).fold(
+                      formatDateAsLocal(bonus.created_at, true),
+                      d => formatDateAsLocal(d, true)
+                    )}
+              </Text>
+            </View>
+            {maybeBonusTos.isSome() && (
+              <>
+                <View spacer={true} />
+                <ItemSeparatorComponent noPadded={true} />
+                <View spacer={true} large={true} />
+                <TouchableDefaultOpacity
+                  onPress={() => handleModalPress(maybeBonusTos.value)}
+                >
+                  <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
+                    {I18n.t("bonus.tos.title")}
+                  </Text>
+                </TouchableDefaultOpacity>
+              </>
+            )}
+            <EdgeBorderComponent />
+          </View>
         </View>
-      </View>
+      </ViewShot>
     </DarkLayout>
   ) : (
     <GenericErrorComponent

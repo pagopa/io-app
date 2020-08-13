@@ -289,6 +289,8 @@ PODS:
   - react-native-text-input-mask (2.0.0):
     - React
     - RNInputMask
+  - react-native-view-shot (3.1.2):
+    - React
   - react-native-webview (10.4.0):
     - React
   - React-RCTActionSheet (0.63.2):
@@ -447,6 +449,7 @@ DEPENDENCIES:
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-text-input-mask (from `../node_modules/react-native-text-input-mask`)
+  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -568,6 +571,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-splash-screen"
   react-native-text-input-mask:
     :path: "../node_modules/react-native-text-input-mask"
+  react-native-view-shot:
+    :path: "../node_modules/react-native-view-shot"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-RCTActionSheet:
@@ -677,6 +682,7 @@ SPEC CHECKSUMS:
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-text-input-mask: 07227297075f9653315f43b0424d596423a01736
+  react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
   react-native-webview: 1ad70b21fb9e44811e33a99e43a4b68b94806a6d
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5
   React-RCTAnimation: 9a883bbe1e9d2e158d4fb53765ed64c8dc2200c6
@@ -708,6 +714,6 @@ SPEC CHECKSUMS:
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: b184c97cdae2b2213f425ebbe9a11108a3138980
+PODFILE CHECKSUM: 9abaeef83e12f1c7fcd6a721350b46c370d8de34
 
 COCOAPODS: 1.9.3
