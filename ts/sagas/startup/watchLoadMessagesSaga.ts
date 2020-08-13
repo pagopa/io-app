@@ -4,6 +4,8 @@
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Task } from "redux-saga";
 import {
   all,
@@ -18,8 +20,6 @@ import {
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
-
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessage as loadMessageAction,
@@ -33,7 +33,6 @@ import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/m
 import { messagesStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { messagesStatusSelector } from "../../store/reducers/entities/messages/messagesStatus";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
 
@@ -80,7 +79,7 @@ export function* loadMessages(
         // Load already cached messages ids from the store
         const potCachedMessagesAllIds: ReturnType<
           typeof messagesAllIdsSelector
-        > = yield select<GlobalState>(messagesAllIdsSelector);
+        > = yield select(messagesAllIdsSelector);
         const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
 
         // Calculate the ids of the message no more visible that we need
@@ -92,7 +91,7 @@ export function* loadMessages(
         // Load already cached messages status ids from the store
         const messagesStatusMapping: ReturnType<
           typeof messagesStatusSelector
-        > = yield select<GlobalState>(messagesStatusSelector);
+        > = yield select(messagesStatusSelector);
         const messagesStatusIds = Object.keys(messagesStatusMapping).filter(
           _ => responseItemsIds.indexOf(_) < 0
         );
@@ -117,7 +116,7 @@ export function* loadMessages(
         // Load already cached messages from the store
         const cachedMessagesById: ReturnType<
           typeof messagesStateByIdSelector
-        > = yield select<GlobalState>(messagesStateByIdSelector);
+        > = yield select(messagesStateByIdSelector);
 
         const shouldLoadMessage = (message: { id: string }) => {
           const cached = cachedMessagesById[message.id];
@@ -134,7 +133,7 @@ export function* loadMessages(
         // Load already cached services from the store
         const cachedServicesById: ReturnType<
           typeof servicesByIdSelector
-        > = yield select<GlobalState>(servicesByIdSelector);
+        > = yield select(servicesByIdSelector);
 
         const shouldLoadService = (id: string) => {
           const cached = cachedServicesById[id];

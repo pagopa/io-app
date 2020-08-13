@@ -125,6 +125,7 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
+  expiration_info: For security reasons, after 30 days from the last login, we will ask you to log in again to use IO
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -319,6 +320,9 @@ authentication:
       carousel:
         label: IO presentation
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
+    session_expired:
+      title: Your session is expired
+      body: For security reasons, after 30 days from the last access, we ask you to log in again with SPID or CIE to use IO.
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
@@ -770,6 +774,7 @@ wallet:
   errorTransaction:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
+  transactionFullReason: Full reason
   detailsTransaction:
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   total: Total
@@ -1060,6 +1065,7 @@ services:
   contactsAndInfo: Contacts and info
   contactAddress: Address
   contactPhone: Phone
+  contactSupport: Support
   areasOfInterest:
     selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
     selectMessageEmptyOrgs: At the moment it is not possible to add a location. Please pull down to refresh the data and try again.

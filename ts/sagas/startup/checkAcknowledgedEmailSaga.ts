@@ -1,5 +1,4 @@
-import { Effect } from "redux-saga";
-import { put, take } from "redux-saga/effects";
+import { Effect, put, take } from "redux-saga/effects";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import {
   navigateToEmailInsertScreen,

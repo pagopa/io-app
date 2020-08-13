@@ -3,9 +3,9 @@ import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { ActivityIndicator, SafeAreaView } from "react-native";
+import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
-import { InfoScreenComponent } from "../infoScreen/InfoScreenComponent";
 import { bonusVacanzeStyle } from "../Styles";
 
 export type LoadingErrorProps = {

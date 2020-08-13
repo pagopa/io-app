@@ -5,6 +5,7 @@ import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
+import AdviceComponent from "../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
@@ -168,6 +169,13 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </ButtonDefaultOpacity>
+          </View>
+          <View style={{ padding: variables.contentPadding }}>
+            <View spacer={true} />
+            <AdviceComponent
+              text={I18n.t("login.expiration_info")}
+              iconColor={"black"}
+            />
           </View>
         </Content>
       </BaseScreenComponent>

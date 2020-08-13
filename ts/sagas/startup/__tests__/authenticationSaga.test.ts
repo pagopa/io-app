@@ -1,6 +1,6 @@
+import { createMockTask } from "@redux-saga/testing-utils";
 import { Task } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
-import { createMockTask } from "redux-saga/utils";
 import { getType } from "typesafe-actions";
 import { removeScheduledNotificationAccessSpid } from "../../../boot/scheduleLocalNotifications";
 import {

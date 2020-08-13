@@ -1,12 +1,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Effect } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadMessageWithRelations } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
 import { loadMessage } from "../messages/messages";
 
@@ -38,9 +36,9 @@ export function* loadMessageWithRelationsSaga(
 
     const serviceById = serviceByIdSelector(message.sender_service_id);
 
-    const potService: ReturnType<typeof serviceById> = yield select<
-      GlobalState
-    >(serviceById);
+    const potService: ReturnType<typeof serviceById> = yield select(
+      serviceById
+    );
 
     // We have the message try to load also the sender service only if there's
     // no such service or if we are already loading it

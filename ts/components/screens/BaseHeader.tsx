@@ -197,6 +197,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
     return (
       <Right>
+        {isSearchAvailable && <SearchButton searchType={searchType} />}
         {!isSearchEnabled &&
           showInstabugChat !== false && <InstabugChatsComponent />}
         {onShowHelp &&
@@ -216,7 +217,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             </ButtonDefaultOpacity>
           )}
 
-        {isSearchAvailable && <SearchButton searchType={searchType} />}
         {customRightIcon &&
           !isSearchEnabled && (
             <ButtonDefaultOpacity

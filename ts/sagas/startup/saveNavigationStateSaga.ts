@@ -1,12 +1,10 @@
 import { NavigationParams, NavigationStateRoute } from "react-navigation";
-import { Effect } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { Effect, put, select } from "redux-saga/effects";
 
 import ROUTES from "../../navigation/routes";
 
 import { setDeepLink } from "../../store/actions/deepLink";
 import { navigationStateSelector } from "../../store/reducers/navigation";
-import { GlobalState } from "../../store/reducers/types";
 
 /**
  * Saves the navigation state in the deep link state so that when the app
@@ -17,7 +15,7 @@ import { GlobalState } from "../../store/reducers/types";
 export function* saveNavigationStateSaga(): IterableIterator<Effect> {
   const navigationState: ReturnType<
     typeof navigationStateSelector
-  > = yield select<GlobalState>(navigationStateSelector);
+  > = yield select(navigationStateSelector);
   const currentRoute = navigationState.routes[
     navigationState.index
   ] as NavigationStateRoute<NavigationParams>;

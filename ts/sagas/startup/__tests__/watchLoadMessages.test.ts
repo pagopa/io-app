@@ -105,9 +105,7 @@ describe("watchLoadMessages", () => {
   describe("loadMessages test plan", () => {
     it("should put MESSAGES_LOAD_FAILURE with the Error it the getMessages response is an Error", () => {
       const getMessages = jest.fn();
-      const getMessage = jest.fn();
-      const getService = jest.fn();
-      testSaga(loadMessages, getMessages, getMessage, getService)
+      testSaga(loadMessages, getMessages)
         .next()
         .call(getMessages, {})
         // Return an error message as getMessages response
@@ -120,9 +118,7 @@ describe("watchLoadMessages", () => {
 
     it("should call the getService saga N times and getMessage M times if the getMessages response contains N new services and M new messages", () => {
       const getMessages = jest.fn();
-      const getMessage = jest.fn();
-      const getService = jest.fn();
-      testSaga(loadMessages, getMessages, getMessage, getService)
+      testSaga(loadMessages, getMessages)
         .next()
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
@@ -151,9 +147,7 @@ describe("watchLoadMessages", () => {
 
     it("should not call getService and getMessage if the getMessages response contains 0 new services and 0 new messages", () => {
       const getMessages = jest.fn();
-      const getMessage = jest.fn();
-      const getService = jest.fn();
-      testSaga(loadMessages, getMessages, getMessage, getService)
+      testSaga(loadMessages, getMessages)
         .next()
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
@@ -182,9 +176,7 @@ describe("watchLoadMessages", () => {
 
     it("should remove testMessageMeta2 and not call getService and getMessage if the getMessages response contains 0 new services and 0 new messages", () => {
       const getMessages = jest.fn();
-      const getMessage = jest.fn();
-      const getService = jest.fn();
-      testSaga(loadMessages, getMessages, getMessage, getService)
+      testSaga(loadMessages, getMessages)
         .next()
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response

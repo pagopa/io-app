@@ -1,4 +1,4 @@
-import { fromEither, fromNullable, Option } from "fp-ts/lib/Option";
+import { fromEither, fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -109,6 +109,12 @@ export function walletHasFavoriteAvailablePsp(
   return walletPspInPsps !== undefined;
 }
 
+const hasDescriptionPrefix = (description: string) =>
+  description.startsWith("/RFA/") ||
+  description.startsWith("/RFB/") ||
+  description.startsWith("RFA/") ||
+  description.startsWith("RFB/");
+
 /**
  * This function removes the tag from payment description of a PagoPA transaction.
  * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
@@ -117,12 +123,7 @@ export const cleanTransactionDescription = (description: string): string => {
   // detect description in pagoPA format - note that we also check for cases
   // without the leading slash since some services don't add it (mistake on
   // their side)
-  if (
-    !description.startsWith("/RFA/") &&
-    !description.startsWith("/RFB/") &&
-    !description.startsWith("RFA/") &&
-    !description.startsWith("RFB/")
-  ) {
+  if (!hasDescriptionPrefix(description)) {
     // not a description in the pagoPA format, return the description unmodified
     return description;
   }
@@ -208,4 +209,16 @@ export const getTransactionFee = (
   return fromNullable(maybeFee)
     .map(formatFunc)
     .toNullable();
+};
+
+// try to extract codice avviso from transaction description
+export const getTransactionCodiceAvviso = (
+  transactionDescription: string
+): Option<string> => {
+  const description = transactionDescription.trim();
+  if (!hasDescriptionPrefix(description)) {
+    return none;
+  }
+  const splitted = description.split("/").filter(i => i.trim().length > 0);
+  return splitted.length > 1 ? some(splitted[1]) : none;
 };

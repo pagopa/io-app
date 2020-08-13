@@ -1,6 +1,7 @@
 import { right } from "fp-ts/lib/Either";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
+import { ActionType } from "typesafe-actions";
 import { DepartmentName } from "../../../../definitions/backend/DepartmentName";
 import { OrganizationName } from "../../../../definitions/backend/OrganizationName";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
@@ -13,9 +14,9 @@ import { loadServiceDetailRequestHandler } from "../loadServiceDetailRequestHand
 
 const mockedServiceId = "A01" as ServiceId;
 const getService = jest.fn();
-const mockedAction = {
-  type: loadServiceDetail.request,
-  payload: mockedServiceId
+const mockedAction: ActionType<typeof loadServiceDetail.request> = {
+  payload: mockedServiceId,
+  type: "LOAD_SERVICE_DETAIL_REQUEST"
 };
 export const mockedService: ServicePublic = {
   service_id: mockedServiceId,
