@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0-rc.0](https://github.com/pagopa/io-app/compare/1.5.0-rc.3...1.6.0-rc.0) (2020-08-14)
+
+
+### Chores
+
+* [[#173888442](https://www.pivotaltracker.com/story/show/173888442)] Upgrade react-native-webview to 10.4.0 [#2146](https://github.com/pagopa/io-app/issues/2146) ([0b62844](https://github.com/pagopa/io-app/commit/0b62844c7eab54cb40a95cea5112cdb217eab6fd))
+* [[#173917003](https://www.pivotaltracker.com/story/show/173917003)] Upgrade redux-saga to 1.1.3 ([#2148](https://github.com/pagopa/io-app/issues/2148)) ([3ab02d2](https://github.com/pagopa/io-app/commit/3ab02d293c5c928ba1b8b097300763311cab3549)), closes [#173888442](https://www.pivotaltracker.com/story/show/173888442)
+
 ## [1.5.0-rc.3](https://github.com/pagopa/io-app/compare/1.5.0-rc.2...1.5.0-rc.3) (2020-08-12)
 
 
