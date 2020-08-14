@@ -1,9 +1,11 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
+import Share from "react-native-share";
+import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
@@ -58,9 +60,6 @@ import {
   validityInterval
 } from "../utils/bonus";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
-import ViewShot, { CaptureOptions } from "react-native-view-shot";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
-import Share from "react-native-share";
 
 type QRCodeContents = {
   [key: string]: string;
