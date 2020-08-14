@@ -22,7 +22,6 @@ import {
 } from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
-import ComponentProps = Animated.ComponentProps;
 
 type Props = Readonly<{
   accessibilityLabel?: string;
@@ -42,7 +41,7 @@ type Props = Readonly<{
   footerContent?: React.ReactNode;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  contentRefreshControl?: ComponentProps<Content>["refreshControl"];
+  contentRefreshControl?: Animated.ComponentProps<Content>["refreshControl"];
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   customGoBack?: React.ReactNode;
   gradientHeader?: boolean;

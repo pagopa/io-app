@@ -20,7 +20,6 @@ import {
 } from "../screens/BaseScreenComponent";
 import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
-import ComponentProps = Animated.ComponentProps;
 
 type Props = Readonly<{
   accessibilityLabel?: string;
@@ -32,7 +31,7 @@ type Props = Readonly<{
   hideHeader?: boolean;
   footerContent?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
-  refreshControl?: ComponentProps<Content>["refreshControl"];
+  refreshControl?: Animated.ComponentProps<Content>["refreshControl"];
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
