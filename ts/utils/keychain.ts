@@ -22,7 +22,7 @@ const PIN_KEY = "PIN";
 export async function setGenericPasswordWithDefaultAccessibleOption(
   username: string,
   password: string,
-  options?: Options
+  options?: Keychain.Options
 ) {
   return Keychain.setGenericPassword(username, password, {
     ...options,

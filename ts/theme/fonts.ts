@@ -28,7 +28,7 @@ const fontWeights = {
 
 type FontFamily = keyof typeof fonts;
 export type FontWeight = keyof typeof fontWeights;
-const enum FontStyle {
+enum FontStyle {
   "normal" = "normal",
   "italic" = "italic"
 }
