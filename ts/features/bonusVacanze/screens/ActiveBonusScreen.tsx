@@ -1,9 +1,9 @@
-import { fromNullable, none } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Badge, Content, Text, View } from "native-base";
+import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { BonusActivationStatusEnum } from "../../../../definitions/bonus_vacanze/BonusActivationStatus";
@@ -58,7 +58,7 @@ import {
   validityInterval
 } from "../utils/bonus";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
-import ViewShot from "react-native-view-shot";
+import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { RTron } from "../../../boot/configureStoreAndPersistor";
 import Share from "react-native-share";
 
@@ -158,6 +158,10 @@ const styles = StyleSheet.create({
     fontSize: variables.fontSize1,
     lineHeight: 21
   },
+  viewShot: {
+    flex: 1,
+    backgroundColor: "white"
+  },
   commonLabel: {
     lineHeight: 18
   },
@@ -203,17 +207,27 @@ const shareQR = async (content: string, code: string, errorMessage: string) => {
 };
 
 const startRefreshPollingAfter = 3000 as Millisecond;
+
+// screenshot option and state
+const screenShotOption: CaptureOptions = { format: "jpg", quality: 0.9 };
+type ScreenShotState = {
+  isPrintable: boolean;
+  imageStyle?: ViewStyle;
+  screenShotUri?: string;
+};
+const screenShortInitialState: ScreenShotState = {
+  imageStyle: undefined,
+  isPrintable: false,
+  screenShotUri: undefined
+};
 // tslint:disable-next-line: no-big-function
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
   const bonusFromNav = props.navigation.getParam("bonus");
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
   const screenShotRef = React.createRef<ViewShot>();
-  const [bonusImageStyle, setBonusImageStyle] = React.useState<
-    ViewStyle | undefined
-  >(undefined);
-  const [screenShotUri, setScreenShotUri] = React.useState<string | undefined>(
-    undefined
+  const [screenShotState, setScreenShotState] = React.useState<ScreenShotState>(
+    screenShortInitialState
   );
 
   React.useEffect(() => {
@@ -237,34 +251,32 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   React.useEffect(
     () => {
-      if (bonusImageStyle === styles.imagePrintable) {
-        if (
-          screenShotRef &&
-          screenShotRef.current &&
-          screenShotRef.current.capture
-        ) {
-          setBonusImageStyle(styles.imagePrintable);
-          screenShotRef.current.capture().then(uri => {
-            setScreenShotUri(uri);
-            setBonusImageStyle(styles.image);
+      if (screenShotState.isPrintable) {
+        {
+          // start capture screenshot
+          captureScreenshot().map(capture => {
+            capture().then(screenShotUri => {
+              setScreenShotState(prev => ({ ...prev, screenShotUri }));
+            });
           });
           return;
         }
       }
     },
-    [bonusImageStyle]
+    [screenShotState.isPrintable]
   );
 
   React.useEffect(
     () => {
-      if (screenShotUri) {
-        RTron.log("sharing");
+      // if the screenShotUri is defined start saving image and restore default style property
+      if (screenShotState.screenShotUri) {
         Share.open({
-          url: `file://${screenShotUri}`
+          url: `file://${screenShotState.screenShotUri}`
         }).then(() => 0);
+        setScreenShotState(screenShortInitialState);
       }
     },
-    [screenShotUri]
+    [screenShotState.screenShotUri]
   );
 
   // translate the bonus status. If no mapping found -> empty string
@@ -276,13 +288,22 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       : ""
   );
 
+  // return an option containing the capture function
+  const captureScreenshot = (): Option<() => Promise<string>> =>
+    fromNullable(
+      screenShotRef && screenShotRef.current && screenShotRef.current.capture
+    );
+
   const openModalBox = () => {
-    if (
-      screenShotRef &&
-      screenShotRef.current &&
-      screenShotRef.current.capture
-    ) {
-      setBonusImageStyle(styles.imagePrintable);
+    // FIXME remove this if block - used in development to test the screenshot feature
+    if (captureScreenshot().isSome()) {
+      // change some style properties to avoid it will be cut out of the image (absolute position and negative offsets)
+      // the ViewShot renders into a canvas all its children
+      setScreenShotState(prevState => ({
+        ...prevState,
+        imageStyle: styles.imagePrintable,
+        isPrintable: true
+      }));
       return;
     }
 
@@ -445,12 +466,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     >
       <ViewShot
         ref={screenShotRef}
-        style={{ flex: 1, backgroundColor: "white" }}
-        options={{ format: "jpg", quality: 0.9 }}
+        style={styles.viewShot}
+        options={screenShotOption}
       >
         <View>
           <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
-            <View style={[styles.image, bonusImageStyle]}>
+            <View style={[styles.image, screenShotState.imageStyle]}>
               <BonusCardComponent
                 bonus={bonus}
                 viewQR={openModalBox}
