@@ -88,7 +88,9 @@ export function* fetchMessage(
       return left<Error, CreatedMessageWithContentAndAttachments>(Error(error));
     }
 
-    return right(response.value.value);
+    return right<Error, CreatedMessageWithContentAndAttachments>(
+      response.value.value
+    );
   } catch (error) {
     // Return the error
     return left<Error, CreatedMessageWithContentAndAttachments>(error);
