@@ -29,11 +29,11 @@ import { profileSelector, ProfileState } from "../../store/reducers/profile";
 export function* watchEmailNotificationPreferencesSaga(): Generator<
   Effect,
   void,
-  ReturnType<typeof isCustomEmailChannelEnabledSelector>
+  any
 > {
-  const isCustomEmailChannelEnabled = yield select(
-    isCustomEmailChannelEnabledSelector
-  );
+  const isCustomEmailChannelEnabled: ReturnType<
+    typeof isCustomEmailChannelEnabledSelector
+  > = yield select(isCustomEmailChannelEnabledSelector);
 
   // if we know about user choice do nothing
   if (pot.isSome(isCustomEmailChannelEnabled)) {
