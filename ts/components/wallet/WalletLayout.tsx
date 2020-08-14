@@ -8,14 +8,9 @@
  * footer with a button for starting a new payment
  */
 
-import { Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import {
-  RefreshControlProps,
-  StyleProp,
-  StyleSheet,
-  ViewStyle
-} from "react-native";
+import { Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
@@ -25,6 +20,7 @@ import {
 } from "../screens/BaseScreenComponent";
 import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
+import ComponentProps = Animated.ComponentProps;
 
 type Props = Readonly<{
   accessibilityLabel?: string;
@@ -36,7 +32,7 @@ type Props = Readonly<{
   hideHeader?: boolean;
   footerContent?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
-  refreshControl?: React.ReactElement<RefreshControlProps>;
+  refreshControl?: ComponentProps<Content>["refreshControl"];
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;

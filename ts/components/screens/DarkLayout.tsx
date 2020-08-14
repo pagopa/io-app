@@ -1,15 +1,15 @@
 /**
  * A component to display a brandDarkGray background color on the screen using it
  */
-import { View } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
 import {
+  Animated,
   ImageSourcePropType,
-  RefreshControlProps,
   StyleProp,
+  StyleSheet,
   ViewStyle
 } from "react-native";
-import { StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../../theme/variables";
@@ -22,6 +22,7 @@ import {
 } from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
+import ComponentProps = Animated.ComponentProps;
 
 type Props = Readonly<{
   accessibilityLabel?: string;
@@ -41,7 +42,7 @@ type Props = Readonly<{
   footerContent?: React.ReactNode;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  contentRefreshControl?: React.ReactElement<RefreshControlProps>;
+  contentRefreshControl?: ComponentProps<Content>["refreshControl"];
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   customGoBack?: React.ReactNode;
   gradientHeader?: boolean;
