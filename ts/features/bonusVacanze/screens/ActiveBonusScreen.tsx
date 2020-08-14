@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   imagePrintable: {
     position: "relative",
-    top: 10
+    top: 28
   },
   image: {
     position: "absolute",
@@ -404,16 +404,23 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     iconColor?: string
   ) => {
     const now = new Date();
-    const datetime: string = `${formatDateAsLocal(
-      now,
-      true,
-      true
-    )} - ${now.toLocaleTimeString()}`;
     return (
       <>
+        {/* show the time when the screenshot is captured */}
         {screenShotState.isPrintable && (
-          <Text style={{ textAlign: "center" }} bold={true}>
-            {`${I18n.t("bonus.bonusVacanze.savedOn")}${datetime}`}
+          <Text
+            style={{
+              textAlign: "center",
+              color: variables.brandPrimary,
+              fontSize: variables.fontSizeBase + 2
+            }}
+            bold={true}
+          >
+            {`${I18n.t("bonus.bonusVacanze.savedOn")}${formatDateAsLocal(
+              now,
+              true,
+              true
+            )} - ${now.toLocaleTimeString()}`}
           </Text>
         )}
         <View
@@ -591,6 +598,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                   </TouchableDefaultOpacity>
                 </>
               )}
+            {/* add extra bottom space when capturing screenshot */}
+            {screenShotState.isPrintable && (
+              <>
+                <View spacer={true} />
+                <View spacer={true} />
+              </>
+            )}
             {!screenShotState.isPrintable && <EdgeBorderComponent />}
           </View>
         </View>
@@ -613,7 +627,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     hasMoreOwnedActiveBonus: ownedActiveOrRedeemedBonus(state).length > 1,
     bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus,
-    isError: pot.isNone(bonus) && pot.isError(bonus), // error and no bonus data, user should retry to load
+    isError: pot.isNone(bonus) && pot.isError(bonus),
     logo: bonusVacanzeLogo(state)
   };
 };
