@@ -14,7 +14,7 @@ const prepareToNewCycle = () => {
   // replace the version, removing the rc part
   package.version = versionModule.getVersion(package.version);
   console.log(package.version);
-  fs.writeFileSync(packagePath, package);
+  fs.writeFileSync(packagePath, JSON.stringify(package, undefined, 2));
 };
 
 prepareToNewCycle();
