@@ -318,6 +318,8 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       screenShotRef && screenShotRef.current && screenShotRef.current.capture
     );
 
+  // call this function to create a screenshot and save it into the device camera roll
+  // tslint-no-unused-variable
   const saveScreenShot = () => {
     if (captureScreenshot().isSome()) {
       // change some style properties to avoid some UI element will be cut out of the image (absolute position and negative offsets)
@@ -332,8 +334,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const openModalBox = () => {
-    saveScreenShot();
-    return;
     const modalBox = (
       <QrModalBox
         codeToDisplay={getBonusCodeFormatted(bonus)}
