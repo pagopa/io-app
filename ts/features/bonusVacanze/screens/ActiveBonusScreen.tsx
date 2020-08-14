@@ -1,10 +1,9 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Badge, Text, View } from "native-base";
+import { Badge, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
-import Share from "react-native-share";
 import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -33,7 +32,11 @@ import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
-import { isShareEnabled, shareBase64Content } from "../../../utils/share";
+import {
+  isShareEnabled,
+  saveImageToGallery,
+  share
+} from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { maybeNotNullyString } from "../../../utils/strings";
 import BonusCardComponent from "../components/BonusCardComponent";
@@ -201,7 +204,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const shareQR = async (content: string, code: string, errorMessage: string) => {
-  const shared = await shareBase64Content(content, code).run();
+  const shared = await share(`data:image/png;base64,${content}`, code).run();
   shared.mapLeft(_ => showToast(errorMessage));
 };
 
@@ -267,11 +270,26 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   React.useEffect(
     () => {
-      // if the screenShotUri is defined start saving image and restore default style property
+      // if the screenShotUri is defined start saving image and restore default style
+      // show a toast error if something goes wrong
       if (screenShotState.screenShotUri) {
-        Share.open({
-          url: `file://${screenShotState.screenShotUri}`
-        }).then(() => 0);
+        saveImageToGallery(`file://${screenShotState.screenShotUri}`)
+          .run()
+          .then(maybeSaved => {
+            maybeSaved.fold(
+              _ => {
+                showToast(I18n.t("global.genericError"));
+              },
+              _ => {
+                Toast.show({
+                  text: I18n.t("bonus.bonusVacanze.saveScreenShotOk")
+                });
+              }
+            );
+          })
+          .catch(_ => {
+            showToast(I18n.t("global.genericError"));
+          });
         setScreenShotState(screenShortInitialState);
       }
     },
@@ -293,8 +311,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       screenShotRef && screenShotRef.current && screenShotRef.current.capture
     );
 
-  const openModalBox = () => {
-    // FIXME remove this if block - used in development to test the screenshot feature
+  const saveScreenShot = () => {
     if (captureScreenshot().isSome()) {
       // change some style properties to avoid it will be cut out of the image (absolute position and negative offsets)
       // the ViewShot renders into a canvas all its children
@@ -305,7 +322,11 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       }));
       return;
     }
+  };
 
+  const openModalBox = () => {
+    saveScreenShot();
+    return;
     const modalBox = (
       <QrModalBox
         codeToDisplay={getBonusCodeFormatted(bonus)}
@@ -381,26 +402,41 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     icon: string,
     text: string,
     iconColor?: string
-  ) => (
-    <View
-      style={[
-        styles.rowBlock,
-        styles.itemsCenter,
-        { justifyContent: "center" }
-      ]}
-    >
-      <IconFont
-        name={icon}
-        color={fromNullable(iconColor).getOrElse(variables.textColor)}
-        size={variables.fontSize3}
-        style={styles.paddedIconLeft}
-      />
-      <View hspacer={true} />
-      <Text style={[styles.flex, styles.validUntil]} bold={true}>
-        {text}
-      </Text>
-    </View>
-  );
+  ) => {
+    const now = new Date();
+    const datetime: string = `${formatDateAsLocal(
+      now,
+      true,
+      true
+    )} - ${now.toLocaleTimeString()}`;
+    return (
+      <>
+        {screenShotState.isPrintable && (
+          <Text style={{ textAlign: "center" }} bold={true}>
+            {`${I18n.t("bonus.bonusVacanze.savedOn")}${datetime}`}
+          </Text>
+        )}
+        <View
+          style={[
+            styles.rowBlock,
+            styles.itemsCenter,
+            { justifyContent: "center" }
+          ]}
+        >
+          <IconFont
+            name={icon}
+            color={fromNullable(iconColor).getOrElse(variables.textColor)}
+            size={variables.fontSize3}
+            style={styles.paddedIconLeft}
+          />
+          <View hspacer={true} />
+          <Text style={[styles.flex, styles.validUntil]} bold={true}>
+            {text}
+          </Text>
+        </View>
+      </>
+    );
+  };
 
   const switchInformationText = () => {
     switch (bonus.status) {
@@ -540,21 +576,22 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                     )}
               </Text>
             </View>
-            {maybeBonusTos.isSome() && (
-              <>
-                <View spacer={true} />
-                <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} large={true} />
-                <TouchableDefaultOpacity
-                  onPress={() => handleModalPress(maybeBonusTos.value)}
-                >
-                  <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
-                    {I18n.t("bonus.tos.title")}
-                  </Text>
-                </TouchableDefaultOpacity>
-              </>
-            )}
-            <EdgeBorderComponent />
+            {!screenShotState.isPrintable &&
+              maybeBonusTos.isSome() && (
+                <>
+                  <View spacer={true} />
+                  <ItemSeparatorComponent noPadded={true} />
+                  <View spacer={true} large={true} />
+                  <TouchableDefaultOpacity
+                    onPress={() => handleModalPress(maybeBonusTos.value)}
+                  >
+                    <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
+                      {I18n.t("bonus.tos.title")}
+                    </Text>
+                  </TouchableDefaultOpacity>
+                </>
+              )}
+            {!screenShotState.isPrintable && <EdgeBorderComponent />}
           </View>
         </View>
       </ViewShot>

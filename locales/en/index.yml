@@ -1424,6 +1424,8 @@ bonus:
     applicant: Applicant FC
     bonusClaim: Who can claim the bonus?
     shareMessage: "This is the code of your Bonus Vacanze:"
+    saveScreenShotOk: "Bonus saved in your gallery!"
+    savedOn: "Saved on il "
     detail:
       contextualHelp:
         title: Bonus Vacanze
