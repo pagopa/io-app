@@ -32,7 +32,4 @@ const mapStateToProps = (state: GlobalState) => ({
   isAllowedSnapshotCurrentScreen: isAllowedSnapshotCurrentScreen(state)
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(FlagSecureComponent);
+export default connect(mapStateToProps)(FlagSecureComponent);
