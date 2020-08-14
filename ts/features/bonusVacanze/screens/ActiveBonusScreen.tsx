@@ -313,13 +313,14 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   // return an option containing the capture function
+
   const captureScreenshot = (): Option<() => Promise<string>> =>
     fromNullable(
       screenShotRef && screenShotRef.current && screenShotRef.current.capture
     );
 
   // call this function to create a screenshot and save it into the device camera roll
-  // tslint-no-unused-variable
+  // @ts-ignore
   const saveScreenShot = () => {
     if (captureScreenshot().isSome()) {
       // change some style properties to avoid some UI element will be cut out of the image (absolute position and negative offsets)
