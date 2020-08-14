@@ -146,6 +146,11 @@ const styles = StyleSheet.create({
     marginTop: 2,
     backgroundColor: variables.textColor
   },
+  screenshotTime: {
+    textAlign: "center",
+    color: variables.brandPrimary,
+    fontSize: variables.fontSizeBase + 2
+  },
   statusText: {
     fontSize: 12,
     lineHeight: 16
@@ -313,7 +318,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   const saveScreenShot = () => {
     if (captureScreenshot().isSome()) {
-      // change some style properties to avoid it will be cut out of the image (absolute position and negative offsets)
+      // change some style properties to avoid some UI element will be cut out of the image (absolute position and negative offsets)
       // the ViewShot renders into a canvas all its children
       setScreenShotState(prevState => ({
         ...prevState,
@@ -408,14 +413,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       <>
         {/* show the time when the screenshot is captured */}
         {screenShotState.isPrintable && (
-          <Text
-            style={{
-              textAlign: "center",
-              color: variables.brandPrimary,
-              fontSize: variables.fontSizeBase + 2
-            }}
-            bold={true}
-          >
+          <Text style={styles.screenshotTime} bold={true}>
             {`${I18n.t("bonus.bonusVacanze.savedOn")}${formatDateAsLocal(
               now,
               true,
@@ -627,7 +625,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     hasMoreOwnedActiveBonus: ownedActiveOrRedeemedBonus(state).length > 1,
     bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
     bonus,
-    isError: pot.isNone(bonus) && pot.isError(bonus),
+    isError: pot.isNone(bonus) && pot.isError(bonus), // error and no bonus data, user should retry to load
     logo: bonusVacanzeLogo(state)
   };
 };

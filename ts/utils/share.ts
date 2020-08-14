@@ -37,7 +37,7 @@ export const isShareEnabled = () =>
   });
 
 /**
- * check if write permission is granted, if yes try to save the given uri in the camera roll
+ * check if write external storage permission is granted, if yes try to save the given uri in the camera roll
  * @param uri
  */
 export const saveImageToGallery = (uri: string): TaskEither<Error, string> => {

@@ -1,5 +1,5 @@
 import { Permission, PermissionsAndroid, Platform } from "react-native";
-// check if given permission is granted. If not, a prompt is shown to request permission
+// check if the given permission is granted. If not, a prompt is shown to request permission
 export const hasAndroidPermission = async (permission: Permission) => {
   if (Platform.OS !== "android") {
     return true;
