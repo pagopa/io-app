@@ -9,9 +9,7 @@ import sagaPlugin from "reactotron-redux-saga";
 // ignoredUrls = /backend.json|info/
 const ignoredUrls: RegExp | undefined = undefined;
 export const configureReactotron = (): Reactotron => {
-  const rtt = ReactotronReactNative.configure({
-    host: "192.168.1.22"
-  })
+  const rtt = ReactotronReactNative.configure({ host: "127.0.0.1" })
     .useReactNative({
       networking: {
         ignoreUrls: ignoredUrls
