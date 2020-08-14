@@ -208,11 +208,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "bonus.bonusVacanze.detail.contextualHelp.body"
 };
 
-const shareQR = async (content: string, code: string, errorMessage: string) => {
+const shareQR = async (content: string, code: string) => {
   const shared = await share(`data:image/png;base64,${content}`, code).run();
-  shared.mapLeft(_ => showToast(errorMessage));
+  shared.mapLeft(_ => showToastGenericError());
 };
-
+const showToastGenericError = () => showToast(I18n.t("global.genericError"));
 const startRefreshPollingAfter = 3000 as Millisecond;
 
 // screenshot option and state
@@ -262,9 +262,11 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         {
           // start capture screenshot
           captureScreenshot().map(capture => {
-            capture().then(screenShotUri => {
-              setScreenShotState(prev => ({ ...prev, screenShotUri }));
-            });
+            capture()
+              .then(screenShotUri => {
+                setScreenShotState(prev => ({ ...prev, screenShotUri }));
+              })
+              .catch(showToastGenericError);
           });
           return;
         }
@@ -283,7 +285,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           .then(maybeSaved => {
             maybeSaved.fold(
               _ => {
-                showToast(I18n.t("global.genericError"));
+                showToastGenericError();
               },
               _ => {
                 Toast.show({
@@ -293,7 +295,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             );
           })
           .catch(_ => {
-            showToast(I18n.t("global.genericError"));
+            showToastGenericError();
           });
         setScreenShotState(screenShortInitialState);
       }
@@ -349,8 +351,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       qrCode[PNG_IMAGE_TYPE],
       `${I18n.t("bonus.bonusVacanze.shareMessage")} ${getBonusCodeFormatted(
         bonusFromNav
-      )}`,
-      I18n.t("global.genericError")
+      )}`
     );
 
   const qrCodeButtonSettings: BlockButtonProps = {
