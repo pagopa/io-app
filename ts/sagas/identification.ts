@@ -1,5 +1,11 @@
-import { Effect } from "redux-saga";
-import { call, put, select, take, takeLatest } from "redux-saga/effects";
+import {
+  call,
+  Effect,
+  put,
+  select,
+  take,
+  takeLatest
+} from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { startApplicationInitialization } from "../store/actions/application";
@@ -30,7 +36,6 @@ import {
 } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { paymentsCurrentStateSelector } from "../store/reducers/payments/current";
-import { GlobalState } from "../store/reducers/types";
 import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
@@ -151,12 +156,12 @@ function* startAndHandleIdentificationResult(
     // Check if we have a pending notification message
     const pendingMessageState: ReturnType<
       typeof pendingMessageStateSelector
-    > = yield select<GlobalState>(pendingMessageStateSelector);
+    > = yield select(pendingMessageStateSelector);
 
     // Check if there is a payment ongoing
     const isPaymentOngoing: ReturnType<
       typeof isPaymentOngoingSelector
-    > = yield select<GlobalState>(isPaymentOngoingSelector);
+    > = yield select(isPaymentOngoingSelector);
 
     if (!isPaymentOngoing && pendingMessageState) {
       // We have a pending notification message to handle

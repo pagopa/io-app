@@ -1,5 +1,4 @@
-import { Effect } from "redux-saga";
-import { call, put, take } from "redux-saga/effects";
+import { call, Effect, put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { tosVersion } from "../../config";

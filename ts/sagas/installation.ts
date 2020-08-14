@@ -6,7 +6,6 @@ import { call, Effect, put, select } from "redux-saga/effects";
 import { scheduleLocalNotificationsAccessSpid } from "../boot/scheduleLocalNotifications";
 import { sessionInvalid } from "../store/actions/authentication";
 import { isFirstRunAfterInstallSelector } from "../store/reducers/installation";
-import { GlobalState } from "../store/reducers/types";
 import { deletePin } from "../utils/keychain";
 
 /**
@@ -18,7 +17,7 @@ export function* previousInstallationDataDeleteSaga(): IterableIterator<
 > {
   const isFirstRunAfterInstall: ReturnType<
     typeof isFirstRunAfterInstallSelector
-  > = yield select<GlobalState>(isFirstRunAfterInstallSelector);
+  > = yield select(isFirstRunAfterInstallSelector);
 
   if (isFirstRunAfterInstall) {
     // Delete the current unlock code from the Keychain

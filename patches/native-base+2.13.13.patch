@@ -1,7 +1,24 @@
 diff --git a/node_modules/native-base/.DS_Store b/node_modules/native-base/.DS_Store
 new file mode 100644
-index 0000000..9498e50
-Binary files /dev/null and b/node_modules/native-base/.DS_Store differ
+index 0000000..e69de29
+diff --git a/node_modules/native-base/dist/src/basic/Tabs/Button.android.js b/node_modules/native-base/dist/src/basic/Tabs/Button.android.js
+index 1dcb578..91f64cb 100644
+--- a/node_modules/native-base/dist/src/basic/Tabs/Button.android.js
++++ b/node_modules/native-base/dist/src/basic/Tabs/Button.android.js
+@@ -1,2 +1,2 @@
+-var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName='src/basic/Tabs/Button.android.js';var React=require('react');var ReactNative=require('react-native');var TouchableNativeFeedback=ReactNative.TouchableNativeFeedback,View=ReactNative.View;var Button=function Button(props){return React.createElement(TouchableNativeFeedback,_extends({delayPressIn:0},props,{__source:{fileName:_jsxFileName,lineNumber:7}}),props.children);};module.exports=Button;
++var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName='src/basic/Tabs/Button.android.js';var React=require('react');var ReactNative=require('react-native');var TouchableNativeFeedback=ReactNative.TouchableNativeFeedback,TouchableHighlight=ReactNative.TouchableHighlight,Platform=ReactNative.Platform;var Touchable=Platform.version>=21?TouchableNativeFeedback:TouchableHighlight;var Button=function Button(props){return React.createElement(Touchable,_extends({delayPressIn:0},props,{__source:{fileName:_jsxFileName,lineNumber:11}}),props.children);};module.exports=Button;
+ //# sourceMappingURL=Button.android.js.map
+\ No newline at end of file
+diff --git a/node_modules/native-base/dist/src/basic/Tabs/Button.android.js.map b/node_modules/native-base/dist/src/basic/Tabs/Button.android.js.map
+index 9fc683a..5c27361 100644
+--- a/node_modules/native-base/dist/src/basic/Tabs/Button.android.js.map
++++ b/node_modules/native-base/dist/src/basic/Tabs/Button.android.js.map
+@@ -1 +1 @@
+-{"version":3,"sources":["../../../../src/basic/Tabs/Button.android.js"],"names":["React","require","ReactNative","TouchableNativeFeedback","View","Button","props","children","module","exports"],"mappings":"oRAAA,GAAMA,OAAQC,QAAQ,OAAR,CAAd,CACA,GAAMC,aAAcD,QAAQ,cAAR,CAApB,C,GACQE,wB,CAAkCD,W,CAAlCC,uB,CAAyBC,I,CAASF,W,CAATE,I,CAEjC,GAAMC,QAAS,QAATA,OAAS,OAAS,CACtB,MACE,qBAAC,uBAAD,WACE,aAAc,CADhB,EAEMC,KAFN,kDAIGA,MAAMC,QAJT,CADF,CAQD,CATD,CAWAC,OAAOC,OAAP,CAAiBJ,MAAjB","file":"Button.android.js","sourcesContent":["const React = require('react');\nconst ReactNative = require('react-native');\nconst { TouchableNativeFeedback, View } = ReactNative;\n\nconst Button = props => {\n  return (\n    <TouchableNativeFeedback\n      delayPressIn={0} // eslint-disable-line new-cap\n      {...props}\n    >\n      {props.children}\n    </TouchableNativeFeedback>\n  );\n};\n\nmodule.exports = Button;\n// export default Button;\n"]}
+\ No newline at end of file
++{"version":3,"sources":["../../../../src/basic/Tabs/Button.android.js"],"names":["React","require","ReactNative","TouchableNativeFeedback","TouchableHighlight","Platform","Touchable","version","Button","props","children","module","exports"],"mappings":"oRAAA,GAAMA,OAAQC,QAAQ,OAAR,CAAd,CACA,GAAMC,aAAcD,QAAQ,cAAR,CAApB,C,GACQE,wB,CAA0DD,W,CAA1DC,uB,CAAyBC,kB,CAAiCF,W,CAAjCE,kB,CAAoBC,Q,CAAaH,W,CAAbG,Q,CAGrD,GAAMC,WAAYD,SAASE,OAAT,EAAoB,EAApB,CAAyBJ,uBAAzB,CAAmDC,kBAArE,CAGA,GAAMI,QAAS,QAATA,OAAS,OAAS,CACtB,MACE,qBAAC,SAAD,WACE,aAAc,CADhB,EAEMC,KAFN,mDAIGA,MAAMC,QAJT,CADF,CAQD,CATD,CAWAC,OAAOC,OAAP,CAAiBJ,MAAjB","file":"Button.android.js","sourcesContent":["const React = require('react');\nconst ReactNative = require('react-native');\nconst { TouchableNativeFeedback, TouchableHighlight, Platform } = ReactNative;\n\n\nconst Touchable = Platform.version >= 21 ? TouchableNativeFeedback : TouchableHighlight;\n\n\nconst Button = props => {\n  return (\n    <Touchable\n      delayPressIn={0} // eslint-disable-line new-cap\n      {...props}\n    >\n      {props.children}\n    </Touchable>\n  );\n};\n\nmodule.exports = Button;\n// export default Button;\n"]}
+\ No newline at end of file
 diff --git a/node_modules/native-base/dist/src/basic/ToastContainer.js b/node_modules/native-base/dist/src/basic/ToastContainer.js
 index a8998cc..28fc4de 100644
 --- a/node_modules/native-base/dist/src/basic/ToastContainer.js

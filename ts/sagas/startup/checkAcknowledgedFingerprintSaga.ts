@@ -1,11 +1,9 @@
 import TouchID, { IsSupportedConfig } from "react-native-touch-id";
-import { Effect } from "redux-saga";
-import { call, put, select, take } from "redux-saga/effects";
+import { call, Effect, put, select, take } from "redux-saga/effects";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
-import { GlobalState } from "../../store/reducers/types";
 export type BiometrySimpleType =
   | "FINGERPRINT"
   | "FACE_ID"
@@ -74,7 +72,7 @@ export function* checkAcknowledgedFingerprintSaga(): IterableIterator<Effect> {
   // recognition Screen. Consider that, like ToS, this should be displayed once.
   const isFingerprintAcknowledged: ReturnType<
     typeof isFingerprintAcknowledgedSelector
-  > = yield select<GlobalState>(isFingerprintAcknowledgedSelector);
+  > = yield select(isFingerprintAcknowledgedSelector);
 
   if (!isFingerprintAcknowledged) {
     // Navigate to the FingerprintScreen and wait for acknowledgment

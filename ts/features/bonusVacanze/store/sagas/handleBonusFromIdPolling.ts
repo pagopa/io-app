@@ -1,5 +1,6 @@
+import { SagaIterator } from "@redux-saga/core";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { delay, SagaIterator } from "redux-saga";
+import { delay } from "redux-saga/effects";
 import { call, put, race, take } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import {
@@ -25,7 +26,7 @@ export function* bonusFromIdWorker(bonusId: string): SagaIterator {
     if (isActionOf(loadBonusVacanzeFromId.failure, resultAction)) {
       yield put(cancelLoadBonusFromIdPolling());
     }
-    yield call(delay, POLLING_FREQ_TIMEOUT);
+    yield delay(POLLING_FREQ_TIMEOUT);
   }
 }
 /**
