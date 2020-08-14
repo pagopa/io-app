@@ -169,7 +169,7 @@ export function* startEmailValidationProcessSaga(
   >["startEmailValidationProcess"]
 ): Generator<
   Effect,
-  Option<InitializedProfile>,
+  void,
   SagaCallReturnType<typeof startEmailValidationProcess>
 > {
   try {
@@ -180,7 +180,6 @@ export function* startEmailValidationProcessSaga(
     }
     if (response.value.status === 202) {
       yield put(startEmailValidation.success());
-      return some(response.value.value);
     }
     if (response.value.status === 401) {
       // in case we got an expired session while loading the profile, we reset
@@ -193,7 +192,6 @@ export function* startEmailValidationProcessSaga(
   } catch (error) {
     yield put(startEmailValidation.failure(error));
   }
-  return none;
 }
 
 // This function listens for request to send again the email validation to profile email and calls the needed saga.

@@ -33,7 +33,9 @@ export function* loadMessage(
 
   // If we already have the message in the store just return it
   if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {
-    return right(cachedMessage);
+    return right<Error, CreatedMessageWithContentAndAttachments>(
+      cachedMessage.message.value
+    );
   }
   try {
     // Fetch the message from the Backend

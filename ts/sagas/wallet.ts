@@ -146,7 +146,7 @@ function* startOrResumeAddCreditCardSaga(
   // prepare a new wallet (payment method) that describes the credit card we
   // want to add
   const creditCardWallet: NullableWallet = {
-    idWallet: null,
+    idWallet: undefined,
     type: TypeEnum.CREDIT_CARD,
     favourite: action.payload.setAsFavorite,
     creditCard: action.payload.creditCard,
