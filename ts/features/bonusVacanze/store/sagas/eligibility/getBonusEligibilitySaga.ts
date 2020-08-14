@@ -72,18 +72,18 @@ function* getCheckBonusEligibilitySaga(
       // 200 -> we got the check result, polling must be stopped
       if (eligibilityCheckResult.value.status === 200) {
         const check = eligibilityCheckResult.value.value;
-        return right(check);
+        return right<Option<Error>, EligibilityCheck>(check);
       }
       // polling should continue
-      return left(none);
+      return left<Option<Error>, EligibilityCheck>(none);
     } else {
       // we got some error on decoding, stop polling
-      return left(
+      return left<Option<Error>, EligibilityCheck>(
         some(Error(readablePrivacyReport(eligibilityCheckResult.value)))
       );
     }
   } catch (e) {
-    return left(none);
+    return left<Option<Error>, EligibilityCheck>(none);
   }
 }
 

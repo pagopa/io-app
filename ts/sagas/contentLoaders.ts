@@ -157,9 +157,9 @@ function* fetchMunicipalityMetadata(
     if (response.value.status !== 200) {
       throw Error(`response status ${response.value.status}`);
     }
-    return right(response.value.value);
+    return right<Error, MunicipalityMedadata>(response.value.value);
   } catch (error) {
-    return left(error);
+    return left<Error, MunicipalityMedadata>(error);
   }
 }
 

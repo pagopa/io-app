@@ -56,7 +56,7 @@ export function* loadMessage(
         error
       })
     );
-    return left(error);
+    return left<Error, CreatedMessageWithContentAndAttachments>(error);
   }
 }
 
@@ -85,12 +85,12 @@ export function* fetchMessage(
           ? response.value.value.title
           : `response status ${response.value.status}`;
       // Return the error
-      return left(Error(error));
+      return left<Error, CreatedMessageWithContentAndAttachments>(Error(error));
     }
 
     return right(response.value.value);
   } catch (error) {
     // Return the error
-    return left(error);
+    return left<Error, CreatedMessageWithContentAndAttachments>(error);
   }
 }

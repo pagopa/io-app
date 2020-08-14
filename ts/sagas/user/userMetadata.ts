@@ -49,18 +49,18 @@ export function* fetchUserMetadata(
     if (response.value.status !== 200) {
       if (response.value.status === 204) {
         // Return an empty object cause profile has no metadata yet (204 === No Content)
-        return right(emptyUserMetadata);
+        return right<Error, BackendUserMetadata>(emptyUserMetadata);
       }
 
       const error =
         response.value.status === 500 ? response.value.value.title : undefined;
       // Return the error
-      return left(Error(error));
+      return left<Error, BackendUserMetadata>(Error(error));
     }
 
-    return right(response.value.value);
+    return right<Error, BackendUserMetadata>(response.value.value);
   } catch (error) {
-    return left(error);
+    return left<Error, BackendUserMetadata>(error);
   }
 }
 
@@ -155,12 +155,12 @@ export function* postUserMetadata(
       const error =
         response.value.status === 500 ? response.value.value.title : undefined;
       // Return the error
-      return left(Error(error));
+      return left<Error, BackendUserMetadata>(Error(error));
     }
 
-    return right(response.value.value);
+    return right<Error, BackendUserMetadata>(response.value.value);
   } catch (error) {
-    return left(error);
+    return left<Error, BackendUserMetadata>(error);
   }
 }
 
