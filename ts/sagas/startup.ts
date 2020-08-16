@@ -96,7 +96,7 @@ const WAIT_INITIALIZE_SAGA = 3000 as Millisecond;
  * Handles the application startup and the main application logic loop
  */
 // tslint:disable-next-line:cognitive-complexity no-big-function
-export function* initializeApplicationSaga(): IterableIterator<Effect> {
+export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset

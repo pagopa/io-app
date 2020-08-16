@@ -44,7 +44,7 @@ import { uniqueItem } from "../../utils/enumerables";
 // tslint:disable-next-line: cognitive-complexity
 export function* loadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
-): IterableIterator<Effect> {
+): Generator<Effect, void, any> {
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
   try {
@@ -184,7 +184,7 @@ export function* loadMessages(
  */
 export function* watchMessagesLoadOrCancelSaga(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
-): IterableIterator<Effect> {
+): Generator<Effect, void, any> {
   // We store the latest task so we can also cancel it
   // tslint:disable-next-line:no-let
   let lastTask: Option<Task> = none;

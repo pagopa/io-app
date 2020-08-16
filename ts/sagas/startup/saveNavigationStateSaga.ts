@@ -12,10 +12,12 @@ import { navigationStateSelector } from "../../store/reducers/navigation";
  * navigation route.
  * Saving and restoring routes relies on the deep link mechanism.
  */
-export function* saveNavigationStateSaga(): IterableIterator<Effect> {
-  const navigationState: ReturnType<
-    typeof navigationStateSelector
-  > = yield select(navigationStateSelector);
+export function* saveNavigationStateSaga(): Generator<
+  Effect,
+  void,
+  ReturnType<typeof navigationStateSelector>
+> {
+  const navigationState = yield select(navigationStateSelector);
   const currentRoute = navigationState.routes[
     navigationState.index
   ] as NavigationStateRoute<NavigationParams>;
