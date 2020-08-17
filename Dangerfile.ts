@@ -9,7 +9,7 @@ import {
 
 import { warn } from "danger";
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 declare var danger: DangerDSLType;
 
 type StoryType = "feature" | "bug" | "chore" | "release";
@@ -28,12 +28,13 @@ const storyOrder = new Map<StoryType, number>([
 
 const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
 
-/**
- * Append the changelog tag to the pull request title
+/***
+ * Read the pivotal stories (if any) associated with the pr to choose the changelog tag
+ * @param prTitle
  */
-const updatePrTitleForChangelog = async () => {
+const getPrTag = async (prTitle: string): Promise<Option<string>> => {
   // detect stories id from the pr title and load the story from pivotal
-  const storyIDs = getPivotalStoryIDs(danger.github.pr.title);
+  const storyIDs = getPivotalStoryIDs(prTitle);
   const stories = (await getPivotalStories(storyIDs)).filter(
     s => s.story_type !== undefined
   );
@@ -63,18 +64,33 @@ const updatePrTitleForChangelog = async () => {
     return acc;
   }, undefined);
 
-  // clean the title from existing tags (multiple commit on the same branch)
-  const rawTitle = danger.github.pr.title.match(cleanChangelogRegex)!.pop();
-  const title = rawTitle !== undefined ? rawTitle : danger.github.pr.title;
-
   // If a tag can be associated to a story, update the pr title
-  const maybeStoryTag = fromNullable(storyTag.get(storyType));
-  maybeStoryTag.map(tag =>
+  return Promise.resolve(fromNullable(storyTag.get(storyType)));
+};
+
+/**
+ * Clean the title from previous changelog prefix to update in case of changes
+ * @param title
+ */
+const getRawTitle = (title: string): string => {
+  // clean the title from existing tags (multiple commit on the same branch)
+  const rawTitle = title.match(cleanChangelogRegex)!.pop();
+  return rawTitle !== undefined ? rawTitle : danger.github.pr.title;
+};
+
+/**
+ * Append the changelog tag to the pull request title
+ */
+const updatePrTitleForChangelog = async () => {
+  const maybePrTag = await getPrTag(danger.github.pr.title);
+  const rawTitle = getRawTitle(danger.github.pr.title);
+
+  maybePrTag.map(tag =>
     danger.github.api.pulls.update({
       owner: danger.github.thisPR.owner,
       repo: danger.github.thisPR.repo,
       pull_number: danger.github.thisPR.number,
-      title: `${tag}${title}`
+      title: `${tag}${rawTitle}`
     })
   );
 };
