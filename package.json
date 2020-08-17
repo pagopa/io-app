@@ -11,7 +11,6 @@
     "start": "react-native start",
     "run-ios": "react-native run-ios",
     "run-android": "react-native run-android",
-    "testpackage": "node scripts/changelog/prepare_to_new_cycle.js",
     "pre-cycle": "scripts/changelog/check_git_status.sh && node scripts/changelog/prepare_to_new_cycle.js",
     "release-rc": "scripts/changelog/check_git_status.sh && standard-version -t \"\" --prerelease rc",
     "start-fix-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as patch",
