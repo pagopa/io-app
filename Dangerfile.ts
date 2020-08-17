@@ -27,7 +27,7 @@ const storyOrder = new Map<StoryType, number>([
 ]);
 
 const allowedScope = new Map<string, string>([
-  ["general", "General"],
+  ["general", ""],
   ["android", "Android"],
   ["ios", "iOS"],
   ["bonus_vacanze", "Bonus Vacanze"],
@@ -105,6 +105,7 @@ const getRawTitle = (title: string): string => {
  */
 const getPrScope = (prBody: string): Option<string> => {
   if (prBody.match(scopeRegex) == null) {
+    console.log("no scope");
     warn(
       "Section '## Scope' not found in the pull request body. " +
         "This pr will not include a scope in the changelog. " +
@@ -115,12 +116,14 @@ const getPrScope = (prBody: string): Option<string> => {
   const matchScopeType = prBody.match(allowedScopeRegex);
 
   if (matchScopeType == null || matchScopeType.length < 3) {
+    console.log("no valid scope");
     warn(
       "The value used for the section '## Scope' is not valid! Please use one of the following values:\n" +
         listOfScopeId
     );
     return none;
   }
+  console.log("scope OK");
   return fromNullable(allowedScope.get(matchScopeType[2]));
 };
 
