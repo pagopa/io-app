@@ -1,4 +1,5 @@
 // Import custom DangerJS rules.
+import { warn } from "danger";
 // See http://danger.systems/js
 // See https://github.com/teamdigitale/danger-plugin-digitalcitizenship/
 import checkDangers from "danger-plugin-digitalcitizenship";
@@ -6,10 +7,9 @@ import {
   getPivotalStories,
   getPivotalStoryIDs
 } from "danger-plugin-digitalcitizenship/dist/utils";
-
-import { warn } from "danger";
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
+
 declare var danger: DangerDSLType;
 
 type StoryType = "feature" | "bug" | "chore" | "release";
@@ -26,7 +26,29 @@ const storyOrder = new Map<StoryType, number>([
   ["chore", 0]
 ]);
 
+const allowedScope = new Map<string, string>([
+  ["general", "General"],
+  ["android", "Android"],
+  ["ios", "iOS"],
+  ["bonus_vacanze", "Bonus Vacanze"],
+  ["messages", "Messages"],
+  ["payments", "Payments"],
+  ["services", "Services"],
+  ["profile", "Profile"],
+  ["privacy", "Privacy"],
+  ["security", "Security"],
+  ["accessibility", "Accessibility"]
+]);
+
 const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
+
+const listOfScopeId = Array.from(allowedScope.keys()).join("|");
+const allowedScopeRegex = new RegExp(
+  `^( *## *scope\\n+)(${listOfScopeId})$`,
+  "im"
+);
+
+const scopeRegex = /^ *## *scope$/im;
 
 /***
  * Read the pivotal stories (if any) associated with the pr to choose the changelog tag
@@ -48,7 +70,6 @@ const getPrTag = async (prTitle: string): Promise<Option<string>> => {
         "Only one tag will be added, following the order: feature > bug > chore"
     );
   }
-
   // In case of multiple stories, only one tag can be added, following the order feature > bug > chore
   const storyType = stories.reduce((acc, val) => {
     const currentStoryOrder = fromNullable(storyOrder.get(val.story_type));
@@ -79,11 +100,37 @@ const getRawTitle = (title: string): string => {
 };
 
 /**
+ * Return the scope of the pr, extracted from the '# Scope' section of the pr body
+ * @param prBody
+ */
+const getPrScope = (prBody: string): Option<string> => {
+  if (prBody.match(scopeRegex) == null) {
+    warn(
+      "Section '## Scope' not found in the pull request body. " +
+        "This pr will not include a scope in the changelog. " +
+        "If your pr doesn't have a scope, please add the section with the value 'general'"
+    );
+    return none;
+  }
+  const matchScopeType = prBody.match(allowedScopeRegex);
+
+  if (matchScopeType == null || matchScopeType.length < 3) {
+    warn(
+      "The value used for the section '## Scope' is not valid! Please use one of the following values:\n" +
+        listOfScopeId
+    );
+    return none;
+  }
+  return fromNullable(allowedScope.get(matchScopeType[2]));
+};
+
+/**
  * Append the changelog tag to the pull request title
  */
 const updatePrTitleForChangelog = async () => {
   const maybePrTag = await getPrTag(danger.github.pr.title);
   const rawTitle = getRawTitle(danger.github.pr.title);
+  console.log("Scope" + getPrScope(danger.github.pr.body));
 
   maybePrTag.map(tag =>
     danger.github.api.pulls.update({
