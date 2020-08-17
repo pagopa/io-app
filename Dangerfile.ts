@@ -67,7 +67,7 @@ const getPrTag = async (prTitle: string): Promise<Option<string>> => {
   if (!allStoriesSameType) {
     warn(
       "Multiple stories with different types are associated with this Pull request. " +
-        "Only one tag will be added, following the order: feature > bug > chore"
+        "Only one tag will be added, following the order: `feature > bug > chore`"
     );
   }
   // In case of multiple stories, only one tag can be added, following the order feature > bug > chore
@@ -107,7 +107,7 @@ const getPrScope = (prBody: string): Option<string> => {
   if (prBody.match(scopeRegex) == null) {
     console.log("no scope");
     warn(
-      "Section '## Scope' not found in the pull request body. " +
+      "Section `## Scope` not found in the pull request body. " +
         "This pr will not include a scope in the changelog. " +
         "If your pr doesn't have a scope, please add the section with the value 'general'"
     );
@@ -118,8 +118,8 @@ const getPrScope = (prBody: string): Option<string> => {
   if (matchScopeType == null || matchScopeType.length < 3) {
     console.log("no valid scope");
     warn(
-      "The value used for the section '## Scope' is not valid! Please use one of the following values:\n" +
-        listOfScopeId
+      `The value used for the section \`## Scope\` is not valid! Please use one of the following values:\n
+      \`${listOfScopeId}\``
     );
     return none;
   }
