@@ -13,7 +13,6 @@ const prepareToNewCycle = () => {
   const package = JSON.parse(fs.readFileSync(packagePath).toString("utf8"));
   // replace the version, removing the rc part
   package.version = versionModule.getVersion(package.version);
-  console.log(package.version);
   fs.writeFileSync(packagePath, JSON.stringify(package, undefined, 2));
 };
 
