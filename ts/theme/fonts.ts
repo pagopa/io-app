@@ -59,6 +59,7 @@ const makeFontFamilyName = (
 /**
  * This function returns an object containing all the properties needed to use
  * a Font correctly on both Android and iOS.
+ * @deprecated
  */
 export const makeFontStyleObject = (
   osSelect: PlatformSelectType,
