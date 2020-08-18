@@ -1,7 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { ColorValue, StyleSheet } from "react-native";
-import { IOColor } from "../../components/core/variables/IOColor";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   body: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 export const ColorsSection = () => {
   return (
     <View style={styles.body}>
-      {Object.entries(IOColor).map(colorEntry => (
+      {Object.entries(IOColors).map(colorEntry => (
         <ColorBox
           key={colorEntry[0]}
           name={colorEntry[0]}

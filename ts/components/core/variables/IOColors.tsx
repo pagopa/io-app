@@ -9,7 +9,7 @@ function asIOColor<T extends { [key: string]: ColorValue }>(arg: T): T {
  * The palette of color used, created from
  * https://pagopa.invisionapp.com/console/IO-app---Library-ckcdil0710mt1014buxuo4u34/ckcdilqwl032d01xbx6db5zwz/play
  */
-export const IOColor = asIOColor({
+export const IOColors = asIOColor({
   black: "#000000",
   white: "#FFFFFF",
   bluegreyDark: "#17324D",
