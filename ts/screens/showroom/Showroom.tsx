@@ -34,9 +34,6 @@ export const Showroom = () => {
     }
   }, []);
 
-  const asd = makeFontStyleObject("Regular", false, "TitilliumWeb");
-  console.log(asd);
-
   return (
     <SafeAreaView style={styles.body}>
       <ScrollView style={styles.scrollView}>
