@@ -1,7 +1,7 @@
 import { ColorValue } from "react-native";
 
 // Ensure the Type for IOColor without losing the inferred types
-function asIOColor<T extends { [key: string]: ColorValue }>(arg: T): T {
+function asIOColors<T extends { [key: string]: ColorValue }>(arg: T): T {
   return arg;
 }
 
@@ -9,7 +9,7 @@ function asIOColor<T extends { [key: string]: ColorValue }>(arg: T): T {
  * The palette of color used, created from
  * https://pagopa.invisionapp.com/console/IO-app---Library-ckcdil0710mt1014buxuo4u34/ckcdilqwl032d01xbx6db5zwz/play
  */
-export const IOColors = asIOColor({
+export const IOColors = asIOColors({
   black: "#000000",
   white: "#FFFFFF",
   bluegreyDark: "#17324D",
