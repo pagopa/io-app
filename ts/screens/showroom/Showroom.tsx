@@ -2,7 +2,6 @@ import { H1, H2, H3, View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { makeFontStyleObject } from "../../components/core/fonts";
 import H4 from "../../components/ui/H4";
 import H5 from "../../components/ui/H5";
 import customVariables from "../../theme/variables";
