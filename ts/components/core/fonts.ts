@@ -21,14 +21,14 @@ const fonts = {
   })
 };
 
-const fontWeights: Record<FontWeight, FontWeightValue> = {
+export const fontWeights: Record<FontWeight, FontWeightValue> = {
   Light: "300",
   Regular: "400",
   SemiBold: "600",
   Bold: "700"
 };
 
-enum FontStyle {
+export enum FontStyle {
   "normal" = "normal",
   "italic" = "italic"
 }
