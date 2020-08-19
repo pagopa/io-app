@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { XOR } from "../../../types/utils";
 import { IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
 import { BaseTypography, BaseTypographyProps } from "./BaseTypography";
@@ -31,9 +32,10 @@ type DefaultFactoryProps<WeightPropsType, ColorsPropsType> = {
 /**
  * Only one type of default props strategy is allowed
  */
-type DefaultProps<WeightPropsType, ColorsPropsType> =
-  | DefaultArgumentProps<WeightPropsType, ColorsPropsType>
-  | DefaultFactoryProps<WeightPropsType, ColorsPropsType>;
+type DefaultProps<WeightPropsType, ColorsPropsType> = XOR<
+  DefaultArgumentProps<WeightPropsType, ColorsPropsType>,
+  DefaultFactoryProps<WeightPropsType, ColorsPropsType>
+>;
 
 /**
  * The factory props will include:
