@@ -2,12 +2,16 @@ import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
+import { H2 } from "../../components/core/typography/H2";
 import { H3 } from "../../components/core/typography/H3";
+import { Label } from "../../components/core/typography/Label";
+import { LabelSmall } from "../../components/core/typography/LabelSmall";
+import { Monospace } from "../../components/core/typography/Monospace";
 import { IOColors } from "../../components/core/variables/IOColors";
 import customVariables from "../../theme/variables";
 import { ColorsSection } from "./ColorsSection";
-import { H2 } from "../../components/core/typography/H2";
 
 const styles = StyleSheet.create({
   body: {
@@ -47,6 +51,14 @@ export const Showroom = () => {
         <H2>Header h2</H2>
         <View spacer={true} />
         <H3>Header h3</H3>
+        <View spacer={true} />
+        <Body>Body</Body>
+        <View spacer={true} />
+        <LabelSmall>Label small</LabelSmall>
+        <View spacer={true} />
+        <Label>Label</Label>
+        <View spacer={true} />
+        <Monospace>Monospace</Monospace>
       </ScrollView>
     </SafeAreaView>
   );

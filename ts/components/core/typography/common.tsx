@@ -31,3 +31,7 @@ export type RequiredTypographyProps<
   WeightPropsType,
   ColorsPropsType
 > = RequiredAll<TypographyProps<WeightPropsType, ColorsPropsType>>;
+
+export function TypographyFactory(): {
+  return <View/>;
+};

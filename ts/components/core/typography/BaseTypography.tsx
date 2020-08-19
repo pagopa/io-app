@@ -4,7 +4,7 @@ import { AccessibilityProps, StyleProp, Text, TextStyle } from "react-native";
 import { IOFontFamily, IOFontWeight, makeFontStyleObject } from "../fonts";
 import { IOColors, IOColorType } from "../variables/IOColors";
 
-type BaseTypographyProps = {
+export type BaseTypographyProps = {
   font: IOFontFamily;
   weight: IOFontWeight;
   color: IOColorType;
