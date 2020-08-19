@@ -12,6 +12,7 @@ import { Monospace } from "../../components/core/typography/Monospace";
 import { IOColors } from "../../components/core/variables/IOColors";
 import customVariables from "../../theme/variables";
 import { ColorsSection } from "./ColorsSection";
+import { Link } from "../../components/core/typography/Link";
 
 const styles = StyleSheet.create({
   body: {
@@ -57,6 +58,8 @@ export const Showroom = () => {
         <LabelSmall>Label small</LabelSmall>
         <View spacer={true} />
         <Label>Label</Label>
+        <View spacer={true} />
+        <Link>Link</Link>
         <View spacer={true} />
         <Monospace>Monospace</Monospace>
       </ScrollView>

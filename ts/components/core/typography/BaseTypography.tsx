@@ -5,22 +5,27 @@ import { IOFontFamily, IOFontWeight, makeFontStyleObject } from "../fonts";
 import { IOColors, IOColorType } from "../variables/IOColors";
 
 export type BaseTypographyProps = {
-  font: IOFontFamily;
   weight: IOFontWeight;
   color: IOColorType;
   fontSize: number;
+  font?: IOFontFamily;
+  isItalic?: boolean;
+  isUnderline?: boolean;
 } & AccessibilityProps;
 
 const calculateTextStyle = (
-  font: IOFontFamily,
   weight: IOFontWeight,
   color: IOColorType,
-  fontSize: number
+  fontSize: number,
+  font: IOFontFamily | undefined = "RobotoMono",
+  isItalic: boolean | undefined = false,
+  isUnderline: boolean | undefined = false
 ): StyleProp<TextStyle> => {
   return {
-    ...makeFontStyleObject(weight, false, font),
+    ...makeFontStyleObject(weight, isItalic, font),
     color: IOColors[color],
-    fontSize
+    fontSize,
+    textDecorationLine: isUnderline ? "underline" : undefined
   };
 };
 
@@ -29,7 +34,14 @@ export const BaseTypography: React.FunctionComponent<
 > = props => {
   const fontStyle = useMemo(
     () =>
-      calculateTextStyle(props.font, props.weight, props.color, props.fontSize),
+      calculateTextStyle(
+        props.weight,
+        props.color,
+        props.fontSize,
+        props.font,
+        props.isItalic,
+        props.isUnderline
+      ),
     [props.font, props.weight, props.color, props.fontSize]
   );
 
