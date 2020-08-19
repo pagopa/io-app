@@ -46,7 +46,7 @@ export type XOR<T, U> = (T | U) extends object
 
 type Values<T extends {}> = T[keyof T];
 
-type Tuplize<T extends {}[]> = Pick<
+type Tuplize<T extends any[]> = Pick<
   T,
   Exclude<keyof T, Extract<keyof any[], string> | number>
 >;

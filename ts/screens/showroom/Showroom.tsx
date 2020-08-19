@@ -6,15 +6,15 @@ import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import { H2 } from "../../components/core/typography/H2";
 import { H3 } from "../../components/core/typography/H3";
+import { H4 } from "../../components/core/typography/H4";
 import { H5 } from "../../components/core/typography/H5";
 import { Label } from "../../components/core/typography/Label";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
+import { Link } from "../../components/core/typography/Link";
 import { Monospace } from "../../components/core/typography/Monospace";
 import { IOColors } from "../../components/core/variables/IOColors";
 import customVariables from "../../theme/variables";
 import { ColorsSection } from "./ColorsSection";
-import { Link } from "../../components/core/typography/Link";
-import { H4 } from "../../components/core/typography/H4";
 
 const styles = StyleSheet.create({
   body: {
