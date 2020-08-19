@@ -3,6 +3,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { H1 } from "../../components/core/typography/H1";
+import { H3 } from "../../components/core/typography/H3";
 import customVariables from "../../theme/variables";
 import { ColorsSection } from "./ColorsSection";
 
@@ -38,6 +39,7 @@ export const Showroom = () => {
         <ColorsSection />
         <H1>Header h1</H1>
         <View spacer={true} ref={ref} />
+        <H3>Header h3</H3>
       </ScrollView>
     </SafeAreaView>
   );

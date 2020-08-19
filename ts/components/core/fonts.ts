@@ -6,7 +6,7 @@
 
 import { Platform } from "react-native";
 
-type FontFamily = keyof typeof fonts;
+export type FontFamily = keyof typeof fonts;
 export type FontWeight = "Light" | "Regular" | "SemiBold" | "Bold";
 export type FontWeightValue = "300" | "400" | "600" | "700";
 
