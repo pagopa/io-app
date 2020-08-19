@@ -4,22 +4,22 @@ import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
 import { typographyFactory, TypographyProps } from "./common";
 
-type BodyAllowedColors = Extract<IOColorType, "bluegrey">;
-type BodyAllowedWeight = Extract<IOFontWeight, "Regular">;
+type AllowedColors = Extract<IOColorType, "bluegrey">;
+type AllowedWeight = Extract<IOFontWeight, "Regular">;
 
-type H1Props = TypographyProps<BodyAllowedWeight, BodyAllowedColors>;
+type Props = TypographyProps<AllowedWeight, AllowedColors>;
 
-type OwnProps = H1Props & AccessibilityProps;
+type OwnProps = Props & AccessibilityProps;
 
-const BodyFontName: IOFontFamily = "RobotoMono";
-const BodyFontSize = 16;
+const fontName: IOFontFamily = "RobotoMono";
+const fontSize = 16;
 
 export const Monospace: React.FunctionComponent<OwnProps> = props => {
-  return typographyFactory<BodyAllowedWeight, BodyAllowedColors>({
+  return typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Regular",
     defaultColor: "bluegrey",
-    font: BodyFontName,
-    fontSize: BodyFontSize
+    font: fontName,
+    fontSize
   });
 };

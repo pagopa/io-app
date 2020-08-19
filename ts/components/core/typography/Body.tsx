@@ -4,22 +4,22 @@ import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
 import { typographyFactory, TypographyProps } from "./common";
 
-type BodyAllowedColors = Extract<IOColorType, "bluegreyDark">;
-type BodyAllowedWeight = Extract<IOFontWeight, "Regular">;
+type AllowedColors = Extract<IOColorType, "bluegreyDark">;
+type AllowedWeight = Extract<IOFontWeight, "Regular">;
 
-type BodyProps = TypographyProps<BodyAllowedWeight, BodyAllowedColors>;
+type Props = TypographyProps<AllowedWeight, AllowedColors>;
 
-type OwnProps = BodyProps & AccessibilityProps;
+type OwnProps = Props & AccessibilityProps;
 
-const BodyFontName: IOFontFamily = "TitilliumWeb";
-const BodyFontSize = 16;
+const fontName: IOFontFamily = "TitilliumWeb";
+const fontSize = 16;
 
 export const Body: React.FunctionComponent<OwnProps> = props => {
-  return typographyFactory<BodyAllowedWeight, BodyAllowedColors>({
+  return typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Regular",
     defaultColor: "bluegreyDark",
-    font: BodyFontName,
-    fontSize: BodyFontSize
+    font: fontName,
+    fontSize
   });
 };

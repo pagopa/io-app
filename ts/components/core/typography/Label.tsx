@@ -4,22 +4,22 @@ import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
 import { typographyFactory, TypographyProps } from "./common";
 
-type BodyAllowedColors = Extract<IOColorType, "blue" | "bluegrey" | "white">;
-type BodyAllowedWeight = Extract<IOFontWeight, "Bold">;
+type AllowedColors = Extract<IOColorType, "blue" | "bluegrey" | "white">;
+type AllowedWeight = Extract<IOFontWeight, "Bold">;
 
-type H1Props = TypographyProps<BodyAllowedWeight, BodyAllowedColors>;
+type Props = TypographyProps<AllowedWeight, AllowedColors>;
 
-type OwnProps = H1Props & AccessibilityProps;
+type OwnProps = Props & AccessibilityProps;
 
-const BodyFontName: IOFontFamily = "TitilliumWeb";
-const BodyFontSize = 16;
+const fontName: IOFontFamily = "TitilliumWeb";
+const fontSize = 16;
 
 export const Label: React.FunctionComponent<OwnProps> = props => {
-  return typographyFactory<BodyAllowedWeight, BodyAllowedColors>({
+  return typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Bold",
     defaultColor: "blue",
-    font: BodyFontName,
-    fontSize: BodyFontSize
+    font: fontName,
+    fontSize
   });
 };
