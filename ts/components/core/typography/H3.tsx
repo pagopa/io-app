@@ -7,7 +7,7 @@ import {
   Text,
   TextStyle
 } from "react-native";
-import { FontFamily, FontWeight, makeFontStyleObject } from "../fonts";
+import { IOFontFamily, IOFontWeight, makeFontStyleObject } from "../fonts";
 import { IOColors, IOColorType } from "../variables/IOColors";
 
 type AllowedSemiBoldColors = Extract<
@@ -20,10 +20,13 @@ type AllowedBoldColors = Extract<IOColorType, "white">;
 type AllowedColors = AllowedBoldColors | AllowedSemiBoldColors;
 
 type SemiBold = {
-  weight?: Extract<FontWeight, "SemiBold">;
+  weight?: Extract<IOFontWeight, "SemiBold">;
   color?: AllowedSemiBoldColors;
 };
-type Bold = { weight: Extract<FontWeight, "Bold">; color?: AllowedBoldColors };
+type Bold = {
+  weight: Extract<IOFontWeight, "Bold">;
+  color?: AllowedBoldColors;
+};
 
 type BoldProps = SemiBold | Bold;
 
@@ -32,7 +35,7 @@ const isBold = (configuration: Bold | SemiBold): configuration is Bold =>
 
 type OwnProps = AccessibilityProps & BoldProps;
 
-const calculateWeightColor = (weight?: FontWeight, color?: AllowedColors) => {
+const calculateWeightColor = (weight?: IOFontWeight, color?: AllowedColors) => {
   const newWeight = weight !== undefined ? weight : "SemiBold";
   const newColor =
     color !== undefined
@@ -47,8 +50,8 @@ const calculateWeightColor = (weight?: FontWeight, color?: AllowedColors) => {
 };
 
 const calculateTextStyle = (
-  font: FontFamily,
-  weight: FontWeight,
+  font: IOFontFamily,
+  weight: IOFontWeight,
   color: IOColorType,
   fontSize: number
 ): StyleProp<TextStyle> => {

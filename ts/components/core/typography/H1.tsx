@@ -1,22 +1,19 @@
 import * as React from "react";
 import { useMemo } from "react";
 import { AccessibilityProps } from "react-native";
-import { FontFamily, FontWeight } from "../fonts";
+import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
 import { BaseTypography } from "./BaseTypography";
-import { calculateWeightColor } from "./common";
+import { calculateWeightColor, TypographyProps } from "./common";
 
 type H1AllowedColors = Extract<IOColorType, "bluegreyDark" | "white">;
-type H1AllowedWeight = Extract<FontWeight, "Bold">;
+type H1AllowedWeight = Extract<IOFontWeight, "Bold">;
 
-type H1Props = {
-  weight?: H1AllowedWeight;
-  color?: H1AllowedColors;
-};
+type H1Props = TypographyProps<H1AllowedWeight, H1AllowedColors>;
 
 type OwnProps = H1Props & AccessibilityProps;
 
-const H1FontName: FontFamily = "TitilliumWeb";
+const H1FontName: IOFontFamily = "TitilliumWeb";
 const H1FontSize = 28;
 
 export const H1: React.FunctionComponent<OwnProps> = props => {

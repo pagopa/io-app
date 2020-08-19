@@ -1,20 +1,19 @@
 /***
- * A common function used to calculate the weight and color for a class of typography, in order to support
+ * A default function used to calculate the weight and color for a class of typography, in order to support
  * the default values if some fields are not specified.
  * @param defaultWeight the default weight value to use if weight is not defined
  * @param defaultColor the default color value to use if color is not defined
  * @param weight the optional weight value
  * @param color the optzional color value
  */
-export function calculateWeightColor<W, C>(
-  defaultWeight: W,
-  defaultColor: C,
-  weight?: W,
-  color?: C
-): {
-  weight: W;
-  color: C;
-} {
+import { RequiredAll } from "../../../types/utils";
+
+export function calculateWeightColor<WeightPropsType, ColorsPropsType>(
+  defaultWeight: WeightPropsType,
+  defaultColor: ColorsPropsType,
+  weight?: WeightPropsType,
+  color?: ColorsPropsType
+): RequiredTypographyProps<WeightPropsType, ColorsPropsType> {
   const newWeight = weight !== undefined ? weight : defaultWeight;
   const newColor = color !== undefined ? color : defaultColor;
   return {
@@ -22,3 +21,13 @@ export function calculateWeightColor<W, C>(
     color: newColor
   };
 }
+
+export type TypographyProps<WeightPropsType, ColorsPropsType> = {
+  weight?: WeightPropsType;
+  color?: ColorsPropsType;
+};
+
+export type RequiredTypographyProps<
+  WeightPropsType,
+  ColorsPropsType
+> = RequiredAll<TypographyProps<WeightPropsType, ColorsPropsType>>;

@@ -6,8 +6,8 @@
 
 import { Platform } from "react-native";
 
-export type FontFamily = keyof typeof fonts;
-export type FontWeight = "Light" | "Regular" | "SemiBold" | "Bold";
+export type IOFontFamily = keyof typeof fonts;
+export type IOFontWeight = "Light" | "Regular" | "SemiBold" | "Bold";
 export type FontWeightValue = "300" | "400" | "600" | "700";
 
 const fonts = {
@@ -21,7 +21,7 @@ const fonts = {
   })
 };
 
-export const fontWeights: Record<FontWeight, FontWeightValue> = {
+export const fontWeights: Record<IOFontWeight, FontWeightValue> = {
   Light: "300",
   Regular: "400",
   SemiBold: "600",
@@ -43,8 +43,8 @@ type FontStyleObject = {
  * Get the correct fontFamily name on both Android and iOS
  */
 const makeFontFamilyName = (
-  font: FontFamily,
-  weight?: FontWeight,
+  font: IOFontFamily,
+  weight?: IOFontWeight,
   isItalic: boolean = false
 ): string =>
   Platform.select({
@@ -58,9 +58,9 @@ const makeFontFamilyName = (
  * a Font correctly on both Android and iOS.
  */
 export const makeFontStyleObject = (
-  weight: FontWeight | undefined = undefined,
+  weight: IOFontWeight | undefined = undefined,
   isItalic: boolean | undefined = false,
-  font: FontFamily | undefined = "TitilliumWeb"
+  font: IOFontFamily | undefined = "TitilliumWeb"
 ): FontStyleObject =>
   Platform.select({
     default: {
