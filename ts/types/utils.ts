@@ -29,3 +29,8 @@ export type PotFromActions<S, F> = Pot<
   PayloadForAction<S>,
   PayloadForAction<F>
 >;
+
+/**
+ * Ensure that all the keys of type T are required, transforming all optional field of kind T | undefined to T
+ */
+export type RequiredAll<T> = { [K in keyof T]-?: T[K] };

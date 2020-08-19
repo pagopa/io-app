@@ -6,23 +6,23 @@ import { IOColorType } from "../variables/IOColors";
 import { BaseTypography } from "./BaseTypography";
 import { calculateWeightColor } from "./common";
 
-type H1AllowedColors = Extract<IOColorType, "bluegreyDark" | "white">;
-type H1AllowedWeight = Extract<FontWeight, "Bold">;
+type H2AllowedColors = Extract<IOColorType, "bluegreyDark">;
+type H2AllowedWeight = Extract<FontWeight, "Bold">;
 
-type H1Props = {
-  weight?: H1AllowedWeight;
-  color?: H1AllowedColors;
+type H2Props = {
+  weight?: H2AllowedWeight;
+  color?: H2AllowedColors;
 };
 
-type OwnProps = H1Props & AccessibilityProps;
+type OwnProps = H2Props & AccessibilityProps;
 
-const H1FontName: FontFamily = "TitilliumWeb";
-const H1FontSize = 28;
+const H2FontName: FontFamily = "TitilliumWeb";
+const H2FontSize = 20;
 
-export const H1: React.FunctionComponent<OwnProps> = props => {
+export const H2: React.FunctionComponent<OwnProps> = props => {
   const { weight, color } = useMemo(
     () =>
-      calculateWeightColor<H1AllowedWeight, H1AllowedColors>(
+      calculateWeightColor<H2AllowedWeight, H2AllowedColors>(
         "Bold",
         "bluegreyDark",
         props.weight,
@@ -33,10 +33,10 @@ export const H1: React.FunctionComponent<OwnProps> = props => {
 
   return (
     <BaseTypography
-      font={H1FontName}
+      font={H2FontName}
       weight={weight}
       color={color}
-      fontSize={H1FontSize}
+      fontSize={H2FontSize}
       {...props}
     />
   );
