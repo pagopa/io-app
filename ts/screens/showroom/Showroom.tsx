@@ -6,6 +6,7 @@ import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import { H2 } from "../../components/core/typography/H2";
 import { H3 } from "../../components/core/typography/H3";
+import { H5 } from "../../components/core/typography/H5";
 import { Label } from "../../components/core/typography/Label";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { Monospace } from "../../components/core/typography/Monospace";
@@ -13,6 +14,7 @@ import { IOColors } from "../../components/core/variables/IOColors";
 import customVariables from "../../theme/variables";
 import { ColorsSection } from "./ColorsSection";
 import { Link } from "../../components/core/typography/Link";
+import { H4 } from "../../components/core/typography/H4";
 
 const styles = StyleSheet.create({
   body: {
@@ -44,14 +46,18 @@ export const Showroom = () => {
     <SafeAreaView style={styles.body}>
       <ScrollView style={styles.scrollView}>
         <ColorsSection />
-        <H1>Header h1</H1>
+        <H1>Header H1</H1>
         <View style={{ backgroundColor: IOColors.bluegrey }}>
           <H1 color={"white"}>Header h1</H1>
         </View>
         <View spacer={true} ref={ref} />
-        <H2>Header h2</H2>
+        <H2>Header H2</H2>
         <View spacer={true} />
-        <H3>Header h3</H3>
+        <H3>Header H3</H3>
+        <View spacer={true} />
+        <H4>Header H4</H4>
+        <View spacer={true} />
+        <H5>Header H5</H5>
         <View spacer={true} />
         <Body>Body</Body>
         <View spacer={true} />
