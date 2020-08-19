@@ -2,7 +2,8 @@ import * as React from "react";
 import { AccessibilityProps } from "react-native";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
-import { typographyFactory, TypographyProps } from "./common";
+import { TypographyProps } from "./common";
+import { typographyFactory } from "./Factory";
 
 type AllowedColors = Extract<IOColorType, "bluegrey">;
 type AllowedWeight = Extract<IOFontWeight, "Regular">;

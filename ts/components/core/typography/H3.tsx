@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useMemo } from "react";
 import { AccessibilityProps } from "react-native";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
-import { BaseTypography } from "./BaseTypography";
 import { RequiredTypographyProps } from "./common";
+import { typographyFactory } from "./Factory";
 
 // these colors are allowed only when the weight is SemiBold
 type AllowedSemiBoldColors = Extract<
@@ -15,7 +14,11 @@ type AllowedSemiBoldColors = Extract<
 // when the weight is bold, only the white color is allowed
 type AllowedBoldColors = Extract<IOColorType, "white">;
 
-type H3AllowedColors = AllowedBoldColors | AllowedSemiBoldColors;
+// all the possible colors
+type AllowedColors = AllowedBoldColors | AllowedSemiBoldColors;
+
+// all the possible weight
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold">;
 
 // these are the properties allowed only if weight is undefined or SemiBold
 type SemiBoldProps = {
@@ -33,20 +36,20 @@ type BoldKindProps = SemiBoldProps | BoldProps;
 
 type OwnProps = AccessibilityProps & BoldKindProps;
 
-const H3FontName: IOFontFamily = "TitilliumWeb";
-const H3FontSize = 18;
+const fontName: IOFontFamily = "TitilliumWeb";
+const fontSize = 18;
 
 /***
  * A custom function to calculate the values if no weight or color is provided.
  * The choose of the default color depends on the weight, for this reason cannot be used
- * the default calculateWeightColor.
+ * the default calculateWeightColor with fallback if undefined.
  * @param weight
  * @param color
  */
 const calculateWeightColor = (
-  weight?: IOFontWeight,
-  color?: H3AllowedColors
-): RequiredTypographyProps<IOFontWeight, H3AllowedColors> => {
+  weight?: AllowedWeight,
+  color?: AllowedColors
+): RequiredTypographyProps<AllowedWeight, AllowedColors> => {
   const newWeight = weight !== undefined ? weight : "SemiBold";
   const newColor =
     color !== undefined
@@ -62,23 +65,15 @@ const calculateWeightColor = (
 
 /***
  * Typography component to render H3 text with font size 18.
- * default values(if not defined) weight: SemiBold, color: bluegreyDark
+ * default values(if not defined) are weight: SemiBold, color: bluegreyDark
  * @param props
  * @constructor
  */
 export const H3: React.FunctionComponent<OwnProps> = props => {
-  const { weight, color } = useMemo(
-    () => calculateWeightColor(props.weight, props.color),
-    [props.weight, props.color]
-  );
-
-  return (
-    <BaseTypography
-      font={H3FontName}
-      weight={weight}
-      color={color}
-      fontSize={H3FontSize}
-      {...props}
-    />
-  );
+  return typographyFactory<AllowedWeight, AllowedColors>({
+    ...props,
+    weightColorFactory: calculateWeightColor,
+    font: fontName,
+    fontSize
+  });
 };
