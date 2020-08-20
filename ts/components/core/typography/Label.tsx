@@ -14,6 +14,12 @@ type OwnProps = ExternalTypographyProps<
 const fontName: IOFontFamily = "TitilliumWeb";
 const fontSize = 16;
 
+/***
+ * Typography component to render `Label` text with font size {@link fontSize} and fontFamily {@link fontName}.
+ * default values(if not defined) are weight: `Bold`, color: `blue`
+ * @param props`
+ * @constructor
+ */
 export const Label: React.FunctionComponent<OwnProps> = props => {
   return typographyFactory<AllowedWeight, AllowedColors>({
     ...props,

@@ -14,6 +14,12 @@ type OwnProps = ExternalTypographyProps<
 const fontName: IOFontFamily = "RobotoMono";
 const fontSize = 16;
 
+/***
+ * Typography component to render `Monospace` text with font size {@link fontSize} and fontFamily {@link fontName}.
+ * default values(if not defined) are weight: `Regular`, color: `bluegrey`
+ * @param props`
+ * @constructor
+ */
 export const Monospace: React.FunctionComponent<OwnProps> = props => {
   return typographyFactory<AllowedWeight, AllowedColors>({
     ...props,

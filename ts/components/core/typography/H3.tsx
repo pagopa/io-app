@@ -63,8 +63,8 @@ const calculateWeightColor = (
 };
 
 /***
- * Typography component to render H3 text with font size 18.
- * default values(if not defined) are weight: SemiBold, color: bluegreyDark
+ * Typography component to render `H3` text with font size {@link fontSize} and fontFamily {@link fontName}.
+ * default values(if not defined) are weight: `SemiBold`, color: `bluegreyDark`
  * @param props
  * @constructor
  */

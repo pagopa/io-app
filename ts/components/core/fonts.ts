@@ -10,6 +10,9 @@ export type IOFontFamily = keyof typeof fonts;
 export type IOFontWeight = "Light" | "Regular" | "SemiBold" | "Bold";
 export type FontWeightValue = "300" | "400" | "600" | "700";
 
+/**
+ * Choose the font name based on the platform
+ */
 const fonts = {
   TitilliumWeb: Platform.select({
     android: "TitilliumWeb",
@@ -21,6 +24,10 @@ const fonts = {
   })
 };
 
+/**
+ * Mapping between the nominal description of the weight (also the postfix used on Android) and the numeric value
+ * used on iOS
+ */
 export const fontWeights: Record<IOFontWeight, FontWeightValue> = {
   Light: "300",
   Regular: "400",
@@ -40,7 +47,10 @@ type FontStyleObject = {
 };
 
 /**
- * Get the correct fontFamily name on both Android and iOS
+ * Get the correct `fontFamily` name on both Android and iOS.
+ * @param font
+ * @param weight
+ * @param isItalic
  */
 const makeFontFamilyName = (
   font: IOFontFamily,
@@ -54,8 +64,10 @@ const makeFontFamilyName = (
   });
 
 /**
- * This function returns an object containing all the properties needed to use
- * a Font correctly on both Android and iOS.
+ * Return a {@link FontStyleObject} with the fields filled based on the platform (iOS or Android).
+ * @param weight
+ * @param isItalic
+ * @param font
  */
 export const makeFontStyleObject = (
   weight: IOFontWeight | undefined = undefined,

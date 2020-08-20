@@ -81,8 +81,8 @@ const calculateWeightColor = (
 };
 
 /***
- * Typography component to render H4 text with font size 18.
- * default values(if not defined) are weight: Bold, color: bluegreyDark
+ * Typography component to render `H4` text with font size {@link fontSize} and fontFamily {@link fontName}.
+ * default values(if not defined) are weight: `Bold`, color: `bluegreyDark`
  * @param props
  * @constructor
  */
