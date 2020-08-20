@@ -21,6 +21,6 @@ export const Body: React.FunctionComponent<OwnProps> = props => {
     defaultWeight: "Regular",
     defaultColor: "bluegreyDark",
     font: fontName,
-    fontSize
+    fontStyle: { fontSize }
   });
 };

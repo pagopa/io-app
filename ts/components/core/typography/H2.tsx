@@ -21,6 +21,6 @@ export const H2: React.FunctionComponent<OwnProps> = props => {
     defaultWeight: "Bold",
     defaultColor: "bluegreyDark",
     font: fontName,
-    fontSize
+    fontStyle: { fontSize }
   });
 };

@@ -21,6 +21,6 @@ export const Label: React.FunctionComponent<OwnProps> = props => {
     defaultWeight: "Bold",
     defaultColor: "blue",
     font: fontName,
-    fontSize
+    fontStyle: { fontSize }
   });
 };

@@ -74,6 +74,6 @@ export const H3: React.FunctionComponent<OwnProps> = props => {
     ...props,
     weightColorFactory: calculateWeightColor,
     font: fontName,
-    fontSize
+    fontStyle: { fontSize }
   });
 };

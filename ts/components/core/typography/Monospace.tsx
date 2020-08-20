@@ -21,6 +21,6 @@ export const Monospace: React.FunctionComponent<OwnProps> = props => {
     defaultWeight: "Regular",
     defaultColor: "bluegrey",
     font: fontName,
-    fontSize
+    fontStyle: { fontSize }
   });
 };

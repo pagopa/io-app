@@ -21,7 +21,9 @@ export const Link: React.FunctionComponent<OwnProps> = props => {
     defaultWeight: "SemiBold",
     defaultColor: "blue",
     font: fontName,
-    fontSize,
-    isUnderline: true
+    fontStyle: {
+      fontSize,
+      textDecorationLine: "underline"
+    }
   });
 };

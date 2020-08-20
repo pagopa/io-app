@@ -14,11 +14,9 @@ export function calculateWeightColor<WeightPropsType, ColorsPropsType>(
   weight?: WeightPropsType,
   color?: ColorsPropsType
 ): RequiredTypographyProps<WeightPropsType, ColorsPropsType> {
-  const newWeight = weight !== undefined ? weight : defaultWeight;
-  const newColor = color !== undefined ? color : defaultColor;
   return {
-    weight: newWeight,
-    color: newColor
+    weight: weight !== undefined ? weight : defaultWeight,
+    color: color !== undefined ? color : defaultColor
   };
 }
 

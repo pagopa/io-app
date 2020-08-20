@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { XOR } from "../../../types/utils";
 import { IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
-import { BaseTypography, BaseTypographyProps } from "./BaseTypography";
+import { BaseTypography, InputTypographyProps } from "./BaseTypography";
 import {
   calculateWeightColor,
   RequiredTypographyProps,
@@ -48,7 +48,7 @@ type FactoryProps<WeightPropsType, ColorsPropsType> = TypographyProps<
   ColorsPropsType
 > &
   DefaultProps<WeightPropsType, ColorsPropsType> &
-  Omit<BaseTypographyProps, "weight" | "color">;
+  Omit<InputTypographyProps, "weight" | "color">;
 
 /**
  * Calculate if the props is of type {@link DefaultFactoryProps}
@@ -65,6 +65,10 @@ function isDefaultFactoryProps<WeightPropsType, ColorsPropsType>(
   );
 }
 
+/**
+ * Build a BaseTypography component, calculating the default values for weight and color if undefined
+ * @param props
+ */
 export function typographyFactory<
   WeightPropsType extends IOFontWeight,
   ColorsPropsType extends IOColorType

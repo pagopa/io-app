@@ -54,6 +54,6 @@ export const H5: React.FunctionComponent<OwnProps> = props => {
     defaultWeight: "SemiBold",
     defaultColor: "bluegreyDark",
     font: fontName,
-    fontSize
+    fontStyle: { fontSize }
   });
 };
