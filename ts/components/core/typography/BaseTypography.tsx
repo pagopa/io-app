@@ -6,7 +6,6 @@ import { IOColors, IOColorType } from "../variables/IOColors";
 
 // TODO: create typography showroom
 // TODO: Create test for typography components
-// TODO: review comments & docs
 // TODO: check with Laura the lineHeight
 
 /***

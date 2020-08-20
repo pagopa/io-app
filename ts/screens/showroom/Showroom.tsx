@@ -2,19 +2,9 @@ import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { Body } from "../../components/core/typography/Body";
-import { H1 } from "../../components/core/typography/H1";
-import { H2 } from "../../components/core/typography/H2";
-import { H3 } from "../../components/core/typography/H3";
-import { H4 } from "../../components/core/typography/H4";
-import { H5 } from "../../components/core/typography/H5";
-import { Label } from "../../components/core/typography/Label";
-import { LabelSmall } from "../../components/core/typography/LabelSmall";
-import { Link } from "../../components/core/typography/Link";
-import { Monospace } from "../../components/core/typography/Monospace";
-import { IOColors } from "../../components/core/variables/IOColors";
 import customVariables from "../../theme/variables";
-import { ColorsSection } from "./ColorsSection";
+import { ColorsShowroom } from "./ColorsShowroom";
+import { TypographyShowroom } from "./TypographyShowRoom";
 
 const styles = StyleSheet.create({
   body: {
@@ -45,29 +35,9 @@ export const Showroom = () => {
   return (
     <SafeAreaView style={styles.body}>
       <ScrollView style={styles.scrollView}>
-        <ColorsSection />
-        <H1>Header H1</H1>
-        <View style={{ backgroundColor: IOColors.bluegrey }}>
-          <H1 color={"white"}>Header h1</H1>
-        </View>
-        <View spacer={true} ref={ref} />
-        <H2>Header H2</H2>
-        <View spacer={true} />
-        <H3>Header H3</H3>
-        <View spacer={true} />
-        <H4>Header H4</H4>
-        <View spacer={true} />
-        <H5>Header H5</H5>
-        <View spacer={true} />
-        <Body>Body</Body>
-        <View spacer={true} />
-        <LabelSmall>Label small</LabelSmall>
-        <View spacer={true} />
-        <Label>Label</Label>
-        <View spacer={true} />
-        <Link>Link</Link>
-        <View spacer={true} />
-        <Monospace>Monospace</Monospace>
+        <ColorsShowroom />
+        <View spacer={true} extralarge={true} />
+        <TypographyShowroom />
       </ScrollView>
     </SafeAreaView>
   );
