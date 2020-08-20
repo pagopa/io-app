@@ -1,8 +1,7 @@
 import * as React from "react";
-import { AccessibilityProps } from "react-native";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
-import { RequiredTypographyProps } from "./common";
+import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 import { typographyFactory } from "./Factory";
 
 // when the weight is bold, only the white color is allowed
@@ -50,7 +49,7 @@ type RegularProps = {
 
 type BoldKindProps = SemiBoldProps | BoldProps | RegularProps;
 
-type OwnProps = AccessibilityProps & BoldKindProps;
+type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
 const fontName: IOFontFamily = "TitilliumWeb";
 const fontSize = 16;

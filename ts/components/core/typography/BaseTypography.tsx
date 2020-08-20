@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useMemo } from "react";
-import { AccessibilityProps, StyleProp, Text, TextStyle } from "react-native";
+import { StyleProp, Text, TextStyle } from "react-native";
 import { IOFontFamily, IOFontWeight, makeFontStyleObject } from "../fonts";
 import { IOColors, IOColorType } from "../variables/IOColors";
 
@@ -21,15 +21,14 @@ type BaseTypographyProps = {
   isItalic?: boolean;
 };
 
-export type InputTypographyProps = BaseTypographyProps &
-  AccessibilityProps & {
-    fontStyle?: StyleProp<TextStyle>;
-  };
+export type InputTypographyProps = BaseTypographyProps & {
+  fontStyle?: StyleProp<TextStyle>;
+} & Omit<React.ComponentPropsWithRef<typeof Text>, "style">;
 
 const calculateTextStyle = (
   weight: IOFontWeight,
   color: IOColorType,
-  font: IOFontFamily | undefined = "RobotoMono",
+  font: IOFontFamily | undefined = "TitilliumWeb",
   isItalic: boolean | undefined = false
 ): StyleProp<TextStyle> => {
   return {
@@ -39,8 +38,8 @@ const calculateTextStyle = (
 };
 
 /**
- * BaseTypography is the core Typography component used to render a text.
- * It accepts all the default text style StyleProp<TextStyle> in addition with {@link BaseTypographyProps}
+ * `BaseTypography` is the core Typography component used to render a text.
+ * It accepts all the default text style `StyleProp<TextStyle>` in addition with {@link BaseTypographyProps}
  * used to calculate at runtime the platform-dependent styles.
  * @param props
  * @constructor

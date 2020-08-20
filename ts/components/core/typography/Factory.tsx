@@ -66,7 +66,9 @@ function isDefaultFactoryProps<WeightPropsType, ColorsPropsType>(
 }
 
 /**
- * Build a BaseTypography component, calculating the default values for weight and color if undefined
+ * Build a {@link BaseTypography} component, calculating the default values for weight and color if undefined.
+ * The default values can be calculated specifying some fallback values using {@link DefaultArgumentProps}
+ * or with a factory function to define some custom behaviour using {@link DefaultFactoryProps}
  * @param props
  */
 export function typographyFactory<

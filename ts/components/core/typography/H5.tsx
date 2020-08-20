@@ -1,7 +1,7 @@
 import * as React from "react";
-import { AccessibilityProps } from "react-native";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
+import { ExternalTypographyProps } from "./common";
 import { typographyFactory } from "./Factory";
 
 // these colors are allowed only when the weight is SemiBold
@@ -37,7 +37,7 @@ type RegularProps = {
 
 type BoldKindProps = SemiBoldProps | RegularProps;
 
-type OwnProps = AccessibilityProps & BoldKindProps;
+type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
 const fontName: IOFontFamily = "TitilliumWeb";
 const fontSize = 14;
