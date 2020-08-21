@@ -9,6 +9,10 @@ import {
 } from "danger-plugin-digitalcitizenship/dist/utils";
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
+import {
+  getChangelogPrefixByStories,
+  getStoriesFromPrTitle
+} from "./scripts/changelog/ts/PivotalUtility";
 
 declare var danger: DangerDSLType;
 
@@ -131,11 +135,16 @@ const getPrScope = (prBody: string): Option<string> => {
  * Append the changelog tag to the pull request title
  */
 const updatePrTitleForChangelog = async () => {
-  const maybePrTag = await getPrTag(danger.github.pr.title);
+  const pivotalStories = await getStoriesFromPrTitle(danger.github.pr.title);
+  console.log("*** stories " + pivotalStories);
+  const maybeChangelogPrefix = await getChangelogPrefixByStories(
+    pivotalStories
+  );
+  console.log("*** changelogPRefix " + maybeChangelogPrefix);
   const rawTitle = getRawTitle(danger.github.pr.title);
   console.log("Scope" + getPrScope(danger.github.pr.body));
 
-  maybePrTag.map(tag =>
+  maybeChangelogPrefix.map(tag =>
     danger.github.api.pulls.update({
       owner: danger.github.thisPR.owner,
       repo: danger.github.thisPR.repo,
