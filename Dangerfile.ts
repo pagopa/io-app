@@ -9,8 +9,6 @@ import {
 } from "danger-plugin-digitalcitizenship/dist/utils";
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import { getChangelogPrefixByStories } from "./scripts/changelog/ts/PivotalUtility";
-import { Story } from "./scripts/changelog/ts/types";
 
 declare var danger: DangerDSLType;
 
@@ -129,30 +127,15 @@ const getPrScope = (prBody: string): Option<string> => {
   return fromNullable(allowedScope.get(matchScopeType[2]));
 };
 
-export const getStoriesFromPrTitle = async (
-  prTitle: string
-): Promise<ReadonlyArray<Story>> => {
-  // detect stories id from the pr title and load the story from pivotal
-  const storyIDs = getPivotalStoryIDs(prTitle);
-  return (await getPivotalStories(storyIDs)).filter(
-    s => s.story_type !== undefined
-  );
-};
-
 /**
  * Append the changelog tag to the pull request title
  */
 const updatePrTitleForChangelog = async () => {
-  const pivotalStories = await getStoriesFromPrTitle(danger.github.pr.title);
-  console.log("*** stories " + pivotalStories);
-  const maybeChangelogPrefix = await getChangelogPrefixByStories(
-    pivotalStories
-  );
-  console.log("*** changelogPRefix " + maybeChangelogPrefix);
+  const maybePrTag = await getPrTag(danger.github.pr.title);
   const rawTitle = getRawTitle(danger.github.pr.title);
   console.log("Scope" + getPrScope(danger.github.pr.body));
 
-  maybeChangelogPrefix.map(tag =>
+  maybePrTag.map(tag =>
     danger.github.api.pulls.update({
       owner: danger.github.thisPR.owner,
       repo: danger.github.thisPR.repo,
