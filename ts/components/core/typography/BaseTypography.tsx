@@ -4,8 +4,6 @@ import { StyleProp, Text, TextStyle } from "react-native";
 import { IOFontFamily, IOFontWeight, makeFontStyleObject } from "../fonts";
 import { IOColors, IOColorType } from "../variables/IOColors";
 
-// TODO: check with Laura the lineHeight
-
 /***
  * The specific properties needed to calculate the font style using {@link makeFontStyleObject} (these information
  * cannot be included in the default StyleProp<TextStyle>
