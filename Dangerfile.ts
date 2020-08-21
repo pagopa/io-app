@@ -9,10 +9,8 @@ import {
 } from "danger-plugin-digitalcitizenship/dist/utils";
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import {
-  getChangelogPrefixByStories,
-  getStoriesFromPrTitle
-} from "./scripts/changelog/ts/PivotalUtility";
+import { getChangelogPrefixByStories } from "./scripts/changelog/ts/PivotalUtility";
+import { Story } from "./scripts/changelog/ts/types";
 
 declare var danger: DangerDSLType;
 
@@ -129,6 +127,16 @@ const getPrScope = (prBody: string): Option<string> => {
   }
   console.log("scope OK");
   return fromNullable(allowedScope.get(matchScopeType[2]));
+};
+
+export const getStoriesFromPrTitle = async (
+  prTitle: string
+): Promise<ReadonlyArray<Story>> => {
+  // detect stories id from the pr title and load the story from pivotal
+  const storyIDs = getPivotalStoryIDs(prTitle);
+  return (await getPivotalStories(storyIDs)).filter(
+    s => s.story_type !== undefined
+  );
 };
 
 /**

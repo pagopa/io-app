@@ -1,8 +1,4 @@
 import { warn } from "danger";
-import {
-  getPivotalStories,
-  getPivotalStoryIDs
-} from "danger-plugin-digitalcitizenship/dist/utils";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { Story, StoryType } from "./types";
 
@@ -17,16 +13,6 @@ const storyOrder = new Map<StoryType, number>([
   ["bug", 1],
   ["chore", 0]
 ]);
-
-export const getStoriesFromPrTitle = async (
-  prTitle: string
-): Promise<ReadonlyArray<Story>> => {
-  // detect stories id from the pr title and load the story from pivotal
-  const storyIDs = getPivotalStoryIDs(prTitle);
-  return (await getPivotalStories(storyIDs)).filter(
-    s => s.story_type !== undefined
-  );
-};
 
 export const getChangelogPrefixByStories = (
   stories: ReadonlyArray<Story>
