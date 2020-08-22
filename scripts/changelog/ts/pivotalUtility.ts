@@ -7,9 +7,9 @@ import { fromNullable, none, Option, Some, some } from "fp-ts/lib/Option";
 import { Story, StoryType } from "./types";
 
 const storyTag = new Map<StoryType, string>([
-  ["feature", "feat: "],
-  ["bug", "fix: "],
-  ["chore", "chore: "]
+  ["feature", "feat"],
+  ["bug", "fix"],
+  ["chore", "chore"]
 ]);
 
 const storyOrder = new Map<StoryType, number>([
@@ -91,7 +91,7 @@ export const getStoryChangelogScope = (
   if (maybeChangelogScopeTag.length > 1) {
     return left(
       new Error(
-        `Multiple labels match the expression ${regex} for the story [#${
+        `Multiple labels match the expression \`${regex}\` for the story [#${
           story.id
         }].\n
        It is not possible to assign a single scope to this pull request!`
@@ -106,7 +106,7 @@ export const getStoryChangelogScope = (
           story.project_id
         } associated with the scope ${
           maybeProjectScope.value
-        } but also have labels matching the expression ${regex}.\n
+        } but also have labels matching the expression \`${regex}\`.\n
         It is not possible to assign a single scope to this pull request!`
       )
     );

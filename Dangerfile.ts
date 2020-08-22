@@ -4,6 +4,7 @@ import { warn } from "danger";
 // See https://github.com/teamdigitale/danger-plugin-digitalcitizenship/
 import checkDangers from "danger-plugin-digitalcitizenship";
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
+import { none } from "fp-ts/lib/Option";
 import {
   allStoriesSameType,
   getChangelogPrefixByStories,
@@ -63,12 +64,16 @@ const updatePrTitleForChangelog = async () => {
     warn(multipleTypesWarning);
   }
   const maybePrTag = getChangelogPrefixByStories(associatedStories);
-  const maybeScope = getChangelogScope(associatedStories);
+  const eitherScope = getChangelogScope(associatedStories);
 
-  if (maybeScope.isLeft()) {
-    maybeScope.value.map(err => warn(err.message));
+  if (eitherScope.isLeft()) {
+    eitherScope.value.map(err => warn(err.message));
   }
-  maybeScope.map(optScope => optScope.map(scope => console.log(scope)));
+  const maybeScope = eitherScope.getOrElse(none).map(scope => `(${scope})`);
+  const totalTag = maybePrTag
+    .map(tag => maybeScope.map(scope => `${tag}${scope}`))
+    .map(totaltag => `${totaltag}: `);
+  console.log(totalTag);
 
   const rawTitle = getRawTitle(danger.github.pr.title);
 
