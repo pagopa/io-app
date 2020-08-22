@@ -18,6 +18,10 @@ const storyOrder = new Map<StoryType, number>([
   ["chore", 0]
 ]);
 
+/**
+ * Parse the pull request title, identify the stories id and retrieve the pivotal stories
+ * @param prTitle
+ */
 export const getPivotalStoriesFromPrTitle = async (
   prTitle: string
 ): Promise<ReadonlyArray<Story>> => {
@@ -27,9 +31,17 @@ export const getPivotalStoriesFromPrTitle = async (
   );
 };
 
+/**
+ * Return true if all the stories have the same `story_type`
+ * @param stories
+ */
 export const allStoriesSameType = (stories: ReadonlyArray<Story>): boolean =>
   stories.every((val, _, arr) => val.story_type === arr[0].story_type);
 
+/**
+ * Calculate the Changelog prefix for the provided stories.
+ * @param stories
+ */
 export const getChangelogPrefixByStories = (
   stories: ReadonlyArray<Story>
 ): Option<string> => {
@@ -48,25 +60,34 @@ export const getChangelogPrefixByStories = (
     return acc;
   }, none);
 
-  // If a tag can be associated to a story, update the pr title
   return storyType.chain(st => fromNullable(storyTag.get(st)));
 };
 
+// a list of project ids associated with a specific scope
 const projectToScope = new Map<string, string>([["2449547", "Bonus Vacanze"]]);
 
-export const storiesHaveSingleProject = (stories: ReadonlyArray<Story>) =>
-  stories.every((val, _, arr) => val.project_id === arr[0].project_id);
-
+// pattern used to recognize a scope label
 const regex = /changelog-scope:(.*)/m;
 
+/**
+ * Calculate the changelog scope for the story
+ * Return:
+ * - `Right<none>` if no labels with scope are associated with the story and the story doesn't belong to a scope project.
+ * - `Right<Some<string>>` if the story have a scope label or the story belong to a scope project
+ * - `Left<Error>` if the story have multiple different scope label or the story have a scope label and belong to a scope project.
+ * @param story
+ */
 export const getStoryChangelogScope = (
   story: Story
 ): Either<Error, Option<string>> => {
+  // try to retrieve the project scope (if any)
   const maybeProjectScope = fromNullable(projectToScope.get(story.project_id));
+  // search for scope labels associated with the story
   const maybeChangelogScopeTag = story.labels
     .filter(l => l.name.match(regex))
     .map(l => l.name.match(regex)!.pop());
 
+  // multiple scope labels found on the story
   if (maybeChangelogScopeTag.length > 1) {
     return left(
       new Error(
@@ -77,6 +98,7 @@ export const getStoryChangelogScope = (
       )
     );
   }
+  // the story matches a project scope and also have scope label
   if (maybeProjectScope.isSome() && maybeChangelogScopeTag.length >= 1) {
     return left(
       new Error(
@@ -98,15 +120,24 @@ export const getStoryChangelogScope = (
   ) {
     return right(some(maybeChangelogScopeTag[0]));
   }
+  // neither project scope nor scope label found
   return right(none);
 };
 
+/**
+ * Calculate the Changelog scope for the stories.
+ * Return:
+ * - `Right<none>` if no scope is found
+ * - `Right<Some<string>>` if one of the stories have a scope or all the stories that have scope have the same scope
+ * - `Left<ReadonlyArray<Error>>` if two stories have different scope or one of the story have different scope
+ * @param stories
+ */
 export const getChangelogScope = (
   stories: ReadonlyArray<Story>
 ): Either<ReadonlyArray<Error>, Option<string>> => {
   const eitherChangelogScopes = stories.map(getStoryChangelogScope);
 
-  // if there is [1..n] error, forward the errors
+  // if there is some error, forward the errors
   if (eitherChangelogScopes.some(scope => scope.isLeft())) {
     return left(
       eitherChangelogScopes.reduce<ReadonlyArray<Error>>((acc, val) => {
