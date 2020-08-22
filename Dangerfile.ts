@@ -69,11 +69,10 @@ const updatePrTitleForChangelog = async () => {
   if (eitherScope.isLeft()) {
     eitherScope.value.map(err => warn(err.message));
   }
-  const maybeScope = eitherScope.getOrElse(none).map(scope => `(${scope})`);
-  const totalTag = maybePrTag
-    .map(tag => maybeScope.map(scope => `${tag}${scope}`))
-    .map(totaltag => `${totaltag}: `);
-  console.log(totalTag);
+  const scope = eitherScope
+    .getOrElse(none)
+    .map(s => `(${s})`)
+    .getOrElse("");
 
   const rawTitle = getRawTitle(danger.github.pr.title);
 
@@ -82,7 +81,7 @@ const updatePrTitleForChangelog = async () => {
       owner: danger.github.thisPR.owner,
       repo: danger.github.thisPR.repo,
       pull_number: danger.github.thisPR.number,
-      title: `${tag}${rawTitle}`
+      title: `${tag}${scope}: ${rawTitle}`
     })
   );
 };
