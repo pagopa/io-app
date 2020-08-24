@@ -9,7 +9,7 @@ import { Content, Item, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import TextInputMask from "react-native-text-input-mask";
+import { TextInputMask } from "react-native-masked-text";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -26,13 +26,13 @@ import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
 import variables from "../../theme/variables";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
+import { isExpired } from "../../utils/dates";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
   CreditCardPan
 } from "../../utils/input";
-import { isExpired } from "./../../utils/dates";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -196,7 +196,6 @@ class AddCardScreen extends React.Component<Props, State> {
         CARD_LOGOS_COLUMNS - (size(displayedCards) % CARD_LOGOS_COLUMNS)
       ).map(_ => ["", undefined])
     );
-
     return (
       <BaseScreenComponent
         goBack={true}
@@ -243,9 +242,16 @@ class AddCardScreen extends React.Component<Props, State> {
                 keyboardType: "numeric",
                 returnKeyType: "done",
                 maxLength: 23,
-                mask: "[0000] [0000] [0000] [0000] [999]",
+                type: "custom",
+                options: {
+                  mask: "9999 9999 9999 9999 999",
+                  getRawValue: value1 => value1.replace(/ /g, "")
+                },
+                includeRawValueInChangeText: true,
                 onChangeText: (_, value) => {
-                  this.updatePanState(value);
+                  if (value !== undefined) {
+                    this.updatePanState(value);
+                  }
                 }
               }}
             />
@@ -268,9 +274,10 @@ class AddCardScreen extends React.Component<Props, State> {
                     ),
                     keyboardType: "numeric",
                     returnKeyType: "done",
-                    mask: "[00]{/}[00]",
-                    onChangeText: (_, value) =>
-                      this.updateExpirationDateState(value)
+                    type: "custom",
+                    options: { mask: "99/99" },
+                    includeRawValueInChangeText: true,
+                    onChangeText: value => this.updateExpirationDateState(value)
                   }}
                 />
               </Col>
@@ -289,13 +296,12 @@ class AddCardScreen extends React.Component<Props, State> {
                     placeholder: I18n.t("wallet.dummyCard.values.securityCode"),
                     returnKeyType: "done",
                     maxLength: 4,
-                    mask: "[0009]",
+                    type: "custom",
+                    options: { mask: "9999" },
                     keyboardType: "numeric",
                     secureTextEntry: true,
-                    // Android only
-                    isNumericSecureKeyboard: true,
-                    onChangeText: (_, value) =>
-                      this.updateSecurityCodeState(value)
+                    includeRawValueInChangeText: true,
+                    onChangeText: value => this.updateSecurityCodeState(value)
                   }}
                 />
               </Col>
