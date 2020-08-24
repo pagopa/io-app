@@ -47,7 +47,11 @@ type ResultAction =
   | ActionType<typeof identificationForceLogout>
   | ActionType<typeof identificationSuccess>;
 // Wait the identification and return the result
-function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
+function* waitIdentificationResult(): Generator<
+  Effect,
+  void | IdentificationResult,
+  any
+> {
   const resultAction: ResultAction = yield take([
     getType(identificationCancel),
     getType(identificationPinReset),
@@ -136,7 +140,7 @@ export function* startAndReturnIdentificationResult(
 function* startAndHandleIdentificationResult(
   pin: PinString,
   identificationRequestAction: ActionType<typeof identificationRequest>
-): IterableIterator<Effect> {
+) {
   yield put(
     identificationStart(
       pin,

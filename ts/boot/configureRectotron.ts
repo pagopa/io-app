@@ -5,9 +5,7 @@ import { reactotronRedux } from "reactotron-redux";
 import sagaPlugin from "reactotron-redux-saga";
 
 // add a regex to avoid tracing specific urls in Reactotron timeline
-// use this regex to avoid tracing scheduled pollings
-// ignoredUrls = /backend.json|info/
-const ignoredUrls: RegExp | undefined = undefined;
+const ignoredUrls: RegExp | undefined = /symbolicate/;
 export const configureReactotron = (): Reactotron => {
   const rtt = ReactotronReactNative.configure({ host: "127.0.0.1" })
     .useReactNative({
@@ -21,7 +19,7 @@ export const configureReactotron = (): Reactotron => {
   if (rtt.setAsyncStorageHandler) {
     rtt.setAsyncStorageHandler(AsyncStorage);
   }
-  // Let's clear Reactotron on every time we load the app
+  // Let's clear Reactotron on every app loading
   if (rtt.clear) {
     rtt.clear();
   }

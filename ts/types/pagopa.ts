@@ -108,7 +108,7 @@ export type Wallet = t.TypeOf<typeof Wallet>;
 /**
  * A Wallet that has not being saved yet
  */
-export type NullableWallet = ReplaceProp1<Wallet, "idWallet", null>;
+export type NullableWallet = ReplaceProp1<Wallet, "idWallet", undefined>;
 
 /**
  * A refined Transaction

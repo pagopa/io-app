@@ -16,12 +16,9 @@ import { removeUnusedStoredServices } from "../services/removeUnusedStoredServic
  */
 export function* loadVisibleServicesRequestHandler(
   getVisibleServices: ReturnType<typeof BackendClient>["getVisibleServices"]
-): IterableIterator<Effect> {
+): Generator<Effect, void, SagaCallReturnType<typeof getVisibleServices>> {
   try {
-    const response: SagaCallReturnType<typeof getVisibleServices> = yield call(
-      getVisibleServices,
-      {}
-    );
+    const response = yield call(getVisibleServices, {});
     if (response.isLeft()) {
       throw Error(readableReport(response.value));
     }

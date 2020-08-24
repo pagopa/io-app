@@ -1,21 +1,17 @@
-import { Option } from "fp-ts/lib/Option";
-import { Effect } from "redux-saga/effects";
-import { call, put, take } from "redux-saga/effects";
+import { call, Effect, put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-
-import { getPin } from "../../utils/keychain";
-
-import { PinString } from "../../types/PinString";
 
 import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
 import { createPinSuccess } from "../../store/actions/pinset";
 
-export function* checkConfiguredPinSaga(): IterableIterator<
-  Effect | PinString
-> {
+import { PinString } from "../../types/PinString";
+
+import { getPin } from "../../utils/keychain";
+
+export function* checkConfiguredPinSaga(): Generator<Effect, PinString, any> {
   // We check whether the user has already created a unlock code by trying to retrieve
   // it from the Keychain
-  const pinCode: Option<PinString> = yield call(getPin);
+  const pinCode = yield call(getPin);
 
   if (pinCode.isSome()) {
     return pinCode.value;

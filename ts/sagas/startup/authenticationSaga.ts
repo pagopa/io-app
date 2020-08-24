@@ -15,7 +15,7 @@ import { watchTestLoginRequestSaga } from "../testLoginSaga";
  * A saga that makes the user go through the authentication process until
  * a SessionToken gets produced.
  */
-export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
+export function* authenticationSaga(): Generator<Effect, SessionToken, any> {
   yield put(analyticsAuthenticationStarted());
 
   // Watch for the test login

@@ -36,7 +36,11 @@ function* getBonusActivation(
     typeof BackendBonusVacanze
   >["getLatestBonusVacanzeFromId"],
   bonusId: string
-): IterableIterator<Effect | Either<Option<Error>, BonusActivationWithQrCode>> {
+): Generator<
+  Effect,
+  Either<Option<Error>, BonusActivationWithQrCode>,
+  SagaCallReturnType<typeof getLatestBonusVacanzeFromId>
+> {
   try {
     const getLatestBonusVacanzeFromIdResult: SagaCallReturnType<
       typeof getLatestBonusVacanzeFromId
@@ -49,24 +53,30 @@ function* getBonusActivation(
         switch (activation.status) {
           // processing -> polling should continue
           case BonusActivationStatusEnum.PROCESSING:
-            return left(none);
+            return left<Option<Error>, BonusActivationWithQrCode>(none);
           case BonusActivationStatusEnum.FAILED:
             // blocking error
-            return left(some(new Error("Bonus Activation failed")));
+            return left<Option<Error>, BonusActivationWithQrCode>(
+              some(new Error("Bonus Activation failed"))
+            );
           default:
             // active
-            return right(getLatestBonusVacanzeFromIdResult.value.value);
+            return right<Option<Error>, BonusActivationWithQrCode>(
+              getLatestBonusVacanzeFromIdResult.value.value
+            );
         }
       }
       // Request not found - polling must be stopped
       if (getLatestBonusVacanzeFromIdResult.value.status === 404) {
-        return left(some(new Error("Bonus Activation not found")));
+        return left<Option<Error>, BonusActivationWithQrCode>(
+          some(new Error("Bonus Activation not found"))
+        );
       }
       // polling should continue
-      return left(none);
+      return left<Option<Error>, BonusActivationWithQrCode>(none);
     } else {
       // we got some error on decoding, stop polling
-      return left(
+      return left<Option<Error>, BonusActivationWithQrCode>(
         some(
           Error(readablePrivacyReport(getLatestBonusVacanzeFromIdResult.value))
         )
@@ -74,7 +84,7 @@ function* getBonusActivation(
     }
   } catch (e) {
     // polling should continue
-    return left(none);
+    return left<Option<Error>, BonusActivationWithQrCode>(none);
   }
 }
 
@@ -87,8 +97,10 @@ export const bonusActivationSaga = (
     typeof BackendBonusVacanze
   >["getLatestBonusVacanzeFromId"]
 ) =>
-  function* startBonusActivationSaga(): IterableIterator<
-    Effect | ActionType<typeof activateBonusVacanze>
+  function* startBonusActivationSaga(): Generator<
+    Effect,
+    ActionType<typeof activateBonusVacanze>,
+    any
   > {
     try {
       const startBonusActivationProcedureResult: SagaCallReturnType<

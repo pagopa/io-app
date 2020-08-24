@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "1.5.0-rc.3",
+  "version": "1.6.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v6.13.0/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v6.13.0/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
@@ -62,7 +62,7 @@
     "react-native-calendar-events": "1.7.1",
     "react-native-camera": "^3.4.0",
     "react-native-config": "1.0.0",
-    "react-native-device-info": "5.5.3",
+    "react-native-device-info": "5.6.4",
     "react-native-exception-handler": "^2.10.8",
     "react-native-flag-secure-android": "git://github.com/pagopa/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795",
     "react-native-fs": "^2.16.6",
@@ -168,7 +168,6 @@
     "plist": "^3.0.1",
     "postinstall-postinstall": "^1.0.0",
     "prettier": "1.14.2",
-    "react-native-typescript-transformer": "^1.2.12",
     "react-test-renderer": "16.13.1",
     "redux-saga-test-plan": "4.0.0-rc.3",
     "rn-nodeify": "^10.0.1",
@@ -176,7 +175,7 @@
     "ts-jest": "^25.1.0",
     "ts-node": "^7.0.1",
     "tslint": "5.20.0",
-    "typescript": "3.4.1"
+    "typescript": "^3.9.7"
   },
   "resolutions": {
     "@types/react": "16.7.18",

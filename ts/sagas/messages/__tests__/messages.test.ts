@@ -1,7 +1,6 @@
 import { left, right } from "fp-ts/lib/Either";
 
 import * as t from "io-ts";
-import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
@@ -65,20 +64,6 @@ describe("messages", () => {
   });
 
   describe("loadMessage test plan", () => {
-    it("should return the cached message if the message is in the cache", () => {
-      const getMessage = jest.fn();
-      testSaga(loadMessage, getMessage, testMessageWithContent1)
-        .next()
-        .next({
-          message: pot.some(testMessageWithContent1)
-        })
-        .returns(
-          right({
-            message: pot.some(testMessageWithContent1)
-          })
-        );
-    });
-
     it("should call fetchMessage with the right parameters", () => {
       const getMessage = jest.fn();
       testSaga(loadMessage, getMessage, testMessageWithContent1)
