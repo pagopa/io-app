@@ -23,7 +23,6 @@ import com.calendarevents.CalendarEventsPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.horcrux.svg.SvgPackage;
-import com.RNTextInputMask.RNTextInputMaskPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import org.reactnative.camera.RNCameraPackage;
@@ -70,7 +69,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
             new RNSharePackage(), new ScreenBrightnessPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
           new ImagePickerPackage(), new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
           new RNGestureHandlerPackage(), new CalendarEventsPackage(), new RNCWebViewPackage(),
-          new FingerprintAuthPackage(), new BackgroundTimerPackage(), new SvgPackage(), new RNTextInputMaskPackage(),
+          new FingerprintAuthPackage(), new BackgroundTimerPackage(), new SvgPackage(),
           new SplashScreenReactPackage(), new ReactNativeExceptionHandlerPackage(), new RNCameraPackage(),
           new ReactNativePushNotificationPackage(), new KeychainPackage(), new RNI18nPackage(), new Sha256Package(),
           new RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(),new CiePackage(),new RNPermissionsPackage(),
