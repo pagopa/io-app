@@ -24,12 +24,17 @@ export const baseLabel: Label = {
 
 export const scopeLabeliOS: Label = {
   ...baseLabel,
-  name: "changelog-scope:iOS"
+  name: "changelog-scope:ios"
 };
 
 export const scopeLabelAndroid: Label = {
   ...baseLabel,
-  name: "changelog-scope:Android"
+  name: "changelog-scope:android"
+};
+
+export const scopeLabelNotAllowed: Label = {
+  ...baseLabel,
+  name: "changelog-scope:not-allowed"
 };
 
 export const bonusVacanzeStory: Story = {
@@ -60,4 +65,9 @@ export const androidLabelAndOtherStory: Story = {
 export const clashScopeLabelStory: Story = {
   ...baseStory,
   labels: [scopeLabelAndroid, scopeLabeliOS]
+};
+
+export const scopeLabelNotAllowedStory: Story = {
+  ...baseStory,
+  labels: [scopeLabelNotAllowed]
 };

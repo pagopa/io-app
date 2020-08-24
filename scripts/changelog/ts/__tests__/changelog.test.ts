@@ -6,6 +6,7 @@ import {
   bonusVacanzeStory,
   bonusVacanzeStoryWithScopeLabel,
   clashScopeLabelStory,
+  scopeLabelNotAllowedStory,
   singleAndroidLabelStory
 } from "../__mocks__/storyMock";
 import { getChangelogScope, getStoryChangelogScope } from "../changelog";
@@ -60,6 +61,10 @@ describe("Test pivotal Utility", () => {
   });
   it("getStoryChangelogScope on a story with different scope labels should return Left,Error", () => {
     const eitherScope = getStoryChangelogScope(clashScopeLabelStory);
+    expect(eitherScope.isLeft()).toBeTruthy();
+  });
+  it("getStoryChangelogScope on a story with scope label not allowed should return Left,Error", () => {
+    const eitherScope = getStoryChangelogScope(scopeLabelNotAllowedStory);
     expect(eitherScope.isLeft()).toBeTruthy();
   });
   it("getStoryChangelogScope on a story with a scope labels and belonging to a project that assigns a scope should return Left,Error", () => {
