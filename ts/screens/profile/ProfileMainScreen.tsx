@@ -198,6 +198,16 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     );
   }
 
+  private versionListItem(title: string, onPress: () => void) {
+    return (
+      <ListItem style={styles.noRightPadding}>
+        <Text numberOfLines={1} semibold={true} onPress={onPress}>
+          {title}
+        </Text>
+      </ListItem>
+    );
+  }
+
   private onLogoutPress = () => {
     Alert.alert(
       I18n.t("profile.logout.menulabel"),
@@ -424,10 +434,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               isLastItem={true}
             />
 
-            {this.debugListItem(
+            {this.versionListItem(
               `${I18n.t("profile.main.appVersion")} ${getAppVersion()}`,
-              this.onTapAppVersion,
-              false
+              this.onTapAppVersion
             )}
 
             {/* Developers Section */}
