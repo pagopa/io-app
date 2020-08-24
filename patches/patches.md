@@ -68,10 +68,3 @@ Created on **12/08/2020**
 
 #### Reason:
 - Use TouchableHighlight instead of TouchableNativeFeedback on Android sdk < 19 to avoid crash.
-
-
-### @types/react-native-text-input-mask+0.7.2
-Created on **13/08/2020**
-
-#### Reason:
-- Add missing props types for TextInputMaskProps.
