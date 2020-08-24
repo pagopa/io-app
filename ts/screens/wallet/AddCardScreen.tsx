@@ -9,7 +9,6 @@ import { Content, Item, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { TextInputMask } from "react-native-masked-text";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -147,10 +146,6 @@ const displayedCards: { [key: string]: any } = {
 };
 
 class AddCardScreen extends React.Component<Props, State> {
-  private panRef = React.createRef<TextInputMask>();
-  private expirationDateRef = React.createRef<TextInputMask>();
-  private securityCodeRef = React.createRef<TextInputMask>();
-
   constructor(props: Props) {
     super(props);
     this.state = INITIAL_STATE;
@@ -236,7 +231,6 @@ class AddCardScreen extends React.Component<Props, State> {
               icon="io-carta"
               isValid={this.isValidPan()}
               inputMaskProps={{
-                ref: this.panRef,
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
                 placeholder: I18n.t("wallet.dummyCard.values.pan"),
                 keyboardType: "numeric",
@@ -265,7 +259,6 @@ class AddCardScreen extends React.Component<Props, State> {
                   icon="io-calendario"
                   isValid={this.isValidExpirationDate()}
                   inputMaskProps={{
-                    ref: this.expirationDateRef,
                     value: this.state.expirationDate.getOrElse(
                       EMPTY_CARD_EXPIRATION_DATE
                     ),
@@ -289,7 +282,6 @@ class AddCardScreen extends React.Component<Props, State> {
                   icon="io-lucchetto"
                   isValid={this.isValidSecurityCode()}
                   inputMaskProps={{
-                    ref: this.securityCodeRef,
                     value: this.state.securityCode.getOrElse(
                       EMPTY_CARD_SECURITY_CODE
                     ),
