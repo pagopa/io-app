@@ -1,8 +1,7 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-
-import { fromNullable } from "fp-ts/lib/Option";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import { checkCurrentSession } from "../../store/actions/authentication";
@@ -43,7 +42,6 @@ import {
   setFavouriteWalletSuccess
 } from "../../store/actions/wallet/wallets";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { GlobalState } from "../../store/reducers/types";
 import { PaymentManagerToken } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
@@ -65,7 +63,7 @@ function* checkSession(): IterableIterator<Effect> {
 export function* fetchWalletsRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   yield call(checkSession);
   const request = pmSessionManager.withRefresh(pagoPaClient.getWallets);
   try {
@@ -91,7 +89,7 @@ export function* fetchTransactionsRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchTransactionsRequest>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   yield call(checkSession);
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getTransactions(action.payload.start)
@@ -124,7 +122,7 @@ export function* fetchTransactionRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchTransactionRequest>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getTransaction(action.payload)
   );
@@ -151,7 +149,7 @@ export function* fetchPspRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchPsp["request"]>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getPsp(action.payload.idPsp)
   );
@@ -194,7 +192,7 @@ export function* setFavouriteWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof setFavouriteWalletRequest>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   const favouriteWalletId = action.payload;
   if (favouriteWalletId === undefined) {
     // FIXME: currently there is no way to unset a favourite wallet
@@ -308,7 +306,7 @@ export function* deleteWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof deleteWalletRequest>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   const deleteWalletApi = pagoPaClient.deleteWallet(action.payload.walletId);
   const deleteWalletWithRefresh = pmSessionManager.withRefresh(deleteWalletApi);
 
@@ -510,7 +508,7 @@ export function* paymentCheckRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentCheck["request"]>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   // FIXME: we should not use default pagopa client for checkpayment, need to
   //        a client that doesn't retry on failure!!! checkpayment is NOT
   //        idempotent, the 2nd time it will error!
@@ -547,7 +545,7 @@ export function* paymentExecutePaymentRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentExecutePayment["request"]>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   const apiPostPayment = pagoPaClient.postPayment(action.payload.idPayment, {
     data: { tipo: "web", idWallet: action.payload.wallet.idWallet }
   });
@@ -583,7 +581,7 @@ export function* paymentDeletePaymentRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentDeletePayment["request"]>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   const apiPostPayment = pagoPaClient.deletePayment(action.payload.paymentId);
   const request = pmSessionManager.withRefresh(apiPostPayment);
   try {
@@ -617,7 +615,7 @@ export function* paymentVerificaRequestHandler(
   try {
     const isPagoPATestEnabled: ReturnType<
       typeof isPagoPATestEnabledSelector
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    > = yield select(isPagoPATestEnabledSelector);
 
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
@@ -656,7 +654,7 @@ export function* paymentAttivaRequestHandler(
   try {
     const isPagoPATestEnabled: ReturnType<
       typeof isPagoPATestEnabledSelector
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    > = yield select(isPagoPATestEnabledSelector);
 
     const response: SagaCallReturnType<typeof postAttivaRpt> = yield call(
       postAttivaRpt,
@@ -705,7 +703,7 @@ export function* paymentIdPollingRequestHandler(
   try {
     const isPagoPATestEnabled: ReturnType<
       typeof isPagoPATestEnabledSelector
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    > = yield select(isPagoPATestEnabledSelector);
 
     const getPaymentId = getPaymentIdApi.e2;
     const response: SagaCallReturnType<typeof getPaymentId> = yield call(

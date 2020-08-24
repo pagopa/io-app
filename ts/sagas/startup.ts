@@ -2,10 +2,10 @@ import { fromNullable, isNone, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { NavigationActions, NavigationState } from "react-navigation";
-import { Effect } from "redux-saga";
 import {
   call,
   cancel,
+  Effect,
   fork,
   put,
   select,
@@ -22,6 +22,8 @@ import {
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
+
+import { watchBonusSaga } from "../features/bonusVacanze/store/sagas/bonusSaga";
 import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
@@ -46,14 +48,10 @@ import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { profileSelector } from "../store/reducers/profile";
-import { GlobalState } from "../store/reducers/types";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
-import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-
-import { watchBonusSaga } from "../features/bonusVacanze/store/sagas/bonusSaga";
 import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest
@@ -91,13 +89,14 @@ import {
   watchUpserUserMetadata
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
+import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
 const WAIT_INITIALIZE_SAGA = 3000 as Millisecond;
 /**
  * Handles the application startup and the main application logic loop
  */
 // tslint:disable-next-line:cognitive-complexity no-big-function
-export function* initializeApplicationSaga(): IterableIterator<Effect> {
+export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -113,7 +112,7 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<
     typeof profileSelector
-  > = yield select<GlobalState>(profileSelector);
+  > = yield select(profileSelector);
 
   const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
     ? fromNullable(lastLoggedInProfileState.value.is_email_validated)
@@ -129,7 +128,7 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<
     typeof sessionTokenSelector
-  > = yield select<GlobalState>(sessionTokenSelector);
+  > = yield select(sessionTokenSelector);
 
   // Unless we have a valid session token already, login until we have one.
   const sessionToken: SagaCallReturnType<
@@ -175,7 +174,7 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
   // tslint:disable-next-line: no-let
   let maybeSessionInformation: ReturnType<
     typeof sessionInfoSelector
-  > = yield select<GlobalState>(sessionInfoSelector);
+  > = yield select(sessionInfoSelector);
   if (isSessionRefreshed || maybeSessionInformation.isNone()) {
     // let's try to load the session information from the backend.
     maybeSessionInformation = yield call(
@@ -224,9 +223,7 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
     yield put(clearCache());
   }
 
-  const maybeIdp: Option<IdentityProvider> = yield select<GlobalState>(
-    idpSelector
-  );
+  const maybeIdp: Option<IdentityProvider> = yield select(idpSelector);
 
   setInstabugProfileAttributes(maybeIdp);
 
@@ -315,7 +312,7 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   const isPagoPATestEnabled: ReturnType<
     typeof isPagoPATestEnabledSelector
-  > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+  > = yield select(isPagoPATestEnabledSelector);
 
   yield fork(
     watchWalletSaga,
@@ -373,7 +370,7 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Check if we have a pending notification message
   const pendingMessageState: ReturnType<
     typeof pendingMessageStateSelector
-  > = yield select<GlobalState>(pendingMessageStateSelector);
+  > = yield select(pendingMessageStateSelector);
 
   if (pendingMessageState) {
     // We have a pending notification message to handle
@@ -385,7 +382,7 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
     // Navigate to message details screen
     yield put(navigateToMessageDetailScreenAction({ messageId }));
     // Push the MAIN navigator in the history to handle the back button
-    const navigationState: NavigationState = yield select<GlobalState>(
+    const navigationState: NavigationState = yield select(
       navigationStateSelector
     );
     yield put(

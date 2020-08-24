@@ -1,5 +1,13 @@
-import { Effect, Task } from "redux-saga";
-import { call, cancel, fork, put, select, takeEvery } from "redux-saga/effects";
+import { Task } from "redux-saga";
+import {
+  call,
+  cancel,
+  Effect,
+  fork,
+  put,
+  select,
+  takeEvery
+} from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { backgroundActivityTimeout } from "../../config";
 import ROUTES from "../../navigation/routes";

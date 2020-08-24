@@ -1,6 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { Effect } from "redux-saga";
+import { Effect } from "redux-saga/effects";
 import { call, put } from "redux-saga/effects";
 
 import { PublicSession } from "../../../definitions/backend/PublicSession";
@@ -22,13 +22,14 @@ import { SagaCallReturnType } from "../../types/utils";
  */
 export function* loadSessionInformationSaga(
   getSession: ReturnType<typeof BackendClient>["getSession"]
-): IterableIterator<Effect | Option<PublicSession>> {
+): Generator<
+  Effect,
+  Option<PublicSession>,
+  SagaCallReturnType<typeof getSession>
+> {
   try {
     // Call the Backend service
-    const response: SagaCallReturnType<typeof getSession> = yield call(
-      getSession,
-      {}
-    );
+    const response = yield call(getSession, {});
     // Ko we got an error
     if (response.isLeft()) {
       throw readableReport(response.value);

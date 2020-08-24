@@ -11,18 +11,15 @@ import { handleServiceReadabilitySaga } from "../services/handleServiceReadabili
  * A generator to load the service details from the Backend
  *
  * @param {function} getService - The function that makes the Backend request
- * @param {string} id - The id of the service to load
+ * @param action
  * @returns {IterableIterator<Effect | Either<Error, ServicePublic>>}
  */
 export function* loadServiceDetailRequestHandler(
   getService: ReturnType<typeof BackendClient>["getService"],
   action: ActionType<typeof loadServiceDetail["request"]>
-): IterableIterator<Effect> {
+): Generator<Effect, void, SagaCallReturnType<typeof getService>> {
   try {
-    const response: SagaCallReturnType<typeof getService> = yield call(
-      getService,
-      { service_id: action.payload }
-    );
+    const response = yield call(getService, { service_id: action.payload });
 
     if (response.isLeft()) {
       throw Error(readableReport(response.value));

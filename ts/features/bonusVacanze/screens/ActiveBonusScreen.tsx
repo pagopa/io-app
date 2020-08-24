@@ -15,7 +15,9 @@ import DarkLayout from "../../../components/screens/DarkLayout";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
-import BlockButtons from "../../../components/ui/BlockButtons";
+import BlockButtons, {
+  BlockButtonProps
+} from "../../../components/ui/BlockButtons";
 import IconFont from "../../../components/ui/IconFont";
 import {
   BottomTopAnimation,
@@ -29,7 +31,7 @@ import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { formatDateAsLocal } from "../../../utils/dates";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
-import { shareBase64Content } from "../../../utils/share";
+import { isShareEnabled, shareBase64Content } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { maybeNotNullyString } from "../../../utils/strings";
 import BonusCardComponent from "../components/BonusCardComponent";
@@ -250,9 +252,20 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       I18n.t("global.genericError")
     );
 
-  const renderFooterButtons = () =>
-    bonus && isBonusActive(bonus) ? (
-      <>
+  const qrCodeButtonSettings: BlockButtonProps = {
+    bordered: true,
+    iconName: "io-qr",
+    iconColor: variables.contentPrimaryBackground,
+    title: I18n.t("bonus.bonusVacanze.cta.qrCode"),
+    onPress: openModalBox
+  };
+
+  /**
+   * If the share is not available on the device, render only the qr code button
+   */
+  const renderBonusActiveButtons = () => (
+    <>
+      {isShareEnabled() ? (
         <BlockButtons
           type="TwoButtonsInlineHalf"
           rightButton={{
@@ -262,16 +275,19 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             title: I18n.t("global.buttons.share"),
             onPress: handleShare
           }}
-          leftButton={{
-            bordered: true,
-            iconName: "io-qr",
-            iconColor: variables.contentPrimaryBackground,
-            title: I18n.t("bonus.bonusVacanze.cta.qrCode"),
-            onPress: openModalBox
-          }}
+          leftButton={qrCodeButtonSettings}
         />
-        <View spacer={true} />
-      </>
+      ) : (
+        <BlockButtons type="SingleButton" leftButton={qrCodeButtonSettings} />
+      )}
+
+      <View spacer={true} />
+    </>
+  );
+
+  const renderFooterButtons = () =>
+    bonus && isBonusActive(bonus) ? (
+      renderBonusActiveButtons()
     ) : (
       <>
         <BlockButtons

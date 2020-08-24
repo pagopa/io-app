@@ -16,12 +16,9 @@ const BACKEND_SERVICES_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
 // Return true if it has information (200) false otherwise
 export function* backendStatusSaga(
   getServicesStatus: ReturnType<typeof CdnBackendStatusClient>["getStatus"]
-): IterableIterator<Effect | boolean> {
+): Generator<Effect, boolean, SagaCallReturnType<typeof getServicesStatus>> {
   try {
-    const response: SagaCallReturnType<typeof getServicesStatus> = yield call(
-      getServicesStatus,
-      {}
-    );
+    const response = yield call(getServicesStatus, {});
     if (response.isRight() && response.value.status === 200) {
       yield put(backendStatusLoadSuccess(response.value.value));
       return true;
@@ -40,7 +37,7 @@ export function* backendStatusSaga(
  */
 export function* backendStatusWatcherLoop(
   getStatus: ReturnType<typeof CdnBackendStatusClient>["getStatus"]
-): IterableIterator<Effect> {
+) {
   // check backend status periodically
   while (true) {
     const response: SagaCallReturnType<typeof backendStatusSaga> = yield call(

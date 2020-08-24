@@ -2,7 +2,7 @@
  * A mocked version of the Keychain
  */
 
-type KeychainDB = {
+export type KeychainDB = {
   [key: string]: {
     username: string;
     password: string;

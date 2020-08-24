@@ -2,7 +2,11 @@
  * Action types and action creator related to authentication by CIE
  */
 
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 
 export const hasApiLevelSupport = createAsyncAction(
   "CIE_HAS_API_LEVEL_REQUEST",
@@ -34,9 +38,14 @@ export const updateReadingState = createAsyncAction(
   "UPDATE_READING_STATE_FAILURE"
 )<void, string, Error>();
 
+export const cieAuthenticationError = createStandardAction(
+  "CIE_AUTHENTICATION_ERROR"
+)<Error>();
+
 export type CieAuthenticationActions =
   | ActionType<typeof hasApiLevelSupport>
   | ActionType<typeof hasNFCFeature>
   | ActionType<typeof cieIsSupported>
   | ActionType<typeof nfcIsEnabled>
-  | ActionType<typeof updateReadingState>;
+  | ActionType<typeof updateReadingState>
+  | ActionType<typeof cieAuthenticationError>;

@@ -17,6 +17,8 @@ import { ContextualHelp } from "../../components/ContextualHelp";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
+import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent, {
@@ -44,7 +46,6 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
-import { showToast } from "../../utils/showToast";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
 
 type Props = NavigationInjectedProps &
@@ -54,6 +55,7 @@ type Props = NavigationInjectedProps &
 
 type State = {
   isRootedOrJailbroken: Option<boolean>;
+  isSessionExpired: boolean;
 };
 
 const getCards = (
@@ -126,26 +128,14 @@ const IdpCIE: IdentityProvider = {
 class LandingScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { isRootedOrJailbroken: none };
+    this.state = { isRootedOrJailbroken: none, isSessionExpired: false };
   }
   public async componentDidMount() {
     const isRootedOrJailbroken = await JailMonkey.isJailBroken();
     this.setState({ isRootedOrJailbroken: some(isRootedOrJailbroken) });
     if (this.props.isSessionExpired) {
-      showToast(
-        I18n.t("authentication.expiredSessionBanner.message"),
-        "warning",
-        "top"
-      );
+      this.setState({ isSessionExpired: true });
       this.props.resetState();
-    }
-
-    if (this.props.isSessionExpired) {
-      showToast(
-        I18n.t("authentication.expiredSessionBanner.message"),
-        "warning",
-        "top"
-      );
     }
   }
 
@@ -222,9 +212,19 @@ class LandingScreen extends React.PureComponent<Props, State> {
     >
       {isDevEnv && <DevScreenButton onPress={this.navigateToMarkdown} />}
 
-      <Content contentContainerStyle={styles.flex} noPadded={true}>
-        <HorizontalScroll cards={this.renderCardComponents()} />
-      </Content>
+      {this.state.isSessionExpired ? (
+        <InfoScreenComponent
+          title={I18n.t("authentication.landing.session_expired.title")}
+          body={I18n.t("authentication.landing.session_expired.body")}
+          image={renderInfoRasterImage(
+            require("../../../img/landing/session_expired.png")
+          )}
+        />
+      ) : (
+        <Content contentContainerStyle={styles.flex} noPadded={true}>
+          <HorizontalScroll cards={this.renderCardComponents()} />
+        </Content>
+      )}
 
       <View footer={true}>
         <ButtonDefaultOpacity
