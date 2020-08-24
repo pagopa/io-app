@@ -1,6 +1,5 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { Effect } from "redux-saga";
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, Effect, put, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendPublicClient } from "../api/backendPublic";
 import { apiUrlPrefix } from "../config";
