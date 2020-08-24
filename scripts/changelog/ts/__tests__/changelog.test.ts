@@ -8,7 +8,7 @@ import {
   clashScopeLabelStory,
   singleAndroidLabelStory
 } from "../__mocks__/storyMock";
-import { getChangelogScope, getStoryChangelogScope } from "../pivotalUtility";
+import { getChangelogScope, getStoryChangelogScope } from "../changelog";
 
 describe("Test pivotal Utility", () => {
   it("getStoryChangelogScope on a story without labels should return Right none", () => {

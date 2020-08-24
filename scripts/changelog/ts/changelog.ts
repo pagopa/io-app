@@ -18,6 +18,37 @@ const storyOrder = new Map<StoryType, number>([
   ["chore", 0]
 ]);
 
+const allowedScope = new Map<string, string>([
+  ["android", "Android"],
+  ["ios", "iOS"],
+  ["bonus_vacanze", "Bonus Vacanze"],
+  ["messages", "Messages"],
+  ["payments", "Payments"],
+  ["services", "Services"],
+  ["profile", "Profile"],
+  ["privacy", "Privacy"],
+  ["security", "Security"],
+  ["accessibility", "Accessibility"]
+]);
+
+// a list of project ids associated with a specific scope
+const projectToScope = new Map<string, string>([["2449547", "Bonus Vacanze"]]);
+
+const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
+
+// pattern used to recognize a scope label
+const regex = /changelog-scope:(.*)/m;
+
+/**
+ * Clean the title from previous changelog prefix to update in case of changes
+ * @param title
+ */
+export const getRawTitle = (title: string): string => {
+  // clean the title from existing tags (multiple commit on the same branch)
+  const rawTitle = title.match(cleanChangelogRegex)!.pop();
+  return rawTitle !== undefined ? rawTitle : title;
+};
+
 /**
  * Parse the pull request title, identify the stories id and retrieve the pivotal stories
  * @param prTitle
@@ -62,12 +93,6 @@ export const getChangelogPrefixByStories = (
 
   return storyType.chain(st => fromNullable(storyTag.get(st)));
 };
-
-// a list of project ids associated with a specific scope
-const projectToScope = new Map<string, string>([["2449547", "Bonus Vacanze"]]);
-
-// pattern used to recognize a scope label
-const regex = /changelog-scope:(.*)/m;
 
 /**
  * Calculate the changelog scope for the story
@@ -118,7 +143,19 @@ export const getStoryChangelogScope = (
     maybeChangelogScopeTag.length === 1 &&
     maybeChangelogScopeTag[0] !== undefined
   ) {
-    return right(some(maybeChangelogScopeTag[0]));
+    // check if is allowed
+    const scopeDisplayName = allowedScope.get(maybeChangelogScopeTag[0]);
+    return scopeDisplayName !== undefined
+      ? right(some(scopeDisplayName))
+      : left(
+          new Error(
+            `The scope ${
+              maybeChangelogScopeTag[0]
+            } is not present in the allowed scopes: ${Array.from(
+              allowedScope.keys()
+            ).join(",")}`
+          )
+        );
   }
   // neither project scope nor scope label found
   return right(none);

@@ -9,51 +9,18 @@ import {
   allStoriesSameType,
   getChangelogPrefixByStories,
   getChangelogScope,
-  getPivotalStoriesFromPrTitle
-} from "./scripts/changelog/ts/pivotalUtility";
+  getPivotalStoriesFromPrTitle,
+  getRawTitle
+} from "./scripts/changelog/ts/changelog";
 
 declare var danger: DangerDSLType;
-
-const allowedScope = new Map<string, string>([
-  ["general", ""],
-  ["android", "Android"],
-  ["ios", "iOS"],
-  ["bonus_vacanze", "Bonus Vacanze"],
-  ["messages", "Messages"],
-  ["payments", "Payments"],
-  ["services", "Services"],
-  ["profile", "Profile"],
-  ["privacy", "Privacy"],
-  ["security", "Security"],
-  ["accessibility", "Accessibility"]
-]);
-
-const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
-
-const listOfScopeId = Array.from(allowedScope.keys()).join("|");
-const allowedScopeRegex = new RegExp(
-  `^( *## *scope\\n+)(${listOfScopeId})$`,
-  "im"
-);
-
-const scopeRegex = /^ *## *scope$/im;
-
-/**
- * Clean the title from previous changelog prefix to update in case of changes
- * @param title
- */
-const getRawTitle = (title: string): string => {
-  // clean the title from existing tags (multiple commit on the same branch)
-  const rawTitle = title.match(cleanChangelogRegex)!.pop();
-  return rawTitle !== undefined ? rawTitle : danger.github.pr.title;
-};
 
 const multipleTypesWarning =
   "Multiple stories with different types are associated with this Pull request.\n" +
   "Only one tag will be added, following the order: `feature > bug > chore`";
 
 /**
- * Append the changelog tag to the pull request title
+ * Append the changelog tag and scope to the pull request title
  */
 const updatePrTitleForChangelog = async () => {
   const associatedStories = await getPivotalStoriesFromPrTitle(
