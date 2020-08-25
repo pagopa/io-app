@@ -38,11 +38,12 @@ module.exports = {
   ],
   rules: {
     "@typescript-eslint/no-unused-vars": "off",
-    "import/order": "error",
     "no-case-declarations": "off",
+    "prefer-const": "error",
+    "react/prop-types": "off",
+    "import/order": "error",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-inferrable-types": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "prefer-const": "error"
+    "@typescript-eslint/no-explicit-any": "off"
   }
 };
