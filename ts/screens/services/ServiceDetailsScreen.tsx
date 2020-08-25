@@ -476,7 +476,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           bold={true}
           style={isSwitchedOn ? styles.enabledColor : styles.disabledColor}
         >
-          {this.profileEnabledChannels.inbox
+          {isSwitchedOn
             ? I18n.t("services.serviceIsEnabled")
             : I18n.t("services.serviceNotEnabled")}
         </Text>
