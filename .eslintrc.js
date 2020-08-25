@@ -14,7 +14,7 @@ Happy linting! 💖
 module.exports = {
   root: true,
   env: {
-    "react-native/react-native": true,
+    "react-native/react-native": true
   },
   extends: [
     "eslint:recommended",
@@ -22,19 +22,19 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "prettier",
-    "prettier/@typescript-eslint",
+    "prettier/@typescript-eslint"
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: "tsconfig.json",
-    sourceType: "module",
+    sourceType: "module"
   },
   plugins: [
     "@typescript-eslint",
     "@typescript-eslint/tslint",
     "react",
     "react-native",
-    "import",
+    "import"
   ],
   rules: {
     "@typescript-eslint/no-unused-vars": "off",
@@ -42,5 +42,6 @@ module.exports = {
     "no-case-declarations": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-inferrable-types": "off",
-  },
+    "@typescript-eslint/no-explicit-any": "off"
+  }
 };

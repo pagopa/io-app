@@ -10,7 +10,7 @@ import {
 import { warn } from "danger";
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
 import { fromNullable } from "fp-ts/lib/Option";
-declare var danger: DangerDSLType;
+declare const danger: DangerDSLType;
 
 type StoryType = "feature" | "bug" | "chore" | "release";
 
@@ -64,7 +64,7 @@ const updatePrTitleForChangelog = async () => {
   }, undefined);
 
   // clean the title from existing tags (multiple commit on the same branch)
-  const rawTitle = danger.github.pr.title.match(cleanChangelogRegex)!.pop();
+  const rawTitle = danger.github.pr.title.match(cleanChangelogRegex)?.pop();
   const title = rawTitle !== undefined ? rawTitle : danger.github.pr.title;
 
   // If a tag can be associated to a story, update the pr title
@@ -80,6 +80,4 @@ const updatePrTitleForChangelog = async () => {
 };
 
 checkDangers();
-updatePrTitleForChangelog()
-  .then()
-  .catch();
+updatePrTitleForChangelog().then().catch();
