@@ -140,9 +140,9 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     this.setState({
       scanningState: "INVALID"
     });
-    // tslint:disable-next-line:no-object-mutation
+    // eslint-disable-next-line
     this.scannerReactivateTimeoutHandler = setTimeout(() => {
-      // tslint:disable-next-line:no-object-mutation
+      // eslint-disable-next-line
       this.scannerReactivateTimeoutHandler = undefined;
       if (this.qrCodeScanner.current) {
         this.qrCodeScanner.current.reactivate();

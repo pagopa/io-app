@@ -100,7 +100,7 @@ const executeGetEligibilityCheck = (
   };
 
 // handle start bonus eligibility check
-// tslint:disable-next-line: cognitive-complexity
+// eslint-disable-next-line
 export const bonusEligibilitySaga = (
   startBonusEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze

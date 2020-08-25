@@ -18,16 +18,16 @@ const {
 // We need to override the global fetch and AbortController to make the tests
 // compatible with node-fetch
 //
-// tslint:disable-next-line:no-object-mutation no-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (global as any).fetch = nodeFetch;
-// tslint:disable-next-line:no-object-mutation no-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (global as any).AbortController = AbortController;
 
 const TEST_PATH = "transient-error";
 const TEST_HOST = "localhost";
 const TEST_PORT = 40000;
 
-// tslint:disable-next-line:no-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createServerMock(): any {
   const server = new ServerMock(
     { host: TEST_HOST, port: TEST_PORT },

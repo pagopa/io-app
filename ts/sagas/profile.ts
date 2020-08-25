@@ -40,7 +40,7 @@ export function* loadProfile(
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
       // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
       // discriminated union!
-      // tslint:disable-next-line:no-useless-cast
+      // eslint-disable-next-line
       yield put(profileLoadSuccess(response.value.value as InitializedProfile));
       return some(response.value.value);
     }

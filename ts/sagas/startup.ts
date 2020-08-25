@@ -95,7 +95,7 @@ const WAIT_INITIALIZE_SAGA = 3000 as Millisecond;
 /**
  * Handles the application startup and the main application logic loop
  */
-// tslint:disable-next-line:cognitive-complexity no-big-function
+// eslint-disable-next-line
 export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
@@ -171,7 +171,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // FIXME: since it looks like we load the session info every
   //        time we get a session token, think about merging the
   //        two steps.
-  // tslint:disable-next-line: no-let
+  // eslint-disable-next-line
   let maybeSessionInformation: ReturnType<
     typeof sessionInfoSelector
   > = yield select(sessionInfoSelector);
@@ -216,7 +216,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   ) {
     // Delete all data while keeping current session:
     // Delete the current unlock code from the Keychain
-    // tslint:disable-next-line:saga-yield-return-type
+    // eslint-disable-next-line
     yield call(deletePin);
     // Delete all onboarding data
     yield put(clearOnboarding());
@@ -230,7 +230,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
 
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   let storedPin: PinString;
 
   // Start watching for profile update requests as the checkProfileEnabledSaga

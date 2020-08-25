@@ -28,7 +28,7 @@ module.exports = {
 
   setGenericPassword: jest.fn(
     (username: string, password: string, options: Options) => {
-      // tslint:disable-next-line no-object-mutation
+      // eslint-disable-next-line 
       keychainDB[options.service] = {
         username,
         password,
@@ -39,7 +39,7 @@ module.exports = {
   ),
 
   resetGenericPassword: jest.fn((options: Options) => {
-    // tslint:disable-next-line no-object-mutation
+    // eslint-disable-next-line 
     delete keychainDB[options.service];
     return Promise.resolve(true);
   })

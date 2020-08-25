@@ -112,7 +112,7 @@ import {
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
 
-// tslint:disable cognitive-complexity no-big-function
+// eslint-disable 
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {

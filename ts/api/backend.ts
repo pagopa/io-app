@@ -128,7 +128,7 @@ function ParamAuthorizationBearerHeaderProducer<
 // Create client
 //
 
-// tslint:disable-next-line: no-big-function
+// eslint-disable-next-line
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,

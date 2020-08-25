@@ -64,7 +64,7 @@ describe("allowed Snapshot Screens Selector test", () => {
     });
   });
   it("Test re-computations only when store interesting part changes", () => {
-    // tslint:disable-next-line:no-let
+    // eslint-disable-next-line
     let globalState: GlobalState = appReducer(
       undefined,
       applicationChangeState("active")

@@ -13,7 +13,7 @@ import { SagaCallReturnType } from "../../types/utils";
 /**
  * Handles the logout flow
  */
-// tslint:disable-next-line:cognitive-complexity
+// eslint-disable-next-line
 export function* watchLogoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"]
 ): Iterator<Effect> {

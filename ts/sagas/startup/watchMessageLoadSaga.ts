@@ -22,7 +22,7 @@ export function* watchMessageLoadSaga(
   > = yield call(channel, buffers.expanding());
 
   // Start the handlers
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   for (let i = 0; i < totMessageFetchWorkers; i++) {
     yield fork(handleMessageLoadRequest, requestsChannel, getMessage);
   }

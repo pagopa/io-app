@@ -81,7 +81,7 @@ function* waitIdentificationResult(): Generator<
       yield put(sessionInvalid());
 
       // Delete the unlock code
-      // tslint:disable-next-line:saga-yield-return-type
+      // eslint-disable-next-line
       yield call(deletePin);
 
       // Hide the identification screen

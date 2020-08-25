@@ -56,7 +56,7 @@ export function defaultRetryingFetch(
   maxRetries: number = fetchMaxRetries
 ) {
   // Override default react-native fetch with whatwg's that supports aborting
-  // tslint:disable-next-line:no-object-mutation
+  // eslint-disable-next-line
   (global as any).AbortController = require("abort-controller");
   require("./whatwg-fetch");
 
@@ -100,7 +100,7 @@ export const constantPollingFetch = (
   timeout: Millisecond = 1000 as Millisecond
 ) => {
   // Override default react-native fetch with whatwg's that supports aborting
-  // tslint:disable-next-line:no-object-mutation
+  // eslint-disable-next-line
   (global as any).AbortController = require("abort-controller");
   require("./whatwg-fetch");
 

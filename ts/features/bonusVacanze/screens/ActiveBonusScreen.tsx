@@ -196,7 +196,7 @@ const shareQR = async (content: string, code: string, errorMessage: string) => {
 };
 
 const startRefreshPollingAfter = 3000 as Millisecond;
-// tslint:disable-next-line: no-big-function
+// eslint-disable-next-line
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
   const bonusFromNav = props.navigation.getParam("bonus");

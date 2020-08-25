@@ -222,7 +222,7 @@ export function* setFavouriteWalletRequestHandler(
  *
  * TODO: consider avoiding the fetch, let the application logic decide
  */
-// tslint:disable-next-line:cognitive-complexity
+// eslint-disable-next-line
 export function* updateWalletPspRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
@@ -301,7 +301,7 @@ export function* updateWalletPspRequestHandler(
  *
  * TODO: consider avoiding the fetch, let the appliction logic decide
  */
-// tslint:disable-next-line: cognitive-complexity
+// eslint-disable-next-line
 export function* deleteWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,

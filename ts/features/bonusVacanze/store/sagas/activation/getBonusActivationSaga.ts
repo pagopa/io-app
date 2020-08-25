@@ -88,7 +88,7 @@ function* getBonusActivation(
   }
 }
 
-// tslint:disable-next-line: cognitive-complexity
+// eslint-disable-next-line
 export const bonusActivationSaga = (
   startBonusActivationProcedure: ReturnType<
     typeof BackendBonusVacanze

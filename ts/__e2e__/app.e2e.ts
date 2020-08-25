@@ -1,4 +1,4 @@
-// tslint:disable:no-commented-code
+/* eslint-disable */
 
 // FIXME: putting these declarations in detox.d.ts makes them available in all
 // test modules clashing with Jest's expect

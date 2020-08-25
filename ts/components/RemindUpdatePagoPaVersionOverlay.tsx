@@ -58,7 +58,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<{}, State> {
         hasError: true
       });
       // After 5 seconds restore state
-      // tslint:disable-next-line: no-object-mutation
+      // eslint-disable-next-line
       this.idTimeout = setTimeout(() => {
         this.setState({
           hasError: false

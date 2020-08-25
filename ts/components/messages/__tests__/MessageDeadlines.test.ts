@@ -29,7 +29,7 @@ const generateSections = (
     pot.map(
       potMessagesState,
       _ =>
-        // tslint:disable-next-line:readonly-array
+        // eslint-disable-next-line
         _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
           const { message, isArchived, isRead } = messageState;
           if (
@@ -62,7 +62,7 @@ const generateSections = (
           //    add the message to the last section
           .reduce<{
             lastTitle: Option<string>;
-            // tslint:disable-next-line:readonly-array
+            // eslint-disable-next-line
             sections: MessageAgendaSection[];
           }>(
             (accumulator, messageAgendaItem) => {

@@ -32,14 +32,14 @@ const exitConfirmThreshold = 2000 as Millisecond;
  */
 const exitApp = () => BackHandler.exitApp();
 
-// tslint:disable-next-line:cognitive-complexity
+// eslint-disable-next-line
 export function createNavigationHistoryMiddleware(): Middleware<
   Dispatch,
   GlobalState
 > {
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   let firstRun = true;
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   let lastExitRequestTime: Option<Millisecond> = none;
 
   return (store: MiddlewareAPI) => (next: Dispatch) => (action: Action) => {

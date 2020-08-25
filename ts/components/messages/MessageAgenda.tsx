@@ -147,7 +147,7 @@ export type MessageAgendaSection = SectionListData<
   MessageAgendaItem | FakeItem
 >;
 
-// tslint:disable-next-line: readonly-array
+// eslint-disable-next-line
 export type Sections = MessageAgendaSection[];
 
 export type ItemLayout = {
@@ -203,11 +203,11 @@ const keyExtractor = (_: MessageAgendaItem | FakeItem, index: number) =>
  * Here we calculate the ItemLayout for each cell.
  */
 const generateItemLayouts = (sections: Sections) => {
-  // tslint:disable-next-line: no-let
+  // eslint-disable-next-line
   let offset = LIST_HEADER_HEIGHT;
-  // tslint:disable-next-line: no-let
+  // eslint-disable-next-line
   let index = 0;
-  // tslint:disable-next-line: readonly-array
+  // eslint-disable-next-line
   const itemLayouts: ItemLayout[] = [];
 
   sections.forEach(section => {
@@ -285,7 +285,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     }
   }
 
-  // tslint:disable-next-line: cognitive-complexity
+  // eslint-disable-next-line
   public componentDidUpdate(prevProps: Props) {
     // Change status loading to show progress
     if (
@@ -302,7 +302,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         this.setState({ isFirstLoading: false });
       } else {
         // We leave half a second longer to show the progress even for faster requests
-        // tslint:disable-next-line: no-object-mutation
+        // eslint-disable-next-line
         this.idTimeoutProgress = setTimeout(() => {
           this.setState({
             isLoadingProgress: false

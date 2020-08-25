@@ -316,7 +316,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         "dark-content",
         customVariables.colorWhite
       );
-    }); // tslint:disable-line no-object-mutation
+    }); // eslint-disable-line 
   }
 
   private animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -394,7 +394,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   }
 
-  // tslint:disable-next-line: cognitive-complexity
+  // eslint-disable-next-line
   public componentDidUpdate(prevProps: Props, prevState: State) {
     // if some errors occur while updating profile, we will show a message in a toast
     // profile could be updated by enabling/disabling on or more channel of a service

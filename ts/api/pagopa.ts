@@ -95,7 +95,7 @@ export type GetTransactionsUsingGETT = r.IGetApiRequestType<
   { readonly Bearer: string; readonly start: number },
   "Authorization",
   never,
-  // tslint:disable-next-line: max-union-size
+  // eslint-disable-next-line
   | r.IResponseType<200, TransactionListResponse>
   | r.IResponseType<401, undefined>
   | r.IResponseType<403, undefined>

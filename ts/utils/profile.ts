@@ -167,10 +167,10 @@ export function getProfileChannelsforServicesList(
           : channels;
 
     if (updatedBlockedChannels.length !== 0) {
-      // tslint:disable-next-line no-object-mutation
+      // eslint-disable-next-line 
       profileBlockedChannels[id] = updatedBlockedChannels;
     } else {
-      // tslint:disable-next-line no-object-mutation
+      // eslint-disable-next-line 
       delete profileBlockedChannels[id];
     }
   });
@@ -231,9 +231,9 @@ export const getBlockedChannels = (
   ].filter(_ => _ !== "");
 
   blockedChannelsForService.length === 0
-    ? // tslint:disable-next-line no-object-mutation
+    ? // eslint-disable-next-line 
       delete profileBlockedChannels[serviceId]
-    : // tslint:disable-next-line no-object-mutation
+    : // eslint-disable-next-line 
       (profileBlockedChannels[serviceId] = blockedChannelsForService);
 
   return {

@@ -5,7 +5,7 @@ import { profileLoadSuccess } from "../store/actions/profile";
 import { profileEmailValidationChanged } from "../store/actions/profileEmailValidationChange";
 import { isTestEnv } from "../utils/environment";
 
-// tslint:disable-next-line:no-let
+// eslint-disable-next-line
 let maybePreviousEmailValidated: Option<boolean> = none;
 
 /**

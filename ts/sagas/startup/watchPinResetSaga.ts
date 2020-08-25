@@ -10,7 +10,7 @@ import { deletePin } from "../../utils/keychain";
 export function* watchPinResetSaga(): Iterator<Effect> {
   yield takeEvery(getType(startPinReset), function*() {
     // Delete the current unlock code from the Keychain
-    // tslint:disable-next-line:saga-yield-return-type
+    // eslint-disable-next-line
     yield call(deletePin);
     // invalidate the session
     yield put(sessionInvalid());

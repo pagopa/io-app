@@ -41,7 +41,7 @@ import { uniqueItem } from "../../utils/enumerables";
  * The messages returned by the Backend are filtered so the application downloads
  * only the details of the messages and services not already in the redux store.
  */
-// tslint:disable-next-line: cognitive-complexity
+// eslint-disable-next-line
 export function* loadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
 ): Generator<Effect, void, any> {
@@ -186,7 +186,7 @@ export function* watchMessagesLoadOrCancelSaga(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
 ): Generator<Effect, void, any> {
   // We store the latest task so we can also cancel it
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   let lastTask: Option<Task> = none;
   while (true) {
     // FIXME: why not takeLatest?

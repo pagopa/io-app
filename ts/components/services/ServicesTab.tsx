@@ -43,7 +43,7 @@ type OwnProps = Readonly<{
   updateToast?: () => void;
   sections: ReadonlyArray<ServicesSectionState>;
   isRefreshing: boolean;
-  onRefresh: (hideToast?: boolean) => void; // tslint:disable-line bool-param-default
+  onRefresh: (hideToast?: boolean) => void; // eslint-disable-line 
   onServiceSelect: (service: ServicePublic) => void;
   handleOnLongPressItem: () => void;
   isLongPressEnabled: boolean;

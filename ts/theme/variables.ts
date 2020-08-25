@@ -5,7 +5,7 @@
  * directory).
  */
 
-// tslint:disable:no-invalid-this
+/* eslint-disable no-invalid-this */
 
 import { Millisecond } from "italia-ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
@@ -15,7 +15,7 @@ import { ThemeSimpleValue } from "./types";
 
 export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 
-// tslint:disable-next-line:no-object-mutation
+// eslint-disable-next-line
 const customVariables = Object.assign(materialVariables, {
   minTouchableHeight: 48,
 

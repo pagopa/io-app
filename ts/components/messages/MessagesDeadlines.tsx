@@ -133,7 +133,7 @@ const generateSections = (
     pot.map(
       potMessagesState,
       _ =>
-        // tslint:disable-next-line:readonly-array
+        // eslint-disable-next-line
         _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
           const { message, isArchived, isRead } = messageState;
           if (
@@ -165,7 +165,7 @@ const generateSections = (
           //    add the message to the last section
           .reduce<{
             lastTitle: Option<string>;
-            // tslint:disable-next-line:readonly-array
+            // eslint-disable-next-line
             sections: MessageAgendaSection[];
           }>(
             (accumulator, messageAgendaItem) => {
@@ -378,7 +378,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         this.scrollToLocation.value
       );
       // Reset the value to none.
-      // tslint:disable-next-line: no-object-mutation
+      // eslint-disable-next-line
       this.scrollToLocation = none;
     }
   };
@@ -435,7 +435,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             const itemIndex =
               moreSectionsToRender[moreSectionsToRender.length - 1].data
                 .length - 1;
-            // tslint:disable-next-line: no-object-mutation
+            // eslint-disable-next-line
             this.scrollToLocation = some({
               sectionIndex,
               itemIndex,
@@ -444,7 +444,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
               animated: true
             });
           } else {
-            // tslint:disable-next-line: no-object-mutation
+            // eslint-disable-next-line
             this.scrollToLocation = some({
               sectionIndex: moreSectionsToRender.length,
               itemIndex: -1,
@@ -571,7 +571,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   private generateMessagesIdsFromMessageAgendaSection(
     sections: Sections
   ): Set<string> {
-    // tslint:disable-next-line: readonly-array
+    // eslint-disable-next-line
     const messagesIds: string[] = [];
     sections.forEach(messageAgendaSection =>
       messageAgendaSection.data.forEach(item => {

@@ -111,7 +111,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleHardwareBack);
     // Periodically check if the user validate his own email address
-    // tslint:disable-next-line: no-object-mutation
+    // eslint-disable-next-line
     this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
     this.props.reloadProfile();
     // since we are here, set the user doesn't acknowledge about the email validation
@@ -173,9 +173,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         // schedule a timeout to make the cta button disabled and showing inside
         // the string that email has been sent.
         // after timeout we restore the default state
-        // tslint:disable-next-line: no-object-mutation
+        // eslint-disable-next-line
         this.idTimeout = setTimeout(() => {
-          // tslint:disable-next-line: no-object-mutation
+          // eslint-disable-next-line
           this.idTimeout = undefined;
           this.setState({
             ctaSendEmailValidationText: I18n.t("email.validate.cta"),

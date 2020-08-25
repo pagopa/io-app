@@ -119,9 +119,9 @@ const getItemHeight = (messageState: MessageState): number => {
 };
 
 const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
-  // tslint:disable-next-line: no-let
+  // eslint-disable-next-line
   let offset = 0;
-  // tslint:disable-next-line: readonly-array
+  // eslint-disable-next-line
   const itemLayouts: ItemLayout[] = [];
 
   messageStates.forEach((messageState, index) => {

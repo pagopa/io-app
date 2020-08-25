@@ -253,7 +253,7 @@ class PinScreen extends React.PureComponent<Props, State> {
             activeColor={variables.contentPrimaryBackground}
             compareWithCode={pinState.pin}
             onFulfill={this.onPinConfirmFulfill}
-            ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
+            ref={pinpad => (this.pinConfirmComponent = pinpad)} // eslint-disable-line 
             buttonType={"light"}
             onDeleteLastDigit={this.onPinConfirmRemoveLastDigit}
           />

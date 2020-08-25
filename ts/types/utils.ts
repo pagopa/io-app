@@ -1,4 +1,4 @@
-// tslint:disable:readonly-array
+/* eslint-disable */
 
 import { Pot } from "italia-ts-commons/lib/pot";
 import { Effect } from "redux-saga/effects";

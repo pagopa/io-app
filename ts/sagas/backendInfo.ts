@@ -50,7 +50,7 @@ function* backendInfoWatcher(): Generator<
           "backendVersion",
           backendInfoResponse.value.value.version
         );
-        // tslint:disable-next-line:saga-yield-return-type
+        // eslint-disable-next-line
         yield call(startTimer, BACKEND_INFO_LOAD_INTERVAL);
       } else {
         const errorDescription = backendInfoResponse.fold(
@@ -60,7 +60,7 @@ function* backendInfoWatcher(): Generator<
 
         yield put(backendInfoLoadFailure(new Error(errorDescription)));
 
-        // tslint:disable-next-line:saga-yield-return-type
+        // eslint-disable-next-line
         yield call(startTimer, BACKEND_INFO_RETRY_INTERVAL);
       }
     } catch (e) {

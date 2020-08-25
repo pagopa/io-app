@@ -125,7 +125,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         "light-content",
         customVariables.brandDarkGray
       );
-    }); // tslint:disable-line no-object-mutation
+    }); // eslint-disable-line 
   }
 
   public componentWillUnmount() {
@@ -277,7 +277,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       this.setState({ tapsOnAppVersion: 0 });
       Toast.show({ text: I18n.t("profile.main.developerModeOn") });
     } else {
-      // tslint:disable-next-line: no-object-mutation
+      // eslint-disable-next-line
       this.idResetTap = setInterval(
         this.resetAppTapCounter,
         RESET_COUNTER_TIMEOUT
@@ -352,7 +352,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     }
   };
 
-  // tslint:disable-next-line: no-big-function
+  // eslint-disable-next-line
   public render() {
     const {
       navigation,
@@ -376,7 +376,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       );
     };
 
-    // tslint:disable no-big-function
+    // eslint-disable 
     const screenContent = () => {
       return (
         <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>

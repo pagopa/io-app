@@ -45,7 +45,7 @@ const replaceLastItem = (
   state: PaymentsHistoryState,
   newItem: PaymentHistory
 ): PaymentsHistoryState => {
-  // tslint:disable-next-line: readonly-array
+  // eslint-disable-next-line
   const cloneState = [...state];
   cloneState.splice(state.length - 1, 1, newItem);
   return cloneState;

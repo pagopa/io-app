@@ -1,4 +1,4 @@
-// tslint:disable:max-union-size
+/* eslint-disable */
 
 /**
  * A saga that manages the Wallet.
@@ -138,7 +138,7 @@ const POLL_TRANSACTION_DELAY_MILLIS = 500;
  * potential state of the flow substates (see GlobalState.wallet.wallets).
  *
  */
-// tslint:disable-next-line:cognitive-complexity
+// eslint-disable-next-line
 function* startOrResumeAddCreditCardSaga(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof runStartOrResumeAddCreditCardSaga>
@@ -324,7 +324,7 @@ function* startOrResumeAddCreditCardSaga(
  *       may fail because they are not idempotent, but we could just proceed
  *       to the next step).
  */
-// tslint:disable-next-line:cognitive-complexity
+// eslint-disable-next-line
 function* startOrResumePaymentActivationSaga(
   action: ActionType<typeof runStartOrResumePaymentActivationSaga>
 ) {
@@ -405,7 +405,7 @@ function* startOrResumePaymentActivationSaga(
 function* pollTransactionSaga(
   action: ActionType<typeof runPollTransactionSaga>
 ) {
-  // tslint:disable-next-line:no-var-keyword
+  // eslint-disable-next-line no-var
   var count = POLL_TRANSACTION_MAX_RETRIES;
 
   const { id, isValid, onValid, onTimeout } = action.payload;
@@ -434,7 +434,7 @@ function* pollTransactionSaga(
 
     // on failure, try again after a delay
 
-    // tslint:disable-next-line:saga-yield-return-type
+    // eslint-disable-next-line
     yield delay(POLL_TRANSACTION_DELAY_MILLIS);
 
     count -= 1;
@@ -467,7 +467,7 @@ function* deleteActivePaymentSaga() {
 }
 
 // this is a shared DeferredPromise used to stop polling when user aborts a running payment
-// tslint:disable-next-line:no-let
+// eslint-disable-next-line
 let shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
 /**
  * Main wallet saga.
@@ -479,7 +479,7 @@ let shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
  * and a new PagopaToken gets received from the backend. Infact, the
  * pagoPaClient passed as paramenter to this saga, embeds the PagopaToken.
  */
-// tslint:disable-next-line: no-big-function
+// eslint-disable-next-line
 export function* watchWalletSaga(
   sessionToken: SessionToken,
   walletToken: string,

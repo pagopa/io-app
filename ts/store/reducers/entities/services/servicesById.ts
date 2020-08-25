@@ -63,7 +63,7 @@ const reducer = (
     case getType(removeServiceTuples): {
       const serviceTuples = action.payload;
       const newState = { ...state };
-      // tslint:disable-next-line: no-object-mutation
+      // eslint-disable-next-line
       serviceTuples.forEach(_ => delete newState[_.e1]);
       return newState;
     }

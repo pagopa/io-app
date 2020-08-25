@@ -131,7 +131,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
         "dark-content",
         customVariables.colorWhite
       );
-    }); // tslint:disable-line no-object-mutation
+    }); // eslint-disable-line 
   }
 
   public componentWillUnmount() {

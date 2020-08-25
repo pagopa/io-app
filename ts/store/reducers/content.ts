@@ -1,38 +1,35 @@
 /**
  * Implements the reducers for static content.
  */
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
+import {fromNullable, none, Option} from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { NavigationState } from "react-navigation";
-import { createSelector } from "reselect";
-import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
-import { Idp } from "../../../definitions/content/Idp";
-import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
-import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
-import {
-  ScopeEnum,
-  Service as ServiceMetadata
-} from "../../../definitions/content/Service";
-import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
-import { IdentityProviderId } from "../../models/IdentityProvider";
-import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { getLocalePrimaryWithFallback } from "../../utils/locale";
-import { getCurrentRouteName } from "../../utils/navigation";
+import {ITuple2} from "italia-ts-commons/lib/tuples";
+import {NavigationState} from "react-navigation";
+import {createSelector} from "reselect";
+import {getType} from "typesafe-actions";
+import {ServiceId} from "../../../definitions/backend/ServiceId";
+import {ServicePublic} from "../../../definitions/backend/ServicePublic";
+import {ContextualHelp} from "../../../definitions/content/ContextualHelp";
+import {Idp} from "../../../definitions/content/Idp";
+import {Municipality as MunicipalityMetadata} from "../../../definitions/content/Municipality";
+import {ScreenCHData} from "../../../definitions/content/ScreenCHData";
+import {ScopeEnum, Service as ServiceMetadata} from "../../../definitions/content/Service";
+import {ServicesByScope} from "../../../definitions/content/ServicesByScope";
+import {IdentityProviderId} from "../../models/IdentityProvider";
+import {CodiceCatastale} from "../../types/MunicipalityCodiceCatastale";
+import {getLocalePrimaryWithFallback} from "../../utils/locale";
+import {getCurrentRouteName} from "../../utils/navigation";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
   loadServiceMetadata,
   loadVisibleServicesByScope
 } from "../actions/content";
-import { clearCache } from "../actions/profile";
-import { removeServiceTuples } from "../actions/services";
-import { Action } from "../actions/types";
-import { navSelector } from "./navigationHistory";
-import { GlobalState } from "./types";
+import {clearCache} from "../actions/profile";
+import {removeServiceTuples} from "../actions/services";
+import {Action} from "../actions/types";
+import {navSelector} from "./navigationHistory";
+import {GlobalState} from "./types";
 
 /**
  * Stores useful content such as services and organizations metadata,
@@ -102,7 +99,7 @@ export const isServiceIdInScopeSelector = (
     pot.getOrElse(
       pot.map(
         maybeServicesByScope,
-        sbs => sbs[scope].indexOf(serviceId) !== -1
+        (sbs) => sbs[scope].indexOf(serviceId) !== -1
       ),
       false
     )
@@ -124,15 +121,13 @@ export const isServiceInScopeSelector = (
  * @param scope
  */
 export const servicesInScopeSelector = (
-  services: ReadonlyArray<ServicePublic>,
+  services: readonly ServicePublic[],
   scope: ScopeEnum
 ) =>
   createSelector(servicesByScopeSelector, maybeServicesByScope =>
     pot.getOrElse(
       pot.map(maybeServicesByScope, sbs =>
-        services.filter(service => {
-          return sbs[scope].some(sId => sId === service.service_id);
-        })
+        services.filter(service => sbs[scope].some(sId => sId === service.service_id))
       ),
       []
     )
@@ -149,8 +144,7 @@ export const contextualHelpDataSelector = (
 export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
   createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, Option<Idp>>(
     contextualHelpDataSelector,
-    contextualHelpData => {
-      return pot.getOrElse(
+    contextualHelpData => pot.getOrElse(
         pot.map(contextualHelpData, data => {
           const locale = getLocalePrimaryWithFallback();
           return fromNullable(
@@ -158,8 +152,7 @@ export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
           );
         }),
         none
-      );
-    }
+      )
   );
 
 /**
@@ -171,8 +164,7 @@ export const screenContextualHelpDataSelector = createSelector<
   pot.Pot<ContextualHelp, Error>,
   NavigationState,
   pot.Pot<Option<ScreenCHData>, Error>
->([contextualHelpDataSelector, navSelector], (contextualHelpData, navState) => {
-  return pot.map(contextualHelpData, data => {
+>([contextualHelpDataSelector, navSelector], (contextualHelpData, navState) => pot.map(contextualHelpData, data => {
     const currentRouteName = getCurrentRouteName(navState);
     if (currentRouteName === undefined) {
       return none;
@@ -187,8 +179,7 @@ export const screenContextualHelpDataSelector = createSelector<
           )
         : undefined;
     return fromNullable(screenData);
-  });
-});
+  }));
 
 export default function content(
   state: ContentState = initialContentState,
@@ -321,7 +312,7 @@ export default function content(
         ...state.servicesMetadata.byId
       };
       serviceTuples.forEach(
-        // tslint:disable-next-line no-object-mutation
+        // eslint-disable-next-line 
         tuple => delete newServicesMetadataByIdState[tuple.e1]
       );
       return {
