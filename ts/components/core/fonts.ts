@@ -4,9 +4,11 @@
  * README file included in this repository.
  */
 
-import { Platform, PlatformStatic } from "react-native";
+import { Platform } from "react-native";
 
-type PlatformSelectType = PlatformStatic["select"];
+type FontFamily = keyof typeof fonts;
+export type FontWeight = "Light" | "Regular" | "SemiBold" | "Bold";
+export type FontWeightValue = "300" | "400" | "600" | "700";
 
 const fonts = {
   TitilliumWeb: Platform.select({
@@ -19,23 +21,21 @@ const fonts = {
   })
 };
 
-const fontWeights = {
-  "300": "Light",
-  "400": "Regular",
-  "600": "SemiBold",
-  "700": "Bold"
+export const fontWeights: Record<FontWeight, FontWeightValue> = {
+  Light: "300",
+  Regular: "400",
+  SemiBold: "600",
+  Bold: "700"
 };
 
-type FontFamily = keyof typeof fonts;
-export type FontWeight = keyof typeof fontWeights;
-enum FontStyle {
+export enum FontStyle {
   "normal" = "normal",
   "italic" = "italic"
 }
 
 type FontStyleObject = {
   fontFamily: string;
-  fontWeight?: FontWeight;
+  fontWeight?: FontWeightValue;
   fontStyle?: FontStyle;
 };
 
@@ -43,40 +43,35 @@ type FontStyleObject = {
  * Get the correct fontFamily name on both Android and iOS
  */
 const makeFontFamilyName = (
-  osSelect: PlatformSelectType,
   font: FontFamily,
   weight?: FontWeight,
   isItalic: boolean = false
 ): string =>
-  osSelect({
+  Platform.select({
     default: "undefined",
-    android: `${fonts[font]}-${fontWeights[weight || "400"]}${
-      isItalic ? "Italic" : ""
-    }`,
+    android: `${fonts[font]}-${weight || "Regular"}${isItalic ? "Italic" : ""}`,
     ios: fonts[font]
   });
 
 /**
  * This function returns an object containing all the properties needed to use
  * a Font correctly on both Android and iOS.
- * @deprecated
  */
 export const makeFontStyleObject = (
-  osSelect: PlatformSelectType,
   weight: FontWeight | undefined = undefined,
   isItalic: boolean | undefined = false,
   font: FontFamily | undefined = "TitilliumWeb"
 ): FontStyleObject =>
-  osSelect({
+  Platform.select({
     default: {
       fontFamily: "undefined"
     },
     android: {
-      fontFamily: makeFontFamilyName(osSelect, font, weight, isItalic)
+      fontFamily: makeFontFamilyName(font, weight, isItalic)
     },
     ios: {
-      fontFamily: makeFontFamilyName(osSelect, font, weight, isItalic),
-      fontWeight: weight,
+      fontFamily: makeFontFamilyName(font, weight, isItalic),
+      fontWeight: weight !== undefined ? fontWeights[weight] : weight,
       fontStyle: isItalic ? FontStyle.italic : FontStyle.normal
     }
   });
