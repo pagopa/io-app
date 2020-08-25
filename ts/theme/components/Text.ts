@@ -1,10 +1,10 @@
+import { Platform, TextProperties } from "react-native";
 import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
 
-import { Platform, TextProperties } from "react-native";
-
 declare module "native-base" {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NativeBase {
     interface Text extends TextProperties {
       link?: boolean;

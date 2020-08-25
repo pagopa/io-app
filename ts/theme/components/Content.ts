@@ -3,6 +3,7 @@ import { Theme } from "../types";
 import variables from "../variables";
 
 declare module "native-base" {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NativeBase {
     interface Content {
       alternative?: boolean;

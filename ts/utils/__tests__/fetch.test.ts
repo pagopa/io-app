@@ -6,12 +6,14 @@ import {
 } from "italia-ts-commons/lib/fetch";
 import { MaxRetries, withRetries } from "italia-ts-commons/lib/tasks";
 import { Millisecond } from "italia-ts-commons/lib/units";
+
+import ServerMock from "mock-http-server";
 import nodeFetch from "node-fetch";
 import { retryLogicForTransientResponseError } from "../fetch";
 
-const ServerMock = require("mock-http-server");
 const {
   AbortController
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
 } = require("abortcontroller-polyfill/dist/cjs-ponyfill");
 
 //

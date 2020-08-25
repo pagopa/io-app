@@ -1,3 +1,5 @@
+/* eslint-disable no-fallthrough */
+// disabled in order to allows comments between the switch
 import { constNull } from "fp-ts/lib/function";
 import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
@@ -112,7 +114,6 @@ import {
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
 
-// eslint-disable 
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
@@ -262,7 +263,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentUpdateWalletPsp.failure):
     case getType(updateNotificationInstallationFailure):
     case getType(cieAuthenticationError):
-    // Bonus vacanze
+    //  Bonus vacanze
     case getType(loadAllBonusActivations.failure):
     case getType(loadAvailableBonuses.failure):
     case getType(checkBonusVacanzeEligibility.failure):
@@ -289,11 +290,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(analyticsAuthenticationCompleted):
     case getType(loginSuccess):
     case getType(sessionInformationLoadSuccess):
-
     case getType(sessionExpired):
     case getType(sessionInvalid):
     case getType(logoutSuccess):
-
     // identification
     case getType(identificationRequest):
     case getType(identificationStart):
@@ -314,24 +313,18 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.success):
     // messages
     case getType(loadMessages.request):
-
     case getType(loadMessages.success):
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):
-
     // services
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):
-
     case getType(loadServiceDetail.request):
     case getType(loadServiceDetail.success):
-
     case getType(loadServiceMetadata.request):
     case getType(loadServiceMetadata.success):
-
     // wallet
     case getType(fetchWalletsRequest):
-
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(payCreditCardVerificationRequest):
@@ -434,7 +427,10 @@ export function screenTracking(
           .track("SCREEN_CHANGE", {
             SCREEN_NAME: nextScreen
           })
-          .then(() => 0, () => 0);
+          .then(
+            () => 0,
+            () => 0
+          );
       }
       return result;
     };

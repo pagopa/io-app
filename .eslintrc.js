@@ -42,8 +42,10 @@ module.exports = {
     "prefer-const": "error",
     "react/prop-types": "off",
     "import/order": "error",
+    // Enable if we want to enforce the return type for all the functions
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-inferrable-types": "off",
+    // TODO: added for compatibility. Remove this line and fix all the any in the code
     "@typescript-eslint/no-explicit-any": "off"
   }
 };
