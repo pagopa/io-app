@@ -26,6 +26,7 @@ import { allPspsSelector } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
+import { orderPspByAmount } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
@@ -130,7 +131,7 @@ class PickPspScreen extends React.Component<Props> {
   };
 
   public render(): React.ReactNode {
-    const availablePsps = this.props.allPsps;
+    const availablePsps = orderPspByAmount(this.props.allPsps);
 
     return (
       <BaseScreenComponent
