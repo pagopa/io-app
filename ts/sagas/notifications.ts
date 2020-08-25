@@ -25,8 +25,10 @@ export function* updateInstallationSaga(
   createOrUpdateInstallation: ReturnType<
     typeof BackendClient
   >["createOrUpdateInstallation"]
-): Iterator<
-  Effect | TypeOfApiResponseStatus<CreateOrUpdateInstallationT> | undefined
+): Generator<
+  Effect,
+  TypeOfApiResponseStatus<CreateOrUpdateInstallationT> | undefined,
+  any
 > {
   // Get the notifications installation data from the store
   const notificationsInstallation: ReturnType<

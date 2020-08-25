@@ -21,7 +21,11 @@ const BACKEND_INFO_LOAD_INTERVAL = 60 * 60 * 1000;
 // retry loading backend info every 10 seconds on error
 const BACKEND_INFO_RETRY_INTERVAL = 10 * 1000;
 
-function* backendInfoWatcher(): IterableIterator<Effect> {
+function* backendInfoWatcher(): Generator<
+  Effect,
+  void,
+  SagaCallReturnType<typeof getServerInfo>
+> {
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
 
   function getServerInfo(): Promise<
@@ -36,9 +40,7 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
 
   while (true) {
     try {
-      const backendInfoResponse: SagaCallReturnType<
-        typeof getServerInfo
-      > = yield call(getServerInfo);
+      const backendInfoResponse = yield call(getServerInfo);
       if (
         backendInfoResponse.isRight() &&
         backendInfoResponse.value.status === 200

@@ -12,8 +12,10 @@ import { deletePin } from "../utils/keychain";
  * This generator function removes user data from previous application
  * installation
  */
-export function* previousInstallationDataDeleteSaga(): IterableIterator<
-  Effect
+export function* previousInstallationDataDeleteSaga(): Generator<
+  Effect,
+  void,
+  boolean
 > {
   const isFirstRunAfterInstall: ReturnType<
     typeof isFirstRunAfterInstallSelector

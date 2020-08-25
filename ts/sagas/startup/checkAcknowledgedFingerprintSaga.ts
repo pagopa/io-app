@@ -20,12 +20,14 @@ export type BiometrySimpleType =
  * All other cases are treated as a single umbrella case "Unavailable: Not
  * supported/Others".
  */
-function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
+function* onboardFingerprintIfAvailableSaga(): Generator<
+  Effect,
+  void,
+  BiometrySimpleType
+> {
   // Check if user device has biometric recognition feature by trying to
   // query data from TouchID library
-  const biometryTypeOrUnsupportedReason: BiometrySimpleType = yield call(
-    getFingerprintSettings
-  );
+  const biometryTypeOrUnsupportedReason = yield call(getFingerprintSettings);
 
   if (biometryTypeOrUnsupportedReason !== "UNAVAILABLE") {
     // If biometric recognition is available, navigate to the Fingerprint
@@ -67,12 +69,16 @@ function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
  * saga that prompts it, otherwise. Consider that, like ToS, this should happen
  * at first launch of the app ONLY.
  */
-export function* checkAcknowledgedFingerprintSaga(): IterableIterator<Effect> {
+export function* checkAcknowledgedFingerprintSaga(): Generator<
+  Effect,
+  void,
+  ReturnType<typeof isFingerprintAcknowledgedSelector>
+> {
   // Query system state and check whether the user has already acknowledged biometric
   // recognition Screen. Consider that, like ToS, this should be displayed once.
-  const isFingerprintAcknowledged: ReturnType<
-    typeof isFingerprintAcknowledgedSelector
-  > = yield select(isFingerprintAcknowledgedSelector);
+  const isFingerprintAcknowledged = yield select(
+    isFingerprintAcknowledgedSelector
+  );
 
   if (!isFingerprintAcknowledged) {
     // Navigate to the FingerprintScreen and wait for acknowledgment

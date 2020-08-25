@@ -7,11 +7,13 @@ import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";
 export type SagaCallReturnType<
   T extends (...args: any[]) => any,
   R = ReturnType<T>
-> = R extends Iterator<infer B | Effect>
-  ? B
-  : R extends IterableIterator<infer B1 | Effect>
-    ? B1
-    : R extends Promise<infer B2> ? B2 : never;
+> = R extends Generator<infer _, infer B0, infer _>
+  ? B0
+  : R extends Iterator<infer B | Effect>
+    ? B
+    : R extends IterableIterator<infer B1 | Effect>
+      ? B1
+      : R extends Promise<infer B2> ? B2 : never;
 
 /**
  * Extracts the type of the payload of a typesafe action
