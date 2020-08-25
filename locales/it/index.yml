@@ -124,6 +124,7 @@ login:
   welcome:
     line1: benvenuto nella tua
     line2: Cittadinanza Digitale
+  expiration_info: Ti informiamo che per ragioni di sicurezza, dopo 30 giorni dall’ultimo accesso, ti chiederemo di effettuare un nuovo login per utilizzare IO.
 inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
@@ -323,6 +324,9 @@ authentication:
       carousel:
         label: Presentazione di IO
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
+    session_expired:
+      title: La tua sessione è scaduta
+      body: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso, ti chiediamo di effettuare una nuova login con SPID o CIE per utilizzare IO.
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
@@ -691,6 +695,7 @@ wallet:
     newCode: Richiedi nuovo codice
     info: Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono
   transactionDetails: Dettagli della transazione
+  transactionFullReason: Causale completa
   detailsTransaction:
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
@@ -1091,6 +1096,7 @@ services:
   contactsAndInfo: Contatti ed informazioni
   contactAddress: Indirizzo
   contactPhone: Telefono
+  contactSupport: Assistenza
   areasOfInterest:
     selectMessage: Scegli le aree geografiche (comuni, regioni, etc.) dove risiedi o che frequenti solitamente per vederne qui i relativi servizi. Potrai modificarle in ogni momento.
     selectMessageEmptyOrgs: Al momento non è possibile aggiungere una località. Per favore trascina in basso per aggiornare i dati e riprova a selezionare un'area.

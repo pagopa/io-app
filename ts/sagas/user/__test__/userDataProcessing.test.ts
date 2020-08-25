@@ -1,5 +1,6 @@
 import { right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+import { ActionType } from "typesafe-actions";
 import { UserDataProcessing } from "../../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../../definitions/backend/UserDataProcessingStatus";
@@ -14,8 +15,8 @@ import {
 
 describe("loadUserDataProcessingSaga", () => {
   const getUserDataProcessingRequest = jest.fn();
-  const loadAction = {
-    type: loadUserDataProcessing.request,
+  const loadAction: ActionType<typeof loadUserDataProcessing.request> = {
+    type: "LOAD_USER_DATA_PROCESSING_REQUEST",
     payload: UserDataProcessingChoiceEnum.DOWNLOAD
   };
 
@@ -97,8 +98,8 @@ describe("loadUserDataProcessingSaga", () => {
 
 describe("upsertUserDataProcessingSaga", () => {
   const postUserDataProcessingRequest = jest.fn();
-  const requestAction = {
-    type: loadUserDataProcessing.request,
+  const requestAction: ActionType<typeof upsertUserDataProcessing.request> = {
+    type: "UPSERT_USER_DATA_PROCESSING_REQUEST",
     payload: UserDataProcessingChoiceEnum.DOWNLOAD
   };
 

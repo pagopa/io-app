@@ -2,7 +2,12 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  Image,
+  StyleSheet,
+  TouchableWithoutFeedback
+} from "react-native";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -26,10 +31,14 @@ import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
 import { whereAmIFrom } from "../../utils/navigation";
-import { maybeInnerProperty } from "../../utils/options";
-import { cleanTransactionDescription } from "../../utils/payment";
+import {
+  cleanTransactionDescription,
+  getTransactionCodiceAvviso,
+  getTransactionFee
+} from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
@@ -86,12 +95,21 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.detailsTransaction.contextualHelpContent"
 };
 
+type State = {
+  showFullReason: boolean;
+};
+
 /**
  * Transaction details screen, displaying
  * a list of information available about a
  * specific transaction.
  */
-class TransactionDetailsScreen extends React.Component<Props> {
+class TransactionDetailsScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { showFullReason: false };
+  }
+
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
@@ -127,14 +145,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
     const amount = formatNumberCentsToAmount(transaction.amount.amount, true);
 
     // fee
-    const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
-      transaction,
-      "fee",
-      m => (m ? m.amount : undefined)
-    ).getOrElse(undefined);
-    const fee = fromNullable(maybeFee)
-      .map(f => formatNumberCentsToAmount(f, true))
-      .toNullable();
+    const fee = getTransactionFee(transaction);
 
     const totalAmount = formatNumberCentsToAmount(
       transaction.grandTotal.amount,
@@ -162,8 +173,14 @@ class TransactionDetailsScreen extends React.Component<Props> {
       transactionWallet.creditCard &&
       transactionWallet.creditCard.brand;
 
+    const codiceAvviso = getTransactionCodiceAvviso(
+      transaction.description
+    ).toUndefined();
+
     const idTransaction = transaction.id;
     return {
+      fullReason: transaction.description,
+      codiceAvviso,
       idTransaction,
       paymentMethodBrand,
       paymentMethodIcon,
@@ -173,6 +190,9 @@ class TransactionDetailsScreen extends React.Component<Props> {
       fee
     };
   };
+
+  private handleOnFullReasonPress = () =>
+    this.setState(ps => ({ showFullReason: !ps.showFullReason }));
 
   public render(): React.ReactNode {
     const { psp } = this.props;
@@ -203,7 +223,21 @@ class TransactionDetailsScreen extends React.Component<Props> {
             recipient={transaction.merchant}
             description={cleanTransactionDescription(transaction.description)}
           />
-
+          <TouchableWithoutFeedback onPress={this.handleOnFullReasonPress}>
+            <Text link={true}>{I18n.t("wallet.transactionFullReason")}</Text>
+          </TouchableWithoutFeedback>
+          {this.state.showFullReason && (
+            <Text
+              onLongPress={() =>
+                clipboardSetStringWithFeedback(data.fullReason)
+              }
+            >
+              {data.fullReason}
+            </Text>
+          )}
+          <View spacer={true} large={true} />
+          {data.codiceAvviso &&
+            standardRow(I18n.t("payment.noticeCode"), data.codiceAvviso)}
           {/** transaction date */}
           <View spacer={true} xsmall={true} />
           <View spacer={true} large={true} />

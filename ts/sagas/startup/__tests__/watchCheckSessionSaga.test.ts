@@ -79,8 +79,8 @@ describe("checkSession", () => {
 
 describe("checkSessionResult", () => {
   it("if session is valid do nothing", () => {
-    const sessionValidAction = {
-      type: checkCurrentSession.request,
+    const sessionValidAction: ReturnType<typeof checkCurrentSession.success> = {
+      type: "CHECK_CURRENT_SESSION_SUCCESS",
       payload: {
         isSessionValid: true
       }
@@ -90,8 +90,10 @@ describe("checkSessionResult", () => {
       .isDone();
   });
   it("if session is invalid call session expired", () => {
-    const sessionInvalidAction = {
-      type: checkCurrentSession.request,
+    const sessionInvalidAction: ReturnType<
+      typeof checkCurrentSession["success"]
+    > = {
+      type: "CHECK_CURRENT_SESSION_SUCCESS",
       payload: {
         isSessionValid: false
       }

@@ -1,4 +1,4 @@
-import { fromEither, fromNullable, Option } from "fp-ts/lib/Option";
+import { fromEither, fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -20,8 +20,11 @@ import {
   getCodiceAvviso,
   PaymentHistory
 } from "../store/reducers/payments/history";
-import { Psp, Wallet } from "../types/pagopa";
+import { Psp, Transaction, Wallet } from "../types/pagopa";
 import { formatDateAsReminder } from "./dates";
+import { getLocalePrimaryWithFallback } from "./locale";
+import { maybeInnerProperty } from "./options";
+import { formatNumberCentsToAmount } from "./stringBuilder";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -78,7 +81,7 @@ export function decodePagoPaQrCode(
  */
 export const pspsForLocale = (
   psps: ReadonlyArray<Psp>,
-  locale: string = I18n.locale.slice(0, 2)
+  locale: string = getLocalePrimaryWithFallback()
 ) => psps.filter(_ => (_.lingua ? _.lingua.toLowerCase() === locale : true));
 
 /**
@@ -106,6 +109,12 @@ export function walletHasFavoriteAvailablePsp(
   return walletPspInPsps !== undefined;
 }
 
+const hasDescriptionPrefix = (description: string) =>
+  description.startsWith("/RFA/") ||
+  description.startsWith("/RFB/") ||
+  description.startsWith("RFA/") ||
+  description.startsWith("RFB/");
+
 /**
  * This function removes the tag from payment description of a PagoPA transaction.
  * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
@@ -114,12 +123,7 @@ export const cleanTransactionDescription = (description: string): string => {
   // detect description in pagoPA format - note that we also check for cases
   // without the leading slash since some services don't add it (mistake on
   // their side)
-  if (
-    !description.startsWith("/RFA/") &&
-    !description.startsWith("/RFB/") &&
-    !description.startsWith("RFA/") &&
-    !description.startsWith("RFB/")
-  ) {
+  if (!hasDescriptionPrefix(description)) {
     // not a description in the pagoPA format, return the description unmodified
     return description;
   }
@@ -189,4 +193,32 @@ export const getPaymentHistoryDetails = (
     separator,
     failureDetails
   );
+};
+
+// return the transaction fee it transaction is defined and its fee property too
+export const getTransactionFee = (
+  transaction?: Transaction,
+  formatFunc: (fee: number) => string = (f: number) =>
+    formatNumberCentsToAmount(f, true)
+): string | null => {
+  const maybeFee = maybeInnerProperty<Transaction, "fee", number | undefined>(
+    transaction,
+    "fee",
+    m => (m ? m.amount : undefined)
+  ).getOrElse(undefined);
+  return fromNullable(maybeFee)
+    .map(formatFunc)
+    .toNullable();
+};
+
+// try to extract codice avviso from transaction description
+export const getTransactionCodiceAvviso = (
+  transactionDescription: string
+): Option<string> => {
+  const description = transactionDescription.trim();
+  if (!hasDescriptionPrefix(description)) {
+    return none;
+  }
+  const splitted = description.split("/").filter(i => i.trim().length > 0);
+  return splitted.length > 1 ? some(splitted[1]) : none;
 };

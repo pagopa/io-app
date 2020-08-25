@@ -52,8 +52,8 @@ import {
   getEnabledChannelsForService
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import { capitalize } from "../../utils/strings";
-import { handleItemOnPress } from "../../utils/url";
+import { capitalize, maybeNotNullyString } from "../../utils/strings";
+import { handleItemOnPress, ItemAction } from "../../utils/url";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -120,7 +120,7 @@ function renderInformationRow(
   label: string,
   info: string,
   value: string,
-  valueType?: "MAP" | "COPY" | "LINK"
+  valueType?: ItemAction
 ) {
   return (
     <View style={styles.infoItem}>
@@ -137,6 +137,21 @@ function renderInformationRow(
     </View>
   );
 }
+
+const renderRowWithDefinedValue = (
+  data: string | undefined,
+  header: string,
+  linkingPrefix?: string,
+  valueType?: ItemAction
+) =>
+  maybeNotNullyString(data).fold(undefined, value =>
+    renderInformationRow(
+      header,
+      value,
+      `${linkingPrefix || ""}${value}`,
+      valueType
+    )
+  );
 
 // Renders a row in the service information panel as a link
 function renderInformationLinkRow(
@@ -366,29 +381,24 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       const metadata = potServiceMetadata.value;
       return (
         <React.Fragment>
-          {metadata.address &&
-            renderInformationRow(
-              I18n.t("services.contactAddress"),
-              metadata.address,
-              metadata.address,
-              "MAP"
-            )}
-          {metadata.phone &&
-            renderInformationRow(
-              I18n.t("services.contactPhone"),
-              metadata.phone,
-              `tel:${metadata.phone}`
-            )}
-          {metadata.email &&
-            renderInformationRow(
-              "Email",
-              metadata.email,
-              `mailto:${metadata.email}`
-            )}
-          {metadata.pec &&
-            renderInformationRow("PEC", metadata.pec, `mailto:${metadata.pec}`)}
-          {metadata.web_url &&
-            renderInformationRow("Web", metadata.web_url, metadata.web_url)}
+          {renderRowWithDefinedValue(
+            metadata.address,
+            I18n.t("services.contactAddress"),
+            undefined,
+            "MAP"
+          )}
+          {renderRowWithDefinedValue(
+            metadata.support_url,
+            I18n.t("services.contactSupport")
+          )}
+          {renderRowWithDefinedValue(
+            metadata.phone,
+            I18n.t("services.contactPhone"),
+            "tel:"
+          )}
+          {renderRowWithDefinedValue(metadata.email, "Email", "mailto:")}
+          {renderRowWithDefinedValue(metadata.pec, "PEC", "mailto:")}
+          {renderRowWithDefinedValue(metadata.web_url, "Web")}
         </React.Fragment>
       );
     }

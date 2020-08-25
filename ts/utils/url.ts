@@ -42,16 +42,16 @@ export const getUrlBasepath = (url: string): string => {
   )(url);
 };
 
+export type ItemAction = "MAP" | "COPY" | "LINK";
 /**
  * Return the function to:
  * - copy the value, if valueType is COPY
  * - navigate to the map, if valueType is MAP
  * - navigate to a browser, if valueType is LINK
  */
-
 export function handleItemOnPress(
   value: string,
-  valueType?: "MAP" | "COPY" | "LINK"
+  valueType?: ItemAction
 ): () => void {
   switch (valueType) {
     case "MAP":
@@ -59,7 +59,10 @@ export function handleItemOnPress(
     case "COPY":
       return () => clipboardSetStringWithFeedback(value);
     default:
-      return () => openUrl(value);
+      return () =>
+        Linking.openURL(value)
+          .then(constNull)
+          .catch(constNull);
   }
 }
 
@@ -78,10 +81,10 @@ const taskCanOpenUrl = (url: string) =>
   );
 
 /**
- * open the url if it can ben opened and if it has a valid protocol (http/https)
- * it should be used in place of direct call of Linking.openURL(url)
+ * open the web url if it can ben opened and if it has a valid protocol (http/https)
+ * it should be used in place of direct call of Linking.openURL(url) with web urls
  */
-export const openUrl = (url: string, onError: () => void = constNull) => {
+export const openWebUrl = (url: string, onError: () => void = constNull) => {
   pipe(
     () => taskCanOpenUrl(url),
     te =>

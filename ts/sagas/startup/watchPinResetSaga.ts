@@ -1,5 +1,4 @@
-import { Effect } from "redux-saga";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, Effect, put, takeEvery } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 
 import { startApplicationInitialization } from "../../store/actions/application";

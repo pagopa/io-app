@@ -1,5 +1,4 @@
-import { Effect } from "redux-saga";
-import { call, cancel, fork, put, take } from "redux-saga/effects";
+import { call, cancel, Effect, fork, put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
 import {
@@ -15,7 +14,7 @@ import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
  * A saga that makes the user go through the authentication process until
  * a SessionToken gets produced.
  */
-export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
+export function* authenticationSaga(): Generator<Effect, SessionToken, any> {
   yield put(analyticsAuthenticationStarted());
 
   // Watch for login by CIE

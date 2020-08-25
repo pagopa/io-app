@@ -4,7 +4,6 @@ import {
   instabugUnreadMessagesLoaded,
   updateInstabugUnreadMessages
 } from "../store/actions/instabug";
-import { SagaCallReturnType } from "../types/utils";
 
 const loadInstabugUnreadMessages = () => {
   return new Promise<number>(resolve => {
@@ -31,10 +30,8 @@ function* watchInstabugSaga(): IterableIterator<Effect> {
   }
 }
 
-function* updateInstabugBadgeSaga(): IterableIterator<Effect> {
-  const repliesCount: SagaCallReturnType<
-    typeof loadInstabugUnreadMessages
-  > = yield call(loadInstabugUnreadMessages);
+function* updateInstabugBadgeSaga(): Generator<any, void, number> {
+  const repliesCount = yield call(loadInstabugUnreadMessages);
   yield put(instabugUnreadMessagesLoaded(repliesCount));
 }
 

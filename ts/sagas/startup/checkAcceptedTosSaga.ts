@@ -1,5 +1,4 @@
-import { Effect } from "redux-saga";
-import { call, put, take } from "redux-saga/effects";
+import { call, Effect, put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { tosVersion } from "../../config";
@@ -10,7 +9,12 @@ import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
 
 export function* checkAcceptedTosSaga(
   userProfile: InitializedProfile
-): IterableIterator<Effect> {
+): Generator<
+  Effect,
+  void,
+  | ActionType<typeof profileUpsert["success"]>
+  | ActionType<typeof profileUpsert["failure"]>
+> {
   // The user has to explicitly accept the new version of ToS if:
   // - this is the first access
   // - the user profile stores the user accepted an old version of ToS
@@ -38,9 +42,7 @@ export function* checkAcceptedTosSaga(
    */
   if (userProfile.has_profile) {
     yield put(profileUpsert.request({ accepted_tos_version: tosVersion }));
-    const action:
-      | ActionType<typeof profileUpsert["success"]>
-      | ActionType<typeof profileUpsert["failure"]> = yield take([
+    const action = yield take([
       getType(profileUpsert.success),
       getType(profileUpsert.failure)
     ]);

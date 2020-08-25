@@ -1,7 +1,7 @@
 /**
  * The root saga that forks and includes all the other sagas.
  */
-import { all, call, Effect } from "redux-saga/effects";
+import { all, call } from "redux-saga/effects";
 
 import backendInfoSaga from "./backendInfo";
 import backendStatusSaga from "./backendStatus";
@@ -30,7 +30,7 @@ const connectionMonitorParameters = {
 };
 */
 
-export default function* root(): Iterator<Effect> {
+export default function* root() {
   yield all([
     call(startupSaga),
     // this saga is temporary removed since it seems to not work properly

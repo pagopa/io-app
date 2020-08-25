@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import AdviceComponent from "../../../components/AdviceComponent";
 import CieRequestAuthenticationOverlay from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
@@ -126,6 +127,11 @@ class CiePinScreen extends React.PureComponent<Props, State> {
               description={I18n.t("authentication.cie.pin.pinCardContent")}
               onPinChanged={this.handelOnPinChanged}
               onSubmit={this.showModal}
+            />
+            <View spacer={true} />
+            <AdviceComponent
+              text={I18n.t("login.expiration_info")}
+              iconColor={"black"}
             />
           </View>
         </ScrollView>

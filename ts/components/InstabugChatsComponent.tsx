@@ -17,7 +17,6 @@ import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import CustomBadge from "./ui/CustomBadge";
 import IconFont from "./ui/IconFont";
-import reportType = BugReporting.reportType;
 
 interface OwnProps {
   color?: string;
@@ -79,7 +78,7 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
     // Register to the instabug dismiss event. (https://docs.instabug.com/docs/react-native-bug-reporting-event-handlers#section-after-dismissing-instabug)
     // This event is fired when chat or bug screen is dismissed
     BugReporting.onSDKDismissedHandler(
-      (dismiss: dismissType, _: reportType): void => {
+      (dismiss: dismissType, _: BugReporting.reportType): void => {
         // Due an Instabug library bug, we can't use the report parameter because it always has "bug" as value.
         // We need to differentiate the type of report then use instabugReportType
         if (this.state.instabugReportType.isSome()) {
