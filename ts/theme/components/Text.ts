@@ -4,8 +4,14 @@ import variables from "../variables";
 
 import { Platform, TextProperties } from "react-native";
 
+/**
+ * @deprecated
+ */
 declare module "native-base" {
   namespace NativeBase {
+    /**
+     * @deprecated
+     */
     interface Text extends TextProperties {
       link?: boolean;
       bold?: boolean;
