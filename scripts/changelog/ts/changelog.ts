@@ -197,7 +197,7 @@ export const getChangelogScope = (
     ? right(some(scopesList[0]))
     : left([
         new Error(
-          `Different purposes were found on the stories related to the pull request: [${scopesList.join(
+          `Different scopes were found on the stories related to the pull request: [${scopesList.join(
             ","
           )}].\n
            It is not possible to assign a single scope to this pull request!`
