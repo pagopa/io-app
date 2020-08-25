@@ -1,4 +1,6 @@
 import * as t from "io-ts";
+
+import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import * as r from "italia-ts-commons/lib/requests";
 import {
   ApiHeaderJson,
@@ -13,7 +15,9 @@ import {
   RequestHeaders,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
+import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Omit } from "italia-ts-commons/lib/types";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
@@ -49,10 +53,6 @@ import {
   upsertUserMetadataDefaultDecoder,
   UpsertUserMetadataT
 } from "../../definitions/backend/requestTypes";
-
-import { DeferredPromise } from "italia-ts-commons/lib/promises";
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 
@@ -217,28 +217,28 @@ export function BackendClient(
               r.constantResponseDecoder<undefined, 202>(202, undefined),
               r.ioResponseDecoder<
                 400,
-                (typeof ProblemJson)["_A"],
-                (typeof ProblemJson)["_O"]
+                typeof ProblemJson["_A"],
+                typeof ProblemJson["_O"]
               >(400, ProblemJson)
             ),
             r.constantResponseDecoder<undefined, 401>(401, undefined)
           ),
           r.ioResponseDecoder<
             404,
-            (typeof ProblemJson)["_A"],
-            (typeof ProblemJson)["_O"]
+            typeof ProblemJson["_A"],
+            typeof ProblemJson["_O"]
           >(404, ProblemJson)
         ),
         r.ioResponseDecoder<
           429,
-          (typeof ProblemJson)["_A"],
-          (typeof ProblemJson)["_O"]
+          typeof ProblemJson["_A"],
+          typeof ProblemJson["_O"]
         >(429, ProblemJson)
       ),
       r.ioResponseDecoder<
         500,
-        (typeof ProblemJson)["_A"],
-        (typeof ProblemJson)["_O"]
+        typeof ProblemJson["_A"],
+        typeof ProblemJson["_O"]
       >(500, ProblemJson)
     );
   };

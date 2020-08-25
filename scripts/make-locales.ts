@@ -15,10 +15,10 @@
  */
 // tslint:disable:no-console
 
+import * as path from "path";
 import chalk from "chalk";
 import * as fs from "fs-extra";
 import * as yaml from "js-yaml";
-import * as path from "path";
 import * as prettier from "prettier";
 
 interface LocaleDoc {
@@ -234,12 +234,12 @@ async function run(rootPath: string): Promise<void> {
 
     // compare keys of locales with master keys
     console.log(chalk.gray("[3/4]"), "Comparing keys...");
-    const checkedLocaleKeys: ReadonlyArray<
-      LocaleDocWithCheckedKeys
-    > = otherLocaleKeys.map(l => ({
-      ...l,
-      ...compareLocaleKeys(masterKeys.keys, l.keys)
-    }));
+    const checkedLocaleKeys: ReadonlyArray<LocaleDocWithCheckedKeys> = otherLocaleKeys.map(
+      l => ({
+        ...l,
+        ...compareLocaleKeys(masterKeys.keys, l.keys)
+      })
+    );
 
     // look for locales that have missing or extra keys
     const badLocales = checkedLocaleKeys.filter(
@@ -248,7 +248,7 @@ async function run(rootPath: string): Promise<void> {
 
     if (badLocales.length > 0) {
       badLocales.forEach(reportBadLocale);
-      if (!Boolean(process.env.I18N_IGNORE_LOCALE_ERRORS)) {
+      if (!process.env.I18N_IGNORE_LOCALE_ERRORS) {
         throw Error("bad locales detected");
       }
     }
@@ -264,4 +264,7 @@ async function run(rootPath: string): Promise<void> {
   }
 }
 
-run(root).then(() => console.log("done"), () => process.exit(1));
+run(root).then(
+  () => console.log("done"),
+  () => process.exit(1)
+);

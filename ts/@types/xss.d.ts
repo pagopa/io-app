@@ -1,4 +1,5 @@
 declare module "xss" {
+  import { FilterXSS } from "xss";
   export type FilterXSSOptions = any;
 
   /**
@@ -9,7 +10,7 @@ declare module "xss" {
    * @return {String}
    */
   export function filterXSS(html: string, options?: FilterXSSOptions): string {
-    var xss = new FilterXSS(options);
+    const xss = new FilterXSS(options);
     return xss.process(html);
   }
 }

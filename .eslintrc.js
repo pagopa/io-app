@@ -42,6 +42,7 @@ module.exports = {
     "no-case-declarations": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-inferrable-types": "off",
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "prefer-const": "error"
   }
 };
