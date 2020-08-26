@@ -40,6 +40,7 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "off",
     "no-case-declarations": "off",
     "prefer-const": "error",
+    curly: "error",
     "react/prop-types": "off",
     "import/order": "error",
     // Enable if we want to enforce the return type for all the functions

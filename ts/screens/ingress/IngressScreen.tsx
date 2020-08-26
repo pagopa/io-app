@@ -35,7 +35,7 @@ class IngressScreen extends React.PureComponent<Props> {
   }
 
   public render() {
-    const items = Array(
+    const items = [
       {
         enabled: this.props.hasSessionToken,
         label: I18n.t("startup.authentication")
@@ -49,7 +49,7 @@ class IngressScreen extends React.PureComponent<Props> {
         enabled: this.props.isProfileEnabled,
         label: I18n.t("startup.profileEnabled")
       }
-    );
+    ];
     return (
       <Container style={styles.container}>
         <ConnectionBar />

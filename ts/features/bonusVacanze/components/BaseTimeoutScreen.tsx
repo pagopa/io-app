@@ -1,5 +1,6 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
+import image from "../../../../img/wallet/errors/payment-expired-icon.png";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../i18n";
@@ -12,8 +13,6 @@ type Props = {
   body: string | React.ReactNode;
   onExit: () => void;
 };
-
-import image from "../../../../img/wallet/errors/payment-expired-icon.png";
 
 /**
  * This screen informs the user that the request takes longer than necessary to be completed
