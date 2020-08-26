@@ -92,7 +92,12 @@ module.exports = {
     ],
     "@typescript-eslint/no-floating-promises": "error",
     "no-unused-expressions": "off",
-    "@typescript-eslint/no-unused-expressions": ["error"]
+    "@typescript-eslint/no-unused-expressions": ["error"],
+    "@typescript-eslint/prefer-function-type": "error",
+    "@typescript-eslint/restrict-plus-operands": "error",
+    semi: "off",
+    "@typescript-eslint/semi": ["error"],
+    "@typescript-eslint/unified-signatures": "error"
   },
   settings: {
     react: {
