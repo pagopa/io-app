@@ -37,14 +37,15 @@ module.exports = {
     "import"
   ],
   rules: {
-    "@typescript-eslint/no-unused-vars": "off",
     "no-case-declarations": "off",
     "prefer-const": "error",
     curly: "error",
     "no-inner-declarations": "off",
+    "spaced-comment": ["error", "always", { block: { balanced: true } }],
     "react/prop-types": "off",
     "react/display-name": "off",
     "import/order": "error",
+    "@typescript-eslint/no-unused-vars": "off",
     // Enable if we want to enforce the return type for all the functions
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-inferrable-types": "off",

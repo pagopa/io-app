@@ -454,7 +454,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   I18n.t("profile.main.experimentalFeatures.confirmTitle"),
                   this.props.isExperimentalFeaturesEnabled,
                   this.onExperimentalFeaturesToggle
-                )*/
+                ) */
                 }
                 {this.developerListItem(
                   I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),

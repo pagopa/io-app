@@ -332,12 +332,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       extrapolate: "clamp"
     });
 
-  /*TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
+  /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
   private instabugLogAndOpenReport = () => {
     this.sendDataToInstabug();
     openInstabugBugReport();
   };
-  /*TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
+  /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
   private instabugReportTag = "services-loading-error";
   private sendDataToInstabug() {
     Instabug.appendTags([this.instabugReportTag]);
@@ -379,7 +379,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <View spacer={true} extralarge={true} />
         <Text bold={true}>{I18n.t("services.loading.title")}</Text>
         <Text>{I18n.t("services.loading.subtitle")}</Text>
-        {/*TODO: remove this component after the resolution of https://www.pivotaltracker.com/story/show/172431153 */}
+        {/* TODO: remove this component after the resolution of https://www.pivotaltracker.com/story/show/172431153 */}
         <View spacer={true} extralarge={true} />
         <ButtonDefaultOpacity
           onPress={this.instabugLogAndOpenReport}

@@ -210,7 +210,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
           bounces={false}
         >
           <List withContentLateralPadding={true}>
-            {/* Privacy Policy*/}
+            {/* Privacy Policy */}
             <ListItemComponent
               title={I18n.t("profile.main.privacy.privacyPolicy.title")}
               subTitle={I18n.t(

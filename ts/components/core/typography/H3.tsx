@@ -38,7 +38,7 @@ type OwnProps = ExternalTypographyProps<BoldKindProps>;
 const fontName: IOFontFamily = "TitilliumWeb";
 const fontSize = 18;
 
-/***
+/**
  * A custom function to calculate the values if no weight or color is provided.
  * The choose of the default color depends on the weight, for this reason cannot be used
  * the default calculateWeightColor with fallback if undefined.
@@ -62,7 +62,7 @@ const calculateWeightColor = (
   };
 };
 
-/***
+/**
  * Typography component to render `H3` text with font size {@link fontSize} and fontFamily {@link fontName}.
  * default values(if not defined) are weight: `SemiBold`, color: `bluegreyDark`
  * @param props

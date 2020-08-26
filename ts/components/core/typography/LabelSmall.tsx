@@ -18,7 +18,7 @@ type OwnProps = ExternalTypographyProps<
 const fontName: IOFontFamily = "TitilliumWeb";
 const fontSize = 14;
 
-/***
+/**
  * Typography component to render `LabelSmall` text with font size {@link fontSize} and fontFamily {@link fontName}.
  * default values(if not defined) are weight: `Bold`, color: `blue`
  * @param props`

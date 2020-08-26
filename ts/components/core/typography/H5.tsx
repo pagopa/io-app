@@ -42,7 +42,7 @@ type OwnProps = ExternalTypographyProps<BoldKindProps>;
 const fontName: IOFontFamily = "TitilliumWeb";
 const fontSize = 14;
 
-/***
+/**
  * Typography component to render `H5` text with font size {@link fontSize} and fontFamily {@link fontName}.
  * default values(if not defined) are weight: `SemiBold`, color: `bluegreyDark`
  * @param props

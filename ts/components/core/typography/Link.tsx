@@ -14,7 +14,7 @@ type OwnProps = ExternalTypographyProps<
 const fontName: IOFontFamily = "TitilliumWeb";
 const fontSize = 16;
 
-/***
+/**
  * Typography component to render `Link` text with font size {@link fontSize} and fontFamily {@link fontName}.
  * default values(if not defined) are weight: `SemiBold`, color: `blue`
  * @param props`
