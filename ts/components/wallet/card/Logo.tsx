@@ -32,7 +32,7 @@ const cardMapIcon: { [key in string]: any } = {
   carta_maestro: require("../../../../img/wallet/cards-icons/maestro.png")
 };
 
-const defaultCardIcon = require("../../../../img/wallet/cards-icons/unknown.png");
+import defaultCardIcon from "../../../../img/wallet/cards-icons/unknown.png";
 /**
  * pagoPA's "brandLogo" field contains an url to an image
  * From the given url it will check if there is a matching and an icon will be returned

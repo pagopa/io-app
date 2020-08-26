@@ -143,9 +143,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const bonusVacanzeWhiteLogo = require("../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png");
-const bonusVacanzePreviewBg = require("../../../../img/bonus/bonusVacanze/bonus_preview_bg.png");
-const bonusVacanzeBg = require("../../../../img/bonus/bonusVacanze/bonus_bg.png");
+import bonusVacanzeWhiteLogo from "../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
+import bonusVacanzePreviewBg from "../../../../img/bonus/bonusVacanze/bonus_preview_bg.png";
+import bonusVacanzeBg from "../../../../img/bonus/bonusVacanze/bonus_bg.png";
 const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const { bonus } = props;
 

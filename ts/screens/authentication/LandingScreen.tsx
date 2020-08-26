@@ -11,6 +11,7 @@ import { Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import sessionExpired from "../../../img/landing/session_expired.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CieNotSupported from "../../components/cie/CieNotSupported";
 import { ContextualHelp } from "../../components/ContextualHelp";
@@ -216,9 +217,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
         <InfoScreenComponent
           title={I18n.t("authentication.landing.session_expired.title")}
           body={I18n.t("authentication.landing.session_expired.body")}
-          image={renderInfoRasterImage(
-            require("../../../img/landing/session_expired.png")
-          )}
+          image={renderInfoRasterImage(sessionExpired)}
         />
       ) : (
         <Content contentContainerStyle={styles.flex} noPadded={true}>

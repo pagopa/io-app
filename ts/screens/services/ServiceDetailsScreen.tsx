@@ -14,6 +14,8 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { NotificationChannelEnum } from "../../../definitions/backend/NotificationChannel";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import iOSStoreBadge from "../../../img/badges/app-store-badge.png";
+import playStoreBadge from "../../../img/badges/google-play-badge.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import OrganizationHeader from "../../components/OrganizationHeader";
 import BaseScreenComponent, {
@@ -36,8 +38,10 @@ import {
 } from "../../store/reducers/content";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { servicesSelector } from "../../store/reducers/entities/services";
-import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
-import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
+import {
+  isCustomEmailChannelEnabledSelector,
+  wasServiceAlertDisplayedOnceSelector
+} from "../../store/reducers/persistedPreferences";
 import {
   isEmailEnabledSelector,
   isInboxEnabledSelector,
@@ -360,13 +364,13 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 renderInformationImageRow(
                   I18n.t("services.otherAppIos"),
                   metadata.app_ios,
-                  require("../../../img/badges/app-store-badge.png")
+                  iOSStoreBadge
                 )}
               {metadata.app_android &&
                 renderInformationImageRow(
                   I18n.t("services.otherAppAndroid"),
                   metadata.app_android,
-                  require("../../../img/badges/google-play-badge.png")
+                  playStoreBadge
                 )}
             </View>
           )}

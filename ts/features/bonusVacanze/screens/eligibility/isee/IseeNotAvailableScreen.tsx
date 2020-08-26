@@ -2,16 +2,16 @@ import { Text } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
+import image from "../../../../../../img/servicesStatus/error-detail-icon.png";
 
 import { InfoScreenStyle } from "../../../../../components/infoScreen/InfoScreenComponent";
+import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../i18n";
 import { cancelBonusVacanzeRequest } from "../../../store/actions/bonusVacanze";
 import { BaseIseeErrorComponent } from "./BaseIseeErrorComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const image = require("../../../../../../img/servicesStatus/error-detail-icon.png");
 const dsuUrl = "https://servizi2.inps.it/servizi/Iseeriforma/FrmSimHome.aspx";
 
 const renderBody = (first: string, second: string, third: string) => (
@@ -63,7 +63,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(IseeNotAvailableScreen);
+export default connect(null, mapDispatchToProps)(IseeNotAvailableScreen);

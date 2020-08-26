@@ -13,7 +13,7 @@ type Props = {
   onExit: () => void;
 };
 
-const image = require("../../../../img/wallet/errors/payment-expired-icon.png");
+import image from "../../../../img/wallet/errors/payment-expired-icon.png";
 
 /**
  * This screen informs the user that the request takes longer than necessary to be completed

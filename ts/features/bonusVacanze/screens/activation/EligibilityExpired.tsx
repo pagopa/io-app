@@ -2,6 +2,7 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import image from "../../../../../img/pictograms/hourglass.png";
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -18,8 +19,6 @@ import {
 } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
-
-const image = require("../../../../../img/pictograms/hourglass.png");
 
 /**
  * This screen informs the user that the eligibility data has expired
@@ -66,7 +65,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onRestart: () => dispatch(checkBonusVacanzeEligibility.request())
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(EligibilityExpired);
+export default connect(null, mapDispatchToProps)(EligibilityExpired);

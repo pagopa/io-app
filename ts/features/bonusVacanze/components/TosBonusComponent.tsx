@@ -2,6 +2,7 @@ import { Body, Container, Content, Right, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
+import brokenLinkImage from "../../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import AppHeader from "../../../components/ui/AppHeader";
@@ -52,8 +53,6 @@ const styles = StyleSheet.create({
     marginEnd: 10
   }
 });
-
-const brokenLinkImage = require("../../../../img/broken-link.png");
 
 /**
  * Component to show the TOS for the bonus activation flow
