@@ -146,6 +146,7 @@ export function createRootReducer(
           (isActionOf(logoutFailure, action) &&
             !action.payload.options.keepUserData))
           ? ({
+              // eslint-disable-next-line no-underscore-dangle
               authentication: { _persist: state.authentication._persist },
               entities: { messagesStatus: state.entities.messagesStatus }
             } as GlobalState)
