@@ -48,12 +48,10 @@ const fontSize = 14;
  * @param props
  * @constructor
  */
-export const H5: React.FunctionComponent<OwnProps> = props => {
-  return typographyFactory<AllowedWeight, AllowedColors>({
+export const H5: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "SemiBold",
     defaultColor: "bluegreyDark",
     font: fontName,
     fontStyle: { fontSize }
   });
-};

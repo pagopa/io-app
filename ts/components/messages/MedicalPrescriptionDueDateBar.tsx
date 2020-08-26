@@ -153,8 +153,7 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
    */
   public render() {
     const { dueDate } = this;
-    return dueDate.fold(null, _ => {
-      return !this.isPrescriptionExpiring && !this.isPrescriptionExpired ? (
+    return dueDate.fold(null, _ => !this.isPrescriptionExpiring && !this.isPrescriptionExpired ? (
         <View style={[styles.container, this.bannerStyle]}>
           <Text style={styles.text} white={false}>
             {this.textContent}
@@ -174,8 +173,7 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
             {this.textContent}
           </Text>
         </View>
-      );
-    });
+      ));
   }
 }
 

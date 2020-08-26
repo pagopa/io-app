@@ -209,13 +209,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
   }
 
-  private getFooterButtons = () => {
-    return this.props.error.fold(this.renderFooterButtons(), error =>
+  private getFooterButtons = () => this.props.error.fold(this.renderFooterButtons(), error =>
       error === "PAYMENT_DUPLICATED"
         ? this.renderFooterSingleButton()
         : this.renderFooterButtons()
     );
-  };
 
   public render(): React.ReactNode {
     const rptId: RptId = this.props.navigation.getParam("rptId");

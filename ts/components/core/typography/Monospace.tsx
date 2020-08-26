@@ -20,12 +20,10 @@ const fontSize = 16;
  * @param props`
  * @constructor
  */
-export const Monospace: React.FunctionComponent<OwnProps> = props => {
-  return typographyFactory<AllowedWeight, AllowedColors>({
+export const Monospace: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Regular",
     defaultColor: "bluegrey",
     font: fontName,
     fontStyle: { fontSize }
   });
-};

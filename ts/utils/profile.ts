@@ -119,12 +119,10 @@ export function getChannelsforServicesList(
     {} as BlockedInboxOrChannels
   );
 
-  return servicesId.reduce((acc, serviceId) => {
-    return {
+  return servicesId.reduce((acc, serviceId) => ({
       ...acc,
       [serviceId]: profileBlockedChannels[serviceId] || []
-    };
-  }, {} as BlockedInboxOrChannels);
+    }), {} as BlockedInboxOrChannels);
 }
 
 /**

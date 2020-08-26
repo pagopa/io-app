@@ -85,11 +85,9 @@ const getAvailableBonusesT: GetBonusListT = {
 function ParamAuthorizationBearerHeaderProducer<
   P extends { readonly Bearer: string }
 >(): RequestHeaderProducer<P, "Authorization"> {
-  return (p: P): RequestHeaders<"Authorization"> => {
-    return {
+  return (p: P): RequestHeaders<"Authorization"> => ({
       Authorization: `Bearer ${p.Bearer}`
-    };
-  };
+    });
 }
 
 //

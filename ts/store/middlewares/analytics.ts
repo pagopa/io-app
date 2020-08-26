@@ -409,8 +409,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
 export function screenTracking(
   store: MiddlewareAPI
 ): (_: Dispatch) => (__: Action) => Action {
-  return (next: Dispatch): ((_: Action) => Action) => {
-    return (action: Action): Action => {
+  return (next: Dispatch): ((_: Action) => Action) => (action: Action): Action => {
       if (
         action.type !== NavigationActions.NAVIGATE &&
         action.type !== NavigationActions.BACK
@@ -435,5 +434,4 @@ export function screenTracking(
       }
       return result;
     };
-  };
 }

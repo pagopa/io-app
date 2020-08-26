@@ -46,8 +46,7 @@ const styles = StyleSheet.create({
  * - dark: the backgound is a dark gray
  * - hasFlatBottom: the bottom is anchored to the container bottom
  */
-export const SlidedContentComponent = (props: Props & React.Props<Content>) => {
-  return (
+export const SlidedContentComponent = (props: Props & React.Props<Content>) => (
     <Content
       noPadded={true}
       style={[styles.container, styles.flexGrow]}
@@ -66,4 +65,3 @@ export const SlidedContentComponent = (props: Props & React.Props<Content>) => {
       </View>
     </Content>
   );
-};

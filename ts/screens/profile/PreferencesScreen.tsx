@@ -152,11 +152,9 @@ class PreferencesScreen extends React.Component<Props, State> {
       return I18n.t("send_email_messages.options.disable_all.label");
     }
     return pot.getOrElse(
-      pot.map(this.props.isCustomEmailChannelEnabled, enabled => {
-        return enabled
+      pot.map(this.props.isCustomEmailChannelEnabled, enabled => enabled
           ? I18n.t("send_email_messages.options.by_service.label")
-          : I18n.t("send_email_messages.options.enable_all.label");
-      }),
+          : I18n.t("send_email_messages.options.enable_all.label")),
       I18n.t("send_email_messages.options.enable_all.label")
     );
   };

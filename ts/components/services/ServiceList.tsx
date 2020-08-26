@@ -100,15 +100,13 @@ class ServiceList extends React.Component<Props> {
   private getServiceKey = (
     potService: pot.Pot<ServicePublic, Error>,
     index: number
-  ): string => {
-    return pot.getOrElse(
+  ): string => pot.getOrElse(
       pot.map(
         potService,
         service => `${service.service_id}-${service.version}`
       ),
       `service-pot-${index}`
     );
-  };
 
   private renderServiceSectionHeader = (info: {
     section: ServicesSectionState;
@@ -126,12 +124,10 @@ class ServiceList extends React.Component<Props> {
   private isRead = (
     potService: pot.Pot<ServicePublic, Error>,
     readServices: ReadStateByServicesId
-  ): boolean => {
-    return pot.getOrElse(
+  ): boolean => pot.getOrElse(
       pot.map(potService, s => s && readServices[s.service_id] !== undefined),
       false
     );
-  };
 
   public render() {
     const {

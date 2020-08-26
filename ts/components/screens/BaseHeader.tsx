@@ -125,8 +125,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     }, noReferenceTimeout);
   }
 
-  private renderBodyLabel = (label?: string, ref?: Ref<Text>) => {
-    return maybeNotNullyString(label).fold(undefined, l => {
+  private renderBodyLabel = (label?: string, ref?: Ref<Text>) => maybeNotNullyString(label).fold(undefined, l => {
       const isWhite = this.props.primary || this.props.dark;
       return (
         <Text
@@ -140,7 +139,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         </Text>
       );
     });
-  };
 
   public render() {
     const {

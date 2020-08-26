@@ -10,17 +10,13 @@ import {
 import { appReducer } from "../index";
 import { GlobalState } from "../types";
 
-jest.mock("@react-native-community/async-storage", () => {
-  return {
+jest.mock("@react-native-community/async-storage", () => ({
     AsyncStorage: jest.fn()
-  };
-});
+  }));
 
-jest.mock("react-native-share", () => {
-  return {
+jest.mock("react-native-share", () => ({
     open: jest.fn()
-  };
-});
+  }));
 
 describe("allowed Snapshot Screens Selector test", () => {
   it("Test high level composition", () => {

@@ -333,9 +333,7 @@ class AddCardScreen extends React.Component<Props, State> {
 
   private isValidPan() {
     return this.state.pan
-      .map(pan => {
-        return CreditCardPan.is(pan);
-      })
+      .map(pan => CreditCardPan.is(pan))
       .toUndefined();
   }
 
@@ -354,9 +352,7 @@ class AddCardScreen extends React.Component<Props, State> {
 
   private isValidSecurityCode() {
     return this.state.securityCode
-      .map(securityCode => {
-        return CreditCardCVC.is(securityCode);
-      })
+      .map(securityCode => CreditCardCVC.is(securityCode))
       .toUndefined();
   }
 

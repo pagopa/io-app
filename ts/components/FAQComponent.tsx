@@ -11,8 +11,7 @@ type Props = Readonly<{
   onLinkClicked?: (url: string) => void;
 }>;
 
-const FAQComponent: React.FunctionComponent<Props> = (props: Props) => {
-  return (
+const FAQComponent: React.FunctionComponent<Props> = (props: Props) => (
     <>
       {getFAQsFromCategories(props.faqCategories).map(
         (faqType: FAQType, i: number) => (
@@ -26,6 +25,5 @@ const FAQComponent: React.FunctionComponent<Props> = (props: Props) => {
       )}
     </>
   );
-};
 
 export default FAQComponent;

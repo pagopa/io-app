@@ -27,8 +27,7 @@ const iconSize = 24;
  * @param props
  * @constructor
  */
-export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> = props => {
-  return (
+export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> = props => (
     <View
       style={[
         styles.verticalPadding,
@@ -47,4 +46,3 @@ export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> = props 
       </Text>
     </View>
   );
-};

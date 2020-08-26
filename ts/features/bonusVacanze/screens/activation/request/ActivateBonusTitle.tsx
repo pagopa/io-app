@@ -29,8 +29,7 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-export const ActivateBonusTitle: React.FunctionComponent<Props> = props => {
-  return (
+export const ActivateBonusTitle: React.FunctionComponent<Props> = props => (
     <View>
       <View style={styles.row}>
         <H3 style={styles.text}>{props.title}</H3>
@@ -48,4 +47,3 @@ export const ActivateBonusTitle: React.FunctionComponent<Props> = props => {
       </View>
     </View>
   );
-};

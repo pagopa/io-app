@@ -34,8 +34,7 @@ declare module "native-base" {
  * https://www.pivotaltracker.com/story/show/170819564
  */
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     ".spacer": {
       xsmall: {
         height: customVariables.spacerExtrasmallHeight
@@ -111,5 +110,4 @@ export default (): Theme => {
       flex: 1,
       justifyContent: "center"
     }
-  };
-};
+  });

@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const TypographyShowroom = () => {
-  return (
+export const TypographyShowroom = () => (
     <ShowroomSection title={"Typography"}>
       <H1Row />
       <H2Row />
@@ -42,7 +41,6 @@ export const TypographyShowroom = () => {
       <View spacer={true} extralarge={true} />
     </ShowroomSection>
   );
-};
 
 export const H1Row = () => (
   <>

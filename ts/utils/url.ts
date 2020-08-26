@@ -88,9 +88,7 @@ export const openWebUrl = (url: string, onError: () => void = constNull) => {
   pipe(
     () => taskCanOpenUrl(url),
     te =>
-      te.chain(v => {
-        return v ? taskLinking(url) : TE.fromLeft("error");
-      })
+      te.chain(v => v ? taskLinking(url) : TE.fromLeft("error"))
   )({})
     .run()
     .then(ei => ei.fold(onError, constNull), onError);

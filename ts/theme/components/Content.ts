@@ -15,8 +15,7 @@ declare module "native-base" {
   }
 }
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     ".alternative": {
       backgroundColor: variables.brandGray
     },
@@ -35,5 +34,4 @@ export default (): Theme => {
     paddingBottom: FOOTER_SAFE_AREA + variables.contentPadding,
     paddingTop: variables.contentPadding,
     paddingHorizontal: variables.contentPadding
-  };
-};
+  });

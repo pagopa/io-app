@@ -20,8 +20,7 @@ declare module "native-base" {
   }
 }
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     ".info": {
       backgroundColor: variables.brandHighLighter,
       bordercolor: variables.brandHighLighter
@@ -196,5 +195,4 @@ export default (): Theme => {
     shadowRadius: 0,
     shadowOpacity: 0,
     alignSelf: "flex-start" // This attribute is necessary to solve the problem reported on Pivotal https://www.pivotaltracker.com/story/show/168290964/comments/207570370
-  };
-};
+  });

@@ -14,8 +14,7 @@ declare module "native-base" {
   }
 }
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     "NativeBase.Left": {
       "NativeBase.Button": {
         "UIComponent.IconFont": {
@@ -141,5 +140,4 @@ export default (): Theme => {
     flexDirection: "row",
     /* Android */
     elevation: 0
-  };
-};
+  });

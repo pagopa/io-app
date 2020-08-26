@@ -164,8 +164,7 @@ class PinScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  private renderErrorDescription = () => {
-    return maybeNotNullyString(this.state.errorDescription).fold(
+  private renderErrorDescription = () => maybeNotNullyString(this.state.errorDescription).fold(
       undefined,
       des => {
         // wait 100ms to set focus
@@ -184,7 +183,6 @@ class PinScreen extends React.PureComponent<Props, State> {
         );
       }
     );
-  };
 
   public onPinReset() {
     this.setState(

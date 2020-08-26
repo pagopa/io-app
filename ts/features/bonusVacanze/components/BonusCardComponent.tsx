@@ -260,8 +260,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
     );
   };
 
-  const renderPreviewCard = () => {
-    return (
+  const renderPreviewCard = () => (
       <View style={styles.preview}>
         <TouchableDefaultOpacity
           style={[styles.row, styles.spaced]}
@@ -296,7 +295,6 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         </TouchableDefaultOpacity>
       </View>
     );
-  };
 
   return (
     <>

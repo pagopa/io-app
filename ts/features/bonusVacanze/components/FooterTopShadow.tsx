@@ -34,10 +34,8 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-export const FooterTopShadow: React.FunctionComponent = props => {
-  return (
+export const FooterTopShadow: React.FunctionComponent = props => (
     <View style={styles.container}>
       <View style={styles.footerVariant}>{props.children}</View>
     </View>
   );
-};

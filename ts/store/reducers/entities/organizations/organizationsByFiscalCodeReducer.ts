@@ -38,8 +38,6 @@ const reducer = (
 // Selectors
 export const organizationNamesByFiscalCodeSelector = (
   state: GlobalState
-): OrganizationNamesByFiscalCodeState => {
-  return state.entities.organizations.nameByFiscalCode;
-};
+): OrganizationNamesByFiscalCodeState => state.entities.organizations.nameByFiscalCode;
 
 export default reducer;

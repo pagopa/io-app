@@ -44,26 +44,20 @@ const IncludeYamlType = (includeRoot: string) =>
   new yaml.Type("!include", {
     kind: "scalar",
 
-    resolve: (data: any) => {
-      return (
+    resolve: (data: any) => (
         data !== null &&
         typeof data === "string" &&
         path // included file must be under includeRoot
           .normalize(path.join(includeRoot, data))
           .startsWith(path.normalize(includeRoot)) &&
         fs.statSync(path.join(includeRoot, data)).isFile()
-      );
-    },
+      ),
 
-    construct: data => {
-      return fs.readFileSync(path.join(includeRoot, data)).toString();
-    },
+    construct: data => fs.readFileSync(path.join(includeRoot, data)).toString(),
 
     instanceOf: String,
 
-    represent: (data: any) => {
-      return String(data);
-    }
+    represent: (data: any) => String(data)
   });
 
 /**

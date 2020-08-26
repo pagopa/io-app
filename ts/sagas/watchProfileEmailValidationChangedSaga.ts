@@ -23,9 +23,7 @@ export function* watchProfileEmailValidationChangedSaga(
 export const isProfileEmailValidatedChanged = (
   previous: Option<boolean>,
   next: Option<boolean>
-): boolean => {
-  return previous.chain(p => next.map(n => n !== p)).getOrElse(false);
-};
+): boolean => previous.chain(p => next.map(n => n !== p)).getOrElse(false);
 
 function* checkProfileEmailChanged(
   action: ActionType<typeof profileLoadSuccess>

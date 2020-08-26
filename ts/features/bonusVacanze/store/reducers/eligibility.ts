@@ -93,14 +93,12 @@ export const eligibilityEligibleSelector = createSelector<
   GlobalState,
   EligibilityState,
   Option<EligibilityCheckSuccessEligible>
->(eligibilitySelector, eligibility => {
-  return pot.getOrElse(
+>(eligibilitySelector, eligibility => pot.getOrElse(
     pot.map(eligibility.checkRequest.check, c =>
       EligibilityCheckSuccessEligible.is(c) ? some(c) : none
     ),
     none
-  );
-});
+  ));
 
 export const eligibilityIsLoading = createSelector<
   GlobalState,

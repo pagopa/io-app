@@ -13,8 +13,7 @@ declare module "native-base" {
   }
 }
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     ".active": {
       borderBottomWidth: variables.borderWidth * 4,
       borderColor: color(variables.inputBorderColor).darken(0.2).hex()
@@ -22,5 +21,4 @@ export default (): Theme => {
     ".spacer": {
       paddingTop: 20
     }
-  };
-};
+  });

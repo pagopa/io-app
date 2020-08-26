@@ -120,11 +120,9 @@ div.custom-block.io-demo-block .custom-block-body::after {
 </style>
 `;
 
-const generateInlineCss = (cssStyle: string) => {
-  return `<style>
+const generateInlineCss = (cssStyle: string) => `<style>
   ${cssStyle}
   </style>`;
-};
 
 const generateCustomFontList = `<style>
     ol {
@@ -163,8 +161,7 @@ const generateHtml = (
   cssStyle?: string,
   useCustomSortedList: boolean = false,
   avoidTextSelection: boolean = false
-) => {
-  return `
+) => `
   <!DOCTYPE html>
   <html>
     <head>
@@ -179,7 +176,6 @@ const generateHtml = (
     </body>
   </html>
   `;
-};
 
 /**
  * Covert the old demo markdown tag with the new one.

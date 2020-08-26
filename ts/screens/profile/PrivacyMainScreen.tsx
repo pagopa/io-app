@@ -180,8 +180,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
 
   private canBeBadgeRendered = (
     choice: UserDataProcessingChoiceEnum
-  ): boolean => {
-    return (
+  ): boolean => (
       !pot.isError(this.props.userDataProcessing[choice]) &&
       pot.getOrElse(
         pot.map(
@@ -194,7 +193,6 @@ class PrivacyMainScreen extends React.Component<Props, State> {
         false
       )
     );
-  };
 
   public render() {
     const ContentComponent = withLoadingSpinner(() => (

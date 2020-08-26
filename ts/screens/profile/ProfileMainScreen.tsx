@@ -377,8 +377,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     };
 
     // eslint-disable
-    const screenContent = () => {
-      return (
+    const screenContent = () => (
         <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <View spacer={true} />
@@ -526,7 +525,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           </List>
         </ScrollView>
       );
-    };
 
     return (
       <DarkLayout

@@ -494,13 +494,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     );
   };
 
-  private hasChannel = (channel: NotificationChannelEnum) => {
-    return fromNullable(this.service.available_notification_channels)
-      .map(anc => {
-        return anc.indexOf(channel) !== -1;
-      })
+  private hasChannel = (channel: NotificationChannelEnum) => fromNullable(this.service.available_notification_channels)
+      .map(anc => anc.indexOf(channel) !== -1)
       .getOrElse(true);
-  };
 
   private getPushSwitchRow = () => {
     if (!this.hasChannel(NotificationChannelEnum.WEBHOOK)) {

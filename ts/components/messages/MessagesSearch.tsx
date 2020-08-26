@@ -42,8 +42,7 @@ const generateMessagesStateMatchingSearchTextArrayAsync = (
   potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>,
   servicesById: ServicesByIdState,
   searchText: string
-): Promise<ReadonlyArray<MessageState>> => {
-  return new Promise(resolve => {
+): Promise<ReadonlyArray<MessageState>> => new Promise(resolve => {
     const result = pot.getOrElse(
       pot.map(potMessagesState, _ =>
         _.filter(messageState =>
@@ -74,7 +73,6 @@ const generateMessagesStateMatchingSearchTextArrayAsync = (
 
     resolve(result);
   });
-};
 
 /**
  * A component to render a list of messages that match a searchText.

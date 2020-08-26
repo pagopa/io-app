@@ -89,8 +89,7 @@ const renderPinCol = (
         unNamed={buttonType === "light"}
       >
         {label.fold(
-          l => {
-            return (
+          l => (
               <Text
                 white={style === "label" && buttonType === "primary"}
                 style={[
@@ -100,10 +99,8 @@ const renderPinCol = (
               >
                 {l}
               </Text>
-            );
-          },
-          ic => {
-            return (
+            ),
+          ic => (
               <StyledIconFont
                 name={ic.name}
                 size={ic.size}
@@ -115,8 +112,7 @@ const renderPinCol = (
                 }
                 accessibilityLabel={ic.accessibilityLabel}
               />
-            );
-          }
+            )
         )}
       </ButtonDefaultOpacity>
     </Col>

@@ -183,9 +183,7 @@ type State = {
   isFirstLoading: boolean;
 };
 
-export const isFakeItem = (item: any): item is FakeItem => {
-  return item.fake;
-};
+export const isFakeItem = (item: any): item is FakeItem => item.fake;
 
 // Min number of items to activate continuos scroll
 const minItemsToScroll = 4;
@@ -447,9 +445,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     );
   };
 
-  private getItemLayout = (_: Sections | null, index: number) => {
-    return this.state.itemLayouts[index];
-  };
+  private getItemLayout = (_: Sections | null, index: number) => this.state.itemLayouts[index];
 
   // On scroll download more data
   private onScrollHandler = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -552,13 +548,11 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     );
   }
 
-  public noOtherDeadlines = () => {
-    return (
+  public noOtherDeadlines = () => (
       <View style={styles.messageNoOthers}>
         <Text bold={true}>{I18n.t("reminders.noOtherDeadlines")}</Text>
       </View>
     );
-  };
 
   public scrollToLocation = (params: SectionListScrollParams) => {
     if (

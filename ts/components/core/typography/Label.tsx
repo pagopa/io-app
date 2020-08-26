@@ -20,12 +20,10 @@ const fontSize = 16;
  * @param props`
  * @constructor
  */
-export const Label: React.FunctionComponent<OwnProps> = props => {
-  return typographyFactory<AllowedWeight, AllowedColors>({
+export const Label: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Bold",
     defaultColor: "blue",
     font: fontName,
     fontStyle: { fontSize }
   });
-};

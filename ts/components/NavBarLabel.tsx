@@ -38,13 +38,13 @@ const routeOrder = new Map<Routes, number>([
   ["PROFILE_NAVIGATOR", 4]
 ]);
 
-const getLabel = (routeName: string, locale: Locales): string => {
+const getLabel = (routeName: string, locale: Locales): string => 
   // "routeName as Routes" is assumed to be safe as explained @https://github.com/pagopa/io-app/pull/193#discussion_r192347234
   // adding fallback anyway -- better safe than sorry
-  return fromNullable(ROUTE_LABEL[routeName as Routes]).fold(fallbackLabel, l =>
+   fromNullable(ROUTE_LABEL[routeName as Routes]).fold(fallbackLabel, l =>
     I18n.t(l, { locale })
-  );
-};
+  )
+;
 
 const styles = StyleSheet.create({
   labelStyle: {

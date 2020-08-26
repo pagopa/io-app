@@ -32,8 +32,7 @@ declare module "native-base" {
   }
 }
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     ".xsmall": {
       fontSize: variables.fontSizeXSmall,
       lineHeight: variables.lineHeightXSmall,
@@ -103,5 +102,4 @@ export default (): Theme => {
     },
     lineHeight: variables.lineHeightBase,
     fontSize: variables.fontSizeBase
-  };
-};
+  });

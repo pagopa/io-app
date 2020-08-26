@@ -11,8 +11,7 @@ export const shareBase64Content = (
   content: string,
   message?: string,
   failOnCancel: boolean = false
-) => {
-  return tryCatch(
+) => tryCatch(
     () =>
       Share.open({
         url: `data:image/png;base64,${content}`,
@@ -21,7 +20,6 @@ export const shareBase64Content = (
       }),
     errorMsg => new Error(String(errorMsg))
   );
-};
 
 /**
  * Return true if the share is available

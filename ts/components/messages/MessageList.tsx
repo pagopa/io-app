@@ -275,9 +275,7 @@ class MessageList extends React.Component<Props, State> {
   private getItemLayout = (
     _: ReadonlyArray<MessageState> | null,
     index: number
-  ) => {
-    return this.state.itemLayouts[index];
-  };
+  ) => this.state.itemLayouts[index];
 
   private onLongPress = (id: string) => {
     Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);

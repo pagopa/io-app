@@ -20,8 +20,7 @@ const fontSize = 16;
  * @param props`
  * @constructor
  */
-export const Link: React.FunctionComponent<OwnProps> = props => {
-  return typographyFactory<AllowedWeight, AllowedColors>({
+export const Link: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "SemiBold",
     defaultColor: "blue",
@@ -31,4 +30,3 @@ export const Link: React.FunctionComponent<OwnProps> = props => {
       textDecorationLine: "underline"
     }
   });
-};

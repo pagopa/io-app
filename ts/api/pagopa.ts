@@ -110,18 +110,14 @@ type GetTransactionsUsingGETTExtra = MapResponseType<
 
 const ParamAuthorizationBearerHeader = <P extends { readonly Bearer: string }>(
   p: P
-): RequestHeaders<"Authorization"> => {
-  return {
+): RequestHeaders<"Authorization"> => ({
     Authorization: `Bearer ${p.Bearer}`
-  };
-};
+  });
 
 const ParamAuthorizationBearerHeaderProducer = <
   P extends { readonly Bearer: string }
->(): RequestHeaderProducer<P, "Authorization"> => {
-  return (p: P): RequestHeaders<"Authorization"> =>
+>(): RequestHeaderProducer<P, "Authorization"> => (p: P): RequestHeaders<"Authorization"> =>
     ParamAuthorizationBearerHeader(p);
-};
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 const transactionsSliceLength = 10;

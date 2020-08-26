@@ -9,13 +9,11 @@ import I18n from "../../../../i18n";
 export const cancelButtonProps = (
   onPress: () => void,
   title?: string
-): BlockButtonProps => {
-  return {
+): BlockButtonProps => ({
     bordered: true,
     title: title ? title : I18n.t("global.buttons.cancel"),
     onPress
-  };
-};
+  });
 /**
  * A common configuration for all the buttons that represent a confirm/active action
  * @param onPress
@@ -24,10 +22,8 @@ export const cancelButtonProps = (
 export const confirmButtonProps = (
   onPress: () => void,
   title?: string
-): BlockButtonProps => {
-  return {
+): BlockButtonProps => ({
     primary: true,
     title: title ? title : I18n.t("global.buttons.confirm"),
     onPress
-  };
-};
+  });

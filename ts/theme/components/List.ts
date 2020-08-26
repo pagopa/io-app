@@ -10,11 +10,9 @@ declare module "native-base" {
   }
 }
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     ".withContentLateralPadding": {
       paddingLeft: variables.contentPadding,
       paddingRight: variables.contentPadding
     }
-  };
-};
+  });

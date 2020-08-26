@@ -49,8 +49,6 @@ const reducer = (
 // Selectors
 export const organizationsAllSelector = (
   state: GlobalState
-): OrganizationsAllState => {
-  return state.entities.organizations.all;
-};
+): OrganizationsAllState => state.entities.organizations.all;
 
 export default reducer;

@@ -82,8 +82,7 @@ type State = {
 /**
  * Get the last deadline id (the oldest in time is the first in array position)
  */
-export const getLastDeadlineId = (sections: Sections): Option<string> => {
-  return fromNullable(sections)
+export const getLastDeadlineId = (sections: Sections): Option<string> => fromNullable(sections)
     .chain(s => fpIndex(0, s))
     .chain(d => fpIndex(0, [...d.data]))
     .fold(none, item => {
@@ -92,7 +91,6 @@ export const getLastDeadlineId = (sections: Sections): Option<string> => {
       }
       return none;
     });
-};
 
 /**
  * Get the next deadline id
@@ -242,9 +240,7 @@ const filterSectionsWithTimeLimit = (
 const selectFutureData = (sections: Sections): Sections => {
   const startOfTodayTime = startOfToday().getTime();
 
-  const initialIndex = sections.findIndex(section => {
-    return new Date(section.title).getTime() >= startOfTodayTime;
-  });
+  const initialIndex = sections.findIndex(section => new Date(section.title).getTime() >= startOfTodayTime);
 
   return initialIndex < 0 ? [] : sections.slice(initialIndex);
 };
@@ -340,8 +336,7 @@ const selectInitialSectionsToRender = (
 const selectMoreSectionsToRenderAsync = async (
   sections: Sections,
   maybeLastLoadedStartOfMonthTime: Option<number>
-): Promise<Sections> => {
-  return new Promise(resolve => {
+): Promise<Sections> => new Promise(resolve => {
     const moreSectionsToRender: Sections = [];
 
     moreSectionsToRender.push(
@@ -358,7 +353,6 @@ const selectMoreSectionsToRenderAsync = async (
 
     resolve(moreSectionsToRender);
   });
-};
 
 /**
  * A component to show the messages with a due_date.

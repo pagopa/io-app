@@ -56,9 +56,7 @@ class UpdateAppModal extends React.PureComponent<never, State> {
   }
   private idTimeout?: number;
   // No Event on back button android
-  private handleBackPress = () => {
-    return true;
-  };
+  private handleBackPress = () => true;
 
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);

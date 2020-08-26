@@ -20,12 +20,10 @@ const fontSize = 28;
  * @param props
  * @constructor
  */
-export const H1: React.FunctionComponent<OwnProps> = props => {
-  return typographyFactory<AllowedWeight, AllowedColors>({
+export const H1: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Bold",
     defaultColor: "bluegreyDark",
     font: fontName,
     fontStyle: { fontSize }
   });
-};

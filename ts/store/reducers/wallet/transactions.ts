@@ -75,20 +75,16 @@ export const latestTransactionsSelector = createSelector(
 );
 
 // return true if there are more transactions to load
-export const areMoreTransactionsAvailable = (state: GlobalState): boolean => {
-  return pot.getOrElse(
-    pot.map(state.wallet.transactions.transactions, transactions => {
-      return pot.getOrElse(
+export const areMoreTransactionsAvailable = (state: GlobalState): boolean => pot.getOrElse(
+    pot.map(state.wallet.transactions.transactions, transactions => pot.getOrElse(
         pot.map(
           state.wallet.transactions.total,
           t => Object.keys(transactions).length < t
         ),
         false
-      );
-    }),
+      )),
     false
   );
-};
 
 // return the number of transactions loaded
 // note transactions loaded should be different (in cardinality) from ones displayed since we operate

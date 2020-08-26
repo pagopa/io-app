@@ -63,12 +63,10 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
     const barCodeContents = await new Promise<BarCodeContents>((res, _) => {
       const attchs = this.attachmentsToRender;
       const content = attchs.reduce<BarCodeContents>(
-        (acc: BarCodeContents, curr: MessageAttachment) => {
-          return {
+        (acc: BarCodeContents, curr: MessageAttachment) => ({
             ...acc,
             [curr.name]: Buffer.from(curr.content, "base64").toString("ascii")
-          };
-        },
+          }),
         {}
       );
       res(content);

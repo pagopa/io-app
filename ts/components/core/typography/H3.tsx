@@ -68,11 +68,9 @@ const calculateWeightColor = (
  * @param props
  * @constructor
  */
-export const H3: React.FunctionComponent<OwnProps> = props => {
-  return typographyFactory<AllowedWeight, AllowedColors>({
+export const H3: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     weightColorFactory: calculateWeightColor,
     font: fontName,
     fontStyle: { fontSize }
   });
-};

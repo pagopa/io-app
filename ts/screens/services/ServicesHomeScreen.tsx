@@ -518,8 +518,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.setState({ enableServices: !enableServices });
   };
 
-  private renderLongPressFooterButtons = () => {
-    return (
+  private renderLongPressFooterButtons = () => (
       <View style={styles.varBar}>
         <ButtonDefaultOpacity
           block={true}
@@ -553,7 +552,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         </ButtonDefaultOpacity>
       </View>
     );
-  };
 
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
@@ -625,8 +623,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   /**
    * Render ServicesSearch component.
    */
-  private renderSearch = () => {
-    return this.props.searchText
+  private renderSearch = () => this.props.searchText
       .map(_ =>
         _.length < MIN_CHARACTER_SEARCH_TEXT ? (
           <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
@@ -642,7 +639,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         )
       )
       .getOrElse(<SearchNoResultMessage errorType={"InvalidSearchBarText"} />);
-  };
 
   private refreshServices = () => {
     this.setState({
@@ -787,8 +783,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   const getTabSevicesId = (
     tabServices: ReadonlyArray<ServicesSectionState>
-  ) => {
-    return tabServices.reduce(
+  ) => tabServices.reduce(
       (acc: ReadonlyArray<string>, curr: ServicesSectionState) => {
         const sectionServices = curr.data.reduce(
           (
@@ -806,7 +801,6 @@ const mapStateToProps = (state: GlobalState) => {
       },
       []
     );
-  };
 
   const tabsServicesId: { [k: number]: ReadonlyArray<string> } = {
     [0]: getTabSevicesId(localTabSections),
