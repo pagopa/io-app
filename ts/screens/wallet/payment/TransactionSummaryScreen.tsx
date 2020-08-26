@@ -324,6 +324,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 }
 
+// eslint-disable-next-line complexity
 const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
   const walletById = state.wallet.wallets.walletById;

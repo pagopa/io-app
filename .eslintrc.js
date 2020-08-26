@@ -58,6 +58,8 @@ module.exports = {
     "no-bitwise": "error",
     eqeqeq: ["error", "smart"],
     "max-classes-per-file": ["error", 1],
+    "guard-for-in": "error",
+    complexity: "error",
     "import/order": "error",
     "@typescript-eslint/no-unused-vars": "off",
     // Enable if we want to enforce the return type for all the functions

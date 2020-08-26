@@ -105,6 +105,7 @@ export const walletsSelector = createSelector(
 );
 
 // reducer
+// eslint-disable-next-line complexity
 const reducer = (
   state: WalletsState = WALLETS_INITIAL_STATE,
   action: Action
