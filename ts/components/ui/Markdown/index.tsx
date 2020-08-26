@@ -417,6 +417,8 @@ class Markdown extends React.PureComponent<Props, State> {
           filterXSS(markdown, { stripIgnoreTagBody: ["script"] })
         ),
         (error: any, file: any) => {
+          // for retro compatibility
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           error
             ? fromNullable(onError).map(_ => _(error))
             : this.setState({

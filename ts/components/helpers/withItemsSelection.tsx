@@ -46,12 +46,15 @@ export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
 
     // A function to add/remove an id from the selectedItemIds Set.
     private toggleItemSelection = (id: string) => {
-      this.setState(({ selectedItemIds }) => selectedItemIds
+      this.setState(({ selectedItemIds }) =>
+        selectedItemIds
           .map(_ => {
             const newSelectedItemIds = new Set(_);
-            newSelectedItemIds.has(id)
-              ? newSelectedItemIds.delete(id)
-              : newSelectedItemIds.add(id);
+            if (newSelectedItemIds.has(id)) {
+              newSelectedItemIds.delete(id);
+            } else {
+              newSelectedItemIds.add(id);
+            }
 
             return {
               selectedItemIds: some(newSelectedItemIds)
@@ -61,7 +64,8 @@ export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
             selectedItemIds: some(
               new Set<string>([id])
             )
-          }));
+          })
+      );
     };
 
     private setSelectedItemIds = (newSelectedItemIds: Option<Set<string>>) => {

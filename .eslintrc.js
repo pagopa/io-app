@@ -90,7 +90,9 @@ module.exports = {
         }
       }
     ],
-    "@typescript-eslint/no-floating-promises": "error"
+    "@typescript-eslint/no-floating-promises": "error",
+    "no-unused-expressions": "off",
+    "@typescript-eslint/no-unused-expressions": ["error"]
   },
   settings: {
     react: {

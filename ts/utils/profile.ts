@@ -119,10 +119,13 @@ export function getChannelsforServicesList(
     {} as BlockedInboxOrChannels
   );
 
-  return servicesId.reduce((acc, serviceId) => ({
+  return servicesId.reduce(
+    (acc, serviceId) => ({
       ...acc,
       [serviceId]: profileBlockedChannels[serviceId] || []
-    }), {} as BlockedInboxOrChannels);
+    }),
+    {} as BlockedInboxOrChannels
+  );
 }
 
 /**
@@ -222,11 +225,11 @@ export const getBlockedChannels = (
     !enabled.email ? EMAIL_CHANNEL : ""
   ].filter(_ => _ !== "");
 
-  blockedChannelsForService.length === 0
-    ? // eslint-disable-next-line
-      delete profileBlockedChannels[serviceId]
-    : // eslint-disable-next-line
-      (profileBlockedChannels[serviceId] = blockedChannelsForService);
+  if (blockedChannelsForService.length === 0) {
+    delete profileBlockedChannels[serviceId];
+  } else {
+    profileBlockedChannels[serviceId] = blockedChannelsForService;
+  }
 
   return {
     ...profileBlockedChannels
