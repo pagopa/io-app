@@ -3,8 +3,6 @@ import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
 
-import { Platform, TextProperties } from "react-native";
-
 /**
  * @deprecated
  */
