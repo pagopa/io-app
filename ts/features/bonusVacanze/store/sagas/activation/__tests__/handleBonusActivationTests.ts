@@ -50,9 +50,7 @@ describe("Bonus Activation Saga, mock networking saga", () => {
   });
   networkingActivationResultActions.map(networkingScenario =>
     navigationActions.map(navigationScenario =>
-      it(`${networkingScenario.displayName} with ${
-        navigationScenario.displayName
-      }`, () => {
+      it(`${networkingScenario.displayName} with ${navigationScenario.displayName}`, () => {
         return expectSagaFactory(
           navigationScenario.startScreen,
           networkingScenario.results,
@@ -67,6 +65,7 @@ describe("Bonus Activation Saga, mock networking saga", () => {
 });
 
 const mockRemote = (result: BonusVacanzeReturnType) =>
+  // eslint-disable-next-line require-yield
   function* mockRemoteGenerator() {
     return result;
   };
