@@ -54,6 +54,10 @@ module.exports = {
     "no-new-wrappers": "error",
     "no-eval": "error",
     "no-console": "error",
+    "no-caller": "error",
+    "no-bitwise": "error",
+    eqeqeq: ["error", "smart"],
+    "max-classes-per-file": ["error", 1],
     "import/order": "error",
     "@typescript-eslint/no-unused-vars": "off",
     // Enable if we want to enforce the return type for all the functions
