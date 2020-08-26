@@ -67,7 +67,13 @@ module.exports = {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-inferrable-types": "off",
     // TODO: added for compatibility. Remove this line and fix all the any in the code
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/array-type": [
+      "error",
+      {
+        default: "generic"
+      }
+    ]
   },
   settings: {
     react: {

@@ -15,7 +15,7 @@ declare module "native-base-shoutem-theme" {
   }
 
   export type MapPropsToStyleNames = <P>(
-    styleNames: string[],
+    styleNames: Array<string>,
     props: P
   ) => ReadonlyArray<string>;
 

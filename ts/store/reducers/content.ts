@@ -124,7 +124,7 @@ export const isServiceInScopeSelector = (
  * @param scope
  */
 export const servicesInScopeSelector = (
-  services: readonly ServicePublic[],
+  services: ReadonlyArray<ServicePublic>,
   scope: ScopeEnum
 ) =>
   createSelector(servicesByScopeSelector, maybeServicesByScope =>
