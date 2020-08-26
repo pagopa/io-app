@@ -30,8 +30,11 @@ const styles = StyleSheet.create({
 
 const timeoutErrorMsg: Millisecond = 5000 as Millisecond;
 
-class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<{}, State> {
-  constructor(props: {}) {
+class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
+  Record<string, unknown>,
+  State
+> {
+  constructor(props: Record<string, unknown>) {
     super(props);
     this.state = {
       hasError: false

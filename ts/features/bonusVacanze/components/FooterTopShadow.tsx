@@ -29,13 +29,12 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = {};
 /**
  * A generic component that can be used to draw shadow on top
  * @param props
  * @constructor
  */
-export const FooterTopShadow: React.FunctionComponent<Props> = props => {
+export const FooterTopShadow: React.FunctionComponent = props => {
   return (
     <View style={styles.container}>
       <View style={styles.footerVariant}>{props.children}</View>

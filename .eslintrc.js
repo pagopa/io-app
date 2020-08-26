@@ -41,12 +41,19 @@ module.exports = {
     "no-case-declarations": "off",
     "prefer-const": "error",
     curly: "error",
+    "no-inner-declarations": "off",
     "react/prop-types": "off",
+    "react/display-name": "off",
     "import/order": "error",
     // Enable if we want to enforce the return type for all the functions
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-inferrable-types": "off",
     // TODO: added for compatibility. Remove this line and fix all the any in the code
     "@typescript-eslint/no-explicit-any": "off"
+  },
+  settings: {
+    react: {
+      version: "detect"
+    }
   }
 };

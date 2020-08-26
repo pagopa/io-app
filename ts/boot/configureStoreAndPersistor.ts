@@ -329,10 +329,12 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
       ? composeEnhancers(middlewares, RTron.createEnhancer())
       : composeEnhancers(middlewares);
 
-  const store: Store = createStore<PersistedGlobalState, Action, {}, {}>(
-    persistedReducer,
-    enhancer
-  );
+  const store: Store = createStore<
+    PersistedGlobalState,
+    Action,
+    Record<string, unknown>,
+    Record<string, unknown>
+  >(persistedReducer, enhancer);
   const persistor = persistStore(store);
 
   if (isDebuggingInChrome) {

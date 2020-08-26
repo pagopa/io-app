@@ -25,7 +25,7 @@ import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailab
 import { defaultRetryingFetch } from "../../../utils/fetch";
 
 type GetBonusListT = IGetApiRequestType<
-  {},
+  Record<string, unknown>,
   never,
   never,
   BasicResponseType<BonusesAvailable>

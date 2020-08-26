@@ -116,7 +116,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private setError = (
     errorMessage: string,
     navigationRoute?: string,
-    navigationParams: {} = {}
+    navigationParams: Record<string, unknown> = {}
   ) => {
     this.dispatchAnalyticEvent(errorMessage);
     this.setState(
@@ -269,12 +269,17 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private handleCieSuccess = (cieConsentUri: string) => {
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
-      setTimeout(async () => {
-        this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
-          cieConsentUri
-        });
-        // if screen reader is enabled, give more time to read the success message
-      }, this.state.isScreenReaderEnabled ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY : WAIT_TIMEOUT_NAVIGATION);
+      setTimeout(
+        async () => {
+          this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
+            cieConsentUri
+          });
+          // if screen reader is enabled, give more time to read the success message
+        },
+        this.state.isScreenReaderEnabled
+          ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
+          : WAIT_TIMEOUT_NAVIGATION
+      );
     });
   };
 
