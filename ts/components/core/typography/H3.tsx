@@ -49,13 +49,13 @@ const calculateWeightColor = (
   weight?: AllowedWeight,
   color?: AllowedColors
 ): RequiredTypographyProps<AllowedWeight, AllowedColors> => {
-  const newWeight = weight !== undefined ? weight : "SemiBold";
+  const newWeight = weight ?? "SemiBold";
   const newColor =
     color !== undefined
       ? color
       : newWeight === "SemiBold"
-        ? "bluegreyDark"
-        : "white";
+      ? "bluegreyDark"
+      : "white";
   return {
     weight: newWeight,
     color: newColor
