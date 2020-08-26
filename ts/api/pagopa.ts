@@ -3,6 +3,9 @@
  * to call the different API available
  */
 import { flip } from "fp-ts/lib/function";
+
+import * as t from "io-ts";
+import * as r from "italia-ts-commons/lib/requests";
 import {
   AddResponseType,
   ApiHeaderJson,
@@ -18,21 +21,6 @@ import {
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
-import {
-  NullableWallet,
-  PagoPAErrorResponse,
-  PaymentManagerToken,
-  PspListResponse,
-  PspResponse
-} from "../types/pagopa";
-import { SessionResponse } from "../types/pagopa";
-import { TransactionListResponse } from "../types/pagopa";
-import { TransactionResponse } from "../types/pagopa";
-import { WalletListResponse } from "../types/pagopa";
-import { WalletResponse } from "../types/pagopa";
-
-import * as t from "io-ts";
-import * as r from "italia-ts-commons/lib/requests";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -60,6 +48,18 @@ import {
   updateWalletUsingPUTDecoder,
   UpdateWalletUsingPUTT
 } from "../../definitions/pagopa/requestTypes";
+import {
+  NullableWallet,
+  PagoPAErrorResponse,
+  PaymentManagerToken,
+  PspListResponse,
+  PspResponse,
+  SessionResponse,
+  TransactionListResponse,
+  TransactionResponse,
+  WalletListResponse,
+  WalletResponse
+} from "../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
 
@@ -170,7 +170,7 @@ const getPatchedWalletsUsingGETDecoder = <O>(
   r.composeResponseDecoders(
     r.composeResponseDecoders(
       r.composeResponseDecoders(
-        r.ioResponseDecoder<200, (typeof type)["_A"], (typeof type)["_O"]>(
+        r.ioResponseDecoder<200, typeof type["_A"], typeof type["_O"]>(
           200,
           type,
           payload => {
@@ -409,7 +409,10 @@ export function PaymentManagerClient(
         )
       )({ id }),
     checkPayment: (id: TypeofApiParams<CheckPaymentUsingGETT>["id"]) =>
-      createFetchRequestForApi(checkPayment, altOptions)({
+      createFetchRequestForApi(
+        checkPayment,
+        altOptions
+      )({
         id
       }),
     getPspList: (
