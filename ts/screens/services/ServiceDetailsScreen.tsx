@@ -455,7 +455,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       // inbox is globally disabled or
       this.props.isInboxEnabled &&
       // inbox is disabled for the given service
-      this.state.uiEnabledChannels.inbox;
+      this.state.uiEnabledChannels.inbox &&
+      // inbox is disbaled for the profile
+      this.profileEnabledChannels.inbox;
 
     const onValueChange = (value: boolean) => {
       if (!value && !this.props.wasServiceAlertDisplayedOnce) {
