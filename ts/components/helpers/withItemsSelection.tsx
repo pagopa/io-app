@@ -35,7 +35,7 @@ export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
       const { selectedItemIds } = this.state;
       return (
         <WrappedComponent
-          {...this.props as P}
+          {...(this.props as P)}
           selectedItemIds={selectedItemIds}
           toggleItemSelection={this.toggleItemSelection}
           resetSelection={this.resetSelection}
@@ -59,7 +59,9 @@ export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
             };
           })
           .getOrElse({
-            selectedItemIds: some(new Set<string>([id]))
+            selectedItemIds: some(
+              new Set<string>([id])
+            )
           });
       });
     };

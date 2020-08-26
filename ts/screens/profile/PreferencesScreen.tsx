@@ -243,33 +243,37 @@ class PreferencesScreen extends React.Component<Props, State> {
               onPress={this.props.navigateToEmailForwardingPreferenceScreen}
             />
 
-            {// Check if spid email exists
-            maybeSpidEmail.isSome() && (
-              <ListItemComponent
-                title={I18n.t("profile.preferences.list.spid_email")}
-                subTitle={maybeSpidEmail.value}
-                onPress={() =>
-                  showModal(
-                    "profile.preferences.spid_email.contextualHelpTitle",
-                    "profile.preferences.spid_email.contextualHelpContent"
-                  )
-                }
-              />
-            )}
+            {
+              // Check if spid email exists
+              maybeSpidEmail.isSome() && (
+                <ListItemComponent
+                  title={I18n.t("profile.preferences.list.spid_email")}
+                  subTitle={maybeSpidEmail.value}
+                  onPress={() =>
+                    showModal(
+                      "profile.preferences.spid_email.contextualHelpTitle",
+                      "profile.preferences.spid_email.contextualHelpContent"
+                    )
+                  }
+                />
+              )
+            }
 
-            {// Check if mobile phone exists
-            maybePhoneNumber.isSome() && (
-              <ListItemComponent
-                title={I18n.t("profile.preferences.list.mobile_phone")}
-                subTitle={maybePhoneNumber.value}
-                onPress={() =>
-                  showModal(
-                    "profile.preferences.spid_email.contextualHelpTitle",
-                    "profile.preferences.spid_email.contextualHelpContent"
-                  )
-                }
-              />
-            )}
+            {
+              // Check if mobile phone exists
+              maybePhoneNumber.isSome() && (
+                <ListItemComponent
+                  title={I18n.t("profile.preferences.list.mobile_phone")}
+                  subTitle={maybePhoneNumber.value}
+                  onPress={() =>
+                    showModal(
+                      "profile.preferences.spid_email.contextualHelpTitle",
+                      "profile.preferences.spid_email.contextualHelpContent"
+                    )
+                  }
+                />
+              )
+            }
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}

@@ -98,8 +98,8 @@ export const walletsSelector = createSelector(
               ? 0
               : -1
             : b.lastUsage === undefined
-              ? 1
-              : a.lastUsage.getTime() - b.lastUsage.getTime())
+            ? 1
+            : a.lastUsage.getTime() - b.lastUsage.getTime())
       )
     )
 );
@@ -249,9 +249,7 @@ const reducer = (
     case getType(creditCardCheckout3dsRequest):
       // a valid URL has been made available
       // from pagoPA and needs to be opened in a webview
-      const urlWithToken = `${action.payload.urlCheckout3ds}&sessionToken=${
-        action.payload.paymentManagerToken
-      }`;
+      const urlWithToken = `${action.payload.urlCheckout3ds}&sessionToken=${action.payload.paymentManagerToken}`;
 
       return {
         ...state,

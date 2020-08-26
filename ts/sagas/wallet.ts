@@ -622,7 +622,7 @@ export function* watchWalletSaga(
     pagopaNodoClient.postAttivaRpt
   );
 
-  yield takeLatest(getType(paymentIdPolling.request), function*(
+  yield takeLatest(getType(paymentIdPolling.request), function* (
     action: ActionType<typeof paymentIdPolling["request"]>
   ) {
     // getPaymentId is a tuple2
@@ -726,7 +726,7 @@ function* setWalletSessionEnabledSaga(
  * This saga checks what is the route whence a new payment is started
  */
 export function* watchPaymentInitializeSaga(): Iterator<Effect> {
-  yield takeEvery(getType(paymentInitializeState), function*() {
+  yield takeEvery(getType(paymentInitializeState), function* () {
     const nav: GlobalState["nav"] = yield select(_ => _.nav);
     const currentRouteName = getCurrentRouteName(nav);
     const currentRouteKey = getCurrentRouteKey(nav);
@@ -747,7 +747,7 @@ export function* watchPaymentInitializeSaga(): Iterator<Effect> {
  * it makes one or two supplementary step backs (the correspondant step to wallet home from these screens)
  */
 export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
-  yield takeEvery(getType(backToEntrypointPayment), function*() {
+  yield takeEvery(getType(backToEntrypointPayment), function* () {
     const entrypointRoute: GlobalState["wallet"]["payment"]["entrypointRoute"] = yield select(
       _ => _.wallet.payment.entrypointRoute
     );

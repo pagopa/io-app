@@ -104,11 +104,12 @@ function* createOrUpdateProfileSaga(
         version: 0
       };
   try {
-    const response: SagaCallReturnType<
-      typeof createOrUpdateProfile
-    > = yield call(createOrUpdateProfile, {
-      profile: newProfile
-    });
+    const response: SagaCallReturnType<typeof createOrUpdateProfile> = yield call(
+      createOrUpdateProfile,
+      {
+        profile: newProfile
+      }
+    );
 
     if (response.isLeft()) {
       throw new Error(readableReport(response.value));

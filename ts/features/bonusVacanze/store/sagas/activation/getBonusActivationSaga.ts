@@ -42,9 +42,10 @@ function* getBonusActivation(
   SagaCallReturnType<typeof getLatestBonusVacanzeFromId>
 > {
   try {
-    const getLatestBonusVacanzeFromIdResult: SagaCallReturnType<
-      typeof getLatestBonusVacanzeFromId
-    > = yield call(getLatestBonusVacanzeFromId, { bonus_id: bonusId });
+    const getLatestBonusVacanzeFromIdResult: SagaCallReturnType<typeof getLatestBonusVacanzeFromId> = yield call(
+      getLatestBonusVacanzeFromId,
+      { bonus_id: bonusId }
+    );
 
     if (getLatestBonusVacanzeFromIdResult.isRight()) {
       // 200 -> we got the check result, polling must be stopped
@@ -103,9 +104,10 @@ export const bonusActivationSaga = (
     any
   > {
     try {
-      const startBonusActivationProcedureResult: SagaCallReturnType<
-        typeof startBonusActivationProcedure
-      > = yield call(startBonusActivationProcedure, {});
+      const startBonusActivationProcedureResult: SagaCallReturnType<typeof startBonusActivationProcedure> = yield call(
+        startBonusActivationProcedure,
+        {}
+      );
       if (startBonusActivationProcedureResult.isRight()) {
         const status = startBonusActivationProcedureResult.value.status;
         // 201 -> Request created.
@@ -114,9 +116,7 @@ export const bonusActivationSaga = (
           // start polling to try to get bonus activation
           const startPollingTime = new Date().getTime();
           while (true) {
-            const bonusActivationFromIdResult: SagaCallReturnType<
-              typeof getBonusActivation
-            > = yield call(
+            const bonusActivationFromIdResult: SagaCallReturnType<typeof getBonusActivation> = yield call(
               getBonusActivation,
               getLatestBonusVacanzeFromId,
               instanceId.id

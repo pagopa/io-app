@@ -96,7 +96,10 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
       calendarEvent.eventId
     ).run();
     this.setState({
-      isEventInDeviceCalendar: mayBeInCalendar.fold(_ => false, s => s)
+      isEventInDeviceCalendar: mayBeInCalendar.fold(
+        _ => false,
+        s => s
+      )
     });
   };
 
@@ -268,9 +271,10 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
               { cancelable: false }
             );
           } else if (preferredCalendar !== undefined) {
-            this.addCalendarEventToDeviceCalendar(message, due_date)(
-              preferredCalendar
-            );
+            this.addCalendarEventToDeviceCalendar(
+              message,
+              due_date
+            )(preferredCalendar);
           } else {
             // The event need to be added
             // Show a modal to let the user select a calendar

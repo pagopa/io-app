@@ -27,9 +27,7 @@ const iconSize = 24;
  * @param props
  * @constructor
  */
-export const ActivateBonusDiscrepancies: React.FunctionComponent<
-  Props
-> = props => {
+export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> = props => {
   return (
     <View
       style={[

@@ -19,16 +19,15 @@ const keychainDB: KeychainDB = {};
 module.exports = {
   ACCESSIBLE: jest.fn(),
 
-  getGenericPassword: jest.fn(
-    (options: Options) =>
-      keychainDB[options.service]
-        ? Promise.resolve(keychainDB[options.service])
-        : Promise.resolve(false)
+  getGenericPassword: jest.fn((options: Options) =>
+    keychainDB[options.service]
+      ? Promise.resolve(keychainDB[options.service])
+      : Promise.resolve(false)
   ),
 
   setGenericPassword: jest.fn(
     (username: string, password: string, options: Options) => {
-      // eslint-disable-next-line 
+      // eslint-disable-next-line
       keychainDB[options.service] = {
         username,
         password,
@@ -39,7 +38,7 @@ module.exports = {
   ),
 
   resetGenericPassword: jest.fn((options: Options) => {
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
     delete keychainDB[options.service];
     return Promise.resolve(true);
   })

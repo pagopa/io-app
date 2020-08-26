@@ -253,7 +253,7 @@ class PinScreen extends React.PureComponent<Props, State> {
             activeColor={variables.contentPrimaryBackground}
             compareWithCode={pinState.pin}
             onFulfill={this.onPinConfirmFulfill}
-            ref={pinpad => (this.pinConfirmComponent = pinpad)} // eslint-disable-line 
+            ref={pinpad => (this.pinConfirmComponent = pinpad)} // eslint-disable-line
             buttonType={"light"}
             onDeleteLastDigit={this.onPinConfirmRemoveLastDigit}
           />
@@ -395,7 +395,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   abortOnboarding: () => dispatch(abortOnboarding())
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(PinScreen);
+export default connect(undefined, mapDispatchToProps)(PinScreen);

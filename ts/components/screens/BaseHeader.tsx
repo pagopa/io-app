@@ -198,37 +198,36 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     return (
       <Right>
         {isSearchAvailable && <SearchButton searchType={searchType} />}
-        {!isSearchEnabled &&
-          showInstabugChat !== false && <InstabugChatsComponent />}
-        {onShowHelp &&
-          !isSearchEnabled && (
-            <ButtonDefaultOpacity
-              onPress={onShowHelp}
-              style={styles.helpButton}
-              transparent={true}
-              accessibilityLabel={I18n.t(
-                "global.accessibility.contextualHelp.open.label"
-              )}
-              accessibilityHint={I18n.t(
-                "global.accessibility.contextualHelp.open.hint"
-              )}
-            >
-              <IconFont name={"io-question"} />
-            </ButtonDefaultOpacity>
-          )}
+        {!isSearchEnabled && showInstabugChat !== false && (
+          <InstabugChatsComponent />
+        )}
+        {onShowHelp && !isSearchEnabled && (
+          <ButtonDefaultOpacity
+            onPress={onShowHelp}
+            style={styles.helpButton}
+            transparent={true}
+            accessibilityLabel={I18n.t(
+              "global.accessibility.contextualHelp.open.label"
+            )}
+            accessibilityHint={I18n.t(
+              "global.accessibility.contextualHelp.open.hint"
+            )}
+          >
+            <IconFont name={"io-question"} />
+          </ButtonDefaultOpacity>
+        )}
 
-        {customRightIcon &&
-          !isSearchEnabled && (
-            <ButtonDefaultOpacity
-              onPress={customRightIcon.onPress}
-              style={styles.helpButton}
-              transparent={true}
-              accessible={customRightIcon.accessibilityLabel !== undefined}
-              accessibilityLabel={customRightIcon.accessibilityLabel}
-            >
-              <IconFont name={customRightIcon.iconName} />
-            </ButtonDefaultOpacity>
-          )}
+        {customRightIcon && !isSearchEnabled && (
+          <ButtonDefaultOpacity
+            onPress={customRightIcon.onPress}
+            style={styles.helpButton}
+            transparent={true}
+            accessible={customRightIcon.accessibilityLabel !== undefined}
+            accessibilityLabel={customRightIcon.accessibilityLabel}
+          >
+            <IconFont name={customRightIcon.iconName} />
+          </ButtonDefaultOpacity>
+        )}
         {fromNullable(this.props.accessibilityEvents).fold(
           true,
           ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
@@ -262,8 +261,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     const iconColor = isPagoPATestEnabled
       ? variables.brandHighlight
       : primary || dark
-        ? variables.colorWhite
-        : variables.brandPrimary;
+      ? variables.colorWhite
+      : variables.brandPrimary;
 
     return (
       !isSearchEnabled &&

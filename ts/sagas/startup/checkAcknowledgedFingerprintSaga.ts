@@ -108,8 +108,8 @@ export function getFingerprintSettings(): Promise<BiometrySimpleType> {
           biometryType === true
             ? "FINGERPRINT"
             : biometryType === "FaceID"
-              ? "FACE_ID"
-              : "TOUCH_ID"
+            ? "FACE_ID"
+            : "TOUCH_ID"
         );
       })
       .catch(reason => {

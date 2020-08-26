@@ -316,7 +316,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         "dark-content",
         customVariables.colorWhite
       );
-    }); // eslint-disable-line 
+    }); // eslint-disable-line
   }
 
   private animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -627,20 +627,19 @@ class ServicesHomeScreen extends React.Component<Props, State> {
    */
   private renderSearch = () => {
     return this.props.searchText
-      .map(
-        _ =>
-          _.length < MIN_CHARACTER_SEARCH_TEXT ? (
-            <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
-          ) : (
-            <ServicesSearch
-              sectionsState={this.props.allSections}
-              profile={this.props.profile}
-              onRefresh={this.refreshServices}
-              navigateToServiceDetail={this.onServiceSelect}
-              searchText={_}
-              readServices={this.props.readServices}
-            />
-          )
+      .map(_ =>
+        _.length < MIN_CHARACTER_SEARCH_TEXT ? (
+          <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
+        ) : (
+          <ServicesSearch
+            sectionsState={this.props.allSections}
+            profile={this.props.profile}
+            onRefresh={this.refreshServices}
+            navigateToServiceDetail={this.onServiceSelect}
+            searchText={_}
+            readServices={this.props.readServices}
+          />
+        )
       )
       .getOrElse(<SearchNoResultMessage errorType={"InvalidSearchBarText"} />);
   };
@@ -833,8 +832,8 @@ const mapStateToProps = (state: GlobalState) => {
   const loadDataFailure: DataLoadFailure = pot.isError(potUserMetadata)
     ? "userMetadaLoadFailure"
     : servicesLoadingFailure
-      ? "servicesLoadFailure"
-      : undefined;
+    ? "servicesLoadFailure"
+    : undefined;
 
   return {
     debugONLYServices: servicesSelector(state),

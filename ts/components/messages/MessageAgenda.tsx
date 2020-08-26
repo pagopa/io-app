@@ -425,9 +425,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     const payment =
       message.content.payment_data !== undefined && service !== undefined
         ? paymentsByRptId[
-            `${service.organization_fiscal_code}${
-              message.content.payment_data.notice_number
-            }`
+            `${service.organization_fiscal_code}${message.content.payment_data.notice_number}`
           ]
         : undefined;
 
@@ -541,16 +539,15 @@ class MessageAgenda extends React.PureComponent<Props, State> {
               : ListEmptyComponent
           }
         />
-        {isLoadingProgress &&
-          isContinuosScrollEnabled && (
-            <View style={styles.contentProgress}>
-              <ActivityIndicator
-                style={styles.progress}
-                size={"small"}
-                color={variables.brandDarkGray}
-              />
-            </View>
-          )}
+        {isLoadingProgress && isContinuosScrollEnabled && (
+          <View style={styles.contentProgress}>
+            <ActivityIndicator
+              style={styles.progress}
+              size={"small"}
+              color={variables.brandDarkGray}
+            />
+          </View>
+        )}
       </View>
     );
   }

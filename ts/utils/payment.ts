@@ -206,9 +206,7 @@ export const getTransactionFee = (
     "fee",
     m => (m ? m.amount : undefined)
   ).getOrElse(undefined);
-  return fromNullable(maybeFee)
-    .map(formatFunc)
-    .toNullable();
+  return fromNullable(maybeFee).map(formatFunc).toNullable();
 };
 
 // try to extract codice avviso from transaction description

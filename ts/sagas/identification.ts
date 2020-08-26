@@ -65,9 +65,9 @@ function* waitIdentificationResult(): Generator<
 
     case getType(identificationPinReset): {
       // If a payment is occurring, delete the active payment from pagoPA
-      const paymentState: ReturnType<
-        typeof paymentsCurrentStateSelector
-      > = yield select(paymentsCurrentStateSelector);
+      const paymentState: ReturnType<typeof paymentsCurrentStateSelector> = yield select(
+        paymentsCurrentStateSelector
+      );
       if (paymentState.kind === "ACTIVATED") {
         yield put(runDeleteActivePaymentSaga());
         // we try to wait untinl the payment deactivation is completed. If the request to backend fails for any reason, we proceed anyway with session invalidation
@@ -158,14 +158,14 @@ function* startAndHandleIdentificationResult(
     yield put(startApplicationInitialization());
   } else if (identificationResult === IdentificationResult.success) {
     // Check if we have a pending notification message
-    const pendingMessageState: ReturnType<
-      typeof pendingMessageStateSelector
-    > = yield select(pendingMessageStateSelector);
+    const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> = yield select(
+      pendingMessageStateSelector
+    );
 
     // Check if there is a payment ongoing
-    const isPaymentOngoing: ReturnType<
-      typeof isPaymentOngoingSelector
-    > = yield select(isPaymentOngoingSelector);
+    const isPaymentOngoing: ReturnType<typeof isPaymentOngoingSelector> = yield select(
+      isPaymentOngoingSelector
+    );
 
     if (!isPaymentOngoing && pendingMessageState) {
       // We have a pending notification message to handle

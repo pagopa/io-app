@@ -8,7 +8,7 @@ import { startPinReset } from "../../store/actions/pinset";
 import { deletePin } from "../../utils/keychain";
 
 export function* watchPinResetSaga(): Iterator<Effect> {
-  yield takeEvery(getType(startPinReset), function*() {
+  yield takeEvery(getType(startPinReset), function* () {
     // Delete the current unlock code from the Keychain
     // eslint-disable-next-line
     yield call(deletePin);

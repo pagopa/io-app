@@ -237,9 +237,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               {data.enteBeneficiario &&
                 renderItem(
                   I18n.t("payment.details.info.enteCreditore"),
-                  `${data.enteBeneficiario.denominazioneBeneficiario}\n${
-                    data.enteBeneficiario.identificativoUnivocoBeneficiario
-                  }`
+                  `${data.enteBeneficiario.denominazioneBeneficiario}\n${data.enteBeneficiario.identificativoUnivocoBeneficiario}`
                 )}
               {data.errorDetail.isSome() && (
                 <View key={"error"}>

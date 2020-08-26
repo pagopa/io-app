@@ -57,18 +57,17 @@ export const latestTransactionsSelector = createSelector(
       potTransactions,
       transactions =>
         [...transactions]
-          .sort(
-            (a, b) =>
-              // FIXME: code here is checking for NaN assuming creation dates may
-              //        be undefined, but since we override the pagoPA Wallet
-              //        type to force creation dates to always be defined and we
-              //        use that new type for parsing responses, we ignore
-              //        wallets with undefined creation dates... so the check
-              //        is unnecessary.
-              // eslint-disable-next-line
-              isNaN(a.created as any) || isNaN(b.created as any)
-                ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
-                : b.created.toISOString().localeCompare(a.created.toISOString())
+          .sort((a, b) =>
+            // FIXME: code here is checking for NaN assuming creation dates may
+            //        be undefined, but since we override the pagoPA Wallet
+            //        type to force creation dates to always be defined and we
+            //        use that new type for parsing responses, we ignore
+            //        wallets with undefined creation dates... so the check
+            //        is unnecessary.
+            // eslint-disable-next-line
+            isNaN(a.created as any) || isNaN(b.created as any)
+              ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
+              : b.created.toISOString().localeCompare(a.created.toISOString())
           )
           .filter(t => t.statusMessage !== "rifiutato")
           .slice(0, MAX_TRANSACTIONS_IN_LIST) // WIP no magic numbers

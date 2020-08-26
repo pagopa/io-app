@@ -134,8 +134,8 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
       const textColor = this.isPrescriptionExpiring
         ? customVariables.calendarExpirableColor
         : this.isPrescriptionExpired
-          ? customVariables.brandDarkGray
-          : customVariables.colorWhite;
+        ? customVariables.brandDarkGray
+        : customVariables.colorWhite;
 
       return (
         <CalendarIconComponent

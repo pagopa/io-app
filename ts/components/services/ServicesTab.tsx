@@ -43,7 +43,7 @@ type OwnProps = Readonly<{
   updateToast?: () => void;
   sections: ReadonlyArray<ServicesSectionState>;
   isRefreshing: boolean;
-  onRefresh: (hideToast?: boolean) => void; // eslint-disable-line 
+  onRefresh: (hideToast?: boolean) => void; // eslint-disable-line
   onServiceSelect: (service: ServicePublic) => void;
   handleOnLongPressItem: () => void;
   isLongPressEnabled: boolean;
@@ -223,8 +223,8 @@ class ServicesTab extends React.PureComponent<Props> {
     const renderRightIcon = this.props.isLongPressEnabled
       ? this.renderSwitchAllOrganizationServices
       : this.props.isLocal
-        ? this.renderLocalQuickSectionDeletion
-        : undefined;
+      ? this.renderLocalQuickSectionDeletion
+      : undefined;
     return (
       <ServicesSectionsList
         isLocal={this.props.isLocal}

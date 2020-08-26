@@ -19,15 +19,14 @@ export const MessageNestedCTABar: React.FunctionComponent<Props> = (
     handleCtaAction(cta, props.dispatch);
   };
   const { ctas } = props;
-  const cta2 = ctas.cta_2 &&
-    isCtaActionValid(ctas.cta_2) && (
-      <MessageNestedCtaButton
-        cta={ctas.cta_2}
-        xsmall={props.xsmall}
-        primary={false}
-        onCTAPress={handleCTAPress}
-      />
-    );
+  const cta2 = ctas.cta_2 && isCtaActionValid(ctas.cta_2) && (
+    <MessageNestedCtaButton
+      cta={ctas.cta_2}
+      xsmall={props.xsmall}
+      primary={false}
+      onCTAPress={handleCTAPress}
+    />
+  );
   const cta1 = isCtaActionValid(ctas.cta_1) && (
     <MessageNestedCtaButton
       cta={ctas.cta_1}

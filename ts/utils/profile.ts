@@ -119,15 +119,12 @@ export function getChannelsforServicesList(
     {} as BlockedInboxOrChannels
   );
 
-  return servicesId.reduce(
-    (acc, serviceId) => {
-      return {
-        ...acc,
-        [serviceId]: profileBlockedChannels[serviceId] || []
-      };
-    },
-    {} as BlockedInboxOrChannels
-  );
+  return servicesId.reduce((acc, serviceId) => {
+    return {
+      ...acc,
+      [serviceId]: profileBlockedChannels[serviceId] || []
+    };
+  }, {} as BlockedInboxOrChannels);
 }
 
 /**
@@ -163,14 +160,14 @@ export function getProfileChannelsforServicesList(
           ? channels
           : channels.concat(channelOfInterest)
         : enableListedServices
-          ? channels.filter(item => item !== channelOfInterest)
-          : channels;
+        ? channels.filter(item => item !== channelOfInterest)
+        : channels;
 
     if (updatedBlockedChannels.length !== 0) {
-      // eslint-disable-next-line 
+      // eslint-disable-next-line
       profileBlockedChannels[id] = updatedBlockedChannels;
     } else {
-      // eslint-disable-next-line 
+      // eslint-disable-next-line
       delete profileBlockedChannels[id];
     }
   });
@@ -187,11 +184,8 @@ export function getEnabledChannelsForService(
 ): EnabledChannels {
   return pot
     .toOption(potProfile)
-    .mapNullable(
-      profile =>
-        InitializedProfile.is(profile)
-          ? profile.blocked_inbox_or_channels
-          : null
+    .mapNullable(profile =>
+      InitializedProfile.is(profile) ? profile.blocked_inbox_or_channels : null
     )
     .mapNullable(blockedChannels => blockedChannels[serviceId])
     .map(_ => ({
@@ -231,9 +225,9 @@ export const getBlockedChannels = (
   ].filter(_ => _ !== "");
 
   blockedChannelsForService.length === 0
-    ? // eslint-disable-next-line 
+    ? // eslint-disable-next-line
       delete profileBlockedChannels[serviceId]
-    : // eslint-disable-next-line 
+    : // eslint-disable-next-line
       (profileBlockedChannels[serviceId] = blockedChannelsForService);
 
   return {

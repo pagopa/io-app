@@ -119,7 +119,8 @@ export const constantPollingFetch = (
   );
 
   // TODO: remove the cast once we upgrade to tsc >= 3.1 (https://www.pivotaltracker.com/story/show/170819445)
-  return retriableFetch(retryWithTransient404s, shouldAbort)(
-    timeoutFetch as typeof fetch
-  );
+  return retriableFetch(
+    retryWithTransient404s,
+    shouldAbort
+  )(timeoutFetch as typeof fetch);
 };

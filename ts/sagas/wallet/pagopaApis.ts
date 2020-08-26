@@ -245,15 +245,15 @@ export function* updateWalletPspRequestHandler(
   );
 
   try {
-    const response: SagaCallReturnType<
-      typeof updateWalletPspWithRefresh
-    > = yield call(updateWalletPspWithRefresh);
+    const response: SagaCallReturnType<typeof updateWalletPspWithRefresh> = yield call(
+      updateWalletPspWithRefresh
+    );
 
     if (response.isRight()) {
       if (response.value.status === 200) {
-        const getResponse: SagaCallReturnType<
-          typeof getWalletsWithRefresh
-        > = yield call(getWalletsWithRefresh);
+        const getResponse: SagaCallReturnType<typeof getWalletsWithRefresh> = yield call(
+          getWalletsWithRefresh
+        );
         if (getResponse.isRight()) {
           if (getResponse.value.status === 200) {
             // look for the updated wallet
@@ -314,13 +314,13 @@ export function* deleteWalletRequestHandler(
     pagoPaClient.getWallets
   );
   try {
-    const deleteResponse: SagaCallReturnType<
-      typeof deleteWalletWithRefresh
-    > = yield call(deleteWalletWithRefresh);
+    const deleteResponse: SagaCallReturnType<typeof deleteWalletWithRefresh> = yield call(
+      deleteWalletWithRefresh
+    );
     if (deleteResponse.isRight() && deleteResponse.value.status === 200) {
-      const getResponse: SagaCallReturnType<
-        typeof getWalletsWithRefresh
-      > = yield call(getWalletsWithRefresh);
+      const getResponse: SagaCallReturnType<typeof getWalletsWithRefresh> = yield call(
+        getWalletsWithRefresh
+      );
       if (getResponse.isRight() && getResponse.value.status === 200) {
         const successAction = deleteWalletSuccess(getResponse.value.value.data);
         yield put(successAction);
@@ -368,9 +368,9 @@ export function* addWalletCreditCardRequestHandler(
   );
 
   try {
-    const response: SagaCallReturnType<
-      typeof boardCreditCardWithRefresh
-    > = yield call(boardCreditCardWithRefresh);
+    const response: SagaCallReturnType<typeof boardCreditCardWithRefresh> = yield call(
+      boardCreditCardWithRefresh
+    );
 
     if (response.isRight()) {
       if (response.value.status === 200) {
@@ -437,9 +437,9 @@ export function* paymentFetchPspsForWalletRequestHandler(
   );
   const getPspListWithRefresh = pmSessionManager.withRefresh(apiGetPspList);
   try {
-    const response: SagaCallReturnType<
-      typeof getPspListWithRefresh
-    > = yield call(getPspListWithRefresh);
+    const response: SagaCallReturnType<typeof getPspListWithRefresh> = yield call(
+      getPspListWithRefresh
+    );
     if (response.isRight()) {
       if (response.value.status === 200) {
         const successAction = paymentFetchPspsForPaymentId.success(
@@ -480,9 +480,9 @@ export function* paymentFetchAllPspsForWalletRequestHandler(
     apiGetAllPspList
   );
   try {
-    const response: SagaCallReturnType<
-      typeof getAllPspListWithRefresh
-    > = yield call(getAllPspListWithRefresh);
+    const response: SagaCallReturnType<typeof getAllPspListWithRefresh> = yield call(
+      getAllPspListWithRefresh
+    );
     if (response.isRight()) {
       if (response.value.status === 200) {
         const successAction = paymentFetchAllPspsForPaymentId.success(
@@ -515,9 +515,9 @@ export function* paymentCheckRequestHandler(
   const apiCheckPayment = () => pagoPaClient.checkPayment(action.payload);
   const checkPaymentWithRefresh = pmSessionManager.withRefresh(apiCheckPayment);
   try {
-    const response: SagaCallReturnType<
-      typeof checkPaymentWithRefresh
-    > = yield call(checkPaymentWithRefresh);
+    const response: SagaCallReturnType<typeof checkPaymentWithRefresh> = yield call(
+      checkPaymentWithRefresh
+    );
     if (response.isRight()) {
       if (
         response.value.status === 200 ||
@@ -551,9 +551,9 @@ export function* paymentExecutePaymentRequestHandler(
   });
   const postPaymentWithRefresh = pmSessionManager.withRefresh(apiPostPayment);
   try {
-    const response: SagaCallReturnType<
-      typeof postPaymentWithRefresh
-    > = yield call(postPaymentWithRefresh);
+    const response: SagaCallReturnType<typeof postPaymentWithRefresh> = yield call(
+      postPaymentWithRefresh
+    );
 
     if (response.isRight()) {
       if (response.value.status === 200) {
@@ -613,9 +613,9 @@ export function* paymentVerificaRequestHandler(
   action: ActionType<typeof paymentVerifica["request"]>
 ) {
   try {
-    const isPagoPATestEnabled: ReturnType<
-      typeof isPagoPATestEnabledSelector
-    > = yield select(isPagoPATestEnabledSelector);
+    const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select(
+      isPagoPATestEnabledSelector
+    );
 
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
@@ -652,9 +652,9 @@ export function* paymentAttivaRequestHandler(
   action: ActionType<typeof paymentAttiva["request"]>
 ) {
   try {
-    const isPagoPATestEnabled: ReturnType<
-      typeof isPagoPATestEnabledSelector
-    > = yield select(isPagoPATestEnabledSelector);
+    const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select(
+      isPagoPATestEnabledSelector
+    );
 
     const response: SagaCallReturnType<typeof postAttivaRpt> = yield call(
       postAttivaRpt,
@@ -701,9 +701,9 @@ export function* paymentIdPollingRequestHandler(
   // now poll until a paymentId is made available
 
   try {
-    const isPagoPATestEnabled: ReturnType<
-      typeof isPagoPATestEnabledSelector
-    > = yield select(isPagoPATestEnabledSelector);
+    const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select(
+      isPagoPATestEnabledSelector
+    );
 
     const getPaymentId = getPaymentIdApi.e2;
     const response: SagaCallReturnType<typeof getPaymentId> = yield call(

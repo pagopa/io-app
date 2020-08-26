@@ -399,7 +399,4 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     )
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(AddCardScreen);
+export default connect(undefined, mapDispatchToProps)(AddCardScreen);

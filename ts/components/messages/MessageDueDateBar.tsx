@@ -156,16 +156,16 @@ class MessageDueDateBar extends React.PureComponent<Props> {
       const iconBackgoundColor = this.paid
         ? customVariables.lighterGray
         : this.isPaymentExpiring || this.isPaymentExpired
-          ? customVariables.colorWhite
-          : customVariables.brandDarkGray;
+        ? customVariables.colorWhite
+        : customVariables.brandDarkGray;
 
       const textColor = this.paid
         ? customVariables.colorWhite
         : this.isPaymentExpiring
-          ? customVariables.calendarExpirableColor
-          : this.isPaymentExpired
-            ? customVariables.brandDarkGray
-            : customVariables.colorWhite;
+        ? customVariables.calendarExpirableColor
+        : this.isPaymentExpired
+        ? customVariables.brandDarkGray
+        : customVariables.colorWhite;
 
       return (
         <CalendarIconComponent
@@ -220,7 +220,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onGoToWallet: () => dispatch(navigateToWalletHome())
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(MessageDueDateBar);
+export default connect(undefined, mapDispatchToProps)(MessageDueDateBar);

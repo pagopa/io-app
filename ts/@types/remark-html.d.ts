@@ -1,3 +1,3 @@
 declare module "remark-html" {
-  export default function(): any;
+  export default function (): any;
 }

@@ -30,15 +30,16 @@ export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
 
 export const isEmailEnabledSelector = createSelector(profileSelector, profile =>
-  pot.getOrElse(pot.map(profile, p => p.is_email_enabled), false)
+  pot.getOrElse(
+    pot.map(profile, p => p.is_email_enabled),
+    false
+  )
 );
 
-export const isInboxEnabledSelector = createSelector(
-  profileSelector,
-  profile =>
-    pot.isSome(profile) && InitializedProfile.is(profile.value)
-      ? profile.value.is_inbox_enabled
-      : false
+export const isInboxEnabledSelector = createSelector(profileSelector, profile =>
+  pot.isSome(profile) && InitializedProfile.is(profile.value)
+    ? profile.value.is_inbox_enabled
+    : false
 );
 
 export const getProfileEmail = (
@@ -57,21 +58,30 @@ export const getProfileSpidEmail = (
 export const profileEmailSelector = createSelector(
   profileSelector,
   (profile: ProfileState): Option<string> =>
-    pot.getOrElse(pot.map(profile, p => getProfileEmail(p)), none)
+    pot.getOrElse(
+      pot.map(profile, p => getProfileEmail(p)),
+      none
+    )
 );
 
 // return the spid email address (as a string)
 export const profileSpidEmailSelector = createSelector(
   profileSelector,
   (profile: ProfileState): Option<string> =>
-    pot.getOrElse(pot.map(profile, p => getProfileSpidEmail(p)), none)
+    pot.getOrElse(
+      pot.map(profile, p => getProfileSpidEmail(p)),
+      none
+    )
 );
 
 // return the mobile phone number (as a string)
 export const profileMobilePhoneSelector = createSelector(
   profileSelector,
   (profile: ProfileState): Option<string> =>
-    pot.getOrElse(pot.map(profile, p => getProfileMobilePhone(p)), none)
+    pot.getOrElse(
+      pot.map(profile, p => getProfileMobilePhone(p)),
+      none
+    )
 );
 
 // return true if the profile has an email
@@ -82,7 +92,10 @@ export const hasProfileEmail = (user: InitializedProfile): boolean =>
 export const hasProfileEmailSelector = createSelector(
   profileSelector,
   (profile: ProfileState): boolean =>
-    pot.getOrElse(pot.map(profile, p => hasProfileEmail(p)), false)
+    pot.getOrElse(
+      pot.map(profile, p => hasProfileEmail(p)),
+      false
+    )
 );
 
 // return true if the profile has an email and it is validated

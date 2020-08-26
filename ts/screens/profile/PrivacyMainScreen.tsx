@@ -305,7 +305,4 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PrivacyMainScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PrivacyMainScreen);

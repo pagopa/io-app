@@ -100,19 +100,18 @@ class MessageDetailData extends React.PureComponent<Props> {
           </Text>
         )}
 
-        {this.data.service_name.isSome() &&
-          this.data.service_detail.isSome() && (
-            <Text>
-              {`${I18n.t("messageDetails.service")} `}
-              <Text
-                bold={true}
-                link={true}
-                onPress={this.props.goToServiceDetail}
-              >
-                {this.data.service_detail.value.service_name}
-              </Text>
+        {this.data.service_name.isSome() && this.data.service_detail.isSome() && (
+          <Text>
+            {`${I18n.t("messageDetails.service")} `}
+            <Text
+              bold={true}
+              link={true}
+              onPress={this.props.goToServiceDetail}
+            >
+              {this.data.service_detail.value.service_name}
             </Text>
-          )}
+          </Text>
+        )}
         {this.hasEmailOrPhone && (
           <React.Fragment>
             <View spacer={true} />

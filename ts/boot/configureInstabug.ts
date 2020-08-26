@@ -39,7 +39,7 @@ export enum TypeLogs {
 }
 
 type InstabugLoggerType = {
-  [key in keyof typeof TypeLogs]: (value: string) => void
+  [key in keyof typeof TypeLogs]: (value: string) => void;
 };
 const InstabugLogger: InstabugLoggerType = {
   INFO: Instabug.logInfo,

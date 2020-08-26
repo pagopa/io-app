@@ -156,7 +156,4 @@ const mapDispatchToProps = {
   navigateBack
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RootContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);

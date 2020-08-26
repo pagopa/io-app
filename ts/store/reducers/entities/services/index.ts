@@ -143,20 +143,17 @@ export const organizationsOfInterestSelector = createSelector(
 
     // If the user never select areas of interest, return an undefined object
     return pot.toUndefined(
-      pot.map(
-        potUserMetadata,
-        _ =>
-          // filter organization by selecting those ones having
-          // at least 1 visible service inside
-          _.metadata.organizationsOfInterest
-            ? _.metadata.organizationsOfInterest.filter(org => {
-                const organizationServices =
-                  services.byOrgFiscalCode[org] || [];
-                return organizationServices.some(serviceId =>
-                  visibleServices.has(serviceId)
-                );
-              })
-            : []
+      pot.map(potUserMetadata, _ =>
+        // filter organization by selecting those ones having
+        // at least 1 visible service inside
+        _.metadata.organizationsOfInterest
+          ? _.metadata.organizationsOfInterest.filter(org => {
+              const organizationServices = services.byOrgFiscalCode[org] || [];
+              return organizationServices.some(serviceId =>
+                visibleServices.has(serviceId)
+              );
+            })
+          : []
       )
     );
   }
@@ -266,13 +263,12 @@ const getServices = (
             isInScope(service, servicesByScope, scope) &&
             isVisibleService(services.visible, service)
         )
-        .sort(
-          (a, b) =>
-            a && pot.isSome(a) && b && pot.isSome(b)
-              ? a.value.service_name
-                  .toLocaleLowerCase()
-                  .localeCompare(b.value.service_name.toLocaleLowerCase())
-              : 0
+        .sort((a, b) =>
+          a && pot.isSome(a) && b && pot.isSome(b)
+            ? a.value.service_name
+                .toLocaleLowerCase()
+                .localeCompare(b.value.service_name.toLocaleLowerCase())
+            : 0
         );
 
       return {

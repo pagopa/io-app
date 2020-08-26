@@ -134,22 +134,21 @@ export default class CardComponent extends React.Component<Props> {
 
       return (
         <View style={styles.row}>
-          {!hideFavoriteIcon &&
-            isFavorite !== undefined && (
-              <IconFont
-                name={
-                  pot.getOrElseWithUpdating(isFavorite, false) === true
-                    ? "io-filled-star"
-                    : "io-empty-star"
-                }
-                color={
-                  pot.isUpdating(isFavorite)
-                    ? variables.brandDarkGray
-                    : variables.brandPrimary
-                }
-                onPress={this.handleFavoritePress}
-              />
-            )}
+          {!hideFavoriteIcon && isFavorite !== undefined && (
+            <IconFont
+              name={
+                pot.getOrElseWithUpdating(isFavorite, false) === true
+                  ? "io-filled-star"
+                  : "io-empty-star"
+              }
+              color={
+                pot.isUpdating(isFavorite)
+                  ? variables.brandDarkGray
+                  : variables.brandPrimary
+              }
+              onPress={this.handleFavoritePress}
+            />
+          )}
 
           {!hideMenu && (
             <Menu>
@@ -162,18 +161,17 @@ export default class CardComponent extends React.Component<Props> {
               </MenuTrigger>
 
               <MenuOptions>
-                {onSetFavorite &&
-                  isFavorite !== undefined && (
-                    <MenuOption onSelect={this.handleFavoritePress}>
-                      <Text bold={true} style={styles.blueText}>
-                        {I18n.t(
-                          pot.getOrElseWithUpdating(isFavorite, false) === true
-                            ? "cardComponent.unsetFavourite"
-                            : "cardComponent.setFavourite"
-                        )}
-                      </Text>
-                    </MenuOption>
-                  )}
+                {onSetFavorite && isFavorite !== undefined && (
+                  <MenuOption onSelect={this.handleFavoritePress}>
+                    <Text bold={true} style={styles.blueText}>
+                      {I18n.t(
+                        pot.getOrElseWithUpdating(isFavorite, false) === true
+                          ? "cardComponent.unsetFavourite"
+                          : "cardComponent.setFavourite"
+                      )}
+                    </Text>
+                  </MenuOption>
+                )}
 
                 {onDelete && (
                   <MenuOption onSelect={this.handleDeleteSelect}>

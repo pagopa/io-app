@@ -17,9 +17,9 @@ I18n.translations = {
 
 export const translations = Object.keys(I18n.translations);
 
-export const availableTransations: ReadonlyArray<
-  locales.Locales
-> = translations.map(k => k as locales.Locales).sort();
+export const availableTransations: ReadonlyArray<locales.Locales> = translations
+  .map(k => k as locales.Locales)
+  .sort();
 
 export function setLocale(lang: locales.Locales) {
   // eslint-disable-next-line

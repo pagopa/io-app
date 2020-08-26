@@ -17,7 +17,7 @@ import { SagaCallReturnType } from "../../types/utils";
 export function* watchLogoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"]
 ): Iterator<Effect> {
-  yield takeEvery(getType(logoutRequest), function*(
+  yield takeEvery(getType(logoutRequest), function* (
     action: ActionType<typeof logoutRequest>
   ) {
     // Issue a logout request to the backend, asking to delete the session

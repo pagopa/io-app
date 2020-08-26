@@ -100,9 +100,7 @@ const paymentMethods: ReadonlyArray<IPaymentMethod> = [
 
 const AddMethodStyle = StyleSheet.create({
   transactionText: {
-    color: color(variables.colorWhite)
-      .darken(0.35)
-      .string()
+    color: color(variables.colorWhite).darken(0.35).string()
   },
   notImplementedBadge: {
     height: 18,

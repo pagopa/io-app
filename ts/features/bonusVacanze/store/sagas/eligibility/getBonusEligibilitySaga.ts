@@ -64,9 +64,10 @@ function* getCheckBonusEligibilitySaga(
   SagaCallReturnType<typeof getBonusEligibilityCheck>
 > {
   try {
-    const eligibilityCheckResult: SagaCallReturnType<
-      typeof getBonusEligibilityCheck
-    > = yield call(getBonusEligibilityCheck, {});
+    const eligibilityCheckResult: SagaCallReturnType<typeof getBonusEligibilityCheck> = yield call(
+      getBonusEligibilityCheck,
+      {}
+    );
 
     if (eligibilityCheckResult.isRight()) {
       // 200 -> we got the check result, polling must be stopped
@@ -115,9 +116,10 @@ export const bonusEligibilitySaga = (
     any
   > {
     try {
-      const startEligibilityResult: SagaCallReturnType<
-        typeof startBonusEligibilityCheck
-      > = yield call(startBonusEligibilityCheck, {});
+      const startEligibilityResult: SagaCallReturnType<typeof startBonusEligibilityCheck> = yield call(
+        startBonusEligibilityCheck,
+        {}
+      );
       if (startEligibilityResult.isRight()) {
         // 201 -> created
         // 202 -> request processing

@@ -24,9 +24,7 @@ const renderBody = (first: string, second: string, third: string) => (
   </Text>
 );
 
-const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<
-  Props
-> = props => {
+const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<Props> = props => {
   const title = I18n.t("bonus.bonusVacanze.eligibility.timeout.title");
   const first = I18n.t(
     "bonus.bonusVacanze.eligibility.timeout.description.first"

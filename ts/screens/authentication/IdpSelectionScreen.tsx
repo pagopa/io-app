@@ -187,7 +187,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setSelectedIdp: (idp: IdentityProvider) => dispatch(idpSelected(idp))
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(IdpSelectionScreen);
+export default connect(undefined, mapDispatchToProps)(IdpSelectionScreen);

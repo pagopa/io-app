@@ -160,17 +160,13 @@ export const getCodiceAvviso = (rptId: RptId) => {
   const pnn = rptId.paymentNoticeNumber;
   switch (pnn.auxDigit) {
     case "0":
-      return `${pnn.auxDigit}${pnn.applicationCode}${pnn.iuv13}${
-        pnn.checkDigit
-      }`;
+      return `${pnn.auxDigit}${pnn.applicationCode}${pnn.iuv13}${pnn.checkDigit}`;
     case "1":
       return `${pnn.auxDigit}${pnn.iuv17}`;
     case "2":
       return `${pnn.auxDigit}${pnn.iuv15}${pnn.checkDigit}`;
     case "3":
-      return `${pnn.auxDigit}${pnn.iuv13}${pnn.checkDigit}${
-        pnn.segregationCode
-      }`;
+      return `${pnn.auxDigit}${pnn.iuv13}${pnn.checkDigit}${pnn.segregationCode}`;
     default:
       return "";
   }

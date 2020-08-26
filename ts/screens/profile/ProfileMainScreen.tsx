@@ -125,7 +125,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         "light-content",
         customVariables.brandDarkGray
       );
-    }); // eslint-disable-line 
+    }); // eslint-disable-line
   }
 
   public componentWillUnmount() {
@@ -376,7 +376,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       );
     };
 
-    // eslint-disable 
+    // eslint-disable
     const screenContent = () => {
       return (
         <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>

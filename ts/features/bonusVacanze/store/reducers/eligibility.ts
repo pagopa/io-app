@@ -95,9 +95,8 @@ export const eligibilityEligibleSelector = createSelector<
   Option<EligibilityCheckSuccessEligible>
 >(eligibilitySelector, eligibility => {
   return pot.getOrElse(
-    pot.map(
-      eligibility.checkRequest.check,
-      c => (EligibilityCheckSuccessEligible.is(c) ? some(c) : none)
+    pot.map(eligibility.checkRequest.check, c =>
+      EligibilityCheckSuccessEligible.is(c) ? some(c) : none
     ),
     none
   );

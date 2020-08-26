@@ -75,8 +75,8 @@ const renderPinCol = (
     style === "digit"
       ? styles.roundButton
       : style === "label"
-        ? [styles.roundButton, styles.transparent]
-        : undefined;
+      ? [styles.roundButton, styles.transparent]
+      : undefined;
 
   return (
     <Col key={key}>
@@ -130,20 +130,19 @@ const renderPinRow = (
   isDisabled: boolean
 ) => (
   <Row key={key}>
-    {digits.map(
-      (el, i) =>
-        el ? (
-          renderPinCol(
-            el.e1,
-            el.e2,
-            el.e1.isLeft() ? "digit" : "label",
-            `pinpad-digit-${el.e2}`,
-            buttonType,
-            isDisabled
-          )
-        ) : (
-          <Col key={`pinpad-empty-${i}`} />
+    {digits.map((el, i) =>
+      el ? (
+        renderPinCol(
+          el.e1,
+          el.e2,
+          el.e1.isLeft() ? "digit" : "label",
+          `pinpad-digit-${el.e2}`,
+          buttonType,
+          isDisabled
         )
+      ) : (
+        <Col key={`pinpad-empty-${i}`} />
+      )
     )}
   </Row>
 );

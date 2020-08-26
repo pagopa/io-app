@@ -31,7 +31,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
   let lastState: ApplicationState = "active";
   // eslint-disable-next-line
   let identificationBackgroundTimer: Task | undefined;
-  yield takeEvery(getType(applicationChangeState), function*(
+  yield takeEvery(getType(applicationChangeState), function* (
     action: ActionType<typeof applicationChangeState>
   ) {
     // Listen for changes in application state
@@ -57,7 +57,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
         yield put(identificationRequest());
       }
       // Start the background timer
-      identificationBackgroundTimer = yield fork(function*() {
+      identificationBackgroundTimer = yield fork(function* () {
         // Start and wait the timer to fire
         yield call(startTimer, backgroundActivityTimeoutMillis);
         identificationBackgroundTimer = undefined;

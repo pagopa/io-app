@@ -10,17 +10,21 @@ export type SagaCallReturnType<
 > = R extends Generator<infer _, infer B0, infer _>
   ? B0
   : R extends Iterator<infer B | Effect>
-    ? B
-    : R extends IterableIterator<infer B1 | Effect>
-      ? B1
-      : R extends Promise<infer B2> ? B2 : never;
+  ? B
+  : R extends IterableIterator<infer B1 | Effect>
+  ? B1
+  : R extends Promise<infer B2>
+  ? B2
+  : never;
 
 /**
  * Extracts the type of the payload of a typesafe action
  */
 export type PayloadForAction<A> = A extends PayloadAC<any, infer P>
   ? P
-  : A extends PayloadMetaAC<any, infer P1, any> ? P1 : A;
+  : A extends PayloadMetaAC<any, infer P1, any>
+  ? P1
+  : A;
 
 /**
  * Converts the types of a success and failure actions to a Pot type
@@ -40,7 +44,7 @@ export type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 /**
  * Ensure that the types T and U are mutually exclusive
  */
-export type XOR<T, U> = (T | U) extends object
+export type XOR<T, U> = T | U extends object
   ? (Without<T, U> & U) | (Without<U, T> & T)
   : T | U;
 
@@ -54,7 +58,7 @@ type Tuplize<T extends any[]> = Pick<
 type _OneOf<T extends {}> = Values<
   {
     [K in keyof T]: T[K] &
-      { [M in Values<{ [L in keyof Omit<T, K>]: keyof T[L] }>]?: undefined }
+      { [M in Values<{ [L in keyof Omit<T, K>]: keyof T[L] }>]?: undefined };
   }
 >;
 

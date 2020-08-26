@@ -27,9 +27,9 @@ export function* loadMessage(
   any
 > {
   // Load the messages already in the redux store
-  const cachedMessage: ReturnType<
-    ReturnType<typeof messageStateByIdSelector>
-  > = yield select(messageStateByIdSelector(meta.id));
+  const cachedMessage: ReturnType<ReturnType<
+    typeof messageStateByIdSelector
+  >> = yield select(messageStateByIdSelector(meta.id));
 
   // If we already have the message in the store just return it
   if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {
