@@ -402,7 +402,7 @@ class Markdown extends React.PureComponent<Props, State> {
     useCustomSortedList: boolean = false,
     avoidTextSelection: boolean = false
   ) => {
-    InteractionManager.runAfterInteractions(() => {
+    void InteractionManager.runAfterInteractions(() => {
       if (animated) {
         // Animate the layout change
         // See https://facebook.github.io/react-native/docs/layoutanimation.html

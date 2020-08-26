@@ -89,7 +89,8 @@ module.exports = {
           requireLast: false
         }
       }
-    ]
+    ],
+    "@typescript-eslint/no-floating-promises": "error"
   },
   settings: {
     react: {

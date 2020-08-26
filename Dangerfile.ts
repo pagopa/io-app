@@ -81,4 +81,4 @@ const updatePrTitleForChangelog = async () => {
 };
 
 checkDangers();
-updatePrTitleForChangelog().then().catch();
+void updatePrTitleForChangelog().then().catch();

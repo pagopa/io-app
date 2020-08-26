@@ -243,7 +243,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
     }
 
     // Check the authorization status
-    checkAndRequestPermission()
+    void checkAndRequestPermission()
       .then(calendarPermission => {
         if (calendarPermission.authorized) {
           if (this.state.isEventInDeviceCalendar) {

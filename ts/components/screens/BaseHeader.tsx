@@ -83,7 +83,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   // set accessibility focus when component is mounted
   // it should be used paired with avoidNavigationEvents === true (navigation context not available)
   public componentDidMount() {
-    AccessibilityInfo.isScreenReaderEnabled()
+    void AccessibilityInfo.isScreenReaderEnabled()
       .then(isScreenReaderActive => {
         this.setState({ isScreenReaderActive });
         if (
@@ -125,7 +125,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     }, noReferenceTimeout);
   }
 
-  private renderBodyLabel = (label?: string, ref?: Ref<Text>) => maybeNotNullyString(label).fold(undefined, l => {
+  private renderBodyLabel = (label?: string, ref?: Ref<Text>) =>
+    maybeNotNullyString(label).fold(undefined, l => {
       const isWhite = this.props.primary || this.props.dark;
       return (
         <Text

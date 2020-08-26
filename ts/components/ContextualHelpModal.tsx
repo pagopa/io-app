@@ -86,7 +86,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   // on close, we set a handler to cleanup the content after all
   // interactions (animations) are complete
   const onClose = () => {
-    InteractionManager.runAfterInteractions(() => setContent(null));
+    void InteractionManager.runAfterInteractions(() => setContent(null));
     props.close();
   };
 

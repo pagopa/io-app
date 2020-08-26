@@ -137,7 +137,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
 
   private handleBackPress = () => {
     // TODO: add log or silent exception
-    this.resetAppBrightness().then().catch();
+    void this.resetAppBrightness().then().catch();
     this.props.navigation.goBack();
     return true;
   };
