@@ -64,8 +64,9 @@ const updatePrTitleForChangelog = async () => {
   }, undefined);
 
   // clean the title from existing tags (multiple commit on the same branch)
-  const rawTitle = danger.github.pr.title.match(cleanChangelogRegex)?.pop();
-  const title = rawTitle !== undefined ? rawTitle : danger.github.pr.title;
+  const title = fromNullable(danger.github.pr.title.match(cleanChangelogRegex))
+    .map(matches => matches.pop() ?? danger.github.pr.title)
+    .getOrElse(danger.github.pr.title);
 
   // If a tag can be associated to a story, update the pr title
   const maybeStoryTag = fromNullable(storyTag.get(storyType));
