@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * This script converts the translations from the "locales"
  * directory into a typescript file that can be bundled with
@@ -13,7 +14,6 @@
  * I18N_IGNORE_LOCALE_ERRORS=1    Ignore locale validation errors.
  * I18N_MASTER_LOCALE=it          Sets a different master locale.
  */
-// tslint:disable:no-console
 
 import * as path from "path";
 import chalk from "chalk";

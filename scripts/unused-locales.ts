@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { exec } from "child_process";
 import * as path from "path";
 import chalk from "chalk";

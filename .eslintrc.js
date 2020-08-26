@@ -51,6 +51,9 @@ module.exports = {
     "no-throw-literal": "error",
     "react/prop-types": "off",
     "react/display-name": "off",
+    "no-new-wrappers": "error",
+    "no-eval": "error",
+    "no-console": "error",
     "import/order": "error",
     "@typescript-eslint/no-unused-vars": "off",
     // Enable if we want to enforce the return type for all the functions
