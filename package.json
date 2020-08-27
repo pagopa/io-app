@@ -154,7 +154,6 @@
     "@types/stacktrace-js": "^0.0.32",
     "@types/uuid": "^3.4.4",
     "@types/validator": "^9.4.2",
-    "@typescript-eslint/eslint-plugin-tslint": "^3.10.1",
     "@typescript-eslint/parser": "^3.10.1",
     "abortcontroller-polyfill": "1.3.0",
     "babel-jest": "^25.1.0",
@@ -168,7 +167,6 @@
     "eslint-plugin-prefer-arrow": "^1.2.2",
     "eslint-plugin-react": "^7.20.6",
     "fs-extra": "^7.0.0",
-    "italia-tslint-rules": "^1.1.0",
     "italia-utils": "^4.1.1",
     "jest": "^25.1.0",
     "js-yaml": "^3.13.1",
@@ -187,7 +185,6 @@
     "standard-version": "^8.0.2",
     "ts-jest": "^25.1.0",
     "ts-node": "^7.0.1",
-    "tslint": "5.20.0",
     "typescript": "^3.9.7"
   },
   "resolutions": {
