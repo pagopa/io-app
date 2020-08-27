@@ -112,8 +112,10 @@ export function walletHasFavoriteAvailablePsp(
 const hasDescriptionPrefix = (description: string) =>
   description.startsWith("/RFA/") ||
   description.startsWith("/RFB/") ||
+  description.startsWith("/RFS/") ||
   description.startsWith("RFA/") ||
-  description.startsWith("RFB/");
+  description.startsWith("RFB/") ||
+  description.startsWith("RFS/");
 
 /**
  * This function removes the tag from payment description of a PagoPA transaction.
