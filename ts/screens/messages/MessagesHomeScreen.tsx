@@ -126,6 +126,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     this.onRefreshMessages();
+    // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "dark-content",

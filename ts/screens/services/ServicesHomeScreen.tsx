@@ -311,6 +311,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       this.props.refreshServicesByScope();
     }
 
+    // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "dark-content",
@@ -519,39 +520,39 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   private renderLongPressFooterButtons = () => (
-      <View style={styles.varBar}>
-        <ButtonDefaultOpacity
-          block={true}
-          bordered={true}
-          onPress={this.handleOnLongPressItem}
-          style={styles.buttonBar}
-        >
-          <Text>{I18n.t("services.close")}</Text>
-        </ButtonDefaultOpacity>
-        <ButtonDefaultOpacity
-          block={true}
-          primary={true}
-          style={styles.buttonBar}
-          onPress={() => {
-            if (!this.props.wasServiceAlertDisplayedOnce) {
-              this.showAlertOnDisableServices(
-                I18n.t("services.disableAllTitle"),
-                I18n.t("services.disableAllMsg"),
-                () => this.disableOrEnableTabServices()
-              );
-            } else {
-              this.disableOrEnableTabServices();
-            }
-          }}
-        >
-          <Text>
-            {this.state.enableServices
-              ? I18n.t("services.enableAll")
-              : I18n.t("services.disableAll")}
-          </Text>
-        </ButtonDefaultOpacity>
-      </View>
-    );
+    <View style={styles.varBar}>
+      <ButtonDefaultOpacity
+        block={true}
+        bordered={true}
+        onPress={this.handleOnLongPressItem}
+        style={styles.buttonBar}
+      >
+        <Text>{I18n.t("services.close")}</Text>
+      </ButtonDefaultOpacity>
+      <ButtonDefaultOpacity
+        block={true}
+        primary={true}
+        style={styles.buttonBar}
+        onPress={() => {
+          if (!this.props.wasServiceAlertDisplayedOnce) {
+            this.showAlertOnDisableServices(
+              I18n.t("services.disableAllTitle"),
+              I18n.t("services.disableAllMsg"),
+              () => this.disableOrEnableTabServices()
+            );
+          } else {
+            this.disableOrEnableTabServices();
+          }
+        }}
+      >
+        <Text>
+          {this.state.enableServices
+            ? I18n.t("services.enableAll")
+            : I18n.t("services.disableAll")}
+        </Text>
+      </ButtonDefaultOpacity>
+    </View>
+  );
 
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
@@ -623,7 +624,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   /**
    * Render ServicesSearch component.
    */
-  private renderSearch = () => this.props.searchText
+  private renderSearch = () =>
+    this.props.searchText
       .map(_ =>
         _.length < MIN_CHARACTER_SEARCH_TEXT ? (
           <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
@@ -781,9 +783,8 @@ const mapStateToProps = (state: GlobalState) => {
     ...allTabSections
   ];
 
-  const getTabSevicesId = (
-    tabServices: ReadonlyArray<ServicesSectionState>
-  ) => tabServices.reduce(
+  const getTabSevicesId = (tabServices: ReadonlyArray<ServicesSectionState>) =>
+    tabServices.reduce(
       (acc: ReadonlyArray<string>, curr: ServicesSectionState) => {
         const sectionServices = curr.data.reduce(
           (

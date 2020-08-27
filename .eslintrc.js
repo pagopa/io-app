@@ -30,7 +30,8 @@ module.exports = {
     "@typescript-eslint",
     "@typescript-eslint/tslint",
     "react",
-    "import"
+    "import",
+    "functional"
   ],
   rules: {
     "no-case-declarations": "off",
@@ -42,6 +43,7 @@ module.exports = {
     "one-var": ["error", "never"],
     "object-shorthand": "error",
     "no-var": "error",
+    "no-param-reassign": "error",
     "no-underscore-dangle": "error",
     "no-undef-init": "error",
     "no-throw-literal": "error",
@@ -95,7 +97,9 @@ module.exports = {
     "react/prop-types": "off",
     "react/display-name": "off",
     "react/jsx-key": "error",
-    "react/jsx-no-bind": ["error", { allowArrowFunctions: true }]
+    "react/jsx-no-bind": ["error", { allowArrowFunctions: true }],
+    "functional/no-let": "error",
+    "functional/immutable-data": "error"
   },
   settings: {
     react: {

@@ -20,9 +20,9 @@ const {
 // We need to override the global fetch and AbortController to make the tests
 // compatible with node-fetch
 //
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,functional/immutable-data
 (global as any).fetch = nodeFetch;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,functional/immutable-data
 (global as any).AbortController = AbortController;
 
 const TEST_PATH = "transient-error";

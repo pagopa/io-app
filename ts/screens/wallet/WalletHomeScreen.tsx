@@ -198,6 +198,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
     this.props.loadWallets();
     this.props.loadTransactions(this.props.transactionsLoadedLength);
+    // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "light-content",

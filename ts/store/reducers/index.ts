@@ -140,6 +140,8 @@ export function createRootReducer(
        * We can't return undefined for nested persist reducer, we need to return
        * the basic redux persist content.
        */
+      // for retro-compatibility
+      // eslint-disable-next-line no-param-reassign
       state =
         state &&
         ((isActionOf(logoutSuccess, action) && !action.payload.keepUserData) ||

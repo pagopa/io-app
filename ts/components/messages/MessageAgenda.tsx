@@ -210,6 +210,7 @@ const generateItemLayouts = (sections: Sections) => {
 
   sections.forEach(section => {
     // Push the info about the SECTION_HEADER cell.
+    // eslint-disable-next-line functional/immutable-data
     itemLayouts.push({
       length: SECTION_HEADER_HEIGHT,
       offset,
@@ -228,6 +229,7 @@ const generateItemLayouts = (sections: Sections) => {
       const cellHeight = isLastItem
         ? itemHeight
         : itemHeight + ITEM_SEPARATOR_HEIGHT;
+      // eslint-disable-next-line functional/immutable-data
       itemLayouts.push({
         length: cellHeight,
         offset,
@@ -241,6 +243,7 @@ const generateItemLayouts = (sections: Sections) => {
     // Push the info about the SECTION_FOOTER cell.
     // NOTE: VirtualizedSectionList component creates a cell instance for
     // the SECTION_FOOTER even when not rendered.
+    // eslint-disable-next-line functional/immutable-data
     itemLayouts.push({
       length: 0,
       offset,
@@ -445,7 +448,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     );
   };
 
-  private getItemLayout = (_: Sections | null, index: number) => this.state.itemLayouts[index];
+  private getItemLayout = (_: Sections | null, index: number) =>
+    this.state.itemLayouts[index];
 
   // On scroll download more data
   private onScrollHandler = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -549,10 +553,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   }
 
   public noOtherDeadlines = () => (
-      <View style={styles.messageNoOthers}>
-        <Text bold={true}>{I18n.t("reminders.noOtherDeadlines")}</Text>
-      </View>
-    );
+    <View style={styles.messageNoOthers}>
+      <Text bold={true}>{I18n.t("reminders.noOtherDeadlines")}</Text>
+    </View>
+  );
 
   public scrollToLocation = (params: SectionListScrollParams) => {
     if (

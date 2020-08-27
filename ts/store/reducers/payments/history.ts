@@ -47,6 +47,7 @@ const replaceLastItem = (
 ): PaymentsHistoryState => {
   // eslint-disable-next-line
   const cloneState = [...state];
+  // eslint-disable-next-line functional/immutable-data
   cloneState.splice(state.length - 1, 1, newItem);
   return cloneState;
 };
@@ -63,6 +64,7 @@ const reducer = (
       );
       // if size exceeded, remove the ones exceeding (here we consider the one we will add in it)
       if (updateState.length + 1 >= HISTORY_SIZE) {
+        // eslint-disable-next-line functional/immutable-data
         updateState.splice(
           HISTORY_SIZE - 1,
           updateState.length + 1 - HISTORY_SIZE

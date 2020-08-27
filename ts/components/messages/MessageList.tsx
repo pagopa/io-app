@@ -132,6 +132,7 @@ const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
         ? itemHeight
         : itemHeight + ITEM_SEPARATOR_HEIGHT;
 
+    // eslint-disable-next-line functional/immutable-data
     itemLayouts.push({
       length: itemHeightWithSeparator,
       offset,

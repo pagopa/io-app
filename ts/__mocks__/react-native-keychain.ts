@@ -16,6 +16,7 @@ type Options = {
 
 const keychainDB: KeychainDB = {};
 
+// eslint-disable-next-line functional/immutable-data
 module.exports = {
   ACCESSIBLE: jest.fn(),
 

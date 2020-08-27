@@ -226,8 +226,10 @@ export const getBlockedChannels = (
   ].filter(_ => _ !== "");
 
   if (blockedChannelsForService.length === 0) {
+    // eslint-disable-next-line functional/immutable-data
     delete profileBlockedChannels[serviceId];
   } else {
+    // eslint-disable-next-line functional/immutable-data
     profileBlockedChannels[serviceId] = blockedChannelsForService;
   }
 
