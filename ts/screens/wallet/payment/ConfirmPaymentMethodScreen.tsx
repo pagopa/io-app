@@ -317,7 +317,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           verifica: props.navigation.getParam("verifica"),
           idPayment: props.navigation.getParam("idPayment"),
           psps: props.navigation.getParam("psps"),
-          wallet: props.navigation.getParam("wallet")
+          wallet: props.navigation.getParam("wallet"),
+          chooseToChange: true
         })
       ),
     onCancel: () => {
