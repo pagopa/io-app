@@ -13,9 +13,6 @@ Happy linting! 💖
 */
 module.exports = {
   root: true,
-  env: {
-    "react-native/react-native": true
-  },
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -33,7 +30,6 @@ module.exports = {
     "@typescript-eslint",
     "@typescript-eslint/tslint",
     "react",
-    "react-native",
     "import"
   ],
   rules: {
@@ -49,8 +45,6 @@ module.exports = {
     "no-underscore-dangle": "error",
     "no-undef-init": "error",
     "no-throw-literal": "error",
-    "react/prop-types": "off",
-    "react/display-name": "off",
     "no-new-wrappers": "error",
     "no-eval": "error",
     "no-console": "error",
@@ -66,7 +60,7 @@ module.exports = {
     // Enable if we want to enforce the return type for all the functions
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-inferrable-types": "off",
-    // TODO: added for compatibility. Remove this line and fix all the any in the code
+    // TODO: added for compatibility. Removing this line we have to remove all the any usage in the code
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/array-type": [
       "error",
@@ -97,7 +91,11 @@ module.exports = {
     "@typescript-eslint/restrict-plus-operands": "error",
     semi: "off",
     "@typescript-eslint/semi": ["error"],
-    "@typescript-eslint/unified-signatures": "error"
+    "@typescript-eslint/unified-signatures": "error",
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "react/jsx-key": "error",
+    "react/jsx-no-bind": ["error", { allowArrowFunctions: true }]
   },
   settings: {
     react: {
