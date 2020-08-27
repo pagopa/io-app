@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     paddingRight: 18
   },
-  flex: { flex: 1 }
+  flex: { flex: 1 },
+  textColor: { color: customVariables.brandDarkGray }
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -143,6 +144,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             fee={fee as ImportoEuroCents}
           />
           <View style={styles.padded}>
+            <View spacer={true} />
             <CardComponent
               type={"Full"}
               wallet={wallet}
@@ -175,10 +177,8 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             size={24}
             color={customVariables.brandDarkGray}
           />
-          <Text white={true} style={styles.flex}>
-            <Text bold={true} white={true}>
-              {I18n.t("global.genericAlert")}
-            </Text>
+          <Text style={[styles.flex, styles.textColor]}>
+            <Text bold={true}>{I18n.t("global.genericAlert")}</Text>
             {` ${I18n.t("wallet.ConfirmPayment.info")}`}
           </Text>
         </View>
@@ -317,7 +317,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           verifica: props.navigation.getParam("verifica"),
           idPayment: props.navigation.getParam("idPayment"),
           psps: props.navigation.getParam("psps"),
-          wallet: props.navigation.getParam("wallet")
+          wallet: props.navigation.getParam("wallet"),
+          chooseToChange: true
         })
       ),
     onCancel: () => {

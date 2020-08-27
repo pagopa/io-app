@@ -1,6 +1,6 @@
-import { FontWeight } from "../fonts";
+import { IOFontWeight } from "../fonts";
 
-export const fontWeightsMocks: ReadonlyArray<FontWeight> = [
+export const fontWeightsMocks: ReadonlyArray<IOFontWeight> = [
   "Bold",
   "SemiBold",
   "Regular",
