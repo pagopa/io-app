@@ -18,6 +18,7 @@ module.exports = {
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
+    "plugin:sonarjs/recommended",
     "prettier",
     "prettier/@typescript-eslint"
   ],
@@ -31,7 +32,8 @@ module.exports = {
     "@typescript-eslint/tslint",
     "react",
     "import",
-    "functional"
+    "functional",
+    "sonarjs"
   ],
   rules: {
     "no-case-declarations": "off",
@@ -99,7 +101,9 @@ module.exports = {
     "react/jsx-key": "error",
     "react/jsx-no-bind": ["error", { allowArrowFunctions: true }],
     "functional/no-let": "error",
-    "functional/immutable-data": "error"
+    "functional/immutable-data": "error",
+    "sonarjs/no-small-switch": "off",
+    "sonarjs/no-duplicate-string": "off"
   },
   settings: {
     react: {

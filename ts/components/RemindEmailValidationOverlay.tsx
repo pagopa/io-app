@@ -86,6 +86,7 @@ const profilePolling = 5000 as Millisecond; // 5 seconds
 const EMPTY_EMAIL = "";
 const MARKDOWN_BODY_STYLE = "body { text-align: center;}";
 const VALIDATION_ICON_WIDTH = 84;
+const emailCtaKey = "email.validate.cta";
 
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   private idTimeout?: number;
@@ -94,7 +95,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+      ctaSendEmailValidationText: I18n.t(emailCtaKey),
       isLoading: false,
       isContentLoadCompleted: false,
       isCtaSentEmailValidationDisabled: false,
@@ -162,7 +163,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       // and we got an error
       if (pot.isError(this.props.emailValidationRequest)) {
         this.setState({
-          ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+          ctaSendEmailValidationText: I18n.t(emailCtaKey),
           isLoading: false,
           isCtaSentEmailValidationDisabled: false
         });
@@ -178,7 +179,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           // eslint-disable-next-line
           this.idTimeout = undefined;
           this.setState({
-            ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+            ctaSendEmailValidationText: I18n.t(emailCtaKey),
             isCtaSentEmailValidationDisabled: false
           });
         }, emailSentTimeout);

@@ -184,6 +184,12 @@ class PreferencesScreen extends React.Component<Props, State> {
       );
     };
 
+    const showSpidEmailModal = () =>
+      showModal(
+        "profile.preferences.spid_email.contextualHelpTitle",
+        "profile.preferences.spid_email.contextualHelpContent"
+      );
+
     return (
       <TopScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
@@ -249,12 +255,7 @@ class PreferencesScreen extends React.Component<Props, State> {
                 <ListItemComponent
                   title={I18n.t("profile.preferences.list.spid_email")}
                   subTitle={maybeSpidEmail.value}
-                  onPress={() =>
-                    showModal(
-                      "profile.preferences.spid_email.contextualHelpTitle",
-                      "profile.preferences.spid_email.contextualHelpContent"
-                    )
-                  }
+                  onPress={showSpidEmailModal}
                 />
               )
             }
@@ -265,12 +266,7 @@ class PreferencesScreen extends React.Component<Props, State> {
                 <ListItemComponent
                   title={I18n.t("profile.preferences.list.mobile_phone")}
                   subTitle={maybePhoneNumber.value}
-                  onPress={() =>
-                    showModal(
-                      "profile.preferences.spid_email.contextualHelpTitle",
-                      "profile.preferences.spid_email.contextualHelpContent"
-                    )
-                  }
+                  onPress={showSpidEmailModal}
                 />
               )
             }

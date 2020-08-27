@@ -110,6 +110,7 @@ export const bonusEligibilitySaga = (
     typeof BackendBonusVacanze
   >["getBonusEligibilityCheck"]
 ) =>
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   function* getBonusEligibilitySaga(): Generator<
     Effect,
     ActionType<typeof checkBonusVacanzeEligibility>,

@@ -42,6 +42,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
   // eslint-disable-next-line
   let lastExitRequestTime: Option<Millisecond> = none;
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   return (store: MiddlewareAPI) => (next: Dispatch) => (action: Action) => {
     switch (action.type) {
       case NavigationActions.INIT:
@@ -129,7 +130,8 @@ export function createNavigationHistoryMiddleware(): Middleware<
             } else {
               // Search for the index where the route is present for the first time
               const index = currentNavigationHistory.findIndex(
-                navigationState => navigationStateRoutesContainsKey(
+                navigationState =>
+                  navigationStateRoutesContainsKey(
                     navigationState.routes,
                     routeKey
                   )
@@ -167,13 +169,14 @@ export function navigationStateRoutesContainsKey(
   routes: ReadonlyArray<NavigationRoute>,
   routeKey: string
 ): boolean {
-  const index = routes.findIndex(r => (
+  const index = routes.findIndex(
+    r =>
       // Check if the route is the one we want
       r.key === routeKey ||
       // Or if this is a nested Navigator route, recursively check to see if
       // its children match
       !!(r.routes && navigationStateRoutesContainsKey(r.routes, routeKey))
-    ));
+  );
 
   const notFound = -1;
   return index !== notFound;

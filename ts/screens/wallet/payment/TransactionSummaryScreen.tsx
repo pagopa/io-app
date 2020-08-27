@@ -209,7 +209,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
   }
 
-  private getFooterButtons = () => this.props.error.fold(this.renderFooterButtons(), error =>
+  private getFooterButtons = () =>
+    this.props.error.fold(this.renderFooterButtons(), error =>
       error === "PAYMENT_DUPLICATED"
         ? this.renderFooterSingleButton()
         : this.renderFooterButtons()
@@ -322,7 +323,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 }
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line complexity,sonarjs/cognitive-complexity
 const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
   const walletById = state.wallet.wallets.walletById;

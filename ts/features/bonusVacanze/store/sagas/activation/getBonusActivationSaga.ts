@@ -98,6 +98,7 @@ export const bonusActivationSaga = (
     typeof BackendBonusVacanze
   >["getLatestBonusVacanzeFromId"]
 ) =>
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   function* startBonusActivationSaga(): Generator<
     Effect,
     ActionType<typeof activateBonusVacanze>,

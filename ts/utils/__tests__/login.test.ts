@@ -26,7 +26,7 @@ describe("hook the login outcome from the url", () => {
   const loginResultUndefined = extractLoginResult(
     "https://somedomain.com/path1/path2/index.html?id=12345"
   );
-  it("should be undefined", () => {
+  it("login result should be undefined", () => {
     expect(loginResultUndefined).toBeUndefined();
   });
 
@@ -47,7 +47,7 @@ describe("hook the login outcome from the url", () => {
       expect(loginFailureNoCode.success).toBeFalsy();
     });
     if (!loginFailureNoCode.success) {
-      it("should be undefined", () => {
+      it("login failure should be undefined", () => {
         expect(loginFailureNoCode.errorCode).toBeUndefined();
       });
     }

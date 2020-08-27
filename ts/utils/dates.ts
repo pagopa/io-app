@@ -39,15 +39,12 @@ export function formatDateAsLocal(
   includeYear: boolean = false,
   extendedYear: boolean = false
 ): ReturnType<typeof dateFnsFormat> {
+  const dateFormat = I18n.t("global.dateFormats.dayMonth");
   return extendedYear
-    ? format(date, I18n.t("global.dateFormats.dayMonth")) +
-        "/" +
-        format(date, "YYYY")
+    ? format(date, dateFormat) + "/" + format(date, "YYYY")
     : includeYear
-    ? format(date, I18n.t("global.dateFormats.dayMonth")) +
-      "/" +
-      format(date, "YY")
-    : format(date, I18n.t("global.dateFormats.dayMonth"));
+    ? format(date, dateFormat) + "/" + format(date, "YY")
+    : format(date, dateFormat);
 }
 
 export function format(

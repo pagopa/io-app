@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
 import bonusVacanzeWhiteLogo from "../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
 import bonusVacanzePreviewBg from "../../../../img/bonus/bonusVacanze/bonus_preview_bg.png";
 import bonusVacanzeBg from "../../../../img/bonus/bonusVacanze/bonus_bg.png";
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const { bonus } = props;
 
@@ -261,40 +262,40 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const renderPreviewCard = () => (
-      <View style={styles.preview}>
-        <TouchableDefaultOpacity
-          style={[styles.row, styles.spaced]}
-          onPress={props.onPress}
-        >
-          <View style={[styles.row]}>
-            <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
-              {I18n.t("bonus.bonusVacanze.name")}
-            </Text>
-            <View hspacer={true} large={true} />
-            <Text
-              bold={true}
-              style={[
-                !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
-                styles.colorWhite,
-                styles.previewAmount
-              ]}
-            >
-              {bonus.dsu_request.max_amount}
-            </Text>
-            <Text
-              style={[
-                !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
-                styles.colorWhite,
-                { fontSize: 20 }
-              ]}
-            >
-              {"€"}
-            </Text>
-          </View>
-          <Image source={bonusVacanzeWhiteLogo} style={styles.previewLogo} />
-        </TouchableDefaultOpacity>
-      </View>
-    );
+    <View style={styles.preview}>
+      <TouchableDefaultOpacity
+        style={[styles.row, styles.spaced]}
+        onPress={props.onPress}
+      >
+        <View style={[styles.row]}>
+          <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
+            {I18n.t("bonus.bonusVacanze.name")}
+          </Text>
+          <View hspacer={true} large={true} />
+          <Text
+            bold={true}
+            style={[
+              !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
+              styles.colorWhite,
+              styles.previewAmount
+            ]}
+          >
+            {bonus.dsu_request.max_amount}
+          </Text>
+          <Text
+            style={[
+              !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
+              styles.colorWhite,
+              { fontSize: 20 }
+            ]}
+          >
+            {"€"}
+          </Text>
+        </View>
+        <Image source={bonusVacanzeWhiteLogo} style={styles.previewLogo} />
+      </TouchableDefaultOpacity>
+    </View>
+  );
 
   return (
     <>
