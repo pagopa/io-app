@@ -269,10 +269,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   private service = this.props.navigation.getParam("service");
 
   // finds out which channels are enabled in the user profile
-  private profileEnabledChannels = getEnabledChannelsForService(
-    this.props.profile,
-    this.serviceId
-  );
+  private profileEnabledChannels = () =>
+    getEnabledChannelsForService(this.props.profile, this.serviceId);
 
   // whether last attempt to save the preferences failed
   private profileVersion = pot
@@ -446,16 +444,18 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   private getInboxSwitchRow = () => {
     const isDisabled =
       // the preference can be updated if
-      // natifications are globally disabled or
+      // notifications are globally disabled or
       !this.props.isInboxEnabled ||
       // profile is updating
       pot.isUpdating(this.props.profile);
 
     const isSwitchedOn =
-      // inbox is globally disabled or
+      // inbox is globally enabled and
       this.props.isInboxEnabled &&
-      // inbox is disabled for the given service
-      this.state.uiEnabledChannels.inbox;
+      // inbox is enabled for the given service
+      this.state.uiEnabledChannels.inbox &&
+      // inbox is enabled for the profile
+      this.profileEnabledChannels().inbox;
 
     const onValueChange = (value: boolean) => {
       if (!value && !this.props.wasServiceAlertDisplayedOnce) {
@@ -476,7 +476,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           bold={true}
           style={isSwitchedOn ? styles.enabledColor : styles.disabledColor}
         >
-          {this.profileEnabledChannels.inbox
+          {isSwitchedOn
             ? I18n.t("services.serviceIsEnabled")
             : I18n.t("services.serviceNotEnabled")}
         </Text>
