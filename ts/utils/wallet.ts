@@ -65,4 +65,9 @@ export const handleSetFavourite = (
   willBeFavorite: boolean,
   callback: () => void
 ) =>
-  willBeFavorite ? callback() : Alert.alert(I18n.t("wallet.alert.favourite"));
+  willBeFavorite
+    ? callback()
+    : Alert.alert(
+        I18n.t("global.genericAlert"),
+        I18n.t("wallet.alert.favourite")
+      );
