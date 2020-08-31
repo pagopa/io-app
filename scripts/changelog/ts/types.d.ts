@@ -30,6 +30,6 @@ export type Story = {
   name: string;
   current_state: StoryCurrentState;
   url: string;
-  project_id: string;
+  project_id: number;
   labels: ReadonlyArray<Label>;
 };
