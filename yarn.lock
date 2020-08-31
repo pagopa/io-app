@@ -1143,6 +1143,11 @@
   dependencies:
     deep-assign "^3.0.0"
 
+"@react-native-community/cameraroll@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cameraroll/-/cameraroll-4.0.0.tgz#97a4be5d01bc05c387c26599ffa559e1b425e415"
+  integrity sha512-ZqzWbNHklgq/sPUmlDgi/SvfbkIVKNYXhcDGRcabXRsX9aIyNEX2dk2fkCSJoKWqBF8uSUnVznonpTP3TlwdyQ==
+
 "@react-native-community/cli-debugger-ui@^4.9.0":
   version "4.9.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-4.9.0.tgz#4177764ba69243c97aa26829d59d9501acb2bd71"
@@ -9378,6 +9383,11 @@ react-native-vector-icons@^7.0.0:
     lodash "^4.17.15"
     prop-types "^15.7.2"
     yargs "^15.0.2"
+
+react-native-view-shot@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.1.2.tgz#8c8e84c67a4bc8b603e697dbbd59dbc9b4f84825"
+  integrity sha512-9u9fPtp6a52UMoZ/UCPrCjKZk8tnkI9To0Eh6yYnLKFEGkRZ7Chm6DqwDJbYJHeZrheCCopaD5oEOnRqhF4L2Q==
 
 react-native-webview@10.4.0:
   version "10.4.0"

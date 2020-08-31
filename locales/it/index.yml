@@ -1457,6 +1457,8 @@ bonus:
     applicant: CF richiedente
     bonusClaim: Chi può riscuotere il bonus?
     shareMessage: "Questo è il codice del tuo Bonus Vacanze:"
+    saveScreenShotOk: "Bonus salvato nella tua galleria!"
+    savedOn: "Salvato il "
     detail:
       contextualHelp:
         title: Bonus Vacanze
