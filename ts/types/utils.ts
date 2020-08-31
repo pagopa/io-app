@@ -29,3 +29,36 @@ export type PotFromActions<S, F> = Pot<
   PayloadForAction<S>,
   PayloadForAction<F>
 >;
+
+/**
+ * Ensure that all the keys of type T are required, transforming all optional field of kind T | undefined to T
+ */
+export type RequiredAll<T> = { [K in keyof T]-?: T[K] };
+
+export type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+
+/**
+ * Ensure that the types T and U are mutually exclusive
+ */
+export type XOR<T, U> = (T | U) extends object
+  ? (Without<T, U> & U) | (Without<U, T> & T)
+  : T | U;
+
+type Values<T extends {}> = T[keyof T];
+
+type Tuplize<T extends any[]> = Pick<
+  T,
+  Exclude<keyof T, Extract<keyof any[], string> | number>
+>;
+
+type _OneOf<T extends {}> = Values<
+  {
+    [K in keyof T]: T[K] &
+      { [M in Values<{ [L in keyof Omit<T, K>]: keyof T[L] }>]?: undefined }
+  }
+>;
+
+/**
+ * Ensure that the types T extends any[] are mutually exclusive
+ */
+export type OneOf<T extends any[]> = _OneOf<Tuplize<T>>;
