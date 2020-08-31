@@ -694,7 +694,7 @@ wallet:
     title: Choose the manager
     info: This card does not belong to the pagoPA payment network.
     infoBold: Choose the economic operator
-    info2: (PSP) which will have to manage yout payment.
+    info2: (PSP) which will have to manage your payment.
     link: Find out more
     maxFee: Maximum fee
     onUpdateWalletPspFailure: Operation failed, please retry
@@ -1424,6 +1424,8 @@ bonus:
     applicant: Applicant FC
     bonusClaim: Who can claim the bonus?
     shareMessage: "This is the code of your Bonus Vacanze:"
+    saveScreenShotOk: "Bonus saved in your gallery!"
+    savedOn: "Saved on "
     detail:
       contextualHelp:
         title: Bonus Vacanze
