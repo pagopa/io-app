@@ -224,3 +224,16 @@ export const getTransactionCodiceAvviso = (
   const splitted = description.split("/").filter(i => i.trim().length > 0);
   return splitted.length > 1 ? some(splitted[1]) : none;
 };
+
+/**
+ * Order the list of PSPs by fixed cost amount: from lower to higher
+ */
+export const orderPspByAmount = (pspList: ReadonlyArray<Psp>) =>
+  pspList.concat().sort((pspA: Psp, pspB: Psp) => {
+    if (pspA.fixedCost.amount < pspB.fixedCost.amount) {
+      return -1;
+    } else if (pspA.fixedCost.amount > pspB.fixedCost.amount) {
+      return 1;
+    }
+    return 0;
+  });
