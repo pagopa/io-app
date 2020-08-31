@@ -7,6 +7,7 @@ import {
   IGetApiRequestType,
   IPostApiRequestType
 } from "italia-ts-commons/lib/requests";
+import { AccessToken } from "../../definitions/backend/AccessToken";
 import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { defaultRetryingFetch } from "../utils/fetch";
@@ -22,7 +23,7 @@ type PostTestLoginT = IPostApiRequestType<
   PasswordLogin,
   "Content-Type",
   never,
-  BasicResponseType<string>
+  BasicResponseType<AccessToken>
 >;
 
 const BackendStatusMessage = t.interface({
@@ -94,7 +95,7 @@ export function BackendPublicClient(
     query: _ => ({}),
     headers: ApiHeaderJson,
     body: (passwordLogin: PasswordLogin) => JSON.stringify(passwordLogin),
-    response_decoder: basicResponseDecoder(t.string)
+    response_decoder: basicResponseDecoder(AccessToken)
   };
 
   return {

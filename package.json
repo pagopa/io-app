@@ -1,8 +1,8 @@
 {
   "name": "italia-app",
   "version": "1.6.0-rc.0",
-  "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v6.13.0/api_backend.yaml",
-  "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v6.13.0/api_public.yaml",
+  "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v6.14.0/api_backend.yaml",
+  "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v6.14.0/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
   "io_bonus_vacanze_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_bonus.yaml",
   "pagopa_api": "https://wisp2.pagopa.gov.it/pp-restapi-CD/v2/api-docs",
