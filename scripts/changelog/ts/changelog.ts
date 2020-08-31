@@ -32,7 +32,10 @@ const allowedScope = new Map<string, string>([
 ]);
 
 // a list of project ids associated with a specific scope
-const projectToScope = new Map<string, string>([["2449547", "Bonus Vacanze"]]);
+const projectToScope = new Map<number, string>([
+  [2449547, "Bonus Vacanze"],
+  [2048617, "Test Fix"]
+]);
 
 const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
 
