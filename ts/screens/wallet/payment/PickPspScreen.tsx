@@ -26,6 +26,7 @@ import { allPspsSelector } from "../../../store/reducers/wallet/payment";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
+import { orderPspByAmount } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
@@ -37,6 +38,7 @@ type NavigationParams = Readonly<{
   idPayment: string;
   psps: ReadonlyArray<Psp>;
   wallet: Wallet;
+  chooseToChange?: boolean;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -130,7 +132,7 @@ class PickPspScreen extends React.Component<Props> {
   };
 
   public render(): React.ReactNode {
-    const availablePsps = this.props.allPsps;
+    const availablePsps = orderPspByAmount(this.props.allPsps);
 
     return (
       <BaseScreenComponent
@@ -143,7 +145,8 @@ class PickPspScreen extends React.Component<Props> {
           <View spacer={true} />
           <View style={styles.padded}>
             <Text>
-              {`${I18n.t("wallet.pickPsp.info")} `}
+              {!this.props.navigation.getParam("chooseToChange") &&
+                `${I18n.t("wallet.pickPsp.info")} `}
               <Text bold={true}>{`${I18n.t("wallet.pickPsp.infoBold")} `}</Text>
               <Text>{`${I18n.t("wallet.pickPsp.info2")} `}</Text>
             </Text>

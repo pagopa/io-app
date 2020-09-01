@@ -46,7 +46,10 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
-import { checkAndRequestPermission } from "../../utils/calendar";
+import {
+  checkAndRequestPermission,
+  convertLocalCalendarName
+} from "../../utils/calendar";
 import {
   getLocalePrimary,
   getLocalePrimaryWithFallback
@@ -225,7 +228,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               )}
               subTitle={
                 this.props.preferredCalendar
-                  ? this.props.preferredCalendar.title
+                  ? convertLocalCalendarName(this.props.preferredCalendar.title)
                   : I18n.t(
                       "profile.preferences.list.preferred_calendar.not_selected"
                     )

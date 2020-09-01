@@ -13,11 +13,11 @@ import color from "color";
 import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInputProps } from "react-native";
-import { TextInputMaskProps } from "react-native-text-input-mask";
+import { TextInputMaskProps } from "react-native-masked-text";
 import { IconProps } from "react-native-vector-icons/Icon";
-import MaskedInput from "../components/ui/MaskedInput";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
+import TextInputMask from "./ui/MaskedInput";
 
 const styles = StyleSheet.create({
   noBottomLine: {
@@ -47,7 +47,8 @@ type Props = CommonProp &
   (
     | Readonly<{
         type: "masked";
-        inputMaskProps: TextInputMaskProps;
+        inputMaskProps: TextInputMaskProps &
+          React.ComponentPropsWithRef<typeof TextInputMask>;
       }>
     | Readonly<{
         type: "text";
@@ -64,8 +65,8 @@ export class LabelledItem extends React.Component<Props, State> {
   /**
    * check if the input is empty and set the value in the state
    */
-  private checkInputIsEmpty = (text: string) => {
-    const isEmpty = text.length === 0;
+  private checkInputIsEmpty = (text?: string) => {
+    const isEmpty = text === undefined || text.length === 0;
     if (isEmpty !== this.state.isEmpty) {
       this.setState({ isEmpty });
     }
@@ -84,7 +85,7 @@ export class LabelledItem extends React.Component<Props, State> {
   /**
    * handle masked input on change text
    */
-  private handleOnMaskedChangeText = (formatted: string, text: string) => {
+  private handleOnMaskedChangeText = (formatted: string, text?: string) => {
     if (
       this.props.type === "masked" &&
       this.props.inputMaskProps.onChangeText
@@ -134,7 +135,7 @@ export class LabelledItem extends React.Component<Props, State> {
             style={this.props.iconStyle}
           />
           {this.props.type === "masked" ? (
-            <MaskedInput
+            <TextInputMask
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
                 .string()}

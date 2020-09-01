@@ -109,15 +109,19 @@ export function walletHasFavoriteAvailablePsp(
   return walletPspInPsps !== undefined;
 }
 
+/**
+ * This tags are defined in PagoPA specs for transaction description.
+ * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
+ */
+const prefixes: ReadonlyArray<string> = ["RFA", "RFB", "RFS"];
+
 const hasDescriptionPrefix = (description: string) =>
-  description.startsWith("/RFA/") ||
-  description.startsWith("/RFB/") ||
-  description.startsWith("RFA/") ||
-  description.startsWith("RFB/");
+  prefixes.some(
+    p => description.startsWith(`${p}/`) || description.startsWith(`/${p}/`)
+  );
 
 /**
  * This function removes the tag from payment description of a PagoPA transaction.
- * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
  */
 export const cleanTransactionDescription = (description: string): string => {
   // detect description in pagoPA format - note that we also check for cases
@@ -220,3 +224,16 @@ export const getTransactionCodiceAvviso = (
   const splitted = description.split("/").filter(i => i.trim().length > 0);
   return splitted.length > 1 ? some(splitted[1]) : none;
 };
+
+/**
+ * Order the list of PSPs by fixed cost amount: from lower to higher
+ */
+export const orderPspByAmount = (pspList: ReadonlyArray<Psp>) =>
+  pspList.concat().sort((pspA: Psp, pspB: Psp) => {
+    if (pspA.fixedCost.amount < pspB.fixedCost.amount) {
+      return -1;
+    } else if (pspA.fixedCost.amount > pspB.fixedCost.amount) {
+      return 1;
+    }
+    return 0;
+  });
