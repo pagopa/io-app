@@ -1,4 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import { tryCatch } from "fp-ts/lib/Task";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -54,7 +55,11 @@ export const setAccessibilityFocus = <T extends React.Component>(
  * return a Promise where true means there is a screen reader active (VoiceOver / TalkBack)
  */
 export const isScreenReaderEnabled = async (): Promise<boolean> => {
-  return Promise.resolve(true);
+  const maybeReaderEnabled = await tryCatch(
+    () => AccessibilityInfo.isScreenReaderEnabled(),
+    errorMsg => new Error(String(errorMsg))
+  ).run();
+  return maybeReaderEnabled.getOrElse(false);
 };
 
 // return the state of the screen reader when the caller component is mounted
