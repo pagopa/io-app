@@ -2,6 +2,7 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import image from "../../../../../img/messages/empty-message-list-icon.png";
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../i18n";
@@ -12,8 +13,6 @@ import { bonusVacanzeStyle } from "../../components/Styles";
 import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
-
-const image = require("../../../../../img/messages/empty-message-list-icon.png");
 
 /**
  * This screen informs the user that there is already an ongoing activation for the bonus.
@@ -55,7 +54,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(BonusActivationPending);
+export default connect(null, mapDispatchToProps)(BonusActivationPending);

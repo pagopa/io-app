@@ -121,23 +121,17 @@ export const searchEventInCalendar = async (
     formatDateAsReminder(endDate)
   )
     .then(
-      events => {
-        return fromNullable(events)
+      events => fromNullable(events)
           .mapNullable(evs =>
-            evs.find(e => {
-              return (
+            evs.find(e => (
                 e.title === title &&
                 new Date(e.endDate).getDay() === endDate.getDay()
-              );
-            })
+              ))
           )
           .map(ev => some(ev.id))
-          .getOrElse(none);
-      },
+          .getOrElse(none),
       // handle promise rejection
-      () => {
-        return none;
-      }
+      () => none
     )
     .catch(() => none);
 };

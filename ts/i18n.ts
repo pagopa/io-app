@@ -5,11 +5,11 @@ import I18n from "react-native-i18n";
 import * as locales from "../locales/locales";
 
 // Should the app fallback to English if user locale doesn't exists
-// tslint:disable-next-line:no-object-mutation
+// eslint-disable-next-line
 I18n.fallbacks = true;
 
 // Define the supported translations
-// tslint:disable-next-line:no-object-mutation
+// eslint-disable-next-line
 I18n.translations = {
   en: locales.localeEN,
   it: locales.localeIT
@@ -17,12 +17,12 @@ I18n.translations = {
 
 export const translations = Object.keys(I18n.translations);
 
-export const availableTransations: ReadonlyArray<
-  locales.Locales
-> = translations.map(k => k as locales.Locales).sort();
+export const availableTransations: ReadonlyArray<locales.Locales> = translations
+  .map(k => k as locales.Locales)
+  .sort();
 
 export function setLocale(lang: locales.Locales) {
-  // tslint:disable-next-line:no-object-mutation
+  // eslint-disable-next-line
   I18n.locale = lang;
 }
 

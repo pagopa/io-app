@@ -123,11 +123,9 @@ export const isSessionExpiredSelector = (state: GlobalState) =>
 
 export const sessionTokenSelector = (
   state: GlobalState
-): SessionToken | undefined => {
-  return isLoggedIn(state.authentication)
+): SessionToken | undefined => isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined;
-};
 
 export const sessionInfoSelector = (state: GlobalState) =>
   isLoggedInWithSessionInfo(state.authentication)

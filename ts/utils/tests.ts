@@ -10,9 +10,7 @@ export const reproduceSequence = <S>(
   initialState: S,
   reducer: (s: S, a: Action) => S,
   sequenceOfActions: ReadonlyArray<Action>
-): S => {
-  return sequenceOfActions.reduce<S>(
+): S => sequenceOfActions.reduce<S>(
     (acc, val) => reducer(acc, val),
     initialState
   );
-};

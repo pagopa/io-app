@@ -1,4 +1,4 @@
-// tslint:disable:parameters-max-number
+/* eslint-disable */
 
 import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";

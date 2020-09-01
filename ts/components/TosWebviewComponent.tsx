@@ -15,8 +15,7 @@ type Props = {
   onExit: () => void;
 };
 
-const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => {
-  return (
+const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => (
     <>
       <View style={{ flex: 1 }}>
         <WebView
@@ -49,6 +48,5 @@ const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => {
       )}
     </>
   );
-};
 
 export default React.memo(TosWebviewComponent);

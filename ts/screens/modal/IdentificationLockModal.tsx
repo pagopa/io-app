@@ -4,6 +4,7 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet } from "react-native";
+import errorIcon from "../../../img/messages/error-message-detail-icon.png";
 import I18n from "../../i18n";
 
 type Props = {
@@ -29,8 +30,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const errorIcon = require("../../../img/messages/error-message-detail-icon.png");
-
 const wrongCodeText = I18n.t("identification.fail.wrongCode");
 const waitMessageText = I18n.t("identification.fail.waitMessage");
 const tooManyAttemptsText = I18n.t("identification.fail.tooManyAttempts");
@@ -45,9 +44,7 @@ const fromMillisecondsToTimeRepresentation = (ms: Millisecond): string =>
   A countdown is displayed indicating how long it is to unlock the application.
 */
 
-export const IdentificationLockModal: React.FunctionComponent<
-  Props
-> = props => {
+export const IdentificationLockModal: React.FunctionComponent<Props> = props => {
   const minuteSeconds = fromNullable(props.countdown).fold("0:00", x =>
     fromMillisecondsToTimeRepresentation(x)
   );

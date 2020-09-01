@@ -95,6 +95,7 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
 /**
  * Reducer for actions that show the payment summary
  */
+// eslint-disable-next-line complexity
 const reducer = (
   state: PaymentState = PAYMENT_INITIAL_STATE,
   action: Action

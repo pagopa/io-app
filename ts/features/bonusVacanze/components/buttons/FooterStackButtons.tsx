@@ -20,31 +20,25 @@ type Props = {
   buttons: ReadonlyArray<BlockButtonProps>;
 };
 
-const renderButton = (props: BlockButtonProps) => {
-  return (
+const renderButton = (props: BlockButtonProps) => (
     <>
       <ButtonDefaultOpacity style={styles.button} {...props}>
         {props.iconName && <IconFont name={props.iconName} />}
         <Text
-          style={fromNullable(props.buttonFontSize).fold(undefined, fs => {
-            return { fontSize: fs };
-          })}
+          style={fromNullable(props.buttonFontSize).fold(undefined, fs => ({ fontSize: fs }))}
         >
           {props.title}
         </Text>
       </ButtonDefaultOpacity>
     </>
   );
-};
 
-const withSpacer = (base: JSX.Element, idx: number) => {
-  return (
+const withSpacer = (base: JSX.Element, idx: number) => (
     <React.Fragment key={`stack_spacer_${idx}`}>
       {base}
       <View spacer={true} />
     </React.Fragment>
   );
-};
 
 /**
  * A generic component to render a stack of buttons in the footer

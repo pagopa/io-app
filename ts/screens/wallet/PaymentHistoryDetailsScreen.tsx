@@ -190,8 +190,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     </React.Fragment>
   );
 
-  private renderHelper = () => {
-    return (
+  private renderHelper = () => (
       <View>
         <Text alignCenter={true} style={styles.padded}>
           {I18n.t("payment.details.info.help")}
@@ -207,7 +206,6 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
         </ButtonDefaultOpacity>
       </View>
     );
-  };
 
   public render(): React.ReactNode {
     const data = this.getData();
@@ -237,9 +235,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               {data.enteBeneficiario &&
                 renderItem(
                   I18n.t("payment.details.info.enteCreditore"),
-                  `${data.enteBeneficiario.denominazioneBeneficiario}\n${
-                    data.enteBeneficiario.identificativoUnivocoBeneficiario
-                  }`
+                  `${data.enteBeneficiario.denominazioneBeneficiario}\n${data.enteBeneficiario.identificativoUnivocoBeneficiario}`
                 )}
               {data.errorDetail.isSome() && (
                 <View key={"error"}>
@@ -321,10 +317,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => {
-  return {
+const mapStateToProps = (state: GlobalState) => ({
     profile: profileSelector(state)
-  };
-};
+  });
 
 export default connect(mapStateToProps)(PaymentHistoryDetailsScreen);

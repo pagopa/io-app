@@ -126,12 +126,13 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     this.onRefreshMessages();
+    // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "dark-content",
         customVariables.colorWhite
       );
-    }); // tslint:disable-line no-object-mutation
+    }); // eslint-disable-line
   }
 
   public componentWillUnmount() {
@@ -288,20 +289,19 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     } = this.props;
 
     return this.props.searchText
-      .map(
-        _ =>
-          _.length < MIN_CHARACTER_SEARCH_TEXT ? (
-            <SearchNoResultMessage errorType="InvalidSearchBarText" />
-          ) : (
-            <MessagesSearch
-              messagesState={lexicallyOrderedMessagesState}
-              servicesById={servicesById}
-              paymentsByRptId={paymentsByRptId}
-              onRefresh={this.onRefreshMessages}
-              navigateToMessageDetail={navigateToMessageDetail}
-              searchText={_}
-            />
-          )
+      .map(_ =>
+        _.length < MIN_CHARACTER_SEARCH_TEXT ? (
+          <SearchNoResultMessage errorType="InvalidSearchBarText" />
+        ) : (
+          <MessagesSearch
+            messagesState={lexicallyOrderedMessagesState}
+            servicesById={servicesById}
+            paymentsByRptId={paymentsByRptId}
+            onRefresh={this.onRefreshMessages}
+            navigateToMessageDetail={navigateToMessageDetail}
+            searchText={_}
+          />
+        )
       )
       .getOrElse(<SearchNoResultMessage errorType="InvalidSearchBarText" />);
   };
@@ -343,7 +343,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   ) => dispatch(setMessagesArchivedState(ids, archived))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MessagesHomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MessagesHomeScreen);

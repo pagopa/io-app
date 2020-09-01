@@ -1,19 +1,18 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
-import { connect } from "react-redux";
-
-import * as pot from "italia-ts-commons/lib/pot";
-import { EdgeBorderComponent } from "../components/screens/EdgeBorderComponent";
-import ListItemComponent from "../components/screens/ListItemComponent";
 
 import { ListRenderItemInfo, SectionList } from "react-native";
+import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+import { connect } from "react-redux";
+import ListItemComponent from "../components/screens/ListItemComponent";
 import I18n from "../i18n";
 import { preferredCalendarSaveSuccess } from "../store/actions/persistedPreferences";
 import { Dispatch } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
 import { convertLocalCalendarName } from "../utils/calendar";
+import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import SectionHeaderComponent from "./screens/SectionHeaderComponent";
 
 type CalendarByAccount = Readonly<{

@@ -147,7 +147,7 @@ export type MessageAgendaSection = SectionListData<
   MessageAgendaItem | FakeItem
 >;
 
-// tslint:disable-next-line: readonly-array
+// eslint-disable-next-line
 export type Sections = MessageAgendaSection[];
 
 export type ItemLayout = {
@@ -183,9 +183,7 @@ type State = {
   isFirstLoading: boolean;
 };
 
-export const isFakeItem = (item: any): item is FakeItem => {
-  return item.fake;
-};
+export const isFakeItem = (item: any): item is FakeItem => item.fake;
 
 // Min number of items to activate continuos scroll
 const minItemsToScroll = 4;
@@ -203,15 +201,16 @@ const keyExtractor = (_: MessageAgendaItem | FakeItem, index: number) =>
  * Here we calculate the ItemLayout for each cell.
  */
 const generateItemLayouts = (sections: Sections) => {
-  // tslint:disable-next-line: no-let
+  // eslint-disable-next-line
   let offset = LIST_HEADER_HEIGHT;
-  // tslint:disable-next-line: no-let
+  // eslint-disable-next-line
   let index = 0;
-  // tslint:disable-next-line: readonly-array
+  // eslint-disable-next-line
   const itemLayouts: ItemLayout[] = [];
 
   sections.forEach(section => {
     // Push the info about the SECTION_HEADER cell.
+    // eslint-disable-next-line functional/immutable-data
     itemLayouts.push({
       length: SECTION_HEADER_HEIGHT,
       offset,
@@ -230,6 +229,7 @@ const generateItemLayouts = (sections: Sections) => {
       const cellHeight = isLastItem
         ? itemHeight
         : itemHeight + ITEM_SEPARATOR_HEIGHT;
+      // eslint-disable-next-line functional/immutable-data
       itemLayouts.push({
         length: cellHeight,
         offset,
@@ -243,6 +243,7 @@ const generateItemLayouts = (sections: Sections) => {
     // Push the info about the SECTION_FOOTER cell.
     // NOTE: VirtualizedSectionList component creates a cell instance for
     // the SECTION_FOOTER even when not rendered.
+    // eslint-disable-next-line functional/immutable-data
     itemLayouts.push({
       length: 0,
       offset,
@@ -285,7 +286,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     }
   }
 
-  // tslint:disable-next-line: cognitive-complexity
+  // eslint-disable-next-line
   public componentDidUpdate(prevProps: Props) {
     // Change status loading to show progress
     if (
@@ -302,7 +303,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         this.setState({ isFirstLoading: false });
       } else {
         // We leave half a second longer to show the progress even for faster requests
-        // tslint:disable-next-line: no-object-mutation
+        // eslint-disable-next-line
         this.idTimeoutProgress = setTimeout(() => {
           this.setState({
             isLoadingProgress: false
@@ -425,9 +426,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     const payment =
       message.content.payment_data !== undefined && service !== undefined
         ? paymentsByRptId[
-            `${service.organization_fiscal_code}${
-              message.content.payment_data.notice_number
-            }`
+            `${service.organization_fiscal_code}${message.content.payment_data.notice_number}`
           ]
         : undefined;
 
@@ -449,9 +448,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     );
   };
 
-  private getItemLayout = (_: Sections | null, index: number) => {
-    return this.state.itemLayouts[index];
-  };
+  private getItemLayout = (_: Sections | null, index: number) =>
+    this.state.itemLayouts[index];
 
   // On scroll download more data
   private onScrollHandler = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -541,27 +539,24 @@ class MessageAgenda extends React.PureComponent<Props, State> {
               : ListEmptyComponent
           }
         />
-        {isLoadingProgress &&
-          isContinuosScrollEnabled && (
-            <View style={styles.contentProgress}>
-              <ActivityIndicator
-                style={styles.progress}
-                size={"small"}
-                color={variables.brandDarkGray}
-              />
-            </View>
-          )}
+        {isLoadingProgress && isContinuosScrollEnabled && (
+          <View style={styles.contentProgress}>
+            <ActivityIndicator
+              style={styles.progress}
+              size={"small"}
+              color={variables.brandDarkGray}
+            />
+          </View>
+        )}
       </View>
     );
   }
 
-  public noOtherDeadlines = () => {
-    return (
-      <View style={styles.messageNoOthers}>
-        <Text bold={true}>{I18n.t("reminders.noOtherDeadlines")}</Text>
-      </View>
-    );
-  };
+  public noOtherDeadlines = () => (
+    <View style={styles.messageNoOthers}>
+      <Text bold={true}>{I18n.t("reminders.noOtherDeadlines")}</Text>
+    </View>
+  );
 
   public scrollToLocation = (params: SectionListScrollParams) => {
     if (

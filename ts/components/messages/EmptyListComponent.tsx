@@ -23,8 +23,7 @@ type Props = Readonly<{
   subtitle?: string;
 }>;
 
-export const EmptyListComponent = (props: Props) => {
-  return (
+export const EmptyListComponent = (props: Props) => (
     <View style={styles.view}>
       <View spacer={true} />
       <Image source={props.image} />
@@ -32,4 +31,3 @@ export const EmptyListComponent = (props: Props) => {
       {props.subtitle && <Text style={styles.subtitle}>{props.subtitle}</Text>}
     </View>
   );
-};

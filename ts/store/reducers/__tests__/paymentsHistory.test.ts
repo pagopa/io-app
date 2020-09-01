@@ -14,11 +14,11 @@ import reducer, {
   isPaymentDoneSuccessfully,
   PaymentsHistoryState
 } from "../payments/history";
-// tslint:disable-next-line: no-let
+// eslint-disable-next-line
 let state: PaymentsHistoryState = [];
 
 describe("payments history", () => {
-  // tslint:disable-next-line:no-useless-cast
+  // eslint-disable-next-line
   const anRptId = RptId.decode({
     organizationFiscalCode: "00000000000",
     paymentNoticeNumber: {
@@ -29,7 +29,7 @@ describe("payments history", () => {
     }
   }).value as RptId;
 
-  // tslint:disable-next-line:no-useless-cast
+  // eslint-disable-next-line
   const successData = PaymentRequestsGetResponse.decode({
     importoSingoloVersamento: 1,
     codiceContestoPagamento: "54ea05a0773011ea9dc75dfcb08809dc",

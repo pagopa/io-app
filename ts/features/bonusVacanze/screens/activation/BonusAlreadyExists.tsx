@@ -16,7 +16,7 @@ import {
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const image = require("../../../../../img/messages/empty-due-date-list-icon.png");
+import image from "../../../../../img/messages/empty-due-date-list-icon.png";
 
 /**
  * This screen informs the user that the bonus cannot be activated because another active or redeemed
@@ -56,7 +56,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onGoToBonus: () => dispatch(showBonusVacanze())
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(BonusAlreadyExists);
+export default connect(null, mapDispatchToProps)(BonusAlreadyExists);

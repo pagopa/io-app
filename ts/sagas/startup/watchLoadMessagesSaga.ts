@@ -41,7 +41,7 @@ import { uniqueItem } from "../../utils/enumerables";
  * The messages returned by the Backend are filtered so the application downloads
  * only the details of the messages and services not already in the redux store.
  */
-// tslint:disable-next-line: cognitive-complexity
+// eslint-disable-next-line
 export function* loadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
 ): Generator<Effect, void, any> {
@@ -77,9 +77,9 @@ export function* loadMessages(
         yield put(loadMessagesAction.success(responseItemsIds));
 
         // Load already cached messages ids from the store
-        const potCachedMessagesAllIds: ReturnType<
-          typeof messagesAllIdsSelector
-        > = yield select(messagesAllIdsSelector);
+        const potCachedMessagesAllIds: ReturnType<typeof messagesAllIdsSelector> = yield select(
+          messagesAllIdsSelector
+        );
         const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
 
         // Calculate the ids of the message no more visible that we need
@@ -89,9 +89,9 @@ export function* loadMessages(
         );
 
         // Load already cached messages status ids from the store
-        const messagesStatusMapping: ReturnType<
-          typeof messagesStatusSelector
-        > = yield select(messagesStatusSelector);
+        const messagesStatusMapping: ReturnType<typeof messagesStatusSelector> = yield select(
+          messagesStatusSelector
+        );
         const messagesStatusIds = Object.keys(messagesStatusMapping).filter(
           _ => responseItemsIds.indexOf(_) < 0
         );
@@ -114,9 +114,9 @@ export function* loadMessages(
         const reversedItems = [...response.value.value.items].reverse();
 
         // Load already cached messages from the store
-        const cachedMessagesById: ReturnType<
-          typeof messagesStateByIdSelector
-        > = yield select(messagesStateByIdSelector);
+        const cachedMessagesById: ReturnType<typeof messagesStateByIdSelector> = yield select(
+          messagesStateByIdSelector
+        );
 
         const shouldLoadMessage = (message: { id: string }) => {
           const cached = cachedMessagesById[message.id];
@@ -131,9 +131,9 @@ export function* loadMessages(
         const pendingMessages = reversedItems.filter(shouldLoadMessage);
 
         // Load already cached services from the store
-        const cachedServicesById: ReturnType<
-          typeof servicesByIdSelector
-        > = yield select(servicesByIdSelector);
+        const cachedServicesById: ReturnType<typeof servicesByIdSelector> = yield select(
+          servicesByIdSelector
+        );
 
         const shouldLoadService = (id: string) => {
           const cached = cachedServicesById[id];
@@ -186,7 +186,7 @@ export function* watchMessagesLoadOrCancelSaga(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
 ): Generator<Effect, void, any> {
   // We store the latest task so we can also cancel it
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   let lastTask: Option<Task> = none;
   while (true) {
     // FIXME: why not takeLatest?

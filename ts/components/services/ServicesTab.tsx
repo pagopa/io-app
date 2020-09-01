@@ -43,7 +43,7 @@ type OwnProps = Readonly<{
   updateToast?: () => void;
   sections: ReadonlyArray<ServicesSectionState>;
   isRefreshing: boolean;
-  onRefresh: (hideToast?: boolean) => void; // tslint:disable-line bool-param-default
+  onRefresh: (hideToast?: boolean) => void; // eslint-disable-line
   onServiceSelect: (service: ServicePublic) => void;
   handleOnLongPressItem: () => void;
   isLongPressEnabled: boolean;
@@ -146,8 +146,7 @@ class ServicesTab extends React.PureComponent<Props> {
     }
   };
 
-  private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => {
-    return (
+  private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => (
       <TouchableOpacity onPress={() => this.onPressItem(section)}>
         <View style={styles.iconContainer}>
           <IconFont
@@ -158,7 +157,6 @@ class ServicesTab extends React.PureComponent<Props> {
         </View>
       </TouchableOpacity>
     );
-  };
 
   private renderSwitchAllOrganizationServices = (
     section: ServicesSectionState
@@ -202,8 +200,7 @@ class ServicesTab extends React.PureComponent<Props> {
     );
   };
 
-  private onTabScroll = () => {
-    return {
+  private onTabScroll = () => ({
       onScroll: Animated.event([
         {
           nativeEvent: {
@@ -212,8 +209,7 @@ class ServicesTab extends React.PureComponent<Props> {
         }
       ]),
       scrollEventThrottle: 8
-    };
-  };
+    });
 
   public render() {
     // the right icon in the organization section could be
@@ -223,8 +219,8 @@ class ServicesTab extends React.PureComponent<Props> {
     const renderRightIcon = this.props.isLongPressEnabled
       ? this.renderSwitchAllOrganizationServices
       : this.props.isLocal
-        ? this.renderLocalQuickSectionDeletion
-        : undefined;
+      ? this.renderLocalQuickSectionDeletion
+      : undefined;
     return (
       <ServicesSectionsList
         isLocal={this.props.isLocal}
@@ -257,12 +253,10 @@ class ServicesTab extends React.PureComponent<Props> {
 const mapStateToProps = (state: GlobalState) => {
   const localServicesSections = localServicesSectionsSelector(state);
   const selectableOrganizations = localServicesSections.map(
-    (section: ServicesSectionState) => {
-      return {
+    (section: ServicesSectionState) => ({
         name: section.organizationName,
         fiscalCode: section.organizationFiscalCode
-      };
-    }
+      })
   );
   const potUserMetadata = userMetadataSelector(state);
   const userMetadata = pot.getOrElse(potUserMetadata, undefined);

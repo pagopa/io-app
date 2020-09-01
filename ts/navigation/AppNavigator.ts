@@ -1,3 +1,4 @@
+import { Animated, Easing } from "react-native";
 import { createStackNavigator, TransitionConfig } from "react-navigation";
 
 import BackgroundScreen from "../screens/BackgroundScreen";
@@ -6,8 +7,6 @@ import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
-
-import { Animated, Easing } from "react-native";
 
 function transitionConfig(): TransitionConfig {
   // FIXME: we should be able to skip the blue background

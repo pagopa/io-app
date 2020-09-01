@@ -28,8 +28,7 @@ const iconSize = 18;
  * This component displays an info icon on top-left and a text message
  * @constructor
  */
-const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => {
-  return (
+const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => (
     <View style={styles.container}>
       <IconFont
         style={styles.icon}
@@ -40,6 +39,5 @@ const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => {
       <Text style={styles.text}>{props.text}</Text>
     </View>
   );
-};
 
 export default React.memo(AdviceComponent);

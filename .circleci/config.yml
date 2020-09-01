@@ -121,7 +121,7 @@ jobs:
       - run: "bash <(curl -s https://codecov.io/bash)"
 
   # Runs Danger checks on PR
-  lint-typescript:
+  eslint:
     <<: *defaults_js
 
     steps:
@@ -466,7 +466,7 @@ workflows:
 
       - run-tests
 
-      - lint-typescript
+      - eslint
 
       - run-danger:
           filters:
@@ -519,7 +519,7 @@ workflows:
             branches:
               ignore: /.*/
 
-      - lint-typescript:
+      - eslint:
           filters:
             tags:
               only: *release_tag
@@ -538,7 +538,7 @@ workflows:
           requires:
             - compile-typescript
             - run-tests
-            - lint-typescript
+            - eslint
           filters:
             tags:
               only: *release_tag

@@ -16,7 +16,7 @@ export function withConditionalView<P, T, C>(
    * the contition component to ensure the nagivigation can address the proper
    * navigation paramaters
    */
-  type nullN = {};
+  type nullN = Record<string, unknown>;
   type NP = P extends NavigationInjectedProps<infer N> ? N : nullN;
   type NC = C extends NavigationInjectedProps<infer N> ? N : nullN;
   type NN = NavigationInjectedProps<NP & NC>;
@@ -24,9 +24,9 @@ export function withConditionalView<P, T, C>(
   class ConditionalView extends React.PureComponent<(P | C) & T & NN> {
     public render() {
       return check(this.props as T) ? (
-        <WrappedComponent {...this.props as P & NN} />
+        <WrappedComponent {...(this.props as P & NN)} />
       ) : (
-        <ConditionComponent {...this.props as C & NN} />
+        <ConditionComponent {...(this.props as C & NN)} />
       );
     }
   }

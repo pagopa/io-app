@@ -3,6 +3,7 @@ import { fontWeightsMocks, italics } from "../__mock__/fontMocks";
 import { FontStyle, fontWeights, makeFontStyleObject } from "../fonts";
 
 jest.mock("react-native", () => ({
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   Platform: { OS: "ios", select: obj => obj.ios }
 }));

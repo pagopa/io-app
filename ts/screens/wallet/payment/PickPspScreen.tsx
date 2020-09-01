@@ -178,8 +178,7 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  return {
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     loadAllPsp: (idWallet: string, idPayment: string) => {
       dispatch(
         paymentFetchAllPspsForPaymentId.request({
@@ -200,8 +199,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         () =>
           showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger")
       )
-  };
-};
+  });
 
 export default connect(
   mapStateToProps,

@@ -140,12 +140,15 @@ export function createRootReducer(
        * We can't return undefined for nested persist reducer, we need to return
        * the basic redux persist content.
        */
+      // for retro-compatibility
+      // eslint-disable-next-line no-param-reassign
       state =
         state &&
         ((isActionOf(logoutSuccess, action) && !action.payload.keepUserData) ||
           (isActionOf(logoutFailure, action) &&
             !action.payload.options.keepUserData))
           ? ({
+              // eslint-disable-next-line no-underscore-dangle
               authentication: { _persist: state.authentication._persist },
               entities: { messagesStatus: state.entities.messagesStatus }
             } as GlobalState)

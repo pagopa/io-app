@@ -16,9 +16,9 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 export function* refreshStoredServices(
   visibleServices: PaginatedServiceTupleCollection["items"]
 ): SagaIterator {
-  const storedServicesById: ReturnType<
-    typeof servicesByIdSelector
-  > = yield select(servicesByIdSelector);
+  const storedServicesById: ReturnType<typeof servicesByIdSelector> = yield select(
+    servicesByIdSelector
+  );
 
   const serviceDetailIdsToLoad = visibleServices
     .filter(service => {

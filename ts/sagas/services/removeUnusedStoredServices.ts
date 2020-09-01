@@ -24,13 +24,13 @@ export function* removeUnusedStoredServices(
     {}
   );
 
-  const storedServicesById: ReturnType<
-    typeof servicesByIdSelector
-  > = yield select(servicesByIdSelector);
+  const storedServicesById: ReturnType<typeof servicesByIdSelector> = yield select(
+    servicesByIdSelector
+  );
 
-  const messagesIdsByServiceId: ReturnType<
-    typeof messagesIdsByServiceIdSelector
-  > = yield select(messagesIdsByServiceIdSelector);
+  const messagesIdsByServiceId: ReturnType<typeof messagesIdsByServiceIdSelector> = yield select(
+    messagesIdsByServiceIdSelector
+  );
 
   // Create an array of tuples containing:
   // - serviceId (to remove service from both the servicesById and the servicesMetadataById sections of the redux store)

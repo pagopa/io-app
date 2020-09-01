@@ -4,7 +4,7 @@ import { mixpanelToken } from "./config";
 import { isScreenReaderEnabled } from "./utils/accessibility";
 import { getAppVersion } from "./utils/appVersion";
 
-// tslint:disable-next-line:no-let
+// eslint-disable-next-line
 export let mixpanel: MixpanelInstance | undefined;
 
 /**

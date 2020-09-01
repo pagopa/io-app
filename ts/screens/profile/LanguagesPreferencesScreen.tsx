@@ -32,12 +32,12 @@ const iconSize = 12;
  * Allows the user to select one of the available Languages as preferred
  */
 class LanguagesPreferencesScreen extends React.PureComponent<Props> {
-  private isAlreadyPreferred = (language: Locales) => {
+  private isAlreadyPreferred = (language: Locales) => 
     // if the preferred Lanuage is not set, we check if language is the same in use
-    return this.props.preferredLanguage
+     this.props.preferredLanguage
       .map(l => l === language)
-      .getOrElse(getLocalePrimaryWithFallback() === language);
-  };
+      .getOrElse(getLocalePrimaryWithFallback() === language)
+  ;
 
   private onLanguageSelected = (language: Locales) => {
     if (!this.isAlreadyPreferred(language)) {

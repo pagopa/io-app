@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-export const ActivateBonusReminder: React.FunctionComponent<Props> = props => {
-  return (
+export const ActivateBonusReminder: React.FunctionComponent<Props> = props => (
     <View style={[bonusVacanzeStyle.row]}>
       <IconFont
         name={"io-titolare"}
@@ -38,4 +37,3 @@ export const ActivateBonusReminder: React.FunctionComponent<Props> = props => {
       </Text>
     </View>
   );
-};

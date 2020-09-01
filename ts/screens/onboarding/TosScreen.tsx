@@ -46,7 +46,7 @@ type State = {
   scrollEnd: boolean;
 };
 
-const brokenLinkImage = require("../../../img/broken-link.png");
+import brokenLinkImage from "../../../img/broken-link.png";
 
 const styles = StyleSheet.create({
   alert: {

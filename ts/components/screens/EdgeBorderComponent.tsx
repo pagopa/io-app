@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class EdgeBorderComponent extends React.PureComponent<{}> {
+export class EdgeBorderComponent extends React.PureComponent {
   public render() {
     return (
       <React.Fragment>

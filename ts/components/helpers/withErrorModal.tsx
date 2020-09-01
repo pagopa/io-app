@@ -89,8 +89,7 @@ export function withErrorModal<
       </View>
     );
 
-    private renderButtons = () => {
-      return (
+    private renderButtons = () => (
         <View style={styles.buttonsContainer}>
           <ButtonDefaultOpacity
             onPress={this.props.onCancel}
@@ -113,7 +112,6 @@ export function withErrorModal<
           )}
         </View>
       );
-    };
   }
 
   return WithErrorModal;

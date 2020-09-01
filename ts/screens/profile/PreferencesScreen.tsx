@@ -117,7 +117,7 @@ class PreferencesScreen extends React.Component<Props, State> {
   };
 
   private checkPermissionThenGoCalendar = () => {
-    checkAndRequestPermission()
+    void checkAndRequestPermission()
       .then(calendarPermission => {
         if (calendarPermission.authorized) {
           this.props.navigateToCalendarPreferenceScreen();
@@ -154,11 +154,11 @@ class PreferencesScreen extends React.Component<Props, State> {
       return I18n.t("send_email_messages.options.disable_all.label");
     }
     return pot.getOrElse(
-      pot.map(this.props.isCustomEmailChannelEnabled, enabled => {
-        return enabled
+      pot.map(this.props.isCustomEmailChannelEnabled, enabled =>
+        enabled
           ? I18n.t("send_email_messages.options.by_service.label")
-          : I18n.t("send_email_messages.options.enable_all.label");
-      }),
+          : I18n.t("send_email_messages.options.enable_all.label")
+      ),
       I18n.t("send_email_messages.options.enable_all.label")
     );
   };
@@ -185,6 +185,12 @@ class PreferencesScreen extends React.Component<Props, State> {
         />
       );
     };
+
+    const showSpidEmailModal = () =>
+      showModal(
+        "profile.preferences.spid_email.contextualHelpTitle",
+        "profile.preferences.spid_email.contextualHelpContent"
+      );
 
     return (
       <TopScreenComponent
@@ -245,33 +251,27 @@ class PreferencesScreen extends React.Component<Props, State> {
               onPress={this.props.navigateToEmailForwardingPreferenceScreen}
             />
 
-            {// Check if spid email exists
-            maybeSpidEmail.isSome() && (
-              <ListItemComponent
-                title={I18n.t("profile.preferences.list.spid_email")}
-                subTitle={maybeSpidEmail.value}
-                onPress={() =>
-                  showModal(
-                    "profile.preferences.spid_email.contextualHelpTitle",
-                    "profile.preferences.spid_email.contextualHelpContent"
-                  )
-                }
-              />
-            )}
+            {
+              // Check if spid email exists
+              maybeSpidEmail.isSome() && (
+                <ListItemComponent
+                  title={I18n.t("profile.preferences.list.spid_email")}
+                  subTitle={maybeSpidEmail.value}
+                  onPress={showSpidEmailModal}
+                />
+              )
+            }
 
-            {// Check if mobile phone exists
-            maybePhoneNumber.isSome() && (
-              <ListItemComponent
-                title={I18n.t("profile.preferences.list.mobile_phone")}
-                subTitle={maybePhoneNumber.value}
-                onPress={() =>
-                  showModal(
-                    "profile.preferences.spid_email.contextualHelpTitle",
-                    "profile.preferences.spid_email.contextualHelpContent"
-                  )
-                }
-              />
-            )}
+            {
+              // Check if mobile phone exists
+              maybePhoneNumber.isSome() && (
+                <ListItemComponent
+                  title={I18n.t("profile.preferences.list.mobile_phone")}
+                  subTitle={maybePhoneNumber.value}
+                  onPress={showSpidEmailModal}
+                />
+              )
+            }
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}

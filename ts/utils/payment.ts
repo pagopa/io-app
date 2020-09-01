@@ -109,15 +109,19 @@ export function walletHasFavoriteAvailablePsp(
   return walletPspInPsps !== undefined;
 }
 
+/**
+ * This tags are defined in PagoPA specs for transaction description.
+ * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
+ */
+const prefixes: ReadonlyArray<string> = ["RFA", "RFB", "RFS"];
+
 const hasDescriptionPrefix = (description: string) =>
-  description.startsWith("/RFA/") ||
-  description.startsWith("/RFB/") ||
-  description.startsWith("RFA/") ||
-  description.startsWith("RFB/");
+  prefixes.some(
+    p => description.startsWith(`${p}/`) || description.startsWith(`/${p}/`)
+  );
 
 /**
  * This function removes the tag from payment description of a PagoPA transaction.
- * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
  */
 export const cleanTransactionDescription = (description: string): string => {
   // detect description in pagoPA format - note that we also check for cases
@@ -206,9 +210,7 @@ export const getTransactionFee = (
     "fee",
     m => (m ? m.amount : undefined)
   ).getOrElse(undefined);
-  return fromNullable(maybeFee)
-    .map(formatFunc)
-    .toNullable();
+  return fromNullable(maybeFee).map(formatFunc).toNullable();
 };
 
 // try to extract codice avviso from transaction description

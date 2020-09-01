@@ -8,6 +8,7 @@ import { WebView } from "react-native-webview";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import brokenLinkImage from "../../../img/broken-link.png";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
@@ -51,8 +52,6 @@ type State = {
 };
 
 const loginFailureTag = "spid-login-failure";
-
-const brokenLinkImage = require("../../../img/broken-link.png");
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -181,9 +180,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       );
     } else if (pot.isError(this.state.requestState)) {
       const errorType = this.state.requestState.error;
-      const errorTranslationKey = `authentication.errors.spid.error_${
-        this.state.errorCode
-      }`;
+      const errorTranslationKey = `authentication.errors.spid.error_${this.state.errorCode}`;
 
       return (
         <View style={styles.errorContainer}>
@@ -312,7 +309,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchLoginFailure: (error: Error) => dispatch(loginFailure(error))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IdpLoginScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(IdpLoginScreen);

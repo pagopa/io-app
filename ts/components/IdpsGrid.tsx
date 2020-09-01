@@ -75,8 +75,7 @@ const renderItem = (props: Props) => (
   );
 };
 
-const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => {
-  return (
+const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
     <FlatList
       bounces={false}
       data={props.idps}
@@ -85,6 +84,5 @@ const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => {
       renderItem={renderItem(props)}
     />
   );
-};
 
 export default IdpsGrid;

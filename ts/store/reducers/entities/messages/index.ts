@@ -40,7 +40,7 @@ const reducer = combineReducers<MessagesState, Action>({
 
 // Selectors
 
-/**-
+/**
  * Returns array of messages IDs inversely lexically ordered.
  */
 export const lexicallyOrderedMessagesIds = createSelector(

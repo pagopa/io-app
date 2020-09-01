@@ -21,7 +21,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatch: dispatch as NavigationDispatch
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Navigation);
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

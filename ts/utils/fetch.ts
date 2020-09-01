@@ -56,7 +56,7 @@ export function defaultRetryingFetch(
   maxRetries: number = fetchMaxRetries
 ) {
   // Override default react-native fetch with whatwg's that supports aborting
-  // tslint:disable-next-line:no-object-mutation
+  // eslint-disable-next-line
   (global as any).AbortController = require("abort-controller");
   require("./whatwg-fetch");
 
@@ -100,7 +100,7 @@ export const constantPollingFetch = (
   timeout: Millisecond = 1000 as Millisecond
 ) => {
   // Override default react-native fetch with whatwg's that supports aborting
-  // tslint:disable-next-line:no-object-mutation
+  // eslint-disable-next-line
   (global as any).AbortController = require("abort-controller");
   require("./whatwg-fetch");
 
@@ -119,7 +119,8 @@ export const constantPollingFetch = (
   );
 
   // TODO: remove the cast once we upgrade to tsc >= 3.1 (https://www.pivotaltracker.com/story/show/170819445)
-  return retriableFetch(retryWithTransient404s, shouldAbort)(
-    timeoutFetch as typeof fetch
-  );
+  return retriableFetch(
+    retryWithTransient404s,
+    shouldAbort
+  )(timeoutFetch as typeof fetch);
 };

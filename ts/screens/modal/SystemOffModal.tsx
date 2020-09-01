@@ -35,11 +35,10 @@ class SystemOffModal extends React.PureComponent<Props> {
   public render() {
     const locale = I18n.currentLocale() === "en" ? "en-EN" : "it-IT";
     const message = this.props.backendStatus.status
-      .map(
-        s =>
-          s.message[locale] !== undefined && s.message[locale].length > 0
-            ? s.message[locale]
-            : undefined
+      .map(s =>
+        s.message[locale] !== undefined && s.message[locale].length > 0
+          ? s.message[locale]
+          : undefined
       )
       .getOrElse(undefined);
     return (

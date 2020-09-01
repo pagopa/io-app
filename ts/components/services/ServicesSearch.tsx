@@ -40,8 +40,7 @@ type State = {
 const generateSectionsServicesStateMatchingSearchTextArrayAsync = (
   servicesState: ReadonlyArray<ServicesSectionState>,
   searchText: string
-): Promise<ReadonlyArray<ServicesSectionState>> => {
-  return new Promise(resolve => {
+): Promise<ReadonlyArray<ServicesSectionState>> => new Promise(resolve => {
     const result = servicesState
       .map(section =>
         filterSectionListDataMatchingSearchText(section, searchText)
@@ -50,7 +49,6 @@ const generateSectionsServicesStateMatchingSearchTextArrayAsync = (
 
     resolve(result);
   });
-};
 
 function filterSectionListDataMatchingSearchText(
   sectionListData: SectionListData<pot.Pot<ServicePublic, Error>>,

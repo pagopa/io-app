@@ -27,33 +27,23 @@ import {
 import { bonusActivationSaga } from "../getBonusActivationSaga";
 import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
 
-jest.mock("react-native-background-timer", () => {
-  return {
+jest.mock("react-native-background-timer", () => ({
     startTimer: jest.fn()
-  };
-});
+  }));
 
-jest.mock("react-native-share", () => {
-  return {
+jest.mock("react-native-share", () => ({
     open: jest.fn()
-  };
-});
+  }));
 
 const activationReducer = combineReducers<MockActivationState, Action>({
   activation: bonusVacanzeActivationReducer,
   allActive: allActiveReducer
 });
 
-const getDisplayNameBackendResponse = (value: Either<Errors, any>): string => {
-  return value.fold(
-    _ => {
-      return "Left error";
-    },
-    r => {
-      return r ? (r.status as string) : "undefined";
-    }
+const getDisplayNameBackendResponse = (value: Either<Errors, any>): string => value.fold(
+    _ => "Left error",
+    r => r ? (r.status as string) : "undefined"
   );
-};
 /** This test suite test the integration of the Activation saga, mocking the backend responses
  *
  */
@@ -117,8 +107,7 @@ describe("Bonus Activation Saga Integration Test", () => {
       .then(expectFinalSagaState);
   });
   backendIntegrationTestCases.map(testCase =>
-    testCase.responses.map(response => {
-      return it(`${
+    testCase.responses.map(response => it(`${
         testCase.displayName
       }, startBonusActivation[${getDisplayNameBackendResponse(
         response.startBonusActivationResponse
@@ -129,8 +118,7 @@ describe("Bonus Activation Saga Integration Test", () => {
           response,
           testCase.expectedActions,
           testCase.finalState
-        ));
-    })
+        )))
   );
 });
 

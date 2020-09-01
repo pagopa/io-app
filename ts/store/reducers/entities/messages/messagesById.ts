@@ -70,7 +70,7 @@ const reducer = (
     case getType(removeMessages): {
       const clonedState = { ...state };
       const ids = action.payload;
-      // tslint:disable-next-line: no-object-mutation
+      // eslint-disable-next-line
       ids.forEach(id => delete clonedState[id]);
       return clonedState;
     }

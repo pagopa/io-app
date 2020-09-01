@@ -1,13 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import image from "../../../../../../img/servicesStatus/error-detail-icon.png";
 import I18n from "../../../../../i18n";
 import { cancelBonusVacanzeRequest } from "../../../store/actions/bonusVacanze";
 import { BaseIseeErrorComponent } from "./BaseIseeErrorComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
-
-const image = require("../../../../../../img/servicesStatus/error-detail-icon.png");
 
 /**
  * This screen display some additional information when the ISEE is not eligible for the bonus vacanze.
@@ -42,7 +41,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(IseeNotEligibleScreen);
+export default connect(null, mapDispatchToProps)(IseeNotEligibleScreen);

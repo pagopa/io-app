@@ -10,10 +10,10 @@ import * as React from "react";
 import { BackHandler, StyleSheet } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import AppHeader from "./ui/AppHeader";
 
 import themeVariables from "../theme/variables";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import AppHeader from "./ui/AppHeader";
 
 type Props = Readonly<{
   title: string;

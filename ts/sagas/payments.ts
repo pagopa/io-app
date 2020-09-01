@@ -11,9 +11,9 @@ import { paymentsCurrentStateSelector } from "../store/reducers/payments/current
  * Detect an uncompleted payment and send the delete to the PaymentManager.
  */
 export function* paymentsDeleteUncompletedSaga() {
-  const paymentsCurrentState: ReturnType<
-    typeof paymentsCurrentStateSelector
-  > = yield select(paymentsCurrentStateSelector);
+  const paymentsCurrentState: ReturnType<typeof paymentsCurrentStateSelector> = yield select(
+    paymentsCurrentStateSelector
+  );
 
   if (paymentsCurrentState.kind === "ACTIVATED") {
     const { rptId } = paymentsCurrentState.initializationData;
