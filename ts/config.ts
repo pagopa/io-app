@@ -45,6 +45,9 @@ export const instabugToken: string = Config.INSTABUG_TOKEN;
 export const bonusVacanzeEnabled: boolean =
   Config.BONUS_VACANZE_ENABLED === "YES";
 
+export const myPortalIntegrationEnabled: boolean =
+  Config.MYPORTAL_INTEGRATION_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2 as NonNegativeNumber;
 
