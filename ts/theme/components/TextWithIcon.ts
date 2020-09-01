@@ -1,8 +1,7 @@
 import { Theme } from "../types";
 import variables from "../variables";
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     ".danger": {
       "NativeBase.Text": {
         color: variables.brandDanger
@@ -30,5 +29,4 @@ export default (): Theme => {
     flexDirection: "row",
     justifyContent: "center",
     alignSelf: "center"
-  };
-};
+  });

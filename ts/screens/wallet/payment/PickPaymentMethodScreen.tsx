@@ -101,7 +101,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
             <List
               keyExtractor={item => `${item.idWallet}`}
               removeClippedSubviews={false}
-              dataArray={wallets as any[]} // tslint:disable-line: readonly-array
+              dataArray={wallets as any[]} // eslint-disable-line
               renderRow={(item): React.ReactElement<any> => (
                 <CardComponent
                   type={"Picking"}

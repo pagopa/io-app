@@ -18,23 +18,18 @@ import {
 } from "../__mock__/networkingSagaResponseMockData";
 import { handleBonusActivationSaga } from "../handleBonusActivationSaga";
 
-jest.mock("react-native-background-timer", () => {
-  return {
+jest.mock("react-native-background-timer", () => ({
     startTimer: jest.fn()
-  };
-});
+  }));
 
-jest.mock("react-native-share", () => {
-  return {
+jest.mock("react-native-share", () => ({
     open: jest.fn()
-  };
-});
+  }));
 
 type BonusVacanzeReturnType = ActionType<typeof activateBonusVacanze>;
 
 describe("Bonus Activation Saga, mock networking saga", () => {
-  it("Cancel bonus activation saga", () => {
-    return expectSaga(
+  it("Cancel bonus activation saga", () => expectSaga(
       handleBonusActivationSaga,
       mockRemote(activationSuccess.results)
     )
@@ -46,27 +41,23 @@ describe("Bonus Activation Saga, mock networking saga", () => {
       ])
       .dispatch(cancelBonusVacanzeRequest())
       .put(NavigationActions.back())
-      .run();
-  });
+      .run());
   networkingActivationResultActions.map(networkingScenario =>
     navigationActions.map(navigationScenario =>
-      it(`${networkingScenario.displayName} with ${
-        navigationScenario.displayName
-      }`, () => {
-        return expectSagaFactory(
+      it(`${networkingScenario.displayName} with ${navigationScenario.displayName}`, () => expectSagaFactory(
           navigationScenario.startScreen,
           networkingScenario.results,
           [
             ...networkingScenario.expectedActions,
             ...navigationScenario.expectedActions
           ]
-        );
-      })
+        ))
     )
   );
 });
 
 const mockRemote = (result: BonusVacanzeReturnType) =>
+  // eslint-disable-next-line require-yield
   function* mockRemoteGenerator() {
     return result;
   };

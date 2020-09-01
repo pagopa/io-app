@@ -9,7 +9,7 @@ export const baseStory: Story = {
   name: "Come CIT voglio poter utilizzare l'app",
   current_state: "started",
   url: "url",
-  project_id: "132",
+  project_id: 132,
   labels: []
 };
 
@@ -39,7 +39,7 @@ export const scopeLabelNotAllowed: Label = {
 
 export const bonusVacanzeStory: Story = {
   ...baseStory,
-  project_id: "2449547"
+  project_id: 2449547
 };
 
 export const baseStoryWithGenericLabel: Story = {

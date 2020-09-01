@@ -118,17 +118,14 @@ export default class MessageDetailComponent extends React.PureComponent<
     return this.service.fold(undefined, service => {
       if (message.content.payment_data !== undefined) {
         return paymentsByRptId[
-          `${service.organization_fiscal_code}${
-            message.content.payment_data.notice_number
-          }`
+          `${service.organization_fiscal_code}${message.content.payment_data.notice_number}`
         ];
       }
       return undefined;
     });
   }
 
-  private getTitle = () => {
-    return this.maybeMedicalData.fold(
+  private getTitle = () => this.maybeMedicalData.fold(
       <H3>{this.props.message.content.subject}</H3>,
       _ => (
         <React.Fragment>
@@ -137,7 +134,6 @@ export default class MessageDetailComponent extends React.PureComponent<
         </React.Fragment>
       )
     );
-  };
 
   public render() {
     const {
@@ -154,13 +150,12 @@ export default class MessageDetailComponent extends React.PureComponent<
           {/** Header */}
           <View style={styles.padded}>
             <View spacer={true} />
-            {service !== undefined &&
-              service.isSome() && (
-                <React.Fragment>
-                  {service && <OrganizationHeader service={service.value} />}
-                  <View spacer={true} large={true} />
-                </React.Fragment>
-              )}
+            {service !== undefined && service.isSome() && (
+              <React.Fragment>
+                {service && <OrganizationHeader service={service.value} />}
+                <View spacer={true} large={true} />
+              </React.Fragment>
+            )}
             {/* Subject */}
             {this.getTitle()}
             <View spacer={true} />
@@ -192,19 +187,18 @@ export default class MessageDetailComponent extends React.PureComponent<
           </MessageMarkdown>
 
           <View spacer={true} large={true} />
-          {this.attachments.isSome() &&
-            this.state.isContentLoadCompleted && (
-              <React.Fragment>
-                <MedicalPrescriptionAttachments
-                  prescriptionData={this.maybeMedicalData.toUndefined()}
-                  attachments={this.attachments.value}
-                  organizationName={this.service
-                    .map(s => s.organization_name)
-                    .toUndefined()}
-                />
-                <View spacer={true} large={true} />
-              </React.Fragment>
-            )}
+          {this.attachments.isSome() && this.state.isContentLoadCompleted && (
+            <React.Fragment>
+              <MedicalPrescriptionAttachments
+                prescriptionData={this.maybeMedicalData.toUndefined()}
+                attachments={this.attachments.value}
+                organizationName={this.service
+                  .map(s => s.organization_name)
+                  .toUndefined()}
+              />
+              <View spacer={true} large={true} />
+            </React.Fragment>
+          )}
 
           {this.state.isContentLoadCompleted && (
             <React.Fragment>

@@ -64,9 +64,10 @@ function* getCheckBonusEligibilitySaga(
   SagaCallReturnType<typeof getBonusEligibilityCheck>
 > {
   try {
-    const eligibilityCheckResult: SagaCallReturnType<
-      typeof getBonusEligibilityCheck
-    > = yield call(getBonusEligibilityCheck, {});
+    const eligibilityCheckResult: SagaCallReturnType<typeof getBonusEligibilityCheck> = yield call(
+      getBonusEligibilityCheck,
+      {}
+    );
 
     if (eligibilityCheckResult.isRight()) {
       // 200 -> we got the check result, polling must be stopped
@@ -100,7 +101,7 @@ const executeGetEligibilityCheck = (
   };
 
 // handle start bonus eligibility check
-// tslint:disable-next-line: cognitive-complexity
+// eslint-disable-next-line
 export const bonusEligibilitySaga = (
   startBonusEligibilityCheck: ReturnType<
     typeof BackendBonusVacanze
@@ -109,15 +110,17 @@ export const bonusEligibilitySaga = (
     typeof BackendBonusVacanze
   >["getBonusEligibilityCheck"]
 ) =>
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   function* getBonusEligibilitySaga(): Generator<
     Effect,
     ActionType<typeof checkBonusVacanzeEligibility>,
     any
   > {
     try {
-      const startEligibilityResult: SagaCallReturnType<
-        typeof startBonusEligibilityCheck
-      > = yield call(startBonusEligibilityCheck, {});
+      const startEligibilityResult: SagaCallReturnType<typeof startBonusEligibilityCheck> = yield call(
+        startBonusEligibilityCheck,
+        {}
+      );
       if (startEligibilityResult.isRight()) {
         // 201 -> created
         // 202 -> request processing

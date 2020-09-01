@@ -27,16 +27,16 @@ import { watchNotificationSaga } from "./watchNotificationSaga";
  * - if a notification is pressed, redirect to the related message
  */
 export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   let lastState: ApplicationState = "active";
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   let identificationBackgroundTimer: Task | undefined;
-  yield takeEvery(getType(applicationChangeState), function*(
+  yield takeEvery(getType(applicationChangeState), function* (
     action: ActionType<typeof applicationChangeState>
   ) {
     // Listen for changes in application state
     const newApplicationState: ApplicationState = action.payload;
-    // tslint:disable-next-line:no-let
+    // eslint-disable-next-line
 
     const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
     if (lastState !== "background" && newApplicationState === "background") {
@@ -57,7 +57,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
         yield put(identificationRequest());
       }
       // Start the background timer
-      identificationBackgroundTimer = yield fork(function*() {
+      identificationBackgroundTimer = yield fork(function* () {
         // Start and wait the timer to fire
         yield call(startTimer, backgroundActivityTimeoutMillis);
         identificationBackgroundTimer = undefined;

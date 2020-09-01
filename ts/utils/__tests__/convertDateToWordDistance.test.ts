@@ -23,7 +23,7 @@ describe("convertDateToWordDistance test plan", () => {
     const testDate = addHours(nowDate, -24);
     expect(convertDateToWordDistance(testDate, "yesterday")).toBe("yesterday");
   });
-  // tslint:disable-next-line:no-identical-functions
+  // eslint-disable-next-line
   it("should compare now date with 48 hours earlier, expected DD/MM", () => {
     const nowDate = new Date();
     const testDate = addHours(nowDate, -48);

@@ -1,12 +1,12 @@
-import chalk from "chalk";
+/* eslint-disable no-console */
 import { exec } from "child_process";
 import * as path from "path";
+import chalk from "chalk";
 import { extractKeys, readLocaleDoc } from "./make-locales";
 
 // tslint:disable:no-console
 
-const isUnused = (input: string): Promise<boolean> => {
-  return new Promise(res => {
+const isUnused = (input: string): Promise<boolean> => new Promise(res => {
     exec(
       `grep -F -r "${input}" ${path.join(__dirname, "../ts")}`,
       (err, stdout, _) => {
@@ -17,7 +17,6 @@ const isUnused = (input: string): Promise<boolean> => {
       }
     );
   });
-};
 
 const run = async (root: string, locale: string) => {
   const d = await readLocaleDoc(root, locale);

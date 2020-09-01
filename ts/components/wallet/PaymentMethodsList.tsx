@@ -100,9 +100,7 @@ const paymentMethods: ReadonlyArray<IPaymentMethod> = [
 
 const AddMethodStyle = StyleSheet.create({
   transactionText: {
-    color: color(variables.colorWhite)
-      .darken(0.35)
-      .string()
+    color: color(variables.colorWhite).darken(0.35).string()
   },
   notImplementedBadge: {
     height: 18,
@@ -126,7 +124,7 @@ const AddMethodStyle = StyleSheet.create({
 
 class PaymentMethodsList extends React.Component<Props, never> {
   private showHelp = () => {
-    // tslint:disable-next-line:no-unused-expression
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.props.showModal(
       <ContextualHelp
         onClose={this.props.hideModal}

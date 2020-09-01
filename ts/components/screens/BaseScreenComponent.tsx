@@ -201,20 +201,20 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     const ch = contextualHelp
       ? { body: contextualHelp.body, title: contextualHelp.title }
       : contextualHelpMarkdown
-        ? {
-            body: () => (
-              <Markdown
-                onLinkClicked={this.handleOnLinkClicked}
-                onLoadEnd={() => {
-                  this.setState({ markdownContentLoaded: some(true) });
-                }}
-              >
-                {I18n.t(contextualHelpMarkdown.body)}
-              </Markdown>
-            ),
-            title: I18n.t(contextualHelpMarkdown.title)
-          }
-        : undefined;
+      ? {
+          body: () => (
+            <Markdown
+              onLinkClicked={this.handleOnLinkClicked}
+              onLoadEnd={() => {
+                this.setState({ markdownContentLoaded: some(true) });
+              }}
+            >
+              {I18n.t(contextualHelpMarkdown.body)}
+            </Markdown>
+          ),
+          title: I18n.t(contextualHelpMarkdown.title)
+        }
+      : undefined;
 
     return (
       <Container>

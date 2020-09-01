@@ -15,9 +15,10 @@ export function* handleLoadAllBonusActivations(
   >["getAllBonusActivations"]
 ): SagaIterator {
   try {
-    const allBonusActivationsResponse: SagaCallReturnType<
-      typeof getAllBonusActivations
-    > = yield call(getAllBonusActivations, {});
+    const allBonusActivationsResponse: SagaCallReturnType<typeof getAllBonusActivations> = yield call(
+      getAllBonusActivations,
+      {}
+    );
     if (allBonusActivationsResponse.isRight()) {
       if (allBonusActivationsResponse.value.status === 200) {
         // for each bonus load details

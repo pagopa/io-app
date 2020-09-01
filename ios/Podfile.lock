@@ -288,9 +288,6 @@ PODS:
     - React
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-text-input-mask (2.0.0):
-    - React
-    - RNInputMask
   - react-native-view-shot (3.1.2):
     - React
   - react-native-webview (10.4.0):
@@ -371,7 +368,6 @@ PODS:
     - React
   - RNI18n (2.0.15):
     - React
-  - RNInputMask (4.1.0)
   - RNKeychain (3.1.3):
     - React
   - RNPermissions (2.1.5):
@@ -451,7 +447,6 @@ DEPENDENCIES:
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
-  - react-native-text-input-mask (from `../node_modules/react-native-text-input-mask`)
   - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -472,7 +467,6 @@ DEPENDENCIES:
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNI18n (from `../node_modules/react-native-i18n`)
-  - RNInputMask (from `../node_modules/react-native-text-input-mask/ios/InputMask`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNPermissions (from `../node_modules/react-native-permissions/`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -574,8 +568,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screen-brightness"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
-  react-native-text-input-mask:
-    :path: "../node_modules/react-native-text-input-mask"
   react-native-view-shot:
     :path: "../node_modules/react-native-view-shot"
   react-native-webview:
@@ -616,8 +608,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNI18n:
     :path: "../node_modules/react-native-i18n"
-  RNInputMask:
-    :path: "../node_modules/react-native-text-input-mask/ios/InputMask"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
   RNPermissions:
@@ -687,7 +677,6 @@ SPEC CHECKSUMS:
   react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-text-input-mask: 07227297075f9653315f43b0424d596423a01736
   react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
   react-native-webview: 1ad70b21fb9e44811e33a99e43a4b68b94806a6d
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5
@@ -708,7 +697,6 @@ SPEC CHECKSUMS:
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
-  RNInputMask: 815461ebdf396beb62cf58916c35cf6930adb991
   RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
   RNPermissions: ad71dd4f767ec254f2cd57592fbee02afee75467
   RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
@@ -720,6 +708,6 @@ SPEC CHECKSUMS:
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: b184c97cdae2b2213f425ebbe9a11108a3138980
+PODFILE CHECKSUM: c27fe750d71f4fb32d1652aef83658293a3d4e30
 
 COCOAPODS: 1.9.3

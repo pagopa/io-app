@@ -4,14 +4,17 @@ import { setLocale } from "../../i18n";
 import { getLocalePrimary, getLocalePrimaryWithFallback } from "../locale";
 
 describe("getLocalePrimary", () => {
-  [["it-IT", "it"], ["it-US", "it"], ["en-EN", "en"], ["it", "it"]].forEach(
-    t => {
-      const [input, expected] = t;
-      it("getLocalePrimary should return the expected output", () => {
-        expect(getLocalePrimary(input)).toStrictEqual(some(expected));
-      });
-    }
-  );
+  [
+    ["it-IT", "it"],
+    ["it-US", "it"],
+    ["en-EN", "en"],
+    ["it", "it"]
+  ].forEach(t => {
+    const [input, expected] = t;
+    it("getLocalePrimary should return the expected output", () => {
+      expect(getLocalePrimary(input)).toStrictEqual(some(expected));
+    });
+  });
 });
 
 describe("getLocalePrimaryWithFallback", () => {

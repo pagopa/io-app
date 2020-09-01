@@ -314,9 +314,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
                 <Image style={styles.pspLogo} source={{ uri: psp.logoPSP }} />
               ) : psp.businessName ? (
                 <Text>{psp.businessName}</Text>
-              ) : (
-                undefined
-              )}
+              ) : undefined}
             </View>
           )}
 

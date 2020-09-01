@@ -25,7 +25,7 @@ import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailab
 import { defaultRetryingFetch } from "../../../utils/fetch";
 
 type GetBonusListT = IGetApiRequestType<
-  {},
+  Record<string, unknown>,
   never,
   never,
   BasicResponseType<BonusesAvailable>
@@ -85,11 +85,9 @@ const getAvailableBonusesT: GetBonusListT = {
 function ParamAuthorizationBearerHeaderProducer<
   P extends { readonly Bearer: string }
 >(): RequestHeaderProducer<P, "Authorization"> {
-  return (p: P): RequestHeaders<"Authorization"> => {
-    return {
+  return (p: P): RequestHeaders<"Authorization"> => ({
       Authorization: `Bearer ${p.Bearer}`
-    };
-  };
+    });
 }
 
 //

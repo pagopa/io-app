@@ -42,18 +42,16 @@ type OwnProps = ExternalTypographyProps<BoldKindProps>;
 const fontName: IOFontFamily = "TitilliumWeb";
 const fontSize = 14;
 
-/***
+/**
  * Typography component to render `H5` text with font size {@link fontSize} and fontFamily {@link fontName}.
  * default values(if not defined) are weight: `SemiBold`, color: `bluegreyDark`
  * @param props
  * @constructor
  */
-export const H5: React.FunctionComponent<OwnProps> = props => {
-  return typographyFactory<AllowedWeight, AllowedColors>({
+export const H5: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "SemiBold",
     defaultColor: "bluegreyDark",
     font: fontName,
     fontStyle: { fontSize }
   });
-};

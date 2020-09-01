@@ -65,36 +65,28 @@ describe("checkAcceptedTosSaga", () => {
   });
 
   describe("when user has already accepted the last version of ToS", () => {
-    it("should do nothing", () => {
-      return expectSaga(checkAcceptedTosSaga, updatedProfile)
+    it("should do nothing", () => expectSaga(checkAcceptedTosSaga, updatedProfile)
         .not.put(navigateToTosScreen)
-        .run();
-    });
+        .run());
   });
 
   describe("when user has accepted ToS before its version was persisted", () => {
-    it("should do nothing", () => {
-      return expectSaga(checkAcceptedTosSaga, oldOnboardedProfile)
+    it("should do nothing", () => expectSaga(checkAcceptedTosSaga, oldOnboardedProfile)
         .not.put(navigateToTosScreen)
-        .run();
-    });
+        .run());
   });
 
   describe("when user has accepted an old version of ToS", () => {
-    it("should navigate to the terms of service screen and succeed when ToS get accepted", () => {
-      return expectSaga(checkAcceptedTosSaga, notUpdatedProfile)
+    it("should navigate to the terms of service screen and succeed when ToS get accepted", () => expectSaga(checkAcceptedTosSaga, notUpdatedProfile)
         .put(navigateToTosScreen)
         .take(tosAccepted)
-        .run();
-    });
+        .run());
   });
 
   describe("when user has never accepted an ToS because he is accessing the app for the first time", () => {
-    it("should navigate to the terms of service screen and succeed when ToS get accepted", () => {
-      return expectSaga(checkAcceptedTosSaga, firstOnboardingProfile)
+    it("should navigate to the terms of service screen and succeed when ToS get accepted", () => expectSaga(checkAcceptedTosSaga, firstOnboardingProfile)
         .put(navigateToTosScreen)
         .take(tosAccepted)
-        .run();
-    });
+        .run());
   });
 });

@@ -7,7 +7,9 @@ import I18n from "../i18n";
 import { getLocalePrimary } from "./locale";
 import { ExpireStatus } from "./messages";
 
-type DFNSLocales = { [index in Locales]: object };
+type DateFnsLocale = typeof import("date-fns/locale/it");
+
+type DFNSLocales = Record<Locales, DateFnsLocale>;
 
 const locales: DFNSLocales = { it: dfns_it, en: dfns_en };
 
@@ -37,15 +39,12 @@ export function formatDateAsLocal(
   includeYear: boolean = false,
   extendedYear: boolean = false
 ): ReturnType<typeof dateFnsFormat> {
+  const dateFormat = I18n.t("global.dateFormats.dayMonth");
   return extendedYear
-    ? format(date, I18n.t("global.dateFormats.dayMonth")) +
-        "/" +
-        format(date, "YYYY")
+    ? format(date, dateFormat) + "/" + format(date, "YYYY")
     : includeYear
-      ? format(date, I18n.t("global.dateFormats.dayMonth")) +
-        "/" +
-        format(date, "YY")
-      : format(date, I18n.t("global.dateFormats.dayMonth"));
+    ? format(date, dateFormat) + "/" + format(date, "YY")
+    : format(date, dateFormat);
 }
 
 export function format(
@@ -67,10 +66,7 @@ export function isExpired(expireMonth: number, expireYear: number): boolean {
   const today: Date = new Date();
   const currentMonth: number = today.getMonth() + 1;
   const currentYear: number = parseInt(
-    today
-      .getFullYear()
-      .toString()
-      .slice(2),
+    today.getFullYear().toString().slice(2),
     10
   );
   return (
@@ -92,15 +88,15 @@ export const getExpireStatus = (date: Date): ExpireStatus => {
   return remainingMilliseconds > 1000 * 60 * 60 * 24 * 7
     ? "VALID"
     : remainingMilliseconds > 0
-      ? "EXPIRING"
-      : "EXPIRED";
+    ? "EXPIRING"
+    : "EXPIRED";
 };
 
-/* 
-* this code is a copy from gcanti repository https://github.com/gcanti/io-ts-types/blob/06b29a2e74c64b21ee2f2477cabf98616a7af35f/src/Date/DateFromISOString.ts
-* this because to avoid node modules conflicts given from using io-ts-types
-* DateFromISOStringType is a codec to encode (date -> string) and decode (string -> date) a date in iso format
-*/
+/*
+ * this code is a copy from gcanti repository https://github.com/gcanti/io-ts-types/blob/06b29a2e74c64b21ee2f2477cabf98616a7af35f/src/Date/DateFromISOString.ts
+ * this because to avoid node modules conflicts given from using io-ts-types
+ * DateFromISOStringType is a codec to encode (date -> string) and decode (string -> date) a date in iso format
+ */
 export class DateFromISOStringType extends t.Type<Date, string, unknown> {
   constructor() {
     super(

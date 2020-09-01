@@ -126,8 +126,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
     );
   }
 
-  private renderEditButton = () => {
-    return (
+  private renderEditButton = () => (
       this.props.isLocal &&
       this.props.selectedOrganizationsFiscalCodes &&
       this.props.selectedOrganizationsFiscalCodes.size > 0 && (
@@ -151,7 +150,6 @@ class ServicesSectionsList extends React.PureComponent<Props> {
         </View>
       )
     );
-  };
 
   private renderList = () => {
     // empty component is different from local and others (national and all)

@@ -15,7 +15,7 @@ export type UserDataProcessingState = {
   [key in keyof typeof UserDataProcessingChoiceEnum]: pot.Pot<
     UserDataProcessing,
     Error
-  >
+  >;
 };
 
 // TODO: integrate with profile while it will be a profile attribute

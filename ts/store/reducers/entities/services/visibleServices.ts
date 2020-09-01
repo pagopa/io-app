@@ -44,6 +44,4 @@ export const visibleServicesReducer = (
 // Selectors
 export const visibleServicesSelector = (
   state: GlobalState
-): VisibleServicesState => {
-  return state.entities.services.visible;
-};
+): VisibleServicesState => state.entities.services.visible;

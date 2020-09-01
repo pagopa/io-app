@@ -9,8 +9,7 @@ import ConnectionBar from "../ConnectionBar";
 
 type Props = NativeBase.Header & ViewProps;
 
-const AppHeader = (props: React.PropsWithChildren<Props>) => {
-  return (
+const AppHeader = (props: React.PropsWithChildren<Props>) => (
     <View>
       <Header
         androidStatusBarColor={variables.androidStatusBarColor}
@@ -20,6 +19,5 @@ const AppHeader = (props: React.PropsWithChildren<Props>) => {
       <ConnectionBar />
     </View>
   );
-};
 
 export default AppHeader;

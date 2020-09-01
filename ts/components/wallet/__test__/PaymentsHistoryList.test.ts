@@ -22,7 +22,7 @@ const data: RptId = {
   }
 };
 
-// tslint:disable-next-line: variable-name
+// eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
 const verified_data: PaymentRequestsGetResponse = {
   importoSingoloVersamento: 1 as ImportoEuroCents,
   codiceContestoPagamento: "03314e90321011eaa22f931313a0ec7c" as string &

@@ -137,7 +137,4 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     )
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(AddPaymentMethodScreen);
+export default connect(undefined, mapDispatchToProps)(AddPaymentMethodScreen);

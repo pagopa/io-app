@@ -63,7 +63,7 @@ const reducer = (
     case getType(removeServiceTuples): {
       const serviceTuples = action.payload;
       const newState = { ...state };
-      // tslint:disable-next-line: no-object-mutation
+      // eslint-disable-next-line
       serviceTuples.forEach(_ => delete newState[_.e1]);
       return newState;
     }
@@ -77,9 +77,7 @@ const reducer = (
 };
 
 // Selectors
-export const servicesByIdSelector = (state: GlobalState): ServicesByIdState => {
-  return state.entities.services.byId;
-};
+export const servicesByIdSelector = (state: GlobalState): ServicesByIdState => state.entities.services.byId;
 
 export const serviceByIdSelector = (id: string) => (
   state: GlobalState

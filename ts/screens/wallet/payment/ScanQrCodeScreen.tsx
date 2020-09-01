@@ -6,30 +6,30 @@ import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Container, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Dimensions, ScrollView, StyleSheet } from "react-native";
+
+import ImagePicker from "react-native-image-picker";
+import * as ReaderQR from "react-native-lewin-qrcode";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-
-import I18n from "../../../i18n";
-import { Dispatch } from "../../../store/actions/types";
-import { ComponentProps } from "../../../types/react";
-
-import ImagePicker from "react-native-image-picker";
-import * as ReaderQR from "react-native-lewin-qrcode";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
+
+import I18n from "../../../i18n";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
+import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
+import { ComponentProps } from "../../../types/react";
 import { openAppSettings } from "../../../utils/appSettings";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
@@ -140,9 +140,9 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     this.setState({
       scanningState: "INVALID"
     });
-    // tslint:disable-next-line:no-object-mutation
+    // eslint-disable-next-line
     this.scannerReactivateTimeoutHandler = setTimeout(() => {
-      // tslint:disable-next-line:no-object-mutation
+      // eslint-disable-next-line
       this.scannerReactivateTimeoutHandler = undefined;
       if (this.qrCodeScanner.current) {
         this.qrCodeScanner.current.reactivate();
@@ -357,7 +357,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(ScanQrCodeScreen);
+export default connect(undefined, mapDispatchToProps)(ScanQrCodeScreen);

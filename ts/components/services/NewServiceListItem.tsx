@@ -77,15 +77,13 @@ export default class NewServiceListItem extends React.PureComponent<
 
   private getServiceKey = (
     potService: pot.Pot<ServicePublic, Error>
-  ): string => {
-    return pot.getOrElse(
+  ): string => pot.getOrElse(
       pot.map(
         potService,
         service => `${service.service_id}-${service.version || 0}`
       ),
       `service-switch`
     );
-  };
 
   private isInboxChannelEnabled() {
     const potService = this.props.item;
@@ -128,8 +126,8 @@ export default class NewServiceListItem extends React.PureComponent<
     const serviceName = pot.isLoading(potService)
       ? I18n.t("global.remoteStates.loading")
       : pot.isError(potService) || pot.isNone(potService)
-        ? I18n.t("global.remoteStates.notAvailable")
-        : potService.value.service_name;
+      ? I18n.t("global.remoteStates.notAvailable")
+      : potService.value.service_name;
 
     return (
       <ListItemComponent

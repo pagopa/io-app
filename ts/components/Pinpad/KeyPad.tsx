@@ -75,8 +75,8 @@ const renderPinCol = (
     style === "digit"
       ? styles.roundButton
       : style === "label"
-        ? [styles.roundButton, styles.transparent]
-        : undefined;
+      ? [styles.roundButton, styles.transparent]
+      : undefined;
 
   return (
     <Col key={key}>
@@ -89,8 +89,7 @@ const renderPinCol = (
         unNamed={buttonType === "light"}
       >
         {label.fold(
-          l => {
-            return (
+          l => (
               <Text
                 white={style === "label" && buttonType === "primary"}
                 style={[
@@ -100,10 +99,8 @@ const renderPinCol = (
               >
                 {l}
               </Text>
-            );
-          },
-          ic => {
-            return (
+            ),
+          ic => (
               <StyledIconFont
                 name={ic.name}
                 size={ic.size}
@@ -115,8 +112,7 @@ const renderPinCol = (
                 }
                 accessibilityLabel={ic.accessibilityLabel}
               />
-            );
-          }
+            )
         )}
       </ButtonDefaultOpacity>
     </Col>
@@ -130,20 +126,19 @@ const renderPinRow = (
   isDisabled: boolean
 ) => (
   <Row key={key}>
-    {digits.map(
-      (el, i) =>
-        el ? (
-          renderPinCol(
-            el.e1,
-            el.e2,
-            el.e1.isLeft() ? "digit" : "label",
-            `pinpad-digit-${el.e2}`,
-            buttonType,
-            isDisabled
-          )
-        ) : (
-          <Col key={`pinpad-empty-${i}`} />
+    {digits.map((el, i) =>
+      el ? (
+        renderPinCol(
+          el.e1,
+          el.e2,
+          el.e1.isLeft() ? "digit" : "label",
+          `pinpad-digit-${el.e2}`,
+          buttonType,
+          isDisabled
         )
+      ) : (
+        <Col key={`pinpad-empty-${i}`} />
+      )
     )}
   </Row>
 );

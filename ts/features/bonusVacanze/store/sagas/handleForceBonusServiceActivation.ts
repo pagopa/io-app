@@ -13,9 +13,9 @@ export function* handleForceBonusServiceActivation(
   bonusTypeId: number
 ): SagaIterator {
   // first: check if we have data about bonus type
-  const maybeBonusVacanze: ReturnType<
-    ReturnType<typeof availableBonusTypesSelectorFromId>
-  > = yield select(availableBonusTypesSelectorFromId(bonusTypeId));
+  const maybeBonusVacanze: ReturnType<ReturnType<
+    typeof availableBonusTypesSelectorFromId
+  >> = yield select(availableBonusTypesSelectorFromId(bonusTypeId));
   // no data
   if (maybeBonusVacanze.isNone()) {
     return;
@@ -37,7 +37,10 @@ export function* handleForceBonusServiceActivation(
         s => s === serviceId.value
       );
       if (isBlocked) {
-        return getBlockedChannels(profile, serviceId.value)({
+        return getBlockedChannels(
+          profile,
+          serviceId.value
+        )({
           email: true,
           inbox: true,
           push: true
