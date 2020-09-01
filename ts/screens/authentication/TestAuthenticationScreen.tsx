@@ -1,3 +1,4 @@
+import { FiscalCode } from 'italia-ts-commons/lib/strings';
 import { Content, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-navigation";
@@ -13,11 +14,7 @@ import { Dispatch } from "../../store/actions/types";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const FC_REGEXP = /(^([A-Za-z]{6}[0-9lmnpqrstuvLMNPQRSTUV]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9lmnpqrstuvLMNPQRSTUV]{2}[A-Za-z]{1}[0-9lmnpqrstuvLMNPQRSTUV]{3}[A-Za-z]{1})$|^([0-9]{11})$)/g;
-
-const checkUsernameValid = (username: string): boolean => {
-  return username.length > 0 && username.match(FC_REGEXP) !== null;
-};
+const checkUsernameValid = (username: string): boolean => FiscalCode.decode(username).isRight();;
 
 const TestAuthenticationScreen: React.FunctionComponent<Props> = (
   props: Props
@@ -30,7 +27,8 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
     primary: true,
     disabled: password.length === 0 || !checkUsernameValid(username),
     onPress: () => {
-      props.requestLogin({ username, password } as PasswordLogin);
+      const credentials = PasswordLogin.decode({ username, password });
+      credentials.map(props.requestLogin);
     },
     title: I18n.t("global.buttons.confirm")
   };
@@ -43,12 +41,12 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
             type={"text"}
             label={I18n.t("profile.fiscalCode.fiscalCode")}
             icon="io-titolare"
-            isValid={checkUsernameValid(username) ? true : undefined}
+            isValid={checkUsernameValid(username)}
             inputProps={{
               value: username,
               placeholder: I18n.t("profile.fiscalCode.fiscalCode"),
               returnKeyType: "done",
-              onChangeText: (value: string) => setUsername(value)
+              onChangeText: setUsername
             }}
           />
 
@@ -58,13 +56,13 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
             type={"text"}
             label={I18n.t("global.password")}
             icon="io-lucchetto"
-            isValid={password.length > 0 ? true : undefined}
+            isValid={password.length > 0}
             inputProps={{
               value: password,
               placeholder: I18n.t("global.password"),
               returnKeyType: "done",
               secureTextEntry: true,
-              onChangeText: (value: string) => setPassword(value)
+              onChangeText: setPassword
             }}
           />
         </Content>
