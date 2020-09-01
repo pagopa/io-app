@@ -59,10 +59,7 @@ export function handleItemOnPress(
     case "COPY":
       return () => clipboardSetStringWithFeedback(value);
     default:
-      return () =>
-        Linking.openURL(value)
-          .then(constNull)
-          .catch(constNull);
+      return () => Linking.openURL(value).then(constNull).catch(constNull);
   }
 }
 
@@ -72,7 +69,10 @@ const isHttp = (url: string): boolean => {
 };
 
 const taskLinking = (url: string) =>
-  TE.tryCatch(() => Linking.openURL(url), _ => `cannot open url ${url}`);
+  TE.tryCatch(
+    () => Linking.openURL(url),
+    _ => `cannot open url ${url}`
+  );
 
 const taskCanOpenUrl = (url: string) =>
   TE.tryCatch(
@@ -88,9 +88,7 @@ export const openWebUrl = (url: string, onError: () => void = constNull) => {
   pipe(
     () => taskCanOpenUrl(url),
     te =>
-      te.chain(v => {
-        return v ? taskLinking(url) : TE.fromLeft("error");
-      })
+      te.chain(v => v ? taskLinking(url) : TE.fromLeft("error"))
   )({})
     .run()
     .then(ei => ei.fold(onError, constNull), onError);

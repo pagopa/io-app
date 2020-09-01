@@ -32,16 +32,17 @@ const exitConfirmThreshold = 2000 as Millisecond;
  */
 const exitApp = () => BackHandler.exitApp();
 
-// tslint:disable-next-line:cognitive-complexity
+// eslint-disable-next-line
 export function createNavigationHistoryMiddleware(): Middleware<
   Dispatch,
   GlobalState
 > {
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   let firstRun = true;
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   let lastExitRequestTime: Option<Millisecond> = none;
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   return (store: MiddlewareAPI) => (next: Dispatch) => (action: Action) => {
     switch (action.type) {
       case NavigationActions.INIT:
@@ -81,80 +82,80 @@ export function createNavigationHistoryMiddleware(): Middleware<
         store.dispatch(navigationHistoryReset());
         return next(action);
       }
-      case NavigationActions.BACK: {
-        const routeKey = action.key;
+      case NavigationActions.BACK:
+        {
+          const routeKey = action.key;
 
-        // Get the current navigation history
-        const currentNavigationHistory = store.getState().navigationHistory;
-        // If the history is empty ask to user to press back again or
-        // check if we have to close the app
-        if (currentNavigationHistory.length === 0) {
-          const now = new Date().getTime() as Millisecond;
-          const elaspedTime =
-            now - lastExitRequestTime.getOrElse(0 as Millisecond);
-          // close previous toast showing before close the app or show a new toast
-          Toast.hide();
-          if (
-            lastExitRequestTime.isSome() &&
-            elaspedTime < exitConfirmThreshold
-          ) {
-            lastExitRequestTime = none;
-            exitApp();
-            // if the user wants exit the app the identification must be requested
-            store.dispatch(identificationRequest());
-          } else {
-            Toast.show({ text: I18n.t("exit.pressAgain") });
+          // Get the current navigation history
+          const currentNavigationHistory = store.getState().navigationHistory;
+          // If the history is empty ask to user to press back again or
+          // check if we have to close the app
+          if (currentNavigationHistory.length === 0) {
+            const now = new Date().getTime() as Millisecond;
+            const elaspedTime =
+              now - lastExitRequestTime.getOrElse(0 as Millisecond);
+            // close previous toast showing before close the app or show a new toast
+            Toast.hide();
+            if (
+              lastExitRequestTime.isSome() &&
+              elaspedTime < exitConfirmThreshold
+            ) {
+              lastExitRequestTime = none;
+              exitApp();
+              // if the user wants exit the app the identification must be requested
+              store.dispatch(identificationRequest());
+            } else {
+              Toast.show({ text: I18n.t("exit.pressAgain") });
+            }
+            lastExitRequestTime = some(now);
+            return;
           }
-          lastExitRequestTime = some(now);
-          return;
-        }
-        lastExitRequestTime = none;
+          lastExitRequestTime = none;
 
-        // Get the previous navigation state
-        const previousNavigationState = {
-          ...currentNavigationHistory[currentNavigationHistory.length - 1]
-        };
+          // Get the previous navigation state
+          const previousNavigationState = {
+            ...currentNavigationHistory[currentNavigationHistory.length - 1]
+          };
 
-        if (routeKey !== undefined && routeKey !== null) {
-          const isSingleBack = !navigationStateRoutesContainsKey(
-            previousNavigationState.routes,
-            routeKey
-          );
-          if (isSingleBack) {
+          if (routeKey !== undefined && routeKey !== null) {
+            const isSingleBack = !navigationStateRoutesContainsKey(
+              previousNavigationState.routes,
+              routeKey
+            );
+            if (isSingleBack) {
+              // Pop the last element from the history
+              store.dispatch(navigationHistoryPop());
+              // Dispatch an action to restore the previous state
+              store.dispatch(navigationRestore(previousNavigationState));
+            } else {
+              // Search for the index where the route is present for the first time
+              const index = currentNavigationHistory.findIndex(
+                navigationState =>
+                  navigationStateRoutesContainsKey(
+                    navigationState.routes,
+                    routeKey
+                  )
+              );
+              // Calculate the number of pop to do for return to the route
+              const nPop = currentNavigationHistory.length - index;
+
+              const backNavigationState = {
+                ...currentNavigationHistory[index]
+              };
+
+              // Pop to route
+              store.dispatch(navigationHistoryPop(nPop));
+              // Dispatch an action to restore the state where go back
+              store.dispatch(navigationRestore(backNavigationState));
+            }
+          } else {
             // Pop the last element from the history
             store.dispatch(navigationHistoryPop());
             // Dispatch an action to restore the previous state
             store.dispatch(navigationRestore(previousNavigationState));
-          } else {
-            // Search for the index where the route is present for the first time
-            const index = currentNavigationHistory.findIndex(
-              navigationState => {
-                return navigationStateRoutesContainsKey(
-                  navigationState.routes,
-                  routeKey
-                );
-              }
-            );
-            // Calculate the number of pop to do for return to the route
-            const nPop = currentNavigationHistory.length - index;
-
-            const backNavigationState = {
-              ...currentNavigationHistory[index]
-            };
-
-            // Pop to route
-            store.dispatch(navigationHistoryPop(nPop));
-            // Dispatch an action to restore the state where go back
-            store.dispatch(navigationRestore(backNavigationState));
           }
-        } else {
-          // Pop the last element from the history
-          store.dispatch(navigationHistoryPop());
-          // Dispatch an action to restore the previous state
-          store.dispatch(navigationRestore(previousNavigationState));
         }
-      }
-
+        return next(action);
       default:
         return next(action);
     }
@@ -162,21 +163,20 @@ export function createNavigationHistoryMiddleware(): Middleware<
 }
 
 /*
-* Check if the route key is present in routes of navigation state
-*/
+ * Check if the route key is present in routes of navigation state
+ */
 export function navigationStateRoutesContainsKey(
   routes: ReadonlyArray<NavigationRoute>,
   routeKey: string
 ): boolean {
-  const index = routes.findIndex(r => {
-    return (
+  const index = routes.findIndex(
+    r =>
       // Check if the route is the one we want
       r.key === routeKey ||
       // Or if this is a nested Navigator route, recursively check to see if
       // its children match
       !!(r.routes && navigationStateRoutesContainsKey(r.routes, routeKey))
-    );
-  });
+  );
 
   const notFound = -1;
   return index !== notFound;

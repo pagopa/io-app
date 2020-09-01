@@ -179,9 +179,9 @@ export function* upsertUserMetadata(
     yield put(userMetadataUpsert.request(userMetadata));
   }
 
-  const currentUserMetadata: ReturnType<
-    typeof userMetadataSelector
-  > = yield select(userMetadataSelector);
+  const currentUserMetadata: ReturnType<typeof userMetadataSelector> = yield select(
+    userMetadataSelector
+  );
 
   // The version of the new userMetadata must be one more
   // the old one.
@@ -200,9 +200,7 @@ export function* upsertUserMetadata(
   }
 
   // Call the saga that perform the API request.
-  const updatedBackendUserMetadataOrError: SagaCallReturnType<
-    typeof postUserMetadata
-  > = yield call(
+  const updatedBackendUserMetadataOrError: SagaCallReturnType<typeof postUserMetadata> = yield call(
     postUserMetadata,
     createOrUpdateUserMetadata,
     // Backend stores the metadata as a plain string

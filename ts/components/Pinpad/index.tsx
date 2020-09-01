@@ -268,7 +268,7 @@ class Pinpad extends React.PureComponent<Props, State> {
           });
 
           // re-enable after delayOnFailureMillis milliseconds
-          // tslint:disable-next-line: no-object-mutation
+          // eslint-disable-next-line
           this.onDelayOnFailureTimeoutId = setTimeout(() => {
             this.setState({
               isDisabled: false
@@ -283,7 +283,7 @@ class Pinpad extends React.PureComponent<Props, State> {
 
       // Fire the callback asynchronously, otherwise this component
       // will be unmounted before the render of the last bullet placeholder.
-      // tslint:disable-next-line no-object-mutation
+      // eslint-disable-next-line
       this.onFulfillTimeoutId = setTimeout(() =>
         this.props.onFulfill(inputValue as PinString, isValid)
       );

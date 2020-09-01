@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   StyleSheet
 } from "react-native";
+import image from "../../../img/rooted/broken-phone.png";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
@@ -54,7 +55,6 @@ body {
 }
 `;
 
-const image = require("../../../img/rooted/broken-phone.png");
 const opacity = 0.9;
 
 type ConfirmConfig = {

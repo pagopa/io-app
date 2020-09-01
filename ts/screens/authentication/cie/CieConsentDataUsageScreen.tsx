@@ -179,7 +179,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loginFailure: (error: Error) => dispatch(loginFailure(error))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(CieConsentDataUsageScreen);
+export default connect(null, mapDispatchToProps)(CieConsentDataUsageScreen);

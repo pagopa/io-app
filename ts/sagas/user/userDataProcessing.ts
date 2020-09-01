@@ -23,11 +23,12 @@ export function* loadUserDataProcessingSaga(
 ): SagaIterator {
   const choice = action.payload;
   try {
-    const response: SagaCallReturnType<
-      typeof getUserDataProcessingRequest
-    > = yield call(getUserDataProcessingRequest, {
-      userDataProcessingChoiceParam: choice
-    });
+    const response: SagaCallReturnType<typeof getUserDataProcessingRequest> = yield call(
+      getUserDataProcessingRequest,
+      {
+        userDataProcessingChoiceParam: choice
+      }
+    );
     if (response.isRight()) {
       if (response.value.status === 404 || response.value.status === 200) {
         yield put(
@@ -63,11 +64,12 @@ export function* upsertUserDataProcessingSaga(
 ): SagaIterator {
   const choice = action.payload;
   try {
-    const response: SagaCallReturnType<
-      typeof postUserDataProcessingRequest
-    > = yield call(postUserDataProcessingRequest, {
-      userDataProcessingChoiceRequest: { choice }
-    });
+    const response: SagaCallReturnType<typeof postUserDataProcessingRequest> = yield call(
+      postUserDataProcessingRequest,
+      {
+        userDataProcessingChoiceRequest: { choice }
+      }
+    );
 
     if (response.isRight() && response.value.status === 200) {
       yield put(upsertUserDataProcessing.success(response.value.value));

@@ -28,7 +28,7 @@ const validCreditCard: { [key: string]: any } = {
 // has no pan
 const invalidCreditCard = Object.keys(validCreditCard)
   .filter(k => k !== "pan")
-  .reduce((o, k) => ({ ...o, [k]: validCreditCard[k] }), {} as object);
+  .reduce((o, k) => ({ ...o, [k]: validCreditCard[k] }), {});
 
 const validAmount: { [key: string]: any } = {
   currency: "EUR",
@@ -38,7 +38,7 @@ const validAmount: { [key: string]: any } = {
 // has no amount
 const invalidAmount = Object.keys(validAmount)
   .filter(k => k !== "amount")
-  .reduce((o, k) => ({ ...o, [k]: validAmount[k] }), {} as object);
+  .reduce((o, k) => ({ ...o, [k]: validAmount[k] }), {});
 
 const validPsp: { [key: string]: any } = {
   id: 43188,
@@ -66,7 +66,7 @@ const validPsp: { [key: string]: any } = {
 // has no id
 const invalidPsp = Object.keys(validPsp)
   .filter(k => k !== "id")
-  .reduce((o, k) => ({ ...o, [k]: validPsp[k] }), {} as object);
+  .reduce((o, k) => ({ ...o, [k]: validPsp[k] }), {});
 
 const validTransaction: { [key: string]: any } = {
   id: 2329,
@@ -91,7 +91,7 @@ const validTransaction: { [key: string]: any } = {
 // has no id
 const invalidTransaction = Object.keys(validTransaction)
   .filter(k => k !== "idWallet")
-  .reduce((o, k) => ({ ...o, [k]: validTransaction[k] }), {} as object);
+  .reduce((o, k) => ({ ...o, [k]: validTransaction[k] }), {});
 
 const validSession: { [key: string]: any } = {
   sessionToken:
@@ -110,7 +110,7 @@ const validSession: { [key: string]: any } = {
 };
 const invalidSession = Object.keys(validSession)
   .filter(k => k !== "sessionToken")
-  .reduce((o, k) => ({ ...o, [k]: validSession[k] }), {} as object);
+  .reduce((o, k) => ({ ...o, [k]: validSession[k] }), {});
 
 const validWallet: { [key: string]: any } = {
   idWallet: 2345,
@@ -136,7 +136,7 @@ const validWalletNoCreditCard: { [key: string]: any } = {
 // has no id
 const invalidWallet = Object.keys(validWallet)
   .filter(k => k !== "idWallet")
-  .reduce((o, k) => ({ ...o, [k]: validWallet[k] }), {} as object);
+  .reduce((o, k) => ({ ...o, [k]: validWallet[k] }), {});
 
 /**
  * mock a valid wallet with psp.tags malformed

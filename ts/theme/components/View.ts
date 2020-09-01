@@ -1,10 +1,10 @@
+import * as ReactNative from "react-native";
 import { Theme } from "../types";
 import variables from "../variables";
-
-import * as ReactNative from "react-native";
 import customVariables from "../variables";
 
 declare module "native-base" {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NativeBase {
     interface View extends ReactNative.ViewProperties {
       spacer?: boolean;
@@ -34,8 +34,7 @@ declare module "native-base" {
  * https://www.pivotaltracker.com/story/show/170819564
  */
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     ".spacer": {
       xsmall: {
         height: customVariables.spacerExtrasmallHeight
@@ -111,5 +110,4 @@ export default (): Theme => {
       flex: 1,
       justifyContent: "center"
     }
-  };
-};
+  });

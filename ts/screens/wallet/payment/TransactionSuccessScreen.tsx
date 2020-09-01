@@ -96,7 +96,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   backToEntrypointPayment: () => dispatch(backToEntrypointPayment())
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(TransactionSuccessScreen);
+export default connect(undefined, mapDispatchToProps)(TransactionSuccessScreen);

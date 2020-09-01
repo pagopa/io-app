@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ColorsShowroom = () => {
-  return (
+export const ColorsShowroom = () => (
     <ShowroomSection title={"Color palette"}>
       <View style={styles.content}>
         {Object.entries(IOColors).map(colorEntry => (
@@ -36,15 +35,13 @@ export const ColorsShowroom = () => {
       </View>
     </ShowroomSection>
   );
-};
 
 type ColorBoxProps = {
   name: string;
   color: ColorValue;
 };
 
-const ColorBox = (props: ColorBoxProps) => {
-  return (
+const ColorBox = (props: ColorBoxProps) => (
     <View style={[styles.colorBox, styles.alignCenter]}>
       <View
         style={{
@@ -58,4 +55,3 @@ const ColorBox = (props: ColorBoxProps) => {
       </H5>
     </View>
   );
-};

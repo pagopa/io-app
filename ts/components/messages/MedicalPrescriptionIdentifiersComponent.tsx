@@ -32,8 +32,7 @@ const styles = StyleSheet.create({
 export default class MedicalPrescriptionIdentifiersComponent extends React.PureComponent<
   Props
 > {
-  private renderItem = (label: string, value: string) => {
-    return (
+  private renderItem = (label: string, value: string) => (
       <React.Fragment>
         <Text>{label}</Text>
         <View style={styles.row}>
@@ -44,7 +43,6 @@ export default class MedicalPrescriptionIdentifiersComponent extends React.PureC
         </View>
       </React.Fragment>
     );
-  };
 
   public render() {
     const { prescriptionData } = this.props;

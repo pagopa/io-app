@@ -72,7 +72,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     this.state = {
       progressBarValue: 0
     };
-    // tslint:disable-next-line: no-object-mutation
+    // eslint-disable-next-line
     this.progressAnimatedValue = new Animated.Value(0);
     this.createAnimation();
   }
@@ -94,7 +94,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
       easing: Easing.linear,
       duration: 10000
     });
-    // tslint:disable-next-line: no-object-mutation
+    // eslint-disable-next-line
     this.progressAnimation = Animated.sequence([firstAnim, secondAnim]);
     this.addAnimationListener();
   }

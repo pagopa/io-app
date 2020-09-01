@@ -39,7 +39,7 @@ export class MarkdownScreenComponent extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    InteractionManager.runAfterInteractions(() =>
+    void InteractionManager.runAfterInteractions(() =>
       this.setState({
         content: <Markdown>{this.props.markdown}</Markdown>
       })

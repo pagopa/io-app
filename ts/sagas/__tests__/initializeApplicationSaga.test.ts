@@ -26,17 +26,13 @@ import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailVali
 
 const aSessionToken = "a_session_token" as SessionToken;
 
-jest.mock("react-native-background-timer", () => {
-  return {
+jest.mock("react-native-background-timer", () => ({
     startTimer: jest.fn()
-  };
-});
+  }));
 
-jest.mock("react-native-share", () => {
-  return {
+jest.mock("react-native-share", () => ({
     open: jest.fn()
-  };
-});
+  }));
 
 jest.mock("../../api/backend");
 

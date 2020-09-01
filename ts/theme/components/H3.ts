@@ -7,11 +7,9 @@ import variables from "../variables";
 /**
  * @deprecated
  */
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     ...makeFontStyleObject(Platform.select, variables.h3FontWeight),
     color: variables.h3Color,
     fontSize: variables.h3FontSize,
     lineHeight: variables.h3LineHeight
-  };
-};
+  });

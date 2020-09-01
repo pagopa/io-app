@@ -164,8 +164,7 @@ class PinScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  private renderErrorDescription = () => {
-    return maybeNotNullyString(this.state.errorDescription).fold(
+  private renderErrorDescription = () => maybeNotNullyString(this.state.errorDescription).fold(
       undefined,
       des => {
         // wait 100ms to set focus
@@ -184,7 +183,6 @@ class PinScreen extends React.PureComponent<Props, State> {
         );
       }
     );
-  };
 
   public onPinReset() {
     this.setState(
@@ -253,7 +251,7 @@ class PinScreen extends React.PureComponent<Props, State> {
             activeColor={variables.contentPrimaryBackground}
             compareWithCode={pinState.pin}
             onFulfill={this.onPinConfirmFulfill}
-            ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
+            ref={pinpad => (this.pinConfirmComponent = pinpad)} // eslint-disable-line
             buttonType={"light"}
             onDeleteLastDigit={this.onPinConfirmRemoveLastDigit}
           />
@@ -395,7 +393,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   abortOnboarding: () => dispatch(abortOnboarding())
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(PinScreen);
+export default connect(undefined, mapDispatchToProps)(PinScreen);

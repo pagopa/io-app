@@ -14,8 +14,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ErrorLoadingComponent = () => {
-  return (
+export const ErrorLoadingComponent = () => (
     <View style={styles.view}>
       <View spacer={true} />
       <Image
@@ -24,4 +23,3 @@ export const ErrorLoadingComponent = () => {
       <Text style={styles.title}>{I18n.t("messages.loadingErrorTitle")}</Text>
     </View>
   );
-};

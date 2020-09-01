@@ -166,8 +166,7 @@ export const isExpired = (
 export const getPrescriptionDataFromName = (
   prescriptionData: PrescriptionData | undefined,
   name: string
-): Option<string> => {
-  return fromNullable(prescriptionData).fold(none, pd => {
+): Option<string> => fromNullable(prescriptionData).fold(none, pd => {
     switch (name.toLowerCase()) {
       case "nre":
         return some(pd.nre);
@@ -178,7 +177,6 @@ export const getPrescriptionDataFromName = (
     }
     return none;
   });
-};
 
 /**
  * extract the CTAs if they are nested inside the message markdown content
@@ -186,8 +184,7 @@ export const getPrescriptionDataFromName = (
  * @param message
  * @param locale
  */
-export const getCTA = (message: CreatedMessageWithContent): Option<CTAS> => {
-  return fromPredicate((t: string) => FM.test(t))(message.content.markdown)
+export const getCTA = (message: CreatedMessageWithContent): Option<CTAS> => fromPredicate((t: string) => FM.test(t))(message.content.markdown)
     .map(m => FM<MessageCTA>(m).attributes)
     .chain(attrs =>
       CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
@@ -196,7 +193,6 @@ export const getCTA = (message: CreatedMessageWithContent): Option<CTAS> => {
         cta => (hasCtaValidActions(cta) ? some(cta) : none)
       )
     );
-};
 
 /**
  * return a boolean indicating if the cta action is valid or not
@@ -234,8 +230,6 @@ export const hasCtaValidActions = (ctas: CTAS): boolean => {
  */
 export const cleanMarkdownFromCTAs = (
   markdown: MessageBodyMarkdown
-): string => {
-  return fromPredicate((t: string) => FM.test(t))(markdown)
+): string => fromPredicate((t: string) => FM.test(t))(markdown)
     .map(m => FM(m).body)
     .getOrElse(markdown as string);
-};

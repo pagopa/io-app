@@ -42,8 +42,6 @@ const reducer = (
 // Selectors
 export const messagesAllIdsSelector = (
   state: GlobalState
-): MessagesAllIdsState => {
-  return state.entities.messages.allIds;
-};
+): MessagesAllIdsState => state.entities.messages.allIds;
 
 export default reducer;

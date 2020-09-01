@@ -136,21 +136,18 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   /**
    * Renders the empty message state, when no message content is avaialable
    */
-  private renderEmptyState = () => {
-    return (
+  private renderEmptyState = () => (
       <View style={styles.notFullStateContainer}>
         <Text style={styles.notFullStateMessageText}>
           {I18n.t("messageDetails.emptyMessage")}
         </Text>
       </View>
     );
-  };
 
   /**
    * Used when the App is trying to load the message/service.
    */
-  private renderLoadingState = () => {
-    return (
+  private renderLoadingState = () => (
       <View style={styles.notFullStateContainer}>
         <Text style={styles.notFullStateMessageText}>
           {I18n.t("messageDetails.loadingText")}
@@ -158,7 +155,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
         <ActivityIndicator />
       </View>
     );
-  };
 
   /**
    * Used when something went wrong but there is a way to recover.
@@ -362,8 +358,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     refreshService: (serviceId: string) =>
       dispatch(loadServiceDetail.request(serviceId)),
     loadServiceMetadata: (serviceId: string) =>
@@ -375,8 +370,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     navigateToServiceDetailsScreen: (
       params: InferNavigationParams<typeof ServiceDetailsScreen>
     ) => dispatch(navigateToServiceDetailsScreen(params))
-  };
-};
+  });
 
 export default connect(
   mapStateToProps,

@@ -1,4 +1,4 @@
-// tslint:disable:no-useless-cast
+/* eslint-disable */
 
 import { isSome, none, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";

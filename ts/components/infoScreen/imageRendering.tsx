@@ -1,10 +1,13 @@
 import * as React from "react";
-import { Dimensions, Image, ImageSourcePropType } from "react-native";
+import {
+  Dimensions,
+  Image,
+  ImageSourcePropType,
+  StyleSheet
+} from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import customVariables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
-
-import { StyleSheet } from "react-native";
 
 const infoImageSize = 102;
 const screenHeight = Dimensions.get("screen").height;

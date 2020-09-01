@@ -72,9 +72,8 @@ class ChooserListSearch<T> extends React.PureComponent<Props<T>, State<T>> {
       return Promise.resolve(listState);
     }
     return new Promise(resolve => {
-      const result = listState.filter(
-        _ =>
-          matchingTextPredicate ? matchingTextPredicate(_, searchText) : false
+      const result = listState.filter(_ =>
+        matchingTextPredicate ? matchingTextPredicate(_, searchText) : false
       );
       resolve(result);
     });

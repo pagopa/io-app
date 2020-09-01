@@ -53,7 +53,8 @@ type Props = CommonProp &
     | Readonly<{
         type: "text";
         inputProps: TextInputProps;
-      }>);
+      }>
+  );
 
 export class LabelledItem extends React.Component<Props, State> {
   constructor(props: Props) {

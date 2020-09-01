@@ -124,15 +124,14 @@ export default class AnimatedScreenContent extends React.Component<
 
     return (
       <React.Fragment>
-        {Platform.OS === "ios" &&
-          this.props.dark && (
-            <Animated.View
-              style={[
-                styles.animatedDarkItem,
-                { transform: [{ translateY: dymanicOffset }] }
-              ]}
-            />
-          )}
+        {Platform.OS === "ios" && this.props.dark && (
+          <Animated.View
+            style={[
+              styles.animatedDarkItem,
+              { transform: [{ translateY: dymanicOffset }] }
+            ]}
+          />
+        )}
         <Animated.ScrollView
           style={[styles.level2, contentStyle]}
           ref={this.scrollableContentRef}

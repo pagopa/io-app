@@ -169,17 +169,16 @@ export default class ListItemComponent extends React.Component<Props> {
             </Text>
           )}
         </View>
-        {this.props.iconName !== undefined &&
-          this.props.hideIcon !== true && (
-            <View style={this.props.iconOnTop && styles.alignToStart}>
-              <IconFont
-                name={this.props.iconName}
-                size={this.props.smallIconSize ? ICON_SIZE : ICON_SIZE * 2}
-                style={styles.center}
-                color={customVariables.contentPrimaryBackground}
-              />
-            </View>
-          )}
+        {this.props.iconName !== undefined && this.props.hideIcon !== true && (
+          <View style={this.props.iconOnTop && styles.alignToStart}>
+            <IconFont
+              name={this.props.iconName}
+              size={this.props.smallIconSize ? ICON_SIZE : ICON_SIZE * 2}
+              style={styles.center}
+              color={customVariables.contentPrimaryBackground}
+            />
+          </View>
+        )}
       </ListItem>
     );
   }

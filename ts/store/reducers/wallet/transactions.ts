@@ -57,18 +57,17 @@ export const latestTransactionsSelector = createSelector(
       potTransactions,
       transactions =>
         [...transactions]
-          .sort(
-            (a, b) =>
-              // FIXME: code here is checking for NaN assuming creation dates may
-              //        be undefined, but since we override the pagoPA Wallet
-              //        type to force creation dates to always be defined and we
-              //        use that new type for parsing responses, we ignore
-              //        wallets with undefined creation dates... so the check
-              //        is unnecessary.
-              // tslint:disable-next-line:no-useless-cast
-              isNaN(a.created as any) || isNaN(b.created as any)
-                ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
-                : b.created.toISOString().localeCompare(a.created.toISOString())
+          .sort((a, b) =>
+            // FIXME: code here is checking for NaN assuming creation dates may
+            //        be undefined, but since we override the pagoPA Wallet
+            //        type to force creation dates to always be defined and we
+            //        use that new type for parsing responses, we ignore
+            //        wallets with undefined creation dates... so the check
+            //        is unnecessary.
+            // eslint-disable-next-line
+            isNaN(a.created as any) || isNaN(b.created as any)
+              ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
+              : b.created.toISOString().localeCompare(a.created.toISOString())
           )
           .filter(t => t.statusMessage !== "rifiutato")
           .slice(0, MAX_TRANSACTIONS_IN_LIST) // WIP no magic numbers
@@ -76,20 +75,16 @@ export const latestTransactionsSelector = createSelector(
 );
 
 // return true if there are more transactions to load
-export const areMoreTransactionsAvailable = (state: GlobalState): boolean => {
-  return pot.getOrElse(
-    pot.map(state.wallet.transactions.transactions, transactions => {
-      return pot.getOrElse(
+export const areMoreTransactionsAvailable = (state: GlobalState): boolean => pot.getOrElse(
+    pot.map(state.wallet.transactions.transactions, transactions => pot.getOrElse(
         pot.map(
           state.wallet.transactions.total,
           t => Object.keys(transactions).length < t
         ),
         false
-      );
-    }),
+      )),
     false
   );
-};
 
 // return the number of transactions loaded
 // note transactions loaded should be different (in cardinality) from ones displayed since we operate

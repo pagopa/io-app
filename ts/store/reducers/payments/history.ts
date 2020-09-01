@@ -45,8 +45,9 @@ const replaceLastItem = (
   state: PaymentsHistoryState,
   newItem: PaymentHistory
 ): PaymentsHistoryState => {
-  // tslint:disable-next-line: readonly-array
+  // eslint-disable-next-line
   const cloneState = [...state];
+  // eslint-disable-next-line functional/immutable-data
   cloneState.splice(state.length - 1, 1, newItem);
   return cloneState;
 };
@@ -63,6 +64,7 @@ const reducer = (
       );
       // if size exceeded, remove the ones exceeding (here we consider the one we will add in it)
       if (updateState.length + 1 >= HISTORY_SIZE) {
+        // eslint-disable-next-line functional/immutable-data
         updateState.splice(
           HISTORY_SIZE - 1,
           updateState.length + 1 - HISTORY_SIZE
@@ -160,17 +162,13 @@ export const getCodiceAvviso = (rptId: RptId) => {
   const pnn = rptId.paymentNoticeNumber;
   switch (pnn.auxDigit) {
     case "0":
-      return `${pnn.auxDigit}${pnn.applicationCode}${pnn.iuv13}${
-        pnn.checkDigit
-      }`;
+      return `${pnn.auxDigit}${pnn.applicationCode}${pnn.iuv13}${pnn.checkDigit}`;
     case "1":
       return `${pnn.auxDigit}${pnn.iuv17}`;
     case "2":
       return `${pnn.auxDigit}${pnn.iuv15}${pnn.checkDigit}`;
     case "3":
-      return `${pnn.auxDigit}${pnn.iuv13}${pnn.checkDigit}${
-        pnn.segregationCode
-      }`;
+      return `${pnn.auxDigit}${pnn.iuv13}${pnn.checkDigit}${pnn.segregationCode}`;
     default:
       return "";
   }

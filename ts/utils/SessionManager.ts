@@ -1,4 +1,4 @@
-// tslint:disable:no-let no-object-mutation
+/* eslint-disable */
 
 import { Mutex } from "async-mutex";
 import { Function1, Lazy } from "fp-ts/lib/function";
@@ -113,7 +113,7 @@ export class SessionManager<T> {
         // always return a Promise<IResponseType<A, B>>
         if (response.isRight() && (response.value as any).status === 401) {
           // our token is expired, reset it
-          // tslint:disable-next-line:no-object-mutation
+          // eslint-disable-next-line
           this.token = undefined;
           continue;
         }

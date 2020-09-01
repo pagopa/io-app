@@ -63,9 +63,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * @param props
  * @constructor
  */
-export const ActivateBonusRequestComponent: React.FunctionComponent<
-  Props
-> = props => {
+export const ActivateBonusRequestComponent: React.FunctionComponent<Props> = props => {
   const {
     headerTitle,
     title,

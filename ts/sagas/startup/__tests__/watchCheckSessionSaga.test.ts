@@ -85,9 +85,7 @@ describe("checkSessionResult", () => {
         isSessionValid: true
       }
     };
-    testSaga(checkSessionResult, sessionValidAction)
-      .next()
-      .isDone();
+    testSaga(checkSessionResult, sessionValidAction).next().isDone();
   });
   it("if session is invalid call session expired", () => {
     const sessionInvalidAction: ReturnType<

@@ -39,8 +39,7 @@ const styles = StyleSheet.create({
 const Accordion: React.FunctionComponent<Props> = (props: Props) => {
   const [expanded, setExpanded] = React.useState(false);
 
-  const renderHeader = (title: string) => {
-    return (
+  const renderHeader = (title: string) => (
       <TouchableDefaultOpacity
         accessible={true}
         accessibilityRole={"button"}
@@ -71,7 +70,6 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
         {!expanded && <ItemSeparatorComponent noPadded={true} />}
       </TouchableDefaultOpacity>
     );
-  };
 
   const renderContent = (content: string) => (
     <View style={styles.pad} accessible={expanded}>

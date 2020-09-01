@@ -100,49 +100,41 @@ export const messagesStatusSelector = (state: GlobalState) =>
 // return all unread messages id
 export const messagesUnreadSelector = createSelector(
   messagesStatusSelector,
-  items => {
-    return Object.keys(items).filter(messageId =>
+  items => Object.keys(items).filter(messageId =>
       fromNullable(items[messageId])
         .map(item => item.isRead === false)
         .getOrElse(true)
-    );
-  }
+    )
 );
 
 // return all read messages id
 export const messagesReadSelector = createSelector(
   messagesStatusSelector,
-  items => {
-    return Object.keys(items).filter(messageId =>
+  items => Object.keys(items).filter(messageId =>
       fromNullable(items[messageId])
         .map(item => item.isRead === true)
         .getOrElse(false)
-    );
-  }
+    )
 );
 
 // return all archived messages id
 export const messagesArchivedSelector = createSelector(
   messagesStatusSelector,
-  items => {
-    return Object.keys(items).filter(messageId =>
+  items => Object.keys(items).filter(messageId =>
       fromNullable(items[messageId])
         .map(item => item.isArchived === true)
         .getOrElse(false)
-    );
-  }
+    )
 );
 
 // return all unarchived messages id
 export const messagesUnarchivedSelector = createSelector(
   messagesStatusSelector,
-  items => {
-    return Object.keys(items).filter(messageId =>
+  items => Object.keys(items).filter(messageId =>
       fromNullable(items[messageId])
         .map(item => item.isArchived === false)
         .getOrElse(true)
-    );
-  }
+    )
 );
 
 // return all unarchived and unread messages id

@@ -55,8 +55,7 @@ const ringSettings = {
 /**
  *  This screen drives the user through the using of the CIE card interacting with the NFC
  */
-const CardSelectionScreen: React.SFC<Props> = props => {
-  return (
+const CardSelectionScreen: React.SFC<Props> = props => (
     // With the following animation we can represent 3 circles that light up similar to a 'radar' effect
     <BaseScreenComponent goBack={true}>
       <Content noPadded={true} bounces={false}>
@@ -106,6 +105,5 @@ const CardSelectionScreen: React.SFC<Props> = props => {
       </View>
     </BaseScreenComponent>
   );
-};
 
 export default CardSelectionScreen;

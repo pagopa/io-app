@@ -311,12 +311,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       this.props.refreshServicesByScope();
     }
 
+    // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "dark-content",
         customVariables.colorWhite
       );
-    }); // tslint:disable-line no-object-mutation
+    }); // eslint-disable-line
   }
 
   private animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -332,12 +333,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       extrapolate: "clamp"
     });
 
-  /*TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
+  /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
   private instabugLogAndOpenReport = () => {
     this.sendDataToInstabug();
     openInstabugBugReport();
   };
-  /*TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
+  /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
   private instabugReportTag = "services-loading-error";
   private sendDataToInstabug() {
     Instabug.appendTags([this.instabugReportTag]);
@@ -379,7 +380,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <View spacer={true} extralarge={true} />
         <Text bold={true}>{I18n.t("services.loading.title")}</Text>
         <Text>{I18n.t("services.loading.subtitle")}</Text>
-        {/*TODO: remove this component after the resolution of https://www.pivotaltracker.com/story/show/172431153 */}
+        {/* TODO: remove this component after the resolution of https://www.pivotaltracker.com/story/show/172431153 */}
         <View spacer={true} extralarge={true} />
         <ButtonDefaultOpacity
           onPress={this.instabugLogAndOpenReport}
@@ -394,7 +395,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   }
 
-  // tslint:disable-next-line: cognitive-complexity
+  // eslint-disable-next-line
   public componentDidUpdate(prevProps: Props, prevState: State) {
     // if some errors occur while updating profile, we will show a message in a toast
     // profile could be updated by enabling/disabling on or more channel of a service
@@ -518,42 +519,40 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.setState({ enableServices: !enableServices });
   };
 
-  private renderLongPressFooterButtons = () => {
-    return (
-      <View style={styles.varBar}>
-        <ButtonDefaultOpacity
-          block={true}
-          bordered={true}
-          onPress={this.handleOnLongPressItem}
-          style={styles.buttonBar}
-        >
-          <Text>{I18n.t("services.close")}</Text>
-        </ButtonDefaultOpacity>
-        <ButtonDefaultOpacity
-          block={true}
-          primary={true}
-          style={styles.buttonBar}
-          onPress={() => {
-            if (!this.props.wasServiceAlertDisplayedOnce) {
-              this.showAlertOnDisableServices(
-                I18n.t("services.disableAllTitle"),
-                I18n.t("services.disableAllMsg"),
-                () => this.disableOrEnableTabServices()
-              );
-            } else {
-              this.disableOrEnableTabServices();
-            }
-          }}
-        >
-          <Text>
-            {this.state.enableServices
-              ? I18n.t("services.enableAll")
-              : I18n.t("services.disableAll")}
-          </Text>
-        </ButtonDefaultOpacity>
-      </View>
-    );
-  };
+  private renderLongPressFooterButtons = () => (
+    <View style={styles.varBar}>
+      <ButtonDefaultOpacity
+        block={true}
+        bordered={true}
+        onPress={this.handleOnLongPressItem}
+        style={styles.buttonBar}
+      >
+        <Text>{I18n.t("services.close")}</Text>
+      </ButtonDefaultOpacity>
+      <ButtonDefaultOpacity
+        block={true}
+        primary={true}
+        style={styles.buttonBar}
+        onPress={() => {
+          if (!this.props.wasServiceAlertDisplayedOnce) {
+            this.showAlertOnDisableServices(
+              I18n.t("services.disableAllTitle"),
+              I18n.t("services.disableAllMsg"),
+              () => this.disableOrEnableTabServices()
+            );
+          } else {
+            this.disableOrEnableTabServices();
+          }
+        }}
+      >
+        <Text>
+          {this.state.enableServices
+            ? I18n.t("services.enableAll")
+            : I18n.t("services.disableAll")}
+        </Text>
+      </ButtonDefaultOpacity>
+    </View>
+  );
 
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
@@ -625,25 +624,23 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   /**
    * Render ServicesSearch component.
    */
-  private renderSearch = () => {
-    return this.props.searchText
-      .map(
-        _ =>
-          _.length < MIN_CHARACTER_SEARCH_TEXT ? (
-            <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
-          ) : (
-            <ServicesSearch
-              sectionsState={this.props.allSections}
-              profile={this.props.profile}
-              onRefresh={this.refreshServices}
-              navigateToServiceDetail={this.onServiceSelect}
-              searchText={_}
-              readServices={this.props.readServices}
-            />
-          )
+  private renderSearch = () =>
+    this.props.searchText
+      .map(_ =>
+        _.length < MIN_CHARACTER_SEARCH_TEXT ? (
+          <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
+        ) : (
+          <ServicesSearch
+            sectionsState={this.props.allSections}
+            profile={this.props.profile}
+            onRefresh={this.refreshServices}
+            navigateToServiceDetail={this.onServiceSelect}
+            searchText={_}
+            readServices={this.props.readServices}
+          />
+        )
       )
       .getOrElse(<SearchNoResultMessage errorType={"InvalidSearchBarText"} />);
-  };
 
   private refreshServices = () => {
     this.setState({
@@ -786,10 +783,8 @@ const mapStateToProps = (state: GlobalState) => {
     ...allTabSections
   ];
 
-  const getTabSevicesId = (
-    tabServices: ReadonlyArray<ServicesSectionState>
-  ) => {
-    return tabServices.reduce(
+  const getTabSevicesId = (tabServices: ReadonlyArray<ServicesSectionState>) =>
+    tabServices.reduce(
       (acc: ReadonlyArray<string>, curr: ServicesSectionState) => {
         const sectionServices = curr.data.reduce(
           (
@@ -807,7 +802,6 @@ const mapStateToProps = (state: GlobalState) => {
       },
       []
     );
-  };
 
   const tabsServicesId: { [k: number]: ReadonlyArray<string> } = {
     [0]: getTabSevicesId(localTabSections),
@@ -833,8 +827,8 @@ const mapStateToProps = (state: GlobalState) => {
   const loadDataFailure: DataLoadFailure = pot.isError(potUserMetadata)
     ? "userMetadaLoadFailure"
     : servicesLoadingFailure
-      ? "servicesLoadFailure"
-      : undefined;
+    ? "servicesLoadFailure"
+    : undefined;
 
   return {
     debugONLYServices: servicesSelector(state),

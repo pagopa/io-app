@@ -11,12 +11,10 @@ type Props = Readonly<{
   idpTextData: Idp;
 }>;
 
-const IdpCustomContextualHelpContent = (idpTextData: Idp) => {
-  return {
+const IdpCustomContextualHelpContent = (idpTextData: Idp) => ({
     title: I18n.t("authentication.idp_login.contextualHelpTitle2"),
     body: () => <IdpCustomContextualHelpBody idpTextData={idpTextData} />
-  };
-};
+  });
 
 const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {
   const { idpTextData } = props;

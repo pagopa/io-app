@@ -129,8 +129,7 @@ export default class BlockButtons extends React.Component<Props, never> {
   private renderButton = (
     props: BlockButtonProps,
     style: ComponentProps<typeof ButtonDefaultOpacity>["style"]
-  ) => {
-    return (
+  ) => (
       <ButtonDefaultOpacity style={style} {...props}>
         {props.iconName && (
           <IconFont
@@ -141,15 +140,12 @@ export default class BlockButtons extends React.Component<Props, never> {
           />
         )}
         <Text
-          style={fromNullable(props.buttonFontSize).fold(undefined, fs => {
-            return { fontSize: fs };
-          })}
+          style={fromNullable(props.buttonFontSize).fold(undefined, fs => ({ fontSize: fs }))}
         >
           {props.title}
         </Text>
       </ButtonDefaultOpacity>
     );
-  };
 
   public render() {
     return (

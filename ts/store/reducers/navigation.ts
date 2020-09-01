@@ -29,13 +29,9 @@ export const navigationStateSelector = (state: GlobalState): NavigationState =>
  */
 export const navigationCurrentRouteSelector = (
   state: GlobalState
-): Option<string> => {
-  return index(state.nav.index, [...state.nav.routes]).fold(none, ln => {
-    return "routes" in ln && "index" in ln
+): Option<string> => index(state.nav.index, [...state.nav.routes]).fold(none, ln => "routes" in ln && "index" in ln
       ? getRouteName(ln.routes[ln.index])
-      : getRouteName(ln);
-  });
-};
+      : getRouteName(ln));
 
 // Return a string that represent the current route
 export const plainNavigationCurrentRouteSelector = createSelector(
@@ -70,8 +66,6 @@ function nextState(state: NavigationState, action: Action): NavigationState {
 const reducer = (
   state: NavigationState = INITIAL_STATE,
   action: Action
-): NavigationState => {
-  return nextState(state, action) || state;
-};
+): NavigationState => nextState(state, action) || state;
 
 export default reducer;

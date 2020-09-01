@@ -65,22 +65,18 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     undefined
   );
 
-  React.useEffect(
-    () => {
-      // if the contextual data is empty or is in error -> try to reload
-      if (
-        !pot.isLoading(props.potContextualData) &&
-        pot.isNone(props.potContextualData) &&
-        pot.isError(props.potContextualData)
-      ) {
-        props.loadContextualHelpData();
-      }
-    },
-    [
-      pot.isNone(props.potContextualData) ||
-        pot.isError(props.potContextualData)
-    ]
-  );
+  React.useEffect(() => {
+    // if the contextual data is empty or is in error -> try to reload
+    if (
+      !pot.isLoading(props.potContextualData) &&
+      pot.isNone(props.potContextualData) &&
+      pot.isError(props.potContextualData)
+    ) {
+      props.loadContextualHelpData();
+    }
+  }, [
+    pot.isNone(props.potContextualData) || pot.isError(props.potContextualData)
+  ]);
 
   // after the modal is fully visible, render the content -
   // in case of complex markdown this can take some time and we don't
@@ -90,7 +86,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   // on close, we set a handler to cleanup the content after all
   // interactions (animations) are complete
   const onClose = () => {
-    InteractionManager.runAfterInteractions(() => setContent(null));
+    void InteractionManager.runAfterInteractions(() => setContent(null));
     props.close();
   };
 
@@ -154,13 +150,12 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
             <View spacer={true} />
             {customizedContent}
             <View spacer={true} />
-            {props.faqCategories &&
-              isContentLoaded && (
-                <FAQComponent
-                  onLinkClicked={props.onLinkClicked}
-                  faqCategories={props.faqCategories}
-                />
-              )}
+            {props.faqCategories && isContentLoaded && (
+              <FAQComponent
+                onLinkClicked={props.onLinkClicked}
+                faqCategories={props.faqCategories}
+              />
+            )}
             {isContentLoaded && (
               <React.Fragment>
                 <View spacer={true} extralarge={true} />

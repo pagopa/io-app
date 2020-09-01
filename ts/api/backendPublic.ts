@@ -9,7 +9,7 @@ import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { defaultRetryingFetch } from "../utils/fetch";
 
 type GetServerInfoT = IGetApiRequestType<
-  {},
+  Record<string, unknown>,
   never,
   never,
   BasicResponseType<ServerInfo>
@@ -29,7 +29,7 @@ export const BackendStatus = t.exact(BackendStatusR, "ServerInfo");
 export type BackendStatus = t.TypeOf<typeof BackendStatus>;
 
 type GetStatusT = IGetApiRequestType<
-  {},
+  Record<string, unknown>,
   never,
   never,
   BasicResponseType<BackendStatus>

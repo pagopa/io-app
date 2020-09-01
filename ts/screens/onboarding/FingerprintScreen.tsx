@@ -131,7 +131,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   abortOnboarding: () => dispatch(abortOnboarding())
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(FingerprintScreen);
+export default connect(undefined, mapDispatchToProps)(FingerprintScreen);

@@ -1,4 +1,6 @@
 import * as t from "io-ts";
+
+import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import * as r from "italia-ts-commons/lib/requests";
 import {
   ApiHeaderJson,
@@ -13,7 +15,9 @@ import {
   RequestHeaders,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
+import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Omit } from "italia-ts-commons/lib/types";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
@@ -49,10 +53,6 @@ import {
   upsertUserMetadataDefaultDecoder,
   UpsertUserMetadataT
 } from "../../definitions/backend/requestTypes";
-
-import { DeferredPromise } from "italia-ts-commons/lib/promises";
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 
@@ -117,18 +117,16 @@ export type LogoutT = IPostApiRequestType<
 function ParamAuthorizationBearerHeaderProducer<
   P extends { readonly Bearer: string }
 >(): RequestHeaderProducer<P, "Authorization"> {
-  return (p: P): RequestHeaders<"Authorization"> => {
-    return {
+  return (p: P): RequestHeaders<"Authorization"> => ({
       Authorization: `Bearer ${p.Bearer}`
-    };
-  };
+    });
 }
 
 //
 // Create client
 //
 
-// tslint:disable-next-line: no-big-function
+// eslint-disable-next-line
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,
@@ -208,8 +206,7 @@ export function BackendClient(
 
   // Custom decoder until we fix the problem in the io-utils generator
   // https://www.pivotaltracker.com/story/show/169915207
-  const startEmailValidationCustomDecoder = () => {
-    return r.composeResponseDecoders(
+  const startEmailValidationCustomDecoder = () => r.composeResponseDecoders(
       r.composeResponseDecoders(
         r.composeResponseDecoders(
           r.composeResponseDecoders(
@@ -217,31 +214,30 @@ export function BackendClient(
               r.constantResponseDecoder<undefined, 202>(202, undefined),
               r.ioResponseDecoder<
                 400,
-                (typeof ProblemJson)["_A"],
-                (typeof ProblemJson)["_O"]
+                typeof ProblemJson["_A"],
+                typeof ProblemJson["_O"]
               >(400, ProblemJson)
             ),
             r.constantResponseDecoder<undefined, 401>(401, undefined)
           ),
           r.ioResponseDecoder<
             404,
-            (typeof ProblemJson)["_A"],
-            (typeof ProblemJson)["_O"]
+            typeof ProblemJson["_A"],
+            typeof ProblemJson["_O"]
           >(404, ProblemJson)
         ),
         r.ioResponseDecoder<
           429,
-          (typeof ProblemJson)["_A"],
-          (typeof ProblemJson)["_O"]
+          typeof ProblemJson["_A"],
+          typeof ProblemJson["_O"]
         >(429, ProblemJson)
       ),
       r.ioResponseDecoder<
         500,
-        (typeof ProblemJson)["_A"],
-        (typeof ProblemJson)["_O"]
+        typeof ProblemJson["_A"],
+        typeof ProblemJson["_O"]
       >(500, ProblemJson)
     );
-  };
 
   const postStartEmailValidationProcessT: StartEmailValidationProcessT = {
     method: "post",

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * This script converts the translations from the "locales"
  * directory into a typescript file that can be bundled with
@@ -13,12 +14,11 @@
  * I18N_IGNORE_LOCALE_ERRORS=1    Ignore locale validation errors.
  * I18N_MASTER_LOCALE=it          Sets a different master locale.
  */
-// tslint:disable:no-console
 
+import * as path from "path";
 import chalk from "chalk";
 import * as fs from "fs-extra";
 import * as yaml from "js-yaml";
-import * as path from "path";
 import * as prettier from "prettier";
 
 interface LocaleDoc {
@@ -44,26 +44,20 @@ const IncludeYamlType = (includeRoot: string) =>
   new yaml.Type("!include", {
     kind: "scalar",
 
-    resolve: (data: any) => {
-      return (
+    resolve: (data: any) => (
         data !== null &&
         typeof data === "string" &&
         path // included file must be under includeRoot
           .normalize(path.join(includeRoot, data))
           .startsWith(path.normalize(includeRoot)) &&
         fs.statSync(path.join(includeRoot, data)).isFile()
-      );
-    },
+      ),
 
-    construct: data => {
-      return fs.readFileSync(path.join(includeRoot, data)).toString();
-    },
+    construct: data => fs.readFileSync(path.join(includeRoot, data)).toString(),
 
     instanceOf: String,
 
-    represent: (data: any) => {
-      return String(data);
-    }
+    represent: (data: any) => String(data)
   });
 
 /**
@@ -234,12 +228,12 @@ async function run(rootPath: string): Promise<void> {
 
     // compare keys of locales with master keys
     console.log(chalk.gray("[3/4]"), "Comparing keys...");
-    const checkedLocaleKeys: ReadonlyArray<
-      LocaleDocWithCheckedKeys
-    > = otherLocaleKeys.map(l => ({
-      ...l,
-      ...compareLocaleKeys(masterKeys.keys, l.keys)
-    }));
+    const checkedLocaleKeys: ReadonlyArray<LocaleDocWithCheckedKeys> = otherLocaleKeys.map(
+      l => ({
+        ...l,
+        ...compareLocaleKeys(masterKeys.keys, l.keys)
+      })
+    );
 
     // look for locales that have missing or extra keys
     const badLocales = checkedLocaleKeys.filter(
@@ -248,7 +242,7 @@ async function run(rootPath: string): Promise<void> {
 
     if (badLocales.length > 0) {
       badLocales.forEach(reportBadLocale);
-      if (!Boolean(process.env.I18N_IGNORE_LOCALE_ERRORS)) {
+      if (!process.env.I18N_IGNORE_LOCALE_ERRORS) {
         throw Error("bad locales detected");
       }
     }
@@ -264,4 +258,7 @@ async function run(rootPath: string): Promise<void> {
   }
 }
 
-run(root).then(() => console.log("done"), () => process.exit(1));
+run(root).then(
+  () => console.log("done"),
+  () => process.exit(1)
+);

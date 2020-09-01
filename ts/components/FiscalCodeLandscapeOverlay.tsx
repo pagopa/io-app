@@ -72,7 +72,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
     // if there is an active timeout, clear it!
     if (this.scrollTimeout !== undefined) {
       clearTimeout(this.scrollTimeout);
-      // tslint:disable-next-line: no-object-mutation
+      // eslint-disable-next-line
       this.scrollTimeout = undefined;
     }
   }
@@ -80,7 +80,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
   private scrollToEnd = () => {
     if (this.props.showBackSide && this.ScrollVewRef.current) {
       // dalay the scroll to end command to wait until the ingress animation is completed
-      // tslint:disable-next-line: no-object-mutation
+      // eslint-disable-next-line
       this.scrollTimeout = setTimeout(() => {
         if (this.ScrollVewRef.current) {
           this.ScrollVewRef.current.scrollToEnd({ animated: true });
