@@ -19,9 +19,7 @@ const styles = StyleSheet.create({
     zIndex: Platform.OS === "ios" ? 1 : undefined
   },
   inner: {
-    backgroundColor: color(customVariables.brandDarkestGray)
-      .fade(0.5)
-      .string(),
+    backgroundColor: color(customVariables.brandDarkestGray).fade(0.5).string(),
     height: 30,
     position: "absolute",
     flexDirection: "row",

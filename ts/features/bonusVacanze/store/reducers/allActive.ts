@@ -69,9 +69,7 @@ export const allBonusActiveSelector = createSelector<
   GlobalState,
   AllActiveState,
   ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>
->(allBonusActiveByIdSelector, allActiveObj => {
-  return Object.keys(allActiveObj).map(k => allActiveObj[k]);
-});
+>(allBonusActiveByIdSelector, allActiveObj => Object.keys(allActiveObj).map(k => allActiveObj[k]));
 
 // return the list of the active or redeemed bonus of which the current profile is the applicant
 export const ownedActiveOrRedeemedBonus = createSelector<
@@ -79,8 +77,7 @@ export const ownedActiveOrRedeemedBonus = createSelector<
   ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>,
   ProfileState,
   ReadonlyArray<BonusActivationWithQrCode>
->([allBonusActiveSelector, profileSelector], (allActiveArray, profile) => {
-  return pot.toOption(profile).fold([], p =>
+>([allBonusActiveSelector, profileSelector], (allActiveArray, profile) => pot.toOption(profile).fold([], p =>
     allActiveArray.reduce(
       (
         acc: ReadonlyArray<BonusActivationWithQrCode>,
@@ -98,8 +95,7 @@ export const ownedActiveOrRedeemedBonus = createSelector<
       },
       []
     )
-  );
-});
+  ));
 
 // return the bonus from a given ID
 export const bonusActiveDetailByIdSelector = (id: string) =>
@@ -107,8 +103,6 @@ export const bonusActiveDetailByIdSelector = (id: string) =>
     GlobalState,
     AllActiveState,
     pot.Pot<BonusActivationWithQrCode, Error>
-  >(allBonusActiveByIdSelector, allActiveObj => {
-    return fromNullable(allActiveObj[id]).getOrElse(pot.none);
-  });
+  >(allBonusActiveByIdSelector, allActiveObj => fromNullable(allActiveObj[id]).getOrElse(pot.none));
 
 export default reducer;

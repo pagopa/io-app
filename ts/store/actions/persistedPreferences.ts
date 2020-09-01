@@ -42,7 +42,7 @@ export const continueWithRootOrJailbreak = createStandardAction(
 )<boolean>();
 
 export type PersistedPreferencesActions = ActionType<
-  // tslint:disable-next-line: max-union-size
+  // eslint-disable-next-line
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
   | typeof preferredCalendarRemoveSuccess

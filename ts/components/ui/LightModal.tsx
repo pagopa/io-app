@@ -39,7 +39,7 @@ export const LightModalContext = React.createContext<
   setOnHiddenModal: () => undefined
 });
 
-type Props = {};
+type Props = Record<string, unknown>;
 
 type State = LightModalContextInterface;
 

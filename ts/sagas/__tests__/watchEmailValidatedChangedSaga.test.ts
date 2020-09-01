@@ -52,57 +52,69 @@ describe("isEmailValidatedChanged", () => {
 
 describe("checkProfileEmailChanged", () => {
   it("should end with no action dispatched", () => {
-    testSaga(checkProfileEmailChanged!, profileLoadSuccess(profile))
-      .next()
-      .isDone();
+    if (checkProfileEmailChanged !== undefined) {
+      testSaga(checkProfileEmailChanged, profileLoadSuccess(profile))
+        .next()
+        .isDone();
+    }
   });
 
   it("should dispatch emailValidationChanged(false) true -> false", () => {
-    testSaga(
-      checkProfileEmailChanged!,
-      profileLoadSuccess({ ...profile, is_email_validated: false })
-    )
-      .next()
-      .put(profileEmailValidationChanged(false))
-      .next()
-      .isDone();
+    if (checkProfileEmailChanged !== undefined) {
+      testSaga(
+        checkProfileEmailChanged,
+        profileLoadSuccess({ ...profile, is_email_validated: false })
+      )
+        .next()
+        .put(profileEmailValidationChanged(false))
+        .next()
+        .isDone();
+    }
   });
 
   it("should end with no actions dispatched (no changes is_email_validated is always false) false -> false", () => {
-    testSaga(
-      checkProfileEmailChanged!,
-      profileLoadSuccess({ ...profile, is_email_validated: false })
-    )
-      .next()
-      .isDone();
+    if (checkProfileEmailChanged !== undefined) {
+      testSaga(
+        checkProfileEmailChanged,
+        profileLoadSuccess({ ...profile, is_email_validated: false })
+      )
+        .next()
+        .isDone();
+    }
   });
 
   it("should dispatch emailValidationChanged(true) false -> true", () => {
-    testSaga(
-      checkProfileEmailChanged!,
-      profileLoadSuccess({ ...profile, is_email_validated: true })
-    )
-      .next()
-      .put(profileEmailValidationChanged(true))
-      .next()
-      .isDone();
+    if (checkProfileEmailChanged !== undefined) {
+      testSaga(
+        checkProfileEmailChanged,
+        profileLoadSuccess({ ...profile, is_email_validated: true })
+      )
+        .next()
+        .put(profileEmailValidationChanged(true))
+        .next()
+        .isDone();
+    }
   });
 
   it("should end with no actions dispatched (no changes is_email_validated is always true) true -> true", () => {
-    testSaga(
-      checkProfileEmailChanged!,
-      profileLoadSuccess({ ...profile, is_email_validated: true })
-    )
-      .next()
-      .isDone();
+    if (checkProfileEmailChanged !== undefined) {
+      testSaga(
+        checkProfileEmailChanged,
+        profileLoadSuccess({ ...profile, is_email_validated: true })
+      )
+        .next()
+        .isDone();
+    }
   });
 
   it("should end with no actions dispatched (is_email_validated is undefined) true -> undefined", () => {
-    testSaga(
-      checkProfileEmailChanged!,
-      profileLoadSuccess({ ...profile, is_email_validated: undefined })
-    )
-      .next()
-      .isDone();
+    if (checkProfileEmailChanged !== undefined) {
+      testSaga(
+        checkProfileEmailChanged,
+        profileLoadSuccess({ ...profile, is_email_validated: undefined })
+      )
+        .next()
+        .isDone();
+    }
   });
 });

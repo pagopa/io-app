@@ -46,9 +46,7 @@ type GetMunicipalityT = IGetApiRequestType<
 const getMunicipalityT: GetMunicipalityT = {
   method: "get",
   url: params =>
-    `/municipalities/${params.codiceCatastale[0]}/${
-      params.codiceCatastale[1]
-    }/${params.codiceCatastale}.json`,
+    `/municipalities/${params.codiceCatastale[0]}/${params.codiceCatastale[1]}/${params.codiceCatastale}.json`,
   query: _ => ({}),
   headers: _ => ({}),
   response_decoder: basicResponseDecoder(MunicipalityMedadata)

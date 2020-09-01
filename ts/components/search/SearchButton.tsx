@@ -133,7 +133,4 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   }
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(SearchButton);
+export default connect(null, mapDispatchToProps)(SearchButton);

@@ -1,8 +1,7 @@
 import { Theme } from "../types";
 import variables from "../variables";
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     marginLeft: 0,
     marginRight: 0,
     paddingTop: variables.fontSizeBase,
@@ -18,5 +17,4 @@ export default (): Theme => {
       borderBottomWidth: 0,
       marginLeft: 0
     }
-  };
-};
+  });

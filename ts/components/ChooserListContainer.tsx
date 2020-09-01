@@ -309,7 +309,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
   }
 }
 
-export default <T extends {}>() => {
+export default <T extends Record<string, unknown>>() => {
   const hocComponent = (props: Props<T>) => {
     const {
       selectedItemIds,

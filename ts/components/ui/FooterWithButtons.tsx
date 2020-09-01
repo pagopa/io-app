@@ -1,9 +1,9 @@
 import { View } from "native-base";
 import * as React from "react";
-import variables from "../../theme/variables";
-import BlockButtons, { BlockButtonsProps } from "./BlockButtons";
 
 import { StyleSheet } from "react-native";
+import variables from "../../theme/variables";
+import BlockButtons, { BlockButtonsProps } from "./BlockButtons";
 
 // TODO: Refactor with an unique component like `FooterTopShadow` after bonus vacanze
 const styles = StyleSheet.create({

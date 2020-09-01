@@ -209,15 +209,12 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
   }
 
-  private getFooterButtons = () => {
-    return this.props.error.fold(
-      this.renderFooterButtons(),
-      error =>
-        error === "PAYMENT_DUPLICATED"
-          ? this.renderFooterSingleButton()
-          : this.renderFooterButtons()
+  private getFooterButtons = () =>
+    this.props.error.fold(this.renderFooterButtons(), error =>
+      error === "PAYMENT_DUPLICATED"
+        ? this.renderFooterSingleButton()
+        : this.renderFooterButtons()
     );
-  };
 
   public render(): React.ReactNode {
     const rptId: RptId = this.props.navigation.getParam("rptId");
@@ -326,27 +323,26 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 }
 
+// eslint-disable-next-line complexity,sonarjs/cognitive-complexity
 const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
   const walletById = state.wallet.wallets.walletById;
 
   const maybeFavoriteWallet = pot.toOption(getFavoriteWallet(state));
 
-  const error: Option<
-    PayloadForAction<
-      | typeof paymentVerifica["failure"]
-      | typeof paymentAttiva["failure"]
-      | typeof paymentIdPolling["failure"]
-    >
-  > = pot.isError(verifica)
+  const error: Option<PayloadForAction<
+    | typeof paymentVerifica["failure"]
+    | typeof paymentAttiva["failure"]
+    | typeof paymentIdPolling["failure"]
+  >> = pot.isError(verifica)
     ? some(verifica.error)
     : pot.isError(attiva)
-      ? some(attiva.error)
-      : pot.isError(paymentId)
-        ? some(paymentId.error)
-        : pot.isError(check) || pot.isError(psps)
-          ? some(undefined)
-          : none;
+    ? some(attiva.error)
+    : pot.isError(paymentId)
+    ? some(paymentId.error)
+    : pot.isError(check) || pot.isError(psps)
+    ? some(undefined)
+    : none;
 
   // we need to show the spinner when the data is in the loading state
   // and also while the logic is processing one step's response and
@@ -371,10 +367,10 @@ const mapStateToProps = (state: GlobalState) => {
   const loadingCaption = isLoadingVerifica
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.verification")
     : isLoadingAttiva
-      ? I18n.t("wallet.firstTransactionSummary.loadingMessage.activation")
-      : isLoadingWalletById
-        ? I18n.t("wallet.firstTransactionSummary.loadingMessage.wallet")
-        : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
+    ? I18n.t("wallet.firstTransactionSummary.loadingMessage.activation")
+    : isLoadingWalletById
+    ? I18n.t("wallet.firstTransactionSummary.loadingMessage.wallet")
+    : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
   const hasWallets = pot.getOrElse(walletsSelector(state), []).length !== 0;
 

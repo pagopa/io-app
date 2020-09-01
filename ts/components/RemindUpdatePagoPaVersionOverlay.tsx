@@ -30,8 +30,11 @@ const styles = StyleSheet.create({
 
 const timeoutErrorMsg: Millisecond = 5000 as Millisecond;
 
-class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<{}, State> {
-  constructor(props: {}) {
+class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
+  Record<string, unknown>,
+  State
+> {
+  constructor(props: Record<string, unknown>) {
     super(props);
     this.state = {
       hasError: false
@@ -58,7 +61,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<{}, State> {
         hasError: true
       });
       // After 5 seconds restore state
-      // tslint:disable-next-line: no-object-mutation
+      // eslint-disable-next-line
       this.idTimeout = setTimeout(() => {
         this.setState({
           hasError: false

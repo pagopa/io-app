@@ -45,8 +45,7 @@ const notAvailable = I18n.t("global.remoteStates.notAvailable");
 export const getPaymentHistoryInfo = (
   paymentHistory: PaymentHistory,
   paymentCheckout: Option<boolean>
-) => {
-  return paymentCheckout.fold(
+) => paymentCheckout.fold(
     {
       text11: I18n.t("payment.details.state.incomplete"),
       text3: getIuv(paymentHistory.data),
@@ -72,7 +71,6 @@ export const getPaymentHistoryInfo = (
       };
     }
   );
-};
 /**
  * Payments List component
  */

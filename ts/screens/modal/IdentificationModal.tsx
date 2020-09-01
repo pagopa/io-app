@@ -129,8 +129,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
    * Update the state using the actual props value of the `identificationFailState`
    * return the updated value of `canInsertPinTooManyAttempts` in order to be used without waiting the state update
    */
-  private updateCanInsertPinTooManyAttempts = () => {
-    return this.props.identificationFailState.map(errorData => {
+  private updateCanInsertPinTooManyAttempts = () => this.props.identificationFailState.map(errorData => {
       const now = new Date();
       const canInsertPinTooManyAttempts = errorData.nextLegalAttempt <= now;
       this.setState({
@@ -140,7 +139,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       });
       return canInsertPinTooManyAttempts;
     });
-  };
 
   /**
    * Activate the interval check on the pin state if the condition is satisfied
@@ -150,7 +148,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     this.props.identificationFailState.map(failState => {
       if (failState.remainingAttempts < checkTimerThreshold) {
         this.updateCanInsertPinTooManyAttempts();
-        // tslint:disable-next-line: no-object-mutation
+        // eslint-disable-next-line
         this.idUpdateCanInsertPinTooManyAttempts = setInterval(
           this.updateCanInsertPinTooManyAttempts,
           checkPinInterval
@@ -295,7 +293,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       // if the pin can be inserted, the timer is no longer needed
       if (caninsertPin) {
         clearInterval(this.idUpdateCanInsertPinTooManyAttempts);
-        // tslint:disable-next-line: no-object-mutation
+        // eslint-disable-next-line
         this.idUpdateCanInsertPinTooManyAttempts = undefined;
 
         // if the pin can't be inserted and is not scheduled an interval, schedule an update
@@ -334,11 +332,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   };
 
-  private renderErrorDescription = () => {
-    return maybeNotNullyString(this.getCodeInsertionStatus()).fold(
+  private renderErrorDescription = () => maybeNotNullyString(this.getCodeInsertionStatus()).fold(
       undefined,
-      des => {
-        return (
+      des => (
           <Text
             alignCenter={true}
             bold={true}
@@ -349,10 +345,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           >
             {des}
           </Text>
-        );
-      }
+        )
     );
-  };
 
   private getCodeInsertionStatus = () => {
     if (this.state.identificationByPinState === "unstarted") {
@@ -420,8 +414,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       this.props.onCancelIdentification();
     };
 
-    const renderHeader = () => {
-      return (
+    const renderHeader = () => (
         <React.Fragment>
           <Text
             bold={true}
@@ -447,7 +440,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           </Text>
         </React.Fragment>
       );
-    };
 
     const defaultColor = isValidatingTask
       ? customVariables.contentPrimaryBackground

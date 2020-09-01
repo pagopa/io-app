@@ -131,9 +131,7 @@ export const activationProgress: NetworkingResults = {
   expectedActions: completeBonusDefaultActions
 };
 
-export const networkingActivationResultActions: ReadonlyArray<
-  NetworkingResults
-> = [
+export const networkingActivationResultActions: ReadonlyArray<NetworkingResults> = [
   activationSuccess,
   activationTimeout,
   activationExists,

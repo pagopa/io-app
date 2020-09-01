@@ -101,17 +101,12 @@ class SelectLogoutOption extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => {
-  return {
+const mapStateToProps = (state: GlobalState) => ({
     isLogoutInProgress: isLogoutRequested(state)
-  };
-};
+  });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logout: (logoutOption: LogoutOption) => dispatch(logoutRequest(logoutOption))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SelectLogoutOption);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectLogoutOption);

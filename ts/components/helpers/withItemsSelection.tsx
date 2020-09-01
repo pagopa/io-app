@@ -35,7 +35,7 @@ export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
       const { selectedItemIds } = this.state;
       return (
         <WrappedComponent
-          {...this.props as P}
+          {...(this.props as P)}
           selectedItemIds={selectedItemIds}
           toggleItemSelection={this.toggleItemSelection}
           resetSelection={this.resetSelection}
@@ -46,22 +46,26 @@ export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
 
     // A function to add/remove an id from the selectedItemIds Set.
     private toggleItemSelection = (id: string) => {
-      this.setState(({ selectedItemIds }) => {
-        return selectedItemIds
+      this.setState(({ selectedItemIds }) =>
+        selectedItemIds
           .map(_ => {
             const newSelectedItemIds = new Set(_);
-            newSelectedItemIds.has(id)
-              ? newSelectedItemIds.delete(id)
-              : newSelectedItemIds.add(id);
+            if (newSelectedItemIds.has(id)) {
+              newSelectedItemIds.delete(id);
+            } else {
+              newSelectedItemIds.add(id);
+            }
 
             return {
               selectedItemIds: some(newSelectedItemIds)
             };
           })
           .getOrElse({
-            selectedItemIds: some(new Set<string>([id]))
-          });
-      });
+            selectedItemIds: some(
+              new Set<string>([id])
+            )
+          })
+      );
     };
 
     private setSelectedItemIds = (newSelectedItemIds: Option<Set<string>>) => {

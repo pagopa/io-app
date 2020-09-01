@@ -120,11 +120,9 @@ div.custom-block.io-demo-block .custom-block-body::after {
 </style>
 `;
 
-const generateInlineCss = (cssStyle: string) => {
-  return `<style>
+const generateInlineCss = (cssStyle: string) => `<style>
   ${cssStyle}
   </style>`;
-};
 
 const generateCustomFontList = `<style>
     ol {
@@ -163,8 +161,7 @@ const generateHtml = (
   cssStyle?: string,
   useCustomSortedList: boolean = false,
   avoidTextSelection: boolean = false
-) => {
-  return `
+) => `
   <!DOCTYPE html>
   <html>
     <head>
@@ -179,7 +176,6 @@ const generateHtml = (
     </body>
   </html>
   `;
-};
 
 /**
  * Covert the old demo markdown tag with the new one.
@@ -406,7 +402,7 @@ class Markdown extends React.PureComponent<Props, State> {
     useCustomSortedList: boolean = false,
     avoidTextSelection: boolean = false
   ) => {
-    InteractionManager.runAfterInteractions(() => {
+    void InteractionManager.runAfterInteractions(() => {
       if (animated) {
         // Animate the layout change
         // See https://facebook.github.io/react-native/docs/layoutanimation.html
@@ -421,6 +417,8 @@ class Markdown extends React.PureComponent<Props, State> {
           filterXSS(markdown, { stripIgnoreTagBody: ["script"] })
         ),
         (error: any, file: any) => {
+          // for retro compatibility
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           error
             ? fromNullable(onError).map(_ => _(error))
             : this.setState({

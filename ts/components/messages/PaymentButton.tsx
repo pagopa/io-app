@@ -177,7 +177,4 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => ({
   navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PaymentButton);
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentButton);

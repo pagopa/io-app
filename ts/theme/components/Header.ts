@@ -5,6 +5,7 @@ import { Theme } from "../types";
 import variables from "../variables";
 
 declare module "native-base" {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NativeBase {
     interface Header {
       primary?: boolean;
@@ -13,8 +14,7 @@ declare module "native-base" {
   }
 }
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     "NativeBase.Left": {
       "NativeBase.Button": {
         "UIComponent.IconFont": {
@@ -140,5 +140,4 @@ export default (): Theme => {
     flexDirection: "row",
     /* Android */
     elevation: 0
-  };
-};
+  });

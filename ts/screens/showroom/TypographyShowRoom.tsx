@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const TypographyShowroom = () => {
-  return (
+export const TypographyShowroom = () => (
     <ShowroomSection title={"Typography"}>
       <H1Row />
       <H2Row />
@@ -42,7 +41,6 @@ export const TypographyShowroom = () => {
       <View spacer={true} extralarge={true} />
     </ShowroomSection>
   );
-};
 
 export const H1Row = () => (
   <>
@@ -93,7 +91,7 @@ export const H3Row = () => (
 export const H4Row = () => (
   <>
     <View style={styles.row}>
-      {/*Bold*/}
+      {/* Bold */}
       <H4>Header H4 Bold</H4>
       <View hspacer={true} />
       <H4 color={"blue"}>Header H4 Bold</H4>
@@ -104,7 +102,7 @@ export const H4Row = () => (
     </View>
     <View spacer={true} />
     <View style={styles.row}>
-      {/*SemiBold*/}
+      {/* SemiBold */}
       <View style={{ backgroundColor: IOColors.bluegrey }}>
         <H4 color={"white"} weight={"SemiBold"}>
           Header H4 SemiBold
@@ -113,7 +111,7 @@ export const H4Row = () => (
     </View>
     <View spacer={true} />
     <View style={styles.row}>
-      {/*Regular*/}
+      {/* Regular */}
       <H4 weight={"Regular"} color={"bluegreyDark"}>
         Header H4
       </H4>

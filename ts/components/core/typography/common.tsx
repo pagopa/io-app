@@ -4,7 +4,7 @@ import { RequiredAll } from "../../../types/utils";
 import { IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
 
-/***
+/**
  * A default function used to calculate the weight and color with some fallback values if not specified.
  * @param defaultWeight the default weight value to use if weight is not defined
  * @param defaultColor the default color value to use if color is not defined

@@ -22,14 +22,12 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @param props
  * @constructor
  */
-const ActivateBonusRequestScreen: React.FunctionComponent<Props> = props => {
-  return (
+const ActivateBonusRequestScreen: React.FunctionComponent<Props> = props => (
     <ActivateBonusRequestComponent
       {...props}
       onRequestBonus={props.onActivateBonus}
     />
   );
-};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () =>

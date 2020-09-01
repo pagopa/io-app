@@ -5,7 +5,7 @@ import { profileLoadSuccess } from "../store/actions/profile";
 import { profileEmailValidationChanged } from "../store/actions/profileEmailValidationChange";
 import { isTestEnv } from "../utils/environment";
 
-// tslint:disable-next-line:no-let
+// eslint-disable-next-line
 let maybePreviousEmailValidated: Option<boolean> = none;
 
 /**
@@ -23,9 +23,7 @@ export function* watchProfileEmailValidationChangedSaga(
 export const isProfileEmailValidatedChanged = (
   previous: Option<boolean>,
   next: Option<boolean>
-): boolean => {
-  return previous.chain(p => next.map(n => n !== p)).getOrElse(false);
-};
+): boolean => previous.chain(p => next.map(n => n !== p)).getOrElse(false);
 
 function* checkProfileEmailChanged(
   action: ActionType<typeof profileLoadSuccess>

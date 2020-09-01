@@ -260,8 +260,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default withLightModalContext(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(BonusInformationScreen)
+  connect(mapStateToProps, mapDispatchToProps)(BonusInformationScreen)
 );

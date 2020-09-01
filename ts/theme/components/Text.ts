@@ -1,13 +1,13 @@
+import { Platform, TextProperties } from "react-native";
 import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
-
-import { Platform, TextProperties } from "react-native";
 
 /**
  * @deprecated
  */
 declare module "native-base" {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NativeBase {
     /**
      * @deprecated
@@ -32,8 +32,7 @@ declare module "native-base" {
   }
 }
 
-export default (): Theme => {
-  return {
+export default (): Theme => ({
     ".xsmall": {
       fontSize: variables.fontSizeXSmall,
       lineHeight: variables.lineHeightXSmall,
@@ -103,5 +102,4 @@ export default (): Theme => {
     },
     lineHeight: variables.lineHeightBase,
     fontSize: variables.fontSizeBase
-  };
-};
+  });

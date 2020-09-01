@@ -86,6 +86,7 @@ const profilePolling = 5000 as Millisecond; // 5 seconds
 const EMPTY_EMAIL = "";
 const MARKDOWN_BODY_STYLE = "body { text-align: center;}";
 const VALIDATION_ICON_WIDTH = 84;
+const emailCtaKey = "email.validate.cta";
 
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   private idTimeout?: number;
@@ -94,7 +95,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+      ctaSendEmailValidationText: I18n.t(emailCtaKey),
       isLoading: false,
       isContentLoadCompleted: false,
       isCtaSentEmailValidationDisabled: false,
@@ -111,7 +112,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleHardwareBack);
     // Periodically check if the user validate his own email address
-    // tslint:disable-next-line: no-object-mutation
+    // eslint-disable-next-line
     this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
     this.props.reloadProfile();
     // since we are here, set the user doesn't acknowledge about the email validation
@@ -162,7 +163,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       // and we got an error
       if (pot.isError(this.props.emailValidationRequest)) {
         this.setState({
-          ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+          ctaSendEmailValidationText: I18n.t(emailCtaKey),
           isLoading: false,
           isCtaSentEmailValidationDisabled: false
         });
@@ -173,12 +174,12 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         // schedule a timeout to make the cta button disabled and showing inside
         // the string that email has been sent.
         // after timeout we restore the default state
-        // tslint:disable-next-line: no-object-mutation
+        // eslint-disable-next-line
         this.idTimeout = setTimeout(() => {
-          // tslint:disable-next-line: no-object-mutation
+          // eslint-disable-next-line
           this.idTimeout = undefined;
           this.setState({
-            ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+            ctaSendEmailValidationText: I18n.t(emailCtaKey),
             isCtaSentEmailValidationDisabled: false
           });
         }, emailSentTimeout);

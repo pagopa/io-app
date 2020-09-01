@@ -14,6 +14,8 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { NotificationChannelEnum } from "../../../definitions/backend/NotificationChannel";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import iOSStoreBadge from "../../../img/badges/app-store-badge.png";
+import playStoreBadge from "../../../img/badges/google-play-badge.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import OrganizationHeader from "../../components/OrganizationHeader";
 import BaseScreenComponent, {
@@ -36,8 +38,10 @@ import {
 } from "../../store/reducers/content";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { servicesSelector } from "../../store/reducers/entities/services";
-import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
-import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
+import {
+  isCustomEmailChannelEnabledSelector,
+  wasServiceAlertDisplayedOnceSelector
+} from "../../store/reducers/persistedPreferences";
 import {
   isEmailEnabledSelector,
   isInboxEnabledSelector,
@@ -269,10 +273,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   private service = this.props.navigation.getParam("service");
 
   // finds out which channels are enabled in the user profile
-  private profileEnabledChannels = getEnabledChannelsForService(
-    this.props.profile,
-    this.serviceId
-  );
+  private profileEnabledChannels = () =>
+    getEnabledChannelsForService(this.props.profile, this.serviceId);
 
   // whether last attempt to save the preferences failed
   private profileVersion = pot
@@ -360,13 +362,13 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 renderInformationImageRow(
                   I18n.t("services.otherAppIos"),
                   metadata.app_ios,
-                  require("../../../img/badges/app-store-badge.png")
+                  iOSStoreBadge
                 )}
               {metadata.app_android &&
                 renderInformationImageRow(
                   I18n.t("services.otherAppAndroid"),
                   metadata.app_android,
-                  require("../../../img/badges/google-play-badge.png")
+                  playStoreBadge
                 )}
             </View>
           )}
@@ -446,16 +448,18 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   private getInboxSwitchRow = () => {
     const isDisabled =
       // the preference can be updated if
-      // natifications are globally disabled or
+      // notifications are globally disabled or
       !this.props.isInboxEnabled ||
       // profile is updating
       pot.isUpdating(this.props.profile);
 
     const isSwitchedOn =
-      // inbox is globally disabled or
+      // inbox is globally enabled and
       this.props.isInboxEnabled &&
-      // inbox is disabled for the given service
-      this.state.uiEnabledChannels.inbox;
+      // inbox is enabled for the given service
+      this.state.uiEnabledChannels.inbox &&
+      // inbox is enabled for the profile
+      this.profileEnabledChannels().inbox;
 
     const onValueChange = (value: boolean) => {
       if (!value && !this.props.wasServiceAlertDisplayedOnce) {
@@ -476,7 +480,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           bold={true}
           style={isSwitchedOn ? styles.enabledColor : styles.disabledColor}
         >
-          {this.profileEnabledChannels.inbox
+          {isSwitchedOn
             ? I18n.t("services.serviceIsEnabled")
             : I18n.t("services.serviceNotEnabled")}
         </Text>
@@ -490,13 +494,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     );
   };
 
-  private hasChannel = (channel: NotificationChannelEnum) => {
-    return fromNullable(this.service.available_notification_channels)
-      .map(anc => {
-        return anc.indexOf(channel) !== -1;
-      })
+  private hasChannel = (channel: NotificationChannelEnum) => fromNullable(this.service.available_notification_channels)
+      .map(anc => anc.indexOf(channel) !== -1)
       .getOrElse(true);
-  };
 
   private getPushSwitchRow = () => {
     if (!this.hasChannel(NotificationChannelEnum.WEBHOOK)) {

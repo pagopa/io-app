@@ -8,14 +8,12 @@ type Props = Readonly<{
   navigateToWalletList: () => void;
 }>;
 
-const CardsFan: React.SFC<Props> = props => {
-  return (
+const CardsFan: React.SFC<Props> = props => (
     <RotatedCards
       cardType="Preview"
       wallets={props.wallets}
       onClick={props.navigateToWalletList}
     />
   );
-};
 
 export default CardsFan;

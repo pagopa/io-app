@@ -29,7 +29,7 @@ const generateSections = (
     pot.map(
       potMessagesState,
       _ =>
-        // tslint:disable-next-line:readonly-array
+        // eslint-disable-next-line
         _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
           const { message, isArchived, isRead } = messageState;
           if (
@@ -62,7 +62,7 @@ const generateSections = (
           //    add the message to the last section
           .reduce<{
             lastTitle: Option<string>;
-            // tslint:disable-next-line:readonly-array
+            // eslint-disable-next-line
             sections: MessageAgendaSection[];
           }>(
             (accumulator, messageAgendaItem) => {
@@ -88,6 +88,7 @@ const generateSections = (
                 // We need to add the message to the last section.
                 // We are sure that pop will return at least one element because
                 // of the previous `if` step.
+                // eslint-disable-next-line functional/immutable-data
                 const prevSection = accumulator.sections.pop() as MessageAgendaSection;
                 const newSection = {
                   title,
@@ -239,7 +240,7 @@ describe("last id check", () => {
     }
   });
 
-  it("should return none", () => {
+  it("getLastDeadlineId should return none", () => {
     const lastDeadlineId = getLastDeadlineId([]);
     expect(lastDeadlineId.isNone()).toBeTruthy();
   });

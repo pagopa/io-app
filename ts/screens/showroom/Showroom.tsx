@@ -27,7 +27,7 @@ export const Showroom = () => {
 
   useEffect(() => {
     if (ref.current !== null) {
-      // tslint:disable-next-line:no-commented-code
+      // eslint-disable-next-line
       // RTron.log(JSON.stringify(ref.current.props.style));
     }
   }, []);

@@ -13,7 +13,7 @@ import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const image = require("../../../../../img/wallet/errors/payment-unknown-icon.png");
+import image from "../../../../../img/wallet/errors/payment-unknown-icon.png";
 
 /**
  * This screen informs the user that only citizens of legal age can apply for the bonus.
@@ -47,7 +47,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(cancelBonusVacanzeRequest())
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(UnderageScreen);
+export default connect(null, mapDispatchToProps)(UnderageScreen);

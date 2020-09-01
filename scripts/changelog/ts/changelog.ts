@@ -119,9 +119,7 @@ export const getStoryChangelogScope = (
   if (maybeChangelogScopeTag.length > 1) {
     return left(
       new Error(
-        `Multiple labels match the expression \`${regex}\` for the story [#${
-          story.id
-        }].\n
+        `Multiple labels match the expression \`${regex}\` for the story [#${story.id}].\n
        It is not possible to assign a single scope to this pull request!`
       )
     );
@@ -130,11 +128,7 @@ export const getStoryChangelogScope = (
   if (maybeProjectScope.isSome() && maybeChangelogScopeTag.length >= 1) {
     return left(
       new Error(
-        `The story [#${story.id}] have the project_id ${
-          story.project_id
-        } associated with the scope ${
-          maybeProjectScope.value
-        } but also have labels matching the expression \`${regex}\`.\n
+        `The story [#${story.id}] have the project_id ${story.project_id} associated with the scope ${maybeProjectScope.value} but also have labels matching the expression \`${regex}\`.\n
         It is not possible to assign a single scope to this pull request!`
       )
     );
@@ -180,9 +174,10 @@ export const getChangelogScope = (
   // if there is some error, forward the errors
   if (eitherChangelogScopes.some(scope => scope.isLeft())) {
     return left(
-      eitherChangelogScopes.reduce<ReadonlyArray<Error>>((acc, val) => {
-        return val.isLeft() ? [...acc, val.value] : acc;
-      }, [])
+      eitherChangelogScopes.reduce<ReadonlyArray<Error>>(
+        (acc, val) => (val.isLeft() ? [...acc, val.value] : acc),
+        []
+      )
     );
   }
   const scopesList = eitherChangelogScopes

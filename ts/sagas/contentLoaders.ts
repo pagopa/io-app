@@ -171,9 +171,7 @@ function* watchContentMunicipalityLoadSaga(
 ): SagaIterator {
   const codiceCatastale = action.payload;
   try {
-    const response: SagaCallReturnType<
-      typeof fetchMunicipalityMetadata
-    > = yield call(
+    const response: SagaCallReturnType<typeof fetchMunicipalityMetadata> = yield call(
       fetchMunicipalityMetadata,
       contentClient.getMunicipality,
       codiceCatastale
@@ -204,9 +202,9 @@ function* watchContentMunicipalityLoadSaga(
  */
 function* watchLoadContextualHelp(): SagaIterator {
   try {
-    const response: SagaCallReturnType<
-      typeof getContextualHelpData
-    > = yield call(getContextualHelpData);
+    const response: SagaCallReturnType<typeof getContextualHelpData> = yield call(
+      getContextualHelpData
+    );
     if (response.isRight()) {
       if (response.value.status === 200) {
         yield put(loadContextualHelpData.success(response.value.value));

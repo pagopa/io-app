@@ -43,14 +43,11 @@ describe("checkProfileEnabledSaga", () => {
     version: 1 as NonNegativeInteger
   };
 
-  it("should do nothing if profile is enabled", () => {
-    return expectSaga(checkProfileEnabledSaga, updatedProfile)
+  it("should do nothing if profile is enabled", () => expectSaga(checkProfileEnabledSaga, updatedProfile)
       .not.put.like({ action: { type: getType(profileUpsert.request) } })
-      .run();
-  });
+      .run());
 
-  it("should create the API profile when the API profile does not exist", () => {
-    return expectSaga(checkProfileEnabledSaga, {
+  it("should create the API profile when the API profile does not exist", () => expectSaga(checkProfileEnabledSaga, {
       ...profile,
       is_inbox_enabled: false,
       is_webhook_enabled: false,
@@ -59,44 +56,36 @@ describe("checkProfileEnabledSaga", () => {
       .put(upsertAction)
       .not.put(startApplicationInitialization())
       .dispatch(profileUpsert.success(updatedProfile))
-      .run();
-  });
+      .run());
 
-  it("should update the profile when the inbox is not enabled", () => {
-    return expectSaga(checkProfileEnabledSaga, {
+  it("should update the profile when the inbox is not enabled", () => expectSaga(checkProfileEnabledSaga, {
       ...profile,
       is_inbox_enabled: false
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
       .dispatch(profileUpsert.success(updatedProfile))
-      .run();
-  });
+      .run());
 
-  it("should update the profile when the webhook is not enabled", () => {
-    return expectSaga(checkProfileEnabledSaga, {
+  it("should update the profile when the webhook is not enabled", () => expectSaga(checkProfileEnabledSaga, {
       ...profile,
       is_webhook_enabled: false
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
       .dispatch(profileUpsert.success(updatedProfile))
-      .run();
-  });
+      .run());
 
-  it("should update the profile when the email is not set", () => {
-    return expectSaga(checkProfileEnabledSaga, {
+  it("should update the profile when the email is not set", () => expectSaga(checkProfileEnabledSaga, {
       ...profile,
       email: undefined
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
       .dispatch(profileUpsert.success(updatedProfile))
-      .run();
-  });
+      .run());
 
-  it("should restart the app if the profile update fails", () => {
-    return expectSaga(checkProfileEnabledSaga, {
+  it("should restart the app if the profile update fails", () => expectSaga(checkProfileEnabledSaga, {
       ...profile,
       is_inbox_enabled: false,
       is_webhook_enabled: false,
@@ -105,6 +94,5 @@ describe("checkProfileEnabledSaga", () => {
       .put(upsertAction)
       .put(startApplicationInitialization())
       .dispatch(profileUpsert.failure(Error()))
-      .run();
-  });
+      .run());
 });

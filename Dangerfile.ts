@@ -4,16 +4,15 @@ import { warn } from "danger";
 // See https://github.com/teamdigitale/danger-plugin-digitalcitizenship/
 import checkDangers from "danger-plugin-digitalcitizenship";
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
-import { none } from "fp-ts/lib/Option";
+import {fromNullable, none} from "fp-ts/lib/Option";
 import {
   allStoriesSameType,
   getChangelogPrefixByStories,
   getChangelogScope,
-  getPivotalStoriesFromPrTitle,
-  getRawTitle
+  getPivotalStoriesFromPrTitle
 } from "./scripts/changelog/ts/changelog";
 
-declare var danger: DangerDSLType;
+declare const danger: DangerDSLType;
 
 const multipleTypesWarning =
   "Multiple stories with different types are associated with this Pull request.\n" +
@@ -41,19 +40,22 @@ const updatePrTitleForChangelog = async () => {
     .map(s => `(${s})`)
     .getOrElse("");
 
-  const rawTitle = getRawTitle(danger.github.pr.title);
+  const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
+  const title = fromNullable(danger.github.pr.title.match(cleanChangelogRegex))
+    .map(matches => matches.pop() || danger.github.pr.title)
+    .getOrElse(danger.github.pr.title);
 
   maybePrTag.map(tag =>
     danger.github.api.pulls.update({
       owner: danger.github.thisPR.owner,
       repo: danger.github.thisPR.repo,
       pull_number: danger.github.thisPR.number,
-      title: `${tag}${scope}: ${rawTitle}`
+      title: `${tag}${scope}: ${title}`
     })
   );
 };
 
 checkDangers();
-updatePrTitleForChangelog()
+void updatePrTitleForChangelog()
   .then()
   .catch();

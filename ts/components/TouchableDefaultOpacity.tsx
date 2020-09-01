@@ -9,8 +9,7 @@ const defaultActiveOpacity = 1.0;
  */
 const TouchableDefaultOpacity = (
   props: TouchableOpacityProps & React.Props<TouchableOpacity>
-) => {
-  return (
+) => (
     <TouchableOpacity
       {...{
         ...props,
@@ -20,6 +19,5 @@ const TouchableDefaultOpacity = (
       {props.children}
     </TouchableOpacity>
   );
-};
 
 export default TouchableDefaultOpacity;

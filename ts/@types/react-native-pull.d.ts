@@ -9,6 +9,7 @@
  *
  *
  */
+// eslint-disable-next-line max-classes-per-file
 declare module "react-native-pull" {
   import * as React from "react";
   import {

@@ -198,12 +198,13 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
     this.props.loadWallets();
     this.props.loadTransactions(this.props.transactionsLoadedLength);
+    // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "light-content",
         customVariables.brandDarkGray
       );
-    }); // tslint:disable-line no-object-mutation
+    }); // eslint-disable-line
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
@@ -460,8 +461,8 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
       : pot.isError(potWallets)
-        ? this.errorWalletsHeader()
-        : this.cardPreview(wallets);
+      ? this.errorWalletsHeader()
+      : this.cardPreview(wallets);
 
     const transactionContent = pot.isError(potTransactions)
       ? this.transactionError()

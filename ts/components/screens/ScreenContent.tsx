@@ -22,6 +22,7 @@ class ScreenContent extends React.PureComponent<Props> {
   private content = React.createRef<any>();
   private scrollTop = () => {
     if (this.content.current) {
+      // eslint-disable-next-line no-underscore-dangle
       this.content.current._root.scrollToPosition(0, 0, false);
     }
   };

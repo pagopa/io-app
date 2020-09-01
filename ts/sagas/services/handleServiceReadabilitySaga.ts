@@ -10,9 +10,9 @@ import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers
  * @param serviceId
  */
 export function* handleServiceReadabilitySaga(serviceId: string): SagaIterator {
-  const isFirstVisibleServiceLoadCompleted: ReturnType<
-    typeof isFirstVisibleServiceLoadCompletedSelector
-  > = yield select(isFirstVisibleServiceLoadCompletedSelector);
+  const isFirstVisibleServiceLoadCompleted: ReturnType<typeof isFirstVisibleServiceLoadCompletedSelector> = yield select(
+    isFirstVisibleServiceLoadCompletedSelector
+  );
 
   if (!isFirstVisibleServiceLoadCompleted) {
     yield put(markServiceAsRead(serviceId as ServiceId));

@@ -69,9 +69,7 @@ const getRow = (
  * @param props
  * @constructor
  */
-export const BonusCompositionDetails: React.FunctionComponent<
-  Props
-> = props => {
+export const BonusCompositionDetails: React.FunctionComponent<Props> = props => {
   const amountTitle = I18n.t("bonus.bonusVacanze.composition.amount");
   const expendableText = I18n.t("bonus.bonusVacanze.composition.expendable");
   const taxBenefitText = I18n.t("bonus.bonusVacanze.composition.taxBenefit");

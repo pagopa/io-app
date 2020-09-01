@@ -12,7 +12,7 @@ import { deletePin } from "../../utils/keychain";
  * Handles the expiration of the session while the user is using the app.
  */
 export function* watchSessionExpiredSaga(): IterableIterator<Effect> {
-  yield takeLatest(getType(sessionExpired), function*() {
+  yield takeLatest(getType(sessionExpired), function* () {
     const isSessionOpened = yield select(isLoggedInWithSessionInfo);
 
     yield call(deletePin);

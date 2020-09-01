@@ -15,16 +15,13 @@ type Props = ReturnType<typeof mapStateToProps>;
  * @constructor
  */
 const FlagSecureComponent: React.FunctionComponent<Props> = props => {
-  useEffect(
-    () => {
-      if (props.isAllowedSnapshotCurrentScreen) {
-        FlagSecure.deactivate();
-      } else {
-        FlagSecure.activate();
-      }
-    },
-    [props.isAllowedSnapshotCurrentScreen]
-  );
+  useEffect(() => {
+    if (props.isAllowedSnapshotCurrentScreen) {
+      FlagSecure.deactivate();
+    } else {
+      FlagSecure.activate();
+    }
+  }, [props.isAllowedSnapshotCurrentScreen]);
   return null;
 };
 

@@ -180,8 +180,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
 
   private canBeBadgeRendered = (
     choice: UserDataProcessingChoiceEnum
-  ): boolean => {
-    return (
+  ): boolean => (
       !pot.isError(this.props.userDataProcessing[choice]) &&
       pot.getOrElse(
         pot.map(
@@ -194,7 +193,6 @@ class PrivacyMainScreen extends React.Component<Props, State> {
         false
       )
     );
-  };
 
   public render() {
     const ContentComponent = withLoadingSpinner(() => (
@@ -210,7 +208,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
           bounces={false}
         >
           <List withContentLateralPadding={true}>
-            {/* Privacy Policy*/}
+            {/* Privacy Policy */}
             <ListItemComponent
               title={I18n.t("profile.main.privacy.privacyPolicy.title")}
               subTitle={I18n.t(
@@ -305,7 +303,4 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PrivacyMainScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PrivacyMainScreen);

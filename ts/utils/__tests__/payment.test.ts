@@ -1,4 +1,4 @@
-// tslint:disable:no-useless-cast
+/* eslint-disable */
 
 import { isSome, none, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
@@ -73,6 +73,14 @@ describe("cleanTransactionDescription", () => {
       ],
       [
         "RFA/0123456789012/666.98/TXT/ actual description",
+        "actual description"
+      ],
+      [
+        "RFS/0123456789012/666.98/TXT/ actual description",
+        "actual description"
+      ],
+      [
+        "/RFS/0123456789012/666.98/TXT/ actual description",
         "actual description"
       ],
       ["actual description", "actual description"]

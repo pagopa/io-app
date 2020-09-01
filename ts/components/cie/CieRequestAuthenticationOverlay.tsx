@@ -103,8 +103,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     return true;
   };
 
-  private renderError = () => {
-    return (
+  private renderError = () => (
       <GenericErrorComponent
         avoidNavigationEvents={true}
         onRetry={this.handleOnRetry}
@@ -113,7 +112,6 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
         text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
       />
     );
-  };
 
   // Updating the webView key its content is refreshed
   private handleOnRetry = () => {

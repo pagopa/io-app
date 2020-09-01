@@ -62,21 +62,17 @@ const migrations: MigrationManifest = {
 
   // Version 2
   // Adds messagesIdsByServiceId
-  "2": (state: PersistedState) => {
-    return addMessagesIdsByServiceId(state as PersistedGlobalState);
-  },
+  "2": (state: PersistedState) => addMessagesIdsByServiceId(state as PersistedGlobalState),
 
   // Version 3
   // we changed the entities of organizations
   "3": (state: PersistedState) => {
     const entitiesState = (state as any).entities;
     const orgNameByFiscalCode = entitiesState.organizations;
-    const allOrganizations = Object.keys(orgNameByFiscalCode).map(key => {
-      return {
+    const allOrganizations = Object.keys(orgNameByFiscalCode).map(key => ({
         fiscalCode: key,
         name: orgNameByFiscalCode[key]
-      };
-    });
+      }));
 
     return {
       ...state,
@@ -92,8 +88,7 @@ const migrations: MigrationManifest = {
 
   // Version 4
   // we added a state to monitor what pagoPA environment is selected
-  "4": (state: PersistedState) => {
-    return (state as PersistedGlobalState).persistedPreferences
+  "4": (state: PersistedState) => (state as PersistedGlobalState).persistedPreferences
       .isPagoPATestEnabled === undefined
       ? {
           ...state,
@@ -104,8 +99,7 @@ const migrations: MigrationManifest = {
         }
       : {
           ...state
-        };
-  },
+        },
 
   // Version 5
   // we changed the way ToS acceptance is managed
@@ -138,8 +132,7 @@ const migrations: MigrationManifest = {
 
   // Version 7
   // we empty the services list to get both services list and services metadata being reloaded and persisted
-  "7": (state: PersistedState) => {
-    return {
+  "7": (state: PersistedState) => ({
       ...state,
       entities: {
         ...(state as PersistedGlobalState).entities,
@@ -148,14 +141,12 @@ const migrations: MigrationManifest = {
           byId: {}
         }
       }
-    };
-  },
+    }),
 
   // Version 8
   // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
   // they will be stored only when a service details screen is displayed
-  "8": (state: PersistedState) => {
-    return {
+  "8": (state: PersistedState) => ({
       ...state,
       content: {
         ...(state as PersistedGlobalState).content,
@@ -164,66 +155,55 @@ const migrations: MigrationManifest = {
           byId: {}
         }
       }
-    };
-  },
+    }),
 
   // Version 9
   // we fix a bug on the version 8 of the migration implying a no proper creation of the content segment of store
   // (the servicesByScope state was not properly initialized)
-  "9": (state: PersistedState) => {
-    return {
+  "9": (state: PersistedState) => ({
       ...state,
       content: {
         ...(state as PersistedGlobalState).content,
         servicesByScope: pot.none
       }
-    };
-  },
+    }),
   // Version 10
   // since entities.messages are not persisted anymore, empty the related store section
-  "10": (state: PersistedState) => {
-    return {
+  "10": (state: PersistedState) => ({
       ...state,
       entities: {
         ...(state as PersistedGlobalState).entities,
         messages: {}
       }
-    };
-  },
+    }),
 
   // Version 11
   // add the default state for isCustomEmailChannelEnabled
-  "11": (state: PersistedState) => {
-    return {
+  "11": (state: PersistedState) => ({
       ...state,
       persistedPreferences: {
         ...(state as PersistedGlobalState).persistedPreferences,
         isCustomEmailChannelEnabled: pot.none
       }
-    };
-  },
+    }),
   // Version 12
   // change default state of isDebugModeEnabled: false
-  "12": (state: PersistedState) => {
-    return {
+  "12": (state: PersistedState) => ({
       ...state,
       debug: {
         isDebugModeEnabled: false
       }
-    };
-  },
+    }),
   // Version 13
   // add content.idpTextData
   // set default value
-  "13": (state: PersistedState) => {
-    return {
+  "13": (state: PersistedState) => ({
       ...state,
       content: {
         ...(state as PersistedGlobalState).content,
         idpTextData: pot.none
       }
-    };
-  },
+    }),
   // Version 14
   // remove content.idpTextData
   // add context.contextualHelp
@@ -313,6 +293,7 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
    */
 
   const composeEnhancers =
+    // eslint-disable-next-line no-underscore-dangle
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const middlewares = applyMiddleware(
     sagaMiddleware,
@@ -329,14 +310,16 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
       ? composeEnhancers(middlewares, RTron.createEnhancer())
       : composeEnhancers(middlewares);
 
-  const store: Store = createStore<PersistedGlobalState, Action, {}, {}>(
-    persistedReducer,
-    enhancer
-  );
+  const store: Store = createStore<
+    PersistedGlobalState,
+    Action,
+    Record<string, unknown>,
+    Record<string, unknown>
+  >(persistedReducer, enhancer);
   const persistor = persistStore(store);
 
   if (isDebuggingInChrome) {
-    // tslint:disable-next-line:no-object-mutation
+    // eslint-disable-next-line
     (window as any).store = store;
   }
 

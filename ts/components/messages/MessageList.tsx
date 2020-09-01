@@ -119,9 +119,9 @@ const getItemHeight = (messageState: MessageState): number => {
 };
 
 const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
-  // tslint:disable-next-line: no-let
+  // eslint-disable-next-line
   let offset = 0;
-  // tslint:disable-next-line: readonly-array
+  // eslint-disable-next-line
   const itemLayouts: ItemLayout[] = [];
 
   messageStates.forEach((messageState, index) => {
@@ -132,6 +132,7 @@ const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
         ? itemHeight
         : itemHeight + ITEM_SEPARATOR_HEIGHT;
 
+    // eslint-disable-next-line functional/immutable-data
     itemLayouts.push({
       length: itemHeightWithSeparator,
       offset,
@@ -252,9 +253,7 @@ class MessageList extends React.Component<Props, State> {
     const payment =
       message.content.payment_data !== undefined && service !== undefined
         ? paymentsByRptId[
-            `${service.organization_fiscal_code}${
-              message.content.payment_data.notice_number
-            }`
+            `${service.organization_fiscal_code}${message.content.payment_data.notice_number}`
           ]
         : undefined;
 
@@ -277,9 +276,7 @@ class MessageList extends React.Component<Props, State> {
   private getItemLayout = (
     _: ReadonlyArray<MessageState> | null,
     index: number
-  ) => {
-    return this.state.itemLayouts[index];
-  };
+  ) => this.state.itemLayouts[index];
 
   private onLongPress = (id: string) => {
     Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
@@ -333,13 +330,12 @@ class MessageList extends React.Component<Props, State> {
           see https://stackoverflow.com/questions/50307314/react-native-flatlist-refreshing-not-showing-when-its-true-during-first-load
           see https://github.com/facebook/react-native/issues/15892
         */}
-        {refreshing &&
-          this.state.isFirstLoad && (
-            <ActivityIndicator
-              animating={true}
-              style={styles.activityIndicator}
-            />
-          )}
+        {refreshing && this.state.isFirstLoad && (
+          <ActivityIndicator
+            animating={true}
+            style={styles.activityIndicator}
+          />
+        )}
         <AnimatedFlatList
           ref={this.flatListRef}
           style={styles.padded}

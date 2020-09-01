@@ -107,7 +107,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
       <View style={styles.text3Line}>
         <View style={styles.text3Container}>
           <Text numberOfLines={2} style={styles.text3}>
-            {/*TODO replace this hardcoded string*/}
+            {/* TODO replace this hardcoded string */}
             {"Bonus Vacanze"}
           </Text>
         </View>

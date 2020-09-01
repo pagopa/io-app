@@ -90,9 +90,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 export default withValidatedPagoPaVersion(
   withValidatedEmail(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(PaymentsHistoryScreen)
+    connect(mapStateToProps, mapDispatchToProps)(PaymentsHistoryScreen)
   )
 );

@@ -99,18 +99,17 @@ class MessageListItem extends React.PureComponent<Props> {
           ...uiService
         })}
       >
-        {!hasPrescriptionData(message) &&
-          messageNeedsCTABar(message) && (
-            <React.Fragment>
-              <View spacer={true} large={true} />
-              <MessageListCTABar
-                message={message}
-                service={service}
-                payment={payment}
-                disabled={isSelectionModeEnabled}
-              />
-            </React.Fragment>
-          )}
+        {!hasPrescriptionData(message) && messageNeedsCTABar(message) && (
+          <React.Fragment>
+            <View spacer={true} large={true} />
+            <MessageListCTABar
+              message={message}
+              service={service}
+              payment={payment}
+              disabled={isSelectionModeEnabled}
+            />
+          </React.Fragment>
+        )}
       </DetailedlistItemComponent>
     );
   }

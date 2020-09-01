@@ -227,7 +227,7 @@ const screenShortInitialState: ScreenShotState = {
   isPrintable: false,
   screenShotUri: undefined
 };
-// tslint:disable-next-line: no-big-function
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
   const bonusFromNav = props.navigation.getParam("bonus");
@@ -256,52 +256,46 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     };
   }, []);
 
-  React.useEffect(
-    () => {
-      if (screenShotState.isPrintable) {
-        {
-          // start capture screenshot
-          captureScreenshot().map(capture => {
-            capture()
-              .then(screenShotUri => {
-                setScreenShotState(prev => ({ ...prev, screenShotUri }));
-              })
-              .catch(showToastGenericError);
-          });
-          return;
-        }
+  React.useEffect(() => {
+    if (screenShotState.isPrintable) {
+      {
+        // start capture screenshot
+        captureScreenshot().map(capture => {
+          capture()
+            .then(screenShotUri => {
+              setScreenShotState(prev => ({ ...prev, screenShotUri }));
+            })
+            .catch(showToastGenericError);
+        });
+        return;
       }
-    },
-    [screenShotState.isPrintable]
-  );
+    }
+  }, [screenShotState.isPrintable]);
 
-  React.useEffect(
-    () => {
-      // if the screenShotUri is defined start saving image and restore default style
-      // show a toast error if something goes wrong
-      if (screenShotState.screenShotUri) {
-        saveImageToGallery(`file://${screenShotState.screenShotUri}`)
-          .run()
-          .then(maybeSaved => {
-            maybeSaved.fold(
-              _ => {
-                showToastGenericError();
-              },
-              _ => {
-                Toast.show({
-                  text: I18n.t("bonus.bonusVacanze.saveScreenShotOk")
-                });
-              }
-            );
-          })
-          .catch(_ => {
-            showToastGenericError();
-          });
-        setScreenShotState(screenShortInitialState);
-      }
-    },
-    [screenShotState.screenShotUri]
-  );
+  React.useEffect(() => {
+    // if the screenShotUri is defined start saving image and restore default style
+    // show a toast error if something goes wrong
+    if (screenShotState.screenShotUri) {
+      saveImageToGallery(`file://${screenShotState.screenShotUri}`)
+        .run()
+        .then(maybeSaved => {
+          maybeSaved.fold(
+            _ => {
+              showToastGenericError();
+            },
+            _ => {
+              Toast.show({
+                text: I18n.t("bonus.bonusVacanze.saveScreenShotOk")
+              });
+            }
+          );
+        })
+        .catch(_ => {
+          showToastGenericError();
+        });
+      setScreenShotState(screenShortInitialState);
+    }
+  }, [screenShotState.screenShotUri]);
 
   // translate the bonus status. If no mapping found -> empty string
   const maybeStatusDescription = maybeNotNullyString(
@@ -320,7 +314,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     );
 
   // call this function to create a screenshot and save it into the device camera roll
-  // @ts-ignore
+  /*
   const saveScreenShot = () => {
     if (captureScreenshot().isSome()) {
       // change some style properties to avoid some UI element will be cut out of the image (absolute position and negative offsets)
@@ -330,9 +324,11 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         imageStyle: styles.imagePrintable,
         isPrintable: true
       }));
+      // eslint-disable-next-line sonarjs/no-redundant-jump
       return;
     }
   };
+   */
 
   const openModalBox = () => {
     const modalBox = (
@@ -583,21 +579,20 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                     )}
               </Text>
             </View>
-            {!screenShotState.isPrintable &&
-              maybeBonusTos.isSome() && (
-                <>
-                  <View spacer={true} />
-                  <ItemSeparatorComponent noPadded={true} />
-                  <View spacer={true} large={true} />
-                  <TouchableDefaultOpacity
-                    onPress={() => handleModalPress(maybeBonusTos.value)}
-                  >
-                    <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
-                      {I18n.t("bonus.tos.title")}
-                    </Text>
-                  </TouchableDefaultOpacity>
-                </>
-              )}
+            {!screenShotState.isPrintable && maybeBonusTos.isSome() && (
+              <>
+                <View spacer={true} />
+                <ItemSeparatorComponent noPadded={true} />
+                <View spacer={true} large={true} />
+                <TouchableDefaultOpacity
+                  onPress={() => handleModalPress(maybeBonusTos.value)}
+                >
+                  <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
+                    {I18n.t("bonus.tos.title")}
+                  </Text>
+                </TouchableDefaultOpacity>
+              </>
+            )}
             {/* add extra bottom space when capturing screenshot */}
             {screenShotState.isPrintable && (
               <>

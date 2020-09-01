@@ -56,9 +56,7 @@ class UpdateAppModal extends React.PureComponent<never, State> {
   }
   private idTimeout?: number;
   // No Event on back button android
-  private handleBackPress = () => {
-    return true;
-  };
+  private handleBackPress = () => true;
 
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
@@ -83,7 +81,7 @@ class UpdateAppModal extends React.PureComponent<never, State> {
         hasError: true
       });
       // After 5 seconds restore state
-      // tslint:disable-next-line: no-object-mutation
+      // eslint-disable-next-line
       this.idTimeout = setTimeout(() => {
         this.setState({
           hasError: false
