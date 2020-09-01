@@ -62,7 +62,10 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
+import { Label } from "../../../components/core/typography/Label";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { constNull } from "fp-ts/lib/function";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -227,6 +230,42 @@ const screenShortInitialState: ScreenShotState = {
   isPrintable: false,
   screenShotUri: undefined
 };
+
+type FooterButtonProp = {
+  label: string;
+  onPress: () => void;
+};
+
+type FooterProps = {
+  firstButton: FooterButtonProp;
+  secondButton: FooterButtonProp;
+  thirdButton: FooterButtonProp;
+};
+
+const FooterButton: React.FunctionComponent<FooterButtonProp> = (
+  props: FooterButtonProp
+) => (
+  <TouchableDefaultOpacity
+    onPress={props.onPress}
+    style={{ flex: 1, alignItems: "center" }}
+  >
+    <IconFont
+      name={"io-qr"}
+      style={{ color: IOColors.blue, marginBottom: 6, fontSize: 32 }}
+    />
+    <Label weight={"Regular"}>{props.label}</Label>
+  </TouchableDefaultOpacity>
+);
+const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
+  props: FooterProps
+) => (
+  <View style={{ flexDirection: "row" }}>
+    <FooterButton {...props.firstButton} />
+    <FooterButton {...props.secondButton} />
+    <FooterButton {...props.thirdButton} />
+  </View>
+);
+
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
@@ -314,7 +353,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     );
 
   // call this function to create a screenshot and save it into the device camera roll
-  /*
   const saveScreenShot = () => {
     if (captureScreenshot().isSome()) {
       // change some style properties to avoid some UI element will be cut out of the image (absolute position and negative offsets)
@@ -328,7 +366,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       return;
     }
   };
-   */
 
   const openModalBox = () => {
     const modalBox = (
@@ -359,6 +396,23 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     onPress: openModalBox
   };
 
+  const renderBonusActiveButtons2 = () => (
+    <ActiveBonusFooterButtons
+      firstButton={{
+        label: I18n.t("bonus.bonusVacanze.cta.qrCode"),
+        onPress: openModalBox
+      }}
+      secondButton={{
+        label: I18n.t("global.genericShare"),
+        onPress: handleShare
+      }}
+      thirdButton={{
+        label: I18n.t("global.genericSave"),
+        onPress: saveScreenShot
+      }}
+    />
+  );
+
   /**
    * If the share is not available on the device, render only the qr code button
    */
@@ -386,7 +440,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   const renderFooterButtons = () =>
     bonus && isBonusActive(bonus) ? (
-      renderBonusActiveButtons()
+      renderBonusActiveButtons2()
     ) : (
       <>
         <BlockButtons
