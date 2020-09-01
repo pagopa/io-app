@@ -1,6 +1,7 @@
 ---
 global:
   password: Password
+  username: Username
   accessibility:
     date_format: DD MMMM YYYY
     expanded: Paragrafo espanso

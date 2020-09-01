@@ -1,4 +1,4 @@
-import { FiscalCode } from 'italia-ts-commons/lib/strings';
+import { FiscalCode } from "italia-ts-commons/lib/strings";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-navigation";
@@ -14,7 +14,8 @@ import { Dispatch } from "../../store/actions/types";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const checkUsernameValid = (username: string): boolean => FiscalCode.decode(username).isRight();;
+const checkUsernameValid = (username: string): boolean =>
+  FiscalCode.decode(username).isRight();
 
 const TestAuthenticationScreen: React.FunctionComponent<Props> = (
   props: Props
@@ -26,10 +27,8 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
     block: true,
     primary: true,
     disabled: password.length === 0 || !checkUsernameValid(username),
-    onPress: () => {
-      const credentials = PasswordLogin.decode({ username, password });
-      credentials.map(props.requestLogin);
-    },
+    onPress: () =>
+      PasswordLogin.decode({ username, password }).map(props.requestLogin),
     title: I18n.t("global.buttons.confirm")
   };
 
@@ -39,12 +38,14 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
         <Content>
           <LabelledItem
             type={"text"}
-            label={I18n.t("profile.fiscalCode.fiscalCode")}
+            label={I18n.t("global.username")}
             icon="io-titolare"
-            isValid={checkUsernameValid(username)}
+            isValid={
+              username.length > 0 ? checkUsernameValid(username) : undefined
+            }
             inputProps={{
               value: username,
-              placeholder: I18n.t("profile.fiscalCode.fiscalCode"),
+              placeholder: I18n.t("global.username"),
               returnKeyType: "done",
               onChangeText: setUsername
             }}
@@ -56,7 +57,7 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
             type={"text"}
             label={I18n.t("global.password")}
             icon="io-lucchetto"
-            isValid={password.length > 0}
+            isValid={password.length > 0 ? true : undefined}
             inputProps={{
               value: password,
               placeholder: I18n.t("global.password"),
@@ -77,7 +78,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(testLoginRequest(passwordLogin))
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(TestAuthenticationScreen);
+export default connect(undefined, mapDispatchToProps)(TestAuthenticationScreen);
