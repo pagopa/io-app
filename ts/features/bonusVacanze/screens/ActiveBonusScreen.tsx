@@ -63,9 +63,8 @@ import {
   validityInterval
 } from "../utils/bonus";
 import { Label } from "../../../components/core/typography/Label";
-import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import { constNull } from "fp-ts/lib/function";
+import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -237,9 +236,9 @@ type FooterButtonProp = {
 };
 
 type FooterProps = {
-  firstButton: FooterButtonProp;
-  secondButton: FooterButtonProp;
-  thirdButton: FooterButtonProp;
+  firstButton?: FooterButtonProp;
+  secondButton?: FooterButtonProp;
+  thirdButton?: FooterButtonProp;
 };
 
 const FooterButton: React.FunctionComponent<FooterButtonProp> = (
@@ -260,9 +259,9 @@ const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
   props: FooterProps
 ) => (
   <View style={{ flexDirection: "row" }}>
-    <FooterButton {...props.firstButton} />
-    <FooterButton {...props.secondButton} />
-    <FooterButton {...props.thirdButton} />
+    {props.firstButton && <FooterButton {...props.firstButton} />}
+    {props.secondButton && <FooterButton {...props.secondButton} />}
+    {props.thirdButton && <FooterButton {...props.thirdButton} />}
   </View>
 );
 
@@ -402,10 +401,14 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         label: I18n.t("bonus.bonusVacanze.cta.qrCode"),
         onPress: openModalBox
       }}
-      secondButton={{
-        label: I18n.t("global.genericShare"),
-        onPress: handleShare
-      }}
+      secondButton={
+        isShareEnabled()
+          ? {
+              label: I18n.t("global.genericShare"),
+              onPress: handleShare
+            }
+          : undefined
+      }
       thirdButton={{
         label: I18n.t("global.genericSave"),
         onPress: saveScreenShot
