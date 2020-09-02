@@ -344,20 +344,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       saveImageToGallery(`file://${screenShotState.screenShotUri}`)
         .run()
         .then(maybeSaved => {
-          maybeSaved.fold(
-            _ => {
-              showToastGenericError();
-            },
-            _ => {
-              Toast.show({
-                text: I18n.t("bonus.bonusVacanze.saveScreenShotOk")
-              });
-            }
-          );
+          maybeSaved.fold(showToastGenericError, () => {
+            Toast.show({
+              text: I18n.t("bonus.bonusVacanze.saveScreenShotOk")
+            });
+          });
         })
-        .catch(_ => {
-          showToastGenericError();
-        })
+        .catch(showToastGenericError)
         .finally(() => {
           // animate fadeOut of flash light animation
           Animated.timing(backgroundAnimation, {
