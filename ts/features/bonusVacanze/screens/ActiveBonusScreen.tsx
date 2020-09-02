@@ -361,7 +361,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         .finally(() => {
           // animate fadeOut of flash light animation
           Animated.timing(backgroundAnimation, {
-            duration: 200,
+            duration: flashAnimation,
             toValue: 0,
             useNativeDriver: false,
             easing: Easing.cubic
