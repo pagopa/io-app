@@ -321,15 +321,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             .then(screenShotUri => {
               setScreenShotState(prev => ({ ...prev, screenShotUri }));
             })
-            .catch(showToastGenericError)
-            .finally(() => {
-              Animated.timing(backgroundAnimation, {
-                duration: flashAnimation,
-                toValue: 0,
-                useNativeDriver: false,
-                easing: Easing.cubic
-              }).start();
-            });
+            .catch(showToastGenericError);
         });
         return;
       }
@@ -356,6 +348,14 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         })
         .catch(_ => {
           showToastGenericError();
+        })
+        .finally(() => {
+          Animated.timing(backgroundAnimation, {
+            duration: flashAnimation,
+            toValue: 0,
+            useNativeDriver: false,
+            easing: Easing.cubic
+          }).start();
         });
       setScreenShotState(screenShortInitialState);
     }
