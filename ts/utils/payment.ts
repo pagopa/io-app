@@ -136,7 +136,9 @@ export const cleanTransactionDescription = (description: string): string => {
 
   return descriptionParts.length > 1
     ? descriptionParts[descriptionParts.length - 1].trim()
-    : "";
+    : `${I18n.t("payment.notice")} n. ${getTransactionCodiceAvviso(
+        description
+      ).getOrElse("")}`;
 };
 
 export const getErrorDescription = (

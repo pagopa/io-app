@@ -83,6 +83,7 @@ describe("cleanTransactionDescription", () => {
         "/RFS/0123456789012/666.98/TXT/ actual description",
         "actual description"
       ],
+      ["/RFB/000001234556859/143.00", "Notice n. 000001234556859"],
       ["actual description", "actual description"]
     ].forEach(([dirty, cleaned]) => {
       expect(cleanTransactionDescription(dirty)).toEqual(cleaned);
