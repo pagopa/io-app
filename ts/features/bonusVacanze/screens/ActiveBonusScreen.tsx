@@ -417,7 +417,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       )}`
     );
 
-  const renderBonusActiveButtons2 = () => (
+  const renderBonusActiveButtons = () => (
     <ActiveBonusFooterButtons
       firstButton={{
         label: I18n.t("bonus.bonusVacanze.cta.qrCode"),
@@ -446,7 +446,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   const renderFooterButtons = () =>
     bonus && isBonusActive(bonus) ? (
-      renderBonusActiveButtons2()
+      renderBonusActiveButtons()
     ) : (
       <>
         <BlockButtons
