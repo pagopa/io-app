@@ -3,7 +3,13 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, Toast, View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet, ViewStyle } from "react-native";
+import {
+  Animated,
+  Easing,
+  SafeAreaView,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
 import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -173,6 +179,16 @@ const styles = StyleSheet.create({
   },
   footerButton: { flex: 1, alignItems: "center" },
   footerButtonIcon: { color: IOColors.blue, marginBottom: 6, fontSize: 24 },
+  hover: {
+    minWidth: "100%",
+    minHeight: "100%",
+    bottom: 0,
+    left: 0,
+    top: 0,
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center"
+  },
   headerSpacer: { height: 154 }
 });
 
@@ -217,6 +233,7 @@ const showToastGenericError = () => showToast(I18n.t("global.genericError"));
 const startRefreshPollingAfter = 3000 as Millisecond;
 
 // screenshot option and state
+const flashAnimation = 250 as Millisecond;
 const screenShotOption: CaptureOptions = { format: "jpg", quality: 0.9 };
 type ScreenShotState = {
   isPrintable: boolean;
@@ -241,6 +258,7 @@ type FooterProps = {
   thirdButton?: FooterButtonProp;
 };
 
+// icon + text in column
 const FooterButton: React.FunctionComponent<FooterButtonProp> = (
   props: FooterButtonProp
 ) => (
@@ -249,6 +267,7 @@ const FooterButton: React.FunctionComponent<FooterButtonProp> = (
     <Label weight={"Regular"}>{props.label}</Label>
   </TouchableDefaultOpacity>
 );
+// 3 buttons in a row
 const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
   props: FooterProps
 ) => (
@@ -261,13 +280,18 @@ const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
-  const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
   const bonusFromNav = props.navigation.getParam("bonus");
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
   const screenShotRef = React.createRef<ViewShot>();
+  const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
   const [screenShotState, setScreenShotState] = React.useState<ScreenShotState>(
     screenShortInitialState
   );
+  const backgroundAnimation = React.useRef(new Animated.Value(0)).current;
+  const backgroundInterpolation = backgroundAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
+  });
 
   React.useEffect(() => {
     // start refresh polling after startRefreshPollingAfter
@@ -348,15 +372,27 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   // call this function to create a screenshot and save it into the device camera roll
   const saveScreenShot = () => {
     if (captureScreenshot().isSome()) {
-      // change some style properties to avoid some UI element will be cut out of the image (absolute position and negative offsets)
-      // the ViewShot renders into a canvas all its children
-      setScreenShotState(prevState => ({
-        ...prevState,
-        imageStyle: styles.imagePrintable,
-        isPrintable: true
-      }));
-      // eslint-disable-next-line sonarjs/no-redundant-jump
-      return;
+      // start screen capturing when first animation complete (screen becomes white)
+      Animated.timing(backgroundAnimation, {
+        duration: flashAnimation,
+        toValue: 1,
+        useNativeDriver: false,
+        easing: Easing.exp
+      }).start(() => {
+        // change some style properties to avoid some UI element will be cut out of the image (absolute position and negative offsets)
+        // the ViewShot renders into a canvas all its children
+        setScreenShotState(prevState => ({
+          ...prevState,
+          imageStyle: styles.imagePrintable,
+          isPrintable: true
+        }));
+        Animated.timing(backgroundAnimation, {
+          duration: flashAnimation,
+          toValue: 0,
+          useNativeDriver: false,
+          easing: Easing.cubic
+        }).start();
+      });
     }
   };
 
@@ -515,122 +551,137 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     to.toUndefined()
   );
   return !props.isError && bonus ? (
-    <DarkLayout
-      bounces={false}
-      title={I18n.t("bonus.bonusVacanze.name")}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["bonus_detail"]}
-      allowGoBack={true}
-      topContent={<View style={styles.headerSpacer} />}
-      footerContent={renderFooterButtons()}
-      gradientHeader={true}
-      hideHeader={true}
-    >
-      <ViewShot
-        ref={screenShotRef}
-        style={styles.viewShot}
-        options={screenShotOption}
+    <>
+      <DarkLayout
+        bounces={false}
+        title={I18n.t("bonus.bonusVacanze.name")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["bonus_detail"]}
+        allowGoBack={true}
+        topContent={<View style={styles.headerSpacer} />}
+        footerContent={renderFooterButtons()}
+        gradientHeader={true}
+        hideHeader={true}
       >
-        <SafeAreaView>
-          <View>
-            <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
-              <View style={[styles.image, screenShotState.imageStyle]}>
-                <BonusCardComponent
-                  bonus={bonus}
-                  viewQR={openModalBox}
-                  share={handleShare}
-                />
-              </View>
-              <View spacer={true} extralarge={true} />
-              {switchInformationText()}
-              <View spacer={true} />
-            </View>
-            {props.hasMoreOwnedActiveBonus && (
-              <ActivateBonusDiscrepancies
-                text={I18n.t("bonus.bonusVacanze.multipleBonus")}
-                attention={I18n.t(
-                  "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.attention"
-                )}
-              />
-            )}
-            <View style={[styles.paddedContentLeft, styles.paddedContentRight]}>
-              <ItemSeparatorComponent noPadded={true} />
-              <View spacer={true} />
-              <BonusCompositionDetails
-                bonusAmount={bonus.dsu_request.max_amount}
-                taxBenefit={bonus.dsu_request.max_tax_benefit}
-              />
-              <View spacer={true} />
-              <ItemSeparatorComponent noPadded={true} />
-              <View spacer={true} />
-              <FamilyComposition
-                familyMembers={bonus.dsu_request.family_members}
-              />
-              <View spacer={true} />
-              <ItemSeparatorComponent noPadded={true} />
-              <View spacer={true} />
-              {maybeStatusDescription.isSome() && (
-                <View style={styles.rowBlock}>
-                  <Text
-                    semibold={true}
-                    style={[styles.sectionLabel, styles.colorDarkest]}
-                  >
-                    {I18n.t("bonus.bonusVacanze.status")}
-                  </Text>
-                  <Badge
-                    style={
-                      isBonusActive(bonus)
-                        ? styles.statusBadgeActive
-                        : styles.statusBadgeRevoked
-                    }
-                  >
-                    <Text style={styles.statusText} semibold={true}>
-                      {maybeStatusDescription.value}
-                    </Text>
-                  </Badge>
+        <ViewShot
+          ref={screenShotRef}
+          style={styles.viewShot}
+          options={screenShotOption}
+        >
+          <SafeAreaView>
+            <View>
+              <View
+                style={[styles.paddedContentLeft, styles.paddedContentRight]}
+              >
+                <View style={[styles.image, screenShotState.imageStyle]}>
+                  <BonusCardComponent
+                    bonus={bonus}
+                    viewQR={openModalBox}
+                    share={handleShare}
+                  />
                 </View>
-              )}
-              <View spacer={true} />
-              <View style={styles.rowBlock}>
-                <Text style={[styles.colorGrey, styles.commonLabel]}>
-                  {I18n.t("bonus.bonusVacanze.requestedAt")}
-                </Text>
-                <Text style={[styles.colorGrey, styles.commonLabel]}>
-                  {isBonusActive(bonus)
-                    ? formatDateAsLocal(bonus.created_at, true)
-                    : fromNullable(bonus.redeemed_at).fold(
-                        formatDateAsLocal(bonus.created_at, true),
-                        d => formatDateAsLocal(d, true)
-                      )}
-                </Text>
+                <View spacer={true} extralarge={true} />
+                {switchInformationText()}
+                <View spacer={true} />
               </View>
-              {!screenShotState.isPrintable && maybeBonusTos.isSome() && (
-                <>
-                  <View spacer={true} />
-                  <ItemSeparatorComponent noPadded={true} />
-                  <View spacer={true} large={true} />
-                  <TouchableDefaultOpacity
-                    onPress={() => handleModalPress(maybeBonusTos.value)}
-                  >
-                    <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
-                      {I18n.t("bonus.tos.title")}
+              {props.hasMoreOwnedActiveBonus && (
+                <ActivateBonusDiscrepancies
+                  text={I18n.t("bonus.bonusVacanze.multipleBonus")}
+                  attention={I18n.t(
+                    "bonus.bonusVacanze.eligibility.activateBonus.discrepancies.attention"
+                  )}
+                />
+              )}
+              <View
+                style={[styles.paddedContentLeft, styles.paddedContentRight]}
+              >
+                <ItemSeparatorComponent noPadded={true} />
+                <View spacer={true} />
+                <BonusCompositionDetails
+                  bonusAmount={bonus.dsu_request.max_amount}
+                  taxBenefit={bonus.dsu_request.max_tax_benefit}
+                />
+                <View spacer={true} />
+                <ItemSeparatorComponent noPadded={true} />
+                <View spacer={true} />
+                <FamilyComposition
+                  familyMembers={bonus.dsu_request.family_members}
+                />
+                <View spacer={true} />
+                <ItemSeparatorComponent noPadded={true} />
+                <View spacer={true} />
+                {maybeStatusDescription.isSome() && (
+                  <View style={styles.rowBlock}>
+                    <Text
+                      semibold={true}
+                      style={[styles.sectionLabel, styles.colorDarkest]}
+                    >
+                      {I18n.t("bonus.bonusVacanze.status")}
                     </Text>
-                  </TouchableDefaultOpacity>
-                </>
-              )}
-              {/* add extra bottom space when capturing screenshot */}
-              {screenShotState.isPrintable && (
-                <>
-                  <View spacer={true} />
-                  <View spacer={true} />
-                </>
-              )}
-              {!screenShotState.isPrintable && <EdgeBorderComponent />}
+                    <Badge
+                      style={
+                        isBonusActive(bonus)
+                          ? styles.statusBadgeActive
+                          : styles.statusBadgeRevoked
+                      }
+                    >
+                      <Text style={styles.statusText} semibold={true}>
+                        {maybeStatusDescription.value}
+                      </Text>
+                    </Badge>
+                  </View>
+                )}
+                <View spacer={true} />
+                <View style={styles.rowBlock}>
+                  <Text style={[styles.colorGrey, styles.commonLabel]}>
+                    {I18n.t("bonus.bonusVacanze.requestedAt")}
+                  </Text>
+                  <Text style={[styles.colorGrey, styles.commonLabel]}>
+                    {isBonusActive(bonus)
+                      ? formatDateAsLocal(bonus.created_at, true)
+                      : fromNullable(bonus.redeemed_at).fold(
+                          formatDateAsLocal(bonus.created_at, true),
+                          d => formatDateAsLocal(d, true)
+                        )}
+                  </Text>
+                </View>
+                {!screenShotState.isPrintable && maybeBonusTos.isSome() && (
+                  <>
+                    <View spacer={true} />
+                    <ItemSeparatorComponent noPadded={true} />
+                    <View spacer={true} large={true} />
+                    <TouchableDefaultOpacity
+                      onPress={() => handleModalPress(maybeBonusTos.value)}
+                    >
+                      <Text
+                        link={true}
+                        ellipsizeMode={"tail"}
+                        numberOfLines={1}
+                      >
+                        {I18n.t("bonus.tos.title")}
+                      </Text>
+                    </TouchableDefaultOpacity>
+                  </>
+                )}
+                {/* add extra bottom space when capturing screenshot */}
+                {screenShotState.isPrintable && (
+                  <>
+                    <View spacer={true} />
+                    <View spacer={true} />
+                  </>
+                )}
+                {!screenShotState.isPrintable && <EdgeBorderComponent />}
+              </View>
             </View>
-          </View>
-        </SafeAreaView>
-      </ViewShot>
-    </DarkLayout>
+          </SafeAreaView>
+        </ViewShot>
+      </DarkLayout>
+      {/* top layout animated when screenshot is captured (save button) to simulate flash effect */}
+      <Animated.View
+        pointerEvents={"none"}
+        style={[styles.hover, { backgroundColor: backgroundInterpolation }]}
+      />
+    </>
   ) : (
     <GenericErrorComponent
       onRetry={() => props.startPollingBonusFromId(bonusFromNav.id)}
