@@ -236,13 +236,13 @@ const startRefreshPollingAfter = 3000 as Millisecond;
 const flashAnimation = 250 as Millisecond;
 const screenShotOption: CaptureOptions = { format: "jpg", quality: 0.9 };
 type ScreenShotState = {
-  isPrintable: boolean;
+  isPrintable?: boolean;
   imageStyle?: ViewStyle;
   screenShotUri?: string;
 };
 const screenShortInitialState: ScreenShotState = {
   imageStyle: undefined,
-  isPrintable: false,
+  isPrintable: undefined,
   screenShotUri: undefined
 };
 
@@ -321,7 +321,15 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             .then(screenShotUri => {
               setScreenShotState(prev => ({ ...prev, screenShotUri }));
             })
-            .catch(showToastGenericError);
+            .catch(showToastGenericError)
+            .finally(() => {
+              Animated.timing(backgroundAnimation, {
+                duration: flashAnimation,
+                toValue: 0,
+                useNativeDriver: false,
+                easing: Easing.cubic
+              }).start();
+            });
         });
         return;
       }
@@ -386,12 +394,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           imageStyle: styles.imagePrintable,
           isPrintable: true
         }));
-        Animated.timing(backgroundAnimation, {
-          duration: flashAnimation,
-          toValue: 0,
-          useNativeDriver: false,
-          easing: Easing.cubic
-        }).start();
       });
     }
   };
