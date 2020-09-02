@@ -233,7 +233,7 @@ const showToastGenericError = () => showToast(I18n.t("global.genericError"));
 const startRefreshPollingAfter = 3000 as Millisecond;
 
 // screenshot option and state
-const flashAnimation = 250 as Millisecond;
+const flashAnimation = 100 as Millisecond;
 const screenShotOption: CaptureOptions = { format: "jpg", quality: 0.9 };
 type ScreenShotState = {
   isPrintable?: boolean;
@@ -321,7 +321,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             .then(screenShotUri => {
               setScreenShotState(prev => ({ ...prev, screenShotUri }));
             })
-            .catch(showToastGenericError);
+            .catch(() => {
+              showToastGenericError();
+              // animate fadeOut of flash light animation
+              Animated.timing(backgroundAnimation, {
+                duration: flashAnimation,
+                toValue: 0,
+                useNativeDriver: false,
+                easing: Easing.cubic
+              }).start();
+            });
         });
         return;
       }
@@ -350,8 +359,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           showToastGenericError();
         })
         .finally(() => {
+          // animate fadeOut of flash light animation
           Animated.timing(backgroundAnimation, {
-            duration: flashAnimation,
+            duration: 200,
             toValue: 0,
             useNativeDriver: false,
             easing: Easing.cubic
@@ -380,12 +390,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   // call this function to create a screenshot and save it into the device camera roll
   const saveScreenShot = () => {
     if (captureScreenshot().isSome()) {
-      // start screen capturing when first animation complete (screen becomes white)
+      // start screen capturing when first flash light animation will be completed (screen becomes white)
       Animated.timing(backgroundAnimation, {
         duration: flashAnimation,
         toValue: 1,
         useNativeDriver: false,
-        easing: Easing.exp
+        easing: Easing.cubic
       }).start(() => {
         // change some style properties to avoid some UI element will be cut out of the image (absolute position and negative offsets)
         // the ViewShot renders into a canvas all its children
