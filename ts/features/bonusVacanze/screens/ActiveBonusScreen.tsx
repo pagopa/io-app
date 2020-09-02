@@ -236,13 +236,13 @@ const startRefreshPollingAfter = 3000 as Millisecond;
 const flashAnimation = 100 as Millisecond;
 const screenShotOption: CaptureOptions = { format: "jpg", quality: 0.9 };
 type ScreenShotState = {
-  isPrintable?: boolean;
+  isPrintable: boolean;
   imageStyle?: ViewStyle;
   screenShotUri?: string;
 };
 const screenShortInitialState: ScreenShotState = {
   imageStyle: undefined,
-  isPrintable: undefined,
+  isPrintable: false,
   screenShotUri: undefined
 };
 
