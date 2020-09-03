@@ -611,6 +611,7 @@ payment:
   noPsp: Non hai ancora selezionato un PSP
   changePsp: Cambia PSP
   IUV: IUV
+  notice: Avviso
   noticeCode: Codice avviso
   recipientFiscalCode: Codice fiscale beneficiario
   details:

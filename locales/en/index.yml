@@ -590,6 +590,7 @@ payment:
   noPsp: You have yet to select a PSP
   changePsp: Change PSP
   IUV: IUV
+  notice: Notice
   noticeCode: Notice code
   recipientFiscalCode: Recipient fiscal code
   details:

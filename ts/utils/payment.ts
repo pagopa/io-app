@@ -25,6 +25,7 @@ import { formatDateAsReminder } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
+import { maybeNotNullyString } from "./strings";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -124,19 +125,14 @@ const hasDescriptionPrefix = (description: string) =>
  * This function removes the tag from payment description of a PagoPA transaction.
  */
 export const cleanTransactionDescription = (description: string): string => {
-  // detect description in pagoPA format - note that we also check for cases
-  // without the leading slash since some services don't add it (mistake on
-  // their side)
-  if (!hasDescriptionPrefix(description)) {
-    // not a description in the pagoPA format, return the description unmodified
-    return description;
-  }
-
-  const descriptionParts = description.split("/TXT/");
+  const descriptionParts = description.split("TXT/");
 
   return descriptionParts.length > 1
-    ? descriptionParts[descriptionParts.length - 1].trim()
-    : "";
+    ? descriptionParts[descriptionParts.length - 1].split("/")[0].trim()
+    : getTransactionCodiceAvviso(description) // try to extract codice avviso from description
+        .chain(maybeNotNullyString)
+        .map(ca => `${I18n.t("payment.notice")} n. ${ca}`)
+        .getOrElse(description);
 };
 
 export const getErrorDescription = (
