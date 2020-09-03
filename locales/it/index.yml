@@ -611,7 +611,7 @@ payment:
   noPsp: Non hai ancora selezionato un PSP
   changePsp: Cambia PSP
   IUV: IUV
-  IUV_extended: Identificativo Univoco di Versamento (IUV)
+  IUV_extended: Identificativo Univoco di Versamento
   notice: Avviso
   noticeCode: Codice avviso
   recipientFiscalCode: Codice fiscale beneficiario
