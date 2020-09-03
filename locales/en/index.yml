@@ -40,6 +40,7 @@ global:
   genericWaiting: Wait a few seconds..
   genericThanks: Thank you
   genericShare: Share
+  genericSave: Save
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
