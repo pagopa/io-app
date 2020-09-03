@@ -40,6 +40,7 @@ global:
   genericWaiting: Wait a few seconds..
   genericThanks: Thank you
   genericShare: Share
+  genericSave: Save
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -589,6 +590,7 @@ payment:
   noPsp: You have yet to select a PSP
   changePsp: Change PSP
   IUV: IUV
+  notice: Notice
   noticeCode: Notice code
   recipientFiscalCode: Recipient fiscal code
   details:
