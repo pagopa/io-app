@@ -12,6 +12,62 @@ export const ON_SCROLL_END_LISTENER = `window.onscroll=function(){
     }
 };`;
 
+export const APP_EVENT_HANDLER = `
+function sendMessagesToRN(message) {
+  if (message) {
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify(message));
+    }
+    return;
+  }
+  console.error("Specify a message to send");
+}
+
+function closeModal() {
+  let message = {
+    type: "CLOSE_MODAL"
+  };
+  sendMessagesToRN(message);
+}
+
+function showLoader() {
+  let message = {
+    type: "START_LOAD"
+  };
+  sendMessagesToRN(message);
+}
+
+function hideLoader() {
+  let message = {
+    type: "END_LOAD"
+  };
+  sendMessagesToRN(message);
+}
+
+function showSuccess(payload) {
+  let message = {
+    type: "SHOW_SUCCESS",
+    payload
+  };
+  sendMessagesToRN(message);
+}
+
+function showErrorMessage(payload) {
+  let message = {
+    type: "SHOW_ERROR",
+    payload
+  };
+  sendMessagesToRN(message);
+}
+
+function showAlertBox(payload) {
+  let message = {
+    type: "SHOW_ALERT",
+    payload
+  };
+  sendMessagesToRN(message);
+}`;
+
 const endTrue = "true;";
 // ensure the injected JS into the webview contains the right closure. If not it will be added.
 export const closeInjectedScript = (injection: string) => {
