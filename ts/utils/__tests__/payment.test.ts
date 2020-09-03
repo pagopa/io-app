@@ -10,14 +10,15 @@ import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeN
 import { Transaction } from "../../types/pagopa";
 import {
   cleanTransactionDescription,
-  getTransactionCodiceAvviso,
-  getTransactionFee
+  getTransactionFee,
+  getTransactionIUV
 } from "../payment";
 import {
   decodePagoPaQrCode,
   getAmountFromPaymentAmount,
   getRptIdFromNoticeNumber
 } from "../payment";
+import I18n from "react-native-i18n";
 
 describe("getAmountFromPaymentAmount", () => {
   const aPaymentAmount = PaymentAmount.decode(1).value as PaymentAmount;
@@ -87,7 +88,10 @@ describe("cleanTransactionDescription", () => {
         "/RFS/0123456789012/666.98/TXT/ actual description/other text",
         "actual description"
       ],
-      ["/RFB/000001234556859/143.00", "Notice n. 000001234556859"],
+      [
+        "/RFB/000001234556859/143.00",
+        `${I18n.t("payment.IUV_extended")} 000001234556859`
+      ],
       ["/XYZ/TXT/some text", "some text"],
       ["/TXT/some text", "some text"],
       ["TXT/some text", "some text"],
@@ -189,7 +193,7 @@ describe("getTransactionFee", () => {
   });
 });
 
-describe("getTransactionCodiceAvviso", () => {
+describe("getTransactionIUV", () => {
   [
     Tuple2(
       "/RFB/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
@@ -207,10 +211,18 @@ describe("getTransactionCodiceAvviso", () => {
       "RFA/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
       some("02000000000495213")
     ),
+    Tuple2(
+      "/RFS/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
+      some("02000000000495213")
+    ),
+    Tuple2(
+      "RFS/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
+      some("02000000000495213")
+    ),
     Tuple2("", none),
     Tuple2("RFC/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION", none),
     Tuple2("RFB/", none)
   ].forEach(tuple => {
-    expect(getTransactionCodiceAvviso(tuple.e1)).toEqual(tuple.e2);
+    expect(getTransactionIUV(tuple.e1)).toEqual(tuple.e2);
   });
 });

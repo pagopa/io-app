@@ -36,8 +36,8 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { whereAmIFrom } from "../../utils/navigation";
 import {
   cleanTransactionDescription,
-  getTransactionCodiceAvviso,
-  getTransactionFee
+  getTransactionFee,
+  getTransactionIUV
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
@@ -173,14 +173,12 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
       transactionWallet.creditCard &&
       transactionWallet.creditCard.brand;
 
-    const codiceAvviso = getTransactionCodiceAvviso(
-      transaction.description
-    ).toUndefined();
+    const iuv = getTransactionIUV(transaction.description).toUndefined();
 
     const idTransaction = transaction.id;
     return {
       fullReason: transaction.description,
-      codiceAvviso,
+      iuv,
       idTransaction,
       paymentMethodBrand,
       paymentMethodIcon,
@@ -236,8 +234,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             </Text>
           )}
           <View spacer={true} large={true} />
-          {data.codiceAvviso &&
-            standardRow(I18n.t("payment.noticeCode"), data.codiceAvviso)}
+          {data.iuv && standardRow(I18n.t("payment.IUV"), data.iuv)}
           {/** transaction date */}
           <View spacer={true} xsmall={true} />
           <View spacer={true} large={true} />
