@@ -25,6 +25,7 @@ import { formatDateAsReminder } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
+import { maybeNotNullyString } from "./strings";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -129,6 +130,7 @@ export const cleanTransactionDescription = (description: string): string => {
   return descriptionParts.length > 1
     ? descriptionParts[descriptionParts.length - 1].split("/")[0].trim()
     : getTransactionCodiceAvviso(description) // try to extract codice avviso from description
+        .chain(maybeNotNullyString)
         .map(ca => `${I18n.t("payment.notice")} n. ${ca}`)
         .getOrElse(description);
 };
