@@ -148,7 +148,7 @@ const RegionServiceModal: React.FunctionComponent<Props> = (props: Props) => {
       <AppHeader>
         <Left>
           <ButtonDefaultOpacity
-            onPress={() => props.onModalClose()}
+            onPress={props.onModalClose}
             transparent={true}
           >
             <IconFont name="io-back" />
