@@ -129,9 +129,12 @@ export const cleanTransactionDescription = (description: string): string => {
 
   return descriptionParts.length > 1
     ? descriptionParts[descriptionParts.length - 1].split("/")[0].trim()
-    : getTransactionCodiceAvviso(description) // try to extract codice avviso from description
+    : getTransactionIUV(description) // try to extract codice avviso from description
         .chain(maybeNotNullyString)
-        .map(ca => `${I18n.t("payment.notice")} n. ${ca}`)
+        .map(
+          ca =>
+            `${I18n.t("payment.IUV_extended")} (${I18n.t("payment.IUV")}) ${ca}`
+        )
         .getOrElse(description);
 };
 
@@ -209,8 +212,9 @@ export const getTransactionFee = (
   return fromNullable(maybeFee).map(formatFunc).toNullable();
 };
 
-// try to extract codice avviso from transaction description
-export const getTransactionCodiceAvviso = (
+// try to extract IUV from transaction description
+// see https://docs.italia.it/italia/pagopa/pagopa-codici-docs/it/stabile/_docs/Capitolo3.html
+export const getTransactionIUV = (
   transactionDescription: string
 ): Option<string> => {
   const description = transactionDescription.trim();
