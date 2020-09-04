@@ -159,7 +159,7 @@ const RegionServiceModal: React.FunctionComponent<Props> = (props: Props) => {
       <View style={{ paddingHorizontal: customVariables.contentPadding }}>
         <TextInput
           style={{ padding: 1, borderWidth: 1, height: 30 }}
-          onChangeText={t => setNavigationUri(t)}
+          onChangeText={setNavigationUri}
           value={navigationURI}
         />
         <ScrollView>
