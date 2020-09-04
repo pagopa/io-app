@@ -128,7 +128,7 @@ export const cleanTransactionDescription = (description: string): string => {
   const descriptionParts = description.split("TXT/");
 
   return descriptionParts.length > 1
-    ? descriptionParts[descriptionParts.length - 1].split("/")[0].trim()
+    ? descriptionParts[descriptionParts.length - 1].trim()
     : getTransactionIUV(description) // try to extract codice avviso from description
         .chain(maybeNotNullyString)
         .map(

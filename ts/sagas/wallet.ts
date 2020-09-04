@@ -62,6 +62,7 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
+  addWalletNewCreditCardSuccess,
   creditCardCheckout3dsRequest,
   creditCardCheckout3dsSuccess,
   deleteWalletRequest,
@@ -281,6 +282,8 @@ function* startOrResumeAddCreditCardSaga(
         _ => _.idWallet === idWallet
       );
       if (maybeAddedWallet !== undefined) {
+        // dispatch an action to saying that a new card has been added
+        yield put(addWalletNewCreditCardSuccess());
         if (action.payload.setAsFavorite === true) {
           yield put(setFavouriteWalletRequest(maybeAddedWallet.idWallet));
         }
@@ -294,9 +297,6 @@ function* startOrResumeAddCreditCardSaga(
         }
       }
     }
-
-    // TODO: set as favorite
-
     break;
   }
 }

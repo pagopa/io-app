@@ -86,7 +86,7 @@ describe("cleanTransactionDescription", () => {
       ],
       [
         "/RFS/0123456789012/666.98/TXT/ actual description/other text",
-        "actual description"
+        "actual description/other text"
       ],
       [
         "/RFB/000001234556859/143.00",
@@ -97,8 +97,8 @@ describe("cleanTransactionDescription", () => {
       ["/XYZ/TXT/some text", "some text"],
       ["/TXT/some text", "some text"],
       ["TXT/some text", "some text"],
-      ["/TXT/some text/other text", "some text"],
-      ["TXT/some text/other text", "some text"],
+      ["/TXT/some text/other text", "some text/other text"],
+      ["TXT/some text/other text", "some text/other text"],
       ["actual description", "actual description"]
     ].forEach(([dirty, cleaned]) => {
       expect(cleanTransactionDescription(dirty)).toEqual(cleaned);
