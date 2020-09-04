@@ -37,7 +37,7 @@
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts"
   },
   "dependencies": {
-    "@pagopa/react-native-cie": "0.2.2",
+    "@pagopa/react-native-cie": "pagopa/io-cie-android-sdk#ios-react-native",
     "@react-native-community/async-storage": "^1.6.1",
     "@react-native-community/cameraroll": "^4.0.0",
     "@redux-saga/testing-utils": "^1.1.3",

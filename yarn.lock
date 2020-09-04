@@ -1122,10 +1122,9 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/react-native-cie@0.2.2":
+"@pagopa/react-native-cie@pagopa/io-cie-android-sdk#ios-react-native":
   version "0.2.2"
-  resolved "https://npm.pkg.github.com/download/@pagopa/react-native-cie/0.2.2/5594a38025e8a0ea446e1b933a966f767679975bee47707234585bd9598b092f#ecc644b4da611b03ef0c26f0ff3872ccfb8c1757"
-  integrity sha512-+OS7spye20HjI6G1/sF+sY+tVoTfvxPkmELYPXMRzr9gRym5bGpUro/smZqFxNEaFrNbp9rXS5Sa/e3gAe4fMA==
+  resolved "https://codeload.github.com/pagopa/io-cie-android-sdk/tar.gz/d1bc1d011ff419d2cbd59f40bbc2481d34945569"
 
 "@react-native-community/art@^1.2.0":
   version "1.2.0"
