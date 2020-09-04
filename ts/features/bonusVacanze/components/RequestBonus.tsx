@@ -6,9 +6,7 @@ import { StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
 import SectionCardComponent from "../../../components/wallet/card/SectionCardComponent";
-import { myPortalEnabled } from '../../../config';
 import I18n from "../../../i18n";
-import RegionServiceModal from "../../../screens/modal/RegionServiceModal";
 import customVariables from "../../../theme/variables";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 import BonusCardComponent from "./BonusCardComponent";
@@ -46,8 +44,6 @@ const styles = StyleSheet.create({
  * @param props
  */
 const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
-  const [modalVisible, setModalVisible] = React.useState(false);
-
   const {
     onButtonPress,
     activeBonuses,
@@ -68,7 +64,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
     <React.Fragment>
       <SectionCardComponent
         label={I18n.t("bonus.requestLabel")}
-        onPress={myPortalEnabled ? () => setModalVisible(true) : onButtonPress}
+        onPress={onButtonPress}
         isNew={true}
         cardStyle={
           noMethod
@@ -92,10 +88,6 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
       ) : (
         <View spacer={true} xsmall={true} />
       )}
-      <RegionServiceModal
-        modalVisible={modalVisible}
-        onModalClose={() => setModalVisible(false)}
-      />
     </React.Fragment>
   );
 };
