@@ -1,9 +1,10 @@
 import CookieManager, { Cookie } from "@react-native-community/cookies";
-import { Body, Container, Left, View } from "native-base";
+import { Body, Container, Content, Left, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, TextInput } from "react-native";
+import { Alert, ScrollView, TextInput } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
+import I18n from "../../i18n";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { Monospace } from "../../components/core/typography/Monospace";
 import ActivityIndicator from "../../components/ui/ActivityIndicator";
@@ -24,8 +25,11 @@ type Props = {
 
 const RegionServiceModal: React.FunctionComponent<Props> = (props: Props) => {
   const [navigationURI, setNavigationUri] = React.useState("");
-  const [message, setMessage] = React.useState("");
+  const [webMessage, setWebMessage] = React.useState("");
+  const [text, setText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const [error, setError] = React.useState(false);
 
   React.useEffect(() => {
     const cookie: Cookie = {
@@ -53,8 +57,59 @@ const RegionServiceModal: React.FunctionComponent<Props> = (props: Props) => {
     }
   });
 
+  const showSuccessContent = () => (
+    <Content>
+      <IconFont
+        name={"io-close"}
+        style={{
+          alignSelf: "flex-end"
+        }}
+        onPress={() => setSuccess(false)}
+      />
+      <IconFont
+        name={"io-complete"}
+        size={120}
+        color={customVariables.brandHighlight}
+        style={{
+          alignSelf: "center"
+        }}
+      />
+      <View spacer={true} />
+
+      <Text alignCenter={true}>{`${I18n.t("global.genericThanks")},`}</Text>
+      <Text alignCenter={true} bold={true}>
+        {text}
+      </Text>
+    </Content>
+  );
+
+  const showErrorContent = () => (
+    <Content>
+      <IconFont
+        name={"io-close"}
+        style={{
+          alignSelf: "flex-end"
+        }}
+        onPress={() => setError(false)}
+      />
+      <IconFont
+        name={"io-error"}
+        size={120}
+        color={customVariables.brandDanger}
+        style={{
+          alignSelf: "center"
+        }}
+      />
+      <View spacer={true} />
+
+      <Text alignCenter={true} bold={true}>
+        {text}
+      </Text>
+    </Content>
+  );
+
   const handleWebviewMessage = (event: WebViewMessageEvent) => {
-    setMessage(event.nativeEvent.data);
+    setWebMessage(event.nativeEvent.data);
 
     const data = JSON.parse(event.nativeEvent.data);
     const locale = getCurrentLocale();
@@ -70,10 +125,12 @@ const RegionServiceModal: React.FunctionComponent<Props> = (props: Props) => {
         setLoading(false);
         return;
       case "SHOW_SUCCESS":
-        showToast(data.payload[locale], "success");
+        setSuccess(true);
+        setText(data.payload[locale]);
         return;
       case "SHOW_ERROR":
-        showToast(data.payload[locale], "danger");
+        setError(true);
+        setText(data.payload[locale]);
         return;
       case "SHOW_ALERT":
         Alert.alert(
@@ -105,19 +162,27 @@ const RegionServiceModal: React.FunctionComponent<Props> = (props: Props) => {
           onChangeText={t => setNavigationUri(t)}
           value={navigationURI}
         />
-        <View style={{ height: heightPercentageToDP("50%") }}>
-          <WebView
-            source={{ uri: navigationURI }}
-            textZoom={100}
-            injectedJavaScript={closeInjectedScript(
-              AVOID_ZOOM_JS + APP_EVENT_HANDLER
-            )}
-            onMessage={handleWebviewMessage}
-            sharedCookiesEnabled={true}
-          />
-        </View>
-        {loading && <ActivityIndicator color={customVariables.brandDarkGray} />}
-        <Monospace>{message}</Monospace>
+        <ScrollView>
+          {!success && !error && (
+            <View style={{ height: heightPercentageToDP("50%") }}>
+              <WebView
+                source={{ uri: navigationURI }}
+                textZoom={100}
+                injectedJavaScript={closeInjectedScript(
+                  AVOID_ZOOM_JS + APP_EVENT_HANDLER
+                )}
+                onMessage={handleWebviewMessage}
+                sharedCookiesEnabled={true}
+              />
+            </View>
+          )}
+          {loading && (
+            <ActivityIndicator color={customVariables.brandDarkGray} />
+          )}
+          <Monospace>{webMessage}</Monospace>
+          {success && showSuccessContent()}
+          {error && showErrorContent()}
+        </ScrollView>
       </View>
     </Container>
   );
