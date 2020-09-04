@@ -282,7 +282,7 @@ function* startOrResumeAddCreditCardSaga(
         _ => _.idWallet === idWallet
       );
       if (maybeAddedWallet !== undefined) {
-        // dispatch an action to saying that a new card has been added
+        // dispatch the action: a new card has been added
         yield put(addWalletNewCreditCardSuccess());
         if (action.payload.setAsFavorite === true) {
           yield put(setFavouriteWalletRequest(maybeAddedWallet.idWallet));
