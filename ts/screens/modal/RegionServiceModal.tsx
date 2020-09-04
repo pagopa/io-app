@@ -4,7 +4,6 @@ import * as React from "react";
 import { Alert, Modal, TextInput } from "react-native";
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import WebView, { WebViewMessageEvent } from "react-native-webview";
-import { RTron } from '../../boot/configureStoreAndPersistor';
 import { Monospace } from '../../components/core/typography/Monospace';
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ActivityIndicator from '../../components/ui/ActivityIndicator';
