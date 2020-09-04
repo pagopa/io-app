@@ -24,28 +24,28 @@ function sendMessagesToRN(message) {
 }
 
 function closeModal() {
-  let message = {
+  const message = {
     type: "CLOSE_MODAL"
   };
   sendMessagesToRN(message);
 }
 
 function showLoader() {
-  let message = {
+  const message = {
     type: "START_LOAD"
   };
   sendMessagesToRN(message);
 }
 
 function hideLoader() {
-  let message = {
+  const message = {
     type: "END_LOAD"
   };
   sendMessagesToRN(message);
 }
 
 function showSuccess(payload) {
-  let message = {
+  const message = {
     type: "SHOW_SUCCESS",
     payload
   };
@@ -53,7 +53,7 @@ function showSuccess(payload) {
 }
 
 function showErrorMessage(payload) {
-  let message = {
+  const message = {
     type: "SHOW_ERROR",
     payload
   };
@@ -61,7 +61,7 @@ function showErrorMessage(payload) {
 }
 
 function showAlertBox(payload) {
-  let message = {
+  const message = {
     type: "SHOW_ALERT",
     payload
   };

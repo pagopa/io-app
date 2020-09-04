@@ -1,7 +1,7 @@
 import CookieManager, { Cookie } from "@react-native-community/cookies";
 import { Body, Container, Content, Left, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, ScrollView, TextInput } from "react-native";
+import { Alert, ScrollView, StyleSheet, TextInput } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import I18n from "../../i18n";
@@ -11,7 +11,7 @@ import ActivityIndicator from "../../components/ui/ActivityIndicator";
 import AppHeader from "../../components/ui/AppHeader";
 import IconFont from "../../components/ui/IconFont";
 import customVariables from "../../theme/variables";
-import { getCurrentLocale } from "../../utils/locale";
+import { getLocalePrimaryWithFallback } from "../../utils/locale";
 import { showToast } from "../../utils/showToast";
 import {
   APP_EVENT_HANDLER,
@@ -22,6 +22,12 @@ import {
 type Props = {
   onModalClose: () => void;
 };
+
+const styles = StyleSheet.create({
+  textInput: { padding: 1, borderWidth: 1, height: 30 },
+  contentPadding: { paddingHorizontal: customVariables.contentPadding },
+  webViewHeight: { height: heightPercentageToDP("50%") }
+});
 
 const RegionServiceModal: React.FunctionComponent<Props> = (props: Props) => {
   const [navigationURI, setNavigationUri] = React.useState("");
@@ -112,7 +118,7 @@ const RegionServiceModal: React.FunctionComponent<Props> = (props: Props) => {
     setWebMessage(event.nativeEvent.data);
 
     const data = JSON.parse(event.nativeEvent.data);
-    const locale = getCurrentLocale();
+    const locale = getLocalePrimaryWithFallback();
 
     switch (data.type) {
       case "CLOSE_MODAL":
@@ -147,24 +153,21 @@ const RegionServiceModal: React.FunctionComponent<Props> = (props: Props) => {
     <Container>
       <AppHeader>
         <Left>
-          <ButtonDefaultOpacity
-            onPress={props.onModalClose}
-            transparent={true}
-          >
+          <ButtonDefaultOpacity onPress={props.onModalClose} transparent={true}>
             <IconFont name="io-back" />
           </ButtonDefaultOpacity>
         </Left>
         <Body />
       </AppHeader>
-      <View style={{ paddingHorizontal: customVariables.contentPadding }}>
+      <View style={styles.contentPadding}>
         <TextInput
-          style={{ padding: 1, borderWidth: 1, height: 30 }}
+          style={styles.textInput}
           onChangeText={setNavigationUri}
           value={navigationURI}
         />
         <ScrollView>
           {!success && !error && (
-            <View style={{ height: heightPercentageToDP("50%") }}>
+            <View style={styles.webViewHeight}>
               <WebView
                 source={{ uri: navigationURI }}
                 textZoom={100}
