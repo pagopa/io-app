@@ -26,7 +26,6 @@ import {
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
 import {
-  getCodiceAvviso,
   isPaymentDoneSuccessfully,
   PaymentHistory
 } from "../../store/reducers/payments/history";
@@ -37,6 +36,7 @@ import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { maybeInnerProperty } from "../../utils/options";
 import {
+  getCodiceAvviso,
   getErrorDescription,
   getPaymentHistoryDetails,
   getTransactionFee
@@ -191,21 +191,21 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   );
 
   private renderHelper = () => (
-      <View>
-        <Text alignCenter={true} style={styles.padded}>
-          {I18n.t("payment.details.info.help")}
-        </Text>
-        <View spacer={true} />
-        <ButtonDefaultOpacity
-          onPress={this.instabugLogAndOpenReport}
-          bordered={true}
-          block={true}
-        >
-          <IconFont name={"io-messaggi"} />
-          <Text>{I18n.t("payment.details.info.buttons.help")}</Text>
-        </ButtonDefaultOpacity>
-      </View>
-    );
+    <View>
+      <Text alignCenter={true} style={styles.padded}>
+        {I18n.t("payment.details.info.help")}
+      </Text>
+      <View spacer={true} />
+      <ButtonDefaultOpacity
+        onPress={this.instabugLogAndOpenReport}
+        bordered={true}
+        block={true}
+      >
+        <IconFont name={"io-messaggi"} />
+        <Text>{I18n.t("payment.details.info.buttons.help")}</Text>
+      </ButtonDefaultOpacity>
+    </View>
+  );
 
   public render(): React.ReactNode {
     const data = this.getData();
@@ -318,7 +318,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-    profile: profileSelector(state)
-  });
+  profile: profileSelector(state)
+});
 
 export default connect(mapStateToProps)(PaymentHistoryDetailsScreen);

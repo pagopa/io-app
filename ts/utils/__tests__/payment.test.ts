@@ -10,6 +10,7 @@ import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeN
 import { Transaction } from "../../types/pagopa";
 import {
   cleanTransactionDescription,
+  getCodiceAvviso,
   getTransactionFee,
   getTransactionIUV
 } from "../payment";
@@ -226,5 +227,58 @@ describe("getTransactionIUV", () => {
     Tuple2("RFB/", none)
   ].forEach(tuple => {
     expect(getTransactionIUV(tuple.e1)).toEqual(tuple.e2);
+  });
+});
+
+describe("getCodiceAvviso", () => {
+  const organizationFiscalCode = "00000123456";
+  [
+    Tuple2<RptId, string>(
+      RptId.decode({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          applicationCode: "02",
+          auxDigit: "0",
+          checkDigit: "78",
+          iuv13: "1600203993985"
+        }
+      }).value as RptId,
+      `002160020399398578`
+    ),
+    Tuple2<RptId, string>(
+      RptId.decode({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          auxDigit: "1",
+          iuv17: "16002039939851111"
+        }
+      }).value as RptId,
+      `116002039939851111`
+    ),
+    Tuple2<RptId, string>(
+      RptId.decode({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          checkDigit: "78",
+          auxDigit: "2",
+          iuv15: "160020399398511"
+        }
+      }).value as RptId,
+      `216002039939851178`
+    ),
+    Tuple2<RptId, string>(
+      RptId.decode({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          checkDigit: "78",
+          auxDigit: "3",
+          segregationCode: "55",
+          iuv13: "1600203993985"
+        }
+      }).value as RptId,
+      `355160020399398578`
+    )
+  ].forEach(tuple => {
+    expect(getCodiceAvviso(tuple.e1)).toEqual(tuple.e2);
   });
 });
