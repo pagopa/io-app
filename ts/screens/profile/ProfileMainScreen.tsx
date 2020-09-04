@@ -52,7 +52,7 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import RegionServiceModal from "../modal/RegionServiceModal";
+import RegionServiceModal from "../../components/RegionServicePlayground";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
