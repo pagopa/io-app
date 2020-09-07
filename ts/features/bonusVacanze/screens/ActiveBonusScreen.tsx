@@ -449,7 +449,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   const renderFooterButtons = () =>
-    bonus && isBonusActive(bonus) ? renderBonusActiveButtons() : undefined;
+    bonus && isBonusActive(bonus) && renderBonusActiveButtons();
 
   const renderInformationBlock = (
     icon: string,
