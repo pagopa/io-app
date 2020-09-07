@@ -61,7 +61,7 @@ export type InternalRoute = {
 };
 
 export function getInternalRoute(href: string): Option<InternalRoute> {
-  // NOTE: URL seems to be not implemented in android
+  // NOTE: URL built-in class seems not to be implemented in Android
   try {
     const url = new URLParse(href, true);
     if (url.protocol.toLowerCase() === IO_INTERNAL_LINK_PROTOCOL) {
@@ -71,7 +71,7 @@ export function getInternalRoute(href: string): Option<InternalRoute> {
         )
       ).map(routeName => ({
         routeName,
-        params: Object.keys(url.query).length === 0 ? undefined : url.query
+        params: Object.keys(url.query).length === 0 ? undefined : url.query // avoid empty object
       }));
     }
     return none;
