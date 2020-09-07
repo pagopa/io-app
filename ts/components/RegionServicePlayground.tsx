@@ -1,4 +1,3 @@
-import CookieManager, { Cookie } from "@react-native-community/cookies";
 import { Body, Container, Content, Left, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet, TextInput } from "react-native";
@@ -7,7 +6,6 @@ import WebView, { WebViewMessageEvent } from "react-native-webview";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { getLocalePrimaryWithFallback } from "../utils/locale";
-import { showToast } from "../utils/showToast";
 import {
   closeInjectedScript,
   AVOID_ZOOM_JS,
@@ -40,25 +38,25 @@ const RegionServiceWebViewPlayGround: React.FunctionComponent<Props> = (
   const [error, setError] = React.useState(false);
 
   React.useEffect(() => {
-    const cookie: Cookie = {
-      name: "test",
-      value: "test",
-      domain: "192.168.1.20", // the domain on which you need to add the cookie, in this case the IP on your machine
-      path: "/",
-      version: "1",
-      expires: "2021-05-30T12:30:00.00-05:00"
-    };
+    // const cookie: Cookie = {
+    //   name: "test",
+    //   value: "test",
+    //   domain: "192.168.1.20", // the domain on which you need to add the cookie, in this case the IP on your machine
+    //   path: "/",
+    //   version: "1",
+    //   expires: "2021-05-30T12:30:00.00-05:00"
+    // };
     /**
      * the domain on which you need to add the cookie, in this case the IP on your machine
      * this value and domain value on cookie MUST match
      * this parameter is considered only by Android.
      */
-    CookieManager.set("http://192.168.1.20", cookie).catch(_ =>
-      showToast(
-        `Unable to execute cookie authentication for ${cookie.name}`,
-        "danger"
-      )
-    );
+    // CookieManager.set("http://192.168.1.20", cookie).catch(_ =>
+    //   showToast(
+    //     `Unable to execute cookie authentication for ${cookie.name}`,
+    //     "danger"
+    //   )
+    // );
 
     if (navigationURI === "") {
       setNavigationUri("http://192.168.1.20:3000/test-html");
