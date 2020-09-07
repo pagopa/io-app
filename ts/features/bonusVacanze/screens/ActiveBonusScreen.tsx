@@ -67,7 +67,6 @@ import {
 } from "../utils/bonus";
 import { Label } from "../../../components/core/typography/Label";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import BlockButtons from "../../../components/ui/BlockButtons";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -450,21 +449,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   const renderFooterButtons = () =>
-    bonus && isBonusActive(bonus) ? (
-      renderBonusActiveButtons()
-    ) : (
-      <>
-        <BlockButtons
-          type="SingleButton"
-          leftButton={{
-            bordered: true,
-            title: I18n.t("global.buttons.cancel"),
-            onPress: props.goBack
-          }}
-        />
-        <View spacer={true} />
-      </>
-    );
+    bonus && isBonusActive(bonus) ? renderBonusActiveButtons() : undefined;
 
   const renderInformationBlock = (
     icon: string,
