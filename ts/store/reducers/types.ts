@@ -27,6 +27,7 @@ import { SearchState } from "./search";
 import { UserDataProcessingState } from "./userDataProcessing";
 import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
+import { InternalRouteNavigationState } from "./internalRouteNavigation";
 
 type NetworkState = Readonly<{
   isConnected: boolean;
@@ -61,6 +62,7 @@ export type GlobalState = Readonly<{
   emailValidation: EmailValidationState;
   cie: CieState;
   bonus: BonusState;
+  internalRouteNavigation: InternalRouteNavigationState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

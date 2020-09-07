@@ -1,12 +1,13 @@
 import { Platform } from "react-native";
 import { NavigationNavigateActionPayload } from "react-navigation";
+import { IO_INTERNAL_LINK_PREFIX } from "../components/ui/Markdown/handlers/internalLink";
 
 export function getNavigateActionFromDeepLink(
   url: string,
   // on Android, the URI prefix contains a host in addition to scheme
   deepLinkPrefix: string = Platform.OS === "android"
-    ? "ioit://ioit/"
-    : "ioit://"
+    ? `${IO_INTERNAL_LINK_PREFIX}ioit/`
+    : IO_INTERNAL_LINK_PREFIX
 ): NavigationNavigateActionPayload {
   const route = url.slice(deepLinkPrefix.length);
   const routeParts = route.split("/");

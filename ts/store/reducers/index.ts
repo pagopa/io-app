@@ -37,6 +37,7 @@ import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
+import internalRouteNavigationReducer from "./internalRouteNavigation";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -90,7 +91,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   search: searchReducer,
   cie: cieReducer,
   bonus: bonusReducer,
-
+  internalRouteNavigation: internalRouteNavigationReducer,
   //
   // persisted state
   //
