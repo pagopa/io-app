@@ -3,6 +3,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import { Locales, TranslationKeys } from "../../../locales/locales";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -23,7 +24,6 @@ import {
 import { profileUpsert } from "../../store/actions/profile";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { profileSelector } from "../../store/reducers/profile";
-import { fromNullable } from "fp-ts/lib/Option";
 import { showToast } from "../../utils/showToast";
 
 type Props = LightModalContextInterface &
