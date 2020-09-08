@@ -6,6 +6,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { BackendClient } from "../api/backend";
@@ -21,6 +22,16 @@ import {
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
 import { SagaCallReturnType } from "../types/utils";
+import {
+  fromLocaleToPreferredLanguage,
+  fromPreferredLanguageToLocale,
+  getCurrentLocale,
+  getLocalePrimaryWithFallback
+} from "../utils/locale";
+import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLanguage";
+import { Locales } from "../../locales/locales";
+import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
+import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -164,7 +175,7 @@ export function* watchProfileRefreshRequestsSaga(
 
 // make a request to start the email validation process that sends to the user
 // an email with a link to validate it
-export function* startEmailValidationProcessSaga(
+function* startEmailValidationProcessSaga(
   startEmailValidationProcess: ReturnType<
     typeof BackendClient
   >["startEmailValidationProcess"]
@@ -195,15 +206,61 @@ export function* startEmailValidationProcessSaga(
   }
 }
 
-// This function listens for request to send again the email validation to profile email and calls the needed saga.
-export function* watchProfileSendEmailValidationSaga(
-  startEmailValidationProcess: ReturnType<
-    typeof BackendClient
-  >["startEmailValidationProcess"]
+// make some checks about loaded profile
+function* checkLoadedProfile(
+  profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
+): Generator<Effect, any, Option<Locales>> {
+  // check if the preferred_languages is up to date
+  const preferredLanguages =
+    profileLoadSuccessAction.payload.preferred_languages;
+  const currentLanguage = pipe<void, Locales, PreferredLanguageEnum>(
+    getCurrentLocale,
+    fromLocaleToPreferredLanguage
+  )();
+  // if the preferred language isn't set, update it with the current device locale
+  if (!preferredLanguages || preferredLanguages.length === 0) {
+    yield put(
+      profileUpsert.request({
+        preferred_languages: [currentLanguage]
+      })
+    );
+  }
+  // check if the locally stored locale matches with the one into the profile
+  const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> = yield select(
+    preferredLanguageSelector
+  );
+  // retrieving current locale, steps:
+  // 1 - the one inside the profile
+  // 2 - the stored one
+  // 3 - from the running device
+  const currentLocale =
+    preferredLanguages && preferredLanguages.length > 0
+      ? fromPreferredLanguageToLocale(preferredLanguages[0])
+      : getLocalePrimaryWithFallback();
+  // if no locale is stored save currentLocale
+  // if the stored locale is different from the current one, update it
+  if (
+    currentStoredLocale.isNone() ||
+    currentStoredLocale.value !== currentLocale
+  ) {
+    yield put(
+      preferredLanguageSaveSuccess({
+        preferredLanguage: currentLocale
+      })
+    );
+  }
+}
+
+// watch for some actions about profile
+export function* watchProfile(
+  backendClient: ReturnType<typeof BackendClient>
 ): Iterator<Effect> {
+  // user requests to send again the email validation to profile email
   yield takeLatest(
     getType(startEmailValidation.request),
     startEmailValidationProcessSaga,
-    startEmailValidationProcess
+    backendClient.startEmailValidationProcess
   );
+  // check the loaded profile
+  yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
 }
