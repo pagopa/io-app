@@ -1,6 +1,6 @@
-import { Body, Container, Content, Left, Text, View } from "native-base";
+import { Body, Container, Content, Left, View } from "native-base";
 import * as React from "react";
-import { Alert, ScrollView, StyleSheet, TextInput } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import I18n from "../i18n";
@@ -12,10 +12,12 @@ import {
   APP_EVENT_HANDLER
 } from "../utils/webview";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { Label } from "./core/typography/Label";
 import { Monospace } from "./core/typography/Monospace";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
 import IconFont from "./ui/IconFont";
+import Switch from "./ui/Switch";
 
 type Props = {
   onModalClose: () => void;
@@ -24,7 +26,8 @@ type Props = {
 const styles = StyleSheet.create({
   textInput: { padding: 1, borderWidth: 1, height: 30 },
   contentPadding: { paddingHorizontal: customVariables.contentPadding },
-  webViewHeight: { height: heightPercentageToDP("50%") }
+  center: { alignItems: "center" },
+  webViewHeight: { height: heightPercentageToDP("100%") }
 });
 
 const RegionServiceWebViewPlayGround: React.FunctionComponent<Props> = (
@@ -36,32 +39,7 @@ const RegionServiceWebViewPlayGround: React.FunctionComponent<Props> = (
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
-
-  React.useEffect(() => {
-    // const cookie: Cookie = {
-    //   name: "test",
-    //   value: "test",
-    //   domain: "192.168.1.20", // the domain on which you need to add the cookie, in this case the IP on your machine
-    //   path: "/",
-    //   version: "1",
-    //   expires: "2021-05-30T12:30:00.00-05:00"
-    // };
-    /**
-     * the domain on which you need to add the cookie, in this case the IP on your machine
-     * this value and domain value on cookie MUST match
-     * this parameter is considered only by Android.
-     */
-    // CookieManager.set("http://192.168.1.20", cookie).catch(_ =>
-    //   showToast(
-    //     `Unable to execute cookie authentication for ${cookie.name}`,
-    //     "danger"
-    //   )
-    // );
-
-    if (navigationURI === "") {
-      setNavigationUri("http://192.168.1.20:3000/test-html");
-    }
-  });
+  const [showDebug, setShowDebug] = React.useState(false);
 
   const showSuccessContent = () => (
     <Content>
@@ -80,12 +58,12 @@ const RegionServiceWebViewPlayGround: React.FunctionComponent<Props> = (
           alignSelf: "center"
         }}
       />
-      <View spacer={true} />
+      <View spacer={true} large={true} />
 
-      <Text alignCenter={true}>{`${I18n.t("global.genericThanks")},`}</Text>
-      <Text alignCenter={true} bold={true}>
-        {text}
-      </Text>
+      <View style={styles.center}>
+        <Label>{`${I18n.t("global.genericThanks")},`}</Label>
+        <Label weight={"Bold"}>{text}</Label>
+      </View>
     </Content>
   );
 
@@ -108,9 +86,9 @@ const RegionServiceWebViewPlayGround: React.FunctionComponent<Props> = (
       />
       <View spacer={true} />
 
-      <Text alignCenter={true} bold={true}>
-        {text}
-      </Text>
+      <View style={styles.center}>
+        <Label weight={"Bold"}>{text}</Label>
+      </View>
     </Content>
   );
 
@@ -159,15 +137,27 @@ const RegionServiceWebViewPlayGround: React.FunctionComponent<Props> = (
         </Left>
         <Body />
       </AppHeader>
-      <View style={styles.contentPadding}>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={setNavigationUri}
-          value={navigationURI}
-        />
-        <ScrollView>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Content contentContainerStyle={{ flex: 1 }}>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={setNavigationUri}
+            value={navigationURI}
+          />
+          <View spacer={true} />
+          <View
+            style={{
+              flexDirection: "row",
+              alignContent: "space-between"
+            }}
+          >
+            <Label color={"bluegrey"}>{"Mostra debug"}</Label>
+            <View hspacer={true} />
+            <Switch value={showDebug} onValueChange={setShowDebug} />
+          </View>
+          <View spacer={true} />
           {!success && !error && (
-            <View style={styles.webViewHeight}>
+            <View style={{ flex: 1 }}>
               <WebView
                 source={{ uri: navigationURI }}
                 textZoom={100}
@@ -182,11 +172,15 @@ const RegionServiceWebViewPlayGround: React.FunctionComponent<Props> = (
           {loading && (
             <ActivityIndicator color={customVariables.brandDarkGray} />
           )}
-          <Monospace>{webMessage}</Monospace>
           {success && showSuccessContent()}
           {error && showErrorContent()}
-        </ScrollView>
-      </View>
+          {showDebug && (
+            <View style={{ position: "absolute", bottom: 0, zIndex: 10 }}>
+              <Monospace>{webMessage}</Monospace>
+            </View>
+          )}
+        </Content>
+      </SafeAreaView>
     </Container>
   );
 };
