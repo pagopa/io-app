@@ -27,7 +27,7 @@ export const profileLoadFailure = createAction(
   resolve => (error: Error) => resolve(error, { error: true })
 );
 
-type ProfileUpsertPayload = Partial<Omit<ExtendedProfile, "version">>;
+type ProfileUpsertPayload = Partial<Omit<InitializedProfile, "version">>;
 
 export const profileUpsert = createAsyncAction(
   "PROFILE_UPSERT_REQUEST",

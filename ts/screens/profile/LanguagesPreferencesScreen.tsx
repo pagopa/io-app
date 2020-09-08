@@ -1,4 +1,5 @@
 import { List } from "native-base";
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
@@ -15,11 +16,21 @@ import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPrefe
 import { Dispatch } from "../../store/actions/types";
 import { preferredLanguageSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { getLocalePrimaryWithFallback } from "../../utils/locale";
+import {
+  fromLocaleToPreferredLanguage,
+  getLocalePrimaryWithFallback
+} from "../../utils/locale";
+import { profileUpsert } from "../../store/actions/profile";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { profileSelector } from "../../store/reducers/profile";
+import { fromNullable } from "fp-ts/lib/Option";
+import { showToast } from "../../utils/showToast";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+type State = { isLoading: boolean; selectedLocale?: Locales };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -31,13 +42,17 @@ const iconSize = 12;
 /**
  * Allows the user to select one of the available Languages as preferred
  */
-class LanguagesPreferencesScreen extends React.PureComponent<Props> {
-  private isAlreadyPreferred = (language: Locales) => 
+class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { isLoading: false };
+  }
+
+  private isAlreadyPreferred = (language: Locales) =>
     // if the preferred Lanuage is not set, we check if language is the same in use
-     this.props.preferredLanguage
+    this.props.preferredLanguage
       .map(l => l === language)
-      .getOrElse(getLocalePrimaryWithFallback() === language)
-  ;
+      .getOrElse(getLocalePrimaryWithFallback() === language);
 
   private onLanguageSelected = (language: Locales) => {
     if (!this.isAlreadyPreferred(language)) {
@@ -56,8 +71,9 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props> {
             text: I18n.t("global.buttons.confirm"),
             style: "default",
             onPress: () => {
-              this.props.preferredLanguageSaveSuccess(language);
-              this.showModal();
+              this.setState({ selectedLocale: language }, () => {
+                this.props.upsertProfile(language);
+              });
             }
           }
         ],
@@ -65,6 +81,29 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props> {
       );
     }
   };
+
+  public componentDidUpdate(prevProps: Readonly<Props>) {
+    // start updating
+    if (pot.isUpdating(this.props.profile)) {
+      this.setState({ isLoading: true });
+      return;
+    }
+
+    // update completed
+    if (pot.isUpdating(prevProps.profile) && pot.isSome(this.props.profile)) {
+      this.setState({ isLoading: false });
+      fromNullable(this.state.selectedLocale).map(
+        this.props.preferredLanguageSaveSuccess
+      );
+      this.showModal();
+      return;
+    }
+
+    // update error
+    if (pot.isUpdating(prevProps.profile) && pot.isError(this.props.profile)) {
+      showToast(I18n.t("errors.profileUpdateError"));
+    }
+  }
 
   private showModal() {
     this.props.showModal(
@@ -75,7 +114,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props> {
   }
 
   public render() {
-    return (
+    const ContainerComponent = withLoadingSpinner(() => (
       <TopScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
         headerTitle={I18n.t("profile.preferences.title")}
@@ -114,12 +153,14 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props> {
           </List>
         </ScreenContent>
       </TopScreenComponent>
-    );
+    ));
+    return <ContainerComponent isLoading={this.state.isLoading} />;
   }
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  preferredLanguage: preferredLanguageSelector(state)
+  preferredLanguage: preferredLanguageSelector(state),
+  profile: profileSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -127,6 +168,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       preferredLanguageSaveSuccess({
         preferredLanguage: language
+      })
+    ),
+  upsertProfile: (language: Locales) =>
+    dispatch(
+      profileUpsert.request({
+        preferred_languages: [fromLocaleToPreferredLanguage(language)]
       })
     )
 });
