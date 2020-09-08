@@ -213,39 +213,26 @@ function* checkLoadedProfile(
   // check if the preferred_languages is up to date
   const preferredLanguages =
     profileLoadSuccessAction.payload.preferred_languages;
-  const currentLanguage = pipe<void, Locales, PreferredLanguageEnum>(
-    getCurrentLocale,
-    fromLocaleToPreferredLanguage
-  )();
+  const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> = yield select(
+    preferredLanguageSelector
+  );
+  // deviceLocale could be the one stored or the one retrieved from the running device
+  const deviceLocale = currentStoredLocale.getOrElse(
+    getLocalePrimaryWithFallback()
+  );
   // if the preferred language isn't set, update it with the current device locale
   if (!preferredLanguages || preferredLanguages.length === 0) {
     yield put(
       profileUpsert.request({
-        preferred_languages: [currentLanguage]
+        preferred_languages: [fromLocaleToPreferredLanguage(deviceLocale)]
       })
     );
   }
-  // check if the locally stored locale matches with the one into the profile
-  const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> = yield select(
-    preferredLanguageSelector
-  );
-  // retrieving current locale, steps:
-  // 1 - the one inside the profile
-  // 2 - the stored one
-  // 3 - from the running device
-  const currentLocale =
-    preferredLanguages && preferredLanguages.length > 0
-      ? fromPreferredLanguageToLocale(preferredLanguages[0])
-      : getLocalePrimaryWithFallback();
-  // if no locale is stored save currentLocale
-  // if the stored locale is different from the current one, update it
-  if (
-    currentStoredLocale.isNone() ||
-    currentStoredLocale.value !== currentLocale
-  ) {
+  // if there is not value stored about preferred language, update it
+  if (currentStoredLocale.isNone()) {
     yield put(
       preferredLanguageSaveSuccess({
-        preferredLanguage: currentLocale
+        preferredLanguage: deviceLocale
       })
     );
   }
