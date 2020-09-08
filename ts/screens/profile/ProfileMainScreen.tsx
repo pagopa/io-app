@@ -52,7 +52,7 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import RegionServiceModal from "../../components/RegionServicePlayground";
+import RegionServicePlayGround from "../../components/RegionServicePlayground";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -381,7 +381,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     const openWebviewModal = () => {
       this.props.showModal(
-        <RegionServiceModal onModalClose={this.props.hideModal} />
+        <RegionServicePlayGround onModalClose={this.props.hideModal} />
       );
     };
 
