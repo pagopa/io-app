@@ -39,6 +39,8 @@ const localePreferredLanguageMapping = new Map<Locales, PreferredLanguageEnum>([
   ["it", PreferredLanguageEnum.it_IT],
   ["en", PreferredLanguageEnum.en_GB]
 ]);
+
+// from a given Locales return the relative PreferredLanguageEnum (fallback is en_GB)
 export const fromLocaleToPreferredLanguage = (
   locale: Locales
 ): PreferredLanguageEnum =>
