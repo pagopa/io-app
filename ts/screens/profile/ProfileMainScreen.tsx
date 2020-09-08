@@ -52,7 +52,6 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import RegionServicePlayGround from "../../components/RegionServicePlayground";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -379,12 +378,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       );
     };
 
-    const openWebviewModal = () => {
-      this.props.showModal(
-        <RegionServicePlayGround onModalClose={this.props.hideModal} />
-      );
-    };
-
     // eslint-disable
     const screenContent = () => (
       <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
@@ -465,7 +458,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               {myPortalEnabled && (
                 <ListItemComponent
                   title={"MyPortal Web Playground"}
-                  onPress={openWebviewModal}
+                  onPress={() => navigation.navigate(ROUTES.WEB_PLAYGROUND)}
                 />
               )}
               {this.developerListItem(

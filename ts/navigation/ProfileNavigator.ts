@@ -11,6 +11,7 @@ import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesS
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
+import WebPlayground from "../screens/profile/WebPlayground";
 import ROUTES from "./routes";
 
 /**
@@ -53,6 +54,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.PROFILE_DOWNLOAD_DATA]: {
       screen: DownloadProfileDataScreen
+    },
+    [ROUTES.WEB_PLAYGROUND]: {
+      screen: WebPlayground
     }
   },
   {

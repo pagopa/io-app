@@ -1568,3 +1568,6 @@ bonus:
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
+webView:
+  error:
+    convertMessage: Non è stato possibile convertire il messaggio dalla Webview

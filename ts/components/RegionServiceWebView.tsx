@@ -1,26 +1,26 @@
-import { Body, Container, Content, Left, View } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
-import { Alert, SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
+import { WebviewMessage } from "../types/WebviewMessage";
 import { getLocalePrimaryWithFallback } from "../utils/locale";
+import { showToast } from "../utils/showToast";
 import {
   closeInjectedScript,
   AVOID_ZOOM_JS,
   APP_EVENT_HANDLER
 } from "../utils/webview";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Label } from "./core/typography/Label";
-import { Monospace } from "./core/typography/Monospace";
 import ActivityIndicator from "./ui/ActivityIndicator";
-import AppHeader from "./ui/AppHeader";
 import IconFont from "./ui/IconFont";
-import Switch from "./ui/Switch";
 
 type Props = {
   onModalClose: () => void;
+  uri: string;
+  handleWebMessage?: (message: string) => void;
 };
 
 const styles = StyleSheet.create({
@@ -30,16 +30,11 @@ const styles = StyleSheet.create({
   webViewHeight: { height: heightPercentageToDP("100%") }
 });
 
-const RegionServiceWebViewPlayGround: React.FunctionComponent<Props> = (
-  props: Props
-) => {
-  const [navigationURI, setNavigationUri] = React.useState("");
-  const [webMessage, setWebMessage] = React.useState("");
+const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   const [text, setText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
-  const [showDebug, setShowDebug] = React.useState(false);
 
   const showSuccessContent = () => (
     <Content>
@@ -93,10 +88,17 @@ const RegionServiceWebViewPlayGround: React.FunctionComponent<Props> = (
   );
 
   const handleWebviewMessage = (event: WebViewMessageEvent) => {
-    setWebMessage(event.nativeEvent.data);
+    if (props.handleWebMessage) {
+      props.handleWebMessage(event.nativeEvent.data);
+    }
 
     const data = JSON.parse(event.nativeEvent.data);
     const locale = getLocalePrimaryWithFallback();
+
+    if (WebviewMessage.decode(event.nativeEvent.data).isLeft()) {
+      showToast(I18n.t("webView.error.convertMessage"));
+      return;
+    }
 
     switch (data.type) {
       case "CLOSE_MODAL":
@@ -110,17 +112,14 @@ const RegionServiceWebViewPlayGround: React.FunctionComponent<Props> = (
         return;
       case "SHOW_SUCCESS":
         setSuccess(true);
-        setText(data.payload[locale]);
+        setText(data[locale]);
         return;
       case "SHOW_ERROR":
         setError(true);
-        setText(data.payload[locale]);
+        setText(data[locale]);
         return;
       case "SHOW_ALERT":
-        Alert.alert(
-          data.payload[locale].title,
-          data.payload[locale].description
-        );
+        Alert.alert(data[locale].title, data[locale].description);
         return;
       default:
         return;
@@ -128,61 +127,25 @@ const RegionServiceWebViewPlayGround: React.FunctionComponent<Props> = (
   };
 
   return (
-    <Container>
-      <AppHeader>
-        <Left>
-          <ButtonDefaultOpacity onPress={props.onModalClose} transparent={true}>
-            <IconFont name="io-back" />
-          </ButtonDefaultOpacity>
-        </Left>
-        <Body />
-      </AppHeader>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Content contentContainerStyle={{ flex: 1 }}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={setNavigationUri}
-            value={navigationURI}
+    <>
+      {!success && !error && (
+        <View style={{ flex: 1 }}>
+          <WebView
+            source={{ uri: props.uri }}
+            textZoom={100}
+            injectedJavaScript={closeInjectedScript(
+              AVOID_ZOOM_JS + APP_EVENT_HANDLER
+            )}
+            onMessage={handleWebviewMessage}
+            sharedCookiesEnabled={true}
           />
-          <View spacer={true} />
-          <View
-            style={{
-              flexDirection: "row",
-              alignContent: "space-between"
-            }}
-          >
-            <Label color={"bluegrey"}>{"Mostra debug"}</Label>
-            <View hspacer={true} />
-            <Switch value={showDebug} onValueChange={setShowDebug} />
-          </View>
-          <View spacer={true} />
-          {!success && !error && (
-            <View style={{ flex: 1 }}>
-              <WebView
-                source={{ uri: navigationURI }}
-                textZoom={100}
-                injectedJavaScript={closeInjectedScript(
-                  AVOID_ZOOM_JS + APP_EVENT_HANDLER
-                )}
-                onMessage={handleWebviewMessage}
-                sharedCookiesEnabled={true}
-              />
-            </View>
-          )}
-          {loading && (
-            <ActivityIndicator color={customVariables.brandDarkGray} />
-          )}
-          {success && showSuccessContent()}
-          {error && showErrorContent()}
-          {showDebug && (
-            <View style={{ position: "absolute", bottom: 0, zIndex: 10 }}>
-              <Monospace>{webMessage}</Monospace>
-            </View>
-          )}
-        </Content>
-      </SafeAreaView>
-    </Container>
+        </View>
+      )}
+      {loading && <ActivityIndicator color={customVariables.brandDarkGray} />}
+      {success && showSuccessContent()}
+      {error && showErrorContent()}
+    </>
   );
 };
 
-export default RegionServiceWebViewPlayGround;
+export default RegionServiceWebView;

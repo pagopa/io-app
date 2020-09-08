@@ -13,21 +13,6 @@ const validEndLoad = {
   type: "END_LOAD"
 };
 
-const invalidCloseModal = {
-  type: "CLOSE_MODAL",
-  en: "prova"
-};
-
-const invalidStartLoad = {
-  type: "START_LOAD",
-  content: "test test"
-};
-
-const invalidEndLoad = {
-  type: "END_LOAD",
-  aaa: "test test"
-};
-
 const validShowSuccess1 = {
   type: "SHOW_SUCCESS",
   en: "test",
