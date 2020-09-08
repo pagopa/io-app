@@ -6,7 +6,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { BackendClient } from "../api/backend";
@@ -24,11 +23,8 @@ import { profileSelector } from "../store/reducers/profile";
 import { SagaCallReturnType } from "../types/utils";
 import {
   fromLocaleToPreferredLanguage,
-  fromPreferredLanguageToLocale,
-  getCurrentLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
-import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLanguage";
 import { Locales } from "../../locales/locales";
 import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
