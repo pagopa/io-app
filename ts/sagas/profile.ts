@@ -23,6 +23,7 @@ import { profileSelector } from "../store/reducers/profile";
 import { SagaCallReturnType } from "../types/utils";
 import {
   fromLocaleToPreferredLanguage,
+  fromPreferredLanguageToLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
 import { Locales } from "../../locales/locales";
@@ -224,11 +225,19 @@ function* checkLoadedProfile(
       })
     );
   }
-  // if there is not value stored about preferred language, update it
-  if (currentStoredLocale.isNone()) {
+  const currentLocale =
+    preferredLanguages && preferredLanguages.length > 0
+      ? fromPreferredLanguageToLocale(preferredLanguages[0])
+      : deviceLocale;
+  // if there is not value stored about preferred language or
+  // the stored value is different from one into the profile, update it
+  if (
+    currentStoredLocale.isNone() ||
+    currentStoredLocale.value !== currentLocale
+  ) {
     yield put(
       preferredLanguageSaveSuccess({
-        preferredLanguage: deviceLocale
+        preferredLanguage: currentLocale
       })
     );
   }
@@ -236,13 +245,15 @@ function* checkLoadedProfile(
 
 // watch for some actions about profile
 export function* watchProfile(
-  backendClient: ReturnType<typeof BackendClient>
+  startEmailValidationProcess: ReturnType<
+    typeof BackendClient
+  >["startEmailValidationProcess"]
 ): Iterator<Effect> {
   // user requests to send again the email validation to profile email
   yield takeLatest(
     getType(startEmailValidation.request),
     startEmailValidationProcessSaga,
-    backendClient.startEmailValidationProcess
+    startEmailValidationProcess
   );
   // check the loaded profile
   yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);

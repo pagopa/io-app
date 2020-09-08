@@ -192,9 +192,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     backendClient.createOrUpdateProfile
   );
 
-  // Start watching for the requests of a new verification email to
-  // validate the user email address
-  yield fork(watchProfile, backendClient);
+  // Start watching when profile is successfully loaded
+  yield fork(watchProfile, backendClient.startEmailValidationProcess);
 
   // If we are here the user is logged in and the session info is
   // loaded and valid
