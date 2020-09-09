@@ -68,8 +68,6 @@ class RootContainer extends React.PureComponent<Props> {
   };
 
   public componentDidMount() {
-    const { preferredLanguage } = this.props;
-
     initialiseInstabug();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
@@ -84,16 +82,19 @@ class RootContainer extends React.PureComponent<Props> {
     this.handleApplicationActivity(AppState.currentState);
     AppState.addEventListener("change", this.handleApplicationActivity);
 
-    /**
-     * If preferred language is set in the Persisted Store it sets the app global Locale
-     * otherwise it continues using the default locale set from the SO
-     */
-    preferredLanguage.map(l => {
-      setLocale(l);
-    });
+    this.updateLocale();
     // Hide splash screen
     SplashScreen.hide();
   }
+
+  /**
+   * If preferred language is set in the Persisted Store it sets the app global Locale
+   * otherwise it continues using the default locale set from the SO
+   */
+  private updateLocale = () =>
+    this.props.preferredLanguage.map(l => {
+      setLocale(l);
+    });
 
   public componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackButton);
@@ -122,6 +123,7 @@ class RootContainer extends React.PureComponent<Props> {
     if (immediate && deepLink) {
       this.props.navigateToDeepLink(deepLink);
     }
+    this.updateLocale();
   }
 
   public render() {

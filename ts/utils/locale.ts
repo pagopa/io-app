@@ -35,15 +35,31 @@ export const getLocalePrimaryWithFallback = (fallback: Locales = "en") =>
     .map(s => s as Locales)
     .getOrElse(fallback);
 
-const localePreferredLanguageMapping = new Map<Locales, PreferredLanguageEnum>([
+const localeToPreferredLanguageMapping = new Map<
+  Locales,
+  PreferredLanguageEnum
+>([
   ["it", PreferredLanguageEnum.it_IT],
   ["en", PreferredLanguageEnum.en_GB]
 ]);
+
+const preferredLanguageMappingToLocale = new Map<
+  PreferredLanguageEnum,
+  Locales
+>(Array.from(localeToPreferredLanguageMapping).map(item => [item[1], item[0]]));
 
 // from a given Locales return the relative PreferredLanguageEnum (fallback is en_GB)
 export const fromLocaleToPreferredLanguage = (
   locale: Locales
 ): PreferredLanguageEnum =>
-  fromNullable(localePreferredLanguageMapping.get(locale)).getOrElse(
+  fromNullable(localeToPreferredLanguageMapping.get(locale)).getOrElse(
     PreferredLanguageEnum.en_GB
   );
+
+// from a given preferredLanguage return the relative Locales (fallback is en)
+export const fromPreferredLanguageToLocale = (
+  preferredLanguage: PreferredLanguageEnum
+): Locales =>
+  fromNullable(
+    preferredLanguageMappingToLocale.get(preferredLanguage)
+  ).getOrElse("en");
