@@ -95,7 +95,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
     const data = JSON.parse(event.nativeEvent.data);
     const locale = getLocalePrimaryWithFallback();
 
-    if (WebviewMessage.decode(event.nativeEvent.data).isLeft()) {
+    if (WebviewMessage.decode(event.nativeEvent.data).isRight()) {
       showToast(I18n.t("webView.error.convertMessage"));
       return;
     }
