@@ -1,5 +1,5 @@
 /**
- * this type models the message that the App handles from a webview's injected js.
+ * these models describe the incoming data sent from web pages that include app injected JS (see RegionServiceWebView)
  */
 import * as t from "io-ts";
 
