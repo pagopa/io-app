@@ -47,8 +47,4 @@ export const WebviewMessage = t.union([
   SuccessPayload,
   EmptyPayloadMessage
 ]);
-  "type",
-  [AlertPayload, SuccessPayload, EmptyPayloadMessage],
-  "WebviewMessage"
-);
 export type WebviewMessage = t.TypeOf<typeof WebviewMessage>;
