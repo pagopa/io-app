@@ -93,16 +93,16 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
       props.handleWebMessage(event.nativeEvent.data);
     }
 
-    const data = WebviewMessage.decode(JSON.parse(event.nativeEvent.data));
+    const maybeData = WebviewMessage.decode(JSON.parse(event.nativeEvent.data));
 
-    if (data.isLeft()) {
+    if (maybeData.isLeft()) {
       showToast(I18n.t("webView.error.convertMessage"));
       return;
     }
 
     const locale = getLocalePrimaryWithFallback();
 
-    switch (data.value.type) {
+    switch (maybeData.value.type) {
       case "CLOSE_MODAL":
         props.onModalClose();
         return;
@@ -114,14 +114,20 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         return;
       case "SHOW_SUCCESS":
         setSuccess(true);
-        setText(fromNullable(data.value[locale]).getOrElse(data.value.en));
+        setText(
+          fromNullable(maybeData.value[locale]).getOrElse(maybeData.value.en)
+        );
         return;
       case "SHOW_ERROR":
         setError(true);
-        setText(fromNullable(data.value[locale]).getOrElse(data.value.en));
+        setText(
+          fromNullable(maybeData.value[locale]).getOrElse(maybeData.value.en)
+        );
         return;
       case "SHOW_ALERT":
-        const value = fromNullable(data.value[locale]).getOrElse(data.value.en);
+        const value = fromNullable(maybeData.value[locale]).getOrElse(
+          maybeData.value.en
+        );
         Alert.alert(value.title, value.description);
         return;
       default:
