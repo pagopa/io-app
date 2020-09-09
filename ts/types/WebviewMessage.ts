@@ -42,7 +42,11 @@ const EmptyPayloadMessage = t.interface({
   ])
 });
 
-export const WebviewMessage = t.taggedUnion(
+export const WebviewMessage = t.union([
+  AlertPayload,
+  SuccessPayload,
+  EmptyPayloadMessage
+]);
   "type",
   [AlertPayload, SuccessPayload, EmptyPayloadMessage],
   "WebviewMessage"
