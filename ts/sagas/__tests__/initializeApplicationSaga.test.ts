@@ -19,7 +19,11 @@ import {
 import { profileSelector } from "../../store/reducers/profile";
 import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
-import { loadProfile } from "../profile";
+import {
+  loadProfile,
+  watchProfile,
+  watchProfileUpsertRequestsSaga
+} from "../profile";
 import { initializeApplicationSaga } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
@@ -27,12 +31,12 @@ import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailVali
 const aSessionToken = "a_session_token" as SessionToken;
 
 jest.mock("react-native-background-timer", () => ({
-    startTimer: jest.fn()
-  }));
+  startTimer: jest.fn()
+}));
 
 jest.mock("react-native-share", () => ({
-    open: jest.fn()
-  }));
+  open: jest.fn()
+}));
 
 jest.mock("../../api/backend");
 
@@ -118,10 +122,13 @@ describe("initializeApplicationSaga", () => {
       .next(
         some({
           spidLevel: "https://www.spid.gov.it/SpidL2",
-
           walletToken: "wallet_token"
         })
       )
+      .fork(watchProfileUpsertRequestsSaga, undefined)
+      .next()
+      .fork(watchProfile, undefined)
+      .next()
       .call(loadProfile, undefined);
   });
 });
