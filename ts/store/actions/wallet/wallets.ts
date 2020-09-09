@@ -39,6 +39,12 @@ export const addWalletCreditCardSuccess = createStandardAction(
   "WALLET_ADD_CREDITCARD_SUCCESS"
 )<WalletResponse>();
 
+// this action describes when a new card is completed onboarded (add + pay + checkout)
+// and available in wallets list
+export const addWalletNewCreditCardSuccess = createStandardAction(
+  "WALLET_ADD_NEW_CREDITCARD_SUCCESS"
+)();
+
 export const addWalletCreditCardFailure = createStandardAction(
   "WALLET_ADD_CREDITCARD_FAILURE"
 )<"GENERIC_ERROR" | "ALREADY_EXISTS">();
@@ -134,6 +140,7 @@ export type WalletsActions =
   | ActionType<typeof addWalletCreditCardRequest>
   | ActionType<typeof addWalletCreditCardSuccess>
   | ActionType<typeof addWalletCreditCardFailure>
+  | ActionType<typeof addWalletNewCreditCardSuccess>
   | ActionType<typeof payCreditCardVerificationRequest>
   | ActionType<typeof payCreditCardVerificationSuccess>
   | ActionType<typeof payCreditCardVerificationFailure>

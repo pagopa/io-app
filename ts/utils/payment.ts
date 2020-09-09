@@ -16,10 +16,7 @@ import { InitializedProfile } from "../../definitions/backend/InitializedProfile
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
 import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
-import {
-  getCodiceAvviso,
-  PaymentHistory
-} from "../store/reducers/payments/history";
+import { PaymentHistory } from "../store/reducers/payments/history";
 import { Psp, Transaction, Wallet } from "../types/pagopa";
 import { formatDateAsReminder } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
@@ -128,7 +125,7 @@ export const cleanTransactionDescription = (description: string): string => {
   const descriptionParts = description.split("TXT/");
 
   return descriptionParts.length > 1
-    ? descriptionParts[descriptionParts.length - 1].split("/")[0].trim()
+    ? descriptionParts[descriptionParts.length - 1].trim()
     : getTransactionIUV(description) // try to extract codice avviso from description
         .chain(maybeNotNullyString)
         .map(
@@ -237,3 +234,39 @@ export const orderPspByAmount = (pspList: ReadonlyArray<Psp>) =>
     }
     return 0;
   });
+
+export const getIuv = (data: RptId): string => {
+  switch (data.paymentNoticeNumber.auxDigit) {
+    case "0":
+    case "3":
+      return data.paymentNoticeNumber.iuv13;
+    case "1":
+      return data.paymentNoticeNumber.iuv17;
+    case "2":
+      return data.paymentNoticeNumber.iuv15;
+  }
+};
+
+// return the notice code from the given rptId
+// see https://docs.italia.it/italia/pagopa/pagopa-codici-docs/it/stabile/_docs/Capitolo2.html#valore-0-del-componente-aux-digit
+export const getCodiceAvviso = (rptId: RptId) => {
+  const pnn = rptId.paymentNoticeNumber;
+  switch (pnn.auxDigit) {
+    // 0<application code (2n)><IUV base (13n)><IUV check digit (2n)>
+    case "0":
+      return `${pnn.auxDigit}${pnn.applicationCode}${getIuv(rptId)}${
+        pnn.checkDigit
+      }`;
+    // 1<IUV base (17n)>
+    case "1":
+      return `${pnn.auxDigit}${getIuv(rptId)}`;
+    // 2<IUV base (15n)><IUV check digit (2n)>
+    case "2":
+      return `${pnn.auxDigit}${getIuv(rptId)}${pnn.checkDigit}`;
+    case "3":
+      // 3<codice segregazione (2n)><IUVbase (13n)><IUV check digit (2n)>
+      return `${pnn.auxDigit}${pnn.segregationCode}${getIuv(rptId)}${
+        pnn.checkDigit
+      }`;
+  }
+};

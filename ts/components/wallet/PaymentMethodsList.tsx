@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     opacity: 0.75
   },
   methodItem: {
-    flexDirection: "column"
+    flexDirection: "column",
+    justifyContent: "center"
   },
   methodTitle: {
     ...makeFontStyleObject(Platform.select, "600"),
@@ -68,7 +69,6 @@ const styles = StyleSheet.create({
 
 const implementedMethod: IPaymentMethod = {
   name: I18n.t("wallet.methods.card.name"),
-  maxFee: I18n.t("wallet.methods.card.maxFee"),
   icon: "io-48-card",
   implemented: true
 };
@@ -124,7 +124,6 @@ const AddMethodStyle = StyleSheet.create({
 
 class PaymentMethodsList extends React.Component<Props, never> {
   private showHelp = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.props.showModal(
       <ContextualHelp
         onClose={this.props.hideModal}
@@ -163,10 +162,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
                   <Grid>
                     <Row>
                       <View style={styles.methodItem}>
-                        <Text
-                          bold={true}
-                          style={[disabledStyle, styles.methodTitle]}
-                        >
+                        <Text style={[disabledStyle, styles.methodTitle]}>
                           {itemInfo.item.name}
                         </Text>
                         {isItemDisabled && (
