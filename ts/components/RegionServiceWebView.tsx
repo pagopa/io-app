@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
@@ -92,15 +93,16 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
       props.handleWebMessage(event.nativeEvent.data);
     }
 
-    const data = JSON.parse(event.nativeEvent.data);
-    const locale = getLocalePrimaryWithFallback();
+    const data = WebviewMessage.decode(JSON.parse(event.nativeEvent.data));
 
-    if (WebviewMessage.decode(event.nativeEvent.data).isRight()) {
+    if (data.isLeft()) {
       showToast(I18n.t("webView.error.convertMessage"));
       return;
     }
 
-    switch (data.type) {
+    const locale = getLocalePrimaryWithFallback();
+
+    switch (data.value.type) {
       case "CLOSE_MODAL":
         props.onModalClose();
         return;
@@ -112,14 +114,15 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         return;
       case "SHOW_SUCCESS":
         setSuccess(true);
-        setText(data[locale]);
+        setText(fromNullable(data.value[locale]).getOrElse(data.value.en));
         return;
       case "SHOW_ERROR":
         setError(true);
-        setText(data[locale]);
+        setText(fromNullable(data.value[locale]).getOrElse(data.value.en));
         return;
       case "SHOW_ALERT":
-        Alert.alert(data[locale].title, data[locale].description);
+        const value = fromNullable(data.value[locale]).getOrElse(data.value.en);
+        Alert.alert(value.title, value.description);
         return;
       default:
         return;
