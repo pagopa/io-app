@@ -1570,4 +1570,4 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
 webView:
   error:
-    convertMessage: Non è stato possibile convertire il messaggio dalla Webview
+    convertMessage: Non è stato possibile decodificare il messaggio inviato all'app
