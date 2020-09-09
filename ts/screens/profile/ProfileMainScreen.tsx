@@ -468,6 +468,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   onPress={openWebviewModal}
                 />
               )}
+              {myPortalEnabled && (
+                <ListItemComponent
+                  title={"Markdown Playground"}
+                  onPress={() =>
+                    navigation.navigate(ROUTES.MARKDOWN_PLAYGROUND)
+                  }
+                />
+              )}
               {this.developerListItem(
                 I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
                 this.props.isPagoPATestEnabled,
