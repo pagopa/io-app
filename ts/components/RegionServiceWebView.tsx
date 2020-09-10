@@ -31,11 +31,16 @@ const styles = StyleSheet.create({
   webViewHeight: { height: heightPercentageToDP("100%") }
 });
 
+const injectedJavascript = closeInjectedScript(
+  AVOID_ZOOM_JS + APP_EVENT_HANDLER
+);
+
 const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   const [text, setText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
+  const ref = React.createRef<WebView>();
 
   const showSuccessContent = () => (
     <Content>
@@ -129,16 +134,21 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
     }
   };
 
+  const injectJS = () => {
+    fromNullable(ref.current).map(wv =>
+      wv.injectJavaScript(injectedJavascript)
+    );
+  };
+
   return (
     <>
       {!success && !error && (
         <View style={{ flex: 1 }}>
           <WebView
+            ref={ref}
             source={{ uri: props.uri }}
             textZoom={100}
-            injectedJavaScript={closeInjectedScript(
-              AVOID_ZOOM_JS + APP_EVENT_HANDLER
-            )}
+            onLoadEnd={injectJS}
             onMessage={handleWebviewMessage}
             sharedCookiesEnabled={true}
           />
