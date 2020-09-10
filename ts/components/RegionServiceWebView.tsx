@@ -21,7 +21,6 @@ import IconFont from "./ui/IconFont";
 type Props = {
   onModalClose: () => void;
   uri: string;
-  webviewStyle?: any;
   handleWebMessage?: (message: string) => void;
 };
 
@@ -102,8 +101,8 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
     }
 
     const locale = getLocalePrimaryWithFallback();
-
-    switch (maybeData.value.type) {
+    const message = maybeData.value;
+    switch (message.type) {
       case "CLOSE_MODAL":
         props.onModalClose();
         return;
@@ -115,20 +114,14 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         return;
       case "SHOW_SUCCESS":
         setSuccess(true);
-        setText(
-          fromNullable(maybeData.value[locale]).getOrElse(maybeData.value.en)
-        );
+        setText(fromNullable(message[locale]).getOrElse(message.en));
         return;
       case "SHOW_ERROR":
         setError(true);
-        setText(
-          fromNullable(maybeData.value[locale]).getOrElse(maybeData.value.en)
-        );
+        setText(fromNullable(message[locale]).getOrElse(message.en));
         return;
       case "SHOW_ALERT":
-        const value = fromNullable(maybeData.value[locale]).getOrElse(
-          maybeData.value.en
-        );
+        const value = fromNullable(message[locale]).getOrElse(message.en);
         Alert.alert(value.title, value.description);
         return;
       default:
@@ -139,9 +132,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <>
       {!success && !error && (
-        <View
-          style={[{ flex: 1 }, props.webviewStyle ? props.webviewStyle : {}]}
-        >
+        <View style={{ flex: 1 }}>
           <WebView
             source={{ uri: props.uri }}
             textZoom={100}

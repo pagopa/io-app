@@ -21,8 +21,6 @@ const styles = StyleSheet.create({
   textInput: { flex: 1, padding: 1, borderWidth: 1, height: 30 },
   center: { alignItems: "center" },
   contentCenter: { justifyContent: "center" },
-  webViewHeightL: { height: heightPercentageToDP("100%") },
-  webViewHeightS: { height: heightPercentageToDP("85%") },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -67,21 +65,18 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           <View spacer={true} />
           <View style={styles.row}>
-            <Label color={"bluegrey"}>{"Mostra debug"}</Label>
+            <Label color={"bluegrey"}>{"Show debug"}</Label>
             <Switch value={showDebug} onValueChange={setShowDebug} />
           </View>
           <View spacer={true} />
-          <RegionServiceWebView
-            webviewStyle={styles.webViewHeightS}
-            uri={loadUri}
-            onModalClose={props.goBack}
-            handleWebMessage={setWebMessage}
-          />
-          {showDebug && (
-            <View style={styles.debugArea}>
-              <Monospace>{webMessage}</Monospace>
-            </View>
-          )}
+          <View style={{ flex: 1 }}>
+            {showDebug && <Monospace>{webMessage}</Monospace>}
+            <RegionServiceWebView
+              uri={loadUri}
+              onModalClose={props.goBack}
+              handleWebMessage={setWebMessage}
+            />
+          </View>
         </Content>
       </SafeAreaView>
     </BaseScreenComponent>
