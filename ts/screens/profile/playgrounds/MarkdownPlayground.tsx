@@ -60,17 +60,28 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
               value={inputText}
             />
             <View hspacer={true} />
-            <ButtonDefaultOpacity
-              style={styles.contentCenter}
-              onPress={() => setMarkdownText(inputText)}
+            <View>
+              <ButtonDefaultOpacity
+                style={styles.contentCenter}
+                onPress={() => setMarkdownText(inputText)}
+              >
+                <IconFont
+                  name={"io-right"}
+                  style={{
+                    color: IOColors.white
+                  }}
+                />
+              </ButtonDefaultOpacity>
+            </View>
+          </View>
+          <View style={{ marginTop: 10 }}>
+            <Label
+              weight={"Regular"}
+              color={"blue"}
+              onPress={() => setInputText("")}
             >
-              <IconFont
-                name={"io-right"}
-                style={{
-                  color: IOColors.white
-                }}
-              />
-            </ButtonDefaultOpacity>
+              {"clear"}
+            </Label>
           </View>
           <View spacer={true} />
           {isMarkdownSet && <Label color={"bluegrey"}>{ctaMessage}</Label>}
