@@ -24,7 +24,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
-import { myPortalEnabled } from "../../config";
+import { isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -455,11 +455,19 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   this.onExperimentalFeaturesToggle
                 ) */
               }
-              {myPortalEnabled && (
-                <ListItemComponent
-                  title={"MyPortal Web Playground"}
-                  onPress={() => navigation.navigate(ROUTES.WEB_PLAYGROUND)}
-                />
+              {isPlaygroundsEnabled && (
+                <>
+                  <ListItemComponent
+                    title={"MyPortal Web Playground"}
+                    onPress={() => navigation.navigate(ROUTES.WEB_PLAYGROUND)}
+                  />
+                  <ListItemComponent
+                    title={"Markdown Playground"}
+                    onPress={() =>
+                      navigation.navigate(ROUTES.MARKDOWN_PLAYGROUND)
+                    }
+                  />
+                </>
               )}
               {this.developerListItem(
                 I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
