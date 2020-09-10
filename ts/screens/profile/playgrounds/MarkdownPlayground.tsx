@@ -1,11 +1,9 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
-import { constNull } from "fp-ts/lib/function";
 import { connect } from "react-redux";
+import { View, Content } from "native-base";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import customVariables from "../../../theme/variables";
-import Switch from "../../../components/ui/Switch";
-import { View, Content } from "native-base";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import IconFont from "../../../components/ui/IconFont";
 import { navigateBack } from "../../../store/actions/navigation";
@@ -21,6 +19,7 @@ import {
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageNestedCtaButton } from "../../../components/messages/MessageNestedCtaButton";
 import { CTA } from "../../../types/MessageCTA";
+import { maybeNotNullyString } from "../../../utils/strings";
 type Props = ReturnType<typeof mapDispatchToProps> & ReduxProps;
 
 const styles = StyleSheet.create({
@@ -44,20 +43,18 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
     }
   } as CreatedMessageWithContent;
   const maybeCTA = getCTA(message);
-  const ctaMessage = maybeCTA.isSome() ? "has valid CTA" : "no CTA found";
+  const ctaMessage = maybeCTA.isSome()
+    ? `${maybeCTA.value.cta_1 ? "2" : "1"} cta found!`
+    : "no CTA found";
+  const isMarkdownSet = maybeNotNullyString(markdownText).isSome();
   return (
-    // eslint-disable-next-line react/jsx-no-undef
     <BaseScreenComponent goBack={true} headerTitle={"Markdown playground"}>
-      {/* eslint-disable-next-line react/jsx-no-undef */}
       <SafeAreaView style={styles.flex}>
-        {/* eslint-disable-next-line react/jsx-no-undef */}
         <Content contentContainerStyle={styles.flex}>
           <View style={styles.row}>
             <TextInput
               multiline={true}
-              placeholder={
-                "paste here your markdown and press the button to view it"
-              }
+              placeholder={"paste here your markdown and press the button"}
               style={styles.textInput}
               onChangeText={setInputText}
               value={inputText}
@@ -77,11 +74,7 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
             </ButtonDefaultOpacity>
           </View>
           <View spacer={true} />
-          <View style={styles.row}>
-            <Label color={"bluegrey"}>{"Mostra debug"}</Label>
-            <Switch value={true} onValueChange={constNull} />
-          </View>
-          <Label color={"bluegrey"}>{ctaMessage}</Label>
+          {isMarkdownSet && <Label color={"bluegrey"}>{ctaMessage}</Label>}
 
           {maybeCTA.isSome() && (
             <View style={styles.row}>
@@ -93,19 +86,25 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
             </View>
           )}
           {maybeCTA.isSome() && maybeCTA.value.cta_2 && (
-            <View style={styles.row}>
-              <MessageNestedCtaButton
-                cta={maybeCTA.value.cta_2}
-                xsmall={true}
-                onCTAPress={props.handleCTAPress}
-              />
-            </View>
+            <>
+              <View spacer={true} />
+              <View style={styles.row}>
+                <MessageNestedCtaButton
+                  cta={maybeCTA.value.cta_2}
+                  xsmall={true}
+                  onCTAPress={props.handleCTAPress}
+                />
+              </View>
+            </>
           )}
-
-          <View spacer={true} />
-          <Markdown>
-            {cleanMarkdownFromCTAs(markdownText as MessageBodyMarkdown)}
-          </Markdown>
+          {isMarkdownSet && (
+            <>
+              <View spacer={true} />
+              <Markdown extraBodyHeight={60}>
+                {cleanMarkdownFromCTAs(markdownText as MessageBodyMarkdown)}
+              </Markdown>
+            </>
+          )}
         </Content>
       </SafeAreaView>
     </BaseScreenComponent>
