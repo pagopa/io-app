@@ -51,7 +51,7 @@ export const isPlaygroundsEnabled: boolean =
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
 // version of ToS
-export const tosVersion: NonNegativeNumber = 2 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;
 
 export const fetchTimeout = t.Integer.decode(
   parseInt(Config.FETCH_TIMEOUT_MS, 10)

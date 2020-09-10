@@ -89,6 +89,7 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.WALLET_TRANSACTION_DETAILS,
   BONUSVACANZE_ROUTES.MAIN,
   ROUTES.MARKDOWN_PLAYGROUND
+  ROUTES.WEB_PLAYGROUND
 ];
 
 const getTabBarVisibility = (

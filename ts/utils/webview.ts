@@ -47,7 +47,7 @@ function hideLoader() {
 function showSuccess(payload) {
   const message = {
     type: "SHOW_SUCCESS",
-    payload
+    ...payload
   };
   sendMessagesToRN(message);
 }
@@ -55,7 +55,7 @@ function showSuccess(payload) {
 function showErrorMessage(payload) {
   const message = {
     type: "SHOW_ERROR",
-    payload
+    ...payload
   };
   sendMessagesToRN(message);
 }
@@ -63,7 +63,7 @@ function showErrorMessage(payload) {
 function showAlertBox(payload) {
   const message = {
     type: "SHOW_ALERT",
-    payload
+    ...payload
   };
   sendMessagesToRN(message);
 }`;
