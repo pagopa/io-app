@@ -456,18 +456,18 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                 ) */
               }
               {isPlaygroundsEnabled && (
-                <ListItemComponent
-                  title={"MyPortal Web Playground"}
-                  onPress={() => navigation.navigate(ROUTES.WEB_PLAYGROUND)}
-                />
-              )}
-              {isPlaygroundsEnabled && (
-                <ListItemComponent
-                  title={"Markdown Playground"}
-                  onPress={() =>
-                    navigation.navigate(ROUTES.MARKDOWN_PLAYGROUND)
-                  }
-                />
+                <>
+                  <ListItemComponent
+                    title={"MyPortal Web Playground"}
+                    onPress={() => navigation.navigate(ROUTES.WEB_PLAYGROUND)}
+                  />
+                  <ListItemComponent
+                    title={"Markdown Playground"}
+                    onPress={() =>
+                      navigation.navigate(ROUTES.MARKDOWN_PLAYGROUND)
+                    }
+                  />
+                </>
               )}
               {this.developerListItem(
                 I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
