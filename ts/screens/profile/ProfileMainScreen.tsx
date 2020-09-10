@@ -24,7 +24,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
-import { myPortalEnabled } from "../../config";
+import { isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -462,13 +462,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   this.onExperimentalFeaturesToggle
                 ) */
               }
-              {myPortalEnabled && (
+              {isPlaygroundsEnabled && (
                 <ListItemComponent
                   title={"MyPortal Web Playground"}
                   onPress={openWebviewModal}
                 />
               )}
-              {myPortalEnabled && (
+              {isPlaygroundsEnabled && (
                 <ListItemComponent
                   title={"Markdown Playground"}
                   onPress={() =>

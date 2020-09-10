@@ -45,7 +45,8 @@ export const instabugToken: string = Config.INSTABUG_TOKEN;
 export const bonusVacanzeEnabled: boolean =
   Config.BONUS_VACANZE_ENABLED === "YES";
 
-export const playgroundsEnabled: boolean = Config.PLAYGROUNDS_ENABLED === "YES";
+export const isPlaygroundsEnabled: boolean =
+  Config.PLAYGROUNDS_ENABLED === "YES";
 
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
