@@ -3,7 +3,6 @@ import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { connect } from "react-redux";
 import { View, Content } from "native-base";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import customVariables from "../../../theme/variables";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import IconFont from "../../../components/ui/IconFont";
 import { navigateBack } from "../../../store/actions/navigation";
@@ -20,6 +19,7 @@ import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBody
 import { MessageNestedCtaButton } from "../../../components/messages/MessageNestedCtaButton";
 import { CTA } from "../../../types/MessageCTA";
 import { maybeNotNullyString } from "../../../utils/strings";
+import { IOColors } from "../../../components/core/variables/IOColors";
 type Props = ReturnType<typeof mapDispatchToProps> & ReduxProps;
 
 const styles = StyleSheet.create({
@@ -60,7 +60,6 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
               value={inputText}
             />
             <View hspacer={true} />
-            {/* eslint-disable-next-line react/jsx-no-undef */}
             <ButtonDefaultOpacity
               style={styles.contentCenter}
               onPress={() => setMarkdownText(inputText)}
@@ -68,7 +67,7 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
               <IconFont
                 name={"io-right"}
                 style={{
-                  color: customVariables.colorWhite
+                  color: IOColors.white
                 }}
               />
             </ButtonDefaultOpacity>
