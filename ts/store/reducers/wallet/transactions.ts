@@ -33,22 +33,21 @@ const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
   total: pot.none
 };
 
-// selectors
-export const getTransactions = (state: GlobalState) =>
-  pot.map(
-    state.wallet.transactions.transactions,
-    txs =>
-      values(txs).filter(
-        _ => _ !== undefined && isSuccessTransaction(_)
-      ) as ReadonlyArray<Transaction>
-  );
+const potTransactions = (state: GlobalState) =>
+  state.wallet.transactions.transactions;
 
-export const getWalletTransactionsCreator = (idWallet: number) => (
-  state: GlobalState
-) =>
-  pot.map(getTransactions(state), tsx =>
-    tsx.filter(_ => _.idWallet === idWallet)
-  );
+// selectors
+export const getTransactions = createSelector(
+  potTransactions,
+  potTransactions =>
+    pot.map(
+      potTransactions,
+      txs =>
+        values(txs).filter(_ => isSuccessTransaction(_)) as ReadonlyArray<
+          Transaction
+        >
+    )
+);
 
 export const latestTransactionsSelector = createSelector(
   getTransactions,
@@ -75,14 +74,17 @@ export const latestTransactionsSelector = createSelector(
 );
 
 // return true if there are more transactions to load
-export const areMoreTransactionsAvailable = (state: GlobalState): boolean => pot.getOrElse(
-    pot.map(state.wallet.transactions.transactions, transactions => pot.getOrElse(
+export const areMoreTransactionsAvailable = (state: GlobalState): boolean =>
+  pot.getOrElse(
+    pot.map(state.wallet.transactions.transactions, transactions =>
+      pot.getOrElse(
         pot.map(
           state.wallet.transactions.total,
           t => Object.keys(transactions).length < t
         ),
         false
-      )),
+      )
+    ),
     false
   );
 
