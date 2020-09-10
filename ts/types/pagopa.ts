@@ -155,11 +155,13 @@ const idStatusSuccessTransaction: ReadonlyArray<number> = [8, 9];
  * 2.payed /w other methods: accountingStatus is undefined AND id_status = 8 (Confermato mod1) or id_status = 9 (Confermato mod2)
  * ref: https://www.pivotaltracker.com/story/show/173850410
  */
-export const isSuccessTransaction = (tx: Transaction) =>
-  fromNullable(tx.accountingStatus).foldL(
-    () => idStatusSuccessTransaction.some(ids => ids === tx.idStatus),
-    as => as === 1
-  );
+export const isSuccessTransaction = (tx?: Transaction) =>
+  fromNullable(tx).map(tx => {
+    fromNullable(tx.accountingStatus).foldL(
+      () => idStatusSuccessTransaction.some(ids => ids === tx.idStatus),
+      as => as === 1
+    );
+  });
 
 /**
  * A refined TransactionListResponse
