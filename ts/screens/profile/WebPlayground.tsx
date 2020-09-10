@@ -71,15 +71,12 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
             <Switch value={showDebug} onValueChange={setShowDebug} />
           </View>
           <View spacer={true} />
-          <View
-            style={showDebug ? styles.webViewHeightS : styles.webViewHeightL}
-          >
-            <RegionServiceWebView
-              uri={loadUri}
-              onModalClose={props.goBack}
-              handleWebMessage={setWebMessage}
-            />
-          </View>
+          <RegionServiceWebView
+            webviewStyle={styles.webViewHeightS}
+            uri={loadUri}
+            onModalClose={props.goBack}
+            handleWebMessage={setWebMessage}
+          />
           {showDebug && (
             <View style={styles.debugArea}>
               <Monospace>{webMessage}</Monospace>

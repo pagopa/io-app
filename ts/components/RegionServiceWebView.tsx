@@ -21,6 +21,7 @@ import IconFont from "./ui/IconFont";
 type Props = {
   onModalClose: () => void;
   uri: string;
+  webviewStyle?: any;
   handleWebMessage?: (message: string) => void;
 };
 
@@ -138,7 +139,9 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <>
       {!success && !error && (
-        <View style={{ flex: 1 }}>
+        <View
+          style={[{ flex: 1 }, props.webviewStyle ? props.webviewStyle : {}]}
+        >
           <WebView
             source={{ uri: props.uri }}
             textZoom={100}
