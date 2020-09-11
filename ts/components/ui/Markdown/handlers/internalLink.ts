@@ -9,7 +9,7 @@ import BONUSVACANZE_ROUTES from "../../../../features/bonusVacanze/navigation/ro
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
 import { isTestEnv } from "../../../../utils/environment";
-import { addInternalRouteNavigation } from "../../../../store/actions/internalRoutNavigation";
+import { addInternalRouteNavigation } from "../../../../store/actions/internalRouteNavigation";
 
 // Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
 const IO_INTERNAL_LINK_PROTOCOL = "ioit:";

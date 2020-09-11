@@ -1,7 +1,7 @@
 import { getType } from "typesafe-actions";
 import { InternalRoute } from "../../components/ui/Markdown/handlers/internalLink";
 import { Action } from "../actions/types";
-import { addInternalRouteNavigation } from "../actions/internalRoutNavigation";
+import { addInternalRouteNavigation } from "../actions/internalRouteNavigation";
 import { GlobalState } from "./types";
 
 export type InternalRouteNavigationState = InternalRoute | null;
