@@ -4,6 +4,7 @@ import {
   put,
   select,
   take,
+  takeEvery,
   takeLatest
 } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
@@ -40,6 +41,8 @@ import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
+import { startPinReset, updatePin } from "../store/actions/pinset";
+import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -180,12 +183,29 @@ function* startAndHandleIdentificationResult(
   }
 }
 
-export function* watchIdentificationRequest(
-  pin: PinString
-): IterableIterator<Effect> {
+function* handlePinReset() {
+  // Delete the current unlock code from the Keychain
+  // eslint-disable-next-line
+  yield call(deletePin);
+  // invalidate the session
+  yield put(sessionInvalid());
+  // initialize the app from scratch (forcing an onboarding flow)
+  yield put(startApplicationInitialization());
+}
+
+export function* watchIdentification(pin: PinString): IterableIterator<Effect> {
+  // Watch for identification request
   yield takeLatest(
     getType(identificationRequest),
     startAndHandleIdentificationResult,
     pin
   );
+
+  // Watch for requests to reset the unlock code.
+  yield takeEvery(getType(startPinReset), handlePinReset);
+
+  yield takeLatest(getType(updatePin), function* () {
+    yield call(deletePin);
+    yield call(checkConfiguredPinSaga);
+  });
 }

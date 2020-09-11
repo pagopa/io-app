@@ -183,7 +183,7 @@ profile:
       cleared: The cache has been cleared.
     resetPin:
       confirmTitle: Are you sure you want to reset your unlock code?
-      confirmMsg: You will be asked again to log in.
+      confirmMsg: The code currently in use will be deleted
     preferences:
       title: Preferences
       description: Manage app internal preferences

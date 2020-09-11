@@ -19,8 +19,12 @@ import { PinString } from "../../types/PinString";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { setPin } from "../../utils/keychain";
 import { maybeNotNullyString } from "../../utils/strings";
+import { GlobalState } from "../../store/reducers/types";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 
-type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
+type Props = NavigationScreenProps &
+  ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 type PinUnselected = {
   state: "PinUnselected";
@@ -164,25 +168,23 @@ class PinScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  private renderErrorDescription = () => maybeNotNullyString(this.state.errorDescription).fold(
-      undefined,
-      des => {
-        // wait 100ms to set focus
-        setAccessibilityFocus(this.confirmationStatusRef, accessibilityTimeout);
-        return (
-          <Text
-            ref={this.confirmationStatusRef}
-            alignCenter={true}
-            bold={true}
-            white={false}
-            primary={true}
-            accessible={true}
-          >
-            {des}
-          </Text>
-        );
-      }
-    );
+  private renderErrorDescription = () =>
+    maybeNotNullyString(this.state.errorDescription).fold(undefined, des => {
+      // wait 100ms to set focus
+      setAccessibilityFocus(this.confirmationStatusRef, accessibilityTimeout);
+      return (
+        <Text
+          ref={this.confirmationStatusRef}
+          alignCenter={true}
+          bold={true}
+          white={false}
+          primary={true}
+          accessible={true}
+        >
+          {des}
+        </Text>
+      );
+    });
 
   public onPinReset() {
     this.setState(
@@ -374,6 +376,10 @@ class PinScreen extends React.PureComponent<Props, State> {
           }
         });
         this.props.createPinSuccess(pin);
+        // user is updating his/her pin inside the app, go back
+        if (this.props.isOnboardingCompleted) {
+          this.props.navigation.goBack();
+        }
       },
       _ =>
         // TODO: show toast if error (https://www.pivotaltracker.com/story/show/170819508)
@@ -388,9 +394,13 @@ class PinScreen extends React.PureComponent<Props, State> {
   };
 }
 
+const mapStateToProps = (state: GlobalState) => ({
+  isOnboardingCompleted: isOnboardingCompletedSelector(state)
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   createPinSuccess: (pin: PinString) => dispatch(createPinSuccess(pin)),
   abortOnboarding: () => dispatch(abortOnboarding())
 });
 
-export default connect(undefined, mapDispatchToProps)(PinScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PinScreen);

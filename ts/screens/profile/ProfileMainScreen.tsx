@@ -36,7 +36,7 @@ import {
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
-import { startPinReset } from "../../store/actions/pinset";
+import { updatePin } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -584,7 +584,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // hard-logout
   logout: () => dispatch(logoutRequest({ keepUserData: false })),
-  resetPin: () => dispatch(startPinReset()),
+  resetPin: () => dispatch(updatePin()),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
