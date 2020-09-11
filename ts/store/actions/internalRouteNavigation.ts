@@ -5,6 +5,6 @@ export const addInternalRouteNavigation = createStandardAction(
   "INTERNAL_ROUTE_NAVIGATION_ADD"
 )<InternalRoute>();
 
-export type InternalRoutNavigationActions = ActionType<
+export type InternalRouteNavigationActions = ActionType<
   typeof addInternalRouteNavigation
 >;
