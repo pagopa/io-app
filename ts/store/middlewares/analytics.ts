@@ -64,7 +64,7 @@ import {
   updateNotificationsInstallationToken
 } from "../actions/notifications";
 import { tosAccepted } from "../actions/onboarding";
-import { createPinSuccess } from "../actions/pinset";
+import { createPinSuccess, updatePin } from "../actions/pinset";
 import {
   profileFirstLogin,
   profileLoadFailure,
@@ -306,6 +306,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // onboarding
     case getType(analyticsOnboardingStarted):
     case getType(createPinSuccess):
+    case getType(updatePin):
     // profile
     case getType(profileUpsert.success):
     // userMetadata

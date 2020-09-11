@@ -185,7 +185,6 @@ function* startAndHandleIdentificationResult(
 
 function* handlePinReset() {
   // Delete the current unlock code from the Keychain
-  // eslint-disable-next-line
   yield call(deletePin);
   // invalidate the session
   yield put(sessionInvalid());
@@ -204,6 +203,7 @@ export function* watchIdentification(pin: PinString): IterableIterator<Effect> {
   // Watch for requests to reset the unlock code.
   yield takeEvery(getType(startPinReset), handlePinReset);
 
+  // Watch for requests to update the unlock code.
   yield takeLatest(getType(updatePin), function* () {
     yield call(deletePin);
     yield call(checkConfiguredPinSaga);
