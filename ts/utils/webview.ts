@@ -66,7 +66,12 @@ function showAlertBox(payload) {
     ...payload
   };
   sendMessagesToRN(message);
-}`;
+}
+
+if (onInjetionCompleted) {
+  onInjectionCompleted()
+}
+`;
 
 const endTrue = "true;";
 // ensure the injected JS into the webview contains the right closure. If not it will be added.
