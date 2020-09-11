@@ -34,8 +34,8 @@ import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { GlobalState } from "../../store/reducers/types";
 import {
   areMoreTransactionsAvailable,
-  getTransactionsLoadedLength,
-  getWalletTransactionsCreator
+  getTransactions,
+  getTransactionsLoadedLength
 } from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
@@ -130,6 +130,11 @@ class TransactionsScreen extends React.Component<Props> {
 
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
+    const transactions = pot.map(this.props.transactions, tsx =>
+      tsx
+        .filter(t => t.idWallet === selectedWallet.idWallet)
+        .sort((a, b) => b.created.getTime() - a.created.getTime())
+    );
 
     const isFavorite = pot.map(
       this.props.favoriteWallet,
@@ -164,7 +169,7 @@ class TransactionsScreen extends React.Component<Props> {
         <TransactionsList
           title={I18n.t("wallet.transactions")}
           amount={I18n.t("wallet.amount")}
-          transactions={this.props.transactions}
+          transactions={transactions}
           areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
           onLoadMoreTransactions={this.handleLoadMoreTransactions}
           navigateToTransactionDetails={
@@ -178,10 +183,8 @@ class TransactionsScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
-  transactions: getWalletTransactionsCreator(
-    ownProps.navigation.getParam("selectedWallet").idWallet
-  )(state),
+const mapStateToProps = (state: GlobalState) => ({
+  transactions: getTransactions(state),
   potPayments: paymentsHistorySelector(state),
   transactionsLoadedLength: getTransactionsLoadedLength(state),
   favoriteWallet: getFavoriteWalletId(state),

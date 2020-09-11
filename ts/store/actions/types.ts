@@ -40,6 +40,7 @@ import { ServicesActions } from "./services";
 import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
+import { InternalRouteNavigationActions } from "./internalRouteNavigation";
 
 export type Action =
   | AnalyticsActions
@@ -70,6 +71,7 @@ export type Action =
   | PaymentsActions
   | OrganizationsActions
   | InstabugInfoActions
+  | InternalRouteNavigationActions
   | UserDataProcessingActions
   | ProfileEmailValidationAction
   | BonusActions;

@@ -21,6 +21,14 @@ import {
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
 import { SagaCallReturnType } from "../types/utils";
+import {
+  fromLocaleToPreferredLanguage,
+  fromPreferredLanguageToLocale,
+  getLocalePrimaryWithFallback
+} from "../utils/locale";
+import { Locales } from "../../locales/locales";
+import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
+import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -164,7 +172,7 @@ export function* watchProfileRefreshRequestsSaga(
 
 // make a request to start the email validation process that sends to the user
 // an email with a link to validate it
-export function* startEmailValidationProcessSaga(
+function* startEmailValidationProcessSaga(
   startEmailValidationProcess: ReturnType<
     typeof BackendClient
   >["startEmailValidationProcess"]
@@ -195,15 +203,58 @@ export function* startEmailValidationProcessSaga(
   }
 }
 
-// This function listens for request to send again the email validation to profile email and calls the needed saga.
-export function* watchProfileSendEmailValidationSaga(
+// make some checks about loaded profile
+function* checkLoadedProfile(
+  profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
+): Generator<Effect, any, Option<Locales>> {
+  // check if the preferred_languages is up to date
+  const preferredLanguages =
+    profileLoadSuccessAction.payload.preferred_languages;
+  const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> = yield select(
+    preferredLanguageSelector
+  );
+  // deviceLocale could be the one stored or the one retrieved from the running device
+  const deviceLocale = currentStoredLocale.getOrElse(
+    getLocalePrimaryWithFallback()
+  );
+  // if the preferred language isn't set, update it with the current device locale
+  if (!preferredLanguages || preferredLanguages.length === 0) {
+    yield put(
+      profileUpsert.request({
+        preferred_languages: [fromLocaleToPreferredLanguage(deviceLocale)]
+      })
+    );
+  }
+  const currentLocale =
+    preferredLanguages && preferredLanguages.length > 0
+      ? fromPreferredLanguageToLocale(preferredLanguages[0])
+      : deviceLocale;
+  // if there is not value stored about preferred language or
+  // the stored value is different from one into the profile, update it
+  if (
+    currentStoredLocale.isNone() ||
+    currentStoredLocale.value !== currentLocale
+  ) {
+    yield put(
+      preferredLanguageSaveSuccess({
+        preferredLanguage: currentLocale
+      })
+    );
+  }
+}
+
+// watch for some actions about profile
+export function* watchProfile(
   startEmailValidationProcess: ReturnType<
     typeof BackendClient
   >["startEmailValidationProcess"]
 ): Iterator<Effect> {
+  // user requests to send again the email validation to profile email
   yield takeLatest(
     getType(startEmailValidation.request),
     startEmailValidationProcessSaga,
     startEmailValidationProcess
   );
+  // check the loaded profile
+  yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
 }

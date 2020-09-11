@@ -66,7 +66,6 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
   const [hasError, setHasError] = React.useState(false);
   React.useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackPressed);
-
     return () =>
       BackHandler.removeEventListener("hardwareBackPress", handleBackPressed);
   });
