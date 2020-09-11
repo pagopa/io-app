@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0-rc.3](https://github.com/pagopa/io-app/compare/1.6.0-rc.2...1.6.0-rc.3) (2020-09-10)
+
+## [1.6.0-rc.2](https://github.com/pagopa/io-app/compare/1.6.0-rc.1...1.6.0-rc.2) (2020-09-10)
+
+
+### Features
+
+* **Bonus Vacanze:** [[#174693564](https://www.pivotaltracker.com/story/show/174693564)] Remove footer when bonus is not active ([#2182](https://github.com/pagopa/io-app/issues/2182)) ([cc1cb4f](https://github.com/pagopa/io-app/commit/cc1cb4f5ff5ce671efd3eb9a3bf2fbb6afc889f3))
+* **My Portal:** [[#174618758](https://www.pivotaltracker.com/story/show/174618758),[#174574621](https://www.pivotaltracker.com/story/show/174574621)] Playground to test the event handling from an external webview ([#2178](https://github.com/pagopa/io-app/issues/2178)) ([82d63ec](https://github.com/pagopa/io-app/commit/82d63ec34f2d5cc2645524b340182e662e1f6e6e))
+* [[#173190756](https://www.pivotaltracker.com/story/show/173190756)] Update profile on language selection ([#2184](https://github.com/pagopa/io-app/issues/2184)) ([a22f330](https://github.com/pagopa/io-app/commit/a22f330d7ad4e25df6c2cda134473d2989b4f7da))
+* [[#174712071](https://www.pivotaltracker.com/story/show/174712071)] Update and sync preferred language ([#2186](https://github.com/pagopa/io-app/issues/2186)) ([7fa533f](https://github.com/pagopa/io-app/commit/7fa533fe92657752c9c38a58eb10f08061391443)), closes [#173190756](https://www.pivotaltracker.com/story/show/173190756)
+* **My Portal:** [[#174689080](https://www.pivotaltracker.com/story/show/174689080)] Improvements on Webview playground ([#2185](https://github.com/pagopa/io-app/issues/2185)) ([67cb09d](https://github.com/pagopa/io-app/commit/67cb09de53bda1b378802159dab786aaa6069903))
+* [[#174736321](https://www.pivotaltracker.com/story/show/174736321)] Add markdown playground ([#2189](https://github.com/pagopa/io-app/issues/2189)) ([7ba4a46](https://github.com/pagopa/io-app/commit/7ba4a46ed57b33b35374a573f49f6635cb73143f))
+
+
+### Bug Fixes
+
+* **Payments:** [[#174552971](https://www.pivotaltracker.com/story/show/174552971)] Notice number is wrong composed ([#2180](https://github.com/pagopa/io-app/issues/2180)) ([607c29f](https://github.com/pagopa/io-app/commit/607c29f48c7c23e538c910246b0f65afd2bb4dce))
+* **Payments:** [[#174646257](https://www.pivotaltracker.com/story/show/174646257)] Display notice in place of IUV ([#2177](https://github.com/pagopa/io-app/issues/2177)) ([183d5a0](https://github.com/pagopa/io-app/commit/183d5a01f09034c3eeaa7a64f1796ecdb130deed))
+* **Payments:** [[#174733925](https://www.pivotaltracker.com/story/show/174733925)] Transactions are ordered from oldest to most recent ([#2190](https://github.com/pagopa/io-app/issues/2190)) ([3250abd](https://github.com/pagopa/io-app/commit/3250abd1990fc1e4b49b30c02e59b7bca5ffc151))
+
 ## [1.6.0-rc.1](https://github.com/pagopa/io-app/compare/1.6.0-rc.0...1.6.0-rc.1) (2020-09-03)
 
 

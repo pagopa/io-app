@@ -45,11 +45,13 @@ export const instabugToken: string = Config.INSTABUG_TOKEN;
 export const bonusVacanzeEnabled: boolean =
   Config.BONUS_VACANZE_ENABLED === "YES";
 
-export const myPortalEnabled: boolean =
-  Config.MYPORTAL_ENABLED === "YES";
+export const isPlaygroundsEnabled: boolean =
+  Config.PLAYGROUNDS_ENABLED === "YES";
+
+export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
 // version of ToS
-export const tosVersion: NonNegativeNumber = 2 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;
 
 export const fetchTimeout = t.Integer.decode(
   parseInt(Config.FETCH_TIMEOUT_MS, 10)
