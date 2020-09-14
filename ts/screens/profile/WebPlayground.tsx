@@ -1,4 +1,4 @@
-import { Content, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
@@ -13,6 +13,9 @@ import { navigateBack } from "../../store/actions/navigation";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IconFont from "../../components/ui/IconFont";
 import customVariables from "../../theme/variables";
+import { LabelledItem } from "../../components/LabelledItem";
+import CookieManager, { Cookie } from "@react-native-community/cookies";
+import { showToast } from "../../utils/showToast";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -36,9 +39,37 @@ const styles = StyleSheet.create({
 
 const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
   const [navigationURI, setNavigationUri] = React.useState("");
+  const [cookieName, setCookieName] = React.useState("");
+  const [cookieValue, setCookieValue] = React.useState("");
   const [loadUri, setLoadUri] = React.useState("");
   const [webMessage, setWebMessage] = React.useState("");
   const [showDebug, setShowDebug] = React.useState(false);
+  const [saveCookie, setSaveCookie] = React.useState(false);
+
+  const setCookieOnDomain = () => {
+    if (loadUri === "") {
+      showToast("Missing domain");
+      return;
+    }
+    const urlParts = navigationURI
+      .replace("http://", "")
+      .replace("https://", "")
+      .split(/[/?#]/);
+
+    const domain = urlParts[0];
+
+    const cookie: Cookie = {
+      name: cookieName,
+      value: cookieValue,
+      domain,
+      path: "/"
+    };
+    CookieManager.set(domain, cookie)
+      .then(_ => {
+        showToast("cookie correctly set", "success");
+      })
+      .catch(_ => showToast("Unable to set Cookie"));
+  };
 
   return (
     <BaseScreenComponent goBack={true}>
@@ -69,7 +100,41 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
             <Switch value={showDebug} onValueChange={setShowDebug} />
           </View>
           <View spacer={true} />
+          <View style={styles.row}>
+            <Label color={"bluegrey"}>{"Save a cookie"}</Label>
+            <Switch value={saveCookie} onValueChange={setSaveCookie} />
+          </View>
+          <View spacer={true} />
           <View style={{ flex: 1 }}>
+            {saveCookie && (
+              <>
+                <LabelledItem
+                  type={"text"}
+                  label={"Cookie name"}
+                  inputProps={{
+                    value: cookieName,
+                    returnKeyType: "done",
+                    onChangeText: setCookieName
+                  }}
+                />
+                <LabelledItem
+                  type={"text"}
+                  label={"Cookie value"}
+                  inputProps={{
+                    value: cookieValue,
+                    returnKeyType: "done",
+                    onChangeText: setCookieValue
+                  }}
+                />
+                <View spacer={true} small={true} />
+                <ButtonDefaultOpacity
+                  style={styles.contentCenter}
+                  onPress={() => setCookieOnDomain()}
+                >
+                  <Label color={"white"}>Save</Label>
+                </ButtonDefaultOpacity>
+              </>
+            )}
             {showDebug && <Monospace>{webMessage}</Monospace>}
             <RegionServiceWebView
               uri={loadUri}
