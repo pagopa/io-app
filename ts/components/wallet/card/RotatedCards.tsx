@@ -49,22 +49,20 @@ export class RotatedCards extends React.PureComponent<Props> {
 
   private emptyCardPreview(): React.ReactNode {
     return (
-      <>
-        <View style={[styles.rotatedCard]}>
-          <View style={[CreditCardStyles.card, CreditCardStyles.flatBottom]}>
-            <View style={[CreditCardStyles.cardInner, CreditCardStyles.row]}>
-              <View style={[CreditCardStyles.row, CreditCardStyles.numberArea]}>
-                <Text style={[CreditCardStyles2.smallTextStyle]}>
-                  {`${HIDDEN_CREDITCARD_NUMBERS}`}
-                </Text>
-              </View>
-              <View style={CreditCardStyles.cardLogo}>
-                <Logo />
-              </View>
+      <View style={[styles.rotatedCard]}>
+        <View style={[CreditCardStyles.card, CreditCardStyles.flatBottom]}>
+          <View style={[CreditCardStyles.cardInner, CreditCardStyles.row]}>
+            <View style={[CreditCardStyles.row, CreditCardStyles.numberArea]}>
+              <Text style={[CreditCardStyles2.smallTextStyle]}>
+                {`${HIDDEN_CREDITCARD_NUMBERS}`}
+              </Text>
+            </View>
+            <View style={CreditCardStyles.cardLogo}>
+              <Logo />
             </View>
           </View>
         </View>
-      </>
+      </View>
     );
   }
 
