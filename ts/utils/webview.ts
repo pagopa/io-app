@@ -68,9 +68,13 @@ function showAlertBox(payload) {
   sendMessagesToRN(message);
 }
 
-if (onInjetionCompleted) {
-  onInjectionCompleted()
+function checkInjectionCompleted() {
+  if(typeof onInjectionCompleted !== 'undefined' && typeof onInjectionCompleted === 'function') {
+    onInjectionCompleted();
+  }
 }
+
+checkInjectionCompleted();
 `;
 
 const endTrue = "true;";
