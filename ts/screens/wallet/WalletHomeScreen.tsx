@@ -461,7 +461,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       ? this.loadingWalletsHeader()
       : pot.isError(potWallets)
       ? this.errorWalletsHeader()
-      : this.cardPreview(potWallets);
+      : this.cardPreview();
 
     const transactionContent = pot.isError(potTransactions)
       ? this.transactionError()
