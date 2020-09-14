@@ -1,5 +1,7 @@
 ---
 global:
+  password: Password
+  username: Username
   accessibility:
     date_format: MMMM Do YYYY
     expanded: Expanded paragraph
@@ -1536,3 +1538,6 @@ bonus:
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
+webView:
+  error:
+    convertMessage: Unable to decode the message from the webview

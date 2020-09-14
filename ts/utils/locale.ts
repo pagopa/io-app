@@ -1,6 +1,7 @@
-import { Option, some } from "fp-ts/lib/Option";
+import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { Locales } from "../../locales/locales";
 import I18n, { translations } from "../i18n";
+import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLanguage";
 /**
  * Helpers for handling locales
  */
@@ -33,3 +34,32 @@ export const getLocalePrimaryWithFallback = (fallback: Locales = "en") =>
     .filter(l => translations.some(t => t.toLowerCase() === l.toLowerCase()))
     .map(s => s as Locales)
     .getOrElse(fallback);
+
+const localeToPreferredLanguageMapping = new Map<
+  Locales,
+  PreferredLanguageEnum
+>([
+  ["it", PreferredLanguageEnum.it_IT],
+  ["en", PreferredLanguageEnum.en_GB]
+]);
+
+const preferredLanguageMappingToLocale = new Map<
+  PreferredLanguageEnum,
+  Locales
+>(Array.from(localeToPreferredLanguageMapping).map(item => [item[1], item[0]]));
+
+// from a given Locales return the relative PreferredLanguageEnum (fallback is en_GB)
+export const fromLocaleToPreferredLanguage = (
+  locale: Locales
+): PreferredLanguageEnum =>
+  fromNullable(localeToPreferredLanguageMapping.get(locale)).getOrElse(
+    PreferredLanguageEnum.en_GB
+  );
+
+// from a given preferredLanguage return the relative Locales (fallback is en)
+export const fromPreferredLanguageToLocale = (
+  preferredLanguage: PreferredLanguageEnum
+): Locales =>
+  fromNullable(
+    preferredLanguageMappingToLocale.get(preferredLanguage)
+  ).getOrElse("en");

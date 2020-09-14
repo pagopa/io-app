@@ -24,7 +24,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
-import { myPortalEnabled } from "../../config";
+import { isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -52,7 +52,6 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import RegionServiceModal from "../../components/RegionServicePlayground";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -379,12 +378,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       );
     };
 
-    const openWebviewModal = () => {
-      this.props.showModal(
-        <RegionServiceModal onModalClose={this.props.hideModal} />
-      );
-    };
-
     // eslint-disable
     const screenContent = () => (
       <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
@@ -462,11 +455,19 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   this.onExperimentalFeaturesToggle
                 ) */
               }
-              {myPortalEnabled && (
-                <ListItemComponent
-                  title={"MyPortal Web Playground"}
-                  onPress={openWebviewModal}
-                />
+              {isPlaygroundsEnabled && (
+                <>
+                  <ListItemComponent
+                    title={"MyPortal Web Playground"}
+                    onPress={() => navigation.navigate(ROUTES.WEB_PLAYGROUND)}
+                  />
+                  <ListItemComponent
+                    title={"Markdown Playground"}
+                    onPress={() =>
+                      navigation.navigate(ROUTES.MARKDOWN_PLAYGROUND)
+                    }
+                  />
+                </>
               )}
               {this.developerListItem(
                 I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),

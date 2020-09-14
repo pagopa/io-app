@@ -9,6 +9,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
+import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
@@ -28,6 +29,10 @@ export type CheckSessionResult = {
 
 export const idpSelected = createStandardAction("IDP_SELECTED")<
   IdentityProvider
+>();
+
+export const testLoginRequest = createStandardAction("TEST_LOGIN_REQUEST")<
+  PasswordLogin
 >();
 
 //
@@ -83,6 +88,7 @@ export const sessionInvalid = createStandardAction("SESSION_INVALID")();
 export type AuthenticationActions =
   | ActionType<typeof idpSelected>
   | ActionType<typeof idpLoginUrlChanged>
+  | ActionType<typeof testLoginRequest>
   | ActionType<typeof loginSuccess>
   | ActionType<typeof loginFailure>
   | ActionType<typeof logoutRequest>
