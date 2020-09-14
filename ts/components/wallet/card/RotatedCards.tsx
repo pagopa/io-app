@@ -1,6 +1,7 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "../../../i18n";
 
 import { Wallet } from "../../../types/pagopa";
@@ -9,7 +10,6 @@ import CreditCardStyles from "./../card/CardComponent.style";
 import { CreditCardStyles as CreditCardStyles2 } from "./../card/style";
 import CardComponent from "./CardComponent";
 import Logo from "./Logo";
-import { fromNullable } from "fp-ts/lib/Option";
 
 const styles = StyleSheet.create({
   rotatedCard: {
@@ -39,7 +39,7 @@ interface Props {
   // tslint-prettier doesn't yet support the readonly tuple syntax
   // eslint-disable-next-line
   wallets?: ReadonlyArray<Wallet>;
-  onClick: () => void;
+  onClick: (wallet: Wallet) => void;
 }
 
 export class RotatedCards extends React.PureComponent<Props> {
@@ -73,7 +73,7 @@ export class RotatedCards extends React.PureComponent<Props> {
       <>
         <TouchableDefaultOpacity
           key={`wallet_${w.idWallet}`}
-          onPress={onClick}
+          onPress={() => onClick(w)}
           accessible={true}
           accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
           accessibilityRole={"button"}

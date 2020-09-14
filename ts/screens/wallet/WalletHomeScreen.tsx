@@ -41,7 +41,8 @@ import {
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
-  navigateToWalletList
+  navigateToWalletList,
+  navigateToWalletTransactionsScreen
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -259,7 +260,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {validWallets.length > 0 ? (
           <RotatedCards
             wallets={validWallets}
-            onClick={this.props.navigateToWalletList}
+            onClick={this.props.navigateToWalletTransactionsScreen}
           />
         ) : null}
         {/* Display this item only if the flag is enabled */}
@@ -537,6 +538,8 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
+  navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
+    dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
   navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
