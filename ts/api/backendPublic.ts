@@ -1,10 +1,14 @@
 import * as t from "io-ts";
 import {
+  ApiHeaderJson,
   basicResponseDecoder,
   BasicResponseType,
   createFetchRequestForApi,
-  IGetApiRequestType
+  IGetApiRequestType,
+  IPostApiRequestType
 } from "italia-ts-commons/lib/requests";
+import { AccessToken } from "../../definitions/backend/AccessToken";
+import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { defaultRetryingFetch } from "../utils/fetch";
 
@@ -13,6 +17,13 @@ type GetServerInfoT = IGetApiRequestType<
   never,
   never,
   BasicResponseType<ServerInfo>
+>;
+
+type PostTestLoginT = IPostApiRequestType<
+  PasswordLogin,
+  "Content-Type",
+  never,
+  BasicResponseType<AccessToken>
 >;
 
 const BackendStatusMessage = t.interface({
@@ -78,7 +89,17 @@ export function BackendPublicClient(
     response_decoder: basicResponseDecoder(ServerInfo)
   };
 
+  const postLoginTestT: PostTestLoginT = {
+    method: "post",
+    url: () => `/test-login`,
+    query: _ => ({}),
+    headers: ApiHeaderJson,
+    body: (passwordLogin: PasswordLogin) => JSON.stringify(passwordLogin),
+    response_decoder: basicResponseDecoder(AccessToken)
+  };
+
   return {
-    getServerInfo: createFetchRequestForApi(getServerInfoT, options)
+    getServerInfo: createFetchRequestForApi(getServerInfoT, options),
+    postTestLogin: createFetchRequestForApi(postLoginTestT, options)
   };
 }

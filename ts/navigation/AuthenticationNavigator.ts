@@ -16,6 +16,7 @@ import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
 import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformationScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
+import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
 
@@ -32,6 +33,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
     screen: IdpLoginScreen
+  },
+  [ROUTES.AUTHENTICATION_IDP_TEST]: {
+    screen: TestAuthenticationScreen
   },
   [ROUTES.AUTHENTICATION_SPID_INFORMATION]: {
     screen: SpidInformationScreen
