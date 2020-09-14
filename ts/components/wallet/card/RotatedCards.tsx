@@ -37,8 +37,7 @@ const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(4);
 interface Props {
   // tslint-prettier doesn't yet support the readonly tuple syntax
   // eslint-disable-next-line
-  wallets?: readonly [Wallet] | readonly [Wallet, Wallet];
-  cardType: "Preview";
+  wallets?: ReadonlyArray<Wallet>;
   onClick: () => void;
 }
 
@@ -70,7 +69,7 @@ export class RotatedCards extends React.PureComponent<Props> {
   }
 
   private cardPreview(wallet: Wallet, isLastItem: boolean): React.ReactNode {
-    const { cardType, onClick } = this.props;
+    const { onClick } = this.props;
     if (wallet === undefined) {
       return undefined;
     }
@@ -85,7 +84,7 @@ export class RotatedCards extends React.PureComponent<Props> {
         >
           {Platform.OS === "android" && <View style={styles.shadowBox} />}
           <View style={styles.rotatedCard}>
-            <CardComponent type={cardType} wallet={wallet} />
+            <CardComponent type={"Preview"} wallet={wallet} />
           </View>
         </TouchableDefaultOpacity>
         {!isLastItem && <View spacer={true} />}
