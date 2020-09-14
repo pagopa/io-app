@@ -9,6 +9,7 @@ import CreditCardStyles from "./../card/CardComponent.style";
 import { CreditCardStyles as CreditCardStyles2 } from "./../card/style";
 import CardComponent from "./CardComponent";
 import Logo from "./Logo";
+import { fromNullable } from "fp-ts/lib/Option";
 
 const styles = StyleSheet.create({
   rotatedCard: {
@@ -68,13 +69,10 @@ export class RotatedCards extends React.PureComponent<Props> {
 
   private cardPreview(wallet: Wallet, isLastItem: boolean): React.ReactNode {
     const { onClick } = this.props;
-    if (wallet === undefined) {
-      return undefined;
-    }
-    return (
+    return fromNullable(wallet).fold(undefined, w => (
       <>
         <TouchableDefaultOpacity
-          key={`wallet_${wallet.idWallet}`}
+          key={`wallet_${w.idWallet}`}
           onPress={onClick}
           accessible={true}
           accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
@@ -82,12 +80,12 @@ export class RotatedCards extends React.PureComponent<Props> {
         >
           {Platform.OS === "android" && <View style={styles.shadowBox} />}
           <View style={styles.rotatedCard}>
-            <CardComponent type={"Preview"} wallet={wallet} />
+            <CardComponent type={"Preview"} wallet={w} />
           </View>
         </TouchableDefaultOpacity>
         {!isLastItem && <View spacer={true} />}
       </>
-    );
+    ));
   }
 
   public render() {
