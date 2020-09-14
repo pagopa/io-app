@@ -11,7 +11,7 @@ import CardComponent from "./CardComponent";
 import Logo from "./Logo";
 
 const styles = StyleSheet.create({
-  rotadedCard: {
+  rotatedCard: {
     shadowColor: "#000",
     marginBottom: -30,
     flex: 1,
@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
   }
 });
 
+const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
+const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(4);
+
 interface Props {
   // tslint-prettier doesn't yet support the readonly tuple syntax
   // eslint-disable-next-line
@@ -40,29 +43,58 @@ interface Props {
 }
 
 export class RotatedCards extends React.PureComponent<Props> {
+  constructor(props: Props) {
+    super(props);
+    this.cardPreview = this.cardPreview.bind(this);
+  }
+
   private emptyCardPreview(): React.ReactNode {
-    const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
-    const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(4);
     return (
-      <View style={[styles.rotadedCard]}>
-        <View style={[CreditCardStyles.card, CreditCardStyles.flatBottom]}>
-          <View style={[CreditCardStyles.cardInner, CreditCardStyles.row]}>
-            <View style={[CreditCardStyles.row, CreditCardStyles.numberArea]}>
-              <Text style={[CreditCardStyles2.smallTextStyle]}>
-                {`${HIDDEN_CREDITCARD_NUMBERS}`}
-              </Text>
-            </View>
-            <View style={CreditCardStyles.cardLogo}>
-              <Logo />
+      <>
+        <View style={[styles.rotatedCard]}>
+          <View style={[CreditCardStyles.card, CreditCardStyles.flatBottom]}>
+            <View style={[CreditCardStyles.cardInner, CreditCardStyles.row]}>
+              <View style={[CreditCardStyles.row, CreditCardStyles.numberArea]}>
+                <Text style={[CreditCardStyles2.smallTextStyle]}>
+                  {`${HIDDEN_CREDITCARD_NUMBERS}`}
+                </Text>
+              </View>
+              <View style={CreditCardStyles.cardLogo}>
+                <Logo />
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </>
+    );
+  }
+
+  private cardPreview(wallet: Wallet, isLastItem: boolean): React.ReactNode {
+    const { cardType, onClick } = this.props;
+    if (wallet === undefined) {
+      return undefined;
+    }
+    return (
+      <>
+        <TouchableDefaultOpacity
+          key={`wallet_${wallet.idWallet}`}
+          onPress={onClick}
+          accessible={true}
+          accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
+          accessibilityRole={"button"}
+        >
+          {Platform.OS === "android" && <View style={styles.shadowBox} />}
+          <View style={styles.rotatedCard}>
+            <CardComponent type={cardType} wallet={wallet} />
+          </View>
+        </TouchableDefaultOpacity>
+        {!isLastItem && <View spacer={true} />}
+      </>
     );
   }
 
   public render() {
-    const { wallets, cardType, onClick } = this.props;
+    const { wallets } = this.props;
 
     return wallets === undefined ? (
       <View>
@@ -71,26 +103,9 @@ export class RotatedCards extends React.PureComponent<Props> {
       </View>
     ) : (
       <View style={styles.container}>
-        <TouchableDefaultOpacity
-          onPress={onClick}
-          accessible={true}
-          accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
-          accessibilityRole={"button"}
-        >
-          {Platform.OS === "android" && <View style={styles.shadowBox} />}
-          <View style={styles.rotadedCard}>
-            <CardComponent type={cardType} wallet={wallets[0]} />
-          </View>
-          {typeof wallets[1] !== "undefined" && (
-            <>
-              <View spacer={true} />
-              {Platform.OS === "android" && <View style={styles.shadowBox} />}
-              <View style={styles.rotadedCard}>
-                <CardComponent type={cardType} wallet={wallets[1]} />
-              </View>
-            </>
-          )}
-        </TouchableDefaultOpacity>
+        {wallets.map((w, idx) =>
+          this.cardPreview(w, idx === wallets.length - 1)
+        )}
         <View spacer={true} />
       </View>
     );
