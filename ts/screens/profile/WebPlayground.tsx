@@ -5,6 +5,8 @@ import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import CookieManager, { Cookie } from "@react-native-community/cookies";
+import WebView from "react-native-webview";
+import { fromNullable } from "fp-ts/lib/Option";
 import { Label } from "../../components/core/typography/Label";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import Switch from "../../components/ui/Switch";
@@ -17,7 +19,6 @@ import IconFont from "../../components/ui/IconFont";
 import customVariables from "../../theme/variables";
 import { LabelledItem } from "../../components/LabelledItem";
 import { showToast } from "../../utils/showToast";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -47,6 +48,8 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
   const [webMessage, setWebMessage] = React.useState("");
   const [showDebug, setShowDebug] = React.useState(false);
   const [saveCookie, setSaveCookie] = React.useState(false);
+  const [reloading, setReloading] = React.useState(false);
+  const webViewRef = React.createRef<WebView>();
 
   const setCookieOnDomain = () => {
     if (loadUri === "") {
@@ -61,11 +64,22 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
       domain: url.hostname,
       path: "/"
     };
-    CookieManager.set(url.origin, cookie)
+
+    CookieManager.set(url.origin, cookie, true)
       .then(_ => {
         showToast("cookie correctly set", "success");
       })
       .catch(_ => showToast("Unable to set Cookie"));
+  };
+
+  const clearCookies = () => {
+    CookieManager.clearAll(true)
+      .then(() => showToast("Cookies cleared", "success"))
+      .catch(_ => showToast("Unable to remove Cookies"));
+  };
+
+  const handleUriInput = (text: string) => {
+    setNavigationUri(text.toLowerCase());
   };
 
   return (
@@ -75,7 +89,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
           <View style={styles.row}>
             <TextInput
               style={styles.textInput}
-              onChangeText={setNavigationUri}
+              onChangeText={handleUriInput}
               value={navigationURI}
             />
             <View hspacer={true} />
@@ -89,6 +103,27 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
                   color: customVariables.colorWhite
                 }}
               />
+            </ButtonDefaultOpacity>
+          </View>
+          <View spacer={true} />
+          <View style={styles.row}>
+            <ButtonDefaultOpacity
+              style={styles.contentCenter}
+              onPress={() => {
+                fromNullable(webViewRef.current).map(wv => {
+                  setReloading(true);
+                  wv.reload();
+                  setReloading(false);
+                });
+              }}
+            >
+              <Label color={"white"}>Reload</Label>
+            </ButtonDefaultOpacity>
+            <ButtonDefaultOpacity
+              style={styles.contentCenter}
+              onPress={clearCookies}
+            >
+              <Label color={"white"}>Clear cookies</Label>
             </ButtonDefaultOpacity>
           </View>
           <View spacer={true} />
@@ -133,11 +168,14 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
               </>
             )}
             {showDebug && <Monospace>{webMessage}</Monospace>}
-            <RegionServiceWebView
-              uri={loadUri}
-              onModalClose={props.goBack}
-              handleWebMessage={setWebMessage}
-            />
+            {!reloading && (
+              <RegionServiceWebView
+                uri={loadUri}
+                onModalClose={props.goBack}
+                handleWebMessage={setWebMessage}
+                webViewRef={webViewRef}
+              />
+            )}
           </View>
         </Content>
       </SafeAreaView>

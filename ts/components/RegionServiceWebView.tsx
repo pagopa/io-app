@@ -22,6 +22,7 @@ type Props = {
   onModalClose: () => void;
   uri: string;
   handleWebMessage?: (message: string) => void;
+  webViewRef?: React.RefObject<WebView>;
 };
 
 const styles = StyleSheet.create({
@@ -135,8 +136,15 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const injectJS = () => {
-    fromNullable(ref.current).map(wv =>
-      wv.injectJavaScript(injectedJavascript)
+    fromNullable(props.webViewRef).foldL(
+      () =>
+        fromNullable(ref.current).map(wv =>
+          wv.injectJavaScript(injectedJavascript)
+        ),
+      r =>
+        fromNullable(r.current).map(wv =>
+          wv.injectJavaScript(injectedJavascript)
+        )
     );
   };
 
@@ -145,7 +153,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
       {!success && !error && (
         <View style={{ flex: 1 }}>
           <WebView
-            ref={ref}
+            ref={props.webViewRef ? props.webViewRef : ref}
             source={{ uri: props.uri }}
             textZoom={100}
             onLoadEnd={injectJS}
