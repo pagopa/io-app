@@ -70,9 +70,8 @@ export class RotatedCards extends React.PureComponent<Props> {
   private cardPreview(wallet: Wallet, isLastItem: boolean): React.ReactNode {
     const { onClick } = this.props;
     return fromNullable(wallet).fold(undefined, w => (
-      <>
+      <React.Fragment key={`wallet_${w.idWallet}`}>
         <TouchableDefaultOpacity
-          key={`wallet_${w.idWallet}`}
           onPress={() => onClick(w)}
           accessible={true}
           accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
@@ -84,7 +83,7 @@ export class RotatedCards extends React.PureComponent<Props> {
           </View>
         </TouchableDefaultOpacity>
         {!isLastItem && <View spacer={true} />}
-      </>
+      </React.Fragment>
     ));
   }
 
