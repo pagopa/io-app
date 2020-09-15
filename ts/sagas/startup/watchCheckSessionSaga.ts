@@ -1,6 +1,5 @@
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { put, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
