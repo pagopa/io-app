@@ -243,7 +243,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
 
   // Start watching for requests of checkSession
-  yield fork(watchCheckSessionSaga, backendClient.getProfile);
+  yield fork(watchCheckSessionSaga, backendClient.getSession);
 
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);

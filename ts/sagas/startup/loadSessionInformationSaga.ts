@@ -6,6 +6,7 @@ import { call, put } from "redux-saga/effects";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 
 import {
+  checkCurrentSession,
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
 } from "../../store/actions/authentication";
@@ -35,6 +36,11 @@ export function* loadSessionInformationSaga(
       throw readableReport(response.value);
     }
 
+    yield put(
+      checkCurrentSession.success({
+        isSessionValid: response.value.status !== 401
+      })
+    );
     if (response.value.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
       yield put(sessionInformationLoadSuccess(response.value.value));
