@@ -31,8 +31,8 @@ const testIdp: IdentityProvider = {
   id: "test",
   name: "Test",
   logo: require("../../../img/spid.png"),
-  entityID: "xx_testenv2",
-  profileUrl: "https://italia-backend/profile.html",
+  entityID: "test-login",
+  profileUrl: "",
   isTestIdp: true
 };
 
@@ -141,8 +141,9 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
 
   public componentDidUpdate() {
     if (this.state.counter === TAPS_TO_OPEN_TESTIDP) {
+      this.setState({ counter: 0 });
       this.props.setSelectedIdp(testIdp);
-      this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
+      this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_TEST);
     }
   }
 
