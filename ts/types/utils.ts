@@ -40,7 +40,7 @@ export type PotFromActions<S, F> = Pot<
 export type RequiredAll<T> = { [K in keyof T]-?: T[K] };
 
 /**
- * Return a type that prohibits the use of unique keys of T
+ * Return a type that prohibits the use of keys that are present only in T but not in U
  */
 type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 
