@@ -19,8 +19,6 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import { cieAuthenticationError } from "../../../store/actions/cie";
-import { ReduxProps } from "../../../store/actions/types";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
@@ -35,8 +33,7 @@ type NavigationParams = {
 };
 
 type Props = NavigationScreenProps<NavigationParams> &
-  ReturnType<typeof mapStateToProps> &
-  ReduxProps;
+  ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   padded: {
@@ -50,20 +47,6 @@ export enum ReadingState {
   "completed" = "completed",
   "waiting_card" = "waiting_card"
 }
-
-// A subset of Cie Events (errors) which is of interest to analytics
-const analyticActions = new Set<CEvent["event"]>([
-  "ON_TAG_DISCOVERED_NOT_CIE",
-  "ON_CARD_PIN_LOCKED",
-  "ON_PIN_ERROR",
-  "PIN_INPUT_ERROR",
-  "CERTIFICATE_EXPIRED",
-  "CERTIFICATE_REVOKED",
-  "AUTHENTICATION_ERROR",
-  "ON_NO_INTERNET_CONNECTION",
-  "STOP_NFC_ERROR",
-  "START_NFC_ERROR"
-]);
 
 type State = {
   // Get the current status of the card reading
@@ -90,7 +73,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      /* 
+      /*
       These are the states that can occur when reading the cie (from SDK)
       - waiting_card (we are ready for read ->radar effect)
       - reading (we are reading the card -> progress animation)
@@ -116,9 +99,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private setError = (
     errorMessage: string,
     navigationRoute?: string,
-    navigationParams: Record<string, unknown> = {}
+    navigationParams: {} = {}
   ) => {
-    this.dispatchAnalyticEvent(errorMessage);
     this.setState(
       {
         readingState: ReadingState.error,
@@ -133,15 +115,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  private dispatchAnalyticEvent = (message: string) => {
-    this.props.dispatch(cieAuthenticationError(Error(message)));
-  };
-
   private handleCieEvent = async (event: CEvent) => {
-    if (analyticActions.has(event.event)) {
-      this.dispatchAnalyticEvent(event.event);
-    }
-
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
@@ -263,35 +237,34 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
-    this.setError(error.message);
+    this.setState({
+      readingState: ReadingState.error,
+      errorMessage: error.message
+    });
   };
 
   private handleCieSuccess = (cieConsentUri: string) => {
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
-      setTimeout(
-        async () => {
-          this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
-            cieConsentUri
-          });
-          // if screen reader is enabled, give more time to read the success message
-        },
-        this.state.isScreenReaderEnabled
-          ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
-          : WAIT_TIMEOUT_NAVIGATION
-      );
+      setTimeout(async () => {
+        this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
+          cieConsentUri
+        });
+        // if screen reader is enabled, give more time to read the success message
+      }, this.state.isScreenReaderEnabled ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY : WAIT_TIMEOUT_NAVIGATION);
     });
   };
 
   public async componentDidMount() {
+    cieManager.onEvent(this.handleCieEvent);
+    cieManager.onError(this.handleCieError);
+    cieManager.onSuccess(this.handleCieSuccess);
+
+    await cieManager.setPin(this.ciePin);
+    cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
     cieManager
       .start()
       .then(async () => {
-        cieManager.onEvent(this.handleCieEvent);
-        cieManager.onError(this.handleCieError);
-        cieManager.onSuccess(this.handleCieSuccess);
-        await cieManager.setPin(this.ciePin);
-        cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
         await cieManager.startListeningNFC();
         this.setState({ readingState: ReadingState.waiting_card });
       })

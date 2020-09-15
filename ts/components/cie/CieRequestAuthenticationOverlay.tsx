@@ -3,11 +3,10 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import { BackHandler, StyleSheet } from "react-native";
+import { BackHandler, StyleSheet, Platform } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
-  WebViewNavigation,
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
 import I18n from "../../i18n";
@@ -16,6 +15,7 @@ import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 
 type Props = {
+  ciePin: string;
   onClose: () => void;
   onSuccess: (authorizationUri: string) => void;
 };
@@ -25,6 +25,7 @@ type State = {
   isLoading: boolean;
   findOpenApp: boolean;
   webViewKey: number;
+  injectJavascript?: string;
 };
 
 const styles = StyleSheet.create({
@@ -45,10 +46,15 @@ const injectJs = `
   true;
 `;
 
+const iOSUserAgent =
+  "Mozilla/5.0 (Linux; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36";
+const userAgent = Platform.select({ ios: iOSUserAgent, default: undefined });
+
 export default class CieRequestAuthenticationOverlay extends React.PureComponent<
   Props,
   State
-> {
+  > {
+  private webView = React.createRef<WebView>();
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -79,12 +85,21 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     });
   };
 
-  private handleOnShouldStartLoadWithRequest = (
-    event: WebViewNavigation
-  ): boolean => {
+  private handleOnShouldStartLoadWithRequest = (event: any): boolean => {
     if (this.state.findOpenApp) {
       return false;
     }
+    if (
+      Platform.OS === "ios" &&
+      event.url !== undefined &&
+      event.url.indexOf("errore.jsp") !== -1
+    ) {
+      this.setState({
+        injectJavascript: `window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`
+      });
+      return false;
+    }
+
     // TODO: check if we can distinguish among different type of errors
     //      some errors could suggest ro redirect the user to the landing screen , not back
     if (event.url && event.url.indexOf("errore") !== -1) {
@@ -103,15 +118,16 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     return true;
   };
 
-  private renderError = () => (
+  private renderError = () => {
+    return (
       <GenericErrorComponent
-        avoidNavigationEvents={true}
         onRetry={this.handleOnRetry}
         onCancel={this.props.onClose}
         image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?
         text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
       />
     );
+  };
 
   // Updating the webView key its content is refreshed
   private handleOnRetry = () => {
@@ -134,8 +150,10 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
       <View style={styles.flex}>
         {this.state.findOpenApp === false && (
           <WebView
-            injectedJavaScript={injectJs}
+            ref={this.webView}
+            userAgent={userAgent}
             javaScriptEnabled={true}
+            injectedJavaScript={this.state.injectJavascript}
             onLoadEnd={this.handleOnLoadEnd}
             onError={this.handleOnError}
             onShouldStartLoadWithRequest={
@@ -160,7 +178,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     ));
     return (
       <ContainerComponent
-        isLoading={this.state.isLoading}
+        isLoading={true}
         loadingOpacity={1.0}
         loadingCaption={I18n.t("global.genericWaiting")}
         onCancel={this.props.onClose}
