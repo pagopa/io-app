@@ -1,8 +1,10 @@
-import { Content, Text, View } from "native-base";
+import { Content, View } from "native-base";
+import URLParse from "url-parse";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
+import CookieManager, { Cookie } from "@react-native-community/cookies";
 import { Label } from "../../components/core/typography/Label";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import Switch from "../../components/ui/Switch";
@@ -14,8 +16,8 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IconFont from "../../components/ui/IconFont";
 import customVariables from "../../theme/variables";
 import { LabelledItem } from "../../components/LabelledItem";
-import CookieManager, { Cookie } from "@react-native-community/cookies";
 import { showToast } from "../../utils/showToast";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -51,20 +53,15 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
       showToast("Missing domain");
       return;
     }
-    const urlParts = navigationURI
-      .replace("http://", "")
-      .replace("https://", "")
-      .split(/[/?#]/);
-
-    const domain = urlParts[0];
+    const url = new URLParse(loadUri, true);
 
     const cookie: Cookie = {
       name: cookieName,
       value: cookieValue,
-      domain,
+      domain: url.hostname,
       path: "/"
     };
-    CookieManager.set(domain, cookie)
+    CookieManager.set(url.origin, cookie)
       .then(_ => {
         showToast("cookie correctly set", "success");
       })
