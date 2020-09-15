@@ -69,7 +69,7 @@ function showAlertBox(payload) {
 }
 
 function checkInjectionCompleted() {
-  if(typeof onInjectionCompleted !== 'undefined' && typeof onInjectionCompleted === 'function') {
+  if(typeof onInjectionCompleted === 'function') {
     onInjectionCompleted();
   }
 }
