@@ -1,6 +1,7 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "../../../i18n";
 
 import { Wallet } from "../../../types/pagopa";
@@ -11,7 +12,7 @@ import CardComponent from "./CardComponent";
 import Logo from "./Logo";
 
 const styles = StyleSheet.create({
-  rotadedCard: {
+  rotatedCard: {
     shadowColor: "#000",
     marginBottom: -30,
     flex: 1,
@@ -31,20 +32,25 @@ const styles = StyleSheet.create({
   }
 });
 
+const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
+const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(4);
+
 interface Props {
   // tslint-prettier doesn't yet support the readonly tuple syntax
   // eslint-disable-next-line
-  wallets?: readonly [Wallet] | readonly [Wallet, Wallet];
-  cardType: "Preview";
-  onClick: () => void;
+  wallets?: ReadonlyArray<Wallet>;
+  onClick: (wallet: Wallet) => void;
 }
 
 export class RotatedCards extends React.PureComponent<Props> {
+  constructor(props: Props) {
+    super(props);
+    this.cardPreview = this.cardPreview.bind(this);
+  }
+
   private emptyCardPreview(): React.ReactNode {
-    const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
-    const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(4);
     return (
-      <View style={[styles.rotadedCard]}>
+      <View style={[styles.rotatedCard]}>
         <View style={[CreditCardStyles.card, CreditCardStyles.flatBottom]}>
           <View style={[CreditCardStyles.cardInner, CreditCardStyles.row]}>
             <View style={[CreditCardStyles.row, CreditCardStyles.numberArea]}>
@@ -61,8 +67,28 @@ export class RotatedCards extends React.PureComponent<Props> {
     );
   }
 
+  private cardPreview(wallet: Wallet, isLastItem: boolean): React.ReactNode {
+    const { onClick } = this.props;
+    return fromNullable(wallet).fold(undefined, w => (
+      <React.Fragment key={`wallet_${w.idWallet}`}>
+        <TouchableDefaultOpacity
+          onPress={() => onClick(w)}
+          accessible={true}
+          accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
+          accessibilityRole={"button"}
+        >
+          {Platform.OS === "android" && <View style={styles.shadowBox} />}
+          <View style={styles.rotatedCard}>
+            <CardComponent type={"Preview"} wallet={w} />
+          </View>
+        </TouchableDefaultOpacity>
+        {!isLastItem && <View spacer={true} />}
+      </React.Fragment>
+    ));
+  }
+
   public render() {
-    const { wallets, cardType, onClick } = this.props;
+    const { wallets } = this.props;
 
     return wallets === undefined ? (
       <View>
@@ -71,26 +97,9 @@ export class RotatedCards extends React.PureComponent<Props> {
       </View>
     ) : (
       <View style={styles.container}>
-        <TouchableDefaultOpacity
-          onPress={onClick}
-          accessible={true}
-          accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
-          accessibilityRole={"button"}
-        >
-          {Platform.OS === "android" && <View style={styles.shadowBox} />}
-          <View style={styles.rotadedCard}>
-            <CardComponent type={cardType} wallet={wallets[0]} />
-          </View>
-          {typeof wallets[1] !== "undefined" && (
-            <>
-              <View spacer={true} />
-              {Platform.OS === "android" && <View style={styles.shadowBox} />}
-              <View style={styles.rotadedCard}>
-                <CardComponent type={cardType} wallet={wallets[1]} />
-              </View>
-            </>
-          )}
-        </TouchableDefaultOpacity>
+        {wallets.map((w, idx) =>
+          this.cardPreview(w, idx === wallets.length - 1)
+        )}
         <View spacer={true} />
       </View>
     );
