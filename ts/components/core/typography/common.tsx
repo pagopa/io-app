@@ -17,7 +17,6 @@ export function calculateWeightColor<WeightPropsType, ColorsPropsType>(
   weight?: WeightPropsType,
   color?: ColorsPropsType
 ): RequiredTypographyProps<WeightPropsType, ColorsPropsType> {
-  // TODO: Replace with nullish coalescing after prettier upgrade
   return {
     weight: weight ?? defaultWeight,
     color: color ?? defaultColor
