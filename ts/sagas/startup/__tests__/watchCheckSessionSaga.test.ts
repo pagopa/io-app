@@ -5,13 +5,11 @@ import { PublicSession } from "../../../../definitions/backend/PublicSession";
 import {
   checkCurrentSession,
   sessionExpired,
-  sessionInformationLoadFailure,
   sessionInformationLoadSuccess
 } from "../../../store/actions/authentication";
-import { loadSessionInformationSaga } from "../loadSessionInformationSaga";
-import { checkSessionResult } from "../watchCheckSessionSaga";
+import { checkSession, checkSessionResult } from "../watchCheckSessionSaga";
 
-describe("loadSessionInformationSaga", () => {
+describe("checkSession", () => {
   const getSessionValidity = jest.fn();
 
   it("if response is 200 the session is valid", () => {
@@ -23,7 +21,7 @@ describe("loadSessionInformationSaga", () => {
       status: 200,
       value: responseValue
     });
-    testSaga(loadSessionInformationSaga, getSessionValidity)
+    testSaga(checkSession, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(responseOK)
@@ -40,7 +38,7 @@ describe("loadSessionInformationSaga", () => {
 
   it("if response is 401 the session is invalid", () => {
     const responseUnauthorized = right({ status: 401 });
-    testSaga(loadSessionInformationSaga, getSessionValidity)
+    testSaga(checkSession, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(responseUnauthorized)
@@ -50,14 +48,12 @@ describe("loadSessionInformationSaga", () => {
         })
       )
       .next()
-      .put(sessionInformationLoadFailure(new Error("Invalid server response")))
-      .next()
       .isDone();
   });
 
   it("if response is 500 the session is valid", () => {
     const response500 = right({ status: 500 });
-    testSaga(loadSessionInformationSaga, getSessionValidity)
+    testSaga(checkSession, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(response500)
@@ -66,8 +62,6 @@ describe("loadSessionInformationSaga", () => {
           isSessionValid: true
         })
       )
-      .next()
-      .put(sessionInformationLoadFailure(new Error("Invalid server response")))
       .next()
       .isDone();
   });
@@ -78,12 +72,12 @@ describe("loadSessionInformationSaga", () => {
       context: [{ key: "", type: t.string }]
     };
     const responeLeft = left([validatorError]);
-    testSaga(loadSessionInformationSaga, getSessionValidity)
+    testSaga(checkSession, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(responeLeft)
       .put(
-        sessionInformationLoadFailure(
+        checkCurrentSession.failure(
           new Error(
             'value ["some error occurred"] at [root] is not a valid [string]'
           )
