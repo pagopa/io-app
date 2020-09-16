@@ -91,9 +91,7 @@ describe("cleanTransactionDescription", () => {
       ],
       [
         "/RFB/000001234556859/143.00",
-        `${I18n.t("payment.IUV_extended")} (${I18n.t(
-          "payment.IUV"
-        )}) 000001234556859`
+        `${I18n.t("payment.IUV")} 000001234556859`
       ],
       ["/XYZ/TXT/some text", "some text"],
       ["/TXT/some text", "some text"],
