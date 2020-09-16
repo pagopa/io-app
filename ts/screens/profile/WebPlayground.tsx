@@ -5,8 +5,6 @@ import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import CookieManager, { Cookie } from "@react-native-community/cookies";
-import WebView from "react-native-webview";
-import { fromNullable } from "fp-ts/lib/Option";
 import { Label } from "../../components/core/typography/Label";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import Switch from "../../components/ui/Switch";
@@ -48,8 +46,6 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
   const [webMessage, setWebMessage] = React.useState("");
   const [showDebug, setShowDebug] = React.useState(false);
   const [saveCookie, setSaveCookie] = React.useState(false);
-  const [reloading, setReloading] = React.useState(false);
-  const webViewRef = React.createRef<WebView>();
 
   const setCookieOnDomain = () => {
     if (loadUri === "") {
@@ -110,11 +106,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
             <ButtonDefaultOpacity
               style={styles.contentCenter}
               onPress={() => {
-                fromNullable(webViewRef.current).map(wv => {
-                  setReloading(true);
-                  wv.reload();
-                  setReloading(false);
-                });
+                setLoadUri(loadUri + `?time=${new Date().getTime()}`);
               }}
             >
               <Label color={"white"}>Reload</Label>
@@ -168,14 +160,11 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
               </>
             )}
             {showDebug && <Monospace>{webMessage}</Monospace>}
-            {!reloading && (
-              <RegionServiceWebView
-                uri={loadUri}
-                onModalClose={props.goBack}
-                handleWebMessage={setWebMessage}
-                webViewRef={webViewRef}
-              />
-            )}
+            <RegionServiceWebView
+              uri={loadUri}
+              onModalClose={props.goBack}
+              handleWebMessage={setWebMessage}
+            />
           </View>
         </Content>
       </SafeAreaView>
