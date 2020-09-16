@@ -200,7 +200,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
         <Text style={styles.flex}>{label}</Text>
-        <Text bold={true} dark={true}>
+        <Text bold={true} dark={true} selectable={true}>
           {value}
         </Text>
       </View>
@@ -226,6 +226,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
           </TouchableWithoutFeedback>
           {this.state.showFullReason && (
             <Text
+              selectable={true}
               onLongPress={() =>
                 clipboardSetStringWithFeedback(data.fullReason)
               }

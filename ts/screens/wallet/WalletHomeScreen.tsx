@@ -41,7 +41,8 @@ import {
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
-  navigateToWalletList
+  navigateToWalletList,
+  navigateToWalletTransactionsScreen
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -232,7 +233,13 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     );
   }
 
-  private cardPreview(wallets: ReadonlyArray<Wallet>) {
+  private getCreditCards = () =>
+    pot
+      .getOrElse(this.props.potWallets, [])
+      .filter(w => w.type === TypeEnum.CREDIT_CARD);
+
+  private cardPreview() {
+    const wallets = this.getCreditCards();
     // we have to render only wallets of credit card type
     const validWallets = wallets.filter(w => w.type === TypeEnum.CREDIT_CARD);
     const noMethod =
@@ -252,13 +259,8 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {this.cardHeader(false, noMethod)}
         {validWallets.length > 0 ? (
           <RotatedCards
-            cardType="Preview"
-            wallets={
-              validWallets.length === 1
-                ? [validWallets[0]]
-                : [validWallets[0], validWallets[1]]
-            }
-            onClick={this.props.navigateToWalletList}
+            wallets={validWallets}
+            onClick={this.props.navigateToWalletTransactionsScreen}
           />
         ) : null}
         {/* Display this item only if the flag is enabled */}
@@ -456,13 +458,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   public render(): React.ReactNode {
     const { potWallets, potTransactions, historyPayments } = this.props;
 
-    const wallets = pot.getOrElse(potWallets, []);
-
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
       : pot.isError(potWallets)
       ? this.errorWalletsHeader()
-      : this.cardPreview(wallets);
+      : this.cardPreview();
 
     const transactionContent = pot.isError(potTransactions)
       ? this.transactionError()
@@ -507,7 +507,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
   private getHeaderHeight() {
     return (
-      250 + (bonusVacanzeEnabled ? this.props.allActiveBonus.length * 65 : 0)
+      250 +
+      (bonusVacanzeEnabled ? this.props.allActiveBonus.length * 65 : 0) +
+      this.getCreditCards().length * 56
     );
   }
 }
@@ -536,6 +538,8 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
+  navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
+    dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
   navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
