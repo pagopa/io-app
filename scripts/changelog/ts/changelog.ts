@@ -28,7 +28,9 @@ const allowedScope = new Map<string, string>([
   ["profile", "Profile"],
   ["privacy", "Privacy"],
   ["security", "Security"],
-  ["accessibility", "Accessibility"]
+  ["accessibility", "Accessibility"],
+  ["bpd", "Bonus Pagamenti Digitali"],
+  ["myportal", "MyPortal"]
 ]);
 
 // a list of project ids associated with a specific scope
@@ -40,7 +42,7 @@ const projectToScope = new Map<number, string>([
 const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
 
 // pattern used to recognize a scope label
-const regex = /changelog-scope:(.*)/m;
+const regex = /(changelog-scope:|epic-)(.*)/m;
 
 /**
  * Clean the title from previous changelog prefix to update in case of changes
