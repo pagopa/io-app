@@ -24,17 +24,17 @@ import SectionCardComponent from "../../components/wallet/card/SectionCardCompon
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled } from "../../config";
-import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
+import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
   navigateToBonusActiveDetailScreen
-} from "../../features/bonusVacanze/navigation/action";
+} from "../../features/bonus/bonusVacanze/navigation/action";
 import {
   loadAllBonusActivations,
   loadAvailableBonuses
-} from "../../features/bonusVacanze/store/actions/bonusVacanze";
-import { allBonusActiveSelector } from "../../features/bonusVacanze/store/reducers/allActive";
-import { availableBonusTypesSelector } from "../../features/bonusVacanze/store/reducers/availableBonusesTypes";
+} from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
+import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import I18n from "../../i18n";
 import {
   navigateBack,

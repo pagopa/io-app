@@ -20,7 +20,7 @@ import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
 import WalletTabIcon from "../components/WalletTabIcon";
-import BONUSVACANZE_ROUTES from "../features/bonusVacanze/navigation/routes";
+import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
