@@ -1,6 +1,5 @@
 import CookieManager, { Cookie } from "@react-native-community/cookies";
 import { fromNullable } from "fp-ts/lib/Option";
-// import CookieManager from "@react-native-community/cookies";
 import { Content } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";

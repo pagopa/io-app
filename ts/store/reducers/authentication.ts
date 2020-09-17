@@ -1,7 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
-import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
