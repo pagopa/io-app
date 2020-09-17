@@ -23,7 +23,7 @@ import { RotatedCards } from "../../components/wallet/card/RotatedCards";
 import SectionCardComponent from "../../components/wallet/card/SectionCardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled } from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
 import RequestBonus from "../../features/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -71,6 +71,7 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { checkCurrentSession } from "../../store/actions/authentication";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -150,6 +151,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.contextualHelpContent"
 };
 
+const isSomeBonusEnabled = bonusVacanzeEnabled || bpdEnabled;
 /**
  * Wallet home screen, with a list of recent transactions and payment methods,
  * a "pay notice" button and payment methods info/button to add new ones
@@ -185,8 +187,8 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     return true;
   };
 
-  private loadBonusVacanze = () => {
-    if (bonusVacanzeEnabled) {
+  private loadBonus = () => {
+    if (isSomeBonusEnabled) {
       this.props.loadAvailableBonuses();
       this.props.loadAllBonusActivations();
     }
@@ -196,7 +198,8 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
-
+    // check if the user session is still valid. otherwise auto-logout will be raised
+    this.props.checkSession();
     this.props.loadWallets();
     this.props.loadTransactions(this.props.transactionsLoadedLength);
     // eslint-disable-next-line functional/immutable-data
@@ -264,7 +267,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           />
         ) : null}
         {/* Display this item only if the flag is enabled */}
-        {bonusVacanzeEnabled && (
+        {isSomeBonusEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
             activeBonuses={this.props.allActiveBonus}
@@ -310,7 +313,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         </ButtonDefaultOpacity>
         <View spacer={true} />
         {/* Display this item only if the flag is enabled */}
-        {bonusVacanzeEnabled && (
+        {isSomeBonusEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
             activeBonuses={this.props.allActiveBonus}
@@ -450,7 +453,8 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
   // triggered on pull to refresh
   private handleOnRefresh = () => {
-    this.loadBonusVacanze();
+    this.props.checkSession();
+    this.loadBonus();
     this.props.refreshTransactions();
     this.props.loadWallets();
   };
@@ -498,8 +502,8 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         headerPaddingMin={true}
       >
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
-        {bonusVacanzeEnabled && (
-          <NavigationEvents onWillFocus={this.loadBonusVacanze} />
+        {isSomeBonusEnabled && (
+          <NavigationEvents onWillFocus={this.loadBonus} />
         )}
       </WalletLayout>
     );
@@ -508,7 +512,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   private getHeaderHeight() {
     return (
       250 +
-      (bonusVacanzeEnabled ? this.props.allActiveBonus.length * 65 : 0) +
+      (isSomeBonusEnabled ? this.props.allActiveBonus.length * 65 : 0) +
       this.getCreditCards().length * 56
     );
   }
@@ -567,7 +571,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),
-  loadWallets: () => dispatch(fetchWalletsRequest())
+  loadWallets: () => dispatch(fetchWalletsRequest()),
+  checkSession: () => dispatch(checkCurrentSession.request())
 });
 
 export default withValidatedPagoPaVersion(

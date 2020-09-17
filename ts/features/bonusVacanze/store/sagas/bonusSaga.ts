@@ -1,14 +1,13 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { apiUrlPrefix, contentRepoUrl } from "../../../../config";
+import { apiUrlPrefix } from "../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
 import { ID_BONUS_VACANZE_TYPE } from "../../utils/bonus";
 import {
   activateBonusVacanze,
   checkBonusVacanzeEligibility,
   loadAllBonusActivations,
-  loadAvailableBonuses,
   loadBonusVacanzeFromId,
   startLoadBonusFromIdPolling
 } from "../actions/bonusVacanze";
@@ -19,7 +18,6 @@ import { handleBonusEligibilitySaga } from "./eligibility/handleBonusEligibility
 import { handleBonusFromIdPollingSaga } from "./handleBonusFromIdPolling";
 import { handleForceBonusServiceActivation } from "./handleForceBonusServiceActivation";
 import { handleLoadAllBonusActivations } from "./handleLoadAllBonusActivationSaga";
-import { handleLoadAvailableBonuses } from "./handleLoadAvailableBonuses";
 import { handleLoadBonusVacanzeFromId } from "./handleLoadBonusVacanzeFromId";
 
 // Saga that listen to all bonus requests
@@ -27,14 +25,7 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
   const backendBonusVacanzeClient = BackendBonusVacanze(
     apiUrlPrefix,
-    contentRepoUrl,
     bearerToken
-  );
-  // available bonus list request
-  yield takeLatest(
-    getType(loadAvailableBonuses.request),
-    handleLoadAvailableBonuses,
-    backendBonusVacanzeClient.getAvailableBonuses
   );
 
   // start polling bonus from id

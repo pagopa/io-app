@@ -23,6 +23,9 @@ import {
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
+import { loadAvailableBonuses } from "../features/bonusVacanze/store/actions/bonusVacanze";
+import { handleLoadAvailableBonuses } from "../features/bonusVacanze/store/sagas/handleLoadAvailableBonuses";
+import { bonusVacanzeEnabled, bpdEnabled } from "../config";
 
 const contentClient = ContentClient();
 
@@ -245,4 +248,13 @@ export function* watchContentSaga() {
 
   // Load content related to the contextual help body
   yield put(loadContextualHelpData.request());
+
+  if (bonusVacanzeEnabled || bpdEnabled) {
+    // available bonus list request
+    yield takeLatest(
+      getType(loadAvailableBonuses.request),
+      handleLoadAvailableBonuses,
+      contentClient.getBonusAvailable
+    );
+  }
 }

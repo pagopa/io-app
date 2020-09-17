@@ -8,6 +8,7 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
@@ -29,6 +30,7 @@ import { availableBonuses } from "../data/availableBonuses";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
 import { availableBonusTypesSelector } from "../store/reducers/availableBonusesTypes";
+import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -57,10 +59,24 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class AvailableBonusScreen extends React.PureComponent<Props> {
   private renderListItem = (info: ListRenderItemInfo<BonusAvailable>) => {
     const item = info.item;
+    if (item.hidden === true) {
+      return undefined;
+    }
+
+    // only bonus vacanze tap is handled
+    const handlersMap: Map<number, (bonus: BonusAvailable) => void> = new Map<
+      number,
+      (bonus: BonusAvailable) => void
+    >([
+      [ID_BONUS_VACANZE_TYPE, bonus => this.props.navigateToBonusRequest(bonus)]
+    ]);
+
     return (
       <AvailableBonusItem
         bonusItem={item}
-        onPress={() => this.props.navigateToBonusRequest(item)}
+        onPress={() =>
+          fromNullable(handlersMap.get(item.id_type)).map(h => h(item))
+        }
       />
     );
   };

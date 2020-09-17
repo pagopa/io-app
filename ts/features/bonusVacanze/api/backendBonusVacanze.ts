@@ -1,10 +1,7 @@
 import {
   ApiHeaderJson,
-  basicResponseDecoder,
-  BasicResponseType,
   composeHeaderProducers,
   createFetchRequestForApi,
-  IGetApiRequestType,
   RequestHeaderProducer,
   RequestHeaders
 } from "italia-ts-commons/lib/requests";
@@ -21,15 +18,8 @@ import {
   startBonusEligibilityCheckDefaultDecoder,
   StartBonusEligibilityCheckT
 } from "../../../../definitions/bonus_vacanze/requestTypes";
-import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 
-type GetBonusListT = IGetApiRequestType<
-  Record<string, unknown>,
-  never,
-  never,
-  BasicResponseType<BonusesAvailable>
->;
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
 const getAllBonusActivations: GetAllBonusActivationsT = {
@@ -74,20 +64,12 @@ const getBonusEligibilityCheckT: GetBonusEligibilityCheckT = {
   response_decoder: getBonusEligibilityCheckDefaultDecoder()
 };
 
-const getAvailableBonusesT: GetBonusListT = {
-  method: "get",
-  url: () => `/bonus/vacanze/bonuses_available.json`,
-  query: _ => ({}),
-  headers: () => ({}),
-  response_decoder: basicResponseDecoder(BonusesAvailable)
-};
-
 function ParamAuthorizationBearerHeaderProducer<
   P extends { readonly Bearer: string }
 >(): RequestHeaderProducer<P, "Authorization"> {
   return (p: P): RequestHeaders<"Authorization"> => ({
-      Authorization: `Bearer ${p.Bearer}`
-    });
+    Authorization: `Bearer ${p.Bearer}`
+  });
 }
 
 //
@@ -95,17 +77,11 @@ function ParamAuthorizationBearerHeaderProducer<
 //
 export function BackendBonusVacanze(
   baseUrl: string,
-  contentUrl: string,
   token: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
   const options = {
     baseUrl,
-    fetchApi
-  };
-
-  const optionsStaticContent = {
-    baseUrl: contentUrl,
     fetchApi
   };
 
@@ -119,10 +95,6 @@ export function BackendBonusVacanze(
   };
 
   return {
-    getAvailableBonuses: createFetchRequestForApi(
-      getAvailableBonusesT,
-      optionsStaticContent
-    ),
     startBonusEligibilityCheck: withBearerToken(
       createFetchRequestForApi(startBonusEligibilityCheckT, options)
     ),
