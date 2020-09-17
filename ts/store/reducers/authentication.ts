@@ -1,5 +1,7 @@
+import { fromNullable } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
+import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
@@ -22,6 +24,9 @@ import { GlobalState } from "./types";
 
 // reason for the user to be in the unauthenticated state
 type LoggedOutReason = "NOT_LOGGED_IN" | "SESSION_EXPIRED";
+
+// PublicSession attributes
+export type TokenName = "walletToken";
 
 // The user is logged out and hasn't selected an IDP
 type LoggedOutWithoutIdp = Readonly<{
@@ -123,7 +128,8 @@ export const isSessionExpiredSelector = (state: GlobalState) =>
 
 export const sessionTokenSelector = (
   state: GlobalState
-): SessionToken | undefined => isLoggedIn(state.authentication)
+): SessionToken | undefined =>
+  isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined;
 
@@ -131,6 +137,17 @@ export const sessionInfoSelector = (state: GlobalState) =>
   isLoggedInWithSessionInfo(state.authentication)
     ? some(state.authentication.sessionInfo)
     : none;
+
+export const tokenFromSessionInfoSelector = (
+  state: GlobalState,
+  tokenName: TokenName
+) => {
+  const maybeSessionInfo = sessionInfoSelector(state);
+  if (maybeSessionInfo.isSome()) {
+    return some(maybeSessionInfo.value[tokenName]);
+  }
+  return none;
+};
 
 export const selectedIdentityProviderSelector = (state: GlobalState) =>
   isLoggedOutWithIdp(state.authentication)
