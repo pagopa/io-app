@@ -4,7 +4,6 @@ import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
-import { checkCurrentSession } from "../../store/actions/authentication";
 import {
   paymentAttiva,
   paymentCheck,
