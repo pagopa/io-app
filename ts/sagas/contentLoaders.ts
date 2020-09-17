@@ -24,7 +24,6 @@ import {
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
 import { loadAvailableBonuses } from "../features/bonusVacanze/store/actions/bonusVacanze";
-import { handleLoadAvailableBonuses } from "../features/bonusVacanze/store/sagas/handleLoadAvailableBonuses";
 import { bonusVacanzeEnabled, bpdEnabled } from "../config";
 
 const contentClient = ContentClient();
@@ -221,6 +220,29 @@ function* watchLoadContextualHelp(): SagaIterator {
   }
 }
 
+// handle available list loading
+function* handleLoadAvailableBonus(
+  getBonusAvailable: ReturnType<typeof ContentClient>["getBonusAvailable"]
+): SagaIterator {
+  try {
+    const bonusListReponse: SagaCallReturnType<typeof getBonusAvailable> = yield call(
+      getBonusAvailable,
+      {}
+    );
+    if (bonusListReponse.isRight()) {
+      if (bonusListReponse.value.status === 200) {
+        yield put(loadAvailableBonuses.success(bonusListReponse.value.value));
+        return;
+      }
+      throw Error(`response status ${bonusListReponse.value.status}`);
+    } else {
+      throw Error(readableReport(bonusListReponse.value));
+    }
+  } catch (e) {
+    yield put(loadAvailableBonuses.failure(e));
+  }
+}
+
 export function* watchContentSaga() {
   // watch municipality loading request
   yield takeEvery(
@@ -253,7 +275,7 @@ export function* watchContentSaga() {
     // available bonus list request
     yield takeLatest(
       getType(loadAvailableBonuses.request),
-      handleLoadAvailableBonuses,
+      handleLoadAvailableBonus,
       contentClient.getBonusAvailable
     );
   }
