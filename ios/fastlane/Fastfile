@@ -86,6 +86,7 @@ platform :ios do
       clean: true,
       export_method: "ad-hoc",
       workspace: "ItaliaApp.xcworkspace",
+      include_symbols: false,
       # sdk: "iphoneos8.4"
     )
   end
@@ -103,6 +104,7 @@ platform :ios do
       clean: true,
       export_method: "app-store",
       workspace: "ItaliaApp.xcworkspace",
+      include_symbols: false,
       # sdk: "iphoneos8.4"
     )
   end
