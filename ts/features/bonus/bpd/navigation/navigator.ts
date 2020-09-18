@@ -8,10 +8,11 @@ import { LoadEligibilityScreen } from "../screens/onboarding/LoadEligibilityScre
 import { NoPaymentMethodsAvailableScreen } from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
 import { NotResidentInItalyKoScreen } from "../screens/onboarding/NotResidentInItalyKOScreen";
 import { ResidenceDeclarationScreen } from "../screens/onboarding/ResidenceDeclarationScreen";
+import BPD_ROUTES from "./routes";
 
 const BpdNavigator = createStackNavigator(
   {
-    [BPD_ROUTES.ONBOARDING.LOAD_ACTIVATION_STATUS]: {
+    [BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS]: {
       screen: LoadBpdActivationStatus
     },
     [BPD_ROUTES.ONBOARDING.INFORMATION_TOS]: {
@@ -32,10 +33,10 @@ const BpdNavigator = createStackNavigator(
     [BPD_ROUTES.ONBOARDING.LOAD_ACTIVATE_BPD]: {
       screen: LoadActivateBpdScreen
     },
-    [BPD_ROUTES.ONBOARDING.ENROLL_PAYMENT_METHOD]: {
+    [BPD_ROUTES.ONBOARDING.ENROLL_PAYMENT_METHODS]: {
       screen: EnrollPaymentMethodsScreen
     },
-    [BPD_ROUTES.ONBOARDING.ENROLL_PAYMENT_METHOD]: {
+    [BPD_ROUTES.ONBOARDING.ENROLL_PAYMENT_METHODS]: {
       screen: NoPaymentMethodsAvailableScreen
     }
   },
