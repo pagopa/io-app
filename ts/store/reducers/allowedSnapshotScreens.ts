@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 import { bonusVacanzeEnabled } from "../../config";
-import BONUSVACANZE_ROUTES from "../../features/bonusVacanze/navigation/routes";
+import BONUSVACANZE_ROUTES from "../../features/bonus/bonusVacanze/navigation/routes";
 import ROUTES from "../../navigation/routes";
 import { isDebugModeEnabledSelector } from "./debug";
 import { plainNavigationCurrentRouteSelector } from "./navigation";
