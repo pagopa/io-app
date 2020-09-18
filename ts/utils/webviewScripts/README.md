@@ -2,7 +2,7 @@
 
 <dl>
 <dt><a href="#closeModal">closeModal()</a></dt>
-<dd><p>This function sends to IO App the input to show the activity indicator loader.</p>
+<dd><p>This function sends to IO App the input to end the webview communication and close the current screen.</p>
 </dd>
 <dt><a href="#showLoader">showLoader()</a></dt>
 <dd><p>This function sends to IO App the input to show the activity indicator loader.</p>
@@ -49,7 +49,7 @@ The key is the language key and the value is the payload for alert box</p>
 <a name="closeModal"></a>
 
 ## closeModal()
-This function sends to IO App the input to show the activity indicator loader.
+This function sends to IO App the input to end the webview communication and close the current screen.
 
 **Kind**: global function  
 <a name="showLoader"></a>
