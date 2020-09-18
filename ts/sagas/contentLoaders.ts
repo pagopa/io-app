@@ -23,8 +23,8 @@ import {
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
-import { loadAvailableBonuses } from "../features/bonusVacanze/store/actions/bonusVacanze";
 import { bonusVacanzeEnabled, bpdEnabled } from "../config";
+import { loadAvailableBonuses } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
 const contentClient = ContentClient();
 
