@@ -32,7 +32,7 @@ type StyleType = IconProps["style"];
 
 type CommonProp = Readonly<{
   label: string;
-  icon: string;
+  icon?: string;
   isValid?: boolean;
   iconStyle?: StyleType;
   focusBorderColor?: string;
@@ -128,12 +128,14 @@ export class LabelledItem extends React.Component<Props, State> {
             this.props.isValid === undefined ? false : this.props.isValid
           }
         >
-          <IconFont
-            size={variables.iconSize3}
-            color={variables.brandDarkGray}
-            name={this.props.icon}
-            style={this.props.iconStyle}
-          />
+          {this.props.icon && (
+            <IconFont
+              size={variables.iconSize3}
+              color={variables.brandDarkGray}
+              name={this.props.icon}
+              style={this.props.iconStyle}
+            />
+          )}
           {this.props.type === "masked" ? (
             <TextInputMask
               placeholderTextColor={color(variables.brandGray)
