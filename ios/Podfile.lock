@@ -279,6 +279,8 @@ PODS:
     - React
   - react-native-config (1.0.0):
     - React
+  - react-native-cookies (4.0.1):
+    - React
   - react-native-image-picker (0.28.1):
     - React
   - react-native-mixpanel (1.2.0):
@@ -445,6 +447,7 @@ DEPENDENCIES:
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - "react-native-cie (from `../node_modules/@pagopa/react-native-cie`)"
   - react-native-config (from `../node_modules/react-native-config`)
+  - "react-native-cookies (from `../node_modules/@react-native-community/cookies`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -563,6 +566,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@pagopa/react-native-cie"
   react-native-config:
     :path: "../node_modules/react-native-config"
+  react-native-cookies:
+    :path: "../node_modules/@react-native-community/cookies"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-mixpanel:
@@ -678,6 +683,7 @@ SPEC CHECKSUMS:
   react-native-cameraroll: ae0a7c0cc8462508855707ff623b1e789b692865
   react-native-cie: d23154c4e799ba0d884b54b4bb9349123010f588
   react-native-config: 7db9b96479164dfd7b2be68eb9079e08279511c4
+  react-native-cookies: ff2e6865dff2e5feeca8f1ed082ae7898e4fa912
   react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9

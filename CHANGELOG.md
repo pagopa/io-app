@@ -2,6 +2,90 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0-rc.0](https://github.com/pagopa/io-app/compare/1.6.0-rc.3...1.7.0-rc.0) (2020-09-18)
+
+
+### Features
+
+* **Android:** [[#174715029](https://www.pivotaltracker.com/story/show/174715029)] Enable hermes [#2187](https://github.com/pagopa/io-app/issues/2187) ([d21b5d9](https://github.com/pagopa/io-app/commit/d21b5d90d54c185db9123e987d97b9889669d2c3))
+* [[#173639055](https://www.pivotaltracker.com/story/show/173639055)] Display all cc in wallet section ([#2196](https://github.com/pagopa/io-app/issues/2196)) ([c7e5e66](https://github.com/pagopa/io-app/commit/c7e5e666a39215454c3c24f16aa06c90fb7448f7))
+* [[#173847889](https://www.pivotaltracker.com/story/show/173847889)] Implements new test-login ([#2126](https://github.com/pagopa/io-app/issues/2126)) ([ddc2dd9](https://github.com/pagopa/io-app/commit/ddc2dd9b3e229e884f3b57ce912021ae1a6bf48f))
+* [[#174803269](https://www.pivotaltracker.com/story/show/174803269)] Add feature flag for BPD [#2200](https://github.com/pagopa/io-app/issues/2200) ([932676d](https://github.com/pagopa/io-app/commit/932676da0d9004271e497ac890a495f66464d2fc))
+* **Bonus Pagamenti Digitali:** [[#174816293](https://www.pivotaltracker.com/story/show/174816293),[#174796530](https://www.pivotaltracker.com/story/show/174796530)] Display BDP in bonus list ([#2207](https://github.com/pagopa/io-app/issues/2207)) ([ff2c805](https://github.com/pagopa/io-app/commit/ff2c8058ea809fc6e629df880ebaebeaa800fa01))
+* **My Portal:** [[#174689160](https://www.pivotaltracker.com/story/show/174689160)] Adds the script to check if injection is completed ([#2194](https://github.com/pagopa/io-app/issues/2194)) ([a8b97d2](https://github.com/pagopa/io-app/commit/a8b97d2b11dbd57292a517c83ab1713ad2923354))
+* **My Portal:** [[#174693542](https://www.pivotaltracker.com/story/show/174693542)] Support internal navigation with params ([#2183](https://github.com/pagopa/io-app/issues/2183)) ([30bb32f](https://github.com/pagopa/io-app/commit/30bb32f39317f4d01b5b54baa960fb7a1c2862af)), closes [#174693564](https://www.pivotaltracker.com/story/show/174693564)
+* **My Portal:** [[#174695208](https://www.pivotaltracker.com/story/show/174695208)] Saves a cookie on web playground ([#2198](https://github.com/pagopa/io-app/issues/2198)) ([9b98a37](https://github.com/pagopa/io-app/commit/9b98a3776b6f81c751566219eee4b99fcd1b4fdb))
+
+
+### Bug Fixes
+
+* [[#174704651](https://www.pivotaltracker.com/story/show/174704651)] Cannot use the style props for typography components ([#2197](https://github.com/pagopa/io-app/issues/2197)) ([72c12ba](https://github.com/pagopa/io-app/commit/72c12ba2418118214372be43bed3fe90943b0a1a))
+* [[#174845929](https://www.pivotaltracker.com/story/show/174845929)] is_inbox_enabled never enabled ([#2203](https://github.com/pagopa/io-app/issues/2203)) ([6a080d2](https://github.com/pagopa/io-app/commit/6a080d2422763bd4476ad140cb9b201fce29847b))
+
+
+### Chores
+
+* [[#174821277](https://www.pivotaltracker.com/story/show/174821277)] Debug Identification PIN creation ([#2199](https://github.com/pagopa/io-app/issues/2199)) ([ba9513a](https://github.com/pagopa/io-app/commit/ba9513a83b9002ca94cf65a8398370969ac3b31e))
+
+## [1.6.0-rc.3](https://github.com/pagopa/io-app/compare/1.6.0-rc.2...1.6.0-rc.3) (2020-09-10)
+
+## [1.6.0-rc.2](https://github.com/pagopa/io-app/compare/1.6.0-rc.1...1.6.0-rc.2) (2020-09-10)
+
+
+### Features
+
+* **Bonus Vacanze:** [[#174693564](https://www.pivotaltracker.com/story/show/174693564)] Remove footer when bonus is not active ([#2182](https://github.com/pagopa/io-app/issues/2182)) ([cc1cb4f](https://github.com/pagopa/io-app/commit/cc1cb4f5ff5ce671efd3eb9a3bf2fbb6afc889f3))
+* **My Portal:** [[#174618758](https://www.pivotaltracker.com/story/show/174618758),[#174574621](https://www.pivotaltracker.com/story/show/174574621)] Playground to test the event handling from an external webview ([#2178](https://github.com/pagopa/io-app/issues/2178)) ([82d63ec](https://github.com/pagopa/io-app/commit/82d63ec34f2d5cc2645524b340182e662e1f6e6e))
+* [[#173190756](https://www.pivotaltracker.com/story/show/173190756)] Update profile on language selection ([#2184](https://github.com/pagopa/io-app/issues/2184)) ([a22f330](https://github.com/pagopa/io-app/commit/a22f330d7ad4e25df6c2cda134473d2989b4f7da))
+* [[#174712071](https://www.pivotaltracker.com/story/show/174712071)] Update and sync preferred language ([#2186](https://github.com/pagopa/io-app/issues/2186)) ([7fa533f](https://github.com/pagopa/io-app/commit/7fa533fe92657752c9c38a58eb10f08061391443)), closes [#173190756](https://www.pivotaltracker.com/story/show/173190756)
+* **My Portal:** [[#174689080](https://www.pivotaltracker.com/story/show/174689080)] Improvements on Webview playground ([#2185](https://github.com/pagopa/io-app/issues/2185)) ([67cb09d](https://github.com/pagopa/io-app/commit/67cb09de53bda1b378802159dab786aaa6069903))
+* [[#174736321](https://www.pivotaltracker.com/story/show/174736321)] Add markdown playground ([#2189](https://github.com/pagopa/io-app/issues/2189)) ([7ba4a46](https://github.com/pagopa/io-app/commit/7ba4a46ed57b33b35374a573f49f6635cb73143f))
+
+
+### Bug Fixes
+
+* **Payments:** [[#174552971](https://www.pivotaltracker.com/story/show/174552971)] Notice number is wrong composed ([#2180](https://github.com/pagopa/io-app/issues/2180)) ([607c29f](https://github.com/pagopa/io-app/commit/607c29f48c7c23e538c910246b0f65afd2bb4dce))
+* **Payments:** [[#174646257](https://www.pivotaltracker.com/story/show/174646257)] Display notice in place of IUV ([#2177](https://github.com/pagopa/io-app/issues/2177)) ([183d5a0](https://github.com/pagopa/io-app/commit/183d5a01f09034c3eeaa7a64f1796ecdb130deed))
+* **Payments:** [[#174733925](https://www.pivotaltracker.com/story/show/174733925)] Transactions are ordered from oldest to most recent ([#2190](https://github.com/pagopa/io-app/issues/2190)) ([3250abd](https://github.com/pagopa/io-app/commit/3250abd1990fc1e4b49b30c02e59b7bca5ffc151))
+
+## [1.6.0-rc.1](https://github.com/pagopa/io-app/compare/1.6.0-rc.0...1.6.0-rc.1) (2020-09-03)
+
+
+### Features
+
+* [[#165057751](https://www.pivotaltracker.com/story/show/165057751)] Transpile typescript with babel ([#2151](https://github.com/pagopa/io-app/issues/2151)) ([43c24af](https://github.com/pagopa/io-app/commit/43c24af566e0879e6ed22a92cf786cee8c87e51b)), closes [#173888442](https://www.pivotaltracker.com/story/show/173888442) [#173917003](https://www.pivotaltracker.com/story/show/173917003)
+* [[#174295674](https://www.pivotaltracker.com/story/show/174295674)] Reworks the description extraction on payments ([#2171](https://github.com/pagopa/io-app/issues/2171)) ([f1a4432](https://github.com/pagopa/io-app/commit/f1a44326235418ce1afe6d017918c32f9a56c2df))
+* [[#174296623](https://www.pivotaltracker.com/story/show/174296623),[#173353861](https://www.pivotaltracker.com/story/show/173353861)] Minor reworks and fixes on psp and confirm payment method screen ([#2166](https://github.com/pagopa/io-app/issues/2166)) ([34b3122](https://github.com/pagopa/io-app/commit/34b3122af56d7c2df49594f5605e7f33cf4f7990))
+* [[#174321085](https://www.pivotaltracker.com/story/show/174321085)] Save Bonus Vacanze screenshot ([#2156](https://github.com/pagopa/io-app/issues/2156)) ([7acb8ad](https://github.com/pagopa/io-app/commit/7acb8ad52651f68ccd481940496423c022479bf1))
+* [[#174338921](https://www.pivotaltracker.com/story/show/174338921)] Convert app version to simple text not a button ([#2163](https://github.com/pagopa/io-app/issues/2163)) ([a56e0af](https://github.com/pagopa/io-app/commit/a56e0af07335eb39c0578f4d889dd9b276ce6c58))
+* [[#174361107](https://www.pivotaltracker.com/story/show/174361107)] Create new common style variables ([#2160](https://github.com/pagopa/io-app/issues/2160)) ([fe3f389](https://github.com/pagopa/io-app/commit/fe3f389f4fc35aea240b650bfc612428e5f12deb))
+* [[#174361165](https://www.pivotaltracker.com/story/show/174361165)] Add core typography ([#2161](https://github.com/pagopa/io-app/issues/2161)) ([5189c3f](https://github.com/pagopa/io-app/commit/5189c3f0a594b066e57aca95cc1b28af07db4738)), closes [#174361107](https://www.pivotaltracker.com/story/show/174361107) [#174361107](https://www.pivotaltracker.com/story/show/174361107)
+* [[#174574704](https://www.pivotaltracker.com/story/show/174574704)] Add My Portal project as changelog-scope ([#2173](https://github.com/pagopa/io-app/issues/2173)) ([ee4f5fd](https://github.com/pagopa/io-app/commit/ee4f5fd82688fbea224a303bb5314a6fb16902b3)), closes [#174572598](https://www.pivotaltracker.com/story/show/174572598) [#174572598](https://www.pivotaltracker.com/story/show/174572598) [#174572598](https://www.pivotaltracker.com/story/show/174572598)
+* **Bonus Vacanze:** [[#174333382](https://www.pivotaltracker.com/story/show/174333382)] Add new footer and screenshot animation in bonus detail screen ([#2175](https://github.com/pagopa/io-app/issues/2175)) ([037e733](https://github.com/pagopa/io-app/commit/037e73313ec3fcd882b6667a1bcb21fd23f3460b))
+
+
+### Bug Fixes
+
+* [[#174160259](https://www.pivotaltracker.com/story/show/174160259)] Switch label to change text on switch value change ([#2168](https://github.com/pagopa/io-app/issues/2168)) ([78110e5](https://github.com/pagopa/io-app/commit/78110e5307144655d13a081dabb19563984f3449))
+* [[#174294652](https://www.pivotaltracker.com/story/show/174294652)] Wrong calendar display name on preferences screen for some devices ([#2167](https://github.com/pagopa/io-app/issues/2167)) ([1ba2421](https://github.com/pagopa/io-app/commit/1ba242128428eff618e0b2c72b4efe723bc7477d))
+* [[#174301199](https://www.pivotaltracker.com/story/show/174301199)] Fixes cut message for favourite method removal ([#2164](https://github.com/pagopa/io-app/issues/2164)) ([4f5a524](https://github.com/pagopa/io-app/commit/4f5a52471f9edec5389750b4fd8b4755cdf38d0a))
+* [[#174317167](https://www.pivotaltracker.com/story/show/174317167)] Hide no pagopa network label if user choose to navigate to pick psp screen ([#2170](https://github.com/pagopa/io-app/issues/2170)) ([75d38cc](https://github.com/pagopa/io-app/commit/75d38cc9ae39e6e34e05e585869ae21ec3905d3b))
+* [[#174572598](https://www.pivotaltracker.com/story/show/174572598)] Pivotal project id is treated as a string ([#2172](https://github.com/pagopa/io-app/issues/2172)) ([23d6ae4](https://github.com/pagopa/io-app/commit/23d6ae44f3b39e397e5732202da9f93187edd05b))
+* Gemfile.lock to reduce vulnerabilities ([#2147](https://github.com/pagopa/io-app/issues/2147)) ([0f90b26](https://github.com/pagopa/io-app/commit/0f90b2639454560ce28014f21fd0375dbf224844))
+* **Android:** [[#174437875](https://www.pivotaltracker.com/story/show/174437875)] StackOverflowException on Huawei P10 lite (and similar) when using the TextInputMask ([#2165](https://github.com/pagopa/io-app/issues/2165)) ([f5c6dc0](https://github.com/pagopa/io-app/commit/f5c6dc0f79414e9c0bd83740d4236e88bcf61dbf))
+* **Payments:** [[#174627683](https://www.pivotaltracker.com/story/show/174627683)] Show notice code when description is unavailable ([#2176](https://github.com/pagopa/io-app/issues/2176)) ([2f73477](https://github.com/pagopa/io-app/commit/2f73477a9b3bb1e3413a91b9b8b93021876a7ccd)), closes [#174333382](https://www.pivotaltracker.com/story/show/174333382) [#174333382](https://www.pivotaltracker.com/story/show/174333382) [#174333382](https://www.pivotaltracker.com/story/show/174333382) [#174333382](https://www.pivotaltracker.com/story/show/174333382)
+
+
+### Chores
+
+* [[#174006350](https://www.pivotaltracker.com/story/show/174006350)] Add support to changelog scope ([#2159](https://github.com/pagopa/io-app/issues/2159)) ([2a5ed3e](https://github.com/pagopa/io-app/commit/2a5ed3e5a75306c3f8031e6f21c571e52ef54b34))
+* [[#174190519](https://www.pivotaltracker.com/story/show/174190519)] Change commands for release & build ([#2157](https://github.com/pagopa/io-app/issues/2157)) ([b199388](https://github.com/pagopa/io-app/commit/b1993884bc0813edcd9fc56707d01417a3e62350)), closes [#173888442](https://www.pivotaltracker.com/story/show/173888442) [#173917003](https://www.pivotaltracker.com/story/show/173917003) [#165057751](https://www.pivotaltracker.com/story/show/165057751) [#174318137](https://www.pivotaltracker.com/story/show/174318137) [#174337387](https://www.pivotaltracker.com/story/show/174337387)
+* [[#174293075](https://www.pivotaltracker.com/story/show/174293075),[#174458516](https://www.pivotaltracker.com/story/show/174458516)] Migrate from tslint to eslint ([#2169](https://github.com/pagopa/io-app/issues/2169)) ([1cc7335](https://github.com/pagopa/io-app/commit/1cc7335a6756f3761b01dca322cdcfa7f4c8712d))
+* [[#174318137](https://www.pivotaltracker.com/story/show/174318137)] Upgrade typescript to 3.9.7 ([#2154](https://github.com/pagopa/io-app/issues/2154)) ([c969d08](https://github.com/pagopa/io-app/commit/c969d08fe847a82fd8a2d9e96f1d28633db515cb)), closes [#173888442](https://www.pivotaltracker.com/story/show/173888442) [#173917003](https://www.pivotaltracker.com/story/show/173917003) [#165057751](https://www.pivotaltracker.com/story/show/165057751)
+* [[#174318377](https://www.pivotaltracker.com/story/show/174318377)] Add symbolicate to urls ignored in Reactotron ([#2153](https://github.com/pagopa/io-app/issues/2153)) ([4fa36fc](https://github.com/pagopa/io-app/commit/4fa36fc28b6f83eb16b9fd2badc0660baec1ceac))
+* [[#174337387](https://www.pivotaltracker.com/story/show/174337387)] Upgrade react-native-device-info to 5.6.4 ([#2155](https://github.com/pagopa/io-app/issues/2155)) ([128ed3d](https://github.com/pagopa/io-app/commit/128ed3d7259f747f9332314b61512d26ebb07bb4)), closes [#173888442](https://www.pivotaltracker.com/story/show/173888442) [#173917003](https://www.pivotaltracker.com/story/show/173917003) [#165057751](https://www.pivotaltracker.com/story/show/165057751) [#174318137](https://www.pivotaltracker.com/story/show/174318137)
+* **My Portal:** [[#174578457](https://www.pivotaltracker.com/story/show/174578457)] Adds a feature flag for myportal integration ([#2174](https://github.com/pagopa/io-app/issues/2174)) ([fd58379](https://github.com/pagopa/io-app/commit/fd583790dbf8891846aee93a12490d6a88a9bf3b))
+
 ## [1.6.0-rc.0](https://github.com/pagopa/io-app/compare/1.5.0-rc.3...1.6.0-rc.0) (2020-08-14)
 
 

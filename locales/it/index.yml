@@ -1,5 +1,7 @@
 ---
 global:
+  password: Password
+  username: Username
   accessibility:
     date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
@@ -40,6 +42,7 @@ global:
   genericWaiting: Attendi qualche secondo...
   genericThanks: Grazie
   genericShare: Condividi
+  genericSave: Salva
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!
@@ -610,6 +613,8 @@ payment:
   noPsp: Non hai ancora selezionato un PSP
   changePsp: Cambia PSP
   IUV: IUV
+  IUV_extended: Identificativo Univoco di Versamento
+  notice: Avviso
   noticeCode: Codice avviso
   recipientFiscalCode: Codice fiscale beneficiario
   details:
@@ -1565,3 +1570,6 @@ bonus:
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
+webView:
+  error:
+    convertMessage: Non è stato possibile decodificare il messaggio inviato all'app

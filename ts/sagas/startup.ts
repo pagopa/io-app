@@ -23,7 +23,7 @@ import {
   pagoPaApiUrlPrefixTest
 } from "../config";
 
-import { watchBonusSaga } from "../features/bonusVacanze/store/sagas/bonusSaga";
+import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
@@ -60,8 +60,8 @@ import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import {
   loadProfile,
+  watchProfile,
   watchProfileRefreshRequestsSaga,
-  watchProfileSendEmailValidationSaga,
   watchProfileUpsertRequestsSaga
 } from "./profile";
 import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
@@ -185,6 +185,16 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     }
   }
 
+  // Start watching for profile update requests as the checkProfileEnabledSaga
+  // may need to update the profile.
+  yield fork(
+    watchProfileUpsertRequestsSaga,
+    backendClient.createOrUpdateProfile
+  );
+
+  // Start watching when profile is successfully loaded
+  yield fork(watchProfile, backendClient.startEmailValidationProcess);
+
   // If we are here the user is logged in and the session info is
   // loaded and valid
 
@@ -229,25 +239,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // eslint-disable-next-line
   let storedPin: PinString;
 
-  // Start watching for profile update requests as the checkProfileEnabledSaga
-  // may need to update the profile.
-  yield fork(
-    watchProfileUpsertRequestsSaga,
-    backendClient.createOrUpdateProfile
-  );
-
   // Start watching for requests of refresh the profile
   yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
 
   // Start watching for requests of checkSession
   yield fork(watchCheckSessionSaga, backendClient.getProfile);
-
-  // Start watching for the requests of a new verification email to
-  // validate the user email address
-  yield fork(
-    watchProfileSendEmailValidationSaga,
-    backendClient.startEmailValidationProcess
-  );
 
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);

@@ -12,11 +12,11 @@ import {
   loadAllBonusActivations,
   loadAvailableBonuses,
   storeEligibilityRequestId
-} from "../../features/bonusVacanze/store/actions/bonusVacanze";
+} from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import {
   isActivationResponseTrackable,
   isEligibilityResponseTrackable
-} from "../../features/bonusVacanze/utils/bonus";
+} from "../../features/bonus/bonusVacanze/utils/bonus";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
@@ -98,6 +98,7 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardInit,
   addWalletCreditCardRequest,
+  addWalletNewCreditCardSuccess,
   creditCardCheckout3dsRequest,
   creditCardCheckout3dsSuccess,
   deleteWalletFailure,
@@ -328,6 +329,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(fetchWalletsRequest):
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
+    case getType(addWalletNewCreditCardSuccess):
     case getType(payCreditCardVerificationRequest):
     case getType(payCreditCardVerificationSuccess):
     case getType(creditCardCheckout3dsRequest):
@@ -409,29 +411,31 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
 export function screenTracking(
   store: MiddlewareAPI
 ): (_: Dispatch) => (__: Action) => Action {
-  return (next: Dispatch): ((_: Action) => Action) => (action: Action): Action => {
-      if (
-        action.type !== NavigationActions.NAVIGATE &&
-        action.type !== NavigationActions.BACK
-      ) {
-        return next(action);
+  return (next: Dispatch): ((_: Action) => Action) => (
+    action: Action
+  ): Action => {
+    if (
+      action.type !== NavigationActions.NAVIGATE &&
+      action.type !== NavigationActions.BACK
+    ) {
+      return next(action);
+    }
+    const currentScreen = getCurrentRouteName(store.getState().nav);
+    const result = next(action);
+    const nextScreen = getCurrentRouteName(store.getState().nav);
+    if (nextScreen !== currentScreen && mixpanel) {
+      if (nextScreen) {
+        setInstabugUserAttribute("activeScreen", nextScreen);
       }
-      const currentScreen = getCurrentRouteName(store.getState().nav);
-      const result = next(action);
-      const nextScreen = getCurrentRouteName(store.getState().nav);
-      if (nextScreen !== currentScreen && mixpanel) {
-        if (nextScreen) {
-          setInstabugUserAttribute("activeScreen", nextScreen);
-        }
-        mixpanel
-          .track("SCREEN_CHANGE", {
-            SCREEN_NAME: nextScreen
-          })
-          .then(
-            () => 0,
-            () => 0
-          );
-      }
-      return result;
-    };
+      mixpanel
+        .track("SCREEN_CHANGE", {
+          SCREEN_NAME: nextScreen
+        })
+        .then(
+          () => 0,
+          () => 0
+        );
+    }
+    return result;
+  };
 }

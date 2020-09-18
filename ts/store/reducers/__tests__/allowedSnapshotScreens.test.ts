@@ -1,6 +1,6 @@
 import { bonusVacanzeEnabled } from "../../../config";
-import { navigateToBonusActivationCompleted } from "../../../features/bonusVacanze/navigation/action";
-import BONUSVACANZE_ROUTES from "../../../features/bonusVacanze/navigation/routes";
+import { navigateToBonusActivationCompleted } from "../../../features/bonus/bonusVacanze/navigation/action";
+import BONUSVACANZE_ROUTES from "../../../features/bonus/bonusVacanze/navigation/routes";
 import { applicationChangeState } from "../../actions/application";
 import { setDebugModeEnabled } from "../../actions/debug";
 import {
@@ -11,12 +11,12 @@ import { appReducer } from "../index";
 import { GlobalState } from "../types";
 
 jest.mock("@react-native-community/async-storage", () => ({
-    AsyncStorage: jest.fn()
-  }));
+  AsyncStorage: jest.fn()
+}));
 
 jest.mock("react-native-share", () => ({
-    open: jest.fn()
-  }));
+  open: jest.fn()
+}));
 
 describe("allowed Snapshot Screens Selector test", () => {
   it("Test high level composition", () => {

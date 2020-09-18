@@ -6,7 +6,7 @@ import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
-import bonusReducer from "../../features/bonusVacanze/store/reducers";
+import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
 import { logoutFailure, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
@@ -37,6 +37,7 @@ import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
+import internalRouteNavigationReducer from "./internalRouteNavigation";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -90,7 +91,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   search: searchReducer,
   cie: cieReducer,
   bonus: bonusReducer,
-
+  internalRouteNavigation: internalRouteNavigationReducer,
   //
   // persisted state
   //

@@ -8,7 +8,7 @@ import {
   StoreEnhancer as ReduxStoreEnhancer
 } from "redux";
 
-import { BonusActions } from "../../features/bonusVacanze/store/actions/bonusVacanze";
+import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { GlobalState } from "../reducers/types";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
@@ -40,6 +40,7 @@ import { ServicesActions } from "./services";
 import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
+import { InternalRouteNavigationActions } from "./internalRouteNavigation";
 
 export type Action =
   | AnalyticsActions
@@ -70,6 +71,7 @@ export type Action =
   | PaymentsActions
   | OrganizationsActions
   | InstabugInfoActions
+  | InternalRouteNavigationActions
   | UserDataProcessingActions
   | ProfileEmailValidationAction
   | BonusActions;

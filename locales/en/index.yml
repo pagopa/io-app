@@ -1,5 +1,7 @@
 ---
 global:
+  password: Password
+  username: Username
   accessibility:
     date_format: MMMM Do YYYY
     expanded: Expanded paragraph
@@ -40,6 +42,7 @@ global:
   genericWaiting: Wait a few seconds..
   genericThanks: Thank you
   genericShare: Share
+  genericSave: Save
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -589,6 +592,8 @@ payment:
   noPsp: You have yet to select a PSP
   changePsp: Change PSP
   IUV: IUV
+  IUV_extended: Identificativo Univoco di Versamento
+  notice: Notice
   noticeCode: Notice code
   recipientFiscalCode: Recipient fiscal code
   details:
@@ -1533,3 +1538,6 @@ bonus:
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
+webView:
+  error:
+    convertMessage: Unable to decode the message from the webview
