@@ -2,13 +2,13 @@
 
 <dl>
 <dt><a href="#closeModal">closeModal()</a></dt>
-<dd><p>This functions sends to IO App the input to show the activity indicator loader.</p>
+<dd><p>This function sends to IO App the input to show the activity indicator loader.</p>
 </dd>
 <dt><a href="#showLoader">showLoader()</a></dt>
-<dd><p>This functions sends to IO App the input to show the activity indicator loader.</p>
+<dd><p>This function sends to IO App the input to show the activity indicator loader.</p>
 </dd>
 <dt><a href="#hideLoader">hideLoader()</a></dt>
-<dd><p>This functions sends to IO App the input to hide the activity indicator loader.</p>
+<dd><p>This function sends to IO App the input to hide the activity indicator loader.</p>
 </dd>
 <dt><a href="#showSuccess">showSuccess(payload)</a></dt>
 <dd><p>A function to show the success component on the IO App side.</p>
@@ -49,19 +49,19 @@ The key is the language key and the value is the payload for alert box</p>
 <a name="closeModal"></a>
 
 ## closeModal()
-This functions sends to IO App the input to show the activity indicator loader.
+This function sends to IO App the input to show the activity indicator loader.
 
 **Kind**: global function  
 <a name="showLoader"></a>
 
 ## showLoader()
-This functions sends to IO App the input to show the activity indicator loader.
+This function sends to IO App the input to show the activity indicator loader.
 
 **Kind**: global function  
 <a name="hideLoader"></a>
 
 ## hideLoader()
-This functions sends to IO App the input to hide the activity indicator loader.
+This function sends to IO App the input to hide the activity indicator loader.
 
 **Kind**: global function  
 <a name="showSuccess"></a>
