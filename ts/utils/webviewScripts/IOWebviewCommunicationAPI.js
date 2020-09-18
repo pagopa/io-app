@@ -54,7 +54,7 @@ function sendMessagesToRN(message) {
 }
 
 /**
- * This function sends to IO App the input to end the webview communication and close the current screen.
+ * This function sends to IO App the input to stop the webview communication and close the current screen.
  */
 function closeModal() {
   const message = {
