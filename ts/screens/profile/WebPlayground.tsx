@@ -46,6 +46,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
   const [webMessage, setWebMessage] = React.useState("");
   const [showDebug, setShowDebug] = React.useState(false);
   const [saveCookie, setSaveCookie] = React.useState(false);
+  const [reloadKey, setReloadKey] = React.useState(0);
 
   const setCookieOnDomain = () => {
     if (loadUri === "") {
@@ -105,9 +106,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
           <View style={styles.row}>
             <ButtonDefaultOpacity
               style={styles.contentCenter}
-              onPress={() => {
-                setLoadUri(loadUri + `?time=${new Date().getTime()}`);
-              }}
+              onPress={() => setReloadKey(r => r + 1)}
             >
               <Label color={"white"}>Reload</Label>
             </ButtonDefaultOpacity>
@@ -161,6 +160,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
             )}
             {showDebug && <Monospace>{webMessage}</Monospace>}
             <RegionServiceWebView
+              key={`${reloadKey}_webview`}
               uri={loadUri}
               onModalClose={props.goBack}
               handleWebMessage={setWebMessage}
