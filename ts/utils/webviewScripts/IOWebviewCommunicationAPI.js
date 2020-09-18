@@ -54,7 +54,7 @@ function sendMessagesToRN(message) {
 }
 
 /**
- * This function sends to IO App the input to show the activity indicator loader.
+ * This function sends to IO App the input to end the webview communication and close the current screen.
  */
 function closeModal() {
   const message = {
