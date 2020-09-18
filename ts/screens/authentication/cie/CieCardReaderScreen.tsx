@@ -261,18 +261,14 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     cieManager.onSuccess(this.handleCieSuccess);
 
     await cieManager.setPin(this.ciePin);
-    console.log("qui 1");
     cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
-    console.log("qui 2");
     cieManager
       .start()
       .then(async () => {
-        console.log("qui 3");
         await cieManager.startListeningNFC();
         this.setState({ readingState: ReadingState.waiting_card });
       })
       .catch(() => {
-        console.log("qui 4");
         this.setState({ readingState: ReadingState.error });
       });
     const srEnabled = await isScreenReaderEnabled();
