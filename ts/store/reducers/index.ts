@@ -6,7 +6,7 @@ import { reducer as networkReducer } from "react-native-offline";
 import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
-import bonusReducer from "../../features/bonusVacanze/store/reducers";
+import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
 import { logoutFailure, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";

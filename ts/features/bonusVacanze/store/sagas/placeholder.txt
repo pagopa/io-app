@@ -1,4 +1,0 @@
-A placeholder file to allows to commit the structures for this section.
-Can be removed after the first file is added in this directory.
-
-This directory will contain the sagas necessary within the "Bonus Vacanze"
