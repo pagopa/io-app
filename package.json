@@ -22,6 +22,7 @@
     "prettify": "prettier --write \"ts/**/*.ts*\"",
     "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
     "bundle:android": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev true --entry-file index.js --bundle-output ./bundles/index.android.bundle",
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/ItaliaApp/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'",
     "tsc:noemit": "tsc --noemit",
     "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx",
     "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix",
