@@ -32,6 +32,11 @@ export const scopeLabelAndroid: Label = {
   name: "changelog-scope:android"
 };
 
+export const scopeLabelEpicBpd: Label = {
+  ...baseLabel,
+  name: "epic-bpd"
+};
+
 export const scopeLabelNotAllowed: Label = {
   ...baseLabel,
   name: "changelog-scope:not-allowed"
@@ -55,6 +60,11 @@ export const bonusVacanzeStoryWithScopeLabel: Story = {
 export const singleAndroidLabelStory: Story = {
   ...baseStory,
   labels: [scopeLabelAndroid]
+};
+
+export const singleEpicBpdStory: Story = {
+  ...baseStory,
+  labels: [scopeLabelEpicBpd]
 };
 
 export const androidLabelAndOtherStory: Story = {
