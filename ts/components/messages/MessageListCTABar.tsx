@@ -88,11 +88,11 @@ class MessageListCTABar extends React.PureComponent<Props> {
   };
 
   // Render a button to add/remove an event related to the message in the calendar
-  private renderCalendarEventButton = () => 
+  private renderCalendarEventButton = () =>
     // The add/remove reminder button is shown if:
     // - if the message has a due date
     // - if the message has a payment and it is not paid nor expired
-     this.dueDate
+    this.dueDate
       .filter(() => !this.paid && !this.isPaymentExpired)
       .fold(undefined, _ => (
         <CalendarEventButton
@@ -100,8 +100,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
           disabled={this.props.disabled}
           message={this.props.message}
         />
-      ))
-  ;
+      ));
 
   // Render a button to display details of the payment related to the message
   private renderPaymentButton() {
@@ -134,6 +133,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
           ctas={maybeCTA.value}
           dispatch={this.props.dispatch}
           xsmall={true}
+          service={this.props.service}
         />
       ) : null;
     const content = nestedCTA || (

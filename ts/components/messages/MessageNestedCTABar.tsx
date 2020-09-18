@@ -1,6 +1,7 @@
 import { View } from "native-base";
 import React, { ReactElement } from "react";
 import { Dispatch } from "redux";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { handleCtaAction, isCtaActionValid } from "../../utils/messages";
 import { MessageNestedCtaButton } from "./MessageNestedCtaButton";
@@ -9,6 +10,7 @@ type Props = {
   ctas: CTAS;
   xsmall: boolean;
   dispatch: Dispatch;
+  service?: ServicePublic;
 };
 
 // render cta1 and cta2 if they are defined in the message content as nested front-matter
@@ -16,10 +18,10 @@ export const MessageNestedCTABar: React.FunctionComponent<Props> = (
   props: Props
 ): ReactElement => {
   const handleCTAPress = (cta: CTA) => {
-    handleCtaAction(cta, props.dispatch);
+    handleCtaAction(cta, props.dispatch, props.service);
   };
   const { ctas } = props;
-  const cta2 = ctas.cta_2 && isCtaActionValid(ctas.cta_2) && (
+  const cta2 = ctas.cta_2 && isCtaActionValid(ctas.cta_2, props.service) && (
     <MessageNestedCtaButton
       cta={ctas.cta_2}
       xsmall={props.xsmall}
@@ -27,7 +29,7 @@ export const MessageNestedCTABar: React.FunctionComponent<Props> = (
       onCTAPress={handleCTAPress}
     />
   );
-  const cta1 = isCtaActionValid(ctas.cta_1) && (
+  const cta1 = isCtaActionValid(ctas.cta_1, props.service) && (
     <MessageNestedCtaButton
       cta={ctas.cta_1}
       primary={true}

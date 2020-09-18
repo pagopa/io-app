@@ -80,9 +80,18 @@ export function getInternalRoute(href: string): Option<InternalRoute> {
   }
 }
 
-export function handleInternalLink(dispatch: Dispatch, href: string) {
+export function handleInternalLink(
+  dispatch: Dispatch,
+  href: string,
+  serviceId?: string
+) {
   getInternalRoute(href).map(internalNavigation => {
-    dispatch(addInternalRouteNavigation(internalNavigation));
+    dispatch(
+      addInternalRouteNavigation({
+        ...internalNavigation,
+        params: { ...internalNavigation.params, serviceId }
+      })
+    );
     dispatch(
       NavigationActions.navigate({
         routeName: internalNavigation.routeName
