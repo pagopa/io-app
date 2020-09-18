@@ -12,11 +12,11 @@ import {
   loadAllBonusActivations,
   loadAvailableBonuses,
   storeEligibilityRequestId
-} from "../../features/bonusVacanze/store/actions/bonusVacanze";
+} from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import {
   isActivationResponseTrackable,
   isEligibilityResponseTrackable
-} from "../../features/bonusVacanze/utils/bonus";
+} from "../../features/bonus/bonusVacanze/utils/bonus";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {

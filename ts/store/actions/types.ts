@@ -8,7 +8,7 @@ import {
   StoreEnhancer as ReduxStoreEnhancer
 } from "redux";
 
-import { BonusActions } from "../../features/bonusVacanze/store/actions/bonusVacanze";
+import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { GlobalState } from "../reducers/types";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
