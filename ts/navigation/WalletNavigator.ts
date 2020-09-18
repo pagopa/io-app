@@ -1,7 +1,7 @@
 import { createStackNavigator } from "react-navigation";
 import { bonusVacanzeEnabled } from "../config";
-import BonusVacanzeNavigator from "../features/bonusVacanze/navigation/navigator";
-import BONUSVACANZE_ROUTES from "../features/bonusVacanze/navigation/routes";
+import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
+import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
