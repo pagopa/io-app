@@ -54,7 +54,7 @@ function sendMessagesToRN(message) {
 }
 
 /**
- * This functions sends to IO App the input to show the activity indicator loader.
+ * This function sends to IO App the input to show the activity indicator loader.
  */
 function closeModal() {
   const message = {
@@ -64,7 +64,7 @@ function closeModal() {
 }
 
 /**
- * This functions sends to IO App the input to show the activity indicator loader.
+ * This function sends to IO App the input to show the activity indicator loader.
  */
 function showLoader() {
   const message = {
@@ -74,7 +74,7 @@ function showLoader() {
 }
 
 /**
- * This functions sends to IO App the input to hide the activity indicator loader.
+ * This function sends to IO App the input to hide the activity indicator loader.
  */
 function hideLoader() {
   const message = {
