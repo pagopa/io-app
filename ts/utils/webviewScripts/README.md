@@ -1,9 +1,6 @@
 ## Functions
 
 <dl>
-<dt><a href="#sendMessagesToRN">sendMessagesToRN(message)</a></dt>
-<dd><p>This function sends messages to IO app layer.</p>
-</dd>
 <dt><a href="#closeModal">closeModal()</a></dt>
 <dd><p>This functions sends to IO App the input to show the activity indicator loader.</p>
 </dd>
@@ -47,21 +44,7 @@ The key is the language key and the value is the message text</p>
 <dd><p>An object defined for internationalization purpose.
 The key is the language key and the value is the payload for alert box</p>
 </dd>
-<dt><a href="#Message">Message</a> : <code>Object</code></dt>
-<dd><p>The object that defines the data exchange between IO App and webpage layers.</p>
-</dd>
 </dl>
-
-<a name="sendMessagesToRN"></a>
-
-## sendMessagesToRN(message)
-This function sends messages to IO app layer.
-
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| message | [<code>Message</code>](#Message) | 
 
 <a name="closeModal"></a>
 
@@ -165,17 +148,4 @@ The key is the language key and the value is the payload for alert box
 | --- | --- | --- |
 | it | <code>AlertContent</code> | The values of the alert box in Italian language |
 | en | <code>AlertContent</code> | The values of the alert box in English language |
-
-<a name="Message"></a>
-
-## Message : <code>Object</code>
-The object that defines the data exchange between IO App and webpage layers.
-
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| type | <code>string</code> | The values of the alert box in Italian language |
-| payload | [<code>MessagePayloadL</code>](#MessagePayloadL) \| [<code>MessagePayloadS</code>](#MessagePayloadS) | (Optional) The values of the alert box in English language |
 
