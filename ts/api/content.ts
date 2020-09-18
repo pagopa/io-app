@@ -13,9 +13,10 @@ import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ServicesByScope } from "../../definitions/content/ServicesByScope";
-import { contentRepoUrl } from "../config";
+import { bpdEnabled, contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
+import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 
 type GetServiceT = IGetApiRequestType<
   {
@@ -82,6 +83,24 @@ const getContextualHelpT: GetContextualHelpT = {
   response_decoder: basicResponseDecoder(ContextualHelp)
 };
 
+type GetBonusListT = IGetApiRequestType<
+  Record<string, unknown>,
+  never,
+  never,
+  BasicResponseType<BonusesAvailable>
+>;
+
+const getAvailableBonusesT: GetBonusListT = {
+  method: "get",
+  url: () =>
+    bpdEnabled
+      ? "/bonus/bonus_available.json"
+      : "/bonus/vacanze/bonuses_available.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(BonusesAvailable)
+};
+
 /**
  * A client for the static content
  */
@@ -92,6 +111,7 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
   };
 
   return {
+    getBonusAvailable: createFetchRequestForApi(getAvailableBonusesT, options),
     getService: createFetchRequestForApi(getServiceT, options),
     getMunicipality: createFetchRequestForApi(getMunicipalityT, options),
     getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options),
