@@ -9,6 +9,7 @@ import {
 } from "../../../model/RemoteValue";
 import { enrollToBpd } from "../../actions/onboarding";
 
+// TODO: create RemoteValueReducer to avoid this code duplication
 const bpdEnrollReducer = (
   state: RemoteValue<boolean, Error> = remoteUndefined,
   action: Action

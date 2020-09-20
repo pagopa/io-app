@@ -8,6 +8,7 @@ import {
 } from "../../../model/RemoteValue";
 import { checkBdpEligibility } from "../../actions/onboarding";
 
+// TODO: create RemoteValueReducer to avoid this code duplication
 const bpdEligibilityReducer = (
   state: RemoteValue<boolean, Error> = { kind: "undefined" },
   action: Action
