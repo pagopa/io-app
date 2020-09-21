@@ -10,7 +10,7 @@ import {
 import { loadBdpActivationStatus } from "../../actions/details";
 
 // TODO: create RemoteValueReducer to avoid this code duplication
-const bpdEnabledReducer = (
+const bpdActiveReducer = (
   state: RemoteValue<boolean, Error> = remoteUndefined,
   action: Action
 ): RemoteValue<boolean, Error> => {
@@ -25,4 +25,4 @@ const bpdEnabledReducer = (
   return state;
 };
 
-export default bpdEnabledReducer;
+export default bpdActiveReducer;
