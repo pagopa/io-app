@@ -23,7 +23,7 @@ import {
   pagoPaApiUrlPrefixTest
 } from "../config";
 
-import { watchBonusSaga } from "../features/bonusVacanze/store/sagas/bonusSaga";
+import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";

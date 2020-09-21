@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0-rc.0](https://github.com/pagopa/io-app/compare/1.6.0-rc.3...1.7.0-rc.0) (2020-09-18)
+
+
+### Features
+
+* **Android:** [[#174715029](https://www.pivotaltracker.com/story/show/174715029)] Enable hermes [#2187](https://github.com/pagopa/io-app/issues/2187) ([d21b5d9](https://github.com/pagopa/io-app/commit/d21b5d90d54c185db9123e987d97b9889669d2c3))
+* [[#173639055](https://www.pivotaltracker.com/story/show/173639055)] Display all cc in wallet section ([#2196](https://github.com/pagopa/io-app/issues/2196)) ([c7e5e66](https://github.com/pagopa/io-app/commit/c7e5e666a39215454c3c24f16aa06c90fb7448f7))
+* [[#173847889](https://www.pivotaltracker.com/story/show/173847889)] Implements new test-login ([#2126](https://github.com/pagopa/io-app/issues/2126)) ([ddc2dd9](https://github.com/pagopa/io-app/commit/ddc2dd9b3e229e884f3b57ce912021ae1a6bf48f))
+* [[#174803269](https://www.pivotaltracker.com/story/show/174803269)] Add feature flag for BPD [#2200](https://github.com/pagopa/io-app/issues/2200) ([932676d](https://github.com/pagopa/io-app/commit/932676da0d9004271e497ac890a495f66464d2fc))
+* **Bonus Pagamenti Digitali:** [[#174816293](https://www.pivotaltracker.com/story/show/174816293),[#174796530](https://www.pivotaltracker.com/story/show/174796530)] Display BDP in bonus list ([#2207](https://github.com/pagopa/io-app/issues/2207)) ([ff2c805](https://github.com/pagopa/io-app/commit/ff2c8058ea809fc6e629df880ebaebeaa800fa01))
+* **My Portal:** [[#174689160](https://www.pivotaltracker.com/story/show/174689160)] Adds the script to check if injection is completed ([#2194](https://github.com/pagopa/io-app/issues/2194)) ([a8b97d2](https://github.com/pagopa/io-app/commit/a8b97d2b11dbd57292a517c83ab1713ad2923354))
+* **My Portal:** [[#174693542](https://www.pivotaltracker.com/story/show/174693542)] Support internal navigation with params ([#2183](https://github.com/pagopa/io-app/issues/2183)) ([30bb32f](https://github.com/pagopa/io-app/commit/30bb32f39317f4d01b5b54baa960fb7a1c2862af)), closes [#174693564](https://www.pivotaltracker.com/story/show/174693564)
+* **My Portal:** [[#174695208](https://www.pivotaltracker.com/story/show/174695208)] Saves a cookie on web playground ([#2198](https://github.com/pagopa/io-app/issues/2198)) ([9b98a37](https://github.com/pagopa/io-app/commit/9b98a3776b6f81c751566219eee4b99fcd1b4fdb))
+
+
+### Bug Fixes
+
+* [[#174704651](https://www.pivotaltracker.com/story/show/174704651)] Cannot use the style props for typography components ([#2197](https://github.com/pagopa/io-app/issues/2197)) ([72c12ba](https://github.com/pagopa/io-app/commit/72c12ba2418118214372be43bed3fe90943b0a1a))
+* [[#174845929](https://www.pivotaltracker.com/story/show/174845929)] is_inbox_enabled never enabled ([#2203](https://github.com/pagopa/io-app/issues/2203)) ([6a080d2](https://github.com/pagopa/io-app/commit/6a080d2422763bd4476ad140cb9b201fce29847b))
+
+
+### Chores
+
+* [[#174821277](https://www.pivotaltracker.com/story/show/174821277)] Debug Identification PIN creation ([#2199](https://github.com/pagopa/io-app/issues/2199)) ([ba9513a](https://github.com/pagopa/io-app/commit/ba9513a83b9002ca94cf65a8398370969ac3b31e))
+
 ## [1.6.0-rc.3](https://github.com/pagopa/io-app/compare/1.6.0-rc.2...1.6.0-rc.3) (2020-09-10)
 
 ## [1.6.0-rc.2](https://github.com/pagopa/io-app/compare/1.6.0-rc.1...1.6.0-rc.2) (2020-09-10)
