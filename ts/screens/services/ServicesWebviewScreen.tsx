@@ -26,6 +26,15 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
   const [isCookieAvailable, setIsCookieAvailable] = React.useState(false);
   const [cookieError, setCookieError] = React.useState(false);
 
+  const handleGoBack = () => {
+    props.goBack();
+    clearCookie();
+  };
+
+  const clearCookie = () => {
+    CookieManager.clearAll().catch(_ => setCookieError(true));
+  };
+
   React.useEffect(() => {
     if (props.token.isSome() && props.url) {
       const url = new URLParse(props.url, true);
@@ -49,13 +58,13 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
   });
 
   return (
-    <BaseScreenComponent goBack={true}>
+    <BaseScreenComponent goBack={handleGoBack}>
       <SafeAreaView style={styles.flex}>
         <Content contentContainerStyle={styles.flex}>
           {!cookieError && isCookieAvailable && (
             <RegionServiceWebView
               uri={fromNullable(props.url).getOrElse("")}
-              onModalClose={props.goBack}
+              onModalClose={handleGoBack}
             />
           )}
         </Content>
