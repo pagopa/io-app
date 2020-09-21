@@ -33,8 +33,8 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
   const [cookieError, setCookieError] = React.useState(false);
 
   const handleGoBack = () => {
-    props.goBack();
     clearCookie();
+    props.goBack();
   };
 
   const clearCookie = () => {
@@ -87,10 +87,8 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
         .catch(_ => setCookieError(true));
     }
 
-    return () => {
-      CookieManager.clearAll().catch(_ => setCookieError(true));
-    };
-  }, []);
+    return clearCookie;
+  });
 
   return (
     <BaseScreenComponent goBack={handleGoBack}>
