@@ -3,14 +3,13 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
 import RegionServiceWebView from "../../components/RegionServiceWebView";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { tokenFromSessionInfoSelector } from "../../store/reducers/authentication";
+import { tokenFromNameSelector } from "../../store/reducers/authentication";
 import { internalRouteNavigationParamsSelector } from "../../store/reducers/internalRouteNavigation";
 import { GlobalState } from "../../store/reducers/types";
 
@@ -27,7 +26,7 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
   const [isCookieAvailable, setIsCookieAvailable] = React.useState(false);
   const [cookieError, setCookieError] = React.useState(false);
 
-  const onDidFocus = () => {
+  React.useEffect(() => {
     if (props.token.isSome() && props.url) {
       const url = new URLParse(props.url, true);
       const cookie: Cookie = {
@@ -43,15 +42,14 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
         })
         .catch(_ => setCookieError(true));
     }
-  };
 
-  const onDidBlur = () => {
-    CookieManager.clearAll().catch(_ => setCookieError(true));
-  };
+    return () => {
+      CookieManager.clearAll().catch(_ => setCookieError(true));
+    };
+  });
 
   return (
     <BaseScreenComponent goBack={true}>
-      <NavigationEvents onDidBlur={onDidBlur} onDidFocus={onDidFocus} />
       <SafeAreaView style={styles.flex}>
         <Content contentContainerStyle={styles.flex}>
           {!cookieError && isCookieAvailable && (
@@ -74,7 +72,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     url: maybeParams.fold("", p => p.url),
-    token: tokenFromSessionInfoSelector(state, "walletToken")
+    token: tokenFromNameSelector("walletToken")(state)
   };
 };
 

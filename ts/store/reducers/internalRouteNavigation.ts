@@ -5,11 +5,9 @@ import { Action } from "../actions/types";
 import { addInternalRouteNavigation } from "../actions/internalRouteNavigation";
 import { GlobalState } from "./types";
 
-export type InternalRouteNavigationState = InternalRoute;
+export type InternalRouteNavigationState = InternalRoute | null;
 
-const initialInternalRouteNavigationState = {
-  routeName: ""
-};
+const initialInternalRouteNavigationState = null;
 
 const reducer = (
   state: InternalRouteNavigationState = initialInternalRouteNavigationState,
@@ -27,7 +25,7 @@ export const internalRouteNavigationSelector = (
 
 export const internalRouteNavigationParamsSelector = createSelector(
   internalRouteNavigationSelector,
-  irn => irn.params
+  irn => irn && irn.params
 );
 
 export default reducer;
