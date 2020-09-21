@@ -5,12 +5,13 @@ import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
   checkCurrentSession,
-  sessionExpired
+  sessionExpired,
+  sessionInformationLoadSuccess
 } from "../../store/actions/authentication";
 import { SagaCallReturnType } from "../../types/utils";
 
 export function* checkSession(
-  getSessionValidity: ReturnType<typeof BackendClient>["getProfile"]
+  getSessionValidity: ReturnType<typeof BackendClient>["getSession"]
 ): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof getSessionValidity> = yield call(
@@ -28,6 +29,10 @@ export function* checkSession(
           isSessionValid: response.value.status !== 401
         })
       );
+
+      if (response.value.status === 200) {
+        yield put(sessionInformationLoadSuccess(response.value.value));
+      }
     }
   } catch (error) {
     yield put(checkCurrentSession.failure(error));
@@ -44,7 +49,7 @@ export function* checkSessionResult(
 
 // Saga that listen to check session dispatch and returns it's validity
 export function* watchCheckSessionSaga(
-  getSessionValidity: ReturnType<typeof BackendClient>["getProfile"]
+  getSessionValidity: ReturnType<typeof BackendClient>["getSession"]
 ): SagaIterator {
   yield takeLatest(
     getType(checkCurrentSession.request),
