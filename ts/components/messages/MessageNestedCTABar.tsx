@@ -4,7 +4,6 @@ import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 import { loadServiceMetadata } from "../../store/actions/content";
 import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";

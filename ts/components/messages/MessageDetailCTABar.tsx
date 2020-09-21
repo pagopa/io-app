@@ -9,7 +9,7 @@ import { ReduxProps } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { getCTA, isExpired, paymentExpirationInfo } from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
-import { MessageNestedCTABar } from "./MessageNestedCTABar";
+import MessageNestedCTABar from "./MessageNestedCTABar";
 import PaymentButton from "./PaymentButton";
 
 type Props = {
