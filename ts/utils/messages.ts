@@ -2,6 +2,7 @@
  * Generic utilities for messages
  */
 
+import * as pot from "italia-ts-commons/lib/pot";
 import {
   fromNullable,
   fromPredicate,
@@ -23,6 +24,7 @@ import {
 } from "../components/ui/Markdown/handlers/internalLink";
 import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link";
 import { CTA, CTAS, MessageCTA } from "../types/MessageCTA";
+import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -211,16 +213,17 @@ export const getCTA = (message: CreatedMessageWithContent): Option<CTAS> =>
  */
 export const isCtaActionValid = (
   cta: CTA,
-  service?: ServicePublic
+  serviceMetadata?: pot.Pot<ServiceMetadata | undefined, Error>
 ): boolean => {
   // check if it is an internal navigation
   const maybeInternalRoute = getInternalRoute(cta.action);
   if (maybeInternalRoute.isSome()) {
     if (maybeInternalRoute.value.routeName === "SERVICE_WEBVIEW") {
       if (
-        service &&
-        service.service_metadata &&
-        service.service_metadata.token_name
+        serviceMetadata &&
+        pot.isSome(serviceMetadata) &&
+        serviceMetadata.value &&
+        serviceMetadata.value.token_name
       ) {
         return true;
       }

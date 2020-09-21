@@ -13,7 +13,7 @@ import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import { getCTA, isExpired, paymentExpirationInfo } from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
-import { MessageNestedCTABar } from "./MessageNestedCTABar";
+import MessageNestedCTABar from "./MessageNestedCTABar";
 import PaymentButton from "./PaymentButton";
 
 type Props = {
