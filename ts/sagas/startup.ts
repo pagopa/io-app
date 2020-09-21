@@ -19,6 +19,7 @@ import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
+  bpdEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
@@ -41,7 +42,8 @@ import { clearCache, resetProfileState } from "../store/actions/profile";
 import {
   idpSelector,
   sessionInfoSelector,
-  sessionTokenSelector
+  sessionTokenSelector,
+  tokenFromNameSelector
 } from "../store/reducers/authentication";
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
@@ -90,6 +92,7 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
+import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 
 const WAIT_INITIALIZE_SAGA = 3000 as Millisecond;
 /**
@@ -294,6 +297,14 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (bonusVacanzeEnabled) {
     // Start watching for requests about bonus
     yield fork(watchBonusSaga, sessionToken);
+  }
+
+  const maybeBpdToken: Option<string> = yield select(
+    tokenFromNameSelector("bpdToken")
+  );
+  if (bpdEnabled && maybeBpdToken.isSome()) {
+    // Start watching for actions about bonus bdp
+    yield fork(watchBonusBpdSaga, maybeBpdToken.value);
   }
 
   // Load the user metadata
