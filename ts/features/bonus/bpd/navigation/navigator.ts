@@ -1,12 +1,9 @@
 import { createStackNavigator } from "react-navigation";
 import { BpdInformationScreen } from "../screens/onboarding/BpdInformationScreen";
-import { EligibilityKoUnderageScreen } from "../screens/onboarding/EligibilityKOUnderageScreen";
 import { EnrollPaymentMethodsScreen } from "../screens/onboarding/EnrollPaymentMethodsScreen";
 import { LoadActivateBpdScreen } from "../screens/onboarding/LoadActivateBpdScreen";
 import { LoadBpdActivationStatus } from "../screens/onboarding/LoadBpdActivationStatus";
-import { LoadEligibilityScreen } from "../screens/onboarding/LoadEligibilityScreen";
 import { NoPaymentMethodsAvailableScreen } from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
-import { NotResidentInItalyKoScreen } from "../screens/onboarding/NotResidentInItalyKOScreen";
 import { DeclarationScreen } from "../screens/onboarding/DeclarationScreen";
 import BPD_ROUTES from "./routes";
 
@@ -18,17 +15,8 @@ const BpdNavigator = createStackNavigator(
     [BPD_ROUTES.ONBOARDING.INFORMATION_TOS]: {
       screen: BpdInformationScreen
     },
-    [BPD_ROUTES.ONBOARDING.ELIGIBILITY_LOAD]: {
-      screen: LoadEligibilityScreen
-    },
-    [BPD_ROUTES.ONBOARDING.ELIGIBILITY_KO_UNDERAGE]: {
-      screen: EligibilityKoUnderageScreen
-    },
-    [BPD_ROUTES.ONBOARDING.RESIDENCE_DECLARATION]: {
+    [BPD_ROUTES.ONBOARDING.DECLARATION]: {
       screen: DeclarationScreen
-    },
-    [BPD_ROUTES.ONBOARDING.RESIDENCE_KO_NOT_ITALIAN]: {
-      screen: NotResidentInItalyKoScreen
     },
     [BPD_ROUTES.ONBOARDING.LOAD_ACTIVATE_BPD]: {
       screen: LoadActivateBpdScreen
