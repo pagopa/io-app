@@ -27,8 +27,8 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
   const [cookieError, setCookieError] = React.useState(false);
 
   const handleGoBack = () => {
-    props.goBack();
     clearCookie();
+    props.goBack();
   };
 
   const clearCookie = () => {
@@ -52,9 +52,7 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
         .catch(_ => setCookieError(true));
     }
 
-    return () => {
-      CookieManager.clearAll().catch(_ => setCookieError(true));
-    };
+    return clearCookie;
   });
 
   return (
@@ -62,10 +60,7 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
       <SafeAreaView style={styles.flex}>
         <Content contentContainerStyle={styles.flex}>
           {!cookieError && isCookieAvailable && (
-            <RegionServiceWebView
-              uri={fromNullable(props.url).getOrElse("")}
-              onModalClose={handleGoBack}
-            />
+            <RegionServiceWebView uri={props.url} onModalClose={handleGoBack} />
           )}
         </Content>
       </SafeAreaView>
@@ -73,14 +68,14 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
   );
 };
 const mapStateToProps = (state: GlobalState) => {
-  const maybeParams = fromNullable(
-    internalRouteNavigationParamsSelector(state)
-  );
+  const maybeUrl = fromNullable(internalRouteNavigationParamsSelector(state))
+    .chain(params => fromNullable(params.url))
+    .getOrElse("");
 
   // TODO Add TokenName parameter from service metadata
 
   return {
-    url: maybeParams.fold("", p => p.url),
+    url: maybeUrl,
     token: tokenFromNameSelector("walletToken")(state)
   };
 };
