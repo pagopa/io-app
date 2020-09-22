@@ -8,12 +8,13 @@ import {
   RemoteValue
 } from "../../../model/RemoteValue";
 import { loadBdpActivationStatus } from "../../actions/details";
+import { CitizenResource } from "../../../../../../../definitions/bdp/citizen/CitizenResource";
 
 // TODO: create RemoteValueReducer to avoid this code duplication
 const bpdEnabledReducer = (
-  state: RemoteValue<boolean, Error> = remoteUndefined,
+  state: RemoteValue<CitizenResource, Error> = remoteUndefined,
   action: Action
-): RemoteValue<boolean, Error> => {
+): RemoteValue<CitizenResource, Error> => {
   switch (action.type) {
     case getType(loadBdpActivationStatus.request):
       return remoteLoading;
