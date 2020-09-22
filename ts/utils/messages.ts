@@ -194,11 +194,27 @@ export const getPrescriptionDataFromName = (
  * extract the CTAs if they are nested inside the message markdown content
  * if some CTAs are been found, the localized version will be returned
  * @param message
- * @param locale
  */
 export const getCTA = (message: CreatedMessageWithContent): Option<CTAS> =>
   fromPredicate((t: string) => FM.test(t))(message.content.markdown)
     .map(m => FM<MessageCTA>(m).attributes)
+    .chain(attrs =>
+      CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
+        _ => none,
+        // check if the decoded actions are valid
+        cta => (hasCtaValidActions(cta) ? some(cta) : none)
+      )
+    );
+
+/**
+ * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
+ * if some CTAs are been found, the localized version will be returned
+ * @param cta
+ */
+export const getServiceCTA = (cta: string): Option<CTAS> =>
+  fromPredicate((t: string) => FM.test(t))(cta)
+    .map(m => FM<MessageCTA>(m).attributes)
+    // eslint-disable-next-line sonarjs/no-identical-functions
     .chain(attrs =>
       CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
         _ => none,
