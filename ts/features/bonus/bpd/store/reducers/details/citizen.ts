@@ -10,8 +10,7 @@ import {
 import { loadBdpActivationStatus } from "../../actions/details";
 import { CitizenResource } from "../../../../../../../definitions/bdp/citizen/CitizenResource";
 
-// TODO: create RemoteValueReducer to avoid this code duplication
-const bpdEnabledReducer = (
+const bdpCitizenReducer = (
   state: RemoteValue<CitizenResource, Error> = remoteUndefined,
   action: Action
 ): RemoteValue<CitizenResource, Error> => {
@@ -26,4 +25,4 @@ const bpdEnabledReducer = (
   return state;
 };
 
-export default bpdEnabledReducer;
+export default bdpCitizenReducer;

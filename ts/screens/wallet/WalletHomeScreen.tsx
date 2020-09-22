@@ -435,18 +435,22 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
     return (
-      <ButtonDefaultOpacity
-        block={true}
-        onPress={
-          pot.isSome(potWallets)
-            ? this.props.navigateToPaymentScanQrCode
-            : undefined
-        }
-        activeOpacity={1}
-      >
-        <IconFont name="io-qr" style={styles.white} />
-        <Text>{I18n.t("wallet.payNotice")}</Text>
-      </ButtonDefaultOpacity>
+      <View>
+        <ButtonDefaultOpacity
+          block={true}
+          onPress={this.props.loadbdp}
+          activeOpacity={1}
+        >
+          <Text>{"load BDP"}</Text>
+        </ButtonDefaultOpacity>
+        <ButtonDefaultOpacity
+          block={true}
+          onPress={this.props.enroll}
+          activeOpacity={1}
+        >
+          <Text>{"enroll BDP"}</Text>
+        </ButtonDefaultOpacity>
+      </View>
     );
   }
 
@@ -543,7 +547,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  navigateToPaymentScanQrCode: () => dispatch(enrollToBpd.request()),
+  enroll: () => dispatch(enrollToBpd.request()),
+  loadbdp: () => dispatch(loadBdpActivationStatus.request()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(

@@ -1,7 +1,7 @@
 import { Action, combineReducers } from "redux";
 import { RemoteValue } from "../../../model/RemoteValue";
 import { CitizenResource } from "../../../../../../../definitions/bdp/citizen/CitizenResource";
-import bpdEnabledReducer from "./enabled";
+import bdpCitizenReducer from "./citizen";
 
 export type BdpDetailsState = {
   citizen: RemoteValue<CitizenResource, Error>;
@@ -9,7 +9,7 @@ export type BdpDetailsState = {
 };
 
 const bpdDetailsReducer = combineReducers<BdpDetailsState, Action>({
-  citizen: bpdEnabledReducer
+  citizen: bdpCitizenReducer
 });
 
 export default bpdDetailsReducer;
