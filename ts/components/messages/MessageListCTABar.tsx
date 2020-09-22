@@ -19,7 +19,6 @@ import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 import MessageNestedCTABar from "./MessageNestedCTABar";
 import PaymentButton from "./PaymentButton";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type OwnProps = {
   message: CreatedMessageWithContent;

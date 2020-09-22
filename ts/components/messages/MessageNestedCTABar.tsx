@@ -1,15 +1,8 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import React, { ReactElement } from "react";
-import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { loadServiceMetadata } from "../../store/actions/content";
-import {
-  ServiceMetadataState,
-  servicesMetadataByIdSelector
-} from "../../store/reducers/content";
-import { GlobalState } from "../../store/reducers/types";
+import { ServiceMetadataState } from "../../store/reducers/content";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { handleCtaAction, isCtaActionValid } from "../../utils/messages";
 import { MessageNestedCtaButton } from "./MessageNestedCtaButton";
