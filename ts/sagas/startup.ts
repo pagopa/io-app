@@ -42,8 +42,7 @@ import { clearCache, resetProfileState } from "../store/actions/profile";
 import {
   idpSelector,
   sessionInfoSelector,
-  sessionTokenSelector,
-  tokenFromNameSelector
+  sessionTokenSelector
 } from "../store/reducers/authentication";
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
@@ -54,6 +53,7 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
+import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest
@@ -92,7 +92,6 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 
 const WAIT_INITIALIZE_SAGA = 3000 as Millisecond;
 /**
@@ -298,13 +297,9 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     // Start watching for requests about bonus
     yield fork(watchBonusSaga, sessionToken);
   }
-
-  const maybeBpdToken: Option<string> = yield select(
-    tokenFromNameSelector("bpdToken")
-  );
-  if (bpdEnabled && maybeBpdToken.isSome()) {
+  if (bpdEnabled) {
     // Start watching for actions about bonus bdp
-    yield fork(watchBonusBpdSaga, maybeBpdToken.value);
+    yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
   }
 
   // Load the user metadata
