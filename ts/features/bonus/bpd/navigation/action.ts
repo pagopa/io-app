@@ -11,24 +11,9 @@ export const navigateToBpdOnboardingInformationTos = () =>
     routeName: BPD_ROUTES.ONBOARDING.INFORMATION_TOS
   });
 
-export const navigateToBpdOnboardingEligibilityLoad = () =>
+export const navigateToBpdOnboardingDeclaration = () =>
   NavigationActions.navigate({
-    routeName: BPD_ROUTES.ONBOARDING.ELIGIBILITY_LOAD
-  });
-
-export const navigateToBpdOnboardingEligibilityKoUnderage = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.ONBOARDING.ELIGIBILITY_KO_UNDERAGE
-  });
-
-export const navigateToBpdOnboardingResidenceDeclaration = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.ONBOARDING.RESIDENCE_DECLARATION
-  });
-
-export const navigateToBpdOnboardingResidenceKoNotItalian = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.ONBOARDING.RESIDENCE_KO_NOT_ITALIAN
+    routeName: BPD_ROUTES.ONBOARDING.DECLARATION
   });
 
 export const navigateToBpdOnboardingLoadActivate = () =>
