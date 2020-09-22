@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { View } from "native-base";
@@ -6,8 +7,11 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { ReduxProps } from "../../store/actions/types";
+import { loadServiceMetadata } from "../../store/actions/content";
+import { Dispatch } from "../../store/actions/types";
+import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { PaidReason } from "../../store/reducers/entities/payments";
+import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import { getCTA, isExpired, paymentExpirationInfo } from "../../utils/messages";
@@ -15,13 +19,18 @@ import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 import MessageNestedCTABar from "./MessageNestedCTABar";
 import PaymentButton from "./PaymentButton";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
-type Props = {
+type OwnProps = {
   message: CreatedMessageWithContent;
   service?: ServicePublic;
   payment?: PaidReason;
   disabled?: boolean;
-} & ReduxProps;
+};
+
+type Props = OwnProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   topContainer: {
@@ -65,6 +74,12 @@ class MessageListCTABar extends React.PureComponent<Props> {
 
   get dueDate(): Option<Date> {
     return fromNullable(this.props.message.content.due_date);
+  }
+
+  public componentDidMount() {
+    if (!this.props.serviceMetadata && this.props.service) {
+      this.props.loadService(this.props.service);
+    }
   }
 
   private renderCalendarIcon = () => {
@@ -125,13 +140,15 @@ class MessageListCTABar extends React.PureComponent<Props> {
   public render() {
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
-    const maybeCTA = getCTA(this.props.message);
+    const maybeCTA = getCTA(this.props.message, this.props.serviceMetadata);
     // payment CTA has priority to nested CTA
     const nestedCTA =
       !this.hasPaymentData && maybeCTA.isSome() ? (
         <MessageNestedCTABar
           ctas={maybeCTA.value}
           xsmall={true}
+          dispatch={this.props.dispatch}
+          serviceMetadata={this.props.serviceMetadata}
           service={this.props.service}
         />
       ) : null;
@@ -157,4 +174,20 @@ class MessageListCTABar extends React.PureComponent<Props> {
   }
 }
 
-export default connect()(MessageListCTABar);
+const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
+  const servicesMetadataByID = servicesMetadataByIdSelector(state);
+
+  return {
+    serviceMetadata: ownProps.service
+      ? servicesMetadataByID[ownProps.service.service_id]
+      : pot.none
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadService: (service: ServicePublic) =>
+    dispatch(loadServiceMetadata.request(service.service_id)),
+  dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageListCTABar);
