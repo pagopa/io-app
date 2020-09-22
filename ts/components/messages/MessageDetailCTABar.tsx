@@ -91,7 +91,6 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
       <View footer={true} style={styles.row}>
         <MessageNestedCTABar
           ctas={maybeCtas.value}
-          dispatch={this.props.dispatch}
           xsmall={false}
           service={this.props.service}
         />

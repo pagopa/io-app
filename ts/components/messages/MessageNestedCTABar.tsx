@@ -14,7 +14,6 @@ import { MessageNestedCtaButton } from "./MessageNestedCtaButton";
 type OwnProps = {
   ctas: CTAS;
   xsmall: boolean;
-  dispatch: Dispatch;
   service?: ServicePublic;
 };
 
@@ -76,7 +75,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadService: (service: ServicePublic) =>
-    dispatch(loadServiceMetadata.request(service.service_id))
+    dispatch(loadServiceMetadata.request(service.service_id)),
+  dispatch
 });
 
 export default connect(

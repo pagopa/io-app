@@ -131,7 +131,6 @@ class MessageListCTABar extends React.PureComponent<Props> {
       !this.hasPaymentData && maybeCTA.isSome() ? (
         <MessageNestedCTABar
           ctas={maybeCTA.value}
-          dispatch={this.props.dispatch}
           xsmall={true}
           service={this.props.service}
         />
