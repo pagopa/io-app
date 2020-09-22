@@ -1,25 +1,19 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import React, { ReactElement } from "react";
-import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { loadServiceMetadata } from "../../store/actions/content";
-import { servicesMetadataByIdSelector } from "../../store/reducers/content";
-import { GlobalState } from "../../store/reducers/types";
+import { ServiceMetadataState } from "../../store/reducers/content";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { handleCtaAction, isCtaActionValid } from "../../utils/messages";
 import { MessageNestedCtaButton } from "./MessageNestedCtaButton";
 
-type OwnProps = {
+type Props = {
   ctas: CTAS;
   xsmall: boolean;
+  dispatch: Dispatch;
   service?: ServicePublic;
+  serviceMetadata?: ServiceMetadataState;
 };
-
-type Props = OwnProps &
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
 
 // render cta1 and cta2 if they are defined in the message content as nested front-matter
 const MessageNestedCTABar: React.FunctionComponent<Props> = (
@@ -28,12 +22,6 @@ const MessageNestedCTABar: React.FunctionComponent<Props> = (
   const handleCTAPress = (cta: CTA) => {
     handleCtaAction(cta, props.dispatch, props.service);
   };
-
-  React.useEffect(() => {
-    if (!props.serviceMetadata && props.service) {
-      props.loadService(props.service);
-    }
-  }, []);
 
   const { ctas } = props;
 
@@ -63,23 +51,4 @@ const MessageNestedCTABar: React.FunctionComponent<Props> = (
   );
 };
 
-const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const servicesMetadataByID = servicesMetadataByIdSelector(state);
-
-  return {
-    serviceMetadata: ownProps.service
-      ? servicesMetadataByID[ownProps.service.service_id]
-      : pot.none
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadService: (service: ServicePublic) =>
-    dispatch(loadServiceMetadata.request(service.service_id)),
-  dispatch
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MessageNestedCTABar);
+export default MessageNestedCTABar;

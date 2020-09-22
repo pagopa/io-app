@@ -194,15 +194,19 @@ export const getPrescriptionDataFromName = (
  * extract the CTAs if they are nested inside the message markdown content
  * if some CTAs are been found, the localized version will be returned
  * @param message
+ * @param serviceMetadata
  */
-export const getCTA = (message: CreatedMessageWithContent): Option<CTAS> =>
+export const getCTA = (
+  message: CreatedMessageWithContent,
+  serviceMetadata?: pot.Pot<ServiceMetadata | undefined, Error>
+): Option<CTAS> =>
   fromPredicate((t: string) => FM.test(t))(message.content.markdown)
     .map(m => FM<MessageCTA>(m).attributes)
     .chain(attrs =>
       CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
         _ => none,
         // check if the decoded actions are valid
-        cta => (hasCtaValidActions(cta) ? some(cta) : none)
+        cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)
       )
     );
 
@@ -259,12 +263,15 @@ export const isCtaActionValid = (
  * return true if at least one of the CTAs is valid
  * @param ctas
  */
-export const hasCtaValidActions = (ctas: CTAS): boolean => {
-  const isCTA1Valid = isCtaActionValid(ctas.cta_1);
+export const hasCtaValidActions = (
+  ctas: CTAS,
+  serviceMetadata?: pot.Pot<ServiceMetadata | undefined, Error>
+): boolean => {
+  const isCTA1Valid = isCtaActionValid(ctas.cta_1, serviceMetadata);
   if (ctas.cta_2 === undefined) {
     return isCTA1Valid;
   }
-  const isCTA2Valid = isCtaActionValid(ctas.cta_2);
+  const isCTA2Valid = isCtaActionValid(ctas.cta_2, serviceMetadata);
   return isCTA1Valid || isCTA2Valid;
 };
 
