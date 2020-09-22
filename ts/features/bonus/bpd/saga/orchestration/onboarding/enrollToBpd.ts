@@ -40,6 +40,7 @@ function* enrollToBpdWorker() {
     yield put(navigationHistoryPop(1));
   }
 
+  // enroll the user and wait for the result
   const enrollToBpdResult: SagaCallReturnType<typeof enrollToBpd> = yield call(
     enrollToBpd
   );
@@ -51,6 +52,9 @@ function* enrollToBpdWorker() {
   }
 }
 
+/**
+ * This saga enroll the user to the bpd
+ */
 export function* handleBpdEnroll(): SagaIterator {
   const { cancelAction } = yield race({
     enroll: call(enrollToBpdWorker),

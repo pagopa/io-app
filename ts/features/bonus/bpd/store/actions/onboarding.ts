@@ -21,6 +21,13 @@ export const BpdOnboardingStart = createStandardAction("BDP_ONBOARDING_START")<
 >();
 
 /**
+ * The user choose to activate the bpd
+ */
+export const BpdUserActivate = createStandardAction(
+  "BDP_ONBOARDING_USER_ACTIVATE"
+)<void>();
+
+/**
  * Cancel the onboarding workflow
  */
 export const BpdOnboardingCancel = createStandardAction(

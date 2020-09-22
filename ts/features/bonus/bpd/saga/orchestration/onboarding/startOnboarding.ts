@@ -15,7 +15,11 @@ import {
 } from "../../../navigation/action";
 import BPD_ROUTES from "../../../navigation/routes";
 import { loadBdpActivationStatus } from "../../../store/actions/details";
-import { BpdOnboardingCancel } from "../../../store/actions/onboarding";
+import {
+  BpdOnboardingAcceptDeclaration,
+  BpdOnboardingCancel,
+  BpdUserActivate
+} from "../../../store/actions/onboarding";
 import { bpdActiveSelector } from "../../../store/reducers/details";
 
 export const isLoadingScreen = (screenName: string) =>
@@ -47,39 +51,52 @@ export function* isBpdEnabled(): Generator<
   }
 }
 
-export function* bpdCheckActiveWorker() {
+export function* bpdStartOnboardingWorker() {
   const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
     navigationCurrentRouteSelector
   );
 
+  // go to the loading page (if I'm not on that screen)
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
-    // show the loading page for the check eligibility
     yield put(navigateToBpdOnboardingLoadActivationStatus());
     yield put(navigationHistoryPop(1));
   }
 
+  // read if the bpd is active for the user
   const isBpdActive: SagaCallReturnType<typeof isBpdEnabled> = yield call(
     isBpdEnabled
   );
 
   if (isBpdActive.isRight()) {
     if (isBpdActive) {
+      // The bpd is already active, go directly to the bpd details screen
       // TODO: navigate to bpd details
       yield put(navigateToWalletHome());
       yield put(navigationHistoryPop(1));
     } else {
+      // The bpd is not active, continue with the onboarding
       yield put(navigateToBpdOnboardingInformationTos());
       yield put(navigationHistoryPop(1));
-      // TODO: wait for continue
+
+      // wait for the user that choose to continue
+      yield take(BpdUserActivate);
+
+      // Navigate to the Onboarding Declaration and wait for the action that complete the saga
       yield put(navigateToBpdOnboardingDeclaration());
       yield put(navigationHistoryPop(1));
+
+      // The saga ends when the user accepts the declaration
+      yield take(BpdOnboardingAcceptDeclaration);
     }
   }
 }
 
-export function* handleBpdCheckActiveSaga(): SagaIterator {
+/**
+ * This saga check if the bpd is active for the user and choose if start the onboarding or go directly to the bpd details
+ */
+export function* handleBpdStartOnboardingSaga(): SagaIterator {
   const { cancelAction } = yield race({
-    onboarding: call(bpdCheckActiveWorker),
+    onboarding: call(bpdStartOnboardingWorker),
     cancelAction: take(BpdOnboardingCancel)
   });
   if (cancelAction) {

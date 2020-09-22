@@ -6,12 +6,12 @@ import {
   BpdOnboardingAcceptDeclaration,
   BpdOnboardingStart
 } from "../store/actions/onboarding";
-import { handleBpdCheckActiveSaga } from "./orchestration/onboarding/checkBpdActive";
+import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 
 export function* watchBpdSaga(): SagaIterator {
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
-  yield takeLatest(getType(BpdOnboardingStart), handleBpdCheckActiveSaga);
+  yield takeLatest(getType(BpdOnboardingStart), handleBpdStartOnboardingSaga);
 
   // The user accepts the declaration, enroll the user to the bpd program
   yield takeLatest(getType(BpdOnboardingAcceptDeclaration), handleBpdEnroll);
