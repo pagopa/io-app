@@ -3,22 +3,20 @@ import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, Effect, put, race, select, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { navigateToWalletHome } from "../../../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
-import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
-import { SagaCallReturnType } from "../../../../../types/utils";
-import { isReady } from "../../model/RemoteValue";
+import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
+import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { isReady } from "../../../model/RemoteValue";
 import {
   navigateToBpdOnboardingDeclaration,
+  navigateToBpdOnboardingInformationTos,
   navigateToBpdOnboardingLoadActivationStatus
-} from "../../navigation/action";
-import BPD_ROUTES from "../../navigation/routes";
-import { loadBdpActivationStatus } from "../../store/actions/details";
-import {
-  BpdOnboardingAcceptDeclaration,
-  BpdOnboardingCancel
-} from "../../store/actions/onboarding";
-import { bpdActiveSelector } from "../../store/reducers/details";
+} from "../../../navigation/action";
+import BPD_ROUTES from "../../../navigation/routes";
+import { loadBdpActivationStatus } from "../../../store/actions/details";
+import { BpdOnboardingCancel } from "../../../store/actions/onboarding";
+import { bpdActiveSelector } from "../../../store/reducers/details";
 
 export const isLoadingScreen = (screenName: string) =>
   screenName === BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS;
@@ -49,7 +47,7 @@ export function* isBpdEnabled(): Generator<
   }
 }
 
-export function* onboardingWorker() {
+export function* bpdCheckActiveWorker() {
   const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
     navigationCurrentRouteSelector
   );
@@ -70,22 +68,18 @@ export function* onboardingWorker() {
       yield put(navigateToWalletHome());
       yield put(navigationHistoryPop(1));
     } else {
+      yield put(navigateToBpdOnboardingInformationTos());
+      yield put(navigationHistoryPop(1));
+      // TODO: wait for continue
       yield put(navigateToBpdOnboardingDeclaration());
       yield put(navigationHistoryPop(1));
-      const userAcceptDeclaration = yield take(
-        typeof BpdOnboardingAcceptDeclaration
-      );
-
-      // need a loop to retry if fail activation here, without restart this saga
     }
   }
 }
 
-export function* handleBpdOnboardingSaga(): SagaIterator {
-  // an event of checkBonusEligibility.request trigger a new workflow for the eligibility
-
+export function* handleBpdCheckActiveSaga(): SagaIterator {
   const { cancelAction } = yield race({
-    onboarding: call(onboardingWorker),
+    onboarding: call(bpdCheckActiveWorker),
     cancelAction: take(BpdOnboardingCancel)
   });
   if (cancelAction) {

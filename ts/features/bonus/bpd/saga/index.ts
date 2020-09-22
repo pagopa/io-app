@@ -2,10 +2,17 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { BpdOnboardingStart } from "../store/actions/onboarding";
-import { handleBpdOnboardingSaga } from "./orchestration/onboarding";
+import {
+  BpdOnboardingAcceptDeclaration,
+  BpdOnboardingStart
+} from "../store/actions/onboarding";
+import { handleBpdCheckActiveSaga } from "./orchestration/onboarding/checkBpdActive";
+import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 
 export function* watchBpdSaga(): SagaIterator {
-  // handle onboarding flow
-  yield takeLatest(getType(BpdOnboardingStart), handleBpdOnboardingSaga);
+  // First step of the onboarding workflow; check if the user is enrolled to the bpd program
+  yield takeLatest(getType(BpdOnboardingStart), handleBpdCheckActiveSaga);
+
+  // The user accepts the declaration, enroll the user to the bpd program
+  yield takeLatest(getType(BpdOnboardingAcceptDeclaration), handleBpdEnroll);
 }
