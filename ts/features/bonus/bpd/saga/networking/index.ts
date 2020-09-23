@@ -3,13 +3,13 @@ import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { enrollToBpd } from "../../store/actions/onboarding";
 import { SagaCallReturnType } from "../../../../../types/utils";
-import { BackendBdpClient } from "../../api/backendBdpClient";
+import { BackendBpdClient } from "../../api/backendBdpClient";
 import { loadBdpActivationStatus } from "../../store/actions/details";
 
 export function* executeAndDispatch(
   remoteCall:
-    | ReturnType<typeof BackendBdpClient>["enrollCitizenIO"]
-    | ReturnType<typeof BackendBdpClient>["find"],
+    | ReturnType<typeof BackendBpdClient>["enrollCitizenIO"]
+    | ReturnType<typeof BackendBpdClient>["find"],
   action: typeof enrollToBpd | typeof loadBdpActivationStatus
 ) {
   try {
@@ -35,7 +35,7 @@ export function* executeAndDispatch(
  * make a request to get the citizen status
  */
 export function* getCitizen(
-  findCitizen: ReturnType<typeof BackendBdpClient>["find"]
+  findCitizen: ReturnType<typeof BackendBpdClient>["find"]
 ): SagaIterator {
   yield call(executeAndDispatch, findCitizen, loadBdpActivationStatus);
 }
@@ -44,7 +44,7 @@ export function* getCitizen(
  * make a request to enroll the citizen to the bpd
  */
 export function* putEnrollCitizen(
-  enrollCitizenIO: ReturnType<typeof BackendBdpClient>["enrollCitizenIO"]
+  enrollCitizenIO: ReturnType<typeof BackendBpdClient>["enrollCitizenIO"]
 ): SagaIterator {
   yield call(executeAndDispatch, enrollCitizenIO, enrollToBpd);
 }

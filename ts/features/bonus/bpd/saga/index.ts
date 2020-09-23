@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, takeLatest, CallEffect } from "redux-saga/effects";
 
-import { BackendBdpClient } from "../api/backendBdpClient";
+import { BackendBpdClient } from "../api/backendBdpClient";
 import { apiUrlPrefix } from "../../../../config";
 import { loadBdpActivationStatus } from "../store/actions/details";
 import { enrollToBpd } from "../store/actions/onboarding";
@@ -10,20 +10,20 @@ import { putEnrollCitizen, getCitizen } from "./networking";
 
 // watch all events about bdp
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
-  const bdpBackendClient = BackendBdpClient(apiUrlPrefix, bpdBearerToken);
+  const bpdBackendClient = BackendBpdClient(apiUrlPrefix, bpdBearerToken);
 
   // load citizen details
   yield takeLatest(
     loadBdpActivationStatus.request,
     getCitizen,
-    bdpBackendClient.find
+    bpdBackendClient.find
   );
 
   // enroll citizen to the bdp
   yield takeLatest(
     enrollToBpd.request,
     putEnrollCitizen,
-    bdpBackendClient.enrollCitizenIO
+    bpdBackendClient.enrollCitizenIO
   );
 }
 
