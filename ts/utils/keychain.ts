@@ -23,8 +23,8 @@ export async function setGenericPasswordWithDefaultAccessibleOption(
   username: string,
   password: string,
   options?: Keychain.Options
-) {
-  return Keychain.setGenericPassword(username, password, {
+): Promise<boolean> {
+  const result = await Keychain.setGenericPassword(username, password, {
     ...options,
     // The data in the keychain item can be accessed only while the device is unlocked by the user.
     // This is recommended for items that need to be accessible only while the application is in the foreground. Items
@@ -32,6 +32,7 @@ export async function setGenericPasswordWithDefaultAccessibleOption(
     // these items will not be present.
     accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY
   });
+  return result !== false;
 }
 
 /**
