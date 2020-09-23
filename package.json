@@ -1,10 +1,11 @@
 {
   "name": "italia-app",
   "version": "1.7.0-rc.0",
-  "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v6.14.0/api_backend.yaml",
-  "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v6.14.0/api_public.yaml",
+  "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.0.0/api_backend.yaml",
+  "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.0.0/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
   "io_bonus_vacanze_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_bonus.yaml",
+  "io_bpd_citizen": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/citizen.json",
   "pagopa_api": "https://wisp2.pagopa.gov.it/pp-restapi-CD/v2/api-docs",
   "private": true,
   "scripts": {
@@ -30,6 +31,7 @@
     "generate:mock-google-services-json": "cp mock-google-services.json ./android/app/google-services.json",
     "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec $npm_package_io_backend_api --out-dir ./definitions/backend --no-strict --request-types --response-decoders  && gen-api-models --api-spec $npm_package_io_public_api --out-dir ./definitions/backend",
     "generate:bonus-vacanze-definitions": "rimraf definitions/bonus_vacanze && mkdir -p definitions/bonus_vacanze && gen-api-models --api-spec $npm_package_io_bonus_vacanze_specs --out-dir ./definitions/bonus_vacanze --no-strict --request-types --response-decoders",
+    "generate:bpd-citizen": "rimraf definitions/bpd/citizen && mkdir -p definitions/bpd/citizen  && gen-api-models --api-spec $npm_package_io_bpd_citizen --out-dir ./definitions/bpd/citizen --no-strict --request-types --response-decoders",
     "bundle:android-release": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "generate:locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/make-locales.ts",
     "generate:content-definitions": "rimraf definitions/content && mkdir -p definitions/content && gen-api-models --api-spec $npm_package_io_content_specs --out-dir ./definitions/content",
