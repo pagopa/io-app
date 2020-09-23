@@ -1,5 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { CitizenResource } from "../../../../../../definitions/bdp/citizen/CitizenResource";
+import { CitizenResource } from "../../../../../../definitions/bpd/citizen/CitizenResource";
 
 /**
  * Enroll the user to the bpd program
