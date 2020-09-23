@@ -4,7 +4,7 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import URLParse from "url-parse";
-import { bonusVacanzeEnabled } from "../../../../config";
+import { bonusVacanzeEnabled, myPortalEnabled } from "../../../../config";
 import BONUSVACANZE_ROUTES from "../../../../features/bonus/bonusVacanze/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
@@ -32,8 +32,11 @@ const BONUS_VACANZE_ROUTE_NAMES: ReadonlyArray<string> = [
   BONUSVACANZE_ROUTES.BONUS_CTA_ELIGILITY_START
 ];
 
+const MY_PORTAL_ROUTES: ReadonlyArray<string> = [ROUTES.SERVICE_WEBVIEW];
+
 const ALLOWED_ROUTE_NAMES = ROUTE_NAMES.concat(
-  bonusVacanzeEnabled ? BONUS_VACANZE_ROUTE_NAMES : []
+  bonusVacanzeEnabled ? BONUS_VACANZE_ROUTE_NAMES : [],
+  myPortalEnabled ? MY_PORTAL_ROUTES : []
 );
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv
