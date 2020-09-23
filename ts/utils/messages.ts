@@ -234,7 +234,7 @@ export const getCTA = (
 
 /**
  * return a boolean indicating if the cta action is valid or not
- * Checks on servicesMetadata for defined parameter based on internalRoutePredicates map
+ * Checks on servicesMetadata for defined parameter based on predicates defined in internalRoutePredicates map
  * @param cta
  * @param serviceMetadata
  */
