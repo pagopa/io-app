@@ -1540,4 +1540,6 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
 webView:
   error:
+    missingParams: Not all information necessary to access this page are available
+    missingToken: Missing authorization to start this flow
     convertMessage: Unable to decode the message from the webview
