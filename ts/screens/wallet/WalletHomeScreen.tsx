@@ -71,8 +71,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { loadBdpActivationStatus } from "../../features/bonus/bpd/store/actions/details";
-import { enrollToBpd } from "../../features/bonus/bpd/store/actions/onboarding";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -435,22 +433,18 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
     return (
-      <View>
-        <ButtonDefaultOpacity
-          block={true}
-          onPress={this.props.loadbdp}
-          activeOpacity={1}
-        >
-          <Text>{"load BDP"}</Text>
-        </ButtonDefaultOpacity>
-        <ButtonDefaultOpacity
-          block={true}
-          onPress={this.props.enroll}
-          activeOpacity={1}
-        >
-          <Text>{"enroll BDP"}</Text>
-        </ButtonDefaultOpacity>
-      </View>
+      <ButtonDefaultOpacity
+        block={true}
+        onPress={
+          pot.isSome(potWallets)
+            ? this.props.navigateToPaymentScanQrCode
+            : undefined
+        }
+        activeOpacity={1}
+      >
+        <IconFont name="io-qr" style={styles.white} />
+        <Text>{I18n.t("wallet.payNotice")}</Text>
+      </ButtonDefaultOpacity>
     );
   }
 
@@ -547,8 +541,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  enroll: () => dispatch(enrollToBpd.request()),
-  loadbdp: () => dispatch(loadBdpActivationStatus.request()),
+  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(

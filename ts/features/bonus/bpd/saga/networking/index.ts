@@ -6,7 +6,7 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBdpClient } from "../../api/backendBdpClient";
 import { loadBdpActivationStatus } from "../../store/actions/details";
 
-export function* exceuteAndDispatch(
+export function* executeAndDispatch(
   remoteCall:
     | ReturnType<typeof BackendBdpClient>["enrollCitizenIO"]
     | ReturnType<typeof BackendBdpClient>["find"],
@@ -34,17 +34,17 @@ export function* exceuteAndDispatch(
 /**
  * make a request to get the citizen status
  */
-export function* findCitizen(
+export function* getCitizen(
   findCitizen: ReturnType<typeof BackendBdpClient>["find"]
 ): SagaIterator {
-  yield call(exceuteAndDispatch, findCitizen, loadBdpActivationStatus);
+  yield call(executeAndDispatch, findCitizen, loadBdpActivationStatus);
 }
 
 /**
  * make a request to enroll the citizen to the bpd
  */
-export function* enrollCitizen(
+export function* putEnrollCitizen(
   enrollCitizenIO: ReturnType<typeof BackendBdpClient>["enrollCitizenIO"]
 ): SagaIterator {
-  yield call(exceuteAndDispatch, enrollCitizenIO, enrollToBpd);
+  yield call(executeAndDispatch, enrollCitizenIO, enrollToBpd);
 }
