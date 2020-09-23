@@ -13,6 +13,7 @@ import {
 import FM from "front-matter";
 import { Linking } from "react-native";
 import { Dispatch } from "redux";
+import { Predicate } from "fp-ts/lib/function";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
@@ -25,6 +26,7 @@ import {
 import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link";
 import { CTA, CTAS, MessageCTA } from "../types/MessageCTA";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
+import ROUTES from "../navigation/routes";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -190,6 +192,26 @@ export const getPrescriptionDataFromName = (
     return none;
   });
 
+type MaybePotMetadata = pot.Pot<ServiceMetadata | undefined, Error> | undefined;
+const hasMetadataTokenName = (metadata: MaybePotMetadata): boolean =>
+  fromNullable(metadata)
+    .map(m =>
+      pot.getOrElse(
+        pot.map(m, m => m !== undefined && m.token_name !== undefined),
+        false
+      )
+    )
+    .getOrElse(false);
+
+// a mapping between routes name (the key) and predicates (the value)
+// the predicate says if for that specific route the navigation is allowed
+const internalRoutePredicates: Map<
+  string,
+  Predicate<MaybePotMetadata>
+> = new Map<string, Predicate<MaybePotMetadata>>([
+  [ROUTES.SERVICE_WEBVIEW, hasMetadataTokenName]
+]);
+
 /**
  * extract the CTAs if they are nested inside the message markdown content
  * if some CTAs are been found, the localized version will be returned
@@ -212,27 +234,22 @@ export const getCTA = (
 
 /**
  * return a boolean indicating if the cta action is valid or not
+ * Checks on servicesMetadata for defined parameter based on internalRoutePredicates map
  * @param cta
+ * @param serviceMetadata
  */
 export const isCtaActionValid = (
   cta: CTA,
-  serviceMetadata?: pot.Pot<ServiceMetadata | undefined, Error>
+  serviceMetadata?: MaybePotMetadata
 ): boolean => {
   // check if it is an internal navigation
   const maybeInternalRoute = getInternalRoute(cta.action);
   if (maybeInternalRoute.isSome()) {
-    if (maybeInternalRoute.value.routeName === "SERVICE_WEBVIEW") {
-      if (
-        serviceMetadata &&
-        pot.isSome(serviceMetadata) &&
-        serviceMetadata.value &&
-        serviceMetadata.value.token_name
-      ) {
-        return true;
-      }
-      return false;
-    }
-    return true;
+    return fromNullable(
+      internalRoutePredicates.get(maybeInternalRoute.value.routeName)
+    )
+      .map(f => f(serviceMetadata))
+      .getOrElse(true);
   }
   const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
   // check if it is a custom action (it should be composed in a specific format)
@@ -245,6 +262,7 @@ export const isCtaActionValid = (
 /**
  * return true if at least one of the CTAs is valid
  * @param ctas
+ * @param serviceMetadata
  */
 export const hasCtaValidActions = (
   ctas: CTAS,
