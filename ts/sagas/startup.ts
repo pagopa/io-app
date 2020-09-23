@@ -19,6 +19,7 @@ import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
+  bpdEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
@@ -52,6 +53,7 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
+import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest
@@ -294,6 +296,10 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (bonusVacanzeEnabled) {
     // Start watching for requests about bonus
     yield fork(watchBonusSaga, sessionToken);
+  }
+  if (bpdEnabled) {
+    // Start watching for actions about bonus bdp
+    yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
   }
 
   // Load the user metadata
