@@ -8,9 +8,9 @@ import {
   RemoteValue
 } from "../../../model/RemoteValue";
 import { loadBdpActivationStatus } from "../../actions/details";
-import { CitizenResource } from "../../../../../../../definitions/bdp/citizen/CitizenResource";
+import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
 
-const bdpCitizenReducer = (
+const bpdCitizenReducer = (
   state: RemoteValue<CitizenResource, Error> = remoteUndefined,
   action: Action
 ): RemoteValue<CitizenResource, Error> => {
@@ -25,4 +25,4 @@ const bdpCitizenReducer = (
   return state;
 };
 
-export default bdpCitizenReducer;
+export default bpdCitizenReducer;
