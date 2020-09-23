@@ -1,14 +1,15 @@
 import { Action, combineReducers } from "redux";
 import { RemoteValue } from "../../../model/RemoteValue";
-import bpdEnabledReducer from "./enabled";
+import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
+import bdpCitizenReducer from "./citizen";
 
 export type BdpDetailsState = {
-  enabled: RemoteValue<boolean, Error>;
+  citizen: RemoteValue<CitizenResource, Error>;
   // IBAN, value, points, other info...
 };
 
 const bpdDetailsReducer = combineReducers<BdpDetailsState, Action>({
-  enabled: bpdEnabledReducer
+  citizen: bdpCitizenReducer
 });
 
 export default bpdDetailsReducer;
