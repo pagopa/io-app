@@ -34,7 +34,7 @@ export function* isBpdEnabled(): Generator<
     bpdActiveSelector
   );
   if (isReady(remoteActive)) {
-    return right<Error, boolean>(remoteActive.value);
+    return right<Error, boolean>(remoteActive.value.enabled);
   } else {
     yield put(loadBdpActivationStatus.request());
     const bpdActivationResults: ActionType<
@@ -46,7 +46,7 @@ export function* isBpdEnabled(): Generator<
     ]);
     return bpdActivationResults.type ===
       getType(loadBdpActivationStatus.success)
-      ? right<Error, boolean>(bpdActivationResults.payload)
+      ? right<Error, boolean>(bpdActivationResults.payload.enabled)
       : left<Error, boolean>(bpdActivationResults.payload);
   }
 }
@@ -68,7 +68,7 @@ export function* bpdStartOnboardingWorker() {
   );
 
   if (isBpdActive.isRight()) {
-    if (isBpdActive) {
+    if (isBpdActive.value) {
       // The bpd is already active, go directly to the bpd details screen
       // TODO: navigate to bpd details
       yield put(navigateToWalletHome());
