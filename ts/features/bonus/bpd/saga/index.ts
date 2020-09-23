@@ -1,16 +1,11 @@
 import { SagaIterator } from "redux-saga";
-import {
-  take,
-  takeLatest,
-  put,
-  PutEffect,
-  TakeEffect
-} from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
+import { call, takeLatest, CallEffect } from "redux-saga/effects";
+
 import { BackendBdpClient } from "../api/backendBdpClient";
 import { apiUrlPrefix } from "../../../../config";
 import { loadBdpActivationStatus } from "../store/actions/details";
 import { enrollToBpd } from "../store/actions/onboarding";
+import { getAsyncResult } from "../../../../utils/saga";
 import { putEnrollCitizen, getCitizen } from "./networking";
 
 // watch all events about bdp
@@ -34,20 +29,8 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
 
 // try to enroll the citizen and return the operation outcome
 // true -> successfully enrolled
-export function* enrollCitizen(): Generator<
-  PutEffect | TakeEffect,
-  boolean,
-  ActionType<typeof enrollToBpd>
-> {
-  yield put(enrollToBpd.request());
-  const successType = getType(enrollToBpd.success);
-  const failureType = getType(enrollToBpd.failure);
-  const result: ActionType<typeof enrollToBpd> = yield take([
-    successType,
-    failureType
-  ]);
-  if (result.type === successType) {
-    return result.payload.enabled;
-  }
-  return false;
+export function* enrollCitizen(): Generator<CallEffect, boolean, boolean> {
+  return yield call(() =>
+    getAsyncResult(enrollToBpd, undefined as void, c => c.enabled)
+  );
 }
