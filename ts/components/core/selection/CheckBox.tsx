@@ -39,7 +39,7 @@ const getBorderColor = (value: boolean) => (value ? onColor : offColor);
  *
  * https://pagopa.invisionapp.com/console/IO-app---Library-ckcdil0710mt1014buxuo4u34/ckcdilqwl032g01xbh77f4i2m/play
  *
- * @param props : asdd
+ * @param props
  * @constructor
  */
 export const CheckBox: React.FunctionComponent<Props> = props => {
