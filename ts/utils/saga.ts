@@ -4,8 +4,8 @@ import { Predicate } from "fp-ts/lib/function";
 
 /**
  * execute an async action dispatching request and wait for the result.
- * If the result is successfully then the predicate will be executed to evaluate the result
- * otherwise false will be returned
+ * If the action ends successfully then the predicate will be executed to evaluate the result
+ * otherwise false will be returned (failure case)
  * @param action the action used to dispatch request and wait for success/failure
  * @param requestInput the input to give to action.request
  * @param predicate the predicate to execute in happy case (success)
