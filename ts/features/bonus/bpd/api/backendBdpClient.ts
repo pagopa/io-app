@@ -41,7 +41,7 @@ const enrollCitizenIOT: EnrollmentT = {
   response_decoder: enrollmentDefaultDecoder()
 };
 
-export function BackendBdpClient(
+export function BackendBpdClient(
   baseUrl: string,
   token: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
