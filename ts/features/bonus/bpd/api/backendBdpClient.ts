@@ -11,7 +11,7 @@ import {
   EnrollmentT,
   findUsingGETDefaultDecoder,
   FindUsingGETT
-} from "../../../../../definitions/bdp/citizen/requestTypes";
+} from "../../../../../definitions/bpd/citizen/requestTypes";
 
 const headersProducers = <
   P extends {
@@ -27,7 +27,7 @@ const headersProducers = <
 const findT: FindUsingGETT = {
   method: "get",
   url: () => `/bonus/bpd/io/citizen`,
-  query: _ => ({}),
+  query: () => ({}),
   headers: headersProducers(),
   response_decoder: findUsingGETDefaultDecoder()
 };
@@ -35,8 +35,8 @@ const findT: FindUsingGETT = {
 const enrollCitizenIOT: EnrollmentT = {
   method: "put",
   url: () => `/bonus/bpd/io/citizen`,
-  query: _ => ({}),
-  body: _ => "",
+  query: () => ({}),
+  body: () => "",
   headers: composeHeaderProducers(headersProducers(), ApiHeaderJson),
   response_decoder: enrollmentDefaultDecoder()
 };

@@ -1,6 +1,6 @@
 import { Action, combineReducers } from "redux";
 import { RemoteValue } from "../../../model/RemoteValue";
-import { CitizenResource } from "../../../../../../../definitions/bdp/citizen/CitizenResource";
+import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
 import bdpCitizenReducer from "./citizen";
 
 export type BdpDetailsState = {
