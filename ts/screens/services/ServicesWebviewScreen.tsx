@@ -5,6 +5,7 @@ import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import I18n from "../../i18n";
 import RegionServiceWebView from "../../components/RegionServiceWebView";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -43,10 +44,14 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
 
   React.useEffect(() => {
     const { navigationParams, token } = props;
-    if (navigationParams.isLeft()) {
+    // if params can't be decoded or the service has not a valid token name in its metadata (token is none)
+    // show an alert and go back
+    if (navigationParams.isLeft() || token.isNone()) {
       Alert.alert(
         I18n.t("global.genericAlert"),
-        I18n.t("webView.error.missingParams"),
+        token.isNone()
+          ? I18n.t("webView.error.missingToken")
+          : I18n.t("webView.error.missingParams"),
         [
           {
             text: I18n.t("global.buttons.exit"),
@@ -57,38 +62,22 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
       );
       return;
     }
-    if (!token || token.isNone()) {
-      Alert.alert(
-        I18n.t("global.genericAlert"),
-        I18n.t("webView.error.missingToken"),
-        [
-          {
-            text: I18n.t("global.buttons.exit"),
-            style: "default",
-            onPress: props.goBack
-          }
-        ]
-      );
-      return;
-    }
-    if (token && token.isSome() && navigationParams.isRight()) {
-      const url = new URLParse(navigationParams.value.url, true);
-      const cookie: Cookie = {
-        name: "token",
-        value: token.value,
-        domain: url.hostname,
-        path: "/"
-      };
+    const url = new URLParse(navigationParams.value.url, true);
+    const cookie: Cookie = {
+      name: "token",
+      value: token.value,
+      domain: url.hostname,
+      path: "/"
+    };
 
-      CookieManager.set(url.origin, cookie, true)
-        .then(_ => {
-          setIsCookieAvailable(true);
-        })
-        .catch(_ => setCookieError(true));
-    }
+    CookieManager.set(url.origin, cookie, true)
+      .then(_ => {
+        setIsCookieAvailable(true);
+      })
+      .catch(_ => setCookieError(true));
 
     return clearCookie;
-  });
+  }, []);
 
   return (
     <BaseScreenComponent goBack={handleGoBack}>
@@ -108,26 +97,28 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
   );
 };
 const mapStateToProps = (state: GlobalState) => {
-  const params = ServicesWebviewParams.decode(
+  const maybeParams = ServicesWebviewParams.decode(
     internalRouteNavigationParamsSelector(state)
   );
 
   // Get TokenName parameter from service metadata
   const servicesMetadataByID = servicesMetadataByIdSelector(state);
 
-  const tokenName = () => {
-    if (params.isRight()) {
-      const metadata = servicesMetadataByID[params.value.serviceID];
-      if (pot.isSome(metadata)) {
-        return metadata.value && metadata.value.token_name;
-      }
+  const tokenName = maybeParams.fold(
+    () => none,
+    params => {
+      const metadata = servicesMetadataByID[params.serviceID];
+      const token = pot.getOrElse(
+        pot.map(metadata, m => m && m.token_name),
+        undefined
+      );
+      return fromNullable(token);
     }
-    return undefined;
-  };
+  );
 
   return {
-    navigationParams: params,
-    token: tokenName() && tokenFromNameSelector(tokenName() as TokenName)(state)
+    navigationParams: maybeParams,
+    token: tokenName.chain(t => tokenFromNameSelector(t as TokenName)(state))
   };
 };
 
