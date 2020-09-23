@@ -77,7 +77,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
 
   public componentDidMount() {
     if (!this.props.serviceMetadata && this.props.service) {
-      this.props.loadService(this.props.service);
+      this.props.loadServiceMetadata(this.props.service);
     }
   }
 
@@ -184,7 +184,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadService: (service: ServicePublic) =>
+  loadServiceMetadata: (service: ServicePublic) =>
     dispatch(loadServiceMetadata.request(service.service_id)),
   dispatch
 });
