@@ -27,7 +27,7 @@ const headersProducers = <
 const findT: FindUsingGETT = {
   method: "get",
   url: () => `/bonus/bpd/io/citizen`,
-  query: () => ({}),
+  query: _ => ({}),
   headers: headersProducers(),
   response_decoder: findUsingGETDefaultDecoder()
 };
@@ -35,8 +35,8 @@ const findT: FindUsingGETT = {
 const enrollCitizenIOT: EnrollmentT = {
   method: "put",
   url: () => `/bonus/bpd/io/citizen`,
-  query: () => ({}),
-  body: () => "",
+  query: _ => ({}),
+  body: _ => "",
   headers: composeHeaderProducers(headersProducers(), ApiHeaderJson),
   response_decoder: enrollmentDefaultDecoder()
 };
