@@ -1,4 +1,4 @@
-import { fromNullable, none } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, Row, Text, View } from "native-base";
