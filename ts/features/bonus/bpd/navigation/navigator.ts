@@ -1,10 +1,10 @@
 import { createStackNavigator } from "react-navigation";
-import { BpdInformationScreen } from "../screens/onboarding/BpdInformationScreen";
+import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
+import DeclarationScreen from "../screens/onboarding/DeclarationScreen";
 import { EnrollPaymentMethodsScreen } from "../screens/onboarding/EnrollPaymentMethodsScreen";
 import { LoadActivateBpdScreen } from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
 import { NoPaymentMethodsAvailableScreen } from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
-import { DeclarationScreen } from "../screens/onboarding/DeclarationScreen";
 import BPD_ROUTES from "./routes";
 
 const BpdNavigator = createStackNavigator(

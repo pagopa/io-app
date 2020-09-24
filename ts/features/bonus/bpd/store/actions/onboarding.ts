@@ -45,4 +45,6 @@ export const BpdOnboardingAcceptDeclaration = createStandardAction(
 export type BdpOnboardingActions =
   | ActionType<typeof enrollToBpd>
   | ActionType<typeof BpdOnboardingStart>
+  | ActionType<typeof BpdUserActivate>
+  | ActionType<typeof BpdOnboardingAcceptDeclaration>
   | ActionType<typeof BpdOnboardingCancel>;
