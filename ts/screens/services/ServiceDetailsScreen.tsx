@@ -646,17 +646,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     );
   };
 
-  private getCTA = (serviceMetadata: ServiceMetadataState) => {
-    if (
-      pot.isSome(serviceMetadata) &&
-      serviceMetadata.value &&
-      serviceMetadata.value.cta
-    ) {
-      return getServiceCTA(serviceMetadata.value.cta, serviceMetadata);
-    }
-    return none;
-  };
-
   public render() {
     const { service, serviceId } = this;
 
@@ -664,7 +653,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     const potServiceMetadata =
       this.props.content.servicesMetadata.byId[serviceId] || pot.none;
 
-    const maybeCTA = this.getCTA(potServiceMetadata);
+    const maybeCTA = getServiceCTA(potServiceMetadata);
     return (
       <BaseScreenComponent
         goBack={this.props.navigation.goBack}

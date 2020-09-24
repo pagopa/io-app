@@ -241,18 +241,30 @@ export const getCTA = (
  * @param serviceMetadata
  */
 export const getServiceCTA = (
-  cta: string,
-  serviceMetadata?: pot.Pot<ServiceMetadata | undefined, Error>
+  serviceMetadata: MaybePotMetadata
 ): Option<CTAS> =>
-  fromPredicate((t: string) => FM.test(t))(cta)
-    .map(m => FM<MessageCTA>(m).attributes)
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    .chain(attrs =>
-      CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
-        _ => none,
-        // check if the decoded actions are valid
-        cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)
+  fromNullable(serviceMetadata)
+    .map(s =>
+      pot.getOrElse(
+        pot.map(s, metadata =>
+          fromNullable(metadata).fold("", m =>
+            fromNullable(m.cta).getOrElse("")
+          )
+        ),
+        ""
       )
+    )
+    .chain(cta =>
+      fromPredicate((t: string) => FM.test(t))(cta)
+        .map(m => FM<MessageCTA>(m).attributes)
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        .chain(attrs =>
+          CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
+            _ => none,
+            // check if the decoded actions are valid
+            cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)
+          )
+        )
     );
 
 /**
