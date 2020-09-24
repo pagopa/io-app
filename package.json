@@ -37,7 +37,7 @@
     "generate:content-definitions": "rimraf definitions/content && mkdir -p definitions/content && gen-api-models --api-spec $npm_package_io_content_specs --out-dir ./definitions/content",
     "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:content-definitions generate:bonus-vacanze-definitions generate:bpd-citizen generate:locales",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
-    "jsDocs": "jsdoc2md ts/utils/webviewScripts/*.js > ts/utils/webviewScripts/README.md"
+    "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md"
   },
   "dependencies": {
     "@pagopa/react-native-cie": "0.2.2",
