@@ -1,4 +1,5 @@
 import { Option } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../definitions/backend/MessageBodyMarkdown";
@@ -6,7 +7,12 @@ import { MessageContent } from "../../../definitions/backend/MessageContent";
 import { Locales } from "../../../locales/locales";
 import { setLocale } from "../../i18n";
 import { CTA, CTAS } from "../../types/MessageCTA";
-import { cleanMarkdownFromCTAs, getCTA, isCtaActionValid } from "../messages";
+import {
+  cleanMarkdownFromCTAs,
+  getCTA,
+  isCtaActionValid,
+  MaybePotMetadata
+} from "../messages";
 
 const messageBody = `### this is a message
 
@@ -48,6 +54,35 @@ const messageWithContent = {
     }
   } as MessageContent
 } as CreatedMessageWithContent;
+
+const serviceMetadataBase = {
+  description: "demo demo <br/>demo demo <br/>demo demo <br/>demo demo <br/>",
+  scope: "LOCAL",
+  address: "Piazza di Spagna, Roma, Italia",
+  email: "mock.service@email.com",
+  pec: "mock.pec@email.com",
+  phone: "5555555",
+  web_url: "https://www.google.com",
+  app_android: "https://www.google.com",
+  app_ios: "https://www.google.com",
+  support_url: "https://www.sos.com",
+  tos_url: "https://www.tos.com",
+  privacy_url: "https://www.privacy.com",
+  cta: `--- it: cta_1: text: "Richiedi" action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html" en: cta_1: text: "Request" action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html" ---`
+};
+
+const CTA_WEBVIEW =
+  `---
+it:
+    cta_1: 
+        text: "premi"
+        action: "ioit://SERVICE_WEBVIEW"
+en:
+    cta_1: 
+        text: "go1"
+        action: "ioit://SERVICE_WEBVIEW"
+---
+` + messageBody;
 
 // test "it" as default language
 beforeAll(() => setLocale("it" as Locales));
@@ -132,6 +167,29 @@ some noise`;
       }
     });
     expect(maybeCTA.isNone()).toBeTruthy();
+  });
+
+  it("should have a valid CTA for service", () => {
+    const validServiceMetadata = pot.some({
+      ...serviceMetadataBase,
+      token_name: "asdfer"
+    });
+    const maybeCTAs = getCTA(
+      {
+        ...messageWithContent,
+        content: {
+          ...messageWithContent.content,
+          markdown: CTA_WEBVIEW as MessageBodyMarkdown
+        }
+      },
+      validServiceMetadata as MaybePotMetadata
+    );
+    expect(maybeCTAs.isSome()).toBeTruthy();
+    if (maybeCTAs.isSome()) {
+      expect(maybeCTAs.value.cta_1).toBeDefined();
+      expect(maybeCTAs.value.cta_1.text).toEqual("go1");
+      expect(maybeCTAs.value.cta_1.action).toEqual("ioit://SERVICE_WEBVIEW");
+    }
   });
 });
 

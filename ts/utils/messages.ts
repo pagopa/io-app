@@ -192,7 +192,9 @@ export const getPrescriptionDataFromName = (
     return none;
   });
 
-type MaybePotMetadata = pot.Pot<ServiceMetadata | undefined, Error> | undefined;
+export type MaybePotMetadata =
+  | pot.Pot<ServiceMetadata | undefined, Error>
+  | undefined;
 const hasMetadataTokenName = (metadata: MaybePotMetadata): boolean =>
   fromNullable(metadata)
     .map(m =>
@@ -220,7 +222,7 @@ const internalRoutePredicates: Map<
  */
 export const getCTA = (
   message: CreatedMessageWithContent,
-  serviceMetadata?: pot.Pot<ServiceMetadata | undefined, Error>
+  serviceMetadata?: MaybePotMetadata
 ): Option<CTAS> =>
   fromPredicate((t: string) => FM.test(t))(message.content.markdown)
     .map(m => FM<MessageCTA>(m).attributes)
