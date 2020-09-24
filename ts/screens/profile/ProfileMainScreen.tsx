@@ -329,24 +329,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   };
   */
 
-  private confirmResetAlert = () =>
-    Alert.alert(
-      I18n.t("profile.main.resetPin.confirmTitle"),
-      I18n.t("profile.main.resetPin.confirmMsg"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.confirm"),
-          style: "destructive",
-          onPress: this.props.resetPin
-        }
-      ],
-      { cancelable: false }
-    );
-
   private ServiceListRef = React.createRef<ScrollView>();
   private scrollToTop = () => {
     if (this.ServiceListRef.current) {
@@ -420,7 +402,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           <ListItemComponent
             title={I18n.t("identification.unlockCode.reset.button_short")}
             subTitle={I18n.t("identification.unlockCode.reset.tip_short")}
-            onPress={this.confirmResetAlert}
+            onPress={this.props.resetPin}
             hideIcon={true}
           />
 
