@@ -20,7 +20,7 @@ import {
   BpdOnboardingCancel,
   BpdUserActivate
 } from "../../../store/actions/onboarding";
-import { bpdActiveSelector } from "../../../store/reducers/details";
+import { bpdActivationSelector } from "../../../store/reducers/details";
 
 export const isLoadingScreen = (screenName: string) =>
   screenName === BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS;
@@ -30,8 +30,8 @@ export function* isBpdEnabled(): Generator<
   Either<Error, boolean>,
   any
 > {
-  const remoteActive: ReturnType<typeof bpdActiveSelector> = yield select(
-    bpdActiveSelector
+  const remoteActive: ReturnType<typeof bpdActivationSelector> = yield select(
+    bpdActivationSelector
   );
   if (isReady(remoteActive)) {
     return right<Error, boolean>(remoteActive.value.enabled);

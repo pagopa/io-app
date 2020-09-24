@@ -1,24 +1,26 @@
 import { Action, combineReducers } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { getValue, RemoteValue } from "../../../model/RemoteValue";
-import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
-import bdpCitizenReducer from "./citizen";
+import { getValue } from "../../../model/RemoteValue";
+import bpdActivationReducer, { BpdActivation } from "./activation";
 
 export type BdpDetailsState = {
-  citizen: RemoteValue<CitizenResource, Error>;
+  activation: BpdActivation;
   // IBAN, value, points, other info...
 };
 
 const bpdDetailsReducer = combineReducers<BdpDetailsState, Action>({
-  citizen: bdpCitizenReducer
+  activation: bpdActivationReducer
 });
 
-export const bpdActiveSelector = (
-  state: GlobalState
-): RemoteValue<CitizenResource, Error> => state.bonus.bpd.details.citizen;
+export const bpdActivationSelector = (state: GlobalState): BpdActivation =>
+  state.bonus.bpd.details.activation;
 
-export const bpdActiveValueSelector = (
+/**
+ * In order to know if the bpd program is enabled for the user
+ * @param state
+ */
+export const bpdEnabledForUserSelector = (
   state: GlobalState
-): boolean | undefined => getValue(state.bonus.bpd.details.citizen)?.enabled;
+): boolean | undefined => getValue(state.bonus.bpd.details.activation.enabled);
 
 export default bpdDetailsReducer;
