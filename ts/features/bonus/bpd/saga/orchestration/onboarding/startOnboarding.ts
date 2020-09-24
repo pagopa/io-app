@@ -14,13 +14,13 @@ import {
   navigateToBpdOnboardingLoadActivationStatus
 } from "../../../navigation/action";
 import BPD_ROUTES from "../../../navigation/routes";
-import { loadBdpActivationStatus } from "../../../store/actions/details";
+import { loadBpdActivationStatus } from "../../../store/actions/details";
 import {
   BpdOnboardingAcceptDeclaration,
   BpdOnboardingCancel,
   BpdUserActivate
 } from "../../../store/actions/onboarding";
-import { bpdActivationSelector } from "../../../store/reducers/details";
+import { bpdEnabledSelector } from "../../../store/reducers/details/activation";
 
 export const isLoadingScreen = (screenName: string) =>
   screenName === BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS;
@@ -30,22 +30,22 @@ export function* isBpdEnabled(): Generator<
   Either<Error, boolean>,
   any
 > {
-  const remoteActive: ReturnType<typeof bpdActivationSelector> = yield select(
-    bpdActivationSelector
+  const remoteActive: ReturnType<typeof bpdEnabledSelector> = yield select(
+    bpdEnabledSelector
   );
   if (isReady(remoteActive)) {
-    return right<Error, boolean>(remoteActive.value.enabled);
+    return right<Error, boolean>(remoteActive.value);
   } else {
-    yield put(loadBdpActivationStatus.request());
+    yield put(loadBpdActivationStatus.request());
     const bpdActivationResults: ActionType<
-      | typeof loadBdpActivationStatus.success
-      | typeof loadBdpActivationStatus.failure
+      | typeof loadBpdActivationStatus.success
+      | typeof loadBpdActivationStatus.failure
     > = yield take([
-      getType(loadBdpActivationStatus.success),
-      getType(loadBdpActivationStatus.failure)
+      getType(loadBpdActivationStatus.success),
+      getType(loadBpdActivationStatus.failure)
     ]);
     return bpdActivationResults.type ===
-      getType(loadBdpActivationStatus.success)
+      getType(loadBpdActivationStatus.success)
       ? right<Error, boolean>(bpdActivationResults.payload.enabled)
       : left<Error, boolean>(bpdActivationResults.payload);
   }

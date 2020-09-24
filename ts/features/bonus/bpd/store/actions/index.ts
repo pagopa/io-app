@@ -1,4 +1,4 @@
-import { BdpDetailsActions } from "./details";
-import { BdpOnboardingActions } from "./onboarding";
+import { BpdDetailsActions } from "./details";
+import { BpdOnboardingActions } from "./onboarding";
 
-export type BdpActions = BdpOnboardingActions | BdpDetailsActions;
+export type BpdActions = BpdOnboardingActions | BpdDetailsActions;

@@ -10,7 +10,7 @@ import {
   BpdOnboardingCancel,
   BpdOnboardingStart
 } from "../../store/actions/onboarding";
-import { bpdActivationSelector } from "../../store/reducers/details";
+import { bpdEnabledSelector } from "../../store/reducers/details/activation";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (globalState: GlobalState) => ({
   // display the error with the retry only in case of networking errors
-  isLoading: !isError(bpdActivationSelector(globalState))
+  isLoading: !isError(bpdEnabledSelector(globalState))
 });
 
 export default connect(

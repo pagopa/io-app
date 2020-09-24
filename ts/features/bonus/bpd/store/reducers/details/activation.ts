@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   remoteError,
   remoteLoading,
@@ -8,7 +9,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../model/RemoteValue";
-import { loadBdpActivationStatus } from "../../actions/details";
+import { loadBpdActivationStatus } from "../../actions/details";
 import { enrollToBpd } from "../../actions/onboarding";
 
 export type BpdActivation = {
@@ -22,13 +23,13 @@ const bpdActivationEnabledReducer = (
   action: Action
 ): RemoteValue<boolean, Error> => {
   switch (action.type) {
-    case getType(loadBdpActivationStatus.request):
+    case getType(loadBpdActivationStatus.request):
     case getType(enrollToBpd.request):
       return remoteLoading;
-    case getType(loadBdpActivationStatus.success):
+    case getType(loadBpdActivationStatus.success):
     case getType(enrollToBpd.success):
       return remoteReady(action.payload.enabled);
-    case getType(loadBdpActivationStatus.failure):
+    case getType(loadBpdActivationStatus.failure):
     case getType(enrollToBpd.failure):
       return remoteError(action.payload);
   }
@@ -41,11 +42,11 @@ const bpdPaymentInstrumentReducer = (
   action: Action
 ): RemoteValue<string | undefined, Error> => {
   switch (action.type) {
-    case getType(loadBdpActivationStatus.request):
+    case getType(loadBpdActivationStatus.request):
       return remoteLoading;
-    case getType(loadBdpActivationStatus.success):
+    case getType(loadBpdActivationStatus.success):
       return remoteReady(action.payload.payoffInstr);
-    case getType(loadBdpActivationStatus.failure):
+    case getType(loadBpdActivationStatus.failure):
       return remoteError(action.payload);
   }
   return state;
@@ -55,5 +56,9 @@ const bpdActivationReducer = combineReducers<BpdActivation, Action>({
   enabled: bpdActivationEnabledReducer,
   payoffInstr: bpdPaymentInstrumentReducer
 });
+
+export const bpdEnabledSelector = (
+  state: GlobalState
+): RemoteValue<boolean, Error> => state.bonus.bpd.details.activation.enabled;
 
 export default bpdActivationReducer;

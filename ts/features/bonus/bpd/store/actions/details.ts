@@ -5,12 +5,12 @@ import { CitizenResource } from "../../../../../../definitions/bpd/citizen/Citiz
  */
 
 /**
- * Request the activation status for the user to the bdp program
+ * Request the activation status for the user to the bpd program
  */
-export const loadBdpActivationStatus = createAsyncAction(
-  "BDP_LOAD_ACTIVATION_STATUS_REQUEST",
-  "BDP_LOAD_ACTIVATION_STATUS_SUCCESS",
-  "BDP_LOAD_ACTIVATION_STATUS_FAILURE"
+export const loadBpdActivationStatus = createAsyncAction(
+  "BPD_LOAD_ACTIVATION_STATUS_REQUEST",
+  "BPD_LOAD_ACTIVATION_STATUS_SUCCESS",
+  "BPD_LOAD_ACTIVATION_STATUS_FAILURE"
 )<void, CitizenResource, Error>();
 
-export type BdpDetailsActions = ActionType<typeof loadBdpActivationStatus>;
+export type BpdDetailsActions = ActionType<typeof loadBpdActivationStatus>;

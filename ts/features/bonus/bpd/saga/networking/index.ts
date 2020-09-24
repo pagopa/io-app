@@ -3,14 +3,14 @@ import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { enrollToBpd } from "../../store/actions/onboarding";
 import { SagaCallReturnType } from "../../../../../types/utils";
-import { BackendBpdClient } from "../../api/backendBdpClient";
-import { loadBdpActivationStatus } from "../../store/actions/details";
+import { BackendBpdClient } from "../../api/backendBpdClient";
+import { loadBpdActivationStatus } from "../../store/actions/details";
 
 export function* executeAndDispatch(
   remoteCall:
     | ReturnType<typeof BackendBpdClient>["enrollCitizenIO"]
     | ReturnType<typeof BackendBpdClient>["find"],
-  action: typeof enrollToBpd | typeof loadBdpActivationStatus
+  action: typeof enrollToBpd | typeof loadBpdActivationStatus
 ) {
   try {
     const enrollCitizenIOResult: SagaCallReturnType<typeof remoteCall> = yield call(
@@ -37,7 +37,7 @@ export function* executeAndDispatch(
 export function* getCitizen(
   findCitizen: ReturnType<typeof BackendBpdClient>["find"]
 ): SagaIterator {
-  yield call(executeAndDispatch, findCitizen, loadBdpActivationStatus);
+  yield call(executeAndDispatch, findCitizen, loadBpdActivationStatus);
 }
 
 /**
