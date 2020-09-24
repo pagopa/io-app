@@ -4,7 +4,7 @@ import { IOColorType } from "../variables/IOColors";
 import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 import { typographyFactory } from "./Factory";
 
-// when the weight is bold, only the white color is allowed
+// when the weight is bold, only these color are allowed
 type AllowedBoldColors = Extract<
   IOColorType,
   "bluegreyDark" | "blue" | "white"
@@ -86,7 +86,8 @@ const calculateWeightColor = (
  * @param props
  * @constructor
  */
-export const H4: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
+export const H4: React.FunctionComponent<OwnProps> = props =>
+  typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     weightColorFactory: calculateWeightColor,
     font: fontName,

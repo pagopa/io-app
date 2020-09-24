@@ -7,7 +7,8 @@ import {
   bonusVacanzeStoryWithScopeLabel,
   clashScopeLabelStory,
   scopeLabelNotAllowedStory,
-  singleAndroidLabelStory
+  singleAndroidLabelStory,
+  singleEpicBpdStory
 } from "../__mocks__/storyMock";
 import { getChangelogScope, getStoryChangelogScope } from "../changelog";
 
@@ -42,6 +43,17 @@ describe("Test pivotal Utility", () => {
     expect(eitherScope.isRight()).toBeTruthy();
     if (eitherScope.isRight() && eitherScope.value.isSome()) {
       expect(eitherScope.value.value).toBe("Android");
+      return;
+    }
+    fail(
+      "Condition eitherScope.isRight() && eitherScope.value.isSome() not satisfied"
+    );
+  });
+  it("getStoryChangelogScope on a story with epic label should return Right,string", () => {
+    const eitherScope = getStoryChangelogScope(singleEpicBpdStory);
+    expect(eitherScope.isRight()).toBeTruthy();
+    if (eitherScope.isRight() && eitherScope.value.isSome()) {
+      expect(eitherScope.value.value).toBe("Bonus Pagamenti Digitali");
       return;
     }
     fail(

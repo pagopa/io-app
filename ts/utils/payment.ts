@@ -128,10 +128,7 @@ export const cleanTransactionDescription = (description: string): string => {
     ? descriptionParts[descriptionParts.length - 1].trim()
     : getTransactionIUV(description) // try to extract codice avviso from description
         .chain(maybeNotNullyString)
-        .map(
-          ca =>
-            `${I18n.t("payment.IUV_extended")} (${I18n.t("payment.IUV")}) ${ca}`
-        )
+        .map(ca => `${I18n.t("payment.IUV")} ${ca}`)
         .getOrElse(description);
 };
 

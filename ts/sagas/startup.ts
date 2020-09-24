@@ -19,11 +19,12 @@ import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
+  bpdEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
 
-import { watchBonusSaga } from "../features/bonusVacanze/store/sagas/bonusSaga";
+import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
@@ -52,6 +53,7 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
+import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -242,7 +244,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
 
   // Start watching for requests of checkSession
-  yield fork(watchCheckSessionSaga, backendClient.getProfile);
+  yield fork(watchCheckSessionSaga, backendClient.getSession);
 
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
@@ -293,6 +295,10 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (bonusVacanzeEnabled) {
     // Start watching for requests about bonus
     yield fork(watchBonusSaga, sessionToken);
+  }
+  if (bpdEnabled) {
+    // Start watching for actions about bonus bdp
+    yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
   }
 
   // Load the user metadata

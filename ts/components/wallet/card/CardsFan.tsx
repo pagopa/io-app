@@ -9,11 +9,7 @@ type Props = Readonly<{
 }>;
 
 const CardsFan: React.SFC<Props> = props => (
-    <RotatedCards
-      cardType="Preview"
-      wallets={props.wallets}
-      onClick={props.navigateToWalletList}
-    />
-  );
+  <RotatedCards wallets={props.wallets} onClick={props.navigateToWalletList} />
+);
 
 export default CardsFan;

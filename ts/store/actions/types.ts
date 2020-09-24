@@ -8,7 +8,8 @@ import {
   StoreEnhancer as ReduxStoreEnhancer
 } from "redux";
 
-import { BonusActions } from "../../features/bonusVacanze/store/actions/bonusVacanze";
+import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { BdpActions } from "../../features/bonus/bpd/store/actions";
 import { GlobalState } from "../reducers/types";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
@@ -74,7 +75,8 @@ export type Action =
   | InternalRouteNavigationActions
   | UserDataProcessingActions
   | ProfileEmailValidationAction
-  | BonusActions;
+  | BonusActions
+  | BdpActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
