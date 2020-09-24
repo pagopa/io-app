@@ -214,6 +214,20 @@ const internalRoutePredicates: Map<
   [ROUTES.SERVICE_WEBVIEW, hasMetadataTokenName]
 ]);
 
+const extractCTA = (
+  text: string,
+  serviceMetadata: MaybePotMetadata
+): Option<CTAS> =>
+  fromPredicate((t: string) => FM.test(t))(text)
+    .map(m => FM<MessageCTA>(m).attributes)
+    .chain(attrs =>
+      CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
+        _ => none,
+        // check if the decoded actions are valid
+        cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)
+      )
+    );
+
 /**
  * extract the CTAs if they are nested inside the message markdown content
  * if some CTAs are been found, the localized version will be returned
@@ -223,16 +237,7 @@ const internalRoutePredicates: Map<
 export const getCTA = (
   message: CreatedMessageWithContent,
   serviceMetadata?: MaybePotMetadata
-): Option<CTAS> =>
-  fromPredicate((t: string) => FM.test(t))(message.content.markdown)
-    .map(m => FM<MessageCTA>(m).attributes)
-    .chain(attrs =>
-      CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
-        _ => none,
-        // check if the decoded actions are valid
-        cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)
-      )
-    );
+): Option<CTAS> => extractCTA(message.content.markdown, serviceMetadata);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
@@ -254,18 +259,7 @@ export const getServiceCTA = (
         ""
       )
     )
-    .chain(cta =>
-      fromPredicate((t: string) => FM.test(t))(cta)
-        .map(m => FM<MessageCTA>(m).attributes)
-        // eslint-disable-next-line sonarjs/no-identical-functions
-        .chain(attrs =>
-          CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
-            _ => none,
-            // check if the decoded actions are valid
-            cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)
-          )
-        )
-    );
+    .chain(cta => extractCTA(cta, serviceMetadata));
 
 /**
  * return a boolean indicating if the cta action is valid or not
