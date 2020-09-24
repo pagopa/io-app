@@ -21,6 +21,7 @@ import { setPin } from "../../utils/keychain";
 import { maybeNotNullyString } from "../../utils/strings";
 import { GlobalState } from "../../store/reducers/types";
 import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
+import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -406,9 +407,9 @@ class PinScreen extends React.PureComponent<Props, State> {
           instabugLog(`createPinSuccess`, TypeLogs.DEBUG, instabuglogTag);
           this.props.createPinSuccess(pin);
           // user is updating his/her pin inside the app, go back
-        if (this.props.isOnboardingCompleted) {
-          this.props.navigation.goBack();
-        }
+          if (this.props.isOnboardingCompleted) {
+            this.props.navigation.goBack();
+          }
         },
         _ => {
           instabugLog(`setPin error`, TypeLogs.DEBUG, instabuglogTag);
