@@ -352,7 +352,11 @@ class PinScreen extends React.PureComponent<Props, State> {
     );
   }
 
-  private handleGoBack = () =>
+  private handleGoBack = () => {
+    if (this.props.isOnboardingCompleted) {
+      this.props.navigation.goBack();
+      return;
+    }
     Alert.alert(
       I18n.t("onboarding.alert.title"),
       I18n.t("onboarding.alert.description"),
@@ -368,6 +372,7 @@ class PinScreen extends React.PureComponent<Props, State> {
         }
       ]
     );
+  };
 
   public render() {
     const { pinState } = this.state;

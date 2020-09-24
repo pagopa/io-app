@@ -23,7 +23,10 @@ import {
   identificationStart,
   identificationSuccess
 } from "../store/actions/identification";
-import { navigateToMessageDetailScreenAction } from "../store/actions/navigation";
+import {
+  navigateToMessageDetailScreenAction,
+  navigateToOnboardingPinScreenAction
+} from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import {
   paymentDeletePayment,
@@ -42,7 +45,6 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
 import { startPinReset, updatePin } from "../store/actions/pinset";
-import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -205,7 +207,6 @@ export function* watchIdentification(pin: PinString): IterableIterator<Effect> {
 
   // Watch for requests to update the unlock code.
   yield takeLatest(getType(updatePin), function* () {
-    yield call(deletePin);
-    yield call(checkConfiguredPinSaga);
+    yield put(navigateToOnboardingPinScreenAction);
   });
 }
