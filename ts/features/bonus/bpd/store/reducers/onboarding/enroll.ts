@@ -6,11 +6,11 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../model/RemoteValue";
-import { enrollToBpd } from "../../actions/onboarding";
+import { bpdEnrollUserToProgram } from "../../actions/onboarding";
 import { Action } from "../../../../../../store/actions/types";
 
 /**
- * This reducers use the action {@link enrollToBpd} to save&update the result of the enrollment operation
+ * This reducers use the action {@link bpdEnrollUserToProgram} to save&update the result of the enrollment operation
  * @param state
  * @param action
  */
@@ -19,11 +19,11 @@ const bpdEnrollUserReducer = (
   action: Action
 ): RemoteValue<boolean, Error> => {
   switch (action.type) {
-    case getType(enrollToBpd.request):
+    case getType(bpdEnrollUserToProgram.request):
       return remoteLoading;
-    case getType(enrollToBpd.success):
+    case getType(bpdEnrollUserToProgram.success):
       return remoteReady(action.payload.enabled);
-    case getType(enrollToBpd.failure):
+    case getType(bpdEnrollUserToProgram.failure):
       return remoteError(action.payload);
   }
   return state;

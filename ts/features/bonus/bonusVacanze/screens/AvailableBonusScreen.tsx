@@ -25,7 +25,7 @@ import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
-import { BpdOnboardingStart } from "../../bpd/store/actions/onboarding";
+import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
 import { AvailableBonusItem } from "../components/AvailableBonusItem";
 import { bonusVacanzeStyle } from "../components/Styles";
 import { availableBonuses } from "../data/availableBonuses";
@@ -162,7 +162,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToBonusRequestInformation({ bonusItem }));
     dispatch(navigationHistoryPop(1));
   },
-  startBpdOnboarding: () => dispatch(BpdOnboardingStart())
+  startBpdOnboarding: () => dispatch(bpdOnboardingStart())
 });
 
 export default connect(

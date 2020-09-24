@@ -7,8 +7,8 @@ import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/us
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isError } from "../../model/RemoteValue";
 import {
-  BpdOnboardingCancel,
-  BpdOnboardingStart
+  bpdOnboardingCancel,
+  bpdOnboardingStart
 } from "../../store/actions/onboarding";
 import { bpdEnabledSelector } from "../../store/reducers/details/activation";
 
@@ -41,9 +41,9 @@ const LoadBpdActivationStatus: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onAbort: () => dispatch(BpdOnboardingCancel()),
+  onAbort: () => dispatch(bpdOnboardingCancel()),
   onRetry: () => {
-    dispatch(BpdOnboardingStart());
+    dispatch(bpdOnboardingStart());
   }
 });
 

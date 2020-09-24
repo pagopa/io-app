@@ -12,8 +12,8 @@ import {
 } from "../../../navigation/action";
 import BPD_ROUTES from "../../../navigation/routes";
 import {
-  BpdOnboardingCancel,
-  enrollToBpd
+  bpdOnboardingCancel,
+  bpdEnrollUserToProgram
 } from "../../../store/actions/onboarding";
 
 // TODO: check with matteo, this call doesn't require a store value, maybe we can call directly and remove this information from the store
@@ -22,11 +22,15 @@ export function* enrollUserToBpd(): Generator<
   Either<Error, boolean>,
   any
 > {
-  yield put(enrollToBpd.request());
+  yield put(bpdEnrollUserToProgram.request());
   const enrollUserResults: ActionType<
-    typeof enrollToBpd.success | typeof enrollToBpd.failure
-  > = yield take([getType(enrollToBpd.success), getType(enrollToBpd.failure)]);
-  return enrollUserResults.type === getType(enrollToBpd.success)
+    | typeof bpdEnrollUserToProgram.success
+    | typeof bpdEnrollUserToProgram.failure
+  > = yield take([
+    getType(bpdEnrollUserToProgram.success),
+    getType(bpdEnrollUserToProgram.failure)
+  ]);
+  return enrollUserResults.type === getType(bpdEnrollUserToProgram.success)
     ? right<Error, boolean>(enrollUserResults.payload.enabled)
     : left<Error, boolean>(enrollUserResults.payload);
 }
@@ -63,7 +67,7 @@ function* enrollToBpdWorker() {
 export function* handleBpdEnroll(): SagaIterator {
   const { cancelAction } = yield race({
     enroll: call(enrollToBpdWorker),
-    cancelAction: take(BpdOnboardingCancel)
+    cancelAction: take(bpdOnboardingCancel)
   });
   if (cancelAction) {
     yield put(NavigationActions.back());

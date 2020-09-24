@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { Label } from "../../../../../components/core/typography/Label";
 import { Dispatch } from "../../../../../store/actions/types";
-import { BpdOnboardingAcceptDeclaration } from "../../store/actions/onboarding";
+import { bpdOnboardingAcceptDeclaration } from "../../store/actions/onboarding";
 
 export type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -25,7 +25,7 @@ const DeclarationScreen: React.FunctionComponent<Props> = props => (
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  userAcceptDeclaration: () => dispatch(BpdOnboardingAcceptDeclaration())
+  userAcceptDeclaration: () => dispatch(bpdOnboardingAcceptDeclaration())
 });
 
 export default connect(undefined, mapDispatchToProps)(DeclarationScreen);

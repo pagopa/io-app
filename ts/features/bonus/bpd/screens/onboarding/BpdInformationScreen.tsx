@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { Label } from "../../../../../components/core/typography/Label";
 import { Dispatch } from "../../../../../store/actions/types";
-import { BpdUserActivate } from "../../store/actions/onboarding";
+import { bpdUserActivate } from "../../store/actions/onboarding";
 
 export type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -25,7 +25,7 @@ const BpdInformationScreen: React.FunctionComponent<Props> = props => (
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  userActivateBpd: () => dispatch(BpdUserActivate())
+  userActivateBpd: () => dispatch(bpdUserActivate())
 });
 
 export default connect(undefined, mapDispatchToProps)(BpdInformationScreen);
