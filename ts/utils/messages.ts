@@ -247,9 +247,9 @@ export const getServiceCTA = (
     .map(s =>
       pot.getOrElse(
         pot.map(s, metadata =>
-          fromNullable(metadata).fold("", m =>
-            fromNullable(m.cta).getOrElse("")
-          )
+          fromNullable(metadata)
+            .chain(m => fromNullable(m.cta))
+            .getOrElse("")
         ),
         ""
       )
