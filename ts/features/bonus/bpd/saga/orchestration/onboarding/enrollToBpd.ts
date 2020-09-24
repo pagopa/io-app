@@ -16,7 +16,6 @@ import {
   bpdEnrollUserToProgram
 } from "../../../store/actions/onboarding";
 
-// TODO: check with matteo, this call doesn't require a store value, maybe we can call directly and remove this information from the store
 export function* enrollUserToBpd(): Generator<
   Effect,
   Either<Error, boolean>,

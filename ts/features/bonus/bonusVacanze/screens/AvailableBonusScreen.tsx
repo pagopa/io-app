@@ -157,7 +157,7 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
-  // TODO Add the param to navigate to proper bonus by na®me (?)
+  // TODO Add the param to navigate to proper bonus by name (?)
   navigateToBonusRequest: (bonusItem: BonusAvailable) => {
     dispatch(navigateToBonusRequestInformation({ bonusItem }));
     dispatch(navigationHistoryPop(1));
