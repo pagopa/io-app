@@ -107,7 +107,7 @@ const mapStateToProps = (state: GlobalState) => {
   const tokenName = maybeParams.fold(
     () => none,
     params => {
-      const metadata = servicesMetadataByID[params.serviceID];
+      const metadata = servicesMetadataByID[params.serviceId];
       const token = pot.getOrElse(
         pot.map(metadata, m => m && m.token_name),
         undefined
