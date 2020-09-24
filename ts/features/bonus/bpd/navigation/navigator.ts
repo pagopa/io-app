@@ -24,7 +24,7 @@ const BpdNavigator = createStackNavigator(
     [BPD_ROUTES.ONBOARDING.ENROLL_PAYMENT_METHODS]: {
       screen: EnrollPaymentMethodsScreen
     },
-    [BPD_ROUTES.ONBOARDING.ENROLL_PAYMENT_METHODS]: {
+    [BPD_ROUTES.ONBOARDING.NO_PAYMENT_METHODS]: {
       screen: NoPaymentMethodsAvailableScreen
     }
   },
