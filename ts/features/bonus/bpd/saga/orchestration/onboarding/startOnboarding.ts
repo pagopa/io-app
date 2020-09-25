@@ -1,12 +1,21 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import { Either, right } from "fp-ts/lib/Either";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
-import { call, Effect, put, race, select, take } from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
+import {
+  call,
+  CallEffect,
+  Effect,
+  put,
+  race,
+  select,
+  take
+} from "redux-saga/effects";
+import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
+import { getAsyncResult } from "../../../../../../utils/saga";
 import { isReady } from "../../../model/RemoteValue";
 import {
   navigateToBpdOnboardingDeclaration,
@@ -25,6 +34,16 @@ import { bpdEnabledSelector } from "../../../store/reducers/details/activation";
 export const isLoadingScreen = (screenName: string) =>
   screenName === BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS;
 
+export function* getActivationStatus(): Generator<
+  CallEffect,
+  Either<Error, CitizenResource>,
+  Either<Error, CitizenResource>
+> {
+  return yield call(() =>
+    getAsyncResult(bpdLoadActivationStatus, undefined as void)
+  );
+}
+
 export function* isBpdEnabled(): Generator<
   Effect,
   Either<Error, boolean>,
@@ -36,18 +55,10 @@ export function* isBpdEnabled(): Generator<
   if (isReady(remoteActive)) {
     return right<Error, boolean>(remoteActive.value);
   } else {
-    yield put(bpdLoadActivationStatus.request());
-    const bpdActivationResults: ActionType<
-      | typeof bpdLoadActivationStatus.success
-      | typeof bpdLoadActivationStatus.failure
-    > = yield take([
-      getType(bpdLoadActivationStatus.success),
-      getType(bpdLoadActivationStatus.failure)
-    ]);
-    return bpdActivationResults.type ===
-      getType(bpdLoadActivationStatus.success)
-      ? right<Error, boolean>(bpdActivationResults.payload.enabled)
-      : left<Error, boolean>(bpdActivationResults.payload);
+    const activationStatus: SagaCallReturnType<typeof getActivationStatus> = yield call(
+      getActivationStatus
+    );
+    return activationStatus.map(citizen => citizen.enabled);
   }
 }
 
