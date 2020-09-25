@@ -25,21 +25,18 @@ type RemoteError<E> = {
   error: E;
 };
 
-export declare const isUndefined: <V>(
+export const isUndefined = <V>(
   rv: RemoteValue<V, any>
-) => rv is RemoteUndefined;
+): rv is RemoteUndefined => rv.kind === "undefined";
 
-export declare const isLoading: <V>(
-  rv: RemoteValue<V, any>
-) => rv is RemoteLoading;
+export const isLoading = <V>(rv: RemoteValue<V, any>): rv is RemoteLoading =>
+  rv.kind === "loading";
 
-export declare const isReady: <V>(
-  rv: RemoteValue<V, any>
-) => rv is RemoteReady<V>;
+export const isReady = <V>(rv: RemoteValue<V, any>): rv is RemoteReady<V> =>
+  rv.kind === "ready";
 
-export declare const isError: <V, E>(
-  rv: RemoteValue<V, E>
-) => rv is RemoteError<E>;
+export const isError = <V, E>(rv: RemoteValue<V, E>): rv is RemoteError<E> =>
+  rv.kind === "error";
 
 export const getValue = <V>(rv: RemoteValue<V, any>) =>
   isReady(rv) ? rv.value : undefined;
