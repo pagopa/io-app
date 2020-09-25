@@ -119,7 +119,7 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
           </View>
         </ScrollView>
         <FooterTwoButtons
-          rightDisabled={state !== 3}
+          rightDisabled={state !== requiredConditions.length}
           onCancel={props.onCancel}
           onRight={props.onConfirm}
           title={I18n.t("global.buttons.continue")}
