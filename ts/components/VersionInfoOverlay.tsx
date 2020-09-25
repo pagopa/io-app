@@ -27,19 +27,23 @@ const styles = StyleSheet.create({
   },
 
   versionText: {
+    padding: 2,
+    backgroundColor: "#ffffffaa",
     fontSize: 16,
-    lineHeight: 14,
+    lineHeight: 24,
     color: "#000000"
   },
 
   routeText: {
+    padding: 2,
+    backgroundColor: "#ffffffaa",
     fontSize: 14,
-    lineHeight: 12,
+    lineHeight: 22,
     color: "#000000"
   }
 });
 
-const VersionInfoOverlay: React.SFC<Props> = props => {
+const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const appVersion = getAppVersion();
   const serverInfo = props.serverInfo;
   const serverVersion = serverInfo ? serverInfo.version : "?";
