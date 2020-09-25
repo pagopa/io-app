@@ -3,7 +3,8 @@ import {
   ApiHeaderJson,
   composeHeaderProducers,
   createFetchRequestForApi,
-  RequestHeaderProducer
+  RequestHeaderProducer,
+  ResponseDecoder
 } from "italia-ts-commons/lib/requests";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
@@ -13,6 +14,11 @@ import {
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
 import { RTron } from "../../../../boot/configureStoreAndPersistor";
+import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
+import * as t from "io-ts";
+import { Iban } from "../../../../../definitions/backend/Iban";
+import * as r from "italia-ts-commons/lib/requests";
+import { CitizenResource } from "../../../../../definitions/bpd/citizen/CitizenResource";
 
 const headersProducers = <
   P extends {
@@ -50,15 +56,32 @@ type ApiNewtorkResult<T, S> = {
   status: S;
 };
 
-const doIban = (url: string, fetchApi: typeof fetch) => {
-  return new Promise<void>((res, rej) => {
+export function testDecoders<A, O>(type: t.Type<A, O>) {
+  return r.composeResponseDecoders(
+    r.composeResponseDecoders(
+      r.ioResponseDecoder<200, typeof type["_A"], typeof type["_O"]>(200, type),
+      r.constantResponseDecoder<undefined, 401>(401, undefined)
+    ),
+    r.constantResponseDecoder<undefined, 500>(500, undefined)
+  );
+}
+
+const testDecoder = t.interface({ validationStatus: t.string });
+type testDecodertype = t.TypeOf<typeof testDecoder>;
+type finalType =
+  | r.IResponseType<200, testDecodertype>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<500, undefined>;
+const doIban = (url: string, fetchApi: typeof fetch) =>
+  new Promise<t.Validation<finalType>>((res, rej) => {
     fetchApi(`${url}/bonus/bpd/io/citizen`, { method: "patch" })
       .then(response => {
-        RTron.log(response.status);
+        testDecoders(testDecoder)(response)
+          .then(r => res(r))
+          .catch(rej);
       })
       .catch(rej);
   });
-};
 
 export function BackendBpdClient(
   baseUrl: string,
@@ -92,7 +115,14 @@ export function BackendBpdClient(
     ) as P;
     return f(params);
   };
-  doIban(baseUrl, fetchApi).then().catch();
+  doIban(baseUrl, fetchApi)
+    .then(r => {
+      if (r && r.isRight() && r.value.status === 200) {
+        const aa = r.value.value.validationStatus;
+        RTron.log(aa);
+      }
+    })
+    .catch();
 
   return {
     find: withBearerToken(createFetchRequestForApi(findT, options)),

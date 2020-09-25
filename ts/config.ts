@@ -47,7 +47,7 @@ export const bonusVacanzeEnabled: boolean =
 
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
-export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
+export const bpdEnabled: boolean = true;
 
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
