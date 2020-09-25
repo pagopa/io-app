@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../../../store/actions/types";
 import {
   remoteError,
   remoteLoading,
@@ -7,22 +6,27 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../model/RemoteValue";
-import { enrollToBpd } from "../../actions/onboarding";
+import { bpdEnrollUserToProgram } from "../../actions/onboarding";
+import { Action } from "../../../../../../store/actions/types";
 
-// TODO: create RemoteValueReducer to avoid this code duplication
-const bpdEnrollReducer = (
+/**
+ * This reducers use the action {@link bpdEnrollUserToProgram} to save&update the result of the enrollment operation
+ * @param state
+ * @param action
+ */
+const bpdEnrollUserReducer = (
   state: RemoteValue<boolean, Error> = remoteUndefined,
   action: Action
 ): RemoteValue<boolean, Error> => {
   switch (action.type) {
-    case getType(enrollToBpd.request):
+    case getType(bpdEnrollUserToProgram.request):
       return remoteLoading;
-    case getType(enrollToBpd.success):
-      return remoteReady(action.payload);
-    case getType(enrollToBpd.failure):
+    case getType(bpdEnrollUserToProgram.success):
+      return remoteReady(action.payload.enabled);
+    case getType(bpdEnrollUserToProgram.failure):
       return remoteError(action.payload);
   }
   return state;
 };
 
-export default bpdEnrollReducer;
+export default bpdEnrollUserReducer;

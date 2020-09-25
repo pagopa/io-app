@@ -7,10 +7,10 @@ import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/us
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isError } from "../../model/RemoteValue";
 import {
-  BpdOnboardingCancel,
-  BpdOnboardingStart
+  bpdOnboardingCancel,
+  bpdOnboardingStart
 } from "../../store/actions/onboarding";
-import { bpdActiveSelector } from "../../store/reducers/details";
+import { bpdEnabledSelector } from "../../store/reducers/details/activation";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -41,15 +41,15 @@ const LoadBpdActivationStatus: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onAbort: () => dispatch(BpdOnboardingCancel()),
+  onAbort: () => dispatch(bpdOnboardingCancel()),
   onRetry: () => {
-    dispatch(BpdOnboardingStart());
+    dispatch(bpdOnboardingStart());
   }
 });
 
 const mapStateToProps = (globalState: GlobalState) => ({
   // display the error with the retry only in case of networking errors
-  isLoading: !isError(bpdActiveSelector(globalState))
+  isLoading: !isError(bpdEnabledSelector(globalState))
 });
 
 export default connect(

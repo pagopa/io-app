@@ -1,13 +1,13 @@
 import { Action, combineReducers } from "redux";
 import { RemoteValue } from "../../../model/RemoteValue";
-import bpdEnrollReducer from "./enroll";
+import bpdEnrollUserReducer from "./enroll";
 
 export type BpdOnboardingState = {
-  enrollOutcome: RemoteValue<boolean, Error>;
+  enrollment: RemoteValue<boolean, Error>;
 };
 
 const bpdOnboardingReducer = combineReducers<BpdOnboardingState, Action>({
-  enrollOutcome: bpdEnrollReducer
+  enrollment: bpdEnrollUserReducer
 });
 
 export default bpdOnboardingReducer;

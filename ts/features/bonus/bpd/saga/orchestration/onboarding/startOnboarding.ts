@@ -14,13 +14,13 @@ import {
   navigateToBpdOnboardingLoadActivationStatus
 } from "../../../navigation/action";
 import BPD_ROUTES from "../../../navigation/routes";
-import { loadBdpActivationStatus } from "../../../store/actions/details";
+import { bpdLoadActivationStatus } from "../../../store/actions/details";
 import {
-  BpdOnboardingAcceptDeclaration,
-  BpdOnboardingCancel,
-  BpdUserActivate
+  bpdOnboardingAcceptDeclaration,
+  bpdOnboardingCancel,
+  bpdUserActivate
 } from "../../../store/actions/onboarding";
-import { bpdActiveSelector } from "../../../store/reducers/details";
+import { bpdEnabledSelector } from "../../../store/reducers/details/activation";
 
 export const isLoadingScreen = (screenName: string) =>
   screenName === BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS;
@@ -30,23 +30,23 @@ export function* isBpdEnabled(): Generator<
   Either<Error, boolean>,
   any
 > {
-  const remoteActive: ReturnType<typeof bpdActiveSelector> = yield select(
-    bpdActiveSelector
+  const remoteActive: ReturnType<typeof bpdEnabledSelector> = yield select(
+    bpdEnabledSelector
   );
   if (isReady(remoteActive)) {
     return right<Error, boolean>(remoteActive.value);
   } else {
-    yield put(loadBdpActivationStatus.request());
+    yield put(bpdLoadActivationStatus.request());
     const bpdActivationResults: ActionType<
-      | typeof loadBdpActivationStatus.success
-      | typeof loadBdpActivationStatus.failure
+      | typeof bpdLoadActivationStatus.success
+      | typeof bpdLoadActivationStatus.failure
     > = yield take([
-      getType(loadBdpActivationStatus.success),
-      getType(loadBdpActivationStatus.failure)
+      getType(bpdLoadActivationStatus.success),
+      getType(bpdLoadActivationStatus.failure)
     ]);
     return bpdActivationResults.type ===
-      getType(loadBdpActivationStatus.success)
-      ? right<Error, boolean>(bpdActivationResults.payload)
+      getType(bpdLoadActivationStatus.success)
+      ? right<Error, boolean>(bpdActivationResults.payload.enabled)
       : left<Error, boolean>(bpdActivationResults.payload);
   }
 }
@@ -68,7 +68,7 @@ export function* bpdStartOnboardingWorker() {
   );
 
   if (isBpdActive.isRight()) {
-    if (isBpdActive) {
+    if (isBpdActive.value) {
       // The bpd is already active, go directly to the bpd details screen
       // TODO: navigate to bpd details
       yield put(navigateToWalletHome());
@@ -79,14 +79,14 @@ export function* bpdStartOnboardingWorker() {
       yield put(navigationHistoryPop(1));
 
       // wait for the user that choose to continue
-      yield take(BpdUserActivate);
+      yield take(bpdUserActivate);
 
       // Navigate to the Onboarding Declaration and wait for the action that complete the saga
       yield put(navigateToBpdOnboardingDeclaration());
       yield put(navigationHistoryPop(1));
 
       // The saga ends when the user accepts the declaration
-      yield take(BpdOnboardingAcceptDeclaration);
+      yield take(bpdOnboardingAcceptDeclaration);
     }
   }
 }
@@ -97,7 +97,7 @@ export function* bpdStartOnboardingWorker() {
 export function* handleBpdStartOnboardingSaga(): SagaIterator {
   const { cancelAction } = yield race({
     onboarding: call(bpdStartOnboardingWorker),
-    cancelAction: take(BpdOnboardingCancel)
+    cancelAction: take(bpdOnboardingCancel)
   });
   if (cancelAction) {
     yield put(NavigationActions.back());

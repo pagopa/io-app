@@ -3,45 +3,49 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { CitizenResource } from "../../../../../../definitions/bpd/citizen/CitizenResource";
 
 /**
  * Enroll the user to the bpd program
  */
-export const enrollToBpd = createAsyncAction(
-  "BDP_ENROLL_REQUEST",
-  "BDP_ENROLL_SUCCESS",
-  "BDP_ENROLL_FAILURE"
-)<void, boolean, Error>();
+// TODO: change CitizenResource with boolean?
+export const bpdEnrollUserToProgram = createAsyncAction(
+  "BPD_ENROLL_REQUEST",
+  "BPD_ENROLL_SUCCESS",
+  "BPD_ENROLL_FAILURE"
+)<void, CitizenResource, Error>();
 
 /**
  * Start the onboarding workflow
  */
-export const BpdOnboardingStart = createStandardAction("BDP_ONBOARDING_START")<
+export const bpdOnboardingStart = createStandardAction("BPD_ONBOARDING_START")<
   void
 >();
 
 /**
  * The user choose to activate the bpd
  */
-export const BpdUserActivate = createStandardAction(
-  "BDP_ONBOARDING_USER_ACTIVATE"
+export const bpdUserActivate = createStandardAction(
+  "BPD_ONBOARDING_USER_ACTIVATE"
 )<void>();
 
 /**
  * Cancel the onboarding workflow
  */
-export const BpdOnboardingCancel = createStandardAction(
-  "BDP_ONBOARDING_CANCEL"
+export const bpdOnboardingCancel = createStandardAction(
+  "BPD_ONBOARDING_CANCEL"
 )<void>();
 
 /**
  * The user accepts and confirms the declaration
  */
-export const BpdOnboardingAcceptDeclaration = createStandardAction(
-  "BDP_ONBOARDING_ACCEPT_DECLARATION"
+export const bpdOnboardingAcceptDeclaration = createStandardAction(
+  "BPD_ONBOARDING_ACCEPT_DECLARATION"
 )<void>();
 
-export type BdpOnboardingActions =
-  | ActionType<typeof enrollToBpd>
-  | ActionType<typeof BpdOnboardingStart>
-  | ActionType<typeof BpdOnboardingCancel>;
+export type BpdOnboardingActions =
+  | ActionType<typeof bpdEnrollUserToProgram>
+  | ActionType<typeof bpdOnboardingStart>
+  | ActionType<typeof bpdUserActivate>
+  | ActionType<typeof bpdOnboardingAcceptDeclaration>
+  | ActionType<typeof bpdOnboardingCancel>;

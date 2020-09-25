@@ -1,15 +1,15 @@
 import { Action, combineReducers } from "redux";
-import bpdDetailsReducer, { BdpDetailsState } from "./details";
+import bpdDetailsReducer, { BpdDetailsState } from "./details";
 import bpdOnboardingReducer, { BpdOnboardingState } from "./onboarding";
 
 export type BpdState = {
+  details: BpdDetailsState;
   onboarding: BpdOnboardingState;
-  details: BdpDetailsState;
 };
 
 const bpdReducer = combineReducers<BpdState, Action>({
-  onboarding: bpdOnboardingReducer,
-  details: bpdDetailsReducer
+  details: bpdDetailsReducer,
+  onboarding: bpdOnboardingReducer
 });
 
 export default bpdReducer;
