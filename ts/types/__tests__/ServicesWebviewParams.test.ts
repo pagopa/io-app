@@ -1,7 +1,7 @@
 import { ServicesWebviewParams } from "../ServicesWebviewParams";
 
 const validParams = {
-  serviceID: "service_id",
+  serviceId: "service_id",
   url: "http://google.com"
 };
 
@@ -10,11 +10,11 @@ const invalidParams1 = {
 };
 
 const invalidParams2 = {
-  serviceID: "service_id"
+  serviceId: "service_id"
 };
 
 const invalidParams3 = {
-  serviceID: "",
+  serviceId: "",
   url: "http://google.com"
 };
 

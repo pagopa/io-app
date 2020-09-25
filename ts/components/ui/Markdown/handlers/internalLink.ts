@@ -83,9 +83,25 @@ export function getInternalRoute(href: string): Option<InternalRoute> {
   }
 }
 
-export function handleInternalLink(dispatch: Dispatch, href: string) {
+/**
+ * try to extract the internal route from href. If it is defined and allowed (white listed)
+ * dispatch the navigation params (to store into the store) and dispatch the navigation action
+ * @param dispatch
+ * @param href
+ * @param serviceId
+ */
+export function handleInternalLink(
+  dispatch: Dispatch,
+  href: string,
+  serviceId?: string
+) {
   getInternalRoute(href).map(internalNavigation => {
-    dispatch(addInternalRouteNavigation(internalNavigation));
+    dispatch(
+      addInternalRouteNavigation({
+        ...internalNavigation,
+        params: { ...internalNavigation.params, serviceId }
+      })
+    );
     dispatch(
       NavigationActions.navigate({
         routeName: internalNavigation.routeName
