@@ -183,9 +183,6 @@ profile:
       alert: Vuoi davvero eliminare la cache?
       clear: Elimina cache
       cleared: La cache è stata eliminata.
-    resetPin:
-      confirmTitle: Vuoi davvero reimpostare il codice di sblocco?
-      confirmMsg: Ti verrà richiesto nuovamente di accedere.
     preferences:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione
@@ -1572,4 +1569,6 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
 webView:
   error:
+    missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
+    missingToken: Non hai l'autorizzazione per avviare questo flusso
     convertMessage: Non è stato possibile decodificare il messaggio inviato all'app

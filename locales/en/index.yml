@@ -183,9 +183,6 @@ profile:
       alert: Are you sure you want to clear the cache?
       clear: Clear cache
       cleared: The cache has been cleared.
-    resetPin:
-      confirmTitle: Are you sure you want to reset your unlock code?
-      confirmMsg: You will be asked again to log in.
     preferences:
       title: Preferences
       description: Manage app internal preferences
@@ -1540,4 +1537,6 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
 webView:
   error:
+    missingParams: Not all information necessary to access this page are available
+    missingToken: Missing authorization to start this flow
     convertMessage: Unable to decode the message from the webview
