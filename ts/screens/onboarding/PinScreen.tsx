@@ -19,9 +19,13 @@ import { PinString } from "../../types/PinString";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { setPin } from "../../utils/keychain";
 import { maybeNotNullyString } from "../../utils/strings";
+import { GlobalState } from "../../store/reducers/types";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 
-type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
+type Props = NavigationScreenProps &
+  ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 type PinUnselected = {
   state: "PinUnselected";
@@ -348,7 +352,11 @@ class PinScreen extends React.PureComponent<Props, State> {
     );
   }
 
-  private handleGoBack = () =>
+  private handleGoBack = () => {
+    if (this.props.isOnboardingCompleted) {
+      this.props.navigation.goBack();
+      return;
+    }
     Alert.alert(
       I18n.t("onboarding.alert.title"),
       I18n.t("onboarding.alert.description"),
@@ -364,6 +372,7 @@ class PinScreen extends React.PureComponent<Props, State> {
         }
       ]
     );
+  };
 
   public render() {
     const { pinState } = this.state;
@@ -402,6 +411,10 @@ class PinScreen extends React.PureComponent<Props, State> {
           });
           instabugLog(`createPinSuccess`, TypeLogs.DEBUG, instabuglogTag);
           this.props.createPinSuccess(pin);
+          // user is updating his/her pin inside the app, go back
+          if (this.props.isOnboardingCompleted) {
+            this.props.navigation.goBack();
+          }
         },
         _ => {
           instabugLog(`setPin error`, TypeLogs.DEBUG, instabuglogTag);
@@ -425,9 +438,13 @@ class PinScreen extends React.PureComponent<Props, State> {
   };
 }
 
+const mapStateToProps = (state: GlobalState) => ({
+  isOnboardingCompleted: isOnboardingCompletedSelector(state)
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   createPinSuccess: (pin: PinString) => dispatch(createPinSuccess(pin)),
   abortOnboarding: () => dispatch(abortOnboarding())
 });
 
-export default connect(undefined, mapDispatchToProps)(PinScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PinScreen);

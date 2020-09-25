@@ -183,9 +183,6 @@ profile:
       alert: Are you sure you want to clear the cache?
       clear: Clear cache
       cleared: The cache has been cleared.
-    resetPin:
-      confirmTitle: Are you sure you want to reset your unlock code?
-      confirmMsg: You will be asked again to log in.
     preferences:
       title: Preferences
       description: Manage app internal preferences
