@@ -1,17 +1,15 @@
 import { SagaIterator } from "redux-saga";
-import { call, takeLatest, CallEffect } from "redux-saga/effects";
+import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-
-import { BackendBpdClient } from "../api/backendBpdClient";
 import { apiUrlPrefix } from "../../../../config";
+import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdLoadActivationStatus } from "../store/actions/details";
 import {
+  bpdEnrollUserToProgram,
   bpdOnboardingAcceptDeclaration,
-  bpdOnboardingStart,
-  bpdEnrollUserToProgram
+  bpdOnboardingStart
 } from "../store/actions/onboarding";
-import { getAsyncResult } from "../../../../utils/saga";
-import { putEnrollCitizen, getCitizen } from "./networking";
+import { getCitizen, putEnrollCitizen } from "./networking";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
 
@@ -38,12 +36,4 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
 
   // The user accepts the declaration, enroll the user to the bpd program
   yield takeLatest(getType(bpdOnboardingAcceptDeclaration), handleBpdEnroll);
-}
-
-// try to enroll the citizen and return the operation outcome
-// true -> successfully enrolled
-export function* enrollCitizen(): Generator<CallEffect, boolean, boolean> {
-  return yield call(() =>
-    getAsyncResult(bpdEnrollUserToProgram, undefined as void, c => c.enabled)
-  );
 }
