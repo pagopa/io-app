@@ -1570,6 +1570,8 @@ bonus:
   bpd:
     title: Cashback Pagamenti Digitali
     onboarding:
+      loadingActivationStatus:
+        title: Verifico lo stato di attivazione
       declaration:
         header: Per poter attivare il cashback devi dichiarare
         conditions:
