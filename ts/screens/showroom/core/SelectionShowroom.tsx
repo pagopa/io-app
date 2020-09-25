@@ -1,8 +1,8 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { CheckBox } from "../../components/core/selection/CheckBox";
-import { ShowroomSection } from "./ShowroomSection";
+import { CheckBox } from "../../../components/core/selection/CheckBox";
+import { ShowroomSection } from "../ShowroomSection";
 
 const styles = StyleSheet.create({
   content: {
