@@ -8,7 +8,7 @@ import { IOColors } from "../variables/IOColors";
 
 type Props = {
   // the value of the checkbox
-  checked: boolean;
+  checked?: boolean;
   // dispatch the new value after the checkbox changes state
   onValueChange?: (newValue: boolean) => void;
 };
@@ -43,7 +43,7 @@ const getBorderColor = (value: boolean) => (value ? onColor : offColor);
  * @constructor
  */
 export const CheckBox: React.FunctionComponent<Props> = props => {
-  const [toggleValue, setToggleValue] = useState(props.checked);
+  const [toggleValue, setToggleValue] = useState(props.checked ?? false);
 
   return (
     <TouchableDefaultOpacity
