@@ -1567,6 +1567,20 @@ bonus:
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
+  bpd:
+    title: Cashback Pagamenti Digitali
+    onboarding:
+      declaration:
+        header: Per poter attivare il cashback devi dichiarare
+        conditions:
+          age: di essere maggiorenne
+          resident: di risiedere in Italia
+          personal_use:
+            normal: che userai gli strumenti di pagamento su cui è attivo il cashback solo per
+            bold: acquisti effettuati fuori dall'esercizio di attività di Impresa, Arte o Professione
+        disclaimer:
+          normal: Questa autodichirazione è resa ai sensi del
+          link: dpr 28 dicembre 2000 n. 445 art 46 e 47
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

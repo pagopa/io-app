@@ -1535,6 +1535,20 @@ bonus:
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
+  bpd:
+    title: Cashback Digital Payments
+    onboarding:
+      declaration:
+        header: In order to activate the cashback you must declare
+        conditions:
+          age: to be of legal age
+          resident: to reside in Italy
+          personal_use:
+            normal: that you will use the payment instruments on which the cashback is active only for
+            bold: purchases made outside the exercise of business, art or profession
+        disclaimer:
+          normal: This self-declaration is made pursuant to
+          link: dpr 28 december 2000 n. 445 art 46 and 47
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
