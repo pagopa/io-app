@@ -1551,6 +1551,9 @@ bonus:
         disclaimer:
           normal: This self-declaration is made pursuant to
           link: dpr 28 december 2000 n. 445 art 46 and 47
+      loadingActivateBpd:
+        title: "We are activating the cashback"
+        body: "Please wait."
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
