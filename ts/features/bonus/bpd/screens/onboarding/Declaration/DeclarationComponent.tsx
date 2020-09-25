@@ -1,4 +1,5 @@
 import { View } from "native-base";
+import { useReducer } from "react";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
@@ -21,6 +22,8 @@ type PersonalUse = {
   normal: string;
   bold: string;
 };
+
+type InnerAction = "increment" | "decrement";
 
 const loadLocales = () => ({
   title: I18n.t("bonus.bpd.title"),
@@ -52,8 +55,34 @@ const personalUseText = (personalUse: PersonalUse) => (
   </Body>
 );
 
+const generateRequiredConditions = (
+  list: ReadonlyArray<string | React.ReactNode>,
+  dispatch: React.Dispatch<InnerAction>
+) =>
+  list.map((condition, index) => (
+    <DeclarationEntry
+      text={condition}
+      key={index}
+      onValueChange={newValue =>
+        newValue ? dispatch("increment") : dispatch("decrement")
+      }
+    />
+  ));
+
+function reducer(state: number, action: InnerAction) {
+  switch (action) {
+    case "increment":
+      return state + 1;
+    case "decrement":
+      return state - 1;
+    default:
+      throw new Error();
+  }
+}
+
 /**
- * This screen allows the user to declare the required conditions
+ * This screen allows the user to declare the required conditions.
+ * When all the condition are accepted, the continue button will be enabled
  */
 export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => {
   const {
@@ -66,24 +95,10 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
   } = loadLocales();
 
   // tracks the condition accepted, used to enabled the "continue" button
-  const [conditionsAccepted, setConditionAccepted] = React.useState(0);
+  const [state, dispatch] = useReducer(reducer, 0);
 
   // transform the required textual conditions to graphical objects with checkbox
-  const requiredConditions = [
-    age,
-    resident,
-    personalUseText(personal_use)
-  ].map((condition, index) => (
-    <DeclarationEntry
-      text={condition}
-      key={index}
-      onValueChange={newValue =>
-        newValue
-          ? setConditionAccepted(conditionsAccepted + 1)
-          : setConditionAccepted(conditionsAccepted - 1)
-      }
-    />
-  ));
+  const requiredConditions = [age, resident, personalUseText(personal_use)];
 
   return (
     <BaseScreenComponent goBack={props.onCancel} headerTitle={title}>
@@ -93,7 +108,7 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
             <View spacer={true} large={true} />
             <H1>{header}</H1>
             <View spacer={true} extralarge={true} />
-            {requiredConditions}
+            {generateRequiredConditions(requiredConditions, dispatch)}
             <View spacer={true} small={true} />
             <InfoBox>
               <Body>
@@ -104,7 +119,7 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
           </View>
         </ScrollView>
         <FooterTwoButtons
-          rightDisabled={conditionsAccepted !== 3}
+          rightDisabled={state !== 3}
           onCancel={props.onCancel}
           onRight={props.onConfirm}
           title={I18n.t("global.buttons.continue")}
