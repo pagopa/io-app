@@ -214,6 +214,20 @@ const internalRoutePredicates: Map<
   [ROUTES.SERVICE_WEBVIEW, hasMetadataTokenName]
 ]);
 
+const extractCTA = (
+  text: string,
+  serviceMetadata: MaybePotMetadata
+): Option<CTAS> =>
+  fromPredicate((t: string) => FM.test(t))(text)
+    .map(m => FM<MessageCTA>(m).attributes)
+    .chain(attrs =>
+      CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
+        _ => none,
+        // check if the decoded actions are valid
+        cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)
+      )
+    );
+
 /**
  * extract the CTAs if they are nested inside the message markdown content
  * if some CTAs are been found, the localized version will be returned
@@ -223,16 +237,29 @@ const internalRoutePredicates: Map<
 export const getCTA = (
   message: CreatedMessageWithContent,
   serviceMetadata?: MaybePotMetadata
+): Option<CTAS> => extractCTA(message.content.markdown, serviceMetadata);
+
+/**
+ * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
+ * if some CTAs are been found, the localized version will be returned
+ * @param cta
+ * @param serviceMetadata
+ */
+export const getServiceCTA = (
+  serviceMetadata: MaybePotMetadata
 ): Option<CTAS> =>
-  fromPredicate((t: string) => FM.test(t))(message.content.markdown)
-    .map(m => FM<MessageCTA>(m).attributes)
-    .chain(attrs =>
-      CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
-        _ => none,
-        // check if the decoded actions are valid
-        cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)
+  fromNullable(serviceMetadata)
+    .map(s =>
+      pot.getOrElse(
+        pot.map(s, metadata =>
+          fromNullable(metadata)
+            .chain(m => fromNullable(m.cta))
+            .getOrElse("")
+        ),
+        ""
       )
-    );
+    )
+    .chain(cta => extractCTA(cta, serviceMetadata));
 
 /**
  * return a boolean indicating if the cta action is valid or not

@@ -11,6 +11,7 @@ import { CTA, CTAS } from "../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
   getCTA,
+  getServiceCTA,
   isCtaActionValid,
   MaybePotMetadata
 } from "../messages";
@@ -255,6 +256,64 @@ const test2CTA = (
     }
   }
 };
+
+describe("getServiceCTA", () => {
+  it("Should extract a valid CTA for the service", () => {
+    const CTA_SERVICE = `---
+it:
+    cta_1:
+        text: "Interno con params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+en:
+    cta_1:
+        text: "Internal with params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+---`;
+    const validServiceMetadata: MaybePotMetadata = pot.some({
+      ...serviceMetadataBase,
+      token_name: "myPortalToken",
+      cta: CTA_SERVICE
+    });
+    const maybeCTA = getServiceCTA(validServiceMetadata);
+    expect(maybeCTA.isSome()).toBeTruthy();
+    if (maybeCTA.isSome()) {
+      const ctas = maybeCTA.value;
+      expect(ctas.cta_1).toBeDefined();
+      expect(ctas.cta_1.text).toEqual("Interno con params");
+      expect(ctas.cta_1.action).toEqual(
+        "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+      );
+    }
+  });
+
+  it("Should not extract a CTA for the service without cta attribute", () => {
+    const invalidServiceMetadata: MaybePotMetadata = pot.some({
+      ...serviceMetadataBase,
+      token_name: "myPortalToken"
+    });
+    const maybeCTA = getServiceCTA(invalidServiceMetadata);
+    expect(maybeCTA.isSome()).toBeFalsy();
+  });
+
+  it("Should not extract a CTA for the service without token_name attribute", () => {
+    const CTA_SERVICE = `---
+it:
+    cta_1:
+        text: "Interno con params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+en:
+    cta_1:
+        text: "Internal with params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+---`;
+    const invalidServiceMetadata: MaybePotMetadata = pot.some({
+      ...serviceMetadataBase,
+      cta: CTA_SERVICE
+    });
+    const maybeCTA = getServiceCTA(invalidServiceMetadata);
+    expect(maybeCTA.isSome()).toBeFalsy();
+  });
+});
 
 describe("isCtaActionValid", () => {
   it("should be a valid action for service", () => {
