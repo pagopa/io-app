@@ -17,6 +17,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import iOSStoreBadge from "../../../img/badges/app-store-badge.png";
 import playStoreBadge from "../../../img/badges/google-play-badge.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import MessageNestedCTABar from "../../components/messages/MessageNestedCTABar";
 import OrganizationHeader from "../../components/OrganizationHeader";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -50,6 +51,7 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { getServiceCTA } from "../../utils/messages";
 import {
   EnabledChannels,
   getBlockedChannels,
@@ -494,7 +496,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     );
   };
 
-  private hasChannel = (channel: NotificationChannelEnum) => fromNullable(this.service.available_notification_channels)
+  private hasChannel = (channel: NotificationChannelEnum) =>
+    fromNullable(this.service.available_notification_channels)
       .map(anc => anc.indexOf(channel) !== -1)
       .getOrElse(true);
 
@@ -650,6 +653,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     const potServiceMetadata =
       this.props.content.servicesMetadata.byId[serviceId] || pot.none;
 
+    const maybeCTA = getServiceCTA(potServiceMetadata);
     return (
       <BaseScreenComponent
         goBack={this.props.navigation.goBack}
@@ -695,6 +699,17 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           )}
           <View spacer={true} extralarge={true} />
         </Content>
+        {maybeCTA.isSome() && (
+          <View footer={true} style={styles.flexRow}>
+            <MessageNestedCTABar
+              ctas={maybeCTA.value}
+              xsmall={false}
+              dispatch={this.props.dispatch}
+              serviceMetadata={potServiceMetadata}
+              service={service}
+            />
+          </View>
+        )}
       </BaseScreenComponent>
     );
   }
