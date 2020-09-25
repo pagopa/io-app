@@ -17,7 +17,7 @@ const DeclarationScreen: React.FunctionComponent<Props> = props => (
   <SafeAreaView style={{ flex: 1 }}>
     <H1>Autodichiarazione</H1>
     <Button>
-      <Label color={"white"} onPress={() => props.userAcceptDeclaration()}>
+      <Label color={"white"} onPress={props.userAcceptDeclaration}>
         Dichiaro&Attivo
       </Label>
     </Button>
