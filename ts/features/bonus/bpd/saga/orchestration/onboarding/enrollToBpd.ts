@@ -1,16 +1,7 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import { Either } from "fp-ts/lib/Either";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
-import {
-  call,
-  CallEffect,
-  Effect,
-  put,
-  race,
-  select,
-  take
-} from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
+import { call, CallEffect, put, race, select, take } from "redux-saga/effects";
 import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
@@ -22,8 +13,8 @@ import {
 } from "../../../navigation/action";
 import BPD_ROUTES from "../../../navigation/routes";
 import {
-  bpdOnboardingCancel,
-  bpdEnrollUserToProgram
+  bpdEnrollUserToProgram,
+  bpdOnboardingCancel
 } from "../../../store/actions/onboarding";
 
 // try to enroll the citizen and return the operation outcome
