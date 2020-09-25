@@ -1,37 +1,32 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import { Either } from "fp-ts/lib/Either";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
-import { call, Effect, put, race, select, take } from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
+import { call, CallEffect, put, race, select, take } from "redux-saga/effects";
+import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
+import { getAsyncResult } from "../../../../../../utils/saga";
 import {
   navigateToBpdOnboardingEnrollPaymentMethod,
   navigateToBpdOnboardingLoadActivate
 } from "../../../navigation/action";
 import BPD_ROUTES from "../../../navigation/routes";
 import {
-  bpdOnboardingCancel,
-  bpdEnrollUserToProgram
+  bpdEnrollUserToProgram,
+  bpdOnboardingCancel
 } from "../../../store/actions/onboarding";
 
+// try to enroll the citizen and return the operation outcome
+// true -> successfully enrolled
 export function* enrollUserToBpd(): Generator<
-  Effect,
-  Either<Error, boolean>,
-  any
+  CallEffect,
+  Either<Error, CitizenResource>,
+  Either<Error, CitizenResource>
 > {
-  yield put(bpdEnrollUserToProgram.request());
-  const enrollUserResults: ActionType<
-    | typeof bpdEnrollUserToProgram.success
-    | typeof bpdEnrollUserToProgram.failure
-  > = yield take([
-    getType(bpdEnrollUserToProgram.success),
-    getType(bpdEnrollUserToProgram.failure)
-  ]);
-  return enrollUserResults.type === getType(bpdEnrollUserToProgram.success)
-    ? right<Error, boolean>(enrollUserResults.payload.enabled)
-    : left<Error, boolean>(enrollUserResults.payload);
+  return yield call(() =>
+    getAsyncResult(bpdEnrollUserToProgram, undefined as void)
+  );
 }
 
 export const isLoadingScreen = (screenName: string) =>

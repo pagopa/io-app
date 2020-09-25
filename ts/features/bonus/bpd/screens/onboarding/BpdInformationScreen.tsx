@@ -17,7 +17,7 @@ const BpdInformationScreen: React.FunctionComponent<Props> = props => (
   <SafeAreaView style={{ flex: 1 }}>
     <H1>Information & tos</H1>
     <Button>
-      <Label color={"white"} onPress={() => props.userActivateBpd()}>
+      <Label color={"white"} onPress={props.userActivateBpd}>
         Attiva
       </Label>
     </Button>
