@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0-rc.3](https://github.com/pagopa/io-app/compare/1.7.0-rc.0...1.7.0-rc.3) (2020-09-25)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#174838425](https://www.pivotaltracker.com/story/show/174838425)] Citizen enrollment and status ([#2219](https://github.com/pagopa/io-app/issues/2219)) ([bbd4fe0](https://github.com/pagopa/io-app/commit/bbd4fe07ef3ace5cc5410e8f74d0ff2efa5c07da))
+* **Bonus Pagamenti Digitali:** [[#174858345](https://www.pivotaltracker.com/story/show/174858345)] Add navigation stack for bpd onboarding ([#2206](https://github.com/pagopa/io-app/issues/2206)) ([6c6dfbe](https://github.com/pagopa/io-app/commit/6c6dfbe156e433af182c31e3554875a6e1f13b47)), closes [#174840617](https://www.pivotaltracker.com/story/show/174840617)
+* **Bonus Pagamenti Digitali:** [[#174897872](https://www.pivotaltracker.com/story/show/174897872)] Draft state, action and reducers for bpd onboarding ([#2212](https://github.com/pagopa/io-app/issues/2212)) ([d5e3e3e](https://github.com/pagopa/io-app/commit/d5e3e3e4685003d06ee00d9a2911f7f10f51d328)), closes [#174858345](https://www.pivotaltracker.com/story/show/174858345) [#174840617](https://www.pivotaltracker.com/story/show/174840617)
+* **MyPortal:** [[#174801117](https://www.pivotaltracker.com/story/show/174801117)] Adds ServicesWebviewParams codec [#2209](https://github.com/pagopa/io-app/issues/2209) ([fbba2eb](https://github.com/pagopa/io-app/commit/fbba2ebb862040b265e75c99eb9926d16a2c0d7e))
+* **MyPortal:** [[#174801172](https://www.pivotaltracker.com/story/show/174801172)] Screen component for region service external webview ([#2204](https://github.com/pagopa/io-app/issues/2204)) ([4f861e4](https://github.com/pagopa/io-app/commit/4f861e454edb51ef65ada25b14ecf7ff66f82582))
+* [[#172911823](https://www.pivotaltracker.com/story/show/172911823)] Update pin without logout ([#2195](https://github.com/pagopa/io-app/issues/2195)) ([63b08ff](https://github.com/pagopa/io-app/commit/63b08ffd83794657ac24d718314b4379f11d37c5)), closes [#174769923](https://www.pivotaltracker.com/story/show/174769923) [#174769923](https://www.pivotaltracker.com/story/show/174769923) [#174769923](https://www.pivotaltracker.com/story/show/174769923)
+* **MyPortal:** [[#174801195](https://www.pivotaltracker.com/story/show/174801195)] Service detail CTA ([#2217](https://github.com/pagopa/io-app/issues/2217)) ([06fbb95](https://github.com/pagopa/io-app/commit/06fbb950a0818a64bb338b1e8eaf7f5446d97063)), closes [#174859517](https://www.pivotaltracker.com/story/show/174859517) [#174859517](https://www.pivotaltracker.com/story/show/174859517)
+* **MyPortal:** [[#174859517](https://www.pivotaltracker.com/story/show/174859517)] Checks token_name on CTA actions ([#2208](https://github.com/pagopa/io-app/issues/2208)) ([3627ac9](https://github.com/pagopa/io-app/commit/3627ac9d28d8270f031bd3a9dc91cd0ca705e74c))
+* **MyPortal:** [[#174881082](https://www.pivotaltracker.com/story/show/174881082)] Adds the check on params coming from store and showing alerts if something is missing ([#2214](https://github.com/pagopa/io-app/issues/2214)) ([6eef55f](https://github.com/pagopa/io-app/commit/6eef55ff88b2f873afbc4596235fe42ea59fa061)), closes [#174801172](https://www.pivotaltracker.com/story/show/174801172) [#174801172](https://www.pivotaltracker.com/story/show/174801172) [#174801172](https://www.pivotaltracker.com/story/show/174801172) [#174801172](https://www.pivotaltracker.com/story/show/174801172)
+* **MyPortal:** [[#174883732](https://www.pivotaltracker.com/story/show/174883732)] Adds MD documentation on webview injected script and original JS file ([#2220](https://github.com/pagopa/io-app/issues/2220)) ([a32cf71](https://github.com/pagopa/io-app/commit/a32cf7104384fb45652eb60ee33402b3ba6aceb7))
+
+
+### Bug Fixes
+
+* [[#174953297](https://www.pivotaltracker.com/story/show/174953297)] Reminder CTA label is wrong localized ([#2222](https://github.com/pagopa/io-app/issues/2222)) ([0e38164](https://github.com/pagopa/io-app/commit/0e38164efc155291676719fa60027037c34e1099))
+* **Payments:** [[#174804073](https://www.pivotaltracker.com/story/show/174804073)] Show IUV label for notice code ([#2223](https://github.com/pagopa/io-app/issues/2223)) ([89859af](https://github.com/pagopa/io-app/commit/89859afce0d4e161ac637ff7b388a24d91366b1c))
+
+
+### Chores
+
+* [[#174596045](https://www.pivotaltracker.com/story/show/174596045)] Change api call from getProfile to getSession ([#2201](https://github.com/pagopa/io-app/issues/2201)) ([a46f228](https://github.com/pagopa/io-app/commit/a46f22898de998cc50c88bf4a9b91e5a9ee53faf))
+* [[#174922141](https://www.pivotaltracker.com/story/show/174922141)] Upgrade react-native-keychain  v6.2.0 ([#2215](https://github.com/pagopa/io-app/issues/2215)) ([b3b8c82](https://github.com/pagopa/io-app/commit/b3b8c8221da2c3bd1c57dc79ca7d455faa09f98c))
+* Update typo in pick_psp.md ([#2221](https://github.com/pagopa/io-app/issues/2221)) ([5de4848](https://github.com/pagopa/io-app/commit/5de4848a3f21e96dce207e817393ed2fd4a2dde3))
+
 ## [1.7.0-rc.0](https://github.com/pagopa/io-app/compare/1.6.0-rc.3...1.7.0-rc.0) (2020-09-18)
 
 

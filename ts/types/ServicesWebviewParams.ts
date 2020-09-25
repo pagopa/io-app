@@ -6,7 +6,7 @@ import * as t from "io-ts";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 
 export const ServicesWebviewParams = t.interface({
-  serviceID: ServiceId,
+  serviceId: ServiceId,
   url: t.string
 });
 
