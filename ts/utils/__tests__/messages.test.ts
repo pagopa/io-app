@@ -207,7 +207,7 @@ some noise`;
     }
   });
 
-  it("should not have a valid CTA for service", () => {
+  it("should not have a valid CTA for service (for the given route 'SERVICE_WEBVIEW' token_name must present in service metadata)", () => {
     const validServiceMetadata: MaybePotMetadata = pot.some({
       ...serviceMetadataBase
     });

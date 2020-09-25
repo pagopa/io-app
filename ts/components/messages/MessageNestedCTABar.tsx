@@ -11,11 +11,16 @@ type Props = {
   ctas: CTAS;
   xsmall: boolean;
   dispatch: Dispatch;
+  // service and serviceMetadata could come from message or service detail
+  // they could be useful to determine if a cta action is valid or not
   service?: ServicePublic;
   serviceMetadata?: ServiceMetadataState;
 };
 
-// render cta1 and cta2 if they are defined in the message content as nested front-matter
+/**
+ * render cta1 and cta2 if they are defined in the message content as nested front-matter
+ * if a cta is not valid it won't be shown
+ */
 const MessageNestedCTABar: React.FunctionComponent<Props> = (
   props: Props
 ): ReactElement => {

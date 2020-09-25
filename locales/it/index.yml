@@ -183,9 +183,6 @@ profile:
       alert: Vuoi davvero eliminare la cache?
       clear: Elimina cache
       cleared: La cache è stata eliminata.
-    resetPin:
-      confirmTitle: Vuoi davvero reimpostare il codice di sblocco?
-      confirmMsg: Ti verrà richiesto nuovamente di accedere.
     preferences:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione

@@ -56,7 +56,7 @@ import { startTimer } from "../utils/timer";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import {
   startAndReturnIdentificationResult,
-  watchIdentificationRequest
+  watchIdentification
 } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
@@ -82,7 +82,6 @@ import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
-import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import {
@@ -358,10 +357,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   // Watch for requests to logout
   yield spawn(watchLogoutSaga, backendClient.logout);
-  // Watch for requests to reset the unlock code.
-  yield fork(watchPinResetSaga);
-  // Watch for identification request
-  yield fork(watchIdentificationRequest, storedPin);
+
+  yield fork(watchIdentification, storedPin);
 
   // Watch for checking the user email notifications preferences
   yield fork(watchEmailNotificationPreferencesSaga);
