@@ -12,17 +12,21 @@ import {
   findUsingGETDefaultDecoder,
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
+import { RTron } from "../../../../boot/configureStoreAndPersistor";
 
 const headersProducers = <
   P extends {
     readonly apiKeyHeader: string;
-    readonly Authorization: string;
-    readonly x_request_id?: string;
   }
 >() =>
   ((p: P) => ({
-    "Ocp-Apim-Subscription-Key": `${p.apiKeyHeader}`
-  })) as RequestHeaderProducer<P, "Ocp-Apim-Subscription-Key" | "Content-Type">;
+    // since these headers are not correctly autogenerate we have to access them as an anon object
+    "Ocp-Apim-Subscription-Key": `${(p as any)["Ocp-Apim-Subscription-Key"]}`,
+    Authorization: `Bearer ${(p as any).Bearer}`
+  })) as RequestHeaderProducer<
+    P,
+    "Ocp-Apim-Subscription-Key" | "Content-Type" | "Authorization"
+  >;
 
 const findT: FindUsingGETT = {
   method: "get",
@@ -41,6 +45,21 @@ const enrollCitizenIOT: EnrollmentT = {
   response_decoder: enrollmentDefaultDecoder()
 };
 
+type ApiNewtorkResult<T, S> = {
+  value: T;
+  status: S;
+};
+
+const doIban = (url: string, fetchApi: typeof fetch) => {
+  return new Promise<void>((res, rej) => {
+    fetchApi(`${url}/bonus/bpd/io/citizen`, { method: "patch" })
+      .then(response => {
+        RTron.log(response.status);
+      })
+      .catch(rej);
+  });
+};
+
 export function BackendBpdClient(
   baseUrl: string,
   token: string,
@@ -51,28 +70,35 @@ export function BackendBpdClient(
     fetchApi
   };
 
-  // withBearerToken injects the field 'Baerer' with value token into the parameter P
+  // withBearerToken injects the field 'Bearer' with value token into the parameter P
   // of the f function
-  const withBearerToken = <
-    P extends {
-      readonly apiKeyHeader: string;
-      readonly Authorization: string;
-      readonly x_request_id?: string;
-    },
-    R
-  >(
+  type extendHeaders = {
+    readonly apiKeyHeader: string;
+    readonly Authorization: string;
+    readonly Bearer: string;
+    ["Ocp-Apim-Subscription-Key"]: string;
+  };
+  const withBearerToken = <P extends extendHeaders, R>(
     f: (p: P) => Promise<R>
   ) => async (
-    po: Omit<P, "apiKeyHeader" | "Authorization" | "x_request_id">
+    po: Omit<P, "Bearer" | "Ocp-Apim-Subscription-Key">
   ): Promise<R> => {
-    const params = Object.assign({ apiKeyHeader: String(token) }, po) as P;
+    const params = Object.assign(
+      {
+        "Ocp-Apim-Subscription-Key": "dummy_key",
+        Bearer: token
+      },
+      po
+    ) as P;
     return f(params);
   };
+  doIban(baseUrl, fetchApi).then().catch();
 
   return {
     find: withBearerToken(createFetchRequestForApi(findT, options)),
     enrollCitizenIO: withBearerToken(
       createFetchRequestForApi(enrollCitizenIOT, options)
-    )
+    ),
+    updatePaymentMethod: ""
   };
 }

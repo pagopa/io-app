@@ -15,7 +15,7 @@ export function* executeAndDispatch(
   try {
     const enrollCitizenIOResult: SagaCallReturnType<typeof remoteCall> = yield call(
       remoteCall,
-      {}
+      {} as any
     );
     if (enrollCitizenIOResult.isRight()) {
       if (enrollCitizenIOResult.value.status === 200) {
