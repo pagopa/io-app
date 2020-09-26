@@ -1,6 +1,6 @@
 import { createStackNavigator } from "react-navigation";
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
-import DeclarationScreen from "../screens/onboarding/Declaration/DeclarationScreen";
+import DeclarationScreen from "../screens/onboarding/declaration/DeclarationScreen";
 import { EnrollPaymentMethodsScreen } from "../screens/onboarding/EnrollPaymentMethodsScreen";
 import { LoadActivateBpdScreen } from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
