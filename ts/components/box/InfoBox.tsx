@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
   }
 });
 
+const iconSize = 24;
+
 /**
  * This component display a box with an icon and a component on the right.
  * @param props
@@ -28,7 +30,7 @@ export const InfoBox: React.FunctionComponent<Props> = props => {
   const iconColor = props.iconColor ?? IOColors.blue;
   return (
     <View style={styles.row}>
-      <IconFont name={iconName} size={24} color={iconColor as string} />
+      <IconFont name={iconName} size={iconSize} color={iconColor as string} />
       <View hspacer={true} />
       <View style={styles.shrink}>{props.children}</View>
     </View>
