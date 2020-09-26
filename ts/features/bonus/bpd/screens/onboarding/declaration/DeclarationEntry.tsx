@@ -6,7 +6,8 @@ import { Body } from "../../../../../../components/core/typography/Body";
 import { XOR } from "../../../../../../types/utils";
 
 const styles = StyleSheet.create({
-  main: { flex: 1, flexDirection: "row", flexWrap: "nowrap" }
+  main: { flex: 1, flexDirection: "row", flexWrap: "nowrap" },
+  shrink: { flexShrink: 1 }
 });
 
 type Props = {
@@ -32,7 +33,7 @@ export const DeclarationEntry: React.FunctionComponent<OwnProps> = props => (
     <View style={styles.main}>
       <CheckBox onValueChange={props.onValueChange} />
       <View hspacer={true} />
-      <View style={{ flexShrink: 1 }}>{pickText(props.text)}</View>
+      <View style={styles.shrink}>{pickText(props.text)}</View>
     </View>
     <View spacer={true} large={true} />
   </View>
