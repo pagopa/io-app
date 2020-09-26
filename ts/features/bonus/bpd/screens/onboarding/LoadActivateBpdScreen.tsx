@@ -16,7 +16,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * This screen is displayed during the activation of the bpd
+ * This screen is displayed during the activation of the bpd program for the user
  */
 const LoadActivateBpdScreen: React.FunctionComponent<Props> = props => {
   const loadingCaption =
