@@ -70,11 +70,16 @@ type finalType =
   | r.IResponseType<500, undefined>;
 const updatePaymentMethodT = (
   options: Options,
-  iban: Iban
+  iban: { payoffInstr: Iban; payoffInstrType: string },
+  headers: Record<string, string>
 ): (() => Promise<t.Validation<finalType>>) => () =>
   new Promise((res, rej) => {
     options
-      .fetchApi(`${options.baseUrl}/bonus/bpd/io/citizen`, { method: "patch" })
+      .fetchApi(`${options.baseUrl}/bonus/bpd/io/citizen`, {
+        method: "patch",
+        headers,
+        body: JSON.stringify(iban)
+      })
       .then(response => {
         patchIbanDecoders(PatchIban)(response).then(res).catch(rej);
       })
@@ -107,14 +112,18 @@ export function BackendBpdClient(
   const withBearerToken = <P extends extendHeaders, R>(
     f: (p: P) => Promise<R>
   ) => async (po: P): Promise<R> => {
-    const params = Object.assign(
-      {
-        "Ocp-Apim-Subscription-Key": "dummy_key",
-        Bearer: token
-      },
-      po
-    ) as P;
+    const params = Object.assign(buildHeaders(token), po) as P;
     return f(params);
+  };
+
+  const buildHeaders = (token: string, content_type?: string) => {
+    const headers = {
+      "Ocp-Apim-Subscription-Key": "dummy_key",
+      Bearer: token
+    };
+    return content_type
+      ? { ...headers, ["Content-Type"]: content_type }
+      : headers;
   };
 
   return {
@@ -122,6 +131,11 @@ export function BackendBpdClient(
     enrollCitizenIO: withBearerToken(
       createFetchRequestForApi(enrollCitizenIOT, options)
     ),
-    updatePaymentMethod: (iban: Iban) => updatePaymentMethodT(options, iban)
+    updatePaymentMethod: (iban: Iban) =>
+      updatePaymentMethodT(
+        options,
+        { payoffInstr: iban, payoffInstrType: "IBAN" },
+        buildHeaders(token, "application/json; charset=utf-8")
+      )
   };
 }
