@@ -25,7 +25,7 @@ export const bpdLoadActivationStatus = createAsyncAction(
 // represent the outcome of iban upsert
 export type IbanUpsertResult = { payoffInstr?: Iban; status: IbanStatus };
 /**
- * Request the activation status for the user to the bpd program
+ * Request the upsert of the citizen iban
  */
 export const bpdUpsertIban = createAsyncAction(
   "BPD_UPSERT_IBAN_REQUEST",
