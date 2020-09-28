@@ -12,9 +12,10 @@ import {
   bpdOnboardingAcceptDeclaration,
   bpdOnboardingStart
 } from "../store/actions/onboarding";
-import { getCitizen, patchCitizenIban, putEnrollCitizen } from "./networking";
+import { getCitizen, putEnrollCitizen } from "./networking";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
+import { patchCitizenIban } from "./networking/patchCitizenIban";
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {

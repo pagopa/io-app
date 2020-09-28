@@ -9,7 +9,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../model/RemoteValue";
-import { bpdLoadActivationStatus, bpdUpsertIban } from "../../actions/details";
+import { bpdLoadActivationStatus } from "../../actions/details";
 import { bpdEnrollUserToProgram } from "../../actions/onboarding";
 
 export type BpdActivation = {
@@ -59,13 +59,10 @@ const paymentInstrumentReducer = (
   action: Action
 ): RemoteValue<string | undefined, Error> => {
   switch (action.type) {
-    case getType(bpdUpsertIban.request):
     case getType(bpdLoadActivationStatus.request):
       return remoteLoading;
-    case getType(bpdUpsertIban.success):
     case getType(bpdLoadActivationStatus.success):
       return remoteReady(action.payload.payoffInstr);
-    case getType(bpdUpsertIban.failure):
     case getType(bpdLoadActivationStatus.failure):
       return remoteError(action.payload);
   }

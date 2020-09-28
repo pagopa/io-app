@@ -1,11 +1,11 @@
-import { Omit } from "italia-ts-commons/lib/types";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
   createFetchRequestForApi,
-  RequestHeaderProducer,
-  ResponseDecoder
+  RequestHeaderProducer
 } from "italia-ts-commons/lib/requests";
+import * as t from "io-ts";
+import * as r from "italia-ts-commons/lib/requests";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   enrollmentDefaultDecoder,
@@ -13,12 +13,7 @@ import {
   findUsingGETDefaultDecoder,
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
-import { RTron } from "../../../../boot/configureStoreAndPersistor";
-import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
-import * as t from "io-ts";
 import { Iban } from "../../../../../definitions/backend/Iban";
-import * as r from "italia-ts-commons/lib/requests";
-import { CitizenResource } from "../../../../../definitions/bpd/citizen/CitizenResource";
 
 const headersProducers = <
   P extends {
@@ -54,8 +49,17 @@ const enrollCitizenIOT: EnrollmentT = {
 export function patchIbanDecoders<A, O>(type: t.Type<A, O>) {
   return r.composeResponseDecoders(
     r.composeResponseDecoders(
-      r.ioResponseDecoder<200, typeof type["_A"], typeof type["_O"]>(200, type),
-      r.constantResponseDecoder<undefined, 401>(401, undefined)
+      r.composeResponseDecoders(
+        r.ioResponseDecoder<200, typeof type["_A"], typeof type["_O"]>(
+          200,
+          type
+        ),
+        r.composeResponseDecoders(
+          r.constantResponseDecoder<undefined, 400>(400, undefined),
+          r.constantResponseDecoder<undefined, 401>(401, undefined)
+        )
+      ),
+      r.constantResponseDecoder<undefined, 404>(404, undefined)
     ),
     r.constantResponseDecoder<undefined, 500>(500, undefined)
   );
@@ -67,6 +71,8 @@ type PatchIban = t.TypeOf<typeof PatchIban>;
 type finalType =
   | r.IResponseType<200, PatchIban>
   | r.IResponseType<401, undefined>
+  | r.IResponseType<404, undefined>
+  | r.IResponseType<400, undefined>
   | r.IResponseType<500, undefined>;
 const updatePaymentMethodT = (
   options: Options,
