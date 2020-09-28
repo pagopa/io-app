@@ -15,7 +15,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import { getCTA, isExpired, paymentExpirationInfo } from "../../utils/messages";
-import NestedCTABar from "../cta/NestedCTABar";
+import ExtractedCTABar from "../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 import PaymentButton from "./PaymentButton";
@@ -143,7 +143,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
     // payment CTA has priority to nested CTA
     const nestedCTA =
       !this.hasPaymentData && maybeCTA.isSome() ? (
-        <NestedCTABar
+        <ExtractedCTABar
           ctas={maybeCTA.value}
           xsmall={true}
           dispatch={this.props.dispatch}

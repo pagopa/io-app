@@ -5,7 +5,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ServiceMetadataState } from "../../store/reducers/content";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { handleCtaAction, isCtaActionValid } from "../../utils/messages";
-import { NestedCtaButton } from "./NestedCtaButton";
+import { ExtractedCtaButton } from "./ExtractedCtaButton";
 
 type Props = {
   ctas: CTAS;
@@ -22,7 +22,7 @@ type Props = {
  * or if they are defined on cta attribute in ServiceMetadata in the service detail screen
  * if a cta is not valid it won't be shown
  */
-const NestedCTABar: React.FunctionComponent<Props> = (
+const ExtractedCTABar: React.FunctionComponent<Props> = (
   props: Props
 ): ReactElement => {
   const handleCTAPress = (cta: CTA) => {
@@ -33,7 +33,7 @@ const NestedCTABar: React.FunctionComponent<Props> = (
 
   const cta2 = ctas.cta_2 &&
     isCtaActionValid(ctas.cta_2, props.serviceMetadata) && (
-      <NestedCtaButton
+      <ExtractedCtaButton
         cta={ctas.cta_2}
         xsmall={props.xsmall}
         primary={false}
@@ -41,7 +41,7 @@ const NestedCTABar: React.FunctionComponent<Props> = (
       />
     );
   const cta1 = isCtaActionValid(ctas.cta_1, props.serviceMetadata) && (
-    <NestedCtaButton
+    <ExtractedCtaButton
       cta={ctas.cta_1}
       primary={true}
       xsmall={props.xsmall}
@@ -57,4 +57,4 @@ const NestedCTABar: React.FunctionComponent<Props> = (
   );
 };
 
-export default NestedCTABar;
+export default ExtractedCTABar;

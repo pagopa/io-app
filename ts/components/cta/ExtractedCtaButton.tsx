@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
  * a button displaying a CTA coming from the message content as nested front-matter
  * or defined in the service detail as part of services metadata attributes
  */
-export const NestedCtaButton: React.FunctionComponent<Props> = (
+export const ExtractedCtaButton: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const cta = props.cta;
