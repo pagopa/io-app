@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0-rc.4](https://github.com/pagopa/io-app/compare/1.7.0-rc.3...1.7.0-rc.4) (2020-09-28)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#174839834](https://www.pivotaltracker.com/story/show/174839834)] Onboarding saga orchestration ([#2216](https://github.com/pagopa/io-app/issues/2216)) ([b432bbf](https://github.com/pagopa/io-app/commit/b432bbf4b5cdff5a4f26ac3d0ac6612102e4fb01)), closes [#174858345](https://www.pivotaltracker.com/story/show/174858345) [#174840617](https://www.pivotaltracker.com/story/show/174840617) [#174897872](https://www.pivotaltracker.com/story/show/174897872)
+
 ## [1.7.0-rc.3](https://github.com/pagopa/io-app/compare/1.7.0-rc.0...1.7.0-rc.3) (2020-09-25)
 
 
