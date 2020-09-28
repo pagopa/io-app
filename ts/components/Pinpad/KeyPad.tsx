@@ -90,29 +90,29 @@ const renderPinCol = (
       >
         {label.fold(
           l => (
-              <Text
-                white={style === "label" && buttonType === "primary"}
-                style={[
-                  styles.buttonTextBase,
-                  style === "label" && styles.buttonTextLabel
-                ]}
-              >
-                {l}
-              </Text>
-            ),
+            <Text
+              white={style === "label" && buttonType === "primary"}
+              style={[
+                styles.buttonTextBase,
+                style === "label" && styles.buttonTextLabel
+              ]}
+            >
+              {l}
+            </Text>
+          ),
           ic => (
-              <StyledIconFont
-                name={ic.name}
-                size={ic.size}
-                style={[styles.noPadded]}
-                color={
-                  buttonType === "light"
-                    ? customVariables.contentPrimaryBackground
-                    : customVariables.colorWhite
-                }
-                accessibilityLabel={ic.accessibilityLabel}
-              />
-            )
+            <StyledIconFont
+              name={ic.name}
+              size={ic.size}
+              style={[styles.noPadded]}
+              color={
+                buttonType === "light"
+                  ? customVariables.contentPrimaryBackground
+                  : customVariables.colorWhite
+              }
+              accessibilityLabel={ic.accessibilityLabel}
+            />
+          )
         )}
       </ButtonDefaultOpacity>
     </Col>
@@ -132,7 +132,7 @@ const renderPinRow = (
           el.e1,
           el.e2,
           el.e1.isLeft() ? "digit" : "label",
-          `pinpad-digit-${el.e2}`,
+          `pinpad-digit-${i}`,
           buttonType,
           isDisabled
         )

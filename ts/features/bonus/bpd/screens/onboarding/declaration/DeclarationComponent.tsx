@@ -64,7 +64,7 @@ const generateRequiredConditions = (
       text={condition}
       key={index}
       onValueChange={newValue =>
-        newValue ? dispatch("increment") : dispatch("decrement")
+        dispatch(newValue ? "increment" : "decrement")
       }
     />
   ));
