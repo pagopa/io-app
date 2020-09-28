@@ -25,6 +25,7 @@ export const CheckBox: React.FunctionComponent<OwnProps> = props => {
   return (
     <RawCheckBox
       checked={toggleValue}
+      disabled={props.disabled}
       onPress={() => {
         setToggleValue(!toggleValue);
         if (props.onValueChange !== undefined) {
