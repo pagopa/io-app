@@ -132,7 +132,7 @@ const renderPinRow = (
           el.e1,
           el.e2,
           el.e1.isLeft() ? "digit" : "label",
-          `pinpad-digit-${el.e1}`,
+          `pinpad-digit-${i}`,
           buttonType,
           isDisabled
         )
