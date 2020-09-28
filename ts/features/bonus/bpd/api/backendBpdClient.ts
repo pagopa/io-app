@@ -51,12 +51,7 @@ const enrollCitizenIOT: EnrollmentT = {
   response_decoder: enrollmentDefaultDecoder()
 };
 
-type ApiNewtorkResult<T, S> = {
-  value: T;
-  status: S;
-};
-
-export function testDecoders<A, O>(type: t.Type<A, O>) {
+export function patchIbanDecoders<A, O>(type: t.Type<A, O>) {
   return r.composeResponseDecoders(
     r.composeResponseDecoders(
       r.ioResponseDecoder<200, typeof type["_A"], typeof type["_O"]>(200, type),
@@ -66,29 +61,37 @@ export function testDecoders<A, O>(type: t.Type<A, O>) {
   );
 }
 
-const testDecoder = t.interface({ validationStatus: t.string });
-type testDecodertype = t.TypeOf<typeof testDecoder>;
+/* Patch IBAN */
+const PatchIban = t.interface({ validationStatus: t.string });
+type PatchIban = t.TypeOf<typeof PatchIban>;
 type finalType =
-  | r.IResponseType<200, testDecodertype>
+  | r.IResponseType<200, PatchIban>
   | r.IResponseType<401, undefined>
   | r.IResponseType<500, undefined>;
-const doIban = (url: string, fetchApi: typeof fetch) =>
-  new Promise<t.Validation<finalType>>((res, rej) => {
-    fetchApi(`${url}/bonus/bpd/io/citizen`, { method: "patch" })
+const updatePaymentMethodT = (
+  options: Options,
+  iban: Iban
+): (() => Promise<t.Validation<finalType>>) => () =>
+  new Promise((res, rej) => {
+    options
+      .fetchApi(`${options.baseUrl}/bonus/bpd/io/citizen`, { method: "patch" })
       .then(response => {
-        testDecoders(testDecoder)(response)
-          .then(r => res(r))
-          .catch(rej);
+        patchIbanDecoders(PatchIban)(response).then(res).catch(rej);
       })
       .catch(rej);
   });
+
+type Options = {
+  baseUrl: string;
+  fetchApi: typeof fetch;
+};
 
 export function BackendBpdClient(
   baseUrl: string,
   token: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
-  const options = {
+  const options: Options = {
     baseUrl,
     fetchApi
   };
@@ -96,16 +99,14 @@ export function BackendBpdClient(
   // withBearerToken injects the field 'Bearer' with value token into the parameter P
   // of the f function
   type extendHeaders = {
-    readonly apiKeyHeader: string;
-    readonly Authorization: string;
-    readonly Bearer: string;
-    ["Ocp-Apim-Subscription-Key"]: string;
+    readonly apiKeyHeader?: string;
+    readonly Authorization?: string;
+    readonly Bearer?: string;
+    ["Ocp-Apim-Subscription-Key"]?: string;
   };
   const withBearerToken = <P extends extendHeaders, R>(
     f: (p: P) => Promise<R>
-  ) => async (
-    po: Omit<P, "Bearer" | "Ocp-Apim-Subscription-Key">
-  ): Promise<R> => {
+  ) => async (po: P): Promise<R> => {
     const params = Object.assign(
       {
         "Ocp-Apim-Subscription-Key": "dummy_key",
@@ -115,20 +116,12 @@ export function BackendBpdClient(
     ) as P;
     return f(params);
   };
-  doIban(baseUrl, fetchApi)
-    .then(r => {
-      if (r && r.isRight() && r.value.status === 200) {
-        const aa = r.value.value.validationStatus;
-        RTron.log(aa);
-      }
-    })
-    .catch();
 
   return {
     find: withBearerToken(createFetchRequestForApi(findT, options)),
     enrollCitizenIO: withBearerToken(
       createFetchRequestForApi(enrollCitizenIOT, options)
     ),
-    updatePaymentMethod: ""
+    updatePaymentMethod: (iban: Iban) => updatePaymentMethodT(options, iban)
   };
 }
