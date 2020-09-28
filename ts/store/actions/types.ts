@@ -9,7 +9,7 @@ import {
 } from "redux";
 
 import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
-import { BdpActions } from "../../features/bonus/bpd/store/actions";
+import { BpdActions } from "../../features/bonus/bpd/store/actions";
 import { GlobalState } from "../reducers/types";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
@@ -76,7 +76,7 @@ export type Action =
   | UserDataProcessingActions
   | ProfileEmailValidationAction
   | BonusActions
-  | BdpActions;
+  | BpdActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
