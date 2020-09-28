@@ -297,7 +297,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     yield fork(watchBonusSaga, sessionToken);
   }
   if (bpdEnabled) {
-    // Start watching for actions about bonus bdp
+    // Start watching for actions about bonus bpd
     yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
   }
 
