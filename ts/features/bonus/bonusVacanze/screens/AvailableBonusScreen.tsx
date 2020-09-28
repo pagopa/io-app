@@ -17,6 +17,7 @@ import BaseScreenComponent, {
 } from "../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { bpdEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../store/actions/navigationHistory";
@@ -24,13 +25,14 @@ import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
+import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
 import { AvailableBonusItem } from "../components/AvailableBonusItem";
 import { bonusVacanzeStyle } from "../components/Styles";
 import { availableBonuses } from "../data/availableBonuses";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
 import { availableBonusTypesSelector } from "../store/reducers/availableBonusesTypes";
-import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
+import { ID_BONUS_VACANZE_TYPE, ID_BPD_TYPE } from "../utils/bonus";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -70,6 +72,10 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     >([
       [ID_BONUS_VACANZE_TYPE, bonus => this.props.navigateToBonusRequest(bonus)]
     ]);
+
+    if (bpdEnabled) {
+      handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
+    }
 
     return (
       <AvailableBonusItem
@@ -155,7 +161,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToBonusRequest: (bonusItem: BonusAvailable) => {
     dispatch(navigateToBonusRequestInformation({ bonusItem }));
     dispatch(navigationHistoryPop(1));
-  }
+  },
+  startBpdOnboarding: () => dispatch(bpdOnboardingStart())
 });
 
 export default connect(
