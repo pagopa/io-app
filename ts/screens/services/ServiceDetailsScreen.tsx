@@ -17,7 +17,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import iOSStoreBadge from "../../../img/badges/app-store-badge.png";
 import playStoreBadge from "../../../img/badges/google-play-badge.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import MessageNestedCTABar from "../../components/messages/MessageNestedCTABar";
+import NestedCTABar from "../../components/cta/NestedCTABar";
 import OrganizationHeader from "../../components/OrganizationHeader";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -701,7 +701,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
         </Content>
         {maybeCTA.isSome() && (
           <View footer={true} style={styles.flexRow}>
-            <MessageNestedCTABar
+            <NestedCTABar
               ctas={maybeCTA.value}
               xsmall={false}
               dispatch={this.props.dispatch}
