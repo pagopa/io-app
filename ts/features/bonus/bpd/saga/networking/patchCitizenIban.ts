@@ -23,6 +23,12 @@ const ibanStatusMapping: Map<string, IbanStatus> = new Map<string, IbanStatus>([
   ["NOT_VALID", IbanStatus.NOT_VALID]
 ]);
 
+const successCases = new Set<IbanStatus>([
+  IbanStatus.OK,
+  IbanStatus.CANT_VERIFY,
+  IbanStatus.NOT_OWNED
+]);
+
 const transformIbanOutCome = (
   ibanOutcome: string,
   iban: Iban
@@ -30,9 +36,9 @@ const transformIbanOutCome = (
   const status: IbanStatus = fromNullable(
     ibanStatusMapping.get(ibanOutcome)
   ).getOrElse(IbanStatus.UNKNOWN);
-  // don't store iban if the outcome is NOT_VALID
+  // don't store iban if the outcome is a failure
   return {
-    payoffInstr: status === IbanStatus.NOT_VALID ? undefined : iban,
+    payoffInstr: successCases.has(status) ? iban : undefined,
     status
   };
 };
