@@ -1,22 +1,11 @@
 import { Button, NativeBase } from "native-base";
 import * as React from "react";
 import customVariables from "../theme/variables";
+import { calculateSlop } from "./core/accessibility";
 
 const defaultActiveOpacity = 1.0;
 
 type Props = NativeBase.Button & React.Props<Button>;
-
-/**
- *
- * @param height
- */
-const calculateSlop = (height: number): number => {
-  const additionalArea = customVariables.minTouchableHeight - height;
-  if (additionalArea <= 0) {
-    return 0;
-  }
-  return Math.ceil(additionalArea / 2);
-};
 
 const smallSlop = calculateSlop(customVariables.btnSmallHeight);
 const xsmallSlop = calculateSlop(customVariables.btnXSmallHeight);
