@@ -29,19 +29,20 @@ const successCases = new Set<IbanStatus>([
   IbanStatus.NOT_OWNED
 ]);
 
+// convert the validation code coming from response to an internal logic status
+const fromValidationToStatus = (ibanOutcome: string): IbanStatus =>
+  fromNullable(ibanStatusMapping.get(ibanOutcome)).getOrElse(
+    IbanStatus.UNKNOWN
+  );
+
 const transformIbanOutCome = (
-  ibanOutcome: string,
+  ibanStatus: IbanStatus,
   iban: Iban
-): IbanUpsertResult => {
-  const status: IbanStatus = fromNullable(
-    ibanStatusMapping.get(ibanOutcome)
-  ).getOrElse(IbanStatus.UNKNOWN);
+): IbanUpsertResult => ({
   // don't store iban if the outcome is a failure
-  return {
-    payoffInstr: successCases.has(status) ? iban : undefined,
-    status
-  };
-};
+  payoffInstr: successCases.has(ibanStatus) ? iban : undefined,
+  status: ibanStatus
+});
 
 /**
  * upsert the citizen iban
@@ -58,11 +59,23 @@ export function* patchCitizenIban(
       typeof updatePaymentMethod
     >> = yield call(updatePaymentMethod(iban));
     if (updatePaymentMethodResult.isRight()) {
-      if (updatePaymentMethodResult.value.status === 200) {
+      const statusCode = updatePaymentMethodResult.value.status;
+      if (statusCode === 200 && updatePaymentMethodResult.value.value) {
         const validationStatus =
-          updatePaymentMethodResult.value.value?.validationStatus;
+          updatePaymentMethodResult.value.value.validationStatus;
         yield put(
-          bpdUpsertIban.success(transformIbanOutCome(validationStatus, iban))
+          bpdUpsertIban.success(
+            transformIbanOutCome(fromValidationToStatus(validationStatus), iban)
+          )
+        );
+        return;
+      }
+      // iban not valid
+      else if (statusCode === 400) {
+        yield put(
+          bpdUpsertIban.success(
+            transformIbanOutCome(IbanStatus.NOT_VALID, iban)
+          )
         );
         return;
       }
