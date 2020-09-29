@@ -16,10 +16,10 @@ import {
   handleCtaAction
 } from "../../../utils/messages";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
-import { MessageNestedCtaButton } from "../../../components/messages/MessageNestedCtaButton";
 import { CTA } from "../../../types/MessageCTA";
 import { maybeNotNullyString } from "../../../utils/strings";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
 type Props = ReturnType<typeof mapDispatchToProps> & ReduxProps;
 
 const styles = StyleSheet.create({
@@ -88,7 +88,7 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
 
           {maybeCTA.isSome() && (
             <View style={styles.row}>
-              <MessageNestedCtaButton
+              <ExtractedCtaButton
                 cta={maybeCTA.value.cta_1}
                 xsmall={true}
                 onCTAPress={props.handleCTAPress}
@@ -99,7 +99,7 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
             <>
               <View spacer={true} />
               <View style={styles.row}>
-                <MessageNestedCtaButton
+                <ExtractedCtaButton
                   cta={maybeCTA.value.cta_2}
                   xsmall={true}
                   onCTAPress={props.handleCTAPress}
