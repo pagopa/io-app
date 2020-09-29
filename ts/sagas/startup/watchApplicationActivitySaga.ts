@@ -10,7 +10,6 @@ import {
 } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { backgroundActivityTimeout } from "../../config";
-import ROUTES from "../../navigation/routes";
 import {
   applicationChangeState,
   ApplicationState
