@@ -15,7 +15,9 @@ export function* executeAndDispatch(
   try {
     const enrollCitizenIOResult: SagaCallReturnType<typeof remoteCall> = yield call(
       remoteCall,
-      {}
+      // due to avoid required headers coming from code autogenerate
+      // (note the required header will be injected automatically)
+      {} as any
     );
     if (enrollCitizenIOResult.isRight()) {
       if (enrollCitizenIOResult.value.status === 200) {
