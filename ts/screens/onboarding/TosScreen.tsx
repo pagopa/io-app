@@ -9,11 +9,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Image, StyleSheet } from "react-native";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
-import {
-  NavigationScreenProp,
-  NavigationState,
-  SafeAreaView
-} from "react-navigation";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -47,7 +43,6 @@ type State = {
 };
 
 import brokenLinkImage from "../../../img/broken-link.png";
-import ScreenContent from "../../components/screens/ScreenContent";
 
 const styles = StyleSheet.create({
   alert: {
