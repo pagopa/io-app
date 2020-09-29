@@ -652,8 +652,8 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
-    successful: Card successfully deleted
-    failed: The card could not be deleted
+    successful: Card successfully removed
+    failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
   newPaymentMethod:
     add: add
@@ -890,7 +890,7 @@ cardComponent:
   setFavourite: Set as favourite
   unsetFavourite: Remove from favourites
   deleteTitle: Do you want to proceed?
-  deleteMsg: This will delete the payment method
+  deleteMsg: This payment method will be removed
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
