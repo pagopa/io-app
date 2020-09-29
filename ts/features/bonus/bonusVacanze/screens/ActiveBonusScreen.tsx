@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     backgroundColor: variables.brandHighLighter
   },
-  statuTextRevoked: {
+  statusTextRevoked: {
     fontSize: 12,
     lineHeight: 18,
     color: variables.brandDarkGray
