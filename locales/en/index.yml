@@ -1418,6 +1418,7 @@ bonus:
     code: Code
     uniqueCode: Unique code
     requestedAt: Requested on
+    consumedAt: Redeemed on
     advice: 'By tapping on "Request the Bonus Vacanze" you declare that you have read and understood the '
     status: Status
     name: Bonus Vacanze
