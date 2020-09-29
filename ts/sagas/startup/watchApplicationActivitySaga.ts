@@ -41,7 +41,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
     const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
     if (lastState !== "background" && newApplicationState === "background") {
       // Screens requiring identification when the app pass from background/inactive to active state
-      const whiteList: ReadonlyArray<string> = [ROUTES.WALLET_ADD_CARD];
+      const whiteList: ReadonlyArray<string> = [];
 
       const nav: ReturnType<typeof navSelector> = yield select(navSelector);
       const currentRoute = getCurrentRouteName(nav);
