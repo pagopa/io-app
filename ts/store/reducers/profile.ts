@@ -18,6 +18,8 @@ import {
   resetProfileState
 } from "../actions/profile";
 import { Action } from "../actions/types";
+import { PreferredLanguageEnum } from "../../../definitions/backend/PreferredLanguage";
+import { preferredLanguageFallback } from "../../utils/locale";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<InitializedProfile, Error>;
@@ -33,6 +35,21 @@ export const isEmailEnabledSelector = createSelector(profileSelector, profile =>
   pot.getOrElse(
     pot.map(profile, p => p.is_email_enabled),
     false
+  )
+);
+
+export const profilePreferredLanguageSelector = createSelector<
+  GlobalState,
+  ProfileState,
+  PreferredLanguageEnum
+>(profileSelector, profile =>
+  pot.getOrElse(
+    pot.map(profile, p =>
+      fromNullable(p.preferred_languages)
+        .mapNullable(pl => (pl.length > 0 ? pl[0] : undefined))
+        .getOrElse(preferredLanguageFallback)
+    ),
+    preferredLanguageFallback
   )
 );
 

@@ -23,13 +23,18 @@ export function getLocalePrimary(
 // return the current locale set in the device (this could be different from the app supported languages)
 export const getCurrentLocale = (): Locales => I18n.currentLocale();
 
+const localeFallback: Locales = "en";
+export const preferredLanguageFallback: PreferredLanguageEnum =
+  PreferredLanguageEnum.en_GB;
 /**
  * return the primary component of the current locale (i.e: it-US -> it)
  * if the current locale (the language set in the device) is not a language supported by the app
  * the fallback will returned
  * @param fallback
  */
-export const getLocalePrimaryWithFallback = (fallback: Locales = "en") =>
+export const getLocalePrimaryWithFallback = (
+  fallback: Locales = localeFallback
+) =>
   getLocalePrimary(getCurrentLocale())
     .filter(l => translations.some(t => t.toLowerCase() === l.toLowerCase()))
     .map(s => s as Locales)
@@ -43,7 +48,7 @@ const localeToPreferredLanguageMapping = new Map<
   ["en", PreferredLanguageEnum.en_GB]
 ]);
 
-const preferredLanguageMappingToLocale = new Map<
+export const preferredLanguageMappingToLocale = new Map<
   PreferredLanguageEnum,
   Locales
 >(Array.from(localeToPreferredLanguageMapping).map(item => [item[1], item[0]]));
@@ -53,7 +58,7 @@ export const fromLocaleToPreferredLanguage = (
   locale: Locales
 ): PreferredLanguageEnum =>
   fromNullable(localeToPreferredLanguageMapping.get(locale)).getOrElse(
-    PreferredLanguageEnum.en_GB
+    preferredLanguageFallback
   );
 
 // from a given preferredLanguage return the relative Locales (fallback is en)
@@ -62,4 +67,4 @@ export const fromPreferredLanguageToLocale = (
 ): Locales =>
   fromNullable(
     preferredLanguageMappingToLocale.get(preferredLanguage)
-  ).getOrElse("en");
+  ).getOrElse(localeFallback);

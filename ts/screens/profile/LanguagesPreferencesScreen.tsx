@@ -12,19 +12,23 @@ import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import I18n, { availableTransations } from "../../i18n";
+import I18n, { availableTranslations } from "../../i18n";
 import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPreferences";
 import { Dispatch } from "../../store/actions/types";
-import { preferredLanguageSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import {
   fromLocaleToPreferredLanguage,
-  getLocalePrimaryWithFallback
+  getLocalePrimaryWithFallback,
+  preferredLanguageMappingToLocale
 } from "../../utils/locale";
 import { profileUpsert } from "../../store/actions/profile";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import { profileSelector } from "../../store/reducers/profile";
+import {
+  profilePreferredLanguageSelector,
+  profileSelector
+} from "../../store/reducers/profile";
 import { showToast } from "../../utils/showToast";
+import { PreferredLanguageEnum } from "../../../definitions/backend/PreferredLanguage";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
@@ -38,7 +42,15 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const iconSize = 12;
-
+const deLocale = "de" as Locales;
+const languagesAvailable = [...availableTranslations, deLocale];
+export const preferredLanguageMappingToLocaleExtended = new Map(
+  preferredLanguageMappingToLocale
+);
+preferredLanguageMappingToLocaleExtended.set(
+  PreferredLanguageEnum.de_DE,
+  deLocale
+);
 /**
  * Allows the user to select one of the available Languages as preferred
  */
@@ -48,11 +60,12 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
     this.state = { isLoading: false };
   }
 
-  private isAlreadyPreferred = (language: Locales) =>
-    // if the preferred Lanuage is not set, we check if language is the same in use
-    this.props.preferredLanguage
-      .map(l => l === language)
-      .getOrElse(getLocalePrimaryWithFallback() === language);
+  private isAlreadyPreferred = (language: Locales): boolean =>
+    fromNullable(
+      preferredLanguageMappingToLocaleExtended.get(this.props.preferredLanguage)
+    ).getOrElse(getLocalePrimaryWithFallback()) === language;
+
+  // if the preferred Language is not set, we check if language is the same in use
 
   private onLanguageSelected = (language: Locales) => {
     if (!this.isAlreadyPreferred(language)) {
@@ -127,7 +140,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
           )}
         >
           <List withContentLateralPadding={true}>
-            {availableTransations.map((lang, index) => {
+            {languagesAvailable.map((lang, index) => {
               const isSelectedLanguage = this.isAlreadyPreferred(lang);
               const languageTitle = I18n.t(`locales.${lang}`, {
                 defaultValue: lang
@@ -159,7 +172,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  preferredLanguage: preferredLanguageSelector(state),
+  preferredLanguage: profilePreferredLanguageSelector(state),
   profile: profileSelector(state)
 });
 
@@ -170,12 +183,17 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         preferredLanguage: language
       })
     ),
-  upsertProfile: (language: Locales) =>
+  upsertProfile: (language: Locales) => {
+    const preferredLanguage =
+      language === deLocale
+        ? PreferredLanguageEnum.de_DE
+        : fromLocaleToPreferredLanguage(language);
     dispatch(
       profileUpsert.request({
-        preferred_languages: [fromLocaleToPreferredLanguage(language)]
+        preferred_languages: [preferredLanguage]
       })
-    )
+    );
+  }
 });
 
 export default connect(

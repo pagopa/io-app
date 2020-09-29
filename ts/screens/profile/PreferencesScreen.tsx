@@ -31,10 +31,7 @@ import {
   navigateToLanguagePreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import {
-  isCustomEmailChannelEnabledSelector,
-  preferredLanguageSelector
-} from "../../store/reducers/persistedPreferences";
+import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
 import {
   hasProfileEmailSelector,
   isEmailEnabledSelector,
@@ -42,6 +39,7 @@ import {
   isProfileEmailValidatedSelector,
   profileEmailSelector,
   profileMobilePhoneSelector,
+  profilePreferredLanguageSelector,
   profileSpidEmailSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
@@ -54,6 +52,7 @@ import {
   getLocalePrimary,
   getLocalePrimaryWithFallback
 } from "../../utils/locale";
+import { preferredLanguageMappingToLocaleExtended } from "./LanguagesPreferencesScreen";
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -172,9 +171,12 @@ class PreferencesScreen extends React.Component<Props, State> {
     const maybeSpidEmail = this.props.optionSpidEmail;
     const maybePhoneNumber = this.props.optionMobilePhone;
 
-    const language = this.props.preferredLanguage.fold(
-      translateLocale(getLocalePrimaryWithFallback()),
-      l => translateLocale(l)
+    const language = translateLocale(
+      fromNullable(
+        preferredLanguageMappingToLocaleExtended.get(
+          this.props.preferredLanguage
+        )
+      ).getOrElse(getLocalePrimaryWithFallback())
     );
 
     const showModal = (title: TranslationKeys, body: TranslationKeys) => {
@@ -290,7 +292,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 
 function mapStateToProps(state: GlobalState) {
   return {
-    preferredLanguage: preferredLanguageSelector(state),
+    preferredLanguage: profilePreferredLanguageSelector(state),
     languages: fromNullable(state.preferences.languages),
     optionEmail: profileEmailSelector(state),
     optionSpidEmail: profileSpidEmailSelector(state),
