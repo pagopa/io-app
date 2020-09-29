@@ -47,6 +47,7 @@ type State = {
 };
 
 import brokenLinkImage from "../../../img/broken-link.png";
+import ScreenContent from "../../components/screens/ScreenContent";
 
 const styles = StyleSheet.create({
   alert: {
@@ -193,7 +194,7 @@ class TosScreen extends React.PureComponent<Props, State> {
             : I18n.t("onboarding.tos.headerTitle")
         }
       >
-        <SafeAreaView style={styles.webViewContainer}>
+        <View style={styles.webViewContainer}>
           {!this.props.hasAcceptedCurrentTos && (
             <View style={styles.alert}>
               <Text>
@@ -215,7 +216,7 @@ class TosScreen extends React.PureComponent<Props, State> {
               onAcceptTos={() => dispatch(tosAccepted(tosVersion))}
             />
           )}
-        </SafeAreaView>
+        </View>
       </BaseScreenComponent>
     ));
     return (
