@@ -149,11 +149,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
     backgroundColor: variables.brandHighLighter
   },
-  statusTextRevoked: {
-    fontSize: 12,
-    lineHeight: 18,
-    color: variables.brandDarkGray
-  },
   screenshotTime: {
     textAlign: "center",
     color: variables.brandPrimary,
