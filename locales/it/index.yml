@@ -1450,6 +1450,7 @@ bonus:
     code: Codice
     uniqueCode: Codice univoco
     requestedAt: Richiesto il
+    consumedAt: Utilizzato il
     advice: "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso la "
     status: Stato
     name: Bonus Vacanze
