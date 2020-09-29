@@ -673,8 +673,8 @@ wallet:
       message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   delete:
-    successful: Carta cancellata correttamente
-    failed: Impossibile cancellare la carta
+    successful: Carta rimossa correttamente
+    failed: Impossibile rimuovere la carta
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
   newPaymentMethod:
     add: aggiungi
@@ -919,7 +919,7 @@ cardComponent:
   setFavourite: Imposta come preferita
   unsetFavourite: Rimuovi dai preferiti
   deleteTitle: Procedere con l'operazione?
-  deleteMsg: Questo cancellerà il metodo di pagamento
+  deleteMsg: Questo metodo di pagamento verrà rimosso
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
@@ -1568,6 +1568,20 @@ bonus:
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
+  bpd:
+    title: Cashback Pagamenti Digitali
+    onboarding:
+      declaration:
+        header: Per poter attivare il cashback devi dichiarare
+        conditions:
+          age: di essere maggiorenne
+          resident: di risiedere in Italia
+          personal_use:
+            normal: "che userai gli strumenti di pagamento su cui è attivo il cashback solo per "
+            bold: acquisti effettuati fuori dall'esercizio di attività di Impresa, Arte o Professione
+        disclaimer:
+          normal: "Questa autodichirazione è resa ai sensi del "
+          link: dpr 28 dicembre 2000 n. 445 art 46 e 47
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
