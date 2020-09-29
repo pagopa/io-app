@@ -27,3 +27,16 @@ export const confirmButtonProps = (
   title: title ? title : I18n.t("global.buttons.confirm"),
   onPress
 });
+
+/**
+ * A common configuration for all the buttons that represent a confirm/active action (disabled)
+ * @param onPress
+ * @param title
+ */
+export const disablePrimaryButtonProps = (
+  title?: string
+): BlockButtonProps => ({
+  primary: true,
+  disabled: true,
+  title: title ? title : I18n.t("global.buttons.confirm")
+});

@@ -1,18 +1,18 @@
 import { View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { Body } from "../../components/core/typography/Body";
-import { H1 } from "../../components/core/typography/H1";
-import { H2 } from "../../components/core/typography/H2";
-import { H3 } from "../../components/core/typography/H3";
-import { H4 } from "../../components/core/typography/H4";
-import { H5 } from "../../components/core/typography/H5";
-import { Label } from "../../components/core/typography/Label";
-import { LabelSmall } from "../../components/core/typography/LabelSmall";
-import { Link } from "../../components/core/typography/Link";
-import { Monospace } from "../../components/core/typography/Monospace";
-import { IOColors } from "../../components/core/variables/IOColors";
-import { ShowroomSection } from "./ShowroomSection";
+import { Body } from "../../../components/core/typography/Body";
+import { H1 } from "../../../components/core/typography/H1";
+import { H2 } from "../../../components/core/typography/H2";
+import { H3 } from "../../../components/core/typography/H3";
+import { H4 } from "../../../components/core/typography/H4";
+import { H5 } from "../../../components/core/typography/H5";
+import { Label } from "../../../components/core/typography/Label";
+import { LabelSmall } from "../../../components/core/typography/LabelSmall";
+import { Link } from "../../../components/core/typography/Link";
+import { Monospace } from "../../../components/core/typography/Monospace";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { ShowroomSection } from "../ShowroomSection";
 
 const styles = StyleSheet.create({
   alignCenter: {
@@ -25,22 +25,22 @@ const styles = StyleSheet.create({
 });
 
 export const TypographyShowroom = () => (
-    <ShowroomSection title={"Typography"}>
-      <H1Row />
-      <H2Row />
-      <H3Row />
-      <H4Row />
-      <H5Row />
-      <Body>Body</Body>
-      <View spacer={true} extralarge={true} />
-      <LabelSmallRow />
-      <LabelRow />
-      <Link onPress={() => Alert.alert("onPress link!")}>Link</Link>
-      <View spacer={true} extralarge={true} />
-      <Monospace>MonoSpace</Monospace>
-      <View spacer={true} extralarge={true} />
-    </ShowroomSection>
-  );
+  <ShowroomSection title={"Typography"}>
+    <H1Row />
+    <H2Row />
+    <H3Row />
+    <H4Row />
+    <H5Row />
+    <Body>Body</Body>
+    <View spacer={true} extralarge={true} />
+    <LabelSmallRow />
+    <LabelRow />
+    <Link onPress={() => Alert.alert("onPress link!")}>Link</Link>
+    <View spacer={true} extralarge={true} />
+    <Monospace>MonoSpace</Monospace>
+    <View spacer={true} extralarge={true} />
+  </ShowroomSection>
+);
 
 export const H1Row = () => (
   <>
