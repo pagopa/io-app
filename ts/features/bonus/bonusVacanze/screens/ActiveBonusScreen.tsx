@@ -32,7 +32,6 @@ import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
-import customVariables from "../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../utils/dates";
 import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
 import {
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
   statusBadgeRevoked: {
     height: 18,
     marginTop: 2,
-    backgroundColor: variables.textColor
+    backgroundColor: variables.brandHighLighter
   },
   screenshotTime: {
     textAlign: "center",
@@ -157,7 +156,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 12,
-    lineHeight: 16
+    lineHeight: 18
   },
   colorDarkest: {
     color: variables.brandDarkestGray
@@ -510,7 +509,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               true
             )
           }),
-          customVariables.brandSuccess
+          variables.brandSuccess
         );
       case BonusActivationStatusEnum.FAILED:
         return renderInformationBlock(
@@ -615,24 +614,36 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                           : styles.statusBadgeRevoked
                       }
                     >
-                      <Text style={styles.statusText} semibold={true}>
+                      <Text
+                        style={styles.statusText}
+                        semibold={true}
+                        dark={true}
+                      >
                         {maybeStatusDescription.value}
                       </Text>
                     </Badge>
                   </View>
                 )}
                 <View spacer={true} />
+                {!isBonusActive(bonus) && bonus.redeemed_at && (
+                  <>
+                    <View style={styles.rowBlock}>
+                      <Text style={[styles.colorGrey, styles.commonLabel]}>
+                        {I18n.t("bonus.bonusVacanze.consumedAt")}
+                      </Text>
+                      <Text style={[styles.colorGrey, styles.commonLabel]}>
+                        {formatDateAsLocal(bonus.redeemed_at, true)}
+                      </Text>
+                    </View>
+                    <View spacer={true} small={true} />
+                  </>
+                )}
                 <View style={styles.rowBlock}>
                   <Text style={[styles.colorGrey, styles.commonLabel]}>
                     {I18n.t("bonus.bonusVacanze.requestedAt")}
                   </Text>
                   <Text style={[styles.colorGrey, styles.commonLabel]}>
-                    {isBonusActive(bonus)
-                      ? formatDateAsLocal(bonus.created_at, true)
-                      : fromNullable(bonus.redeemed_at).fold(
-                          formatDateAsLocal(bonus.created_at, true),
-                          d => formatDateAsLocal(d, true)
-                        )}
+                    {formatDateAsLocal(bonus.created_at, true)}
                   </Text>
                 </View>
                 {!screenShotState.isPrintable && maybeBonusTos.isSome() && (
