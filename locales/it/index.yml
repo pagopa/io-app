@@ -673,8 +673,8 @@ wallet:
       message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   delete:
-    successful: Carta cancellata correttamente
-    failed: Impossibile cancellare la carta
+    successful: Carta rimossa correttamente
+    failed: Impossibile rimuovere la carta
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
   newPaymentMethod:
     add: aggiungi
@@ -919,7 +919,7 @@ cardComponent:
   setFavourite: Imposta come preferita
   unsetFavourite: Rimuovi dai preferiti
   deleteTitle: Procedere con l'operazione?
-  deleteMsg: Questo cancellerà il metodo di pagamento
+  deleteMsg: Questo metodo di pagamento verrà rimosso
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
