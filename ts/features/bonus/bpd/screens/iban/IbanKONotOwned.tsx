@@ -9,7 +9,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
  * This is just a warning, the user can continue and iban has been registered on the bpd remote system.
  * @constructor
  */
-export const IbanKoNotOwned: React.FunctionComponent = () => <View />;
+const IbanKoNotOwned: React.FunctionComponent = () => <View />;
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 

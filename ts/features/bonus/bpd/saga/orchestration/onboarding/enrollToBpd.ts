@@ -10,7 +10,7 @@ import { getAsyncResult } from "../../../../../../utils/saga";
 import {
   navigateToBpdOnboardingEnrollPaymentMethod,
   navigateToBpdOnboardingLoadActivate
-} from "../../../navigation/action";
+} from "../../../navigation/action/onboarding";
 import BPD_ROUTES from "../../../navigation/routes";
 import {
   bpdEnrollUserToProgram,
