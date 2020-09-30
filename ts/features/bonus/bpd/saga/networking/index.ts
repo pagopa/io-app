@@ -21,7 +21,21 @@ export function* executeAndDispatch(
     );
     if (enrollCitizenIOResult.isRight()) {
       if (enrollCitizenIOResult.value.status === 200) {
-        yield put(action.success(enrollCitizenIOResult.value.value));
+        const citizen = enrollCitizenIOResult.value.value;
+        yield put(
+          action.success({
+            enabled: citizen.enabled,
+            payoffInstr: citizen.payoffInstr
+          })
+        );
+        return;
+      } else if (enrollCitizenIOResult.value.status === 404) {
+        yield put(
+          action.success({
+            enabled: false,
+            payoffInstr: undefined
+          })
+        );
         return;
       }
       throw new Error(`response status ${enrollCitizenIOResult.value.status}`);
