@@ -18,6 +18,6 @@ export const bpdLoadActivationStatus = createAsyncAction(
   "BPD_LOAD_ACTIVATION_STATUS_REQUEST",
   "BPD_LOAD_ACTIVATION_STATUS_SUCCESS",
   "BPD_LOAD_ACTIVATION_STATUS_FAILURE"
-)<void, CitizenResource, Error>();
+)<void, BpdActivationPayload, Error>();
 
 export type BpdDetailsActions = ActionType<typeof bpdLoadActivationStatus>;
