@@ -3,6 +3,7 @@ import IbanInsertionScreen from "../screens/iban/IbanInsertionScreen";
 import IbanKOCannotVerify from "../screens/iban/IbanKOCannotVerify";
 import IbanKoNotOwned from "../screens/iban/IbanKONotOwned";
 import IbanKOWrong from "../screens/iban/IbanKOWrong";
+import IbanLoadingUpsert from "../screens/iban/IbanLoadingUpsert";
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
 import DeclarationScreen from "../screens/onboarding/declaration/DeclarationScreen";
 import { EnrollPaymentMethodsScreen } from "../screens/onboarding/EnrollPaymentMethodsScreen";
@@ -33,6 +34,9 @@ const BpdNavigator = createStackNavigator(
     },
     [BPD_ROUTES.IBAN.INSERTION]: {
       screen: IbanInsertionScreen
+    },
+    [BPD_ROUTES.IBAN.LOADING_UPSERT]: {
+      screen: IbanLoadingUpsert
     },
     [BPD_ROUTES.IBAN.KO_CANNOT_VERIFY]: {
       screen: IbanKOCannotVerify

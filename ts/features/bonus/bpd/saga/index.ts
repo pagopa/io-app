@@ -3,19 +3,18 @@ import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { apiUrlPrefix } from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
-import {
-  bpdLoadActivationStatus,
-  bpdUpsertIban
-} from "../store/actions/details";
+import { bpdLoadActivationStatus } from "../store/actions/details";
+import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
 import {
   bpdEnrollUserToProgram,
   bpdOnboardingAcceptDeclaration,
   bpdOnboardingStart
 } from "../store/actions/onboarding";
 import { getCitizen, putEnrollCitizen } from "./networking";
+import { patchCitizenIban } from "./networking/patchCitizenIban";
+import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
-import { patchCitizenIban } from "./networking/patchCitizenIban";
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
@@ -47,4 +46,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
 
   // The user accepts the declaration, enroll the user to the bpd program
   yield takeLatest(getType(bpdOnboardingAcceptDeclaration), handleBpdEnroll);
+
+  // The user start the insertion / modification of the IBAN associated with bpd program
+  yield takeLatest(bpdIbanInsertionStart, handleBpdIbanInsertion);
 }

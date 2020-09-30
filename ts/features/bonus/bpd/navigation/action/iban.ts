@@ -6,6 +6,11 @@ export const navigateToBpdIbanInsertion = () =>
     routeName: BPD_ROUTES.IBAN.INSERTION
   });
 
+export const navigateToBpdIbanLoadingUpsert = () =>
+  NavigationActions.navigate({
+    routeName: BPD_ROUTES.IBAN.LOADING_UPSERT
+  });
+
 export const navigateToBpdIbanKOCannotVerify = () =>
   NavigationActions.navigate({
     routeName: BPD_ROUTES.IBAN.KO_CANNOT_VERIFY
