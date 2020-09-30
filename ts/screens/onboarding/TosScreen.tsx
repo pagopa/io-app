@@ -7,7 +7,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Image, StyleSheet } from "react-native";
+import { Alert, Image, StyleSheet, SafeAreaView } from "react-native";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -189,7 +189,7 @@ class TosScreen extends React.PureComponent<Props, State> {
             : I18n.t("onboarding.tos.headerTitle")
         }
       >
-        <View style={styles.webViewContainer}>
+        <SafeAreaView style={styles.webViewContainer}>
           {!this.props.hasAcceptedCurrentTos && (
             <View style={styles.alert}>
               <Text>
@@ -211,7 +211,7 @@ class TosScreen extends React.PureComponent<Props, State> {
               onAcceptTos={() => dispatch(tosAccepted(tosVersion))}
             />
           )}
-        </View>
+        </SafeAreaView>
       </BaseScreenComponent>
     ));
     return (
