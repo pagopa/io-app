@@ -129,18 +129,6 @@ class PrivacyMainScreen extends React.Component<Props, State> {
     Alert.alert(confirmAlertTitle[choice], confirmAlertSubtitle[choice]);
   };
 
-  // Handle the tap on Download or Delete data.
-  // Check if the mail is validated before to send any backend request.
-  private handleDownloadOrDeletePress = (
-    choice: UserDataProcessingChoiceEnum
-  ): void => {
-    if (!this.props.isEmailValidated) {
-      Alert.alert(needValidatedEmailTitle, needValidatedEmailSubtitle);
-      return;
-    }
-    this.props.loadUserDataRequest(choice);
-  };
-
   public componentDidUpdate(prevProps: Props) {
     // If the new request submission fails, show an alert and hide the 'in progress' badge
     // if it is the get request (prev prop is pot.none), check if show the alert to submit the request
