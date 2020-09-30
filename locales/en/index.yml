@@ -652,8 +652,8 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
-    successful: Card successfully deleted
-    failed: The card could not be deleted
+    successful: Card successfully removed
+    failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
   newPaymentMethod:
     add: add
@@ -890,7 +890,7 @@ cardComponent:
   setFavourite: Set as favourite
   unsetFavourite: Remove from favourites
   deleteTitle: Do you want to proceed?
-  deleteMsg: This will delete the payment method
+  deleteMsg: This payment method will be removed
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
@@ -1418,6 +1418,7 @@ bonus:
     code: Code
     uniqueCode: Unique code
     requestedAt: Requested on
+    consumedAt: Redeemed on
     advice: 'By tapping on "Request the Bonus Vacanze" you declare that you have read and understood the '
     status: Status
     name: Bonus Vacanze
@@ -1535,6 +1536,22 @@ bonus:
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
+  bpd:
+    title: Cashback Digital Payments
+    onboarding:
+      loadingActivationStatus:
+        title: Loading activation status
+      declaration:
+        header: In order to activate the cashback you must declare
+        conditions:
+          age: to be of legal age
+          resident: to reside in Italy
+          personal_use:
+            normal: "that you will use the payment instruments on which the cashback is active only for "
+            bold: "purchases made outside the exercise of business, art or profession "
+        disclaimer:
+          normal: This self-declaration is made pursuant to
+          link: dpr 28 december 2000 n. 445 art 46 and 47
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

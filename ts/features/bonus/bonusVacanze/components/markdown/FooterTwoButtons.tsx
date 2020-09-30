@@ -2,7 +2,8 @@ import * as React from "react";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
-  confirmButtonProps
+  confirmButtonProps,
+  disablePrimaryButtonProps
 } from "../buttons/ButtonConfigurations";
 import { OnCancelProps } from "./FooterSingleButton";
 
@@ -11,7 +12,11 @@ type OnRightProps = {
   title: string;
 };
 
-type MyProps = OnCancelProps & OnRightProps;
+type OwnProps = {
+  rightDisabled?: boolean;
+};
+
+type MyProps = OnCancelProps & OnRightProps & OwnProps;
 
 /**
  * A preset for the screens of bonusVacanze that compose the code used in {@link FooterSingleButton}
@@ -21,6 +26,10 @@ export const FooterTwoButtons: React.FunctionComponent<MyProps> = props => (
   <FooterWithButtons
     type={"TwoButtonsInlineThird"}
     leftButton={cancelButtonProps(props.onCancel)}
-    rightButton={confirmButtonProps(props.onRight, props.title)}
+    rightButton={
+      props.rightDisabled ?? false
+        ? disablePrimaryButtonProps(props.title)
+        : confirmButtonProps(props.onRight, props.title)
+    }
   />
 );

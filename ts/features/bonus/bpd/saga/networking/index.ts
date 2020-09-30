@@ -15,11 +15,27 @@ export function* executeAndDispatch(
   try {
     const enrollCitizenIOResult: SagaCallReturnType<typeof remoteCall> = yield call(
       remoteCall,
-      {}
+      // due to avoid required headers coming from code autogenerate
+      // (note the required header will be injected automatically)
+      {} as any
     );
     if (enrollCitizenIOResult.isRight()) {
       if (enrollCitizenIOResult.value.status === 200) {
-        yield put(action.success(enrollCitizenIOResult.value.value));
+        const { enabled, payoffInstr } = enrollCitizenIOResult.value.value;
+        yield put(
+          action.success({
+            enabled,
+            payoffInstr
+          })
+        );
+        return;
+      } else if (enrollCitizenIOResult.value.status === 404) {
+        yield put(
+          action.success({
+            enabled: false,
+            payoffInstr: undefined
+          })
+        );
         return;
       }
       throw new Error(`response status ${enrollCitizenIOResult.value.status}`);
