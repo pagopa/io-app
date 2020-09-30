@@ -230,7 +230,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               )}
               onPress={() =>
                 this.setState({ requestProcess: true }, () =>
-                  this.handleDownloadOrDeletePress(
+                  this.props.loadUserDataRequest(
                     UserDataProcessingChoiceEnum.DELETE
                   )
                 )
