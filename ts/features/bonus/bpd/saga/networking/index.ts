@@ -21,11 +21,11 @@ export function* executeAndDispatch(
     );
     if (enrollCitizenIOResult.isRight()) {
       if (enrollCitizenIOResult.value.status === 200) {
-        const citizen = enrollCitizenIOResult.value.value;
+        const { enabled, payoffInstr } = enrollCitizenIOResult.value.value;
         yield put(
           action.success({
-            enabled: citizen.enabled,
-            payoffInstr: citizen.payoffInstr
+            enabled,
+            payoffInstr
           })
         );
         return;
