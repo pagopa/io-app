@@ -66,13 +66,6 @@ const confirmAlertSubtitle = {
   DELETE: I18n.t("profile.main.privacy.removeAccount.alert.confirmSubtitle")
 };
 
-const needValidatedEmailTitle = I18n.t(
-  "profile.alerts.emailNotValidated.title"
-);
-const needValidatedEmailSubtitle = I18n.t(
-  "profile.alerts.emailNotValidated.subtitle"
-);
-
 class PrivacyMainScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
