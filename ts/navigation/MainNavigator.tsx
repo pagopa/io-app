@@ -21,6 +21,7 @@ import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
 import WalletTabIcon from "../components/WalletTabIcon";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
+import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -88,6 +89,7 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
   ROUTES.WALLET_TRANSACTION_DETAILS,
   BONUSVACANZE_ROUTES.MAIN,
+  BPD_ROUTES.MAIN,
   ROUTES.MARKDOWN_PLAYGROUND,
   ROUTES.WEB_PLAYGROUND
 ];
