@@ -9,7 +9,7 @@ type AllowedColors = Extract<
   // tslint:disable-next-line:max-union-size
   "blue" | "bluegrey" | "red" | "white"
 >;
-type AllowedWeight = Extract<IOFontWeight, "Bold">;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
@@ -24,7 +24,8 @@ const fontSize = 14;
  * @param props`
  * @constructor
  */
-export const LabelSmall: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
+export const LabelSmall: React.FunctionComponent<OwnProps> = props =>
+  typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Bold",
     defaultColor: "blue",
