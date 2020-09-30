@@ -180,18 +180,17 @@ class PrivacyMainScreen extends React.Component<Props, State> {
 
   private canBeBadgeRendered = (
     choice: UserDataProcessingChoiceEnum
-  ): boolean => (
-      !pot.isError(this.props.userDataProcessing[choice]) &&
-      pot.getOrElse(
-        pot.map(
-          this.props.userDataProcessing[choice],
-          v =>
-            v !== undefined &&
-            v.status !== UserDataProcessingStatusEnum.CLOSED &&
-            v.status !== UserDataProcessingStatusEnum.ABORTED
-        ),
-        false
-      )
+  ): boolean =>
+    !pot.isError(this.props.userDataProcessing[choice]) &&
+    pot.getOrElse(
+      pot.map(
+        this.props.userDataProcessing[choice],
+        v =>
+          v !== undefined &&
+          v.status !== UserDataProcessingStatusEnum.CLOSED &&
+          v.status !== UserDataProcessingStatusEnum.ABORTED
+      ),
+      false
     );
 
   public render() {
@@ -250,7 +249,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               subTitle={I18n.t("profile.main.privacy.exportData.description")}
               onPress={() =>
                 this.setState({ requestProcess: true }, () =>
-                  this.handleDownloadOrDeletePress(
+                  this.props.loadUserDataRequest(
                     UserDataProcessingChoiceEnum.DOWNLOAD
                   )
                 )
