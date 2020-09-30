@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { abortBonusRequest } from "../../../bonusVacanze/components/alert/AbortBonusRequest";
 import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isError } from "../../model/RemoteValue";
@@ -22,11 +22,13 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 
 const LoadBpdActivationStatus: React.FunctionComponent<Props> = props => {
-  const loadingCaption = "Verifico lo stato di attivazione...";
+  const loadingCaption = I18n.t(
+    "bonus.bpd.onboarding.loadingActivationStatus.title"
+  );
 
   useHardwareBackButton(() => {
     if (!props.isLoading) {
-      abortBonusRequest(props.onAbort);
+      props.onAbort();
     }
     return true;
   });
@@ -35,7 +37,7 @@ const LoadBpdActivationStatus: React.FunctionComponent<Props> = props => {
     <LoadingErrorComponent
       {...props}
       loadingCaption={loadingCaption}
-      onAbort={() => abortBonusRequest(props.onAbort)}
+      onAbort={props.onAbort}
     />
   );
 };
