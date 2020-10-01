@@ -14,7 +14,7 @@ const screenBonusVacanzaWhiteList: ReadonlyArray<string> = [
   BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN
 ];
 
-export const screenWhiteList = bonusVacanzeEnabled
+export const screenBlackList = bonusVacanzeEnabled
   ? new Set([...defaultScreenWhiteList, ...screenBonusVacanzaWhiteList])
   : new Set(defaultScreenWhiteList);
 
@@ -25,5 +25,5 @@ export const screenWhiteList = bonusVacanzeEnabled
 export const isAllowedSnapshotCurrentScreen = createSelector(
   [plainNavigationCurrentRouteSelector, isDebugModeEnabledSelector],
   (currentRoute, debugEnabled) =>
-    debugEnabled ? true : screenWhiteList.has(currentRoute)
+    debugEnabled ? true : !screenBlackList.has(currentRoute)
 );
