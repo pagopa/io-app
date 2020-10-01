@@ -3,7 +3,6 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
-import { paymentDeletePayment } from "../../../../../store/actions/wallet/payment";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { navigateToBpdIbanInsertion } from "../../navigation/action/iban";
 import { navigateToBpdOnboardingEnrollPaymentMethod } from "../../navigation/action/onboarding";
@@ -22,7 +21,7 @@ export const chooseContinueAction = (isOnboarding: boolean) =>
     : NavigationActions.back;
 
 export const isMainScreen = (screenName: string) =>
-  screenName === BPD_ROUTES.IBAN.INSERTION;
+  screenName === BPD_ROUTES.IBAN;
 
 function* ensureMainScreen() {
   const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
@@ -43,7 +42,7 @@ export function* bpdIbanInsertionWorker() {
   // wait for the user iban insertion
 
   const nextAction: ActionType<
-    typeof paymentDeletePayment.success | typeof paymentDeletePayment.failure
+    typeof bpdIbanInsertionCancel | typeof bpdIbanInsertionContinue
   > = yield take([
     getType(bpdIbanInsertionCancel),
     getType(bpdIbanInsertionContinue)
