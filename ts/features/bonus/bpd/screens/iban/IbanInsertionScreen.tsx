@@ -2,19 +2,19 @@ import * as React from "react";
 import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Iban } from "../../../../../../../definitions/backend/Iban";
-import { H1 } from "../../../../../../components/core/typography/H1";
-import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../../../i18n";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import { Iban } from "../../../../../../definitions/backend/Iban";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../i18n";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 import {
   bpdIbanInsertionCancel,
   bpdIbanInsertionContinue,
   bpdUpsertIban
-} from "../../../store/actions/iban";
-import { bpdUpsertIbanSelector } from "../../../store/reducers/details/activation";
+} from "../../store/actions/iban";
+import { bpdUpsertIbanSelector } from "../../store/reducers/details/activation";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
