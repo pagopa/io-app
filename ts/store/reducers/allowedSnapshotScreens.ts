@@ -5,18 +5,15 @@ import ROUTES from "../../navigation/routes";
 import { isDebugModeEnabledSelector } from "./debug";
 import { plainNavigationCurrentRouteSelector } from "./navigation";
 
-const defaultScreenWhiteList: ReadonlyArray<string> = [
-  ROUTES.WALLET_HOME,
-  ROUTES.WALLET_TRANSACTION_DETAILS
-];
+const defaultScreenBlackList: ReadonlyArray<string> = [ROUTES.WALLET_ADD_CARD];
 
 const screenBonusVacanzaWhiteList: ReadonlyArray<string> = [
   BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN
 ];
 
 export const screenBlackList = bonusVacanzeEnabled
-  ? new Set([...defaultScreenWhiteList, ...screenBonusVacanzaWhiteList])
-  : new Set(defaultScreenWhiteList);
+  ? new Set([...defaultScreenBlackList, ...screenBonusVacanzaWhiteList])
+  : new Set(defaultScreenBlackList);
 
 /**
  * Return {true} if the current screen can be snapshotted (android only).
