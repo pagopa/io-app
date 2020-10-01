@@ -27,9 +27,15 @@ import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { logoutRequest } from "../../store/actions/authentication";
+import {
+  logoutRequest,
+  sessionExpired
+} from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
-import { preferencesPagoPaTestEnvironmentSetEnabled } from "../../store/actions/persistedPreferences";
+import {
+  preferencesExperimentalFeaturesSetEnabled,
+  preferencesPagoPaTestEnvironmentSetEnabled
+} from "../../store/actions/persistedPreferences";
 import { updatePin } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -299,7 +305,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
   // eslint-disable-next-line
   public render() {
-    const { navigation, backendInfo } = this.props;
+    const {
+      navigation,
+      backendInfo,
+      sessionToken,
+      walletToken,
+      notificationToken,
+      notificationId
+    } = this.props;
 
     const showInformationModal = (
       title: TranslationKeys,
@@ -427,11 +440,49 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                       false
                     )}
 
+                  {isDevEnv &&
+                    sessionToken &&
+                    this.debugListItem(
+                      `Session Token ${sessionToken}`,
+                      () => clipboardSetStringWithFeedback(sessionToken),
+                      false
+                    )}
+
+                  {isDevEnv &&
+                    walletToken &&
+                    this.debugListItem(
+                      `Wallet token ${walletToken}`,
+                      () => clipboardSetStringWithFeedback(walletToken),
+                      false
+                    )}
+
+                  {isDevEnv &&
+                    this.debugListItem(
+                      `Notification ID ${notificationId.slice(0, 6)}`,
+                      () => clipboardSetStringWithFeedback(notificationId),
+                      false
+                    )}
+
+                  {isDevEnv &&
+                    notificationToken &&
+                    this.debugListItem(
+                      `Notification token ${notificationToken.slice(0, 6)}`,
+                      () => clipboardSetStringWithFeedback(notificationToken),
+                      false
+                    )}
+
                   {this.debugListItem(
                     I18n.t("profile.main.cache.clear"),
                     this.handleClearCachePress,
                     true
                   )}
+
+                  {isDevEnv &&
+                    this.debugListItem(
+                      I18n.t("profile.main.forgetCurrentSession"),
+                      this.props.dispatchSessionExpired,
+                      true
+                    )}
                 </React.Fragment>
               )}
             </React.Fragment>
@@ -495,7 +546,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
     dispatch(
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
-    )
+    ),
+  dispatchSessionExpired: () => dispatch(sessionExpired()),
+  dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
+    dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });
 
 export default connect(
