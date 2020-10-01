@@ -1,5 +1,4 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { CitizenResource } from "../../../../../../definitions/bpd/citizen/CitizenResource";
 import { Iban } from "../../../../../../definitions/backend/Iban";
 import { IbanStatus } from "../../saga/networking/patchCitizenIban";
 
@@ -20,7 +19,7 @@ export const bpdLoadActivationStatus = createAsyncAction(
   "BPD_LOAD_ACTIVATION_STATUS_REQUEST",
   "BPD_LOAD_ACTIVATION_STATUS_SUCCESS",
   "BPD_LOAD_ACTIVATION_STATUS_FAILURE"
-)<void, CitizenResource, Error>();
+)<void, BpdActivationPayload, Error>();
 
 // represent the outcome of iban upsert
 export type IbanUpsertResult = { payoffInstr?: Iban; status: IbanStatus };
