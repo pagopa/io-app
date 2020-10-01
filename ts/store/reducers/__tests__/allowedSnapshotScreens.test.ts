@@ -1,11 +1,12 @@
 import { bonusVacanzeEnabled } from "../../../config";
 import { navigateToBonusActivationCompleted } from "../../../features/bonus/bonusVacanze/navigation/action";
 import BONUSVACANZE_ROUTES from "../../../features/bonus/bonusVacanze/navigation/routes";
+import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../actions/application";
 import { setDebugModeEnabled } from "../../actions/debug";
 import {
   isAllowedSnapshotCurrentScreen,
-  screenWhiteList
+  screenBlackList
 } from "../allowedSnapshotScreens";
 import { appReducer } from "../index";
 import { GlobalState } from "../types";
@@ -20,12 +21,9 @@ jest.mock("react-native-share", () => ({
 
 describe("allowed Snapshot Screens Selector test", () => {
   it("Test high level composition", () => {
-    // with a screen not snapshottable, expected false
+    // with a blacklisted screen, expected false
     expect(
-      isAllowedSnapshotCurrentScreen.resultFunc(
-        "NOT_SNAPSHOTTABLE_SCREEN",
-        false
-      )
+      isAllowedSnapshotCurrentScreen.resultFunc(ROUTES.WALLET_ADD_CARD, false)
     ).toBeFalsy();
     // with the debug mode enabled, expected true
     expect(
@@ -49,11 +47,11 @@ describe("allowed Snapshot Screens Selector test", () => {
       ).toBeTruthy();
     }
   });
-  it("Test all allowed screens", () => {
-    screenWhiteList.forEach(screen => {
+  it("Test all blacklisted screens", () => {
+    screenBlackList.forEach(screen => {
       expect(
         isAllowedSnapshotCurrentScreen.resultFunc(screen, false)
-      ).toBeTruthy();
+      ).toBeFalsy();
       expect(
         isAllowedSnapshotCurrentScreen.resultFunc(screen, true)
       ).toBeTruthy();
