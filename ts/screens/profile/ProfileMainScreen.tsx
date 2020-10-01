@@ -296,39 +296,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     clearInterval(this.idResetTap);
   };
 
-  /**
-   * since no experimental features are available we hide this method (see https://www.pivotaltracker.com/story/show/168263994).
-   * It could be usefull when new experimental features will be available
-   */
-  /*
-  private onExperimentalFeaturesToggle = (enabled: boolean) => {
-    if (enabled) {
-      Alert.alert(
-        I18n.t("profile.main.experimentalFeatures.confirmTitle"),
-        I18n.t("profile.main.experimentalFeatures.confirmMessage"),
-        [
-          {
-            text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("global.buttons.ok"),
-            style: "destructive",
-            onPress: () => {
-              this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(
-                enabled
-              );
-            }
-          }
-        ],
-        { cancelable: false }
-      );
-    } else {
-      this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
-    }
-  };
-  */
-
   private ServiceListRef = React.createRef<ScrollView>();
   private scrollToTop = () => {
     if (this.ServiceListRef.current) {
@@ -472,27 +439,32 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                       () => clipboardSetStringWithFeedback(backendInfo.version),
                       false
                     )}
-                  {sessionToken &&
+
+                  {isDevEnv &&
+                    sessionToken &&
                     this.debugListItem(
                       `Session Token ${sessionToken}`,
                       () => clipboardSetStringWithFeedback(sessionToken),
                       false
                     )}
 
-                  {walletToken &&
+                  {isDevEnv &&
+                    walletToken &&
                     this.debugListItem(
                       `Wallet token ${walletToken}`,
                       () => clipboardSetStringWithFeedback(walletToken),
                       false
                     )}
 
-                  {this.debugListItem(
-                    `Notification ID ${notificationId.slice(0, 6)}`,
-                    () => clipboardSetStringWithFeedback(notificationId),
-                    false
-                  )}
+                  {isDevEnv &&
+                    this.debugListItem(
+                      `Notification ID ${notificationId.slice(0, 6)}`,
+                      () => clipboardSetStringWithFeedback(notificationId),
+                      false
+                    )}
 
-                  {notificationToken &&
+                  {isDevEnv &&
+                    notificationToken &&
                     this.debugListItem(
                       `Notification token ${notificationToken.slice(0, 6)}`,
                       () => clipboardSetStringWithFeedback(notificationToken),
@@ -505,11 +477,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     true
                   )}
 
-                  {this.debugListItem(
-                    I18n.t("profile.main.forgetCurrentSession"),
-                    this.props.dispatchSessionExpired,
-                    true
-                  )}
+                  {isDevEnv &&
+                    this.debugListItem(
+                      I18n.t("profile.main.forgetCurrentSession"),
+                      this.props.dispatchSessionExpired,
+                      true
+                    )}
                 </React.Fragment>
               )}
             </React.Fragment>
@@ -570,11 +543,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
-  dispatchSessionExpired: () => dispatch(sessionExpired()),
   setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
     dispatch(
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
     ),
+  dispatchSessionExpired: () => dispatch(sessionExpired()),
   dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
     dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });

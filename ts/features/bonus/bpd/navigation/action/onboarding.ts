@@ -1,5 +1,5 @@
 import { NavigationActions } from "react-navigation";
-import BPD_ROUTES from "./routes";
+import BPD_ROUTES from "../routes";
 
 export const navigateToBpdOnboardingLoadActivationStatus = () =>
   NavigationActions.navigate({

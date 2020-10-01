@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0-rc.5](https://github.com/pagopa/io-app/compare/1.7.0-rc.4...1.7.0-rc.5) (2020-10-01)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#174837969](https://www.pivotaltracker.com/story/show/174837969)] bpd information & tos screen ([#2231](https://github.com/pagopa/io-app/issues/2231)) ([526c64b](https://github.com/pagopa/io-app/commit/526c64bb0c1d2097a8da88cc25dbd060c96754d1)), closes [#174858345](https://www.pivotaltracker.com/story/show/174858345) [#174840617](https://www.pivotaltracker.com/story/show/174840617) [#174897872](https://www.pivotaltracker.com/story/show/174897872) [#174860317](https://www.pivotaltracker.com/story/show/174860317)
+* **Bonus Pagamenti Digitali:** [[#174838065](https://www.pivotaltracker.com/story/show/174838065)] Declaration screen ([#2228](https://github.com/pagopa/io-app/issues/2228)) ([72cbca6](https://github.com/pagopa/io-app/commit/72cbca6317c8b77f8fbbc2866c63f89775320040)), closes [#174858345](https://www.pivotaltracker.com/story/show/174858345) [#174840617](https://www.pivotaltracker.com/story/show/174840617) [#174897872](https://www.pivotaltracker.com/story/show/174897872)
+* **Bonus Pagamenti Digitali:** [[#174847263](https://www.pivotaltracker.com/story/show/174847263),[#174847196](https://www.pivotaltracker.com/story/show/174847196)] Add network logic to support upsert IBAN ([#2233](https://github.com/pagopa/io-app/issues/2233)) ([1132c8e](https://github.com/pagopa/io-app/commit/1132c8e251f82baa41492cf202d8d525848307f1))
+* **Bonus Pagamenti Digitali:** [[#174858355](https://www.pivotaltracker.com/story/show/174858355)] iban insertion screen placeholder ([#2243](https://github.com/pagopa/io-app/issues/2243)) ([f7bf206](https://github.com/pagopa/io-app/commit/f7bf206323c3d81af8dfe97685f6418126bd7d5c))
+* **Bonus Pagamenti Digitali:** [[#174860194](https://www.pivotaltracker.com/story/show/174860194)] Loading Activate bpd screen ([#2230](https://github.com/pagopa/io-app/issues/2230)) ([b5eafb7](https://github.com/pagopa/io-app/commit/b5eafb77a94042e2fc42f4018bf5cae9f71df4ea)), closes [#174858345](https://www.pivotaltracker.com/story/show/174858345) [#174840617](https://www.pivotaltracker.com/story/show/174840617) [#174897872](https://www.pivotaltracker.com/story/show/174897872) [#174860317](https://www.pivotaltracker.com/story/show/174860317)
+* **Bonus Pagamenti Digitali:** [[#174860317](https://www.pivotaltracker.com/story/show/174860317)] Loading bpd activation status screen ([#2229](https://github.com/pagopa/io-app/issues/2229)) ([e7af639](https://github.com/pagopa/io-app/commit/e7af63939e256320bf034392e2f13027b8504634)), closes [#174858345](https://www.pivotaltracker.com/story/show/174858345) [#174840617](https://www.pivotaltracker.com/story/show/174840617) [#174897872](https://www.pivotaltracker.com/story/show/174897872)
+* **Bonus Pagamenti Digitali:** [[#174970898](https://www.pivotaltracker.com/story/show/174970898)] Handle citizen not found as not enrolled to BPD ([#2246](https://github.com/pagopa/io-app/issues/2246)) ([a12bc03](https://github.com/pagopa/io-app/commit/a12bc03a4bf9cd5b4f199b1e0f6696d8d2021490))
+* **Bonus Pagamenti Digitali:** [[#175011121](https://www.pivotaltracker.com/story/show/175011121)] Onboarding Bancomat screens placeholder ([#2239](https://github.com/pagopa/io-app/issues/2239)) ([494cebd](https://github.com/pagopa/io-app/commit/494cebd790b4b090456b27d0ac2fa0fa007a3d88))
+* **Bonus Pagamenti Digitali:** [[#175013432](https://www.pivotaltracker.com/story/show/175013432)] iban navigation stack ([#2245](https://github.com/pagopa/io-app/issues/2245)) ([72184e0](https://github.com/pagopa/io-app/commit/72184e04867e01fdaa5eda1d58db9e917281e03d))
+* **MyPortal:** [[#174865280](https://www.pivotaltracker.com/story/show/174865280)] Clean stored navigation params [#2227](https://github.com/pagopa/io-app/issues/2227) ([5b556b8](https://github.com/pagopa/io-app/commit/5b556b841cc4f58437806b9f9da5590620a218fc))
+* [[#174864406](https://www.pivotaltracker.com/story/show/174864406)] Remove the not validated email block to request the download of data ([#2247](https://github.com/pagopa/io-app/issues/2247)) ([e60d9cb](https://github.com/pagopa/io-app/commit/e60d9cb2c5ee8a121824cf2bd7390a7ffb598b21))
+* [[#175009115](https://www.pivotaltracker.com/story/show/175009115)] No identification required on credit card insertion ([#2237](https://github.com/pagopa/io-app/issues/2237)) ([d7689c0](https://github.com/pagopa/io-app/commit/d7689c0b4ea4bcc5f31b5b7ed85437390451632e))
+
+
+### Bug Fixes
+
+* **Bonus Vacanze:** [[#174985742](https://www.pivotaltracker.com/story/show/174985742)] Add consumed date row on bonus detail ([#2226](https://github.com/pagopa/io-app/issues/2226)) ([e9f669c](https://github.com/pagopa/io-app/commit/e9f669c069369c905c4d65db71408feeaa2b5603))
+* [[#174768831](https://www.pivotaltracker.com/story/show/174768831)] Remove extra spaces TOS screen ([#2240](https://github.com/pagopa/io-app/issues/2240)) ([ef37152](https://github.com/pagopa/io-app/commit/ef37152faae9af472125f2fad3774c085b42c351))
+* [[#174893081](https://www.pivotaltracker.com/story/show/174893081)] update payment faq ([#2242](https://github.com/pagopa/io-app/issues/2242)) ([9c76d5d](https://github.com/pagopa/io-app/commit/9c76d5dc42c27eedbb8c1b2eadc68235f320dd76))
+* [[#174949682](https://www.pivotaltracker.com/story/show/174949682)] Fix duplicate keys on Keypad ([#2234](https://github.com/pagopa/io-app/issues/2234)) ([59fd59f](https://github.com/pagopa/io-app/commit/59fd59faab1851c557c3a25385648ba5fdd0f21d))
+* **Bonus Vacanze:** [[#175058176](https://www.pivotaltracker.com/story/show/175058176)] Fixes the color of bonus status badge text [#2248](https://github.com/pagopa/io-app/issues/2248) ([1adf361](https://github.com/pagopa/io-app/commit/1adf361cb19becdc7905a3340dcf24f54451b27f))
+
+
+### Chores
+
+* [[#174976615](https://www.pivotaltracker.com/story/show/174976615)] Rename and move CTA components ([#2235](https://github.com/pagopa/io-app/issues/2235)) ([b2f3071](https://github.com/pagopa/io-app/commit/b2f30719a393793dd4d098f9d2c0621a6b545917))
+* [[#175071475](https://www.pivotaltracker.com/story/show/175071475)] Remove sensible data from developer section ([#2249](https://github.com/pagopa/io-app/issues/2249)) ([2c626ef](https://github.com/pagopa/io-app/commit/2c626ef6f2a3b313f61c66ce293930695189d499))
+
 ## [1.7.0-rc.4](https://github.com/pagopa/io-app/compare/1.7.0-rc.3...1.7.0-rc.4) (2020-09-28)
 
 

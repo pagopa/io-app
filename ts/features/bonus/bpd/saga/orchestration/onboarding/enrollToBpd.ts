@@ -1,33 +1,18 @@
-import { Either } from "fp-ts/lib/Either";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
-import { call, CallEffect, put, race, select, take } from "redux-saga/effects";
-import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
+import { call, put, race, select, take } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
-import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getAsyncResult } from "../../../../../../utils/saga";
 import {
   navigateToBpdOnboardingEnrollPaymentMethod,
   navigateToBpdOnboardingLoadActivate
-} from "../../../navigation/action";
+} from "../../../navigation/action/onboarding";
 import BPD_ROUTES from "../../../navigation/routes";
 import {
   bpdEnrollUserToProgram,
   bpdOnboardingCancel
 } from "../../../store/actions/onboarding";
-
-// try to enroll the citizen and return the operation outcome
-// true -> successfully enrolled
-export function* enrollUserToBpd(): Generator<
-  CallEffect,
-  Either<Error, CitizenResource>,
-  Either<Error, CitizenResource>
-> {
-  return yield call(() =>
-    getAsyncResult(bpdEnrollUserToProgram, undefined as void)
-  );
-}
 
 export const isLoadingScreen = (screenName: string) =>
   screenName === BPD_ROUTES.ONBOARDING.LOAD_ACTIVATE_BPD;
@@ -44,15 +29,18 @@ function* enrollToBpdWorker() {
   }
 
   // enroll the user and wait for the result
-  const enrollToBpdResult: SagaCallReturnType<typeof enrollUserToBpd> = yield call(
-    enrollUserToBpd
+  yield put(bpdEnrollUserToProgram.request());
+
+  const enrollResult: ActionType<typeof bpdEnrollUserToProgram.success> = yield take(
+    bpdEnrollUserToProgram.success
   );
 
-  if (enrollToBpdResult.isRight()) {
+  if (enrollResult.payload.enabled) {
     // TODO: TEMP, change to IBAN insertion
     yield put(navigateToBpdOnboardingEnrollPaymentMethod());
     yield put(navigationHistoryPop(1));
   }
+  // TODO: handle false case to avoid making the user remain blocked in case of malfunction
 }
 
 /**
