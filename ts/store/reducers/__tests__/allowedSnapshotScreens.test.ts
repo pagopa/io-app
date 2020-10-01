@@ -63,12 +63,12 @@ describe("allowed Snapshot Screens Selector test", () => {
       undefined,
       applicationChangeState("active")
     );
-    expect(isAllowedSnapshotCurrentScreen(globalState)).toBeFalsy();
-    expect(isAllowedSnapshotCurrentScreen(globalState)).toBeFalsy();
+    expect(isAllowedSnapshotCurrentScreen(globalState)).toBeTruthy();
+    expect(isAllowedSnapshotCurrentScreen(globalState)).toBeTruthy();
     // with the same state, only one computation is expected
     expect(isAllowedSnapshotCurrentScreen.recomputations()).toBe(1);
     globalState = appReducer(globalState, setDebugModeEnabled(false));
-    expect(isAllowedSnapshotCurrentScreen(globalState)).toBeFalsy();
+    expect(isAllowedSnapshotCurrentScreen(globalState)).toBeTruthy();
     // with a change of state but the same values, no new computation are expected
     expect(isAllowedSnapshotCurrentScreen.recomputations()).toBe(1);
     globalState = appReducer(globalState, setDebugModeEnabled(true));
