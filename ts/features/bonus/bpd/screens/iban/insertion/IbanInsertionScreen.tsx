@@ -30,7 +30,7 @@ const IbanInsertionScreen: React.FunctionComponent<Props> = props => (
         <H1>Insert Iban</H1>
       </View>
       <FooterTwoButtons
-        onRight={() => props.submitIban("51" as Iban)}
+        onRight={() => props.submitIban("IT60X0542811101000000123456" as Iban)}
         onCancel={props.continue}
         title={I18n.t("global.buttons.continue")}
       />

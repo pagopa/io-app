@@ -7,11 +7,9 @@ import { navigationHistoryPop } from "../../../../../../store/actions/navigation
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getAsyncResult } from "../../../../../../utils/saga";
-import {
-  navigateToBpdOnboardingEnrollPaymentMethod,
-  navigateToBpdOnboardingLoadActivate
-} from "../../../navigation/action/onboarding";
+import { navigateToBpdOnboardingLoadActivate } from "../../../navigation/action/onboarding";
 import BPD_ROUTES from "../../../navigation/routes";
+import { bpdIbanInsertionStart } from "../../../store/actions/iban";
 import {
   bpdEnrollUserToProgram,
   bpdOnboardingCancel
@@ -50,7 +48,7 @@ function* enrollToBpdWorker() {
 
   if (enrollToBpdResult.isRight()) {
     // TODO: TEMP, change to IBAN insertion
-    yield put(navigateToBpdOnboardingEnrollPaymentMethod());
+    yield put(bpdIbanInsertionStart());
     yield put(navigationHistoryPop(1));
   }
 }

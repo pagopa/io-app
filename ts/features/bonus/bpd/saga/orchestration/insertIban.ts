@@ -29,15 +29,8 @@ function* ensureMainScreen() {
     navigationCurrentRouteSelector
   );
 
-  const onboardingOngoing: ReturnType<typeof isBpdOnboardingOngoing> = yield select(
-    isBpdOnboardingOngoing
-  );
-
   if (currentRoute.isSome() && !isMainScreen(currentRoute.value)) {
     yield put(navigateToBpdIbanInsertion());
-    if (onboardingOngoing) {
-      yield put(navigationHistoryPop(1));
-    }
   }
 }
 

@@ -32,6 +32,7 @@ const chooseRenderScreen = (props: Props) => {
       case IbanStatus.NOT_VALID:
         return <IbanKOWrong />;
       case IbanStatus.OK:
+        props.reset();
         props.completed();
     }
   }

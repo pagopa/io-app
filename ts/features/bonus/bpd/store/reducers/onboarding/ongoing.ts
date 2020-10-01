@@ -29,7 +29,7 @@ const ongoingOnboardingReducer = (
  * Return true if the user is the ongoing workflow
  * @param state
  */
-export const isBpdOnboardingOngoing = (state: GlobalState) => false;
-// state.bonus.bpd.onboarding.ongoing;
+export const isBpdOnboardingOngoing = (state: GlobalState) =>
+  state.bonus.bpd.onboarding.ongoing;
 
 export default ongoingOnboardingReducer;
