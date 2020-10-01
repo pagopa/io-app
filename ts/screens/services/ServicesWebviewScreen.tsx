@@ -19,6 +19,7 @@ import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { internalRouteNavigationParamsSelector } from "../../store/reducers/internalRouteNavigation";
 import { GlobalState } from "../../store/reducers/types";
 import { ServicesWebviewParams } from "../../types/ServicesWebviewParams";
+import { resetInternalRouteNavigation } from "../../store/actions/internalRouteNavigation";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -35,7 +36,7 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
 
   const handleGoBack = () => {
     clearCookie();
-    props.goBack();
+    props.goBackAndResetInternalNavigationInfo();
   };
 
   const clearCookie = () => {
@@ -56,7 +57,7 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
           {
             text: I18n.t("global.buttons.exit"),
             style: "default",
-            onPress: props.goBack
+            onPress: props.goBackAndResetInternalNavigationInfo
           }
         ]
       );
@@ -123,7 +124,10 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  goBack: () => dispatch(navigateBack())
+  goBackAndResetInternalNavigationInfo: () => {
+    dispatch(resetInternalRouteNavigation());
+    dispatch(navigateBack());
+  }
 });
 
 export default connect(

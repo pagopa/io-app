@@ -1,2 +1,2 @@
 Of course, if the notice supports payment via pagoPA you can proceed and make the transaction directly from the IO app.
-You can verify that the payment model is suitable if the QR code and / or the alphanumeric IUV code is available. The IO app, from the 'Payments' section, allows both the scanning of the QR code and the manual entry of the IUV, depending on how comfortable it is to you.
+You can verify that the payment model is suitable if the QR code and / or the Notice Code is available. The IO app, from the 'Payments' section, allows both the scanning of the QR code and the manual entry of the IUV, depending on how comfortable it is to you.
