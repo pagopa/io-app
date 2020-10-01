@@ -49,11 +49,7 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (props: Props) =>
           {props.bank.name}
         </LabelSmall>
       </View>
-      <IconFont
-        name={"io-right"}
-        color={IOColors.blue}
-        style={{ justifyContent: "flex-end" }}
-      />
+      <IconFont name={"io-right"} color={IOColors.blue} />
     </ListItem>
   ) : (
     <ButtonDefaultOpacity
