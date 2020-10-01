@@ -42,8 +42,13 @@ export const bpdIbanInsertionCancel = createStandardAction(
   "BPD_IBAN_INSERTION_CANCEL"
 )<void>();
 
+export const bpdIbanInsertionResetScreen = createStandardAction(
+  "BPD_IBAN_INSERTION_RESET_SCREEN"
+)<void>();
+
 export type BpdIbanActions =
   | ActionType<typeof bpdUpsertIban>
   | ActionType<typeof bpdIbanInsertionStart>
   | ActionType<typeof bpdIbanInsertionContinue>
-  | ActionType<typeof bpdIbanInsertionCancel>;
+  | ActionType<typeof bpdIbanInsertionCancel>
+  | ActionType<typeof bpdIbanInsertionResetScreen>;

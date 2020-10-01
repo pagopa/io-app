@@ -1,7 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H1 } from "../../../../../components/core/typography/H1";
@@ -10,6 +9,10 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import {
+  bpdIbanInsertionContinue,
+  bpdIbanInsertionResetScreen
+} from "../../store/actions/iban";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -21,10 +24,9 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const IbanKoNotOwned: React.FunctionComponent<Props> = props => (
   <BaseScreenComponent
-    goBack={true}
+    goBack={props.modifyIban}
     headerTitle={"Cashback pagamenti digitali"}
   >
-    <NavigationEvents onDidFocus={() => console.log("focus cannot verify")} />
     <SafeAreaView style={IOStyles.flex}>
       <View style={IOStyles.flex}>
         <H1>Iban not owned</H1>
@@ -38,9 +40,9 @@ const IbanKoNotOwned: React.FunctionComponent<Props> = props => (
   </BaseScreenComponent>
 );
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  modifyIban: () => {},
-  completeInsertion: () => {}
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  modifyIban: () => dispatch(bpdIbanInsertionResetScreen()),
+  completeInsertion: () => dispatch(bpdIbanInsertionContinue())
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

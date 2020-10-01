@@ -1,19 +1,16 @@
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../../i18n";
-import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 import {
   bpdIbanInsertionCancel,
-  bpdIbanInsertionStart
+  bpdIbanInsertionResetScreen
 } from "../../store/actions/iban";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -28,7 +25,6 @@ const IbanKoWrong: React.FunctionComponent<Props> = props => (
     goBack={props.modifyIban}
     headerTitle={"Cashback pagamenti digitali"}
   >
-    <NavigationEvents onDidFocus={() => console.log("focus cannot verify")} />
     <SafeAreaView style={IOStyles.flex}>
       <View style={IOStyles.flex}>
         <H1>Iban wrong!</H1>
@@ -36,7 +32,7 @@ const IbanKoWrong: React.FunctionComponent<Props> = props => (
       <FooterTwoButtons
         onRight={props.modifyIban}
         onCancel={props.cancel}
-        title={I18n.t("global.buttons.continue")}
+        title={"Modifica Iban"}
       />
     </SafeAreaView>
   </BaseScreenComponent>
@@ -44,8 +40,7 @@ const IbanKoWrong: React.FunctionComponent<Props> = props => (
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   modifyIban: () => {
-    dispatch(navigationHistoryPop(1));
-    dispatch(bpdIbanInsertionStart());
+    dispatch(bpdIbanInsertionResetScreen());
   },
   cancel: () => dispatch(bpdIbanInsertionCancel())
 });

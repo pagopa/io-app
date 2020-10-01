@@ -1,9 +1,9 @@
 import { createStackNavigator } from "react-navigation";
-import IbanInsertionScreen from "../screens/iban/insertion/IbanInsertionScreen";
 import IbanKOCannotVerify from "../screens/iban/IbanKOCannotVerify";
 import IbanKoNotOwned from "../screens/iban/IbanKONotOwned";
 import IbanKOWrong from "../screens/iban/IbanKOWrong";
 import IbanLoadingUpsert from "../screens/iban/IbanLoadingUpsert";
+import MainIbanScreen from "../screens/iban/insertion/MainIbanScreen";
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
 import DeclarationScreen from "../screens/onboarding/declaration/DeclarationScreen";
 import { EnrollPaymentMethodsScreen } from "../screens/onboarding/EnrollPaymentMethodsScreen";
@@ -33,7 +33,7 @@ const BpdNavigator = createStackNavigator(
       screen: NoPaymentMethodsAvailableScreen
     },
     [BPD_ROUTES.IBAN.INSERTION]: {
-      screen: IbanInsertionScreen
+      screen: MainIbanScreen
     },
     [BPD_ROUTES.IBAN.LOADING_UPSERT]: {
       screen: IbanLoadingUpsert

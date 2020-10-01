@@ -4,6 +4,7 @@ import { Iban } from "../../../../../../../definitions/backend/Iban";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
+  isError,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -12,7 +13,7 @@ import {
 } from "../../../model/RemoteValue";
 import { IbanStatus } from "../../../saga/networking/patchCitizenIban";
 import { bpdLoadActivationStatus } from "../../actions/details";
-import { bpdUpsertIban } from "../../actions/iban";
+import { bpdIbanInsertionResetScreen, bpdUpsertIban } from "../../actions/iban";
 import { bpdEnrollUserToProgram } from "../../actions/onboarding";
 
 type UpsertIBAN = {
@@ -109,6 +110,11 @@ const paymentInstrumentUpsertReducer = (
         ...state,
         outcome: remoteError(action.payload)
       };
+    case getType(bpdIbanInsertionResetScreen):
+      return {
+        ...state,
+        outcome: remoteUndefined
+      };
   }
   return state;
 };
@@ -130,5 +136,11 @@ const bpdActivationReducer = combineReducers<BpdActivation, Action>({
 export const bpdEnabledSelector = (
   state: GlobalState
 ): RemoteValue<boolean, Error> => state.bonus.bpd.details.activation.enabled;
+
+export const bpdUpsertIbanSelector = (state: GlobalState): UpsertIBAN =>
+  state.bonus.bpd.details.activation.payoffInstr.upsert;
+
+export const bpdUpsertIbanIsError = (state: GlobalState): boolean =>
+  isError(state.bonus.bpd.details.activation.payoffInstr.upsert.outcome);
 
 export default bpdActivationReducer;
