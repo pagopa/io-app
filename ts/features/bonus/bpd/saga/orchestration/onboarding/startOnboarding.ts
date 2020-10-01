@@ -95,11 +95,10 @@ export function* bpdStartOnboardingWorker() {
       // Navigate to the Onboarding Declaration and wait for the action that complete the saga
       yield put(navigateToBpdOnboardingDeclaration());
       yield put(navigationHistoryPop(1));
-
-      // The saga ends when the user accepts the declaration
-      yield take(bpdOnboardingAcceptDeclaration);
     }
   }
+  // The saga ends when the user accepts the declaration
+  yield take(bpdOnboardingAcceptDeclaration);
 }
 
 /**

@@ -617,7 +617,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                       <Text
                         style={styles.statusText}
                         semibold={true}
-                        dark={true}
+                        dark={!isBonusActive(bonus)}
                       >
                         {maybeStatusDescription.value}
                       </Text>
