@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   remoteError,
   remoteLoading,
@@ -28,5 +29,9 @@ const bpdEnrollUserReducer = (
   }
   return state;
 };
+
+export const bpdEnrollSelector = (
+  state: GlobalState
+): RemoteValue<boolean, Error> => state.bonus.bpd.onboarding.enrollment;
 
 export default bpdEnrollUserReducer;
