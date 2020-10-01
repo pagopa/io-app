@@ -1,5 +1,4 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { CitizenResource } from "../../../../../../definitions/bpd/citizen/CitizenResource";
 
 /**
  * This file contains all the action related to the bpd details like the activation status, value, etc.

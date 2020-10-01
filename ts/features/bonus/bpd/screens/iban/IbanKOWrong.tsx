@@ -10,6 +10,10 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import {
+  bpdIbanInsertionCancel,
+  bpdIbanInsertionStart
+} from "../../store/actions/iban";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -20,7 +24,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const IbanKoWrong: React.FunctionComponent<Props> = props => (
   <BaseScreenComponent
-    goBack={true}
+    goBack={props.modifyIban}
     headerTitle={"Cashback pagamenti digitali"}
   >
     <NavigationEvents onDidFocus={() => console.log("focus cannot verify")} />
@@ -37,9 +41,9 @@ const IbanKoWrong: React.FunctionComponent<Props> = props => (
   </BaseScreenComponent>
 );
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  modifyIban: () => {},
-  cancel: () => {}
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  modifyIban: () => dispatch(bpdIbanInsertionStart()),
+  cancel: () => dispatch(bpdIbanInsertionCancel())
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

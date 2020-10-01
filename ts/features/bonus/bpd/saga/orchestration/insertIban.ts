@@ -6,6 +6,8 @@ import { navigationHistoryPop } from "../../../../../store/actions/navigationHis
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import {
   navigateToBpdIbanInsertion,
+  navigateToBpdIbanKOCannotVerify,
+  navigateToBpdIbanKONotOwned,
   navigateToBpdIbanKOWrong
 } from "../../navigation/action/iban";
 import { navigateToBpdOnboardingEnrollPaymentMethod } from "../../navigation/action/onboarding";
@@ -13,34 +15,31 @@ import BPD_ROUTES from "../../navigation/routes";
 import {
   bpdIbanInsertionCancel,
   bpdIbanInsertionContinue,
-  bpdIbanInsertionStart,
-  bpdUpsertIban,
-  IBANInsertionSource
+  bpdUpsertIban
 } from "../../store/actions/iban";
+import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing";
 import { IbanStatus } from "../networking/patchCitizenIban";
 
-export const chooseContinueAction = (source: IBANInsertionSource) => {
-  switch (source) {
-    case IBANInsertionSource.DETAILS:
-      return NavigationActions.back;
-    case IBANInsertionSource.ONBOARDING:
-      // TODO change with an action that triggers a saga that choose which screen to display
-      //  based on the cards present or not
-      return navigateToBpdOnboardingEnrollPaymentMethod;
-    default:
-      throw new Error(`${source} not handled!`);
-  }
-};
+// TODO: if onboarding change with an action that triggers a saga that choose which screen to display
+//  based on the cards present or not
+export const chooseContinueAction = (isOnboarding: boolean) =>
+  isOnboarding
+    ? navigateToBpdOnboardingEnrollPaymentMethod
+    : NavigationActions.back;
 
 export const chooseNextScreen = (
   ibantype: IbanStatus,
-  source: IBANInsertionSource
+  isOnboarding: boolean
 ) => {
   switch (ibantype) {
     case IbanStatus.OK:
-      return chooseContinueAction(source);
+      return chooseContinueAction(isOnboarding);
     case IbanStatus.NOT_VALID:
       return navigateToBpdIbanKOWrong;
+    case IbanStatus.CANT_VERIFY:
+      return navigateToBpdIbanKOCannotVerify;
+    case IbanStatus.NOT_OWNED:
+      return navigateToBpdIbanKONotOwned;
     default:
       throw new Error(`${ibantype} not handled!`);
   }
@@ -56,30 +55,39 @@ function* ensureMainScreen() {
 
   if (currentRoute.isSome() && !isMainScreen(currentRoute.value)) {
     yield put(navigateToBpdIbanInsertion());
-    yield put(navigationHistoryPop(1));
   }
 }
 
-export function* bpdIbanInsertionWorker(source: IBANInsertionSource) {
+export function* bpdIbanInsertionWorker() {
+  const onboardingOngoing: ReturnType<typeof isBpdOnboardingOngoing> = yield select(
+    isBpdOnboardingOngoing
+  );
   // ensure the first screen of the saga is the iban insertion screen.
   yield call(ensureMainScreen);
   // wait for the user iban insertion
   const result: ActionType<typeof bpdUpsertIban.success> = yield take(
     bpdUpsertIban.success
   );
-  const nextNavigation = chooseNextScreen(result.payload.status, source);
+  const nextNavigation = chooseNextScreen(
+    result.payload.status,
+    onboardingOngoing
+  );
+
   yield put(nextNavigation());
+  yield put(navigationHistoryPop(1));
+  if (nextNavigation !== chooseContinueAction(onboardingOngoing)) {
+    yield take(bpdIbanInsertionContinue);
+    yield put(chooseContinueAction(onboardingOngoing)());
+    yield put(navigationHistoryPop(1));
+  }
 }
 
 /**
  * This saga start the workflow that allows the user to insert / modify the IBAN associated to bpd.
  */
-export function* handleBpdIbanInsertion(
-  action: ActionType<typeof bpdIbanInsertionStart>
-): SagaIterator {
-  const triggerType = action.payload;
+export function* handleBpdIbanInsertion(): SagaIterator {
   const { cancelAction, continueAction } = yield race({
-    enroll: call(bpdIbanInsertionWorker, triggerType),
+    enroll: call(bpdIbanInsertionWorker),
     cancelAction: take(bpdIbanInsertionCancel),
     continueAction: take(bpdIbanInsertionContinue)
   });
@@ -89,17 +97,11 @@ export function* handleBpdIbanInsertion(
   }
   // the user chooses to continue, navigate to the appropriate section based on the triggering flow.
   else if (continueAction) {
-    switch (triggerType) {
-      case IBANInsertionSource.DETAILS:
-        yield put(NavigationActions.back());
-        break;
-      case IBANInsertionSource.ONBOARDING:
-        // TODO change with an action that triggers a saga that choose which screen to display
-        //  based on the cards present or not
-        yield put(navigateToBpdOnboardingEnrollPaymentMethod());
-        break;
-      default:
-        throw new Error(`${triggerType} not handled!`);
-    }
+    const onboardingOngoing: ReturnType<typeof isBpdOnboardingOngoing> = yield select(
+      isBpdOnboardingOngoing
+    );
+    const continueAction = chooseContinueAction(onboardingOngoing);
+    yield put(continueAction());
+    yield put(navigationHistoryPop(1));
   }
 }

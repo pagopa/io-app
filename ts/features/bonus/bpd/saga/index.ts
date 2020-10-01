@@ -48,5 +48,5 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   yield takeLatest(getType(bpdOnboardingAcceptDeclaration), handleBpdEnroll);
 
   // The user start the insertion / modification of the IBAN associated with bpd program
-  yield takeLatest(bpdIbanInsertionStart, handleBpdIbanInsertion);
+  yield takeLatest(getType(bpdIbanInsertionStart), handleBpdIbanInsertion);
 }

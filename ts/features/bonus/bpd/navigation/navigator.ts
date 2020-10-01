@@ -1,5 +1,5 @@
 import { createStackNavigator } from "react-navigation";
-import IbanInsertionScreen from "../screens/iban/IbanInsertionScreen";
+import IbanInsertionScreen from "../screens/iban/insertion/IbanInsertionScreen";
 import IbanKOCannotVerify from "../screens/iban/IbanKOCannotVerify";
 import IbanKoNotOwned from "../screens/iban/IbanKONotOwned";
 import IbanKOWrong from "../screens/iban/IbanKOWrong";

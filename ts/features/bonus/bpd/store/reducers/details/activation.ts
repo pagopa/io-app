@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { getType } from "typesafe-actions";
+import { Iban } from "../../../../../../../definitions/backend/Iban";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
@@ -9,12 +10,24 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../model/RemoteValue";
+import { IbanStatus } from "../../../saga/networking/patchCitizenIban";
 import { bpdLoadActivationStatus } from "../../actions/details";
+import { bpdUpsertIban } from "../../actions/iban";
 import { bpdEnrollUserToProgram } from "../../actions/onboarding";
+
+type UpsertIBAN = {
+  outcome: RemoteValue<IbanStatus, Error>;
+  value: Iban | undefined;
+};
+
+type PayoffInstrumentType = {
+  value: RemoteValue<string | undefined, Error>;
+  upsert: UpsertIBAN;
+};
 
 export type BpdActivation = {
   enabled: RemoteValue<boolean, Error>;
-  payoffInstr: RemoteValue<string | undefined, Error>;
+  payoffInstr: PayoffInstrumentType;
   // TODO: use definitions/backend/Iban.ts ?
 };
 
@@ -53,21 +66,57 @@ const enabledReducer = (
  * @param state
  * @param action
  */
-// TODO: integrate with edit / insert iban call
-const paymentInstrumentReducer = (
+const paymentInstrumentValueReducer = (
   state: RemoteValue<string | undefined, Error> = remoteUndefined,
   action: Action
 ): RemoteValue<string | undefined, Error> => {
   switch (action.type) {
     case getType(bpdLoadActivationStatus.request):
+    case getType(bpdUpsertIban.request):
       return remoteLoading;
     case getType(bpdLoadActivationStatus.success):
+    case getType(bpdUpsertIban.success):
       return remoteReady(action.payload.payoffInstr);
     case getType(bpdLoadActivationStatus.failure):
+    case getType(bpdUpsertIban.failure):
       return remoteError(action.payload);
   }
   return state;
 };
+
+const INITIAL_UPSERT: UpsertIBAN = {
+  outcome: remoteUndefined,
+  value: undefined
+};
+
+const paymentInstrumentUpsertReducer = (
+  state: UpsertIBAN = INITIAL_UPSERT,
+  action: Action
+): UpsertIBAN => {
+  switch (action.type) {
+    case getType(bpdUpsertIban.request):
+      return {
+        value: action.payload,
+        outcome: remoteLoading
+      };
+    case getType(bpdUpsertIban.success):
+      return {
+        value: action.payload.payoffInstr,
+        outcome: remoteReady(action.payload.status)
+      };
+    case getType(bpdUpsertIban.failure):
+      return {
+        ...state,
+        outcome: remoteError(action.payload)
+      };
+  }
+  return state;
+};
+
+const paymentInstrumentReducer = combineReducers<PayoffInstrumentType, Action>({
+  value: paymentInstrumentValueReducer,
+  upsert: paymentInstrumentUpsertReducer
+});
 
 const bpdActivationReducer = combineReducers<BpdActivation, Action>({
   enabled: enabledReducer,

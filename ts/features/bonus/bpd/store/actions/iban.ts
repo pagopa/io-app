@@ -22,20 +22,11 @@ export const bpdUpsertIban = createAsyncAction(
 )<Iban, IbanUpsertResult, Error>();
 
 /**
- * Enum used to distinguish between the onboarding workflow that starts from the user onboarding
- * or from the bpd details
- */
-export enum IBANInsertionSource {
-  ONBOARDING = "ONBOARDING",
-  DETAILS = "DETAILS"
-}
-
-/**
  * The action that triggers the start of insertion / modification of the IBAN
  */
 export const bpdIbanInsertionStart = createStandardAction(
   "BPD_IBAN_INSERTION_START"
-)<IBANInsertionSource>();
+)<void>();
 
 /**
  * The user choose to go forward and terminate the iban insertion

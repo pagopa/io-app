@@ -4,15 +4,20 @@ import { SafeAreaView, View } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Iban } from "../../../../../../definitions/backend/Iban";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../../i18n";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
-import { navigateToBpdIbanKOCannotVerify } from "../../navigation/action/iban";
-import { bpdIbanInsertionSkip, bpdUpsertIban } from "../../store/actions/iban";
+import { Iban } from "../../../../../../../definitions/backend/Iban";
+import { H1 } from "../../../../../../components/core/typography/H1";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../../i18n";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import { navigateToBpdIbanKOCannotVerify } from "../../../navigation/action/iban";
+import {
+  bpdIbanInsertionCancel,
+  bpdIbanInsertionContinue,
+  bpdIbanInsertionSkip,
+  bpdUpsertIban
+} from "../../../store/actions/iban";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -26,17 +31,14 @@ const IbanInsertionScreen: React.FunctionComponent<Props> = props => {
     console.log("mount!");
   }, []);
   return (
-    <BaseScreenComponent goBack={true} headerTitle={"Insert Iban"}>
-      <NavigationEvents onDidFocus={() => console.log("focus iban insert")} />
+    <BaseScreenComponent goBack={props.cancel} headerTitle={"Insert Iban"}>
       <SafeAreaView style={IOStyles.flex}>
         <View style={IOStyles.flex}>
           <H1>Insert Iban</H1>
         </View>
         <FooterTwoButtons
-          onRight={() =>
-            props.submitIban("IT60X0542811101000000123456" as Iban)
-          }
-          onCancel={props.skip}
+          onRight={() => props.submitIban("51" as Iban)}
+          onCancel={props.continue}
           title={I18n.t("global.buttons.continue")}
         />
       </SafeAreaView>
@@ -45,7 +47,8 @@ const IbanInsertionScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  skip: () => dispatch(bpdIbanInsertionSkip()),
+  cancel: () => dispatch(bpdIbanInsertionCancel()),
+  continue: () => dispatch(bpdIbanInsertionContinue()),
   submitIban: (iban: Iban) => dispatch(bpdUpsertIban.request(iban))
 });
 
