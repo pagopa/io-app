@@ -1584,6 +1584,9 @@ bonus:
         disclaimer:
           normal: "Questa autodichirazione è resa ai sensi del "
           link: dpr 28 dicembre 2000 n. 445 art 46 e 47
+      loadingActivateBpd:
+        title: "Stiamo attivando il cashback"
+        body: "Ti preghiamo di attendere."
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
