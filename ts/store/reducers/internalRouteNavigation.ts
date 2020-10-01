@@ -2,7 +2,10 @@ import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { InternalRoute } from "../../components/ui/Markdown/handlers/internalLink";
 import { Action } from "../actions/types";
-import { addInternalRouteNavigation } from "../actions/internalRouteNavigation";
+import {
+  addInternalRouteNavigation,
+  resetInternalRouteNavigation
+} from "../actions/internalRouteNavigation";
 import { GlobalState } from "./types";
 
 export type InternalRouteNavigationState = InternalRoute | null;
@@ -13,10 +16,14 @@ const reducer = (
   state: InternalRouteNavigationState = initialInternalRouteNavigationState,
   action: Action
 ): InternalRouteNavigationState => {
-  if (action.type === getType(addInternalRouteNavigation)) {
-    return action.payload;
+  switch (action.type) {
+    case getType(addInternalRouteNavigation):
+      return action.payload;
+    case getType(resetInternalRouteNavigation):
+      return initialInternalRouteNavigationState;
+    default:
+      return state;
   }
-  return state;
 };
 
 export const internalRouteNavigationSelector = (
