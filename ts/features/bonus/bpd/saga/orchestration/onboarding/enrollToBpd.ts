@@ -4,8 +4,6 @@ import { call, put, race, select, take } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
-import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getAsyncResult } from "../../../../../../utils/saga";
 import { navigateToBpdOnboardingLoadActivate } from "../../../navigation/action/onboarding";
 import BPD_ROUTES from "../../../navigation/routes";
 import { bpdIbanInsertionStart } from "../../../store/actions/iban";
