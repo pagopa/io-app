@@ -9,7 +9,7 @@ import {
   bpdIbanInsertionContinue,
   bpdIbanInsertionResetScreen
 } from "../../store/actions/iban";
-import { bpdUpsertIbanSelector } from "../../store/reducers/details/activation";
+import { bpdUpsertIbanSelector } from "../../store/reducers/details/activation/payoffInstrument";
 import IbanKoCannotVerify from "./IbanKOCannotVerify";
 import IbanKoNotOwned from "./IbanKONotOwned";
 import IbanKOWrong from "./IbanKOWrong";
@@ -41,7 +41,6 @@ const chooseRenderScreen = (props: Props) => {
 
 const MainIbanScreen: React.FunctionComponent<Props> = props => {
   useEffect(() => {
-    console.log("mount! main");
     props.reset();
   }, []);
   return chooseRenderScreen(props);

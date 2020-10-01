@@ -14,7 +14,7 @@ import {
   bpdIbanInsertionContinue,
   bpdUpsertIban
 } from "../../store/actions/iban";
-import { bpdUpsertIbanSelector } from "../../store/reducers/details/activation";
+import { bpdUpsertIbanSelector } from "../../store/reducers/details/activation/payoffInstrument";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

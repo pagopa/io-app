@@ -10,10 +10,11 @@ import {
   bpdIbanInsertionCancel,
   bpdUpsertIban
 } from "../../store/actions/iban";
+import {} from "../../store/reducers/details/activation";
 import {
   bpdUpsertIbanIsError,
   bpdUpsertIbanSelector
-} from "../../store/reducers/details/activation";
+} from "../../store/reducers/details/activation/payoffInstrument";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -25,12 +26,10 @@ const IbanLoadingUpsert: React.FunctionComponent<Props> = props => {
     }
     return true;
   });
-  console.log("asdasdasddsa" + props.isLoading);
-
   return (
     <LoadingErrorComponent
       {...props}
-      loadingCaption={"asd loading..."}
+      loadingCaption={"insert new iban loading..."}
       onAbort={props.onAbort}
       onRetry={() =>
         fromNullable(props.ibanValue.value).map(iban => props.onRetry(iban))

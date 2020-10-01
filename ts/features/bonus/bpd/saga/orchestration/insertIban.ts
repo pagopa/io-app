@@ -61,6 +61,8 @@ export function* bpdIbanInsertionWorker() {
 
 /**
  * This saga start the workflow that allows the user to insert / modify the IBAN associated to bpd.
+ * In this first phase subject to changes, the call to the bpdIbanInsertionWorker is preserved,
+ * instead of removing the call.
  */
 export function* handleBpdIbanInsertion(): SagaIterator {
   yield call(bpdIbanInsertionWorker);
