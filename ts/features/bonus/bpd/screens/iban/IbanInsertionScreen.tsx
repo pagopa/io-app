@@ -8,7 +8,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
  * This screen allows the user to add / modify an iban to be used to receive the refund provided by bpd
  * @constructor
  */
-export const IbanInsertionScreen: React.FunctionComponent = () => <View />;
+const IbanInsertionScreen: React.FunctionComponent = () => <View />;
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
