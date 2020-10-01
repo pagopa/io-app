@@ -27,15 +27,9 @@ import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import {
-  logoutRequest,
-  sessionExpired
-} from "../../store/actions/authentication";
+import { logoutRequest } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
-import {
-  preferencesExperimentalFeaturesSetEnabled,
-  preferencesPagoPaTestEnvironmentSetEnabled
-} from "../../store/actions/persistedPreferences";
+import { preferencesPagoPaTestEnvironmentSetEnabled } from "../../store/actions/persistedPreferences";
 import { updatePin } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -296,39 +290,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     clearInterval(this.idResetTap);
   };
 
-  /**
-   * since no experimental features are available we hide this method (see https://www.pivotaltracker.com/story/show/168263994).
-   * It could be usefull when new experimental features will be available
-   */
-  /*
-  private onExperimentalFeaturesToggle = (enabled: boolean) => {
-    if (enabled) {
-      Alert.alert(
-        I18n.t("profile.main.experimentalFeatures.confirmTitle"),
-        I18n.t("profile.main.experimentalFeatures.confirmMessage"),
-        [
-          {
-            text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("global.buttons.ok"),
-            style: "destructive",
-            onPress: () => {
-              this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(
-                enabled
-              );
-            }
-          }
-        ],
-        { cancelable: false }
-      );
-    } else {
-      this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
-    }
-  };
-  */
-
   private ServiceListRef = React.createRef<ScrollView>();
   private scrollToTop = () => {
     if (this.ServiceListRef.current) {
@@ -338,14 +299,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
   // eslint-disable-next-line
   public render() {
-    const {
-      navigation,
-      backendInfo,
-      sessionToken,
-      walletToken,
-      notificationToken,
-      notificationId
-    } = this.props;
+    const { navigation, backendInfo } = this.props;
 
     const showInformationModal = (
       title: TranslationKeys,
@@ -472,42 +426,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                       () => clipboardSetStringWithFeedback(backendInfo.version),
                       false
                     )}
-                  {sessionToken &&
-                    this.debugListItem(
-                      `Session Token ${sessionToken}`,
-                      () => clipboardSetStringWithFeedback(sessionToken),
-                      false
-                    )}
-
-                  {walletToken &&
-                    this.debugListItem(
-                      `Wallet token ${walletToken}`,
-                      () => clipboardSetStringWithFeedback(walletToken),
-                      false
-                    )}
-
-                  {this.debugListItem(
-                    `Notification ID ${notificationId.slice(0, 6)}`,
-                    () => clipboardSetStringWithFeedback(notificationId),
-                    false
-                  )}
-
-                  {notificationToken &&
-                    this.debugListItem(
-                      `Notification token ${notificationToken.slice(0, 6)}`,
-                      () => clipboardSetStringWithFeedback(notificationToken),
-                      false
-                    )}
 
                   {this.debugListItem(
                     I18n.t("profile.main.cache.clear"),
                     this.handleClearCachePress,
-                    true
-                  )}
-
-                  {this.debugListItem(
-                    I18n.t("profile.main.forgetCurrentSession"),
-                    this.props.dispatchSessionExpired,
                     true
                   )}
                 </React.Fragment>
@@ -570,13 +492,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
-  dispatchSessionExpired: () => dispatch(sessionExpired()),
   setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
     dispatch(
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
-    ),
-  dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
-    dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
+    )
 });
 
 export default connect(
