@@ -748,7 +748,7 @@ wallet:
     object: Reason
     date: Date and Time
     iuv: IUV code
-    entityCode: Entity fiscal code
+    entityCode: Creditor Entity Fiscal Code
     fee: Fee
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
@@ -767,7 +767,7 @@ wallet:
     info: which allow us to identify the transaction
     link: Where are they?
     noticeCode: Notice Code
-    entityCode: Entity Fiscal Code
+    entityCode: Creditor Entity Fiscal Code
     amount: Amount (€)
     proceed: Proceed with the transaction
     contextualHelpTitle: Manually insert notice
