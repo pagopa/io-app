@@ -8,6 +8,7 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
+import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 import {
@@ -42,7 +43,10 @@ const IbanKoWrong: React.FunctionComponent<Props> = props => (
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  modifyIban: () => dispatch(bpdIbanInsertionStart()),
+  modifyIban: () => {
+    dispatch(navigationHistoryPop(1));
+    dispatch(bpdIbanInsertionStart());
+  },
   cancel: () => dispatch(bpdIbanInsertionCancel())
 });
 

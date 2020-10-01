@@ -75,10 +75,10 @@ export function* bpdIbanInsertionWorker() {
 
   yield put(nextNavigation());
   yield put(navigationHistoryPop(1));
+  // yield put(navigationHistoryPop(1));
   if (nextNavigation !== chooseContinueAction(onboardingOngoing)) {
     yield take(bpdIbanInsertionContinue);
     yield put(chooseContinueAction(onboardingOngoing)());
-    yield put(navigationHistoryPop(1));
   }
 }
 
@@ -102,6 +102,5 @@ export function* handleBpdIbanInsertion(): SagaIterator {
     );
     const continueAction = chooseContinueAction(onboardingOngoing);
     yield put(continueAction());
-    yield put(navigationHistoryPop(1));
   }
 }
