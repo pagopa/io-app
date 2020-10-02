@@ -13,8 +13,8 @@ import {
 } from "../../store/actions/iban";
 import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing";
 
-// TODO: if onboarding change with an action that triggers a saga that choose which screen to display
-//  based on the cards present or not
+// TODO: if isOnboarding===true, change with an action that triggers a saga that choose
+//  which screen to display, (the user already have payment methods or not)
 export const chooseContinueAction = (isOnboarding: boolean) =>
   isOnboarding
     ? navigateToBpdOnboardingEnrollPaymentMethod
@@ -37,10 +37,10 @@ export function* bpdIbanInsertionWorker() {
   const onboardingOngoing: ReturnType<typeof isBpdOnboardingOngoing> = yield select(
     isBpdOnboardingOngoing
   );
-  // ensure the first screen of the saga is the iban insertion screen.
+  // ensure the first screen of the saga is the iban main screen.
   yield call(ensureMainScreen);
-  // wait for the user iban insertion
 
+  // wait for the user iban insertion o cancellation
   const nextAction: ActionType<
     typeof bpdIbanInsertionCancel | typeof bpdIbanInsertionContinue
   > = yield take([

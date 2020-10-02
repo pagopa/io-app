@@ -14,7 +14,6 @@ import {
   bpdIbanInsertionContinue,
   bpdUpsertIban
 } from "../../store/actions/iban";
-import { bpdUpsertIbanSelector } from "../../store/reducers/details/activation/payoffInstrument";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -44,9 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   submitIban: (iban: Iban) => dispatch(bpdUpsertIban.request(iban))
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  upsertValue: bpdUpsertIbanSelector(state)
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(
   mapStateToProps,
