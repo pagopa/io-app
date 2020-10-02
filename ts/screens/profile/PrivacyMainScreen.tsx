@@ -202,8 +202,25 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               useExtendedSubTitle={true}
             />
 
-            {/* Remove account - temporary disabled https://www.pivotaltracker.com/story/show/173418452
-
+            {/* Export your data */}
+            <ListItemComponent
+              title={I18n.t("profile.main.privacy.exportData.title")}
+              subTitle={I18n.t("profile.main.privacy.exportData.description")}
+              onPress={() =>
+                this.setState({ requestProcess: true }, () =>
+                  this.props.loadUserDataRequest(
+                    UserDataProcessingChoiceEnum.DOWNLOAD
+                  )
+                )
+              }
+              useExtendedSubTitle={true}
+              titleBadge={
+                this.canBeBadgeRendered(UserDataProcessingChoiceEnum.DOWNLOAD)
+                  ? I18n.t("profile.preferences.list.wip")
+                  : undefined
+              }
+            />
+            {/* Remove account */}
             <ListItemComponent
               title={I18n.t("profile.main.privacy.removeAccount.title")}
               subTitle={I18n.t(
@@ -219,25 +236,6 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               useExtendedSubTitle={true}
               titleBadge={
                 this.canBeBadgeRendered(UserDataProcessingChoiceEnum.DELETE)
-                  ? I18n.t("profile.preferences.list.wip")
-                  : undefined
-              }
-            />
-            */}
-            {/* Export your data */}
-            <ListItemComponent
-              title={I18n.t("profile.main.privacy.exportData.title")}
-              subTitle={I18n.t("profile.main.privacy.exportData.description")}
-              onPress={() =>
-                this.setState({ requestProcess: true }, () =>
-                  this.props.loadUserDataRequest(
-                    UserDataProcessingChoiceEnum.DOWNLOAD
-                  )
-                )
-              }
-              useExtendedSubTitle={true}
-              titleBadge={
-                this.canBeBadgeRendered(UserDataProcessingChoiceEnum.DOWNLOAD)
                   ? I18n.t("profile.preferences.list.wip")
                   : undefined
               }
