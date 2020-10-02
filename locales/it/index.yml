@@ -222,6 +222,10 @@ profile:
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
         contextualHelpContent: !include profile/profile_privacy_main.md
+      removeAccountInfo:
+        title: Elimina il tuo account
+        body: !include profile/profile_remove_account_info.md
+        cta: Continua
     appInfo:
       title: Informazioni su IO beta
       description: Per saperne di più sull'app IO
