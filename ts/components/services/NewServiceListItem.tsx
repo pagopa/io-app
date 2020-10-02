@@ -75,9 +75,8 @@ export default class NewServiceListItem extends React.PureComponent<
     }
   }
 
-  private getServiceKey = (
-    potService: pot.Pot<ServicePublic, Error>
-  ): string => pot.getOrElse(
+  private getServiceKey = (potService: pot.Pot<ServicePublic, Error>): string =>
+    pot.getOrElse(
       pot.map(
         potService,
         service => `${service.service_id}-${service.version || 0}`

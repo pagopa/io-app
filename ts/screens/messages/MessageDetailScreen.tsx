@@ -137,24 +137,24 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    * Renders the empty message state, when no message content is avaialable
    */
   private renderEmptyState = () => (
-      <View style={styles.notFullStateContainer}>
-        <Text style={styles.notFullStateMessageText}>
-          {I18n.t("messageDetails.emptyMessage")}
-        </Text>
-      </View>
-    );
+    <View style={styles.notFullStateContainer}>
+      <Text style={styles.notFullStateMessageText}>
+        {I18n.t("messageDetails.emptyMessage")}
+      </Text>
+    </View>
+  );
 
   /**
    * Used when the App is trying to load the message/service.
    */
   private renderLoadingState = () => (
-      <View style={styles.notFullStateContainer}>
-        <Text style={styles.notFullStateMessageText}>
-          {I18n.t("messageDetails.loadingText")}
-        </Text>
-        <ActivityIndicator />
-      </View>
-    );
+    <View style={styles.notFullStateContainer}>
+      <Text style={styles.notFullStateMessageText}>
+        {I18n.t("messageDetails.loadingText")}
+      </Text>
+      <ActivityIndicator />
+    </View>
+  );
 
   /**
    * Used when something went wrong but there is a way to recover.
@@ -359,18 +359,18 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    refreshService: (serviceId: string) =>
-      dispatch(loadServiceDetail.request(serviceId)),
-    loadServiceMetadata: (serviceId: string) =>
-      dispatch(loadServiceMetadata.request(serviceId as ServiceId)),
-    loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
-      dispatch(loadMessageWithRelations.request(meta)),
-    setMessageReadState: (messageId: string, isRead: boolean) =>
-      dispatch(setMessageReadState(messageId, isRead)),
-    navigateToServiceDetailsScreen: (
-      params: InferNavigationParams<typeof ServiceDetailsScreen>
-    ) => dispatch(navigateToServiceDetailsScreen(params))
-  });
+  refreshService: (serviceId: string) =>
+    dispatch(loadServiceDetail.request(serviceId)),
+  loadServiceMetadata: (serviceId: string) =>
+    dispatch(loadServiceMetadata.request(serviceId as ServiceId)),
+  loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
+    dispatch(loadMessageWithRelations.request(meta)),
+  setMessageReadState: (messageId: string, isRead: boolean) =>
+    dispatch(setMessageReadState(messageId, isRead)),
+  navigateToServiceDetailsScreen: (
+    params: InferNavigationParams<typeof ServiceDetailsScreen>
+  ) => dispatch(navigateToServiceDetailsScreen(params))
+});
 
 export default connect(
   mapStateToProps,
