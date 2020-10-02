@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Content, View } from "native-base";
+import { Body, Container, Content, Right, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
@@ -14,20 +14,26 @@ import {
   AVOID_ZOOM_JS,
   APP_EVENT_HANDLER
 } from "../utils/webview";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Label } from "./core/typography/Label";
-import ActivityIndicator from "./ui/ActivityIndicator";
+import { withLightModalContext } from "./helpers/withLightModalContext";
+import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
+import AppHeader from "./ui/AppHeader";
 import IconFont from "./ui/IconFont";
+import { LightModalContextInterface } from "./ui/LightModal";
 
 type Props = {
-  onModalClose: () => void;
+  onWebviewClose: () => void;
   uri: string;
   handleWebMessage?: (message: string) => void;
-};
+} & LightModalContextInterface;
 
 const styles = StyleSheet.create({
   textInput: { padding: 1, borderWidth: 1, height: 30 },
   contentPadding: { paddingHorizontal: customVariables.contentPadding },
-  center: { alignItems: "center" },
+  itemsCenter: { alignItems: "center" },
+  selfCenter: { alignSelf: "center" },
+  flex1: { flex: 1 },
   webViewHeight: { height: heightPercentageToDP("100%") }
 });
 
@@ -36,61 +42,60 @@ const injectedJavascript = closeInjectedScript(
 );
 
 const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
-  const [text, setText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
-  const [error, setError] = React.useState(false);
   const ref = React.createRef<WebView>();
 
-  const showSuccessContent = () => (
-    <Content>
-      <IconFont
-        name={"io-close"}
-        style={{
-          alignSelf: "flex-end"
-        }}
-        onPress={() => setSuccess(false)}
-      />
-      <IconFont
-        name={"io-complete"}
-        size={120}
-        color={customVariables.brandHighlight}
-        style={{
-          alignSelf: "center"
-        }}
-      />
-      <View spacer={true} large={true} />
+  const showSuccessContent = (text: string, close: () => void) => (
+    <Container>
+      <AppHeader noLeft={true}>
+        <Body />
+        <Right>
+          <ButtonDefaultOpacity onPress={close} transparent={true}>
+            <IconFont name={"io-close"} />
+          </ButtonDefaultOpacity>
+        </Right>
+      </AppHeader>
+      <Content style={styles.flex1}>
+        <IconFont
+          name={"io-complete"}
+          size={120}
+          color={customVariables.brandHighlight}
+          style={styles.selfCenter}
+        />
+        <View spacer={true} large={true} />
 
-      <View style={styles.center}>
-        <Label>{`${I18n.t("global.genericThanks")},`}</Label>
-        <Label weight={"Bold"}>{text}</Label>
-      </View>
-    </Content>
+        <View style={styles.itemsCenter}>
+          <Label>{`${I18n.t("global.genericThanks")},`}</Label>
+          <Label weight={"Bold"}>{text}</Label>
+        </View>
+      </Content>
+    </Container>
   );
 
-  const showErrorContent = () => (
-    <Content>
-      <IconFont
-        name={"io-close"}
-        style={{
-          alignSelf: "flex-end"
-        }}
-        onPress={() => setError(false)}
-      />
-      <IconFont
-        name={"io-error"}
-        size={120}
-        color={customVariables.brandDanger}
-        style={{
-          alignSelf: "center"
-        }}
-      />
-      <View spacer={true} />
+  const showErrorContent = (text: string, close: () => void) => (
+    <Container>
+      <AppHeader noLeft={true}>
+        <Body />
+        <Right>
+          <ButtonDefaultOpacity onPress={close} transparent={true}>
+            <IconFont name={"io-close"} />
+          </ButtonDefaultOpacity>
+        </Right>
+      </AppHeader>
+      <Content style={styles.flex1}>
+        <IconFont
+          name={"io-error"}
+          size={120}
+          color={customVariables.brandDanger}
+          style={styles.selfCenter}
+        />
+        <View spacer={true} />
 
-      <View style={styles.center}>
-        <Label weight={"Bold"}>{text}</Label>
-      </View>
-    </Content>
+        <View style={styles.itemsCenter}>
+          <Label weight={"Bold"}>{text}</Label>
+        </View>
+      </Content>
+    </Container>
   );
 
   const handleWebviewMessage = (event: WebViewMessageEvent) => {
@@ -109,7 +114,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
     const message = maybeData.value;
     switch (message.type) {
       case "CLOSE_MODAL":
-        props.onModalClose();
+        props.onWebviewClose();
         return;
       case "START_LOAD":
         setLoading(true);
@@ -118,12 +123,23 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         setLoading(false);
         return;
       case "SHOW_SUCCESS":
-        setSuccess(true);
-        setText(fromNullable(message[locale]).getOrElse(message.en));
+        props.showModal(
+          showSuccessContent(
+            fromNullable(message[locale]).getOrElse(message.en),
+            () => {
+              props.hideModal();
+              props.onWebviewClose();
+            }
+          )
+        );
         return;
       case "SHOW_ERROR":
-        setError(true);
-        setText(fromNullable(message[locale]).getOrElse(message.en));
+        props.showModal(
+          showErrorContent(
+            fromNullable(message[locale]).getOrElse(message.en),
+            props.hideModal
+          )
+        );
         return;
       case "SHOW_ALERT":
         const value = fromNullable(message[locale]).getOrElse(message.en);
@@ -141,24 +157,19 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   return (
-    <>
-      {!success && !error && (
-        <View style={{ flex: 1 }}>
-          <WebView
-            ref={ref}
-            source={{ uri: props.uri }}
-            textZoom={100}
-            onLoadEnd={injectJS}
-            onMessage={handleWebviewMessage}
-            sharedCookiesEnabled={true}
-          />
-        </View>
-      )}
-      {loading && <ActivityIndicator color={customVariables.brandDarkGray} />}
-      {success && showSuccessContent()}
-      {error && showErrorContent()}
-    </>
+    <LoadingSpinnerOverlay isLoading={loading}>
+      <View style={{ flex: 1 }}>
+        <WebView
+          ref={ref}
+          source={{ uri: props.uri }}
+          textZoom={100}
+          onLoadEnd={injectJS}
+          onMessage={handleWebviewMessage}
+          sharedCookiesEnabled={true}
+        />
+      </View>
+    </LoadingSpinnerOverlay>
   );
 };
 
-export default RegionServiceWebView;
+export default withLightModalContext(RegionServiceWebView);
