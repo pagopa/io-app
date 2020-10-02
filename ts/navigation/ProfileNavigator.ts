@@ -13,6 +13,7 @@ import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import WebPlayground from "../screens/profile/WebPlayground";
+import DeleteAccountInfo from "../screens/profile/DeleteAccountInfoScreen";
 import ROUTES from "./routes";
 
 /**
@@ -61,6 +62,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.WEB_PLAYGROUND]: {
       screen: WebPlayground
+    },
+    [ROUTES.PROFILE_REMOVE_ACCOUNT_INFO]: {
+      screen: DeleteAccountInfo
     }
   },
   {
