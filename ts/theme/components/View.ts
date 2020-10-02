@@ -35,79 +35,79 @@ declare module "native-base" {
  */
 
 export default (): Theme => ({
-    ".spacer": {
-      xsmall: {
-        height: customVariables.spacerExtrasmallHeight
-      },
-      ".xsmall": {
-        height: customVariables.spacerExtrasmallHeight
-      },
-      ".small": {
-        height: customVariables.spacerSmallHeight
-      },
-      ".large": {
-        height: variables.spacerLargeHeight
-      },
-      ".extrasmall": {
-        height: variables.spacerExtrasmallHeight
-      },
-
-      ".extralarge": {
-        height: variables.spacerExtralargeHeight
-      },
-
-      height: variables.spacerHeight
+  ".spacer": {
+    xsmall: {
+      height: customVariables.spacerExtrasmallHeight
+    },
+    ".xsmall": {
+      height: customVariables.spacerExtrasmallHeight
+    },
+    ".small": {
+      height: customVariables.spacerSmallHeight
+    },
+    ".large": {
+      height: variables.spacerLargeHeight
+    },
+    ".extrasmall": {
+      height: variables.spacerExtrasmallHeight
     },
 
-    // horizontal spacer
-    ".hspacer": {
-      ".small": {
-        width: variables.spacerSmallHeight
-      },
-      ".large": {
-        width: variables.spacerLargeWidth
-      },
-      ".extralarge": {
-        width: variables.spacerExtralargeWidth
-      },
-      width: variables.spacerWidth
+    ".extralarge": {
+      height: variables.spacerExtralargeHeight
     },
 
-    ".modal": {
-      flex: 1,
-      backgroundColor: variables.contentBackground
-    },
+    height: variables.spacerHeight
+  },
 
-    ".padded": {
-      paddingBottom: 15
+  // horizontal spacer
+  ".hspacer": {
+    ".small": {
+      width: variables.spacerSmallHeight
     },
+    ".large": {
+      width: variables.spacerLargeWidth
+    },
+    ".extralarge": {
+      width: variables.spacerExtralargeWidth
+    },
+    width: variables.spacerWidth
+  },
 
-    ".footer": {
-      backgroundColor: variables.footerBackground,
-      paddingBottom: variables.footerPaddingBottom,
-      paddingLeft: variables.footerPaddingLeft,
-      paddingRight: variables.footerPaddingRight,
-      paddingTop: variables.footerPaddingTop,
-      borderBottomWidth: variables.footerBottomBorderWidth,
-      borderBottomColor: variables.brandGray,
-      // iOS shadow
-      shadowColor: variables.footerShadowColor,
-      shadowOffset: {
-        width: variables.footerShadowOffsetWidth,
-        height: variables.footerShadowOffsetHeight
-      },
-      shadowOpacity: variables.footerShadowOpacity,
-      shadowRadius: variables.footerShadowRadius,
-      // Android shadow
-      elevation: variables.footerElevation
+  ".modal": {
+    flex: 1,
+    backgroundColor: variables.contentBackground
+  },
+
+  ".padded": {
+    paddingBottom: 15
+  },
+
+  ".footer": {
+    backgroundColor: variables.footerBackground,
+    paddingBottom: variables.footerPaddingBottom,
+    paddingLeft: variables.footerPaddingLeft,
+    paddingRight: variables.footerPaddingRight,
+    paddingTop: variables.footerPaddingTop,
+    borderBottomWidth: variables.footerBottomBorderWidth,
+    borderBottomColor: variables.brandGray,
+    // iOS shadow
+    shadowColor: variables.footerShadowColor,
+    shadowOffset: {
+      width: variables.footerShadowOffsetWidth,
+      height: variables.footerShadowOffsetHeight
     },
-    ".content": {
-      padding: variables.contentPadding,
-      backgroundColor: variables.contentBackground,
-      flex: 1
-    },
-    ".centerJustified": {
-      flex: 1,
-      justifyContent: "center"
-    }
-  });
+    shadowOpacity: variables.footerShadowOpacity,
+    shadowRadius: variables.footerShadowRadius,
+    // Android shadow
+    elevation: variables.footerElevation
+  },
+  ".content": {
+    padding: variables.contentPadding,
+    backgroundColor: variables.contentBackground,
+    flex: 1
+  },
+  ".centerJustified": {
+    flex: 1,
+    justifyContent: "center"
+  }
+});

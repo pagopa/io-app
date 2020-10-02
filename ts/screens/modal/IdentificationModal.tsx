@@ -129,7 +129,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
    * Update the state using the actual props value of the `identificationFailState`
    * return the updated value of `canInsertPinTooManyAttempts` in order to be used without waiting the state update
    */
-  private updateCanInsertPinTooManyAttempts = () => this.props.identificationFailState.map(errorData => {
+  private updateCanInsertPinTooManyAttempts = () =>
+    this.props.identificationFailState.map(errorData => {
       const now = new Date();
       const canInsertPinTooManyAttempts = errorData.nextLegalAttempt <= now;
       this.setState({
@@ -332,21 +333,19 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   };
 
-  private renderErrorDescription = () => maybeNotNullyString(this.getCodeInsertionStatus()).fold(
-      undefined,
-      des => (
-          <Text
-            alignCenter={true}
-            bold={true}
-            white={true}
-            primary={false}
-            accessible={true}
-            ref={this.errorStatusRef}
-          >
-            {des}
-          </Text>
-        )
-    );
+  private renderErrorDescription = () =>
+    maybeNotNullyString(this.getCodeInsertionStatus()).fold(undefined, des => (
+      <Text
+        alignCenter={true}
+        bold={true}
+        white={true}
+        primary={false}
+        accessible={true}
+        ref={this.errorStatusRef}
+      >
+        {des}
+      </Text>
+    ));
 
   private getCodeInsertionStatus = () => {
     if (this.state.identificationByPinState === "unstarted") {
@@ -415,31 +414,31 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
 
     const renderHeader = () => (
-        <React.Fragment>
-          <Text
-            bold={true}
-            alignCenter={true}
-            style={styles.header}
-            white={!isValidatingTask}
-            dark={isValidatingTask}
-            accessible={true}
-            ref={this.headerRef}
-          >
-            {I18n.t(
-              isValidatingTask
-                ? "identification.titleValidation"
-                : "identification.title"
-            )}
-          </Text>
-          <Text
-            alignCenter={true}
-            white={!isValidatingTask}
-            dark={isValidatingTask}
-          >
-            {this.getInstructions()}
-          </Text>
-        </React.Fragment>
-      );
+      <React.Fragment>
+        <Text
+          bold={true}
+          alignCenter={true}
+          style={styles.header}
+          white={!isValidatingTask}
+          dark={isValidatingTask}
+          accessible={true}
+          ref={this.headerRef}
+        >
+          {I18n.t(
+            isValidatingTask
+              ? "identification.titleValidation"
+              : "identification.title"
+          )}
+        </Text>
+        <Text
+          alignCenter={true}
+          white={!isValidatingTask}
+          dark={isValidatingTask}
+        >
+          {this.getInstructions()}
+        </Text>
+      </React.Fragment>
+    );
 
     const defaultColor = isValidatingTask
       ? customVariables.contentPrimaryBackground

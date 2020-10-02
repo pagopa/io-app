@@ -40,36 +40,36 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const renderHeader = (title: string) => (
-      <TouchableDefaultOpacity
-        accessible={true}
-        accessibilityRole={"button"}
-        accessibilityLabel={
-          props.title +
-          (expanded
-            ? I18n.t("global.accessibility.expanded")
-            : I18n.t("global.accessibility.collapsed"))
-        }
-        onPress={() => setExpanded(!expanded)}
-      >
-        <View style={styles.header}>
-          <Text bold={true} style={styles.flex}>
-            {title}
-          </Text>
-          <IconFont
-            name={"io-right"}
-            color={customVariables.brandPrimary}
-            size={24}
-            style={[
-              styles.headerIcon,
-              {
-                transform: [{ rotateZ: expanded ? "-90deg" : "90deg" }]
-              }
-            ]}
-          />
-        </View>
-        {!expanded && <ItemSeparatorComponent noPadded={true} />}
-      </TouchableDefaultOpacity>
-    );
+    <TouchableDefaultOpacity
+      accessible={true}
+      accessibilityRole={"button"}
+      accessibilityLabel={
+        props.title +
+        (expanded
+          ? I18n.t("global.accessibility.expanded")
+          : I18n.t("global.accessibility.collapsed"))
+      }
+      onPress={() => setExpanded(!expanded)}
+    >
+      <View style={styles.header}>
+        <Text bold={true} style={styles.flex}>
+          {title}
+        </Text>
+        <IconFont
+          name={"io-right"}
+          color={customVariables.brandPrimary}
+          size={24}
+          style={[
+            styles.headerIcon,
+            {
+              transform: [{ rotateZ: expanded ? "-90deg" : "90deg" }]
+            }
+          ]}
+        />
+      </View>
+      {!expanded && <ItemSeparatorComponent noPadded={true} />}
+    </TouchableDefaultOpacity>
+  );
 
   const renderContent = (content: string) => (
     <View style={styles.pad} accessible={expanded}>

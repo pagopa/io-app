@@ -16,22 +16,22 @@ declare module "native-base" {
 }
 
 export default (): Theme => ({
-    ".alternative": {
-      backgroundColor: variables.brandGray
-    },
-    ".noPadded": {
-      paddingBottom: FOOTER_SAFE_AREA,
-      paddingTop: 0,
-      paddingHorizontal: 0
-    },
-    ".primary": {
-      backgroundColor: variables.contentPrimaryBackground
-    },
-    backgroundColor: variables.contentBackground,
+  ".alternative": {
+    backgroundColor: variables.brandGray
+  },
+  ".noPadded": {
+    paddingBottom: FOOTER_SAFE_AREA,
+    paddingTop: 0,
+    paddingHorizontal: 0
+  },
+  ".primary": {
+    backgroundColor: variables.contentPrimaryBackground
+  },
+  backgroundColor: variables.contentBackground,
 
-    // It implies the content backgound color covers the bottom space in iPhone X
-    marginBottom: -FOOTER_SAFE_AREA,
-    paddingBottom: FOOTER_SAFE_AREA + variables.contentPadding,
-    paddingTop: variables.contentPadding,
-    paddingHorizontal: variables.contentPadding
-  });
+  // It implies the content backgound color covers the bottom space in iPhone X
+  marginBottom: -FOOTER_SAFE_AREA,
+  paddingBottom: FOOTER_SAFE_AREA + variables.contentPadding,
+  paddingTop: variables.contentPadding,
+  paddingHorizontal: variables.contentPadding
+});
