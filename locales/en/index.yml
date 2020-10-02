@@ -748,7 +748,7 @@ wallet:
     object: Reason
     date: Date and Time
     iuv: IUV code
-    entityCode: Entity fiscal code
+    entityCode: Creditor Entity Fiscal Code
     fee: Fee
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
@@ -767,7 +767,7 @@ wallet:
     info: which allow us to identify the transaction
     link: Where are they?
     noticeCode: Notice Code
-    entityCode: Entity Fiscal Code
+    entityCode: Creditor Entity Fiscal Code
     amount: Amount (€)
     proceed: Proceed with the transaction
     contextualHelpTitle: Manually insert notice
@@ -1418,6 +1418,7 @@ bonus:
     code: Code
     uniqueCode: Unique code
     requestedAt: Requested on
+    consumedAt: Redeemed on
     advice: 'By tapping on "Request the Bonus Vacanze" you declare that you have read and understood the '
     status: Status
     name: Bonus Vacanze
@@ -1545,6 +1546,8 @@ bonus:
         text3: information on the processing of personal data
       bankName: Name of the bank
     onboarding:
+      loadingActivationStatus:
+        title: Loading activation status
       declaration:
         header: In order to activate the cashback you must declare
         conditions:
@@ -1556,6 +1559,9 @@ bonus:
         disclaimer:
           normal: This self-declaration is made pursuant to
           link: dpr 28 december 2000 n. 445 art 46 and 47
+      loadingActivateBpd:
+        title: "We are activating the cashback"
+        body: "Please wait."
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

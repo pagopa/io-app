@@ -777,7 +777,7 @@ wallet:
     object: Causale
     date: Data e ora
     iuv: Codice IUV
-    entityCode: Codice fiscale creditore
+    entityCode: Codice Fiscale Ente Creditore
     updatedAmount: Importo aggiornato
     fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
@@ -1450,6 +1450,7 @@ bonus:
     code: Codice
     uniqueCode: Codice univoco
     requestedAt: Richiesto il
+    consumedAt: Utilizzato il
     advice: "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso la "
     status: Stato
     name: Bonus Vacanze
@@ -1577,6 +1578,8 @@ bonus:
         text3: informativa sul trattamento dei dati personali
       bankName: Denominazione della banca
     onboarding:
+      loadingActivationStatus:
+        title: Verifico lo stato di attivazione
       declaration:
         header: Per poter attivare il cashback devi dichiarare
         conditions:
@@ -1588,6 +1591,9 @@ bonus:
         disclaimer:
           normal: "Questa autodichirazione è resa ai sensi del "
           link: dpr 28 dicembre 2000 n. 445 art 46 e 47
+      loadingActivateBpd:
+        title: "Stiamo attivando il cashback"
+        body: "Ti preghiamo di attendere."
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

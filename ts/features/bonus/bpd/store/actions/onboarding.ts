@@ -3,7 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { CitizenResource } from "../../../../../../definitions/bpd/citizen/CitizenResource";
+import { BpdActivationPayload } from "./details";
 
 /**
  * Enroll the user to the bpd program
@@ -13,7 +13,7 @@ export const bpdEnrollUserToProgram = createAsyncAction(
   "BPD_ENROLL_REQUEST",
   "BPD_ENROLL_SUCCESS",
   "BPD_ENROLL_FAILURE"
-)<void, CitizenResource, Error>();
+)<void, BpdActivationPayload, Error>();
 
 /**
  * Start the onboarding workflow
