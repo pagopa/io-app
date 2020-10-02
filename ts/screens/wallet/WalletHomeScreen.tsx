@@ -35,7 +35,6 @@ import {
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
-import { bpdIbanInsertionStart } from "../../features/bonus/bpd/store/actions/iban";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -542,7 +541,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  navigateToPaymentScanQrCode: () => dispatch(bpdIbanInsertionStart()),
+  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(
