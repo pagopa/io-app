@@ -14,7 +14,7 @@ import IbanKoCannotVerify from "./IbanKOCannotVerify";
 import IbanKoNotOwned from "./IbanKONotOwned";
 import IbanKOWrong from "./IbanKOWrong";
 import IbanLoadingUpsert from "./IbanLoadingUpsert";
-import IbanInsertionScreen from "./IbanInsertionScreen";
+import IbanInsertionScreen from "./insertion/IbanInsertionScreen";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
