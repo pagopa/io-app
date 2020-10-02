@@ -17,8 +17,8 @@ import { authenticationSaga } from "../authenticationSaga";
 const aSessionToken = "a_session_token" as SessionToken;
 
 jest.mock("react-native-background-timer", () => ({
-    startTimer: jest.fn()
-  }));
+  startTimer: jest.fn()
+}));
 
 describe("authenticationSaga", () => {
   it("should always navigate to authentication screen and return the session token on login success", () => {

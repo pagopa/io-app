@@ -330,9 +330,7 @@ class AddCardScreen extends React.Component<Props, State> {
   }
 
   private isValidPan() {
-    return this.state.pan
-      .map(pan => CreditCardPan.is(pan))
-      .toUndefined();
+    return this.state.pan.map(pan => CreditCardPan.is(pan)).toUndefined();
   }
 
   private isValidExpirationDate() {

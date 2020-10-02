@@ -13,7 +13,8 @@ export const share = (
   url: string,
   message?: string,
   failOnCancel: boolean = false
-) => tryCatch(
+) =>
+  tryCatch(
     () =>
       Share.open({
         url,
