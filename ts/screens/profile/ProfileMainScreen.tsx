@@ -485,12 +485,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                       true
                     )}
 
-                  {isDevEnv &&
-                    this.debugListItem(
-                      "Leave BPD",
-                      this.props.dispatchLeaveBpd,
-                      true
-                    )}
+                  {this.debugListItem(
+                    "Leave BPD",
+                    this.props.dispatchLeaveBpd,
+                    true
+                  )}
                 </React.Fragment>
               )}
             </React.Fragment>
