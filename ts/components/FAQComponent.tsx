@@ -12,18 +12,18 @@ type Props = Readonly<{
 }>;
 
 const FAQComponent: React.FunctionComponent<Props> = (props: Props) => (
-    <>
-      {getFAQsFromCategories(props.faqCategories).map(
-        (faqType: FAQType, i: number) => (
-          <Accordion
-            key={i}
-            title={faqType.title}
-            content={faqType.content}
-            onLinkClicked={props.onLinkClicked}
-          />
-        )
-      )}
-    </>
-  );
+  <>
+    {getFAQsFromCategories(props.faqCategories).map(
+      (faqType: FAQType, i: number) => (
+        <Accordion
+          key={i}
+          title={faqType.title}
+          content={faqType.content}
+          onLinkClicked={props.onLinkClicked}
+        />
+      )
+    )}
+  </>
+);
 
 export default FAQComponent;

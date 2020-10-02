@@ -33,16 +33,16 @@ export default class MedicalPrescriptionIdentifiersComponent extends React.PureC
   Props
 > {
   private renderItem = (label: string, value: string) => (
-      <React.Fragment>
-        <Text>{label}</Text>
-        <View style={styles.row}>
-          <Text style={styles.value} bold={true}>
-            {value}
-          </Text>
-          <CopyButtonComponent textToCopy={value} />
-        </View>
-      </React.Fragment>
-    );
+    <React.Fragment>
+      <Text>{label}</Text>
+      <View style={styles.row}>
+        <Text style={styles.value} bold={true}>
+          {value}
+        </Text>
+        <CopyButtonComponent textToCopy={value} />
+      </View>
+    </React.Fragment>
+  );
 
   public render() {
     const { prescriptionData } = this.props;

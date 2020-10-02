@@ -127,7 +127,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
    * - _undefined_, if email field is empty. This state is consumed by
    * LabelledItem Component and it used for style pourposes ONLY.
    */
-  private isValidEmail = () => this.state.email
+  private isValidEmail = () =>
+    this.state.email
       .map(value => {
         if (EMPTY_EMAIL === value) {
           return undefined;

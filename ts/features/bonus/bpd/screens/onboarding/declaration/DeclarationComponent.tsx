@@ -63,9 +63,7 @@ const generateRequiredConditions = (
     <DeclarationEntry
       text={condition}
       key={index}
-      onValueChange={newValue =>
-        dispatch(newValue ? "increment" : "decrement")
-      }
+      onValueChange={newValue => dispatch(newValue ? "increment" : "decrement")}
     />
   ));
 

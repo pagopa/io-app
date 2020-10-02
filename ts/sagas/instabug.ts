@@ -5,14 +5,16 @@ import {
   updateInstabugUnreadMessages
 } from "../store/actions/instabug";
 
-const loadInstabugUnreadMessages = () => new Promise<number>(resolve => {
+const loadInstabugUnreadMessages = () =>
+  new Promise<number>(resolve => {
     Replies.getUnreadRepliesCount(count => {
       resolve(count);
     });
   });
 
 // promise will be resolver when the OnNewReplyReceivedCallback will be executed
-const onNewReplyReceived = () => new Promise<void>(resolve => {
+const onNewReplyReceived = () =>
+  new Promise<void>(resolve => {
     Replies.setOnNewReplyReceivedCallback(() => {
       resolve();
     });
