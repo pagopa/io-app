@@ -57,4 +57,5 @@ export type BpdOnboardingActions =
   | ActionType<typeof bpdOnboardingStart>
   | ActionType<typeof bpdUserActivate>
   | ActionType<typeof bpdOnboardingAcceptDeclaration>
-  | ActionType<typeof bpdOnboardingCancel>;
+  | ActionType<typeof bpdOnboardingCancel>
+  | ActionType<typeof bpdDeleteUserFromProgram>;
