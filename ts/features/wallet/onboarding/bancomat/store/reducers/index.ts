@@ -26,7 +26,7 @@ const abiReducer = (
     case getType(loadAbi.request):
       return remoteLoading;
     case getType(loadAbi.success):
-      // since all fields are optional we ensure to index only entry those have abi defined
+      // since all fields are optional we ensure to index only entries those have abi defined
       const indexedAbi: IndexedById<Abi> = fromNullable(
         action.payload.data
       ).fold({}, abis =>

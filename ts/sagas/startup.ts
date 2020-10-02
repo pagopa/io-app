@@ -296,13 +296,6 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     // Start watching for requests about bonus
     yield fork(watchBonusSaga, sessionToken);
   }
-  const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select(
-    isPagoPATestEnabledSelector
-  );
-
-  // the wallet token is available,
-  // proceed with starting the "watch wallet" saga
-  const walletToken = maybeSessionInformation.value.walletToken;
 
   if (bpdEnabled) {
     // Start watching for actions about bonus bpd
@@ -311,6 +304,14 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   // Load the user metadata
   yield call(loadUserMetadata, backendClient.getUserMetadata, true);
+
+  // the wallet token is available,
+  // proceed with starting the "watch wallet" saga
+  const walletToken = maybeSessionInformation.value.walletToken;
+
+  const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select(
+    isPagoPATestEnabledSelector
+  );
 
   yield fork(
     watchWalletSaga,
