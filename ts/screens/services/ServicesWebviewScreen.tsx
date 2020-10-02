@@ -89,7 +89,7 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
             props.navigationParams.isRight() && (
               <RegionServiceWebView
                 uri={props.navigationParams.value.url}
-                onModalClose={handleGoBack}
+                onWebviewClose={handleGoBack}
               />
             )}
         </Content>
