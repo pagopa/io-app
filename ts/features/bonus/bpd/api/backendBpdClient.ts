@@ -2,6 +2,7 @@ import {
   ApiHeaderJson,
   composeHeaderProducers,
   createFetchRequestForApi,
+  MapResponseType,
   RequestHeaderProducer
 } from "italia-ts-commons/lib/requests";
 import * as t from "io-ts";
@@ -33,7 +34,12 @@ const headersProducers = <
     "Ocp-Apim-Subscription-Key" | "Content-Type" | "Authorization"
   >;
 
-const findT: FindUsingGETT = {
+type FindUsingGETTExtra = MapResponseType<
+  FindUsingGETT,
+  200,
+  PatchedCitizenResource
+>;
+const findT: FindUsingGETTExtra = {
   method: "get",
   url: () => `/bpd/io/citizen`,
   query: _ => ({}),
@@ -41,7 +47,12 @@ const findT: FindUsingGETT = {
   response_decoder: findUsingGETDecoder(PatchedCitizenResource)
 };
 
-const enrollCitizenIOT: EnrollmentT = {
+type EnrollmentTTExtra = MapResponseType<
+  EnrollmentT,
+  200,
+  PatchedCitizenResource
+>;
+const enrollCitizenIOT: EnrollmentTTExtra = {
   method: "put",
   url: () => `/bpd/io/citizen`,
   query: _ => ({}),
