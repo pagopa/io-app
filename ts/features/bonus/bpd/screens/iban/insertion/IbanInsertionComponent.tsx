@@ -32,7 +32,8 @@ const loadLocales = () => ({
 
 export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
   const [iban, setIban] = useState("");
-  const isInvalidIban = () => iban.length > 0 && Iban.decode(iban).isLeft();
+  const isInvalidIban = iban.length > 0 && Iban.decode(iban).isLeft();
+  const userCanContinue = !isInvalidIban && iban.length > 0;
   const {
     headerTitle,
     title,
@@ -52,7 +53,7 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
           <Body>{body1}</Body>
           <View spacer={true} large={true} />
           <H5>{ibanDescription}</H5>
-          <Item error={isInvalidIban()}>
+          <Item error={isInvalidIban}>
             <Input
               value={iban}
               maxLength={IbanMaxLength}
@@ -64,7 +65,7 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
           <Body>{body2}</Body>
         </View>
         <FooterTwoButtons
-          rightDisabled={isInvalidIban()}
+          rightDisabled={!userCanContinue}
           onRight={() => Iban.decode(iban).map(i => props.onIbanConfirm(i))}
           onCancel={props.onContinue}
           rightText={I18n.t("global.buttons.continue")}
