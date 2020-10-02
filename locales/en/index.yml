@@ -192,8 +192,8 @@ profile:
       subtitle: Here you find information on the legal conditions and on the processing of your personal data.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
-        title: Delete your profile
-        description: Request cancellation of information related to your IO profile
+        title: Delete your account
+        description: Permanently delete your account and your information
         alert:
           requestTitle: Are you sure you want request the cancellation of your account?
           requestSubtitle: To use IO you will need to register again. The cancellation does not concern the data processed by public administrations.

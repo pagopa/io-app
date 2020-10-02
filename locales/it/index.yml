@@ -192,8 +192,8 @@ profile:
       subtitle: Qui trovi informazioni sulle condizioni legali e sul trattamento dei tuoi dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
-        title: Cancella il tuo profilo
-        description: Richiedi cancellazione delle informazioni relative al tuo profilo IO
+        title: Elimina il tuo account
+        description: Cancella in modo permanente il tuo account e le tue informazioni
         alert:
           requestTitle: Sei sicuro di voler richiedere la cancellazione del tuo account?
           requestSubtitle: Per usare IO dovrai registrarti nuovamente. La cancellazione non riguarda i dati trattati per conto degli Enti Erogatori.
