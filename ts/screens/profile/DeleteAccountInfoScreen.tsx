@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A screen to explain how profile data export works.
- * Here user can ask to download his data
+ * A screen to explain how the account removal works.
+ * Here user can ask to delete his account
  */
 class DeleteAccountInfo extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -100,19 +100,17 @@ class DeleteAccountInfo extends React.PureComponent<Props, State> {
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
         goBack={true}
-        headerTitle={I18n.t("profile.main.privacy.exportData.title")}
+        headerTitle={I18n.t("profile.main.title")}
       >
         <ScreenContent
-          title={I18n.t("profile.main.privacy.exportData.title")}
-          subtitle={I18n.t("profile.main.privacy.exportData.info.title")}
+          title={I18n.t("profile.main.privacy.removeAccountInfo.title")}
           bounces={false}
         >
           <View style={styles.markdownContainer}>
-            <Text>pippo</Text>
             <Markdown
               onLoadEnd={() => this.setState({ isMarkdownLoaded: true })}
             >
-              {I18n.t("profile.main.privacy.exportData.info.body")}
+              {I18n.t("profile.main.privacy.removeAccountInfo.body")}
             </Markdown>
             {this.state.isMarkdownLoaded && <EdgeBorderComponent />}
           </View>
@@ -124,7 +122,7 @@ class DeleteAccountInfo extends React.PureComponent<Props, State> {
               block: true,
               primary: true,
               onPress: this.handleDownloadPress,
-              title: I18n.t("profile.main.privacy.exportData.cta")
+              title: I18n.t("profile.main.privacy.removeAccountInfo.cta")
             }}
           />
         )}
