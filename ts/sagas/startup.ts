@@ -306,12 +306,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   if (bpdEnabled) {
     // Start watching for actions about bonus bpd
-    yield fork(
-      watchBonusBpdSaga,
-      maybeSessionInformation.value.bpdToken,
-      isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix,
-      walletToken
-    );
+    yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
   }
 
   // Load the user metadata

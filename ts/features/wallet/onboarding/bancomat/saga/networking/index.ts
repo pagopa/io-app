@@ -6,7 +6,7 @@ import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { loadAbi } from "../../store/actions";
 
-// load all bancomat banks
+// load all bancomat abi
 export function* handleLoadAbi(
   getAbi: ReturnType<typeof PaymentManagerClient>["getAbi"],
   sessionManager: SessionManager<PaymentManagerToken>

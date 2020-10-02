@@ -1,10 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import {
-  apiUrlPrefix,
-  fetchPaymentManagerLongTimeout
-} from "../../../../config";
+import { apiUrlPrefix } from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import {
   bpdLoadActivationStatus,
@@ -19,23 +16,10 @@ import { getCitizen, putEnrollCitizen } from "./networking";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
 import { patchCitizenIban } from "./networking/patchCitizenIban";
-import { PaymentManagerClient } from "../../../../api/pagopa";
-import { defaultRetryingFetch } from "../../../../utils/fetch";
-import { loadBancomatAbi } from "../../../wallet/onboarding/bancomat/saga/networking";
 
 // watch all events about bpd
-export function* watchBonusBpdSaga(
-  bpdBearerToken: string,
-  paymentManagerUrlPrefix: string,
-  walletToken: string
-): SagaIterator {
+export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   const bpdBackendClient = BackendBpdClient(apiUrlPrefix, bpdBearerToken);
-  const paymentManagerClient: PaymentManagerClient = PaymentManagerClient(
-    paymentManagerUrlPrefix,
-    walletToken,
-    defaultRetryingFetch(),
-    defaultRetryingFetch(fetchPaymentManagerLongTimeout, 0)
-  );
 
   // load citizen details
   yield takeLatest(

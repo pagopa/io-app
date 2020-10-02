@@ -368,7 +368,7 @@ const deleteWallet: DeleteWalletUsingDELETET = {
   response_decoder: constantEmptyDecoder
 };
 
-const getBancomatAbi: GetAbiUsingGetT = {
+const getAbi: GetAbiUsingGetT = {
   method: "get",
   url: () => `/v1/bancomat/abi`,
   query: () => ({}),
@@ -529,9 +529,7 @@ export function PaymentManagerClient(
         id
       }),
     getAbi: flip(
-      withPaymentManagerToken(
-        createFetchRequestForApi(getBancomatAbi, altOptions)
-      )
+      withPaymentManagerToken(createFetchRequestForApi(getAbi, altOptions))
     )({})
   };
 }
