@@ -8,12 +8,16 @@ import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
-  enrollmentDefaultDecoder,
+  deleteUsingDELETEDefaultDecoder,
+  DeleteUsingDELETET,
+  enrollmentDecoder,
   EnrollmentT,
-  findUsingGETDefaultDecoder,
+  findUsingGETDecoder,
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
 import { Iban } from "../../../../../definitions/backend/Iban";
+import { bpdApiKey } from "../../../../config";
+import { PatchedCitizenResource } from "./patched_types";
 
 const headersProducers = <
   P extends {
@@ -31,19 +35,27 @@ const headersProducers = <
 
 const findT: FindUsingGETT = {
   method: "get",
-  url: () => `/bonus/bpd/io/citizen`,
+  url: () => `/bpd/io/citizen`,
   query: _ => ({}),
   headers: headersProducers(),
-  response_decoder: findUsingGETDefaultDecoder()
+  response_decoder: findUsingGETDecoder(PatchedCitizenResource)
 };
 
 const enrollCitizenIOT: EnrollmentT = {
   method: "put",
-  url: () => `/bonus/bpd/io/citizen`,
+  url: () => `/bpd/io/citizen`,
   query: _ => ({}),
   body: _ => "",
   headers: composeHeaderProducers(headersProducers(), ApiHeaderJson),
-  response_decoder: enrollmentDefaultDecoder()
+  response_decoder: enrollmentDecoder(PatchedCitizenResource)
+};
+
+const deleteCitizenIOT: DeleteUsingDELETET = {
+  method: "delete",
+  url: () => `/bpd/io/citizen`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: deleteUsingDELETEDefaultDecoder()
 };
 
 // decoders composition to handle updatePaymentMethod response
@@ -85,7 +97,7 @@ const updatePaymentMethodT = (
 ): (() => Promise<t.Validation<finalType>>) => () =>
   new Promise((res, rej) => {
     options
-      .fetchApi(`${options.baseUrl}/bonus/bpd/io/citizen`, {
+      .fetchApi(`${options.baseUrl}/bpd/io/citizen`, {
         method: "patch",
         headers,
         body: JSON.stringify(iban)
@@ -104,13 +116,13 @@ type Options = {
 export function BackendBpdClient(
   baseUrl: string,
   token: string,
+  fiscalCode: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
   const options: Options = {
     baseUrl,
     fetchApi
   };
-
   // withBearerToken injects the header "Bearer" with token
   // and "Ocp-Apim-Subscription-Key" with an hard-coded value (perhaps it won't be used)
   type extendHeaders = {
@@ -119,16 +131,29 @@ export function BackendBpdClient(
     readonly Bearer?: string;
     ["Ocp-Apim-Subscription-Key"]?: string;
   };
+
+  // FIX ME !this code must be removed!
+  // only for test purpose
+  const withTestToken = () =>
+    fetchApi(
+      `https://bpd-dev.azure-api.net/bpd/pagopa/api/v1/login?fiscalCode=${fiscalCode}`,
+      {
+        method: "post"
+      }
+    );
+
   const withBearerToken = <P extends extendHeaders, R>(
     f: (p: P) => Promise<R>
   ) => async (po: P): Promise<R> => {
-    const params = Object.assign(buildHeaders(token), po) as P;
+    const reqTestToken = await withTestToken();
+    const testToken = await reqTestToken.text();
+    const params = Object.assign(buildHeaders(testToken), po) as P;
     return f(params);
   };
 
   const buildHeaders = (token: string, content_type?: string) => {
     const headers = {
-      "Ocp-Apim-Subscription-Key": "dummy_key",
+      "Ocp-Apim-Subscription-Key": bpdApiKey,
       Bearer: token
     };
     return content_type
@@ -140,6 +165,9 @@ export function BackendBpdClient(
     find: withBearerToken(createFetchRequestForApi(findT, options)),
     enrollCitizenIO: withBearerToken(
       createFetchRequestForApi(enrollCitizenIOT, options)
+    ),
+    deleteCitizenIO: withBearerToken(
+      createFetchRequestForApi(deleteCitizenIOT, options)
     ),
     updatePaymentMethod: (iban: Iban) =>
       updatePaymentMethodT(

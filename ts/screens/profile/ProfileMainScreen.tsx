@@ -52,6 +52,7 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { bpdDeleteUserFromProgram } from "../../features/bonus/bpd/store/actions/onboarding";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -483,6 +484,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                       this.props.dispatchSessionExpired,
                       true
                     )}
+
+                  {isDevEnv &&
+                    this.debugListItem(
+                      "Leave BPD",
+                      this.props.dispatchLeaveBpd,
+                      true
+                    )}
                 </React.Fragment>
               )}
             </React.Fragment>
@@ -548,6 +556,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
     ),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
+  dispatchLeaveBpd: () => dispatch(bpdDeleteUserFromProgram.request()),
   dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
     dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });

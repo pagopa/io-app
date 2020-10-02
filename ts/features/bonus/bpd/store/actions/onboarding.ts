@@ -16,6 +16,15 @@ export const bpdEnrollUserToProgram = createAsyncAction(
 )<void, BpdActivationPayload, Error>();
 
 /**
+ * delete user from bpd program
+ */
+export const bpdDeleteUserFromProgram = createAsyncAction(
+  "BPD_DELETE_REQUEST",
+  "BPD_DELETE_SUCCESS",
+  "BPD_DELETE_FAILURE"
+)<void, void, Error>();
+
+/**
  * Start the onboarding workflow
  */
 export const bpdOnboardingStart = createStandardAction("BPD_ONBOARDING_START")<
