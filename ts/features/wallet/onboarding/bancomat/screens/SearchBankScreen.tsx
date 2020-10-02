@@ -19,6 +19,8 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { withLightModalContext } from "../../../../../components/helpers/withLightModalContext";
 import { LightModalContextInterface } from "../../../../../components/ui/LightModal";
 import TosBonusComponent from "../../../../bonus/bonusVacanze/components/TosBonusComponent";
+import { sortAbiByName } from "../utils/abi";
+import { debounce } from "lodash";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
@@ -46,15 +48,18 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     />
   );
 
-  const handleFilter = (text: string) => {
+  const debounceSearch = debounce((text: string) => {
     setIsSearchStarted(true);
     const resultList = props.bankList.filter(
       bank =>
         bank.abi.toLowerCase().indexOf(text.toLowerCase()) > -1 ||
         bank.name.toLowerCase().indexOf(text.toLowerCase()) > -1
     );
-    setFilteredList(resultList);
+    setFilteredList(sortAbiByName(resultList));
+  }, 200);
+  const handleFilter = (text: string) => {
     setSearchText(text);
+    debounceSearch(text);
   };
 
   const keyExtractor = (bank: any): string => bank.abi;
@@ -92,11 +97,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} />
           <Label>{I18n.t("bonus.bpd.searchAbi.bankName")}</Label>
           <Item>
-            <Input
-              placeholder={I18n.t("bonus.bpd.searchAbi.bankName")}
-              value={searchText}
-              onChangeText={handleFilter}
-            />
+            <Input value={searchText} onChangeText={handleFilter} />
             <IconFont name="io-search" />
           </Item>
           <View spacer={true} />
@@ -109,7 +110,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(
-            props.onCanel,
+            props.onCancel,
             I18n.t("global.buttons.cancel")
           )}
           rightButton={confirmButtonProps(
@@ -123,7 +124,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCanel: () => dispatch(navigateBack()),
+  onCancel: () => dispatch(navigateBack()),
   onItemPress: () => null,
   onContinue: () => null
 });
