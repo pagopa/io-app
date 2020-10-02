@@ -77,7 +77,8 @@ const reducer = (
 };
 
 // Selectors
-export const servicesByIdSelector = (state: GlobalState): ServicesByIdState => state.entities.services.byId;
+export const servicesByIdSelector = (state: GlobalState): ServicesByIdState =>
+  state.entities.services.byId;
 
 export const serviceByIdSelector = (id: string) => (
   state: GlobalState

@@ -147,16 +147,16 @@ class ServicesTab extends React.PureComponent<Props> {
   };
 
   private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => (
-      <TouchableOpacity onPress={() => this.onPressItem(section)}>
-        <View style={styles.iconContainer}>
-          <IconFont
-            name={"io-trash"}
-            color={customVariables.brandMildGray}
-            size={ICON_SIZE}
-          />
-        </View>
-      </TouchableOpacity>
-    );
+    <TouchableOpacity onPress={() => this.onPressItem(section)}>
+      <View style={styles.iconContainer}>
+        <IconFont
+          name={"io-trash"}
+          color={customVariables.brandMildGray}
+          size={ICON_SIZE}
+        />
+      </View>
+    </TouchableOpacity>
+  );
 
   private renderSwitchAllOrganizationServices = (
     section: ServicesSectionState
@@ -201,15 +201,15 @@ class ServicesTab extends React.PureComponent<Props> {
   };
 
   private onTabScroll = () => ({
-      onScroll: Animated.event([
-        {
-          nativeEvent: {
-            contentOffset: { y: this.props.tabScrollOffset }
-          }
+    onScroll: Animated.event([
+      {
+        nativeEvent: {
+          contentOffset: { y: this.props.tabScrollOffset }
         }
-      ]),
-      scrollEventThrottle: 8
-    });
+      }
+    ]),
+    scrollEventThrottle: 8
+  });
 
   public render() {
     // the right icon in the organization section could be
@@ -254,9 +254,9 @@ const mapStateToProps = (state: GlobalState) => {
   const localServicesSections = localServicesSectionsSelector(state);
   const selectableOrganizations = localServicesSections.map(
     (section: ServicesSectionState) => ({
-        name: section.organizationName,
-        fiscalCode: section.organizationFiscalCode
-      })
+      name: section.organizationName,
+      fiscalCode: section.organizationFiscalCode
+    })
   );
   const potUserMetadata = userMetadataSelector(state);
   const userMetadata = pot.getOrElse(potUserMetadata, undefined);

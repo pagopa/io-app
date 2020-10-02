@@ -77,7 +77,7 @@ export const getFAQsFromCategories = (
   );
 
   return Array.from(faqIDs).map<FAQType>(id => ({
-      title: I18n.t(`faq.${id}.title`, { defaultValue: "faq title n/a" }),
-      content: I18n.t(`faq.${id}.content`, { defaultValue: "faq content n/a" })
-    }));
+    title: I18n.t(`faq.${id}.title`, { defaultValue: "faq title n/a" }),
+    content: I18n.t(`faq.${id}.content`, { defaultValue: "faq content n/a" })
+  }));
 };
