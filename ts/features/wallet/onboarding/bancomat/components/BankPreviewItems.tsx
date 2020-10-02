@@ -1,6 +1,6 @@
 import { ListItem, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -50,17 +50,15 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
     Image.getSize(props.bank.logoUrl, handleImageDimensionSuccess);
   }, []);
 
+  const imageStyle: StyleProp<ImageStyle> = {
+    width: imageW,
+    height: BASE_IMG_H,
+    resizeMode: "contain"
+  };
   return props.inList ? (
     <ListItem style={styles.flexRow} onPress={props.onPress}>
       <View style={styles.listItem}>
-        <Image
-          style={{
-            width: imageW,
-            height: BASE_IMG_H,
-            resizeMode: "contain"
-          }}
-          source={{ uri: props.bank.logoUrl }}
-        />
+        <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
         <View spacer={true} />
         <LabelSmall color={"bluegrey"} weight={"Bold"}>
           {props.bank.name}
@@ -74,7 +72,7 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
       style={styles.gridItem}
       onPress={props.onPress}
     >
-      <Image style={styles.imageStyle} source={{ uri: props.bank.logoUrl }} />
+      <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
       <View spacer={true} />
       <LabelSmall color={"bluegrey"} weight={"Bold"}>
         {props.bank.name}
