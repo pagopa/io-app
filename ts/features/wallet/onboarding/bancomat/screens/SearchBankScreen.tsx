@@ -3,6 +3,7 @@ import * as React from "react";
 import { FlatList, ListRenderItemInfo, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { debounce } from "lodash";
 import { Link } from "../../../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -20,7 +21,6 @@ import { withLightModalContext } from "../../../../../components/helpers/withLig
 import { LightModalContextInterface } from "../../../../../components/ui/LightModal";
 import TosBonusComponent from "../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import { sortAbiByName } from "../utils/abi";
-import { debounce } from "lodash";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
