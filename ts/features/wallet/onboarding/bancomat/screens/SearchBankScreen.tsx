@@ -21,6 +21,7 @@ import { withLightModalContext } from "../../../../../components/helpers/withLig
 import { LightModalContextInterface } from "../../../../../components/ui/LightModal";
 import TosBonusComponent from "../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import { sortAbiByName } from "../utils/abi";
+import { Body } from "../../../../../components/core/typography/Body";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
@@ -49,14 +50,20 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   const debounceSearch = debounce((text: string) => {
-    setIsSearchStarted(true);
-    const resultList = props.bankList.filter(
-      bank =>
-        bank.abi.toLowerCase().indexOf(text.toLowerCase()) > -1 ||
-        bank.name.toLowerCase().indexOf(text.toLowerCase()) > -1
-    );
-    setFilteredList(sortAbiByName(resultList));
+    if (text.length === 0) {
+      setIsSearchStarted(false);
+      setFilteredList([]);
+    } else {
+      setIsSearchStarted(true);
+      const resultList = props.bankList.filter(
+        bank =>
+          bank.abi.toLowerCase().indexOf(text.toLowerCase()) > -1 ||
+          bank.name.toLowerCase().indexOf(text.toLowerCase()) > -1
+      );
+      setFilteredList(sortAbiByName(resultList));
+    }
   }, 200);
+
   const handleFilter = (text: string) => {
     setSearchText(text);
     debounceSearch(text);
@@ -76,26 +83,26 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerTitle={I18n.t("bonus.bpd.searchAbi.title")}
+      headerTitle={I18n.t("wallet.searchAbi.title")}
     >
       <SafeAreaView style={{ flex: 1 }}>
         <Content style={{ flex: 1 }}>
           {!isSearchStarted && (
             <>
               <View spacer={true} large={true} />
-              <Text>
+              <Body>
                 <Text bold={true}>
-                  {I18n.t("bonus.bpd.searchAbi.description.text1")}
+                  {I18n.t("wallet.searchAbi.description.text1")}
                 </Text>
-                {I18n.t("bonus.bpd.searchAbi.description.text2")}
+                {I18n.t("wallet.searchAbi.description.text2")}
                 <Link onPress={openTosModal}>
-                  {I18n.t("bonus.bpd.searchAbi.description.text3")}
+                  {I18n.t("wallet.searchAbi.description.text3")}
                 </Link>
-              </Text>
+              </Body>
             </>
           )}
           <View spacer={true} />
-          <Label>{I18n.t("bonus.bpd.searchAbi.bankName")}</Label>
+          <Label>{I18n.t("wallet.searchAbi.bankName")}</Label>
           <Item>
             <Input value={searchText} onChangeText={handleFilter} />
             <IconFont name="io-search" />

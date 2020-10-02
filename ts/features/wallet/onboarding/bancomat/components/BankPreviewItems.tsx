@@ -1,6 +1,7 @@
 import { ListItem, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
+import { RTron } from "../../../../../boot/configureStoreAndPersistor";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -11,6 +12,9 @@ type Props = {
   inList: boolean;
   onPress: () => void;
 };
+
+const BASE_IMG_H = 40;
+const BASE_IMG_W = 160;
 
 const styles = StyleSheet.create({
   flexRow: {
@@ -31,21 +35,39 @@ const styles = StyleSheet.create({
     width: 156,
     flexDirection: "column",
     flex: 1
-  },
-  imageStyle: {
-    width: 156,
-    height: 30,
-    resizeMode: "cover"
   }
 });
 
-export const BankPreviewItem: React.FunctionComponent<Props> = (props: Props) =>
-  props.inList ? (
+// width / height = 160 / x => x = (height / width) * 160
+
+// width / height = x / 40 => x = width / height * 40
+
+export const BankPreviewItem: React.FunctionComponent<Props> = (
+  props: Props
+) => {
+  const [imageW, setImageW] = React.useState(BASE_IMG_W);
+
+  const handleImageDimensionSuccess = (width: number, height: number) => {
+    setImageW((width / height) * BASE_IMG_H);
+  };
+
+  React.useEffect(() => {
+    Image.getSize(props.bank.logoUrl, handleImageDimensionSuccess);
+  }, []);
+
+  return props.inList ? (
     <ListItem style={styles.flexRow} onPress={props.onPress}>
       <View style={styles.listItem}>
-        <Image style={styles.imageStyle} source={{ uri: props.bank.logoUrl }} />
+        <Image
+          style={{
+            width: imageW,
+            height: BASE_IMG_H,
+            resizeMode: "contain"
+          }}
+          source={{ uri: props.bank.logoUrl }}
+        />
         <View spacer={true} />
-        <LabelSmall color={"bluegrey"} weight={"SemiBold"}>
+        <LabelSmall color={"bluegrey"} weight={"Bold"}>
           {props.bank.name}
         </LabelSmall>
       </View>
@@ -59,8 +81,9 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (props: Props) =>
     >
       <Image style={styles.imageStyle} source={{ uri: props.bank.logoUrl }} />
       <View spacer={true} />
-      <LabelSmall color={"bluegrey"} weight={"SemiBold"}>
+      <LabelSmall color={"bluegrey"} weight={"Bold"}>
         {props.bank.name}
       </LabelSmall>
     </ButtonDefaultOpacity>
   );
+};

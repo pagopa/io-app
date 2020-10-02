@@ -9,7 +9,7 @@ type AllowedColors = Extract<
   // tslint:disable-next-line:max-union-size
   "blue" | "bluegrey" | "red" | "white"
 >;
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold">;
+type AllowedWeight = Extract<IOFontWeight, "Bold">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>

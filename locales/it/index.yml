@@ -639,6 +639,13 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Pagamenti
+  searchAbi:
+    title: Aggiungi carta Bancomat
+    description:
+      text1: Se vuoi, puoi indicare la banca
+      text2: " su cui hai un carta Pagobancomat attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
+      text3: informativa sul trattamento dei dati personali
+    bankName: Denominazione della banca
   accessibility:
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
@@ -1570,13 +1577,6 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
     title: Cashback Pagamenti Digitali
-    searchAbi:
-      title: Aggiungi carta Bancomat
-      description:
-        text1: Se vuoi, puoi indicare la banca
-        text2: " su cui hai un carta Pagobancomat attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
-        text3: informativa sul trattamento dei dati personali
-      bankName: Denominazione della banca
     onboarding:
       loadingActivationStatus:
         title: Verifico lo stato di attivazione
