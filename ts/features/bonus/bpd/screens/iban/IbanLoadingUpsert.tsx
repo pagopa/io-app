@@ -10,7 +10,6 @@ import {
   bpdIbanInsertionCancel,
   bpdUpsertIban
 } from "../../store/actions/iban";
-import {} from "../../store/reducers/details/activation";
 import {
   bpdUpsertIbanIsError,
   bpdUpsertIbanSelector
@@ -19,6 +18,12 @@ import {
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+/**
+ * displays to the user a loading screen while sending the new iban or
+ * possibly an error screen in case of unmanaged errors.
+ * @param props
+ * @constructor
+ */
 const IbanLoadingUpsert: React.FunctionComponent<Props> = props => {
   useHardwareBackButton(() => {
     if (!props.isLoading) {
