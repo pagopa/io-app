@@ -777,7 +777,7 @@ wallet:
     object: Causale
     date: Data e ora
     iuv: Codice IUV
-    entityCode: Codice fiscale creditore
+    entityCode: Codice Fiscale Ente Creditore
     updatedAmount: Importo aggiornato
     fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
