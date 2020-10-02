@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -14,6 +14,7 @@ import ScreenContent from "../../components/screens/ScreenContent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
 import {
   resetUserDataProcessingRequest,
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
  * A screen to explain how the account removal works.
  * Here user can ask to delete his account
  */
-class DeleteAccountInfo extends React.PureComponent<Props, State> {
+class RemoveAccountInfo extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { isMarkdownLoaded: false };
@@ -75,25 +76,8 @@ class DeleteAccountInfo extends React.PureComponent<Props, State> {
     }
   }
 
-  private handleDownloadPress = (): void => {
-    Alert.alert(
-      I18n.t("profile.main.privacy.exportData.alert.requestTitle"),
-      undefined,
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel",
-          onPress: () => this.props.resetRequest()
-        },
-        {
-          text: I18n.t("global.buttons.continue"),
-          style: "default",
-          onPress: () => {
-            this.props.upsertUserDataProcessing();
-          }
-        }
-      ]
-    );
+  private handleContinuePress = (): void => {
+    this.props.navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
   };
 
   public render() {
@@ -121,7 +105,7 @@ class DeleteAccountInfo extends React.PureComponent<Props, State> {
             leftButton={{
               block: true,
               primary: true,
-              onPress: this.handleDownloadPress,
+              onPress: this.handleContinuePress,
               title: I18n.t("profile.main.privacy.removeAccountInfo.cta")
             }}
           />
@@ -154,4 +138,4 @@ function mapStateToProps(state: GlobalState) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeleteAccountInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(RemoveAccountInfo);
