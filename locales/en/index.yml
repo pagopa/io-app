@@ -1537,6 +1537,13 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
     title: Cashback Digital Payments
+    searchAbi:
+      title: Add Bancomat card
+      description:
+        text1: If you prefer, you can indicate the bank
+        text2: " on which you have an active Pagobancomat card. Otherwise we will look for all the cards associated with you: by continuing you accept the "
+        text3: information on the processing of personal data
+      bankName: Name of the bank
     onboarding:
       declaration:
         header: In order to activate the cashback you must declare

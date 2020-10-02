@@ -13,12 +13,15 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../../../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import I18n from "../../../../../i18n";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { withLightModalContext } from "../../../../../components/helpers/withLightModalContext";
+import { LightModalContextInterface } from "../../../../../components/ui/LightModal";
+import TosBonusComponent from "../../../../bonus/bonusVacanze/components/TosBonusComponent";
 
-type Props = ReturnType<typeof mapStateToProps> &
+type Props = LightModalContextInterface &
+  ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 /**
  * This screen allows the user to choose a specific bank to search for their Bancomat.
@@ -54,32 +57,54 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     setSearchText(text);
   };
 
+  const keyExtractor = (bank: any): string => bank.abi;
+
+  const openTosModal = () => {
+    props.showModal(
+      <TosBonusComponent
+        tos_url={"https://google.com"}
+        onClose={props.hideModal}
+      />
+    );
+  };
+
   return (
-    <BaseScreenComponent goBack={true} headerTitle={"Aggiungi carta Bancomat"}>
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("bonus.bpd.searchAbi.title")}
+    >
       <SafeAreaView style={{ flex: 1 }}>
         <Content style={{ flex: 1 }}>
           {!isSearchStarted && (
             <>
               <View spacer={true} large={true} />
               <Text>
-                <Text bold={true}>{"Se vuoi, puoi indicare la banca"}</Text>{" "}
-                {
-                  "su cui hai un carta Pagobancomat attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
-                }
-                <Link onPress={() => null}>
-                  {"informativa sul trattamento dei dati personali"}
+                <Text bold={true}>
+                  {I18n.t("bonus.bpd.searchAbi.description.text1")}
+                </Text>
+                {I18n.t("bonus.bpd.searchAbi.description.text2")}
+                <Link onPress={openTosModal}>
+                  {I18n.t("bonus.bpd.searchAbi.description.text3")}
                 </Link>
               </Text>
             </>
           )}
           <View spacer={true} />
-          <Item floatingLabel>
-            <Label>{"Denominazione della banca"}</Label>
-            <Input value={searchText} onChangeText={handleFilter} />
+          <Label>{I18n.t("bonus.bpd.searchAbi.bankName")}</Label>
+          <Item>
+            <Input
+              placeholder={I18n.t("bonus.bpd.searchAbi.bankName")}
+              value={searchText}
+              onChangeText={handleFilter}
+            />
             <IconFont name="io-search" />
           </Item>
           <View spacer={true} />
-          <FlatList data={filteredList} renderItem={renderListItem(true)} />
+          <FlatList
+            data={filteredList}
+            renderItem={renderListItem(true)}
+            keyExtractor={keyExtractor}
+          />
         </Content>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
@@ -107,4 +132,6 @@ const mapStateToProps = (_: GlobalState) => ({
   bankList: abis
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBankScreen);
+export default withLightModalContext(
+  connect(mapStateToProps, mapDispatchToProps)(SearchBankScreen)
+);
