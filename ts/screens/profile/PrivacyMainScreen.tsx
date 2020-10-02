@@ -227,10 +227,8 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                 "profile.main.privacy.removeAccount.description"
               )}
               onPress={() =>
-                this.setState({ requestProcess: true }, () =>
-                  this.props.loadUserDataRequest(
-                    UserDataProcessingChoiceEnum.DELETE
-                  )
+                this.props.navigation.navigate(
+                  ROUTES.PROFILE_REMOVE_ACCOUNT_INFO
                 )
               }
               useExtendedSubTitle={true}
