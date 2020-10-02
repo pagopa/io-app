@@ -1,7 +1,6 @@
 import { ListItem, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { RTron } from "../../../../../boot/configureStoreAndPersistor";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -37,10 +36,6 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
-
-// width / height = 160 / x => x = (height / width) * 160
-
-// width / height = x / 40 => x = width / height * 40
 
 export const BankPreviewItem: React.FunctionComponent<Props> = (
   props: Props
