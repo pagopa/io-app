@@ -17,7 +17,7 @@ import {
 } from "../../../../../definitions/bpd/citizen/requestTypes";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { bpdApiKey } from "../../../../config";
-import { PatchedCitizenResource } from "./patched_types";
+import { PatchedCitizenResource } from "./patchedTypes";
 
 const headersProducers = <
   P extends {
