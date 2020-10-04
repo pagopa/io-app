@@ -1594,6 +1594,10 @@ bonus:
         title: "IBAN per l’accredito"
         body1: "Indica qui l’IBAN del tuo conto corrente, su cui vuoi ricevere l’accredito una volta consolidata la classifica."
         body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
+      koWrong:
+        title: "IBAN non corretto"
+        text1: "L'IBAN che hai inserito"
+        text2: "non risulta corretto: controllalo per piacere!"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

@@ -1562,7 +1562,10 @@ bonus:
         title: "IBAN for accreditation"
         body1: "Indicate here the IBAN of your current account, on which you want to receive credit once the ranking has been consolidated."
         body2: "The IBAN will be checked to find out if the relevant current account is in your name. You can also enter it at a later time."
-
+      koWrong:
+        title: "Incorrect IBAN"
+        text1: "The IBAN you entered"
+        text2: "is not correct: check it please!"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

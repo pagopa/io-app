@@ -17,7 +17,7 @@ type BaseTypographyProps = {
 
 type OwnProps = BaseTypographyProps & {
   fontStyle?: StyleProp<TextStyle>;
-} & Omit<React.ComponentPropsWithRef<typeof Text>, "style">;
+} & React.ComponentPropsWithRef<typeof Text>;
 
 /**
  * Decorate the function {@link makeFontStyleObject} with the additional color calculation.
@@ -48,7 +48,7 @@ export const BaseTypography: React.FunctionComponent<OwnProps> = props => {
   );
 
   return (
-    <Text {...props} style={[props.fontStyle, fontStyle]}>
+    <Text {...props} style={[props.style, props.fontStyle, fontStyle]}>
       {props.children}
     </Text>
   );
