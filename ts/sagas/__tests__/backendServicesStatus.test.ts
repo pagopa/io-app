@@ -7,8 +7,8 @@ import { backendStatusLoadSuccess } from "../../store/actions/backendStatus";
 import { backendStatusSaga } from "../backendStatus";
 
 jest.mock("react-native-background-timer", () => ({
-    BackgroundTimer: { setTimeout: jest.fn }
-  }));
+  BackgroundTimer: { setTimeout: jest.fn }
+}));
 
 const responseOn: BackendStatus = {
   is_alive: true,

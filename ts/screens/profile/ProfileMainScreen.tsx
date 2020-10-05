@@ -24,7 +24,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
-import { isPlaygroundsEnabled } from "../../config";
+import { bpdEnabled, isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -36,7 +36,7 @@ import {
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
-import { startPinReset } from "../../store/actions/pinset";
+import { updatePin } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -52,6 +52,7 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { bpdDeleteUserFromProgram } from "../../features/bonus/bpd/store/actions/onboarding";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -296,57 +297,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     clearInterval(this.idResetTap);
   };
 
-  /**
-   * since no experimental features are available we hide this method (see https://www.pivotaltracker.com/story/show/168263994).
-   * It could be usefull when new experimental features will be available
-   */
-  /*
-  private onExperimentalFeaturesToggle = (enabled: boolean) => {
-    if (enabled) {
-      Alert.alert(
-        I18n.t("profile.main.experimentalFeatures.confirmTitle"),
-        I18n.t("profile.main.experimentalFeatures.confirmMessage"),
-        [
-          {
-            text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("global.buttons.ok"),
-            style: "destructive",
-            onPress: () => {
-              this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(
-                enabled
-              );
-            }
-          }
-        ],
-        { cancelable: false }
-      );
-    } else {
-      this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
-    }
-  };
-  */
-
-  private confirmResetAlert = () =>
-    Alert.alert(
-      I18n.t("profile.main.resetPin.confirmTitle"),
-      I18n.t("profile.main.resetPin.confirmMsg"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.confirm"),
-          style: "destructive",
-          onPress: this.props.resetPin
-        }
-      ],
-      { cancelable: false }
-    );
-
   private ServiceListRef = React.createRef<ScrollView>();
   private scrollToTop = () => {
     if (this.ServiceListRef.current) {
@@ -420,7 +370,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           <ListItemComponent
             title={I18n.t("identification.unlockCode.reset.button_short")}
             subTitle={I18n.t("identification.unlockCode.reset.tip_short")}
-            onPress={this.confirmResetAlert}
+            onPress={this.props.resetPin}
             hideIcon={true}
           />
 
@@ -490,27 +440,32 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                       () => clipboardSetStringWithFeedback(backendInfo.version),
                       false
                     )}
-                  {sessionToken &&
+
+                  {isDevEnv &&
+                    sessionToken &&
                     this.debugListItem(
                       `Session Token ${sessionToken}`,
                       () => clipboardSetStringWithFeedback(sessionToken),
                       false
                     )}
 
-                  {walletToken &&
+                  {isDevEnv &&
+                    walletToken &&
                     this.debugListItem(
                       `Wallet token ${walletToken}`,
                       () => clipboardSetStringWithFeedback(walletToken),
                       false
                     )}
 
-                  {this.debugListItem(
-                    `Notification ID ${notificationId.slice(0, 6)}`,
-                    () => clipboardSetStringWithFeedback(notificationId),
-                    false
-                  )}
+                  {isDevEnv &&
+                    this.debugListItem(
+                      `Notification ID ${notificationId.slice(0, 6)}`,
+                      () => clipboardSetStringWithFeedback(notificationId),
+                      false
+                    )}
 
-                  {notificationToken &&
+                  {isDevEnv &&
+                    notificationToken &&
                     this.debugListItem(
                       `Notification token ${notificationToken.slice(0, 6)}`,
                       () => clipboardSetStringWithFeedback(notificationToken),
@@ -523,11 +478,19 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     true
                   )}
 
-                  {this.debugListItem(
-                    I18n.t("profile.main.forgetCurrentSession"),
-                    this.props.dispatchSessionExpired,
-                    true
-                  )}
+                  {isDevEnv &&
+                    this.debugListItem(
+                      I18n.t("profile.main.forgetCurrentSession"),
+                      this.props.dispatchSessionExpired,
+                      true
+                    )}
+
+                  {bpdEnabled &&
+                    this.debugListItem(
+                      "Leave BPD",
+                      this.props.dispatchLeaveBpd,
+                      true
+                    )}
                 </React.Fragment>
               )}
             </React.Fragment>
@@ -584,15 +547,16 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // hard-logout
   logout: () => dispatch(logoutRequest({ keepUserData: false })),
-  resetPin: () => dispatch(startPinReset()),
+  resetPin: () => dispatch(updatePin()),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
-  dispatchSessionExpired: () => dispatch(sessionExpired()),
   setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
     dispatch(
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
     ),
+  dispatchSessionExpired: () => dispatch(sessionExpired()),
+  dispatchLeaveBpd: () => dispatch(bpdDeleteUserFromProgram.request()),
   dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
     dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });

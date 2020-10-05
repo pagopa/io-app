@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { Action } from "../../../../../store/actions/types";
+import bpdReducer, { BpdState } from "../../../bpd/store/reducers";
 import bonusVacanzeActivationReducer, { ActivationState } from "./activation";
 import allActiveReducer, { AllActiveState } from "./allActive";
 import availableBonusesReducer, {
@@ -17,6 +18,7 @@ type BonusVacanzeState = {
 export type BonusState = Readonly<{
   availableBonusTypes: AvailableBonusTypesState;
   bonusVacanze: BonusVacanzeState;
+  bpd: BpdState;
 }>;
 
 const bonusVacanzeReducer = combineReducers<BonusVacanzeState, Action>({
@@ -27,7 +29,8 @@ const bonusVacanzeReducer = combineReducers<BonusVacanzeState, Action>({
 
 const bonusReducer = combineReducers<BonusState, Action>({
   availableBonusTypes: availableBonusesReducer,
-  bonusVacanze: bonusVacanzeReducer
+  bonusVacanze: bonusVacanzeReducer,
+  bpd: bpdReducer
 });
 
 export default bonusReducer;

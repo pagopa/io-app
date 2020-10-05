@@ -26,6 +26,7 @@ import {
   isScreenReaderEnabled,
   setAccessibilityFocus
 } from "../../../utils/accessibility";
+import { instabugLog, TypeLogs } from "../../../boot/configureInstabug";
 
 type NavigationParams = {
   ciePin: string;
@@ -58,6 +59,7 @@ type State = {
   isScreenReaderEnabled: boolean;
 };
 
+const instabugTag = "cie";
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
@@ -116,6 +118,10 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private handleCieEvent = async (event: CEvent) => {
+    if (analyticActions.has(event.event)) {
+      this.dispatchAnalyticEvent(event.event);
+    }
+    instabugLog(event.event, TypeLogs.DEBUG, instabugTag);
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
@@ -237,13 +243,12 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
-    this.setState({
-      readingState: ReadingState.error,
-      errorMessage: error.message
-    });
+    instabugLog(error.message, TypeLogs.DEBUG, instabugTag);
+    this.setError(error.message);
   };
 
   private handleCieSuccess = (cieConsentUri: string) => {
+    instabugLog("authentication SUCCESS", TypeLogs.DEBUG, instabugTag);
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
       setTimeout(async () => {

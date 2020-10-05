@@ -120,16 +120,15 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     return true;
   };
 
-  private renderError = () => {
-    return (
-      <GenericErrorComponent
-        onRetry={this.handleOnRetry}
-        onCancel={this.props.onClose}
-        image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?
-        text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
-      />
-    );
-  };
+  private renderError = () => (
+    <GenericErrorComponent
+      avoidNavigationEvents={true}
+      onRetry={this.handleOnRetry}
+      onCancel={this.props.onClose}
+      image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?
+      text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
+    />
+  );
 
   // Updating the webView key its content is refreshed
   private handleOnRetry = () => {

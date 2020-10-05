@@ -4,7 +4,7 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import URLParse from "url-parse";
-import { bonusVacanzeEnabled } from "../../../../config";
+import { bonusVacanzeEnabled, myPortalEnabled } from "../../../../config";
 import BONUSVACANZE_ROUTES from "../../../../features/bonus/bonusVacanze/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
@@ -32,8 +32,11 @@ const BONUS_VACANZE_ROUTE_NAMES: ReadonlyArray<string> = [
   BONUSVACANZE_ROUTES.BONUS_CTA_ELIGILITY_START
 ];
 
+const MY_PORTAL_ROUTES: ReadonlyArray<string> = [ROUTES.SERVICE_WEBVIEW];
+
 const ALLOWED_ROUTE_NAMES = ROUTE_NAMES.concat(
-  bonusVacanzeEnabled ? BONUS_VACANZE_ROUTE_NAMES : []
+  bonusVacanzeEnabled ? BONUS_VACANZE_ROUTE_NAMES : [],
+  myPortalEnabled ? MY_PORTAL_ROUTES : []
 );
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv
@@ -80,9 +83,25 @@ export function getInternalRoute(href: string): Option<InternalRoute> {
   }
 }
 
-export function handleInternalLink(dispatch: Dispatch, href: string) {
+/**
+ * try to extract the internal route from href. If it is defined and allowed (white listed)
+ * dispatch the navigation params (to store into the store) and dispatch the navigation action
+ * @param dispatch
+ * @param href
+ * @param serviceId
+ */
+export function handleInternalLink(
+  dispatch: Dispatch,
+  href: string,
+  serviceId?: string
+) {
   getInternalRoute(href).map(internalNavigation => {
-    dispatch(addInternalRouteNavigation(internalNavigation));
+    dispatch(
+      addInternalRouteNavigation({
+        ...internalNavigation,
+        params: { ...internalNavigation.params, serviceId }
+      })
+    );
     dispatch(
       NavigationActions.navigate({
         routeName: internalNavigation.routeName

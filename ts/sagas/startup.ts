@@ -19,6 +19,7 @@ import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
+  bpdEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
@@ -52,9 +53,10 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
+import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import {
   startAndReturnIdentificationResult,
-  watchIdentificationRequest
+  watchIdentification
 } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
@@ -80,7 +82,6 @@ import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
-import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import {
@@ -243,7 +244,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
 
   // Start watching for requests of checkSession
-  yield fork(watchCheckSessionSaga, backendClient.getProfile);
+  yield fork(watchCheckSessionSaga, backendClient.getSession);
 
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
@@ -294,6 +295,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (bonusVacanzeEnabled) {
     // Start watching for requests about bonus
     yield fork(watchBonusSaga, sessionToken);
+  }
+
+  if (bpdEnabled) {
+    // Start watching for actions about bonus bpd
+    yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
   }
 
   // Load the user metadata
@@ -352,10 +358,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   // Watch for requests to logout
   yield spawn(watchLogoutSaga, backendClient.logout);
-  // Watch for requests to reset the unlock code.
-  yield fork(watchPinResetSaga);
-  // Watch for identification request
-  yield fork(watchIdentificationRequest, storedPin);
+
+  yield fork(watchIdentification, storedPin);
 
   // Watch for checking the user email notifications preferences
   yield fork(watchEmailNotificationPreferencesSaga);

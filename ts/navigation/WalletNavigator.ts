@@ -1,7 +1,9 @@
 import { createStackNavigator } from "react-navigation";
-import { bonusVacanzeEnabled } from "../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
+import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
+import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
@@ -75,15 +77,27 @@ const baseRouteConfigMap = {
   }
 };
 
-const bonusVacanzeConfigMap = {
-  [BONUSVACANZE_ROUTES.MAIN]: {
-    screen: BonusVacanzeNavigator
-  }
-};
+const bonusVacanzeConfigMap = bonusVacanzeEnabled
+  ? {
+      [BONUSVACANZE_ROUTES.MAIN]: {
+        screen: BonusVacanzeNavigator
+      }
+    }
+  : {};
 
-const routeConfig = bonusVacanzeEnabled
-  ? { ...baseRouteConfigMap, ...bonusVacanzeConfigMap }
-  : baseRouteConfigMap;
+const bpdConfigMap = bpdEnabled
+  ? {
+      [BPD_ROUTES.MAIN]: {
+        screen: BpdNavigator
+      }
+    }
+  : {};
+
+const routeConfig = {
+  ...baseRouteConfigMap,
+  ...bonusVacanzeConfigMap,
+  ...bpdConfigMap
+};
 
 /**
  * TODO: migrate WALLET_TRANSACTION_SUMMARY on a new navigator for screens which does not visualize the footer menu.

@@ -62,6 +62,10 @@ import {
 } from "../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
+import {
+  getAbiUsingGetDefaultDecoder,
+  GetAbiUsingGetT
+} from "../../definitions/pagopa/bancomat/requestTypes";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -111,13 +115,14 @@ type GetTransactionsUsingGETTExtra = MapResponseType<
 const ParamAuthorizationBearerHeader = <P extends { readonly Bearer: string }>(
   p: P
 ): RequestHeaders<"Authorization"> => ({
-    Authorization: `Bearer ${p.Bearer}`
-  });
+  Authorization: `Bearer ${p.Bearer}`
+});
 
 const ParamAuthorizationBearerHeaderProducer = <
   P extends { readonly Bearer: string }
->(): RequestHeaderProducer<P, "Authorization"> => (p: P): RequestHeaders<"Authorization"> =>
-    ParamAuthorizationBearerHeader(p);
+>(): RequestHeaderProducer<P, "Authorization"> => (
+  p: P
+): RequestHeaders<"Authorization"> => ParamAuthorizationBearerHeader(p);
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 const transactionsSliceLength = 10;
@@ -363,6 +368,14 @@ const deleteWallet: DeleteWalletUsingDELETET = {
   response_decoder: constantEmptyDecoder
 };
 
+const getAbi: GetAbiUsingGetT = {
+  method: "get",
+  url: () => `/v1/bancomat/abi`,
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getAbiUsingGetDefaultDecoder()
+};
+
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
@@ -514,7 +527,10 @@ export function PaymentManagerClient(
         withPaymentManagerToken(createFetchRequestForApi(deleteWallet, options))
       )({
         id
-      })
+      }),
+    getAbi: flip(
+      withPaymentManagerToken(createFetchRequestForApi(getAbi, altOptions))
+    )({})
   };
 }
 

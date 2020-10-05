@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
@@ -5,18 +6,25 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { ReduxProps } from "../../store/actions/types";
+import { loadServiceMetadata } from "../../store/actions/content";
+import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { PaidReason } from "../../store/reducers/entities/payments";
+import { GlobalState } from "../../store/reducers/types";
 import { getCTA, isExpired, paymentExpirationInfo } from "../../utils/messages";
+import { Dispatch } from "../../store/actions/types";
+import ExtractedCTABar from "../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
-import { MessageNestedCTABar } from "./MessageNestedCTABar";
 import PaymentButton from "./PaymentButton";
 
-type Props = {
+type OwnProps = {
   message: CreatedMessageWithContent;
   service?: ServicePublic;
   payment?: PaidReason;
-} & ReduxProps;
+};
+
+type Props = OwnProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   row: {
@@ -48,15 +56,20 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     return fromNullable(this.props.message.content.due_date);
   }
 
+  public componentDidMount() {
+    if (!this.props.serviceMetadata && this.props.service) {
+      this.props.loadServiceMetadata(this.props.service);
+    }
+  }
+
   // Render a button to add/remove an event related to the message in the calendar
-  private renderCalendarEventButton = () => 
+  private renderCalendarEventButton = () =>
     // The add/remove reminder button is hidden:
     // - if the message hasn't a due date
     // - if the message has a payment and it has been paid or is expired
-     this.dueDate
+    this.dueDate
       .chain(fromPredicate(() => !this.paid && !this.isPaymentExpired))
-      .fold(null, _ => <CalendarEventButton message={this.props.message} />)
-  ;
+      .fold(null, _ => <CalendarEventButton message={this.props.message} />);
 
   // Render a button to display details of the payment related to the message
   private renderPaymentButton() {
@@ -87,13 +100,15 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
         {paymentButton}
       </View>
     );
-    const maybeCtas = getCTA(this.props.message);
+    const maybeCtas = getCTA(this.props.message, this.props.serviceMetadata);
     const footer2 = maybeCtas.isSome() && (
       <View footer={true} style={styles.row}>
-        <MessageNestedCTABar
+        <ExtractedCTABar
           ctas={maybeCtas.value}
-          dispatch={this.props.dispatch}
           xsmall={false}
+          dispatch={this.props.dispatch}
+          serviceMetadata={this.props.serviceMetadata}
+          service={this.props.service}
         />
       </View>
     );
@@ -106,4 +121,23 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
   }
 }
 
-export default connect()(MessageDetailCTABar);
+const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
+  const servicesMetadataByID = servicesMetadataByIdSelector(state);
+
+  return {
+    serviceMetadata: ownProps.service
+      ? servicesMetadataByID[ownProps.service.service_id]
+      : pot.none
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadServiceMetadata: (service: ServicePublic) =>
+    dispatch(loadServiceMetadata.request(service.service_id)),
+  dispatch
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MessageDetailCTABar);

@@ -1,9 +1,11 @@
 import { left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { testSaga } from "redux-saga-test-plan";
+import { PublicSession } from "../../../../definitions/backend/PublicSession";
 import {
   checkCurrentSession,
-  sessionExpired
+  sessionExpired,
+  sessionInformationLoadSuccess
 } from "../../../store/actions/authentication";
 import { checkSession, checkSessionResult } from "../watchCheckSessionSaga";
 
@@ -11,7 +13,14 @@ describe("checkSession", () => {
   const getSessionValidity = jest.fn();
 
   it("if response is 200 the session is valid", () => {
-    const responseOK = right({ status: 200 });
+    const responseValue = {
+      spidLevel: "https://www.spid.gov.it/SpidL2",
+      walletToken: "ZXCVBNM098876543"
+    };
+    const responseOK = right({
+      status: 200,
+      value: responseValue
+    });
     testSaga(checkSession, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
@@ -21,6 +30,8 @@ describe("checkSession", () => {
           isSessionValid: true
         })
       )
+      .next()
+      .put(sessionInformationLoadSuccess(responseValue as PublicSession))
       .next()
       .isDone();
   });

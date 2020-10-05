@@ -9,7 +9,9 @@ import {
 } from "redux";
 
 import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { BpdActions } from "../../features/bonus/bpd/store/actions";
 import { GlobalState } from "../reducers/types";
+import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -74,7 +76,9 @@ export type Action =
   | InternalRouteNavigationActions
   | UserDataProcessingActions
   | ProfileEmailValidationAction
-  | BonusActions;
+  | BonusActions
+  | BpdActions
+  | AbiActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
