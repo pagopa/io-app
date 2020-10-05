@@ -275,7 +275,7 @@ PODS:
     - React
   - react-native-cameraroll (4.0.0):
     - React
-  - react-native-cie (0.2.10):
+  - react-native-cie (0.2.20):
     - React
   - react-native-config (1.0.0):
     - React
@@ -681,7 +681,7 @@ SPEC CHECKSUMS:
   react-native-calendar-events: 667f4141959b3f90c44cd328396c1488f216922d
   react-native-camera: d9e7b66e40420dcef111f3265a00f01eea54c52c
   react-native-cameraroll: ae0a7c0cc8462508855707ff623b1e789b692865
-  react-native-cie: d23154c4e799ba0d884b54b4bb9349123010f588
+  react-native-cie: 8051da69e0a4397c9d4603dad84fe858c3a46bd6
   react-native-config: 7db9b96479164dfd7b2be68eb9079e08279511c4
   react-native-cookies: ff2e6865dff2e5feeca8f1ed082ae7898e4fa912
   react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
