@@ -87,7 +87,8 @@ const ICON_WIDTH = 24;
 export default class DetailedlistItemComponent extends React.PureComponent<
   Props
 > {
-  private getIconName = () => this.props.isSelectionModeEnabled
+  private getIconName = () =>
+    this.props.isSelectionModeEnabled
       ? this.props.isItemSelected
         ? "io-checkbox-on"
         : "io-checkbox-off"
