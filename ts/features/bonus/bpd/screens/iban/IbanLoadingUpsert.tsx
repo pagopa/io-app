@@ -3,6 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Iban } from "../../../../../../definitions/backend/Iban";
+import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
@@ -25,6 +26,8 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const IbanLoadingUpsert: React.FunctionComponent<Props> = props => {
+  const loading = I18n.t("bonus.bpd.title");
+
   useHardwareBackButton(() => {
     if (!props.isLoading) {
       props.onAbort();
@@ -34,11 +37,9 @@ const IbanLoadingUpsert: React.FunctionComponent<Props> = props => {
   return (
     <LoadingErrorComponent
       {...props}
-      loadingCaption={"insert new iban loading..."}
+      loadingCaption={loading}
       onAbort={props.onAbort}
-      onRetry={() =>
-        fromNullable(props.ibanValue.value).map(props.onRetry)
-      }
+      onRetry={() => fromNullable(props.ibanValue.value).map(props.onRetry)}
     />
   );
 };
