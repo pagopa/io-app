@@ -1,6 +1,6 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { AbiResponse } from "../../../../../../../definitions/pagopa/bancomat/AbiResponse";
-import { PatchedCard } from "../../../../../../api/pagopa";
+import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 
 /**
  * Request the list of all abi

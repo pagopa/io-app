@@ -7,7 +7,6 @@ import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { loadAbi, loadPans } from "../../store/actions";
-import { RTron } from "../../../../../../boot/configureStoreAndPersistor";
 
 // load all bancomat abi
 export function* handleLoadAbi(
@@ -49,7 +48,6 @@ export function* handleLoadPans(
     const getPansWithRefreshResult: SagaCallReturnType<typeof getPansWithRefresh> = yield call(
       getPansWithRefresh
     );
-    RTron.log(getPansWithRefreshResult);
     if (getPansWithRefreshResult.isRight()) {
       if (getPansWithRefreshResult.value.status === 200) {
         yield put(
