@@ -26,6 +26,7 @@ import { BackendClient } from "../api/backend";
 import { PaymentManagerClient } from "../api/pagopa";
 import {
   apiUrlPrefix,
+  bpdEnabled,
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
@@ -109,6 +110,8 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
+import { handleLoadAbi } from "../features/wallet/onboarding/bancomat/saga/networking";
+import { loadAbi } from "../features/wallet/onboarding/bancomat/store/actions";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -689,6 +692,16 @@ export function* watchWalletSaga(
     setWalletSessionEnabledSaga,
     pmSessionManager
   );
+
+  if (bpdEnabled) {
+    // watch for load abi request
+    yield takeLatest(
+      loadAbi.request,
+      handleLoadAbi,
+      paymentManagerClient.getAbi,
+      pmSessionManager
+    );
+  }
 
   yield fork(paymentsDeleteUncompletedSaga);
 }
