@@ -1,6 +1,6 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { AbiResponse } from "../../../../../../../definitions/pagopa/bancomat/AbiResponse";
-import { Cards } from "../../../../../../../definitions/pagopa/bancomat/Cards";
+import { PatchedCard } from "../../../../../../api/pagopa";
 
 /**
  * Request the list of all abi
@@ -18,7 +18,7 @@ export const loadPans = createAsyncAction(
   "WALLET_LOAD_PANS_REQUEST",
   "WALLET_LOAD_PANS_SUCCESS",
   "WALLET_LOAD_PANS_FAILURE"
-)<string | undefined, Cards, Error>();
+)<string | undefined, ReadonlyArray<PatchedCard>, Error>();
 
 export type AbiActions =
   | ActionType<typeof loadAbi>

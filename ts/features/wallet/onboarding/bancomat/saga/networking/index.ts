@@ -1,6 +1,7 @@
 import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ActionType } from "typesafe-actions";
+import { fromNullable } from "fp-ts/lib/Option";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
@@ -44,15 +45,25 @@ export function* handleLoadPans(
     const getPansWithRefresh = sessionManager.withRefresh(
       getPans(action.payload)
     );
+
     const getPansWithRefreshResult: SagaCallReturnType<typeof getPansWithRefresh> = yield call(
       getPansWithRefresh
     );
     RTron.log(getPansWithRefreshResult);
-    if (
-      getPansWithRefreshResult.isRight() &&
-      getPansWithRefreshResult.value.status === 200
-    ) {
-      const data = getPansWithRefreshResult.value.value.datasdf;
+    if (getPansWithRefreshResult.isRight()) {
+      if (getPansWithRefreshResult.value.status === 200) {
+        yield put(
+          loadPans.success(
+            fromNullable(getPansWithRefreshResult.value.value.data).getOrElse(
+              []
+            )
+          )
+        );
+      } else {
+        throw new Error(
+          `response status ${getPansWithRefreshResult.value.status}`
+        );
+      }
     } else {
       throw new Error(readableReport(getPansWithRefreshResult.value));
     }

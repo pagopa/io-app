@@ -379,17 +379,15 @@ const getAbi: GetAbiUsingGetT = {
   response_decoder: getAbiUsingGetDefaultDecoder()
 };
 
+// TODO move this type to patched types folder/file
+// expiringDate codec is created as PatternString instead of DateFromString
 export const PatchedCard = repP(Card, "expiringDate", t.string);
 export type PatchedCard = t.TypeOf<typeof PatchedCard>;
-const PatchedCardsO = t.partial({
+const PatchedCards = t.partial({
   data: t.readonlyArray(PatchedCard, "array of PatchedCard")
 });
-const PatchedCardsR = t.interface({});
-export const PatchedCards = t.intersection(
-  [PatchedCardsR, PatchedCardsO],
-  "PatchedCards"
-);
 export type PatchedCards = t.TypeOf<typeof PatchedCards>;
+
 type GetPansUsingGetTExtra = MapResponseType<
   GetPansUsingGetT,
   200,
@@ -562,7 +560,10 @@ export function PaymentManagerClient(
     getPans: (abi?: string) =>
       flip(
         withPaymentManagerToken(createFetchRequestForApi(getPans, altOptions))
-      )({ abi: abi || "" })
+      )(
+        // empty abi if it's undefined
+        { abi: abi || "" }
+      )
   };
 }
 
