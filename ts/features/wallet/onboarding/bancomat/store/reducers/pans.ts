@@ -10,7 +10,7 @@ import { Action } from "../../../../../../store/actions/types";
 import { loadPans } from "../actions";
 import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 
-// search holds abi array derived from search
+// 'search' holds cards array derived from pans search
 export type PansState = {
   search: RemoteValue<ReadonlyArray<PatchedCard>, Error>;
 };
