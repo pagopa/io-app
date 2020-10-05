@@ -1,4 +1,5 @@
 import { createStackNavigator } from "react-navigation";
+import SearchBankScreen from "../../../wallet/onboarding/bancomat/screens/SearchBankScreen";
 import ActivateBonusCompletedScreen from "../screens/activation/ActivateBonusCompletedScreen";
 import BonusAlreadyExists from "../screens/activation/BonusAlreadyExists";
 import EligibilityExpired from "../screens/activation/EligibilityExpired";
@@ -20,7 +21,7 @@ import BONUSVACANZE_ROUTES from "./routes";
 const BonusVacanzeNavigator = createStackNavigator(
   {
     [BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST]: {
-      screen: AvailableBonusScreen
+      screen: SearchBankScreen
     },
     [BONUSVACANZE_ROUTES.BONUS_REQUEST_INFORMATION]: {
       screen: BonusInformationScreen

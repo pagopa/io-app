@@ -8,7 +8,7 @@ import { Link } from "../../../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { GlobalState } from "../../../../../store/reducers/types";
 import IconFont from "../../../../../components/ui/IconFont";
-import { BankPreviewItem } from "../components/BankPreviewItems";
+import { BankPreviewItem } from "../components/BankPreviewItem";
 import { abis } from "../mock/mockData";
 import {
   cancelButtonProps,
@@ -22,6 +22,7 @@ import { LightModalContextInterface } from "../../../../../components/ui/LightMo
 import TosBonusComponent from "../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import { sortAbiByName } from "../utils/abi";
 import { Body } from "../../../../../components/core/typography/Body";
+import { Abi } from "../../../../../../definitions/pagopa/bancomat/Abi";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
@@ -40,7 +41,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [isSearchStarted, setIsSearchStarted] = React.useState(false);
 
   const renderListItem = (isList: boolean) => (
-    info: ListRenderItemInfo<any>
+    info: ListRenderItemInfo<Abi>
   ) => (
     <BankPreviewItem
       bank={info.item}
@@ -49,24 +50,28 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     />
   );
 
-  const debounceSearch = debounce((text: string) => {
+  const performSearch = (text: string) => {
     if (text.length === 0) {
-      setIsSearchStarted(false);
       setFilteredList([]);
-    } else {
-      setIsSearchStarted(true);
-      const resultList = props.bankList.filter(
-        bank =>
-          bank.abi.toLowerCase().indexOf(text.toLowerCase()) > -1 ||
-          bank.name.toLowerCase().indexOf(text.toLowerCase()) > -1
-      );
-      setFilteredList(sortAbiByName(resultList));
+      setIsSearchStarted(false);
+      return;
     }
-  }, 200);
+    const resultList = props.bankList.filter(
+      bank =>
+        (bank.abi && bank.abi.toLowerCase().indexOf(text.toLowerCase()) > -1) ||
+        (bank.name && bank.name.toLowerCase().indexOf(text.toLowerCase()) > -1)
+    );
+    setFilteredList(sortAbiByName(resultList));
+  };
+  const debounceRef = React.useRef(debounce(performSearch, 300));
+
+  React.useEffect(() => {
+    setIsSearchStarted(true);
+    debounceRef.current(searchText);
+  }, [searchText]);
 
   const handleFilter = (text: string) => {
     setSearchText(text);
-    debounceSearch(text);
   };
 
   const keyExtractor = (bank: any): string => bank.abi;
@@ -137,7 +142,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (_: GlobalState) => ({
-  bankList: abis
+  bankList: abis as ReadonlyArray<Abi>
 });
 
 export default withLightModalContext(
