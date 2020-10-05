@@ -1,7 +1,10 @@
 import { SagaIterator } from "@redux-saga/core";
 import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { bpdEnrollUserToProgram } from "../../store/actions/onboarding";
+import {
+  bpdDeleteUserFromProgram,
+  bpdEnrollUserToProgram
+} from "../../store/actions/onboarding";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
@@ -63,4 +66,28 @@ export function* putEnrollCitizen(
   enrollCitizenIO: ReturnType<typeof BackendBpdClient>["enrollCitizenIO"]
 ): SagaIterator {
   yield call(executeAndDispatch, enrollCitizenIO, bpdEnrollUserToProgram);
+}
+
+/**
+ * make a request to delete citizen from bpd program
+ */
+export function* deleteCitizen(
+  deleteCitizenIO: ReturnType<typeof BackendBpdClient>["deleteCitizenIO"]
+): SagaIterator {
+  try {
+    const deleteCitizenIOResult: SagaCallReturnType<typeof deleteCitizenIO> = yield call(
+      deleteCitizenIO,
+      {} as any
+    );
+    if (deleteCitizenIOResult.isRight()) {
+      if (deleteCitizenIOResult.value.status === 204) {
+        yield put(bpdDeleteUserFromProgram.success());
+      }
+      throw new Error(`response status ${deleteCitizenIOResult.value.status}`);
+    } else {
+      throw new Error(readableReport(deleteCitizenIOResult.value));
+    }
+  } catch (e) {
+    yield put(bpdDeleteUserFromProgram.failure(e));
+  }
 }
