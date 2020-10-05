@@ -24,7 +24,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
-import { isPlaygroundsEnabled } from "../../config";
+import { bpdEnabled, isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -485,11 +485,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                       true
                     )}
 
-                  {this.debugListItem(
-                    "Leave BPD",
-                    this.props.dispatchLeaveBpd,
-                    true
-                  )}
+                  {bpdEnabled &&
+                    this.debugListItem(
+                      "Leave BPD",
+                      this.props.dispatchLeaveBpd,
+                      true
+                    )}
                 </React.Fragment>
               )}
             </React.Fragment>
