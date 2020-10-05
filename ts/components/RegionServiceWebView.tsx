@@ -137,6 +137,37 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
     setLoading(false);
   };
 
+  const renderErrorComponent = () => (
+    <View style={styles.errorContainer}>
+      <View spacer={true} extralarge={true} />
+      <View spacer={true} extralarge={true} />
+      <Image source={brokenLinkImage} resizeMode="contain" />
+      <Label style={styles.errorTitle} weight={"Bold"}>
+        {I18n.t("authentication.errors.network.title")}
+      </Label>
+
+      <View style={styles.errorButtonsContainer}>
+        <ButtonDefaultOpacity
+          onPress={props.onWebviewClose}
+          style={styles.cancelButtonStyle}
+          block={true}
+          light={true}
+          bordered={true}
+        >
+          <BodyText>{I18n.t("global.buttons.cancel")}</BodyText>
+        </ButtonDefaultOpacity>
+        <ButtonDefaultOpacity
+          onPress={handleReload}
+          style={{ flex: 2 }}
+          block={true}
+          primary={true}
+        >
+          <Label color={"white"}>{I18n.t("global.buttons.retry")}</Label>
+        </ButtonDefaultOpacity>
+      </View>
+    </View>
+  );
+
   const handleReload = () => {
     setHasError(false);
     setLoading(true);
@@ -221,36 +252,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
           />
         </View>
       )}
-      {hasError && (
-        <View style={styles.errorContainer}>
-          <View spacer={true} extralarge={true} />
-          <View spacer={true} extralarge={true} />
-          <Image source={brokenLinkImage} resizeMode="contain" />
-          <Label style={styles.errorTitle} weight={"Bold"}>
-            {I18n.t("authentication.errors.network.title")}
-          </Label>
-
-          <View style={styles.errorButtonsContainer}>
-            <ButtonDefaultOpacity
-              onPress={props.onWebviewClose}
-              style={styles.cancelButtonStyle}
-              block={true}
-              light={true}
-              bordered={true}
-            >
-              <BodyText>{I18n.t("global.buttons.cancel")}</BodyText>
-            </ButtonDefaultOpacity>
-            <ButtonDefaultOpacity
-              onPress={handleReload}
-              style={{ flex: 2 }}
-              block={true}
-              primary={true}
-            >
-              <Label color={"white"}>{I18n.t("global.buttons.retry")}</Label>
-            </ButtonDefaultOpacity>
-          </View>
-        </View>
-      )}
+      {hasError && renderErrorComponent()}
     </LoadingSpinnerOverlay>
   );
 };
