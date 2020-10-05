@@ -44,6 +44,7 @@ const IbanKoCannotVerify: React.FunctionComponent<Props> = props => {
           body={<IbanKoBody text1={text1} text2={text2} />}
         />
         <FooterTwoButtons
+          type={"TwoButtonsInlineHalf"}
           onRight={props.completeInsertion}
           onCancel={props.modifyIban}
           rightText={continueStr}

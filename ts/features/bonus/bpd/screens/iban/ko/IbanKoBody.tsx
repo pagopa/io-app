@@ -3,7 +3,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { Monospace } from "../../../../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
@@ -15,9 +14,7 @@ type OwnProps = {
   text2: string;
 };
 
-export type Props = OwnProps &
-  ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+export type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   text: {
@@ -50,10 +47,8 @@ const IbanKoBody: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
-
 const mapStateToProps = (state: GlobalState) => ({
   candidateIban: bpdUpsertIbanSelector(state)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(IbanKoBody);
+export default connect(mapStateToProps)(IbanKoBody);
