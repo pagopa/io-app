@@ -96,7 +96,12 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
     this.props.loginSuccess(token);
   };
 
+  private lastUriLoaded: string  | undefined= undefined;
   private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
+    if(this.lastUriLoaded === event.url){
+      return false;
+    }
+    this.lastUriLoaded = event.url;
     const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
       this.handleLoginSuccess
@@ -149,6 +154,7 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
           javaScriptEnabled={true}
           onShouldStartLoadWithRequest={this.handleShouldStartLoading}
           onLoad={() => this.setState({ isLoading: false })}
+          onLoadEnd={() => {this.lastUriLoaded = undefined;}}
           onLoadProgress={() => this.setState({ isLoading: true })}
           onError={this.handleWebViewError}
         />
