@@ -71,6 +71,7 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { loadPans } from "../../features/wallet/onboarding/bancomat/store/actions";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -559,7 +560,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     validTo?: Date
   ) =>
     dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo })),
-  navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
+  navigateToBonusList: () => dispatch(loadPans.request(undefined)),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   refreshTransactions: () => {
     dispatch(clearTransactions());

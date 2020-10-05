@@ -20,7 +20,7 @@ import {
   RequestHeaders,
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
-import { Omit } from "italia-ts-commons/lib/types";
+import { Omit, replaceProp1 as repP } from "italia-ts-commons/lib/types";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -64,8 +64,11 @@ import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
 import {
   getAbiUsingGetDefaultDecoder,
-  GetAbiUsingGetT
+  GetAbiUsingGetT,
+  getPansUsingGetDecoder,
+  GetPansUsingGetT
 } from "../../definitions/pagopa/bancomat/requestTypes";
+import { Card } from "../../definitions/pagopa/bancomat/Card";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -376,6 +379,31 @@ const getAbi: GetAbiUsingGetT = {
   response_decoder: getAbiUsingGetDefaultDecoder()
 };
 
+export const PatchedCard = repP(Card, "expiringDate", t.string);
+export type PatchedCard = t.TypeOf<typeof PatchedCard>;
+const PatchedCardsO = t.partial({
+  data: t.readonlyArray(PatchedCard, "array of PatchedCard")
+});
+const PatchedCardsR = t.interface({});
+export const PatchedCards = t.intersection(
+  [PatchedCardsR, PatchedCardsO],
+  "PatchedCards"
+);
+export type PatchedCards = t.TypeOf<typeof PatchedCards>;
+type GetPansUsingGetTExtra = MapResponseType<
+  GetPansUsingGetT,
+  200,
+  PatchedCards
+>;
+
+const getPans: GetPansUsingGetTExtra = {
+  method: "get",
+  url: () => `/v1/bancomat/pans`,
+  query: ({ abi }) => ({ abi }),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getPansUsingGetDecoder(PatchedCards)
+};
+
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
@@ -530,7 +558,11 @@ export function PaymentManagerClient(
       }),
     getAbi: flip(
       withPaymentManagerToken(createFetchRequestForApi(getAbi, altOptions))
-    )({})
+    )({}),
+    getPans: (abi?: string) =>
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(getPans, altOptions))
+      )({ abi: abi || "" })
   };
 }
 
