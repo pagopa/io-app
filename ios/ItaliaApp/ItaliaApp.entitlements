@@ -7,6 +7,7 @@
 	<key>com.apple.developer.nfc.readersession.formats</key>
     	<array>
     		<string>TAG</string>
+    		<string>NDEF</string>
     	</array>
 </dict>
 </plist>
