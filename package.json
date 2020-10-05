@@ -43,7 +43,7 @@
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md"
   },
   "dependencies": {
-    "@pagopa/react-native-cie": "pagopa/io-cie-android-sdk#57b94f28f5b4f237b84c414d01fba2135b912994",
+    "@pagopa/react-native-cie": "pagopa/io-cie-android-sdk#ios-react-native",
     "@react-native-community/async-storage": "^1.6.1",
     "@react-native-community/cameraroll": "^4.0.0",
     "@react-native-community/cookies": "^4.0.1",
