@@ -3,9 +3,9 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendBpdClient } from "../../api/backendBpdClient";
-import { bpdUpsertIban, IbanUpsertResult } from "../../store/actions/details";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { Iban } from "../../../../../../definitions/backend/Iban";
+import { bpdUpsertIban, IbanUpsertResult } from "../../store/actions/iban";
 
 // representation of iban status
 export enum IbanStatus {
