@@ -63,6 +63,7 @@ global:
     exit: Exit
     saveSelection: Save the selection
     search: Search
+    skip: "Skip"
   navigator:
     messages: messages
     wallet: payments
@@ -1560,7 +1561,6 @@ bonus:
         body: "To start collecting points you have to add your favorite electronic payment methods to IO: today credit cards, prepaid, rechargeable cards, debit cards, bancomat and apps and other digital tools are supported.\n\n
         In the future, cashback will support other tools: you can add new payment methods to IO whenever you want and activate the collection of points on each!"
     iban:
-      skip: "Skip"
       iban: "IBAN"
       edit: "Change IBAN"
       insertion:

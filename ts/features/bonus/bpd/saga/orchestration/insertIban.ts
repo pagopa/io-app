@@ -5,10 +5,7 @@ import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { navigateToBpdIbanInsertion } from "../../navigation/action/iban";
-import {
-  navigateToBpdOnboardingEnrollPaymentMethod,
-  navigateToBpdOnboardingNoPaymentMethods
-} from "../../navigation/action/onboarding";
+import { navigateToBpdOnboardingNoPaymentMethods } from "../../navigation/action/onboarding";
 import BPD_ROUTES from "../../navigation/routes";
 import {
   bpdIbanInsertionCancel,

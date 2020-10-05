@@ -17,7 +17,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 
 const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.title"),
-  skip: I18n.t("bonus.bpd.iban.skip"),
+  skip: I18n.t("global.buttons.skip"),
   addMethod: I18n.t("wallet.newPaymentMethod.addButton"),
   title: I18n.t("bonus.bpd.onboarding.noPaymentMethod.title"),
   body: I18n.t("bonus.bpd.onboarding.noPaymentMethod.body")
