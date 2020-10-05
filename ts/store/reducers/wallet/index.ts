@@ -6,9 +6,9 @@ import { combineReducers } from "redux";
 import abiReducer, {
   AbiState
 } from "../../../features/wallet/onboarding/bancomat/store/reducers/abi";
-import pansReducer, {
-  PansState
-} from "../../../features/wallet/onboarding/bancomat/store/reducers/pans";
+import bancomatReducer, {
+  BancomatState
+} from "../../../features/wallet/onboarding/bancomat/store/reducers/bancomat";
 import { PaymentState } from "./payment";
 import paymentReducer from "./payment";
 import pspsByIdReducer, { PspStateById } from "./pspsById";
@@ -23,7 +23,7 @@ export type WalletState = Readonly<{
   payment: PaymentState;
   pspsById: PspStateById;
   abi: AbiState;
-  pans: PansState;
+  bancomat: BancomatState;
 }>;
 
 const reducer = combineReducers({
@@ -32,7 +32,7 @@ const reducer = combineReducers({
   payment: paymentReducer,
   pspsById: pspsByIdReducer,
   abi: abiReducer,
-  pans: pansReducer
+  bancomat: bancomatReducer
 });
 
 export default reducer;
