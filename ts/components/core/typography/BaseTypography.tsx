@@ -46,9 +46,12 @@ export const BaseTypography: React.FunctionComponent<OwnProps> = props => {
       calculateTextStyle(props.color, props.weight, props.isItalic, props.font),
     [props.color, props.weight, props.isItalic, props.font]
   );
+  const style = props.style
+    ? [props.style, props.fontStyle, fontStyle]
+    : [props.fontStyle, fontStyle];
 
   return (
-    <Text {...props} style={[props.style, props.fontStyle, fontStyle]}>
+    <Text {...props} style={style}>
       {props.children}
     </Text>
   );
