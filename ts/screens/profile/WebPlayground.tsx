@@ -42,9 +42,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
   const [navigationURI, setNavigationUri] = React.useState("");
   const [cookieName, setCookieName] = React.useState("");
   const [cookieValue, setCookieValue] = React.useState("");
-  const [loadUri, setLoadUri] = React.useState(
-    "http://localhost:3000/myportal_playground"
-  );
+  const [loadUri, setLoadUri] = React.useState("");
   const [webMessage, setWebMessage] = React.useState("");
   const [showDebug, setShowDebug] = React.useState(false);
   const [saveCookie, setSaveCookie] = React.useState(false);
