@@ -34,7 +34,7 @@ function* enrollToBpdWorker() {
   );
 
   if (enrollResult.payload.enabled) {
-    // TODO: TEMP, change to IBAN insertion
+ 
     yield put(bpdIbanInsertionStart());
     yield put(navigationHistoryPop(1));
   }
