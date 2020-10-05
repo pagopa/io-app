@@ -21,6 +21,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 
 const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.title"),
+  edit: I18n.t("bonus.bpd.iban.edit"),
   title: I18n.t("bonus.bpd.iban.koWrong.title"),
   text1: I18n.t("bonus.bpd.iban.koWrong.text1"),
   text2: I18n.t("bonus.bpd.iban.koWrong.text2")
@@ -31,7 +32,7 @@ const loadLocales = () => ({
  * @constructor
  */
 const IbanKoWrong: React.FunctionComponent<Props> = props => {
-  const { headerTitle, title, text1, text2 } = loadLocales();
+  const { headerTitle, title, text1, text2, edit } = loadLocales();
   return (
     <BaseScreenComponent goBack={props.modifyIban} headerTitle={headerTitle}>
       <SafeAreaView style={IOStyles.flex}>
@@ -43,7 +44,7 @@ const IbanKoWrong: React.FunctionComponent<Props> = props => {
         <FooterTwoButtons
           onRight={props.modifyIban}
           onCancel={props.cancel}
-          rightText={"Modifica Iban"}
+          rightText={edit}
         />
       </SafeAreaView>
     </BaseScreenComponent>
