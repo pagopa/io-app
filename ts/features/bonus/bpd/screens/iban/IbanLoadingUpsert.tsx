@@ -26,7 +26,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const IbanLoadingUpsert: React.FunctionComponent<Props> = props => {
-  const loading = I18n.t("bonus.bpd.title");
+  const loading = I18n.t("bonus.bpd.iban.loading");
 
   useHardwareBackButton(() => {
     if (!props.isLoading) {
