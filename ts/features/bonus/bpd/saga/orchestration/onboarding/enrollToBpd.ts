@@ -4,11 +4,9 @@ import { call, put, race, select, take } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
-import {
-  navigateToBpdOnboardingEnrollPaymentMethod,
-  navigateToBpdOnboardingLoadActivate
-} from "../../../navigation/action/onboarding";
+import { navigateToBpdOnboardingLoadActivate } from "../../../navigation/action/onboarding";
 import BPD_ROUTES from "../../../navigation/routes";
+import { bpdIbanInsertionStart } from "../../../store/actions/iban";
 import {
   bpdEnrollUserToProgram,
   bpdOnboardingCancel
@@ -36,8 +34,8 @@ function* enrollToBpdWorker() {
   );
 
   if (enrollResult.payload.enabled) {
-    // TODO: TEMP, change to IBAN insertion
-    yield put(navigateToBpdOnboardingEnrollPaymentMethod());
+ 
+    yield put(bpdIbanInsertionStart());
     yield put(navigationHistoryPop(1));
   }
   // TODO: handle false case to avoid making the user remain blocked in case of malfunction
