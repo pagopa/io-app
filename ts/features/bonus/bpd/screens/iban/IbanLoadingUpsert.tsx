@@ -37,7 +37,7 @@ const IbanLoadingUpsert: React.FunctionComponent<Props> = props => {
       loadingCaption={"insert new iban loading..."}
       onAbort={props.onAbort}
       onRetry={() =>
-        fromNullable(props.ibanValue.value).map(iban => props.onRetry(iban))
+        fromNullable(props.ibanValue.value).map(props.onRetry)
       }
     />
   );
