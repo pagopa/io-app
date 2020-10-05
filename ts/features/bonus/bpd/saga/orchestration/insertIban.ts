@@ -5,7 +5,10 @@ import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { navigateToBpdIbanInsertion } from "../../navigation/action/iban";
-import { navigateToBpdOnboardingEnrollPaymentMethod } from "../../navigation/action/onboarding";
+import {
+  navigateToBpdOnboardingEnrollPaymentMethod,
+  navigateToBpdOnboardingNoPaymentMethods
+} from "../../navigation/action/onboarding";
 import BPD_ROUTES from "../../navigation/routes";
 import {
   bpdIbanInsertionCancel,
@@ -17,7 +20,7 @@ import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing"
 //  which screen to display, (the user already have payment methods or not)
 export const chooseContinueAction = (isOnboarding: boolean) =>
   isOnboarding
-    ? navigateToBpdOnboardingEnrollPaymentMethod
+    ? navigateToBpdOnboardingNoPaymentMethods
     : NavigationActions.back;
 
 export const isMainScreen = (screenName: string) =>
@@ -51,7 +54,7 @@ export function* bpdIbanInsertionWorker() {
     yield put(NavigationActions.back());
   } else {
     if (onboardingOngoing) {
-      yield put(navigateToBpdOnboardingEnrollPaymentMethod());
+      yield put(navigateToBpdOnboardingNoPaymentMethods());
       navigationHistoryPop(1);
     } else {
       yield put(NavigationActions.back());
