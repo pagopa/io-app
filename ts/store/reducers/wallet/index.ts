@@ -3,6 +3,9 @@
  * transactions and for cards
  */
 import { combineReducers } from "redux";
+import abiReducer, {
+  AbiState
+} from "../../../features/wallet/onboarding/bancomat/store/reducers";
 import { PaymentState } from "./payment";
 import paymentReducer from "./payment";
 import pspsByIdReducer, { PspStateById } from "./pspsById";
@@ -16,13 +19,15 @@ export type WalletState = Readonly<{
   wallets: WalletsState;
   payment: PaymentState;
   pspsById: PspStateById;
+  abi: AbiState;
 }>;
 
 const reducer = combineReducers({
   transactions: transactionsReducer,
   wallets: walletsReducer,
   payment: paymentReducer,
-  pspsById: pspsByIdReducer
+  pspsById: pspsByIdReducer,
+  abi: abiReducer
 });
 
 export default reducer;
