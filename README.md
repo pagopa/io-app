@@ -539,7 +539,7 @@ export default (): Theme => {
 }
 ```
 
-In this file, you can see how two attributes are redefined (`padding` and `backgroundColor`) using the values ​​in the relative variables. The returned object will be used in the file [ts/theme/abi.ts](ts/theme/index.ts) to associate it with a specific component type (in this case `NativeBase.Component`).
+In this file, you can see how two attributes are redefined (`padding` and `backgroundColor`) using the values ​​in the relative variables. The returned object will be used in the file [ts/theme/index.ts](ts/theme/index.ts) to associate it with a specific component type (in this case `NativeBase.Component`).
 
 A more complex example allows you to use the advanced features of the native-base theming layer.
 

@@ -10,7 +10,7 @@ import { Action } from "../../../../../../store/actions/types";
 import { loadPans } from "../actions";
 import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 
-// plain object where the key is the abi and the value is the abi object
+// search holds abi array derived from search
 export type PansState = {
   search: RemoteValue<ReadonlyArray<PatchedCard>, Error>;
 };

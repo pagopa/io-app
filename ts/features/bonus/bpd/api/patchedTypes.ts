@@ -3,6 +3,7 @@ import { enumType } from "italia-ts-commons/lib/types";
 
 /**
  * patched version of CitizenResource
+ * - payoffInstr and payoffInstrType must be optional
  */
 // required attributes
 const PatchedCitizenResourceR = t.interface({
@@ -27,6 +28,7 @@ export type PatchedCitizenResource = t.TypeOf<typeof PatchedCitizenResource>;
 
 /**
  * patched version of Card / Cards
+ * - expiringDate is PatterString('yyyy-MM-dd') instead of string
  */
 export enum ProductTypeEnum {
   "PP" = "PP",
