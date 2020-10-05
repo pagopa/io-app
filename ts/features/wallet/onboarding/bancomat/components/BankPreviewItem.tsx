@@ -45,6 +45,14 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
   const [imageW, setImageW] = React.useState(BASE_IMG_W);
   const [calculatedDim, setCalculatedDim] = React.useState(false);
 
+  /**
+   * To keep the image bounded in the predefined maximum dimensions (40x160) we use the resizeMode "contain"
+   * and always calculate the resize width keeping fixed the height to 40, in this way all images will have an height of 40
+   * and a variable width until the limit of 160.
+   * Calculating the new image height based on its width may cause an over boundary dimension in some case.
+   * @param width
+   * @param height
+   */
   const handleImageDimensionSuccess = (width: number, height: number) => {
     if (width > 0 && height > 0) {
       const newWidth = (width / height) * BASE_IMG_H;
