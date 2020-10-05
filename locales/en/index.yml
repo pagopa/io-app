@@ -1575,6 +1575,8 @@ bonus:
         title: "The current account is not in your name"
         text1: "The IBAN you entered"
         text2: "identify a current account that is not registered in your tax code: are you sure you want to use this IBAN?"
+      loading:
+        "We are verifying your IBAN\n\nPlease wait."
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
