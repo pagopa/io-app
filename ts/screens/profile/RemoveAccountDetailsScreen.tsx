@@ -1,21 +1,16 @@
-import { censor } from "fp-ts/lib/Writer";
 import * as pot from "italia-ts-commons/lib/pot";
-import { View, Text, List, Radio } from "native-base";
+import { Text, List } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
-import DetailedlistItemComponent from "../../components/screens/DetailedlistItemComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import Markdown from "../../components/ui/Markdown";
+import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
@@ -27,9 +22,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import themeVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
-import IconFont from "./../../components/ui/IconFont";
-import { title } from "process";
-import reactotron from "reactotron-react-native";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -43,76 +35,6 @@ type Props = ReduxProps &
 type State = {
   isMarkdownLoaded: boolean;
   selectedMotivation: number;
-};
-
-const styles = StyleSheet.create({
-  mainContent: {
-    flex: 1
-  },
-  markdownContainer: {
-    paddingLeft: themeVariables.contentPadding,
-    paddingRight: themeVariables.contentPadding
-  }
-});
-
-type PropsItem = Readonly<{
-  items: Array<string>;
-  title: string;
-  key: string;
-  selected: number;
-  onPress: (selected: number) => void;
-}>;
-
-const RenderListItem: React.FunctionComponent<PropsItem> = (
-  props: PropsItem
-) => {
-  const styles = {
-    title: {
-      paddingTop: 10,
-      paddingBottom: 10
-    },
-    item: {
-      flexDirection: "row" as const,
-      flex: 1,
-      paddingTop: 10,
-      paddingBottom: 10
-    },
-    icon: {
-      paddingBottom: 15,
-      paddingRight: 20
-    }
-  };
-
-  const [selectedIndex, setSelectedIndex] = React.useState(-1);
-  reactotron.log(selectedIndex);
-
-  return (
-    <View>
-      <Text style={styles.title}>{props.title}</Text>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "column"
-        }}
-      >
-        {props.items.map((item, key) => (
-          <View key={`${props.key}_${key}`} style={styles.item}>
-            <IconFont
-              name={selectedIndex === key ? "io-radio-on" : "io-radio-off"}
-              size={24}
-              color={themeVariables.contentPrimaryBackground}
-              onPress={() => {
-                setSelectedIndex(key);
-                props.onPress(key);
-              }}
-              style={styles.icon}
-            />
-            <Text style={{ flex: 1 }}>{item}</Text>
-          </View>
-        ))}
-      </View>
-    </View>
-  );
 };
 
 /**
@@ -171,25 +93,20 @@ class RemoveAccountDetails extends React.PureComponent<Props, State> {
           </Text>
 
           <List withContentLateralPadding={true} style={{ paddingTop: 6 }}>
-            <RenderListItem
-              title="Qual'è il motivo della cancellazione?"
+            <RadioButtonList
+              head="Qual'è il motivo della cancellazione?"
               key="delete_reason"
               items={[
-                "Non ritengo più utile IO",
-                "Non mi sento al sicuro su IO",
-                "Non ho mai usato l'app",
-                "Nessuno dei precedenti"
+                { label: "Non ritengo più utile IO", id: 0 },
+                { label: "Non mi sento al sicuro su IO", id: 1 },
+                { label: "Non ho mai usato l'app", id: 2 },
+                { label: "Nessuno dei precedenti", id: 3 }
               ]}
-              selected={this.state.selectedMotivation}
+              selectedItem={this.state.selectedMotivation}
               onPress={motivationIndex => {
-                this.setState(
-                  {
-                    selectedMotivation: motivationIndex
-                  },
-                  () => {
-                    reactotron.log("parent:" + this.state.selectedMotivation);
-                  }
-                );
+                this.setState({
+                  selectedMotivation: motivationIndex
+                });
               }}
             />
           </List>

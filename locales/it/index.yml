@@ -191,7 +191,7 @@ profile:
       description: I tuoi diritti e obblighi nell’uso di IO
       subtitle: Qui trovi informazioni sulle condizioni legali e sul trattamento dei tuoi dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
-      removeAccount:
+      removeAccountDetails:
         title: Elimina il tuo account
         description: Cancella in modo permanente il tuo account e le tue informazioni
         alert:
