@@ -8,7 +8,6 @@ import {
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
-import { RTron } from "../../../../../boot/configureStoreAndPersistor";
 
 export function* executeAndDispatch(
   remoteCall:
@@ -76,12 +75,10 @@ export function* deleteCitizen(
   deleteCitizenIO: ReturnType<typeof BackendBpdClient>["deleteCitizenIO"]
 ): SagaIterator {
   try {
-    RTron.log("pre");
     const deleteCitizenIOResult: SagaCallReturnType<typeof deleteCitizenIO> = yield call(
       deleteCitizenIO,
       {} as any
     );
-    RTron.log(deleteCitizenIOResult);
     if (deleteCitizenIOResult.isRight()) {
       if (deleteCitizenIOResult.value.status === 204) {
         yield put(bpdDeleteUserFromProgram.success());

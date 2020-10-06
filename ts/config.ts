@@ -47,7 +47,7 @@ export const bonusVacanzeEnabled: boolean =
 
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
-export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
+export const bpdEnabled: boolean = true;
 
 export const bpdApiKey: string = Config.BPD_API_KEY;
 

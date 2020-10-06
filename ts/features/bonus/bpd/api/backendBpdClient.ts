@@ -9,8 +9,6 @@ import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
-  deleteUsingDELETEDefaultDecoder,
-  DeleteUsingDELETET,
   enrollmentDecoder,
   EnrollmentT,
   findUsingGETDecoder,
@@ -69,6 +67,8 @@ const deleteResponseDecoders = r.composeResponseDecoders(
   r.constantResponseDecoder<undefined, 404>(404, undefined)
 );
 
+// these responses code/codec are built from api usage and not from API spec
+// see https://bpd-dev.portal.azure-api.net/docs/services/bpd-ms-citizen/operations/deleteUsingDELETE
 type DeleteUsingDELETETExtra = r.IDeleteApiRequestType<
   {
     readonly apiKeyHeader: string;
@@ -168,7 +168,7 @@ export function BackendBpdClient(
   // FIX ME !this code must be removed!
   // only for test purpose
   const withTestToken = () =>
-    fetchApi(`${baseUrl}/pagopa/api/v1/login?fiscalCode=${fiscalCode}`, {
+    fetchApi(`${baseUrl}/bpd/pagopa/api/v1/login?fiscalCode=${fiscalCode}`, {
       method: "post"
     });
 
