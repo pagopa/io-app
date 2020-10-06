@@ -3,6 +3,7 @@ import * as React from "react";
 import { Body } from "../typography/Body";
 import IconFont from "./../../ui/IconFont";
 import themeVariables from "./../../../theme/variables";
+import reactotron from "reactotron-react-native";
 
 type RadioItem = {
   label: string;
@@ -60,7 +61,7 @@ export const RadioButtonList: React.FunctionComponent<Props> = (
               onPress={() => props.onPress(key)}
               style={styles.icon}
             />
-            <Body style={{ flex: 1 }}>{item}</Body>
+            <Body style={{ flex: 1 }}>{item.label}</Body>
           </View>
         ))}
       </View>
