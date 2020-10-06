@@ -77,7 +77,7 @@ class RemoveAccountInfo extends React.PureComponent<Props, State> {
   }
 
   private handleContinuePress = (): void => {
-    this.props.navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
+    this.props.navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS);
   };
 
   public render() {
