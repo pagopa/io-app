@@ -820,6 +820,8 @@ wallet:
       name: Postepay
     paypal:
       name: Paypal
+    bancomat:
+      name: Bancomat
     notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:

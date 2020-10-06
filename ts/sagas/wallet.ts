@@ -30,6 +30,7 @@ import {
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
+import { addBancomatToWallet } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
@@ -111,7 +112,10 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { handleLoadAbi } from "../features/wallet/onboarding/bancomat/saga/networking";
-import { loadAbi } from "../features/wallet/onboarding/bancomat/store/actions";
+import {
+  loadAbi,
+  walletAddBancomatStart
+} from "../features/wallet/onboarding/bancomat/store/actions";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -701,6 +705,9 @@ export function* watchWalletSaga(
       paymentManagerClient.getAbi,
       pmSessionManager
     );
+
+    // watch for add Bancomat to Wallet workflow
+    yield takeLatest(walletAddBancomatStart, addBancomatToWallet);
   }
 
   yield fork(paymentsDeleteUncompletedSaga);

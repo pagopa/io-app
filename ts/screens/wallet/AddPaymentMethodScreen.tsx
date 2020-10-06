@@ -11,7 +11,12 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
-import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
+import PaymentMethodsList, {
+  IPaymentMethod
+} from "../../components/wallet/PaymentMethodsList";
+import { bpdEnabled } from "../../config";
+import { isBpdEnabled } from "../../features/bonus/bpd/saga/orchestration/onboarding/startOnboarding";
+import { walletAddBancomatStart } from "../../features/wallet/onboarding/bancomat/store/actions";
 import I18n from "../../i18n";
 import {
   navigateToPaymentTransactionSummaryScreen,
@@ -44,6 +49,14 @@ const styles = StyleSheet.create({
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.newPaymentMethod.contextualHelpTitle",
   body: "wallet.newPaymentMethod.contextualHelpContent"
+};
+
+// added here the new payment methods that depends on the "inPayment" navigation state in order
+// to maintains retro-compatibility
+const bancomat: IPaymentMethod = {
+  name: I18n.t("wallet.methods.bancomat.name"),
+  icon: "io-48-card",
+  implemented: true
 };
 
 /**
@@ -94,6 +107,11 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
           <Content noPadded={true} style={styles.paddedLR}>
             <PaymentMethodsList
               navigateToAddCreditCard={this.props.navigateToAddCreditCard}
+              paymentMethods={
+                bpdEnabled
+                  ? [{ ...bancomat, onPress: this.props.startAddBancomat }]
+                  : undefined
+              }
             />
           </Content>
         )}
@@ -117,6 +135,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
+  startAddBancomat: () => dispatch(walletAddBancomatStart()),
   navigateToTransactionSummary: () => {
     const maybeInPayment = props.navigation.getParam("inPayment");
     maybeInPayment.map(inPayment =>
