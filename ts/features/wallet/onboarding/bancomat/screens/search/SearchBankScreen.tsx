@@ -65,7 +65,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAbis: () => dispatch(loadAbi.request()),
   onCancel: () => dispatch(navigateBack()),
-  onItemPress: (abi: string) => null,
+  onItemPress: (_abi: string) => null,
   onContinue: () => null
 });
 
