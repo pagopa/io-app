@@ -3,7 +3,6 @@ import * as React from "react";
 import { Body } from "../typography/Body";
 import IconFont from "./../../ui/IconFont";
 import themeVariables from "./../../../theme/variables";
-import reactotron from "reactotron-react-native";
 
 type RadioItem = {
   label: string;
