@@ -61,12 +61,33 @@ const enrollCitizenIOT: EnrollmentTTExtra = {
   response_decoder: enrollmentDecoder(PatchedCitizenResource)
 };
 
-const deleteCitizenIOT: DeleteUsingDELETET = {
+const deleteResponseDecoders = r.composeResponseDecoders(
+  r.composeResponseDecoders(
+    r.constantResponseDecoder<undefined, 204>(204, undefined),
+    r.constantResponseDecoder<undefined, 401>(401, undefined)
+  ),
+  r.constantResponseDecoder<undefined, 404>(404, undefined)
+);
+
+type DeleteUsingDELETETExtra = r.IDeleteApiRequestType<
+  {
+    readonly apiKeyHeader: string;
+    readonly Authorization: string;
+    readonly x_request_id?: string;
+  },
+  "Ocp-Apim-Subscription-Key",
+  never,
+  | r.IResponseType<204, undefined>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<404, undefined>
+>;
+
+const deleteCitizenIOT: DeleteUsingDELETETExtra = {
   method: "delete",
   url: () => `/bpd/io/citizen`,
   query: _ => ({}),
   headers: headersProducers(),
-  response_decoder: deleteUsingDELETEDefaultDecoder()
+  response_decoder: deleteResponseDecoders
 };
 
 // decoders composition to handle updatePaymentMethod response
