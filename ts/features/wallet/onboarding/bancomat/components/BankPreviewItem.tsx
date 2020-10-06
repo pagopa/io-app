@@ -11,7 +11,7 @@ import IconFont from "../../../../../components/ui/IconFont";
 type Props = {
   bank: Abi;
   inList: boolean;
-  onPress: () => void;
+  onPress: (abi: string) => void;
 };
 
 const BASE_IMG_H = 40;
@@ -73,8 +73,10 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
     resizeMode: "contain"
   };
 
+  const onItemPress = () => props.bank.abi && props.onPress(props.bank.abi);
+
   return props.inList ? (
-    <ListItem style={styles.flexRow} onPress={props.onPress}>
+    <ListItem style={styles.flexRow} onPress={onItemPress}>
       <View style={styles.listItem}>
         <View spacer={true} />
         {calculatedDim && props.bank.logoUrl && (
@@ -92,7 +94,7 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
     <ButtonDefaultOpacity
       white={true}
       style={styles.gridItem}
-      onPress={props.onPress}
+      onPress={onItemPress}
     >
       {calculatedDim && props.bank.logoUrl && (
         <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
