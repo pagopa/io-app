@@ -80,6 +80,7 @@ type DeleteUsingDELETETExtra = r.IDeleteApiRequestType<
   | r.IResponseType<204, undefined>
   | r.IResponseType<401, undefined>
   | r.IResponseType<404, undefined>
+  | r.IResponseType<500, undefined>
 >;
 
 const deleteCitizenIOT: DeleteUsingDELETETExtra = {
@@ -167,12 +168,9 @@ export function BackendBpdClient(
   // FIX ME !this code must be removed!
   // only for test purpose
   const withTestToken = () =>
-    fetchApi(
-      `https://bpd-dev.azure-api.net/bpd/pagopa/api/v1/login?fiscalCode=${fiscalCode}`,
-      {
-        method: "post"
-      }
-    );
+    fetchApi(`${baseUrl}/pagopa/api/v1/login?fiscalCode=${fiscalCode}`, {
+      method: "post"
+    });
 
   const withBearerToken = <P extends extendHeaders, R>(
     f: (p: P) => Promise<R>
