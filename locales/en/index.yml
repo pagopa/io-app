@@ -1557,6 +1557,28 @@ bonus:
       loadingActivateBpd:
         title: "We are activating the cashback"
         body: "Please wait."
+    iban:
+      skip: "Skip"
+      iban: "IBAN"
+      edit: "Change IBAN"
+      insertion:
+        title: "IBAN for accreditation"
+        body1: "Indicate here the IBAN of your current account, on which you want to receive credit once the ranking has been consolidated."
+        body2: "The IBAN will be checked to find out if the relevant current account is in your name. You can also enter it at a later time."
+      koWrong:
+        title: "Incorrect IBAN"
+        text1: "The IBAN you entered"
+        text2: "is not correct: check it please!"
+      koCannotVerify:
+        title: "Your IBAN could not be verified"
+        text1: "If you are sure the IBAN"
+        text2: "identify the account on which you want to receive credit, you can proceed."
+      koNotOwned:
+        title: "The current account is not in your name"
+        text1: "The IBAN you entered"
+        text2: "identify a current account that is not registered in your tax code: are you sure you want to use this IBAN?"
+      loading:
+        "We are verifying your IBAN\n\nPlease wait."
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
