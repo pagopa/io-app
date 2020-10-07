@@ -66,7 +66,7 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
         </View>
         <FooterTwoButtons
           rightDisabled={!userCanContinue}
-          onRight={() => Iban.decode(iban).map(i => props.onIbanConfirm(i))}
+          onRight={() => Iban.decode(iban).map(props.onIbanConfirm)}
           onCancel={props.onContinue}
           rightText={I18n.t("global.buttons.continue")}
           leftText={skip}
