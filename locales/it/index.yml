@@ -1161,8 +1161,6 @@ identification:
       button: Hai dimenticato il
       code: codice di sblocco
       button_short: Reimposta il codice di sblocco
-      tip: Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente.
-      tip_short: Dovrai effettuare di nuovo l'accesso.
     confirmValid: Codice di sblocco corretto
   unlock_screen:
     help:
