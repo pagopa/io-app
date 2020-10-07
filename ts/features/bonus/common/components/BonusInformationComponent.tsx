@@ -1,8 +1,7 @@
 import { Content, Text, View } from "native-base";
 import { ComponentProps } from "react";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-navigation";
+import { Image, StyleSheet, SafeAreaView } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
