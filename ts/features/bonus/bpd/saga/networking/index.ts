@@ -82,6 +82,7 @@ export function* deleteCitizen(
     if (deleteCitizenIOResult.isRight()) {
       if (deleteCitizenIOResult.value.status === 204) {
         yield put(bpdDeleteUserFromProgram.success());
+        return;
       }
       throw new Error(`response status ${deleteCitizenIOResult.value.status}`);
     } else {

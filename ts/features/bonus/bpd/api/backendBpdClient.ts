@@ -9,8 +9,6 @@ import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
-  deleteUsingDELETEDefaultDecoder,
-  DeleteUsingDELETET,
   enrollmentDecoder,
   EnrollmentT,
   findUsingGETDecoder,
@@ -61,12 +59,36 @@ const enrollCitizenIOT: EnrollmentTTExtra = {
   response_decoder: enrollmentDecoder(PatchedCitizenResource)
 };
 
-const deleteCitizenIOT: DeleteUsingDELETET = {
+const deleteResponseDecoders = r.composeResponseDecoders(
+  r.composeResponseDecoders(
+    r.constantResponseDecoder<undefined, 204>(204, undefined),
+    r.constantResponseDecoder<undefined, 401>(401, undefined)
+  ),
+  r.constantResponseDecoder<undefined, 404>(404, undefined)
+);
+
+// these responses code/codec are built from api usage and not from API spec
+// see https://bpd-dev.portal.azure-api.net/docs/services/bpd-ms-citizen/operations/deleteUsingDELETE
+type DeleteUsingDELETETExtra = r.IDeleteApiRequestType<
+  {
+    readonly apiKeyHeader: string;
+    readonly Authorization: string;
+    readonly x_request_id?: string;
+  },
+  "Ocp-Apim-Subscription-Key",
+  never,
+  | r.IResponseType<204, undefined>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<404, undefined>
+  | r.IResponseType<500, undefined>
+>;
+
+const deleteCitizenIOT: DeleteUsingDELETETExtra = {
   method: "delete",
   url: () => `/bpd/io/citizen`,
   query: _ => ({}),
   headers: headersProducers(),
-  response_decoder: deleteUsingDELETEDefaultDecoder()
+  response_decoder: deleteResponseDecoders
 };
 
 // decoders composition to handle updatePaymentMethod response
@@ -146,12 +168,9 @@ export function BackendBpdClient(
   // FIX ME !this code must be removed!
   // only for test purpose
   const withTestToken = () =>
-    fetchApi(
-      `https://bpd-dev.azure-api.net/bpd/pagopa/api/v1/login?fiscalCode=${fiscalCode}`,
-      {
-        method: "post"
-      }
-    );
+    fetchApi(`${baseUrl}/bpd/pagopa/api/v1/login?fiscalCode=${fiscalCode}`, {
+      method: "post"
+    });
 
   const withBearerToken = <P extends extendHeaders, R>(
     f: (p: P) => Promise<R>
