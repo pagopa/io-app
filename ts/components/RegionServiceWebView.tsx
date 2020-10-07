@@ -4,6 +4,7 @@ import * as React from "react";
 import { Alert, Image, StyleSheet } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
+import URLParse from "url-parse";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
@@ -73,6 +74,8 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   const [loading, setLoading] = React.useState(false);
   const [hasError, setHasError] = React.useState(false);
   const ref = React.createRef<WebView>();
+
+  const urlParsed = new URLParse(props.uri, true);
 
   const showSuccessContent = (text: string, close: () => void) => (
     <Container>
@@ -177,6 +180,10 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const handleWebviewMessage = (event: WebViewMessageEvent) => {
+    if (!event.nativeEvent.url.startsWith(urlParsed.origin)) {
+      return;
+    }
+
     if (props.handleWebMessage) {
       props.handleWebMessage(event.nativeEvent.data);
     }
