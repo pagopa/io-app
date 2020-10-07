@@ -15,7 +15,6 @@ import PaymentMethodsList, {
   IPaymentMethod
 } from "../../components/wallet/PaymentMethodsList";
 import { bpdEnabled } from "../../config";
-import { isBpdEnabled } from "../../features/bonus/bpd/saga/orchestration/onboarding/startOnboarding";
 import { walletAddBancomatStart } from "../../features/wallet/onboarding/bancomat/store/actions";
 import I18n from "../../i18n";
 import {

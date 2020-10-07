@@ -3,6 +3,7 @@ const WALLET_ADD_BANCOMAT_ROUTES = {
 
   CHOOSE_BANK: "WALLET_ADD_BANCOMAT_CHOOSE_BANK",
   ADD_BANCOMAT: "WALLET_ADD_BANCOMAT",
+  // TODO: temp only, to be removed when linked with the real workflow
   POC1: "WALLET_ADD_BANCOMAT_POC1"
 };
 

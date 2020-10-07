@@ -11,6 +11,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import { navigateToWalletPoc1 } from "../navigation/action";
 import {
+  walletAddBancomatBack,
   walletAddBancomatCancel,
   walletAddBancomatCompleted
 } from "../store/actions";
@@ -23,7 +24,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const PocBancomatScreen1: React.FunctionComponent<Props> = props => (
-  <BaseScreenComponent goBack={props.cancel} headerTitle={"Poc 1"}>
+  <BaseScreenComponent goBack={props.back} headerTitle={"Poc 1"}>
     <SafeAreaView style={IOStyles.flex}>
       <View style={IOStyles.flex}>
         <H1>POC1</H1>
@@ -31,13 +32,14 @@ const PocBancomatScreen1: React.FunctionComponent<Props> = props => (
       <FooterTwoButtons
         onRight={props.navigate}
         onCancel={props.cancel}
-        title={I18n.t("global.buttons.continue")}
+        rightText={I18n.t("global.buttons.continue")}
       />
     </SafeAreaView>
   </BaseScreenComponent>
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  back: () => dispatch(walletAddBancomatBack()),
   complete: () => dispatch(walletAddBancomatCompleted()),
   cancel: () => dispatch(walletAddBancomatCancel()),
   navigate: () => dispatch(navigateToWalletPoc1())

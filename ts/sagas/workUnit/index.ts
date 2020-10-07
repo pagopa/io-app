@@ -11,20 +11,36 @@ import { navigationHistoryPop } from "../../store/actions/navigationHistory";
 import { navigationHistorySizeSelector } from "../../store/middlewares/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../store/reducers/navigation";
 
+/**
+ * The data model needed to run the workunit
+ */
 export type WorkUnit = {
+  // The navigation action that will be used if the current screen isn't the `startScreenName`
   startScreenNavigation: NavigationNavigateAction;
+  // The expected first screen of the workflow
   startScreenName: string;
+  // The action that will be taken when the workflow is completed
   complete: ActionCreator<TypeConstant>;
+  // The action that will be taken when the workflow has been canceled
   cancel: ActionCreator<TypeConstant>;
+  // The action that will be taken when `back` is pressed from the `startScreenName`
   back: ActionCreator<TypeConstant>;
 };
 
+/**
+ * The result of the WorkUnit
+ */
 export enum ESagaResult {
   Cancel = "Cancel",
   Completed = "Completed",
   Back = "Back"
 }
 
+/**
+ * Ensure that the `startScreen` is the current screen or navigate to `startScreen` using `navigateTo`
+ * @param navigateTo
+ * @param startScreen
+ */
 function* ensureScreen(
   navigateTo: NavigationNavigateAction,
   startScreen: string
@@ -39,8 +55,8 @@ function* ensureScreen(
 }
 
 /**
- * Ensure that after the execution of the saga `g`, the navigation stacks return to the first screen
- * before the call.
+ * Ensure that after the execution of the saga `g`,
+ * the navigation stack return to the screen from which the saga was invoked
  * @param g
  */
 export function* withResetNavigationStack<T>(
@@ -58,10 +74,13 @@ export function* withResetNavigationStack<T>(
     yield put(navigationHistoryPop(deltaNavigation - 1));
   }
   yield put(NavigationActions.back());
-  console.log("withReset" + res);
   return res;
 }
 
+/**
+ * Execute the work unit, and wait for an action to complete
+ * @param wu
+ */
 export function* executeWorkUnit(
   wu: WorkUnit
 ): Generator<
