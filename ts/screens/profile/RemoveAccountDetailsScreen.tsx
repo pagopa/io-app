@@ -22,6 +22,10 @@ import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import themeVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
+import reactotron from "reactotron-react-native";
+import { RootModal } from "../modal/RootModal";
+import IdentificationModal from "../modal/IdentificationModal";
+import SystemOffModal from "../modal/SystemOffModal";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -32,101 +36,72 @@ type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-type State = {
-  isMarkdownLoaded: boolean;
-  selectedMotivation: number;
-};
-
 /**
  * A screen to explain how the account removal works.
  * Here user can ask to delete his account
  */
-class RemoveAccountDetails extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isMarkdownLoaded: false,
-      selectedMotivation: -1
-    };
-  }
+export const RemoveAccountDetails: React.FunctionComponent<Props> = (
+  props: Props
+) => {
+  const [isMarkdownLoaded, setisMarkdownLoaded] = React.useState(false);
+  // Initially no motivation is selected
+  const [selectedMotivation, setSelectedMotivation] = React.useState(-1);
 
-  public componentDidUpdate(prevProps: Props) {
-    const prev =
-      prevProps.userDataProcessing[UserDataProcessingChoiceEnum.DOWNLOAD];
-    const curr = this.props.userDataProcessing[
-      UserDataProcessingChoiceEnum.DOWNLOAD
-    ];
-    // the request to download has been done
-    if (pot.isUpdating(prev) && pot.isSome(curr)) {
-      // we got an error
-      if (pot.isError(curr)) {
-        showToast(I18n.t("profile.main.privacy.exportData.error"));
-        return;
-      }
-      // success, go back!
-      this.props.navigation.goBack();
-    }
-  }
-
-  private handleContinuePress = (): void => {
-    this.props.navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
+  const handleContinuePress = (): void => {
+    props.navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
   };
 
-  public render() {
-    const ContainerComponent = withLoadingSpinner(() => (
-      <TopScreenComponent
-        goBack={true}
-        headerTitle={I18n.t("profile.main.title")}
-      >
-        <ScreenContent
-          title={I18n.t("profile.main.privacy.removeAccountInfo.title")}
-          bounces={false}
-        >
-          <Text
-            style={{
-              paddingHorizontal: themeVariables.contentPadding
-            }}
-          >
-            {I18n.t("send_email_messages.subtitle")}
-            <Text bold={true}>Pippo</Text>
-            <Text>{I18n.t("global.symbols.question")}</Text>
-          </Text>
+  return (
+    <IdentificationModal identificationProgressState="pippo" />
+    // <TopScreenComponent
+    //   goBack={true}
+    //   headerTitle={I18n.t("profile.main.title")}
+    // >
+    //   <ScreenContent
+    //     title={I18n.t("profile.main.privacy.removeAccountInfo.title")}
+    //     bounces={false}
+    //   >
+    //     <Text
+    //       style={{
+    //         paddingHorizontal: themeVariables.contentPadding
+    //       }}
+    //     >
+    //       {I18n.t("send_email_messages.subtitle")}
+    //       <Text bold={true}>Pippo</Text>
+    //       <Text>{I18n.t("global.symbols.question")}</Text>
+    //     </Text>
 
-          <List withContentLateralPadding={true} style={{ paddingTop: 6 }}>
-            <RadioButtonList
-              head="Qual'è il motivo della cancellazione?"
-              key="delete_reason"
-              items={[
-                { label: "Non ritengo più utile IO", id: 0 },
-                { label: "Non mi sento al sicuro su IO", id: 1 },
-                { label: "Non ho mai usato l'app", id: 2 },
-                { label: "Nessuno dei precedenti", id: 3 }
-              ]}
-              selectedItem={this.state.selectedMotivation}
-              onPress={motivationIndex => {
-                this.setState({
-                  selectedMotivation: motivationIndex
-                });
-              }}
-            />
-          </List>
-        </ScreenContent>
-        {this.state.isMarkdownLoaded && (
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={{
-              block: true,
-              primary: true,
-              onPress: this.handleContinuePress,
-              title: I18n.t("profile.main.privacy.removeAccountInfo.cta")
-            }}
-          />
-        )}
-      </TopScreenComponent>
-    ));
-    return <ContainerComponent isLoading={this.props.isLoading} />;
-  }
-}
+    //     <List withContentLateralPadding={true} style={{ paddingTop: 6 }}>
+    //       <RadioButtonList
+    //         head="Qual'è il motivo della cancellazione?"
+    //         key="delete_reason"
+    //         items={[
+    //           { label: "Non ritengo più utile IO", id: 0 },
+    //           { label: "Non mi sento al sicuro su IO", id: 1 },
+    //           { label: "Non ho mai usato l'app", id: 2 },
+    //           { label: "Nessuno dei precedenti", id: 3 }
+    //         ]}
+    //         selectedItem={selectedMotivation}
+    //         onPress={motivationIndex => {
+    //           setSelectedMotivation(motivationIndex);
+    //         }}
+    //       />
+    //     </List>
+    //   </ScreenContent>
+    //   {isMarkdownLoaded && (
+    //     <FooterWithButtons
+    //       type={"SingleButton"}
+    //       leftButton={{
+    //         block: true,
+    //         primary: true,
+    //         onPress: handleContinuePress,
+    //         title: I18n.t("profile.main.privacy.removeAccountInfo.cta")
+    //       }}
+    //     />
+    //   )}
+    // </TopScreenComponent>
+  );
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   upsertUserDataProcessing: () =>
