@@ -36,8 +36,16 @@ export const walletAddBancomatCancel = createStandardAction(
   "WALLET_ADD_BANCOMAT_CANCEL"
 )<void>();
 
+/**
+ * The user choose `back` from the first screen
+ */
+export const walletAddBancomatBack = createStandardAction(
+  "WALLET_ADD_BANCOMAT_BACK"
+)<void>();
+
 export type AbiActions =
   | ActionType<typeof loadAbi>
   | ActionType<typeof walletAddBancomatStart>
   | ActionType<typeof walletAddBancomatCompleted>
-  | ActionType<typeof walletAddBancomatCancel>;
+  | ActionType<typeof walletAddBancomatCancel>
+  | ActionType<typeof walletAddBancomatBack>;

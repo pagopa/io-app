@@ -1,51 +1,42 @@
-import { NavigationActions, NavigationNavigateAction } from "react-navigation";
-import { select, call, put, Effect } from "redux-saga/effects";
+import { NavigationNavigateAction } from "react-navigation";
+import { call, Effect, put, select, take } from "redux-saga/effects";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 import {
-  navigateToPaymentScanQrCode,
-  navigateToWalletHome
-} from "../../../../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
-import { navigationHistorySizeSelector } from "../../../../../../store/middlewares/navigationHistory";
+  ESagaResult,
+  executeWorkUnit,
+  withResetNavigationStack
+} from "../../../../../../sagas/workUnit";
+import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { navigateToBpdIbanInsertion } from "../../../../../bonus/bpd/navigation/action/iban";
-import BPD_ROUTES from "../../../../../bonus/bpd/navigation/routes";
-
-export enum ESagaResult {
-  Cancel = "Cancel",
-  Completed = "Completed",
-  Back = "Back"
-}
+import { navigateToWalletPoc1 } from "../../navigation/action";
+import WALLET_ADD_BANCOMAT_ROUTES from "../../navigation/routes";
+import {
+  walletAddBancomatBack,
+  walletAddBancomatCancel,
+  walletAddBancomatCompleted
+} from "../../store/actions";
 
 export function* addBancomatToWallet() {
   const res: SagaCallReturnType<typeof baseAddBancomatToWallet> = yield call(
     withResetNavigationStack,
-    baseAddBancomatToWallet
+    myBancomat
   );
+  console.log("RESSSS ->" + res);
   yield put(navigateToWalletHome());
-  console.log("asdasd");
 }
 
-export function* withResetNavigationStack<T>(
-  g: (...args: Array<any>) => Generator<Effect, T>
-): Generator<Effect, T, any> {
-  const currentNavigationStackSize: ReturnType<typeof navigationHistorySizeSelector> = yield select(
-    navigationHistorySizeSelector
-  );
-  const res: T = yield call(g);
-  const newNavigationStackSize: ReturnType<typeof navigationHistorySizeSelector> = yield select(
-    navigationHistorySizeSelector
-  );
-  const deltaNavigation = newNavigationStackSize - currentNavigationStackSize;
-  if (deltaNavigation > 1) {
-    yield put(navigationHistoryPop(deltaNavigation - 1));
-  }
-  yield put(NavigationActions.back());
-
-  return res;
+function* myBancomat() {
+  return yield call(executeWorkUnit, {
+    startScreenNavigation: navigateToWalletPoc1(),
+    startScreenName: WALLET_ADD_BANCOMAT_ROUTES.POC1,
+    complete: walletAddBancomatCompleted,
+    back: walletAddBancomatBack,
+    cancel: walletAddBancomatCancel
+  });
 }
 
-function* ensureMainScreen(
+function* ensureScreen(
   navigateTo: NavigationNavigateAction,
   startScreen: string
 ) {
@@ -58,6 +49,25 @@ function* ensureMainScreen(
   }
 }
 
-function* baseAddBancomatToWallet(): Generator<Effect, ESagaResult> {
-  yield call(ensureMainScreen, navigateToBpdIbanInsertion(), "asd");
+function* baseAddBancomatToWallet(): Generator<
+  Effect,
+  ESagaResult,
+  ActionType<typeof walletAddBancomatCancel | typeof walletAddBancomatCompleted>
+> {
+  yield call(
+    ensureScreen,
+    navigateToWalletPoc1(),
+    WALLET_ADD_BANCOMAT_ROUTES.POC1
+  );
+
+  const result: ActionType<
+    typeof walletAddBancomatCancel | typeof walletAddBancomatCompleted
+  > = yield take([
+    getType(walletAddBancomatCancel),
+    getType(walletAddBancomatCompleted)
+  ]);
+  if (isActionOf(walletAddBancomatCompleted, result)) {
+    return ESagaResult.Completed;
+  }
+  return ESagaResult.Cancel;
 }

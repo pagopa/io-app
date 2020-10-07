@@ -10,3 +10,8 @@ export const navigateToWalletAddBancomat = () =>
   NavigationActions.navigate({
     routeName: WALLET_ADD_BANCOMAT_ROUTES.ADD_BANCOMAT
   });
+
+export const navigateToWalletPoc1 = () =>
+  NavigationActions.navigate({
+    routeName: WALLET_ADD_BANCOMAT_ROUTES.POC1
+  });
