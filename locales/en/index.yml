@@ -1130,8 +1130,6 @@ identification:
       button: Did you forget the
       code: unlock code
       button_short: Reset unlock code
-      tip: To reset your unlock code you will have to log in again.
-      tip_short: You will have to login again.
     confirmValid: Correct unlock code
   unlock_screen:
     help:
