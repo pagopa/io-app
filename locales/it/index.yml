@@ -1161,8 +1161,6 @@ identification:
       button: Hai dimenticato il
       code: codice di sblocco
       button_short: Reimposta il codice di sblocco
-      tip: Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente.
-      tip_short: Dovrai effettuare di nuovo l'accesso.
     confirmValid: Codice di sblocco corretto
   unlock_screen:
     help:
@@ -1587,6 +1585,28 @@ bonus:
       loadingActivateBpd:
         title: "Stiamo attivando il cashback"
         body: "Ti preghiamo di attendere."
+    iban:
+      skip: "Salta"
+      iban: "IBAN"
+      edit: "Modifica IBAN"
+      insertion:
+        title: "IBAN per l’accredito"
+        body1: "Indica qui l’IBAN del tuo conto corrente, su cui vuoi ricevere l’accredito una volta consolidata la classifica."
+        body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
+      koWrong:
+        title: "IBAN non corretto"
+        text1: "L'IBAN che hai inserito"
+        text2: "non risulta corretto: controllalo per piacere!"
+      koCannotVerify:
+        title: "Non è stato possibile verificare il tuo IBAN"
+        text1: "Se sei sicuro che l’IBAN"
+        text2: "identifichi il conto su cui vuoi ricevere gli accrediti, puoi proseguire."
+      koNotOwned:
+        title: "Il conto corrente non risulta intestato a te"
+        text1: "L’IBAN che hai inserito"
+        text2: "identifica un conto corrente che non risulta intestato al tuo codice fiscale: sei sicuro di voler usare questo IBAN?"
+      loading:
+        "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
