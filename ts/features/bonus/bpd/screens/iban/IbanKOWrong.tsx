@@ -32,7 +32,7 @@ const IbanKoWrong: React.FunctionComponent<Props> = props => (
       <FooterTwoButtons
         onRight={props.modifyIban}
         onCancel={props.cancel}
-        title={"Modifica Iban"}
+        rightText={"Modifica Iban"}
       />
     </SafeAreaView>
   </BaseScreenComponent>
