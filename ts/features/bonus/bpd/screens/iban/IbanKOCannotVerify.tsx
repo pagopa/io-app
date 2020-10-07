@@ -34,7 +34,7 @@ const IbanKoCannotVerify: React.FunctionComponent<Props> = props => (
       <FooterTwoButtons
         onRight={props.completeInsertion}
         onCancel={props.modifyIban}
-        title={I18n.t("global.buttons.continue")}
+        rightText={I18n.t("global.buttons.continue")}
       />
     </SafeAreaView>
   </BaseScreenComponent>
