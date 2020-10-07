@@ -108,6 +108,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     title: I18n.t("global.buttons.cancel")
   };
   const requestButtonProps = {
+    buttonFontSize: customVariables.btnFontSize - 1,
     block: true,
     primary: true,
     onPress: props.onConfirm,
