@@ -9,11 +9,12 @@ import { OnCancelProps } from "./FooterSingleButton";
 
 type OnRightProps = {
   onRight: () => void;
-  title: string;
+  rightText: string;
 };
 
 type OwnProps = {
   rightDisabled?: boolean;
+  leftText?: string;
 };
 
 type MyProps = OnCancelProps & OnRightProps & OwnProps;
@@ -25,11 +26,11 @@ type MyProps = OnCancelProps & OnRightProps & OwnProps;
 export const FooterTwoButtons: React.FunctionComponent<MyProps> = props => (
   <FooterWithButtons
     type={"TwoButtonsInlineThird"}
-    leftButton={cancelButtonProps(props.onCancel)}
+    leftButton={cancelButtonProps(props.onCancel, props.leftText)}
     rightButton={
       props.rightDisabled ?? false
-        ? disablePrimaryButtonProps(props.title)
-        : confirmButtonProps(props.onRight, props.title)
+        ? disablePrimaryButtonProps(props.rightText)
+        : confirmButtonProps(props.onRight, props.rightText)
     }
   />
 );
