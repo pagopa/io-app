@@ -2,6 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { ListItem, View } from "native-base";
 import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
+import I18n from "../../../../../i18n";
 import { Abi } from "../../../../../../definitions/pagopa/bancomat/Abi";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -36,14 +37,19 @@ const styles = StyleSheet.create({
     width: 156,
     flexDirection: "column",
     flex: 1
+  },
+  boundaryImage: {
+    height: BASE_IMG_H,
+    width: BASE_IMG_W,
+    justifyContent: "center",
+    alignItems: "flex-start"
   }
 });
 
 export const BankPreviewItem: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const [imageW, setImageW] = React.useState(BASE_IMG_W);
-  const [calculatedDim, setCalculatedDim] = React.useState(false);
+  const [imageDimensions, setImageDimensions] = React.useState({ w: 0, h: 0 });
 
   /**
    * To keep the image bounded in the predefined maximum dimensions (40x160) we use the resizeMode "contain"
@@ -55,9 +61,8 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
    */
   const handleImageDimensionSuccess = (width: number, height: number) => {
     if (width > 0 && height > 0) {
-      const newWidth = (width / height) * BASE_IMG_H;
-      setImageW(newWidth > BASE_IMG_W ? BASE_IMG_W : newWidth);
-      setCalculatedDim(true);
+      const ratio = Math.min(BASE_IMG_W / width, BASE_IMG_H / height);
+      setImageDimensions({ w: width * ratio, h: height * ratio });
     }
   };
 
@@ -68,21 +73,25 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
   }, []);
 
   const imageStyle: StyleProp<ImageStyle> = {
-    width: imageW,
-    height: BASE_IMG_H,
+    width: imageDimensions.w,
+    height: imageDimensions.h,
     resizeMode: "contain"
   };
+
+  const bankName = props.bank.name || I18n.t("wallet.searchAbi.noName");
 
   return props.inList ? (
     <ListItem style={styles.flexRow} onPress={props.onPress}>
       <View style={styles.listItem}>
         <View spacer={true} />
-        {calculatedDim && props.bank.logoUrl && (
-          <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
-        )}
+        <View style={styles.boundaryImage}>
+          {props.bank.logoUrl && (
+            <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
+          )}
+        </View>
         <View spacer={true} small={true} />
         <LabelSmall color={"bluegrey"} weight={"Bold"}>
-          {props.bank.name ? props.bank.name : "Nome non trovato"}
+          {bankName}
         </LabelSmall>
         <View spacer={true} />
       </View>
@@ -94,12 +103,14 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
       style={styles.gridItem}
       onPress={props.onPress}
     >
-      {calculatedDim && props.bank.logoUrl && (
-        <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
-      )}
+      <View style={styles.boundaryImage}>
+        {props.bank.logoUrl && (
+          <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
+        )}
+      </View>
       <View spacer={true} />
       <LabelSmall color={"bluegrey"} weight={"Bold"}>
-        {props.bank.name ? props.bank.name : "Nome non trovato"}
+        {bankName}
       </LabelSmall>
     </ButtonDefaultOpacity>
   );
