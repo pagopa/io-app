@@ -57,7 +57,7 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
             <Input
               value={iban}
               maxLength={IbanMaxLength}
-              onChangeText={text => setIban(text.toUpperCase())}
+              onChangeText={text => setIban(text.toUpperCase().trim())}
             />
           </Item>
           <View spacer={true} large={true} />
