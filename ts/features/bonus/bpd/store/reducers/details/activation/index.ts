@@ -10,7 +10,10 @@ import {
   RemoteValue
 } from "../../../../model/RemoteValue";
 import { bpdLoadActivationStatus } from "../../../actions/details";
-import { bpdEnrollUserToProgram } from "../../../actions/onboarding";
+import {
+  bpdDeleteUserFromProgram,
+  bpdEnrollUserToProgram
+} from "../../../actions/onboarding";
 import paymentInstrumentReducer, {
   PayoffInstrumentType
 } from "./payoffInstrument";
@@ -41,6 +44,8 @@ const enabledReducer = (
     case getType(bpdLoadActivationStatus.success):
     case getType(bpdEnrollUserToProgram.success):
       return remoteReady(action.payload.enabled);
+    case getType(bpdDeleteUserFromProgram.success):
+      return remoteReady(false);
     case getType(bpdLoadActivationStatus.failure):
     case getType(bpdEnrollUserToProgram.failure):
       return remoteError(action.payload);
