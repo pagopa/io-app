@@ -2500,3 +2500,24 @@ export const abis = [
     logoUrl: "https://picsum.photos/200/300"
   }
 ];
+
+export const pans = [
+  {
+    abi: "02008",
+    cardNumber: "1234",
+    cardPartialNumber: "11112222",
+    expiringDate: "2021-10-07",
+    productType: "PP",
+    tokens: ["string"],
+    validityState: "V"
+  },
+  {
+    abi: "02008",
+    cardNumber: "5678",
+    cardPartialNumber: "33332222",
+    expiringDate: "2021-10-07",
+    productType: "PP",
+    tokens: ["string"],
+    validityState: "V"
+  }
+];
