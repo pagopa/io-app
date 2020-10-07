@@ -63,6 +63,7 @@ global:
     exit: Esci
     saveSelection: Salva la selezione
     search: Ricerca
+    skip: "Salta"
   navigator:
     messages: messaggi
     wallet: pagamenti
@@ -1585,8 +1586,11 @@ bonus:
       loadingActivateBpd:
         title: "Stiamo attivando il cashback"
         body: "Ti preghiamo di attendere."
+      noPaymentMethod:
+        title: "Aggiungi almeno un metodo di pagamento"
+        body: "Per inziare a raccogliere punti devi aggiungere su IO i tuoi metodi di pagamento elettronico preferiti: oggi sono supportate carte di credito, prepagate, ricaricabili, carte di debito, Bancomat e app e altri strumenti digitali.\n\n
+        In futuro il cashback supporterà altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno la raccolta dei punti!"
     iban:
-      skip: "Salta"
       iban: "IBAN"
       edit: "Modifica IBAN"
       insertion:
