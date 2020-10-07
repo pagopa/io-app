@@ -4,6 +4,7 @@ import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
+import URLParse from "url-parse";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { WebviewMessage } from "../types/WebviewMessage";
@@ -44,6 +45,8 @@ const injectedJavascript = closeInjectedScript(
 const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   const [loading, setLoading] = React.useState(false);
   const ref = React.createRef<WebView>();
+
+  const urlParsed = new URLParse(props.uri, true);
 
   const showSuccessContent = (text: string, close: () => void) => (
     <Container>
@@ -99,6 +102,10 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   const handleWebviewMessage = (event: WebViewMessageEvent) => {
+    if (!event.nativeEvent.url.startsWith(urlParsed.origin)) {
+      return;
+    }
+
     if (props.handleWebMessage) {
       props.handleWebMessage(event.nativeEvent.data);
     }
@@ -162,6 +169,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         <WebView
           ref={ref}
           source={{ uri: props.uri }}
+          originWhitelist={[urlParsed.origin]}
           textZoom={100}
           onLoadEnd={injectJS}
           onMessage={handleWebviewMessage}
