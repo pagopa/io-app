@@ -46,6 +46,8 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   const [loading, setLoading] = React.useState(false);
   const ref = React.createRef<WebView>();
 
+  const urlParsed = new URLParse(props.uri, true);
+
   const showSuccessContent = (text: string, close: () => void) => (
     <Container>
       <AppHeader noLeft={true}>
@@ -100,14 +102,12 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   const handleWebviewMessage = (event: WebViewMessageEvent) => {
-    if (props.handleWebMessage) {
-      props.handleWebMessage(event.nativeEvent.data);
+    if (!event.nativeEvent.url.startsWith(urlParsed.origin)) {
+      return;
     }
 
-    const urlParse = new URLParse(props.uri, true);
-
-    if (!event.nativeEvent.url.includes(urlParse.origin)) {
-      return;
+    if (props.handleWebMessage) {
+      props.handleWebMessage(event.nativeEvent.data);
     }
 
     const maybeData = WebviewMessage.decode(JSON.parse(event.nativeEvent.data));
@@ -169,7 +169,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         <WebView
           ref={ref}
           source={{ uri: props.uri }}
-          originWhitelist={[URLParse(props.uri, true).origin]}
+          originWhitelist={[urlParsed.origin]}
           textZoom={100}
           onLoadEnd={injectJS}
           onMessage={handleWebviewMessage}
