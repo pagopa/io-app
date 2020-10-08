@@ -110,8 +110,14 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { handleLoadAbi } from "../features/wallet/onboarding/bancomat/saga/networking";
-import { loadAbi } from "../features/wallet/onboarding/bancomat/store/actions";
+import {
+  handleLoadAbi,
+  handleLoadPans
+} from "../features/wallet/onboarding/bancomat/saga/networking";
+import {
+  loadAbi,
+  loadPans
+} from "../features/wallet/onboarding/bancomat/store/actions";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -699,6 +705,14 @@ export function* watchWalletSaga(
       loadAbi.request,
       handleLoadAbi,
       paymentManagerClient.getAbi,
+      pmSessionManager
+    );
+
+    // watch for load pans request
+    yield takeLatest(
+      loadPans.request,
+      handleLoadPans,
+      paymentManagerClient.getPans,
       pmSessionManager
     );
   }
