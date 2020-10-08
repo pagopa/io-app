@@ -647,7 +647,7 @@ wallet:
       text2: " su cui hai un carta Pagobancomat attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
       text3: informativa sul trattamento dei dati personali
     bankName: Denominazione della banca
-    noName: Nome non trovato
+    noName: Nome non disponibile
   accessibility:
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
