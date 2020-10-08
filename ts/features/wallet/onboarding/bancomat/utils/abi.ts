@@ -1,6 +1,14 @@
-export const sortAbiByName = (abis: ReadonlyArray<any>) =>
-  abis
-    .concat()
-    .sort((abi1: { name: string }, abi2: { name: string }) =>
-      abi1.name.toLocaleLowerCase().localeCompare(abi2.name.toLocaleLowerCase())
-    );
+import { Abi } from "../../../../../../definitions/pagopa/bancomat/Abi";
+
+/**
+ * This function aims to order the list of Abis returned by the PM in alphabetical order based on his name
+ * @param abis the abi list returned from the PM
+ */
+export const sortAbiByName = (abis: ReadonlyArray<Abi>) =>
+  [...abis].sort((abi1: Abi, abi2: Abi) => {
+    const abi1Name = abi1.name ?? "";
+    const abi2Name = abi2.name ?? "";
+    return abi1Name
+      .toLocaleLowerCase()
+      .localeCompare(abi2Name.toLocaleLowerCase());
+  });
