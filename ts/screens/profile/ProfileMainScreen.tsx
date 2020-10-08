@@ -369,7 +369,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           {/* Reset unlock code */}
           <ListItemComponent
             title={I18n.t("identification.unlockCode.reset.button_short")}
-            subTitle={I18n.t("identification.unlockCode.reset.tip_short")}
             onPress={this.props.resetPin}
             hideIcon={true}
           />

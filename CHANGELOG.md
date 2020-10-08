@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0-rc.9](https://github.com/pagopa/io-app/compare/1.7.0-rc.5...1.7.0-rc.9) (2020-10-08)
+
+
+### Features
+
+* **MyPortal:** [[#175076179](https://www.pivotaltracker.com/story/show/175076179)] Security improvements on webview component for services ([#2258](https://github.com/pagopa/io-app/issues/2258)) ([a2dcb2f](https://github.com/pagopa/io-app/commit/a2dcb2fb0616fa5c19690ae22f16f8231c51f84e))
+* [[#175057500](https://www.pivotaltracker.com/story/show/175057500)] Modify label for transaction details ([#2251](https://github.com/pagopa/io-app/issues/2251)) ([3986236](https://github.com/pagopa/io-app/commit/3986236f32be83570fc1f498b73ff71fac1d3b75))
+* **Bonus Pagamenti Digitali:** [[#174847319](https://www.pivotaltracker.com/story/show/174847319)] Iban insertion screen ([#2259](https://github.com/pagopa/io-app/issues/2259)) ([6351eff](https://github.com/pagopa/io-app/commit/6351eff07103a4bbd590be4eeee12ffd36fbaa18))
+* **Bonus Pagamenti Digitali:** [[#174847335](https://www.pivotaltracker.com/story/show/174847335),[#174847371](https://www.pivotaltracker.com/story/show/174847371),[#174847398](https://www.pivotaltracker.com/story/show/174847398)] Iban ko screens ([#2261](https://github.com/pagopa/io-app/issues/2261)) ([adf9337](https://github.com/pagopa/io-app/commit/adf9337fe257249fbdf98af504701091313eb19c))
+* **Bonus Pagamenti Digitali:** [[#174863094](https://www.pivotaltracker.com/story/show/174863094)] No payment methods available screen ([#2262](https://github.com/pagopa/io-app/issues/2262)) ([6fda0ec](https://github.com/pagopa/io-app/commit/6fda0ecdba249b000406a06873d471ebfaa53a51)), closes [#174847335](https://www.pivotaltracker.com/story/show/174847335)
+* **Bonus Pagamenti Digitali:** [[#175013470](https://www.pivotaltracker.com/story/show/175013470),[#174847416](https://www.pivotaltracker.com/story/show/174847416),[#174847513](https://www.pivotaltracker.com/story/show/174847513)] Onboarding Iban business logic workflow, actions and store ([#2252](https://github.com/pagopa/io-app/issues/2252)) ([a1546d5](https://github.com/pagopa/io-app/commit/a1546d5c1435d36911600e16a3d10ba9cfe138f9))
+* **Bonus Pagamenti Digitali:** [[#175076682](https://www.pivotaltracker.com/story/show/175076682)] Load ABI list ([#2254](https://github.com/pagopa/io-app/issues/2254)) ([0e30730](https://github.com/pagopa/io-app/commit/0e30730f595b2b041b667fc88cf45fd123ffd51f))
+* **Bonus Pagamenti Digitali:** [[#175096847](https://www.pivotaltracker.com/story/show/175096847)] Support internal tests ([#2260](https://github.com/pagopa/io-app/issues/2260)) ([a06825f](https://github.com/pagopa/io-app/commit/a06825fe576248fc5bcaa65e627843d1592c0dbc))
+* **Bonus Pagamenti Digitali:** [[#175165785](https://www.pivotaltracker.com/story/show/175165785)] Remove api-key from BPD requests ([#2272](https://github.com/pagopa/io-app/issues/2272)) ([a7219ac](https://github.com/pagopa/io-app/commit/a7219ac5e76b0725fb5baf12564d251c3306734d))
+* **MyPortal:** [[#175114980](https://www.pivotaltracker.com/story/show/175114980)] Implements check on loading error on Webview component ([#2264](https://github.com/pagopa/io-app/issues/2264)) ([13d2999](https://github.com/pagopa/io-app/commit/13d299919385d191b48e08097b041ca5a658a613))
+* [[#175058139](https://www.pivotaltracker.com/story/show/175058139)] Remove subtitle change pin screen ([#2268](https://github.com/pagopa/io-app/issues/2268)) ([312eeef](https://github.com/pagopa/io-app/commit/312eeef7b96009d450a430166c35953192f53f9d))
+* [[#175060613](https://www.pivotaltracker.com/story/show/175060613)] Modify screenshot deny logic android ([#2250](https://github.com/pagopa/io-app/issues/2250)) ([2e17847](https://github.com/pagopa/io-app/commit/2e17847e3a772e18dd2c0fde2b9f52172723a9a4))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#175117682](https://www.pivotaltracker.com/story/show/175117682)] Citizen delete response cannot be decoded ([#2265](https://github.com/pagopa/io-app/issues/2265)) ([5520010](https://github.com/pagopa/io-app/commit/5520010a0d54f7ec448558c4f130feb4e8e8fe2a))
+* [[#175072051](https://www.pivotaltracker.com/story/show/175072051)] use SafeAreaView from react-natvie instead react-navigation [#2267](https://github.com/pagopa/io-app/issues/2267) ([a180b73](https://github.com/pagopa/io-app/commit/a180b737e9b5170c137eaf7bb0a3f58a2ca78797))
+* [[#175090750](https://www.pivotaltracker.com/story/show/175090750)] Wrong label shown in Touch-ID identification ([#2253](https://github.com/pagopa/io-app/issues/2253)) ([e59b628](https://github.com/pagopa/io-app/commit/e59b628ecccfb447e28d3b41ed886f0e4bf7325b))
+
+
+### Chores
+
+* [[#175095271](https://www.pivotaltracker.com/story/show/175095271)] Prettify the codebase [#2257](https://github.com/pagopa/io-app/issues/2257) ([3f4029c](https://github.com/pagopa/io-app/commit/3f4029c97879ab25ce3318c3d8cc34b95fe98ea9))
+
 ## [1.7.0-rc.5](https://github.com/pagopa/io-app/compare/1.7.0-rc.4...1.7.0-rc.5) (2020-10-01)
 
 

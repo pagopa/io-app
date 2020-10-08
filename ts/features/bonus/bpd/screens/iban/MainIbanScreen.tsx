@@ -10,9 +10,9 @@ import {
   bpdIbanInsertionResetScreen
 } from "../../store/actions/iban";
 import { bpdUpsertIbanSelector } from "../../store/reducers/details/activation/payoffInstrument";
-import IbanKoCannotVerify from "./IbanKOCannotVerify";
-import IbanKoNotOwned from "./IbanKONotOwned";
-import IbanKOWrong from "./IbanKOWrong";
+import IbanKoCannotVerify from "./ko/IbanKOCannotVerify";
+import IbanKoNotOwned from "./ko/IbanKONotOwned";
+import IbanKOWrong from "./ko/IbanKOWrong";
 import IbanLoadingUpsert from "./IbanLoadingUpsert";
 import IbanInsertionScreen from "./insertion/IbanInsertionScreen";
 

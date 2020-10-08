@@ -28,8 +28,8 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const [searchText, setSearchText] = React.useState("");
-  const [filteredList, setFilteredList] = React.useState(
-    [] as typeof props.bankList
+  const [filteredList, setFilteredList] = React.useState<ReadonlyArray<Abi>>(
+    []
   );
   const [isSearchStarted, setIsSearchStarted] = React.useState(false);
 

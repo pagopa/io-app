@@ -9,7 +9,7 @@ import { withLightModalContext } from "../../../../../../components/helpers/with
 import { LightModalContextInterface } from "../../../../../../components/ui/LightModal";
 import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import { loadAbi } from "../../store/actions";
-import { abiSelector, abiListSelector } from "../../store/reducers";
+import { abiSelector, abiListSelector } from "../../store/reducers/abi";
 import { isError, isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { SearchBankComponent } from "./SearchBankComponent";

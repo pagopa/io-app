@@ -63,6 +63,7 @@ global:
     exit: Esci
     saveSelection: Salva la selezione
     search: Ricerca
+    skip: "Salta"
   navigator:
     messages: messaggi
     wallet: pagamenti
@@ -646,6 +647,7 @@ wallet:
       text2: " su cui hai un carta Pagobancomat attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
       text3: informativa sul trattamento dei dati personali
     bankName: Denominazione della banca
+    noName: Nome non disponibile
   accessibility:
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
@@ -1168,8 +1170,6 @@ identification:
       button: Hai dimenticato il
       code: codice di sblocco
       button_short: Reimposta il codice di sblocco
-      tip: Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente.
-      tip_short: Dovrai effettuare di nuovo l'accesso.
     confirmValid: Codice di sblocco corretto
   unlock_screen:
     help:
@@ -1594,13 +1594,31 @@ bonus:
       loadingActivateBpd:
         title: "Stiamo attivando il cashback"
         body: "Ti preghiamo di attendere."
+      noPaymentMethod:
+        title: "Aggiungi almeno un metodo di pagamento"
+        body: "Per inziare a raccogliere punti devi aggiungere su IO i tuoi metodi di pagamento elettronico preferiti: oggi sono supportate carte di credito, prepagate, ricaricabili, carte di debito, Bancomat e app e altri strumenti digitali.\n\n
+        In futuro il cashback supporterà altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno la raccolta dei punti!"
     iban:
-      skip: "Salta"
       iban: "IBAN"
+      edit: "Modifica IBAN"
       insertion:
         title: "IBAN per l’accredito"
         body1: "Indica qui l’IBAN del tuo conto corrente, su cui vuoi ricevere l’accredito una volta consolidata la classifica."
         body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
+      koWrong:
+        title: "IBAN non corretto"
+        text1: "L'IBAN che hai inserito"
+        text2: "non risulta corretto: controllalo per piacere!"
+      koCannotVerify:
+        title: "Non è stato possibile verificare il tuo IBAN"
+        text1: "Se sei sicuro che l’IBAN"
+        text2: "identifichi il conto su cui vuoi ricevere gli accrediti, puoi proseguire."
+      koNotOwned:
+        title: "Il conto corrente non risulta intestato a te"
+        text1: "L’IBAN che hai inserito"
+        text2: "identifica un conto corrente che non risulta intestato al tuo codice fiscale: sei sicuro di voler usare questo IBAN?"
+      loading:
+        "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
