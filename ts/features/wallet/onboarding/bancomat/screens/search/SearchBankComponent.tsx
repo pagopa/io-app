@@ -1,6 +1,11 @@
 import { Content, Input, Item, Text, View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, FlatList, ListRenderItemInfo } from "react-native";
+import {
+  SafeAreaView,
+  FlatList,
+  ListRenderItemInfo,
+  ActivityIndicator
+} from "react-native";
 import { debounce } from "lodash";
 import I18n from "../../../../../../i18n";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -15,9 +20,11 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
 
 type Props = {
   bankList: ReadonlyArray<Abi>;
+  isLoading: boolean;
   onItemPress: (abi: string) => void;
   openTosModal: () => void;
   onCancel: () => void;
@@ -87,17 +94,42 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
           </>
         )}
         <View spacer={true} />
-        <Label color={"bluegrey"}>{I18n.t("wallet.searchAbi.bankName")}</Label>
+        {!props.isLoading && (
+          <Label color={"bluegrey"}>
+            {I18n.t("wallet.searchAbi.bankName")}
+          </Label>
+        )}
         <Item>
-          <Input value={searchText} onChangeText={handleFilter} />
-          <IconFont name="io-search" />
+          <Input
+            value={searchText}
+            onChangeText={handleFilter}
+            disabled={props.isLoading}
+            placeholderTextColor={IOColors.bluegreyLight}
+            placeholder={
+              props.isLoading ? I18n.t("wallet.searchAbi.loading") : undefined
+            }
+          />
+          {!props.isLoading && <IconFont name="io-search" />}
         </Item>
         <View spacer={true} />
-        <FlatList
-          data={filteredList}
-          renderItem={renderListItem(true)}
-          keyExtractor={keyExtractor}
-        />
+        {props.isLoading ? (
+          <>
+            <View spacer={true} large={true} />
+            <ActivityIndicator
+              color={"black"}
+              size={"large"}
+              accessible={false}
+              importantForAccessibility={"no-hide-descendants"}
+              accessibilityElementsHidden={true}
+            />
+          </>
+        ) : (
+          <FlatList
+            data={filteredList}
+            renderItem={renderListItem(true)}
+            keyExtractor={keyExtractor}
+          />
+        )}
       </Content>
       <FooterWithButtons
         type={"TwoButtonsInlineThird"}

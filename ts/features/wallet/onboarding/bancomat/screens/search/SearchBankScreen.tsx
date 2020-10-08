@@ -41,23 +41,16 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
       goBack={true}
       headerTitle={I18n.t("wallet.searchAbi.title")}
     >
-      {!props.isError && !props.isLoading && (
+      {
         <SearchBankComponent
           bankList={props.bankList}
+          isLoading={props.isLoading}
           onCancel={props.onCancel}
           onContinue={props.onContinue}
           onItemPress={props.onItemPress}
           openTosModal={openTosModal}
         />
-      )}
-      {(props.isError || props.isLoading) && (
-        <LoadingErrorComponent
-          isLoading={props.isLoading}
-          loadingCaption={I18n.t("global.remoteStates.loading")}
-          onRetry={props.loadAbis}
-          onAbort={props.onCancel}
-        />
-      )}
+      }
     </BaseScreenComponent>
   );
 };
@@ -71,7 +64,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   isLoading: isLoading(abiSelector(state)),
-  isError: isError(abiSelector(state)),
   bankList: abiListSelector(state)
 });
 
