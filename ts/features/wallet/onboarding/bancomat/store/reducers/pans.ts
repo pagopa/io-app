@@ -3,6 +3,7 @@ import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 import {
+  isError,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -28,5 +29,8 @@ const pansReducer = (state: Pans = remoteUndefined, action: Action): Pans => {
 
 export const onboardingBancomatFoundPansSelector = (state: GlobalState): Pans =>
   state.wallet.onboarding.bancomat.foundPans;
+
+export const onboardingBancomatPansIsError = (state: GlobalState): boolean =>
+  isError(state.wallet.onboarding.bancomat.foundPans);
 
 export default pansReducer;

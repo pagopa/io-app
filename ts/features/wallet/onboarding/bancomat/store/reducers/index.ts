@@ -1,10 +1,10 @@
 import { Action, combineReducers } from "redux";
 import pansReducer, { Pans } from "./pans";
-import abiSelectedReducer, { QueryAbi } from "./queryAbi";
+import abiSelectedReducer, { AbiSelected } from "./abiSelected";
 
 export type BancomatState = {
   foundPans: Pans;
-  abiSelected: QueryAbi;
+  abiSelected: AbiSelected;
 };
 
 const bancomatReducer = combineReducers<BancomatState, Action>({

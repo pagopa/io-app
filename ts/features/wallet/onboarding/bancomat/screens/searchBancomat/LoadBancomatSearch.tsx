@@ -1,17 +1,48 @@
-import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { loadPans, walletAddBancomatCancel } from "../../store/actions";
+import { onboardingBancomatAbiSelectedSelector } from "../../store/reducers/abiSelected";
+import { onboardingBancomatPansIsError } from "../../store/reducers/pans";
+
+export type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 /**
  * This screen is displayed when searching for Bancomat
  * @constructor
  */
-export const LoadBancomatSearch: React.FunctionComponent = () => <View />;
+const LoadBancomatSearch: React.FunctionComponent<Props> = props => {
+  const loading = "Loading";
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+  useHardwareBackButton(() => {
+    if (!props.isLoading) {
+      props.cancel();
+    }
+    return true;
+  });
+  return (
+    <LoadingErrorComponent
+      {...props}
+      loadingCaption={loading}
+      onAbort={props.cancel}
+      onRetry={() => props.retry(props.abiSelected)}
+    />
+  );
+};
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  cancel: () => dispatch(walletAddBancomatCancel()),
+  retry: (abiSelected: string | undefined) =>
+    dispatch(loadPans.request(abiSelected))
+});
+
+const mapStateToProps = (state: GlobalState) => ({
+  abiSelected: onboardingBancomatAbiSelectedSelector(state),
+  isLoading: !onboardingBancomatPansIsError(state)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoadBancomatSearch);

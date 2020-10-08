@@ -3,12 +3,12 @@ import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { loadPans, walletAddBancomatStart } from "../actions";
 
-export type QueryAbi = string | null;
+export type AbiSelected = string | null;
 
 const abiSelectedReducer = (
-  state: QueryAbi = null,
+  state: AbiSelected = null,
   action: Action
-): QueryAbi => {
+): AbiSelected => {
   switch (action.type) {
     case getType(loadPans.request):
       return action.payload ?? null;

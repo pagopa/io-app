@@ -10,8 +10,8 @@ import {
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import BancomatKoNotFound from "./BancomatKoNotFound";
-import { BancomatKoTimeout } from "./BancomatKoTimeout";
-import { LoadBancomatSearch } from "./LoadBancomatSearch";
+import BancomatKoTimeout from "./BancomatKoTimeout";
+import LoadBancomatSearch from "./LoadBancomatSearch";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -36,6 +36,7 @@ const SearchBancomatScreen: React.FunctionComponent<Props> = props => {
   if (isLoading(pans) || isError(pans)) {
     return <LoadBancomatSearch />;
   }
+  // TODO: Success -> navigate to next success screen
   return <View />;
 };
 
