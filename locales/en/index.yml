@@ -1436,7 +1436,7 @@ bonus:
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:
-      requestBonus: Request
+      requestBonus: Request Bonus
       cancelRequest: Cancel the request
       qrCode: QR code
       copyCode: Code copy

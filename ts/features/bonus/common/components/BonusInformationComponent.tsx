@@ -108,13 +108,10 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     title: I18n.t("global.buttons.cancel")
   };
   const requestButtonProps = {
-    buttonFontSize: customVariables.btnFontSize - 1,
     block: true,
     primary: true,
     onPress: props.onConfirm,
-    title: `${I18n.t("bonus.bonusVacanze.cta.requestBonus")} ${
-      bonusTypeLocalizedContent.name
-    }`
+    title: I18n.t("bonus.bonusVacanze.cta.requestBonus")
   };
 
   const handleModalPress = (tos: string) =>

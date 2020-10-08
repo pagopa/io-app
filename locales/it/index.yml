@@ -1468,7 +1468,7 @@ bonus:
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:
-      requestBonus: Richiedi
+      requestBonus: Richiedi Bonus
       cancelRequest: Annulla la richiesta
       qrCode: QR code
       copyCode: Copia codice
