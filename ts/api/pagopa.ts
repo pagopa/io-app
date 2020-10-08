@@ -387,7 +387,8 @@ type GetPansUsingGetTExtra = MapResponseType<
 >;
 const getPans: GetPansUsingGetTExtra = {
   method: "get",
-  url: ({ abi }) => `/v1/bancomat/pans?abi=${abi}`,
+  // TODO check abi length === 5 if it is defined
+  url: ({ abi }) => `/v1/bancomat/pans${abi ? "?abi=" : ""}${abi ?? ""}`,
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPansUsingGETDecoder(PatchedCards)
@@ -551,10 +552,7 @@ export function PaymentManagerClient(
     getPans: (abi?: string) =>
       flip(
         withPaymentManagerToken(createFetchRequestForApi(getPans, altOptions))
-      )(
-        // empty abi if it's undefined
-        { abi: abi || "" }
-      )
+      )({ abi })
   };
 }
 
