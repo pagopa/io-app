@@ -79,7 +79,10 @@ const paymentInstrumentUpsertReducer = (
       };
     case getType(bpdUpsertIban.success):
       return {
-        value: action.payload.payoffInstr,
+        value:
+          action.payload.status === IbanStatus.NOT_VALID
+            ? state.value
+            : action.payload.payoffInstr,
         outcome: remoteReady(action.payload.status)
       };
     case getType(bpdUpsertIban.failure):
