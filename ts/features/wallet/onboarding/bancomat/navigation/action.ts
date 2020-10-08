@@ -6,9 +6,9 @@ export const navigateToWalletAddBancomatChooseBank = () =>
     routeName: WALLET_ADD_BANCOMAT_ROUTES.CHOOSE_BANK
   });
 
-export const navigateToWalletAddBancomatSearch = () =>
+export const navigateToWalletAddBancomatSearchAvailableUserBancomat = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ADD_BANCOMAT_ROUTES.SEARCH
+    routeName: WALLET_ADD_BANCOMAT_ROUTES.SEARCH_AVAILABLE_USER_BANCOMAT
   });
 
 export const navigateToWalletAddBancomat = () =>

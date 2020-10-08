@@ -9,7 +9,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
-import { navigateToWalletAddBancomatSearch } from "../navigation/action";
+import { navigateToWalletAddBancomatSearchAvailableUserBancomat } from "../navigation/action";
 import {
   loadPans,
   walletAddBancomatBack,
@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
   searchBancomat: () => {
     dispatch(loadPans.request(undefined));
-    dispatch(navigateToWalletAddBancomatSearch());
+    dispatch(navigateToWalletAddBancomatSearchAvailableUserBancomat());
   }
 });
 

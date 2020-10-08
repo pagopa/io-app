@@ -20,7 +20,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  * This screen handle the errors and loading for the user bancomat.
  * @constructor
  */
-const SearchBancomatScreen: React.FunctionComponent<Props> = props => {
+const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props => {
   const pans = props.pans;
 
   const noBancomatFound =
@@ -49,4 +49,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SearchBancomatScreen);
+)(SearchAvailableUserBancomatScreen);
