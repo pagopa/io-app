@@ -62,13 +62,12 @@ import {
 } from "../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
-import {
-  getAbiUsingGetDefaultDecoder,
-  GetAbiUsingGetT,
-  getPansUsingGetDecoder,
-  GetPansUsingGetT
-} from "../../definitions/pagopa/bancomat/requestTypes";
 import { PatchedCards } from "../features/bonus/bpd/api/patchedTypes";
+import {
+  getAbiListUsingGETDefaultDecoder,
+  getPansUsingGETDecoder,
+  GetPansUsingGETT
+} from "../../definitions/pagopa/bancomat/requestTypes";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -371,26 +370,24 @@ const deleteWallet: DeleteWalletUsingDELETET = {
   response_decoder: constantEmptyDecoder
 };
 
-const getAbi: GetAbiUsingGetT = {
+const getAbi: GetPansUsingGETT = {
   method: "get",
   url: () => `/v1/bancomat/abi`,
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getAbiUsingGetDefaultDecoder()
+  response_decoder: getAbiListUsingGETDefaultDecoder()
 };
-
 type GetPansUsingGetTExtra = MapResponseType<
-  GetPansUsingGetT,
+  GetPansUsingGETT,
   200,
   PatchedCards
 >;
-
 const getPans: GetPansUsingGetTExtra = {
   method: "get",
-  url: () => `/v1/bancomat/pans`,
-  query: ({ abi }) => ({ abi }),
+  url: ({ abi }) => `/v1/bancomat/pans?abi=${abi}`,
+  query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getPansUsingGetDecoder(PatchedCards)
+  response_decoder: getPansUsingGETDecoder(PatchedCards)
 };
 
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
