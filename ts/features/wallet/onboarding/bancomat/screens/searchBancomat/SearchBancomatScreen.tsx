@@ -1,4 +1,3 @@
-import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -9,7 +8,7 @@ import {
   isReady
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
-import { H1 } from "../../../../../../components/core/typography/H1";
+import TMPUserAddBancomatToWallet from "../TMPUserAddBancomatToWallet";
 import BancomatKoNotFound from "./BancomatKoNotFound";
 import BancomatKoTimeout from "./BancomatKoTimeout";
 import LoadBancomatSearch from "./LoadBancomatSearch";
@@ -23,7 +22,6 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const SearchBancomatScreen: React.FunctionComponent<Props> = props => {
   const pans = props.pans;
-  console.log(pans);
 
   const noBancomatFound =
     (isError(pans) && pans.error.kind === "notFound") ||
@@ -38,12 +36,8 @@ const SearchBancomatScreen: React.FunctionComponent<Props> = props => {
   if (isLoading(pans) || isError(pans)) {
     return <LoadBancomatSearch />;
   }
-  // TODO: Success -> navigate to next success screen
-  return (
-    <View>
-      <H1>Success!</H1>
-    </View>
-  );
+  // success! The user can now optionally add found bancomat to the wallet
+  return <TMPUserAddBancomatToWallet />;
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({});

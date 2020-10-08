@@ -6,45 +6,41 @@ import { Dispatch } from "redux";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
-import { navigateToWalletAddBancomatSearch } from "../navigation/action";
 import {
-  loadPans,
-  walletAddBancomatBack,
-  walletAddBancomatCancel
+  walletAddBancomatCancel,
+  walletAddBancomatCompleted
 } from "../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * TODO: TEMP Component only for proof of concept and avoid conflicts, will be removed in the next iteration
+ * TODO: TEMP Component only for proof of concept and avoid conflicts,
+ * will be removed in the next iteration
+ * Represents the screen that will allow the user to add any found bancomat to the wallet.
  * @constructor
  */
 const TMPSearchBankScreen: React.FunctionComponent<Props> = props => (
-  <BaseScreenComponent goBack={props.back} headerTitle={"Search a bank"}>
+  <BaseScreenComponent goBack={false} headerTitle={"Add a bancomat!"}>
     <SafeAreaView style={IOStyles.flex}>
       <View style={IOStyles.flex}>
-        <H1>Search a bank, Or maybe not!</H1>
+        <H1>Add bancomat!</H1>
       </View>
       <FooterTwoButtons
-        onRight={props.searchBancomat}
+        onRight={props.complete}
         onCancel={props.cancel}
-        rightText={I18n.t("global.buttons.continue")}
+        rightText={"Simula Aggiungi Tutto"}
+        leftText={"Annulla"}
       />
     </SafeAreaView>
   </BaseScreenComponent>
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  back: () => dispatch(walletAddBancomatBack()),
   cancel: () => dispatch(walletAddBancomatCancel()),
-  searchBancomat: () => {
-    dispatch(loadPans.request(undefined));
-    dispatch(navigateToWalletAddBancomatSearch());
-  }
+  complete: () => dispatch(walletAddBancomatCompleted())
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
