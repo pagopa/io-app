@@ -648,6 +648,7 @@ wallet:
       text3: informativa sul trattamento dei dati personali
     bankName: Denominazione della banca
     noName: Nome non disponibile
+    loading: Carico la lista delle banche...
   accessibility:
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:

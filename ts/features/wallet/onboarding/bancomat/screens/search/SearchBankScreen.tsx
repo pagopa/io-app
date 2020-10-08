@@ -11,7 +11,6 @@ import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosB
 import { loadAbi } from "../../store/actions";
 import { abiSelector, abiListSelector } from "../../store/reducers/abi";
 import { isError, isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
-import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { SearchBankComponent } from "./SearchBankComponent";
 
 type Props = LightModalContextInterface &
@@ -41,23 +40,16 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
       goBack={true}
       headerTitle={I18n.t("wallet.searchAbi.title")}
     >
-      {!props.isError && !props.isLoading && (
+      {
         <SearchBankComponent
           bankList={props.bankList}
+          isLoading={props.isLoading}
           onCancel={props.onCancel}
           onContinue={props.onContinue}
           onItemPress={props.onItemPress}
           openTosModal={openTosModal}
         />
-      )}
-      {(props.isError || props.isLoading) && (
-        <LoadingErrorComponent
-          isLoading={props.isLoading}
-          loadingCaption={I18n.t("global.remoteStates.loading")}
-          onRetry={props.loadAbis}
-          onAbort={props.onCancel}
-        />
-      )}
+      }
     </BaseScreenComponent>
   );
 };
@@ -70,8 +62,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  isLoading: isLoading(abiSelector(state)),
-  isError: isError(abiSelector(state)),
+  isLoading: isLoading(abiSelector(state)) || isError(abiSelector(state)),
   bankList: abiListSelector(state)
 });
 

@@ -627,6 +627,7 @@ wallet:
       text3: information on the processing of personal data
     bankName: Name of the bank
     noName: Name unavailable
+    loading: Loading bank's list...
   accessibility:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
