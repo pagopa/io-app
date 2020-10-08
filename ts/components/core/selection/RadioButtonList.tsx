@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import * as React from "react";
-import { Body } from "../typography/Body";
+import { H4 } from "../typography/H4";
 import IconFont from "./../../ui/IconFont";
 import themeVariables from "./../../../theme/variables";
 
@@ -47,7 +47,11 @@ export const RadioButtonList: React.FunctionComponent<Props> = (
 
   return (
     <View>
-      {props.head && <Body style={styles.head}>{props.head}</Body>}
+      {props.head && (
+        <H4 color={"bluegreyDark"} weight={"Regular"} style={styles.head}>
+          {props.head}
+        </H4>
+      )}
       <View style={styles.itemsContainer}>
         {props.items.map((item, key) => (
           <View key={`radio_item_${key}`} style={styles.item}>
@@ -60,7 +64,9 @@ export const RadioButtonList: React.FunctionComponent<Props> = (
               onPress={() => props.onPress(key)}
               style={styles.icon}
             />
-            <Body style={{ flex: 1 }}>{item.label}</Body>
+            <H4 color={"bluegreyDark"} weight={"Regular"} style={{ flex: 1 }}>
+              {item.label}
+            </H4>
           </View>
         ))}
       </View>
