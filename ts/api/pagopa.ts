@@ -21,6 +21,7 @@ import {
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
+import { fromNullable } from "fp-ts/lib/Option";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -69,7 +70,6 @@ import {
   getPansUsingGETDecoder,
   GetPansUsingGETT
 } from "../../definitions/pagopa/bancomat/requestTypes";
-import { fromNullable } from "fp-ts/lib/Option";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
