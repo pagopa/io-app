@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, delay, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ActionType } from "typesafe-actions";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -31,6 +31,8 @@ export function* handleLoadAbi(
     }
   } catch (e) {
     yield put(loadAbi.failure(e));
+    yield delay(200);
+    yield put(loadAbi.request());
   }
 }
 

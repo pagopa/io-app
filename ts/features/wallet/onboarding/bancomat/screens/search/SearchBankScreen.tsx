@@ -10,9 +10,9 @@ import { LightModalContextInterface } from "../../../../../../components/ui/Ligh
 import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import { loadAbi } from "../../store/actions";
 import { abiSelector, abiListSelector } from "../../store/reducers/abi";
-import { isError, isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
-import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
 import { SearchBankComponent } from "./SearchBankComponent";
+import { isError } from "lodash";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  isLoading: isLoading(abiSelector(state)),
+  isLoading: isLoading(abiSelector(state)) || isError(abiSelector(state)),
   bankList: abiListSelector(state)
 });
 
