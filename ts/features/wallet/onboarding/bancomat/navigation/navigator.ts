@@ -1,14 +1,14 @@
 import { createStackNavigator } from "react-navigation";
 import SearchBancomatScreen from "../screens/searchBancomat/SearchAvailableUserBancomatScreen";
 import TMPSearchBankScreen from "../screens/TMPSearchBankScreen";
-import WALLET_ADD_BANCOMAT_ROUTES from "./routes";
+import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";
 
-const PaymentMethodAddBancomatNavigator = createStackNavigator(
+const PaymentMethodOnboardingBancomatNavigator = createStackNavigator(
   {
-    [WALLET_ADD_BANCOMAT_ROUTES.CHOOSE_BANK]: {
+    [WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK]: {
       screen: TMPSearchBankScreen
     },
-    [WALLET_ADD_BANCOMAT_ROUTES.SEARCH_AVAILABLE_USER_BANCOMAT]: {
+    [WALLET_ONBOARDING_BANCOMAT_ROUTES.SEARCH_AVAILABLE_USER_BANCOMAT]: {
       screen: SearchBancomatScreen
     }
   },
@@ -21,4 +21,4 @@ const PaymentMethodAddBancomatNavigator = createStackNavigator(
   }
 );
 
-export default PaymentMethodAddBancomatNavigator;
+export default PaymentMethodOnboardingBancomatNavigator;

@@ -10,7 +10,7 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
-import { loadPans, walletAddBancomatCancel } from "../../store/actions";
+import { searchUserPans, walletAddBancomatCancel } from "../../store/actions";
 import { onboardingBancomatAbiSelectedSelector } from "../../store/reducers/abiSelected";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -41,7 +41,7 @@ const BancomatKoTimeout: React.FunctionComponent<Props> = props => (
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
   retry: (abiSelected: string | undefined) =>
-    dispatch(loadPans.request(abiSelected))
+    dispatch(searchUserPans.request(abiSelected))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

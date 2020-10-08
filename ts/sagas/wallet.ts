@@ -37,7 +37,7 @@ import {
 import { addBancomatToWalletGeneric } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import {
   loadAbi,
-  loadPans,
+  searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
 import ROUTES from "../navigation/routes";
@@ -712,7 +712,7 @@ export function* watchWalletSaga(
 
     // watch for load pans request
     yield takeLatest(
-      loadPans.request,
+      searchUserPans.request,
       handleLoadPans,
       paymentManagerClient.getPans,
       pmSessionManager

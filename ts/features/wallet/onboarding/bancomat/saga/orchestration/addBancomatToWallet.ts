@@ -6,8 +6,8 @@ import {
 } from "../../../../../../sagas/workUnit";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { navigateToWalletAddBancomatChooseBank } from "../../navigation/action";
-import WALLET_ADD_BANCOMAT_ROUTES from "../../navigation/routes";
+import { navigateToOnboardingBancomatChooseBank } from "../../navigation/action";
+import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
 import {
   walletAddBancomatBack,
   walletAddBancomatCancel,
@@ -23,8 +23,8 @@ import {
  */
 function* bancomatWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToWalletAddBancomatChooseBank(),
-    startScreenName: WALLET_ADD_BANCOMAT_ROUTES.CHOOSE_BANK,
+    startScreenNavigation: navigateToOnboardingBancomatChooseBank(),
+    startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK,
     complete: walletAddBancomatCompleted,
     back: walletAddBancomatBack,
     cancel: walletAddBancomatCancel

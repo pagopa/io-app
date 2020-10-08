@@ -1,17 +1,17 @@
 import { NavigationActions } from "react-navigation";
-import WALLET_ADD_BANCOMAT_ROUTES from "./routes";
+import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";
 
-export const navigateToWalletAddBancomatChooseBank = () =>
+export const navigateToOnboardingBancomatChooseBank = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ADD_BANCOMAT_ROUTES.CHOOSE_BANK
+    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK
   });
 
-export const navigateToWalletAddBancomatSearchAvailableUserBancomat = () =>
+export const navigateToOnboardingBancomatSearchAvailableUserBancomat = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ADD_BANCOMAT_ROUTES.SEARCH_AVAILABLE_USER_BANCOMAT
+    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.SEARCH_AVAILABLE_USER_BANCOMAT
   });
 
-export const navigateToWalletAddBancomat = () =>
+export const navigateToOnboardingBancomatAdd = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ADD_BANCOMAT_ROUTES.ADD_BANCOMAT
+    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.ADD_BANCOMAT
   });

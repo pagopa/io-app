@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { loadPans, walletAddBancomatCancel } from "../../store/actions";
+import { searchUserPans, walletAddBancomatCancel } from "../../store/actions";
 import { onboardingBancomatAbiSelectedSelector } from "../../store/reducers/abiSelected";
 import { onboardingBancomatPansIsError } from "../../store/reducers/pans";
 
@@ -37,7 +37,7 @@ const LoadBancomatSearch: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
   retry: (abiSelected: string | undefined) =>
-    dispatch(loadPans.request(abiSelected))
+    dispatch(searchUserPans.request(abiSelected))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

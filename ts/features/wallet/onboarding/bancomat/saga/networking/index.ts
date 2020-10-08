@@ -6,7 +6,7 @@ import { SagaCallReturnType } from "../../../../../../types/utils";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
-import { loadAbi, loadPans } from "../../store/actions";
+import { loadAbi, searchUserPans } from "../../store/actions";
 
 // load all bancomat abi
 export function* handleLoadAbi(
@@ -46,7 +46,7 @@ type GenericError = { kind: "generic"; value: Error };
 export function* handleLoadPans(
   getPans: ReturnType<typeof PaymentManagerClient>["getPans"],
   sessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof loadPans.request>
+  action: ActionType<typeof searchUserPans.request>
 ) {
   try {
     const getPansWithRefresh = sessionManager.withRefresh(
@@ -59,17 +59,17 @@ export function* handleLoadPans(
     if (getPansWithRefreshResult.isRight()) {
       if (getPansWithRefreshResult.value.status === 200) {
         return yield put(
-          loadPans.success(
+          searchUserPans.success(
             fromNullable(getPansWithRefreshResult.value.value.data).getOrElse(
               []
             )
           )
         );
       } else if (getPansWithRefreshResult.value.status === 404) {
-        return yield put(loadPans.failure({ kind: "notFound" }));
+        return yield put(searchUserPans.failure({ kind: "notFound" }));
       } else {
         return yield put(
-          loadPans.failure({
+          searchUserPans.failure({
             kind: "generic",
             value: new Error(
               `response status ${getPansWithRefreshResult.value.status}`
@@ -79,7 +79,7 @@ export function* handleLoadPans(
       }
     } else {
       return yield put(
-        loadPans.failure({
+        searchUserPans.failure({
           kind: "generic",
           value: new Error(readableReport(getPansWithRefreshResult.value))
         })
@@ -87,13 +87,13 @@ export function* handleLoadPans(
     }
   } catch (e) {
     if (e === "max-retries") {
-      return yield put(loadPans.failure({ kind: "timeout" }));
+      return yield put(searchUserPans.failure({ kind: "timeout" }));
     }
     if (typeof e === "string") {
       return yield put(
-        loadPans.failure({ kind: "generic", value: new Error(e) })
+        searchUserPans.failure({ kind: "generic", value: new Error(e) })
       );
     }
-    return yield put(loadPans.failure({ kind: "generic", value: e }));
+    return yield put(searchUserPans.failure({ kind: "generic", value: e }));
   }
 }

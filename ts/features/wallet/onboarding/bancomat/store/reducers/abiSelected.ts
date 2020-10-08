@@ -1,7 +1,7 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { loadPans, walletAddBancomatStart } from "../actions";
+import { searchUserPans, walletAddBancomatStart } from "../actions";
 
 export type AbiSelected = string | null;
 
@@ -10,7 +10,7 @@ const abiSelectedReducer = (
   action: Action
 ): AbiSelected => {
   switch (action.type) {
-    case getType(loadPans.request):
+    case getType(searchUserPans.request):
       return action.payload ?? null;
     // reset at the start
     case getType(walletAddBancomatStart):

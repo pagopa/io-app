@@ -5,7 +5,7 @@ import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/route
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
-import WALLET_ADD_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
+import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
@@ -92,7 +92,7 @@ const bpdConfigMap = bpdEnabled
       [BPD_ROUTES.MAIN]: {
         screen: BpdNavigator
       },
-      [WALLET_ADD_BANCOMAT_ROUTES.MAIN]: {
+      [WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN]: {
         screen: WalletAddBancomatNavigator
       }
     }
