@@ -3,7 +3,7 @@ import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { loadPans, walletAddBancomatStart } from "../actions";
 
-export type QueryAbi = string | undefined | null;
+export type QueryAbi = string | null;
 
 const abiSelectedReducer = (
   state: QueryAbi = null,
@@ -11,10 +11,10 @@ const abiSelectedReducer = (
 ): QueryAbi => {
   switch (action.type) {
     case getType(loadPans.request):
-      return action.payload;
+      return action.payload ?? null;
     // reset at the start
     case getType(walletAddBancomatStart):
-      return undefined;
+      return null;
   }
   return state;
 };

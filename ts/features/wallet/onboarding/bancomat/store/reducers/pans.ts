@@ -1,18 +1,18 @@
 import { getType } from "typesafe-actions";
+import { Action } from "../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 import {
-  getValueOrElse,
   remoteError,
   remoteLoading,
   remoteReady,
   remoteUndefined,
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { Action } from "../../../../../../store/actions/types";
+import { LoadPansError } from "../../saga/networking";
 import { loadPans } from "../actions";
-import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
-import { GlobalState } from "../../../../../../store/reducers/types";
 
-export type Pans = RemoteValue<ReadonlyArray<PatchedCard>, Error>;
+export type Pans = RemoteValue<ReadonlyArray<PatchedCard>, LoadPansError>;
 
 const pansReducer = (state: Pans = remoteUndefined, action: Action): Pans => {
   switch (action.type) {
@@ -26,9 +26,7 @@ const pansReducer = (state: Pans = remoteUndefined, action: Action): Pans => {
   return state;
 };
 
-export const onboardingBancomatFoundPansSelector = (
-  state: GlobalState
-): ReadonlyArray<PatchedCard> =>
-  getValueOrElse(state.wallet.onboarding.bancomat.foundPans, []);
+export const onboardingBancomatFoundPansSelector = (state: GlobalState): Pans =>
+  state.wallet.onboarding.bancomat.foundPans;
 
 export default pansReducer;

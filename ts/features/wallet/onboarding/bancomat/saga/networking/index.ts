@@ -34,6 +34,14 @@ export function* handleLoadAbi(
   }
 }
 
+export type LoadPansError = NotFoundError | TimeoutError | GenericError;
+
+type NotFoundError = { readonly kind: "notFound" };
+
+type TimeoutError = { readonly kind: "timeout" };
+
+type GenericError = { kind: "generic"; value: Error };
+
 // get user's pans
 export function* handleLoadPans(
   getPans: ReturnType<typeof PaymentManagerClient>["getPans"],
@@ -50,22 +58,42 @@ export function* handleLoadPans(
     );
     if (getPansWithRefreshResult.isRight()) {
       if (getPansWithRefreshResult.value.status === 200) {
-        yield put(
+        return yield put(
           loadPans.success(
             fromNullable(getPansWithRefreshResult.value.value.data).getOrElse(
               []
             )
           )
         );
+      } else if (getPansWithRefreshResult.value.status === 404) {
+        return yield put(loadPans.failure({ kind: "notFound" }));
       } else {
-        throw new Error(
-          `response status ${getPansWithRefreshResult.value.status}`
+        return yield put(
+          loadPans.failure({
+            kind: "generic",
+            value: new Error(
+              `response status ${getPansWithRefreshResult.value.status}`
+            )
+          })
         );
       }
     } else {
-      throw new Error(readableReport(getPansWithRefreshResult.value));
+      return yield put(
+        loadPans.failure({
+          kind: "generic",
+          value: new Error(readableReport(getPansWithRefreshResult.value))
+        })
+      );
     }
   } catch (e) {
-    yield put(loadPans.failure(e));
+    if (e === "max-retries") {
+      return yield put(loadPans.failure({ kind: "timeout" }));
+    }
+    if (typeof e === "string") {
+      return yield put(
+        loadPans.failure({ kind: "generic", value: new Error(e) })
+      );
+    }
+    return yield put(loadPans.failure({ kind: "generic", value: e }));
   }
 }
