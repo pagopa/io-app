@@ -9,6 +9,7 @@ import {
   isReady
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
+import { H1 } from "../../../../../../components/core/typography/H1";
 import BancomatKoNotFound from "./BancomatKoNotFound";
 import BancomatKoTimeout from "./BancomatKoTimeout";
 import LoadBancomatSearch from "./LoadBancomatSearch";
@@ -22,6 +23,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const SearchBancomatScreen: React.FunctionComponent<Props> = props => {
   const pans = props.pans;
+  console.log(pans);
 
   const noBancomatFound =
     (isError(pans) && pans.error.kind === "notFound") ||
@@ -37,7 +39,11 @@ const SearchBancomatScreen: React.FunctionComponent<Props> = props => {
     return <LoadBancomatSearch />;
   }
   // TODO: Success -> navigate to next success screen
-  return <View />;
+  return (
+    <View>
+      <H1>Success!</H1>
+    </View>
+  );
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({});
