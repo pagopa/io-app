@@ -626,6 +626,7 @@ wallet:
       text2: " on which you have an active Pagobancomat card. Otherwise we will look for all the cards associated with you: by continuing you accept the "
       text3: information on the processing of personal data
     bankName: Name of the bank
+    noName: Name not found
   accessibility:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
