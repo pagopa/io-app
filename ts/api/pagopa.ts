@@ -69,6 +69,7 @@ import {
   getPansUsingGETDecoder,
   GetPansUsingGETT
 } from "../../definitions/pagopa/bancomat/requestTypes";
+import { fromNullable } from "fp-ts/lib/Option";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -388,7 +389,12 @@ type GetPansUsingGetTExtra = MapResponseType<
 const getPans: GetPansUsingGetTExtra = {
   method: "get",
   // TODO check abi length === 5 if it is defined
-  url: ({ abi }) => `/v1/bancomat/pans${abi ? "?abi=" : ""}${abi ?? ""}`,
+  url: ({ abi }) => {
+    const abiParameter = fromNullable(abi)
+      .map(a => `?abi=${a}`)
+      .getOrElse("");
+    return `/v1/bancomat/pans${abiParameter}`;
+  },
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPansUsingGETDecoder(PatchedCards)
