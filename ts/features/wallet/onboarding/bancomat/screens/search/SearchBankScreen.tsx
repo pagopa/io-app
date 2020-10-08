@@ -10,9 +10,8 @@ import { LightModalContextInterface } from "../../../../../../components/ui/Ligh
 import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import { loadAbi } from "../../store/actions";
 import { abiSelector, abiListSelector } from "../../store/reducers/abi";
-import { isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
+import { isError, isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
 import { SearchBankComponent } from "./SearchBankComponent";
-import { isError } from "lodash";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
