@@ -64,8 +64,11 @@ import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
 import {
   getAbiUsingGetDefaultDecoder,
-  GetAbiUsingGetT
+  GetAbiUsingGetT,
+  getPansUsingGetDecoder,
+  GetPansUsingGetT
 } from "../../definitions/pagopa/bancomat/requestTypes";
+import { PatchedCards } from "../features/bonus/bpd/api/patchedTypes";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -376,6 +379,20 @@ const getAbi: GetAbiUsingGetT = {
   response_decoder: getAbiUsingGetDefaultDecoder()
 };
 
+type GetPansUsingGetTExtra = MapResponseType<
+  GetPansUsingGetT,
+  200,
+  PatchedCards
+>;
+
+const getPans: GetPansUsingGetTExtra = {
+  method: "get",
+  url: () => `/v1/bancomat/pans`,
+  query: ({ abi }) => ({ abi }),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getPansUsingGetDecoder(PatchedCards)
+};
+
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
@@ -530,7 +547,14 @@ export function PaymentManagerClient(
       }),
     getAbi: flip(
       withPaymentManagerToken(createFetchRequestForApi(getAbi, altOptions))
-    )({})
+    )({}),
+    getPans: (abi?: string) =>
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(getPans, altOptions))
+      )(
+        // empty abi if it's undefined
+        { abi: abi || "" }
+      )
   };
 }
 
