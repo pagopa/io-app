@@ -2,37 +2,36 @@
  * A reducer for the wallet, aggregating those for
  * transactions and for cards
  */
-import { combineReducers } from "redux";
+import { Action, combineReducers } from "redux";
+import onboardingReducer, {
+  PaymentMethodOnboardingState
+} from "../../../features/wallet/onboarding/store";
 import abiReducer, {
   AbiState
-} from "../../../features/wallet/onboarding/bancomat/store/reducers/abi";
-import bancomatReducer, {
-  BancomatState
-} from "../../../features/wallet/onboarding/bancomat/store/reducers/bancomat";
-import { PaymentState } from "./payment";
-import paymentReducer from "./payment";
+} from "../../../features/wallet/onboarding/store/abi";
+import paymentReducer, { PaymentState } from "./payment";
 import pspsByIdReducer, { PspStateById } from "./pspsById";
-import { TransactionsState } from "./transactions";
-import transactionsReducer from "./transactions";
-import { WalletsState } from "./wallets";
-import walletsReducer from "./wallets";
+import transactionsReducer, { TransactionsState } from "./transactions";
+import walletsReducer, { WalletsState } from "./wallets";
 
 export type WalletState = Readonly<{
   transactions: TransactionsState;
   wallets: WalletsState;
   payment: PaymentState;
   pspsById: PspStateById;
+  // List of banks (abi) found. This data is used atm in the bancomat onboarding
   abi: AbiState;
-  bancomat: BancomatState;
+  // section used for the onboarding of a new payment method. Each payment have a sub-section
+  onboarding: PaymentMethodOnboardingState;
 }>;
 
-const reducer = combineReducers({
+const reducer = combineReducers<WalletState, Action>({
   transactions: transactionsReducer,
   wallets: walletsReducer,
   payment: paymentReducer,
   pspsById: pspsByIdReducer,
   abi: abiReducer,
-  bancomat: bancomatReducer
+  onboarding: onboardingReducer
 });
 
 export default reducer;
