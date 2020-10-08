@@ -65,6 +65,7 @@ import { fixWalletPspTagsValues } from "../utils/wallet";
 import { PatchedCards } from "../features/bonus/bpd/api/patchedTypes";
 import {
   getAbiListUsingGETDefaultDecoder,
+  GetAbiListUsingGETT,
   getPansUsingGETDecoder,
   GetPansUsingGETT
 } from "../../definitions/pagopa/bancomat/requestTypes";
@@ -370,13 +371,15 @@ const deleteWallet: DeleteWalletUsingDELETET = {
   response_decoder: constantEmptyDecoder
 };
 
-const getAbi: GetPansUsingGETT = {
+const getAbi: GetAbiListUsingGETT = {
   method: "get",
   url: () => `/v1/bancomat/abi`,
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getAbiListUsingGETDefaultDecoder()
 };
+
+// map the response 200 with a patched codec
 type GetPansUsingGetTExtra = MapResponseType<
   GetPansUsingGETT,
   200,
