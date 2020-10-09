@@ -656,6 +656,18 @@ wallet:
         read: Transazione
         unread: Transazione da leggere
       label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
+  onboarding:
+    bancomat:
+      headerTitle: "Aggiungi carta Bancomat"
+      koTimeout:
+        title: "Non siamo riusciti a contattare Bancomat."
+        body: "Ripova per favore"
+      koNotFound:
+        title: "Spiacenti, non abbiamo trovato nessuna carta"
+        body: "Non risultano Bancomat intestati a te"
+        chooseAnother: "Scegli un'altra banca"
+      loadingSearch:
+        title: "Stiamo chiedendo a Bancomat la lista delle tue carte\n\nAttendi qualche secondo"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
