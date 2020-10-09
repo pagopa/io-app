@@ -1,16 +1,21 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import I18n from "../../../../../../i18n";
-import { navigateBack } from "../../../../../../store/actions/navigation";
 import { withLightModalContext } from "../../../../../../components/helpers/withLightModalContext";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { LightModalContextInterface } from "../../../../../../components/ui/LightModal";
+import I18n from "../../../../../../i18n";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
-import { loadAbi } from "../../store/actions";
-import { abiSelector, abiListSelector } from "../../store/reducers/abi";
 import { isError, isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
+import { abiListSelector, abiSelector } from "../../../store/abi";
+import { navigateToOnboardingBancomatSearchAvailableUserBancomat } from "../../navigation/action";
+import {
+  loadAbi,
+  searchUserPans,
+  walletAddBancomatBack,
+  walletAddBancomatCancel
+} from "../../store/actions";
 import { SearchBankComponent } from "./SearchBankComponent";
 
 type Props = LightModalContextInterface &
@@ -37,7 +42,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={props.onBack}
       headerTitle={I18n.t("wallet.searchAbi.title")}
     >
       {
@@ -54,11 +59,17 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
+const dispatchSearchAndNavigate = (dispatch: Dispatch, abi?: string) => {
+  dispatch(searchUserPans.request(abi));
+  dispatch(navigateToOnboardingBancomatSearchAvailableUserBancomat());
+};
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAbis: () => dispatch(loadAbi.request()),
-  onCancel: () => dispatch(navigateBack()),
-  onItemPress: (_abi: string) => null,
-  onContinue: () => null
+  onCancel: () => dispatch(walletAddBancomatCancel()),
+  onBack: () => dispatch(walletAddBancomatBack()),
+  onItemPress: (_abi: string) => dispatchSearchAndNavigate(dispatch, _abi),
+  onContinue: () => dispatchSearchAndNavigate(dispatch)
 });
 
 const mapStateToProps = (state: GlobalState) => ({
