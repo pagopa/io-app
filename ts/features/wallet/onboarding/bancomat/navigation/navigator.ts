@@ -1,6 +1,6 @@
 import { createStackNavigator } from "react-navigation";
 import PocBancomatScreen1 from "../screens/PocBancomatScreen1";
-import SearchBankScreen from "../screens/SearchBankScreen";
+import SearchBankScreen from "../screens/search/SearchBankScreen";
 import WALLET_ADD_BANCOMAT_ROUTES from "./routes";
 
 const PaymentMethodAddBancomatNavigator = createStackNavigator(
