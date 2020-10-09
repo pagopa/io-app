@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { NavigationEvents } from "react-navigation";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import I18n from "../../../../../../i18n";
@@ -9,7 +10,11 @@ import { withLightModalContext } from "../../../../../../components/helpers/with
 import { LightModalContextInterface } from "../../../../../../components/ui/LightModal";
 import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import { loadAbi } from "../../store/actions";
-import { isError, isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
+import {
+  isError,
+  isLoading,
+  isUndefined
+} from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiListSelector, abiSelector } from "../../../store/abi";
 import { SearchBankComponent } from "./SearchBankComponent";
 
@@ -22,17 +27,15 @@ type Props = LightModalContextInterface &
  * @constructor
  */
 const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
+  // eslint-disable-next-line functional/no-let
+  let errorRetry: number | undefined;
   React.useEffect(() => {
-    props.loadAbis();
-  }, []);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      if (props.isError) {
-        props.loadAbis();
-      }
-    }, 2000);
-  }, [props.isError]);
+    if (isUndefined(props.bankRemoveValue)) {
+      props.loadAbis();
+    } else if (isError(props.bankRemoveValue)) {
+      errorRetry = setTimeout(props.loadAbis, 2000);
+    }
+  }, [props.bankRemoveValue]);
 
   const openTosModal = () => {
     props.showModal(
@@ -48,6 +51,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
       goBack={true}
       headerTitle={I18n.t("wallet.searchAbi.title")}
     >
+      <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
       <SearchBankComponent
         bankList={props.bankList}
         isLoading={props.isLoading || props.isError}
@@ -70,7 +74,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => ({
   isLoading: isLoading(abiSelector(state)),
   isError: isError(abiSelector(state)),
-  bankList: abiListSelector(state)
+  bankList: abiListSelector(state),
+  bankRemoveValue: abiSelector(state)
 });
 
 export default withLightModalContext(
