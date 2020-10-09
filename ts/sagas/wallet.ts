@@ -30,6 +30,16 @@ import {
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
+import {
+  handleLoadAbi,
+  handleLoadPans
+} from "../features/wallet/onboarding/bancomat/saga/networking";
+import { addBancomatToWalletGeneric } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
+import {
+  loadAbi,
+  loadPans,
+  walletAddBancomatStart
+} from "../features/wallet/onboarding/bancomat/store/actions";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
@@ -110,14 +120,6 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import {
-  handleLoadAbi,
-  handleLoadPans
-} from "../features/wallet/onboarding/bancomat/saga/networking";
-import {
-  loadAbi,
-  loadPans
-} from "../features/wallet/onboarding/bancomat/store/actions";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -715,6 +717,9 @@ export function* watchWalletSaga(
       paymentManagerClient.getPans,
       pmSessionManager
     );
+
+    // watch for add Bancomat to Wallet workflow
+    yield takeLatest(walletAddBancomatStart, addBancomatToWalletGeneric);
   }
 
   yield fork(paymentsDeleteUncompletedSaga);
