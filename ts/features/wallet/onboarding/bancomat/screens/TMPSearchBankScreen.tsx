@@ -9,28 +9,28 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
-import { navigateToWalletPoc1 } from "../navigation/action";
+import { navigateToOnboardingBancomatSearchAvailableUserBancomat } from "../navigation/action";
 import {
+  searchUserPans,
   walletAddBancomatBack,
-  walletAddBancomatCancel,
-  walletAddBancomatCompleted
+  walletAddBancomatCancel
 } from "../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * TODO: TEMP Component only for proof of concept, will be removed in the next iteration
+ * TODO: TEMP Component only for proof of concept and avoid conflicts, will be removed in the next iteration
  * @constructor
  */
-const PocBancomatScreen1: React.FunctionComponent<Props> = props => (
-  <BaseScreenComponent goBack={props.back} headerTitle={"Poc 1"}>
+const TMPSearchBankScreen: React.FunctionComponent<Props> = props => (
+  <BaseScreenComponent goBack={props.back} headerTitle={"Search a bank"}>
     <SafeAreaView style={IOStyles.flex}>
       <View style={IOStyles.flex}>
-        <H1>POC1</H1>
+        <H1>Search a bank, Or maybe not!</H1>
       </View>
       <FooterTwoButtons
-        onRight={props.navigate}
+        onRight={props.searchBancomat}
         onCancel={props.cancel}
         rightText={I18n.t("global.buttons.continue")}
       />
@@ -40,11 +40,16 @@ const PocBancomatScreen1: React.FunctionComponent<Props> = props => (
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(walletAddBancomatBack()),
-  complete: () => dispatch(walletAddBancomatCompleted()),
   cancel: () => dispatch(walletAddBancomatCancel()),
-  navigate: () => dispatch(navigateToWalletPoc1())
+  searchBancomat: () => {
+    dispatch(searchUserPans.request(undefined));
+    dispatch(navigateToOnboardingBancomatSearchAvailableUserBancomat());
+  }
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(PocBancomatScreen1);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TMPSearchBankScreen);

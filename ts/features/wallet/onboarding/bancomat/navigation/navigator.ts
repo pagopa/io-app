@@ -1,16 +1,15 @@
 import { createStackNavigator } from "react-navigation";
-import PocBancomatScreen1 from "../screens/PocBancomatScreen1";
-import SearchBankScreen from "../screens/SearchBankScreen";
-import WALLET_ADD_BANCOMAT_ROUTES from "./routes";
+import TMPSearchBankScreen from "../screens/TMPSearchBankScreen";
+import TMPUserAddBancomatToWallet from "../screens/TMPUserAddBancomatToWallet";
+import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";
 
-const PaymentMethodAddBancomatNavigator = createStackNavigator(
+const PaymentMethodOnboardingBancomatNavigator = createStackNavigator(
   {
-    [WALLET_ADD_BANCOMAT_ROUTES.CHOOSE_BANK]: {
-      screen: SearchBankScreen
+    [WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK]: {
+      screen: TMPSearchBankScreen
     },
-    // TODO: temp only, will be removed when linked with the real workflow
-    [WALLET_ADD_BANCOMAT_ROUTES.POC1]: {
-      screen: PocBancomatScreen1
+    [WALLET_ONBOARDING_BANCOMAT_ROUTES.SEARCH_AVAILABLE_USER_BANCOMAT]: {
+      screen: TMPUserAddBancomatToWallet
     }
   },
   {
@@ -22,4 +21,4 @@ const PaymentMethodAddBancomatNavigator = createStackNavigator(
   }
 );
 
-export default PaymentMethodAddBancomatNavigator;
+export default PaymentMethodOnboardingBancomatNavigator;
