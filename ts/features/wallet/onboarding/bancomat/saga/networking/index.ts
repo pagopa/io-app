@@ -31,8 +31,6 @@ export function* handleLoadAbi(
     }
   } catch (e) {
     yield put(loadAbi.failure(e));
-    yield delay(200);
-    yield put(loadAbi.request());
   }
 }
 

@@ -26,6 +26,14 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     props.loadAbis();
   }, []);
 
+  React.useEffect(() => {
+    setTimeout(() => {
+      if (props.isError) {
+        props.loadAbis();
+      }
+    }, 2000);
+  }, [props.isError]);
+
   const openTosModal = () => {
     props.showModal(
       <TosBonusComponent
@@ -42,7 +50,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     >
       <SearchBankComponent
         bankList={props.bankList}
-        isLoading={props.isLoading}
+        isLoading={props.isLoading || props.isError}
         onCancel={props.onCancel}
         onContinue={props.onContinue}
         onItemPress={props.onItemPress}
@@ -60,7 +68,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  isLoading: isLoading(abiSelector(state)) || isError(abiSelector(state)),
+  isLoading: isLoading(abiSelector(state)),
+  isError: isError(abiSelector(state)),
   bankList: abiListSelector(state)
 });
 
