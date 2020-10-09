@@ -8,6 +8,10 @@ import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import IconFont from "../../../../../components/ui/IconFont";
+import {
+  ImageDimensions,
+  useImageResize
+} from "../screens/hooks/useImageResize";
 
 type Props = {
   bank: Abi;
@@ -49,28 +53,16 @@ const styles = StyleSheet.create({
 export const BankPreviewItem: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const [imageDimensions, setImageDimensions] = React.useState({ w: 0, h: 0 });
+  const [imageDimensions, setImageDimensions] = React.useState<ImageDimensions>(
+    { w: 0, h: 0 }
+  );
 
-  /**
-   * To keep the image bounded in the predefined maximum dimensions (40x160) we use the resizeMode "contain"
-   * and always calculate the resize width keeping fixed the height to 40, in this way all images will have an height of 40
-   * and a variable width until the limit of 160.
-   * Calculating the new image height based on its width may cause an over boundary dimension in some case.
-   * @param width
-   * @param height
-   */
-  const handleImageDimensionSuccess = (width: number, height: number) => {
-    if (width > 0 && height > 0) {
-      const ratio = Math.min(BASE_IMG_W / width, BASE_IMG_H / height);
-      setImageDimensions({ w: width * ratio, h: height * ratio });
-    }
-  };
-
-  React.useEffect(() => {
-    fromNullable(props.bank.logoUrl).map(url =>
-      Image.getSize(url, handleImageDimensionSuccess)
-    );
-  }, []);
+  useImageResize(
+    BASE_IMG_W,
+    BASE_IMG_H,
+    setImageDimensions,
+    props.bank.logoUrl
+  );
 
   const imageStyle: StyleProp<ImageStyle> = {
     width: imageDimensions.w,
