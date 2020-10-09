@@ -48,7 +48,7 @@ const abiReducer = (
 
 export default abiReducer;
 
-const abiSelector = (state: GlobalState): AbiState => state.wallet.abi;
+export const abiSelector = (state: GlobalState): AbiState => state.wallet.abi;
 
 // return the abi list as array
 export const abiListSelector = createSelector<
