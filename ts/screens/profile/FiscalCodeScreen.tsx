@@ -113,10 +113,8 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
       const maybeCodiceCatastale = CodiceCatastale.decode(
         this.props.profile.fiscal_code.substring(11, 15)
       );
-      // if municipality data are none we request a load
-      if (pot.isNone(this.props.municipality.data)) {
-        maybeCodiceCatastale.map(c => this.props.loadMunicipality(c));
-      }
+
+      maybeCodiceCatastale.map(c => this.props.loadMunicipality(c));
     }
   }
 
