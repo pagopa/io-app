@@ -1151,7 +1151,8 @@ identification:
     reset:
       button: Did you forget the
       code: unlock code
-      button_short: Reset unlock code
+      button_short: Change the unlock code
+      subtitle: Set a new 6-digit code
     confirmValid: Correct unlock code
   unlock_screen:
     help:

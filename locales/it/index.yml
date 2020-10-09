@@ -1183,7 +1183,8 @@ identification:
     reset:
       button: Hai dimenticato il
       code: codice di sblocco
-      button_short: Reimposta il codice di sblocco
+      button_short: Modifica il codice di sblocco
+      subtitle: Imposta un nuovo codice di 6 cifre
     confirmValid: Codice di sblocco corretto
   unlock_screen:
     help:
