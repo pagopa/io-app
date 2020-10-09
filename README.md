@@ -342,8 +342,21 @@ _Note: The sample configuration sets the app to interface with our test environm
 **module for CIE authentication**
 IO uses a [react native module](https://github.com/pagopa/io-cie-android-sdk) to allow authentication through CIE (Carta di Indentità Elettronica)
 This package is hosted on [Github Packages](https://github.com/features/packages). In order to install this package you need to be able to access the github registry.
-The configuration is pretty simple and fast, you can follow [these instructions](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages)
-**If you don't do this step you can't download and install the cie module.**
+
+#### Create Github token
+In order to access the Github registry a Github token is needed:
+
+- Go to [Github](https://github.com) and access to your account
+- In the upper-right hand corner click your profile photo then click Settings
+- On the left sidebar, click Developer settings.
+- On the left sidebar, click Personal access tokens.
+- Click the Generate new token button and create a new token with the following permissions:
+    - read:packages
+    - write:packages
+    - delete:packages
+- Click the green Generate token button.
+
+Finally you can follow [these instructions](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages) and perform this simple and fast configuration. **If you don't do this step you can't download and install the cie module.**
 
 Now you can install the libraries used by the project:
 
@@ -366,7 +379,10 @@ $ yarn generate:all
 
 On Android (the device simulator must be [launched manually](https://medium.com/@deepak.gulati/running-react-native-app-on-the-android-emulator-11bf309443eb)):
 
+
 ```
+# Perform the port forwarding
+$ adb reverse tcp:8081 tcp:8081;adb reverse tcp:3000 tcp:3000;adb reverse tcp:9090 tcp:9090
 $ react-native run-android
 ```
 
