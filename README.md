@@ -150,7 +150,15 @@ Install `asdf` with the command:
 brew install asdf
 ```
 
-Brew installs `asdf` in the path so no more steps are needed. Check you have it available with the command `which asdf`.
+Add `asdf.sh` to your shell with:
+```
+# ZSH
+echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.zshrc
+
+# BASH
+echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.bash_profile
+```
+
 
 ##### Install asdf on Linux 
 
