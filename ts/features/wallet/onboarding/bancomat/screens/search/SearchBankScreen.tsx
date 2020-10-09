@@ -45,16 +45,14 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
       goBack={props.onBack}
       headerTitle={I18n.t("wallet.searchAbi.title")}
     >
-      {
-        <SearchBankComponent
-          bankList={props.bankList}
-          isLoading={props.isLoading}
-          onCancel={props.onCancel}
-          onContinue={props.searchPans}
-          onItemPress={props.searchPans}
-          openTosModal={openTosModal}
-        />
-      }
+      <SearchBankComponent
+        bankList={props.bankList}
+        isLoading={props.isLoading}
+        onCancel={props.onCancel}
+        onContinue={props.searchPans}
+        onItemPress={props.searchPans}
+        openTosModal={openTosModal}
+      />
     </BaseScreenComponent>
   );
 };
