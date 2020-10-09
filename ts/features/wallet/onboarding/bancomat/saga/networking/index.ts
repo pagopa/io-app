@@ -34,9 +34,7 @@ export function* handleLoadAbi(
   }
 }
 
-export type LoadPansError = NotFoundError | TimeoutError | GenericError;
-
-type NotFoundError = { readonly kind: "notFound" };
+export type LoadPansError = TimeoutError | GenericError;
 
 type TimeoutError = { readonly kind: "timeout" };
 
@@ -65,8 +63,6 @@ export function* handleLoadPans(
             )
           )
         );
-      } else if (getPansWithRefreshResult.value.status === 404) {
-        return yield put(searchUserPans.failure({ kind: "notFound" }));
       } else {
         return yield put(
           searchUserPans.failure({

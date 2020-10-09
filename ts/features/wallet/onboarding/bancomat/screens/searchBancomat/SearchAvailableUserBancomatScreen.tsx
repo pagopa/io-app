@@ -23,9 +23,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props => {
   const pans = props.pans;
 
-  const noBancomatFound =
-    (isError(pans) && pans.error.kind === "notFound") ||
-    (isReady(pans) && pans.value.length === 0);
+  const noBancomatFound = isReady(pans) && pans.value.length === 0;
 
   if (noBancomatFound) {
     return <BancomatKoNotFound />;
