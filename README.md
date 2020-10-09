@@ -312,7 +312,7 @@ sudo gem install cocoapods
 
 #### React Native
 
-Follow the tutorial [Building Projects with Native Code](https://facebook.github.io/react-native/docs/getting-started.html) for your operating system.
+Follow the tutorial [Setting up the development environment](https://reactnative.dev/docs/environment-setup) and install `React Native CLI` for your operating system.
 
 If you have a macOS system, you can follow both the tutorial for iOS and for Android. If you have a Linux or Windows system, you need only to install the development environment for Android.
 
