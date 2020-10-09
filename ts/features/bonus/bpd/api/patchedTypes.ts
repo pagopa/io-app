@@ -55,6 +55,8 @@ const CardO = t.partial({
 
   expiringDate: t.string,
 
+  hpan: t.string,
+
   productType: enumType<ProductTypeEnum>(ProductTypeEnum, "productType"),
 
   tokens: t.readonlyArray(t.string, "array of string"),
