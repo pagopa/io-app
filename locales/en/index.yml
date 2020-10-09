@@ -635,6 +635,18 @@ wallet:
         read: Transaction
         unread: Unread transaction
       label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} at {{hours}} with reason {{reason}}. Activate for the full detail"
+  onboarding:
+    bancomat:
+      headerTitle: "Add Bancomat card"
+      koTimeout:
+        title: "We were unable to contact Bancomat."
+        body: "Please retry"
+      koNotFound:
+        title: "Sorry, we couldn't find any cards"
+        body: "There are no Bancomat registered to you"
+        chooseAnother: "Choose another bank"
+      loadingSearch:
+        title: "We are asking Bancomat for the list of your cards\n\nPlease wait"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
