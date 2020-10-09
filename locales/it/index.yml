@@ -1323,7 +1323,7 @@ faq:
     title: "Quali metodi di pagamento puoi aggiungere?"
     content: !include faq/faq37.md
   38:
-    title: "Riepilogo della transazione e ricevuta del pagamento sono la stessa cosa?"
+    title: "Ricevuta dell’operazione e quietanza liberatoria sono la stessa cosa?"
     content: !include faq/faq38.md
   39:
     title: "Cos'è il codice identificativo della transazione?"
