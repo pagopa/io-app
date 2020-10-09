@@ -37,8 +37,20 @@ export const AddBancomatScreen: React.FunctionComponent<Props> = (
   const [abiLogo, setAbiLogo] = React.useState<string | undefined>();
 
   const handleOnContinue = () => {
-    setCurrentIndex(currentIndex + 1);
-    props.onContinue();
+    if (currentIndex === props.pans.length - 1) {
+      props.onContinue();
+    } else {
+      setCurrentIndex(currentIndex + 1);
+      props.onContinue();
+    }
+  };
+
+  const handleSkip = () => {
+    if (currentIndex === props.pans.length - 1) {
+      props.onCancel();
+    } else {
+      setCurrentIndex(currentIndex + 1);
+    }
   };
 
   React.useEffect(() => {
@@ -50,10 +62,16 @@ export const AddBancomatScreen: React.FunctionComponent<Props> = (
 
   return (
     <BaseScreenComponent
+      customGoBack={<View hspacer={true} spacer={true} />}
       headerTitle={I18n.t("wallet.addBancomat.title", {
         current: currentIndex + 1,
         length: props.pans.length
       })}
+      // TODO Replace with right CH texts
+      contextualHelpMarkdown={{
+        title: "wallet.walletCardTransaction.contextualHelpTitle",
+        body: "wallet.walletCardTransaction.contextualHelpContent"
+      }}
     >
       <SafeAreaView style={{ flex: 1 }}>
         <View spacer={true} />
