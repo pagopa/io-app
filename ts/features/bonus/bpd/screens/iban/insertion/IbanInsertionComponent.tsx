@@ -27,7 +27,7 @@ const loadLocales = () => ({
   body1: I18n.t("bonus.bpd.iban.insertion.body1"),
   body2: I18n.t("bonus.bpd.iban.insertion.body2"),
   ibanDescription: I18n.t("bonus.bpd.iban.iban"),
-  skip: I18n.t("bonus.bpd.iban.skip")
+  skip: I18n.t("global.buttons.skip")
 });
 
 export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {

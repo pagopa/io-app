@@ -63,6 +63,7 @@ global:
     exit: Exit
     saveSelection: Save the selection
     search: Search
+    skip: "Skip"
   navigator:
     messages: messages
     wallet: payments
@@ -618,6 +619,14 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Payments
+  searchAbi:
+    title: Add Bancomat card
+    description:
+      text1: If you prefer, you can indicate the bank
+      text2: " on which you have an active Pagobancomat card. Otherwise we will look for all the cards associated with you: by continuing you accept the "
+      text3: information on the processing of personal data
+    bankName: Name of the bank
+    noName: Name not found
   accessibility:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
@@ -1553,8 +1562,11 @@ bonus:
       loadingActivateBpd:
         title: "We are activating the cashback"
         body: "Please wait."
+      noPaymentMethod:
+        title: "Add at least one payment method"
+        body: "To start collecting points you have to add your favorite electronic payment methods to IO: today credit cards, prepaid, rechargeable cards, debit cards, bancomat and apps and other digital tools are supported.\n\n
+        In the future, cashback will support other tools: you can add new payment methods to IO whenever you want and activate the collection of points on each!"
     iban:
-      skip: "Skip"
       iban: "IBAN"
       edit: "Change IBAN"
       insertion:
