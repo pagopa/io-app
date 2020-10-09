@@ -3003,7 +3003,7 @@ export const abis = [
 
 export const pans = [
   {
-    abi: "02008",
+    abi: "00001",
     cardNumber: "1234",
     cardPartialNumber: "11112222",
     expiringDate: "2021-10-07",
@@ -3012,7 +3012,7 @@ export const pans = [
     validityState: "V"
   },
   {
-    abi: "02008",
+    abi: "00001",
     cardNumber: "5678",
     cardPartialNumber: "33332222",
     expiringDate: "2021-10-07",

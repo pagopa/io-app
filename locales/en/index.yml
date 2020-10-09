@@ -628,6 +628,12 @@ wallet:
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank's list...
+  addBancomat:
+    title: "Add bancomat {{current}} of {{length}}"
+    screenTitle: "Do you want to add this card?"
+    bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
+    bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
+    skip: Salta
   accessibility:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:

@@ -1,12 +1,17 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
-import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
+import {
+  Image,
+  ImageStyle,
+  Platform,
+  StyleProp,
+  StyleSheet
+} from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import I18n from "../../../../../../i18n";
 import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
 import { Body } from "../../../../../../components/core/typography/Body";
-import { LabelSmall } from "../../../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { H5 } from "../../../../../../components/core/typography/H5";
 import customVariables from "../../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../../utils/dates";
 import { ImageDimensions, useImageResize } from "../hooks/useImageResize";
@@ -14,7 +19,11 @@ import { ImageDimensions, useImageResize } from "../hooks/useImageResize";
 type Props = {
   abiLogo?: string;
   pan: Card;
+  user: string;
 };
+
+const BANCOMAT_LOGO =
+  "https://www.drop-pos.shop/images/home/pagamenti/pagobancomat.png";
 
 const styles = StyleSheet.create({
   cardBox: {
@@ -23,10 +32,39 @@ const styles = StyleSheet.create({
     maxWidth: 343,
     paddingHorizontal: customVariables.contentPadding,
     paddingTop: 20,
-    paddingBottom: 15,
+    paddingBottom: 22,
     flexDirection: "column",
-    backgroundColor: IOColors.aqua,
-    borderRadius: 8
+    justifyContent: "space-between",
+    backgroundColor: customVariables.brandGray,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 4.65,
+    zIndex: 7,
+    elevation: 7
+  },
+  shadowBox: {
+    marginBottom: -13,
+    borderRadius: 8,
+    borderTopWidth: 10,
+    borderTopColor: "rgba(0,0,0,0.1)",
+    height: 15,
+    width: widthPercentageToDP("90%"),
+    maxWidth: 343
+  },
+  bottomRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "baseline"
+  },
+  bancomatLogo: {
+    width: 60,
+    height: 36,
+    resizeMode: "contain"
   }
 });
 
@@ -48,37 +86,29 @@ const PanCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   return (
-    <View style={styles.cardBox}>
-      <Image style={imageStyle} source={{ uri: props.abiLogo }} />
-      <View spacer={true} small={true} />
-      {props.pan.expiringDate && (
-        <LabelSmall color={"bluegrey"}>{`Valida fino al ${formatDateAsLocal(
-          props.pan.expiringDate
-        )}`}</LabelSmall>
-      )}
-      <View
-        style={{
-          flexDirection: "row",
-          backgroundColor: "red",
-          position: "absolute",
-          bottom: 15,
-          left: customVariables.contentPadding
-        }}
-      >
-        <Image
-          style={{
-            width: 60,
-            height: 36,
-            resizeMode: "contain",
-            alignSelf: "flex-end"
-          }}
-          source={{
-            uri:
-              "https://www.drop-pos.shop/images/home/pagamenti/pagobancomat.png"
-          }}
-        />
+    <>
+      {Platform.OS === "android" && <View style={styles.shadowBox} />}
+      <View style={styles.cardBox}>
+        <View>
+          <Image style={imageStyle} source={{ uri: props.abiLogo }} />
+          <View spacer={true} />
+          {props.pan.expiringDate && (
+            <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
+              "cardComponent.validUntil"
+            )} ${formatDateAsLocal(props.pan.expiringDate)}`}</H5>
+          )}
+        </View>
+        <View style={styles.bottomRow}>
+          <Body>{props.user.toLocaleUpperCase()}</Body>
+          <Image
+            style={styles.bancomatLogo}
+            source={{
+              uri: BANCOMAT_LOGO
+            }}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 

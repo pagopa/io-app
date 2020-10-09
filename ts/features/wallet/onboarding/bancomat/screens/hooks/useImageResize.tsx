@@ -43,4 +43,4 @@ export const useImageResize = (
         handleImageDimensionSuccess(w, h, maxWidth, maxHeight, handler)
       )
     );
-  }, []);
+  }, [imageUrl]);
