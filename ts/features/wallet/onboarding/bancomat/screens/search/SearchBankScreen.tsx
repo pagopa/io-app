@@ -49,7 +49,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
         bankList={props.bankList}
         isLoading={props.isLoading}
         onCancel={props.onCancel}
-        onContinue={props.searchPans}
+        onContinue={() => props.searchPans()}
         onItemPress={props.searchPans}
         openTosModal={openTosModal}
       />
