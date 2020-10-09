@@ -84,7 +84,7 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
   };
 
   const bankName = props.bank.name || I18n.t("wallet.searchAbi.noName");
-  const bankLogo = false && props.bank.logoUrl && imageStyle && (
+  const bankLogo = props.bank.logoUrl && imageStyle && (
     <View style={styles.boundaryImage}>
       <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
     </View>
