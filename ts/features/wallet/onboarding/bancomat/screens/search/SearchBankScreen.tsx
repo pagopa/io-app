@@ -9,8 +9,8 @@ import { withLightModalContext } from "../../../../../../components/helpers/with
 import { LightModalContextInterface } from "../../../../../../components/ui/LightModal";
 import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import { loadAbi } from "../../store/actions";
-import { abiSelector, abiListSelector } from "../../store/reducers/abi";
 import { isError, isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
+import { abiListSelector, abiSelector } from "../../../store/abi";
 import { SearchBankComponent } from "./SearchBankComponent";
 
 type Props = LightModalContextInterface &
