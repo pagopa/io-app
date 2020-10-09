@@ -7,6 +7,7 @@ import {
 } from "italia-ts-commons/lib/requests";
 import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
+import { constNull } from "fp-ts/lib/function";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   enrollmentDecoder,
@@ -16,7 +17,6 @@ import {
 } from "../../../../../definitions/bpd/citizen/requestTypes";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { PatchedCitizenResource } from "./patchedTypes";
-import { constNull } from "fp-ts/lib/function";
 
 const headersProducers = <
   P extends {
