@@ -3015,7 +3015,7 @@ export const pans = [
     abi: "00001",
     cardNumber: "5678",
     cardPartialNumber: "33332222",
-    expiringDate: "2021-10-07",
+    expiringDate: "2021-12-07",
     productType: "PP",
     tokens: ["string"],
     validityState: "V"
