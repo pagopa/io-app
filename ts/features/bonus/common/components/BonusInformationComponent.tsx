@@ -110,9 +110,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     block: true,
     primary: true,
     onPress: props.onConfirm,
-    title: `${I18n.t("bonus.bonusVacanze.cta.requestBonus")} ${
-      bonusTypeLocalizedContent.name
-    }`
+    title: I18n.t("bonus.bonusVacanze.cta.requestBonus")
   };
 
   const handleModalPress = (tos: string) =>
