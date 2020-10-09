@@ -7,6 +7,7 @@ import {
 } from "italia-ts-commons/lib/requests";
 import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
+import { constNull } from "fp-ts/lib/function";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   enrollmentDecoder,
@@ -120,20 +121,26 @@ type finalType =
 // TODO abstract the usage of fetch
 const updatePaymentMethodT = (
   options: Options,
+  fiscalCode: string,
   iban: { payoffInstr: Iban; payoffInstrType: string },
   headers: Record<string, string>
 ): (() => Promise<t.Validation<finalType>>) => () =>
   new Promise((res, rej) => {
-    options
-      .fetchApi(`${options.baseUrl}/bpd/io/citizen`, {
-        method: "patch",
-        headers,
-        body: JSON.stringify(iban)
+    withTestToken(options, fiscalCode)
+      .then(tokenResponse => {
+        const testToken = tokenResponse.text();
+        options
+          .fetchApi(`${options.baseUrl}/bpd/io/citizen`, {
+            method: "patch",
+            headers: { ...headers, Authorization: `Bearer ${testToken}` },
+            body: JSON.stringify(iban)
+          })
+          .then(response => {
+            patchIbanDecoders(PatchIban)(response).then(res).catch(rej);
+          })
+          .catch(rej);
       })
-      .then(response => {
-        patchIbanDecoders(PatchIban)(response).then(res).catch(rej);
-      })
-      .catch(rej);
+      .catch(constNull);
   });
 
 type Options = {
@@ -141,9 +148,19 @@ type Options = {
   fetchApi: typeof fetch;
 };
 
+// FIX ME !this code must be removed!
+// only for test purpose
+const withTestToken = (options: Options, fiscalCode: string) =>
+  options.fetchApi(
+    `${options.baseUrl}/bpd/pagopa/api/v1/login?fiscalCode=${fiscalCode}`,
+    {
+      method: "post"
+    }
+  );
+
 export function BackendBpdClient(
   baseUrl: string,
-  token: string,
+  _: string,
   fiscalCode: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
@@ -160,29 +177,13 @@ export function BackendBpdClient(
     ["Ocp-Apim-Subscription-Key"]?: string;
   };
 
-  // FIX ME !this code must be removed!
-  // only for test purpose
-  const withTestToken = () =>
-    fetchApi(`${baseUrl}/bpd/pagopa/api/v1/login?fiscalCode=${fiscalCode}`, {
-      method: "post"
-    });
-
   const withBearerToken = <P extends extendHeaders, R>(
     f: (p: P) => Promise<R>
   ) => async (po: P): Promise<R> => {
-    const reqTestToken = await withTestToken();
+    const reqTestToken = await withTestToken(options, fiscalCode);
     const testToken = await reqTestToken.text();
-    const params = Object.assign(buildHeaders(testToken), po) as P;
+    const params = Object.assign({ Bearer: testToken }, po) as P;
     return f(params);
-  };
-
-  const buildHeaders = (token: string, content_type?: string) => {
-    const headers = {
-      Bearer: token
-    };
-    return content_type
-      ? { ...headers, ["Content-Type"]: content_type }
-      : headers;
   };
 
   return {
@@ -194,11 +195,14 @@ export function BackendBpdClient(
       createFetchRequestForApi(deleteCitizenIOT, options)
     ),
     updatePaymentMethod: (iban: Iban) =>
-      updatePaymentMethodT(
-        options,
-        // payoffInstrType has IBAN as hardcoded value
-        { payoffInstr: iban, payoffInstrType: "IBAN" },
-        buildHeaders(token, jsonContentType)
+      withBearerToken(
+        updatePaymentMethodT(
+          options,
+          fiscalCode,
+          // payoffInstrType has IBAN as hardcoded value
+          { payoffInstr: iban, payoffInstrType: "IBAN" },
+          { ["Content-Type"]: jsonContentType }
+        )
       )
   };
 }
