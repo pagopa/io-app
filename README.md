@@ -280,7 +280,7 @@ Now you have to login and logout again from the terminal as yarn installs the co
 
 Verify it was installed correctly with the command `which yarn`. It should tell you the installation path of the command. 
 
-#### Install bundler
+#### Install bundler and cocoapods
 
 Some dependencies are installed via [bundler](https://bundler.io/) and [cocoapods](https://cocoapods.org/) 
 
@@ -303,6 +303,12 @@ gem install bundler:2.0.2
 ```
 
 Verify it was installed correctly with the command `which bundle`. It should show the installation path of the command. 
+
+#### Only for macOS - install cocoapods
+Then install cocoapods, also in this case you can use Ruby to install it:
+```
+sudo gem install cocoapods
+```
 
 #### React Native
 
