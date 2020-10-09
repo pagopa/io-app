@@ -46,10 +46,16 @@ const styles = StyleSheet.create({
   }
 });
 
+type ImageSize = {
+  width: number;
+  height: number;
+};
 export const BankPreviewItem: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const [imageDimensions, setImageDimensions] = React.useState({ w: 0, h: 0 });
+  const [imageDimensions, setImageDimensions] = React.useState<
+    ImageSize | undefined
+  >();
 
   /**
    * To keep the image bounded in the predefined maximum dimensions (40x160) we use the resizeMode "contain"
@@ -62,7 +68,7 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
   const handleImageDimensionSuccess = (width: number, height: number) => {
     if (width > 0 && height > 0) {
       const ratio = Math.min(BASE_IMG_W / width, BASE_IMG_H / height);
-      setImageDimensions({ w: width * ratio, h: height * ratio });
+      setImageDimensions({ width: width * ratio, height: height * ratio });
     }
   };
 
@@ -73,23 +79,25 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
   }, []);
 
   const imageStyle: StyleProp<ImageStyle> = {
-    width: imageDimensions.w,
-    height: imageDimensions.h,
+    ...imageDimensions,
     resizeMode: "contain"
   };
 
   const onItemPress = () => props.bank.abi && props.onPress(props.bank.abi);
   const bankName = props.bank.name || I18n.t("wallet.searchAbi.noName");
+  const bankLogo = (
+    <View style={styles.boundaryImage}>
+      {props.bank.logoUrl && imageDimensions && (
+        <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
+      )}
+    </View>
+  );
 
   return props.inList ? (
     <ListItem style={styles.flexRow} onPress={onItemPress}>
       <View style={styles.listItem}>
         <View spacer={true} />
-        <View style={styles.boundaryImage}>
-          {props.bank.logoUrl && (
-            <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
-          )}
-        </View>
+        {bankLogo}
         <View spacer={true} small={true} />
         <LabelSmall color={"bluegrey"} weight={"Bold"}>
           {bankName}
@@ -104,11 +112,7 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
       style={styles.gridItem}
       onPress={onItemPress}
     >
-      <View style={styles.boundaryImage}>
-        {props.bank.logoUrl && (
-          <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
-        )}
-      </View>
+      {bankLogo}
       <View spacer={true} />
       <LabelSmall color={"bluegrey"} weight={"Bold"}>
         {bankName}
