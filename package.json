@@ -7,7 +7,7 @@
   "io_bonus_vacanze_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_bonus.yaml",
   "io_bpd_citizen": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/citizen.json",
   "pagopa_api": "https://wisp2.pagopa.gov.it/pp-restapi-CD/v2/api-docs",
-  "pagopa_api_bancomat": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/pm/swagger_bancomat.yaml",
+  "pagopa_api_bancomat": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/pm/swagger_bancomat.json",
   "private": true,
   "scripts": {
     "start": "react-native start",
