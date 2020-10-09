@@ -1,5 +1,4 @@
 import { createStackNavigator } from "react-navigation";
-// import AddBancomatScreen from "../../../wallet/onboarding/bancomat/screens/add-pans/AddBancomatScreen";
 import ActivateBonusCompletedScreen from "../screens/activation/ActivateBonusCompletedScreen";
 import BonusAlreadyExists from "../screens/activation/BonusAlreadyExists";
 import EligibilityExpired from "../screens/activation/EligibilityExpired";
@@ -20,9 +19,6 @@ import BONUSVACANZE_ROUTES from "./routes";
 
 const BonusVacanzeNavigator = createStackNavigator(
   {
-    // [BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST]: {
-    //   screen: AddBancomatScreen
-    // },
     [BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST]: {
       screen: AvailableBonusScreen
     },
