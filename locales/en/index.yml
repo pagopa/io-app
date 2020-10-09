@@ -645,8 +645,7 @@ wallet:
         body: "There are no Bancomat registered to you"
         chooseAnother: "Choose another bank"
       loadingSearch:
-        title: "We are asking Bancomat for the list of your cards"
-        body: "Please wait"
+        title: "We are asking Bancomat for the list of your cards\n\nPlease wait"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required

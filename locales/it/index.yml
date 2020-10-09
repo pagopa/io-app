@@ -666,8 +666,7 @@ wallet:
         body: "Non risultano Bancomat intestati a te"
         chooseAnother: "Scegli un'altra banca"
       loadingSearch:
-        title: "Stiamo chiedendo a Bancomat la lista delle tue carte"
-        body: "Attendi qualche secondo"
+        title: "Stiamo chiedendo a Bancomat la lista delle tue carte\n\nAttendi qualche secondo"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
