@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
@@ -16,8 +17,6 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const LoadBancomatSearch: React.FunctionComponent<Props> = props => {
-  const loading = "Loading";
-
   useHardwareBackButton(() => {
     if (!props.isLoading) {
       props.cancel();
@@ -27,7 +26,7 @@ const LoadBancomatSearch: React.FunctionComponent<Props> = props => {
   return (
     <LoadingErrorComponent
       {...props}
-      loadingCaption={loading}
+      loadingCaption={I18n.t("wallet.onboarding.bancomat.loadingSearch.title")}
       onAbort={props.cancel}
       onRetry={() => props.retry(props.abiSelected)}
     />

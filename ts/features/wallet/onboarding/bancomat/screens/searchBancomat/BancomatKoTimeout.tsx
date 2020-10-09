@@ -2,7 +2,7 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import image from "../../../../../../../img/search/search-icon.png";
+import image from "../../../../../../../img/servicesStatus/error-detail-icon.png";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../../components/infoScreen/InfoScreenComponent";
@@ -16,28 +16,40 @@ import { onboardingBancomatAbiSelectedSelector } from "../../store/reducers/abiS
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+const loadLocales = () => ({
+  headerTitle: I18n.t("wallet.onboarding.bancomat.headerTitle"),
+  title: I18n.t("wallet.onboarding.bancomat.koTimeout.title"),
+  body: I18n.t("wallet.onboarding.bancomat.koTimeout.body"),
+  cancel: I18n.t("global.buttons.cancel"),
+  retry: I18n.t("global.buttons.retry")
+});
+
 /**
  * This screen informs the user that the search operation could not be completed
  * @constructor
  */
-const BancomatKoTimeout: React.FunctionComponent<Props> = props => (
-  <BaseScreenComponent goBack={true} headerTitle={"Bancomat TIMEOUT"}>
-    <SafeAreaView style={IOStyles.flex}>
-      <InfoScreenComponent
-        image={renderInfoRasterImage(image)}
-        title={"BANCOMAT TIMEOUT"}
-        body={"BANCOMAT TIMEOUT"}
-      />
-      <FooterTwoButtons
-        type={"TwoButtonsInlineHalf"}
-        onRight={() => props.retry(props.abiSelected)}
-        onCancel={props.cancel}
-        rightText={"Riprova"}
-        leftText={I18n.t("global.buttons.cancel")}
-      />
-    </SafeAreaView>
-  </BaseScreenComponent>
-);
+const BancomatKoTimeout: React.FunctionComponent<Props> = props => {
+  const { headerTitle, title, body, cancel, retry } = loadLocales();
+  return (
+    <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
+      <SafeAreaView style={IOStyles.flex}>
+        <InfoScreenComponent
+          image={renderInfoRasterImage(image)}
+          title={title}
+          body={body}
+        />
+        <FooterTwoButtons
+          type={"TwoButtonsInlineThird"}
+          onRight={() => props.retry(props.abiSelected)}
+          onCancel={props.cancel}
+          rightText={retry}
+          leftText={cancel}
+        />
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
   retry: (abiSelected: string | undefined) =>
