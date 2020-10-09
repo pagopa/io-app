@@ -50,8 +50,8 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
           bankList={props.bankList}
           isLoading={props.isLoading}
           onCancel={props.onCancel}
-          onContinue={props.onContinue}
-          onItemPress={props.onItemPress}
+          onContinue={props.searchPans}
+          onItemPress={props.searchPans}
           openTosModal={openTosModal}
         />
       }
@@ -59,17 +59,14 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-const dispatchSearchAndNavigate = (dispatch: Dispatch, abi?: string) => {
-  dispatch(searchUserPans.request(abi));
-  dispatch(navigateToOnboardingBancomatSearchAvailableUserBancomat());
-};
-
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAbis: () => dispatch(loadAbi.request()),
   onCancel: () => dispatch(walletAddBancomatCancel()),
   onBack: () => dispatch(walletAddBancomatBack()),
-  onItemPress: (_abi: string) => dispatchSearchAndNavigate(dispatch, _abi),
-  onContinue: () => dispatchSearchAndNavigate(dispatch)
+  searchPans: (abi?: string) => {
+    dispatch(searchUserPans.request(abi));
+    dispatch(navigateToOnboardingBancomatSearchAvailableUserBancomat());
+  }
 });
 
 const mapStateToProps = (state: GlobalState) => ({
