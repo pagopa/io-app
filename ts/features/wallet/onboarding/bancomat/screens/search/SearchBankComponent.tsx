@@ -64,8 +64,8 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
     setSearchText(text);
   };
 
-  const keyExtractor = (bank: Abi): string =>
-    bank.abi ? bank.abi : `abi_item_${Math.random()}`;
+  const keyExtractor = (bank: Abi, index: number): string =>
+    bank.abi ? bank.abi : `abi_item_${index}`;
 
   const renderListItem = (isList: boolean) => (
     info: ListRenderItemInfo<Abi>

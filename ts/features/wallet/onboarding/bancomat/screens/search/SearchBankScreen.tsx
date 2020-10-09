@@ -1,13 +1,18 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { NavigationEvents } from "react-navigation";
 import { withLightModalContext } from "../../../../../../components/helpers/withLightModalContext";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { LightModalContextInterface } from "../../../../../../components/ui/LightModal";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
-import { isError, isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
+import {
+  isError,
+  isLoading,
+  isUndefined
+} from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiListSelector, abiSelector } from "../../../store/abi";
 import { navigateToOnboardingBancomatSearchAvailableUserBancomat } from "../../navigation/action";
 import {
@@ -27,9 +32,15 @@ type Props = LightModalContextInterface &
  * @constructor
  */
 const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
+  // eslint-disable-next-line functional/no-let
+  let errorRetry: number | undefined;
   React.useEffect(() => {
-    props.loadAbis();
-  }, []);
+    if (isUndefined(props.bankRemoveValue)) {
+      props.loadAbis();
+    } else if (isError(props.bankRemoveValue)) {
+      errorRetry = setTimeout(props.loadAbis, 2000);
+    }
+  }, [props.bankRemoveValue]);
 
   const openTosModal = () => {
     props.showModal(
@@ -45,9 +56,10 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
       goBack={props.onBack}
       headerTitle={I18n.t("wallet.searchAbi.title")}
     >
+      <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
       <SearchBankComponent
         bankList={props.bankList}
-        isLoading={props.isLoading}
+        isLoading={props.isLoading || props.isError}
         onCancel={props.onCancel}
         onContinue={() => props.searchPans()}
         onItemPress={props.searchPans}
@@ -68,8 +80,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  isLoading: isLoading(abiSelector(state)) || isError(abiSelector(state)),
-  bankList: abiListSelector(state)
+  isLoading: isLoading(abiSelector(state)),
+  isError: isError(abiSelector(state)),
+  bankList: abiListSelector(state),
+  bankRemoveValue: abiSelector(state)
 });
 
 export default withLightModalContext(
