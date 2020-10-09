@@ -159,7 +159,7 @@ echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.zshrc
 echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.bash_profile
 ```
 
-
+Restart your shell and check you have it available with the command `which asdf`.
 ##### Install asdf on Linux 
 
 This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. Your mileage may vary.
@@ -189,14 +189,34 @@ asdf plugin add ruby
 asdf plugin add nodejs
 ```
 
-Before you can install your version of Ruby, you need a C compiler and some libraries. On Ubuntu or Debian based systems use:
+Before you can install your version of Ruby, you need a C compiler and some libraries. 
+
+##### Ubuntu or Debian based systems:
+
+Run:
 
 ```
 sudo apt-get update
 sudo apt-get install build-essential libssl-dev libreadline-dev zlib1g-dev
 ```
 
-Import the Node.js release team's OpenPGP keys to main keyring:
+##### MacOS:
+
+Run:
+
+```
+brew install build-essential libssl-dev libreadline-dev zlib1g-dev
+brew install gnupg
+```
+Install XCode from the App Store and then run:
+
+```
+sudo xcode-select --switch /Applications/Xcode.app
+```
+
+
+
+After the compiler installation import the Node.js release team's OpenPGP keys to main keyring:
 
 ```
 bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
@@ -207,7 +227,7 @@ Finally you can install your version of `node` and `ruby` using `asdf` (replace 
 ```
 cd <work-dir>/io-app
 asdf install ruby 2.4.2
-asdf install nodejs 10.13.0
+asdf install nodejs 10.18.0
 ```
 
 You should now verify that the output of the `asdf current` command and the version of the node in the PATH are the same as the content of the `.tool-versions` file. For example:
