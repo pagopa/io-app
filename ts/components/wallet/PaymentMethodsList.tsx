@@ -21,12 +21,15 @@ import { LightModalContextInterface } from "../ui/LightModal";
 import Markdown from "../ui/Markdown";
 
 type OwnProps = Readonly<{
+  // In order to maintain backwards compatibility, is added
+  // the possibility of receiving additional payment methods via props
+  paymentMethods?: ReadonlyArray<IPaymentMethod>;
   navigateToAddCreditCard: () => void;
 }>;
 
 type Props = OwnProps & LightModalContextInterface;
 
-type IPaymentMethod = Readonly<{
+export type IPaymentMethod = Readonly<{
   name: string;
   maxFee?: string;
   icon?: any;
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const implementedMethod: IPaymentMethod = {
+const creditCard: IPaymentMethod = {
   name: I18n.t("wallet.methods.card.name"),
   icon: "io-48-card",
   implemented: true
@@ -136,9 +139,10 @@ class PaymentMethodsList extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const methods: ReadonlyArray<IPaymentMethod> = [
       {
-        ...implementedMethod,
+        ...creditCard,
         onPress: this.props.navigateToAddCreditCard
       },
+      ...(this.props.paymentMethods ?? []),
       ...paymentMethods
     ];
     return (
