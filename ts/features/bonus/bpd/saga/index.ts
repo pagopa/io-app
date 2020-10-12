@@ -1,6 +1,6 @@
-import { SagaIterator } from "redux-saga";
 import * as pot from "italia-ts-commons/lib/pot";
-import { takeEvery, takeLatest, select } from "redux-saga/effects";
+import { SagaIterator } from "redux-saga";
+import { select, takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { bpdApiUrlPrefix } from "../../../../config";
 import { profileSelector } from "../../../../store/reducers/profile";
@@ -8,14 +8,21 @@ import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
 import {
-  bpdEnrollUserToProgram,
   bpdDeleteUserFromProgram,
+  bpdEnrollUserToProgram,
   bpdOnboardingAcceptDeclaration,
   bpdOnboardingStart
 } from "../store/actions/onboarding";
-import { bpdPaymentMethodActivation } from "../store/actions/paymentMethods";
+import {
+  bpdPaymentMethodActivation,
+  bpdUpdatePaymentMethodActivation
+} from "../store/actions/paymentMethods";
 import { deleteCitizen, getCitizen, putEnrollCitizen } from "./networking";
 import { patchCitizenIban } from "./networking/patchCitizenIban";
+import {
+  bpdLoadPaymentMethodActivationSaga,
+  bpdUpdatePaymentMethodActivationSaga
+} from "./networking/paymentMethod";
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
@@ -64,7 +71,17 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     bpdBackendClient.updatePaymentMethod
   );
 
-  yield takeEvery(bpdPaymentMethodActivation.request);
+  // load bpd activation status for a specific payment method
+  yield takeEvery(
+    bpdPaymentMethodActivation.request,
+    bpdLoadPaymentMethodActivationSaga
+  );
+
+  // load bpd activation status for a specific payment method
+  yield takeEvery(
+    bpdUpdatePaymentMethodActivation.request,
+    bpdUpdatePaymentMethodActivationSaga
+  );
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
   yield takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);

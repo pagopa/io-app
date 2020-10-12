@@ -23,11 +23,16 @@ export type BpdPaymentMethodActivation = {
 };
 
 /**
- * The failure payload when trying to know the actual state of bpd on a payment method
+ * The failure payload when trying to know the actual state or update bpd on a payment method
  */
 type BpdPaymentMethodFailure = {
   hPan: HPan;
   error: Error;
+};
+
+type BpdUpdatePaymentMethodActivationPayload = {
+  hPan: HPan;
+  value: Exclude<BpdPmActivationStatus, "notActivable">;
 };
 
 /**
@@ -46,7 +51,11 @@ export const bpdUpdatePaymentMethodActivation = createAsyncAction(
   "BPD_PAYMENT_METHOD_ACTIVATION_UPDATE_REQUEST",
   "BPD_PAYMENT_METHOD_ACTIVATION_UPDATE_SUCCESS",
   "BPD_PAYMENT_METHOD_ACTIVATION_UPDATE_FAILURE"
-)<boolean, void, Error>();
+)<
+  BpdUpdatePaymentMethodActivationPayload,
+  BpdPaymentMethodActivation,
+  BpdPaymentMethodFailure
+>();
 
 export type BpdPaymentMethod =
   | ActionType<typeof bpdPaymentMethodActivation>

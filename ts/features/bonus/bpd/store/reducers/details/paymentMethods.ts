@@ -11,7 +11,8 @@ import {
 } from "../../../model/RemoteValue";
 import {
   BpdPaymentMethodActivation,
-  bpdPaymentMethodActivation
+  bpdPaymentMethodActivation,
+  bpdUpdatePaymentMethodActivation
 } from "../../actions/paymentMethods";
 
 export type BpdPaymentMethods = {
@@ -20,7 +21,7 @@ export type BpdPaymentMethods = {
   // represent the effective remote value of bpd activation status on the payment method
   actualValue: RemoteValue<BpdPaymentMethodActivation, Error>;
   // represent the remote request to update the activation status on the payment method
-  upsertValue: RemoteValue<void, Error>;
+  upsertValue: RemoteValue<null, Error>;
 };
 
 /**
@@ -79,6 +80,19 @@ export const bpdPaymentMethodsReducer = (
     case getType(bpdPaymentMethodActivation.failure):
       return updateBpdPaymentMethodEntry(action.payload.hPan, state, {
         actualValue: remoteError(action.payload.error)
+      });
+    case getType(bpdUpdatePaymentMethodActivation.request):
+      return updateBpdPaymentMethodEntry(action.payload.hPan, state, {
+        upsertValue: remoteLoading
+      });
+    case getType(bpdUpdatePaymentMethodActivation.success):
+      return updateBpdPaymentMethodEntry(action.payload.hPan, state, {
+        actualValue: remoteReady(action.payload),
+        upsertValue: remoteReady(null)
+      });
+    case getType(bpdUpdatePaymentMethodActivation.failure):
+      return updateBpdPaymentMethodEntry(action.payload.hPan, state, {
+        upsertValue: remoteError(action.payload.error)
       });
   }
 
