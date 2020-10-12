@@ -3,37 +3,32 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import {
+  remoteError,
   remoteLoading,
+  remoteReady,
   remoteUndefined,
   RemoteValue
 } from "../../../model/RemoteValue";
-import { bpdPaymentMethodActivation } from "../../actions/paymentMethods";
-
-enum EBpdActivationStatus {
-  // bpd is active on the payment method
-  ACTIVE = "ACTIVE",
-  // bpd is not active on the payment method
-  INACTIVE = "INACTIVE",
-  // bpd activate on the payment method by someone else, cannot be activated
-  NOT_ACTIVABLE = "NOT_ACTIVABLE"
-}
-
-type BpdActivationStatus = {
-  status: EBpdActivationStatus;
-  activationDate: Date;
-  deactivationDate: Date;
-};
+import {
+  BpdPaymentMethodActivation,
+  bpdPaymentMethodActivation
+} from "../../actions/paymentMethods";
 
 export type BpdPaymentMethods = {
   // the value used as key to group the information related to the payment method
   hPan: string;
   // represent the effective remote value of bpd activation status on the payment method
-  actualValue: RemoteValue<Error, BpdActivationStatus>;
+  actualValue: RemoteValue<BpdPaymentMethodActivation, Error>;
   // represent the remote request to update the activation status on the payment method
-  upsertValue: RemoteValue<Error, void>;
+  upsertValue: RemoteValue<void, Error>;
 };
 
-const readBpdPaymentMethodEntry = (
+/**
+ * Retrieve the existing BpdPaymentMethods (if any) or return a default one
+ * @param hPan
+ * @param data
+ */
+const retrieveBpdPaymentMethodEntry = (
   hPan: string,
   data: IndexedById<BpdPaymentMethods>
 ): BpdPaymentMethods =>
@@ -43,18 +38,35 @@ const readBpdPaymentMethodEntry = (
     upsertValue: remoteUndefined
   });
 
+const updateBpdPaymentMethodEntry = (
+  hPan: string,
+  data: IndexedById<BpdPaymentMethods>,
+  newEntry: Partial<BpdPaymentMethods>
+): IndexedById<BpdPaymentMethods> => {
+  const updatedEntry = {
+    ...retrieveBpdPaymentMethodEntry(hPan, data),
+    ...newEntry
+  };
+  return { ...data, [hPan]: updatedEntry };
+};
+
 export const bpdPaymentMethodsReducer = (
   state: IndexedById<BpdPaymentMethods> = {},
   action: Action
 ): IndexedById<BpdPaymentMethods> => {
   switch (action.type) {
-    case getType(bpdPaymentMethodActivation.request): {
-      const entry = {
-        ...readBpdPaymentMethodEntry(action.payload, state),
+    case getType(bpdPaymentMethodActivation.request):
+      return updateBpdPaymentMethodEntry(action.payload, state, {
         actualValue: remoteLoading
-      };
-      return { ...state, [action.payload]: entry };
-    }
+      });
+    case getType(bpdPaymentMethodActivation.success):
+      return updateBpdPaymentMethodEntry(action.payload.hPan, state, {
+        actualValue: remoteReady(action.payload)
+      });
+    case getType(bpdPaymentMethodActivation.failure):
+      return updateBpdPaymentMethodEntry(action.payload.hPan, state, {
+        actualValue: remoteError(action.payload.error)
+      });
   }
 
   return state;
