@@ -5,7 +5,6 @@ import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { NavigationState } from "react-navigation";
-import reactotron from "reactotron-react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
