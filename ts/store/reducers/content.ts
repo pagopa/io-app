@@ -5,6 +5,7 @@ import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { NavigationState } from "react-navigation";
+import reactotron from "reactotron-react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
@@ -232,11 +233,17 @@ export default function content(
       };
 
     case getType(contentMunicipalityLoad.request):
+      const codiceCatastale = state.municipality.codiceCatastale;
+      const municipalityData = state.municipality.data;
       return {
         ...state,
         municipality: {
-          codiceCatastale: pot.noneLoading,
-          data: pot.noneLoading
+          codiceCatastale: pot.isNone(codiceCatastale)
+            ? pot.noneLoading
+            : codiceCatastale,
+          data: pot.isNone(municipalityData)
+            ? pot.noneLoading
+            : municipalityData
         }
       };
 
