@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0-rc.10](https://github.com/pagopa/io-app/compare/1.7.0-rc.9...1.7.0-rc.10) (2020-10-09)
+
+
+### Features
+
+* [[#175165123](https://www.pivotaltracker.com/story/show/175165123)] add subtitle in change code item [#2278](https://github.com/pagopa/io-app/issues/2278) ([acd2b18](https://github.com/pagopa/io-app/commit/acd2b1891198eaa8556412d60013a6f66565db1c))
+* **Bonus Pagamenti Digitali:** [[#175011093](https://www.pivotaltracker.com/story/show/175011093),[#175011182](https://www.pivotaltracker.com/story/show/175011182)] Add bancomat entrypoint and stub navigation ([#2269](https://github.com/pagopa/io-app/issues/2269)) ([c98a4e8](https://github.com/pagopa/io-app/commit/c98a4e8efa3b9bdaf434b2cd86fa945f27361e49))
+* **Bonus Pagamenti Digitali:** [[#175011879](https://www.pivotaltracker.com/story/show/175011879)] Adds Bank selection and search screen ([#2255](https://github.com/pagopa/io-app/issues/2255)) ([369c77d](https://github.com/pagopa/io-app/commit/369c77dbd6a0c5a2103ca605cb6b660e104e7682)), closes [#175011121](https://www.pivotaltracker.com/story/show/175011121) [#175011121](https://www.pivotaltracker.com/story/show/175011121)
+* **Bonus Pagamenti Digitali:** [[#175011989](https://www.pivotaltracker.com/story/show/175011989),[#175012026](https://www.pivotaltracker.com/story/show/175012026),[#175012064](https://www.pivotaltracker.com/story/show/175012064)] Style for onboarding bancomat KO and loading screens ([#2276](https://github.com/pagopa/io-app/issues/2276)) ([bed6ab5](https://github.com/pagopa/io-app/commit/bed6ab589d085a800244cc850c7bdedd33c55299)), closes [#175011093](https://www.pivotaltracker.com/story/show/175011093)
+* **Bonus Pagamenti Digitali:** [[#175012295](https://www.pivotaltracker.com/story/show/175012295),[#175011188](https://www.pivotaltracker.com/story/show/175011188)] Onboarding bancomat workflow ([#2273](https://github.com/pagopa/io-app/issues/2273)) ([a9737be](https://github.com/pagopa/io-app/commit/a9737be5d0f0eec60cfe451701ea6fb368e433c3)), closes [#175011093](https://www.pivotaltracker.com/story/show/175011093)
+* **Bonus Pagamenti Digitali:** [[#175115845](https://www.pivotaltracker.com/story/show/175115845)] Add networking and store logic to support pans search ([#2263](https://github.com/pagopa/io-app/issues/2263)) ([cd92644](https://github.com/pagopa/io-app/commit/cd92644e197ae80ad54eb2b443fe7fb7f46720b1))
+* **Bonus Pagamenti Digitali:** [[#175142335](https://www.pivotaltracker.com/story/show/175142335)] Connects Search Bank screen with store and remote data ([#2266](https://github.com/pagopa/io-app/issues/2266)) ([cad3dde](https://github.com/pagopa/io-app/commit/cad3dde170ab1f9138b7f776a63a80a4e0d8e850)), closes [#175011121](https://www.pivotaltracker.com/story/show/175011121) [#175011121](https://www.pivotaltracker.com/story/show/175011121) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175011879](https://www.pivotaltracker.com/story/show/175011879)
+* **Bonus Pagamenti Digitali:** [[#175204419](https://www.pivotaltracker.com/story/show/175204419)] Connect search bank screen with onboarding bancomat business logic ([#2279](https://github.com/pagopa/io-app/issues/2279)) ([54ca830](https://github.com/pagopa/io-app/commit/54ca8300a39d3bb6469c0e14a5a85edd199b19e7)), closes [#175011121](https://www.pivotaltracker.com/story/show/175011121) [#175011121](https://www.pivotaltracker.com/story/show/175011121) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175142335](https://www.pivotaltracker.com/story/show/175142335) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175011879](https://www.pivotaltracker.com/story/show/175011879) [#175142335](https://www.pivotaltracker.com/story/show/175142335)
+
+
+### Bug Fixes
+
+* **Android:** [[#175090703](https://www.pivotaltracker.com/story/show/175090703)] CTA text not aligned in the Android Bonus_Request_Information screen ([#2270](https://github.com/pagopa/io-app/issues/2270)) ([c033df4](https://github.com/pagopa/io-app/commit/c033df40a866e6684cea157439a33097b50b0e2d))
+* [[#175132435](https://www.pivotaltracker.com/story/show/175132435)] update context help content for faqs ([#2275](https://github.com/pagopa/io-app/issues/2275)) ([f96be24](https://github.com/pagopa/io-app/commit/f96be24902fe616654bde49d4b857ac89b0b4c23))
+* **Bonus Pagamenti Digitali:** [[#175207263](https://www.pivotaltracker.com/story/show/175207263)] Iban update request has wrong token ([#2281](https://github.com/pagopa/io-app/issues/2281)) ([b2b6ae4](https://github.com/pagopa/io-app/commit/b2b6ae4df10e3082d61e5e2d0c1339f277dce536))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#175186882](https://www.pivotaltracker.com/story/show/175186882)] Sync code last PM API spec  ([#2274](https://github.com/pagopa/io-app/issues/2274)) ([c6a0f5f](https://github.com/pagopa/io-app/commit/c6a0f5fc78e68ca8ea9796793af12f4f28e14cab))
+
 ## [1.7.0-rc.9](https://github.com/pagopa/io-app/compare/1.7.0-rc.5...1.7.0-rc.9) (2020-10-08)
 
 

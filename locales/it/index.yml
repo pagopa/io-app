@@ -647,7 +647,8 @@ wallet:
       text2: " su cui hai un carta Pagobancomat attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
       text3: informativa sul trattamento dei dati personali
     bankName: Denominazione della banca
-    noName: Nome non trovato
+    noName: Nome non disponibile
+    loading: Carico la lista delle banche...
   accessibility:
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
@@ -655,6 +656,18 @@ wallet:
         read: Transazione
         unread: Transazione da leggere
       label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
+  onboarding:
+    bancomat:
+      headerTitle: "Aggiungi carta Bancomat"
+      koTimeout:
+        title: "Non siamo riusciti a contattare Bancomat."
+        body: "Ripova per favore"
+      koNotFound:
+        title: "Spiacenti, non abbiamo trovato nessuna carta"
+        body: "Non risultano Bancomat intestati a te"
+        chooseAnother: "Scegli un'altra banca"
+      loadingSearch:
+        title: "Stiamo chiedendo a Bancomat la lista delle tue carte\n\nAttendi qualche secondo"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
@@ -855,6 +868,8 @@ wallet:
       name: Postepay
     paypal:
       name: Paypal
+    bancomat:
+      name: Bancomat
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
@@ -1169,7 +1184,8 @@ identification:
     reset:
       button: Hai dimenticato il
       code: codice di sblocco
-      button_short: Reimposta il codice di sblocco
+      button_short: Modifica il codice di sblocco
+      subtitle: Imposta un nuovo codice di 6 cifre
     confirmValid: Codice di sblocco corretto
   unlock_screen:
     help:
