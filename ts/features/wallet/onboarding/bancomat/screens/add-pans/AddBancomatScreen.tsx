@@ -20,7 +20,7 @@ import I18n from "../../../../../../i18n";
 import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
 import { profileSelector } from "../../../../../../store/reducers/profile";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import { abiListSelector } from "../../store/reducers/abi";
+// import { abiListSelector } from "../../store/reducers/abi";
 import PanCardComponent from "./PanCardComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &

@@ -3006,7 +3006,7 @@ export const pans = [
     abi: "00001",
     cardNumber: "1234",
     cardPartialNumber: "11112222",
-    expiringDate: "2021-10-07",
+    expiringDate: new Date("2021-10-07"),
     productType: "PP",
     tokens: ["string"],
     validityState: "V"
@@ -3015,7 +3015,7 @@ export const pans = [
     abi: "00001",
     cardNumber: "5678",
     cardPartialNumber: "33332222",
-    expiringDate: "2021-12-07",
+    expiringDate: new Date("2021-10-07"),
     productType: "PP",
     tokens: ["string"],
     validityState: "V"
