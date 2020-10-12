@@ -1,8 +1,8 @@
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { fromNullable } from "fp-ts/lib/Option";
-import { IndexedById } from "../../../../../../store/helpers/indexer";
-import { Abi } from "../../../../../../../definitions/pagopa/bancomat/Abi";
+import { IndexedById } from "../../../../store/helpers/indexer";
+import { Abi } from "../../../../../definitions/pagopa/bancomat/Abi";
 import {
   isReady,
   remoteError,
@@ -10,10 +10,10 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../../bonus/bpd/model/RemoteValue";
-import { Action } from "../../../../../../store/actions/types";
-import { loadAbi } from "../actions";
-import { GlobalState } from "../../../../../../store/reducers/types";
+} from "../../../bonus/bpd/model/RemoteValue";
+import { Action } from "../../../../store/actions/types";
+import { loadAbi } from "../bancomat/store/actions";
+import { GlobalState } from "../../../../store/reducers/types";
 
 // plain object where the key is the abi and the value is the abi object
 export type AbiState = RemoteValue<IndexedById<Abi>, Error>;
@@ -48,7 +48,7 @@ const abiReducer = (
 
 export default abiReducer;
 
-const abiSelector = (state: GlobalState): AbiState => state.wallet.abi;
+export const abiSelector = (state: GlobalState): AbiState => state.wallet.abi;
 
 // return the abi list as array
 export const abiListSelector = createSelector<
