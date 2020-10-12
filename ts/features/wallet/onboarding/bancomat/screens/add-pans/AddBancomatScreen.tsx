@@ -30,9 +30,7 @@ type Props = ReturnType<typeof mapStateToProps> &
  * This screen is displayed when Bancomat are found and ready to be added in wallet
  * @constructor
  */
-export const AddBancomatScreen: React.FunctionComponent<Props> = (
-  props: Props
-) => {
+const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [abiLogo, setAbiLogo] = React.useState<string | undefined>();
 
@@ -105,7 +103,7 @@ export const AddBancomatScreen: React.FunctionComponent<Props> = (
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(
-            props.onCancel,
+            handleSkip,
             I18n.t("wallet.addBancomat.skip")
           )}
           rightButton={confirmButtonProps(

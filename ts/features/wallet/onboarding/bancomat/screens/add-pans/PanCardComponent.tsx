@@ -15,15 +15,13 @@ import { H5 } from "../../../../../../components/core/typography/H5";
 import customVariables from "../../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../../utils/dates";
 import { ImageDimensions, useImageResize } from "../hooks/useImageResize";
+import pagoBancomatLogo from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
 
 type Props = {
   abiLogo?: string;
   pan: Card;
   user: string;
 };
-
-const BANCOMAT_LOGO =
-  "https://www.drop-pos.shop/images/home/pagamenti/pagobancomat.png";
 
 const styles = StyleSheet.create({
   cardBox: {
@@ -100,12 +98,7 @@ const PanCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         </View>
         <View style={styles.bottomRow}>
           <Body>{props.user.toLocaleUpperCase()}</Body>
-          <Image
-            style={styles.bancomatLogo}
-            source={{
-              uri: BANCOMAT_LOGO
-            }}
-          />
+          <Image style={styles.bancomatLogo} source={pagoBancomatLogo} />
         </View>
       </View>
     </>
