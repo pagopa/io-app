@@ -1,0 +1,6 @@
+/**
+ * All the
+ *
+ */
+
+function* loadBpdPaymentMethodActivation() {}

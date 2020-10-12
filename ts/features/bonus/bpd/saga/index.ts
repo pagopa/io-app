@@ -1,6 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import * as pot from "italia-ts-commons/lib/pot";
-import { takeLatest, select } from "redux-saga/effects";
+import { takeEvery, takeLatest, select } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { bpdApiUrlPrefix } from "../../../../config";
 import { profileSelector } from "../../../../store/reducers/profile";
@@ -13,6 +13,7 @@ import {
   bpdOnboardingAcceptDeclaration,
   bpdOnboardingStart
 } from "../store/actions/onboarding";
+import { bpdPaymentMethodActivation } from "../store/actions/paymentMethods";
 import { deleteCitizen, getCitizen, putEnrollCitizen } from "./networking";
 import { patchCitizenIban } from "./networking/patchCitizenIban";
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
@@ -62,6 +63,8 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     patchCitizenIban,
     bpdBackendClient.updatePaymentMethod
   );
+
+  yield takeEvery(bpdPaymentMethodActivation.request);
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
   yield takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);

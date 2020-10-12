@@ -38,6 +38,12 @@ const retrieveBpdPaymentMethodEntry = (
     upsertValue: remoteUndefined
   });
 
+/**
+ * Update the entry in data with the updated newEntry
+ * @param hPan
+ * @param data
+ * @param newEntry
+ */
 const updateBpdPaymentMethodEntry = (
   hPan: string,
   data: IndexedById<BpdPaymentMethods>,
@@ -50,6 +56,13 @@ const updateBpdPaymentMethodEntry = (
   return { ...data, [hPan]: updatedEntry };
 };
 
+/**
+ * This reducer keep the activation state and the upsert request foreach payment method,
+ * grouped by hPan.
+ * Foreach hPan there is a {@link BpdPaymentMethods} containing the related state / upsert information.
+ * @param state
+ * @param action
+ */
 export const bpdPaymentMethodsReducer = (
   state: IndexedById<BpdPaymentMethods> = {},
   action: Action
