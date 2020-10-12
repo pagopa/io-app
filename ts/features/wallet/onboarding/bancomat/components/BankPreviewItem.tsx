@@ -1,4 +1,3 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { ListItem, View } from "native-base";
 import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
@@ -72,16 +71,19 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
 
   const onItemPress = () => props.bank.abi && props.onPress(props.bank.abi);
   const bankName = props.bank.name || I18n.t("wallet.searchAbi.noName");
+  const bankLogo = (
+    <View style={styles.boundaryImage}>
+      {props.bank.logoUrl && imageDimensions && (
+        <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
+      )}
+    </View>
+  );
 
   return props.inList ? (
     <ListItem style={styles.flexRow} onPress={onItemPress}>
       <View style={styles.listItem}>
         <View spacer={true} />
-        <View style={styles.boundaryImage}>
-          {props.bank.logoUrl && (
-            <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
-          )}
-        </View>
+        {bankLogo}
         <View spacer={true} small={true} />
         <LabelSmall color={"bluegrey"} weight={"Bold"}>
           {bankName}
@@ -96,11 +98,7 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
       style={styles.gridItem}
       onPress={onItemPress}
     >
-      <View style={styles.boundaryImage}>
-        {props.bank.logoUrl && (
-          <Image style={imageStyle} source={{ uri: props.bank.logoUrl }} />
-        )}
-      </View>
+      {bankLogo}
       <View spacer={true} />
       <LabelSmall color={"bluegrey"} weight={"Bold"}>
         {bankName}

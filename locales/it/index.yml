@@ -662,6 +662,18 @@ wallet:
         read: Transazione
         unread: Transazione da leggere
       label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
+  onboarding:
+    bancomat:
+      headerTitle: "Aggiungi carta Bancomat"
+      koTimeout:
+        title: "Non siamo riusciti a contattare Bancomat."
+        body: "Ripova per favore"
+      koNotFound:
+        title: "Spiacenti, non abbiamo trovato nessuna carta"
+        body: "Non risultano Bancomat intestati a te"
+        chooseAnother: "Scegli un'altra banca"
+      loadingSearch:
+        title: "Stiamo chiedendo a Bancomat la lista delle tue carte\n\nAttendi qualche secondo"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
@@ -862,6 +874,8 @@ wallet:
       name: Postepay
     paypal:
       name: Paypal
+    bancomat:
+      name: Bancomat
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
@@ -1176,7 +1190,8 @@ identification:
     reset:
       button: Hai dimenticato il
       code: codice di sblocco
-      button_short: Reimposta il codice di sblocco
+      button_short: Modifica il codice di sblocco
+      subtitle: Imposta un nuovo codice di 6 cifre
     confirmValid: Codice di sblocco corretto
   unlock_screen:
     help:
@@ -1330,7 +1345,7 @@ faq:
     title: "Quali metodi di pagamento puoi aggiungere?"
     content: !include faq/faq37.md
   38:
-    title: "Riepilogo della transazione e ricevuta del pagamento sono la stessa cosa?"
+    title: "Ricevuta dell’operazione e quietanza liberatoria sono la stessa cosa?"
     content: !include faq/faq38.md
   39:
     title: "Cos'è il codice identificativo della transazione?"
@@ -1482,7 +1497,7 @@ bonus:
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:
-      requestBonus: Richiedi
+      requestBonus: Richiedi Bonus
       cancelRequest: Annulla la richiesta
       qrCode: QR code
       copyCode: Copia codice

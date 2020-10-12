@@ -40,14 +40,14 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
   );
   const [isSearchStarted, setIsSearchStarted] = React.useState(false);
 
-  const performSearch = (text: string) => {
+  const performSearch = (text: string, bankList: ReadonlyArray<Abi>) => {
     if (text.length === 0) {
       setFilteredList([]);
       setIsSearchStarted(false);
       return;
     }
     setIsSearchStarted(true);
-    const resultList = props.bankList.filter(
+    const resultList = bankList.filter(
       bank =>
         (bank.abi && bank.abi.toLowerCase().indexOf(text.toLowerCase()) > -1) ||
         (bank.name && bank.name.toLowerCase().indexOf(text.toLowerCase()) > -1)
@@ -57,14 +57,15 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
   const debounceRef = React.useRef(debounce(performSearch, 300));
 
   React.useEffect(() => {
-    debounceRef.current(searchText);
-  }, [searchText]);
+    debounceRef.current(searchText, props.bankList);
+  }, [searchText, props.bankList]);
 
   const handleFilter = (text: string) => {
     setSearchText(text);
   };
 
-  const keyExtractor = (bank: any): string => bank.abi;
+  const keyExtractor = (bank: Abi, index: number): string =>
+    bank.abi ? bank.abi : `abi_item_${index}`;
 
   const renderListItem = (isList: boolean) => (
     info: ListRenderItemInfo<Abi>
