@@ -21,7 +21,7 @@ import {
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromPredicate } from "fp-ts/lib/Option";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -64,11 +64,14 @@ import {
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
 import {
+  addWalletsBancomatCardUsingPOSTDefaultDecoder,
+  AddWalletsBancomatCardUsingPOSTT,
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT
 } from "../../definitions/pagopa/bancomat/requestTypes";
+import { BancomatCardsRequest } from "../../definitions/pagopa/bancomat/BancomatCardsRequest";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -373,7 +376,7 @@ const deleteWallet: DeleteWalletUsingDELETET = {
 
 const getAbi: GetAbiListUsingGETT = {
   method: "get",
-  url: () => `/v1/bancomat/abi?size=10000`, // FIXME to retrieve whole list
+  url: () => `/v1/bancomat/abi?size=10000`, // FIXME needed to retrieve whole list
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getAbiListUsingGETDefaultDecoder()
@@ -381,9 +384,10 @@ const getAbi: GetAbiListUsingGETT = {
 
 const getPans: GetPansUsingGETT = {
   method: "get",
-  // TODO check abi length === 5 if it is defined
   url: ({ abi }) => {
-    const abiParameter = fromNullable(abi)
+    const isAvalidAbi = (abi: string | undefined): boolean =>
+      abi !== undefined && abi.length >= 5;
+    const abiParameter = fromPredicate(isAvalidAbi)(abi)
       .map(a => `?abi=${a}`)
       .getOrElse("");
     return `/v1/bancomat/pans${abiParameter}`;
@@ -391,6 +395,15 @@ const getPans: GetPansUsingGETT = {
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPansUsingGETDefaultDecoder()
+};
+
+const addPans: AddWalletsBancomatCardUsingPOSTT = {
+  method: "post",
+  url: () => `/v1/bancomat/add-wallets`,
+  query: () => ({}),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  body: p => JSON.stringify(p.bancomatCardsRequest),
+  response_decoder: addWalletsBancomatCardUsingPOSTDefaultDecoder()
 };
 
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
@@ -551,7 +564,11 @@ export function PaymentManagerClient(
     getPans: (abi?: string) =>
       flip(
         withPaymentManagerToken(createFetchRequestForApi(getPans, altOptions))
-      )({ abi })
+      )({ abi }),
+    addPans: (cards: BancomatCardsRequest) =>
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(addPans, altOptions))
+      )({ bancomatCardsRequest: cards })
   };
 }
 

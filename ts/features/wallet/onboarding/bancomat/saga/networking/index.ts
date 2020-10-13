@@ -7,6 +7,7 @@ import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { loadAbi, searchUserPans } from "../../store/actions";
+import { addWalletBancomatPans } from "../../../../../../store/actions/wallet/wallets";
 
 // load all bancomat abi
 export function* handleLoadAbi(
@@ -91,5 +92,36 @@ export function* handleLoadPans(
       );
     }
     return yield put(searchUserPans.failure({ kind: "generic", value: e }));
+  }
+}
+
+// add pans to wallet
+export function* handleAddPans(
+  addPans: ReturnType<typeof PaymentManagerClient>["addPans"],
+  sessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof addWalletBancomatPans.request>
+) {
+  try {
+    const addPansWithRefresh = sessionManager.withRefresh(
+      addPans(action.payload)
+    );
+    const addPansWithRefreshResult: SagaCallReturnType<typeof addPansWithRefresh> = yield call(
+      addPansWithRefresh
+    );
+    if (addPansWithRefreshResult.isRight()) {
+      if (addPansWithRefreshResult.value.status === 200) {
+        yield put(
+          addWalletBancomatPans.success(addPansWithRefreshResult.value.value)
+        );
+      } else {
+        throw new Error(
+          `response status ${addPansWithRefreshResult.value.status}`
+        );
+      }
+    } else {
+      throw new Error(readableReport(addPansWithRefreshResult.value));
+    }
+  } catch (e) {
+    yield put(addWalletBancomatPans.failure(e));
   }
 }

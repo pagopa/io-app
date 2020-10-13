@@ -1,4 +1,8 @@
-import { ActionType, createStandardAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 
 import {
   CreditCard,
@@ -10,6 +14,8 @@ import {
   WalletResponse
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
+import { BancomatCardsRequest } from "../../../../definitions/pagopa/bancomat/BancomatCardsRequest";
+import { WalletsV2Response } from "../../../../definitions/pagopa/bancomat/WalletsV2Response";
 
 export const fetchWalletsRequest = createStandardAction(
   "WALLETS_LOAD_REQUEST"
@@ -125,6 +131,15 @@ export const runStartOrResumeAddCreditCardSaga = createStandardAction(
   "RUN_ADD_CREDIT_CARD_SAGA"
 )<StartOrResumeAddCreditCardSagaPayload>();
 
+/**
+ * search for user's bancomat pans
+ */
+export const addWalletBancomatPans = createAsyncAction(
+  "WALLET_BANCOMAT_ADD_PANS_REQUEST",
+  "WALLET_BANCOMAT_ADD_PANS_SUCCESS",
+  "WALLET_BANCOMAT_ADD_PANS_FAILURE"
+)<BancomatCardsRequest, WalletsV2Response, Error>();
+
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
   | ActionType<typeof fetchWalletsSuccess>
@@ -146,4 +161,5 @@ export type WalletsActions =
   | ActionType<typeof payCreditCardVerificationFailure>
   | ActionType<typeof creditCardCheckout3dsRequest>
   | ActionType<typeof creditCardCheckout3dsSuccess>
-  | ActionType<typeof setWalletSessionEnabled>;
+  | ActionType<typeof setWalletSessionEnabled>
+  | ActionType<typeof addWalletBancomatPans>;
