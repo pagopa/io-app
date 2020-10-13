@@ -631,9 +631,10 @@ wallet:
   addBancomat:
     title: "Add bancomat {{current}} of {{length}}"
     screenTitle: "Do you want to add this card?"
-    bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
-    bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
-    skip: Salta
+    bodySingular: "We found 1 card headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
+    bodyPlural: "We found {{number}} cards headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
+    skip: Skip
+    add: Add
   accessibility:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:

@@ -11,7 +11,10 @@ import {
   onboardingBancomatChosenPanError,
   onboardingBancomatChosenPanLoading
 } from "../../store/reducers/addingPans";
-import { walletAddSelectedBancomat } from "../../store/actions";
+import {
+  walletAddBancomatCompleted,
+  walletAddSelectedBancomat
+} from "../../store/actions";
 import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 import AddBancomatComponent from "./AddBancomatComponent";
 import LoadAddBancomatComponent from "./LoadAddBancomatComponent";
@@ -26,18 +29,35 @@ type Props = ReturnType<typeof mapStateToProps> &
 const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
-  React.useEffect(() => {
-    // If we reached the last pan of our list exit the flow and complete the saga
-    if (currentIndex === props.pans.length - 1 && !props.loading) {
-      props.onContinue();
-    }
-  }, [props.loading, currentIndex]);
+  const firstRender = React.useRef(true);
 
-  const skipToNextPan = () => setCurrentIndex(currentIndex + 1);
+  React.useEffect(() => {
+    if (firstRender.current) {
+      // eslint-disable-next-line functional/immutable-data
+      firstRender.current = false;
+      return;
+    }
+    const nextStep = currentIndex + 1;
+    // If we reached the last pan of our list exit the flow and complete the saga
+    if (!props.loading) {
+      if (nextStep >= props.pans.length) {
+        props.onContinue();
+      } else {
+        setCurrentIndex(nextStep);
+      }
+    }
+  }, [props.loading]);
+
+  const skipToNextPan = () => {
+    if (currentIndex === props.pans.length - 1) {
+      props.onContinue();
+      return;
+    }
+    setCurrentIndex(currentIndex + 1);
+  };
 
   const handleOnContinue = () => {
     props.addBancomat(props.pans[currentIndex]);
-    skipToNextPan();
   };
 
   return props.loading ? (
@@ -55,10 +75,9 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => dispatch(navigateBack()),
   addBancomat: (pan: PatchedCard) =>
     dispatch(walletAddSelectedBancomat.request(pan)),
-  onContinue: () => null
+  onContinue: () => dispatch(walletAddBancomatCompleted())
 });
 
 const mapStateToProps = (state: GlobalState) => {
