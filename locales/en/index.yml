@@ -63,6 +63,7 @@ global:
     exit: Exit
     saveSelection: Save the selection
     search: Search
+    skip: "Skip"
   navigator:
     messages: messages
     wallet: payments
@@ -619,6 +620,15 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Payments
+  searchAbi:
+    title: Add Bancomat card
+    description:
+      text1: If you prefer, you can indicate the bank
+      text2: " on which you have an active Pagobancomat card. Otherwise we will look for all the cards associated with you: by continuing you accept the "
+      text3: information on the processing of personal data
+    bankName: Name of the bank
+    noName: Name unavailable
+    loading: Loading bank list...
   accessibility:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
@@ -626,6 +636,18 @@ wallet:
         read: Transaction
         unread: Unread transaction
       label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} at {{hours}} with reason {{reason}}. Activate for the full detail"
+  onboarding:
+    bancomat:
+      headerTitle: "Add Bancomat card"
+      koTimeout:
+        title: "We were unable to contact Bancomat."
+        body: "Please retry"
+      koNotFound:
+        title: "Sorry, we couldn't find any cards"
+        body: "There are no Bancomat registered to you"
+        chooseAnother: "Choose another bank"
+      loadingSearch:
+        title: "We are asking Bancomat for the list of your cards\n\nPlease wait"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
@@ -653,8 +675,8 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
-    successful: Card successfully deleted
-    failed: The card could not be deleted
+    successful: Card successfully removed
+    failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
   newPaymentMethod:
     add: add
@@ -749,7 +771,7 @@ wallet:
     object: Reason
     date: Date and Time
     iuv: IUV code
-    entityCode: Entity fiscal code
+    entityCode: Creditor Entity Fiscal Code
     fee: Fee
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
@@ -768,7 +790,7 @@ wallet:
     info: which allow us to identify the transaction
     link: Where are they?
     noticeCode: Notice Code
-    entityCode: Entity Fiscal Code
+    entityCode: Creditor Entity Fiscal Code
     amount: Amount (€)
     proceed: Proceed with the transaction
     contextualHelpTitle: Manually insert notice
@@ -821,6 +843,8 @@ wallet:
       name: Postepay
     paypal:
       name: Paypal
+    bancomat:
+      name: Bancomat
     notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
@@ -891,7 +915,7 @@ cardComponent:
   setFavourite: Set as favourite
   unsetFavourite: Remove from favourites
   deleteTitle: Do you want to proceed?
-  deleteMsg: This will delete the payment method
+  deleteMsg: This payment method will be removed
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
@@ -1129,9 +1153,8 @@ identification:
     reset:
       button: Did you forget the
       code: unlock code
-      button_short: Reset unlock code
-      tip: To reset your unlock code you will have to log in again.
-      tip_short: You will have to login again.
+      button_short: Change the unlock code
+      subtitle: Set a new 6-digit code
     confirmValid: Correct unlock code
   unlock_screen:
     help:
@@ -1419,6 +1442,7 @@ bonus:
     code: Code
     uniqueCode: Unique code
     requestedAt: Requested on
+    consumedAt: Redeemed on
     advice: 'By tapping on "Request the Bonus Vacanze" you declare that you have read and understood the '
     status: Status
     name: Bonus Vacanze
@@ -1436,7 +1460,7 @@ bonus:
     checkBonusEligibility:
       loading: Checking bonus eligibility
     cta:
-      requestBonus: Request
+      requestBonus: Request Bonus
       cancelRequest: Cancel the request
       qrCode: QR code
       copyCode: Code copy
@@ -1539,6 +1563,8 @@ bonus:
   bpd:
     title: Cashback Digital Payments
     onboarding:
+      loadingActivationStatus:
+        title: Loading activation status
       declaration:
         header: In order to activate the cashback you must declare
         conditions:
@@ -1550,6 +1576,34 @@ bonus:
         disclaimer:
           normal: This self-declaration is made pursuant to
           link: dpr 28 december 2000 n. 445 art 46 and 47
+      loadingActivateBpd:
+        title: "We are activating the cashback"
+        body: "Please wait."
+      noPaymentMethod:
+        title: "Add at least one payment method"
+        body: "To start collecting points you have to add your favorite electronic payment methods to IO: today credit cards, prepaid, rechargeable cards, debit cards, bancomat and apps and other digital tools are supported.\n\n
+        In the future, cashback will support other tools: you can add new payment methods to IO whenever you want and activate the collection of points on each!"
+    iban:
+      iban: "IBAN"
+      edit: "Change IBAN"
+      insertion:
+        title: "IBAN for accreditation"
+        body1: "Indicate here the IBAN of your current account, on which you want to receive credit once the ranking has been consolidated."
+        body2: "The IBAN will be checked to find out if the relevant current account is in your name. You can also enter it at a later time."
+      koWrong:
+        title: "Incorrect IBAN"
+        text1: "The IBAN you entered"
+        text2: "is not correct: check it please!"
+      koCannotVerify:
+        title: "Your IBAN could not be verified"
+        text1: "If you are sure the IBAN"
+        text2: "identify the account on which you want to receive credit, you can proceed."
+      koNotOwned:
+        title: "The current account is not in your name"
+        text1: "The IBAN you entered"
+        text2: "identify a current account that is not registered in your tax code: are you sure you want to use this IBAN?"
+      loading:
+        "We are verifying your IBAN\n\nPlease wait."
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

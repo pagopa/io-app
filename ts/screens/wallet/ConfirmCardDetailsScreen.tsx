@@ -244,7 +244,6 @@ const mapDispatchToProps = (
   const navigateToNextScreen = (maybeWallet: Option<Wallet>) => {
     const inPayment = props.navigation.getParam("inPayment");
     if (inPayment.isSome()) {
-      showToast(I18n.t("wallet.newPaymentMethod.successful"), "success");
       const { rptId, initialAmount, verifica, idPayment } = inPayment.value;
       dispatchPickPspOrConfirm(dispatch)(
         rptId,
@@ -296,7 +295,10 @@ const mapDispatchToProps = (
         runStartOrResumeAddCreditCardSaga({
           creditCard,
           setAsFavorite,
-          onSuccess: addedWallet => navigateToNextScreen(some(addedWallet)),
+          onSuccess: addedWallet => {
+            showToast(I18n.t("wallet.newPaymentMethod.successful"), "success");
+            navigateToNextScreen(some(addedWallet));
+          },
           onFailure: error => {
             showToast(
               I18n.t(

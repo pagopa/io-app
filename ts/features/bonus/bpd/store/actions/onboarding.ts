@@ -3,7 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { CitizenResource } from "../../../../../../definitions/bpd/citizen/CitizenResource";
+import { BpdActivationPayload } from "./details";
 
 /**
  * Enroll the user to the bpd program
@@ -13,7 +13,16 @@ export const bpdEnrollUserToProgram = createAsyncAction(
   "BPD_ENROLL_REQUEST",
   "BPD_ENROLL_SUCCESS",
   "BPD_ENROLL_FAILURE"
-)<void, CitizenResource, Error>();
+)<void, BpdActivationPayload, Error>();
+
+/**
+ * delete user from bpd program
+ */
+export const bpdDeleteUserFromProgram = createAsyncAction(
+  "BPD_DELETE_REQUEST",
+  "BPD_DELETE_SUCCESS",
+  "BPD_DELETE_FAILURE"
+)<void, void, Error>();
 
 /**
  * Start the onboarding workflow
@@ -48,4 +57,5 @@ export type BpdOnboardingActions =
   | ActionType<typeof bpdOnboardingStart>
   | ActionType<typeof bpdUserActivate>
   | ActionType<typeof bpdOnboardingAcceptDeclaration>
-  | ActionType<typeof bpdOnboardingCancel>;
+  | ActionType<typeof bpdOnboardingCancel>
+  | ActionType<typeof bpdDeleteUserFromProgram>;

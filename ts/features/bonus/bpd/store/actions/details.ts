@@ -1,8 +1,7 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { CitizenResource } from "../../../../../../definitions/bpd/citizen/CitizenResource";
 
 /**
- * This file contains all the action related to the bpd details like the activation status, iban, value, etc.
+ * This file contains all the action related to the bpd details like the activation status, value, etc.
  */
 
 // TODO change payload for loadBpdActivationStatus with this one
@@ -18,6 +17,6 @@ export const bpdLoadActivationStatus = createAsyncAction(
   "BPD_LOAD_ACTIVATION_STATUS_REQUEST",
   "BPD_LOAD_ACTIVATION_STATUS_SUCCESS",
   "BPD_LOAD_ACTIVATION_STATUS_FAILURE"
-)<void, CitizenResource, Error>();
+)<void, BpdActivationPayload, Error>();
 
 export type BpdDetailsActions = ActionType<typeof bpdLoadActivationStatus>;

@@ -12,8 +12,8 @@ import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import { getCTA, isExpired, paymentExpirationInfo } from "../../utils/messages";
 import { Dispatch } from "../../store/actions/types";
+import ExtractedCTABar from "../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
-import MessageNestedCTABar from "./MessageNestedCTABar";
 import PaymentButton from "./PaymentButton";
 
 type OwnProps = {
@@ -103,7 +103,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     const maybeCtas = getCTA(this.props.message, this.props.serviceMetadata);
     const footer2 = maybeCtas.isSome() && (
       <View footer={true} style={styles.row}>
-        <MessageNestedCTABar
+        <ExtractedCTABar
           ctas={maybeCtas.value}
           xsmall={false}
           dispatch={this.props.dispatch}

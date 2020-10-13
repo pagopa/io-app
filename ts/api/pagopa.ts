@@ -21,6 +21,7 @@ import {
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
+import { fromNullable } from "fp-ts/lib/Option";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -62,6 +63,13 @@ import {
 } from "../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
+import { PatchedCards } from "../features/bonus/bpd/api/patchedTypes";
+import {
+  getAbiListUsingGETDefaultDecoder,
+  GetAbiListUsingGETT,
+  getPansUsingGETDecoder,
+  GetPansUsingGETT
+} from "../../definitions/pagopa/bancomat/requestTypes";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -111,13 +119,14 @@ type GetTransactionsUsingGETTExtra = MapResponseType<
 const ParamAuthorizationBearerHeader = <P extends { readonly Bearer: string }>(
   p: P
 ): RequestHeaders<"Authorization"> => ({
-    Authorization: `Bearer ${p.Bearer}`
-  });
+  Authorization: `Bearer ${p.Bearer}`
+});
 
 const ParamAuthorizationBearerHeaderProducer = <
   P extends { readonly Bearer: string }
->(): RequestHeaderProducer<P, "Authorization"> => (p: P): RequestHeaders<"Authorization"> =>
-    ParamAuthorizationBearerHeader(p);
+>(): RequestHeaderProducer<P, "Authorization"> => (
+  p: P
+): RequestHeaders<"Authorization"> => ParamAuthorizationBearerHeader(p);
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 const transactionsSliceLength = 10;
@@ -363,6 +372,34 @@ const deleteWallet: DeleteWalletUsingDELETET = {
   response_decoder: constantEmptyDecoder
 };
 
+const getAbi: GetAbiListUsingGETT = {
+  method: "get",
+  url: () => `/v1/bancomat/abi?size=10000`, // FIXME to retrieve whole list
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getAbiListUsingGETDefaultDecoder()
+};
+
+// map the response 200 with a patched codec
+type GetPansUsingGetTExtra = MapResponseType<
+  GetPansUsingGETT,
+  200,
+  PatchedCards
+>;
+const getPans: GetPansUsingGetTExtra = {
+  method: "get",
+  // TODO check abi length === 5 if it is defined
+  url: ({ abi }) => {
+    const abiParameter = fromNullable(abi)
+      .map(a => `?abi=${a}`)
+      .getOrElse("");
+    return `/v1/bancomat/pans${abiParameter}`;
+  },
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getPansUsingGETDecoder(PatchedCards)
+};
+
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
@@ -514,7 +551,14 @@ export function PaymentManagerClient(
         withPaymentManagerToken(createFetchRequestForApi(deleteWallet, options))
       )({
         id
-      })
+      }),
+    getAbi: flip(
+      withPaymentManagerToken(createFetchRequestForApi(getAbi, altOptions))
+    )({}),
+    getPans: (abi?: string) =>
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(getPans, altOptions))
+      )({ abi })
   };
 }
 

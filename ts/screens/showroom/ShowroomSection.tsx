@@ -14,9 +14,9 @@ type OwnProps = {
 };
 
 export const ShowroomSection: React.FunctionComponent<OwnProps> = props => (
-    <View style={styles.alignCenter}>
-      <H1>{props.title}</H1>
-      <View spacer={true} />
-      {props.children}
-    </View>
-  );
+  <View style={styles.alignCenter}>
+    <H1>{props.title}</H1>
+    <View spacer={true} />
+    {props.children}
+  </View>
+);

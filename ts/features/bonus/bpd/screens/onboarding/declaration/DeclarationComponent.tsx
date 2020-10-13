@@ -63,9 +63,7 @@ const generateRequiredConditions = (
     <DeclarationEntry
       text={condition}
       key={index}
-      onValueChange={newValue =>
-        dispatch(newValue ? "increment" : "decrement")
-      }
+      onValueChange={newValue => dispatch(newValue ? "increment" : "decrement")}
     />
   ));
 
@@ -122,7 +120,7 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
           rightDisabled={state !== requiredConditions.length}
           onCancel={props.onCancel}
           onRight={props.onConfirm}
-          title={I18n.t("global.buttons.continue")}
+          rightText={I18n.t("global.buttons.continue")}
         />
       </SafeAreaView>
     </BaseScreenComponent>

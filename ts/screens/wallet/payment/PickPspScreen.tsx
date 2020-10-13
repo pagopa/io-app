@@ -179,27 +179,27 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-    loadAllPsp: (idWallet: string, idPayment: string) => {
-      dispatch(
-        paymentFetchAllPspsForPaymentId.request({
-          idWallet,
-          idPayment
-        })
-      );
-    },
-    pickPsp: (idPsp: number, psps: ReadonlyArray<Psp>) =>
-      dispatchUpdatePspForWalletAndConfirm(dispatch)(
-        idPsp,
-        props.navigation.getParam("wallet"),
-        props.navigation.getParam("rptId"),
-        props.navigation.getParam("initialAmount"),
-        props.navigation.getParam("verifica"),
-        props.navigation.getParam("idPayment"),
-        psps,
-        () =>
-          showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger")
-      )
-  });
+  loadAllPsp: (idWallet: string, idPayment: string) => {
+    dispatch(
+      paymentFetchAllPspsForPaymentId.request({
+        idWallet,
+        idPayment
+      })
+    );
+  },
+  pickPsp: (idPsp: number, psps: ReadonlyArray<Psp>) =>
+    dispatchUpdatePspForWalletAndConfirm(dispatch)(
+      idPsp,
+      props.navigation.getParam("wallet"),
+      props.navigation.getParam("rptId"),
+      props.navigation.getParam("initialAmount"),
+      props.navigation.getParam("verifica"),
+      props.navigation.getParam("idPayment"),
+      psps,
+      () =>
+        showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger")
+    )
+});
 
 export default connect(
   mapStateToProps,

@@ -66,13 +66,6 @@ const confirmAlertSubtitle = {
   DELETE: I18n.t("profile.main.privacy.removeAccount.alert.confirmSubtitle")
 };
 
-const needValidatedEmailTitle = I18n.t(
-  "profile.alerts.emailNotValidated.title"
-);
-const needValidatedEmailSubtitle = I18n.t(
-  "profile.alerts.emailNotValidated.subtitle"
-);
-
 class PrivacyMainScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -129,18 +122,6 @@ class PrivacyMainScreen extends React.Component<Props, State> {
     Alert.alert(confirmAlertTitle[choice], confirmAlertSubtitle[choice]);
   };
 
-  // Handle the tap on Download or Delete data.
-  // Check if the mail is validated before to send any backend request.
-  private handleDownloadOrDeletePress = (
-    choice: UserDataProcessingChoiceEnum
-  ): void => {
-    if (!this.props.isEmailValidated) {
-      Alert.alert(needValidatedEmailTitle, needValidatedEmailSubtitle);
-      return;
-    }
-    this.props.loadUserDataRequest(choice);
-  };
-
   public componentDidUpdate(prevProps: Props) {
     // If the new request submission fails, show an alert and hide the 'in progress' badge
     // if it is the get request (prev prop is pot.none), check if show the alert to submit the request
@@ -180,18 +161,17 @@ class PrivacyMainScreen extends React.Component<Props, State> {
 
   private canBeBadgeRendered = (
     choice: UserDataProcessingChoiceEnum
-  ): boolean => (
-      !pot.isError(this.props.userDataProcessing[choice]) &&
-      pot.getOrElse(
-        pot.map(
-          this.props.userDataProcessing[choice],
-          v =>
-            v !== undefined &&
-            v.status !== UserDataProcessingStatusEnum.CLOSED &&
-            v.status !== UserDataProcessingStatusEnum.ABORTED
-        ),
-        false
-      )
+  ): boolean =>
+    !pot.isError(this.props.userDataProcessing[choice]) &&
+    pot.getOrElse(
+      pot.map(
+        this.props.userDataProcessing[choice],
+        v =>
+          v !== undefined &&
+          v.status !== UserDataProcessingStatusEnum.CLOSED &&
+          v.status !== UserDataProcessingStatusEnum.ABORTED
+      ),
+      false
     );
 
   public render() {
@@ -231,7 +211,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               )}
               onPress={() =>
                 this.setState({ requestProcess: true }, () =>
-                  this.handleDownloadOrDeletePress(
+                  this.props.loadUserDataRequest(
                     UserDataProcessingChoiceEnum.DELETE
                   )
                 )
@@ -250,7 +230,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               subTitle={I18n.t("profile.main.privacy.exportData.description")}
               onPress={() =>
                 this.setState({ requestProcess: true }, () =>
-                  this.handleDownloadOrDeletePress(
+                  this.props.loadUserDataRequest(
                     UserDataProcessingChoiceEnum.DOWNLOAD
                   )
                 )

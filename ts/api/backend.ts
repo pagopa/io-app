@@ -118,8 +118,8 @@ function ParamAuthorizationBearerHeaderProducer<
   P extends { readonly Bearer: string }
 >(): RequestHeaderProducer<P, "Authorization"> {
   return (p: P): RequestHeaders<"Authorization"> => ({
-      Authorization: `Bearer ${p.Bearer}`
-    });
+    Authorization: `Bearer ${p.Bearer}`
+  });
 }
 
 //
@@ -206,7 +206,8 @@ export function BackendClient(
 
   // Custom decoder until we fix the problem in the io-utils generator
   // https://www.pivotaltracker.com/story/show/169915207
-  const startEmailValidationCustomDecoder = () => r.composeResponseDecoders(
+  const startEmailValidationCustomDecoder = () =>
+    r.composeResponseDecoders(
       r.composeResponseDecoders(
         r.composeResponseDecoders(
           r.composeResponseDecoders(

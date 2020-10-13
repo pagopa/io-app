@@ -24,10 +24,10 @@ type Props = Readonly<{
 }>;
 
 export const EmptyListComponent = (props: Props) => (
-    <View style={styles.view}>
-      <View spacer={true} />
-      <Image source={props.image} />
-      <Text style={styles.title}>{props.title}</Text>
-      {props.subtitle && <Text style={styles.subtitle}>{props.subtitle}</Text>}
-    </View>
-  );
+  <View style={styles.view}>
+    <View spacer={true} />
+    <Image source={props.image} />
+    <Text style={styles.title}>{props.title}</Text>
+    {props.subtitle && <Text style={styles.subtitle}>{props.subtitle}</Text>}
+  </View>
+);
