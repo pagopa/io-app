@@ -9,17 +9,17 @@ import {
 } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import I18n from "../../../../../../i18n";
-import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H5 } from "../../../../../../components/core/typography/H5";
 import customVariables from "../../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../../utils/dates";
 import { ImageDimensions, useImageResize } from "../hooks/useImageResize";
 import pagoBancomatLogo from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
+import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 
 type Props = {
   abiLogo?: string;
-  pan: Card;
+  pan: PatchedCard;
   user: string;
 };
 
