@@ -237,12 +237,8 @@ export default function content(
       return {
         ...state,
         municipality: {
-          codiceCatastale: pot.isNone(codiceCatastale)
-            ? pot.noneLoading
-            : codiceCatastale,
-          data: pot.isNone(municipalityData)
-            ? pot.noneLoading
-            : municipalityData
+          codiceCatastale: pot.toLoading(codiceCatastale),
+          data: pot.toLoading(municipalityData)
         }
       };
 
