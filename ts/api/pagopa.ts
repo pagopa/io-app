@@ -21,7 +21,7 @@ import {
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
-import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -386,9 +386,6 @@ const getPans: GetPansUsingGETT = {
   method: "get",
   url: ({ abi }) => {
     const abiParameter = fromNullable(abi)
-      // check abi length
-      // see https://it.wikipedia.org/wiki/Coordinate_bancarie#:~:text=ABI%20(5%20cifre),caratteri%20sia%20inferiore%20a%2012)
-      .chain(fromPredicate((abi: string): boolean => abi.length >= 5))
       .map(a => `?abi=${a}`)
       .getOrElse("");
     return `/v1/bancomat/pans${abiParameter}`;
