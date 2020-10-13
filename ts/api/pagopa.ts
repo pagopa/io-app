@@ -376,7 +376,7 @@ const deleteWallet: DeleteWalletUsingDELETET = {
 
 const getAbi: GetAbiListUsingGETT = {
   method: "get",
-  url: () => `/v1/bancomat/abi?size=10000`, // FIXME needed to retrieve whole list
+  url: () => `/v1/bancomat/abi?size=10000`, // FIXME needed to retrieve the whole bank list
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getAbiListUsingGETDefaultDecoder()
