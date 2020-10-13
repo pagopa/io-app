@@ -64,7 +64,8 @@ import {
   loadProfile,
   watchProfile,
   watchProfileRefreshRequestsSaga,
-  watchProfileUpsertRequestsSaga
+  watchProfileUpsertRequestsSaga,
+  handleRemoveAccount
 } from "./profile";
 import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
@@ -246,6 +247,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Start watching for requests of checkSession
   yield fork(watchCheckSessionSaga, backendClient.getSession);
 
+  // Sart watching for request of remove profile
+  yield fork(handleRemoveAccount);
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
 

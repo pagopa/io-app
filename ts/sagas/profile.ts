@@ -4,7 +4,14 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
+import {
+  call,
+  Effect,
+  put,
+  select,
+  takeEvery,
+  takeLatest
+} from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -13,6 +20,7 @@ import { tosVersion } from "../config";
 import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
 import {
+  navigateToRemoveAccountDetails,
   profileLoadFailure,
   profileLoadRequest,
   profileLoadSuccess,
@@ -29,6 +37,8 @@ import {
 import { Locales } from "../../locales/locales";
 import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
+import ROUTES from "../navigation/routes";
+import reactotron from "reactotron-react-native";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -257,4 +267,9 @@ export function* watchProfile(
   );
   // check the loaded profile
   yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
+}
+
+export function* handleRemoveAccount() {
+  reactotron.log("entra");
+  yield put(navigateToRemoveAccountDetails());
 }
