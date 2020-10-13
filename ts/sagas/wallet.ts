@@ -71,7 +71,7 @@ import {
   runPollTransactionSaga
 } from "../store/actions/wallet/transactions";
 import {
-  addWalletBancomatPans,
+  addWalletBancomatPan,
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
@@ -720,9 +720,9 @@ export function* watchWalletSaga(
       pmSessionManager
     );
 
-    // watch for add pans request
+    // watch for add pan request
     yield takeLatest(
-      addWalletBancomatPans.request,
+      addWalletBancomatPan.request,
       handleAddPans,
       paymentManagerClient.addPans,
       pmSessionManager

@@ -131,12 +131,12 @@ export const runStartOrResumeAddCreditCardSaga = createStandardAction(
 )<StartOrResumeAddCreditCardSagaPayload>();
 
 /**
- * search for user's bancomat pans
+ * search for user's bancomat pan
  */
-export const addWalletBancomatPans = createAsyncAction(
-  "WALLET_BANCOMAT_ADD_PANS_REQUEST",
-  "WALLET_BANCOMAT_ADD_PANS_SUCCESS",
-  "WALLET_BANCOMAT_ADD_PANS_FAILURE"
+export const addWalletBancomatPan = createAsyncAction(
+  "WALLET_BANCOMAT_ADD_PAN_REQUEST",
+  "WALLET_BANCOMAT_ADD_PAN_SUCCESS",
+  "WALLET_BANCOMAT_ADD_PAN_FAILURE"
 )<Card, Card, Error>();
 
 export type WalletsActions =
@@ -161,4 +161,4 @@ export type WalletsActions =
   | ActionType<typeof creditCardCheckout3dsRequest>
   | ActionType<typeof creditCardCheckout3dsSuccess>
   | ActionType<typeof setWalletSessionEnabled>
-  | ActionType<typeof addWalletBancomatPans>;
+  | ActionType<typeof addWalletBancomatPan>;

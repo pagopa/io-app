@@ -7,7 +7,7 @@ import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { loadAbi, searchUserPans } from "../../store/actions";
-import { addWalletBancomatPans } from "../../../../../../store/actions/wallet/wallets";
+import { addWalletBancomatPan } from "../../../../../../store/actions/wallet/wallets";
 
 // load all bancomat abi
 export function* handleLoadAbi(
@@ -99,7 +99,7 @@ export function* handleLoadPans(
 export function* handleAddPans(
   addPans: ReturnType<typeof PaymentManagerClient>["addPans"],
   sessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof addWalletBancomatPans.request>
+  action: ActionType<typeof addWalletBancomatPan.request>
 ) {
   try {
     const addPansWithRefresh = sessionManager.withRefresh(
@@ -112,7 +112,7 @@ export function* handleAddPans(
     if (addPansWithRefreshResult.isRight()) {
       if (addPansWithRefreshResult.value.status === 200) {
         yield put(
-          addWalletBancomatPans.success(addPansWithRefreshResult.value.value)
+          addWalletBancomatPan.success(addPansWithRefreshResult.value.value)
         );
       } else {
         throw new Error(
@@ -123,6 +123,6 @@ export function* handleAddPans(
       throw new Error(readableReport(addPansWithRefreshResult.value));
     }
   } catch (e) {
-    yield put(addWalletBancomatPans.failure(e));
+    yield put(addWalletBancomatPan.failure(e));
   }
 }
