@@ -63,11 +63,10 @@ import {
 } from "../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
-import { PatchedCards } from "../features/bonus/bpd/api/patchedTypes";
 import {
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
-  getPansUsingGETDecoder,
+  getPansUsingGETDefaultDecoder,
   GetPansUsingGETT
 } from "../../definitions/pagopa/bancomat/requestTypes";
 
@@ -380,13 +379,7 @@ const getAbi: GetAbiListUsingGETT = {
   response_decoder: getAbiListUsingGETDefaultDecoder()
 };
 
-// map the response 200 with a patched codec
-type GetPansUsingGetTExtra = MapResponseType<
-  GetPansUsingGETT,
-  200,
-  PatchedCards
->;
-const getPans: GetPansUsingGetTExtra = {
+const getPans: GetPansUsingGETT = {
   method: "get",
   // TODO check abi length === 5 if it is defined
   url: ({ abi }) => {
@@ -397,7 +390,7 @@ const getPans: GetPansUsingGetTExtra = {
   },
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getPansUsingGETDecoder(PatchedCards)
+  response_decoder: getPansUsingGETDefaultDecoder()
 };
 
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
