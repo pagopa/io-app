@@ -57,7 +57,7 @@ export function* patchCitizenIban(
     const iban: Iban = action.payload;
     const updatePaymentMethodResult: SagaCallReturnType<ReturnType<
       typeof updatePaymentMethod
-    >> = yield call(updatePaymentMethod(iban));
+    >> = yield call(updatePaymentMethod(iban), {});
     if (updatePaymentMethodResult.isRight()) {
       const statusCode = updatePaymentMethodResult.value.status;
       if (statusCode === 200 && updatePaymentMethodResult.value.value) {

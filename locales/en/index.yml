@@ -626,7 +626,8 @@ wallet:
       text2: " on which you have an active Pagobancomat card. Otherwise we will look for all the cards associated with you: by continuing you accept the "
       text3: information on the processing of personal data
     bankName: Name of the bank
-    noName: Name not found
+    noName: Name unavailable
+    loading: Loading bank list...
   accessibility:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
@@ -634,6 +635,18 @@ wallet:
         read: Transaction
         unread: Unread transaction
       label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} at {{hours}} with reason {{reason}}. Activate for the full detail"
+  onboarding:
+    bancomat:
+      headerTitle: "Add Bancomat card"
+      koTimeout:
+        title: "We were unable to contact Bancomat."
+        body: "Please retry"
+      koNotFound:
+        title: "Sorry, we couldn't find any cards"
+        body: "There are no Bancomat registered to you"
+        chooseAnother: "Choose another bank"
+      loadingSearch:
+        title: "We are asking Bancomat for the list of your cards\n\nPlease wait"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
@@ -829,6 +842,8 @@ wallet:
       name: Postepay
     paypal:
       name: Paypal
+    bancomat:
+      name: Bancomat
     notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
@@ -1137,7 +1152,8 @@ identification:
     reset:
       button: Did you forget the
       code: unlock code
-      button_short: Reset unlock code
+      button_short: Change the unlock code
+      subtitle: Set a new 6-digit code
     confirmValid: Correct unlock code
   unlock_screen:
     help:
