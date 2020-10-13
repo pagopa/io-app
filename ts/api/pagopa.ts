@@ -21,7 +21,7 @@ import {
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
-import { fromPredicate } from "fp-ts/lib/Option";
+import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -385,9 +385,8 @@ const getAbi: GetAbiListUsingGETT = {
 const getPans: GetPansUsingGETT = {
   method: "get",
   url: ({ abi }) => {
-    const isAvalidAbi = (abi: string | undefined): boolean =>
-      abi !== undefined && abi.length >= 5;
-    const abiParameter = fromPredicate(isAvalidAbi)(abi)
+    const abiParameter = fromNullable(abi)
+      .chain(fromPredicate((abi: string): boolean => abi.length >= 5))
       .map(a => `?abi=${a}`)
       .getOrElse("");
     return `/v1/bancomat/pans${abiParameter}`;
