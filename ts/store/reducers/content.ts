@@ -232,11 +232,13 @@ export default function content(
       };
 
     case getType(contentMunicipalityLoad.request):
+      const codiceCatastale = state.municipality.codiceCatastale;
+      const municipalityData = state.municipality.data;
       return {
         ...state,
         municipality: {
-          codiceCatastale: pot.noneLoading,
-          data: pot.noneLoading
+          codiceCatastale: pot.toLoading(codiceCatastale),
+          data: pot.toLoading(municipalityData)
         }
       };
 
