@@ -386,6 +386,8 @@ const getPans: GetPansUsingGETT = {
   method: "get",
   url: ({ abi }) => {
     const abiParameter = fromNullable(abi)
+      // check abi length
+      // see https://it.wikipedia.org/wiki/Coordinate_bancarie#:~:text=ABI%20(5%20cifre),caratteri%20sia%20inferiore%20a%2012)
       .chain(fromPredicate((abi: string): boolean => abi.length >= 5))
       .map(a => `?abi=${a}`)
       .getOrElse("");
