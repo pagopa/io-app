@@ -3000,24 +3000,3 @@ export const abis = [
       "https://upload.wikimedia.org/wikipedia/it/thumb/5/51/Intesa_Sanpaolo_logo.svg/320px-Intesa_Sanpaolo_logo.svg.png"
   }
 ];
-
-export const pans = [
-  {
-    abi: "00001",
-    cardNumber: "1234",
-    cardPartialNumber: "11112222",
-    expiringDate: new Date("2021-10-07"),
-    productType: "PP",
-    tokens: ["string"],
-    validityState: "V"
-  },
-  {
-    abi: "00001",
-    cardNumber: "5678",
-    cardPartialNumber: "33332222",
-    expiringDate: new Date("2021-10-07"),
-    productType: "PP",
-    tokens: ["string"],
-    validityState: "V"
-  }
-];
