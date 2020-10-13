@@ -95,8 +95,8 @@ export function* handleLoadPans(
   }
 }
 
-// add pans to wallet
-export function* handleAddPans(
+// add pan to wallet
+export function* handleAddPan(
   addPans: ReturnType<typeof PaymentManagerClient>["addPans"],
   sessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof addWalletBancomatPan.request>
