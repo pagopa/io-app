@@ -103,7 +103,7 @@ export function* handleAddPans(
 ) {
   try {
     const addPansWithRefresh = sessionManager.withRefresh(
-      // add a card as single element array
+      // add a card as an array of one element
       addPans({ data: [action.payload] })
     );
     const addPansWithRefreshResult: SagaCallReturnType<typeof addPansWithRefresh> = yield call(
