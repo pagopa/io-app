@@ -108,7 +108,7 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
           )}
           rightButton={confirmButtonProps(
             handleOnContinue,
-            I18n.t("global.buttons.continue")
+            I18n.t("wallet.addBancomat.add")
           )}
         />
       </SafeAreaView>
