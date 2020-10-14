@@ -363,7 +363,7 @@ authentication:
     expiredCardHelp: How to renew your Electronic Identity Card?
   cie:
     genericTitle: Login - CIE
-    cie: Electronic Identity Card
+    cie: CIE
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
