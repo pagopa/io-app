@@ -52,20 +52,15 @@ const styles = StyleSheet.create({
 export const BankPreviewItem: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const [imageDimensions, setImageDimensions] = React.useState<ImageDimensions>(
-    { w: 0, h: 0 }
-  );
-
-  useImageResize(
+  const imageDimensions = useImageResize(
     BASE_IMG_W,
     BASE_IMG_H,
-    setImageDimensions,
     props.bank.logoUrl
   );
 
   const imageStyle: StyleProp<ImageStyle> = {
-    width: imageDimensions.w,
-    height: imageDimensions.h,
+    width: imageDimensions[0],
+    height: imageDimensions[1],
     resizeMode: "contain"
   };
 

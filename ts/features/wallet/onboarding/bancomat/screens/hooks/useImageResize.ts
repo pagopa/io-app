@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Image } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 
@@ -22,25 +22,28 @@ const handleImageDimensionSuccess = (
   width: number,
   height: number,
   maxW: number,
-  maxH: number,
-  callback: (dim: ImageDimensions) => void
-) => {
+  maxH: number
+): [number, number] => {
   if (width > 0 && height > 0) {
     const ratio = Math.min(maxW / width, maxH / height);
-    callback({ w: width * ratio, h: height * ratio });
+    return [width * ratio, height * ratio];
   }
+  return [0, 0];
 };
 
 export const useImageResize = (
   maxWidth: number,
   maxHeight: number,
-  handler: (dimensions: ImageDimensions) => void,
   imageUrl?: string
-) =>
+): [number, number] => {
+  const [size, setSize] = useState<[number, number]>([0, 0]);
+
   useEffect(() => {
     fromNullable(imageUrl).map(url =>
       Image.getSize(url, (w, h) =>
-        handleImageDimensionSuccess(w, h, maxWidth, maxHeight, handler)
+        setSize(handleImageDimensionSuccess(w, h, maxWidth, maxHeight))
       )
     );
   }, [imageUrl]);
+  return size;
+};
