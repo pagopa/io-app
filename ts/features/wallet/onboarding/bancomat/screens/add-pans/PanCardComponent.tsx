@@ -93,7 +93,7 @@ const PanCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           {props.pan.expiringDate && (
             <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
               "cardComponent.validUntil"
-            )} ${formatDateAsLocal(props.pan.expiringDate)}`}</H5>
+            )} ${formatDateAsLocal(new Date(props.pan.expiringDate))}`}</H5>
           )}
         </View>
         <View style={styles.bottomRow}>

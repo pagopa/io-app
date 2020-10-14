@@ -3,7 +3,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { navigateBack } from "../../../../../../store/actions/navigation";
 import { profileSelector } from "../../../../../../store/reducers/profile";
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import { isReady } from "../../../../../bonus/bpd/model/RemoteValue";
@@ -40,7 +39,7 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
     const nextStep = currentIndex + 1;
     // If we reached the last pan of our list exit the flow and complete the saga
     if (!props.loading) {
-      if (nextStep >= props.pans.length) {
+      if (nextStep === props.pans.length) {
         props.onContinue();
       } else {
         setCurrentIndex(nextStep);
@@ -49,11 +48,12 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
   }, [props.loading]);
 
   const skipToNextPan = () => {
-    if (currentIndex === props.pans.length - 1) {
+    const nextStep = currentIndex + 1;
+    if (nextStep === props.pans.length) {
       props.onContinue();
       return;
     }
-    setCurrentIndex(currentIndex + 1);
+    setCurrentIndex(nextStep);
   };
 
   const handleOnContinue = () => {
