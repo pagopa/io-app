@@ -72,11 +72,14 @@ const BASE_IMG_H = 40;
 const PanCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, props.abiLogo);
 
-  const imageStyle: StyleProp<ImageStyle> = {
-    width: imgDimensions[0],
-    height: imgDimensions[1],
-    resizeMode: "contain"
-  };
+  const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
+    undefined,
+    imgDim => ({
+      width: imgDim[0],
+      height: imgDim[1],
+      resizeMode: "contain"
+    })
+  );
 
   return (
     <>
