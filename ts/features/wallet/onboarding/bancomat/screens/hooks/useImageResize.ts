@@ -2,11 +2,6 @@ import { useEffect, useState } from "react";
 import { Image } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 
-export type ImageDimensions = {
-  w: number;
-  h: number;
-};
-
 /**
  * To keep the image bounded in the predefined maximum dimensions (40x160) we use the resizeMode "contain"
  * and always calculate the resize width keeping fixed the height to 40, in this way all images will have an height of 40

@@ -14,7 +14,7 @@ import { Body } from "../../../../../../components/core/typography/Body";
 import { H5 } from "../../../../../../components/core/typography/H5";
 import customVariables from "../../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../../utils/dates";
-import { ImageDimensions, useImageResize } from "../hooks/useImageResize";
+import { useImageResize } from "../hooks/useImageResize";
 import pagoBancomatLogo from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
 
 type Props = {

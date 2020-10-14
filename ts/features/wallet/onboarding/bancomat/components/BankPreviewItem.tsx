@@ -7,10 +7,7 @@ import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import IconFont from "../../../../../components/ui/IconFont";
-import {
-  ImageDimensions,
-  useImageResize
-} from "../screens/hooks/useImageResize";
+import { useImageResize } from "../screens/hooks/useImageResize";
 
 type Props = {
   bank: Abi;
