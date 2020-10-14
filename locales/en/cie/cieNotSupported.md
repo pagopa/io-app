@@ -1,1 +1,1 @@
-To login you need a device with NFC technology and the operating system with the minimum requirements (**iOS** devices are not yet compatible but will become compatible with the next updates).
+To log in with your electronic ID card, you need an NFC-enabled device with Android (version 6.0 or higher), or iOS (iPhone 7 or later).
