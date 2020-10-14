@@ -1,4 +1,4 @@
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -47,22 +47,22 @@ export const availableBonusTypesSelector = (
  * @param idBonusType
  */
 export const availableBonusTypesSelectorFromId = (idBonusType: number) =>
-  createSelector<GlobalState, AvailableBonusTypesState, Option<BonusAvailable>>(
-    availableBonusTypesSelector,
-    ab =>
-      pot.getOrElse(
-        pot.map(ab, abs =>
-          fromNullable(abs.find(i => i.id_type === idBonusType))
-        ),
-        none
-      )
+  createSelector<
+    GlobalState,
+    AvailableBonusTypesState,
+    BonusAvailable | undefined
+  >(availableBonusTypesSelector, ab =>
+    pot.getOrElse(
+      pot.map(ab, abs => abs.find(i => i.id_type === idBonusType)),
+      undefined
+    )
   );
 /**
  * Return the uri of the bonus vacanze image logo
  */
 export const bonusVacanzeLogo = createSelector(
   availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE),
-  bonus => bonus.fold(undefined, b => b.cover)
+  bonus => fromNullable(bonus).fold(undefined, b => b.cover)
 );
 
 export default reducer;

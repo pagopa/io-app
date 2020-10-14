@@ -1,5 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { availableBonusTypesSelectorFromId } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
@@ -17,17 +18,20 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  * This Screen shows all the information about the bpd program, with the rules and t&c.
  */
 
-const BpdInformationScreen: React.FunctionComponent<Props> = props => (
-  <>
-    {props.bonus.isSome() ? (
-      <BonusInformationComponent
-        bonus={props.bonus.value}
-        onConfirm={props.userActivateBpd}
-        onCancel={props.onCancel}
-      />
-    ) : null}
-  </>
-);
+const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
+  const mb = fromNullable(props.bonus);
+  return (
+    <>
+      {mb.isSome() ? (
+        <BonusInformationComponent
+          bonus={mb.value}
+          onConfirm={props.userActivateBpd}
+          onCancel={props.onCancel}
+        />
+      ) : null}
+    </>
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => ({
   // display the error with the retry only in case of networking errors
