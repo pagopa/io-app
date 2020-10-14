@@ -725,7 +725,10 @@ export function* watchWalletSaga(
     // watch for add Bancomat to Wallet workflow
     yield takeLatest(walletAddBancomatStart, addBancomatToWalletGeneric);
 
-    // watch for add Bancomat to Wallet workflow
+    /**
+     * TODO Replace with correct saga once developed the networking flow
+     * watch for add Bancomat to Wallet workflow
+     */
     yield takeLatest(walletAddSelectedBancomat.request, addSelectedPans);
   }
 
