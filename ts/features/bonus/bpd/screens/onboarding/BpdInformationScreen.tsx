@@ -1,6 +1,5 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { availableBonusTypesSelectorFromId } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
