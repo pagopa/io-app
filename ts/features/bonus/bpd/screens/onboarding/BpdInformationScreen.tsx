@@ -19,12 +19,12 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  */
 
 const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
-  const mb = fromNullable(props.bonus);
+  const maybeBonus = fromNullable(props.bonus);
   return (
     <>
-      {mb.isSome() ? (
+      {maybeBonus.isSome() ? (
         <BonusInformationComponent
-          bonus={mb.value}
+          bonus={maybeBonus.value}
           onConfirm={props.userActivateBpd}
           onCancel={props.onCancel}
         />
