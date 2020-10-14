@@ -55,11 +55,14 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
     props.bank.logoUrl
   );
 
-  const imageStyle: StyleProp<ImageStyle> = {
-    width: imageDimensions[0],
-    height: imageDimensions[1],
-    resizeMode: "contain"
-  };
+  const imageStyle: StyleProp<ImageStyle> | undefined = imageDimensions.fold(
+    undefined,
+    imgDim => ({
+      width: imgDim[0],
+      height: imgDim[1],
+      resizeMode: "contain"
+    })
+  );
 
   const onItemPress = () => props.bank.abi && props.onPress(props.bank.abi);
   const bankName = props.bank.name || I18n.t("wallet.searchAbi.noName");

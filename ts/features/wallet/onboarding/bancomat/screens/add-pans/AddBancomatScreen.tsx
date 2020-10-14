@@ -17,7 +17,6 @@ import {
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { navigateBack } from "../../../../../../store/actions/navigation";
 import I18n from "../../../../../../i18n";
-import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
 import { profileSelector } from "../../../../../../store/reducers/profile";
 import { H4 } from "../../../../../../components/core/typography/H4";
 // import { abiListSelector } from "../../store/reducers/abi";
@@ -35,6 +34,7 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [abiLogo, setAbiLogo] = React.useState<string | undefined>();
 
   const handleOnContinue = () => {
+    // TODO refactor code
     if (currentIndex === props.pans.length - 1) {
       props.onContinue();
     } else {
@@ -83,7 +83,7 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
           <H1>{I18n.t("wallet.addBancomat.screenTitle")}</H1>
           <View spacer={true} large={true} />
           <PanCardComponent
-            pan={props.pans[currentIndex] as Card}
+            pan={props.pans[currentIndex]}
             abiLogo={abiLogo}
             user={
               props.profile
