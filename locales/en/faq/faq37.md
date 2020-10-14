@@ -1,1 +1,1 @@
-You can currently add MasterCard or Visa debit and credit cards. The addition of additional payment methods such as Bancomat Pay, PayPal, Satispay and the like is scheduled for the coming months.
+You can currently add credit and debit cards issued by American Express, Mastercard, Visa and V Pay. You can also use prepaid cards issued by Mastercard and Visa (like Postepay). Additional payment methods such as Bancomat Pay, PayPal, Satispay will be supported in the coming months.
