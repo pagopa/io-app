@@ -13,14 +13,14 @@ import {
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { abiListSelector } from "../../../store/abi";
 import PanCardComponent from "./PanCardComponent";
+import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
 
 type Props = {
-  pan: PatchedCard;
+  pan: Card;
   pansNumber: number;
   currentIndex: number;
   handleContinue: () => void;

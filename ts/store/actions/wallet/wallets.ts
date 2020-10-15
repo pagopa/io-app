@@ -132,7 +132,7 @@ export const runStartOrResumeAddCreditCardSaga = createStandardAction(
 )<StartOrResumeAddCreditCardSagaPayload>();
 
 /**
- * search for user's bancomat pan
+ * save bancomat into the wallet
  */
 export const addWalletBancomatPan = createAsyncAction(
   "WALLET_BANCOMAT_ADD_PAN_REQUEST",

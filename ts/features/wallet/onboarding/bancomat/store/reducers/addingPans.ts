@@ -1,7 +1,6 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 import {
   remoteError,
   remoteLoading,
@@ -10,10 +9,11 @@ import {
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { walletAddSelectedBancomat } from "../actions";
+import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
 
 export type AddingPansState = {
   addingResult: RemoteValue<void, Error>;
-  selectedPan?: PatchedCard;
+  selectedPan?: Card;
 };
 
 const initialState: AddingPansState = {
@@ -46,8 +46,7 @@ const addingPansReducer = (
 
 export const onboardingBancomatChosenPanSelector = (
   state: GlobalState
-): PatchedCard | undefined =>
-  state.wallet.onboarding.bancomat.addingPans.selectedPan;
+): Card | undefined => state.wallet.onboarding.bancomat.addingPans.selectedPan;
 
 export const onboardingBancomatAddingResultSelector = (
   state: GlobalState
