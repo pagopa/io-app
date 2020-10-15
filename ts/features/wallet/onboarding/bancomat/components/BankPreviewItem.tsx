@@ -7,10 +7,7 @@ import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import IconFont from "../../../../../components/ui/IconFont";
-import {
-  ImageDimensions,
-  useImageResize
-} from "../screens/hooks/useImageResize";
+import { useImageResize } from "../screens/hooks/useImageResize";
 
 type Props = {
   bank: Abi;
@@ -52,22 +49,20 @@ const styles = StyleSheet.create({
 export const BankPreviewItem: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const [imageDimensions, setImageDimensions] = React.useState<ImageDimensions>(
-    { w: 0, h: 0 }
-  );
-
-  useImageResize(
+  const imageDimensions = useImageResize(
     BASE_IMG_W,
     BASE_IMG_H,
-    setImageDimensions,
     props.bank.logoUrl
   );
 
-  const imageStyle: StyleProp<ImageStyle> = {
-    width: imageDimensions.w,
-    height: imageDimensions.h,
-    resizeMode: "contain"
-  };
+  const imageStyle: StyleProp<ImageStyle> | undefined = imageDimensions.fold(
+    undefined,
+    imgDim => ({
+      width: imgDim[0],
+      height: imgDim[1],
+      resizeMode: "contain"
+    })
+  );
 
   const onItemPress = () => props.bank.abi && props.onPress(props.bank.abi);
   const bankName = props.bank.name || I18n.t("wallet.searchAbi.noName");

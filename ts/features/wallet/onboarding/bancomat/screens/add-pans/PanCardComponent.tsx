@@ -13,7 +13,7 @@ import { Body } from "../../../../../../components/core/typography/Body";
 import { H5 } from "../../../../../../components/core/typography/H5";
 import customVariables from "../../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../../utils/dates";
-import { ImageDimensions, useImageResize } from "../hooks/useImageResize";
+import { useImageResize } from "../hooks/useImageResize";
 import pagoBancomatLogo from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 
@@ -70,18 +70,16 @@ const BASE_IMG_W = 160;
 const BASE_IMG_H = 40;
 
 const PanCardComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const [imgDimensions, setImgDimensions] = React.useState<ImageDimensions>({
-    w: 0,
-    h: 0
-  });
+  const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, props.abiLogo);
 
-  useImageResize(BASE_IMG_W, BASE_IMG_H, setImgDimensions, props.abiLogo);
-
-  const imageStyle: StyleProp<ImageStyle> = {
-    width: imgDimensions.w,
-    height: imgDimensions.h,
-    resizeMode: "contain"
-  };
+  const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
+    undefined,
+    imgDim => ({
+      width: imgDim[0],
+      height: imgDim[1],
+      resizeMode: "contain"
+    })
+  );
 
   return (
     <>

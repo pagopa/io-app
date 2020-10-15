@@ -1,11 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Image } from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
-
-export type ImageDimensions = {
-  w: number;
-  h: number;
-};
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 
 /**
  * To keep the image bounded in the predefined maximum dimensions (40x160) we use the resizeMode "contain"
@@ -22,25 +17,30 @@ const handleImageDimensionSuccess = (
   width: number,
   height: number,
   maxW: number,
-  maxH: number,
-  callback: (dim: ImageDimensions) => void
-) => {
+  maxH: number
+): [number, number] | undefined => {
   if (width > 0 && height > 0) {
     const ratio = Math.min(maxW / width, maxH / height);
-    callback({ w: width * ratio, h: height * ratio });
+    return [width * ratio, height * ratio];
   }
+  return undefined;
 };
-
+type FutureSize = Option<[number, number]>;
 export const useImageResize = (
   maxWidth: number,
   maxHeight: number,
-  handler: (dimensions: ImageDimensions) => void,
   imageUrl?: string
-) =>
+): FutureSize => {
+  const [size, setSize] = useState<FutureSize>(none);
+
   useEffect(() => {
     fromNullable(imageUrl).map(url =>
       Image.getSize(url, (w, h) =>
-        handleImageDimensionSuccess(w, h, maxWidth, maxHeight, handler)
+        setSize(
+          fromNullable(handleImageDimensionSuccess(w, h, maxWidth, maxHeight))
+        )
       )
     );
   }, [imageUrl]);
+  return size;
+};

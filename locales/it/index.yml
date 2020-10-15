@@ -374,7 +374,7 @@ authentication:
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
   cie:
     genericTitle: Accedi - CIE
-    cie: Carta di Identità Elettronica
+    cie: CIE
     noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
