@@ -17,41 +17,6 @@ export type BpdPotPaymentMethodActivation = pot.Pot<
   Error
 >;
 
-export type BpdPaymentMethods = {
-  // the value used as key to group the information related to the payment method
-  hPan: HPan;
-  potTest: pot.Pot<BpdPaymentMethodActivation, Error>;
-};
-
-/**
- * Retrieve the existing BpdPaymentMethods (if any) or return a default one
- * @param hPan
- * @param data
- */
-const retrieveBpdPaymentMethodEntry = (
-  hPan: HPan,
-  data: IndexedById<BpdPotPaymentMethodActivation>
-): BpdPotPaymentMethodActivation =>
-  fromNullable(data[hPan]).getOrElse(pot.none);
-
-/**
- * Update the entry in data with the updated newEntry
- * @param hPan
- * @param data
- * @param newEntry
- */
-const updateBpdPaymentMethodEntry = (
-  hPan: HPan,
-  data: IndexedById<BpdPaymentMethods>,
-  newEntry: Partial<BpdPaymentMethods>
-): IndexedById<BpdPaymentMethods> => {
-  const updatedEntry = {
-    ...retrieveBpdPaymentMethodEntry(hPan, data),
-    ...newEntry
-  };
-  return { ...data, [hPan]: updatedEntry };
-};
-
 const readPot = (
   hPan: HPan,
   data: IndexedById<BpdPotPaymentMethodActivation>
@@ -60,7 +25,7 @@ const readPot = (
 /**
  * This reducer keep the activation state and the upsert request foreach payment method,
  * grouped by hPan.
- * Foreach hPan there is a {@link BpdPaymentMethods} containing the related state / upsert information.
+ * Foreach hPan there is a {@link BpdPaymentMethods} containing the related bpd activation information.
  * @param state
  * @param action
  */
@@ -70,7 +35,7 @@ export const bpdPaymentMethodsReducer = (
 ): IndexedById<BpdPotPaymentMethodActivation> => {
   switch (action.type) {
     case getType(bpdPaymentMethodActivation.request):
-      return { ...state, [action.payload]: pot.none };
+      return { ...state, [action.payload]: pot.noneLoading };
     case getType(bpdPaymentMethodActivation.success):
       return { ...state, [action.payload.hPan]: pot.some(action.payload) };
     case getType(bpdPaymentMethodActivation.failure):

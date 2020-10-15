@@ -1,9 +1,9 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, Image, StyleSheet } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../img/wallet/cards-icons/pagobancomat.png";
@@ -19,12 +19,9 @@ import {
   bpdUpdatePaymentMethodActivation,
   HPan
 } from "../store/actions/paymentMethods";
-import {
-  bpdPaymentMethodValueSelector,
-  bpdTestPotValue
-} from "../store/reducers/details/paymentMethods";
+import { bpdPaymentMethodValueSelector } from "../store/reducers/details/paymentMethods";
 
-type OwnProps = { hpan: HPan };
+type OwnProps = { hPan: HPan };
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -79,6 +76,7 @@ const renderToggle = (
   }
 };
 
+// TODO: retry on error, "notActivable" -> when no capability
 const testCalculateGraphicalState = (
   potBpdActivation: pot.Pot<BpdPaymentMethodActivation, Error>
 ): GraphicalValue =>
@@ -104,24 +102,44 @@ const testCalculateGraphicalState = (
  * @constructor
  */
 const PaymentMethodBpdToggle: React.FunctionComponent<Props> = props => {
-  const graphicalState = testCalculateGraphicalState(
-    fromNullable(props.pot).getOrElse(pot.none)
-  );
+  const graphicalState = testCalculateGraphicalState(props.bpdPotActivation);
+  const [errorRetry, setRetry] = useState<number | undefined>(undefined);
+
+  const retry = () => {
+    console.log("tic tac");
+    setRetry(undefined);
+    props.loadActualValue(props.hPan);
+  };
+
   useEffect(() => {
-    if (props.pot === pot.none) {
-      props.loadActualValue(props.hpan);
+    console.log("effect" + errorRetry);
+    console.log("effect" + pot.isNone(props.bpdPotActivation));
+    console.log("effect" + pot.isError(props.bpdPotActivation));
+    if (props.bpdPotActivation === pot.none) {
+      props.loadActualValue(props.hPan);
+    } else if (
+      pot.isNone(props.bpdPotActivation) &&
+      pot.isError(props.bpdPotActivation) &&
+      errorRetry === undefined
+    ) {
+      console.log("schedule");
+      setRetry(setTimeout(retry, 10000));
     }
-  }, [props.pot]);
+  }, [props.bpdPotActivation, errorRetry]);
 
   return (
     <>
       <View style={styles.row}>
+        <NavigationEvents
+          onDidBlur={() => clearTimeout(errorRetry)}
+          onDidFocus={() => setRetry(undefined)}
+        />
         <View style={{ flexDirection: "row", flex: 1 }}>
           <Image source={image} style={styles.cardIcon} />
           <View hspacer={true} />
-          <Body>Intesa San Paolo </Body>
+          <Body>Intesa San Paolo</Body>
         </View>
-        {renderToggle(graphicalState, b => props.updateValue(props.hpan, b))}
+        {renderToggle(graphicalState, b => props.updateValue(props.hPan, b))}
       </View>
     </>
   );
@@ -135,7 +153,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
-  pot: bpdPaymentMethodValueSelector(state, props.hpan)
+  bpdPotActivation: bpdPaymentMethodValueSelector(state, props.hPan)
 });
 
 export default connect(
