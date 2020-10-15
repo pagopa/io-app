@@ -15,6 +15,7 @@ import {
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { Card } from "../../../../definitions/pagopa/bancomat/Card";
+import { WalletV2 } from "../../../../definitions/pagopa/bancomat/WalletV2";
 
 export const fetchWalletsRequest = createStandardAction(
   "WALLETS_LOAD_REQUEST"
@@ -137,7 +138,7 @@ export const addWalletBancomatPan = createAsyncAction(
   "WALLET_BANCOMAT_ADD_PAN_REQUEST",
   "WALLET_BANCOMAT_ADD_PAN_SUCCESS",
   "WALLET_BANCOMAT_ADD_PAN_FAILURE"
-)<Card, Card, Error>();
+)<Card, WalletV2, Error>();
 
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
