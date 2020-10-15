@@ -1,4 +1,11 @@
-export const abis = [
+import { Abi } from "../../../../../../definitions/pagopa/bancomat/Abi";
+import {
+  Card,
+  ProductTypeEnum,
+  ValidityStateEnum
+} from "../../../../../../definitions/pagopa/bancomat/Card";
+
+export const abis: ReadonlyArray<Abi> = [
   {
     abi: "00001",
     name: "Dutto Group",
@@ -7,9 +14,7 @@ export const abis = [
   },
   {
     abi: "00002",
-    name: "Mignogna - Repetto",
-    logoUrl:
-      "https://upload.wikimedia.org/wikipedia/it/thumb/5/51/Intesa_Sanpaolo_logo.svg/320px-Intesa_Sanpaolo_logo.svg.png"
+    name: "Mignogna - Repetto"
   },
   {
     abi: "00003",
@@ -2998,5 +3003,35 @@ export const abis = [
     name: "Angelini, Manca and Bertolussi",
     logoUrl:
       "https://upload.wikimedia.org/wikipedia/it/thumb/5/51/Intesa_Sanpaolo_logo.svg/320px-Intesa_Sanpaolo_logo.svg.png"
+  }
+];
+
+export const pans: ReadonlyArray<Card> = [
+  {
+    abi: "00001",
+    cardNumber: "1234",
+    cardPartialNumber: "11112222",
+    expiringDate: new Date("2021-10-07"),
+    productType: ProductTypeEnum.PP,
+    tokens: ["string"],
+    validityState: ValidityStateEnum.V
+  },
+  {
+    abi: "00002",
+    cardNumber: "5678",
+    cardPartialNumber: "33332222",
+    expiringDate: new Date("2021-10-07"),
+    productType: ProductTypeEnum.PP,
+    tokens: ["string"],
+    validityState: ValidityStateEnum.V
+  },
+  {
+    abi: "00003",
+    cardNumber: "5678",
+    cardPartialNumber: "33332222",
+    expiringDate: new Date("2021-10-07"),
+    productType: ProductTypeEnum.PP,
+    tokens: ["string"],
+    validityState: ValidityStateEnum.V
   }
 ];
