@@ -12,11 +12,17 @@ import {
 export function* bpdLoadPaymentMethodActivationSaga(
   action: ActionType<typeof bpdPaymentMethodActivation.request>
 ) {
-  yield delay(125);
+  yield delay(825);
+  // yield put(
+  //   bpdPaymentMethodActivation.success({
+  //     hPan: action.payload,
+  //     activationStatus: "inactive"
+  //   })
+  // );
   yield put(
-    bpdPaymentMethodActivation.success({
-      hPan: action.payload,
-      activationStatus: "active"
+    bpdPaymentMethodActivation.failure({
+      error: new Error(),
+      hPan: action.payload
     })
   );
 }
@@ -28,11 +34,11 @@ export function* bpdLoadPaymentMethodActivationSaga(
 export function* bpdUpdatePaymentMethodActivationSaga(
   action: ActionType<typeof bpdUpdatePaymentMethodActivation.request>
 ) {
-  yield delay(125);
+  yield delay(825);
   yield put(
     bpdUpdatePaymentMethodActivation.success({
       hPan: action.payload.hPan,
-      activationStatus: action.payload.value
+      activationStatus: action.payload.value ? "active" : "inactive"
     })
   );
 }

@@ -10,7 +10,7 @@ export type HPan = string & IUnitTag<"HPan">;
  * - inactive: bpd is not active on the payment method
  * - notActivable: bpd activate on the payment method by someone else, cannot be activated
  */
-type BpdPmActivationStatus = "active" | "inactive" | "notActivable";
+export type BpdPmActivationStatus = "active" | "inactive" | "notActivable";
 
 /**
  * The response payload to know the actual state of bpd on a payment method
@@ -32,7 +32,7 @@ type BpdPaymentMethodFailure = {
 
 type BpdUpdatePaymentMethodActivationPayload = {
   hPan: HPan;
-  value: Exclude<BpdPmActivationStatus, "notActivable">;
+  value: boolean;
 };
 
 /**
