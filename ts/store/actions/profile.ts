@@ -50,10 +50,9 @@ export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")();
 
 export const clearCache = createStandardAction("CLEAR_CACHE")();
 
-export const navigateToRemoveAccountDetails = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
-  });
+export const removeAccountMotivation = createStandardAction(
+  "REMOVE_ACCOUNT_MOTIVATION"
+)();
 
 export type ProfileActions =
   | ActionType<typeof resetProfileState>

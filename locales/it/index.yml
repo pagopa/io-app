@@ -197,6 +197,9 @@ profile:
         info:
           body: !include profile/profile_remove_account_info.md
           cta: Continua
+        details:
+          body: "Ci piacerebbe sapere perchè stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
+          cta: Continua
       # removeAccountDetails:
       #   title: Elimina il tuo account
       #   description: Cancella in modo permanente il tuo account e le tue informazioni

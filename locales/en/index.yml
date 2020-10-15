@@ -197,6 +197,9 @@ profile:
         info:
           body: !include profile/profile_remove_account_info.md
           cta: Continue
+        details:
+          body: "We would like to know why you are deleting your account, in order to improve in the future. You can also proceed directly with the deletion by clicking on the button below."
+          cta: Continue        
         # alert:
         #   requestTitle: Are you sure you want request the cancellation of your account?
         #   requestSubtitle: To use IO you will need to register again. The cancellation does not concern the data processed by public administrations.

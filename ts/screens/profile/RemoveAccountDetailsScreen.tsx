@@ -1,131 +1,78 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, List } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
 
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { SafeAreaView } from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
-import {
-  resetUserDataProcessingRequest,
-  upsertUserDataProcessing
-} from "../../store/actions/userDataProcessing";
 import { GlobalState } from "../../store/reducers/types";
-import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
-import themeVariables from "../../theme/variables";
-import { showToast } from "../../utils/showToast";
-import reactotron from "reactotron-react-native";
-import { RootModal } from "../modal/RootModal";
-import IdentificationModal from "../modal/IdentificationModal";
-import SystemOffModal from "../modal/SystemOffModal";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { H1 } from "../../components/core/typography/H1";
+import { H4 } from "../../components/core/typography/H4";
+import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { removeAccountMotivation } from "../../store/actions/profile";
 
-type Props = ReduxProps &
-  OwnProps &
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+type Props = ReduxProps & ReturnType<typeof mapDispatchToProps>;
 
 /**
- * A screen to explain how the account removal works.
+ * A screen that ask user the motivation of the account removal
  * Here user can ask to delete his account
  */
-export const RemoveAccountDetails: React.FunctionComponent<Props> = (
-  props: Props
-) => {
-  const [isMarkdownLoaded, setisMarkdownLoaded] = React.useState(false);
+const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   // Initially no motivation is selected
   const [selectedMotivation, setSelectedMotivation] = React.useState(-1);
-
-  const handleContinuePress = (): void => {
-    props.navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
+  const continueButtonProps = {
+    block: true,
+    primary: true,
+    onPress: () => props.sendMotivation(),
+    title: I18n.t("profile.main.privacy.removeAccount.info.cta")
   };
 
+  const footerComponent = (
+    <FooterWithButtons type={"SingleButton"} leftButton={continueButtonProps} />
+  );
   return (
-    <IdentificationModal identificationProgressState="pippo" />
-    // <TopScreenComponent
-    //   goBack={true}
-    //   headerTitle={I18n.t("profile.main.title")}
-    // >
-    //   <ScreenContent
-    //     title={I18n.t("profile.main.privacy.removeAccountInfo.title")}
-    //     bounces={false}
-    //   >
-    //     <Text
-    //       style={{
-    //         paddingHorizontal: themeVariables.contentPadding
-    //       }}
-    //     >
-    //       {I18n.t("send_email_messages.subtitle")}
-    //       <Text bold={true}>Pippo</Text>
-    //       <Text>{I18n.t("global.symbols.question")}</Text>
-    //     </Text>
-
-    //     <List withContentLateralPadding={true} style={{ paddingTop: 6 }}>
-    //       <RadioButtonList
-    //         head="Qual'è il motivo della cancellazione?"
-    //         key="delete_reason"
-    //         items={[
-    //           { label: "Non ritengo più utile IO", id: 0 },
-    //           { label: "Non mi sento al sicuro su IO", id: 1 },
-    //           { label: "Non ho mai usato l'app", id: 2 },
-    //           { label: "Nessuno dei precedenti", id: 3 }
-    //         ]}
-    //         selectedItem={selectedMotivation}
-    //         onPress={motivationIndex => {
-    //           setSelectedMotivation(motivationIndex);
-    //         }}
-    //       />
-    //     </List>
-    //   </ScreenContent>
-    //   {isMarkdownLoaded && (
-    //     <FooterWithButtons
-    //       type={"SingleButton"}
-    //       leftButton={{
-    //         block: true,
-    //         primary: true,
-    //         onPress: handleContinuePress,
-    //         title: I18n.t("profile.main.privacy.removeAccountInfo.cta")
-    //       }}
-    //     />
-    //   )}
-    // </TopScreenComponent>
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("profile.main.title")}
+    >
+      <SafeAreaView style={IOStyles.flex}>
+        <Content>
+          <H1>{I18n.t("profile.main.privacy.removeAccount.title")}</H1>
+          <H4 weight="Regular">
+            {I18n.t("profile.main.privacy.removeAccount.details.body")}
+          </H4>
+          <View style={{ paddingTop: 25 }}>
+            <RadioButtonList
+              head="Qual'è il motivo della cancellazione?"
+              key="delete_reason"
+              items={[
+                { label: "Non ritengo più utile IO", id: 0 },
+                { label: "Non mi sento al sicuro su IO", id: 1 },
+                { label: "Non ho mai usato l'app", id: 2 },
+                { label: "Nessuno dei precedenti", id: 3 }
+              ]}
+              selectedItem={selectedMotivation}
+              onPress={motivationIndex => {
+                setSelectedMotivation(motivationIndex);
+              }}
+            />
+          </View>
+        </Content>
+        {footerComponent}
+      </SafeAreaView>
+    </BaseScreenComponent>
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  upsertUserDataProcessing: () =>
-    dispatch(
-      upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DOWNLOAD)
-    ),
-  resetRequest: () =>
-    dispatch(
-      resetUserDataProcessingRequest(UserDataProcessingChoiceEnum.DOWNLOAD)
-    )
+  sendMotivation: () => dispatch(removeAccountMotivation())
 });
 
-function mapStateToProps(state: GlobalState) {
-  const userDataProcessing = userDataProcessingSelector(state);
-  const isLoading =
-    pot.isLoading(userDataProcessing.DOWNLOAD) ||
-    pot.isUpdating(userDataProcessing.DOWNLOAD);
-  return {
-    userDataProcessing,
-    isLoading
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RemoveAccountDetails);
+export default connect(undefined, mapDispatchToProps)(RemoveAccountDetails);

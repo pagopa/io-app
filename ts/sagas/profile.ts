@@ -9,6 +9,7 @@ import {
   Effect,
   put,
   select,
+  take,
   takeEvery,
   takeLatest
 } from "redux-saga/effects";
@@ -20,11 +21,11 @@ import { tosVersion } from "../config";
 import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
 import {
-  navigateToRemoveAccountDetails,
   profileLoadFailure,
   profileLoadRequest,
   profileLoadSuccess,
   profileUpsert,
+  removeAccountMotivation,
   startEmailValidation
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
@@ -39,6 +40,10 @@ import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferen
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import ROUTES from "../navigation/routes";
 import reactotron from "reactotron-react-native";
+import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
+import { isYesterday } from "date-fns";
+import { startAndReturnIdentificationResult } from "./identification";
+import { pass } from "fp-ts/lib/Writer";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -269,7 +274,15 @@ export function* watchProfile(
   yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
 }
 
+export function* authenticationWorker() {
+  const storedPin = yield call(checkConfiguredPinSaga);
+
+  yield call(startAndReturnIdentificationResult, storedPin);
+}
+
 export function* handleRemoveAccount() {
+  yield takeEvery(removeAccountMotivation, authenticationWorker);
+
   reactotron.log("entra");
-  yield put(navigateToRemoveAccountDetails());
+  //   //yield put(navigateToRemoveAccountDetails());
 }

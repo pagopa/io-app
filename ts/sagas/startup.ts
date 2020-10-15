@@ -61,11 +61,11 @@ import {
 import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import {
+  handleRemoveAccount,
   loadProfile,
   watchProfile,
   watchProfileRefreshRequestsSaga,
-  watchProfileUpsertRequestsSaga,
-  handleRemoveAccount
+  watchProfileUpsertRequestsSaga
 } from "./profile";
 import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
