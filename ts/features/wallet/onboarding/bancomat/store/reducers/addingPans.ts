@@ -49,4 +49,9 @@ export const onboardingBancomatChosenPanSelector = (
 ): PatchedCard | undefined =>
   state.wallet.onboarding.bancomat.addingPans.selectedPan;
 
+export const onboardingBancomatAddingResultSelector = (
+  state: GlobalState
+): RemoteValue<void, Error> =>
+  state.wallet.onboarding.bancomat.addingPans.addingResult;
+
 export default addingPansReducer;

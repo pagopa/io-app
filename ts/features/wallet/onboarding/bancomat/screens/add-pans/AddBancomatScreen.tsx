@@ -2,70 +2,111 @@ import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { fromNullable } from "fp-ts/lib/Option";
+import { index } from "fp-ts/lib/Array";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { profileSelector } from "../../../../../../store/reducers/profile";
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import {
   getValueOrElse,
-  isLoading
+  isError,
+  isLoading,
+  isReady
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import {
+  walletAddBancomatCancel,
   walletAddBancomatCompleted,
   walletAddSelectedBancomat
 } from "../../store/actions";
 import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
+import {
+  onboardingBancomatAddingResultSelector,
+  onboardingBancomatChosenPanSelector
+} from "../../store/reducers/addingPans";
 import AddBancomatComponent from "./AddBancomatComponent";
 import LoadAddBancomatComponent from "./LoadAddBancomatComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+type NextAction = {
+  index: number;
+  skip: boolean;
+};
 /**
  * This screen is displayed when Bancomat are found and ready to be added in wallet
  * @constructor
  */
 const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
-  const [currentIndex, setCurrentIndex] = React.useState(0);
+  // next could be skip or not (a pan should be added)
+  const [currentAction, setNextAction] = React.useState<NextAction>({
+    index: 0,
+    skip: false
+  });
 
-  const nextPan = () => {
-    const nextIndex = currentIndex + 1;
-    if (nextIndex >= props.pans.length) {
-      props.onContinue();
-      return;
+  const currentIndex = currentAction.index;
+
+  React.useEffect(() => {
+    // we raise onCompleted we end pans has been reached
+    // and the adding phase has been completed (or it was skipped)
+    if (
+      currentIndex >= props.pans.length &&
+      (currentAction.skip || props.isAddingReady)
+    ) {
+      props.onCompleted();
     }
-    setCurrentIndex(nextIndex);
+  }, [currentAction, props.isAddingReady]);
+
+  const nextPan = (skip: boolean) => {
+    const nextIndex = currentIndex + 1;
+    setNextAction({ index: nextIndex, skip });
   };
 
   const handleOnContinue = () => {
-    props.addBancomat(props.pans[currentIndex]);
-    nextPan();
+    if (currentIndex < props.pans.length) {
+      props.addBancomat(props.pans[currentIndex]);
+    }
+    nextPan(false);
   };
 
-  return props.loading || props.pans.length === 0 ? (
-    <LoadAddBancomatComponent isLoading={props.loading} />
-  ) : (
+  const currentPan = index(currentIndex, [...props.pans]);
+
+  return props.loading || props.isAddingResultError ? (
+    <LoadAddBancomatComponent
+      isLoading={!props.isAddingResultError}
+      onCancel={props.onCancel}
+      onRetry={() => fromNullable(props.selectedPan).map(props.onRetry)}
+    />
+  ) : currentPan.isSome() ? (
     <AddBancomatComponent
-      pan={props.pans[currentIndex]}
+      pan={currentPan.value}
       profile={props.profile}
       pansNumber={props.pans.length}
       currentIndex={currentIndex}
       handleContinue={handleOnContinue}
-      handleSkip={nextPan}
+      handleSkip={() => nextPan(true)}
     />
-  );
+  ) : null; // this should not happen
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addBancomat: (pan: PatchedCard) =>
     dispatch(walletAddSelectedBancomat.request(pan)),
-  onContinue: () => dispatch(walletAddBancomatCompleted())
+  onCompleted: () => dispatch(walletAddBancomatCompleted()),
+  onCancel: () => dispatch(walletAddBancomatCancel()),
+  onRetry: (panSelected: PatchedCard) =>
+    dispatch(walletAddSelectedBancomat.request(panSelected))
 });
 
 const mapStateToProps = (state: GlobalState) => {
   const remotePans = onboardingBancomatFoundPansSelector(state);
+  const addingResult = onboardingBancomatAddingResultSelector(state);
   return {
-    loading: isLoading(remotePans),
+    isAddingReady: isReady(addingResult),
+    loading: isLoading(addingResult),
+    isAddingResultError: isError(addingResult),
     remotePans,
+    selectedPan: onboardingBancomatChosenPanSelector(state),
     pans: getValueOrElse(remotePans, []),
     profile: pot.toUndefined(profileSelector(state))
   };
