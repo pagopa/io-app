@@ -526,15 +526,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
     );
 
-  const bonusInfoFromLocale = props.bonusInfo
+  const maybeBonusInfo = fromNullable(props.bonusInfo);
+  const bonusInfoFromLocale = maybeBonusInfo
     .map(b => b[getLocalePrimaryWithFallback()])
     .toUndefined();
   const maybeBonusTos = fromNullable(bonusInfoFromLocale).fold(none, b =>
     maybeNotNullyString(b.tos_url)
   );
 
-  const from = props.bonusInfo.map(bi => bi.valid_from);
-  const to = props.bonusInfo.map(bi => bi.valid_to);
+  const from = maybeBonusInfo.map(bi => bi.valid_from);
+  const to = maybeBonusInfo.map(bi => bi.valid_to);
   const bonusValidityInterval = validityInterval(
     from.toUndefined(),
     to.toUndefined()
