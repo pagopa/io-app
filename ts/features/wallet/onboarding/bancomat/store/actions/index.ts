@@ -24,6 +24,16 @@ export const searchUserPans = createAsyncAction(
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_SUCCESS",
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_FAILURE"
 )<string | undefined, ReadonlyArray<PatchedCard>, LoadPansError>();
+
+/**
+ * The user select the current bancomat to add to the wallet
+ */
+export const walletAddSelectedBancomat = createAsyncAction(
+  "WALLET_ONBOARDING_BANCOMAT_ADD_REQUEST",
+  "WALLET_ONBOARDING_BANCOMAT_ADD_SUCCESS",
+  "WALLET_ONBOARDING_BANCOMAT_ADD_FAILURE"
+)<PatchedCard, void, Error>();
+
 /**
  * The user choose to start the workflow to add a new bancomat to the wallet
  */
@@ -56,6 +66,7 @@ export const walletAddBancomatBack = createStandardAction(
 export type AbiActions =
   | ActionType<typeof loadAbi>
   | ActionType<typeof searchUserPans>
+  | ActionType<typeof walletAddSelectedBancomat>
   | ActionType<typeof walletAddBancomatStart>
   | ActionType<typeof walletAddBancomatCompleted>
   | ActionType<typeof walletAddBancomatCancel>
