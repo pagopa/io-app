@@ -35,11 +35,15 @@ import {
   handleLoadAbi,
   handleLoadPans
 } from "../features/wallet/onboarding/bancomat/saga/networking";
-import { addBancomatToWalletGeneric } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
+import {
+  addBancomatToWalletGeneric,
+  addSelectedPans
+} from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import {
   loadAbi,
   searchUserPans,
-  walletAddBancomatStart
+  walletAddBancomatStart,
+  walletAddSelectedBancomat
 } from "../features/wallet/onboarding/bancomat/store/actions";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
@@ -730,6 +734,12 @@ export function* watchWalletSaga(
 
     // watch for add Bancomat to Wallet workflow
     yield takeLatest(walletAddBancomatStart, addBancomatToWalletGeneric);
+
+    /**
+     * TODO Replace with correct saga once developed the networking flow
+     * watch for add Bancomat to Wallet workflow
+     */
+    yield takeLatest(walletAddSelectedBancomat.request, addSelectedPans);
   }
 
   yield fork(paymentsDeleteUncompletedSaga);
