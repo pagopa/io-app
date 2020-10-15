@@ -17,11 +17,11 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  * This Screen shows all the information about the bpd program, with the rules and t&c.
  */
 
-const BpdInformationScreen: React.FunctionComponent<Props> = props => (
+const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => (
   <>
-    {props.bonus.isSome() ? (
+    {props.bonus ? (
       <BonusInformationComponent
-        bonus={props.bonus.value}
+        bonus={props.bonus}
         onConfirm={props.userActivateBpd}
         onCancel={props.onCancel}
       />
