@@ -1,4 +1,3 @@
-import reactotron from "reactotron-react-native";
 /**
  * A saga to manage notifications
  */
