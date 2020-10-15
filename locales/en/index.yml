@@ -363,7 +363,7 @@ authentication:
     expiredCardHelp: How to renew your Electronic Identity Card?
   cie:
     genericTitle: Login - CIE
-    cie: Electronic Identity Card
+    cie: CIE
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
@@ -628,6 +628,13 @@ wallet:
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
+  addBancomat:
+    title: "Add bancomat {{current}} of {{length}}"
+    screenTitle: "Do you want to add this card?"
+    bodySingular: "We found 1 card headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
+    bodyPlural: "We found {{number}} cards headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
+    skip: Skip
+    add: Add
   accessibility:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:

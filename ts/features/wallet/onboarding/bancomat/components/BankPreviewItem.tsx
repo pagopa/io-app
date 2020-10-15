@@ -1,4 +1,3 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { ListItem, View } from "native-base";
 import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
@@ -8,6 +7,7 @@ import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import IconFont from "../../../../../components/ui/IconFont";
+import { useImageResize } from "../screens/hooks/useImageResize";
 
 type Props = {
   bank: Abi;
@@ -46,42 +46,23 @@ const styles = StyleSheet.create({
   }
 });
 
-type ImageSize = {
-  width: number;
-  height: number;
-};
 export const BankPreviewItem: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const [imageDimensions, setImageDimensions] = React.useState<
-    ImageSize | undefined
-  >();
+  const imageDimensions = useImageResize(
+    BASE_IMG_W,
+    BASE_IMG_H,
+    props.bank.logoUrl
+  );
 
-  /**
-   * To keep the image bounded in the predefined maximum dimensions (40x160) we use the resizeMode "contain"
-   * and always calculate the resize width keeping fixed the height to 40, in this way all images will have an height of 40
-   * and a variable width until the limit of 160.
-   * Calculating the new image height based on its width may cause an over boundary dimension in some case.
-   * @param width
-   * @param height
-   */
-  const handleImageDimensionSuccess = (width: number, height: number) => {
-    if (width > 0 && height > 0) {
-      const ratio = Math.min(BASE_IMG_W / width, BASE_IMG_H / height);
-      setImageDimensions({ width: width * ratio, height: height * ratio });
-    }
-  };
-
-  React.useEffect(() => {
-    fromNullable(props.bank.logoUrl).map(url =>
-      Image.getSize(url, handleImageDimensionSuccess)
-    );
-  }, []);
-
-  const imageStyle: StyleProp<ImageStyle> = {
-    ...imageDimensions,
-    resizeMode: "contain"
-  };
+  const imageStyle: StyleProp<ImageStyle> | undefined = imageDimensions.fold(
+    undefined,
+    imgDim => ({
+      width: imgDim[0],
+      height: imgDim[1],
+      resizeMode: "contain"
+    })
+  );
 
   const onItemPress = () => props.bank.abi && props.onPress(props.bank.abi);
   const bankName = props.bank.name || I18n.t("wallet.searchAbi.noName");

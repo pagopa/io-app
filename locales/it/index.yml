@@ -374,7 +374,7 @@ authentication:
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
   cie:
     genericTitle: Accedi - CIE
-    cie: Carta di Identità Elettronica
+    cie: CIE
     noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
@@ -649,6 +649,13 @@ wallet:
     bankName: Denominazione della banca
     noName: Nome non disponibile
     loading: Carico la lista delle banche...
+  addBancomat:
+    title: "Aggiungi bancomat {{current}} di {{length}}"
+    screenTitle: "Vuoi aggiungere questa carta?"
+    bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
+    bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
+    skip: Salta
+    add: Aggiungi
   accessibility:
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
