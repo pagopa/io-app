@@ -628,6 +628,13 @@ wallet:
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
+  addBancomat:
+    title: "Add bancomat {{current}} of {{length}}"
+    screenTitle: "Do you want to add this card?"
+    bodySingular: "We found 1 card headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
+    bodyPlural: "We found {{number}} cards headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
+    skip: Skip
+    add: Add
   accessibility:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
