@@ -10,7 +10,8 @@ export type Props = {
 };
 
 /**
- * This screen is displayed when adding a new Bancomat
+ * This screen displays a loading or error message while saving a bancomat
+ * In error case a retry button will be shown
  * @constructor
  */
 const LoadAddBancomatComponent: React.FunctionComponent<Props> = props => {
