@@ -10,13 +10,10 @@ import {
   walletAddBancomatCancel,
   walletAddSelectedBancomat
 } from "../../store/actions";
-import {
-  onboardingBancomatChosenPanError,
-  onboardingBancomatChosenPanSelector
-} from "../../store/reducers/addingPans";
+import { onboardingBancomatChosenPanSelector } from "../../store/reducers/addingPans";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> & { isLoading: boolean };
 
 /**
  * This screen is displayed when adding a new Bancomat
@@ -46,8 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  panSelected: onboardingBancomatChosenPanSelector(state),
-  isLoading: !onboardingBancomatChosenPanError(state)
+  panSelected: onboardingBancomatChosenPanSelector(state)
 });
 
 export default connect(

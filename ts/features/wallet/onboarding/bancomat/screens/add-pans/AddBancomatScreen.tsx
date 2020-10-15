@@ -5,11 +5,10 @@ import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { profileSelector } from "../../../../../../store/reducers/profile";
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
-import { isReady } from "../../../../../bonus/bpd/model/RemoteValue";
 import {
-  onboardingBancomatChosenPanError,
-  onboardingBancomatChosenPanLoading
-} from "../../store/reducers/addingPans";
+  getValueOrElse,
+  isLoading
+} from "../../../../../bonus/bpd/model/RemoteValue";
 import {
   walletAddBancomatCompleted,
   walletAddSelectedBancomat
@@ -28,40 +27,22 @@ type Props = ReturnType<typeof mapStateToProps> &
 const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
-  const firstRender = React.useRef(true);
-
-  React.useEffect(() => {
-    if (firstRender.current) {
-      // eslint-disable-next-line functional/immutable-data
-      firstRender.current = false;
-      return;
-    }
-    const nextStep = currentIndex + 1;
-    // If we reached the last pan of our list exit the flow and complete the saga
-    if (!props.loading) {
-      if (nextStep === props.pans.length) {
-        props.onContinue();
-      } else {
-        setCurrentIndex(nextStep);
-      }
-    }
-  }, [props.loading]);
-
-  const skipToNextPan = () => {
-    const nextStep = currentIndex + 1;
-    if (nextStep === props.pans.length) {
+  const nextPan = () => {
+    const nextIndex = currentIndex + 1;
+    if (nextIndex >= props.pans.length) {
       props.onContinue();
       return;
     }
-    setCurrentIndex(nextStep);
+    setCurrentIndex(nextIndex);
   };
 
   const handleOnContinue = () => {
     props.addBancomat(props.pans[currentIndex]);
+    nextPan();
   };
 
-  return props.loading ? (
-    <LoadAddBancomatComponent />
+  return props.loading || props.pans.length === 0 ? (
+    <LoadAddBancomatComponent isLoading={props.loading} />
   ) : (
     <AddBancomatComponent
       pan={props.pans[currentIndex]}
@@ -69,7 +50,7 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
       pansNumber={props.pans.length}
       currentIndex={currentIndex}
       handleContinue={handleOnContinue}
-      handleSkip={skipToNextPan}
+      handleSkip={nextPan}
     />
   );
 };
@@ -81,12 +62,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => {
-  const maybeFoundPans = onboardingBancomatFoundPansSelector(state);
+  const remotePans = onboardingBancomatFoundPansSelector(state);
   return {
-    loading:
-      onboardingBancomatChosenPanError(state) ||
-      onboardingBancomatChosenPanLoading(state),
-    pans: isReady(maybeFoundPans) ? maybeFoundPans.value : [],
+    loading: isLoading(remotePans),
+    remotePans,
+    pans: getValueOrElse(remotePans, []),
     profile: pot.toUndefined(profileSelector(state))
   };
 };
