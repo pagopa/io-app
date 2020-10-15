@@ -101,7 +101,9 @@ export const bpdPaymentMethodsReducer = (
       return updateBpdPaymentMethodEntry(action.payload.hPan, state, {
         upsertValue: remoteLoading,
         potTest: pot.toUpdating(currentEntry.potTest, {
-          ...currentEntry,
+          ...(pot.isSome(currentEntry.potTest)
+            ? currentEntry.potTest.value
+            : { hPan: action.payload.hPan }),
           activationStatus: action.payload.value ? "active" : "inactive"
         })
       });
@@ -148,6 +150,12 @@ const bpdPaymentMethodUpsertValue = (
   hPan: HPan
 ): RemoteValue<null, Error> | undefined =>
   state.bonus.bpd.details.paymentMethods[hPan]?.upsertValue;
+
+export const bpdTestPotValue = (
+  state: GlobalState,
+  hPan: HPan
+): pot.Pot<BpdPaymentMethodActivation, Error> | undefined =>
+  state.bonus.bpd.details.paymentMethods[hPan]?.potTest;
 
 /**
  *

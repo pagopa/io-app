@@ -6,39 +6,45 @@ import {
 } from "../../store/actions/paymentMethods";
 
 /**
- * Placeholder method for remote call
+ * TODO: Placeholder method for remote call
  * Request the actual state of bpd on a payment method
  */
 export function* bpdLoadPaymentMethodActivationSaga(
   action: ActionType<typeof bpdPaymentMethodActivation.request>
 ) {
   yield delay(825);
-  // yield put(
-  //   bpdPaymentMethodActivation.success({
-  //     hPan: action.payload,
-  //     activationStatus: "inactive"
-  //   })
-  // );
   yield put(
-    bpdPaymentMethodActivation.failure({
-      error: new Error(),
-      hPan: action.payload
+    bpdPaymentMethodActivation.success({
+      hPan: action.payload,
+      activationStatus: "inactive"
     })
   );
+  // yield put(
+  //   bpdPaymentMethodActivation.failure({
+  //     error: new Error(),
+  //     hPan: action.payload
+  //   })
+  // );
 }
 
 /**
- * Placeholder method for remote call
+ * TODO: Placeholder method for remote call
  * Change the activation state on a payment method
  */
 export function* bpdUpdatePaymentMethodActivationSaga(
   action: ActionType<typeof bpdUpdatePaymentMethodActivation.request>
 ) {
-  yield delay(825);
+  yield delay(5000);
+  // yield put(
+  //   bpdUpdatePaymentMethodActivation.success({
+  //     hPan: action.payload.hPan,
+  //     activationStatus: action.payload.value ? "active" : "inactive"
+  //   })
+  // );
   yield put(
-    bpdUpdatePaymentMethodActivation.success({
+    bpdUpdatePaymentMethodActivation.failure({
       hPan: action.payload.hPan,
-      activationStatus: action.payload.value ? "active" : "inactive"
+      error: new Error("asd")
     })
   );
 }

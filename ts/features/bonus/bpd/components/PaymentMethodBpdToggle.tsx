@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import * as pot from "italia-ts-commons/lib/pot";
 import image from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOColors } from "../../../../components/core/variables/IOColors";
@@ -21,7 +22,8 @@ import {
 } from "../store/actions/paymentMethods";
 import {
   bpdPaymentMethodActualValueSelector,
-  bpdPaymentMethodUpsertValueSelector
+  bpdPaymentMethodUpsertValueSelector,
+  bpdTestPotValue
 } from "../store/reducers/details/paymentMethods";
 
 type OwnProps = { hpan: HPan };
@@ -58,11 +60,10 @@ const calculateGraphicalState = (
   )(actualValue);
 
 const renderToggle = (
-  state: GraphicalState,
-  value: BpdPmActivationStatus | undefined,
+  state: GraphicalValue,
   onValueChanged: (b: boolean) => void
 ) => {
-  switch (state) {
+  switch (state.state) {
     case "loading":
       return (
         <ActivityIndicator
@@ -79,14 +80,36 @@ const renderToggle = (
     case "update":
       return (
         <Switch
-          value={value === "active"}
-          disabled={state === "update"}
+          value={state.value === "active"}
+          disabled={state.state === "update"}
           onValueChange={onValueChanged}
         />
       );
   }
 };
 
+type GraphicalValue = {
+  state: GraphicalState;
+  value: BpdPmActivationStatus | undefined;
+};
+
+const testCalculateGraphicalState = (
+  potBpdActivation: pot.Pot<BpdPaymentMethodActivation, Error>
+): GraphicalValue =>
+  pot.fold<BpdPaymentMethodActivation, Error, GraphicalValue>(
+    potBpdActivation,
+    () => ({ state: "loading", value: undefined }),
+    () => ({ state: "loading", value: undefined }),
+    _ => ({ state: "loading", value: undefined }),
+    _ => ({ state: "loading", value: undefined }),
+    value => ({ state: "ready", value: value.activationStatus }),
+    value => ({ state: "loading", value: value.activationStatus }),
+    (_, newValue) => ({
+      state: "update",
+      value: newValue.activationStatus
+    }),
+    value => ({ state: "ready", value: value.activationStatus })
+  );
 /**
  * This component represents the activation state of bpd on a payment method.
  * - Load the initial value (is bpd active on the payment method)
@@ -97,10 +120,13 @@ const renderToggle = (
 const PaymentMethodBpdToggle: React.FunctionComponent<Props> = props => {
   const remoteValue = props.remoteValue;
   const upsertValue = props.upsertValue;
+
   const value = fromNullable(getValue(remoteValue))
     .map(v => v.activationStatus)
     .toUndefined();
-  const graphicalState = calculateGraphicalState(remoteValue, upsertValue);
+  const graphicalState = testCalculateGraphicalState(
+    fromNullable(props.pot).getOrElse(pot.none)
+  );
   useEffect(() => {
     if (isUndefined(remoteValue)) {
       props.loadActualValue(props.hpan);
@@ -115,9 +141,7 @@ const PaymentMethodBpdToggle: React.FunctionComponent<Props> = props => {
           <View hspacer={true} />
           <Body>Intesa San Paolo </Body>
         </View>
-        {renderToggle(graphicalState, value, b =>
-          props.updateValue(props.hpan, b)
-        )}
+        {renderToggle(graphicalState, b => props.updateValue(props.hpan, b))}
       </View>
     </>
   );
@@ -132,7 +156,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
   remoteValue: bpdPaymentMethodActualValueSelector(state, props.hpan),
-  upsertValue: bpdPaymentMethodUpsertValueSelector(state, props.hpan)
+  upsertValue: bpdPaymentMethodUpsertValueSelector(state, props.hpan),
+  pot: bpdTestPotValue(state, props.hpan)
 });
 
 export default connect(
