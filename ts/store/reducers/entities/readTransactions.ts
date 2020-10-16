@@ -28,7 +28,7 @@ export const transactionsReadReducer = (
       };
     }
     case getType(deleteReadTransaction): {
-      // rebuild the state by removing the elements in action.payload
+      // rebuild the state by removing the elements contained in action.payload
       const toDelete = action.payload;
       return Object.keys(state).reduce<ReadTransactionsState>((acc, curr) => {
         if (toDelete.indexOf(state[curr]) !== -1) {
