@@ -45,6 +45,7 @@ import { PaymentManagerToken } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
+import { convertWalletV2toWalletV1 } from "../../utils/wallet";
 
 //
 // Payment Manager APIs
@@ -64,6 +65,33 @@ export function* fetchWalletsRequestHandler(
     if (getResponse.isRight()) {
       if (getResponse.value.status === 200) {
         yield put(fetchWalletsSuccess(getResponse.value.value.data));
+      } else {
+        throw Error(`response status ${getResponse.value.status}`);
+      }
+    } else {
+      throw Error(readablePrivacyReport(getResponse.value));
+    }
+  } catch (error) {
+    yield put(fetchWalletsFailure(error));
+  }
+}
+
+export function* fetchWalletsV2RequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>
+): Generator<Effect, void, any> {
+  const request = pmSessionManager.withRefresh(pagoPaClient.getWalletsV2);
+  try {
+    const getResponse: SagaCallReturnType<typeof request> = yield call(request);
+    if (getResponse.isRight()) {
+      if (getResponse.value.status === 200) {
+        if (getResponse.value.value.data) {
+          yield put(
+            fetchWalletsSuccess(
+              getResponse.value.value.data.map(convertWalletV2toWalletV1)
+            )
+          );
+        }
       } else {
         throw Error(`response status ${getResponse.value.status}`);
       }

@@ -68,7 +68,9 @@ import {
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
   getPansUsingGETDecoder,
-  GetPansUsingGETT
+  GetPansUsingGETT,
+  getWalletsV2UsingGETDefaultDecoder,
+  GetWalletsV2UsingGETT
 } from "../../definitions/pagopa/bancomat/requestTypes";
 
 /**
@@ -203,6 +205,14 @@ const getWallets: GetWalletsUsingGETExtraT = {
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPatchedWalletsUsingGETDecoder(WalletListResponse)
+};
+
+const getWalletsV2: GetWalletsV2UsingGETT = {
+  method: "get",
+  url: () => "/v2/wallet",
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getWalletsV2UsingGETDefaultDecoder()
 };
 
 const checkPayment: CheckPaymentUsingGETT = {
@@ -428,6 +438,9 @@ export function PaymentManagerClient(
     ) => createFetchRequestForApi(getSession, options)({ token: wt }),
     getWallets: flip(
       withPaymentManagerToken(createFetchRequestForApi(getWallets, options))
+    )({}),
+    getWalletsV2: flip(
+      withPaymentManagerToken(createFetchRequestForApi(getWalletsV2, options))
     )({}),
     getTransactions: (start: number) =>
       flip(
