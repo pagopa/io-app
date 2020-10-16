@@ -64,9 +64,11 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../store/actions/wallet/payment";
 import {
+  deleteReadTransaction,
   fetchPsp,
   fetchTransactionFailure,
   fetchTransactionRequest,
+  fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
   fetchTransactionSuccess,
   pollTransactionSagaCompleted,
@@ -124,6 +126,8 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
+import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
+import _ from "lodash";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -575,6 +579,28 @@ export function* watchWalletSaga(
     paymentManagerClient,
     pmSessionManager
   );
+
+  /**
+   * watch when all transactions are been loaded
+   * check if transaction read store section (entities.transactionsRead) is dirty:
+   * it could contain transactions different from the loaded ones
+   * This scenario could happen when same app instace is used across multiple users
+   */
+  yield takeLatest(getType(fetchTransactionsLoadComplete), function* (
+    action: ActionType<typeof fetchTransactionsLoadComplete>
+  ) {
+    const transactionRead: ReturnType<typeof getTransactionsRead> = yield select(
+      getTransactionsRead
+    );
+    const transactionReadId = Object.keys(transactionRead).map(
+      k => transactionRead[k]
+    );
+    const allTransactionsId = action.payload.map(t => t.id);
+    const toDelete = _.difference(transactionReadId, allTransactionsId);
+    if (toDelete.length > 0) {
+      yield put(deleteReadTransaction(toDelete));
+    }
+  });
 
   yield takeLatest(
     getType(fetchTransactionRequest),
