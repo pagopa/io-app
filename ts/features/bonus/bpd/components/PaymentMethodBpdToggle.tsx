@@ -115,22 +115,29 @@ const PaymentMethodBpdToggle: React.FunctionComponent<Props> = props => {
     timerRetry.current = undefined;
     props.loadActualValue(props.hPan);
   };
+  // When the focus change, clear the timer (if any) and reset the value to undefined
+  // (new focus -> new schedule is allowed)
+  useEffect(() => {
+    console.log("The focus is:  " + navigation.isFocused());
+    clearTimeout(timerRetry.current);
+    timerRetry.current = undefined;
+  }, [navigation.isFocused()]);
 
   useEffect(() => {
     console.log("effect" + timerRetry.current);
-    console.log("is Focus" + navigation.isFocused());
     if (props.bpdPotActivation === pot.none) {
       props.loadActualValue(props.hPan);
     } else if (
       pot.isNone(props.bpdPotActivation) &&
       pot.isError(props.bpdPotActivation) &&
-      timerRetry.current === undefined
+      timerRetry.current === undefined &&
+      navigation.isFocused()
     ) {
       console.log("----> schedule");
       // eslint-disable-next-line functional/immutable-data
       timerRetry.current = setTimeout(retry, 10000);
     }
-  }, [props.bpdPotActivation, timerRetry.current]);
+  }, [props.bpdPotActivation, timerRetry.current, navigation.isFocused()]);
 
   useEffect(
     () => () => {
@@ -143,16 +150,6 @@ const PaymentMethodBpdToggle: React.FunctionComponent<Props> = props => {
   return (
     <>
       <View style={styles.row}>
-        <NavigationEvents
-          onDidBlur={() => {
-            console.log("blur");
-            clearTimeout(timerRetry.current);
-          }}
-          onDidFocus={() => {
-            console.log("focus");
-            timerRetry.current = undefined;
-          }}
-        />
         <View style={{ flexDirection: "row", flex: 1 }}>
           <Image source={image} style={styles.cardIcon} />
           <View hspacer={true} />
