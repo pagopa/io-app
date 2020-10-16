@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     height: 25,
     overflow: "hidden",
     resizeMode: "contain"
-  }
+  },
+  leftSection: { flexDirection: "row", flex: 1 }
 });
 
 const retryTimeout = 5000 as Millisecond;
@@ -143,7 +144,7 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
   return (
     <>
       <View style={styles.row}>
-        <View style={{ flexDirection: "row", flex: 1 }}>
+        <View style={styles.leftSection}>
           {/* TODO: The image will be received by props / redux state */}
           <Image source={image} style={styles.cardIcon} />
           <View hspacer={true} />
