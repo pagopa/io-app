@@ -31,6 +31,7 @@ import {
   fetchPaymentManagerLongTimeout
 } from "../config";
 import {
+  handleAddPan,
   handleLoadAbi,
   handleLoadPans
 } from "../features/wallet/onboarding/bancomat/saga/networking";
@@ -74,6 +75,7 @@ import {
   runPollTransactionSaga
 } from "../store/actions/wallet/transactions";
 import {
+  addWalletBancomatPan,
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
@@ -719,6 +721,14 @@ export function* watchWalletSaga(
       searchUserPans.request,
       handleLoadPans,
       paymentManagerClient.getPans,
+      pmSessionManager
+    );
+
+    // watch for add pan request
+    yield takeLatest(
+      addWalletBancomatPan.request,
+      handleAddPan,
+      paymentManagerClient.addPans,
       pmSessionManager
     );
 

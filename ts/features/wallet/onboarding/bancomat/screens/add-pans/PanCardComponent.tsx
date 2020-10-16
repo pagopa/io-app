@@ -15,11 +15,11 @@ import customVariables from "../../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../../utils/dates";
 import { useImageResize } from "../hooks/useImageResize";
 import pagoBancomatLogo from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
-import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
+import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
 
 type Props = {
   abiLogo?: string;
-  pan: PatchedCard;
+  pan: Card;
   user: string;
 };
 
@@ -91,7 +91,7 @@ const PanCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           {props.pan.expiringDate && (
             <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
               "cardComponent.validUntil"
-            )} ${formatDateAsLocal(new Date(props.pan.expiringDate))}`}</H5>
+            )} ${formatDateAsLocal(props.pan.expiringDate)}`}</H5>
           )}
         </View>
         <View style={styles.bottomRow}>
