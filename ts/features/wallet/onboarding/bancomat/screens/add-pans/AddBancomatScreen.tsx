@@ -16,7 +16,7 @@ import {
 import {
   walletAddBancomatCancel,
   walletAddBancomatCompleted,
-  walletAddSelectedBancomat
+  addBancomatToWallet
 } from "../../store/actions";
 import {
   onboardingBancomatAddingResultSelector,
@@ -90,11 +90,11 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addBancomat: (pan: Card) => dispatch(walletAddSelectedBancomat.request(pan)),
+  addBancomat: (pan: Card) => dispatch(addBancomatToWallet.request(pan)),
   onCompleted: () => dispatch(walletAddBancomatCompleted()),
   onCancel: () => dispatch(walletAddBancomatCancel()),
   onRetry: (panSelected: Card) =>
-    dispatch(walletAddSelectedBancomat.request(panSelected))
+    dispatch(addBancomatToWallet.request(panSelected))
 });
 
 const mapStateToProps = (state: GlobalState) => {
