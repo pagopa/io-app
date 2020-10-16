@@ -34,6 +34,7 @@ const renderPaymentMethod = (
 ) =>
   pot.fold(
     potWallets,
+    // TODO: handle error, loading with spinner if needed
     () => null,
     () => null,
     _ => null,

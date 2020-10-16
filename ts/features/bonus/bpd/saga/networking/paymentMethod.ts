@@ -12,7 +12,7 @@ import {
 export function* bpdLoadPaymentMethodActivationSaga(
   action: ActionType<typeof bpdPaymentMethodActivation.request>
 ) {
-  yield delay(5000);
+  yield delay(500);
   yield put(
     bpdPaymentMethodActivation.success({
       hPan: action.payload,
@@ -34,17 +34,17 @@ export function* bpdLoadPaymentMethodActivationSaga(
 export function* bpdUpdatePaymentMethodActivationSaga(
   action: ActionType<typeof bpdUpdatePaymentMethodActivation.request>
 ) {
-  yield delay(5000);
-  // yield put(
-  //   bpdUpdatePaymentMethodActivation.success({
-  //     hPan: action.payload.hPan,
-  //     activationStatus: action.payload.value ? "active" : "inactive"
-  //   })
-  // );
+  yield delay(500);
   yield put(
-    bpdUpdatePaymentMethodActivation.failure({
+    bpdUpdatePaymentMethodActivation.success({
       hPan: action.payload.hPan,
-      error: new Error("asd")
+      activationStatus: action.payload.value ? "active" : "inactive"
     })
   );
+  // yield put(
+  //   bpdUpdatePaymentMethodActivation.failure({
+  //     hPan: action.payload.hPan,
+  //     error: new Error("asd")
+  //   })
+  // );
 }
