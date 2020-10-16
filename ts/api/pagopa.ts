@@ -69,8 +69,7 @@ import {
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
   getPansUsingGETDefaultDecoder,
-  GetPansUsingGETT
-  getPansUsingGETDecoder,
+  GetPansUsingGETT,
   getWalletsV2UsingGETDefaultDecoder,
   GetWalletsV2UsingGETT
 } from "../../definitions/pagopa/bancomat/requestTypes";
