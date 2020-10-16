@@ -12,19 +12,19 @@ import {
 export function* bpdLoadPaymentMethodActivationSaga(
   action: ActionType<typeof bpdPaymentMethodActivation.request>
 ) {
-  yield delay(0);
-  // yield put(
-  //   bpdPaymentMethodActivation.success({
-  //     hPan: action.payload,
-  //     activationStatus: "inactive"
-  //   })
-  // );
+  yield delay(5000);
   yield put(
-    bpdPaymentMethodActivation.failure({
-      error: new Error(),
-      hPan: action.payload
+    bpdPaymentMethodActivation.success({
+      hPan: action.payload,
+      activationStatus: "inactive"
     })
   );
+  // yield put(
+  //   bpdPaymentMethodActivation.failure({
+  //     error: new Error(),
+  //     hPan: action.payload
+  //   })
+  // );
 }
 
 /**

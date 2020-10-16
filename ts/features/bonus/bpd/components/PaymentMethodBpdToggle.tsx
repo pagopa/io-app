@@ -1,16 +1,15 @@
+/* eslint-disable functional/immutable-data */
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
-import { useContext, useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Image, StyleSheet } from "react-native";
-import { NavigationContext, NavigationEvents } from "react-navigation";
+import { useContext, useEffect, useRef } from "react";
+import { Image, StyleSheet } from "react-native";
+import { NavigationContext } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { Body } from "../../../../components/core/typography/Body";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import IconFont from "../../../../components/ui/IconFont";
-import Switch from "../../../../components/ui/Switch";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   bpdPaymentMethodActivation,
@@ -20,12 +19,21 @@ import {
   HPan
 } from "../store/actions/paymentMethods";
 import { bpdPaymentMethodValueSelector } from "../store/reducers/details/paymentMethods";
+import { BpdToggle } from "./BpdToggle";
 
-type OwnProps = { hPan: HPan };
+// TODO: accept only hpan, read all the other information with a selector from payment methods
+type OwnProps = { hPan: HPan; hasBpdCapability: boolean };
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
+
+type GraphicalState = "loading" | "ready" | "notActivable" | "update";
+
+export type GraphicalValue = {
+  state: GraphicalState;
+  value: BpdPmActivationStatus | undefined;
+};
 
 const styles = StyleSheet.create({
   row: {
@@ -42,44 +50,59 @@ const styles = StyleSheet.create({
   }
 });
 
-type GraphicalState = "loading" | "ready" | "notActivable" | "update";
+const retryTimeout = 5000 as Millisecond;
+/**
+ * This custom hook handles the load of the initial state and the retry in case of error.
+ * @param props
+ */
+const useInitialValue = (props: Props) => {
+  const timerRetry = useRef<number | undefined>(undefined);
+  const navigation = useContext(NavigationContext);
+  const retry = () => {
+    timerRetry.current = undefined;
+    props.loadActualValue(props.hPan);
+  };
 
-type GraphicalValue = {
-  state: GraphicalState;
-  value: BpdPmActivationStatus | undefined;
+  /**
+   * When the focus change, clear the timer (if any) and reset the value to undefined
+   * focus: true  -> a new schedule is allowed
+   * focus: false -> clear all the pending schedule
+   */
+  useEffect(() => {
+    clearTimeout(timerRetry.current);
+    timerRetry.current = undefined;
+  }, [navigation.isFocused()]);
+
+  useEffect(() => {
+    // Initial state, request the state
+    if (props.bpdPotActivation === pot.none) {
+      props.loadActualValue(props.hPan);
+    } else if (
+      pot.isNone(props.bpdPotActivation) &&
+      pot.isError(props.bpdPotActivation) &&
+      timerRetry.current === undefined &&
+      navigation.isFocused()
+    ) {
+      // If the pot is NoneError, the navigation focus is on the element
+      // and no other retry are scheduled
+      timerRetry.current = setTimeout(retry, retryTimeout);
+    }
+  }, [props.bpdPotActivation, timerRetry.current, navigation.isFocused()]);
+
+  // Component unmount, clear scheduled
+  useEffect(
+    () => () => {
+      clearTimeout(timerRetry.current);
+    },
+    []
+  );
 };
 
-const renderToggle = (
-  state: GraphicalValue,
-  onValueChanged: (b: boolean) => void
-) => {
-  switch (state.state) {
-    case "loading":
-      return (
-        <ActivityIndicator
-          color={"black"}
-          accessible={false}
-          importantForAccessibility={"no-hide-descendants"}
-          accessibilityElementsHidden={true}
-        />
-      );
-
-    case "notActivable":
-      return <IconFont name={"io-notice"} size={24} color={IOColors.blue} />;
-    case "ready":
-    case "update":
-      return (
-        <Switch
-          value={state.value === "active"}
-          disabled={state.state === "update"}
-          onValueChange={onValueChanged}
-        />
-      );
-  }
-};
-
-// TODO: retry on error, "notActivable" -> when no capability
-const testCalculateGraphicalState = (
+/**
+ * Calculate the graphical state based on the pot possible states
+ * @param potBpdActivation
+ */
+const calculateGraphicalState = (
   potBpdActivation: pot.Pot<BpdPaymentMethodActivation, Error>
 ): GraphicalValue =>
   pot.fold<BpdPaymentMethodActivation, Error, GraphicalValue>(
@@ -101,61 +124,37 @@ const testCalculateGraphicalState = (
  * - Load the initial value (is bpd active on the payment method)
  * - The toggle allows the user to enable or disable bpd on the payment method
  * - Sync the remote communication with the graphical states
+ * Bpd can also be "not activable" on the payment method:
+ * - The payment method doesn't have the capability
+ * - Bpd is already activate on the payment method by another user
  * @constructor
  */
 const PaymentMethodBpdToggle: React.FunctionComponent<Props> = props => {
-  const graphicalState = testCalculateGraphicalState(props.bpdPotActivation);
-  const timerRetry = useRef<number | undefined>(undefined);
-  const navigation = useContext(NavigationContext);
-
-  console.log("render");
-  const retry = () => {
-    console.log("tic tac");
-    // eslint-disable-next-line functional/immutable-data
-    timerRetry.current = undefined;
-    props.loadActualValue(props.hPan);
-  };
-  // When the focus change, clear the timer (if any) and reset the value to undefined
-  // (new focus -> new schedule is allowed)
-  useEffect(() => {
-    console.log("The focus is:  " + navigation.isFocused());
-    clearTimeout(timerRetry.current);
-    timerRetry.current = undefined;
-  }, [navigation.isFocused()]);
-
-  useEffect(() => {
-    console.log("effect" + timerRetry.current);
-    if (props.bpdPotActivation === pot.none) {
-      props.loadActualValue(props.hPan);
-    } else if (
-      pot.isNone(props.bpdPotActivation) &&
-      pot.isError(props.bpdPotActivation) &&
-      timerRetry.current === undefined &&
-      navigation.isFocused()
-    ) {
-      console.log("----> schedule");
-      // eslint-disable-next-line functional/immutable-data
-      timerRetry.current = setTimeout(retry, 10000);
-    }
-  }, [props.bpdPotActivation, timerRetry.current, navigation.isFocused()]);
-
-  useEffect(
-    () => () => {
-      console.log("clean");
-      clearTimeout(timerRetry.current);
-    },
-    []
-  );
+  // Calculate the graphical state based on the potActivation and capability
+  const graphicalState: GraphicalValue = props.hasBpdCapability
+    ? calculateGraphicalState(props.bpdPotActivation)
+    : { state: "notActivable", value: "notActivable" };
+  if (props.hasBpdCapability) {
+    // trigger the initial loading / retry only if the method has the bpd capability
+    useInitialValue(props);
+  }
 
   return (
     <>
       <View style={styles.row}>
         <View style={{ flexDirection: "row", flex: 1 }}>
+          {/* TODO: The image will be received by props / redux state */}
           <Image source={image} style={styles.cardIcon} />
           <View hspacer={true} />
+          {/* TODO: The Text will be received by props / redux state */}
           <Body>Intesa San Paolo</Body>
         </View>
-        {renderToggle(graphicalState, b => props.updateValue(props.hPan, b))}
+        <BpdToggle
+          graphicalValue={graphicalState}
+          // TODO: ask for user confirm when disable the bpd on payment method
+          onValueChanged={b => props.updateValue(props.hPan, b)}
+          // TODO: when onPress -> show bottomsheet explaining why the bpd cannot be activated
+        />
       </View>
     </>
   );
