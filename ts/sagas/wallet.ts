@@ -584,7 +584,7 @@ export function* watchWalletSaga(
    * watch when all transactions are been loaded
    * check if transaction read store section (entities.transactionsRead) is dirty:
    * it could contain transactions different from the loaded ones
-   * This scenario could happen when same app instace is used across multiple users
+   * This scenario could happen when same app instance is used across multiple users
    */
   yield takeLatest(getType(fetchTransactionsLoadComplete), function* (
     action: ActionType<typeof fetchTransactionsLoadComplete>
