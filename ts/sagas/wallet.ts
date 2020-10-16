@@ -35,15 +35,12 @@ import {
   handleLoadAbi,
   handleLoadPans
 } from "../features/wallet/onboarding/bancomat/saga/networking";
+import { addBancomatToWalletGeneric } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import {
-  addBancomatToWalletGeneric,
-  addSelectedPans
-} from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
-import {
+  addBancomatToWallet,
   loadAbi,
   searchUserPans,
-  walletAddBancomatStart,
-  walletAddSelectedBancomat
+  walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
@@ -75,7 +72,6 @@ import {
   runPollTransactionSaga
 } from "../store/actions/wallet/transactions";
 import {
-  addWalletBancomatPan,
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
@@ -726,7 +722,7 @@ export function* watchWalletSaga(
 
     // watch for add pan request
     yield takeLatest(
-      addWalletBancomatPan.request,
+      addBancomatToWallet.request,
       handleAddPan,
       paymentManagerClient.addPans,
       pmSessionManager
@@ -734,12 +730,6 @@ export function* watchWalletSaga(
 
     // watch for add Bancomat to Wallet workflow
     yield takeLatest(walletAddBancomatStart, addBancomatToWalletGeneric);
-
-    /**
-     * TODO Replace with correct saga once developed the networking flow
-     * watch for add Bancomat to Wallet workflow
-     */
-    yield takeLatest(walletAddSelectedBancomat.request, addSelectedPans);
   }
 
   yield fork(paymentsDeleteUncompletedSaga);

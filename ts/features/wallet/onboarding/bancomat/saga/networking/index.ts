@@ -7,8 +7,11 @@ import { SagaCallReturnType } from "../../../../../../types/utils";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
-import { loadAbi, searchUserPans } from "../../store/actions";
-import { addWalletBancomatPan } from "../../../../../../store/actions/wallet/wallets";
+import {
+  addBancomatToWallet,
+  loadAbi,
+  searchUserPans
+} from "../../store/actions";
 
 // load all bancomat abi
 export function* handleLoadAbi(
@@ -100,7 +103,7 @@ export function* handleLoadPans(
 export function* handleAddPan(
   addPans: ReturnType<typeof PaymentManagerClient>["addPans"],
   sessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof addWalletBancomatPan.request>
+  action: ActionType<typeof addBancomatToWallet.request>
 ) {
   try {
     const addPansWithRefresh = sessionManager.withRefresh(
@@ -118,7 +121,7 @@ export function* handleAddPan(
         if (maybeWallet.isSome()) {
           yield put(
             // access
-            addWalletBancomatPan.success(maybeWallet.value)
+            addBancomatToWallet.success(maybeWallet.value)
           );
         } else {
           throw new Error(`success payload is empty`);
@@ -132,6 +135,6 @@ export function* handleAddPan(
       throw new Error(readableReport(addPansWithRefreshResult.value));
     }
   } catch (e) {
-    yield put(addWalletBancomatPan.failure(e));
+    yield put(addBancomatToWallet.failure(e));
   }
 }

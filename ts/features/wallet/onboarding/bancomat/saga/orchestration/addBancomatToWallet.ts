@@ -1,4 +1,4 @@
-import { call, delay, put } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import {
   ESagaResult,
   executeWorkUnit,
@@ -11,8 +11,7 @@ import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
 import {
   walletAddBancomatBack,
   walletAddBancomatCancel,
-  walletAddBancomatCompleted,
-  walletAddSelectedBancomat
+  walletAddBancomatCompleted
 } from "../../store/actions";
 
 /**
@@ -44,13 +43,4 @@ export function* addBancomatToWalletGeneric() {
   if (res !== ESagaResult.Back) {
     yield put(navigateToWalletHome());
   }
-}
-
-/**
- * Development purpose only function
- * TO BE REPLACED with the saga to add a new bancomat to the wallet
- */
-export function* addSelectedPans() {
-  yield delay(400);
-  yield put(walletAddSelectedBancomat.success());
 }
