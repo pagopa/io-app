@@ -31,19 +31,16 @@ export const BpdToggle: React.FunctionComponent<Props> = props => {
           accessibilityElementsHidden={true}
         />
       );
-
-    case "notActivable":
-      return (
+    case "ready":
+    case "update":
+      return props.graphicalValue.value === "notActivable" ? (
         <IconFont
           name={"io-notice"}
           size={iconSize}
           color={IOColors.blue}
           onPress={props.onPress}
         />
-      );
-    case "ready":
-    case "update":
-      return (
+      ) : (
         <Switch
           value={props.graphicalValue.value === "active"}
           disabled={props.graphicalValue.state === "update"}

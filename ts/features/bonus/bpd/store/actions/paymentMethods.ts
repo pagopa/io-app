@@ -13,7 +13,7 @@ export type HPan = string & IUnitTag<"HPan">;
 export type BpdPmActivationStatus = "active" | "inactive" | "notActivable";
 
 /**
- * The response payload to know the actual state of bpd on a payment method
+ * The response payload that represents the actual state of bpd on a payment method
  */
 export type BpdPaymentMethodActivation = {
   hPan: HPan;
@@ -30,6 +30,9 @@ type BpdPaymentMethodFailure = {
   error: Error;
 };
 
+/**
+ * The request payload to update the activation status on a payment method
+ */
 type BpdUpdatePaymentMethodActivationPayload = {
   hPan: HPan;
   value: boolean;

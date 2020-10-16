@@ -28,7 +28,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
 
-type GraphicalState = "loading" | "ready" | "notActivable" | "update";
+type GraphicalState = "loading" | "ready" | "update";
 
 export type GraphicalValue = {
   state: GraphicalState;
@@ -119,6 +119,7 @@ const calculateGraphicalState = (
     }),
     value => ({ state: "ready", value: value.activationStatus })
   );
+
 /**
  * This component represents the activation state of bpd on a payment method.
  * - Load the initial value (is bpd active on the payment method)
@@ -133,7 +134,7 @@ const PaymentMethodBpdToggle: React.FunctionComponent<Props> = props => {
   // Calculate the graphical state based on the potActivation and capability
   const graphicalState: GraphicalValue = props.hasBpdCapability
     ? calculateGraphicalState(props.bpdPotActivation)
-    : { state: "notActivable", value: "notActivable" };
+    : { state: "ready", value: "notActivable" };
   if (props.hasBpdCapability) {
     // trigger the initial loading / retry only if the method has the bpd capability
     useInitialValue(props);

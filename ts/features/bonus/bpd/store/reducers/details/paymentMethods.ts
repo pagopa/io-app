@@ -20,12 +20,13 @@ export type BpdPotPaymentMethodActivation = pot.Pot<
 const readPot = (
   hPan: HPan,
   data: IndexedById<BpdPotPaymentMethodActivation>
-) => fromNullable(data[hPan]).getOrElse(pot.none);
+): BpdPotPaymentMethodActivation =>
+  fromNullable(data[hPan]).getOrElse(pot.none);
 
 /**
  * This reducer keep the activation state and the upsert request foreach payment method,
  * grouped by hPan.
- * Foreach hPan there is a {@link BpdPaymentMethods} containing the related bpd activation information.
+ * Foreach hPan there is a {@link BpdPotPaymentMethodActivation} containing the related bpd activation information.
  * @param state
  * @param action
  */
@@ -48,6 +49,7 @@ export const bpdPaymentMethodsReducer = (
       };
     case getType(bpdUpdatePaymentMethodActivation.request):
       const updateRequest = readPot(action.payload.hPan, state);
+      // write the candidate activationStatus, preserving all the others fields
       return {
         ...state,
         [action.payload.hPan]: pot.toUpdating(updateRequest, {
@@ -66,22 +68,26 @@ export const bpdPaymentMethodsReducer = (
         [action.payload.hPan]: pot.toError(updateFailure, action.payload.error)
       };
   }
-
   return state;
 };
 
-const bpdTestPotValue = (
+/**
+ * The raw selection of the bpd activation status for a payment method
+ * @param state
+ * @param hPan
+ */
+const bpdPaymentMethodActivationByHPanValue = (
   state: GlobalState,
   hPan: HPan
-): pot.Pot<BpdPaymentMethodActivation, Error> | undefined => {
-  console.log("pottttte");
-  return state.bonus.bpd.details.paymentMethods[hPan];
-};
+): pot.Pot<BpdPaymentMethodActivation, Error> | undefined =>
+  state.bonus.bpd.details.paymentMethods[hPan];
 
+/**
+ * Return the pot representing the bpd activation status for a payment method.
+ * It's wrapped with createSelector in order to memoize the value and avoid recalculation
+ * when the state change.
+ */
 export const bpdPaymentMethodValueSelector = createSelector(
-  [bpdTestPotValue],
-  potValue => {
-    console.log("read selector pot " + potValue);
-    return potValue ?? pot.none;
-  }
+  [bpdPaymentMethodActivationByHPanValue],
+  potValue => potValue ?? pot.none
 );
