@@ -12,7 +12,7 @@ import {
 export function* bpdLoadPaymentMethodActivationSaga(
   action: ActionType<typeof bpdPaymentMethodActivation.request>
 ) {
-  yield delay(5000);
+  yield delay(0);
   // yield put(
   //   bpdPaymentMethodActivation.success({
   //     hPan: action.payload,

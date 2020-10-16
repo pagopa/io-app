@@ -1,9 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Image, StyleSheet } from "react-native";
-import { NavigationEvents } from "react-navigation";
+import { NavigationContext, NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../img/wallet/cards-icons/pagobancomat.png";
@@ -36,7 +36,9 @@ const styles = StyleSheet.create({
   },
   cardIcon: {
     width: 40,
-    height: 25
+    height: 25,
+    overflow: "hidden",
+    resizeMode: "contain"
   }
 });
 
@@ -103,36 +105,53 @@ const testCalculateGraphicalState = (
  */
 const PaymentMethodBpdToggle: React.FunctionComponent<Props> = props => {
   const graphicalState = testCalculateGraphicalState(props.bpdPotActivation);
-  const [errorRetry, setRetry] = useState<number | undefined>(undefined);
+  const timerRetry = useRef<number | undefined>(undefined);
+  const navigation = useContext(NavigationContext);
 
+  console.log("render");
   const retry = () => {
     console.log("tic tac");
-    setRetry(undefined);
+    // eslint-disable-next-line functional/immutable-data
+    timerRetry.current = undefined;
     props.loadActualValue(props.hPan);
   };
 
   useEffect(() => {
-    console.log("effect" + errorRetry);
-    console.log("effect" + pot.isNone(props.bpdPotActivation));
-    console.log("effect" + pot.isError(props.bpdPotActivation));
+    console.log("effect" + timerRetry.current);
+    console.log("is Focus" + navigation.isFocused());
     if (props.bpdPotActivation === pot.none) {
       props.loadActualValue(props.hPan);
     } else if (
       pot.isNone(props.bpdPotActivation) &&
       pot.isError(props.bpdPotActivation) &&
-      errorRetry === undefined
+      timerRetry.current === undefined
     ) {
-      console.log("schedule");
-      setRetry(setTimeout(retry, 10000));
+      console.log("----> schedule");
+      // eslint-disable-next-line functional/immutable-data
+      timerRetry.current = setTimeout(retry, 10000);
     }
-  }, [props.bpdPotActivation, errorRetry]);
+  }, [props.bpdPotActivation, timerRetry.current]);
+
+  useEffect(
+    () => () => {
+      console.log("clean");
+      clearTimeout(timerRetry.current);
+    },
+    []
+  );
 
   return (
     <>
       <View style={styles.row}>
         <NavigationEvents
-          onDidBlur={() => clearTimeout(errorRetry)}
-          onDidFocus={() => setRetry(undefined)}
+          onDidBlur={() => {
+            console.log("blur");
+            clearTimeout(timerRetry.current);
+          }}
+          onDidFocus={() => {
+            console.log("focus");
+            timerRetry.current = undefined;
+          }}
         />
         <View style={{ flexDirection: "row", flex: 1 }}>
           <Image source={image} style={styles.cardIcon} />
