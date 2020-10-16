@@ -8,17 +8,17 @@ import { Image, StyleSheet } from "react-native";
 import { NavigationContext } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import image from "../../../../../img/wallet/cards-icons/pagobancomat.png";
-import { Body } from "../../../../components/core/typography/Body";
-import { GlobalState } from "../../../../store/reducers/types";
+import image from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
+import { Body } from "../../../../../components/core/typography/Body";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   bpdPaymentMethodActivation,
   BpdPaymentMethodActivation,
   BpdPmActivationStatus,
   bpdUpdatePaymentMethodActivation,
   HPan
-} from "../store/actions/paymentMethods";
-import { bpdPaymentMethodValueSelector } from "../store/reducers/details/paymentMethods";
+} from "../../store/actions/paymentMethods";
+import { bpdPaymentMethodValueSelector } from "../../store/reducers/details/paymentMethods";
 import { BpdToggle } from "./BpdToggle";
 
 // TODO: accept only hpan, read all the other information with a selector from payment methods
@@ -130,7 +130,7 @@ const calculateGraphicalState = (
  * - Bpd is already activate on the payment method by another user
  * @constructor
  */
-const PaymentMethodBpdToggle: React.FunctionComponent<Props> = props => {
+const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
   // Calculate the graphical state based on the potActivation and capability
   const graphicalState: GraphicalValue = props.hasBpdCapability
     ? calculateGraphicalState(props.bpdPotActivation)
@@ -175,4 +175,4 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PaymentMethodBpdToggle);
+)(PaymentMethodActivationToggle);

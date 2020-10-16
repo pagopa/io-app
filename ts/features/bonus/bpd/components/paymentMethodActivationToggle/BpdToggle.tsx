@@ -1,8 +1,8 @@
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import IconFont from "../../../../components/ui/IconFont";
-import Switch from "../../../../components/ui/Switch";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import IconFont from "../../../../../components/ui/IconFont";
+import Switch from "../../../../../components/ui/Switch";
 import { GraphicalValue } from "./PaymentMethodBpdToggle";
 
 type Props = {
