@@ -44,6 +44,12 @@ type Props = NavigationScreenProp<NavigationState> &
   NavigationScreenProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
+const loaderComponent = (
+  <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
+    <View spacer={true} />
+  </LoadingSpinnerOverlay>
+);
+
 class CieConsentDataUsageScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -139,11 +145,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
         />
       );
     } else if (this.state.isLoginSuccess) {
-      return (
-        <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
-          <View spacer={true} />
-        </LoadingSpinnerOverlay>
-      );
+      return loaderComponent;
     } else {
       return (
         <WebView
@@ -151,11 +153,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
           source={{ uri: this.cieAuthorizationUri }}
           javaScriptEnabled={true}
           onShouldStartLoadWithRequest={this.handleShouldStartLoading}
-          renderLoading={() => (
-            <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
-              <View spacer={true} />
-            </LoadingSpinnerOverlay>
-          )}
+          renderLoading={() => loaderComponent}
           onError={this.handleWebViewError}
         />
       );
