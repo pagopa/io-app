@@ -24,6 +24,7 @@ import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
+import { View } from "native-base";
 
 type NavigationParams = {
   cieConsentUri: string;
@@ -128,7 +129,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     );
 
   private getContent = () => {
-    if (this.state.hasError === true) {
+    if (this.state.hasError) {
       return (
         <GenericErrorComponent
           onRetry={this.props.resetNavigation}
@@ -138,7 +139,11 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
         />
       );
     } else if (this.state.isLoginSuccess) {
-      return <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true} />;
+      return (
+        <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
+          <View spacer={true} />
+        </LoadingSpinnerOverlay>
+      );
     } else {
       return (
         <WebView
@@ -147,7 +152,9 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
           javaScriptEnabled={true}
           onShouldStartLoadWithRequest={this.handleShouldStartLoading}
           renderLoading={() => (
-            <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true} />
+            <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
+              <View spacer={true} />
+            </LoadingSpinnerOverlay>
           )}
           onError={this.handleWebViewError}
         />

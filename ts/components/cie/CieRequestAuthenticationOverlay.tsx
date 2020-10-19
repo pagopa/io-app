@@ -13,7 +13,7 @@ import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
-import {closeInjectedScript} from "../../utils/webview";
+import { closeInjectedScript } from "../../utils/webview";
 
 type Props = {
   ciePin: string;
@@ -23,7 +23,6 @@ type Props = {
 
 type State = {
   hasError: boolean;
-  isLoading: boolean;
   findOpenApp: boolean;
   webViewKey: number;
   injectJavascript?: string;
@@ -54,13 +53,12 @@ const userAgent = Platform.select({ ios: iOSUserAgent, default: undefined });
 export default class CieRequestAuthenticationOverlay extends React.PureComponent<
   Props,
   State
-  > {
+> {
   private webView = React.createRef<WebView>();
   constructor(props: Props) {
     super(props);
     this.state = {
       hasError: false,
-      isLoading: true,
       findOpenApp: false,
       webViewKey: 1
     };
@@ -81,34 +79,32 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
 
   private handleOnError = () => {
     this.setState({
-      isLoading: false,
       hasError: true
     });
   };
 
   private handleOnShouldStartLoadWithRequest = (event: any): boolean => {
-    console.log(event.url);
     if (this.state.findOpenApp) {
       return false;
     }
-
-
+    // on iOS the web page script try to redirect in an error url
     if (
       Platform.OS === "ios" &&
       event.url !== undefined &&
       event.url.indexOf("errore.jsp") !== -1
     ) {
-      console.log("sono qui12",this.webView.current);
-
+      // avoid redirect and follow the 'happy path'
       if (this.webView.current !== null) {
         this.webView.current.injectJavaScript(
-          closeInjectedScript(`window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`)
+          closeInjectedScript(
+            `window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`
+          )
         );
       }
       return false;
     }
 
-    // Once the returned url conteins the "OpenApp" string, then the authorization has been given
+    // Once the returned url contains the "OpenApp" string, then the authorization has been given
     if (event.url && event.url.indexOf("OpenApp") !== -1) {
       this.setState({ findOpenApp: true }, () => {
         const authorizationUri = event.url;
@@ -116,6 +112,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
           this.props.onSuccess(authorizationUri);
         }
       });
+      return false;
     }
     return true;
   };
@@ -135,8 +132,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     const webViewKey = this.state.webViewKey + 1;
     this.setState({
       webViewKey,
-      hasError: false,
-      isLoading: false
+      hasError: false
     });
   };
 
@@ -144,7 +140,6 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     if (e.nativeEvent.title === "Pagina web non disponibile") {
       this.handleOnError();
     }
-
   };
 
   private renderWebView() {
@@ -155,7 +150,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
             ref={this.webView}
             userAgent={userAgent}
             javaScriptEnabled={true}
-            injectedJavaScript={closeInjectedScript(`alert(1);`)}
+            injectedJavaScript={injectJs}
             onLoadEnd={this.handleOnLoadEnd}
             onError={this.handleOnError}
             onShouldStartLoadWithRequest={
