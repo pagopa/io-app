@@ -16,7 +16,6 @@ import GenericErrorComponent from "../screens/GenericErrorComponent";
 import { closeInjectedScript } from "../../utils/webview";
 
 type Props = {
-  ciePin: string;
   onClose: () => void;
   onSuccess: (authorizationUri: string) => void;
 };
