@@ -33,26 +33,22 @@ type OwnProps = {
   isLoading: boolean;
 };
 
+type State = {
+  hasError: boolean;
+  isLoginSuccess?: boolean;
+};
+
 type Props = NavigationScreenProp<NavigationState> &
   OwnProps &
   NavigationScreenProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
-type State = {
-  hasError: boolean;
-  isLoading: boolean;
-  findOpenApp: boolean;
-  webViewKey: number;
-};
-
-class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
+class CieConsentDataUsageScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       hasError: false,
-      isLoading: true,
-      findOpenApp: false,
-      webViewKey: 1
+      isLoginSuccess: undefined
     };
   }
 
@@ -92,16 +88,12 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
   };
 
   private handleLoginSuccess = (token: SessionToken) => {
-    this.setState({ isLoading: true });
-    this.props.loginSuccess(token);
+    this.setState({ isLoginSuccess: true }, () => {
+      this.props.loginSuccess(token);
+    });
   };
 
-  private lastUriLoaded: string  | undefined= undefined;
   private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
-    if(this.lastUriLoaded === event.url){
-      return false;
-    }
-    this.lastUriLoaded = event.url;
     const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
       this.handleLoginSuccess
@@ -136,7 +128,7 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
     );
 
   private getContent = () => {
-    if (this.state.hasError) {
+    if (this.state.hasError === true) {
       return (
         <GenericErrorComponent
           onRetry={this.props.resetNavigation}
@@ -145,17 +137,18 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
           text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
         />
       );
+    } else if (this.state.isLoginSuccess) {
+      return <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true} />;
     } else {
       return (
         <WebView
           textZoom={100}
-          key={this.state.webViewKey}
           source={{ uri: this.cieAuthorizationUri }}
           javaScriptEnabled={true}
           onShouldStartLoadWithRequest={this.handleShouldStartLoading}
-          onLoad={() => this.setState({ isLoading: false })}
-          onLoadEnd={() => {this.lastUriLoaded = undefined;}}
-          onLoadProgress={() => this.setState({ isLoading: true })}
+          renderLoading={() => (
+            <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true} />
+          )}
           onError={this.handleWebViewError}
         />
       );
@@ -164,17 +157,12 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
 
   public render(): React.ReactNode {
     return (
-      <LoadingSpinnerOverlay
-        loadingOpacity={1.0}
-        isLoading={this.state.isLoading}
+      <TopScreenComponent
+        goBack={this.handleGoBack}
+        headerTitle={I18n.t("authentication.cie.genericTitle")}
       >
-        <TopScreenComponent
-          goBack={this.handleGoBack}
-          headerTitle={I18n.t("authentication.cie.genericTitle")}
-        >
-          {this.getContent()}
-        </TopScreenComponent>
-      </LoadingSpinnerOverlay>
+        {this.getContent()}
+      </TopScreenComponent>
     );
   }
 }
