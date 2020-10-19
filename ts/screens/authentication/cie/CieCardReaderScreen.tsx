@@ -6,7 +6,7 @@
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Content, Text } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import {
   AccessibilityInfo,
@@ -110,6 +110,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       content: I18n.t("authentication.cie.card.layCardMessageFooter"),
       isScreenReaderEnabled: false
     };
+    this.startCieiOS = this.startCieiOS.bind(this);
+    this.startCieAndroid = this.startCieAndroid.bind(this);
   }
 
   get ciePin(): string {
@@ -125,6 +127,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     navigationRoute?: string,
     navigationParams: Record<string, unknown> = {}
   ) => {
+    this.dispatchAnalyticEvent(errorMessage);
     this.setState(
       {
         readingState: ReadingState.error,
@@ -159,10 +162,12 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
 
       // Reading interrupted before the sdk complete the reading
+      case "Transmission Error":
       case "ON_TAG_LOST":
         this.setError(I18n.t("authentication.cie.card.error.onTagLost"));
         break;
 
+      case "TAG_ERROR_NFC_NOT_SUPPORTED":
       case "ON_TAG_DISCOVERED_NOT_CIE":
         this.setError(
           I18n.t("authentication.cie.card.error.unknownCardContent")
@@ -170,6 +175,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
 
       // The card is temporarily locked. Unlock is available by CieID app
+      case "PIN Locked":
       case "ON_CARD_PIN_LOCKED":
         this.setError(
           I18n.t("authentication.cie.card.error.generic"),
@@ -277,7 +283,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     if (this.state.readingState === ReadingState.completed) {
       return;
     }
-
     instabugLog("authentication SUCCESS", TypeLogs.DEBUG, instabugTag);
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
@@ -290,7 +295,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         },
         this.state.isScreenReaderEnabled
           ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
-          : Platform.OS === "ios"
+          : // if is iOS don't wait. The thank you page is shown natively
+          Platform.OS === "ios"
           ? 0
           : WAIT_TIMEOUT_NAVIGATION
       );
@@ -347,6 +353,34 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     setAccessibilityFocus(this.subTitleRef, accessibityTimeout);
   };
 
+  private getFooter = () =>
+    Platform.select({
+      default: (
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={{
+            onPress: this.props.navigation.goBack,
+            cancel: true,
+            title: I18n.t("global.buttons.cancel")
+          }}
+        />
+      ),
+      ios: (
+        <FooterWithButtons
+          type={"TwoButtonsInlineThird"}
+          leftButton={{
+            onPress: this.props.navigation.goBack,
+            cancel: true,
+            title: I18n.t("global.buttons.cancel")
+          }}
+          rightButton={{
+            onPress: async () => await this.startCieiOS(),
+            title: I18n.t("authentication.cie.nfc.retry")
+          }}
+        />
+      )
+    });
+
   public render(): React.ReactNode {
     return (
       <TopScreenComponent
@@ -359,21 +393,16 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           <Text style={styles.padded} ref={this.subTitleRef}>
             {this.state.subtitle}
           </Text>
-          <CieReadingCardAnimation readingState={this.state.readingState} />
+          {Platform.OS === "android" && (
+            <CieReadingCardAnimation readingState={this.state.readingState} />
+          )}
+          {Platform.OS === "ios" && <View spacer={true} />}
           <Text style={styles.padded} accessible={true}>
             {this.state.content}
           </Text>
         </Content>
-        {this.state.readingState !== ReadingState.completed && ( // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={{
-              onPress: this.props.navigation.goBack,
-              cancel: true,
-              title: I18n.t("global.buttons.cancel")
-            }}
-          />
-        )}
+        {this.state.readingState !== ReadingState.completed && // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
+          this.getFooter()}
       </TopScreenComponent>
     );
   }

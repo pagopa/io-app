@@ -7,7 +7,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import JailMonkey from "jail-monkey";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -132,6 +132,15 @@ class LandingScreen extends React.PureComponent<Props, State> {
     super(props);
     this.state = { isRootedOrJailbroken: none };
   }
+
+  private isCieSupported = () => {
+    if (this.props.isCieSupported && Platform.OS === "ios") {
+      // only iPhone have NFC hardware
+      return !DeviceInfo.isTablet();
+    }
+    return this.props.isCieSupported;
+  };
+
   public async componentDidMount() {
     const isRootedOrJailbroken = await JailMonkey.isJailBroken();
     this.setState({ isRootedOrJailbroken: some(isRootedOrJailbroken) });
@@ -189,7 +198,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
 
   private navigateToCiePinScreen = () => {
-    if (this.props.isCieSupported) {
+    if (this.isCieSupported()) {
       this.props.dispatchIdpCieSelected();
       this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
     } else {
@@ -199,13 +208,13 @@ class LandingScreen extends React.PureComponent<Props, State> {
 
   private navigateToSpidCieInformationRequest = () =>
     this.props.navigation.navigate(
-      this.props.isCieSupported
+      this.isCieSupported()
         ? ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION
         : ROUTES.AUTHENTICATION_SPID_INFORMATION
     );
 
   private renderCardComponents = () => {
-    const cardProps = getCards(this.props.isCieSupported);
+    const cardProps = getCards(this.isCieSupported());
     return cardProps.map(p => (
       <LandingCardComponent key={`card-${p.id}`} {...p} />
     ));
@@ -216,16 +225,15 @@ class LandingScreen extends React.PureComponent<Props, State> {
   };
 
   private renderLandingScreen = () => {
-    const secondButtonStyle = this.props.isCieSupported
+    const isCieSupported = this.isCieSupported();
+    const secondButtonStyle = isCieSupported
       ? styles.fullOpacity
       : styles.noCie;
     return (
       <BaseScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={
-          this.props.isCieSupported
-            ? ["landing_SPID", "landing_CIE"]
-            : ["landing_SPID"]
+          isCieSupported ? ["landing_SPID", "landing_CIE"] : ["landing_SPID"]
         }
       >
         {isDevEnv && <DevScreenButton onPress={this.navigateToMarkdown} />}
@@ -240,22 +248,22 @@ class LandingScreen extends React.PureComponent<Props, State> {
             primary={true}
             iconLeft={true}
             onPress={
-              this.props.isCieSupported
+              isCieSupported
                 ? this.navigateToCiePinScreen
                 : this.navigateToIdpSelection
             }
             testID={
-              this.props.isCieSupported
+              isCieSupported
                 ? "landing-button-login-cie"
                 : "landing-button-login-spid"
             }
           >
             <IconFont
-              name={this.props.isCieSupported ? "io-cie" : "io-profilo"}
+              name={isCieSupported ? "io-cie" : "io-profilo"}
               color={variables.colorWhite}
             />
             <Text>
-              {this.props.isCieSupported
+              {isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
                 : I18n.t("authentication.landing.loginSpid")}
             </Text>
@@ -267,22 +275,22 @@ class LandingScreen extends React.PureComponent<Props, State> {
             primary={true}
             iconLeft={true}
             onPress={
-              this.props.isCieSupported
+              this.isCieSupported()
                 ? this.navigateToIdpSelection
                 : this.navigateToCiePinScreen
             }
             testID={
-              this.props.isCieSupported
+              this.isCieSupported()
                 ? "landing-button-login-spid"
                 : "landing-button-login-cie"
             }
           >
             <IconFont
-              name={this.props.isCieSupported ? "io-profilo" : "io-cie"}
+              name={this.isCieSupported() ? "io-profilo" : "io-cie"}
               color={variables.colorWhite}
             />
             <Text>
-              {this.props.isCieSupported
+              {this.isCieSupported()
                 ? I18n.t("authentication.landing.loginSpid")
                 : I18n.t("authentication.landing.loginCie")}
             </Text>
@@ -295,7 +303,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
             onPress={this.navigateToSpidCieInformationRequest}
           >
             <Text style={styles.noPadded} link={true}>
-              {this.props.isCieSupported
+              {this.isCieSupported()
                 ? I18n.t("authentication.landing.nospid-nocie")
                 : I18n.t("authentication.landing.nospid")}
             </Text>

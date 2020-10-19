@@ -367,6 +367,7 @@ authentication:
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
+      retry: Retry
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
       enableNfcTitle: Enable NFC
