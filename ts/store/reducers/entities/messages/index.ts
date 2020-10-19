@@ -52,7 +52,7 @@ export const lexicallyOrderedMessagesIds = createSelector(
 );
 
 // this type is need to combine message data to message status. Note
-// that message status is a data holded only by the app (isRead / isArchived)
+// that message status is a data held only by the app (isRead / isArchived)
 export type MessagesStateAndStatus = MessageState & MessageStatus;
 /**
  * A selector that using the inversely lexically ordered messages IDs

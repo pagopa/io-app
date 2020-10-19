@@ -63,6 +63,7 @@ global:
     exit: Esci
     saveSelection: Salva la selezione
     search: Ricerca
+    skip: "Salta"
   navigator:
     messages: messaggi
     wallet: pagamenti
@@ -373,7 +374,7 @@ authentication:
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
   cie:
     genericTitle: Accedi - CIE
-    cie: Carta di Identità Elettronica
+    cie: CIE
     noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
@@ -639,6 +640,22 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Pagamenti
+  searchAbi:
+    title: Aggiungi carta Bancomat
+    description:
+      text1: Se vuoi, puoi indicare la banca
+      text2: " su cui hai un carta Pagobancomat attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
+      text3: informativa sul trattamento dei dati personali
+    bankName: Denominazione della banca
+    noName: Nome non disponibile
+    loading: Carico la lista delle banche...
+  addBancomat:
+    title: "Aggiungi bancomat {{current}} di {{length}}"
+    screenTitle: "Vuoi aggiungere questa carta?"
+    bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
+    bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
+    skip: Salta
+    add: Aggiungi
   accessibility:
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
@@ -646,6 +663,18 @@ wallet:
         read: Transazione
         unread: Transazione da leggere
       label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
+  onboarding:
+    bancomat:
+      headerTitle: "Aggiungi carta Bancomat"
+      koTimeout:
+        title: "Non siamo riusciti a contattare Bancomat."
+        body: "Ripova per favore"
+      koNotFound:
+        title: "Spiacenti, non abbiamo trovato nessuna carta"
+        body: "Non risultano Bancomat intestati a te"
+        chooseAnother: "Scegli un'altra banca"
+      loadingSearch:
+        title: "Stiamo chiedendo a Bancomat la lista delle tue carte\n\nAttendi qualche secondo"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
@@ -846,6 +875,8 @@ wallet:
       name: Postepay
     paypal:
       name: Paypal
+    bancomat:
+      name: Bancomat
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
@@ -1160,9 +1191,8 @@ identification:
     reset:
       button: Hai dimenticato il
       code: codice di sblocco
-      button_short: Reimposta il codice di sblocco
-      tip: Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente.
-      tip_short: Dovrai effettuare di nuovo l'accesso.
+      button_short: Modifica il codice di sblocco
+      subtitle: Imposta un nuovo codice di 6 cifre
     confirmValid: Codice di sblocco corretto
   unlock_screen:
     help:
@@ -1316,7 +1346,7 @@ faq:
     title: "Quali metodi di pagamento puoi aggiungere?"
     content: !include faq/faq37.md
   38:
-    title: "Riepilogo della transazione e ricevuta del pagamento sono la stessa cosa?"
+    title: "Ricevuta dell’operazione e quietanza liberatoria sono la stessa cosa?"
     content: !include faq/faq38.md
   39:
     title: "Cos'è il codice identificativo della transazione?"
@@ -1468,7 +1498,7 @@ bonus:
     checkBonusEligibility:
       loading: Verifico l'idoneità per l'accesso al bonus
     cta:
-      requestBonus: Richiedi
+      requestBonus: Richiedi Bonus
       cancelRequest: Annulla la richiesta
       qrCode: QR code
       copyCode: Copia codice
@@ -1587,6 +1617,31 @@ bonus:
       loadingActivateBpd:
         title: "Stiamo attivando il cashback"
         body: "Ti preghiamo di attendere."
+      noPaymentMethod:
+        title: "Aggiungi almeno un metodo di pagamento"
+        body: "Per inziare a raccogliere punti devi aggiungere su IO i tuoi metodi di pagamento elettronico preferiti: oggi sono supportate carte di credito, prepagate, ricaricabili, carte di debito, Bancomat e app e altri strumenti digitali.\n\n
+        In futuro il cashback supporterà altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno la raccolta dei punti!"
+    iban:
+      iban: "IBAN"
+      edit: "Modifica IBAN"
+      insertion:
+        title: "IBAN per l’accredito"
+        body1: "Indica qui l’IBAN del tuo conto corrente, su cui vuoi ricevere l’accredito una volta consolidata la classifica."
+        body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
+      koWrong:
+        title: "IBAN non corretto"
+        text1: "L'IBAN che hai inserito"
+        text2: "non risulta corretto: controllalo per piacere!"
+      koCannotVerify:
+        title: "Non è stato possibile verificare il tuo IBAN"
+        text1: "Se sei sicuro che l’IBAN"
+        text2: "identifichi il conto su cui vuoi ricevere gli accrediti, puoi proseguire."
+      koNotOwned:
+        title: "Il conto corrente non risulta intestato a te"
+        text1: "L’IBAN che hai inserito"
+        text2: "identifica un conto corrente che non risulta intestato al tuo codice fiscale: sei sicuro di voler usare questo IBAN?"
+      loading:
+        "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

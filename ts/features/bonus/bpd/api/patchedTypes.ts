@@ -1,5 +1,9 @@
 import * as t from "io-ts";
 
+/**
+ * patched version of CitizenResource
+ * - payoffInstr and payoffInstrType must be optional
+ */
 // required attributes
 const PatchedCitizenResourceR = t.interface({
   enabled: t.boolean,
