@@ -136,6 +136,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
   private isCieSupported = () => {
     if (this.props.isCieSupported && Platform.OS === "ios") {
       // only iPhone have NFC hardware
+      // TODO this check should be done inside cie library
       return !DeviceInfo.isTablet();
     }
     return this.props.isCieSupported;
