@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   noCie: {
+    // don't use opacity since the button still have the active color when it is pressed
     backgroundColor: "#789ccd"
   },
   fullOpacity: {

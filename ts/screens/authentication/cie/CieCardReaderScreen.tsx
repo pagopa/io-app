@@ -8,7 +8,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text } from "native-base";
 import * as React from "react";
-import {AccessibilityInfo, Platform, StyleSheet, Vibration} from "react-native";
+import {
+  AccessibilityInfo,
+  Platform,
+  StyleSheet,
+  Vibration
+} from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
@@ -27,6 +32,8 @@ import {
   setAccessibilityFocus
 } from "../../../utils/accessibility";
 import { instabugLog, TypeLogs } from "../../../boot/configureInstabug";
+import { cieAuthenticationError } from "../../../store/actions/cie";
+import { ReduxProps } from "../../../store/actions/types";
 
 type NavigationParams = {
   ciePin: string;
@@ -34,6 +41,7 @@ type NavigationParams = {
 };
 
 type Props = NavigationScreenProps<NavigationParams> &
+  ReduxProps &
   ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
@@ -58,6 +66,20 @@ type State = {
   errorMessage?: string;
   isScreenReaderEnabled: boolean;
 };
+
+// A subset of Cie Events (errors) which is of interest to analytics
+const analyticActions = new Set<CEvent["event"]>([
+  "ON_TAG_DISCOVERED_NOT_CIE",
+  "ON_CARD_PIN_LOCKED",
+  "ON_PIN_ERROR",
+  "PIN_INPUT_ERROR",
+  "CERTIFICATE_EXPIRED",
+  "CERTIFICATE_REVOKED",
+  "AUTHENTICATION_ERROR",
+  "ON_NO_INTERNET_CONNECTION",
+  "STOP_NFC_ERROR",
+  "START_NFC_ERROR"
+]);
 
 const instabugTag = "cie";
 // the timeout we sleep until move to consent form screen when authentication goes well
@@ -101,7 +123,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private setError = (
     errorMessage: string,
     navigationRoute?: string,
-    navigationParams: {} = {}
+    navigationParams: Record<string, unknown> = {}
   ) => {
     this.setState(
       {
@@ -117,7 +139,14 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     );
   };
 
+  private dispatchAnalyticEvent = (message: string) => {
+    this.props.dispatch(cieAuthenticationError(Error(message)));
+  };
+
   private handleCieEvent = async (event: CEvent) => {
+    if (analyticActions.has(event.event)) {
+      this.dispatchAnalyticEvent(event.event);
+    }
     instabugLog(event.event, TypeLogs.DEBUG, instabugTag);
     switch (event.event) {
       // Reading starts
@@ -244,30 +273,52 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     this.setError(error.message);
   };
 
-  private hasBeenNavigate : boolean = false;
-
   private handleCieSuccess = (cieConsentUri: string) => {
-    if(this.hasBeenNavigate){
+    if (this.state.readingState === ReadingState.completed) {
       return;
     }
-    this.hasBeenNavigate = true;
+
     instabugLog("authentication SUCCESS", TypeLogs.DEBUG, instabugTag);
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
-      setTimeout(async () => {
-        this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
-          cieConsentUri
-        });
-        // if screen reader is enabled, give more time to read the success message
-      }, this.state.isScreenReaderEnabled ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY : Platform.OS === "ios" ? 0 : WAIT_TIMEOUT_NAVIGATION);
+      setTimeout(
+        async () => {
+          this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
+            cieConsentUri
+          });
+          // if screen reader is enabled, give more time to read the success message
+        },
+        this.state.isScreenReaderEnabled
+          ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
+          : Platform.OS === "ios"
+          ? 0
+          : WAIT_TIMEOUT_NAVIGATION
+      );
     });
   };
 
-  public async componentDidMount() {
+  public async startCieAndroid() {
+    cieManager
+      .start()
+      .then(async () => {
+        cieManager.onEvent(this.handleCieEvent);
+        cieManager.onError(this.handleCieError);
+        cieManager.onSuccess(this.handleCieSuccess);
+        await cieManager.setPin(this.ciePin);
+        cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
+        await cieManager.startListeningNFC();
+        this.setState({ readingState: ReadingState.waiting_card });
+      })
+      .catch(() => {
+        this.setState({ readingState: ReadingState.error });
+      });
+  }
+
+  public async startCieiOS() {
+    cieManager.removeAllListeners();
     cieManager.onEvent(this.handleCieEvent);
     cieManager.onError(this.handleCieError);
     cieManager.onSuccess(this.handleCieSuccess);
-
     await cieManager.setPin(this.ciePin);
     cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
     cieManager
@@ -279,6 +330,14 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       .catch(() => {
         this.setState({ readingState: ReadingState.error });
       });
+  }
+
+  public async componentDidMount() {
+    const startCie = Platform.select({
+      ios: this.startCieiOS,
+      default: this.startCieAndroid
+    });
+    await startCie();
     const srEnabled = await isScreenReaderEnabled();
     this.setState({ isScreenReaderEnabled: srEnabled });
   }
