@@ -484,13 +484,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                       this.props.dispatchSessionExpired,
                       true
                     )}
-
-                  {bpdEnabled &&
-                    this.debugListItem(
-                      "Leave BPD",
-                      this.props.dispatchLeaveBpd,
-                      true
-                    )}
                 </React.Fragment>
               )}
             </React.Fragment>
@@ -556,7 +549,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
     ),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
-  dispatchLeaveBpd: () => dispatch(bpdDeleteUserFromProgram.request()),
   dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
     dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });
