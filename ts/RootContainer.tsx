@@ -28,6 +28,7 @@ import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 import { setLocale } from "./i18n";
 import RootModal from "./screens/modal/RootModal";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
+import { BottomSheetRoot } from "./components/ui/BottomSheet";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -141,6 +142,7 @@ class RootContainer extends React.PureComponent<Props> {
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <RootModal />
         <LightModalRoot />
+        <BottomSheetRoot />
       </Root>
     );
   }

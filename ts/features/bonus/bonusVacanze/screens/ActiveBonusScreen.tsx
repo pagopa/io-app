@@ -67,6 +67,9 @@ import {
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
+import BottomSheetComponent from "../../../../components/BottomSheetComponent";
+import { withBottomSheetContext } from "../../../../components/helpers/withBottomSheetContext";
+import { BottomSheetContextInterface } from "../../../../components/ui/BottomSheet";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -86,7 +89,8 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  LightModalContextInterface;
+  LightModalContextInterface &
+  BottomSheetContextInterface;
 
 const styles = StyleSheet.create({
   emptyHeader: { height: 90 },
@@ -290,6 +294,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     inputRange: [0, 1],
     outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
   });
+  const [bottomSheetContent, setBottomSheetContent] = React.useState<
+    React.ReactNode
+  >(null);
 
   React.useEffect(() => {
     // start refresh polling after startRefreshPollingAfter
@@ -409,7 +416,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         logo={props.logo}
       />
     );
-    props.showAnimatedModal(modalBox, BottomTopAnimation);
+    // props.showAnimatedModal(modalBox, BottomTopAnimation);
+    // setBottomSheetContent(modalBox);
+    props.showBS(modalBox, I18n.t("bonus.bonusVacanze.name"), 466);
   };
 
   const handleShare = () =>
@@ -683,6 +692,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         pointerEvents={"none"}
         style={[styles.hover, { backgroundColor: backgroundInterpolation }]}
       />
+      <BottomSheetComponent
+        bottomSheetTitle={I18n.t("bonus.bonusVacanze.name")}
+        content={bottomSheetContent}
+        maxSnapPoint={466}
+        handleClose={() => setBottomSheetContent(null)}
+      />
     </>
   ) : (
     <GenericErrorComponent
@@ -716,4 +731,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(ActiveBonusScreen));
+)(withBottomSheetContext(withLightModalContext(ActiveBonusScreen)));

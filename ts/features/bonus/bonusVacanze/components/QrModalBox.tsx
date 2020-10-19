@@ -24,16 +24,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   modalBox: {
-    position: "absolute",
-    bottom: 0,
-    height: 466,
-    borderTopRightRadius: 16,
-    borderTopLeftRadius: 16,
     alignSelf: "center",
-    width: "95%",
+    height: "100%",
+    width: "100%",
     backgroundColor: customVariables.colorWhite,
-    paddingLeft: 16,
-    paddingRight: 13,
     paddingTop: 16
   },
   image: {
@@ -113,53 +107,34 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
   });
 
   return (
-    <Animated.View style={[styles.modalBackdrop, modalBackdrop]}>
-      <View style={styles.modalBox}>
-        <View style={styles.row}>
-          <Text style={styles.title} semibold={true}>
-            {I18n.t("bonus.bonusVacanze.name")}
+    // <Animated.View style={[styles.modalBackdrop, modalBackdrop]}>
+    <View style={styles.modalBox}>
+      <View spacer={true} large={true} />
+      <View style={styles.row}>
+        <View>
+          <Text style={styles.uniqueCode}>
+            {I18n.t("bonus.bonusVacanze.uniqueCode")}
           </Text>
-          <ButtonDefaultOpacity
-            style={styles.modalClose}
-            onPress={onClose}
-            transparent={true}
-            accessible={true}
-            accessibilityRole={"button"}
-            accessibilityLabel={I18n.t("global.buttons.close")}
-          >
-            <IconFont
-              name="io-close"
-              color={customVariables.lightGray}
-              style={styles.icon}
-            />
-          </ButtonDefaultOpacity>
-        </View>
-        <View spacer={true} large={true} />
-        <View style={styles.row}>
-          <View>
-            <Text style={styles.uniqueCode}>
-              {I18n.t("bonus.bonusVacanze.uniqueCode")}
+          <View style={styles.row}>
+            <Text style={styles.codeText} bold={true}>
+              {codeToDisplay}
             </Text>
-            <View style={styles.row}>
-              <Text style={styles.codeText} bold={true}>
-                {codeToDisplay}
-              </Text>
-              <View hspacer={true} />
-              <CopyButtonComponent textToCopy={codeToCopy} />
-            </View>
+            <View hspacer={true} />
+            <CopyButtonComponent textToCopy={codeToCopy} />
           </View>
-          {props.logo && (
-            <Image
-              source={{ uri: props.logo }}
-              resizeMode={"contain"}
-              style={styles.bonusLogo}
-            />
-          )}
         </View>
-        <View spacer={true} extralarge={true} />
-        <View style={styles.image}>{renderQRCode(qrCode)}</View>
+        {props.logo && (
+          <Image
+            source={{ uri: props.logo }}
+            resizeMode={"contain"}
+            style={styles.bonusLogo}
+          />
+        )}
       </View>
-    </Animated.View>
+      <View spacer={true} extralarge={true} />
+      <View style={styles.image}>{renderQRCode(qrCode)}</View>
+    </View>
+    // </Animated.View>
   );
 };
 
