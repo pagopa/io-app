@@ -8,7 +8,7 @@ import {
   isReady
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
-import TMPUserAddBancomatToWallet from "../TMPUserAddBancomatToWallet";
+import AddBancomatScreen from "../add-pans/AddBancomatScreen";
 import BancomatKoNotFound from "./BancomatKoNotFound";
 import BancomatKoTimeout from "./BancomatKoTimeout";
 import LoadBancomatSearch from "./LoadBancomatSearch";
@@ -35,7 +35,7 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
     return <LoadBancomatSearch />;
   }
   // success! The user can now optionally add found bancomat to the wallet
-  return <TMPUserAddBancomatToWallet />;
+  return <AddBancomatScreen />;
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({});

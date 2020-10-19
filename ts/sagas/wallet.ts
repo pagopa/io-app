@@ -31,11 +31,13 @@ import {
   fetchPaymentManagerLongTimeout
 } from "../config";
 import {
+  handleAddPan,
   handleLoadAbi,
   handleLoadPans
 } from "../features/wallet/onboarding/bancomat/saga/networking";
 import { addBancomatToWalletGeneric } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import {
+  addBancomatToWallet,
   loadAbi,
   searchUserPans,
   walletAddBancomatStart
@@ -715,6 +717,14 @@ export function* watchWalletSaga(
       searchUserPans.request,
       handleLoadPans,
       paymentManagerClient.getPans,
+      pmSessionManager
+    );
+
+    // watch for add pan request
+    yield takeLatest(
+      addBancomatToWallet.request,
+      handleAddPan,
+      paymentManagerClient.addPans,
       pmSessionManager
     );
 
