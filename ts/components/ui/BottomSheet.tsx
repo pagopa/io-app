@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { Modal, StyleSheet } from "react-native";
+import { Modal } from "react-native";
 import { isScreenReaderEnabled } from "../../utils/accessibility";
 import BottomSheetComponent from "../BottomSheetComponent";
 
