@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { Modal, StyleSheet, View } from "react-native";
+import { Modal, StyleSheet } from "react-native";
 import { isScreenReaderEnabled } from "../../utils/accessibility";
 import BottomSheetComponent from "../BottomSheetComponent";
 
@@ -31,17 +31,6 @@ export const BottomSheetContext = React.createContext<
 });
 
 type Props = Record<string, unknown> & { children: React.ReactNode };
-
-const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    top: 0,
-    zIndex: 1000
-  }
-});
 
 export const BottomSheetConsumer = BottomSheetContext.Consumer;
 

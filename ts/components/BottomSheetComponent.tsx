@@ -2,7 +2,6 @@ import { View, Text } from "native-base";
 import * as React from "react";
 import { Animated, StyleSheet } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
-import { RTron } from "../boot/configureStoreAndPersistor";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";

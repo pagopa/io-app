@@ -290,9 +290,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     inputRange: [0, 1],
     outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
   });
-  const [bottomSheetContent, setBottomSheetContent] = React.useState<
-    React.ReactNode
-  >(null);
 
   React.useEffect(() => {
     // start refresh polling after startRefreshPollingAfter
