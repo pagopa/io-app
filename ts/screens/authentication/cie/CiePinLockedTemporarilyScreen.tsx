@@ -3,7 +3,7 @@
  */
 import { Content } from "native-base";
 import * as React from "react";
-import { Linking } from "react-native";
+import { Linking, Platform } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
@@ -14,6 +14,7 @@ import I18n from "../../../i18n";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
+import { constNull } from "fp-ts/lib/function";
 
 type Props = NavigationScreenProps & ReduxProps;
 
@@ -27,8 +28,12 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
     this.state = { isLoadingCompleted: false };
   }
   private goToCieID() {
-    const url = "https://play.google.com/store/apps/details?id=it.ipzs.cieid";
-    Linking.openURL(url).catch(_ => undefined);
+    Linking.openURL(
+      Platform.select({
+        ios: "https://apps.apple.com/it/app/cieid/id1504644677",
+        default: "https://play.google.com/store/apps/details?id=it.ipzs.cieid"
+      })
+    ).catch(constNull);
   }
   private renderFooterButtons = () => {
     const cancelButtonProps = {
@@ -40,7 +45,7 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
       primary: true,
       iconColor: variables.colorWhite,
       iconName: "io-cie",
-      onPress: this.goToCieID, // TODO: if the app is installed, redirect to the page dedicated to rpin recovery
+      onPress: this.goToCieID,
       title: I18n.t("authentication.cie.pinTempLocked.button")
     };
     return (

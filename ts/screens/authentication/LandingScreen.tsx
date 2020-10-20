@@ -47,6 +47,7 @@ import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
+import sessionExpiredImg from "../../../img/landing/session_expired.png";
 
 type Props = NavigationInjectedProps &
   LightModalContextInterface &
@@ -129,22 +130,13 @@ const IdpCIE: IdentityProvider = {
   profileUrl: ""
 };
 
-const sessionExpiredImg = require("../../../img/landing/session_expired.png");
-
 class LandingScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { isRootedOrJailbroken: none, isSessionExpired: false };
   }
 
-  private isCieSupported = () => {
-    if (this.props.isCieSupported && Platform.OS === "ios") {
-      // only iPhone have NFC hardware
-      // TODO this check should be done inside cie library
-      return !DeviceInfo.isTablet();
-    }
-    return this.props.isCieSupported;
-  };
+  private isCieSupported = () => this.props.isCieSupported;
 
   public async componentDidMount() {
     const isRootedOrJailbroken = await JailMonkey.isJailBroken();
