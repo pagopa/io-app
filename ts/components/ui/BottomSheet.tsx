@@ -45,16 +45,28 @@ const styles = StyleSheet.create({
 
 export const BottomSheetConsumer = BottomSheetContext.Consumer;
 
+type BottomSheetState = {
+  component: React.ReactNode;
+  sheetTitle: string;
+  snapPoint: number;
+};
+
 export const BottomSheetProvider: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const [component, setComponent] = React.useState<React.ReactNode>();
-  const [sheetTitle, setSheetTitle] = React.useState("");
-  const [snapPoint, setSnapPoint] = React.useState(0);
+  const initialState = {
+    component: null,
+    sheetTitle: "",
+    snapPoint: 0
+  };
+
+  const [bottomSheetState, setBottomSheetState] = React.useState<
+    BottomSheetState
+  >(initialState);
 
   const showBS = async (
     childComponent: React.ReactNode,
-    title: string,
+    sheetTitle: string,
     snapPoint: number
   ) => {
     const isScreenReaderActive = await isScreenReaderEnabled();
@@ -63,25 +75,25 @@ export const BottomSheetProvider: React.FunctionComponent<Props> = (
     ) : (
       childComponent
     );
-    setComponent(component);
-    setSheetTitle(title);
-    setSnapPoint(snapPoint);
+    setBottomSheetState({
+      component,
+      sheetTitle,
+      snapPoint
+    });
   };
 
   const hideBS = () => {
-    setComponent(null);
+    setBottomSheetState(initialState);
   };
 
-  const state = {
-    component,
-    sheetTitle,
-    snapPoint,
+  const providerValue = {
+    ...bottomSheetState,
     showBS,
     hideBS
   };
 
   return (
-    <BottomSheetContext.Provider value={state}>
+    <BottomSheetContext.Provider value={providerValue}>
       {props.children}
     </BottomSheetContext.Provider>
   );

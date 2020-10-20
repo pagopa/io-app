@@ -2,6 +2,7 @@ import { View, Text } from "native-base";
 import * as React from "react";
 import { Animated, StyleSheet } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
+import { RTron } from "../boot/configureStoreAndPersistor";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
@@ -103,6 +104,11 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
   const openBottomSheet = () => {
     if (bottomSheetRef && bottomSheetRef.current) {
       bottomSheetRef.current.snapTo(1);
+      Animated.timing(opacity, {
+        useNativeDriver: false,
+        toValue: 1,
+        duration: 200
+      }).start();
     }
   };
 
