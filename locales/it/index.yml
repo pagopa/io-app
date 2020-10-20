@@ -397,6 +397,8 @@ authentication:
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
       alert: Vuoi davvero tornare indietro?
+      contextualHelpTitle: Dove trovo il PIN?
+      contextualHelpBody: "Il codice PIN è composto da 8 cifre: \n\n- le prime 4 cifre ti sono state consegnate all'anagrafe;\n- le ultime 4 cifre ti sono state spedite a casa, insieme alla carta d'identità elettronica. \n\nMettile insieme e inseriscile in quest'ordine. \n\n[Hai dimenticato il PIN?](https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/)"
     pinTempLocked:
       header: Pin bloccato
       title: Carta temporaneamente bloccata

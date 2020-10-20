@@ -1,5 +1,5 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { View } from "native-base";
+import { View, Text } from "native-base";
 import * as React from "react";
 import {
   Keyboard,
@@ -27,6 +27,7 @@ import { nfcIsEnabled } from "../../../store/actions/cie";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
+import Markdown from "../../../components/ui/Markdown";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -108,6 +109,14 @@ class CiePinScreen extends React.PureComponent<Props, State> {
           setAccessibilityFocus(this.pinPadViewRef, 100 as Millisecond);
         }}
         goBack={true}
+        contextualHelp={{
+          title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
+          body: () => (
+            <Markdown>
+              {I18n.t("authentication.cie.pin.contextualHelpBody")}
+            </Markdown>
+          )
+        }}
         headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
       >
         <ScrollView>
