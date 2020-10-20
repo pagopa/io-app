@@ -17,8 +17,15 @@ import { H4 } from "../../components/core/typography/H4";
 import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { removeAccountMotivation } from "../../store/actions/profile";
+import { identificationRequest } from "../../store/actions/identification";
+import { shufflePinPadOnPayment } from "../../config";
+import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
+import { showToast } from "../../utils/showToast";
+import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 
-type Props = ReduxProps & ReturnType<typeof mapDispatchToProps>;
+type Props = ReduxProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 /**
  * A screen that ask user the motivation of the account removal
@@ -27,6 +34,7 @@ type Props = ReduxProps & ReturnType<typeof mapDispatchToProps>;
 const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   // Initially no motivation is selected
   const [selectedMotivation, setSelectedMotivation] = React.useState(-1);
+
   const continueButtonProps = {
     block: true,
     primary: true,
@@ -34,45 +42,121 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
     title: I18n.t("profile.main.privacy.removeAccount.info.cta")
   };
 
-  const footerComponent = (
-    <FooterWithButtons type={"SingleButton"} leftButton={continueButtonProps} />
+  const loadingCaption = I18n.t(
+    "bonus.bpd.onboarding.loadingActivationStatus.title"
   );
   return (
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t("profile.main.title")}
     >
-      <SafeAreaView style={IOStyles.flex}>
-        <Content>
-          <H1>{I18n.t("profile.main.privacy.removeAccount.title")}</H1>
-          <H4 weight="Regular">
-            {I18n.t("profile.main.privacy.removeAccount.details.body")}
-          </H4>
-          <View style={{ paddingTop: 25 }}>
-            <RadioButtonList
-              head="Qual'è il motivo della cancellazione?"
-              key="delete_reason"
-              items={[
-                { label: "Non ritengo più utile IO", id: 0 },
-                { label: "Non mi sento al sicuro su IO", id: 1 },
-                { label: "Non ho mai usato l'app", id: 2 },
-                { label: "Nessuno dei precedenti", id: 3 }
-              ]}
-              selectedItem={selectedMotivation}
-              onPress={motivationIndex => {
-                setSelectedMotivation(motivationIndex);
-              }}
-            />
-          </View>
-        </Content>
-        {footerComponent}
-      </SafeAreaView>
+      {/* {pot.isSome(
+          props.userDataProcessing[UserDataProcessingChoiceEnum.DELETE]
+        ) && (
+            <Content>
+              <H1>{I18n.t("profile.main.privacy.removeAccount.title")}</H1>
+              <H4 weight="Regular">
+                {I18n.t("profile.main.privacy.removeAccount.details.body")}
+              </H4>
+              <View style={{ paddingTop: 25 }}>
+                <RadioButtonList
+                  head="Qual'è il motivo della cancellazione?"
+                  key="delete_reason"
+                  items={[
+                    { label: "Non ritengo più utile IO", id: 0 },
+                    { label: "Non mi sento al sicuro su IO", id: 1 },
+                    { label: "Non ho mai usato l'app", id: 2 },
+                    { label: "Nessuno dei precedenti", id: 3 }
+                  ]}
+                  selectedItem={selectedMotivation}
+                  onPress={motivationIndex => {
+                    setSelectedMotivation(motivationIndex);
+                  }}
+                />
+              </View>
+            </Content>
+          ) &&
+          footerComponent} */}
+      {props.isLoading ||
+      pot.isError(
+        props.userDataProcessing[UserDataProcessingChoiceEnum.DELETE]
+      ) ? (
+        <LoadingErrorComponent
+          isLoading={props.isLoading}
+          loadingCaption={loadingCaption}
+          onRetry={() => true}
+        ></LoadingErrorComponent>
+      ) : (
+        <SafeAreaView style={IOStyles.flex}>
+          <Content>
+            <H1>{I18n.t("profile.main.privacy.removeAccount.title")}</H1>
+            <H4 weight="Regular">
+              {I18n.t("profile.main.privacy.removeAccount.details.body")}
+            </H4>
+            <View style={{ paddingTop: 25 }}>
+              <RadioButtonList
+                head="Qual'è il motivo della cancellazione?"
+                key="delete_reason"
+                items={[
+                  { label: "Non ritengo più utile IO", id: 0 },
+                  { label: "Non mi sento al sicuro su IO", id: 1 },
+                  { label: "Non ho mai usato l'app", id: 2 },
+                  { label: "Nessuno dei precedenti", id: 3 }
+                ]}
+                selectedItem={selectedMotivation}
+                onPress={motivationIndex => {
+                  setSelectedMotivation(motivationIndex);
+                }}
+              />
+            </View>
+          </Content>
+          <FooterWithButtons
+            type={"SingleButton"}
+            leftButton={continueButtonProps}
+          />
+        </SafeAreaView>
+      )}
     </BaseScreenComponent>
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  sendMotivation: () => dispatch(removeAccountMotivation())
-});
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  const onIdentificationSuccess = () => dispatch(removeAccountMotivation());
 
-export default connect(undefined, mapDispatchToProps)(RemoveAccountDetails);
+  return {
+    sendMotivation: () =>
+      dispatch(
+        identificationRequest(
+          false,
+          true,
+          {
+            message: I18n.t("wallet.ConfirmPayment.identificationMessage")
+          },
+          {
+            label: I18n.t("wallet.ConfirmPayment.cancelPayment"),
+            onCancel: () => undefined
+          },
+          {
+            onSuccess: onIdentificationSuccess
+          },
+          shufflePinPadOnPayment
+        )
+      )
+  };
+};
+
+const mapStateToProps = (state: GlobalState) => {
+  const userDataProcessing = userDataProcessingSelector(state);
+  const isLoading =
+    pot.isLoading(userDataProcessing.DOWNLOAD) ||
+    pot.isUpdating(userDataProcessing.DOWNLOAD);
+  return {
+    userDataProcessing,
+    isLoading
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RemoveAccountDetails);
