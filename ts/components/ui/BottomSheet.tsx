@@ -4,8 +4,6 @@
  */
 
 import React from "react";
-import { Modal } from "react-native";
-import { isScreenReaderEnabled } from "../../utils/accessibility";
 import BottomSheetComponent from "../BottomSheetComponent";
 
 export type BottomSheetContextInterface = Readonly<{
@@ -54,16 +52,10 @@ export const BottomSheetProvider: React.FunctionComponent<Props> = (
   >(initialState);
 
   const showBS = async (
-    childComponent: React.ReactNode,
+    component: React.ReactNode,
     sheetTitle: string,
     snapPoint: number
   ) => {
-    const isScreenReaderActive = await isScreenReaderEnabled();
-    const component = isScreenReaderActive ? (
-      <Modal>{childComponent}</Modal>
-    ) : (
-      childComponent
-    );
     setBottomSheetState({
       component,
       sheetTitle,
