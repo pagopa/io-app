@@ -64,6 +64,7 @@ global:
     saveSelection: Save the selection
     search: Search
     skip: "Skip"
+    add: Add
   navigator:
     messages: messages
     wallet: payments
@@ -628,13 +629,6 @@ wallet:
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
-  addBancomat:
-    title: "Add bancomat {{current}} of {{length}}"
-    screenTitle: "Do you want to add this card?"
-    bodySingular: "We found 1 card headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
-    bodyPlural: "We found {{number}} cards headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
-    skip: Skip
-    add: Add
   accessibility:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
@@ -654,6 +648,11 @@ wallet:
         chooseAnother: "Choose another bank"
       loadingSearch:
         title: "We are asking Bancomat for the list of your cards\n\nPlease wait"
+      add:
+        title: "Add bancomat {{current}} of {{length}}"
+        screenTitle: "Do you want to add this card?"
+        bodySingular: "We found 1 card headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
+        bodyPlural: "We found {{number}} cards headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
