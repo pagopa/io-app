@@ -39,7 +39,6 @@ import { Locales } from "../../locales/locales";
 import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import ROUTES from "../navigation/routes";
-import reactotron from "reactotron-react-native";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { isYesterday } from "date-fns";
 import { startAndReturnIdentificationResult } from "./identification";
@@ -293,7 +292,5 @@ export function* handleRemoveAccount() {
     )
   ) {
     yield put(navigateToRemoveAccountSuccess());
-  } else {
-    reactotron.log("else");
   }
 }
