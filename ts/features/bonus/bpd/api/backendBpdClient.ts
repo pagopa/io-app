@@ -16,6 +16,9 @@ import {
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
 import {
+  DeleteUsingDELETET,
+  enrollmentPaymentInstrumentIOUsingPUTDefaultDecoder,
+  EnrollmentPaymentInstrumentIOUsingPUTT,
   findUsingGETDefaultDecoder,
   FindUsingGETT as FindPaymentUsingGETT
 } from "../../../../../definitions/bpd/payment/requestTypes";
@@ -32,7 +35,7 @@ const headersProducers = <
     Authorization: `Bearer ${(p as any).Bearer}`
   })) as RequestHeaderProducer<P, "Authorization">;
 
-/* CITIZEN (status, subscribe, unsubscribe) */
+/* CITIZEN (status, enroll, delete) */
 type FindUsingGETTExtra = MapResponseType<
   FindUsingGETT,
   200,
@@ -92,13 +95,41 @@ const deleteCitizenIOT: DeleteUsingDELETETExtra = {
   response_decoder: deleteResponseDecoders
 };
 
-/* PAYMENT (status, subscribe, unsubscribe) */
+/* PAYMENT (status, enroll, delete) */
 const findPayment: FindPaymentUsingGETT = {
   method: "get",
   url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: findUsingGETDefaultDecoder()
+};
+
+const enrollPayment: EnrollmentPaymentInstrumentIOUsingPUTT = {
+  method: "put",
+  url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
+  query: _ => ({}),
+  body: () => "",
+  headers: composeHeaderProducers(ApiHeaderJson, headersProducers()),
+  response_decoder: enrollmentPaymentInstrumentIOUsingPUTDefaultDecoder()
+};
+
+const deletePaymentResponseDecoders = r.composeResponseDecoders(
+  r.composeResponseDecoders(
+    r.constantResponseDecoder<undefined, 204>(204, undefined),
+    r.constantResponseDecoder<undefined, 400>(400, undefined)
+  ),
+  r.composeResponseDecoders(
+    r.constantResponseDecoder<undefined, 401>(401, undefined),
+    r.constantResponseDecoder<undefined, 500>(500, undefined)
+  )
+);
+
+const deletePayment: DeleteUsingDELETET = {
+  method: "delete",
+  url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: deletePaymentResponseDecoders
 };
 
 // decoders composition to handle updatePaymentMethod response
@@ -218,6 +249,14 @@ export function BackendBpdClient(
           { ["Content-Type"]: jsonContentType }
         )
       ),
-    findPayment: withBearerToken(createFetchRequestForApi(findPayment, options))
+    findPayment: withBearerToken(
+      createFetchRequestForApi(findPayment, options)
+    ),
+    enrollPayment: withBearerToken(
+      createFetchRequestForApi(enrollPayment, options)
+    ),
+    deletePayment: withBearerToken(
+      createFetchRequestForApi(deletePayment, options)
+    )
   };
 }

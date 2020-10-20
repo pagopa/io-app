@@ -1,6 +1,5 @@
 import { IUnitTag } from "italia-ts-commons/lib/units";
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { PaymentInstrumentResource } from "../../../../../../definitions/bpd/payment/PaymentInstrumentResource";
 
 // Temp type to ensure that only HPan from walled are used to query the bpd pm activation
 export type HPan = string & IUnitTag<"HPan">;
@@ -46,7 +45,7 @@ export const bpdPaymentMethodActivation = createAsyncAction(
   "BPD_PAYMENT_METHOD_ACTIVATION_REQUEST",
   "BPD_PAYMENT_METHOD_ACTIVATION_SUCCESS",
   "BPD_PAYMENT_METHOD_ACTIVATION_FAILURE"
-)<HPan, PaymentInstrumentResource, BpdPaymentMethodFailure>();
+)<HPan, BpdPaymentMethodActivation, BpdPaymentMethodFailure>();
 
 /**
  * The remote request to change the bpd activation on a payment method
