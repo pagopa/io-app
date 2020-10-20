@@ -81,6 +81,20 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
     backgroundColor: color
   };
 
+  const openBackdropAnimation = () =>
+    Animated.timing(opacity, {
+      useNativeDriver: false,
+      toValue: 1,
+      duration: 200
+    }).start();
+
+  const closeBackdropAnimation = () =>
+    Animated.timing(opacity, {
+      useNativeDriver: false,
+      toValue: 0,
+      duration: 200
+    }).start();
+
   React.useEffect(() => {
     if (props.content) {
       openBottomSheet();
@@ -92,11 +106,7 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
   const closeBottomSheet = () => {
     if (bottomSheetRef && bottomSheetRef.current) {
       bottomSheetRef.current.snapTo(0);
-      Animated.timing(opacity, {
-        useNativeDriver: false,
-        toValue: 0,
-        duration: 200
-      }).start();
+      closeBackdropAnimation();
       props.handleClose();
     }
   };
@@ -104,11 +114,7 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
   const openBottomSheet = () => {
     if (bottomSheetRef && bottomSheetRef.current) {
       bottomSheetRef.current.snapTo(1);
-      Animated.timing(opacity, {
-        useNativeDriver: false,
-        toValue: 1,
-        duration: 200
-      }).start();
+      openBackdropAnimation();
     }
   };
 
@@ -143,20 +149,8 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
       <BottomSheet
         ref={bottomSheetRef}
         snapPoints={[0, props.maxSnapPoint]}
-        onOpenEnd={() =>
-          Animated.timing(opacity, {
-            useNativeDriver: false,
-            toValue: 1,
-            duration: 200
-          }).start()
-        }
-        onCloseEnd={() =>
-          Animated.timing(opacity, {
-            useNativeDriver: false,
-            toValue: 0,
-            duration: 200
-          }).start()
-        }
+        onOpenEnd={openBackdropAnimation}
+        onCloseEnd={closeBackdropAnimation}
         renderHeader={renderHeader}
         renderContent={() => (
           <View style={styles.content}>{props.content}</View>
