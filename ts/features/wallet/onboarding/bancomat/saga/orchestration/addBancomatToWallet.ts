@@ -1,11 +1,12 @@
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import {
-  ESagaResult,
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
+import { isBpdEnabled } from "../../../../../bonus/bpd/saga/orchestration/onboarding/startOnboarding";
+import { bpdOnboardingStart } from "../../../../../bonus/bpd/store/actions/onboarding";
 import { navigateToOnboardingBancomatChooseBank } from "../../navigation/action";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
 import {
@@ -13,6 +14,7 @@ import {
   walletAddBancomatCancel,
   walletAddBancomatCompleted
 } from "../../store/actions";
+import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
 
 /**
  * Define the workflow that allows the user to add a bancomat to the wallet.
@@ -40,7 +42,44 @@ export function* addBancomatToWalletGeneric() {
     withResetNavigationStack,
     bancomatWorkUnit
   );
-  if (res !== ESagaResult.Back) {
+  if (res !== "back") {
     yield put(navigateToWalletHome());
+  }
+}
+
+export function* addBancomatToWalletAndActivateBpd() {
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+    withResetNavigationStack,
+    bancomatWorkUnit
+  );
+  if (res === "cancel") {
+    yield put(navigateToWalletHome());
+  } else if (res === "completed") {
+    const bancomatAdded: ReturnType<typeof onboardingBancomatAddedPansSelector> = yield select(
+      onboardingBancomatAddedPansSelector
+    );
+    // TODO: change enableableFunction with types representing the possibles functionalities
+    const atLeastOneBancomatWithBpdCapability = bancomatAdded.some(b =>
+      b.enableableFunctions?.includes("BPDs")
+    );
+
+    // No bancomat with bpd capability added in the current workflow, return to wallet home
+    if (!atLeastOneBancomatWithBpdCapability) {
+      yield put(navigateToWalletHome());
+    }
+    const isBpdEnabledResponse: SagaCallReturnType<typeof isBpdEnabled> = yield call(
+      isBpdEnabled
+    );
+
+    if (isBpdEnabledResponse.isLeft()) {
+      yield put(navigateToWalletHome());
+    } else {
+      if (isBpdEnabledResponse.value) {
+        // navigate to onboarding new bancomat
+      } else {
+        // navigate to "ask if u want to start bpd onboarding"
+        yield put(bpdOnboardingStart());
+      }
+    }
   }
 }

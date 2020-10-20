@@ -1,6 +1,7 @@
 import { getType } from "typesafe-actions";
 import { WalletV2 } from "../../../../../../../definitions/pagopa/bancomat/WalletV2";
 import { Action } from "../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import { addBancomatToWallet, walletAddBancomatStart } from "../actions";
 
 const addedPansReducer = (
@@ -15,8 +16,11 @@ const addedPansReducer = (
     case getType(walletAddBancomatStart):
       return [];
   }
-
   return state;
 };
+
+export const onboardingBancomatAddedPansSelector = (
+  state: GlobalState
+): ReadonlyArray<WalletV2> => state.wallet.onboarding.bancomat.addedPans;
 
 export default addedPansReducer;

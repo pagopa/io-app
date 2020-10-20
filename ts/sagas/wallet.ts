@@ -35,7 +35,10 @@ import {
   handleLoadAbi,
   handleLoadPans
 } from "../features/wallet/onboarding/bancomat/saga/networking";
-import { addBancomatToWalletGeneric } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
+import {
+  addBancomatToWalletAndActivateBpd,
+  addBancomatToWalletGeneric
+} from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import {
   addBancomatToWallet,
   loadAbi,
@@ -729,7 +732,7 @@ export function* watchWalletSaga(
     );
 
     // watch for add Bancomat to Wallet workflow
-    yield takeLatest(walletAddBancomatStart, addBancomatToWalletGeneric);
+    yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
   }
 
   yield fork(paymentsDeleteUncompletedSaga);
