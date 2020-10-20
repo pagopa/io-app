@@ -791,7 +791,7 @@
 			baseConfigurationReference = 1DE434F7662456C56AE365DA /* Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = QWLSX4D6KP;
+				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -817,7 +817,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = QWLSX4D6KP;
+				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ItaliaAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
