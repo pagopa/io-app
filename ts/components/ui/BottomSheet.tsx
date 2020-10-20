@@ -88,17 +88,15 @@ export const BottomSheetProvider: React.FunctionComponent<Props> = (
   );
 };
 
-export const BottomSheetRoot: React.FunctionComponent = () => {
-  return (
-    <BottomSheetConsumer>
-      {({ component, sheetTitle, snapPoint, hideBS }) => (
-        <BottomSheetComponent
-          content={component}
-          maxSnapPoint={snapPoint}
-          bottomSheetTitle={sheetTitle}
-          handleClose={hideBS}
-        />
-      )}
-    </BottomSheetConsumer>
-  );
-};
+export const BottomSheetRoot: React.FunctionComponent = () => (
+  <BottomSheetConsumer>
+    {({ component, sheetTitle, snapPoint, hideBS }) => (
+      <BottomSheetComponent
+        content={component}
+        maxSnapPoint={snapPoint}
+        bottomSheetTitle={sheetTitle}
+        handleClose={hideBS}
+      />
+    )}
+  </BottomSheetConsumer>
+);
