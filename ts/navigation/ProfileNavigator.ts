@@ -16,6 +16,7 @@ import WebPlayground from "../screens/profile/WebPlayground";
 import RemoveAccountInfo from "../screens/profile/RemoveAccountInfoScreen";
 import RemoveAccountDetails from "../screens/profile/RemoveAccountDetailsScreen";
 import ROUTES from "./routes";
+import RemoveAccountSuccess from "../screens/profile/RemoveAccountSuccessScreen";
 
 /**
  * A navigator for all the screens of the Profile section
@@ -69,6 +70,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS]: {
       screen: RemoveAccountDetails
+    },
+    [ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS]: {
+      screen: RemoveAccountSuccess
     }
   },
   {
