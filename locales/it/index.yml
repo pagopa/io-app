@@ -2,6 +2,7 @@
 global:
   password: Password
   username: Username
+  disclaimer_beta: Questa funzionalità è in beta. Se riscontri problemi di accesso, segnalacelo!
   accessibility:
     date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
@@ -128,7 +129,7 @@ login:
   welcome:
     line1: benvenuto nella tua
     line2: Cittadinanza Digitale
-  expiration_info: Ti informiamo che per ragioni di sicurezza, dopo 30 giorni dall’ultimo accesso, ti chiederemo di effettuare un nuovo login per utilizzare IO.
+  expiration_info: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso dovrai effettuare un nuovo login per continuare a utilizzare IO.
 inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox

@@ -28,7 +28,7 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
 
   private renderFooterButtons = () => {
     const cancelButtonProps = {
-      cancel: true,
+      bordered: true,
       onPress: this.props.navigation.goBack,
       title: I18n.t("global.buttons.cancel")
     };

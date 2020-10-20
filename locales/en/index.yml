@@ -2,6 +2,7 @@
 global:
   password: Password
   username: Username
+  disclaimer_beta: This feature is in beta. If you're having trouble signing in, please let us know!
   accessibility:
     date_format: MMMM Do YYYY
     expanded: Expanded paragraph
@@ -128,7 +129,7 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
-  expiration_info: For security reasons, after 30 days from the last login, we will ask you to log in again to use IO
+  expiration_info: For security reasons, after 30 days from your last login you'll need to sign in again to continue using IO.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -387,7 +388,7 @@ authentication:
       incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
       alert: Are you sure you want to go back?
       contextualHelpTitle: Where can I find my PIN?
-      contextualHelpBody: "The PIN code consists of 8 digits:\n- the first 4 digits you received at the registry office;\n- the last 4 digits you received at home, along with your electronic ID card.\nPlease enter them following this order."
+      contextualHelpBody: "The PIN code consists of 8 digits: \n\n- the first 4 digits you received at the registry office;\n- the last 4 digits you received at home, along with your electronic ID card.\n\nPlease enter them following this order.\n\n[Did you forget your PIN?](https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/)"
     pinTempLocked:
       header: Pin locked
       title: Card temporarily locked
