@@ -13,7 +13,7 @@ import {
   takeEvery,
   takeLatest
 } from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { BackendClient } from "../api/backend";
@@ -44,6 +44,9 @@ import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { isYesterday } from "date-fns";
 import { startAndReturnIdentificationResult } from "./identification";
 import { pass } from "fp-ts/lib/Writer";
+import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
+import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
+import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -274,15 +277,23 @@ export function* watchProfile(
   yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
 }
 
-export function* authenticationWorker() {
-  const storedPin = yield call(checkConfiguredPinSaga);
-
-  yield call(startAndReturnIdentificationResult, storedPin);
-}
-
 export function* handleRemoveAccount() {
-  yield takeEvery(removeAccountMotivation, authenticationWorker);
+  yield put(
+    upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
+  );
+  const upsertUserDataProcessingResponse = yield take([
+    upsertUserDataProcessing.success,
+    upsertUserDataProcessing.failure
+  ]);
 
-  reactotron.log("entra");
-  //   //yield put(navigateToRemoveAccountDetails());
+  if (
+    isActionOf(
+      upsertUserDataProcessing.success,
+      upsertUserDataProcessingResponse
+    )
+  ) {
+    yield put(navigateToRemoveAccountSuccess());
+  } else {
+    reactotron.log("else");
+  }
 }

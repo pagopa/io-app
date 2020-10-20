@@ -38,7 +38,11 @@ import {
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
-import { clearCache, resetProfileState } from "../store/actions/profile";
+import {
+  clearCache,
+  removeAccountMotivation,
+  resetProfileState
+} from "../store/actions/profile";
 import {
   idpSelector,
   sessionInfoSelector,
@@ -248,7 +252,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield fork(watchCheckSessionSaga, backendClient.getSession);
 
   // Sart watching for request of remove profile
-  yield fork(handleRemoveAccount);
+  yield takeEvery(removeAccountMotivation, handleRemoveAccount);
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
 
