@@ -653,6 +653,7 @@ wallet:
         screenTitle: "Do you want to add this card?"
         bodySingular: "We found 1 card headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
         bodyPlural: "We found {{number}} cards headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
+        loading: "We are adding your PagoBANCOMAT card\n\nPlease wait a few seconds"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
