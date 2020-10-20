@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   content: {
     ...IOStyles.horizontalContentPadding,
     width: "100%",
+    height: "100%",
     backgroundColor: IOColors.white
   },
   hover: {
@@ -82,6 +83,8 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
   React.useEffect(() => {
     if (props.content) {
       openBottomSheet();
+    } else {
+      closeBottomSheet();
     }
   }, [props.content]);
 
@@ -134,14 +137,14 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
       <BottomSheet
         ref={bottomSheetRef}
         snapPoints={[0, props.maxSnapPoint]}
-        onOpenStart={() =>
+        onOpenEnd={() =>
           Animated.timing(opacity, {
             useNativeDriver: false,
             toValue: 1,
             duration: 200
           }).start()
         }
-        onCloseStart={() =>
+        onCloseEnd={() =>
           Animated.timing(opacity, {
             useNativeDriver: false,
             toValue: 0,

@@ -23,10 +23,7 @@ import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderCo
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
-import {
-  BottomTopAnimation,
-  LightModalContextInterface
-} from "../../../../components/ui/LightModal";
+import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
@@ -66,10 +63,9 @@ import {
 } from "../utils/bonus";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
-import BottomSheetComponent from "../../../../components/BottomSheetComponent";
 import { withBottomSheetContext } from "../../../../components/helpers/withBottomSheetContext";
 import { BottomSheetContextInterface } from "../../../../components/ui/BottomSheet";
+import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -416,8 +412,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         logo={props.logo}
       />
     );
-    // props.showAnimatedModal(modalBox, BottomTopAnimation);
-    // setBottomSheetContent(modalBox);
+
     props.showBS(modalBox, I18n.t("bonus.bonusVacanze.name"), 466);
   };
 
@@ -691,12 +686,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       <Animated.View
         pointerEvents={"none"}
         style={[styles.hover, { backgroundColor: backgroundInterpolation }]}
-      />
-      <BottomSheetComponent
-        bottomSheetTitle={I18n.t("bonus.bonusVacanze.name")}
-        content={bottomSheetContent}
-        maxSnapPoint={466}
-        handleClose={() => setBottomSheetContent(null)}
       />
     </>
   ) : (
