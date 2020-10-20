@@ -8,9 +8,14 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   BpdPaymentMethodActivation,
   bpdPaymentMethodActivation,
+  BpdPmActivationStatus,
   bpdUpdatePaymentMethodActivation,
   HPan
 } from "../../actions/paymentMethods";
+import {
+  PaymentInstrumentResource,
+  StatusEnum
+} from "../../../../../../../definitions/bpd/payment/PaymentInstrumentResource";
 
 export type BpdPotPaymentMethodActivation = pot.Pot<
   BpdPaymentMethodActivation,
@@ -22,6 +27,26 @@ const readPot = (
   data: IndexedById<BpdPotPaymentMethodActivation>
 ): BpdPotPaymentMethodActivation =>
   fromNullable(data[hPan]).getOrElse(pot.none);
+
+const mapStatus: Map<StatusEnum, BpdPmActivationStatus> = new Map<
+  StatusEnum,
+  BpdPmActivationStatus
+>([
+  [StatusEnum.ACTIVE, "active"],
+  [StatusEnum.INACTIVE, "inactive"]
+]);
+
+// convert the network payload to the logical app representation of it
+const convertNetworkPayload = (
+  networkPayload: PaymentInstrumentResource
+): BpdPaymentMethodActivation => ({
+  hPan: networkPayload.hpan as HPan,
+  activationStatus: fromNullable(
+    mapStatus.get(networkPayload.Status)
+  ).getOrElse("notActivable"),
+  activationDate: networkPayload.activationDate,
+  deactivationDate: networkPayload.deactivationDate
+});
 
 /**
  * This reducer keep the activation state and the upsert request foreach payment method,
@@ -38,7 +63,11 @@ export const bpdPaymentMethodsReducer = (
     case getType(bpdPaymentMethodActivation.request):
       return { ...state, [action.payload]: pot.noneLoading };
     case getType(bpdPaymentMethodActivation.success):
-      return { ...state, [action.payload.hPan]: pot.some(action.payload) };
+      const methodActivation = convertNetworkPayload(action.payload);
+      return {
+        ...state,
+        [methodActivation.hPan]: pot.some(methodActivation)
+      };
     case getType(bpdPaymentMethodActivation.failure):
       return {
         ...state,

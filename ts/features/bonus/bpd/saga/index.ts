@@ -74,7 +74,8 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   // load bpd activation status for a specific payment method
   yield takeEvery(
     bpdPaymentMethodActivation.request,
-    bpdLoadPaymentMethodActivationSaga
+    bpdLoadPaymentMethodActivationSaga,
+    bpdBackendClient.findPayment
   );
 
   // update bpd activation status for a specific payment method

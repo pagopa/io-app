@@ -15,6 +15,10 @@ import {
   findUsingGETDecoder,
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
+import {
+  findUsingGETDefaultDecoder,
+  FindUsingGETT as FindPaymentUsingGETT
+} from "../../../../../definitions/bpd/payment/requestTypes";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { PatchedCitizenResource } from "./patchedTypes";
 
@@ -28,6 +32,7 @@ const headersProducers = <
     Authorization: `Bearer ${(p as any).Bearer}`
   })) as RequestHeaderProducer<P, "Authorization">;
 
+/* CITIZEN (status, subscribe, unsubscribe) */
 type FindUsingGETTExtra = MapResponseType<
   FindUsingGETT,
   200,
@@ -85,6 +90,15 @@ const deleteCitizenIOT: DeleteUsingDELETETExtra = {
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: deleteResponseDecoders
+};
+
+/* PAYMENT (status, subscribe, unsubscribe) */
+const findPayment: FindPaymentUsingGETT = {
+  method: "get",
+  url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findUsingGETDefaultDecoder()
 };
 
 // decoders composition to handle updatePaymentMethod response
@@ -203,6 +217,7 @@ export function BackendBpdClient(
           { payoffInstr: iban, payoffInstrType: "IBAN" },
           { ["Content-Type"]: jsonContentType }
         )
-      )
+      ),
+    findPayment: withBearerToken(createFetchRequestForApi(findPayment, options))
   };
 }
