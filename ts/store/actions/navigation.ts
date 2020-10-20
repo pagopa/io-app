@@ -150,6 +150,11 @@ export const navigateToLanguagePreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_LANGUAGE
   });
 
+export const navigateToRemoveAccountSuccess = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
+  });
+
 /**
  * Wallet & Payments
  */
