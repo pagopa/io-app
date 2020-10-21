@@ -26,7 +26,7 @@ const loadLocales = () => ({
   continueStr: I18n.t("global.buttons.continue")
 });
 
-const ActivateBpdOnNewBancomat: React.FunctionComponent<Props> = props => {
+const ActivateBpdOnNewBancomatScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body1, body2, skip, continueStr } = loadLocales();
   return (
     <BaseScreenComponent headerTitle={headerTitle}>
@@ -67,4 +67,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ActivateBpdOnNewBancomat);
+)(ActivateBpdOnNewBancomatScreen);
