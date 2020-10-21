@@ -81,7 +81,7 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  abort: () => dispatch(resetToAuthenticationRoute())
+  abort: () => dispatch(resetToAuthenticationRoute)
 });
 
 export default connect(undefined, mapDispatchToProps)(CieWrongCiePinScreen);

@@ -6,7 +6,6 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import InputPlaceHolder from "../Pinpad/InputPlaceholder";
 import { INPUT_PLACEHOLDER_HEIGHT } from "../Pinpad/Placeholders";
-import { Link } from "../core/typography/Link";
 
 type Props = {
   pinLength: number;
