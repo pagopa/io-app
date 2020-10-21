@@ -50,6 +50,9 @@ const injectJs = `
 const iOSUserAgent =
   "Mozilla/5.0 (Linux; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36";
 const userAgent = Platform.select({ ios: iOSUserAgent, default: undefined });
+// this injection is done only on iOS side. Since the server doesn't recognize iOS as a valid device it shows an error page (it is a simple UI block).
+// we inject this JS code to get all info needed to continue the authentication
+const iOSFollowHappyPathInjection = `window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`;
 
 export default class CieRequestAuthenticationOverlay extends React.PureComponent<
   Props,
@@ -97,9 +100,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
       // avoid redirect and follow the 'happy path'
       if (this.webView.current !== null) {
         this.webView.current.injectJavaScript(
-          closeInjectedScript(
-            `window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`
-          )
+          closeInjectedScript(iOSFollowHappyPathInjection)
         );
       }
       return false;
