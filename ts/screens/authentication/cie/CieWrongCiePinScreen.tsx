@@ -4,17 +4,21 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
+import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 
 type NavigationParams = {
   remainingCount: number;
 };
 
-type Props = NavigationScreenProps<NavigationParams>;
+type Props = NavigationScreenProps<NavigationParams> &
+  ReturnType<typeof mapDispatchToProps>;
 
 class CieWrongCiePinScreen extends React.PureComponent<Props> {
   // TODO: usare redux per gestire il controllo?
@@ -29,7 +33,7 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
   private renderFooterButtons = () => {
     const cancelButtonProps = {
       bordered: true,
-      onPress: this.props.navigation.goBack,
+      onPress: this.props.abort,
       title: I18n.t("global.buttons.cancel")
     };
     const retryButtonProps = {
@@ -76,4 +80,8 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
     );
   }
 }
-export default CieWrongCiePinScreen;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  abort: () => dispatch(resetToAuthenticationRoute())
+});
+
+export default connect(undefined, mapDispatchToProps)(CieWrongCiePinScreen);

@@ -6,6 +6,7 @@ import * as React from "react";
 import { Linking, Platform } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -14,7 +15,6 @@ import I18n from "../../../i18n";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
-import { constNull } from "fp-ts/lib/function";
 
 type Props = NavigationScreenProps & ReduxProps;
 
@@ -35,9 +35,17 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
       })
     ).catch(constNull);
   }
+
+  private getContextualHelp = () => ({
+    title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
+    body: () => (
+      <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
+    )
+  });
+
   private renderFooterButtons = () => {
     const cancelButtonProps = {
-      cancel: true,
+      bordered: true,
       onPress: this.handleGoBack,
       title: I18n.t("global.buttons.cancel")
     };
@@ -62,6 +70,7 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
+        contextualHelp={this.getContextualHelp()}
         headerTitle={I18n.t("authentication.cie.pinTempLocked.header")} // TODO: validate
       >
         <ScreenContentHeader

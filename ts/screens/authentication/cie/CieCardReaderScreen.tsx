@@ -35,6 +35,7 @@ import { instabugLog, TypeLogs } from "../../../boot/configureInstabug";
 import { cieAuthenticationError } from "../../../store/actions/cie";
 import { ReduxProps } from "../../../store/actions/types";
 import { isIos } from "../../../utils/platform";
+import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 
 type NavigationParams = {
   ciePin: string;
@@ -196,7 +197,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "ON_PIN_ERROR":
         this.setError(
           I18n.t("authentication.cie.card.error.tryAgain"),
-          ROUTES.CIE_WRONG_PIN_SCREEN,
+          ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN,
           {
             remainingCount: event.attemptsLeft
           }
@@ -354,13 +355,15 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     setAccessibilityFocus(this.subTitleRef, accessibityTimeout);
   };
 
+  private handleCancel = () => this.props.dispatch(resetToAuthenticationRoute);
+
   private getFooter = () =>
     Platform.select({
       default: (
         <FooterWithButtons
           type={"SingleButton"}
           leftButton={{
-            onPress: this.props.navigation.goBack,
+            onPress: this.handleCancel,
             bordered: true,
             title: I18n.t("global.buttons.cancel")
           }}
@@ -371,7 +374,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           type={"TwoButtonsInlineThird"}
           leftButton={{
             bordered: true,
-            onPress: this.props.navigation.goBack,
+            onPress: this.handleCancel,
             title: I18n.t("global.buttons.cancel")
           }}
           rightButton={{
