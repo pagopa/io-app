@@ -40,7 +40,7 @@ class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
         <FooterWithButtons
           type={"SingleButton"}
           leftButton={{
-            cancel: true,
+            bordered: true,
             onPress: this.handleGoBack,
             title: I18n.t("global.buttons.cancel")
           }}

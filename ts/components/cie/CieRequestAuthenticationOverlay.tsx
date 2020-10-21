@@ -3,17 +3,17 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import { BackHandler, StyleSheet } from "react-native";
+import { BackHandler, StyleSheet, Platform } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
-  WebViewNavigation,
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
+import { closeInjectedScript } from "../../utils/webview";
 
 type Props = {
   onClose: () => void;
@@ -22,9 +22,9 @@ type Props = {
 
 type State = {
   hasError: boolean;
-  isLoading: boolean;
   findOpenApp: boolean;
   webViewKey: number;
+  injectJavascript?: string;
 };
 
 const styles = StyleSheet.create({
@@ -45,15 +45,24 @@ const injectJs = `
   true;
 `;
 
+// this is a 'fake' user-agent to send through the webView when the running device is an iOS
+// this is needed because the device must be recognized as Android
+const iOSUserAgent =
+  "Mozilla/5.0 (Linux; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36";
+const userAgent = Platform.select({ ios: iOSUserAgent, default: undefined });
+// this injection is done only on iOS side. Since the server doesn't recognize iOS as a valid device it shows an error page (it is a simple UI block).
+// we inject this JS code to get all info needed to continue the authentication
+const iOSFollowHappyPathInjection = `window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`;
+
 export default class CieRequestAuthenticationOverlay extends React.PureComponent<
   Props,
   State
 > {
+  private webView = React.createRef<WebView>();
   constructor(props: Props) {
     super(props);
     this.state = {
       hasError: false,
-      isLoading: true,
       findOpenApp: false,
       webViewKey: 1
     };
@@ -74,24 +83,30 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
 
   private handleOnError = () => {
     this.setState({
-      isLoading: false,
       hasError: true
     });
   };
 
-  private handleOnShouldStartLoadWithRequest = (
-    event: WebViewNavigation
-  ): boolean => {
+  private handleOnShouldStartLoadWithRequest = (event: any): boolean => {
     if (this.state.findOpenApp) {
       return false;
     }
-    // TODO: check if we can distinguish among different type of errors
-    //      some errors could suggest ro redirect the user to the landing screen , not back
-    if (event.url && event.url.indexOf("errore") !== -1) {
-      this.handleOnError();
-      return true;
+    // on iOS the web page script try to redirect in an error url
+    if (
+      Platform.OS === "ios" &&
+      event.url !== undefined &&
+      event.url.indexOf("errore.jsp") !== -1
+    ) {
+      // avoid redirect and follow the 'happy path'
+      if (this.webView.current !== null) {
+        this.webView.current.injectJavaScript(
+          closeInjectedScript(iOSFollowHappyPathInjection)
+        );
+      }
+      return false;
     }
-    // Once the returned url conteins the "OpenApp" string, then the authorization has been given
+
+    // Once the returned url contains the "OpenApp" string, then the authorization has been given
     if (event.url && event.url.indexOf("OpenApp") !== -1) {
       this.setState({ findOpenApp: true }, () => {
         const authorizationUri = event.url;
@@ -99,6 +114,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
           this.props.onSuccess(authorizationUri);
         }
       });
+      return false;
     }
     return true;
   };
@@ -118,8 +134,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     const webViewKey = this.state.webViewKey + 1;
     this.setState({
       webViewKey,
-      hasError: false,
-      isLoading: true
+      hasError: false
     });
   };
 
@@ -132,10 +147,12 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
   private renderWebView() {
     return (
       <View style={styles.flex}>
-        {this.state.findOpenApp === false && (
+        {!this.state.findOpenApp && (
           <WebView
-            injectedJavaScript={injectJs}
+            ref={this.webView}
+            userAgent={userAgent}
             javaScriptEnabled={true}
+            injectedJavaScript={injectJs}
             onLoadEnd={this.handleOnLoadEnd}
             onError={this.handleOnError}
             onShouldStartLoadWithRequest={
@@ -160,7 +177,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     ));
     return (
       <ContainerComponent
-        isLoading={this.state.isLoading}
+        isLoading={true}
         loadingOpacity={1.0}
         loadingCaption={I18n.t("global.genericWaiting")}
         onCancel={this.props.onClose}
