@@ -4,13 +4,12 @@ import {
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { isBpdEnabled } from "../../../../../bonus/bpd/saga/orchestration/onboarding/startOnboarding";
 import {
-  navigateToSuggestBpdActivation,
+  navigateToActivateBpdOnNewBancomat,
   navigateToOnboardingBancomatChooseBank,
-  navigateToActivateBpdOnNewBancomat
+  navigateToSuggestBpdActivation
 } from "../../navigation/action";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
 import {
