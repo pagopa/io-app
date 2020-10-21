@@ -1,7 +1,6 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 import {
   isError,
   remoteError,
@@ -12,8 +11,9 @@ import {
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { LoadPansError } from "../../saga/networking";
 import { searchUserPans } from "../actions";
+import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
 
-export type Pans = RemoteValue<ReadonlyArray<PatchedCard>, LoadPansError>;
+export type Pans = RemoteValue<ReadonlyArray<Card>, LoadPansError>;
 
 const pansReducer = (state: Pans = remoteUndefined, action: Action): Pans => {
   switch (action.type) {

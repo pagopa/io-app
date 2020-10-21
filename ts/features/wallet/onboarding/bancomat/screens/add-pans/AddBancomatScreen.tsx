@@ -16,13 +16,13 @@ import {
 import {
   walletAddBancomatCancel,
   walletAddBancomatCompleted,
-  walletAddSelectedBancomat
+  addBancomatToWallet
 } from "../../store/actions";
-import { PatchedCard } from "../../../../../bonus/bpd/api/patchedTypes";
 import {
   onboardingBancomatAddingResultSelector,
   onboardingBancomatChosenPanSelector
 } from "../../store/reducers/addingPans";
+import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
 import AddBancomatComponent from "./AddBancomatComponent";
 import LoadAddBancomatComponent from "./LoadAddBancomatComponent";
 
@@ -90,12 +90,11 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addBancomat: (pan: PatchedCard) =>
-    dispatch(walletAddSelectedBancomat.request(pan)),
+  addBancomat: (pan: Card) => dispatch(addBancomatToWallet.request(pan)),
   onCompleted: () => dispatch(walletAddBancomatCompleted()),
   onCancel: () => dispatch(walletAddBancomatCancel()),
-  onRetry: (panSelected: PatchedCard) =>
-    dispatch(walletAddSelectedBancomat.request(panSelected))
+  onRetry: (panSelected: Card) =>
+    dispatch(addBancomatToWallet.request(panSelected))
 });
 
 const mapStateToProps = (state: GlobalState) => {
