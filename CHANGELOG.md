@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0-rc.4](https://github.com/pagopa/io-app/compare/1.8.0-rc.0...1.8.0-rc.4) (2020-10-21)
+
+
+### Features
+
+* [[#175228211](https://www.pivotaltracker.com/story/show/175228211)] Update Internationalization section in README ([#2297](https://github.com/pagopa/io-app/issues/2297)) ([b9685d6](https://github.com/pagopa/io-app/commit/b9685d6deb95a78107915b659d84ac827989256a))
+
+
+### Bug Fixes
+
+* **Payments:** [[#175300578](https://www.pivotaltracker.com/story/show/175300578)] Transaction read state is lost across multiple sessions ([#2296](https://github.com/pagopa/io-app/issues/2296)) ([eb1e5a3](https://github.com/pagopa/io-app/commit/eb1e5a3826eb955671e3e9c7af1da0dc1ff64f96))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#175329922](https://www.pivotaltracker.com/story/show/175329922)] Add Bpd Test Overlay [#2303](https://github.com/pagopa/io-app/issues/2303) ([407e7f4](https://github.com/pagopa/io-app/commit/407e7f46a5d86e225fa1b758cd1c634d9e6cd73b))
+
 ## [1.8.0-rc.0](https://github.com/pagopa/io-app/compare/1.7.0-rc.10...1.8.0-rc.0) (2020-10-19)
 
 
