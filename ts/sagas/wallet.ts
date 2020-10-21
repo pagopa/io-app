@@ -35,10 +35,7 @@ import {
   handleLoadAbi,
   handleLoadPans
 } from "../features/wallet/onboarding/bancomat/saga/networking";
-import {
-  addBancomatToWalletAndActivateBpd,
-  addBancomatToWalletGeneric
-} from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
+import { addBancomatToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import {
   addBancomatToWallet,
   loadAbi,
