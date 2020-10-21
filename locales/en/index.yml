@@ -654,6 +654,14 @@ wallet:
         bodySingular: "We found 1 card headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
         bodyPlural: "We found {{number}} cards headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
         loading: "We are adding your PagoBANCOMAT card\n\nPlease wait a few seconds"
+      bpd:
+        askActivation:
+          title: "Do you want to activate Digital Payments Cashback?"
+          body: "You have added payment methods compatible with Cashback Digital Payments, the initiative promoted by the Presidency of the Council of Ministers to promote the use of electronic money.\n\n
+                 Each time you pay with one of the compatible electronic payment methods (cards, debit cards, apps, etc.), you will receive a partial refund based on your expense.\n\n
+                 Based on how many transnations you have accumulated, in each period, you can receive a cash prize of up to XXXX euros. "
+          skip: "No, thanks"
+          confirm: "Info and activation"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required

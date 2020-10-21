@@ -6,8 +6,10 @@ import {
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { isBpdEnabled } from "../../../../../bonus/bpd/saga/orchestration/onboarding/startOnboarding";
-import { bpdOnboardingStart } from "../../../../../bonus/bpd/store/actions/onboarding";
-import { navigateToOnboardingBancomatChooseBank } from "../../navigation/action";
+import {
+  navigateToAskBpdActivation,
+  navigateToOnboardingBancomatChooseBank
+} from "../../navigation/action";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
 import {
   walletAddBancomatBack,
@@ -47,6 +49,9 @@ export function* addBancomatToWalletGeneric() {
   }
 }
 
+/**
+ * Chain the add bancomat to wallet with "activate bpd on the new bancomat"
+ */
 export function* addBancomatToWalletAndActivateBpd() {
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
     withResetNavigationStack,
@@ -55,31 +60,40 @@ export function* addBancomatToWalletAndActivateBpd() {
   if (res === "cancel") {
     yield put(navigateToWalletHome());
   } else if (res === "completed") {
-    const bancomatAdded: ReturnType<typeof onboardingBancomatAddedPansSelector> = yield select(
-      onboardingBancomatAddedPansSelector
-    );
-    // TODO: change enableableFunction with types representing the possibles functionalities
-    const atLeastOneBancomatWithBpdCapability = bancomatAdded.some(b =>
-      b.enableableFunctions?.includes("BPDs")
-    );
+    yield call(activateBpdOnNewBancomat);
+  }
+}
 
-    // No bancomat with bpd capability added in the current workflow, return to wallet home
-    if (!atLeastOneBancomatWithBpdCapability) {
-      yield put(navigateToWalletHome());
-    }
-    const isBpdEnabledResponse: SagaCallReturnType<typeof isBpdEnabled> = yield call(
-      isBpdEnabled
-    );
+/**
+ * Allows the user to activate bpd on the new added bancomat
+ */
+function* activateBpdOnNewBancomat() {
+  // read the new added bancomat
+  const bancomatAdded: ReturnType<typeof onboardingBancomatAddedPansSelector> = yield select(
+    onboardingBancomatAddedPansSelector
+  );
+  // TODO: change enableableFunction with types representing the possibles functionalities
+  const atLeastOneBancomatWithBpdCapability = bancomatAdded.some(b =>
+    b.enableableFunctions?.includes("BPD")
+  );
 
-    if (isBpdEnabledResponse.isLeft()) {
-      yield put(navigateToWalletHome());
+  // No bancomat with bpd capability added in the current workflow, return to wallet home
+  if (!atLeastOneBancomatWithBpdCapability) {
+    yield put(navigateToWalletHome());
+  }
+  const isBpdEnabledResponse: SagaCallReturnType<typeof isBpdEnabled> = yield call(
+    isBpdEnabled
+  );
+
+  // Error while reading the bpdEnabled, return to wallet
+  if (isBpdEnabledResponse.isLeft()) {
+    yield put(navigateToWalletHome());
+  } else {
+    if (isBpdEnabledResponse.value) {
+      // navigate to onboarding new bancomat
     } else {
-      if (isBpdEnabledResponse.value) {
-        // navigate to onboarding new bancomat
-      } else {
-        // navigate to "ask if u want to start bpd onboarding"
-        yield put(bpdOnboardingStart());
-      }
+      // navigate to "ask if u want to start bpd onboarding"
+      yield put(navigateToAskBpdActivation());
     }
   }
 }

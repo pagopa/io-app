@@ -15,3 +15,8 @@ export const navigateToOnboardingBancomatAdd = () =>
   NavigationActions.navigate({
     routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.ADD_BANCOMAT
   });
+
+export const navigateToAskBpdActivation = () =>
+  NavigationActions.navigate({
+    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.ASK_BPD_ACTIVATION
+  });
