@@ -240,11 +240,17 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case ReadingState.error:
         this.setState(
           {
-            title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-            subtitle: I18n.t(
-              "authentication.cie.card.error.readerCardLostHeader"
+            title: I18n.t(
+              isIos
+                ? "authentication.cie.card.error.readerCardLostTitleiOS"
+                : "authentication.cie.card.error.readerCardLostTitle"
             ),
-            content: this.state.errorMessage
+            subtitle: I18n.t(
+              isIos
+                ? "authentication.cie.card.error.readerCardLostHeaderiOS"
+                : "authentication.cie.card.error.readerCardLostHeader"
+            ),
+            content: isIos ? "" : this.state.errorMessage
           },
           this.announceUpdate
         );
@@ -266,9 +272,19 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       default:
         this.setState(
           {
-            title: I18n.t("authentication.cie.card.title"),
-            subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
-            content: I18n.t("authentication.cie.card.layCardMessageFooter")
+            title: I18n.t(
+              isIos
+                ? "authentication.cie.card.titleiOS"
+                : "authentication.cie.card.title"
+            ),
+            subtitle: I18n.t(
+              isIos
+                ? "authentication.cie.card.layCardMessageHeaderiOS"
+                : "authentication.cie.card.layCardMessageHeader"
+            ),
+            content: isIos
+              ? ""
+              : I18n.t("authentication.cie.card.layCardMessageFooter")
           },
           this.announceUpdate
         );
