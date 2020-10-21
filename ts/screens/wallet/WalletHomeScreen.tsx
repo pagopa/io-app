@@ -47,6 +47,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import {
   clearTransactions,
+  fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
   readTransaction
 } from "../../store/actions/wallet/transactions";
@@ -214,6 +215,18 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       this.navListener.remove();
     }
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentDidUpdate(prevProps: Readonly<Props>) {
+    // check when all transactions are been loaded
+    // then dispatch an action to notify the loading is completed
+    if (
+      prevProps.areMoreTransactionsAvailable &&
+      !this.props.areMoreTransactionsAvailable &&
+      pot.isSome(this.props.potTransactions)
+    ) {
+      this.props.dispatchAllTransactionLoaded(this.props.potTransactions.value);
+    }
   }
 
   private cardHeader(isError: boolean = false, isBlue: boolean = false) {
@@ -567,7 +580,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),
-  loadWallets: () => dispatch(fetchWalletsRequest())
+  loadWallets: () => dispatch(fetchWalletsRequest()),
+  dispatchAllTransactionLoaded: (transactions: ReadonlyArray<Transaction>) =>
+    dispatch(fetchTransactionsLoadComplete(transactions))
 });
 
 export default withValidatedPagoPaVersion(
