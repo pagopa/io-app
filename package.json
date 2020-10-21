@@ -44,7 +44,7 @@
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md"
   },
   "dependencies": {
-    "@pagopa/react-native-cie": "https://github.com/pagopa/io-cie-sdk.git#ios-react-native",
+    "@pagopa/react-native-cie": "0.3.1",
     "@react-native-community/async-storage": "^1.6.1",
     "@react-native-community/cameraroll": "^4.0.0",
     "@react-native-community/cookies": "^4.0.1",

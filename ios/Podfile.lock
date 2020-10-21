@@ -275,8 +275,6 @@ PODS:
     - React
   - react-native-cameraroll (4.0.0):
     - React
-  - react-native-cie (0.2.7):
-    - React
   - react-native-config (1.0.0):
     - React
   - react-native-cookies (4.0.1):
@@ -445,7 +443,6 @@ DEPENDENCIES:
   - react-native-calendar-events (from `../node_modules/react-native-calendar-events`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
-  - "react-native-cie (from `../node_modules/@pagopa/react-native-cie`)"
   - react-native-config (from `../node_modules/react-native-config`)
   - "react-native-cookies (from `../node_modules/@react-native-community/cookies`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
@@ -562,8 +559,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-community/cameraroll"
-  react-native-cie:
-    :path: "../node_modules/@pagopa/react-native-cie"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-cookies:
@@ -681,7 +676,6 @@ SPEC CHECKSUMS:
   react-native-calendar-events: 667f4141959b3f90c44cd328396c1488f216922d
   react-native-camera: d9e7b66e40420dcef111f3265a00f01eea54c52c
   react-native-cameraroll: ae0a7c0cc8462508855707ff623b1e789b692865
-  react-native-cie: 37e6d0ef52f0803b00922cfacd48f1ae7807aa49
   react-native-config: 7db9b96479164dfd7b2be68eb9079e08279511c4
   react-native-cookies: ff2e6865dff2e5feeca8f1ed082ae7898e4fa912
   react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
