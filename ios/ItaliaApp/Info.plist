@@ -34,7 +34,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>0</string>
+    <string>4</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSRequiresIPhoneOS</key>
@@ -119,16 +119,16 @@
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
     <key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
-        	<array>
-        		<string>com.apple.developer.nfc.readersession.iso7816.select-identifiers</string>
-        		<string>A0000000308000000009816001</string>
-        		<string>A00000000039</string>
-        		<string>A0000002471001</string>
-        		<string>00000000000000</string>
-        	</array>
-        	<key>method</key>
-        	<string>app-store</string>
-          <key>NFCReaderUsageDescription</key>
-          <string>NFC tag to read NDEF messages into the application</string>
+    <array>
+      <string>com.apple.developer.nfc.readersession.iso7816.select-identifiers</string>
+      <string>A0000000308000000009816001</string>
+      <string>A00000000039</string>
+      <string>A0000002471001</string>
+      <string>00000000000000</string>
+    </array>
+    <key>method</key>
+    <string>app-store</string>
+    <key>NFCReaderUsageDescription</key>
+    <string>NFC tag to read NDEF messages into the application</string>
   </dict>
 </plist>
