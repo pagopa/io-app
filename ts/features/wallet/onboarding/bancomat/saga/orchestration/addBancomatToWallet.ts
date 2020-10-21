@@ -1,9 +1,11 @@
+import { NavigationActions } from "react-navigation";
 import { call, put, select } from "redux-saga/effects";
 import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
+import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { isBpdEnabled } from "../../../../../bonus/bpd/saga/orchestration/onboarding/startOnboarding";
 import {
@@ -58,9 +60,23 @@ export function* addBancomatToWalletAndActivateBpd() {
     withResetNavigationStack,
     bancomatWorkUnit
   );
-  if (res === "cancel") {
-    yield put(navigateToWalletHome());
-  } else if (res === "completed") {
+  if (res !== "back") {
+    // integration with the legacy "Add a payment"
+    // If the payment starts from "WALLET_ADD_PAYMENT_METHOD", remove from stack
+    // This shouldn't happens if all the workflow will use the executeWorkUnit
+    const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
+      navigationCurrentRouteSelector
+    );
+
+    if (
+      currentRoute.isSome() &&
+      currentRoute.value === "WALLET_ADD_PAYMENT_METHOD"
+    ) {
+      yield put(NavigationActions.back());
+    }
+  }
+
+  if (res === "completed") {
     yield call(activateBpdOnNewBancomat);
   }
 }
