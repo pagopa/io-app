@@ -4,11 +4,13 @@ import {
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { isBpdEnabled } from "../../../../../bonus/bpd/saga/orchestration/onboarding/startOnboarding";
 import {
-  navigateToAskBpdActivation,
-  navigateToOnboardingBancomatChooseBank
+  navigateToSuggestBpdActivation,
+  navigateToOnboardingBancomatChooseBank,
+  navigateToActivateBpdOnNewBancomat
 } from "../../navigation/action";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
 import {
@@ -79,7 +81,7 @@ function* activateBpdOnNewBancomat() {
 
   // No bancomat with bpd capability added in the current workflow, return to wallet home
   if (!atLeastOneBancomatWithBpdCapability) {
-    yield put(navigateToWalletHome());
+    return yield put(navigateToWalletHome());
   }
   const isBpdEnabledResponse: SagaCallReturnType<typeof isBpdEnabled> = yield call(
     isBpdEnabled
@@ -91,9 +93,10 @@ function* activateBpdOnNewBancomat() {
   } else {
     if (isBpdEnabledResponse.value) {
       // navigate to onboarding new bancomat
+      yield put(navigateToActivateBpdOnNewBancomat());
     } else {
       // navigate to "ask if u want to start bpd onboarding"
-      yield put(navigateToAskBpdActivation());
+      yield put(navigateToSuggestBpdActivation());
     }
   }
 }

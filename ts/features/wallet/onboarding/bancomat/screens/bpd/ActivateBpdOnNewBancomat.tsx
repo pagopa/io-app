@@ -11,42 +11,44 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
-import { bpdOnboardingStart } from "../../../../../bonus/bpd/store/actions/onboarding";
+import { PaymentMethodBpdList } from "../../../../../bonus/bpd/components/PaymentMethodBpdList";
+import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.bancomat.headerTitle"),
-  title: I18n.t("wallet.onboarding.bancomat.bpd.askActivation.title"),
-  body: I18n.t("wallet.onboarding.bancomat.bpd.askActivation.body"),
-  skip: I18n.t("wallet.onboarding.bancomat.bpd.askActivation.skip"),
-  confirm: I18n.t("wallet.onboarding.bancomat.bpd.askActivation.confirm")
+  title: I18n.t("wallet.onboarding.bancomat.bpd.activateNew.title"),
+  body1: I18n.t("wallet.onboarding.bancomat.bpd.activateNew.body1"),
+  body2: I18n.t("wallet.onboarding.bancomat.bpd.activateNew.body2"),
+  skip: I18n.t("wallet.onboarding.bancomat.bpd.activateNew.skip"),
+  continueStr: I18n.t("global.buttons.continue")
 });
 
-/**
- * this screen prompts the user to activate bpd after inserting a new bancomat.
- * @constructor
- */
-const AskBpdActivationScreen: React.FunctionComponent<Props> = props => {
-  const { headerTitle, title, body, skip, confirm } = loadLocales();
-
+const ActivateBpdOnNewBancomat: React.FunctionComponent<Props> = props => {
+  const { headerTitle, title, body1, body2, skip, continueStr } = loadLocales();
   return (
-    <BaseScreenComponent goBack={false} headerTitle={headerTitle}>
+    <BaseScreenComponent headerTitle={headerTitle}>
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
             <View spacer={true} large={true} />
             <H1>{title}</H1>
             <View spacer={true} large={true} />
-            <Body>{body}</Body>
+            <Body>{body1}</Body>
+            <View spacer={true} large={true} />
+            <PaymentMethodBpdList paymentList={props.newBancomat} />
+            <View spacer={true} large={true} />
+            <Body>{body2}</Body>
           </View>
         </ScrollView>
+
         <FooterTwoButtons
-          type={"TwoButtonsInlineThird"}
-          onRight={props.activateBpd}
+          type={"TwoButtonsInlineHalf"}
           onCancel={props.skip}
-          rightText={confirm}
+          onRight={props.skip}
+          rightText={continueStr}
           leftText={skip}
         />
       </SafeAreaView>
@@ -55,13 +57,14 @@ const AskBpdActivationScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  skip: () => dispatch(NavigationActions.back()),
-  activateBpd: () => dispatch(bpdOnboardingStart())
+  skip: () => dispatch(NavigationActions.back())
 });
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  newBancomat: onboardingBancomatAddedPansSelector(state)
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AskBpdActivationScreen);
+)(ActivateBpdOnNewBancomat);

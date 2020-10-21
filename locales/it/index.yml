@@ -676,13 +676,18 @@ wallet:
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo"
       bpd:
-        askActivation:
+        suggestActivation:
           title: "Vuoi attivare il Cashback Pagamenti Digitali?"
           body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback Pagamenti Digitali, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri per promuovere l’uso della moneta elettronica.\n\n
                  Ogni volta che pagherai con uno dei metodi di pagamento elettronico compatibili (carte, bancomat, app, etc..), riceverai un riborso parziale  in base alla tua spesa.\n\n
                  In base a quante trasnazioni avrai accumulato, in ciascuno periodo, potrai ricevere un premio in denaro fino a XXXX euro."
           skip: "No, grazie"
           confirm: "Info e attivazione"
+        activateNew:
+          title: "Vuoi attivare il Cashback Pagamenti Digitali?"
+          body1: "I pagamenti che farai con questi metodi riceveranno il cashback e concorreranno alla tua posizione in classifica."
+          body2: "Se preferisci, puoi attivare il cashback su questi metodi anche in un secondo momento."
+          skip: "Non ora, grazie"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
