@@ -36,9 +36,12 @@ const styles = StyleSheet.create({
 // INFRA DEV -> xx_servizicie_test
 const CIE_IDP_ID = "xx_servizicie";
 
-// this value assignment tries to decrease the sleeping time of a script
-// sleeping is due to allow user to read page content until the content changes to an
-// automatic redirect. It also tries to call a function (present only on iOS) to process through authentication
+/**
+ * this value assignment tries to decrease the sleeping time of a script
+ * sleeping is due to allow user to read page content until the content changes to an automatic redirect.
+ * every time a page is load this code will be injected. It tries also to call apriIosUL.
+ * If it is defined it start the authentication process. (iOS only)
+ */
 const injectJs = `
   seconds = 0;
   apriIosUL && apriIosUL();
