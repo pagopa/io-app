@@ -197,7 +197,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "ON_PIN_ERROR":
         this.setError(
           I18n.t("authentication.cie.card.error.tryAgain"),
-          ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN,
+          ROUTES.CIE_WRONG_PIN_SCREEN,
           {
             remainingCount: event.attemptsLeft
           }
