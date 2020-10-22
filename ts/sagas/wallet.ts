@@ -111,7 +111,7 @@ import {
   fetchPspRequestHandler,
   fetchTransactionRequestHandler,
   fetchTransactionsRequestHandler,
-  fetchWalletsRequestHandler,
+  getWallets,
   payCreditCardVerificationRequestHandler,
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
@@ -609,7 +609,7 @@ export function* watchWalletSaga(
 
   yield takeLatest(
     getType(fetchWalletsRequest),
-    fetchWalletsRequestHandler,
+    getWallets,
     paymentManagerClient,
     pmSessionManager
   );
