@@ -69,7 +69,8 @@ import {
   profileFirstLogin,
   profileLoadFailure,
   profileLoadSuccess,
-  profileUpsert
+  profileUpsert,
+  removeAccountMotivation
 } from "../actions/profile";
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
 import { loadServiceDetail, loadVisibleServices } from "../actions/services";
@@ -387,6 +388,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         });
       }
       break;
+    case getType(removeAccountMotivation):
+      return mp.track(action.type, action.payload);
   }
   return Promise.resolve();
 };
