@@ -38,7 +38,9 @@ const convertNetworkPayload = (
   deactivationDate: networkPayload.deactivationDate
 });
 
-// return BpdPaymentMethodActivation when network response is conflict (409)
+/**
+ * return {@link BpdPaymentMethodActivation} when network response is conflict (409)
+ */
 const whenConflict = (hPan: HPan): BpdPaymentMethodActivation => ({
   hPan,
   activationStatus: "notActivable"
@@ -68,6 +70,14 @@ export function* bpdLoadPaymentMethodActivationSaga(
         // conflict means not activable
         yield put(
           bpdPaymentMethodActivation.success(whenConflict(action.payload))
+        );
+        return;
+      } else if (findPaymentMethodResult.value.status === 404) {
+        yield put(
+          bpdPaymentMethodActivation.success({
+            hPan: action.payload,
+            activationStatus: "inactive"
+          })
         );
         return;
       }

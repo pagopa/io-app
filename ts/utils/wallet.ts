@@ -1,10 +1,16 @@
 import * as t from "io-ts";
 import { Alert } from "react-native";
 import I18n from "../i18n";
-import { CreditCard } from "../types/pagopa";
+import { CreditCard, PatchedWalletV2, Wallet } from "../types/pagopa";
+import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { isExpired } from "./dates";
 import { NumberFromString } from "./number";
-/* 
+import {
+  CreditCardExpirationMonth,
+  CreditCardExpirationYear,
+  CreditCardPan
+} from "./input";
+/*
     Contains utility functions to check conditions
     used across project (currently just in CardComponent)
  */
@@ -71,3 +77,34 @@ export const handleSetFavourite = (
         I18n.t("global.genericAlert"),
         I18n.t("wallet.alert.favourite")
       );
+
+export const convertWalletV2toWalletV1 = (
+  walletV2: PatchedWalletV2
+): Wallet => {
+  const info = walletV2.info;
+  return {
+    idWallet: walletV2.idWallet,
+    type: TypeEnum.CREDIT_CARD,
+    favourite: walletV2.favourite,
+    creditCard: {
+      id: undefined,
+      holder: info.holder ?? "",
+      pan: info.blurredNumber as CreditCardPan,
+      expireMonth: info.expireMonth as CreditCardExpirationMonth,
+      expireYear: info.expireYear as CreditCardExpirationYear,
+      brandLogo: info.brandLogo,
+      flag3dsVerified: true,
+      brand: info.brand,
+      onUs: true,
+      securityCode: undefined
+    },
+    psp: undefined,
+    idPsp: undefined,
+    pspEditable: false,
+    lastUsage: walletV2.updateDate ? new Date(walletV2.updateDate) : undefined,
+    isPspToIgnore: false,
+    registeredNexi: false,
+    saved: true,
+    v2: walletV2
+  };
+};
