@@ -60,23 +60,26 @@ export function* bpdLoadPaymentMethodActivationSaga(
     );
     if (findPaymentMethodResult.isRight()) {
       if (findPaymentMethodResult.value.status === 200) {
-        return yield put(
+        yield put(
           bpdPaymentMethodActivation.success(
             convertNetworkPayload(findPaymentMethodResult.value.value)
           )
         );
+        return;
       } else if (findPaymentMethodResult.value.status === 409) {
         // conflict means not activable
-        return yield put(
+        yield put(
           bpdPaymentMethodActivation.success(whenConflict(action.payload))
         );
+        return;
       } else if (findPaymentMethodResult.value.status === 404) {
-        return yield put(
+        yield put(
           bpdPaymentMethodActivation.success({
             hPan: action.payload,
             activationStatus: "inactive"
           })
         );
+        return;
       }
       throw new Error(
         `response status ${findPaymentMethodResult.value.status}`
