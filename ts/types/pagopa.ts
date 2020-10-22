@@ -139,7 +139,7 @@ export const Wallet = repP(
   t.union([Psp, t.undefined]),
   "Wallet"
 );
-// add v2 optional fields. It may contain a PatchedWalletV2 object
+// add v2 optional field. It may contain a PatchedWalletV2 object
 const WalletV1V2 = t.intersection([Wallet, t.partial({ v2: PatchedWalletV2 })]);
 export type Wallet = t.TypeOf<typeof WalletV1V2>;
 
