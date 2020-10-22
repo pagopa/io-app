@@ -1,13 +1,7 @@
 import * as React from "react";
-import { ImageSourcePropType, View } from "react-native";
-import { WalletTypeEnum } from "../../../../../definitions/pagopa/bancomat/WalletV2";
+import { View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { PatchedWalletV2 } from "../../../../types/pagopa";
-import { HPan } from "../store/actions/paymentMethods";
-import pagobancomatImage from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
-import PaymentMethodBpdToggle, {
-  BpdToggleProps
-} from "./paymentMethodActivationToggle/PaymentMethodBpdToggle";
 import { CardBpdToggle } from "./paymentMethodActivationToggle/CardBpdToggle";
 
 type Props = {

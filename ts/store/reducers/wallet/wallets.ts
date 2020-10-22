@@ -10,6 +10,7 @@ import { AllActiveState } from "../../../features/bonus/bonusVacanze/store/reduc
 
 import { PatchedWalletV2, Wallet } from "../../../types/pagopa";
 import { PotFromActions } from "../../../types/utils";
+import { isDefined } from "../../../utils/guards";
 import { Action } from "../../actions/types";
 import { paymentUpdateWalletPsp } from "../../actions/wallet/payment";
 import {
@@ -105,14 +106,11 @@ export const walletsSelector = createSelector(
       )
     )
 );
-
 /**
  * Get a list of WalletV2 extracted from WalletV1
  */
 export const walletV2Selector = createSelector([walletsSelector], potWallet =>
-  pot.map(potWallet, wallets =>
-    wallets.filter(w => w.v2 !== undefined).map(w => w.v2)
-  )
+  pot.map(potWallet, wallets => wallets.map(w => w.v2).filter(isDefined))
 );
 
 // reducer

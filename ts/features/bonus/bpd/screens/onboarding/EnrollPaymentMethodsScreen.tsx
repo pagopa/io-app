@@ -12,8 +12,8 @@ import I18n from "../../../../../i18n";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { walletsSelector } from "../../../../../store/reducers/wallet/wallets";
-import { Wallet } from "../../../../../types/pagopa";
+import { walletV2Selector } from "../../../../../store/reducers/wallet/wallets";
+import { PatchedWalletV2 } from "../../../../../types/pagopa";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 import { PaymentMethodBpdList } from "../../components/PaymentMethodBpdList";
 
@@ -30,7 +30,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const renderPaymentMethod = (
-  potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>
+  potWallets: pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>
 ) =>
   pot.fold(
     potWallets,
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  potWallets: walletsSelector(state)
+  potWallets: walletV2Selector(state)
 });
 
 export default connect(
