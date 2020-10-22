@@ -8,6 +8,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   BpdPaymentMethodActivation,
   bpdPaymentMethodActivation,
+  BpdPmActivationStatus,
   bpdUpdatePaymentMethodActivation,
   HPan
 } from "../../actions/paymentMethods";
@@ -22,6 +23,9 @@ const readPot = (
   data: IndexedById<BpdPotPaymentMethodActivation>
 ): BpdPotPaymentMethodActivation =>
   fromNullable(data[hPan]).getOrElse(pot.none);
+
+export const getPaymentStatus = (value: boolean): BpdPmActivationStatus =>
+  value ? "active" : "inactive";
 
 /**
  * This reducer keep the activation state and the upsert request foreach payment method,
@@ -38,7 +42,10 @@ export const bpdPaymentMethodsReducer = (
     case getType(bpdPaymentMethodActivation.request):
       return { ...state, [action.payload]: pot.noneLoading };
     case getType(bpdPaymentMethodActivation.success):
-      return { ...state, [action.payload.hPan]: pot.some(action.payload) };
+      return {
+        ...state,
+        [action.payload.hPan]: pot.some(action.payload)
+      };
     case getType(bpdPaymentMethodActivation.failure):
       return {
         ...state,
@@ -56,7 +63,7 @@ export const bpdPaymentMethodsReducer = (
           ...(pot.isSome(updateRequest)
             ? updateRequest.value
             : { hPan: action.payload.hPan }),
-          activationStatus: action.payload.value ? "active" : "inactive"
+          activationStatus: getPaymentStatus(action.payload.value)
         })
       };
     case getType(bpdUpdatePaymentMethodActivation.success):
