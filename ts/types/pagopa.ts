@@ -94,6 +94,38 @@ export const Psp = repP(
 );
 export type Psp = t.TypeOf<typeof Psp>;
 
+/** A refined WalletV2
+ * reasons:
+ * - createDate and updateDate are generated from spec as UTCISODateFromString instead of DateFromString
+ * - info is required
+ * - info is CardInfo and not PaymentMethodInfo (empty interface)
+ */
+
+// required attributes
+
+const WalletV2O = t.partial({
+  updateDate: t.string,
+  createDate: DateFromString,
+  onboardingChannel: t.string,
+  favourite: t.boolean
+});
+
+// optional attributes
+const WalletV2R = t.interface({
+  enableableFunctions: t.readonlyArray(t.string, "array of string"),
+  info: CardInfo,
+  idWallet: t.Integer,
+  pagoPA: t.boolean,
+  walletType: enumType<WalletTypeEnum>(WalletTypeEnum, "walletType")
+});
+
+export const PatchedWalletV2 = t.intersection(
+  [WalletV2R, WalletV2O],
+  "WalletV2"
+);
+
+export type PatchedWalletV2 = t.TypeOf<typeof PatchedWalletV2>;
+
 /**
  * A refined Wallet
  */
@@ -107,7 +139,9 @@ export const Wallet = repP(
   t.union([Psp, t.undefined]),
   "Wallet"
 );
-export type Wallet = t.TypeOf<typeof Wallet>;
+// add v2 optional fields. It may contain a PatchedWalletV2 object
+const WalletV1V2 = t.intersection([Wallet, t.partial({ v2: PatchedWalletV2 })]);
+export type Wallet = t.TypeOf<typeof WalletV1V2>;
 
 /**
  * A Wallet that has not being saved yet
@@ -291,38 +325,6 @@ export const PagoPAErrorResponse = t.type({
 });
 
 export type PagoPAErrorResponse = t.TypeOf<typeof PagoPAErrorResponse>;
-
-/**
- * reasons:
- * - createDate and updateDate are generated from spec as UTCISODateFromString instead of DateFromString
- * - info is required
- * - info is CardInfo and not PaymentMethodInfo (empty interface)
- */
-
-// required attributes
-
-const WalletV2O = t.partial({
-  updateDate: t.string,
-  createDate: DateFromString,
-  onboardingChannel: t.string,
-  favourite: t.boolean
-});
-
-// optional attributes
-const WalletV2R = t.interface({
-  enableableFunctions: t.readonlyArray(t.string, "array of string"),
-  info: CardInfo,
-  idWallet: t.Integer,
-  pagoPA: t.boolean,
-  walletType: enumType<WalletTypeEnum>(WalletTypeEnum, "walletType")
-});
-
-export const PatchedWalletV2 = t.intersection(
-  [WalletV2R, WalletV2O],
-  "WalletV2"
-);
-
-export type PatchedWalletV2 = t.TypeOf<typeof PatchedWalletV2>;
 
 const WalletV2ListResponseR = t.interface({});
 
