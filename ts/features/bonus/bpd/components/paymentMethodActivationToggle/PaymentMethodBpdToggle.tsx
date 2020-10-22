@@ -4,11 +4,10 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
 import { useContext, useEffect, useRef } from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { NavigationContext } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import image from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { Body } from "../../../../../components/core/typography/Body";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
@@ -22,14 +21,16 @@ import { bpdPaymentMethodValueSelector } from "../../store/reducers/details/paym
 import { BpdToggle } from "./BpdToggle";
 
 // TODO: accept only hpan, read all the other information with a selector from payment methods
-type OwnProps = {
+export type BpdToggleProps = {
   hPan: HPan;
+  icon: ImageSourcePropType;
+  caption: string;
   hasBpdCapability: boolean;
 };
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  OwnProps;
+  BpdToggleProps;
 
 type GraphicalState = "loading" | "ready" | "update";
 
@@ -151,10 +152,10 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
       <View style={styles.row}>
         <View style={styles.leftSection}>
           {/* TODO: The image will be received by props / redux state */}
-          <Image source={image} style={styles.cardIcon} />
+          <Image source={props.icon} style={styles.cardIcon} />
           <View hspacer={true} />
           {/* TODO: The Text will be received by props / redux state */}
-          <Body>Intesa San Paolo</Body>
+          <Body>{props.caption}</Body>
         </View>
         <BpdToggle
           graphicalValue={graphicalState}
@@ -174,7 +175,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(bpdUpdatePaymentMethodActivation.request({ hPan, value }))
 });
 
-const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
+const mapStateToProps = (state: GlobalState, props: BpdToggleProps) => ({
   bpdPotActivation: bpdPaymentMethodValueSelector(state, props.hPan)
 });
 

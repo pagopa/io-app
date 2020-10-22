@@ -13,8 +13,11 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { walletsSelector } from "../../../../../store/reducers/wallet/wallets";
-import { Wallet } from "../../../../../types/pagopa";
+import {
+  walletsSelector,
+  walletV2Selector
+} from "../../../../../store/reducers/wallet/wallets";
+import { PatchedWalletV2, Wallet } from "../../../../../types/pagopa";
 import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { PaymentMethodBpdList } from "../../components/PaymentMethodBpdList";
 import {
@@ -43,7 +46,7 @@ const renderBpdActive = (value: RemoteValue<boolean, Error>) =>
   )(value);
 
 const renderPaymentMethod = (
-  potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>
+  potWallets: pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>
 ) =>
   pot.fold(
     potWallets,
@@ -128,7 +131,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   bpdActive: bpdEnabledSelector(state),
-  potWallets: walletsSelector(state)
+  potWallets: walletV2Selector(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TmpBpdScreen);

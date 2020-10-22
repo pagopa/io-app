@@ -5,8 +5,10 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
+import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { AllActiveState } from "../../../features/bonus/bonusVacanze/store/reducers/allActive";
 
-import { Wallet } from "../../../types/pagopa";
+import { PatchedWalletV2, Wallet } from "../../../types/pagopa";
 import { PotFromActions } from "../../../types/utils";
 import { Action } from "../../actions/types";
 import { paymentUpdateWalletPsp } from "../../actions/wallet/payment";
@@ -102,6 +104,15 @@ export const walletsSelector = createSelector(
             : a.lastUsage.getTime() - b.lastUsage.getTime())
       )
     )
+);
+
+/**
+ * Get a list of WalletV2 extracted from WalletV1
+ */
+export const walletV2Selector = createSelector([walletsSelector], potWallet =>
+  pot.map(potWallet, wallets =>
+    wallets.filter(w => w.v2 !== undefined).map(w => w.v2)
+  )
 );
 
 // reducer
