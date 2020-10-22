@@ -13,6 +13,7 @@ import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
+import { closeInjectedScript } from "../../utils/webview";
 
 type Props = {
   onClose: () => void;
@@ -44,8 +45,9 @@ const CIE_IDP_ID = "xx_servizicie";
  */
 const injectJs = `
   seconds = 0;
-  apriIosUL && apriIosUL();
-  true;
+  if(apriIosUL !== undefined){
+  apriIosUL();
+  }
 `;
 
 const iOSUserAgent =
@@ -143,7 +145,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     }
     // inject JS on every page load
     if (this.webView.current) {
-      this.webView.current.injectJavaScript(injectJs);
+      this.webView.current.injectJavaScript(closeInjectedScript(injectJs));
     }
   };
 
