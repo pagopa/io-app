@@ -32,7 +32,7 @@ export type BpdActivation = {
  * @param state
  * @param action
  */
-// TODO: integrate with the unsubscribe
+// TODO: check if the logic is ok
 const enabledReducer = (
   state: RemoteValue<boolean, Error> = remoteUndefined,
   action: Action
