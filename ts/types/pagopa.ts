@@ -298,12 +298,14 @@ export type PagoPAErrorResponse = t.TypeOf<typeof PagoPAErrorResponse>;
 
 // required attributes
 
-const WalletV2O = t.partial({});
+const WalletV2O = t.partial({
+  updateDate: t.string,
+  createDate: t.string,
+  onboardingChannel: t.string
+});
 
 // optional attributes
 const WalletV2R = t.interface({
-  createDate: t.string,
-
   enableableFunctions: t.readonlyArray(t.string, "array of string"),
 
   favourite: t.boolean,
@@ -311,11 +313,7 @@ const WalletV2R = t.interface({
 
   idWallet: t.Integer,
 
-  onboardingChannel: t.string,
-
-  pagoPA: t.boolean,
-
-  updateDate: t.string
+  pagoPA: t.boolean
 });
 
 export const PatchedWalletV2 = t.intersection(

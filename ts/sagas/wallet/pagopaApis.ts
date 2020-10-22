@@ -47,7 +47,7 @@ import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/wallet";
-import { isWalletV2Enabled } from "../../config";
+import { bpdEnabled } from "../../config";
 
 //
 // Payment Manager APIs
@@ -62,7 +62,7 @@ export function* getWallets(
   pmSessionManager: SessionManager<PaymentManagerToken>
 ): Generator<Effect, Either<Error, ReadonlyArray<Wallet>>, any> {
   return yield call(
-    isWalletV2Enabled ? getWalletsV2 : getWalletsV1,
+    bpdEnabled ? getWalletsV2 : getWalletsV1,
     pagoPaClient,
     pmSessionManager
   );
