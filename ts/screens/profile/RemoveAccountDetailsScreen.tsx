@@ -16,11 +16,14 @@ import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { removeAccountMotivation } from "../../store/actions/profile";
+import {
+  RemoveAccountMotivation,
+  removeAccountMotivation,
+  RemoveAccountMotivationPayload
+} from "../../store/actions/profile";
 import { identificationRequest } from "../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../config";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
-import { showToast } from "../../utils/showToast";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 
 type Props = ReduxProps &
@@ -33,12 +36,18 @@ type Props = ReduxProps &
  */
 const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   // Initially no motivation is selected
-  const [selectedMotivation, setSelectedMotivation] = React.useState(-1);
+  const [selectedMotivation, setSelectedMotivation] = React.useState<
+    RemoveAccountMotivation | undefined
+  >(undefined);
 
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => props.sendMotivation(),
+    onPress: () => {
+      if (selectedMotivation !== undefined) {
+        props.requestIdentification({ reason: selectedMotivation });
+      }
+    },
     title: I18n.t("profile.main.privacy.removeAccount.info.cta")
   };
 
@@ -50,33 +59,6 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
       goBack={true}
       headerTitle={I18n.t("profile.main.title")}
     >
-      {/* {pot.isSome(
-          props.userDataProcessing[UserDataProcessingChoiceEnum.DELETE]
-        ) && (
-            <Content>
-              <H1>{I18n.t("profile.main.privacy.removeAccount.title")}</H1>
-              <H4 weight="Regular">
-                {I18n.t("profile.main.privacy.removeAccount.details.body")}
-              </H4>
-              <View style={{ paddingTop: 25 }}>
-                <RadioButtonList
-                  head="Qual'è il motivo della cancellazione?"
-                  key="delete_reason"
-                  items={[
-                    { label: "Non ritengo più utile IO", id: 0 },
-                    { label: "Non mi sento al sicuro su IO", id: 1 },
-                    { label: "Non ho mai usato l'app", id: 2 },
-                    { label: "Nessuno dei precedenti", id: 3 }
-                  ]}
-                  selectedItem={selectedMotivation}
-                  onPress={motivationIndex => {
-                    setSelectedMotivation(motivationIndex);
-                  }}
-                />
-              </View>
-            </Content>
-          ) &&
-          footerComponent} */}
       {props.isLoading ||
       pot.isError(
         props.userDataProcessing[UserDataProcessingChoiceEnum.DELETE]
@@ -94,14 +76,14 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
               {I18n.t("profile.main.privacy.removeAccount.details.body")}
             </H4>
             <View style={{ paddingTop: 25 }}>
-              <RadioButtonList
+              <RadioButtonList<RemoveAccountMotivation>
                 head="Qual'è il motivo della cancellazione?"
                 key="delete_reason"
                 items={[
-                  { label: "Non ritengo più utile IO", id: 0 },
-                  { label: "Non mi sento al sicuro su IO", id: 1 },
-                  { label: "Non ho mai usato l'app", id: 2 },
-                  { label: "Nessuno dei precedenti", id: 3 }
+                  { label: "Non ritengo più utile IO", id: "notUtils" },
+                  { label: "Non mi sento al sicuro su IO", id: "notSafe" },
+                  { label: "Non ho mai usato l'app", id: "neverUsed" },
+                  { label: "Nessuno dei precedenti", id: "others" }
                 ]}
                 selectedItem={selectedMotivation}
                 onPress={motivationIndex => {
@@ -121,10 +103,14 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-  const onIdentificationSuccess = () => dispatch(removeAccountMotivation());
+  const onIdentificationSuccess = (
+    motivationPayload: RemoveAccountMotivationPayload
+  ) => dispatch(removeAccountMotivation(motivationPayload));
 
   return {
-    sendMotivation: () =>
+    requestIdentification: (
+      motivationPayload: RemoveAccountMotivationPayload
+    ) =>
       dispatch(
         identificationRequest(
           false,
@@ -137,7 +123,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             onCancel: () => undefined
           },
           {
-            onSuccess: onIdentificationSuccess
+            onSuccess: () => onIdentificationSuccess(motivationPayload)
           },
           shufflePinPadOnPayment
         )

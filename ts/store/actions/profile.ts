@@ -50,9 +50,18 @@ export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")();
 
 export const clearCache = createStandardAction("CLEAR_CACHE")();
 
+export type RemoveAccountMotivation =
+  | "notUtils"
+  | "notSafe"
+  | "neverUsed"
+  | "others";
+export type RemoveAccountMotivationPayload = {
+  reason: RemoveAccountMotivation;
+  userText?: string;
+};
 export const removeAccountMotivation = createStandardAction(
   "REMOVE_ACCOUNT_MOTIVATION"
-)();
+)<RemoveAccountMotivationPayload>();
 
 export type ProfileActions =
   | ActionType<typeof resetProfileState>
@@ -63,4 +72,5 @@ export type ProfileActions =
   | ActionType<typeof startEmailValidation>
   | ActionType<typeof acknowledgeOnEmailValidation>
   | ActionType<typeof profileFirstLogin>
-  | ActionType<typeof clearCache>;
+  | ActionType<typeof clearCache>
+  | ActionType<typeof removeAccountMotivation>;
