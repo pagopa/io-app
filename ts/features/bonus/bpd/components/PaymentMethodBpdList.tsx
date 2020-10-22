@@ -2,6 +2,8 @@ import * as React from "react";
 import { View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { PatchedWalletV2 } from "../../../../types/pagopa";
+import PaymentMethodBpdToggle from "./paymentMethodActivationToggle/base/PaymentMethodBpdToggle";
+import { bpdToggleFactory } from "./paymentMethodActivationToggle/BpdPaymentMethodToggleFactory";
 import { CardBpdToggle } from "./paymentMethodActivationToggle/CardBpdToggle";
 
 type Props = {
@@ -17,8 +19,6 @@ type Props = {
  */
 export const PaymentMethodBpdList: React.FunctionComponent<Props> = props => (
   <View style={IOStyles.flex}>
-    {props.paymentList.map(pm => (
-      <CardBpdToggle key={pm.idWallet} card={pm} />
-    ))}
+    {props.paymentList.map(pm => bpdToggleFactory(pm))}
   </View>
 );

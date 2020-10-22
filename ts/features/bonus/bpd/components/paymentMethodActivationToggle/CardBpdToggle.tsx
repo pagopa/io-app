@@ -2,7 +2,8 @@ import * as React from "react";
 import { getCardIconFromBrandLogo } from "../../../../../components/wallet/card/Logo";
 import { PatchedWalletV2 } from "../../../../../types/pagopa";
 import { HPan } from "../../store/actions/paymentMethods";
-import PaymentMethodBpdToggle from "./PaymentMethodBpdToggle";
+import { hasBpdCapability } from "../../utils";
+import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
 
 type Props = {
   card: PatchedWalletV2;
@@ -19,7 +20,7 @@ export const CardBpdToggle: React.FunctionComponent<Props> = props => (
   <PaymentMethodBpdToggle
     hPan={props.card.info.hashPan as HPan}
     icon={getCardIconFromBrandLogo(props.card.info)}
-    hasBpdCapability={props.card.enableableFunctions.includes("BPD")}
+    hasBpdCapability={hasBpdCapability(props.card)}
     caption={`${FOUR_UNICODE_CIRCLES} ${props.card.info.blurredNumber}`}
   />
 );
