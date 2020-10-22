@@ -89,7 +89,8 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     if (this.state.findOpenApp) {
       return false;
     }
-    // on iOS the web page script try to redirect in an error url
+    // on iOS when authnRequestString is present in the url we are on that page that shows
+    // the button "apri l'applicazione CIEID". So we have all stuffs to go on
     if (
       Platform.OS === "ios" &&
       event.url !== undefined &&
@@ -99,6 +100,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
       if (this.webView.current !== null) {
         this.setState({ findOpenApp: true }, () => {
           this.props.onSuccess(
+            // cie-ios sdk asks for "OpenApp?nextUrl=" as prefix
             event.url.replace("nextUrl=", "OpenApp?nextUrl=")
           );
         });
