@@ -7,7 +7,9 @@ import {
   requiredProp1 as reqP,
   tag
 } from "italia-ts-commons/lib/types";
+import { DateFromString } from "italia-ts-commons/lib/dates";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
+import { WalletTypeEnum } from "../../definitions/pagopa/bancomat/WalletV2";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
 import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
@@ -29,8 +31,6 @@ import {
   CreditCardPan
 } from "../utils/input";
 import { CardInfo } from "../../definitions/pagopa/bancomat/CardInfo";
-import { DateFromString } from "italia-ts-commons/lib/dates";
-import { WalletTypeEnum } from "../../definitions/pagopa/bancomat/WalletV2";
 
 /**
  * Union of all possible credit card types
