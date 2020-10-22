@@ -101,7 +101,7 @@ export const convertWalletV2toWalletV1 = (
     psp: undefined,
     idPsp: undefined,
     pspEditable: false,
-    lastUsage: new Date(),
+    lastUsage: walletV2.updateDate ? new Date(walletV2.updateDate) : undefined,
     isPspToIgnore: false,
     registeredNexi: false,
     saved: true
