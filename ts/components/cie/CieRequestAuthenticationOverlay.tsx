@@ -13,7 +13,6 @@ import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
-import { closeInjectedScript } from "../../utils/webview";
 
 type Props = {
   onClose: () => void;
@@ -39,20 +38,16 @@ const CIE_IDP_ID = "xx_servizicie";
 
 // this value assignment tries to decrease the sleeping time of a script
 // sleeping is due to allow user to read page content until the content changes to an
-// automatic redirect
+// automatic redirect. It also tries to call a function (present only on iOS) to process through authentication
 const injectJs = `
   seconds = 0;
+  apriIosUL && apriIosUL();
   true;
 `;
 
-// this is a 'fake' user-agent to send through the webView when the running device is an iOS
-// this is needed because the device must be recognized as Android
 const iOSUserAgent =
-  "Mozilla/5.0 (Linux; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36";
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
 const userAgent = Platform.select({ ios: iOSUserAgent, default: undefined });
-// this injection is done only on iOS side. Since the server doesn't recognize iOS as a valid device it shows an error page (it is a simple UI block).
-// we inject this JS code to get all info needed to continue the authentication
-const iOSFollowHappyPathInjection = `window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`;
 
 export default class CieRequestAuthenticationOverlay extends React.PureComponent<
   Props,
@@ -95,13 +90,15 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     if (
       Platform.OS === "ios" &&
       event.url !== undefined &&
-      event.url.indexOf("errore.jsp") !== -1
+      event.url.indexOf("authnRequestString") !== -1
     ) {
       // avoid redirect and follow the 'happy path'
       if (this.webView.current !== null) {
-        this.webView.current.injectJavaScript(
-          closeInjectedScript(iOSFollowHappyPathInjection)
-        );
+        this.setState({ findOpenApp: true }, () => {
+          this.props.onSuccess(
+            event.url.replace("nextUrl=", "OpenApp?nextUrl=")
+          );
+        });
       }
       return false;
     }
@@ -109,10 +106,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     // Once the returned url contains the "OpenApp" string, then the authorization has been given
     if (event.url && event.url.indexOf("OpenApp") !== -1) {
       this.setState({ findOpenApp: true }, () => {
-        const authorizationUri = event.url;
-        if (authorizationUri !== undefined) {
-          this.props.onSuccess(authorizationUri);
-        }
+        this.props.onSuccess(event.url);
       });
       return false;
     }
@@ -141,6 +135,9 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
   private handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
     if (e.nativeEvent.title === "Pagina web non disponibile") {
       this.handleOnError();
+    }
+    if (this.webView.current) {
+      this.webView.current.injectJavaScript(injectJs);
     }
   };
 
@@ -172,6 +169,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     if (this.state.hasError) {
       return this.renderError();
     }
+    return this.renderWebView();
     const ContainerComponent = withLoadingSpinner(() => (
       <View>{this.renderWebView()}</View>
     ));
