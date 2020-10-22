@@ -13,7 +13,7 @@ type RadioItem<T> = {
 type Props<T> = {
   items: Array<RadioItem<T>>;
   head?: string;
-  selectedItem: T;
+  selectedItem?: T;
   onPress: (selected: T) => void;
 };
 
