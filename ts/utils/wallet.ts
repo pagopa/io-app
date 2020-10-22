@@ -85,7 +85,7 @@ export const convertWalletV2toWalletV1 = (
   return {
     idWallet: walletV2.idWallet,
     type: TypeEnum.CREDIT_CARD,
-    favourite: true,
+    favourite: walletV2.favourite,
     creditCard: {
       id: undefined,
       holder: info.holder ?? "",

@@ -1,6 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import {
+  enumType,
   ReplaceProp1,
   replaceProp1 as repP,
   requiredProp1 as reqP,
@@ -28,6 +29,8 @@ import {
   CreditCardPan
 } from "../utils/input";
 import { CardInfo } from "../../definitions/pagopa/bancomat/CardInfo";
+import { DateFromString } from "italia-ts-commons/lib/dates";
+import { WalletTypeEnum } from "../../definitions/pagopa/bancomat/WalletV2";
 
 /**
  * Union of all possible credit card types
@@ -300,20 +303,18 @@ export type PagoPAErrorResponse = t.TypeOf<typeof PagoPAErrorResponse>;
 
 const WalletV2O = t.partial({
   updateDate: t.string,
-  createDate: t.string,
-  onboardingChannel: t.string
+  createDate: DateFromString,
+  onboardingChannel: t.string,
+  favourite: t.boolean
 });
 
 // optional attributes
 const WalletV2R = t.interface({
   enableableFunctions: t.readonlyArray(t.string, "array of string"),
-
-  favourite: t.boolean,
   info: CardInfo,
-
   idWallet: t.Integer,
-
-  pagoPA: t.boolean
+  pagoPA: t.boolean,
+  walletType: enumType<WalletTypeEnum>(WalletTypeEnum, "walletType")
 });
 
 export const PatchedWalletV2 = t.intersection(
