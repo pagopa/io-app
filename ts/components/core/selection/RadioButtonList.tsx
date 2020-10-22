@@ -3,17 +3,18 @@ import * as React from "react";
 import { H4 } from "../typography/H4";
 import IconFont from "./../../ui/IconFont";
 import themeVariables from "./../../../theme/variables";
+import { Text } from "native-base";
 
-type RadioItem = {
+type RadioItem<T> = {
   label: string;
-  id: number;
+  id: T;
 };
 
-type Props = {
-  items: Array<RadioItem>;
+type Props<T> = {
+  items: Array<RadioItem<T>>;
   head?: string;
-  selectedItem: number;
-  onPress: (selected: number) => void;
+  selectedItem: T;
+  onPress: (selected: T) => void;
 };
 
 /**
@@ -21,9 +22,7 @@ type Props = {
  * The management of the selection is demanded and drived by the `selectedItem` prop.
  * The item with the `id` equal to the `selectedItem` is the active one.
  */
-export const RadioButtonList: React.FunctionComponent<Props> = (
-  props: Props
-) => {
+export const RadioButtonList = <T,>(props: Props<T>) => {
   const styles = {
     head: {
       paddingTop: 10,
@@ -61,7 +60,7 @@ export const RadioButtonList: React.FunctionComponent<Props> = (
               }
               size={24}
               color={themeVariables.contentPrimaryBackground}
-              onPress={() => props.onPress(key)}
+              onPress={() => props.onPress(item.id)}
               style={styles.icon}
             />
             <H4 color={"bluegreyDark"} weight={"Regular"} style={{ flex: 1 }}>
