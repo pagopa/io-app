@@ -593,7 +593,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(fetchTransactionsRequest({ start })),
   loadWallets: () => dispatch(fetchWalletsRequest()),
   dispatchAllTransactionLoaded: (transactions: ReadonlyArray<Transaction>) =>
-    dispatch(fetchTransactionsLoadComplete(transactions))
+    dispatch(fetchTransactionsLoadComplete(transactions)),
   // TODO: Temp only, remove after bpd details
   navigateToBpdTest: () => dispatch(navigateToBpdTestScreen())
 });
