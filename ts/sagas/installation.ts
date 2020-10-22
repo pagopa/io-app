@@ -30,7 +30,7 @@ export function* previousInstallationDataDeleteSaga(): Generator<
     yield call(deletePin);
     // invalidate the session
     yield put(sessionInvalid());
-    // Remove all the notification already setted
+    // Remove all the notification already set
     yield call(removeScheduledNotificationAccessSpid);
     // Schedule a set of local notifications
     yield call(scheduleLocalNotificationsAccessSpid);
