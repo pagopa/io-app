@@ -1,19 +1,19 @@
 import { Content, View, Text } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
-
+import { Image, SafeAreaView, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 import { NavigationScreenProps } from "react-navigation";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
-import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import ROUTES from "../../navigation/routes";
-import { Image } from "react-native";
 import { H2 } from "../../components/core/typography/H2";
+import { Dispatch } from "../../store/actions/types";
+import { logoutRequest } from "../../store/actions/authentication";
 
-type Props = NavigationScreenProps;
+type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   center: {
@@ -30,8 +30,7 @@ const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () =>
-      props.navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS),
+    onPress: props.logout,
     title: I18n.t("profile.main.privacy.removeAccount.info.cta")
   };
 
@@ -53,7 +52,7 @@ const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
           }}
         >
           <Image
-            source={require("../../../img/wallet/errors/generic-error-icon.png")}
+            source={require("../../../img/wallet/errors/payment-expired-icon.png")}
           />
           <View spacer={true} />
           <H2>{I18n.t("profile.main.privacy.removeAccount.success.title")}</H2>
@@ -69,4 +68,9 @@ const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
   );
 };
 
-export default RemoveAccountSuccess;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  // hard-logout
+  logout: () => dispatch(logoutRequest({ keepUserData: false }))
+});
+
+export default connect(undefined, mapDispatchToProps)(RemoveAccountSuccess);
