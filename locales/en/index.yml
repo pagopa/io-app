@@ -194,6 +194,13 @@ profile:
       removeAccount:
         title: Delete your account
         description: Permanently delete your account and your information
+        error: An error occurred while submit your deletion request, please retry!
+        alert:
+          oldRequest: We are already proceeding to delete your account.
+          oldRequestSubtitle: To use IO you will need to register again. The cancellation does not concern the data processed by public administrations.
+          cta:
+            return: Return
+            cancel: Cancel the deletion
         info:
           body: !include profile/profile_remove_account_info.md
           cta: Continue
@@ -203,13 +210,7 @@ profile:
         success:
           title: Stiamo processando la tua richiesta.
           body: !include profile/profile_remove_account_success.md
-          cta: Esci
-        # alert:
-        #   requestTitle: Are you sure you want request the cancellation of your account?
-        #   requestSubtitle: To use IO you will need to register again. The cancellation does not concern the data processed by public administrations.
-        #   oldRequest: We are already proceeding to delete your account
-        #   confirmSubtitle: After processing, you will receive an email confirming the deletion.
-        # error: An error occurred while submit your deletion request, please retry!
+          cta: Logout
       exportData:
         cta: Request a copy of your data
         title: Access your data
