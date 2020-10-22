@@ -102,6 +102,8 @@ const useInitialValue = (props: Props) => {
   );
 };
 
+const loading: GraphicalValue = { state: "loading", value: undefined };
+
 /**
  * Calculate the graphical state based on the pot possible states
  * @param potBpdActivation
@@ -111,10 +113,10 @@ const calculateGraphicalState = (
 ): GraphicalValue =>
   pot.fold<BpdPaymentMethodActivation, Error, GraphicalValue>(
     potBpdActivation,
-    () => ({ state: "loading", value: undefined }),
-    () => ({ state: "loading", value: undefined }),
-    _ => ({ state: "loading", value: undefined }),
-    _ => ({ state: "loading", value: undefined }),
+    () => loading,
+    () => loading,
+    _ => loading,
+    _ => loading,
     value => ({ state: "ready", value: value.activationStatus }),
     value => ({ state: "loading", value: value.activationStatus }),
     (_, newValue) => ({
