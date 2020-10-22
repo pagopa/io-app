@@ -74,13 +74,16 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   // load bpd activation status for a specific payment method
   yield takeEvery(
     bpdPaymentMethodActivation.request,
-    bpdLoadPaymentMethodActivationSaga
+    bpdLoadPaymentMethodActivationSaga,
+    bpdBackendClient.findPayment
   );
 
   // update bpd activation status for a specific payment method
   yield takeEvery(
     bpdUpdatePaymentMethodActivation.request,
-    bpdUpdatePaymentMethodActivationSaga
+    bpdUpdatePaymentMethodActivationSaga,
+    bpdBackendClient.enrollPayment,
+    bpdBackendClient.deletePayment
   );
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
