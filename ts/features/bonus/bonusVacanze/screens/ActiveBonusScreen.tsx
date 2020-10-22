@@ -410,7 +410,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       />
     );
 
-    props.showBS(modalBox, I18n.t("bonus.bonusVacanze.name"), 466);
+    props.showBottomSheet(modalBox, I18n.t("bonus.bonusVacanze.name"), 466);
   };
 
   const handleShare = () =>

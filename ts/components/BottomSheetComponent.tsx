@@ -75,6 +75,7 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
   const bottomSheetRef = React.useRef<BottomSheet>(null);
   const [opacity] = React.useState(new Animated.Value(0));
   const [accessible, setAccessible] = React.useState(false);
+  const [bottomSheetOpen, setBottomSheetOpen] = React.useState(false);
 
   const color = opacity.interpolate({
     inputRange: [0, 1],
@@ -116,8 +117,8 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
     setAccessible(false);
     if (bottomSheetRef && bottomSheetRef.current) {
       bottomSheetRef.current.snapTo(0);
+      setBottomSheetOpen(false);
       closeBackdropAnimation();
-      props.handleClose();
     }
   };
 
@@ -127,6 +128,7 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
     if (bottomSheetRef && bottomSheetRef.current) {
       bottomSheetRef.current.snapTo(1);
       openBackdropAnimation();
+      setBottomSheetOpen(true);
     }
   };
 
@@ -137,7 +139,7 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
       </Text>
       <ButtonDefaultOpacity
         style={styles.modalClose}
-        onPress={closeBottomSheet}
+        onPress={props.handleClose}
         transparent={true}
         accessible={true}
         accessibilityRole={"button"}
@@ -162,14 +164,20 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
   ) : (
     <>
       <Animated.View
-        pointerEvents={"none"}
+        pointerEvents={bottomSheetOpen ? "auto" : "none"}
         style={[styles.hover, modalBackdrop]}
       />
       <BottomSheet
         ref={bottomSheetRef}
         snapPoints={[0, props.maxSnapPoint]}
-        onOpenEnd={openBackdropAnimation}
-        onCloseEnd={closeBackdropAnimation}
+        onOpenEnd={() => {
+          openBackdropAnimation();
+        }}
+        onCloseEnd={() => {
+          closeBackdropAnimation();
+          setBottomSheetOpen(false);
+          props.handleClose();
+        }}
         renderHeader={renderHeader}
         renderContent={() => (
           <View style={styles.content}>{props.content}</View>

@@ -10,12 +10,12 @@ export type BottomSheetContextInterface = Readonly<{
   component: React.ReactNode;
   sheetTitle: string;
   snapPoint: number;
-  showBS: (
+  showBottomSheet: (
     component: React.ReactNode,
     title: string,
     snapPoint: number
   ) => void;
-  hideBS: () => void;
+  hideBottomSheet: () => void;
 }>;
 
 export const BottomSheetContext = React.createContext<
@@ -24,8 +24,8 @@ export const BottomSheetContext = React.createContext<
   component: null,
   sheetTitle: "",
   snapPoint: 0,
-  showBS: () => undefined,
-  hideBS: () => undefined
+  showBottomSheet: () => undefined,
+  hideBottomSheet: () => undefined
 });
 
 type Props = Record<string, unknown> & { children: React.ReactNode };
@@ -51,7 +51,7 @@ export const BottomSheetProvider: React.FunctionComponent<Props> = (
     BottomSheetState
   >(initialState);
 
-  const showBS = async (
+  const showBottomSheet = async (
     component: React.ReactNode,
     sheetTitle: string,
     snapPoint: number
@@ -63,14 +63,14 @@ export const BottomSheetProvider: React.FunctionComponent<Props> = (
     });
   };
 
-  const hideBS = () => {
+  const hideBottomSheet = () => {
     setBottomSheetState(initialState);
   };
 
   const providerValue = {
     ...bottomSheetState,
-    showBS,
-    hideBS
+    showBottomSheet,
+    hideBottomSheet
   };
 
   return (
@@ -82,12 +82,12 @@ export const BottomSheetProvider: React.FunctionComponent<Props> = (
 
 export const BottomSheetRoot: React.FunctionComponent = () => (
   <BottomSheetConsumer>
-    {({ component, sheetTitle, snapPoint, hideBS }) => (
+    {({ component, sheetTitle, snapPoint, hideBottomSheet }) => (
       <BottomSheetComponent
         content={component}
         maxSnapPoint={snapPoint}
         bottomSheetTitle={sheetTitle}
-        handleClose={hideBS}
+        handleClose={hideBottomSheet}
       />
     )}
   </BottomSheetConsumer>

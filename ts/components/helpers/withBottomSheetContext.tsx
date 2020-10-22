@@ -13,17 +13,11 @@ import {
 export function withBottomSheetContext<P>(
   WrappedComponent: React.ComponentType<P & BottomSheetContextInterface>
 ) {
-  class WithBottomSheetContext extends React.Component<P> {
-    public render() {
-      return (
-        <BottomSheetConsumer>
-          {contextProps => (
-            <WrappedComponent {...contextProps} {...this.props} />
-          )}
-        </BottomSheetConsumer>
-      );
-    }
-  }
+  const WithBottomSheetContext: React.FunctionComponent<P> = props => (
+    <BottomSheetConsumer>
+      {contextProps => <WrappedComponent {...contextProps} {...props} />}
+    </BottomSheetConsumer>
+  );
 
   hoistNonReactStatics(WithBottomSheetContext, WrappedComponent);
 
