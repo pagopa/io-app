@@ -52,6 +52,7 @@ import {
 import {
   NullableWallet,
   PagoPAErrorResponse,
+  PatchedWalletV2ListResponse,
   PaymentManagerToken,
   PspListResponse,
   PspResponse,
@@ -70,8 +71,7 @@ import {
   GetAbiListUsingGETT,
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT,
-  getWalletsV2UsingGETDefaultDecoder,
-  GetWalletsV2UsingGETT
+  getWalletsV2UsingGETDecoder
 } from "../../definitions/pagopa/bancomat/requestTypes";
 import { BancomatCardsRequest } from "../../definitions/pagopa/bancomat/BancomatCardsRequest";
 
@@ -209,12 +209,21 @@ const getWallets: GetWalletsUsingGETExtraT = {
   response_decoder: getPatchedWalletsUsingGETDecoder(WalletListResponse)
 };
 
-const getWalletsV2: GetWalletsV2UsingGETT = {
+export type GetWalletsV2UsingGETTExtra = r.IGetApiRequestType<
+  { readonly Bearer: string },
+  "Authorization",
+  never,
+  | r.IResponseType<200, PatchedWalletV2ListResponse>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
+>;
+const getWalletsV2: GetWalletsV2UsingGETTExtra = {
   method: "get",
   url: () => "/v2/wallet",
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getWalletsV2UsingGETDefaultDecoder()
+  response_decoder: getWalletsV2UsingGETDecoder(PatchedWalletV2ListResponse)
 };
 
 const checkPayment: CheckPaymentUsingGETT = {

@@ -28,7 +28,8 @@ import {
   apiUrlPrefix,
   bpdEnabled,
   fetchPagoPaTimeout,
-  fetchPaymentManagerLongTimeout
+  fetchPaymentManagerLongTimeout,
+  isWalletV2Enabled
 } from "../config";
 import {
   handleAddPan,
@@ -111,6 +112,7 @@ import {
   fetchPspRequestHandler,
   fetchTransactionRequestHandler,
   fetchTransactionsRequestHandler,
+  fetchWalletsRequestHandler,
   fetchWalletsV2RequestHandler,
   payCreditCardVerificationRequestHandler,
   paymentAttivaRequestHandler,
@@ -607,18 +609,11 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
-  /*
   yield takeLatest(
     getType(fetchWalletsRequest),
-    fetchWalletsRequestHandler,
-    paymentManagerClient,
-    pmSessionManager
-  );
-  */
-
-  yield takeLatest(
-    getType(fetchWalletsRequest),
-    fetchWalletsV2RequestHandler,
+    isWalletV2Enabled
+      ? fetchWalletsV2RequestHandler
+      : fetchWalletsRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );

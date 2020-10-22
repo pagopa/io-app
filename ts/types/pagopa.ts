@@ -27,6 +27,7 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
+import { CardInfo } from "../../definitions/pagopa/bancomat/CardInfo";
 
 /**
  * Union of all possible credit card types
@@ -287,3 +288,55 @@ export const PagoPAErrorResponse = t.type({
 });
 
 export type PagoPAErrorResponse = t.TypeOf<typeof PagoPAErrorResponse>;
+
+/**
+ * reasons:
+ * - createDate and updateDate are generated from spec as UTCISODateFromString instead of DateFromString
+ * - info is required
+ * - info is CardInfo and not PaymentMethodInfo (empty interface)
+ */
+
+// required attributes
+
+const WalletV2O = t.partial({});
+
+// optional attributes
+const WalletV2R = t.interface({
+  createDate: t.string,
+
+  enableableFunctions: t.readonlyArray(t.string, "array of string"),
+
+  favourite: t.boolean,
+  info: CardInfo,
+
+  idWallet: t.Integer,
+
+  onboardingChannel: t.string,
+
+  pagoPA: t.boolean,
+
+  updateDate: t.string
+});
+
+export const PatchedWalletV2 = t.intersection(
+  [WalletV2R, WalletV2O],
+  "WalletV2"
+);
+
+export type PatchedWalletV2 = t.TypeOf<typeof PatchedWalletV2>;
+
+const WalletV2ListResponseR = t.interface({});
+
+// optional attributes
+const WalletV2ListResponseO = t.partial({
+  data: t.readonlyArray(PatchedWalletV2, "array of PatchedWalletV2")
+});
+
+export const PatchedWalletV2ListResponse = t.intersection(
+  [WalletV2ListResponseR, WalletV2ListResponseO],
+  "WalletV2ListResponse"
+);
+
+export type PatchedWalletV2ListResponse = t.TypeOf<
+  typeof PatchedWalletV2ListResponse
+>;
