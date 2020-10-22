@@ -1,6 +1,6 @@
 import { View, Text, Container } from "native-base";
 import * as React from "react";
-import { Animated, Modal, StyleSheet } from "react-native";
+import { Animated, Modal, SafeAreaView, StyleSheet } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 import { useHardwareBackButton } from "../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 
@@ -180,7 +180,9 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
         }}
         renderHeader={renderHeader}
         renderContent={() => (
-          <View style={styles.content}>{props.content}</View>
+          <View style={styles.content}>
+            <SafeAreaView style={IOStyles.flex}>{props.content}</SafeAreaView>
+          </View>
         )}
       />
     </>
