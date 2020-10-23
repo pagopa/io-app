@@ -8,16 +8,16 @@ import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { NavigationContext } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Body } from "../../../../../components/core/typography/Body";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { Body } from "../../../../../../components/core/typography/Body";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   bpdPaymentMethodActivation,
   BpdPaymentMethodActivation,
   BpdPmActivationStatus,
   bpdUpdatePaymentMethodActivation,
   HPan
-} from "../../store/actions/paymentMethods";
-import { bpdPaymentMethodValueSelector } from "../../store/reducers/details/paymentMethods";
+} from "../../../store/actions/paymentMethods";
+import { bpdPaymentMethodValueSelector } from "../../../store/reducers/details/paymentMethods";
 import { BpdToggle } from "./BpdToggle";
 
 // TODO: accept only hpan, read all the other information with a selector from payment methods

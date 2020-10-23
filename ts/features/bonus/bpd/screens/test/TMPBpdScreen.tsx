@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
-import { useEffect } from "react";
 import * as React from "react";
+import { useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -13,11 +13,8 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  walletsSelector,
-  walletV2Selector
-} from "../../../../../store/reducers/wallet/wallets";
-import { PatchedWalletV2, Wallet } from "../../../../../types/pagopa";
+import { walletV2Selector } from "../../../../../store/reducers/wallet/wallets";
+import { PatchedWalletV2 } from "../../../../../types/pagopa";
 import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { PaymentMethodBpdList } from "../../components/PaymentMethodBpdList";
 import {

@@ -2,9 +2,7 @@ import * as React from "react";
 import { View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { PatchedWalletV2 } from "../../../../types/pagopa";
-import PaymentMethodBpdToggle from "./paymentMethodActivationToggle/base/PaymentMethodBpdToggle";
 import { bpdToggleFactory } from "./paymentMethodActivationToggle/BpdPaymentMethodToggleFactory";
-import { CardBpdToggle } from "./paymentMethodActivationToggle/CardBpdToggle";
 
 type Props = {
   // TODO: waiting for conversion to WalletV2

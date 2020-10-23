@@ -9,7 +9,6 @@ import { CardBpdToggle } from "./CardBpdToggle";
  * @param wallet
  */
 export const bpdToggleFactory = (wallet: PatchedWalletV2) => {
-  console.log(wallet.walletType);
   switch (wallet.walletType) {
     case WalletTypeEnum.Bancomat:
       return <BancomatBpdToggle key={wallet.info.hashPan} card={wallet} />;

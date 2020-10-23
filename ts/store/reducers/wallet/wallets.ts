@@ -5,10 +5,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
-import { BonusActivationWithQrCode } from "../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
-import { AllActiveState } from "../../../features/bonus/bonusVacanze/store/reducers/allActive";
 
-import { PatchedWalletV2, Wallet } from "../../../types/pagopa";
+import { Wallet } from "../../../types/pagopa";
 import { PotFromActions } from "../../../types/utils";
 import { isDefined } from "../../../utils/guards";
 import { Action } from "../../actions/types";
