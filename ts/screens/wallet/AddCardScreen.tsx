@@ -33,6 +33,8 @@ import {
   CreditCardPan
 } from "../../utils/input";
 
+import { CreditCardDetector } from "../../utils/creditCard";
+
 type NavigationParams = Readonly<{
   inPayment: Option<{
     rptId: RptId;
@@ -228,7 +230,10 @@ class AddCardScreen extends React.Component<Props, State> {
             <LabelledItem
               type={"masked"}
               label={I18n.t("wallet.dummyCard.labels.pan")}
-              icon="io-carta"
+              icon={CreditCardDetector.getIcon(this.state.pan)}
+              //icon={cardIcons.MASTERCARD}
+              //icon="io-carta"
+              //icon={undefined}
               isValid={this.isValidPan()}
               inputMaskProps={{
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),

@@ -1,9 +1,14 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
+import { ImageURISource } from 'react-native';
+
+export type IconSource = string & ImageURISource | undefined;
 
 type CreditCardDetector = {
   blocks: Record<string, ReadonlyArray<number>>;
   re: Record<string, RegExp>;
+  cardIcons: Record<string, IconSource>;
   getInfo: (value: string) => Option<string>;
+  getIcon: (value: Option<string>) => IconSource;
 };
 
 export const CreditCardDetector: CreditCardDetector = {
@@ -63,7 +68,25 @@ export const CreditCardDetector: CreditCardDetector = {
     visa: /^4\d{0,15}/,
 
     // starts with 62; 16 digits
-    unionPay: /^62\d{0,14}/
+    unionpay: /^62\d{0,14}/,
+
+    unknown: /.*/
+  },
+
+  cardIcons /*: { [key in CreditCardType]: any } */: {
+    mastercard: require("../../img/wallet/cards-icons/mastercard.png"),
+    visa: require("../../img/wallet/cards-icons/visa.png"),
+    amex: require("../../img/wallet/cards-icons/amex.png"),
+    diners: require("../../img/wallet/cards-icons/diners.png"),
+    maestro: require("../../img/wallet/cards-icons/maestro.png"),
+    visaelectron: require("../../img/wallet/cards-icons/visa-electron.png"),
+    postepay: require("../../img/wallet/cards-icons/postepay.png"),
+    unionpay: require("../../img/wallet/cards-icons/unknown.png"),
+    discover: require("../../img/wallet/cards-icons/unknown.png"),
+    jcb: require("../../img/wallet/cards-icons/unknown.png"),
+    //beacuse of the right padding, alignment is better then "io-carta"
+    unknown: require("../../img/wallet/cards-icons/unknown.png")
+    //unknown: "io-carta"
   },
 
   getInfo: (value: string) => {
@@ -73,7 +96,14 @@ export const CreditCardDetector: CreditCardDetector = {
     // Set strictMode to true will remove the 16 max-length restrain,
     // however, I never found any website validate card number like
     // this, hence probably you don't want to enable this option.
-    const result = Object.keys(re).find(k => re[k].test(value));
-    return fromNullable(result);
+    return fromNullable(Object.keys(re).find(k => re[k].test(value)));
+  },
+
+  getIcon: (pan: Option<string>) => { 
+    const cardIcons = CreditCardDetector.cardIcons;
+    const getInfo = CreditCardDetector.getInfo;
+
+    //The ending getOrElse call could be moved to AppCardScreen. 
+   return pan.chain((myPan) => getInfo(myPan)).map((brand) => cardIcons[brand]).getOrElse(cardIcons['unknown']);
   }
 };

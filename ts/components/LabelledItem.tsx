@@ -10,9 +10,16 @@
  *       input
  */
 import color from "color";
+import { isString } from "lodash";
 import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, TextInputProps } from "react-native";
+import {
+  StyleSheet,
+  TextInputProps,
+  Image,
+  ImageSourcePropType,
+  ImageStyle
+} from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
 import { IconProps } from "react-native-vector-icons/Icon";
 import variables from "../theme/variables";
@@ -28,11 +35,11 @@ const styles = StyleSheet.create({
   }
 });
 
-type StyleType = IconProps["style"];
+type StyleType = IconProps["style"] & ImageStyle;
 
 type CommonProp = Readonly<{
   label: string;
-  icon?: string;
+  icon?: string & ImageSourcePropType;
   isValid?: boolean;
   iconStyle?: StyleType;
   focusBorderColor?: string;
@@ -128,14 +135,28 @@ export class LabelledItem extends React.Component<Props, State> {
             this.props.isValid === undefined ? false : this.props.isValid
           }
         >
-          {this.props.icon && (
-            <IconFont
-              size={variables.iconSize3}
-              color={variables.brandDarkGray}
-              name={this.props.icon}
-              style={this.props.iconStyle}
-            />
-          )}
+          {this.props.icon &&
+            (isString(this.props.icon) ? (
+              <IconFont
+                size={variables.iconSize3}
+                color={variables.brandDarkGray}
+                name={this.props.icon}
+                style={this.props.iconStyle}
+              />
+            ) : (
+              <Image
+                source={this.props.icon}
+                style={[
+                  {
+                    height: variables.iconSize3,
+                    width: variables.iconSize3 * 2,
+                    resizeMode: "contain"
+                  },
+                  this.props.iconStyle
+                ]}
+              />
+            ))}
+
           {this.props.type === "masked" ? (
             <TextInputMask
               placeholderTextColor={color(variables.brandGray)
