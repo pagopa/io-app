@@ -9,7 +9,6 @@ import { IOColors } from "./core/variables/IOColors";
 import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
-import { profileSpidEmailSelector } from "../store/reducers/profile";
 
 type OwnProps = Readonly<{
   text11: string;
