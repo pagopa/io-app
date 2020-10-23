@@ -22,7 +22,10 @@ import { bpdPaymentMethodValueSelector } from "../../store/reducers/details/paym
 import { BpdToggle } from "./BpdToggle";
 
 // TODO: accept only hpan, read all the other information with a selector from payment methods
-type OwnProps = { hPan: HPan; hasBpdCapability: boolean };
+type OwnProps = {
+  hPan: HPan;
+  hasBpdCapability: boolean;
+};
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &

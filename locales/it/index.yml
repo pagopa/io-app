@@ -1629,6 +1629,10 @@ bonus:
         title: "Aggiungi almeno un metodo di pagamento"
         body: "Per inziare a raccogliere punti devi aggiungere su IO i tuoi metodi di pagamento elettronico preferiti: oggi sono supportate carte di credito, prepagate, ricaricabili, carte di debito, Bancomat e app e altri strumenti digitali.\n\n
         In futuro il cashback supporterà altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno la raccolta dei punti!"
+      enrollPaymentMethod:
+        title: "Scegli quali metodi di pagamento attivare"
+        body1: "I pagamenti che farai con questi metodi riceveranno il cashback concorreranno alla tua posizione in classifica"
+        body2: "Potrai aggiungere in ogni momento altri metodi di pagamento su IO e attivare il cashback."
     iban:
       iban: "IBAN"
       edit: "Modifica IBAN"
