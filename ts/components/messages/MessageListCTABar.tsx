@@ -96,7 +96,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
     // The calendar icon is shown if:
     // - the message has a due date
     // - the payment related to the message is not yet paid
-    if (dueDate.isSome() && !this.paid) {
+    if (dueDate.isSome() && !this.paid && !this.isPaymentExpired) {
       return (
         <CalendarIconComponent
           small={true}
