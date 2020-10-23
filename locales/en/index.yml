@@ -984,6 +984,7 @@ messages:
           block1: The prescription expired at 
           block2: "on"
     pay: Pay € {{amount}}
+    onlyPay: Pay
     paid: Paid
     reminder: Reminder
     reminderShort: Memo
