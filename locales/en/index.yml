@@ -973,7 +973,9 @@ messages:
       addMemo: 
           block1: Add a reminder for the 
           block2: at
-      expiringAlert: This notice expire today at
+      expiringAlert:
+        block1: This notice will expire on
+        block2: at
       expiredAlert: 
         block1: The notice expired at 
         block2: "on"

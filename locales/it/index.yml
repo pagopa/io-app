@@ -1002,7 +1002,9 @@ messages:
       addMemo:
         block1: Aggiungi un promemoria per il
         block2: alle
-      expiringAlert: Questo avviso scade oggi alle
+      expiringAlert:
+        block1: Questo avviso scade il giorno
+        block2: alle ore
       expiredAlert:
         block1: Il pagamento è scaduto alle ore
         block2: del
