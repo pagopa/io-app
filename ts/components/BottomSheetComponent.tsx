@@ -117,8 +117,6 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
     setAccessible(false);
     if (bottomSheetRef && bottomSheetRef.current) {
       bottomSheetRef.current.snapTo(0);
-      setBottomSheetOpen(false);
-      closeBackdropAnimation();
     }
   };
 
@@ -139,7 +137,7 @@ const BottomSheetComponent: React.FunctionComponent<Props> = (props: Props) => {
       </Text>
       <ButtonDefaultOpacity
         style={styles.modalClose}
-        onPress={props.handleClose}
+        onPress={closeBottomSheet}
         transparent={true}
         accessible={true}
         accessibilityRole={"button"}
