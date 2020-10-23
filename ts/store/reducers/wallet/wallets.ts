@@ -8,6 +8,7 @@ import { getType, isOfType } from "typesafe-actions";
 
 import { Wallet } from "../../../types/pagopa";
 import { PotFromActions } from "../../../types/utils";
+import { isDefined } from "../../../utils/guards";
 import { Action } from "../../actions/types";
 import { paymentUpdateWalletPsp } from "../../actions/wallet/payment";
 import {
@@ -102,6 +103,12 @@ export const walletsSelector = createSelector(
             : a.lastUsage.getTime() - b.lastUsage.getTime())
       )
     )
+);
+/**
+ * Get a list of WalletV2 extracted from WalletV1
+ */
+export const walletV2Selector = createSelector([walletsSelector], potWallet =>
+  pot.map(potWallet, wallets => wallets.map(w => w.v2).filter(isDefined))
 );
 
 // reducer
