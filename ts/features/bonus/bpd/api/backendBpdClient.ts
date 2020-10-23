@@ -205,7 +205,7 @@ const withTestToken = (options: Options, fiscalCode: string) =>
 
 export function BackendBpdClient(
   baseUrl: string,
-  _: string,
+  token: string,
   fiscalCode: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
@@ -225,9 +225,7 @@ export function BackendBpdClient(
   const withBearerToken = <P extends extendHeaders, R>(
     f: (p: P) => Promise<R>
   ) => async (po: P): Promise<R> => {
-    const reqTestToken = await withTestToken(options, fiscalCode);
-    const testToken = await reqTestToken.text();
-    const params = Object.assign({ Bearer: testToken }, po) as P;
+    const params = Object.assign({ Bearer: token }, po) as P;
     return f(params);
   };
 

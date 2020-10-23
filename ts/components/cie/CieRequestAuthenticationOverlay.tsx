@@ -37,22 +37,24 @@ const styles = StyleSheet.create({
 // INFRA DEV -> xx_servizicie_test
 const CIE_IDP_ID = "xx_servizicie";
 
-// this value assignment tries to decrease the sleeping time of a script
-// sleeping is due to allow user to read page content until the content changes to an
-// automatic redirect
+/**
+ * This JS is injection on every page load. It tries to decrease to 0 the sleeping time of a script.
+ * That sleeping is used to allow user to read page content until the content changes to an automatic redirect.
+ * This script also tries also to call apriIosUL.
+ * If it is defined it starts the authentication process (iOS only).
+ */
 const injectJs = `
   seconds = 0;
-  true;
+  if(apriIosUL !== undefined){
+  apriIosUL();
+  }
 `;
 
-// this is a 'fake' user-agent to send through the webView when the running device is an iOS
-// this is needed because the device must be recognized as Android
+// to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
+// on Android it is not required
 const iOSUserAgent =
-  "Mozilla/5.0 (Linux; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36";
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
 const userAgent = Platform.select({ ios: iOSUserAgent, default: undefined });
-// this injection is done only on iOS side. Since the server doesn't recognize iOS as a valid device it shows an error page (it is a simple UI block).
-// we inject this JS code to get all info needed to continue the authentication
-const iOSFollowHappyPathInjection = `window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`;
 
 export default class CieRequestAuthenticationOverlay extends React.PureComponent<
   Props,
@@ -91,17 +93,20 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     if (this.state.findOpenApp) {
       return false;
     }
-    // on iOS the web page script try to redirect in an error url
+    // on iOS when authnRequestString is present in the url, it means we have all stuffs to go on.
     if (
-      Platform.OS === "ios" &&
       event.url !== undefined &&
-      event.url.indexOf("errore.jsp") !== -1
+      Platform.OS === "ios" &&
+      event.url.indexOf("authnRequestString") !== -1
     ) {
       // avoid redirect and follow the 'happy path'
       if (this.webView.current !== null) {
-        this.webView.current.injectJavaScript(
-          closeInjectedScript(iOSFollowHappyPathInjection)
-        );
+        this.setState({ findOpenApp: true }, () => {
+          this.props.onSuccess(
+            // cie-ios sdk asks for "OpenApp?nextUrl=" as prefix
+            event.url.replace("nextUrl=", "OpenApp?nextUrl=")
+          );
+        });
       }
       return false;
     }
@@ -109,10 +114,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     // Once the returned url contains the "OpenApp" string, then the authorization has been given
     if (event.url && event.url.indexOf("OpenApp") !== -1) {
       this.setState({ findOpenApp: true }, () => {
-        const authorizationUri = event.url;
-        if (authorizationUri !== undefined) {
-          this.props.onSuccess(authorizationUri);
-        }
+        this.props.onSuccess(event.url);
       });
       return false;
     }
@@ -141,6 +143,10 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
   private handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
     if (e.nativeEvent.title === "Pagina web non disponibile") {
       this.handleOnError();
+    }
+    // inject JS on every page load end
+    if (this.webView.current) {
+      this.webView.current.injectJavaScript(closeInjectedScript(injectJs));
     }
   };
 

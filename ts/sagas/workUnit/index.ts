@@ -30,11 +30,7 @@ export type WorkUnit = {
 /**
  * The result of the WorkUnit
  */
-export enum ESagaResult {
-  Cancel = "Cancel",
-  Completed = "Completed",
-  Back = "Back"
-}
+export type SagaResult = "cancel" | "completed" | "back";
 
 /**
  * Ensure that the `startScreen` is the current screen or navigate to `startScreen` using `navigateTo`
@@ -85,7 +81,7 @@ export function* executeWorkUnit(
   wu: WorkUnit
 ): Generator<
   Effect,
-  ESagaResult,
+  SagaResult,
   ActionType<typeof wu.cancel | typeof wu.complete | typeof wu.back>
 > {
   yield call(ensureScreen, wu.startScreenNavigation, wu.startScreenName);
@@ -97,11 +93,11 @@ export function* executeWorkUnit(
   ]);
 
   if (isActionOf(wu.complete, result)) {
-    return ESagaResult.Completed;
+    return "completed";
   } else if (isActionOf(wu.cancel, result)) {
-    return ESagaResult.Cancel;
+    return "cancel";
   } else if (isActionOf(wu.back, result)) {
-    return ESagaResult.Back;
+    return "back";
   }
   throw new Error(`Unhandled case for ${result}`);
 }

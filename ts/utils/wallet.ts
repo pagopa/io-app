@@ -104,6 +104,7 @@ export const convertWalletV2toWalletV1 = (
     lastUsage: walletV2.updateDate ? new Date(walletV2.updateDate) : undefined,
     isPspToIgnore: false,
     registeredNexi: false,
-    saved: true
+    saved: true,
+    v2: walletV2
   };
 };

@@ -1,11 +1,16 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
+import { walletsSelector } from "../../../../../store/reducers/wallet/wallets";
 import { navigateToBpdIbanInsertion } from "../../navigation/action/iban";
-import { navigateToBpdOnboardingNoPaymentMethods } from "../../navigation/action/onboarding";
+import {
+  navigateToBpdOnboardingEnrollPaymentMethod,
+  navigateToBpdOnboardingNoPaymentMethods
+} from "../../navigation/action/onboarding";
 import BPD_ROUTES from "../../navigation/routes";
 import {
   bpdIbanInsertionCancel,
@@ -51,8 +56,16 @@ export function* bpdIbanInsertionWorker() {
     yield put(NavigationActions.back());
   } else {
     if (onboardingOngoing) {
-      yield put(navigateToBpdOnboardingNoPaymentMethods());
-      navigationHistoryPop(1);
+      const paymentMethodsAvailable: ReturnType<typeof walletsSelector> = yield select(
+        walletsSelector
+      );
+      const nextAction =
+        pot.isSome(paymentMethodsAvailable) &&
+        paymentMethodsAvailable.value.length > 0
+          ? navigateToBpdOnboardingEnrollPaymentMethod()
+          : navigateToBpdOnboardingNoPaymentMethods();
+      yield put(nextAction);
+      yield put(navigationHistoryPop(1));
     } else {
       yield put(NavigationActions.back());
     }

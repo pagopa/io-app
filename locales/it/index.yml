@@ -65,6 +65,7 @@ global:
     saveSelection: Salva la selezione
     search: Ricerca
     skip: "Salta"
+    add: Aggiungi
   navigator:
     messages: messaggi
     wallet: pagamenti
@@ -657,13 +658,6 @@ wallet:
     bankName: Denominazione della banca
     noName: Nome non disponibile
     loading: Carico la lista delle banche...
-  addBancomat:
-    title: "Aggiungi bancomat {{current}} di {{length}}"
-    screenTitle: "Vuoi aggiungere questa carta?"
-    bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
-    bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
-    skip: Salta
-    add: Aggiungi
   accessibility:
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
@@ -683,6 +677,25 @@ wallet:
         chooseAnother: "Scegli un'altra banca"
       loadingSearch:
         title: "Stiamo chiedendo a Bancomat la lista delle tue carte\n\nAttendi qualche secondo"
+      add:
+        title: "Aggiungi bancomat {{current}} di {{length}}"
+        screenTitle: "Vuoi aggiungere questa carta?"
+        bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
+        bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
+        loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo"
+      bpd:
+        suggestActivation:
+          title: "Vuoi attivare il Cashback Pagamenti Digitali?"
+          body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback Pagamenti Digitali, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri per promuovere l’uso della moneta elettronica.\n\n
+                 Ogni volta che pagherai con uno dei metodi di pagamento elettronico compatibili (carte, bancomat, app, etc..), riceverai un riborso parziale in base alla tua spesa.\n\n
+                 In base a quante trasnazioni avrai accumulato, in ciascuno periodo, potrai ricevere un premio in denaro fino a XXXX euro."
+          skip: "No, grazie"
+          confirm: "Info e attivazione"
+        activateNew:
+          title: "Vuoi attivare il Cashback Pagamenti Digitali?"
+          body1: "I pagamenti che farai con questi metodi riceveranno il cashback e concorreranno alla tua posizione in classifica."
+          body2: "Se preferisci, puoi attivare il cashback su questi metodi anche in un secondo momento."
+          skip: "Non ora, grazie"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
@@ -1629,6 +1642,10 @@ bonus:
         title: "Aggiungi almeno un metodo di pagamento"
         body: "Per inziare a raccogliere punti devi aggiungere su IO i tuoi metodi di pagamento elettronico preferiti: oggi sono supportate carte di credito, prepagate, ricaricabili, carte di debito, Bancomat e app e altri strumenti digitali.\n\n
         In futuro il cashback supporterà altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno la raccolta dei punti!"
+      enrollPaymentMethod:
+        title: "Scegli quali metodi di pagamento attivare"
+        body1: "I pagamenti che farai con questi metodi riceveranno il cashback concorreranno alla tua posizione in classifica"
+        body2: "Potrai aggiungere in ogni momento altri metodi di pagamento su IO e attivare il cashback."
     iban:
       iban: "IBAN"
       edit: "Modifica IBAN"

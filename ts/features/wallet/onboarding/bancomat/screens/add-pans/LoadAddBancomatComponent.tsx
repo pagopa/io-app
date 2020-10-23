@@ -24,7 +24,7 @@ const LoadAddBancomatComponent: React.FunctionComponent<Props> = props => {
   return (
     <LoadingErrorComponent
       {...props}
-      loadingCaption={I18n.t("wallet.onboarding.bancomat.loadingSearch.title")}
+      loadingCaption={I18n.t("wallet.onboarding.bancomat.add.loading")}
       onAbort={props.onCancel}
       onRetry={props.onRetry}
     />

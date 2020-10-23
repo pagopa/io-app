@@ -18,8 +18,8 @@ export type BpdPmActivationStatus = "active" | "inactive" | "notActivable";
 export type BpdPaymentMethodActivation = {
   hPan: HPan;
   activationStatus: BpdPmActivationStatus;
-  activationDate?: Date;
-  deactivationDate?: Date;
+  activationDate?: string;
+  deactivationDate?: string;
 };
 
 /**
