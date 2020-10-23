@@ -1010,6 +1010,9 @@ messages:
     errors:
       fetchCalendars: Error fetching calendars
     helper: "IO will remember this choice, you can change it from the preference pane."
+  badge:
+    expired: Expired
+    paid: Paid
   unknownSender: Unknown sender
   noContent: Content not available
   archive:
