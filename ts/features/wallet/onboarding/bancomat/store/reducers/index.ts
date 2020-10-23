@@ -1,14 +1,14 @@
 import { Action, combineReducers } from "redux";
-import { WalletV2 } from "../../../../../../../definitions/pagopa/bancomat/WalletV2";
-import addedPansReducer from "./addedPans";
-import pansReducer, { Pans } from "./pans";
+import { PatchedWalletV2 } from "../../../../../../types/pagopa";
 import abiSelectedReducer, { AbiSelected } from "./abiSelected";
+import addedPansReducer from "./addedPans";
 import addingPansReducer, { AddingPansState } from "./addingPans";
+import pansReducer, { Pans } from "./pans";
 
 export type BancomatState = {
   foundPans: Pans;
   addingPans: AddingPansState;
-  addedPans: ReadonlyArray<WalletV2>;
+  addedPans: ReadonlyArray<PatchedWalletV2>;
   abiSelected: AbiSelected;
 };
 

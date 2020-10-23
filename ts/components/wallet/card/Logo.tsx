@@ -4,6 +4,7 @@
  */
 import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
+import { CardInfo } from "../../../../definitions/pagopa/bancomat/CardInfo";
 import { CreditCard } from "../../../types/pagopa";
 import { CreditCardType } from "../../../types/pagopa";
 import { getResourceNameFromUrl } from "../../../utils/url";
@@ -42,7 +43,7 @@ import defaultCardIcon from "../../../../img/wallet/cards-icons/unknown.png";
  * for more info check https://www.pivotaltracker.com/story/show/165067615
  * @param creditcard the creditcard objects from which retrieve the icon
  */
-const getCardIconFromBrandLogo = (creditcard: CreditCard) => {
+export const getCardIconFromBrandLogo = (creditcard: CreditCard | CardInfo) => {
   if (!creditcard.brandLogo) {
     return defaultCardIcon;
   }

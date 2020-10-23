@@ -3,6 +3,7 @@
  * to call the different API available
  */
 import { flip } from "fp-ts/lib/function";
+import { fromNullable } from "fp-ts/lib/Option";
 
 import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
@@ -21,7 +22,15 @@ import {
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
-import { fromNullable } from "fp-ts/lib/Option";
+import { BancomatCardsRequest } from "../../definitions/pagopa/bancomat/BancomatCardsRequest";
+import {
+  addWalletsBancomatCardUsingPOSTDecoder,
+  getAbiListUsingGETDefaultDecoder,
+  GetAbiListUsingGETT,
+  getPansUsingGETDefaultDecoder,
+  GetPansUsingGETT,
+  getWalletsV2UsingGETDecoder
+} from "../../definitions/pagopa/bancomat/requestTypes";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -64,16 +73,6 @@ import {
 } from "../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
-import {
-  addWalletsBancomatCardUsingPOSTDecoder,
-  AddWalletsBancomatCardUsingPOSTT,
-  getAbiListUsingGETDefaultDecoder,
-  GetAbiListUsingGETT,
-  getPansUsingGETDefaultDecoder,
-  GetPansUsingGETT,
-  getWalletsV2UsingGETDecoder
-} from "../../definitions/pagopa/bancomat/requestTypes";
-import { BancomatCardsRequest } from "../../definitions/pagopa/bancomat/BancomatCardsRequest";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -414,7 +413,21 @@ const getPans: GetPansUsingGETT = {
   response_decoder: getPansUsingGETDefaultDecoder()
 };
 
-const addPans: AddWalletsBancomatCardUsingPOSTT = {
+export type AddWalletsBancomatCardUsingPOSTTExtra = r.IPostApiRequestType<
+  {
+    readonly Bearer: string;
+    readonly bancomatCardsRequest: BancomatCardsRequest;
+  },
+  "Content-Type" | "Authorization",
+  never,
+  | r.IResponseType<200, PatchedWalletV2ListResponse>
+  | r.IResponseType<201, undefined>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
+>;
+
+const addPans: AddWalletsBancomatCardUsingPOSTTExtra = {
   method: "post",
   url: () => `/v1/bancomat/add-wallets`,
   query: () => ({}),
