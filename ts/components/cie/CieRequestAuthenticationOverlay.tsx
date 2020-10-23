@@ -93,11 +93,10 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     if (this.state.findOpenApp) {
       return false;
     }
-    // on iOS when authnRequestString is present in the url we are on that page that shows
-    // the button "apri l'applicazione CIEID". So we have all stuffs to go on
+    // on iOS when authnRequestString is present in the url, it means we have all stuffs to go on.
     if (
-      Platform.OS === "ios" &&
       event.url !== undefined &&
+      Platform.OS === "ios" &&
       event.url.indexOf("authnRequestString") !== -1
     ) {
       // avoid redirect and follow the 'happy path'
