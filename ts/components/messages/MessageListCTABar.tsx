@@ -143,7 +143,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
           disabled={disabled}
           service={service}
           message={message}
-          enableAlertStyle={true}
+          enableAlertStyle={false}
         />
       );
     });
