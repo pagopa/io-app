@@ -115,7 +115,7 @@ export function* handleAddPan(
     if (addPansWithRefreshResult.isRight()) {
       if (addPansWithRefreshResult.value.status === 200) {
         const wallets = addPansWithRefreshResult.value.value.data ?? [];
-        // search for the added bancomat
+        // search for the added bancomat.
         const maybeWallet = fromNullable(
           wallets.find(w => w.info.hashPan === action.payload.hpan)
         );
