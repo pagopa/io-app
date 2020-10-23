@@ -144,7 +144,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     if (e.nativeEvent.title === "Pagina web non disponibile") {
       this.handleOnError();
     }
-    // inject JS on every page load
+    // inject JS on every page load end
     if (this.webView.current) {
       this.webView.current.injectJavaScript(closeInjectedScript(injectJs));
     }
