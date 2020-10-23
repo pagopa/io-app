@@ -2,7 +2,6 @@ import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ActionType } from "typesafe-actions";
 import { fromNullable } from "fp-ts/lib/Option";
-import { index } from "fp-ts/lib/Array";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
@@ -116,15 +115,19 @@ export function* handleAddPan(
     if (addPansWithRefreshResult.isRight()) {
       if (addPansWithRefreshResult.value.status === 200) {
         const wallets = addPansWithRefreshResult.value.value.data ?? [];
-        // since we add only one bancomat we should have a response of size 1
-        const maybeWallet = index(0, [...wallets]);
+        // search for the added bancomat
+        const maybeWallet = fromNullable(
+          wallets.find(w => w.info.hashPan === action.payload.hpan)
+        );
         if (maybeWallet.isSome()) {
           yield put(
-            // access
+            // success
             addBancomatToWallet.success(maybeWallet.value)
           );
         } else {
-          throw new Error(`success payload is empty`);
+          throw new Error(
+            `cannot find added bancomat in wallets list response`
+          );
         }
       } else {
         throw new Error(
