@@ -96,6 +96,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
     // The calendar icon is shown if:
     // - the message has a due date
     // - the payment related to the message is not yet paid
+    // - the payment related to the message is not yet expired
     if (dueDate.isSome() && !this.paid && !this.isPaymentExpired) {
       return (
         <CalendarIconComponent
@@ -128,10 +129,9 @@ class MessageListCTABar extends React.PureComponent<Props> {
           message={this.props.message}
         />
       ));
-
   // Render a button to display details of the payment related to the message
   private renderPaymentButton() {
-    // The button is displayed if the payment has an expiration date in the future
+    // The button is displayed if the payment has an expiration date in the future or if is valid also after due date.
     return this.paymentExpirationInfo.fold(undefined, pei => {
       const { message, service, disabled } = this.props;
       const { paid } = this;
