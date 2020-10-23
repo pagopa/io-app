@@ -65,7 +65,7 @@ import {
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
 import {
-  addWalletsBancomatCardUsingPOSTDefaultDecoder,
+  addWalletsBancomatCardUsingPOSTDecoder,
   AddWalletsBancomatCardUsingPOSTT,
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
@@ -420,7 +420,9 @@ const addPans: AddWalletsBancomatCardUsingPOSTT = {
   query: () => ({}),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   body: p => JSON.stringify(p.bancomatCardsRequest),
-  response_decoder: addWalletsBancomatCardUsingPOSTDefaultDecoder()
+  response_decoder: addWalletsBancomatCardUsingPOSTDecoder(
+    PatchedWalletV2ListResponse
+  )
 };
 
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
