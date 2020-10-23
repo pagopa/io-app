@@ -14,7 +14,12 @@ import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
-import { getCTA, isExpired, paymentExpirationInfo } from "../../utils/messages";
+import {
+  getCTA,
+  isExpired,
+  isExpiring,
+  paymentExpirationInfo
+} from "../../utils/messages";
 import ExtractedCTABar from "../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
@@ -65,6 +70,10 @@ class MessageListCTABar extends React.PureComponent<Props> {
 
   get isPaymentExpired() {
     return this.paymentExpirationInfo.fold(false, info => isExpired(info));
+  }
+
+  get isPaymentExpiring() {
+    return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
   }
 
   get hasPaymentData() {
