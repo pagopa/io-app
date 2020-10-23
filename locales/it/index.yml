@@ -687,7 +687,7 @@ wallet:
         suggestActivation:
           title: "Vuoi attivare il Cashback Pagamenti Digitali?"
           body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback Pagamenti Digitali, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri per promuovere l’uso della moneta elettronica.\n\n
-                 Ogni volta che pagherai con uno dei metodi di pagamento elettronico compatibili (carte, bancomat, app, etc..), riceverai un riborso parziale  in base alla tua spesa.\n\n
+                 Ogni volta che pagherai con uno dei metodi di pagamento elettronico compatibili (carte, bancomat, app, etc..), riceverai un riborso parziale in base alla tua spesa.\n\n
                  In base a quante trasnazioni avrai accumulato, in ciascuno periodo, potrai ricevere un premio in denaro fino a XXXX euro."
           skip: "No, grazie"
           confirm: "Info e attivazione"
