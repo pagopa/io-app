@@ -9,7 +9,7 @@ type Props = {
   card: PatchedWalletV2;
 };
 
-const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
+const FOUR_UNICODE_CIRCLES = "●".repeat(4);
 
 /**
  * Customize a {@link PaymentMethodBpdToggle} with the data from a Credit Card
