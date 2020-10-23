@@ -1,6 +1,6 @@
 import { fromNullable, fromPredicate, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Text, View } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, RefreshControl, StyleSheet } from "react-native";
 import {
@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { Label } from "../../components/core/typography/Label";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
@@ -23,7 +24,7 @@ import { RotatedCards } from "../../components/wallet/card/RotatedCards";
 import SectionCardComponent from "../../components/wallet/card/SectionCardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled } from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -35,6 +36,7 @@ import {
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { navigateToBpdTestScreen } from "../../features/bonus/bpd/navigation/action/bpdTestNav";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -510,6 +512,15 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         gradientHeader={true}
         headerPaddingMin={true}
       >
+        {/* TODO: temp only, for test purpose,to be removed with bpd details */}
+        {bpdEnabled && (
+          <Button
+            style={{ width: "100%" }}
+            onPress={this.props.navigateToBpdTest}
+          >
+            <Label color={"white"}>BPD details</Label>
+          </Button>
+        )}
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
         {bonusVacanzeEnabled && (
           <NavigationEvents onWillFocus={this.loadBonusVacanze} />
@@ -582,7 +593,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(fetchTransactionsRequest({ start })),
   loadWallets: () => dispatch(fetchWalletsRequest()),
   dispatchAllTransactionLoaded: (transactions: ReadonlyArray<Transaction>) =>
-    dispatch(fetchTransactionsLoadComplete(transactions))
+    dispatch(fetchTransactionsLoadComplete(transactions)),
+  // TODO: Temp only, remove after bpd details
+  navigateToBpdTest: () => dispatch(navigateToBpdTestScreen())
 });
 
 export default withValidatedPagoPaVersion(
