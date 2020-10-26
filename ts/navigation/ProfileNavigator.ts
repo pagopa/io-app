@@ -13,8 +13,8 @@ import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import WebPlayground from "../screens/profile/WebPlayground";
-import ROUTES from "./routes";
 import { Showroom } from "../screens/showroom/Showroom";
+import ROUTES from "./routes";
 
 /**
  * A navigator for all the screens of the Profile section
