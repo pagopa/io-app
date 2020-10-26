@@ -6,6 +6,7 @@ import * as React from "react";
 import {
   Animated,
   Easing,
+  Modal,
   SafeAreaView,
   StyleSheet,
   ViewStyle
@@ -67,6 +68,7 @@ import {
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
+import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -187,8 +189,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  headerSpacer: { height: 154 }
+  headerSpacer: { height: 154 },
+  blurContainer: {
+    ...StyleSheet.absoluteFillObject,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    overflow: "hidden",
+    backgroundColor: "rgba(0,0,0, 0.5)"
+  }
 });
+
+const BlurComponent = () => <View style={styles.blurContainer} />;
 
 async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
   return new Promise<QRCodeContents>((res, _) => {
@@ -278,6 +289,7 @@ const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
+  const { present, dismiss } = useBottomSheetModal();
   const bonusFromNav = props.navigation.getParam("bonus");
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
   const screenShotRef = React.createRef<ViewShot>();
@@ -401,15 +413,25 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   const openModalBox = () => {
     const modalBox = (
+      // <Modal>
+      //   <View spacer={true} extralarge={true} />
       <QrModalBox
         codeToDisplay={getBonusCodeFormatted(bonus)}
         codeToCopy={bonus.id}
-        onClose={props.hideModal}
+        onClose={dismiss}
         qrCode={qrCode[QR_CODE_MIME_TYPE]}
         logo={props.logo}
       />
+      /* </Modal> */
     );
-    props.showAnimatedModal(modalBox, BottomTopAnimation);
+    // props.showAnimatedModal(modalBox, BottomTopAnimation);
+    present(modalBox, {
+      snapPoints: [466],
+      allowTouchThroughOverlay: false,
+      dismissOnOverlayPress: true,
+      dismissOnScrollDown: true,
+      overlayComponent: BlurComponent
+    });
   };
 
   const handleShare = () =>
