@@ -14,6 +14,7 @@ import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import WebPlayground from "../screens/profile/WebPlayground";
 import ROUTES from "./routes";
+import { Showroom } from "../screens/showroom/Showroom";
 
 /**
  * A navigator for all the screens of the Profile section
@@ -58,6 +59,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.MARKDOWN_PLAYGROUND]: {
       screen: MarkdownPlayground
+    },
+    [ROUTES.SHOWROOM]: {
+      screen: Showroom
     },
     [ROUTES.WEB_PLAYGROUND]: {
       screen: WebPlayground
