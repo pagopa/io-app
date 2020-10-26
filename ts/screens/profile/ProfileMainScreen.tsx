@@ -418,10 +418,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   />
                 </>
               )}
-              {/* Preferences */}
+              {/* Showroom */}
               <ListItemComponent
-                title={I18n.t("profile.main.preferences.title")}
-                subTitle={I18n.t("profile.main.preferences.description")}
+                title={I18n.t("profile.main.showroom")}
                 onPress={() => navigation.navigate(ROUTES.SHOWROOM)}
                 isFirstItem={true}
               />
