@@ -22,6 +22,7 @@ import IconFont from "../components/ui/IconFont";
 import WalletTabIcon from "../components/WalletTabIcon";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
+import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -91,8 +92,10 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.PROFILE_REMOVE_ACCOUNT_INFO,
   BONUSVACANZE_ROUTES.MAIN,
   BPD_ROUTES.MAIN,
+  WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN,
   ROUTES.MARKDOWN_PLAYGROUND,
-  ROUTES.WEB_PLAYGROUND
+  ROUTES.WEB_PLAYGROUND,
+  ROUTES.SERVICE_WEBVIEW
 ];
 
 const getTabBarVisibility = (

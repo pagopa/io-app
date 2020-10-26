@@ -47,21 +47,21 @@ const styles = StyleSheet.create({
  * - hasFlatBottom: the bottom is anchored to the container bottom
  */
 export const SlidedContentComponent = (props: Props & React.Props<Content>) => (
-    <Content
-      noPadded={true}
-      style={[styles.container, styles.flexGrow]}
-      contentContainerStyle={styles.flexGrow}
-      bounces={false}
+  <Content
+    noPadded={true}
+    style={[styles.container, styles.flexGrow]}
+    contentContainerStyle={styles.flexGrow}
+    bounces={false}
+  >
+    <View
+      style={[
+        styles.flexGrow,
+        styles.correctBottomPadding,
+        props.hasFlatBottom ? styles.contentBottomFlat : styles.content,
+        props.dark ? styles.dark : styles.white
+      ]}
     >
-      <View
-        style={[
-          styles.flexGrow,
-          styles.correctBottomPadding,
-          props.hasFlatBottom ? styles.contentBottomFlat : styles.content,
-          props.dark ? styles.dark : styles.white
-        ]}
-      >
-        {props.children}
-      </View>
-    </Content>
-  );
+      {props.children}
+    </View>
+  </Content>
+);

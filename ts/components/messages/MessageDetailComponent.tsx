@@ -125,7 +125,8 @@ export default class MessageDetailComponent extends React.PureComponent<
     });
   }
 
-  private getTitle = () => this.maybeMedicalData.fold(
+  private getTitle = () =>
+    this.maybeMedicalData.fold(
       <H3>{this.props.message.content.subject}</H3>,
       _ => (
         <React.Fragment>

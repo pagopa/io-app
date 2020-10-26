@@ -127,7 +127,7 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<Props> = pro
         <FooterTwoButtons
           onCancel={props.onCancel}
           onRight={props.onRequestBonus}
-          title={activateBonusText}
+          rightText={activateBonusText}
         />
       </SafeAreaView>
     </BaseScreenComponent>

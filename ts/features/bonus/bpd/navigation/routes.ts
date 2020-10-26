@@ -9,12 +9,9 @@ const BPD_ROUTES = {
     ENROLL_PAYMENT_METHODS: "BPD_ENROLL_PAYMENT_METHODS",
     NO_PAYMENT_METHODS: "BPD_NO_PAYMENT_METHODS"
   },
-  IBAN: {
-    INSERTION: "BPD_IBAN_INSERTION",
-    KO_CANNOT_VERIFY: "BPD_IBAN_KO_CANNOT_VERIFY",
-    KO_NOT_OWNED: "BPD_IBAN_KO_NOT_OWNED",
-    KO_WRONG: "BPD_IBAN_KO_WRONG"
-  }
+  IBAN: "BPD_IBAN",
+  // TODO: remove after the introduction of the bpd detail screen
+  TEST: "BPD_TEST"
 };
 
 export default BPD_ROUTES;

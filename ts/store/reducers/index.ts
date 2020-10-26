@@ -151,7 +151,13 @@ export function createRootReducer(
           ? ({
               // eslint-disable-next-line no-underscore-dangle
               authentication: { _persist: state.authentication._persist },
-              entities: { messagesStatus: state.entities.messagesStatus }
+              // data should be kept across multiple sessions
+              entities: {
+                messagesStatus: state.entities.messagesStatus,
+                paymentByRptId: state.entities.paymentByRptId,
+                calendarEvents: state.entities.calendarEvents,
+                transactionsRead: state.entities.transactionsRead
+              }
             } as GlobalState)
           : state;
     }

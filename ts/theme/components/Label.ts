@@ -8,5 +8,5 @@ import variables from "../variables";
  * @deprecated
  */
 export default (): Theme => ({
-    ...makeFontStyleObject(Platform.select, variables.labelNormalWeight)
-  });
+  ...makeFontStyleObject(Platform.select, variables.labelNormalWeight)
+});

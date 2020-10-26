@@ -1,14 +1,12 @@
 import { createStackNavigator } from "react-navigation";
-import IbanInsertionScreen from "../screens/iban/IbanInsertionScreen";
-import IbanKOCannotVerify from "../screens/iban/IbanKOCannotVerify";
-import IbanKoNotOwned from "../screens/iban/IbanKONotOwned";
-import IbanKOWrong from "../screens/iban/IbanKOWrong";
+import MainIbanScreen from "../screens/iban/MainIbanScreen";
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
 import DeclarationScreen from "../screens/onboarding/declaration/DeclarationScreen";
-import { EnrollPaymentMethodsScreen } from "../screens/onboarding/EnrollPaymentMethodsScreen";
+import EnrollPaymentMethodsScreen from "../screens/onboarding/EnrollPaymentMethodsScreen";
 import LoadActivateBpdScreen from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
-import { NoPaymentMethodsAvailableScreen } from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
+import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
+import TMPBpdScreen from "../screens/test/TMPBpdScreen";
 import BPD_ROUTES from "./routes";
 
 const BpdNavigator = createStackNavigator(
@@ -31,17 +29,12 @@ const BpdNavigator = createStackNavigator(
     [BPD_ROUTES.ONBOARDING.NO_PAYMENT_METHODS]: {
       screen: NoPaymentMethodsAvailableScreen
     },
-    [BPD_ROUTES.IBAN.INSERTION]: {
-      screen: IbanInsertionScreen
+    [BPD_ROUTES.IBAN]: {
+      screen: MainIbanScreen
     },
-    [BPD_ROUTES.IBAN.KO_CANNOT_VERIFY]: {
-      screen: IbanKOCannotVerify
-    },
-    [BPD_ROUTES.IBAN.KO_NOT_OWNED]: {
-      screen: IbanKoNotOwned
-    },
-    [BPD_ROUTES.IBAN.KO_WRONG]: {
-      screen: IbanKOWrong
+    // TODO: remove after the introduction of the bpd detail screen
+    [BPD_ROUTES.TEST]: {
+      screen: TMPBpdScreen
     }
   },
   {

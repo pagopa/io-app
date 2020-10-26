@@ -1,18 +1,18 @@
 import { Tuple3 } from "italia-ts-commons/lib/tuples";
 
 jest.mock("react-native-device-info", () => ({
-    getReadableVersion: jest
-      .fn()
-      .mockReturnValueOnce("1.1.3")
-      .mockReturnValueOnce("1.1.9")
-      .mockReturnValueOnce("1.2.3.4"),
-    getVersion: jest
-      .fn()
-      .mockReturnValueOnce("1.1.3")
-      .mockReturnValueOnce("1.1.9")
-      .mockReturnValueOnce("1.2.3.4"),
-    getBuildNumber: () => 3
-  }));
+  getReadableVersion: jest
+    .fn()
+    .mockReturnValueOnce("1.1.3")
+    .mockReturnValueOnce("1.1.9")
+    .mockReturnValueOnce("1.2.3.4"),
+  getVersion: jest
+    .fn()
+    .mockReturnValueOnce("1.1.3")
+    .mockReturnValueOnce("1.1.9")
+    .mockReturnValueOnce("1.2.3.4"),
+  getBuildNumber: () => 3
+}));
 import { getAppVersion, isVersionAppSupported } from "../appVersion";
 
 describe("check if getVersion works properly", () => {

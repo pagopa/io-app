@@ -90,28 +90,28 @@ export function withErrorModal<
     );
 
     private renderButtons = () => (
-        <View style={styles.buttonsContainer}>
+      <View style={styles.buttonsContainer}>
+        <ButtonDefaultOpacity
+          onPress={this.props.onCancel}
+          style={styles.buttonCancel}
+          light={true}
+          block={true}
+        >
+          <Text white={true}>{I18n.t("global.buttons.cancel")}</Text>
+        </ButtonDefaultOpacity>
+        {this.props.onRetry && <View style={styles.separator} />}
+        {this.props.onRetry && (
           <ButtonDefaultOpacity
-            onPress={this.props.onCancel}
-            style={styles.buttonCancel}
-            light={true}
+            primary={true}
             block={true}
+            onPress={this.props.onRetry}
+            style={styles.buttonRetry}
           >
-            <Text white={true}>{I18n.t("global.buttons.cancel")}</Text>
+            <Text>{I18n.t("global.buttons.retry")}</Text>
           </ButtonDefaultOpacity>
-          {this.props.onRetry && <View style={styles.separator} />}
-          {this.props.onRetry && (
-            <ButtonDefaultOpacity
-              primary={true}
-              block={true}
-              onPress={this.props.onRetry}
-              style={styles.buttonRetry}
-            >
-              <Text>{I18n.t("global.buttons.retry")}</Text>
-            </ButtonDefaultOpacity>
-          )}
-        </View>
-      );
+        )}
+      </View>
+    );
   }
 
   return WithErrorModal;

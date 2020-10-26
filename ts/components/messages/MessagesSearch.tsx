@@ -42,7 +42,8 @@ const generateMessagesStateMatchingSearchTextArrayAsync = (
   potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>,
   servicesById: ServicesByIdState,
   searchText: string
-): Promise<ReadonlyArray<MessageState>> => new Promise(resolve => {
+): Promise<ReadonlyArray<MessageState>> =>
+  new Promise(resolve => {
     const result = pot.getOrElse(
       pot.map(potMessagesState, _ =>
         _.filter(messageState =>

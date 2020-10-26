@@ -1,6 +1,8 @@
 /**
  * Experimental type used for represent an async load from remote source with a simpler structure than the pot
  */
+import { fromNullable } from "fp-ts/lib/Option";
+
 export type RemoteValue<V, E> =
   | RemoteUndefined
   | RemoteLoading
@@ -41,6 +43,11 @@ export const isError = <V, E>(rv: RemoteValue<V, E>): rv is RemoteError<E> =>
 export const getValue = <V>(rv: RemoteValue<V, any>) =>
   isReady(rv) ? rv.value : undefined;
 
+export const getValueOrElse = <V>(
+  rv: RemoteValue<V, any>,
+  defaultValue: V
+): V => fromNullable(getValue(rv)).getOrElse(defaultValue);
+
 export const remoteUndefined: RemoteUndefined = { kind: "undefined" };
 export const remoteLoading: RemoteLoading = { kind: "loading" };
 export const remoteReady = <V>(v: V): RemoteReady<V> => ({
@@ -52,3 +59,25 @@ export const remoteError = <E>(e: E): RemoteError<E> => ({
   kind: "error",
   error: e
 });
+
+export const fold = <T, E, B>(
+  onUndefined: () => B,
+  onLoading: () => B,
+  onReady: (error: T) => B,
+  onError: (value: E) => B
+) => (rm: RemoteValue<T, E>): B => {
+  switch (rm.kind) {
+    case "undefined": {
+      return onUndefined();
+    }
+    case "loading": {
+      return onLoading();
+    }
+    case "ready": {
+      return onReady(rm.value);
+    }
+    case "error": {
+      return onError(rm.error);
+    }
+  }
+};

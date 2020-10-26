@@ -162,7 +162,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
             <RegionServiceWebView
               key={`${reloadKey}_webview`}
               uri={loadUri}
-              onModalClose={props.goBack}
+              onWebviewClose={props.goBack}
               handleWebMessage={setWebMessage}
             />
           </View>

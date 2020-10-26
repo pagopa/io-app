@@ -34,10 +34,8 @@ const userProfileWithEmailAndValidated: InitializedProfile = {
 
 describe("checkAcceptedTosSaga", () => {
   describe("when user has an email and it is validated", () => {
-    it("should do nothing", () => expectSaga(
-        checkAcknowledgedEmailSaga,
-        userProfileWithEmailAndValidated
-      )
+    it("should do nothing", () =>
+      expectSaga(checkAcknowledgedEmailSaga, userProfileWithEmailAndValidated)
         .not.put(navigateToEmailReadScreen())
         .run());
   });
@@ -47,7 +45,8 @@ describe("checkAcceptedTosSaga", () => {
       ...userProfileWithEmailAndValidated,
       version: 0
     };
-    it("should show email read screen", () => expectSaga(
+    it("should show email read screen", () =>
+      expectSaga(
         checkAcknowledgedEmailSaga,
         profileEmailValidatedFirstOnboarding
       )
@@ -60,14 +59,13 @@ describe("checkAcceptedTosSaga", () => {
       ...userProfileWithEmailAndValidated,
       is_email_validated: false
     };
-    it("should prompt the screen to remember to validate", () => (
-        expectSaga(checkAcknowledgedEmailSaga, profileWithEmailNotValidated)
-          // read screen is wrapped in a HOC where if email is validate show ReadScreen
-          // otherwise a screen that remembers to validate it
-          .put(navigateToEmailReadScreen())
-          .dispatch(emailAcknowledged())
-          .run()
-      ));
+    it("should prompt the screen to remember to validate", () =>
+      expectSaga(checkAcknowledgedEmailSaga, profileWithEmailNotValidated)
+        // read screen is wrapped in a HOC where if email is validate show ReadScreen
+        // otherwise a screen that remembers to validate it
+        .put(navigateToEmailReadScreen())
+        .dispatch(emailAcknowledged())
+        .run());
   });
 
   describe("when user has not an email", () => {
@@ -76,7 +74,8 @@ describe("checkAcceptedTosSaga", () => {
       is_email_validated: false,
       email: undefined
     };
-    it("should prompt the screen to insert it", () => expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
+    it("should prompt the screen to insert it", () =>
+      expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
         .put(navigateToEmailInsertScreen()) // go to email insert screen
         .dispatch(emailInsert()) // dispatch email insert
         .dispatch(navigateToEmailReadScreen()) // navigate to email read screen to remember the user to validate id

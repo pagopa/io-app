@@ -14,11 +14,11 @@ declare module "native-base" {
 }
 
 export default (): Theme => ({
-    ".active": {
-      borderBottomWidth: variables.borderWidth * 4,
-      borderColor: color(variables.inputBorderColor).darken(0.2).hex()
-    },
-    ".spacer": {
-      paddingTop: 20
-    }
-  });
+  ".active": {
+    borderBottomWidth: variables.borderWidth * 4,
+    borderColor: color(variables.inputBorderColor).darken(0.2).hex()
+  },
+  ".spacer": {
+    paddingTop: 20
+  }
+});

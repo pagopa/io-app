@@ -1,25 +1,47 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { takeLatest } from "redux-saga/effects";
+import { select, takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { apiUrlPrefix } from "../../../../config";
+import { bpdApiUrlPrefix } from "../../../../config";
+import { profileSelector } from "../../../../store/reducers/profile";
 import { BackendBpdClient } from "../api/backendBpdClient";
+import { bpdLoadActivationStatus } from "../store/actions/details";
+import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
 import {
-  bpdLoadActivationStatus,
-  bpdUpsertIban
-} from "../store/actions/details";
-import {
+  bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
   bpdOnboardingAcceptDeclaration,
   bpdOnboardingStart
 } from "../store/actions/onboarding";
-import { getCitizen, putEnrollCitizen } from "./networking";
+import {
+  bpdPaymentMethodActivation,
+  bpdUpdatePaymentMethodActivation
+} from "../store/actions/paymentMethods";
+import { deleteCitizen, getCitizen, putEnrollCitizen } from "./networking";
+import { patchCitizenIban } from "./networking/patchCitizenIban";
+import {
+  bpdLoadPaymentMethodActivationSaga,
+  bpdUpdatePaymentMethodActivationSaga
+} from "./networking/paymentMethod";
+import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
-import { patchCitizenIban } from "./networking/patchCitizenIban";
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
-  const bpdBackendClient = BackendBpdClient(apiUrlPrefix, bpdBearerToken);
+  const profileState: ReturnType<typeof profileSelector> = yield select(
+    profileSelector
+  );
+  const bpdBackendClient = BackendBpdClient(
+    bpdApiUrlPrefix,
+    bpdBearerToken,
+    // FIX ME !this code must be removed!
+    // only for test purpose
+    pot.getOrElse(
+      pot.map(profileState, p => p.fiscal_code as string),
+      ""
+    )
+  );
 
   // load citizen details
   yield takeLatest(
@@ -35,6 +57,13 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     bpdBackendClient.enrollCitizenIO
   );
 
+  // delete citizen from the bpd
+  yield takeLatest(
+    bpdDeleteUserFromProgram.request,
+    deleteCitizen,
+    bpdBackendClient.deleteCitizenIO
+  );
+
   // upsert citizen iban
   yield takeLatest(
     bpdUpsertIban.request,
@@ -42,9 +71,27 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     bpdBackendClient.updatePaymentMethod
   );
 
+  // load bpd activation status for a specific payment method
+  yield takeEvery(
+    bpdPaymentMethodActivation.request,
+    bpdLoadPaymentMethodActivationSaga,
+    bpdBackendClient.findPayment
+  );
+
+  // update bpd activation status for a specific payment method
+  yield takeEvery(
+    bpdUpdatePaymentMethodActivation.request,
+    bpdUpdatePaymentMethodActivationSaga,
+    bpdBackendClient.enrollPayment,
+    bpdBackendClient.deletePayment
+  );
+
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
   yield takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);
 
   // The user accepts the declaration, enroll the user to the bpd program
   yield takeLatest(getType(bpdOnboardingAcceptDeclaration), handleBpdEnroll);
+
+  // The user start the insertion / modification of the IBAN associated with bpd program
+  yield takeLatest(getType(bpdIbanInsertionStart), handleBpdIbanInsertion);
 }

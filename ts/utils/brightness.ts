@@ -15,12 +15,12 @@ const setBrightnessPlatform = (brightness: number): Promise<number> =>
   })(brightness);
 
 // if right return the current brightness
-export const getBrightness = (): TaskEither<Error, number> => tryCatch(getBrightnessPlatform, reason => new Error(String(reason)));
+export const getBrightness = (): TaskEither<Error, number> =>
+  tryCatch(getBrightnessPlatform, reason => new Error(String(reason)));
 
 // if right return the set brightness
-export const setBrightness = (
-  brightness: number
-): TaskEither<Error, number> => tryCatch(
+export const setBrightness = (brightness: number): TaskEither<Error, number> =>
+  tryCatch(
     () => setBrightnessPlatform(brightness),
     reason => new Error(String(reason))
   );

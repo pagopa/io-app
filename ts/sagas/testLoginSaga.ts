@@ -36,9 +36,10 @@ function* handleTestLogin({
     );
   }
   try {
-    const testLoginResponse: SagaCallReturnType<
-      typeof postTestLogin
-    > = yield call(postTestLogin, payload);
+    const testLoginResponse: SagaCallReturnType<typeof postTestLogin> = yield call(
+      postTestLogin,
+      payload
+    );
 
     if (testLoginResponse.isRight()) {
       if (testLoginResponse.value.status === 200) {

@@ -80,7 +80,7 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
     }
     // if user asks to disable biometric recnognition is required to proceed
     TouchID.authenticate(
-      I18n.t("identification.biometric.popup.reason"),
+      I18n.t("identification.biometric.popup.title"),
       authenticateConfig
     )
       .then(() => this.props.setFingerprintPreference(biometricPreference))

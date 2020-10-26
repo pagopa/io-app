@@ -150,8 +150,16 @@ Install `asdf` with the command:
 brew install asdf
 ```
 
-Brew installs `asdf` in the path so no more steps are needed. Check you have it available with the command `which asdf`.
+Add `asdf.sh` to your shell with:
+```
+# ZSH
+echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.zshrc
 
+# BASH
+echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.bash_profile
+```
+
+Restart your shell and check you have it available with the command `which asdf`.
 ##### Install asdf on Linux 
 
 This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. Your mileage may vary.
@@ -181,14 +189,34 @@ asdf plugin add ruby
 asdf plugin add nodejs
 ```
 
-Before you can install your version of Ruby, you need a C compiler and some libraries. On Ubuntu or Debian based systems use:
+Before you can install your version of Ruby, you need a C compiler and some libraries. 
+
+##### Ubuntu or Debian based systems:
+
+Run:
 
 ```
 sudo apt-get update
 sudo apt-get install build-essential libssl-dev libreadline-dev zlib1g-dev
 ```
 
-Import the Node.js release team's OpenPGP keys to main keyring:
+##### MacOS:
+
+Run:
+
+```
+brew install build-essential libssl-dev libreadline-dev zlib1g-dev
+brew install gnupg
+```
+Install XCode from the App Store and then run:
+
+```
+sudo xcode-select --switch /Applications/Xcode.app
+```
+
+
+
+After the compiler installation import the Node.js release team's OpenPGP keys to main keyring:
 
 ```
 bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
@@ -199,7 +227,7 @@ Finally you can install your version of `node` and `ruby` using `asdf` (replace 
 ```
 cd <work-dir>/io-app
 asdf install ruby 2.4.2
-asdf install nodejs 10.13.0
+asdf install nodejs 10.18.0
 ```
 
 You should now verify that the output of the `asdf current` command and the version of the node in the PATH are the same as the content of the `.tool-versions` file. For example:
@@ -252,7 +280,7 @@ Now you have to login and logout again from the terminal as yarn installs the co
 
 Verify it was installed correctly with the command `which yarn`. It should tell you the installation path of the command. 
 
-#### Install bundler
+#### Install bundler and cocoapods
 
 Some dependencies are installed via [bundler](https://bundler.io/) and [cocoapods](https://cocoapods.org/) 
 
@@ -276,9 +304,15 @@ gem install bundler:2.0.2
 
 Verify it was installed correctly with the command `which bundle`. It should show the installation path of the command. 
 
+#### Only for macOS - install cocoapods
+Then install cocoapods, also in this case you can use Ruby to install it:
+```
+sudo gem install cocoapods
+```
+
 #### React Native
 
-Follow the tutorial [Building Projects with Native Code](https://facebook.github.io/react-native/docs/getting-started.html) for your operating system.
+Follow the tutorial [Setting up the development environment](https://reactnative.dev/docs/environment-setup) and install `React Native CLI` for your operating system.
 
 If you have a macOS system, you can follow both the tutorial for iOS and for Android. If you have a Linux or Windows system, you need only to install the development environment for Android.
 
@@ -308,8 +342,21 @@ _Note: The sample configuration sets the app to interface with our test environm
 **module for CIE authentication**
 IO uses a [react native module](https://github.com/pagopa/io-cie-android-sdk) to allow authentication through CIE (Carta di Indentità Elettronica)
 This package is hosted on [Github Packages](https://github.com/features/packages). In order to install this package you need to be able to access the github registry.
-The configuration is pretty simple and fast, you can follow [these instructions](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages)
-**If you don't do this step you can't download and install the cie module.**
+
+#### Create Github token
+In order to access the Github registry a Github token is needed:
+
+- Go to [Github](https://github.com) and access to your account
+- In the upper-right hand corner click your profile photo then click Settings
+- On the left sidebar, click Developer settings.
+- On the left sidebar, click Personal access tokens.
+- Click the Generate new token button and create a new token with the following permissions:
+    - read:packages
+    - write:packages
+    - delete:packages
+- Click the green Generate token button.
+
+Finally you can follow [these instructions](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages) and perform this simple and fast configuration. **If you don't do this step you can't download and install the cie module.**
 
 Now you can install the libraries used by the project:
 
@@ -332,7 +379,10 @@ $ yarn generate:all
 
 On Android (the device simulator must be [launched manually](https://medium.com/@deepak.gulati/running-react-native-app-on-the-android-emulator-11bf309443eb)):
 
+
 ```
+# Perform the port forwarding
+$ adb reverse tcp:8081 tcp:8081;adb reverse tcp:3000 tcp:3000;adb reverse tcp:9090 tcp:9090
 $ react-native run-android
 ```
 
@@ -447,11 +497,35 @@ For multi-language support the application uses:
 
 To add a new language you must:
 
+1. Clone the repository
 1. Create a new directory under [locales](locales) using the language code as the name (e.g. `es` for Spanish, `de` for German, etc...).
-1. Copy the content from the base language (`en`).
+1. Copy the content from the base language [locales/en](en)(`en`).
 1. Proceed with the translation by editing the YAML and Markdown files.
-1. Run the Typescript code generation script (`npm run generate:locales`).
+    - if is a YAML file (`*.yml`) translate only the text following the colon (e.g. `today:` **`"today"`** become in italian `today:` **`"oggi"`**).
+    - if is a Mardown file (`*.md`) translate the text leaving the formatting as is.
+1. Check that the command: ```npm run generate:locales``` (or ```yarn generate:locales```) returns a success message.
+1. Create a PR using as title `Internationalization {New Language}` (e.g. `Internationalization Italiano`)and apply the label `internationalization`.
+
+If you want to see the result in the app you must:
+
+1. Run the command: ```npm run generate:locales```.
 1. Edit the file [ts/i18n.ts](ts/i18n.ts) by adding the new language in the variable `I18n.translations`.
+
+    E.g. for German
+    ```
+    I18n.translations = {
+      en: locales.localeEN,
+      it: locales.localeIT
+    };
+    ```
+    become
+    ```
+    I18n.translations = {
+      en: locales.localeEN,
+      it: locales.localeIT
+      de: locales.localeDE
+    };
+    ```
 
 ### Error handling
 

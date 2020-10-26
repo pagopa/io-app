@@ -126,29 +126,28 @@ class ServicesSectionsList extends React.PureComponent<Props> {
     );
   }
 
-  private renderEditButton = () => (
-      this.props.isLocal &&
-      this.props.selectedOrganizationsFiscalCodes &&
-      this.props.selectedOrganizationsFiscalCodes.size > 0 && (
-        <View style={styles.headerContentWrapper}>
-          <ButtonDefaultOpacity
-            small={true}
-            primary={!this.props.isLongPressEnabled}
-            style={styles.button}
-            block={true}
-            onPress={this.props.onChooserAreasOfInterestPress}
-            disabled={
-              this.props.isRefreshing ||
-              this.props.isLongPressEnabled ||
-              this.props.isSelectableOrgsEmpty
-            }
-          >
-            <Text style={styles.textButton}>
-              {I18n.t("services.areasOfInterest.editButton")}
-            </Text>
-          </ButtonDefaultOpacity>
-        </View>
-      )
+  private renderEditButton = () =>
+    this.props.isLocal &&
+    this.props.selectedOrganizationsFiscalCodes &&
+    this.props.selectedOrganizationsFiscalCodes.size > 0 && (
+      <View style={styles.headerContentWrapper}>
+        <ButtonDefaultOpacity
+          small={true}
+          primary={!this.props.isLongPressEnabled}
+          style={styles.button}
+          block={true}
+          onPress={this.props.onChooserAreasOfInterestPress}
+          disabled={
+            this.props.isRefreshing ||
+            this.props.isLongPressEnabled ||
+            this.props.isSelectableOrgsEmpty
+          }
+        >
+          <Text style={styles.textButton}>
+            {I18n.t("services.areasOfInterest.editButton")}
+          </Text>
+        </ButtonDefaultOpacity>
+      </View>
     );
 
   private renderList = () => {

@@ -3,9 +3,9 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendBpdClient } from "../../api/backendBpdClient";
-import { bpdUpsertIban, IbanUpsertResult } from "../../store/actions/details";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { Iban } from "../../../../../../definitions/backend/Iban";
+import { bpdUpsertIban, IbanUpsertResult } from "../../store/actions/iban";
 
 // representation of iban status
 export enum IbanStatus {
@@ -57,7 +57,7 @@ export function* patchCitizenIban(
     const iban: Iban = action.payload;
     const updatePaymentMethodResult: SagaCallReturnType<ReturnType<
       typeof updatePaymentMethod
-    >> = yield call(updatePaymentMethod(iban));
+    >> = yield call(updatePaymentMethod(iban), {});
     if (updatePaymentMethodResult.isRight()) {
       const statusCode = updatePaymentMethodResult.value.status;
       if (statusCode === 200 && updatePaymentMethodResult.value.value) {

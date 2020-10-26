@@ -20,7 +20,8 @@ const fontSize = 16;
  * @param props`
  * @constructor
  */
-export const Body: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
+export const Body: React.FunctionComponent<OwnProps> = props =>
+  typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Regular",
     defaultColor: "bluegreyDark",

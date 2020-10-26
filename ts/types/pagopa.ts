@@ -1,12 +1,15 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import {
+  enumType,
   ReplaceProp1,
   replaceProp1 as repP,
   requiredProp1 as reqP,
   tag
 } from "italia-ts-commons/lib/types";
+import { DateFromString } from "italia-ts-commons/lib/dates";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
+import { WalletTypeEnum } from "../../definitions/pagopa/bancomat/WalletV2";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
 import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
@@ -27,6 +30,7 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
+import { CardInfo } from "../../definitions/pagopa/bancomat/CardInfo";
 
 /**
  * Union of all possible credit card types
@@ -90,6 +94,38 @@ export const Psp = repP(
 );
 export type Psp = t.TypeOf<typeof Psp>;
 
+/** A refined WalletV2
+ * reasons:
+ * - createDate and updateDate are generated from spec as UTCISODateFromString instead of DateFromString
+ * - info is required
+ * - info is CardInfo and not PaymentMethodInfo (empty interface)
+ */
+
+// required attributes
+
+const WalletV2O = t.partial({
+  updateDate: t.string,
+  createDate: DateFromString,
+  onboardingChannel: t.string,
+  favourite: t.boolean
+});
+
+// optional attributes
+const WalletV2R = t.interface({
+  enableableFunctions: t.readonlyArray(t.string, "array of string"),
+  info: CardInfo,
+  idWallet: t.Integer,
+  pagoPA: t.boolean,
+  walletType: enumType<WalletTypeEnum>(WalletTypeEnum, "walletType")
+});
+
+export const PatchedWalletV2 = t.intersection(
+  [WalletV2R, WalletV2O],
+  "WalletV2"
+);
+
+export type PatchedWalletV2 = t.TypeOf<typeof PatchedWalletV2>;
+
 /**
  * A refined Wallet
  */
@@ -103,7 +139,9 @@ export const Wallet = repP(
   t.union([Psp, t.undefined]),
   "Wallet"
 );
-export type Wallet = t.TypeOf<typeof Wallet>;
+// add v2 optional field. It may contain a PatchedWalletV2 object
+const WalletV1V2 = t.intersection([Wallet, t.partial({ v2: PatchedWalletV2 })]);
+export type Wallet = t.TypeOf<typeof WalletV1V2>;
 
 /**
  * A Wallet that has not being saved yet
@@ -287,3 +325,19 @@ export const PagoPAErrorResponse = t.type({
 });
 
 export type PagoPAErrorResponse = t.TypeOf<typeof PagoPAErrorResponse>;
+
+const WalletV2ListResponseR = t.interface({});
+
+// optional attributes
+const WalletV2ListResponseO = t.partial({
+  data: t.readonlyArray(PatchedWalletV2, "array of PatchedWalletV2")
+});
+
+export const PatchedWalletV2ListResponse = t.intersection(
+  [WalletV2ListResponseR, WalletV2ListResponseO],
+  "WalletV2ListResponse"
+);
+
+export type PatchedWalletV2ListResponse = t.TypeOf<
+  typeof PatchedWalletV2ListResponse
+>;

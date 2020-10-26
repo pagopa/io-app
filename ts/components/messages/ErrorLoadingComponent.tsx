@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
 });
 
 export const ErrorLoadingComponent = () => (
-    <View style={styles.view}>
-      <View spacer={true} />
-      <Image
-        source={require("../../../img/messages/empty-message-list-icon.png")}
-      />
-      <Text style={styles.title}>{I18n.t("messages.loadingErrorTitle")}</Text>
-    </View>
-  );
+  <View style={styles.view}>
+    <View spacer={true} />
+    <Image
+      source={require("../../../img/messages/empty-message-list-icon.png")}
+    />
+    <Text style={styles.title}>{I18n.t("messages.loadingErrorTitle")}</Text>
+  </View>
+);
