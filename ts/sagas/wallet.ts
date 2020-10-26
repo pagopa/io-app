@@ -35,7 +35,7 @@ import {
   handleLoadAbi,
   handleLoadPans
 } from "../features/wallet/onboarding/bancomat/saga/networking";
-import { addBancomatToWalletGeneric } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
+import { addBancomatToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import {
   addBancomatToWallet,
   loadAbi,
@@ -111,7 +111,7 @@ import {
   fetchPspRequestHandler,
   fetchTransactionRequestHandler,
   fetchTransactionsRequestHandler,
-  fetchWalletsRequestHandler,
+  getWallets,
   payCreditCardVerificationRequestHandler,
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
@@ -609,7 +609,7 @@ export function* watchWalletSaga(
 
   yield takeLatest(
     getType(fetchWalletsRequest),
-    fetchWalletsRequestHandler,
+    getWallets,
     paymentManagerClient,
     pmSessionManager
   );
@@ -755,7 +755,7 @@ export function* watchWalletSaga(
     );
 
     // watch for add Bancomat to Wallet workflow
-    yield takeLatest(walletAddBancomatStart, addBancomatToWalletGeneric);
+    yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
   }
 
   yield fork(paymentsDeleteUncompletedSaga);

@@ -2,10 +2,11 @@ import { createStackNavigator } from "react-navigation";
 import MainIbanScreen from "../screens/iban/MainIbanScreen";
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
 import DeclarationScreen from "../screens/onboarding/declaration/DeclarationScreen";
-import { EnrollPaymentMethodsScreen } from "../screens/onboarding/EnrollPaymentMethodsScreen";
+import EnrollPaymentMethodsScreen from "../screens/onboarding/EnrollPaymentMethodsScreen";
 import LoadActivateBpdScreen from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
 import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
+import TMPBpdScreen from "../screens/test/TMPBpdScreen";
 import BPD_ROUTES from "./routes";
 
 const BpdNavigator = createStackNavigator(
@@ -30,6 +31,10 @@ const BpdNavigator = createStackNavigator(
     },
     [BPD_ROUTES.IBAN]: {
       screen: MainIbanScreen
+    },
+    // TODO: remove after the introduction of the bpd detail screen
+    [BPD_ROUTES.TEST]: {
+      screen: TMPBpdScreen
     }
   },
   {

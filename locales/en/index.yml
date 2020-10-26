@@ -65,6 +65,7 @@ global:
     saveSelection: Save the selection
     search: Search
     skip: "Skip"
+    add: Add
   navigator:
     messages: messages
     wallet: payments
@@ -636,13 +637,6 @@ wallet:
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
-  addBancomat:
-    title: "Add bancomat {{current}} of {{length}}"
-    screenTitle: "Do you want to add this card?"
-    bodySingular: "We found 1 card headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
-    bodyPlural: "We found {{number}} cards headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
-    skip: Skip
-    add: Add
   accessibility:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
@@ -662,6 +656,25 @@ wallet:
         chooseAnother: "Choose another bank"
       loadingSearch:
         title: "We are asking Bancomat for the list of your cards\n\nPlease wait"
+      add:
+        title: "Add bancomat {{current}} of {{length}}"
+        screenTitle: "Do you want to add this card?"
+        bodySingular: "We found 1 card headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
+        bodyPlural: "We found {{number}} cards headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
+        loading: "We are adding your PagoBANCOMAT card\n\nPlease wait a few seconds"
+      bpd:
+        suggestActivation:
+          title: "Do you want to activate Digital Payments Cashback?"
+          body: "You have added payment methods compatible with Cashback Digital Payments, the initiative promoted by the Presidency of the Council of Ministers to promote the use of electronic money.\n\n
+                 Each time you pay with one of the compatible electronic payment methods (cards, debit cards, apps, etc.), you will receive a partial refund based on your expense.\n\n
+                 Based on how many transnations you have accumulated, in each period, you can receive a cash prize of up to XXXX euros. "
+          skip: "No, thanks"
+          confirm: "Info and activation"
+        activateNew:
+          title: "Do you want to activate Digital Payments Cashback?"
+          body1: "Payments you make with these methods will receive cashback and compete for your ranking."
+          body2: "If you prefer, you can activate cashback on these methods at a later time as well."
+          skip: "Not now, thanks"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
@@ -1603,6 +1616,10 @@ bonus:
         title: "Add at least one payment method"
         body: "To start collecting points you have to add your favorite electronic payment methods to IO: today credit cards, prepaid, rechargeable cards, debit cards, bancomat and apps and other digital tools are supported.\n\n
         In the future, cashback will support other tools: you can add new payment methods to IO whenever you want and activate the collection of points on each!"
+      enrollPaymentMethod:
+        title: "Choose which payment methods to activate"
+        body1: "The payments you make with these methods will receive cashback will compete for your position in the ranking"
+        body2: "You can add other payment methods to IO at any time and activate cashback."
     iban:
       iban: "IBAN"
       edit: "Change IBAN"
