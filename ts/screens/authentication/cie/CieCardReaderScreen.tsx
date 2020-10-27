@@ -146,11 +146,19 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     navigationRoute?: string,
     navigationParams: Record<string, unknown> = {}
   ) => {
-    this.dispatchAnalyticEvent(error);
+    const errorDescription = analyticActions.has(errorReason)
+      ? analyticActions.get(errorReason)
+      : "";
+
+    this.dispatchAnalyticEvent({
+      reason: errorReason,
+      cie_description: errorDescription
+    });
+
     this.setState(
       {
         readingState: ReadingState.error,
-        errorMessage: error.cie_description
+        errorMessage: errorDescription
       },
       () => {
         Vibration.vibrate(VIBRATION);
@@ -166,9 +174,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private handleCieEvent = async (event: CEvent) => {
-    if (analyticActions.has(event.event)) {
-      this.dispatchAnalyticEvent({ reason: event.event });
-    }
     instabugLog(event.event, TypeLogs.DEBUG, instabugTag);
     switch (event.event) {
       // Reading starts
