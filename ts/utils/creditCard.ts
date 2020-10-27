@@ -8,7 +8,7 @@ type CreditCardDetector = {
   re: Record<string, RegExp>;
   cardIcons: Record<string, IconSource>;
   getInfo: (pan: string) => Option<string>;
-  getIcon: (pan: Option<string>, ) => IconSource;
+  getIcon: (pan: Option<string>) => IconSource;
 };
 
 export const CreditCardDetector: CreditCardDetector = {
@@ -73,7 +73,7 @@ export const CreditCardDetector: CreditCardDetector = {
     unknown: /.*/
   },
 
-  cardIcons /*: { [key in CreditCardType]: any } */: {
+  cardIcons: {
     mastercard: require("../../img/wallet/cards-icons/mastercard.png"),
     visa: require("../../img/wallet/cards-icons/visa.png"),
     amex: require("../../img/wallet/cards-icons/amex.png"),
@@ -84,9 +84,7 @@ export const CreditCardDetector: CreditCardDetector = {
     unionpay: require("../../img/wallet/cards-icons/unknown.png"),
     discover: require("../../img/wallet/cards-icons/unknown.png"),
     jcb: require("../../img/wallet/cards-icons/unknown.png"),
-    //because of the right padding, alignment is better then "io-carta"
     unknown: require("../../img/wallet/cards-icons/unknown.png")
-    //unknown: "io-carta"
   },
 
   getInfo: (pan: string) => {
@@ -103,10 +101,9 @@ export const CreditCardDetector: CreditCardDetector = {
     const cardIcons = CreditCardDetector.cardIcons;
     const getInfo = CreditCardDetector.getInfo;
 
-    //The ending getOrElse call could be moved to AppCardScreen.
     return pan
       .chain(myPan => getInfo(myPan))
       .map(brand => cardIcons[brand])
-      .getOrElse(cardIcons["unknown"]);
+      .getOrElse(cardIcons.unknown);
   }
 };

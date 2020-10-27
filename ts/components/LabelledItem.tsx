@@ -145,7 +145,7 @@ export class LabelledItem extends React.Component<Props, State> {
                 style={this.props.iconStyle}
               />
             ) : (
-              <Image source={this.props.icon} style={[this.props.iconStyle]} />
+              <Image source={this.props.icon} style={this.props.iconStyle} />
             ))}
 
           {this.props.type === "masked" ? (
