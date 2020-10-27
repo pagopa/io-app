@@ -6,7 +6,6 @@ import * as React from "react";
 import {
   Animated,
   Easing,
-  Modal,
   SafeAreaView,
   StyleSheet,
   ViewStyle
@@ -14,6 +13,7 @@ import {
 import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
@@ -24,10 +24,7 @@ import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderCo
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
-import {
-  BottomTopAnimation,
-  LightModalContextInterface
-} from "../../../../components/ui/LightModal";
+import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
@@ -67,8 +64,8 @@ import {
 } from "../utils/bonus";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import { bottomSheetContent } from "../../../../utils/bottomSheet";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -189,17 +186,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  headerSpacer: { height: 154 },
-  blurContainer: {
-    ...StyleSheet.absoluteFillObject,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    overflow: "hidden",
-    backgroundColor: "rgba(0,0,0, 0.5)"
-  }
+  headerSpacer: { height: 154 }
 });
-
-const BlurComponent = () => <View style={styles.blurContainer} />;
 
 async function readBase64Svg(bonusWithQrCode: BonusActivationWithQrCode) {
   return new Promise<QRCodeContents>((res, _) => {
@@ -411,10 +399,8 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   };
 
-  const openModalBox = () => {
+  const openModalBox = async () => {
     const modalBox = (
-      // <Modal>
-      //   <View spacer={true} extralarge={true} />
       <QrModalBox
         codeToDisplay={getBonusCodeFormatted(bonus)}
         codeToCopy={bonus.id}
@@ -422,15 +408,17 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         qrCode={qrCode[QR_CODE_MIME_TYPE]}
         logo={props.logo}
       />
-      /* </Modal> */
     );
-    // props.showAnimatedModal(modalBox, BottomTopAnimation);
-    present(modalBox, {
-      snapPoints: [466],
-      allowTouchThroughOverlay: false,
-      dismissOnOverlayPress: true,
-      dismissOnScrollDown: true,
-      overlayComponent: BlurComponent
+
+    const bottomSheetProps = await bottomSheetContent(
+      modalBox,
+      I18n.t("bonus.bonusVacanze.name"),
+      466,
+      dismiss
+    );
+
+    present(bottomSheetProps.content, {
+      ...bottomSheetProps.config
     });
   };
 

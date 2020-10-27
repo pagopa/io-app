@@ -1,0 +1,37 @@
+import { BottomSheetModalConfigs } from "@gorhom/bottom-sheet/lib/typescript/types";
+import { AccessibilityContent } from "../components/bottomSheet/AccessibilityContent";
+import { BlurredBackgroundComponent } from "../components/bottomSheet/BlurredBackgroundComponent";
+import { BottomSheetHeader } from "../components/bottomSheet/BottomSheetHeader";
+import { isScreenReaderEnabled } from "./accessibility";
+
+export type BottomSheetProps = {
+  content: React.ReactNode;
+  config: BottomSheetModalConfigs;
+};
+
+export const bottomSheetContent = async (
+  content: React.ReactNode,
+  title: string,
+  snapPoint: number,
+  onClose: () => void
+): Promise<BottomSheetProps> => {
+  const isScreenReaderActive = await isScreenReaderEnabled();
+
+  const header = BottomSheetHeader({ title, onClose });
+
+  const bottomSheetBody: React.ReactNode = isScreenReaderActive
+    ? AccessibilityContent(header, content)
+    : content;
+
+  return {
+    content: bottomSheetBody,
+    config: {
+      snapPoints: [snapPoint],
+      allowTouchThroughOverlay: false,
+      dismissOnOverlayPress: true,
+      dismissOnScrollDown: true,
+      overlayComponent: BlurredBackgroundComponent,
+      handleComponent: () => header
+    }
+  };
+};
