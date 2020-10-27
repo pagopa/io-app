@@ -418,6 +418,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   />
                 </>
               )}
+              {/* Showroom */}
+              <ListItemComponent
+                title={I18n.t("profile.main.showroom")}
+                onPress={() => navigation.navigate(ROUTES.SHOWROOM)}
+                isFirstItem={true}
+              />
               {this.developerListItem(
                 I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
                 this.props.isPagoPATestEnabled,
