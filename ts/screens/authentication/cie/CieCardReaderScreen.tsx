@@ -74,10 +74,17 @@ type State = {
 
 // A subset of Cie Events (errors) which is of interest to analytics
 const analyticActions = new Map<CEvent["event"], string>([
+  ["Transmission Error", I18n.t("authentication.cie.card.error.onTagLost")],
+  ["ON_TAG_LOST", I18n.t("authentication.cie.card.error.onTagLost")],
+  [
+    "TAG_ERROR_NFC_NOT_SUPPORTED",
+    I18n.t("authentication.cie.card.error.unknownCardContent")
+  ],
   [
     "ON_TAG_DISCOVERED_NOT_CIE",
     I18n.t("authentication.cie.card.error.unknownCardContent")
   ],
+  ["PIN Locked", I18n.t("authentication.cie.card.error.generic")],
   ["ON_CARD_PIN_LOCKED", I18n.t("authentication.cie.card.error.generic")],
   ["ON_PIN_ERROR", I18n.t("authentication.cie.card.error.tryAgain")],
   ["PIN_INPUT_ERROR", ""],
@@ -134,7 +141,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   }
 
   private setError = (
-    error: cieAuthenticationErrorPayload,
+    errorReason: CEvent["event"],
     navigationRoute?: string,
     navigationParams: Record<string, unknown> = {}
   ) => {
@@ -175,23 +182,15 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       // Reading interrupted before the sdk complete the reading
       case "Transmission Error":
       case "ON_TAG_LOST":
-        this.setError(I18n.t("authentication.cie.card.error.onTagLost"));
-        break;
-
       case "TAG_ERROR_NFC_NOT_SUPPORTED":
       case "ON_TAG_DISCOVERED_NOT_CIE":
-        this.setError(
-          I18n.t("authentication.cie.card.error.unknownCardContent")
-        );
+        this.setError(event.event);
         break;
 
       // The card is temporarily locked. Unlock is available by CieID app
       case "PIN Locked":
       case "ON_CARD_PIN_LOCKED":
-        this.setError(
-          I18n.t("authentication.cie.card.error.generic"),
-          ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
-        );
+        this.setError(event.event, ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN);
         break;
 
       case "AUTHENTICATION_ERROR":
@@ -204,13 +203,9 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
       // The inserted pin is incorrect
       case "ON_PIN_ERROR":
-        this.setError(
-          I18n.t("authentication.cie.card.error.tryAgain"),
-          ROUTES.CIE_WRONG_PIN_SCREEN,
-          {
-            remainingCount: event.attemptsLeft
-          }
-        );
+        this.setError(event.event, ROUTES.CIE_WRONG_PIN_SCREEN, {
+          remainingCount: event.attemptsLeft
+        });
         break;
 
       // CIE is Expired or Revoked
