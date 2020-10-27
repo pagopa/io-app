@@ -244,6 +244,7 @@ profile:
     appVersion: Versione App
     backendVersion: Versione Backend
     debugMode: Modalità debug
+    showroom: Showroom
   preferences:
     title: Preferenze
     subtitle:

@@ -91,6 +91,7 @@ const ROUTES = {
   MARKDOWN_PLAYGROUND: "MARKDOWN_PLAYGROUND",
 
   // Developer Mode
+  SHOWROOM: "SHOWROOM",
   WEB_PLAYGROUND: "WEB_PLAYGROUND",
 
   // Preferences
