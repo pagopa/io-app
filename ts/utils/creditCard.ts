@@ -1,14 +1,14 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import { ImageURISource } from 'react-native';
+import { ImageURISource } from "react-native";
 
-export type IconSource = string & ImageURISource | undefined;
+export type IconSource = (string & ImageURISource) | undefined;
 
 type CreditCardDetector = {
   blocks: Record<string, ReadonlyArray<number>>;
   re: Record<string, RegExp>;
   cardIcons: Record<string, IconSource>;
-  getInfo: (value: string) => Option<string>;
-  getIcon: (value: Option<string>) => IconSource;
+  getInfo: (pan: string) => Option<string>;
+  getIcon: (pan: Option<string>, ) => IconSource;
 };
 
 export const CreditCardDetector: CreditCardDetector = {
@@ -84,26 +84,29 @@ export const CreditCardDetector: CreditCardDetector = {
     unionpay: require("../../img/wallet/cards-icons/unknown.png"),
     discover: require("../../img/wallet/cards-icons/unknown.png"),
     jcb: require("../../img/wallet/cards-icons/unknown.png"),
-    //beacuse of the right padding, alignment is better then "io-carta"
+    //because of the right padding, alignment is better then "io-carta"
     unknown: require("../../img/wallet/cards-icons/unknown.png")
     //unknown: "io-carta"
   },
 
-  getInfo: (value: string) => {
+  getInfo: (pan: string) => {
     const re = CreditCardDetector.re;
 
     // Some credit card can have up to 19 digits number.
     // Set strictMode to true will remove the 16 max-length restrain,
     // however, I never found any website validate card number like
     // this, hence probably you don't want to enable this option.
-    return fromNullable(Object.keys(re).find(k => re[k].test(value)));
+    return fromNullable(Object.keys(re).find(k => re[k].test(pan)));
   },
 
-  getIcon: (pan: Option<string>) => { 
+  getIcon: (pan: Option<string>) => {
     const cardIcons = CreditCardDetector.cardIcons;
     const getInfo = CreditCardDetector.getInfo;
 
-    //The ending getOrElse call could be moved to AppCardScreen. 
-   return pan.chain((myPan) => getInfo(myPan)).map((brand) => cardIcons[brand]).getOrElse(cardIcons['unknown']);
+    //The ending getOrElse call could be moved to AppCardScreen.
+    return pan
+      .chain(myPan => getInfo(myPan))
+      .map(brand => cardIcons[brand])
+      .getOrElse(cardIcons["unknown"]);
   }
 };

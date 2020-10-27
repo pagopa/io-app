@@ -68,6 +68,12 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
 
+  creditCardForm: {
+    height: 16,
+    width: 24,
+    resizeMode: "contain"
+  },
+
   verticalSpacing: {
     width: 16,
     flex: 0
@@ -231,6 +237,7 @@ class AddCardScreen extends React.Component<Props, State> {
               type={"masked"}
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon={CreditCardDetector.getIcon(this.state.pan)}
+              iconStyle={[styles.creditCardForm]}
               //icon={cardIcons.MASTERCARD}
               //icon="io-carta"
               //icon={undefined}

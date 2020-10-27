@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   }
 });
 
+// Style type must be generalized so as to support both text icons and image icons
 type StyleType = IconProps["style"] & ImageStyle;
 
 type CommonProp = Readonly<{
@@ -144,17 +145,7 @@ export class LabelledItem extends React.Component<Props, State> {
                 style={this.props.iconStyle}
               />
             ) : (
-              <Image
-                source={this.props.icon}
-                style={[
-                  {
-                    height: variables.iconSize3,
-                    width: variables.iconSize3 * 2,
-                    resizeMode: "contain"
-                  },
-                  this.props.iconStyle
-                ]}
-              />
+              <Image source={this.props.icon} style={[this.props.iconStyle]} />
             ))}
 
           {this.props.type === "masked" ? (
