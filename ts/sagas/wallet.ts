@@ -31,11 +31,13 @@ import {
   fetchPaymentManagerLongTimeout
 } from "../config";
 import {
+  handleAddPan,
   handleLoadAbi,
   handleLoadPans
 } from "../features/wallet/onboarding/bancomat/saga/networking";
-import { addBancomatToWalletGeneric } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
+import { addBancomatToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import {
+  addBancomatToWallet,
   loadAbi,
   searchUserPans,
   walletAddBancomatStart
@@ -60,9 +62,11 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../store/actions/wallet/payment";
 import {
+  deleteReadTransaction,
   fetchPsp,
   fetchTransactionFailure,
   fetchTransactionRequest,
+  fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
   fetchTransactionSuccess,
   pollTransactionSagaCompleted,
@@ -107,7 +111,7 @@ import {
   fetchPspRequestHandler,
   fetchTransactionRequestHandler,
   fetchTransactionsRequestHandler,
-  fetchWalletsRequestHandler,
+  getWallets,
   payCreditCardVerificationRequestHandler,
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
@@ -120,6 +124,8 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
+import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
+import _ from "lodash";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -572,6 +578,28 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  /**
+   * watch when all transactions are been loaded
+   * check if transaction read store section (entities.transactionsRead) is dirty:
+   * it could contain transactions different from the loaded ones
+   * This scenario could happen when same app instance is used across multiple users
+   */
+  yield takeLatest(getType(fetchTransactionsLoadComplete), function* (
+    action: ActionType<typeof fetchTransactionsLoadComplete>
+  ) {
+    const transactionRead: ReturnType<typeof getTransactionsRead> = yield select(
+      getTransactionsRead
+    );
+    const transactionReadId = Object.keys(transactionRead).map(
+      k => transactionRead[k]
+    );
+    const allTransactionsId = action.payload.map(t => t.id);
+    const toDelete = _.difference(transactionReadId, allTransactionsId);
+    if (toDelete.length > 0) {
+      yield put(deleteReadTransaction(toDelete));
+    }
+  });
+
   yield takeLatest(
     getType(fetchTransactionRequest),
     fetchTransactionRequestHandler,
@@ -581,7 +609,7 @@ export function* watchWalletSaga(
 
   yield takeLatest(
     getType(fetchWalletsRequest),
-    fetchWalletsRequestHandler,
+    getWallets,
     paymentManagerClient,
     pmSessionManager
   );
@@ -718,8 +746,16 @@ export function* watchWalletSaga(
       pmSessionManager
     );
 
+    // watch for add pan request
+    yield takeLatest(
+      addBancomatToWallet.request,
+      handleAddPan,
+      paymentManagerClient.addPans,
+      pmSessionManager
+    );
+
     // watch for add Bancomat to Wallet workflow
-    yield takeLatest(walletAddBancomatStart, addBancomatToWalletGeneric);
+    yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
   }
 
   yield fork(paymentsDeleteUncompletedSaga);

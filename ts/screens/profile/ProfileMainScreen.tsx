@@ -24,7 +24,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
-import { bpdEnabled, isPlaygroundsEnabled } from "../../config";
+import { isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -52,7 +52,6 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { bpdDeleteUserFromProgram } from "../../features/bonus/bpd/store/actions/onboarding";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -419,6 +418,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   />
                 </>
               )}
+              {/* Showroom */}
+              <ListItemComponent
+                title={I18n.t("profile.main.showroom")}
+                onPress={() => navigation.navigate(ROUTES.SHOWROOM)}
+                isFirstItem={true}
+              />
               {this.developerListItem(
                 I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
                 this.props.isPagoPATestEnabled,
@@ -482,13 +487,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     this.debugListItem(
                       I18n.t("profile.main.forgetCurrentSession"),
                       this.props.dispatchSessionExpired,
-                      true
-                    )}
-
-                  {bpdEnabled &&
-                    this.debugListItem(
-                      "Leave BPD",
-                      this.props.dispatchLeaveBpd,
                       true
                     )}
                 </React.Fragment>
@@ -556,7 +554,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
     ),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
-  dispatchLeaveBpd: () => dispatch(bpdDeleteUserFromProgram.request()),
   dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
     dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });

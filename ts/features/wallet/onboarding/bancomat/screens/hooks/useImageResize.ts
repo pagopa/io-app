@@ -11,7 +11,6 @@ import { fromNullable, none, Option } from "fp-ts/lib/Option";
  * @param height
  * @param maxW
  * @param maxH
- * @param callback
  */
 const handleImageDimensionSuccess = (
   width: number,

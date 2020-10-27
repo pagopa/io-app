@@ -36,6 +36,16 @@ export const readTransaction = createStandardAction("READ_TRANSACTION")<
   Transaction
 >();
 
+// all transactions id to remove from the store
+export const deleteReadTransaction = createStandardAction(
+  "DELETE_READ_TRANSACTION"
+)<ReadonlyArray<number>>();
+
+// notify all transactions are been fully loaded
+export const fetchTransactionsLoadComplete = createStandardAction(
+  "FETCH_TRANSACTION_LOAD_COMPLETE"
+)<ReadonlyArray<Transaction>>();
+
 //
 // fetch a single transaction
 //
@@ -112,4 +122,6 @@ export type TransactionsActions =
   | ActionType<typeof clearTransactions>
   | ActionType<typeof runPollTransactionSaga>
   | ActionType<typeof pollTransactionSagaCompleted>
-  | ActionType<typeof pollTransactionSagaTimeout>;
+  | ActionType<typeof pollTransactionSagaTimeout>
+  | ActionType<typeof deleteReadTransaction>
+  | ActionType<typeof fetchTransactionsLoadComplete>;

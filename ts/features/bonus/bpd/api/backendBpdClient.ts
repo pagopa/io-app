@@ -15,6 +15,13 @@ import {
   findUsingGETDecoder,
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
+import {
+  DeleteUsingDELETET,
+  enrollmentPaymentInstrumentIOUsingPUTDefaultDecoder,
+  EnrollmentPaymentInstrumentIOUsingPUTT,
+  findUsingGETDefaultDecoder,
+  FindUsingGETT as FindPaymentUsingGETT
+} from "../../../../../definitions/bpd/payment/requestTypes";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { PatchedCitizenResource } from "./patchedTypes";
 
@@ -28,6 +35,7 @@ const headersProducers = <
     Authorization: `Bearer ${(p as any).Bearer}`
   })) as RequestHeaderProducer<P, "Authorization">;
 
+/* CITIZEN (status, enroll, delete) */
 type FindUsingGETTExtra = MapResponseType<
   FindUsingGETT,
   200,
@@ -85,6 +93,43 @@ const deleteCitizenIOT: DeleteUsingDELETETExtra = {
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: deleteResponseDecoders
+};
+
+/* PAYMENT (status, enroll, delete) */
+const findPayment: FindPaymentUsingGETT = {
+  method: "get",
+  url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findUsingGETDefaultDecoder()
+};
+
+const enrollPayment: EnrollmentPaymentInstrumentIOUsingPUTT = {
+  method: "put",
+  url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
+  query: _ => ({}),
+  body: () => "",
+  headers: composeHeaderProducers(ApiHeaderJson, headersProducers()),
+  response_decoder: enrollmentPaymentInstrumentIOUsingPUTDefaultDecoder()
+};
+
+const deletePaymentResponseDecoders = r.composeResponseDecoders(
+  r.composeResponseDecoders(
+    r.constantResponseDecoder<undefined, 204>(204, undefined),
+    r.constantResponseDecoder<undefined, 400>(400, undefined)
+  ),
+  r.composeResponseDecoders(
+    r.constantResponseDecoder<undefined, 401>(401, undefined),
+    r.constantResponseDecoder<undefined, 500>(500, undefined)
+  )
+);
+
+const deletePayment: DeleteUsingDELETET = {
+  method: "delete",
+  url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: deletePaymentResponseDecoders
 };
 
 // decoders composition to handle updatePaymentMethod response
@@ -160,7 +205,7 @@ const withTestToken = (options: Options, fiscalCode: string) =>
 
 export function BackendBpdClient(
   baseUrl: string,
-  _: string,
+  token: string,
   fiscalCode: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
@@ -180,9 +225,7 @@ export function BackendBpdClient(
   const withBearerToken = <P extends extendHeaders, R>(
     f: (p: P) => Promise<R>
   ) => async (po: P): Promise<R> => {
-    const reqTestToken = await withTestToken(options, fiscalCode);
-    const testToken = await reqTestToken.text();
-    const params = Object.assign({ Bearer: testToken }, po) as P;
+    const params = Object.assign({ Bearer: token }, po) as P;
     return f(params);
   };
 
@@ -203,6 +246,15 @@ export function BackendBpdClient(
           { payoffInstr: iban, payoffInstrType: "IBAN" },
           { ["Content-Type"]: jsonContentType }
         )
-      )
+      ),
+    findPayment: withBearerToken(
+      createFetchRequestForApi(findPayment, options)
+    ),
+    enrollPayment: withBearerToken(
+      createFetchRequestForApi(enrollPayment, options)
+    ),
+    deletePayment: withBearerToken(
+      createFetchRequestForApi(deletePayment, options)
+    )
   };
 }
