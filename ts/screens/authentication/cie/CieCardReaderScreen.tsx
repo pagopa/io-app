@@ -74,6 +74,7 @@ type State = {
 
 // A subset of Cie Events (errors) which is of interest to analytics
 const analyticActions = new Map<CEvent["event"], string>([
+  // Reading interrupted before the sdk complete the reading
   ["Transmission Error", I18n.t("authentication.cie.card.error.onTagLost")],
   ["ON_TAG_LOST", I18n.t("authentication.cie.card.error.onTagLost")],
   [
@@ -179,11 +180,12 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         }
         break;
 
-      // Reading interrupted before the sdk complete the reading
       case "Transmission Error":
       case "ON_TAG_LOST":
       case "TAG_ERROR_NFC_NOT_SUPPORTED":
       case "ON_TAG_DISCOVERED_NOT_CIE":
+      case "AUTHENTICATION_ERROR":
+      case "ON_NO_INTERNET_CONNECTION":
         this.setError(event.event);
         break;
 
@@ -191,14 +193,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "PIN Locked":
       case "ON_CARD_PIN_LOCKED":
         this.setError(event.event, ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN);
-        break;
-
-      case "AUTHENTICATION_ERROR":
-        this.setError(I18n.t("authentication.cie.card.error.generic"));
-        break;
-
-      case "ON_NO_INTERNET_CONNECTION":
-        this.setError(I18n.t("authentication.cie.card.error.tryAgain"));
         break;
 
       // The inserted pin is incorrect
@@ -211,10 +205,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       // CIE is Expired or Revoked
       case "CERTIFICATE_EXPIRED":
       case "CERTIFICATE_REVOKED":
-        this.setError(
-          I18n.t("authentication.cie.card.error.generic"),
-          ROUTES.CIE_EXPIRED_SCREEN
-        );
+        this.setError(event.event, ROUTES.CIE_EXPIRED_SCREEN);
         break;
 
       default:
