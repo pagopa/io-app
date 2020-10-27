@@ -32,7 +32,10 @@ import {
   setAccessibilityFocus
 } from "../../../utils/accessibility";
 import { instabugLog, TypeLogs } from "../../../boot/configureInstabug";
-import { cieAuthenticationError } from "../../../store/actions/cie";
+import {
+  cieAuthenticationError,
+  cieAuthenticationErrorPayload
+} from "../../../store/actions/cie";
 import { ReduxProps } from "../../../store/actions/types";
 import { isIos } from "../../../utils/platform";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
@@ -70,17 +73,23 @@ type State = {
 };
 
 // A subset of Cie Events (errors) which is of interest to analytics
-const analyticActions = new Set<CEvent["event"]>([
-  "ON_TAG_DISCOVERED_NOT_CIE",
-  "ON_CARD_PIN_LOCKED",
-  "ON_PIN_ERROR",
-  "PIN_INPUT_ERROR",
-  "CERTIFICATE_EXPIRED",
-  "CERTIFICATE_REVOKED",
-  "AUTHENTICATION_ERROR",
-  "ON_NO_INTERNET_CONNECTION",
-  "STOP_NFC_ERROR",
-  "START_NFC_ERROR"
+const analyticActions = new Map<CEvent["event"], string>([
+  [
+    "ON_TAG_DISCOVERED_NOT_CIE",
+    I18n.t("authentication.cie.card.error.unknownCardContent")
+  ],
+  ["ON_CARD_PIN_LOCKED", I18n.t("authentication.cie.card.error.generic")],
+  ["ON_PIN_ERROR", I18n.t("authentication.cie.card.error.tryAgain")],
+  ["PIN_INPUT_ERROR", ""],
+  ["CERTIFICATE_EXPIRED", I18n.t("authentication.cie.card.error.generic")],
+  ["CERTIFICATE_REVOKED", I18n.t("authentication.cie.card.error.generic")],
+  ["AUTHENTICATION_ERROR", I18n.t("authentication.cie.card.error.generic")],
+  [
+    "ON_NO_INTERNET_CONNECTION",
+    I18n.t("authentication.cie.card.error.tryAgain")
+  ],
+  ["STOP_NFC_ERROR", ""],
+  ["START_NFC_ERROR", ""]
 ]);
 
 const instabugTag = "cie";
@@ -125,15 +134,15 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   }
 
   private setError = (
-    errorMessage: string,
+    error: cieAuthenticationErrorPayload,
     navigationRoute?: string,
     navigationParams: Record<string, unknown> = {}
   ) => {
-    this.dispatchAnalyticEvent(errorMessage);
+    this.dispatchAnalyticEvent(error);
     this.setState(
       {
         readingState: ReadingState.error,
-        errorMessage
+        errorMessage: error.cie_description
       },
       () => {
         Vibration.vibrate(VIBRATION);
@@ -144,13 +153,13 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  private dispatchAnalyticEvent = (message: string) => {
-    this.props.dispatch(cieAuthenticationError(Error(message)));
+  private dispatchAnalyticEvent = (error: cieAuthenticationErrorPayload) => {
+    this.props.dispatch(cieAuthenticationError(error));
   };
 
   private handleCieEvent = async (event: CEvent) => {
     if (analyticActions.has(event.event)) {
-      this.dispatchAnalyticEvent(event.event);
+      this.dispatchAnalyticEvent({ reason: event.event });
     }
     instabugLog(event.event, TypeLogs.DEBUG, instabugTag);
     switch (event.event) {
