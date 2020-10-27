@@ -1,3 +1,4 @@
+import { Event as CEvent } from "@pagopa/react-native-cie";
 /**
  * Action types and action creator related to authentication by CIE
  */
@@ -38,9 +39,14 @@ export const updateReadingState = createAsyncAction(
   "UPDATE_READING_STATE_FAILURE"
 )<void, string, Error>();
 
+export type cieAuthenticationErrorPayload = {
+  reason: CEvent["event"] | "GENERIC";
+  cie_description?: string;
+};
+
 export const cieAuthenticationError = createStandardAction(
   "CIE_AUTHENTICATION_ERROR"
-)<Error>();
+)<cieAuthenticationErrorPayload>();
 
 export type CieAuthenticationActions =
   | ActionType<typeof hasApiLevelSupport>
