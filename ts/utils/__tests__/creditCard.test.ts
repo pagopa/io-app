@@ -112,7 +112,6 @@ describe("Returns Card Icon", () => {
           iconExpected ? iconExpected.toString() : "undefined"
         }`, () => {
           expect(iconComputed).toEqual(iconExpected);
-          //}
         });
       }
     );
