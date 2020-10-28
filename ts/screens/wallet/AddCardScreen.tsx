@@ -69,9 +69,9 @@ const styles = StyleSheet.create({
   },
 
   creditCardForm: {
-    height: 16,
-    width: 24,
-    resizeMode: "contain"
+    height: 24,
+    width: 24
+    // resizeMode: "contain"
   },
 
   verticalSpacing: {

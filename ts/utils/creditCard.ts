@@ -74,17 +74,15 @@ export const CreditCardDetector: CreditCardDetector = {
   },
 
   cardIcons: {
-    mastercard: require("../../img/wallet/cards-icons/mastercard.png"),
-    visa: require("../../img/wallet/cards-icons/visa.png"),
-    amex: require("../../img/wallet/cards-icons/amex.png"),
-    diners: require("../../img/wallet/cards-icons/diners.png"),
-    maestro: require("../../img/wallet/cards-icons/maestro.png"),
-    visaelectron: require("../../img/wallet/cards-icons/visa-electron.png"),
-    postepay: require("../../img/wallet/cards-icons/postepay.png"),
-    unionpay: require("../../img/wallet/cards-icons/unknown.png"),
-    discover: require("../../img/wallet/cards-icons/unknown.png"),
-    jcb: require("../../img/wallet/cards-icons/unknown.png"),
-    unknown: require("../../img/wallet/cards-icons/unknown.png")
+    mastercard: require("../../img/wallet/cards-icons/form/mastercard.png"),
+    visa: require("../../img/wallet/cards-icons/form/visa.png"),
+    amex: require("../../img/wallet/cards-icons/form/amex.png"),
+    diners: require("../../img/wallet/cards-icons/form/diners.png"),
+    maestro: require("../../img/wallet/cards-icons/form/maestro.png"),
+    unionpay: require("../../img/wallet/cards-icons/form/unionpay.png"),
+    discover: require("../../img/wallet/cards-icons/form/discover.png"),
+    jcb: require("../../img/wallet/cards-icons/form/jcb.png"),
+    unknown: "io-carta"
   },
 
   getInfo: (pan: string) => {
