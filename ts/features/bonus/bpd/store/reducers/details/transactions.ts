@@ -41,7 +41,7 @@ export const bpdTransactionsReducer = (
 };
 
 /**
- * The rew selector to read a specific period transactions
+ * The raw selector to read a specific period of transactions
  * @param state
  * @param periodId
  */
