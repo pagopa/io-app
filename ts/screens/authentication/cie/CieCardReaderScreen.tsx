@@ -34,7 +34,8 @@ import {
 import { instabugLog, TypeLogs } from "../../../boot/configureInstabug";
 import {
   cieAuthenticationError,
-  cieAuthenticationErrorPayload
+  cieAuthenticationErrorPayload,
+  cieAuthenticationErrorReason
 } from "../../../store/actions/cie";
 import { ReduxProps } from "../../../store/actions/types";
 import { isIos } from "../../../utils/platform";
@@ -72,8 +73,15 @@ type State = {
   isScreenReaderEnabled: boolean;
 };
 
+type setErrorParameter = {
+  eventReason: cieAuthenticationErrorReason;
+  errorDescription?: string;
+  navigationRoute?: string;
+  navigationParams?: Record<string, unknown>;
+};
+
 // A subset of Cie Events (errors) which is of interest to analytics
-const analyticActions = new Map<CEvent["event"], string>([
+const analyticActions = new Map<cieAuthenticationErrorReason, string>([
   // Reading interrupted before the sdk complete the reading
   ["Transmission Error", I18n.t("authentication.cie.card.error.onTagLost")],
   ["ON_TAG_LOST", I18n.t("authentication.cie.card.error.onTagLost")],
@@ -141,24 +149,27 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     return this.props.navigation.getParam("authorizationUri");
   }
 
-  private setError = (
-    errorReason: CEvent["event"],
-    navigationRoute?: string,
-    navigationParams: Record<string, unknown> = {}
-  ) => {
-    const errorDescription = analyticActions.has(errorReason)
-      ? analyticActions.get(errorReason)
+  private setError = ({
+    eventReason,
+    errorDescription,
+    navigationRoute,
+    navigationParams = {}
+  }: setErrorParameter) => {
+    const cieDescription = errorDescription
+      ? errorDescription
+      : analyticActions.get(eventReason)
+      ? analyticActions.get(eventReason)
       : "";
 
     this.dispatchAnalyticEvent({
-      reason: errorReason,
-      cie_description: errorDescription
+      reason: eventReason,
+      cie_description: cieDescription
     });
 
     this.setState(
       {
         readingState: ReadingState.error,
-        errorMessage: errorDescription
+        errorMessage: cieDescription
       },
       () => {
         Vibration.vibrate(VIBRATION);
@@ -191,26 +202,36 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case "ON_TAG_DISCOVERED_NOT_CIE":
       case "AUTHENTICATION_ERROR":
       case "ON_NO_INTERNET_CONNECTION":
-        this.setError(event.event);
+        this.setError({ eventReason: event.event });
         break;
 
       // The card is temporarily locked. Unlock is available by CieID app
       case "PIN Locked":
       case "ON_CARD_PIN_LOCKED":
-        this.setError(event.event, ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN);
+        this.setError({
+          eventReason: event.event,
+          navigationRoute: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
+        });
         break;
 
       // The inserted pin is incorrect
       case "ON_PIN_ERROR":
-        this.setError(event.event, ROUTES.CIE_WRONG_PIN_SCREEN, {
-          remainingCount: event.attemptsLeft
+        this.setError({
+          eventReason: event.event,
+          navigationRoute: ROUTES.CIE_WRONG_PIN_SCREEN,
+          navigationParams: {
+            remainingCount: event.attemptsLeft
+          }
         });
         break;
 
       // CIE is Expired or Revoked
       case "CERTIFICATE_EXPIRED":
       case "CERTIFICATE_REVOKED":
-        this.setError(event.event, ROUTES.CIE_EXPIRED_SCREEN);
+        this.setError({
+          eventReason: event.event,
+          navigationRoute: ROUTES.CIE_EXPIRED_SCREEN
+        });
         break;
 
       default:
@@ -294,7 +315,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
     instabugLog(error.message, TypeLogs.DEBUG, instabugTag);
-    this.setError(error.message);
+    this.setError({ eventReason: "GENERIC", errorDescription: error.message });
   };
 
   private handleCieSuccess = (cieConsentUri: string) => {
