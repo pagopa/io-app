@@ -23,7 +23,9 @@ export type BpdTransaction = WithAwardPeriodId & {
   circuitType: CircuitType;
 };
 
-type BpdTransactions = WithAwardPeriodId & ReadonlyArray<BpdTransaction>;
+type BpdTransactions = WithAwardPeriodId & {
+  results: ReadonlyArray<BpdTransaction>;
+};
 
 type BpdTransactionsError = WithAwardPeriodId & {
   error: Error;

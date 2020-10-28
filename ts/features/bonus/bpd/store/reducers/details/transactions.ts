@@ -28,7 +28,11 @@ export const bpdTransactionsReducer = (
     case getType(bpdTransactionsLoad.request):
       return toLoading(action.payload, state);
     case getType(bpdTransactionsLoad.success):
-      return toSome(action.payload.awardPeriodId, state, action.payload);
+      return toSome(
+        action.payload.awardPeriodId,
+        state,
+        action.payload.results
+      );
     case getType(bpdTransactionsLoad.failure):
       return toError(action.payload.awardPeriodId, state, action.payload.error);
   }
