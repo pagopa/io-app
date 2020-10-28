@@ -3,6 +3,12 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 
 export type AwardPeriodId = string & IUnitTag<"AwardPeriodId">;
 
+/**
+ * The possible state for a period:
+ * - Active: the current period, can be only one at time
+ * - Closed: a past period that has ended
+ * - Inactive: a future period not yet active
+ */
 type BpdPeriodStatus = "Active" | "Inactive" | "Closed";
 
 /**
