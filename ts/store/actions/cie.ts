@@ -39,8 +39,10 @@ export const updateReadingState = createAsyncAction(
   "UPDATE_READING_STATE_FAILURE"
 )<void, string, Error>();
 
+export type cieAuthenticationErrorReason = CEvent["event"] | "GENERIC";
+
 export type cieAuthenticationErrorPayload = {
-  reason: CEvent["event"] | "GENERIC";
+  reason: cieAuthenticationErrorReason;
   cie_description?: string;
 };
 
