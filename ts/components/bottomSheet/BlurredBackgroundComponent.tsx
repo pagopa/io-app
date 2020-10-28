@@ -1,9 +1,10 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { View } from "native-base";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 
-export const BlurredBackgroundComponent = () => (
-  <View
+export const BlurredBackgroundComponent = (onPress: ()=> void) => (
+  <TouchableDefaultOpacity
+    onPress={onPress}
     style={{
       ...StyleSheet.absoluteFillObject,
       borderTopLeftRadius: 10,

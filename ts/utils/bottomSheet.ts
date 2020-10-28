@@ -1,4 +1,5 @@
 import { BottomSheetModalConfigs } from "@gorhom/bottom-sheet/lib/typescript/types";
+import * as React from "react";
 import { AccessibilityContent } from "../components/bottomSheet/AccessibilityContent";
 import { BlurredBackgroundComponent } from "../components/bottomSheet/BlurredBackgroundComponent";
 import { BottomSheetHeader } from "../components/bottomSheet/BottomSheetHeader";
@@ -30,7 +31,7 @@ export const bottomSheetContent = async (
       allowTouchThroughOverlay: false,
       dismissOnOverlayPress: true,
       dismissOnScrollDown: true,
-      overlayComponent: BlurredBackgroundComponent,
+      overlayComponent: () => BlurredBackgroundComponent(onClose),
       handleComponent: () => header
     }
   };
