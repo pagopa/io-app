@@ -24,6 +24,10 @@ import {
 } from "../../../../../definitions/bpd/payment/requestTypes";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { PatchedCitizenResource } from "./patchedTypes";
+import {
+  findAllUsingGETDefaultDecoder,
+  FindAllUsingGETT
+} from "../../../../../definitions/bpd/award_periods/requestTypes";
 
 const headersProducers = <
   P extends {
@@ -130,6 +134,15 @@ const deletePayment: DeleteUsingDELETET = {
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: deletePaymentResponseDecoders
+};
+
+/* AWARD PERIODS  */
+const awardPeriods: FindAllUsingGETT = {
+  method: "get",
+  url: () => `/bpd/io/award-periods`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findAllUsingGETDefaultDecoder()
 };
 
 // decoders composition to handle updatePaymentMethod response
@@ -255,6 +268,9 @@ export function BackendBpdClient(
     ),
     deletePayment: withBearerToken(
       createFetchRequestForApi(deletePayment, options)
+    ),
+    awardPeriods: withBearerToken(
+      createFetchRequestForApi(awardPeriods, options)
     )
   };
 }

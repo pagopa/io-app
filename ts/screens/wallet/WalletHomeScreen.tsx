@@ -74,6 +74,7 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { bpdPeriodsLoad } from "../../features/bonus/bpd/store/actions/periods";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -583,7 +584,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     validTo?: Date
   ) =>
     dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo })),
-  navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
+  navigateToBonusList: () => dispatch(bpdPeriodsLoad.request()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   refreshTransactions: () => {
     dispatch(clearTransactions());
