@@ -87,7 +87,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     ]);
 
     if (bpdEnabled) {
-      // handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
+      handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
     }
 
     return (
