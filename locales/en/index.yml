@@ -1209,6 +1209,9 @@ titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
 messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need
   to update it to the latest version."
+titleUpdateAppAlert: To continue, update IO
+messageUpdateAppAlert: A new version of IO is available on {{storeName}}, download it to use this feature.
+openStore: Open {{storeName}}
 btnUpdateApp: Update the IO app
 systemsOff:
   title: Unable to start IO

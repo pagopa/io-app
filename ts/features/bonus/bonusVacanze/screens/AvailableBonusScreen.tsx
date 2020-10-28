@@ -3,7 +3,9 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import {
   FlatList,
+  Linking,
   ListRenderItemInfo,
+  Platform,
   SafeAreaView,
   StyleSheet
 } from "react-native";
@@ -33,6 +35,9 @@ import { navigateToBonusRequestInformation } from "../navigation/action";
 import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
 import { availableBonusTypesSelector } from "../store/reducers/availableBonusesTypes";
 import { ID_BONUS_VACANZE_TYPE, ID_BPD_TYPE } from "../utils/bonus";
+import { actionWithAlert } from "../components/alert/ActionWithAlert";
+import { storeUrl } from "../../../../utils/appVersion";
+import { showToast } from "../../../../utils/showToast";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -59,8 +64,16 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * instead if bonus is not active the user can navigate to the begin of request flow.
  */
 class AvailableBonusScreen extends React.PureComponent<Props> {
+  private openAppStore = () => {
+    // storeUrl is not a webUrl, try to open it
+    Linking.openURL(storeUrl).catch(() => {
+      showToast(I18n.t("msgErrorUpdateApp"));
+    });
+  };
+
   private renderListItem = (info: ListRenderItemInfo<BonusAvailable>) => {
     const item = info.item;
+
     if (item.hidden === true) {
       return undefined;
     }
@@ -74,14 +87,34 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     ]);
 
     if (bpdEnabled) {
-      handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
+      // handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
     }
 
     return (
       <AvailableBonusItem
         bonusItem={item}
         onPress={() =>
-          fromNullable(handlersMap.get(item.id_type)).map(h => h(item))
+          fromNullable(handlersMap.get(item.id_type)).foldL(
+            () =>
+              actionWithAlert({
+                title: I18n.t("titleUpdateAppAlert"),
+                body: I18n.t("messageUpdateAppAlert", {
+                  storeName: Platform.select({
+                    ios: "App Store",
+                    default: "Play Store"
+                  })
+                }),
+                cancelText: I18n.t("global.buttons.cancel"),
+                confirmText: I18n.t("openStore", {
+                  storeName: Platform.select({
+                    ios: "App Store",
+                    default: "Play Store"
+                  })
+                }),
+                onConfirmAction: this.openAppStore
+              }),
+            h => h(item)
+          )
         }
       />
     );
