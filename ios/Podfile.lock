@@ -360,6 +360,8 @@ PODS:
     - React
   - RNCAsyncStorage (1.11.0):
     - React
+  - RNCClipboard (1.5.0):
+    - React-Core
   - RNCPushNotificationIOS (1.4.0):
     - React
   - RNDeviceInfo (5.6.4):
@@ -467,6 +469,7 @@ DEPENDENCIES:
   - "ReactNativeART (from `../node_modules/@react-native-community/art/ReactNativeART.podspec`)"
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - "RNCClipboard (from `../node_modules/@react-native-community/clipboard`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
@@ -606,6 +609,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-exception-handler"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-community/clipboard"
   RNCPushNotificationIOS:
     :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDeviceInfo:
@@ -703,6 +708,7 @@ SPEC CHECKSUMS:
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   RNCAsyncStorage: d059c3ee71738c39834a627476322a5a8cd5bf36
+  RNCClipboard: c7abea1baea58adca5c1f29e56dd5261837b4892
   RNCPushNotificationIOS: dc1c0c6aa18a128df123598149f42e848d26a4ac
   RNDeviceInfo: a576aac2f2927eb7e0058a27dad811c8e7cd1474
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
