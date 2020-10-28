@@ -9,8 +9,7 @@ type BpdPeriodStatus = "Active" | "Inactive" | "Closed";
  * This type contains all the information related to a specific cashback period.
  * TODO: use this or the remote data?
  */
-export type BpdPeriod = {
-  awardPeriodId: AwardPeriodId;
+export type BpdPeriod = WithAwardPeriodId & {
   startDate: Date;
   endDate: Date;
   status: BpdPeriodStatus;
@@ -30,6 +29,13 @@ export type BpdPeriod = {
   gracePeriod: number;
 };
 
+export type WithAwardPeriodId = {
+  awardPeriodId: AwardPeriodId;
+};
+
+/**
+ * Request the period list
+ */
 export const bpdPeriodsLoad = createAsyncAction(
   "BPD_PERIODS_REQUEST",
   "BPD_PERIODS_SUCCESS",
