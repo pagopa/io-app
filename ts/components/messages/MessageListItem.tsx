@@ -51,7 +51,7 @@ class MessageListItem extends React.PureComponent<Props> {
     return this.props.payment !== undefined;
   }
   get isPaymentExpired() {
-    return this.paymentExpirationInfo.fold(false, info => isExpired(info));
+    return this.paymentExpirationInfo.fold(false, isExpired);
   }
   private handlePress = () => {
     this.props.onPress(this.props.message.id);
