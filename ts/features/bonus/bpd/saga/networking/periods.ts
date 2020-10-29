@@ -1,5 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { fromNullable } from "fp-ts/lib/Option";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import {
@@ -10,8 +11,8 @@ import {
 } from "../../store/actions/periods";
 import { AwardPeriodResource } from "../../../../../../definitions/bpd/award_periods/AwardPeriodResource";
 import { getError } from "../../../../../utils/errors";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 
+// mapping between network payload status and app domain model status
 const periodStatusMap: Map<string, BpdPeriodStatus> = new Map<
   string,
   BpdPeriodStatus
@@ -21,6 +22,7 @@ const periodStatusMap: Map<string, BpdPeriodStatus> = new Map<
   ["CLOSED", "Closed"]
 ]);
 
+// convert a network ward payload into the app domain model
 const convertPeriod = (
   networkPeriod: AwardPeriodResource,
   statusFallback: BpdPeriodStatus = "Inactive"
