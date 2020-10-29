@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Action, combineReducers } from "redux";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { BpdAmount } from "../../actions/amount";
-import { AwardPeriodId, BpdPeriod } from "../../actions/periods";
+import { BpdPeriod } from "../../actions/periods";
 import { BpdTransaction } from "../../actions/transactions";
 import bpdActivationReducer, { BpdActivation } from "./activation";
 import { bpdAmountsReducer } from "./amounts";

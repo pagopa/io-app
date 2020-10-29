@@ -36,7 +36,7 @@ import {
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
-import { navigateToBpdTestScreen } from "../../features/bonus/bpd/navigation/action/bpdTestNav";
+import { navigateToBpdTestScreen } from "../../features/bonus/bpd/navigation/actions";
 import I18n from "../../i18n";
 import {
   navigateBack,

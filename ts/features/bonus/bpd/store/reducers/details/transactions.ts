@@ -1,4 +1,4 @@
-import { fromNullable, none } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
