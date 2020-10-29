@@ -4,7 +4,6 @@ import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
@@ -22,8 +21,6 @@ const styles = StyleSheet.create({
     height: "100%",
     alignSelf: "center",
     width: "100%",
-    backgroundColor: customVariables.colorWhite,
-    ...IOStyles.horizontalContentPadding,
     paddingTop: 16
   },
   image: {
