@@ -466,9 +466,10 @@ jobs:
       - run:
           name: check cie button existence
           command: |
-            ls scripts
             cd scripts/check_cie_button_exists
-            python3 check_cie_button_exists_ios.py
+            sudo pip install pipenv
+            pipenv install
+            pipenv run python3 check_cie_button_exists_ios.py
 
 workflows:
   version: 2

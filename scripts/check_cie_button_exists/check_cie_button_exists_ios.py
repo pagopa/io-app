@@ -4,7 +4,7 @@
 # from typing import List
 
 # import certifi
-# import requests
+import requests
 # import urllib3
 # from multiprocessing import Manager, Pool, cpu_count
 # from os.path import dirname, abspath, join, basename
@@ -14,15 +14,18 @@
 # from slack.errors import SlackApiError
 # from urlextract import URLExtract
 
-print("Hello World!!!")
-
-
 # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+MAX_TIMEOUT = 5
+headers = {
+    'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1'
+}
 
-# HEADERS = {
-#     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
-# }
-# MAX_TIMEOUT = 20
+uri = "https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL2"
+cie_uri = "https://idserver.servizicie.interno.gov.it/idp/x509-prompt.jsp?conversation=e1s2"
+r = requests.get(uri, headers=headers, allow_redirects=True)
+print(r.text)
+
+#
 # global_uris = set()
 # SLACK_TOKEN = os.environ.get("IO_APP_SLACK_TOKEN_CHECK_URLS", None)
 # tagged_people = ["<@UTVS9R0SF>"]
