@@ -203,11 +203,11 @@ You should now verify that the output of the `nodenv version` command and the ve
 
 ```
 $ nodenv version
-10.13.0 (set by <work-dir>/io-app/.node-version)
+10.18.0 (set by <work-dir>/io-app/.node-version)
 $ node -v
-v10.13.0
+v10.18.0
 $ cat .node-version
-10.13.0
+10.18.0
 ```
 
 #### Install rbenv
@@ -395,7 +395,7 @@ You should now verify that the output of the `asdf current` command and the vers
 
 ```
 $ asdf current
-nodejs         10.13.0  (set by <work-dir>/io-app/.tool-versions)
+nodejs         10.18.0  (set by <work-dir>/io-app/.tool-versions)
 ruby           2.4.2    (set by <work-dir>/io-app/.tool-versions)
 
 $ node -v
@@ -403,10 +403,6 @@ v10.13.0
 
 $ ruby -v
 ruby 2.4.2p198 (2017-09-14 revision 59899) [x86_64-linux]
-
-$ cat .tool-versions
-ruby 2.4.2
-nodejs 10.13.0
 ```
 
 #### Install yarn
@@ -424,7 +420,7 @@ If you do not have node already installed you can install  `yarn` using `asdf` w
 
 ```
 cd <work-dir>/io-app
-asdf global nodejs 10.13.0
+asdf global nodejs 10.18.0
 npm install -g yarn
 ```
 
