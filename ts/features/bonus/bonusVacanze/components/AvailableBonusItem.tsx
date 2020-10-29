@@ -76,10 +76,7 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
     bonusItem.sponsorship_description
   );
   return (
-    <ListItem
-      style={styles.listItem}
-      onPress={() => (isComingSoon ? null : props.onPress())}
-    >
+    <ListItem style={styles.listItem} onPress={props.onPress}>
       <View style={styles.columnLeft}>
         <Grid>
           <Row>
