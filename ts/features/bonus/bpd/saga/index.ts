@@ -93,7 +93,11 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   );
 
   // load bpd periods
-  yield takeEvery(bpdPeriodsLoad.request, bpdLoadPeriodsSaga);
+  yield takeEvery(
+    bpdPeriodsLoad.request,
+    bpdLoadPeriodsSaga,
+    bpdBackendClient.awardPeriods
+  );
 
   // load bpd amount for a period
   yield takeEvery(bpdAmountLoad.request, bpdLoadAmountSaga);
