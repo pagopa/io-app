@@ -23,11 +23,11 @@ import {
   FindUsingGETT as FindPaymentUsingGETT
 } from "../../../../../definitions/bpd/payment/requestTypes";
 import { Iban } from "../../../../../definitions/backend/Iban";
-import { PatchedCitizenResource } from "./patchedTypes";
 import {
   findAllUsingGETDefaultDecoder,
   FindAllUsingGETT
 } from "../../../../../definitions/bpd/award_periods/requestTypes";
+import { PatchedCitizenResource } from "./patchedTypes";
 
 const headersProducers = <
   P extends {
