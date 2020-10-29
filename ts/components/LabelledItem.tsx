@@ -40,7 +40,7 @@ type StyleType = IconProps["style"] & ImageStyle;
 
 type CommonProp = Readonly<{
   label: string;
-  icon?: string & ImageSourcePropType;
+  icon?: string | ImageSourcePropType;
   isValid?: boolean;
   iconStyle?: StyleType;
   focusBorderColor?: string;
