@@ -1,20 +1,36 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Action, combineReducers } from "redux";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
+import { BpdAmount } from "../../actions/amount";
+import { BpdPeriod } from "../../actions/periods";
+import { BpdTransaction } from "../../actions/transactions";
 import bpdActivationReducer, { BpdActivation } from "./activation";
+import { bpdAmountsReducer } from "./amounts";
 import {
   bpdPaymentMethodsReducer,
   BpdPotPaymentMethodActivation
 } from "./paymentMethods";
+import { bpdPeriodsReducer } from "./periods";
+import { bpdTransactionsReducer } from "./transactions";
 
 export type BpdDetailsState = {
   activation: BpdActivation;
   paymentMethods: IndexedById<BpdPotPaymentMethodActivation>;
-  // IBAN, value, points, other info...
+  periods: pot.Pot<IndexedById<BpdPeriod>, Error>;
+  amounts: IndexedById<pot.Pot<BpdAmount, Error>>;
+  transactions: IndexedById<pot.Pot<ReadonlyArray<BpdTransaction>, Error>>;
 };
 
 const bpdDetailsReducer = combineReducers<BpdDetailsState, Action>({
+  // The information related to the activation (enabled / IBAN)
   activation: bpdActivationReducer,
-  paymentMethods: bpdPaymentMethodsReducer
+  // The state of cashback on each payment method in the wallet
+  paymentMethods: bpdPaymentMethodsReducer,
+  // All the periods of the cashback
+  periods: bpdPeriodsReducer,
+  // The amounts (transactions and amount) foreach cashback period
+  amounts: bpdAmountsReducer,
+  transactions: bpdTransactionsReducer
 });
 
 export default bpdDetailsReducer;
