@@ -9,7 +9,7 @@ export type AwardPeriodId = string & IUnitTag<"AwardPeriodId">;
  * - Closed: a past period that has ended
  * - Inactive: a future period not yet active
  */
-type BpdPeriodStatus = "Active" | "Inactive" | "Closed";
+export type BpdPeriodStatus = "Active" | "Inactive" | "Closed";
 
 /**
  * This type contains all the information related to a specific cashback period.
