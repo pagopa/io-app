@@ -1,4 +1,5 @@
 import { NavigationActions } from "react-navigation";
+import { BpdPeriod } from "../store/actions/periods";
 import BPD_ROUTES from "./routes";
 
 export const navigateToBpdOnboardingLoadActivationStatus = () =>
@@ -45,7 +46,8 @@ export const navigateToBpdTestScreen = () =>
 
 // Details
 
-export const navigateToBpdDetails = () =>
+export const navigateToBpdDetails = (specificPeriod?: BpdPeriod) =>
   NavigationActions.navigate({
-    routeName: BPD_ROUTES.DETAILS
+    routeName: BPD_ROUTES.DETAILS,
+    params: { specificPeriod }
   });

@@ -2,6 +2,7 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { navigateToBpdDetails } from "../../../navigation/actions";
 import { BpdPeriod } from "../../actions/periods";
 import { bpdSelectPeriod } from "../../actions/selectedPeriod";
 
@@ -17,6 +18,8 @@ export const bpdSelectedPeriodsReducer = (
   switch (action.type) {
     case getType(bpdSelectPeriod):
       return action.payload;
+    case getType(navigateToBpdDetails):
+      return action.params;
   }
   return state;
 };
