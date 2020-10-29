@@ -22,7 +22,7 @@ const periodStatusMap: Map<string, BpdPeriodStatus> = new Map<
   ["CLOSED", "Closed"]
 ]);
 
-// convert a network ward payload into the app domain model
+// convert a network payload award period into the relative app domain model
 const convertPeriod = (
   networkPeriod: AwardPeriodResource,
   statusFallback: BpdPeriodStatus = "Inactive"
