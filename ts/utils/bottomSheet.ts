@@ -2,6 +2,7 @@ import { BottomSheetModalConfigs } from "@gorhom/bottom-sheet/lib/typescript/typ
 import * as React from "react";
 import { AccessibilityContent } from "../components/bottomSheet/AccessibilityContent";
 import { BlurredBackgroundComponent } from "../components/bottomSheet/BlurredBackgroundComponent";
+import { BottomSheetContent } from "../components/bottomSheet/BottomSheetContent";
 import { BottomSheetHeader } from "../components/bottomSheet/BottomSheetHeader";
 import { isScreenReaderEnabled } from "./accessibility";
 
@@ -22,7 +23,7 @@ export const bottomSheetContent = async (
 
   const bottomSheetBody: React.ReactNode = isScreenReaderActive
     ? AccessibilityContent(header, content)
-    : content;
+    : BottomSheetContent({ children: content });
 
   return {
     content: bottomSheetBody,
