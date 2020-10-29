@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import DarkLayout from "../../../../../components/screens/DarkLayout";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import BpdPeriodDetail from "./BpdPeriodDetail";
+import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
