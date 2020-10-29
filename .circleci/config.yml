@@ -457,6 +457,18 @@ jobs:
             sudo pip install pipenv
             pipenv install
             pipenv run python3 check_urls.py
+  
+  io_check_cie_button_exists_ios:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - run:
+          name: check cie button existence
+          command: |
+            ls scripts
+            cd scripts/check_cie_button_exists
+            python3 check_cie_button_exists_ios.py
 
 workflows:
   version: 2
@@ -559,3 +571,4 @@ workflows:
     jobs:
       - pagopa_specs_diff
       - io_check_uris
+      - io_check_cie_button_exists_ios
