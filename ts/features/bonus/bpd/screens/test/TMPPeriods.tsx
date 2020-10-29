@@ -41,6 +41,17 @@ const renderPeriods = (
     </Button>
   ));
 
+type OwnProps = {
+  potPeriods: pot.Pot<ReadonlyArray<BpdPeriod>, Error>;
+  onPeriodSelected: (period: BpdPeriod) => void;
+};
+
+export const TMPBpdPeriodsAsButtons = (props: OwnProps) => (
+  <View style={{ flexDirection: "row", alignContent: "stretch" }}>
+    {foldPeriods(props.potPeriods, props.onPeriodSelected)}
+  </View>
+);
+
 /**
  * A temp component to render the bpd periods as button and navigate to bpdDetails with the selected period
  * TODO: Complete after the completion of the bpd cards
@@ -53,9 +64,10 @@ const TmpPeriods: React.FunctionComponent<Props> = props => {
   }, []);
 
   return (
-    <View style={{ flex: 1, flexDirection: "row", alignContent: "stretch" }}>
-      {foldPeriods(props.periods, props.navigateToBpdDetails)}
-    </View>
+    <TMPBpdPeriodsAsButtons
+      potPeriods={props.periods}
+      onPeriodSelected={props.navigateToBpdDetails}
+    />
   );
 };
 

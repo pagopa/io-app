@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     height: 172
   },
   selector: {
+    // TODO: temp, as placeholder from invision, waiting for the components
     height: 192 + 10 + 16 + 16,
     width: "100%",
     position: "absolute",

@@ -4,20 +4,33 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { H1 } from "../../../../../../components/core/typography/H1";
+import { BpdPeriod } from "../../../store/actions/periods";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
+import BpdActivePeriod from "./BpdActivePeriod";
+import BpdClosedPeriod from "./BpdClosedPeriod";
+import BpdInactivePeriod from "./BpdInactivePeriod";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const selectPeriodScreen = (period: BpdPeriod) => {
+  switch (period.status) {
+    case "Active":
+      return <BpdActivePeriod />;
+    case "Closed":
+      return <BpdClosedPeriod />;
+    case "Inactive":
+      return <BpdInactivePeriod />;
+  }
+};
 
 /**
  * The body and details for a specific cashback period. Will change if is Active, Inactive or Closed
  * @constructor
  */
-const BpdPeriodDetail: React.FunctionComponent<Props> = () => (
+const BpdPeriodDetail: React.FunctionComponent<Props> = props => (
   <View style={IOStyles.flex}>
-    {/* {TODO: will choose the right representation (different components) based on the period} */}
-    <H1>Period details Placeholder!</H1>
+    {props.selectedPeriod && selectPeriodScreen(props.selectedPeriod)}
   </View>
 );
 

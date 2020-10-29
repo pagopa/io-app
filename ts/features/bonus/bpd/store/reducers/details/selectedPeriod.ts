@@ -31,6 +31,8 @@ export const bpdSelectedPeriodsReducer = (
 
 /**
  * Return current period selected by the user (current displayed)
+ * TODO: if null(generic navigation to cashback), return the current period ( start_date < today < end_date )
+ * if no period match the date interval, return the nearest
  */
 export const bpdSelectedPeriodSelector = createSelector(
   [(state: GlobalState) => state.bonus.bpd.details.selectedPeriod],
