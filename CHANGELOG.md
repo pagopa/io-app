@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0-rc.0](https://github.com/pagopa/io-app/compare/1.8.0-rc.7...1.9.0-rc.0) (2020-10-28)
+
+
+### Features
+
+* [[#174575010](https://www.pivotaltracker.com/story/show/174575010)] Add showroom listitem ([#2317](https://github.com/pagopa/io-app/issues/2317)) ([72c0200](https://github.com/pagopa/io-app/commit/72c020058ae00388d654eb10d1cdb4f1442306c3))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#175419552](https://www.pivotaltracker.com/story/show/175419552)] Enhance add bancomat response ([#2315](https://github.com/pagopa/io-app/issues/2315)) ([1705c39](https://github.com/pagopa/io-app/commit/1705c39d181abafd1bcda93f8751d0274d4c2259))
+* [[#174257087](https://www.pivotaltracker.com/story/show/174257087)] Update clipboard module ([#2318](https://github.com/pagopa/io-app/issues/2318)) ([ee084c9](https://github.com/pagopa/io-app/commit/ee084c9c8c4994cee42442d4ca01f20d81239b7a))
+
 ## [1.8.0-rc.7](https://github.com/pagopa/io-app/compare/1.8.0-rc.6...1.8.0-rc.7) (2020-10-23)
 
 ## [1.8.0-rc.6](https://github.com/pagopa/io-app/compare/1.8.0-rc.5...1.8.0-rc.6) (2020-10-23)
