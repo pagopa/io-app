@@ -9,6 +9,7 @@ import { IOColors } from "./core/variables/IOColors";
 import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
+import { H5 } from "./core/typography/H5";
 
 type OwnProps = Readonly<{
   text11: string;
@@ -147,18 +148,14 @@ export default class DetailedlistItemComponent extends React.PureComponent<
           {this.props.isExpired && (
             <View>
               <Badge style={styles.badgeInfoExpired}>
-                <LabelSmall color="red">
-                  {I18n.t("messages.badge.expired")}
-                </LabelSmall>
+                <H5 color="red">{I18n.t("messages.badge.expired")}</H5>
               </Badge>
             </View>
           )}
           {this.props.isPaid && (
             <View>
               <Badge style={styles.badgeInfoPaid}>
-                <LabelSmall color="bluegreyDark">
-                  {I18n.t("messages.badge.paid")}
-                </LabelSmall>
+                <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
               </Badge>
             </View>
           )}
