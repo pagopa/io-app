@@ -12,7 +12,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const BpdActivePeriod: React.FunctionComponent<Props> = () => (
-  <H1>Active Period!</H1>
+  <H1>Active Period placeholder!</H1>
 );
 
 const mapDispatchToProps = (_: Dispatch) => ({});
