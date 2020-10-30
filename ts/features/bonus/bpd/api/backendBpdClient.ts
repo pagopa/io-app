@@ -27,6 +27,11 @@ import {
   findAllUsingGETDefaultDecoder,
   FindAllUsingGETT
 } from "../../../../../definitions/bpd/award_periods/requestTypes";
+
+import {
+  findWinningTransactionsUsingGETDefaultDecoder,
+  FindWinningTransactionsUsingGETT
+} from "../../../../../definitions/bpd/total_cashback/requestTypes";
 import { PatchedCitizenResource } from "./patchedTypes";
 
 const headersProducers = <
@@ -146,12 +151,13 @@ const awardPeriods: FindAllUsingGETT = {
 };
 
 /* TOTAL CASHBACK  */
-const awardPeriods: FindAllUsingGETT = {
+const totalCashback: FindWinningTransactionsUsingGETT = {
   method: "get",
-  url: () => `/bpd/io/award-periods`,
+  url: ({ awardPeriodId }) =>
+    `/bpd/io/winning-transactions/total-cashback?awardPeriodId=${awardPeriodId}`,
   query: _ => ({}),
   headers: headersProducers(),
-  response_decoder: findAllUsingGETDefaultDecoder()
+  response_decoder: findWinningTransactionsUsingGETDefaultDecoder()
 };
 
 // decoders composition to handle updatePaymentMethod response
@@ -280,6 +286,9 @@ export function BackendBpdClient(
     ),
     awardPeriods: withBearerToken(
       createFetchRequestForApi(awardPeriods, options)
+    ),
+    totalCashback: withBearerToken(
+      createFetchRequestForApi(totalCashback, options)
     )
   };
 }
