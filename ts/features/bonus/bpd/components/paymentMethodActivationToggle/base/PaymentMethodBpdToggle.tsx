@@ -151,10 +151,8 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
     <>
       <View style={styles.row}>
         <View style={styles.leftSection}>
-          {/* TODO: The image will be received by props / redux state */}
           <Image source={props.icon} style={styles.cardIcon} />
           <View hspacer={true} />
-          {/* TODO: The Text will be received by props / redux state */}
           <Body>{props.caption}</Body>
         </View>
         <BpdToggle
