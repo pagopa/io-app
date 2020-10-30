@@ -64,8 +64,6 @@ export const BaseIbanInformationComponent: React.FunctionComponent<BaseIbanProps
     ) : (
       <NoIbanComponent onPress={props.onInsertIban} />
     )}
-    {/* <NoIbanComponent onPress={props.onInsertIban} /> */}
-    {/* <IbanComponent iban={"IT52012516521"} /> */}
     <View spacer={true} />
   </View>
 );
