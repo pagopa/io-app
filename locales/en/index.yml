@@ -244,6 +244,7 @@ profile:
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
+    showroom: Showroom
   preferences:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
@@ -1208,6 +1209,9 @@ titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
 messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need
   to update it to the latest version."
+titleUpdateAppAlert: To continue, update IO
+messageUpdateAppAlert: A new release of IO is now available on {{storeName}}. To start using this new feature, please download the update.
+openStore: Open {{storeName}}
 btnUpdateApp: Update the IO app
 systemsOff:
   title: Unable to start IO
