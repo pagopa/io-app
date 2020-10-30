@@ -46,7 +46,7 @@ const enabledReducer = (
     case getType(bpdEnrollUserToProgram.success):
       return remoteReady(action.payload.enabled);
     case getType(bpdDeleteUserFromProgram.success):
-      return remoteReady(false);
+      return remoteUndefined;
     case getType(bpdLoadActivationStatus.failure):
     case getType(bpdEnrollUserToProgram.failure):
       return remoteError(action.payload);
