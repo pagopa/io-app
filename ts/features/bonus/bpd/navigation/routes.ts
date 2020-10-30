@@ -11,6 +11,7 @@ const BPD_ROUTES = {
   },
   IBAN: "BPD_IBAN",
   DETAILS: "BPD_DETAILS",
+  TRANSACTIONS: "BPD_TRANSACTIONS",
   // TODO: remove after the introduction of the bpd detail screen
   TEST: "BPD_TEST"
 };
