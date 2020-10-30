@@ -29,8 +29,8 @@ import {
 } from "../../../../../definitions/bpd/award_periods/requestTypes";
 
 import {
-  findWinningTransactionsUsingGETDefaultDecoder,
-  FindWinningTransactionsUsingGETT
+  getTotalScoreUsingGETDefaultDecoder,
+  GetTotalScoreUsingGETT
 } from "../../../../../definitions/bpd/total_cashback/requestTypes";
 import { PatchedCitizenResource } from "./patchedTypes";
 
@@ -151,13 +151,13 @@ const awardPeriods: FindAllUsingGETT = {
 };
 
 /* TOTAL CASHBACK  */
-const totalCashback: FindWinningTransactionsUsingGETT = {
+const totalCashback: GetTotalScoreUsingGETT = {
   method: "get",
   url: ({ awardPeriodId }) =>
     `/bpd/io/winning-transactions/total-cashback?awardPeriodId=${awardPeriodId}`,
   query: _ => ({}),
   headers: headersProducers(),
-  response_decoder: findWinningTransactionsUsingGETDefaultDecoder()
+  response_decoder: getTotalScoreUsingGETDefaultDecoder()
 };
 
 // decoders composition to handle updatePaymentMethod response
