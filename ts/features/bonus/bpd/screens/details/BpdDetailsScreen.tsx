@@ -7,6 +7,7 @@ import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
+import GoToTransactions from "./transaction/GoToTransactions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
     height: 60
   }
 });
+
 /**
  * The screen that allows the user to see all the details related to the bpd.
  * @constructor
@@ -41,6 +43,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = () => (
     topContent={<View style={styles.headerSpacer} />}
     gradientHeader={true}
     hideHeader={true}
+    footerContent={<GoToTransactions />}
   >
     <View style={styles.selector}>
       <BpdPeriodSelector />

@@ -1649,6 +1649,7 @@ bonus:
           button: "Set IBAN"
       transaction:
         title: "Your transactions"
+        goToButton: "Transactions detail"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
