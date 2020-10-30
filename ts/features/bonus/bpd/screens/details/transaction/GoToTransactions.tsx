@@ -8,7 +8,7 @@ import { Label } from "../../../../../../components/core/typography/Label";
 import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { useLoadPotValue } from "../../../../../../utils/hooks/usePotValue";
+import { useLoadPotValue } from "../../../../../../utils/hooks/useLoadPotValue";
 import { navigateToBpdTransactions } from "../../../navigation/actions";
 import { AwardPeriodId } from "../../../store/actions/periods";
 import { bpdTransactionsLoad } from "../../../store/actions/transactions";
