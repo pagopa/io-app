@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
 const retryTimeout = 5000 as Millisecond;
 /**
  * This custom hook handles the load of the initial state and the retry in case of error.
+ * TODO: refactor with  {@link useLoadPotValue}
+ * @deprecated
  * @param props
  */
 const useInitialValue = (props: Props) => {

@@ -8,8 +8,9 @@ const retryTimeout = 5000 as Millisecond;
 
 /**
  * Load the pot value using the loadAction until is some. Automatically retry using the {@link retryTimeout}
- * @param potValue
- * @param loadAction
+ * @param id - the loadRequestId. Should be always the same for the same pot and different, for different pots.
+ * @param potValue - the value that we would ensure that should be loaded
+ * @param loadAction - the action that trigger the load of the pot
  */
 export const useLoadPotValue = <T, E>(
   id: string,
@@ -25,7 +26,8 @@ export const useLoadPotValue = <T, E>(
   };
 
   /**
-   * When the focus change, clear the timer (if any) and reset the value to undefined
+   * When the focus change or the idRequest changes, clear the timer (if any)
+   * and reset the value to undefined.
    * focus: true  -> a new schedule is allowed
    * focus: false -> clear all the pending schedule
    */
