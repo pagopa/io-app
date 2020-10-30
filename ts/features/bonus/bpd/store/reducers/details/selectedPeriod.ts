@@ -21,9 +21,7 @@ export const bpdSelectedPeriodsReducer = (
       return action.payload;
     case NavigationActions.NAVIGATE:
       if (action.routeName === BPD_ROUTES.DETAILS) {
-        return action.params?.specificPeriod
-          ? action.params?.specificPeriod
-          : null;
+        return action.params?.specificPeriod ?? null;
       }
   }
   return state;
