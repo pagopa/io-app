@@ -4,7 +4,6 @@ import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../theme/fonts";
 import customVariables from "../theme/variables";
 import I18n from "../i18n";
-import { LabelSmall } from "./core/typography/LabelSmall";
 import { IOColors } from "./core/variables/IOColors";
 import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
