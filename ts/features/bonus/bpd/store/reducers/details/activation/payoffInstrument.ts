@@ -17,6 +17,7 @@ import {
   bpdIbanInsertionResetScreen,
   bpdUpsertIban
 } from "../../../actions/iban";
+import { bpdDeleteUserFromProgram } from "../../../actions/onboarding";
 
 type UpsertIBAN = {
   // the results of the upsert operation
@@ -43,6 +44,8 @@ const paymentInstrumentValueReducer = (
   action: Action
 ): RemoteValue<string | undefined, Error> => {
   switch (action.type) {
+    case getType(bpdDeleteUserFromProgram.success):
+      return remoteUndefined;
     case getType(bpdLoadActivationStatus.request):
       return remoteLoading;
     case getType(bpdLoadActivationStatus.success):

@@ -11,7 +11,6 @@ type Props = {
 
 /**
  * Render a {@link ReadOnlyArray} of {@link Wallet} using {@link PaymentMethodBpdToggle}
- * TODO: after v2, extract foreach Walletv2 the information to render the element
  * @param props
  * @constructor
  */
