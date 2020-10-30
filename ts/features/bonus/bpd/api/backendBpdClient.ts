@@ -145,6 +145,15 @@ const awardPeriods: FindAllUsingGETT = {
   response_decoder: findAllUsingGETDefaultDecoder()
 };
 
+/* TOTAL CASHBACK  */
+const awardPeriods: FindAllUsingGETT = {
+  method: "get",
+  url: () => `/bpd/io/award-periods`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findAllUsingGETDefaultDecoder()
+};
+
 // decoders composition to handle updatePaymentMethod response
 export function patchIbanDecoders<A, O>(type: t.Type<A, O>) {
   return r.composeResponseDecoders(
