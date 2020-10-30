@@ -1647,6 +1647,8 @@ bonus:
           title: "IBAN for accreditation"
           noIbanBody: "Set your IBAN in order to receive the accumulated cashback"
           button: "Set IBAN"
+      transaction:
+        title: "Your transactions"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
