@@ -1,8 +1,4 @@
-import {
-  ActionType,
-  createAsyncAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createAsyncAction } from "typesafe-actions";
 import { AwardPeriodId, WithAwardPeriodId } from "./periods";
 
 /**
