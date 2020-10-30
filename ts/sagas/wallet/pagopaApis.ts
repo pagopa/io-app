@@ -278,12 +278,6 @@ export function* updateWalletPspRequestHandler(
     apiUpdateWalletPsp
   );
 
-  const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
-    getWallets,
-    pagoPaClient,
-    pmSessionManager
-  );
-
   try {
     const response: SagaCallReturnType<typeof updateWalletPspWithRefresh> = yield call(
       updateWalletPspWithRefresh
@@ -291,6 +285,11 @@ export function* updateWalletPspRequestHandler(
 
     if (response.isRight()) {
       if (response.value.status === 200) {
+        const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
+          getWallets,
+          pagoPaClient,
+          pmSessionManager
+        );
         if (maybeWallets.isRight()) {
           // look for the updated wallet
           const updatedWallet = maybeWallets.value.find(
@@ -345,17 +344,16 @@ export function* deleteWalletRequestHandler(
   const deleteWalletApi = pagoPaClient.deleteWallet(action.payload.walletId);
   const deleteWalletWithRefresh = pmSessionManager.withRefresh(deleteWalletApi);
 
-  const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
-    getWallets,
-    pagoPaClient,
-    pmSessionManager
-  );
-
   try {
     const deleteResponse: SagaCallReturnType<typeof deleteWalletWithRefresh> = yield call(
       deleteWalletWithRefresh
     );
     if (deleteResponse.isRight() && deleteResponse.value.status === 200) {
+      const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
+        getWallets,
+        pagoPaClient,
+        pmSessionManager
+      );
       if (maybeWallets.isRight()) {
         const successAction = deleteWalletSuccess(maybeWallets.value);
         yield put(successAction);
