@@ -19,7 +19,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * Display the transactions button only if the transactions number are > 0
+ * Display the transactions button only if the transactions number are > 0 for the selected period
  * (never displayed for inactive period)
  * @param props
  * @constructor
