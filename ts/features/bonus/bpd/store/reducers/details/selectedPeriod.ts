@@ -17,8 +17,11 @@ export const bpdSelectedPeriodsReducer = (
   action: Action
 ): BpdPeriod | null => {
   switch (action.type) {
+    // The user manually selected a specific period
     case getType(bpdSelectPeriod):
       return action.payload;
+    // The user navigate to BpdDetailsScreen. We use the payload to update the
+    // selectedPeriod based on the payload
     case NavigationActions.NAVIGATE:
       if (action.routeName === BPD_ROUTES.DETAILS) {
         return action.params?.specificPeriod ?? null;
