@@ -40,7 +40,7 @@ const convertTransactions = (
     awardPeriodId,
     circuitType: fromNullable(
       mapNetworkCircuitType.get(nt.circuitType)
-    ).getOrElse("PagoBancomat") // TODO what is a right default?
+    ).getOrElse("PagoBancomat") // TODO which is the right default?
   }));
   return {
     results,
