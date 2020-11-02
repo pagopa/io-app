@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation from "../../../components/cie/CieReadingCardAnimation";
 import { withConditionalView } from "../../../components/helpers/withConditionalView";
@@ -155,11 +156,9 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     navigationRoute,
     navigationParams = {}
   }: setErrorParameter) => {
-    const cieDescription = errorDescription
-      ? errorDescription
-      : analyticActions.get(eventReason)
-      ? analyticActions.get(eventReason)
-      : "";
+    const cieDescription =
+      errorDescription ??
+      fromNullable(analyticActions.get(eventReason)).getOrElse("");
 
     this.dispatchAnalyticEvent({
       reason: eventReason,
