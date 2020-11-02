@@ -8,6 +8,7 @@ import {
 import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
 import { constNull } from "fp-ts/lib/function";
+import { fromNullable } from "fp-ts/lib/Option";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   enrollmentDecoder,
@@ -35,7 +36,6 @@ import {
   GetTotalScoreUsingGETT
 } from "../../../../../definitions/bpd/winning_transactions/requestTypes";
 import { PatchedCitizenResource } from "./patchedTypes";
-import { fromNullable } from "fp-ts/lib/Option";
 
 const headersProducers = <
   P extends {
