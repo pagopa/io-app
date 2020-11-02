@@ -9,6 +9,7 @@ import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.reactnativecommunity.cookies.CookieManagerPackage;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
@@ -67,6 +68,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new ClipboardPackage(),
             new CookieManagerPackage(),
             new CameraRollPackage(),
             new RNViewShotPackage(),
