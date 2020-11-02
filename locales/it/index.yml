@@ -1677,6 +1677,13 @@ bonus:
         text2: "identifica un conto corrente che non risulta intestato al tuo codice fiscale: sei sicuro di voler usare questo IBAN?"
       loading:
         "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
+    detail:
+      status:
+        active: Attivo
+        closed: Concluso
+        inactive: In arrivo
+      card:
+        earned: Cashback accumulato
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
