@@ -40,7 +40,7 @@ const convertTransactions = (
     awardPeriodId,
     circuitType: fromNullable(
       mapNetworkCircuitType.get(nt.circuitType)
-    ).getOrElse("PagoBancomat") // TODO which is the right default?
+    ).getOrElse("PagoBancomat") // TODO which is the right default? maybe 'Unknown' can be added to CircuitType literal union?
   }));
   return {
     results,
