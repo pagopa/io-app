@@ -28,13 +28,13 @@ import {
   findAllUsingGETDefaultDecoder,
   FindAllUsingGETT
 } from "../../../../../definitions/bpd/award_periods/requestTypes";
-import { PatchedCitizenResource } from "./patchedTypes";
 import {
   findWinningTransactionsUsingGETDefaultDecoder,
   FindWinningTransactionsUsingGETT,
   getTotalScoreUsingGETDefaultDecoder,
   GetTotalScoreUsingGETT
 } from "../../../../../definitions/bpd/winning_transactions/requestTypes";
+import { PatchedCitizenResource } from "./patchedTypes";
 
 const headersProducers = <
   P extends {
