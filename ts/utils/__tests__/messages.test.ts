@@ -518,7 +518,7 @@ describe("getExpireStatus", () => {
   ];
 
   inputAndExpected.forEach(ie => {
-    it(`${ie[0]} -> should be status: ${ie[1]}`, () => {
+    it(`${ie[0]} -> should be in status: ${ie[1]}`, () => {
       expect(getExpireStatus(ie[0])).toEqual(ie[1]);
     });
   });
