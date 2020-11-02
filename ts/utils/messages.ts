@@ -115,6 +115,15 @@ export type MessagePaymentExpirationInfo =
   | MessagePaymentUnexpirable
   | MessagePaymentExpirable;
 
+/**
+ * Given a payment data and a due date return an object that specifies if the data are expirable or not.
+ * There are 3 cases:
+ *  - if the due date is undefined -> the message is unexpirable
+ *  - if the due date is defined and the message is valid after the due date -> the message is expirable
+ * - if the due date is defined and the message is invalid after the due date -> the message is unexpirable
+ * @param paymentData
+ * @param dueDate -> optional
+ */
 export function getMessagePaymentExpirationInfo(
   paymentData: NonNullable<
     CreatedMessageWithContentAndAttachments["content"]["payment_data"]
@@ -138,6 +147,10 @@ export function getMessagePaymentExpirationInfo(
   return { kind: "UNEXPIRABLE", noticeNumber: notice_number, amount };
 }
 
+/**
+ * Given a message return an object of type MessagePaymentExpirationInfo
+ * @param message
+ */
 export const paymentExpirationInfo = (message: CreatedMessageWithContent) => {
   const { payment_data, due_date } = message.content;
   return fromNullable(payment_data).map(paymentData =>
