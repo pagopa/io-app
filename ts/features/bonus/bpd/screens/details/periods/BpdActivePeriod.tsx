@@ -1,11 +1,12 @@
+import { View } from "native-base";
 import * as React from "react";
-import { View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { H1 } from "../../../../../../components/core/typography/H1";
+import { H5 } from "../../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import IbanInformationComponent from "../components/iban/IbanInformationComponent";
+import { TransactionsCountOverview } from "../components/TransactionsCountOverview";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -16,8 +17,10 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const BpdActivePeriod: React.FunctionComponent<Props> = () => (
   <View style={IOStyles.horizontalContentPadding}>
-    <H1>Active Period placeholder!</H1>
+    <View spacer={true} />
+    <TransactionsCountOverview transactions={0} minTransactions={50} />
     <IbanInformationComponent />
+    <H5>Active Period!</H5>
   </View>
 );
 

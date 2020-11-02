@@ -1679,6 +1679,13 @@ bonus:
           title: "IBAN per l’accredito"
           noIbanBody: "Imposta il tuo IBAN per poter ricevere il cashback accumulato"
           button: "Imposta IBAN"
+        transactionsCountOverview:
+          title: "Transazioni valide"
+          closedPeriodKOBody: "Non hai raggiunto le {{transactions}} transazioni necessarie per ottenere un rimborso: avresti ricevuto € {{amount}}. Provaci nel prossimo periodo!"
+          currentPeriodKOBody: "Devi aver fatto almeno {{transactions}} transazioni per sbloccare il cashback che hai accumulato!"
+          gracePeriodBody: "Questo periodo del cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere dalle banche le ultime transazazioni. Ancora un po’ di pazienza. TI avviseremo con un messaggio su IO!"
+          closedPeriodOKBody: "Complimenti {{name}}!\n\nHai diritto a € {{amount}} di Cashback"
+          closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
       transaction:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
