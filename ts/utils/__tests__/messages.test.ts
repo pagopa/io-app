@@ -11,6 +11,7 @@ import { setLocale } from "../../i18n";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
+  ExpireStatus,
   getCTA,
   getMessagePaymentExpirationInfo,
   getServiceCTA,
@@ -19,6 +20,7 @@ import {
   MessagePaymentExpirationInfo,
   paymentExpirationInfo
 } from "../messages";
+import { getExpireStatus } from "../dates";
 
 const messageBody = `### this is a message
 
@@ -503,5 +505,21 @@ describe("paymentExpirationInfo", () => {
         {} as MessagePaymentExpirationInfo
       );
     }
+  });
+});
+
+describe("getExpireStatus", () => {
+  const hour = 1000 * 60 * 60;
+  const day = hour * 24;
+  const inputAndExpected: ReadonlyArray<[Date, ExpireStatus]> = [
+    [new Date(new Date().getTime() + day * 8), "VALID"], // > 7 days
+    [new Date(new Date().getTime() + day * 7 - 1), "EXPIRING"], // < 7 days
+    [new Date(new Date().getTime() - hour), "EXPIRED"] // past
+  ];
+
+  inputAndExpected.forEach(ie => {
+    it(`${ie[0]} -> should be status: ${ie[1]}`, () => {
+      expect(getExpireStatus(ie[0])).toEqual(ie[1]);
+    });
   });
 });
