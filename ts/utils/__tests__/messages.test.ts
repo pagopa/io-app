@@ -11,7 +11,6 @@ import { setLocale } from "../../i18n";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
-  ExpireStatus,
   getCTA,
   getMessagePaymentExpirationInfo,
   getServiceCTA,
@@ -20,7 +19,6 @@ import {
   MessagePaymentExpirationInfo,
   paymentExpirationInfo
 } from "../messages";
-import { getExpireStatus } from "../dates";
 
 const messageBody = `### this is a message
 
