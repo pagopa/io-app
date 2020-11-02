@@ -35,6 +35,7 @@ import {
   GetTotalScoreUsingGETT
 } from "../../../../../definitions/bpd/winning_transactions/requestTypes";
 import { PatchedCitizenResource } from "./patchedTypes";
+import { fromNullable } from "fp-ts/lib/Option";
 
 const headersProducers = <
   P extends {
@@ -165,9 +166,11 @@ const totalCashback: GetTotalScoreUsingGETT = {
 const winningTransactions: FindWinningTransactionsUsingGETT = {
   method: "get",
   url: ({ awardPeriodId, hpan }) =>
-    `/bpd/io/winning-transactions?awardPeriodId=${awardPeriodId}${
-      hpan !== undefined ? "&hpan=" + hpan : ""
-    }`,
+    `/bpd/io/winning-transactions?awardPeriodId=${awardPeriodId}${fromNullable(
+      hpan
+    )
+      .map(h => `&hpan=${h}`)
+      .getOrElse("")}`,
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: findWinningTransactionsUsingGETDefaultDecoder()
