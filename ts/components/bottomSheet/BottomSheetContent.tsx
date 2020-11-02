@@ -8,6 +8,9 @@ type Props = {
   children: React.ReactNode;
 };
 
+/**
+ * Build the base content of a BottomSheet including a SafeArea, content padding and a ScrollView
+ */
 export const BottomSheetContent: React.FunctionComponent<Props> = ({
   children
 }: Props) => (

@@ -11,6 +11,14 @@ export type BottomSheetProps = {
   config: BottomSheetModalConfigs;
 };
 
+/**
+ * Utility function to build a BottomSheet considering accessibility. This will create a common BottomSheet object to be used in the `present` function
+ * that is available only in component context since it uses the context api made available from https://github.com/gorhom/react-native-bottom-sheet/blob/master/docs/modal.md#present
+ * @param content
+ * @param title
+ * @param snapPoint
+ * @param onClose
+ */
 export const bottomSheetContent = async (
   content: React.ReactNode,
   title: string,
