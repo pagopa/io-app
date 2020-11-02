@@ -100,7 +100,11 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   );
 
   // load bpd amount for a period
-  yield takeEvery(bpdAmountLoad.request, bpdLoadAmountSaga);
+  yield takeEvery(
+    bpdAmountLoad.request,
+    bpdLoadAmountSaga,
+    bpdBackendClient.totalCashback
+  );
 
   // load bpd transactions for a period
   yield takeEvery(bpdTransactionsLoad.request, bpdLoadTransactionsSaga);
