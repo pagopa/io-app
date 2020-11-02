@@ -39,16 +39,16 @@ export const updateReadingState = createAsyncAction(
   "UPDATE_READING_STATE_FAILURE"
 )<void, string, Error>();
 
-export type cieAuthenticationErrorReason = CEvent["event"] | "GENERIC";
+export type CieAuthenticationErrorReason = CEvent["event"] | "GENERIC";
 
-export type cieAuthenticationErrorPayload = {
-  reason: cieAuthenticationErrorReason;
-  cie_description?: string;
+export type CieAuthenticationErrorPayload = {
+  reason: CieAuthenticationErrorReason;
+  cieDescription?: string;
 };
 
 export const cieAuthenticationError = createStandardAction(
   "CIE_AUTHENTICATION_ERROR"
-)<cieAuthenticationErrorPayload>();
+)<CieAuthenticationErrorPayload>();
 
 export type CieAuthenticationActions =
   | ActionType<typeof hasApiLevelSupport>

@@ -34,8 +34,8 @@ import {
 import { instabugLog, TypeLogs } from "../../../boot/configureInstabug";
 import {
   cieAuthenticationError,
-  cieAuthenticationErrorPayload,
-  cieAuthenticationErrorReason
+  CieAuthenticationErrorPayload,
+  CieAuthenticationErrorReason
 } from "../../../store/actions/cie";
 import { ReduxProps } from "../../../store/actions/types";
 import { isIos } from "../../../utils/platform";
@@ -74,14 +74,14 @@ type State = {
 };
 
 type setErrorParameter = {
-  eventReason: cieAuthenticationErrorReason;
+  eventReason: CieAuthenticationErrorReason;
   errorDescription?: string;
   navigationRoute?: string;
   navigationParams?: Record<string, unknown>;
 };
 
 // A subset of Cie Events (errors) which is of interest to analytics
-const analyticActions = new Map<cieAuthenticationErrorReason, string>([
+const analyticActions = new Map<CieAuthenticationErrorReason, string>([
   // Reading interrupted before the sdk complete the reading
   ["Transmission Error", I18n.t("authentication.cie.card.error.onTagLost")],
   ["ON_TAG_LOST", I18n.t("authentication.cie.card.error.onTagLost")],
@@ -163,7 +163,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
     this.dispatchAnalyticEvent({
       reason: eventReason,
-      cie_description: cieDescription
+      cieDescription
     });
 
     this.setState(
@@ -180,7 +180,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  private dispatchAnalyticEvent = (error: cieAuthenticationErrorPayload) => {
+  private dispatchAnalyticEvent = (error: CieAuthenticationErrorPayload) => {
     this.props.dispatch(cieAuthenticationError(error));
   };
 
