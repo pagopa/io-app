@@ -153,7 +153,7 @@ const awardPeriods: FindAllUsingGETT = {
   response_decoder: findAllUsingGETDefaultDecoder()
 };
 
-/* WINNING TRANSACTIONS  */
+/* TOTAL CASHBACK  */
 const totalCashback: GetTotalScoreUsingGETT = {
   method: "get",
   url: ({ awardPeriodId }) =>
