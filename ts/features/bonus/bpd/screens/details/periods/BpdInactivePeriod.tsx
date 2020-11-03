@@ -20,9 +20,9 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const BpdInactivePeriod: React.FunctionComponent<Props> = () => (
   <View style={IOStyles.horizontalContentPadding}>
     <View spacer={true} />
-    <WalletPaymentMethodBpdList />
-    <View spacer={true} />
     <BpdSummaryComponent />
+    <View spacer={true} />
+    <WalletPaymentMethodBpdList />
     <View spacer={true} />
     <IbanInformationComponent />
     <View spacer={true} />
