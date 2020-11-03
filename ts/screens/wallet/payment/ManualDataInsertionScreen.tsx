@@ -113,7 +113,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   };
 
   private isFormValid = () =>
-    this.state.delocalizedAmount.map(isRight).getOrElse(false) &&
     this.state.paymentNoticeNumber.map(isRight).getOrElse(false) &&
     this.state.organizationFiscalCode.map(isRight).getOrElse(false);
 
