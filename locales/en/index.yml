@@ -988,7 +988,9 @@ messages:
       addMemo: 
           block1: Add a reminder for the 
           block2: at
-      expiringAlert: This notice expire today at
+      expiringAlert:
+        block1: This notice will expire on
+        block2: at
       expiredAlert: 
         block1: The notice expired at 
         block2: "on"
@@ -999,6 +1001,7 @@ messages:
           block1: The prescription expired at 
           block2: "on"
     pay: Pay € {{amount}}
+    onlyPay: Pay
     paid: Paid
     reminder: Reminder
     reminderShort: Memo
@@ -1024,6 +1027,9 @@ messages:
     errors:
       fetchCalendars: Error fetching calendars
     helper: "IO will remember this choice, you can change it from the preference pane."
+  badge:
+    expired: Expired
+    paid: Paid
   unknownSender: Unknown sender
   noContent: Content not available
   archive:
