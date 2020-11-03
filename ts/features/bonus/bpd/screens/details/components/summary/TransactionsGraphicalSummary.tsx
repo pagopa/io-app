@@ -4,8 +4,8 @@ import { StyleSheet } from "react-native";
 import { H2 } from "../../../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../../../components/core/typography/H5";
 import I18n from "../../../../../../../i18n";
-import { BpdBaseShadowBoxLayout } from "./BpdBaseShadowBoxLayout";
-import { ProgressBar } from "./ProgressBar";
+import { BpdBaseShadowBoxLayout } from "./base/BpdBaseShadowBoxLayout";
+import { ProgressBar } from "./base/ProgressBar";
 
 type Props = {
   transactions: number;

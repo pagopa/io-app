@@ -1,10 +1,10 @@
 import * as React from "react";
-import { InfoBox } from "../../../../../../../../components/box/InfoBox";
-import { Body } from "../../../../../../../../components/core/typography/Body";
-import I18n from "../../../../../../../../i18n";
-import { dateToAccessibilityReadableFormat } from "../../../../../../../../utils/accessibility";
-import { BpdAmount } from "../../../../../store/actions/amount";
-import { BpdPeriod } from "../../../../../store/actions/periods";
+import { InfoBox } from "../../../../../../../components/box/InfoBox";
+import { Body } from "../../../../../../../components/core/typography/Body";
+import I18n from "../../../../../../../i18n";
+import { dateToAccessibilityReadableFormat } from "../../../../../../../utils/accessibility";
+import { BpdAmount } from "../../../../store/actions/amount";
+import { BpdPeriod } from "../../../../store/actions/periods";
 
 type Props = {
   period: BpdPeriod;

@@ -5,13 +5,14 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import { isStringNullyOrEmpty } from "../../../../../../../utils/strings";
 import { isReady } from "../../../../model/RemoteValue";
 import { BpdAmount } from "../../../../store/actions/amount";
 import { BpdPeriod } from "../../../../store/actions/periods";
 import { bpdIbanSelector } from "../../../../store/reducers/details/activation";
 import { bpdAmountForSelectedPeriod } from "../../../../store/reducers/details/amounts";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
-import { TransactionsTextualSummary } from "./infobox/TransactionsTextualSummary";
+import { TransactionsTextualSummary } from "./TransactionsTextualSummary";
 import { TransactionsGraphicalSummary } from "./TransactionsGraphicalSummary";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -48,7 +49,8 @@ const BpdSummaryComponent: React.FunctionComponent<Props> = props =>
   fromNullable(props.currentPeriod)
     .map(period =>
       // In order to render the component in the active period, the iban should be defined
-      period.status !== "Active" || (isReady(props.iban) && props.iban.value)
+      period.status !== "Active" ||
+      (isReady(props.iban) && !isStringNullyOrEmpty(props.iban.value))
         ? pot.fold(
             props.amount,
             () => null,
