@@ -8,6 +8,7 @@ import {
 import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
 import { constNull } from "fp-ts/lib/function";
+import { fromNullable } from "fp-ts/lib/Option";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   enrollmentDecoder,
@@ -23,15 +24,17 @@ import {
   FindUsingGETT as FindPaymentUsingGETT
 } from "../../../../../definitions/bpd/payment/requestTypes";
 import { Iban } from "../../../../../definitions/backend/Iban";
+
 import {
   findAllUsingGETDefaultDecoder,
   FindAllUsingGETT
 } from "../../../../../definitions/bpd/award_periods/requestTypes";
-
 import {
+  findWinningTransactionsUsingGETDefaultDecoder,
+  FindWinningTransactionsUsingGETT,
   getTotalScoreUsingGETDefaultDecoder,
   GetTotalScoreUsingGETT
-} from "../../../../../definitions/bpd/total_cashback/requestTypes";
+} from "../../../../../definitions/bpd/winning_transactions/requestTypes";
 import { PatchedCitizenResource } from "./patchedTypes";
 
 const headersProducers = <
@@ -158,6 +161,19 @@ const totalCashback: GetTotalScoreUsingGETT = {
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: getTotalScoreUsingGETDefaultDecoder()
+};
+
+const winningTransactions: FindWinningTransactionsUsingGETT = {
+  method: "get",
+  url: ({ awardPeriodId, hpan }) =>
+    `/bpd/io/winning-transactions?awardPeriodId=${awardPeriodId}${fromNullable(
+      hpan
+    )
+      .map(h => `&hpan=${h}`)
+      .getOrElse("")}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findWinningTransactionsUsingGETDefaultDecoder()
 };
 
 // decoders composition to handle updatePaymentMethod response
@@ -289,6 +305,9 @@ export function BackendBpdClient(
     ),
     totalCashback: withBearerToken(
       createFetchRequestForApi(totalCashback, options)
+    ),
+    winningTransactions: withBearerToken(
+      createFetchRequestForApi(winningTransactions, options)
     )
   };
 }
