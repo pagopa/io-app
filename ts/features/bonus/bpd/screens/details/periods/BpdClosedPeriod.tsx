@@ -20,6 +20,7 @@ const BpdClosedPeriod: React.FunctionComponent<Props> = () => (
     <BpdSummaryComponent />
     <View spacer={true} extralarge={true} />
     <H5>Closed period!</H5>
+    <View spacer={true} extralarge={true} />
   </View>
 );
 

@@ -1666,6 +1666,8 @@ bonus:
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
+      paymentMethods:
+        noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

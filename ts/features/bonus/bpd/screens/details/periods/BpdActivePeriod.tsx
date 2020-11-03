@@ -8,6 +8,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import IbanInformationComponent from "../components/iban/IbanInformationComponent";
 import BpdSummaryComponent from "../components/summary/BpdSummaryComponent";
 import WalletPaymentMethodBpdList from "../components/WalletPaymentMethodBpdList";
+import UnsubscribeToBpd from "../components/UnsubscribeToBpd";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -24,8 +25,10 @@ const BpdActivePeriod: React.FunctionComponent<Props> = () => (
     <BpdSummaryComponent />
     <View spacer={true} />
     <IbanInformationComponent />
-    <View spacer={true} extralarge={true} />
+    <View spacer={true} />
+    <UnsubscribeToBpd />
     <H5>Active Period!</H5>
+    <View spacer={true} extralarge={true} />
   </View>
 );
 
