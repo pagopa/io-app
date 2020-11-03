@@ -1631,6 +1631,7 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
     title: Cashback Pagamenti Digitali
+    short_title: Cashback
     onboarding:
       loadingActivationStatus:
         title: Verifico lo stato di attivazione
