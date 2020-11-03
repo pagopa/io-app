@@ -100,10 +100,18 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   );
 
   // load bpd amount for a period
-  yield takeEvery(bpdAmountLoad.request, bpdLoadAmountSaga);
+  yield takeEvery(
+    bpdAmountLoad.request,
+    bpdLoadAmountSaga,
+    bpdBackendClient.totalCashback
+  );
 
   // load bpd transactions for a period
-  yield takeEvery(bpdTransactionsLoad.request, bpdLoadTransactionsSaga);
+  yield takeEvery(
+    bpdTransactionsLoad.request,
+    bpdLoadTransactionsSaga,
+    bpdBackendClient.winningTransactions
+  );
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
   yield takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);

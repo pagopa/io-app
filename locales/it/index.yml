@@ -1016,7 +1016,9 @@ messages:
       addMemo:
         block1: Aggiungi un promemoria per il
         block2: alle
-      expiringAlert: Questo avviso scade oggi alle
+      expiringAlert:
+        block1: Questo avviso scade il giorno
+        block2: alle ore
       expiredAlert:
         block1: Il pagamento è scaduto alle ore
         block2: del
@@ -1028,6 +1030,7 @@ messages:
         block2: del
 
     pay: Paga € {{amount}}
+    onlyPay: Paga
     paid: Pagato
     reminder: Promemoria
     reminderShort: Memo
@@ -1053,6 +1056,9 @@ messages:
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
     helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."
+  badge:
+    expired: Scaduto
+    paid: Pagato
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
   archive:
