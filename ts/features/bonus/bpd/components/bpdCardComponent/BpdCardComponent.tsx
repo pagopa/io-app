@@ -9,8 +9,9 @@ import { BpdAmount } from "../../store/actions/amount";
 import { BpdPeriod } from "../../store/actions/periods";
 import { H4 } from "../../../../../components/core/typography/H4";
 import I18n from "../../../../../i18n";
-import bpdBonusLogo from "../../../../../../img/bonus/bpd/cashback-alt.png";
-import bpdCardBg from "../../../../../../img/bonus/bpd/cards_bonus.png";
+import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_White.png";
+import bpdCardBgFull from "../../../../../../img/bonus/bpd/bonus_bg.png";
+import bpdCardBgPreview from "../../../../../../img/bonus/bpd/bonus_preview_bg.png";
 import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
 import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     height: 192
   },
   paddedContentFull: {
-    padding: 16,
+    paddingLeft: 16,
     paddingTop: 24,
     paddingRight: 20
   },
@@ -151,17 +152,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
 
   const renderFullCard = () => (
     <View style={[styles.row, styles.spaced]}>
-      <View
-        style={[
-          styles.column,
-          styles.flex2,
-          {
-            borderRightColor: IOColors.black,
-            borderRightWidth: 1
-          },
-          styles.spaced
-        ]}
-      >
+      <View style={[styles.column, styles.flex2, styles.spaced]}>
         <View>
           <H2 weight={"Bold"} color={"white"}>
             {I18n.t("bonus.bpd.title")}
@@ -259,11 +250,8 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
 
   return (
     <ImageBackground
-      // source={bpdCardBg}
-      style={[
-        props.preview ? styles.preview : styles.container,
-        { backgroundColor: IOColors.blue }
-      ]}
+      source={props.preview ? bpdCardBgPreview : bpdCardBgFull}
+      style={[props.preview ? styles.preview : styles.container]}
       imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
     >
       <View
