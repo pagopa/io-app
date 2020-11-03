@@ -6,7 +6,7 @@ import { H5 } from "../../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import IbanInformationComponent from "../components/iban/IbanInformationComponent";
-import { TransactionsCountOverview } from "../components/TransactionsCountOverview";
+import { TransactionsGraphicalSummary } from "../components/summary/TransactionsGraphicalSummary";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -18,8 +18,9 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const BpdActivePeriod: React.FunctionComponent<Props> = () => (
   <View style={IOStyles.horizontalContentPadding}>
     <View spacer={true} />
-    <TransactionsCountOverview transactions={0} minTransactions={50} />
+    <TransactionsGraphicalSummary transactions={50} minTransactions={50} />
     <IbanInformationComponent />
+    <View spacer={true} extralarge={true} />
     <H5>Active Period!</H5>
   </View>
 );
