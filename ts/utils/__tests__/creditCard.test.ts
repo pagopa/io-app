@@ -101,6 +101,17 @@ describe("Returns Card Icon", () => {
         [some("378282246310005"), cardIcons.amex],
         [some("3530111333300000"), cardIcons.jcb]
       ]
+    ],
+    [
+      "Unsupported Circuits", // At least one test case for known and unsupported circuits
+      [
+        [some("123"), cardIcons.unknown],
+        [some("123456789012345"), cardIcons.unknown],
+        [some("5919000000000000"), cardIcons.unknown],
+        [some("6370000000000000"), cardIcons.unknown],
+        [some("6390000000000000"), cardIcons.unknown],
+        [some("63900"), cardIcons.unknown]
+      ]
     ]
   ];
   describe.each(testTable)("Tests for category %s", (description, tests) => {
@@ -115,5 +126,13 @@ describe("Returns Card Icon", () => {
         });
       }
     );
+  });
+});
+
+describe("Credit Card Detector Structural Tests", () => {
+  it("Check if regexps and icons keys match", () => {
+    const reKeys = Object.keys(CreditCardDetector.re);
+    const iconKeys = Object.keys(CreditCardDetector.cardIcons);
+    expect(reKeys).toEqual(expect.arrayContaining(iconKeys));
   });
 });

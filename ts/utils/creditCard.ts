@@ -30,10 +30,16 @@ export const CreditCardDetector: CreditCardDetector = {
     generalStrict: [4, 4, 4, 7]
   },
 
+  /* 
+  Credit card brands are recognized by matching against regular expressions.
+  Many brands are known to be recognized by the following regexps, but to not support them.
+ 
+  uatp: /^(?!1800)1\d{0,14}/, starts with 1; 15 digits, not starts with 1800 (jcb card)
+  dankort: /^(5019|4175|4571)\d{0,12}/, starts with 5019/4175/4571; 16 digits 
+  instapayment: /^63[7-9]\d{0,13}/, starts with 637-639; 16 digits
+  */
   re: {
-    // starts with 1; 15 digits, not starts with 1800 (jcb card)
-    uatp: /^(?!1800)1\d{0,14}/,
-
+    // Note: regexes are checked in the same order as listed
     // starts with 34/37; 15 digits
     amex: /^3[47]\d{0,13}/,
 
@@ -46,12 +52,6 @@ export const CreditCardDetector: CreditCardDetector = {
     // starts with 51-55/2221–2720; 16 digits
     mastercard: /^(5[1-5]\d{0,2}|22[2-9]\d{0,1}|2[3-7]\d{0,2})\d{0,12}/,
 
-    // starts with 5019/4175/4571; 16 digits
-    dankort: /^(5019|4175|4571)\d{0,12}/,
-
-    // starts with 637-639; 16 digits
-    instapayment: /^63[7-9]\d{0,13}/,
-
     // starts with 2131/1800; 15 digits
     jcb15: /^(?:2131|1800)\d{0,11}/,
 
@@ -60,9 +60,6 @@ export const CreditCardDetector: CreditCardDetector = {
 
     // starts with 50/56-58/6304/67; 16 digits
     maestro: /^(?:5[0678]\d{0,2}|6304|67\d{0,2})\d{0,12}/,
-
-    // starts with 22; 16 digits
-    mir: /^220[0-4]\d{0,12}/,
 
     // starts with 4; 16 digits
     visa: /^4\d{0,15}/,
@@ -82,6 +79,7 @@ export const CreditCardDetector: CreditCardDetector = {
     unionpay: require("../../img/wallet/cards-icons/form/unionpay.png"),
     discover: require("../../img/wallet/cards-icons/form/discover.png"),
     jcb: require("../../img/wallet/cards-icons/form/jcb.png"),
+    jcb15: require("../../img/wallet/cards-icons/form/jcb.png"),
     unknown: "io-carta"
   },
 
