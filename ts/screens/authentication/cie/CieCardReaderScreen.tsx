@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation from "../../../components/cie/CieReadingCardAnimation";
 import { withConditionalView } from "../../../components/helpers/withConditionalView";
@@ -32,7 +33,11 @@ import {
   setAccessibilityFocus
 } from "../../../utils/accessibility";
 import { instabugLog, TypeLogs } from "../../../boot/configureInstabug";
-import { cieAuthenticationError } from "../../../store/actions/cie";
+import {
+  cieAuthenticationError,
+  CieAuthenticationErrorPayload,
+  CieAuthenticationErrorReason
+} from "../../../store/actions/cie";
 import { ReduxProps } from "../../../store/actions/types";
 import { isIos } from "../../../utils/platform";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
@@ -69,18 +74,39 @@ type State = {
   isScreenReaderEnabled: boolean;
 };
 
+type setErrorParameter = {
+  eventReason: CieAuthenticationErrorReason;
+  errorDescription?: string;
+  navigationRoute?: string;
+  navigationParams?: Record<string, unknown>;
+};
+
 // A subset of Cie Events (errors) which is of interest to analytics
-const analyticActions = new Set<CEvent["event"]>([
-  "ON_TAG_DISCOVERED_NOT_CIE",
-  "ON_CARD_PIN_LOCKED",
-  "ON_PIN_ERROR",
-  "PIN_INPUT_ERROR",
-  "CERTIFICATE_EXPIRED",
-  "CERTIFICATE_REVOKED",
-  "AUTHENTICATION_ERROR",
-  "ON_NO_INTERNET_CONNECTION",
-  "STOP_NFC_ERROR",
-  "START_NFC_ERROR"
+const analyticActions = new Map<CieAuthenticationErrorReason, string>([
+  // Reading interrupted before the sdk complete the reading
+  ["Transmission Error", I18n.t("authentication.cie.card.error.onTagLost")],
+  ["ON_TAG_LOST", I18n.t("authentication.cie.card.error.onTagLost")],
+  [
+    "TAG_ERROR_NFC_NOT_SUPPORTED",
+    I18n.t("authentication.cie.card.error.unknownCardContent")
+  ],
+  [
+    "ON_TAG_DISCOVERED_NOT_CIE",
+    I18n.t("authentication.cie.card.error.unknownCardContent")
+  ],
+  ["PIN Locked", I18n.t("authentication.cie.card.error.generic")],
+  ["ON_CARD_PIN_LOCKED", I18n.t("authentication.cie.card.error.generic")],
+  ["ON_PIN_ERROR", I18n.t("authentication.cie.card.error.tryAgain")],
+  ["PIN_INPUT_ERROR", ""],
+  ["CERTIFICATE_EXPIRED", I18n.t("authentication.cie.card.error.generic")],
+  ["CERTIFICATE_REVOKED", I18n.t("authentication.cie.card.error.generic")],
+  ["AUTHENTICATION_ERROR", I18n.t("authentication.cie.card.error.generic")],
+  [
+    "ON_NO_INTERNET_CONNECTION",
+    I18n.t("authentication.cie.card.error.tryAgain")
+  ],
+  ["STOP_NFC_ERROR", ""],
+  ["START_NFC_ERROR", ""]
 ]);
 
 const instabugTag = "cie";
@@ -124,16 +150,25 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     return this.props.navigation.getParam("authorizationUri");
   }
 
-  private setError = (
-    errorMessage: string,
-    navigationRoute?: string,
-    navigationParams: Record<string, unknown> = {}
-  ) => {
-    this.dispatchAnalyticEvent(errorMessage);
+  private setError = ({
+    eventReason,
+    errorDescription,
+    navigationRoute,
+    navigationParams = {}
+  }: setErrorParameter) => {
+    const cieDescription =
+      errorDescription ??
+      fromNullable(analyticActions.get(eventReason)).getOrElse("");
+
+    this.dispatchAnalyticEvent({
+      reason: eventReason,
+      cieDescription
+    });
+
     this.setState(
       {
         readingState: ReadingState.error,
-        errorMessage
+        errorMessage: cieDescription
       },
       () => {
         Vibration.vibrate(VIBRATION);
@@ -144,14 +179,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  private dispatchAnalyticEvent = (message: string) => {
-    this.props.dispatch(cieAuthenticationError(Error(message)));
+  private dispatchAnalyticEvent = (error: CieAuthenticationErrorPayload) => {
+    this.props.dispatch(cieAuthenticationError(error));
   };
 
   private handleCieEvent = async (event: CEvent) => {
-    if (analyticActions.has(event.event)) {
-      this.dispatchAnalyticEvent(event.event);
-    }
     instabugLog(event.event, TypeLogs.DEBUG, instabugTag);
     switch (event.event) {
       // Reading starts
@@ -163,54 +195,42 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         }
         break;
 
-      // Reading interrupted before the sdk complete the reading
       case "Transmission Error":
       case "ON_TAG_LOST":
-        this.setError(I18n.t("authentication.cie.card.error.onTagLost"));
-        break;
-
       case "TAG_ERROR_NFC_NOT_SUPPORTED":
       case "ON_TAG_DISCOVERED_NOT_CIE":
-        this.setError(
-          I18n.t("authentication.cie.card.error.unknownCardContent")
-        );
+      case "AUTHENTICATION_ERROR":
+      case "ON_NO_INTERNET_CONNECTION":
+        this.setError({ eventReason: event.event });
         break;
 
       // The card is temporarily locked. Unlock is available by CieID app
       case "PIN Locked":
       case "ON_CARD_PIN_LOCKED":
-        this.setError(
-          I18n.t("authentication.cie.card.error.generic"),
-          ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
-        );
-        break;
-
-      case "AUTHENTICATION_ERROR":
-        this.setError(I18n.t("authentication.cie.card.error.generic"));
-        break;
-
-      case "ON_NO_INTERNET_CONNECTION":
-        this.setError(I18n.t("authentication.cie.card.error.tryAgain"));
+        this.setError({
+          eventReason: event.event,
+          navigationRoute: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
+        });
         break;
 
       // The inserted pin is incorrect
       case "ON_PIN_ERROR":
-        this.setError(
-          I18n.t("authentication.cie.card.error.tryAgain"),
-          ROUTES.CIE_WRONG_PIN_SCREEN,
-          {
+        this.setError({
+          eventReason: event.event,
+          navigationRoute: ROUTES.CIE_WRONG_PIN_SCREEN,
+          navigationParams: {
             remainingCount: event.attemptsLeft
           }
-        );
+        });
         break;
 
       // CIE is Expired or Revoked
       case "CERTIFICATE_EXPIRED":
       case "CERTIFICATE_REVOKED":
-        this.setError(
-          I18n.t("authentication.cie.card.error.generic"),
-          ROUTES.CIE_EXPIRED_SCREEN
-        );
+        this.setError({
+          eventReason: event.event,
+          navigationRoute: ROUTES.CIE_EXPIRED_SCREEN
+        });
         break;
 
       default:
@@ -294,7 +314,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
     instabugLog(error.message, TypeLogs.DEBUG, instabugTag);
-    this.setError(error.message);
+    this.setError({ eventReason: "GENERIC", errorDescription: error.message });
   };
 
   private handleCieSuccess = (cieConsentUri: string) => {
