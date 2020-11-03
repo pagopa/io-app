@@ -112,11 +112,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     }
   };
 
-  private decimalSeparatorRe = RegExp(
-    `\\${I18n.t("global.localization.decimalSeparator")}`,
-    "g"
-  );
-
   private isFormValid = () =>
     this.state.delocalizedAmount.map(isRight).getOrElse(false) &&
     this.state.paymentNoticeNumber.map(isRight).getOrElse(false) &&
