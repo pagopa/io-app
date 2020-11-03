@@ -22,7 +22,6 @@ import {
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import {
-  IPatternStringTag,
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
