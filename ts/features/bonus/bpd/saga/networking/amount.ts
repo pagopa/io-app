@@ -5,8 +5,8 @@ import { BpdAmount, bpdAmountLoad } from "../../store/actions/amount";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getError } from "../../../../../utils/errors";
-import { TotalCashbackResource } from "../../../../../../definitions/bpd/total_cashback/TotalCashbackResource";
 import { AwardPeriodId } from "../../store/actions/periods";
+import { TotalCashbackResource } from "../../../../../../definitions/bpd/winning_transactions/TotalCashbackResource";
 
 // convert a network payload amount into the relative app domain model
 const convertAmount = (
