@@ -27,6 +27,7 @@ import {
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import {
+  IPatternStringTag,
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
@@ -140,17 +141,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 paymentNoticeNumber,
                 organizationFiscalCode
               })
-            )
-          )
-          .chain(rptId =>
-            this.state.delocalizedAmount
-              .chain(fromEither)
-              .map(delocalizedAmount =>
-                this.props.navigateToTransactionSummary(
-                  rptId,
-                  delocalizedAmount
-                )
-              )
+            ).map(rptId => {
+              // Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
+              const initialAmount = "1" as string &
+                IPatternStringTag<"^[0-9]{1,10}$">;
+              this.props.navigateToTransactionSummary(rptId, initialAmount);
+            })
           )
       );
   };
