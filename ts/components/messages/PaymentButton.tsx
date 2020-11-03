@@ -72,7 +72,9 @@ class PaymentButton extends React.PureComponent<Props> {
     }
 
     if (this.isPaymentExpired) {
-      return I18n.t("messages.cta.payment.expired");
+      return this.props.messagePaymentExpirationInfo.kind === "EXPIRABLE"
+        ? I18n.t("messages.cta.payment.expired")
+        : I18n.t("messages.cta.onlyPay");
     }
 
     return I18n.t("messages.cta.pay", {
@@ -142,7 +144,11 @@ class PaymentButton extends React.PureComponent<Props> {
         disabled={disabled}
         onPress={this.handleOnPress}
         gray={paid}
-        darkGray={!paid && this.isPaymentExpired}
+        darkGray={
+          !paid &&
+          this.isPaymentExpired &&
+          messagePaymentExpirationInfo.kind === "EXPIRABLE"
+        }
         xsmall={small}
         alert={
           enableAlertStyle && !paid && isExpiring(messagePaymentExpirationInfo)
