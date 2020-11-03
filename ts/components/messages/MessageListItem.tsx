@@ -12,7 +12,12 @@ import {
   convertDateToWordDistance,
   convertReceivedDateToAccessible
 } from "../../utils/convertDateToWordDistance";
-import { hasPrescriptionData, messageNeedsCTABar } from "../../utils/messages";
+import {
+  hasPrescriptionData,
+  isExpired,
+  messageNeedsCTABar,
+  paymentExpirationInfo
+} from "../../utils/messages";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
 import MessageListCTABar from "./MessageListCTABar";
 
@@ -39,6 +44,15 @@ const UNKNOWN_SERVICE_DATA = {
 };
 
 class MessageListItem extends React.PureComponent<Props> {
+  get paymentExpirationInfo() {
+    return paymentExpirationInfo(this.props.message);
+  }
+  get paid(): boolean {
+    return this.props.payment !== undefined;
+  }
+  get isPaymentExpired() {
+    return this.paymentExpirationInfo.fold(false, isExpired);
+  }
   private handlePress = () => {
     this.props.onPress(this.props.message.id);
   };
@@ -92,6 +106,8 @@ class MessageListItem extends React.PureComponent<Props> {
         onLongPressItem={this.handleLongPress}
         isSelectionModeEnabled={isSelectionModeEnabled}
         isItemSelected={isSelected}
+        isPaid={this.paid}
+        isExpired={this.isPaymentExpired && !this.paid}
         accessible={true}
         accessibilityLabel={this.announceMessage({
           isRead,
