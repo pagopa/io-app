@@ -136,7 +136,10 @@ const chooseTextualInfoBox = (props: Props) => {
       // Congratulation! cashback received
       return <ClosedPeriodOK {...props} />;
     case "Active":
-      if (props.amount.transactionNumber < props.period.minTransactionNumber) {
+      if (
+        props.amount.transactionNumber < props.period.minTransactionNumber &&
+        props.amount.totalCashback > 0
+      ) {
         return <CurrentPeriodWarning period={props.period} />;
       }
   }

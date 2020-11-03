@@ -5,8 +5,10 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import { isReady } from "../../../../model/RemoteValue";
 import { BpdAmount } from "../../../../store/actions/amount";
 import { BpdPeriod } from "../../../../store/actions/periods";
+import { bpdIbanSelector } from "../../../../store/reducers/details/activation";
 import { bpdAmountForSelectedPeriod } from "../../../../store/reducers/details/amounts";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import { TransactionsTextualSummary } from "./infobox/TransactionsTextualSummary";
@@ -39,23 +41,26 @@ const Content = (sd: SummaryData) => (
 
 /**
  * Display a summary with a graphical and textual information about the minimum transaction
- * and the amount earned for the period
+ * and the amount earned for the period.
  * @constructor
  */
 const BpdSummaryComponent: React.FunctionComponent<Props> = props =>
   fromNullable(props.currentPeriod)
     .map(period =>
-      pot.fold(
-        props.amount,
-        () => null,
-        () => null,
-        _ => null,
-        _ => null,
-        amount => <Content amount={amount} period={period} />,
-        amount => <Content amount={amount} period={period} />,
-        (amount, _) => <Content amount={amount} period={period} />,
-        _ => null
-      )
+      // In order to render the component in the active period, the iban should be defined
+      period.status !== "Active" || (isReady(props.iban) && props.iban.value)
+        ? pot.fold(
+            props.amount,
+            () => null,
+            () => null,
+            _ => null,
+            _ => null,
+            amount => <Content amount={amount} period={period} />,
+            amount => <Content amount={amount} period={period} />,
+            (amount, _) => <Content amount={amount} period={period} />,
+            _ => null
+          )
+        : null
     )
     .getOrElse(null);
 
@@ -63,7 +68,8 @@ const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
   currentPeriod: bpdSelectedPeriodSelector(state),
-  amount: bpdAmountForSelectedPeriod(state)
+  amount: bpdAmountForSelectedPeriod(state),
+  iban: bpdIbanSelector(state)
 });
 
 export default connect(
