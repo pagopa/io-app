@@ -1,8 +1,11 @@
+import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { H1 } from "../../../../../../components/core/typography/H1";
+import { H5 } from "../../../../../../components/core/typography/H5";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import BpdSummaryComponent from "../components/summary/BpdSummaryComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -12,7 +15,12 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const BpdClosedPeriod: React.FunctionComponent<Props> = () => (
-  <H1>Closed Period placeholder!</H1>
+  <View style={IOStyles.horizontalContentPadding}>
+    <View spacer={true} />
+    <BpdSummaryComponent />
+    <View spacer={true} extralarge={true} />
+    <H5>Closed period!</H5>
+  </View>
 );
 
 const mapDispatchToProps = (_: Dispatch) => ({});

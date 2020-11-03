@@ -34,7 +34,7 @@ const BpdPeriodDetail: React.FunctionComponent<Props> = props => (
   </View>
 );
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
   selectedPeriod: bpdSelectedPeriodSelector(state)

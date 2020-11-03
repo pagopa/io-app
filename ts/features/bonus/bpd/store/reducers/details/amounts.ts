@@ -64,6 +64,6 @@ export const bpdAmountForSelectedPeriod = createSelector(
   ],
   (amounts, period) =>
     fromNullable(period)
-      .map(p => amounts[p.awardPeriodId])
+      .map(p => amounts[p.awardPeriodId] ?? pot.none)
       .getOrElse(pot.none)
 );
