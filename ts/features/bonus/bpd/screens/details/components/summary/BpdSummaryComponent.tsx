@@ -13,7 +13,7 @@ import { BpdPeriod } from "../../../../store/actions/periods";
 import { bpdIbanSelector } from "../../../../store/reducers/details/activation";
 import { bpdAmountForSelectedPeriod } from "../../../../store/reducers/details/amounts";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
-import { TransactionsTextualSummary } from "./TransactionsTextualSummary";
+import { TextualSummary } from "./TextualSummary";
 import { TransactionsGraphicalSummary } from "./TransactionsGraphicalSummary";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -34,11 +34,7 @@ const Content = (sd: SummaryData) => (
       />
     )}
     <View spacer={true} />
-    <TransactionsTextualSummary
-      period={sd.period}
-      amount={sd.amount}
-      name={sd.name}
-    />
+    <TextualSummary period={sd.period} amount={sd.amount} name={sd.name} />
   </View>
 );
 

@@ -123,7 +123,6 @@ const chooseTextualInfoBox = (props: Props) => {
       endGracePeriod.setDate(
         props.period.endDate.getDate() + props.period.gracePeriod
       );
-      console.log(endGracePeriod);
       // we are still in the grace period and warns the user that some transactions
       // may still be pending
       if (today <= endGracePeriod && today >= props.period.endDate) {
@@ -152,5 +151,5 @@ const chooseTextualInfoBox = (props: Props) => {
  * @param props
  * @constructor
  */
-export const TransactionsTextualSummary: React.FunctionComponent<Props> = props =>
+export const TextualSummary: React.FunctionComponent<Props> = props =>
   chooseTextualInfoBox(props);
