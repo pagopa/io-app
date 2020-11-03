@@ -111,8 +111,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               })
             ).map(rptId => {
               // Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
-              const initialAmount = "1" as string &
-                IPatternStringTag<"^[0-9]{1,10}$">;
+              const initialAmount = "1" as AmountInEuroCents;
               this.props.navigateToTransactionSummary(rptId, initialAmount);
             })
           )
