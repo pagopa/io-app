@@ -7,6 +7,7 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import IbanInformationComponent from "../components/iban/IbanInformationComponent";
 import BpdSummaryComponent from "../components/summary/BpdSummaryComponent";
+import WalletPaymentMethodBpdList from "../components/WalletPaymentMethodBpdList";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -17,6 +18,8 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const BpdInactivePeriod: React.FunctionComponent<Props> = () => (
   <View style={IOStyles.horizontalContentPadding}>
+    <View spacer={true} />
+    <WalletPaymentMethodBpdList />
     <View spacer={true} />
     <BpdSummaryComponent />
     <View spacer={true} />

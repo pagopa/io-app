@@ -1633,6 +1633,7 @@ bonus:
   bpd:
     title: Cashback Pagamenti Digitali
     name: Cashback
+    unsubscribe: "Disattiva il cashback"
     onboarding:
       loadingActivationStatus:
         title: Verifico lo stato di attivazione

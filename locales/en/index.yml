@@ -1601,6 +1601,7 @@ bonus:
   bpd:
     title: Cashback Digital Payments
     name: Cashback
+    unsubscribe: "Disable cashback"
     onboarding:
       loadingActivationStatus:
         title: Loading activation status
