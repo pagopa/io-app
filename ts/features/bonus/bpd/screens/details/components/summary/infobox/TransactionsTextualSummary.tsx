@@ -47,5 +47,5 @@ const chooseTextualInfoBox = (props: Props) => {
   return null;
 };
 
-export const MinimumTransactionsTextualInfoBox: React.FunctionComponent<Props> = props =>
+export const TransactionsTextualSummary: React.FunctionComponent<Props> = props =>
   chooseTextualInfoBox(props);
