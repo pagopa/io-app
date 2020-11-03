@@ -110,7 +110,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     bpdBackendClient.totalCashback
   );
 
-  // prefetch all the details data
+  // prefetch all the bpd data
   yield takeEvery(bpdDetailsLoadAll, prefetchBpdData);
 
   // load bpd transactions for a period

@@ -4,6 +4,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { profileNameSelector } from "../../../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { isStringNullyOrEmpty } from "../../../../../../../utils/strings";
 import { isReady } from "../../../../model/RemoteValue";
@@ -21,6 +22,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 type SummaryData = {
   period: BpdPeriod;
   amount: BpdAmount;
+  name: string | undefined;
 };
 
 const Content = (sd: SummaryData) => (
@@ -35,7 +37,7 @@ const Content = (sd: SummaryData) => (
     <TransactionsTextualSummary
       period={sd.period}
       amount={sd.amount}
-      name={"Ciao"}
+      name={sd.name}
     />
   </View>
 );
@@ -57,9 +59,15 @@ const BpdSummaryComponent: React.FunctionComponent<Props> = props =>
             () => null,
             _ => null,
             _ => null,
-            amount => <Content amount={amount} period={period} />,
-            amount => <Content amount={amount} period={period} />,
-            (amount, _) => <Content amount={amount} period={period} />,
+            amount => (
+              <Content amount={amount} period={period} name={props.name} />
+            ),
+            amount => (
+              <Content amount={amount} period={period} name={props.name} />
+            ),
+            (amount, _) => (
+              <Content amount={amount} period={period} name={props.name} />
+            ),
             _ => null
           )
         : null
@@ -71,7 +79,8 @@ const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
   currentPeriod: bpdSelectedPeriodSelector(state),
   amount: bpdAmountForSelectedPeriod(state),
-  iban: bpdIbanSelector(state)
+  iban: bpdIbanSelector(state),
+  name: profileNameSelector(state)
 });
 
 export default connect(

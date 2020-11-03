@@ -9,7 +9,7 @@ import { BpdPeriod } from "../../../../store/actions/periods";
 type Props = {
   period: BpdPeriod;
   amount: BpdAmount;
-  name: string;
+  name: string | undefined;
 };
 
 /**
@@ -114,7 +114,6 @@ const InactivePeriod = (props: { period: BpdPeriod }) => (
  * @param props
  */
 const chooseTextualInfoBox = (props: Props) => {
-  // active period but still not enough transaction
   switch (props.period.status) {
     case "Inactive":
       return <InactivePeriod period={props.period} />;
@@ -124,9 +123,10 @@ const chooseTextualInfoBox = (props: Props) => {
       endGracePeriod.setDate(
         props.period.endDate.getDate() + props.period.gracePeriod
       );
+      console.log(endGracePeriod);
       // we are still in the grace period and warns the user that some transactions
       // may still be pending
-      if (today <= endGracePeriod) {
+      if (today <= endGracePeriod && today >= props.period.endDate) {
         return <GracePeriod {...props} />;
       }
       // not enough transaction to receive the cashback
@@ -136,6 +136,7 @@ const chooseTextualInfoBox = (props: Props) => {
       // Congratulation! cashback received
       return <ClosedPeriodOK {...props} />;
     case "Active":
+      // active period but still not enough transaction
       if (
         props.amount.transactionNumber < props.period.minTransactionNumber &&
         props.amount.totalCashback > 0

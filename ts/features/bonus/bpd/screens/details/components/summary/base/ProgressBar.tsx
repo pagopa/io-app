@@ -1,7 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { IOColors } from "../../../../../../../components/core/variables/IOColors";
+import { IOColors } from "../../../../../../../../components/core/variables/IOColors";
 
 type Props = {
   // between 0 and 1
