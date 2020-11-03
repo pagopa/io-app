@@ -44,7 +44,7 @@ export default class FooterWithButtons extends React.Component<
       <View
         style={styles.container}
         accessible={this.props.accessible}
-        pointerEvents="box-none"
+        pointerEvents={"box-none"}
       >
         <View style={styles.footerVariant}>
           <BlockButtons {...this.props} />
