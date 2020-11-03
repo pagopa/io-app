@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 
 /**
- * Simple component used as background when the bottom sheet pops up to blurr the background and demands its closing when tapping on it
+ * Simple component used as background when the bottom sheet pops up to blur the background and demands its closing when tapping on it
  * @param onPress
  */
 export const BlurredBackgroundComponent = (onPress: () => void) => (
