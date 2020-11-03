@@ -1655,6 +1655,7 @@ bonus:
           gracePeriodBody: "This cashback period ended on {{date}}. We are waiting to receive the latest transactions from the banks. A little more patience. We will notify you with a message on IO!"
           closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
           closedPeriodMaxAmount: "it's the maximum possible refund!"
+          inactivePeriodBody: "You will be able to start accumulating valid transactions starting from {{date}}"
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"

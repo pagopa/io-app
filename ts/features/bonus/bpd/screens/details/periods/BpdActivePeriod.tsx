@@ -19,6 +19,7 @@ const BpdActivePeriod: React.FunctionComponent<Props> = () => (
   <View style={IOStyles.horizontalContentPadding}>
     <View spacer={true} />
     <BpdSummaryComponent />
+    <View spacer={true} />
     <IbanInformationComponent />
     <View spacer={true} extralarge={true} />
     <H5>Active Period!</H5>

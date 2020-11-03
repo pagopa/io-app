@@ -22,10 +22,12 @@ type SummaryData = {
 
 const Content = (sd: SummaryData) => (
   <View>
-    <TransactionsGraphicalSummary
-      transactions={sd.amount.transactionNumber}
-      minTransactions={sd.period.minTransactionNumber}
-    />
+    {sd.period.status === "Inactive" ? null : (
+      <TransactionsGraphicalSummary
+        transactions={sd.amount.transactionNumber}
+        minTransactions={sd.period.minTransactionNumber}
+      />
+    )}
     <View spacer={true} />
     <TransactionsTextualSummary
       period={sd.period}

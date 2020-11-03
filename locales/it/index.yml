@@ -1687,6 +1687,7 @@ bonus:
           gracePeriodBody: "Questo periodo del cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere dalle banche le ultime transazazioni. Ancora un po’ di pazienza. TI avviseremo con un messaggio su IO!"
           closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
           closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
+          inactivePeriodBody: "Potrai iniziare ad accumulare transazioni valide a partire dal {{date}}"
       transaction:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
