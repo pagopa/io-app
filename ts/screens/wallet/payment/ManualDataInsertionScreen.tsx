@@ -11,18 +11,13 @@
 import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
 import * as React from "react";
 import { Keyboard, ScrollView, StyleSheet } from "react-native";
-import {
-  NavigationEventPayload,
-  NavigationEvents,
-  NavigationInjectedProps
-} from "react-navigation";
+import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { isLeft, isRight, left, right } from "fp-ts/lib/Either";
+import { isLeft, isRight } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
-  AmountInEuroCentsFromNumber,
   PaymentNoticeNumberFromString,
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
