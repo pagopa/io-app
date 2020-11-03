@@ -47,7 +47,6 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
-import { NumberFromString } from "../../../utils/number";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -67,10 +66,6 @@ type State = Readonly<{
   organizationFiscalCode: Option<
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
-  delocalizedAmount: Option<
-    ReturnType<typeof AmountInEuroCentsFromString.decode>
-  >;
-  inputAmountValue: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -83,10 +78,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const AmountInEuroCentsFromString = NumberFromString.pipe(
-  AmountInEuroCentsFromNumber
-);
-
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.insertManually.contextualHelpTitle",
   body: "wallet.insertManually.contextualHelpContent"
@@ -96,21 +87,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       paymentNoticeNumber: none,
-      organizationFiscalCode: none,
-      delocalizedAmount: none,
-      inputAmountValue: ""
+      organizationFiscalCode: none
     };
   }
-
-  private handleWillFocus = (payload: NavigationEventPayload) => {
-    const isInvalidAmount =
-      payload.state.params !== undefined
-        ? payload.state.params.isInvalidAmount
-        : false;
-    if (isInvalidAmount) {
-      this.setState({ inputAmountValue: "", delocalizedAmount: none });
-    }
-  };
 
   private isFormValid = () =>
     this.state.paymentNoticeNumber.map(isRight).getOrElse(false) &&
@@ -167,7 +146,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_insert_notice_data"]}
       >
-        <NavigationEvents onWillFocus={this.handleWillFocus} />
+        <NavigationEvents />
         <ScrollView style={styles.whiteBg} keyboardShouldPersistTaps="handled">
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
