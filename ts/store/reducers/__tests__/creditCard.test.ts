@@ -4,7 +4,7 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../../../utils/input";
-import reducer, { CreditCardHistoryState } from "../wallet/creditCard";
+import reducer, { CreditCardInsertionState } from "../wallet/creditCard";
 
 import { addWalletCreditCardRequest } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
@@ -25,19 +25,19 @@ describe("credit card history", () => {
   });
 
   it("should add a credit card in the history", () => {
-    const state1 = doAddCreditCardTest([], addCCAction);
+    const state1 = runReducer([], addCCAction);
     expect(state1.length).toEqual(1);
   });
 
   it("should not add a credit card in the history (already present)", () => {
-    const state1 = doAddCreditCardTest([], addCCAction);
+    const state1 = runReducer([], addCCAction);
     expect(state1.length).toEqual(1);
-    const state2 = doAddCreditCardTest(state1, addCCAction);
+    const state2 = runReducer(state1, addCCAction);
     expect(state2.length).toEqual(1);
   });
 });
 
-const doAddCreditCardTest = (
-  state: CreditCardHistoryState,
+const runReducer = (
+  state: CreditCardInsertionState,
   action: Action
-): CreditCardHistoryState => reducer(state, action);
+): CreditCardInsertionState => reducer(state, action);
