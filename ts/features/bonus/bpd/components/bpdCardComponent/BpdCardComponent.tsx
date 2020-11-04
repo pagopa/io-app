@@ -16,6 +16,8 @@ import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
 import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 
+const STATUS_CLOSED = "Closed";
+
 type Props = {
   period: BpdPeriod;
   totalAmount: BpdAmount;
@@ -98,6 +100,10 @@ const styles = StyleSheet.create({
   alignItemsCenter: {
     alignItems: "center"
   },
+  badgePreview: {
+    backgroundColor: IOColors.white,
+    height: 18
+  },
   justifyContentCenter: {
     justifyContent: "center"
   }
@@ -122,7 +128,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           },
           label: I18n.t("bonus.bpd.detail.status.active")
         };
-      case "Closed":
+      case STATUS_CLOSED:
         return {
           style: {
             backgroundColor: IOColors.black
@@ -146,9 +152,38 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
     }
   };
 
-  const amount = formatNumberCentsToAmount(
-    props.totalAmount.totalCashback
-  ).split(",");
+  const showLock = () => {
+    const { period } = props;
+
+    switch (period.status) {
+      case "Active":
+        return (
+          props.totalAmount.transactionNumber <
+          props.period.minTransactionNumber
+        );
+      case "Inactive":
+        return true;
+      default:
+        return false;
+    }
+  };
+
+  const conditionalAmount = (): ReadonlyArray<string> => {
+    // TODO: Add supercashback logic for amount
+    // eslint-disable-next-line sonarjs/no-collapsible-if
+    if (props.period.status === STATUS_CLOSED) {
+      if (
+        props.totalAmount.transactionNumber < props.period.minTransactionNumber
+      ) {
+        return ["0", "00"];
+      }
+    }
+    return formatNumberCentsToAmount(props.totalAmount.totalCashback).split(
+      ","
+    );
+  };
+
+  const amount = conditionalAmount();
 
   const renderFullCard = () => (
     <View style={[styles.row, styles.spaced]}>
@@ -173,7 +208,9 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               {amount[1]}
             </Text>
             <View hspacer={true} small={true} />
-            <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
+            {showLock() && (
+              <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
+            )}
           </View>
           <H5 color={"white"} weight={"Regular"}>
             {I18n.t("bonus.bpd.detail.card.earned")}
@@ -185,7 +222,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           <Text
             semibold={true}
             style={styles.badgeTextBase}
-            dark={props.period.status !== "Closed"}
+            dark={props.period.status !== STATUS_CLOSED}
           >
             {formatStatusBadge().label}
           </Text>
@@ -194,6 +231,22 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
       </View>
     </View>
   );
+
+  const checkGracePeriod = (): boolean => {
+    const actualDate = new Date();
+    const endDate = new Date(props.period.endDate.getTime());
+    endDate.setDate(endDate.getDate() + props.period.gracePeriod);
+    if (
+      props.period.status === STATUS_CLOSED &&
+      actualDate.getTime() >= props.period.endDate.getTime() &&
+      actualDate.getTime() <= endDate.getTime()
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const isInGracePeriod = checkGracePeriod();
 
   const renderPreviewCard = () => (
     <TouchableDefaultOpacity
@@ -211,7 +264,9 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             {format(props.period.endDate, "MMMM YYYY")}
           </H5>
           <View hspacer={true} small={true} />
-          <IconFont name="io-tick-big" size={20} color={IOColors.white} />
+          {props.period.status === STATUS_CLOSED && (
+            <IconFont name="io-tick-big" size={20} color={IOColors.white} />
+          )}
         </View>
         <View
           style={[
@@ -232,15 +287,29 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               styles.justifyContentCenter
             ]}
           >
-            <IconFont name="io-lucchetto" size={16} color={IOColors.white} />
+            {showLock() && (
+              <IconFont name="io-lucchetto" size={16} color={IOColors.white} />
+            )}
             <View hspacer={true} small={true} />
-            <Text bold={true} white={true} style={styles.amountTextBasePreview}>
-              €
-              <Text white={true} style={styles.amountTextUpperPreview}>
-                {amount[0]},
+            {isInGracePeriod ? (
+              <Badge style={styles.badgePreview}>
+                <Text semibold={true} style={styles.badgeTextBase} dark={true}>
+                  {I18n.t("profile.preferences.list.wip")}
+                </Text>
+              </Badge>
+            ) : (
+              <Text
+                bold={true}
+                white={true}
+                style={styles.amountTextBasePreview}
+              >
+                €
+                <Text white={true} style={styles.amountTextUpperPreview}>
+                  {amount[0]},
+                </Text>
+                {amount[1]}
               </Text>
-              {amount[1]}
-            </Text>
+            )}
           </View>
         </View>
       </View>
