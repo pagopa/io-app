@@ -61,11 +61,12 @@ export const remoteError = <E>(e: E): RemoteError<E> => ({
 });
 
 export const fold = <T, E, B>(
+  rm: RemoteValue<T, E>,
   onUndefined: () => B,
   onLoading: () => B,
-  onReady: (error: T) => B,
-  onError: (value: E) => B
-) => (rm: RemoteValue<T, E>): B => {
+  onReady: (value: T) => B,
+  onError: (error: E) => B
+): B => {
   switch (rm.kind) {
     case "undefined": {
       return onUndefined();
