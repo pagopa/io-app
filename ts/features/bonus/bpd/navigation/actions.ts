@@ -51,3 +51,9 @@ export const navigateToBpdDetails = (specificPeriod?: BpdPeriod) =>
     routeName: BPD_ROUTES.DETAILS,
     params: { specificPeriod }
   });
+
+// Transactions
+export const navigateToBpdTransactions = () =>
+  NavigationActions.navigate({
+    routeName: BPD_ROUTES.TRANSACTIONS
+  });

@@ -1685,6 +1685,9 @@ bonus:
           title: "IBAN per l’accredito"
           noIbanBody: "Imposta il tuo IBAN per poter ricevere il cashback accumulato"
           button: "Imposta IBAN"
+      transaction:
+        title: "Le tue transazioni"
+        goToButton: "Dettaglio transazioni"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
