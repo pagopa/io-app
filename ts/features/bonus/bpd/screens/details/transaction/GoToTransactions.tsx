@@ -8,7 +8,6 @@ import { Label } from "../../../../../../components/core/typography/Label";
 import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { useLoadPotValue } from "../../../../../../utils/hooks/useLoadPotValue";
 import { navigateToBpdTransactions } from "../../../navigation/actions";
 import { AwardPeriodId } from "../../../store/actions/periods";
 import { bpdTransactionsLoad } from "../../../store/actions/transactions";
@@ -25,17 +24,6 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const GoToTransactions: React.FunctionComponent<Props> = props => {
-  // Load the transactions if not pot.some
-
-  const periodId = fromNullable(props.selectedPeriod)
-    .map(period => period.awardPeriodId.toString())
-    .getOrElse("undefined");
-
-  useLoadPotValue(periodId, props.transactions, () =>
-    fromNullable(props.selectedPeriod).map(period =>
-      props.loadTransactionsByPeriod(period.awardPeriodId)
-    )
-  );
   const canRenderButton = pot.getOrElse(
     pot.map(props.transactions, val => val.length > 0),
     false
