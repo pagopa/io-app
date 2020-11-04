@@ -66,6 +66,7 @@ global:
     search: Ricerca
     skip: "Salta"
     add: Aggiungi
+    edit: "Modifica"
   navigator:
     messages: messaggi
     wallet: pagamenti
@@ -1678,6 +1679,12 @@ bonus:
         text2: "identifica un conto corrente che non risulta intestato al tuo codice fiscale: sei sicuro di voler usare questo IBAN?"
       loading:
         "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
+    details:
+      components:
+        iban:
+          title: "IBAN per l’accredito"
+          noIbanBody: "Imposta il tuo IBAN per poter ricevere il cashback accumulato"
+          button: "Imposta IBAN"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

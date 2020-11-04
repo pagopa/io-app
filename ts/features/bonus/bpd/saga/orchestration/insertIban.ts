@@ -16,6 +16,7 @@ import {
   bpdIbanInsertionCancel,
   bpdIbanInsertionContinue
 } from "../../store/actions/iban";
+import { bpdOnboardingCompleted } from "../../store/actions/onboarding";
 import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing";
 
 // TODO: if isOnboarding===true, change with an action that triggers a saga that choose
@@ -66,6 +67,7 @@ export function* bpdIbanInsertionWorker() {
           : navigateToBpdOnboardingNoPaymentMethods();
       yield put(nextAction);
       yield put(navigationHistoryPop(1));
+      yield put(bpdOnboardingCompleted());
     } else {
       yield put(NavigationActions.back());
     }

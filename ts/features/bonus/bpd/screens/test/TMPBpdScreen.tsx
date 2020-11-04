@@ -32,6 +32,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 
 const renderBpdActive = (value: RemoteValue<boolean, Error>) =>
   fold(
+    value,
     () => <LabelSmall color={"bluegrey"}>Sconosciuta</LabelSmall>,
     () => <LabelSmall color={"bluegrey"}>In caricamento</LabelSmall>,
     active => (
@@ -40,7 +41,7 @@ const renderBpdActive = (value: RemoteValue<boolean, Error>) =>
       </LabelSmall>
     ),
     _ => <LabelSmall color={"red"}>Errore durante il caricamento</LabelSmall>
-  )(value);
+  );
 
 const renderPaymentMethod = (
   potWallets: pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>
