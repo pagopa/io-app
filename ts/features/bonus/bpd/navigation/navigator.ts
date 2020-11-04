@@ -1,4 +1,5 @@
 import { createStackNavigator } from "react-navigation";
+import BpdDetailsScreen from "../screens/details/BpdDetailsScreen";
 import MainIbanScreen from "../screens/iban/MainIbanScreen";
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
 import DeclarationScreen from "../screens/onboarding/declaration/DeclarationScreen";
@@ -31,6 +32,9 @@ const BpdNavigator = createStackNavigator(
     },
     [BPD_ROUTES.IBAN]: {
       screen: MainIbanScreen
+    },
+    [BPD_ROUTES.DETAILS]: {
+      screen: BpdDetailsScreen
     },
     // TODO: remove after the introduction of the bpd detail screen
     [BPD_ROUTES.TEST]: {

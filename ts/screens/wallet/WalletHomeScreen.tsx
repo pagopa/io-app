@@ -36,7 +36,8 @@ import {
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
-import { navigateToBpdTestScreen } from "../../features/bonus/bpd/navigation/action/bpdTestNav";
+import { navigateToBpdTestScreen } from "../../features/bonus/bpd/navigation/actions";
+import TmpPeriods from "../../features/bonus/bpd/screens/test/TMPPeriods";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -514,12 +515,16 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       >
         {/* TODO: temp only, for test purpose,to be removed with bpd details */}
         {bpdEnabled && (
-          <Button
-            style={{ width: "100%" }}
-            onPress={this.props.navigateToBpdTest}
-          >
-            <Label color={"white"}>BPD details</Label>
-          </Button>
+          <>
+            <Button
+              style={{ width: "100%" }}
+              onPress={this.props.navigateToBpdTest}
+            >
+              <Label color={"white"}>BPD details</Label>
+            </Button>
+            {/* TODO: temp only, temporary display bpd periods */}
+            <TmpPeriods />
+          </>
         )}
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
         {bonusVacanzeEnabled && (

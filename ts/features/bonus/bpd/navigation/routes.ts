@@ -10,6 +10,7 @@ const BPD_ROUTES = {
     NO_PAYMENT_METHODS: "BPD_NO_PAYMENT_METHODS"
   },
   IBAN: "BPD_IBAN",
+  DETAILS: "BPD_DETAILS",
   // TODO: remove after the introduction of the bpd detail screen
   TEST: "BPD_TEST"
 };

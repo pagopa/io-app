@@ -6,11 +6,11 @@ import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { walletsSelector } from "../../../../../store/reducers/wallet/wallets";
-import { navigateToBpdIbanInsertion } from "../../navigation/action/iban";
 import {
+  navigateToBpdIbanInsertion,
   navigateToBpdOnboardingEnrollPaymentMethod,
   navigateToBpdOnboardingNoPaymentMethods
-} from "../../navigation/action/onboarding";
+} from "../../navigation/actions";
 import BPD_ROUTES from "../../navigation/routes";
 import {
   bpdIbanInsertionCancel,
