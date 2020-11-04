@@ -4,7 +4,7 @@ import { call, put, race, select, take } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
-import { navigateToBpdOnboardingLoadActivate } from "../../../navigation/action/onboarding";
+import { navigateToBpdOnboardingLoadActivate } from "../../../navigation/actions";
 import BPD_ROUTES from "../../../navigation/routes";
 import { bpdIbanInsertionStart } from "../../../store/actions/iban";
 import {
@@ -34,7 +34,6 @@ function* enrollToBpdWorker() {
   );
 
   if (enrollResult.payload.enabled) {
- 
     yield put(bpdIbanInsertionStart());
     yield put(navigationHistoryPop(1));
   }
