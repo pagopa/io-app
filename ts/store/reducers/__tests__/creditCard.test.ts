@@ -1,3 +1,4 @@
+import { range } from "fp-ts/lib/Array";
 import { NullableWallet, WalletResponse } from "../../../types/pagopa";
 import {
   CreditCardExpirationMonth,
@@ -15,7 +16,6 @@ import {
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
 import sha from "sha.js";
-import { range } from "fp-ts/lib/Array";
 
 const creditCardToAdd: NullableWallet = {
   creditCard: {
@@ -71,9 +71,10 @@ describe("credit card history", () => {
   it("should limit the attempts list on a maximum", () => {
     const finalState = range(1, MAX_HISTORY_LENGTH + 10).reduce<
       CreditCardInsertionState
-    >(acc => {
-      return runReducer(acc, addWalletCreditCardRequest(getNewCreditCard()));
-    }, []);
+    >(
+      acc => runReducer(acc, addWalletCreditCardRequest(getNewCreditCard())),
+      []
+    );
     expect(finalState.length).toBeLessThanOrEqual(MAX_HISTORY_LENGTH);
   });
 
