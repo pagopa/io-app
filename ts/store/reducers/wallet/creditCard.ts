@@ -1,7 +1,7 @@
 import { getType } from "typesafe-actions";
 import sha from "sha.js";
 import { fromNullable } from "fp-ts/lib/Option";
-import { index, takeEnd } from "fp-ts/lib/Array";
+import { index, take, takeEnd } from "fp-ts/lib/Array";
 import {
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess
@@ -22,6 +22,7 @@ type CreditCardInsertion = {
 };
 
 export type CreditCardInsertionState = ReadonlyArray<CreditCardInsertion>;
+export const MAX_HISTORY_LENGTH = 15;
 
 /**
  * card insertion follow these step:
@@ -55,7 +56,7 @@ const reducer = (
           expireMonth: c.expireMonth,
           expireYear: c.expireYear
         };
-        return [...newState, creditCardAttempt];
+        return take(MAX_HISTORY_LENGTH, [creditCardAttempt, ...newState]);
       });
     case getType(addWalletCreditCardSuccess):
       const currentState = [...state];
@@ -70,14 +71,16 @@ const reducer = (
             brand: wallet.creditCard?.brand
           }
         };
-        return state.length === 0
-          ? [updatedAttempt]
-          : // place the update item on 0-index position
-            // followed by the others element 1...N
-            [
-              updatedAttempt,
-              ...takeEnd<CreditCardInsertion>(state.length - 1, currentState)
-            ];
+        const updateState =
+          state.length === 0
+            ? [updatedAttempt]
+            : // place the update item on 0-index position
+              // followed by the others element 1...N
+              [
+                updatedAttempt,
+                ...takeEnd<CreditCardInsertion>(state.length - 1, currentState)
+              ];
+        return take(MAX_HISTORY_LENGTH, updateState);
       });
 
     default:
