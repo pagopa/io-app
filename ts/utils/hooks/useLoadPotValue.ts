@@ -11,6 +11,7 @@ const retryTimeout = 5000 as Millisecond;
  * @param id - the loadRequestId. Should be always the same for the same pot and different, for different pots.
  * @param potValue - the value that we would ensure that should be loaded
  * @param loadAction - the action that trigger the load of the pot
+ * @deprecated
  */
 export const useLoadPotValue = <T, E>(
   id: string,
