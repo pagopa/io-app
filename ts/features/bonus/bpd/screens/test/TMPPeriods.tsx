@@ -43,7 +43,7 @@ const renderPeriods = (
     <Button
       key={p.period.awardPeriodId}
       style={{ flex: 1 }}
-      onPress={() => action(p)}
+      onPress={() => action(p.period)}
     >
       <Label color={"white"}>{p.period.awardPeriodId}</Label>
     </Button>
