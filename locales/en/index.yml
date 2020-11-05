@@ -1602,6 +1602,7 @@ bonus:
     title: Cashback Digital Payments
     name: Cashback
     unsubscribe: "Disable cashback"
+    earned: Earned Cashback
     onboarding:
       loadingActivationStatus:
         title: Loading activation status
@@ -1668,6 +1669,14 @@ bonus:
         goToButton: "Transactions detail"
       paymentMethods:
         noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
+      transaction:
+        title: "Your transactions"
+        goToButton: "Transactions detail"
+      card:
+        status:
+          active: Active
+          closed: Closed
+          inactive: Incoming
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

@@ -37,33 +37,24 @@ const styles = StyleSheet.create({
  * The screen that allows the user to see all the details related to the bpd.
  * @constructor
  */
-const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
-  // TODO. temp only, prefetch will be moved on the bpd wallet cards
-  const navigation = useContext(NavigationContext);
-  useEffect(() => {
-    if (navigation.isFocused()) {
-      props.load();
-    }
-  }, [navigation.isFocused()]);
-  return (
-    <DarkLayout
-      bounces={false}
-      title={I18n.t("bonus.bpd.name")}
-      faqCategories={["bonus_detail"]}
-      allowGoBack={true}
-      topContent={<View style={styles.headerSpacer} />}
-      gradientHeader={true}
-      hideHeader={true}
-      footerContent={<GoToTransactions />}
-    >
-      <View style={styles.selector}>
-        <BpdPeriodSelector />
-      </View>
-      <View style={styles.selectorSpacer} />
-      <BpdPeriodDetail />
-    </DarkLayout>
-  );
-};
+const BpdDetailsScreen: React.FunctionComponent<Props> = () => (
+  <DarkLayout
+    bounces={false}
+    title={I18n.t("bonus.bpd.name")}
+    faqCategories={["bonus_detail"]}
+    allowGoBack={true}
+    topContent={<View style={styles.headerSpacer} />}
+    gradientHeader={true}
+    hideHeader={true}
+    footerContent={<GoToTransactions />}
+  >
+    <View style={styles.selector}>
+      <BpdPeriodSelector />
+    </View>
+    <View style={styles.selectorSpacer} />
+    <BpdPeriodDetail />
+  </DarkLayout>
+);
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   load: () => dispatch(bpdDetailsLoadAll())
