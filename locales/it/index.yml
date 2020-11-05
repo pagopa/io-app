@@ -666,7 +666,7 @@ wallet:
       payment:
         read: Transazione
         unread: Transazione da leggere
-      label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
+      label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
   onboarding:
     bancomat:
       headerTitle: "Aggiungi carta Bancomat"
@@ -1633,7 +1633,8 @@ bonus:
   bpd:
     title: Cashback Pagamenti Digitali
     name: Cashback
-    unsubscribe: "Disattiva il cashback"
+    earned: Cashback accumulato
+    unsubscribe: "Cancella la tua iscrizione al cashback"
     onboarding:
       loadingActivationStatus:
         title: Verifico lo stato di attivazione
@@ -1700,7 +1701,11 @@ bonus:
         goToButton: "Dettaglio transazioni"
       paymentMethods:
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare le transazioni necessarie"
-
+      card:
+        status:
+          active: Attivo
+          closed: Concluso
+          inactive: In arrivo
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
