@@ -7,9 +7,8 @@ import {
   requiredProp1 as reqP,
   tag
 } from "italia-ts-commons/lib/types";
-import { DateFromString } from "italia-ts-commons/lib/dates";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
-import { WalletTypeEnum } from "../../definitions/pagopa/bancomat/WalletV2";
+import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
 import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
@@ -30,7 +29,7 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
-import { CardInfo } from "../../definitions/pagopa/bancomat/CardInfo";
+import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
 
 /**
  * Union of all possible credit card types
@@ -96,23 +95,36 @@ export type Psp = t.TypeOf<typeof Psp>;
 
 /** A refined WalletV2
  * reasons:
- * - createDate and updateDate are generated from spec as UTCISODateFromString instead of DateFromString
+ * - createDate and updateDate are generated from spec as UTCISODateFromString but they have an invalid format (2020-11-03 22:20:29)
  * - info is required
  * - info is CardInfo and not PaymentMethodInfo (empty interface)
+ * - enableableFunctions is build as an array of strings instead of array of enum (io-utils code generation limit)
  */
+
+export enum EnableableFunctionsTypeEnum {
+  "pagoPA" = "pagoPA",
+  "BPD" = "BPD",
+  "FA" = "FA"
+}
 
 // required attributes
 
 const WalletV2O = t.partial({
   updateDate: t.string,
-  createDate: DateFromString,
+  createDate: t.string,
   onboardingChannel: t.string,
   favourite: t.boolean
 });
 
 // optional attributes
 const WalletV2R = t.interface({
-  enableableFunctions: t.readonlyArray(t.string, "array of string"),
+  enableableFunctions: t.readonlyArray(
+    enumType<EnableableFunctionsTypeEnum>(
+      EnableableFunctionsTypeEnum,
+      "enableableFunctions"
+    ),
+    "array of enableableFunctions"
+  ),
   info: CardInfo,
   idWallet: t.Integer,
   pagoPA: t.boolean,
