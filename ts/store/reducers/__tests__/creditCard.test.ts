@@ -114,9 +114,6 @@ describe("credit card history", () => {
       expect(walletInfo.idCreditCard).toEqual(
         walletResponse.data.creditCard!.id
       );
-      expect(walletInfo.idCreditCard).toEqual(
-        walletResponse.data.creditCard!.id
-      );
     }
   });
 });
