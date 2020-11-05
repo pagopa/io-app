@@ -3,6 +3,7 @@ import sha from "sha.js";
 import { fromNullable } from "fp-ts/lib/Option";
 import { index, take, takeEnd } from "fp-ts/lib/Array";
 import {
+  addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
   creditCardCheckout3dsRedirectionUrls
@@ -20,6 +21,7 @@ type CreditCardInsertion = {
     idCreditCard?: number;
     brand?: string;
   };
+  failureReason?: "GENERIC_ERROR" | "ALREADY_EXISTS";
 };
 
 export type CreditCardInsertionState = ReadonlyArray<CreditCardInsertion>;
@@ -48,26 +50,30 @@ const reducer = (
   switch (action.type) {
     case getType(addWalletCreditCardRequest):
       const payload = action.payload;
-      const cc = fromNullable(payload.creditcard?.creditCard);
-      return cc.fold<CreditCardInsertionState>(state, c => {
+      return fromNullable(payload.creditcard?.creditCard).fold<
+        CreditCardInsertionState
+      >(state, c => {
         const hashedPan = sha("sha256").update(c.pan).digest("hex");
         // ensure to have only a single item representing the card insertion
         const newState = state.filter(c => c.hashedPan !== hashedPan);
-        const creditCardAttempt: CreditCardInsertion = {
+        const requestedAttempt: CreditCardInsertion = {
           startDate: new Date(),
           hashedPan,
           blurredPan: c.pan.slice(-4),
           expireMonth: c.expireMonth,
           expireYear: c.expireYear
         };
-        return trimState([creditCardAttempt, ...newState]);
+        return trimState([requestedAttempt, ...newState]);
       });
     case getType(addWalletCreditCardSuccess):
       const currentState = [...state];
       const wallet = action.payload.data;
+      // We expect addWalletCreditCardRequest not to be dispatched twice in a row,
+      // so the current addWalletCreditCardRequest action refers to the last card added to the history.
+      // As we don't pass an idientifer for the case, we have no other method do relate the success action to its request.
       const maybeAttempt = index<CreditCardInsertion>(0, currentState);
       return maybeAttempt.fold(state, attempt => {
-        const updatedAttempt = {
+        const succedeedAttempt = {
           ...attempt,
           wallet: {
             idWallet: wallet.idWallet,
@@ -77,12 +83,34 @@ const reducer = (
         };
         const updateState =
           state.length === 0
-            ? [updatedAttempt]
+            ? [succedeedAttempt]
             : // place the update item at 0-index position
               // tailed by the others element 1...N
               [
-                updatedAttempt,
+                succedeedAttempt,
                 ...takeEnd<CreditCardInsertion>(state.length - 1, currentState)
+              ];
+        return take(MAX_HISTORY_LENGTH, updateState);
+      });
+
+    case getType(addWalletCreditCardFailure):
+      const failureReason = action.payload;
+      // We expect addWalletCreditCardRequest not to be dispatched twice in a row,
+      // so the current addWalletCreditCardFailure action refers to the last card added to the history.
+      // As we don't pass an idientifer for the case, we have no other method do relate the success action to its request.
+      return index<CreditCardInsertion>(0, [...state]).fold(state, attempt => {
+        const failedAttempt = {
+          ...attempt,
+          failureReason
+        };
+        const updateState =
+          state.length === 0
+            ? [failedAttempt]
+            : // place the update item on 0-index position
+              // followed by the others element 1...N
+              [
+                failedAttempt,
+                ...takeEnd<CreditCardInsertion>(state.length - 1, [...state])
               ];
         return trimState(updateState);
       });

@@ -12,6 +12,7 @@ import reducer, {
 } from "../wallet/creditCard";
 
 import {
+  addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess
 } from "../../actions/wallet/wallets";
@@ -22,6 +23,16 @@ const creditCardToAdd: NullableWallet = {
     pan: "abcd1234" as CreditCardPan,
     expireMonth: "12" as CreditCardExpirationMonth,
     expireYear: "23" as CreditCardExpirationYear,
+    securityCode: undefined,
+    holder: "holder"
+  }
+} as NullableWallet;
+
+const anotherCreditCardToAdd: NullableWallet = {
+  creditCard: {
+    pan: "qwerty6789" as CreditCardPan,
+    expireMonth: "11" as CreditCardExpirationMonth,
+    expireYear: "22" as CreditCardExpirationYear,
     securityCode: undefined,
     holder: "holder"
   }
@@ -106,7 +117,8 @@ describe("credit card history", () => {
       state1,
       addWalletCreditCardSuccess(walletResponse)
     );
-    const walletInfo = state2[0].wallet;
+    const [lastItem] = state2;
+    const walletInfo = lastItem.wallet;
     expect(walletInfo).toBeDefined();
     if (walletInfo) {
       expect(walletInfo.idWallet).toEqual(walletResponse.data.idWallet);
@@ -116,9 +128,53 @@ describe("credit card history", () => {
       );
     }
   });
+
+  it("should set wallet on last inserted item", () => {
+    const state = runReducer(
+      [],
+      addCCAction,
+      addWalletCreditCardRequest({
+        creditcard: anotherCreditCardToAdd
+      }),
+      addWalletCreditCardSuccess(walletResponse)
+    );
+
+    const [anotherCardItem, cardItem] = state;
+    expect(anotherCardItem.wallet).toBeDefined();
+    expect(cardItem.wallet).not.toBeDefined();
+  });
+
+  it("should add a credit card in the history and the relative failure reason in case of failure", () => {
+
+    const state = runReducer(
+      [],
+      addCCAction,
+      addWalletCreditCardFailure("GENERIC_ERROR")
+    );
+   
+    const [lastItem] = state;
+
+    expect(lastItem.failureReason).toBe("GENERIC_ERROR");
+  });
+
+  it("should set failure on last inserted item", () => {
+    const state = runReducer(
+      [],
+      addCCAction,
+      addWalletCreditCardRequest({
+        creditcard: anotherCreditCardToAdd
+      }),
+      addWalletCreditCardFailure("GENERIC_ERROR")
+    );
+
+    const [anotherCardItem, cardItem] = state;
+    expect(anotherCardItem.failureReason).toBe("GENERIC_ERROR");
+    expect(cardItem.failureReason).not.toBeDefined();
+
+  })
 });
 
 const runReducer = (
-  state: CreditCardInsertionState,
-  action: Action
-): CreditCardInsertionState => reducer(state, action);
+  initialState: CreditCardInsertionState,
+  ...actions: Action[]
+): CreditCardInsertionState => actions.reduce((s, a) => reducer(s, a), initialState);
