@@ -1,6 +1,6 @@
 import { range } from "fp-ts/lib/Array";
 import sha from "sha.js";
-import { NullableWallet, WalletResponse } from "../../../types/pagopa";
+import { NullableWallet, TransactionResponse, WalletResponse } from "../../../types/pagopa";
 import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
@@ -15,7 +15,9 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
-  creditCardCheckout3dsRedirectionUrls
+  creditCardCheckout3dsRedirectionUrls,
+  payCreditCardVerificationFailure,
+  payCreditCardVerificationSuccess
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
 
@@ -52,6 +54,44 @@ const walletResponse: WalletResponse = {
 } as WalletResponse;
 
 const aUrlArray =  ["url1", "url2"] as ReadonlyArray<string>;
+const aPaymentFailure = new Error("payment went wrong");
+
+const aTransaction = {
+  data: {
+    id: 15977733,
+    created: "2020-09-04T10:47:50Z",
+    updated: "2020-09-04T10:47:50Z",
+    amount: {
+      currency: "EUR",
+      amount: 1,
+      decimalDigits: 2
+    },
+    grandTotal: {
+      currency: "EUR",
+      amount: 2,
+      decimalDigits: 2
+    },
+    description: "SET_SUBJECT",
+    merchant: "",
+    idStatus: 0,
+    statusMessage: "Da autorizzare",
+    error: false,
+    success: false,
+    fee: {
+      currency: "EUR",
+      amount: 1,
+      decimalDigits: 2
+    },
+    urlCheckout3ds: "https://example.com",
+    paymentModel: 0,
+    token: "A".repeat(14),
+    idWallet: 12345678,
+    idPayment: 12345678,
+    nodoIdPayment: "nodoIdPayment",
+    orderNumber: 12345678,
+    directAcquirer: false
+  }
+} as unknown as TransactionResponse;
 
 const addCCAction = addWalletCreditCardRequest({
   creditcard: creditCardToAdd
@@ -202,6 +242,36 @@ describe("credit card history", () => {
     
     expect(cardItem.wallet).toBeDefined();
     expect(cardItem.urlHistory3ds).toEqual(aUrlArray);
+  });
+
+  it("should add a failure message when the verification payment fails", () => {
+    const state = runReducer(
+      [],
+      addCCAction,
+      addWalletCreditCardSuccess(walletResponse),
+      creditCardCheckout3dsRedirectionUrls(aUrlArray),
+      payCreditCardVerificationFailure(aPaymentFailure)
+    );
+
+    const [ cardItem ] = state;
+    
+    expect(cardItem.verificationFailureReason).toBe(aPaymentFailure.message);
+    expect(cardItem.failureReason).not.toBeDefined();
+  });
+
+  it("should add transaction data when the verification payment succeeded", () => {
+    const state = runReducer(
+      [],
+      addCCAction,
+      addWalletCreditCardSuccess(walletResponse),
+      creditCardCheckout3dsRedirectionUrls(aUrlArray),
+      payCreditCardVerificationSuccess(aTransaction)
+    );
+
+    const [cardItem] = state;
+
+    expect(cardItem.verificationFailureReason).not.toBeDefined();
+    expect(cardItem.verificationTransaction).toEqual(aTransaction);
   });
 });
 

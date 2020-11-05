@@ -6,9 +6,12 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
-  creditCardCheckout3dsRedirectionUrls
+  creditCardCheckout3dsRedirectionUrls,
+  payCreditCardVerificationFailure,
+  payCreditCardVerificationSuccess
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
+import { TransactionResponse } from '../../../types/pagopa';
 
 type CreditCardInsertion = {
   startDate: Date;
@@ -22,6 +25,8 @@ type CreditCardInsertion = {
     brand?: string;
   };
   failureReason?: "GENERIC_ERROR" | "ALREADY_EXISTS";
+  verificationFailureReason?: string;
+  verificationTransaction?: TransactionResponse;
   urlHistory3ds?: ReadonlyArray<string>;
 };
 
@@ -115,6 +120,28 @@ const reducer = (
         updateStateHead(state, {
           ...attempt,
           urlHistory3ds: action.payload
+        })
+      );
+
+    case getType(payCreditCardVerificationSuccess):
+      // We expect addWalletCreditCardRequest not to be dispatched twice in a row,
+      // so the current addWalletCreditCardRequest action refers to the last card added to the history.
+      // As we don't pass an idientifer for the case, we have no other method do relate the success action to its request.
+      return index<CreditCardInsertion>(0, [...state]).fold(state, attempt =>
+        updateStateHead(state, {
+          ...attempt,
+          verificationTransaction: action.payload
+        })
+      );
+
+    case getType(payCreditCardVerificationFailure):
+      // We expect addWalletCreditCardRequest not to be dispatched twice in a row,
+      // so the current addWalletCreditCardRequest action refers to the last card added to the history.
+      // As we don't pass an idientifer for the case, we have no other method do relate the success action to its request.
+      return index<CreditCardInsertion>(0, [...state]).fold(state, attempt =>
+        updateStateHead(state, {
+          ...attempt,
+          verificationFailureReason: action.payload.message
         })
       );
 
