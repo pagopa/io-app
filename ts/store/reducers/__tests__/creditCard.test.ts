@@ -172,6 +172,19 @@ describe("credit card history", () => {
     expect(cardItem.failureReason).not.toBeDefined();
 
   })
+
+  it("should remove failure on new request for the same card", () => {
+    const state = runReducer(
+      [],
+      addCCAction,
+      addWalletCreditCardFailure("GENERIC_ERROR"),
+      addCCAction
+    );
+
+    const [ cardItem ] = state;
+    expect(state.length).toBe(1);
+    expect(cardItem.failureReason).not.toBeDefined();
+  })
 });
 
 const runReducer = (
