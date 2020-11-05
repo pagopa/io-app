@@ -1020,8 +1020,11 @@ messages:
         block1: Questo avviso scade il giorno
         block2: alle ore
       expiredAlert:
-        block1: Il pagamento è scaduto alle ore
-        block2: del
+        expirable:
+          block1: Il pagamento è scaduto alle ore
+          block2: del
+        unexpirable:
+          block: Il pagamento è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad attualizzare l'importo.
     presctiption:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi

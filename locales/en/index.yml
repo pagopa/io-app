@@ -990,9 +990,12 @@ messages:
       expiringAlert:
         block1: This notice will expire on
         block2: at
-      expiredAlert: 
-        block1: The notice expired at 
-        block2: "on"
+      expiredAlert:
+        expirable:
+          block1: The notice expired at 
+          block2: "on"
+        unexpirable:
+          block: The payment is overdue. You can still pay; IO app will update the amount if needed.
     presctiption:  
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today

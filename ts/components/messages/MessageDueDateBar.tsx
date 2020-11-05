@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   text: {
     flex: 1,
-    paddingRight: 60,
+    paddingRight: 50,
     paddingLeft: 5
   },
   highlight: {
@@ -136,12 +136,19 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     }
 
     if (this.isPaymentExpired) {
+      if (this.isPaymentExpirable) {
+        return (
+          <React.Fragment>
+            {I18n.t("messages.cta.payment.expiredAlert.expirable.block1")}
+            <Text bold={true} white={true}>{` ${time} `}</Text>
+            {I18n.t("messages.cta.payment.expiredAlert.expirable.block2")}
+            <Text bold={true} white={true}>{` ${date}`}</Text>
+          </React.Fragment>
+        );
+      }
       return (
         <React.Fragment>
-          {I18n.t("messages.cta.payment.expiredAlert.block1")}
-          <Text bold={true} white={true}>{` ${time} `}</Text>
-          {I18n.t("messages.cta.payment.expiredAlert.block2")}
-          <Text bold={true} white={true}>{` ${date}`}</Text>
+          {I18n.t("messages.cta.payment.expiredAlert.unexpirable.block")}
         </React.Fragment>
       );
     }
