@@ -24,6 +24,9 @@ type CreditCardInsertion = {
 export type CreditCardInsertionState = ReadonlyArray<CreditCardInsertion>;
 export const MAX_HISTORY_LENGTH = 15;
 
+const trimState = (state: CreditCardInsertionState) =>
+  take(MAX_HISTORY_LENGTH, [...state]);
+
 /**
  * card insertion follow these step:
  * 1. request to add a credit card: addWalletCreditCardRequest
@@ -33,7 +36,7 @@ export const MAX_HISTORY_LENGTH = 15;
  * 5. addWalletNewCreditCardSuccess completed onboarded (add + pay + checkout)
  * see: https://docs.google.com/presentation/d/1nikV9vNGCFE_9Mxt31ZQuqzQXeJucMW3kdJvtjoBtC4/edit#slide=id.ga4eb40050a_0_4
  *
- * step 1 add an item into the history.
+ * step 1 adds an item into the history.
  * all further steps add their info referring the item in the 0-index position
  * that is the one added in the step 1
  */
@@ -56,7 +59,7 @@ const reducer = (
           expireMonth: c.expireMonth,
           expireYear: c.expireYear
         };
-        return take(MAX_HISTORY_LENGTH, [creditCardAttempt, ...newState]);
+        return trimState([creditCardAttempt, ...newState]);
       });
     case getType(addWalletCreditCardSuccess):
       const currentState = [...state];
@@ -74,13 +77,13 @@ const reducer = (
         const updateState =
           state.length === 0
             ? [updatedAttempt]
-            : // place the update item on 0-index position
-              // followed by the others element 1...N
+            : // place the update item at 0-index position
+              // tailed by the others element 1...N
               [
                 updatedAttempt,
                 ...takeEnd<CreditCardInsertion>(state.length - 1, currentState)
               ];
-        return take(MAX_HISTORY_LENGTH, updateState);
+        return trimState(updateState);
       });
 
     default:
