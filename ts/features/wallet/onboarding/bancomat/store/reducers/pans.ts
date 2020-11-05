@@ -11,7 +11,7 @@ import {
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { LoadPansError } from "../../saga/networking";
 import { searchUserPans } from "../actions";
-import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
+import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 
 export type Pans = RemoteValue<ReadonlyArray<Card>, LoadPansError>;
 

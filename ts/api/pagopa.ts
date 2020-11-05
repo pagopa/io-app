@@ -22,7 +22,7 @@ import {
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
-import { BancomatCardsRequest } from "../../definitions/pagopa/bancomat/BancomatCardsRequest";
+import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
 import {
   addWalletsBancomatCardUsingPOSTDecoder,
   getAbiListUsingGETDefaultDecoder,
@@ -30,7 +30,7 @@ import {
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT,
   getWalletsV2UsingGETDecoder
-} from "../../definitions/pagopa/bancomat/requestTypes";
+} from "../../definitions/pagopa/walletv2/requestTypes";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,

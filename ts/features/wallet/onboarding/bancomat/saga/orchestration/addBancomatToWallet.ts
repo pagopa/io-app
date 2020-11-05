@@ -20,6 +20,8 @@ import {
   walletAddBancomatCompleted
 } from "../../store/actions";
 import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
+import { hasFunctionEnabled } from "../../../../../../utils/walletv2";
+import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
 
 /**
  * Define the workflow that allows the user to add a bancomat to the wallet.
@@ -91,7 +93,7 @@ function* activateBpdOnNewBancomat() {
   );
   // TODO: change enableableFunction with types representing the possibles functionalities
   const atLeastOneBancomatWithBpdCapability = bancomatAdded.some(b =>
-    b.enableableFunctions?.includes("BPD")
+    hasFunctionEnabled(b, EnableableFunctionsTypeEnum.BPD)
   );
 
   // No bancomat with bpd capability added in the current workflow, return to wallet home

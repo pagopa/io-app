@@ -62,9 +62,9 @@ export function* handleLoadPans(
       if (getPansWithRefreshResult.value.status === 200) {
         return yield put(
           searchUserPans.success(
-            fromNullable(getPansWithRefreshResult.value.value.data).getOrElse(
-              []
-            )
+            fromNullable(
+              getPansWithRefreshResult.value.value.data?.data
+            ).getOrElse([])
           )
         );
       } else {

@@ -22,7 +22,7 @@ import {
   onboardingBancomatAddingResultSelector,
   onboardingBancomatChosenPanSelector
 } from "../../store/reducers/addingPans";
-import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
+import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import AddBancomatComponent from "./AddBancomatComponent";
 import LoadAddBancomatComponent from "./LoadAddBancomatComponent";
 
