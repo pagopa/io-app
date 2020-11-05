@@ -22,13 +22,31 @@ type CreditCardInsertion = {
     brand?: string;
   };
   failureReason?: "GENERIC_ERROR" | "ALREADY_EXISTS";
+  urlHistory3ds?: ReadonlyArray<string>;
 };
 
+// The state is modeled as a stack on which the last element is added at the head
 export type CreditCardInsertionState = ReadonlyArray<CreditCardInsertion>;
 export const MAX_HISTORY_LENGTH = 15;
 
 const trimState = (state: CreditCardInsertionState) =>
   take(MAX_HISTORY_LENGTH, [...state]);
+
+/**
+ * Given a current state (which is represented by a stack), replace the head with a given item
+ * @param state the stack og items
+ * @param updateItem item to put at the head 
+ * 
+ * @returns the new stafck with the head changed
+ */
+const updateStateHead = (
+  [, ...tail]: CreditCardInsertionState,
+  updateItem: CreditCardInsertion
+) => 
+  trimState([
+    updateItem,
+    ...takeEnd<CreditCardInsertion>(tail.length, tail)
+  ]);
 
 /**
  * card insertion follow these step:
@@ -66,57 +84,41 @@ const reducer = (
         return trimState([requestedAttempt, ...newState]);
       });
     case getType(addWalletCreditCardSuccess):
-      const currentState = [...state];
-      const wallet = action.payload.data;
       // We expect addWalletCreditCardRequest not to be dispatched twice in a row,
       // so the current addWalletCreditCardRequest action refers to the last card added to the history.
       // As we don't pass an idientifer for the case, we have no other method do relate the success action to its request.
-      const maybeAttempt = index<CreditCardInsertion>(0, currentState);
-      return maybeAttempt.fold(state, attempt => {
-        const succedeedAttempt = {
+      return index<CreditCardInsertion>(0, [...state]).fold(state, attempt => {
+        const wallet = action.payload.data;
+        return updateStateHead(state, {
           ...attempt,
           wallet: {
             idWallet: wallet.idWallet,
             idCreditCard: wallet.creditCard?.id,
             brand: wallet.creditCard?.brand
           }
-        };
-        const updateState =
-          state.length === 0
-            ? [succedeedAttempt]
-            : // place the update item at 0-index position
-              // tailed by the others element 1...N
-              [
-                succedeedAttempt,
-                ...takeEnd<CreditCardInsertion>(state.length - 1, currentState)
-              ];
-        return take(MAX_HISTORY_LENGTH, updateState);
+        })
       });
 
     case getType(addWalletCreditCardFailure):
-      const failureReason = action.payload;
       // We expect addWalletCreditCardRequest not to be dispatched twice in a row,
       // so the current addWalletCreditCardFailure action refers to the last card added to the history.
       // As we don't pass an idientifer for the case, we have no other method do relate the success action to its request.
-      return index<CreditCardInsertion>(0, [...state]).fold(state, attempt => {
-        const failedAttempt = {
+      return index<CreditCardInsertion>(0, [...state]).fold(state, attempt =>
+        updateStateHead(state, {
           ...attempt,
-          failureReason
-        };
-        const updateState =
-          state.length === 0
-            ? [failedAttempt]
-            : // place the update item on 0-index position
-              // followed by the others element 1...N
-              [
-                failedAttempt,
-                ...takeEnd<CreditCardInsertion>(state.length - 1, [...state])
-              ];
-        return trimState(updateState);
-      });
+          failureReason: action.payload
+        })
+      );
     case getType(creditCardCheckout3dsRedirectionUrls):
-      // TODO stub, to be implemented
-      return state;
+      // We expect addWalletCreditCardRequest not to be dispatched twice in a row,
+      // so the current addWalletCreditCardRequest action refers to the last card added to the history.
+      // As we don't pass an idientifer for the case, we have no other method do relate the success action to its request.
+      return index<CreditCardInsertion>(0, [...state]).fold(state, attempt => 
+        updateStateHead(state, {
+          ...attempt,
+          urlHistory3ds: action.payload
+        })
+      );
 
     default:
       return state;

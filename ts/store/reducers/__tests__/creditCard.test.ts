@@ -14,7 +14,8 @@ import reducer, {
 import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
-  addWalletCreditCardSuccess
+  addWalletCreditCardSuccess,
+  creditCardCheckout3dsRedirectionUrls
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
 
@@ -49,6 +50,8 @@ const walletResponse: WalletResponse = {
     }
   }
 } as WalletResponse;
+
+const aUrlArray =  ["url1", "url2"] as ReadonlyArray<string>;
 
 const addCCAction = addWalletCreditCardRequest({
   creditcard: creditCardToAdd
@@ -171,7 +174,7 @@ describe("credit card history", () => {
     expect(anotherCardItem.failureReason).toBe("GENERIC_ERROR");
     expect(cardItem.failureReason).not.toBeDefined();
 
-  })
+  });
 
   it("should remove failure on new request for the same card", () => {
     const state = runReducer(
@@ -184,10 +187,25 @@ describe("credit card history", () => {
     const [ cardItem ] = state;
     expect(state.length).toBe(1);
     expect(cardItem.failureReason).not.toBeDefined();
-  })
+  });
+
+
+  it("should add the history of 3ds urls to a card item", () => {
+    const state = runReducer(
+      [],
+      addCCAction,
+      addWalletCreditCardSuccess(walletResponse),
+      creditCardCheckout3dsRedirectionUrls(aUrlArray),
+    );
+
+    const [ cardItem ] = state;
+    
+    expect(cardItem.wallet).toBeDefined();
+    expect(cardItem.urlHistory3ds).toEqual(aUrlArray);
+  });
 });
 
 const runReducer = (
   initialState: CreditCardInsertionState,
-  ...actions: Action[]
+  ...actions: Array<Action>
 ): CreditCardInsertionState => actions.reduce((s, a) => reducer(s, a), initialState);
