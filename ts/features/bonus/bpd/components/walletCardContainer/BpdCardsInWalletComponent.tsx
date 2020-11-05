@@ -1,52 +1,50 @@
-import { Millisecond } from "italia-ts-commons/lib/units";
+import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { H1 } from "../../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useRefreshDataWhenFocus } from "../../../../../utils/hooks/useRefreshDataWhenFocus";
+import { useRefreshOnFocus } from "../../../../../utils/hooks/useOnFocus";
+import { navigateToBpdDetails } from "../../navigation/actions";
 import { bpdDetailsLoadAll } from "../../store/actions/details";
+import { BpdPeriod } from "../../store/actions/periods";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
+import { BpdCardComponent } from "../bpdCardComponent/BpdCardComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const forceRefreshTime = 30000 as Millisecond;
-
-/**
- * Todo: handle errors
- * @param potPeriods
- */
-// const foldPeriods = (potPeriods: pot.Pot<ReadonlyArray<BpdPeriod>, Error>) =>
-//   pot.fold(
-//     potPeriods,
-//     () => null,
-//     () => null,
-//     _ => null,
-//     _ => null,
-//     value => null,
-//     value => null,
-//     value => null,
-//     value => null
-//   );
-
 /**
  * Render the bpd card in the wallet
+ * //TODO: handle error, render only if some
  * @constructor
  */
 const BpdCardsInWalletContainer: React.FunctionComponent<Props> = props => {
-  useRefreshDataWhenFocus(props.load, forceRefreshTime);
+  // TODO: a less aggressive refresh?
+  useRefreshOnFocus(props.load);
 
   return (
     <View>
-      <H1>Ciao</H1>
+      {pot.isSome(props.periodsWithAmount) &&
+        props.periodsWithAmount.value.map(pa => (
+          <BpdCardComponent
+            key={pa.period.awardPeriodId}
+            period={pa.period}
+            totalAmount={pa.amount}
+            preview={true}
+            onPress={() => {
+              props.navigateToCashbackDetails(pa.period);
+            }}
+          />
+        ))}
     </View>
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  load: () => dispatch(bpdDetailsLoadAll())
+  load: () => dispatch(bpdDetailsLoadAll()),
+  navigateToCashbackDetails: (period: BpdPeriod) =>
+    dispatch(navigateToBpdDetails(period))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

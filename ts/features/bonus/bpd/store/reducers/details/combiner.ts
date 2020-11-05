@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
-import { getValue, RemoteValue } from "../../../model/RemoteValue";
+import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { BpdAmount } from "../../actions/amount";
 import { BpdPeriod } from "../../actions/periods";
 import { bpdEnabledSelector } from "./activation";
@@ -46,9 +46,10 @@ const isPeriodAmountWalletVisible = (
   periodAmount: BpdPeriodAmount,
   bpdEnabled: RemoteValue<boolean, Error>
 ) =>
-  (periodAmount.period.status === "Active" && getValue(bpdEnabled)) ||
-  (periodAmount.period.status === "Closed" &&
-    periodAmount.amount.transactionNumber > 0);
+  isReady(bpdEnabled) &&
+  ((periodAmount.period.status === "Active" && bpdEnabled.value) ||
+    (periodAmount.period.status === "Closed" &&
+      periodAmount.amount.transactionNumber > 0));
 
 /**
  * Return the {@link BpdPeriodAmount} that can be visible in the wallet
@@ -59,6 +60,33 @@ export const bpdPeriodsAmountWalletVisibleSelector = createSelector(
     pot.map(potPeriodsAmount, periodsAmountList =>
       periodsAmountList.filter(periodAmount =>
         isPeriodAmountWalletVisible(periodAmount, bpdEnabled)
+      )
+    )
+);
+
+/**
+ * The period should be visible in the snapped list only if:
+ * state === Closed (a closed period is always visible)
+ * bpdEnabled === true (a inactive or current period is visible only if bpd is Enabled)
+ * @param periodAmount
+ * @param bpdEnabled
+ */
+const isPeriodAmountSnappedVisible = (
+  periodAmount: BpdPeriodAmount,
+  bpdEnabled: RemoteValue<boolean, Error>
+) =>
+  periodAmount.period.status === "Closed" ||
+  (isReady(bpdEnabled) && bpdEnabled.value);
+
+/**
+ * Return the {@link BpdPeriodAmount} that should be visible in the snapped List selector
+ */
+export const bpdPeriodsAmountSnappedListSelector = createSelector(
+  [bpdAllPeriodsWithAmountSelector, bpdEnabledSelector],
+  (potPeriodsAmount, bpdEnabled) =>
+    pot.map(potPeriodsAmount, periodsAmountList =>
+      periodsAmountList.filter(periodAmount =>
+        isPeriodAmountSnappedVisible(periodAmount, bpdEnabled)
       )
     )
 );

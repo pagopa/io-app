@@ -69,9 +69,12 @@ export const bpdEnabledSelector = (
 
 /**
  * Return the Iban that the user has entered to receive the cashback amount
- * @return {RemoteValue<string | undefined, Error>}
  */
-export const bpdIbanSelector = createSelector(
+export const bpdIbanSelector = createSelector<
+  GlobalState,
+  RemoteValue<string | undefined, Error>,
+  RemoteValue<string | undefined, Error>
+>(
   [
     (state: GlobalState) =>
       state.bonus.bpd.details.activation.payoffInstr.enrolledValue
