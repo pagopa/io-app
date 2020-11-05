@@ -6,6 +6,7 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
+  addWalletNewCreditCardSuccess,
   creditCardCheckout3dsRedirectionUrls,
   payCreditCardVerificationFailure,
   payCreditCardVerificationSuccess
@@ -28,6 +29,7 @@ type CreditCardInsertion = {
   verificationFailureReason?: string;
   verificationTransaction?: TransactionResponse;
   urlHistory3ds?: ReadonlyArray<string>;
+  onboardingComplete: boolean;
 };
 
 // The state is modeled as a stack on which the last element is added at the head
@@ -57,7 +59,7 @@ const updateStateHead = (
  * 3. if 2 is addWalletCreditCardSuccess -> creditCardCheckout3dsRequest
  * 4. creditCardCheckout3dsSuccess
  * 5. credit card payment verification outcome: payCreditCardVerificationSuccess | payCreditCardVerificationFailure
- * 5. addWalletNewCreditCardSuccess completed onboarded (add + pay + checkout)
+ * 6. addWalletNewCreditCardSuccess completed onboarded (add + pay + checkout)
  * see: https://docs.google.com/presentation/d/1nikV9vNGCFE_9Mxt31ZQuqzQXeJucMW3kdJvtjoBtC4/edit#slide=id.ga4eb40050a_0_4
  *
  * step 1 adds an item into the history.
@@ -82,7 +84,8 @@ const reducer = (
           hashedPan,
           blurredPan: c.pan.slice(-4),
           expireMonth: c.expireMonth,
-          expireYear: c.expireYear
+          expireYear: c.expireYear,
+          onboardingComplete: false
         };
         return trimState([requestedAttempt, ...newState]);
       });
@@ -142,6 +145,17 @@ const reducer = (
         updateStateHead(state, {
           ...attempt,
           verificationFailureReason: action.payload.message
+        })
+      );
+
+    case getType(addWalletNewCreditCardSuccess):
+      // We expect addWalletCreditCardRequest not to be dispatched twice in a row,
+      // so the current addWalletCreditCardRequest action refers to the last card added to the history.
+      // As we don't pass an idientifer for the case, we have no other method do relate the success action to its request.
+      return index<CreditCardInsertion>(0, [...state]).fold(state, attempt =>
+        updateStateHead(state, {
+          ...attempt,
+          onboardingComplete: true
         })
       );
 

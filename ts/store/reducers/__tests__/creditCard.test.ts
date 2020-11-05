@@ -15,6 +15,7 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
+  addWalletNewCreditCardSuccess,
   creditCardCheckout3dsRedirectionUrls,
   payCreditCardVerificationFailure,
   payCreditCardVerificationSuccess
@@ -140,8 +141,7 @@ describe("credit card history", () => {
   });
 
   it("should store the credit card attempts info", () => {
-    const state1 = runReducer([], addCCAction);
-    const creditCardInfo = state1[0];
+    const [creditCardInfo] = runReducer([], addCCAction);
     expect(creditCardInfo.blurredPan).toEqual("1234");
     expect(creditCardInfo.hashedPan).toEqual(
       sha("sha256").update(creditCardToAdd.creditCard!.pan).digest("hex")
@@ -152,16 +152,16 @@ describe("credit card history", () => {
     expect(creditCardInfo.expireYear).toEqual(
       creditCardToAdd.creditCard!.expireYear
     );
+    expect(creditCardInfo.onboardingComplete).toBe(false);
   });
 
   it("should add a credit card attempt and the relative wallet info (2nd step)", () => {
-    const state1 = runReducer([], addCCAction);
-    const state2 = runReducer(
-      state1,
+    const [cardItem] = runReducer(
+      [],
+      addCCAction,
       addWalletCreditCardSuccess(walletResponse)
     );
-    const [lastItem] = state2;
-    const walletInfo = lastItem.wallet;
+    const walletInfo = cardItem.wallet;
     expect(walletInfo).toBeDefined();
     if (walletInfo) {
       expect(walletInfo.idWallet).toEqual(walletResponse.data.idWallet);
@@ -170,6 +170,7 @@ describe("credit card history", () => {
         walletResponse.data.creditCard!.id
       );
     }
+    expect(cardItem.onboardingComplete).toBe(false);
   });
 
   it("should set wallet on last inserted item", () => {
@@ -185,6 +186,7 @@ describe("credit card history", () => {
     const [anotherCardItem, cardItem] = state;
     expect(anotherCardItem.wallet).toBeDefined();
     expect(cardItem.wallet).not.toBeDefined();
+    expect(cardItem.onboardingComplete).toBe(false);
   });
 
   it("should add a credit card in the history and the relative failure reason in case of failure", () => {
@@ -195,9 +197,10 @@ describe("credit card history", () => {
       addWalletCreditCardFailure("GENERIC_ERROR")
     );
    
-    const [lastItem] = state;
+    const [cardItem] = state;
 
-    expect(lastItem.failureReason).toBe("GENERIC_ERROR");
+    expect(cardItem.failureReason).toBe("GENERIC_ERROR");
+    expect(cardItem.onboardingComplete).toBe(false);
   });
 
   it("should set failure on last inserted item", () => {
@@ -213,6 +216,7 @@ describe("credit card history", () => {
     const [anotherCardItem, cardItem] = state;
     expect(anotherCardItem.failureReason).toBe("GENERIC_ERROR");
     expect(cardItem.failureReason).not.toBeDefined();
+    expect(cardItem.onboardingComplete).toBe(false);
 
   });
 
@@ -227,6 +231,7 @@ describe("credit card history", () => {
     const [ cardItem ] = state;
     expect(state.length).toBe(1);
     expect(cardItem.failureReason).not.toBeDefined();
+    expect(cardItem.onboardingComplete).toBe(false);
   });
 
 
@@ -242,6 +247,7 @@ describe("credit card history", () => {
     
     expect(cardItem.wallet).toBeDefined();
     expect(cardItem.urlHistory3ds).toEqual(aUrlArray);
+    expect(cardItem.onboardingComplete).toBe(false);
   });
 
   it("should add a failure message when the verification payment fails", () => {
@@ -257,6 +263,7 @@ describe("credit card history", () => {
     
     expect(cardItem.verificationFailureReason).toBe(aPaymentFailure.message);
     expect(cardItem.failureReason).not.toBeDefined();
+    expect(cardItem.onboardingComplete).toBe(false);
   });
 
   it("should add transaction data when the verification payment succeeded", () => {
@@ -272,6 +279,22 @@ describe("credit card history", () => {
 
     expect(cardItem.verificationFailureReason).not.toBeDefined();
     expect(cardItem.verificationTransaction).toEqual(aTransaction);
+    expect(cardItem.onboardingComplete).toBe(false);
+  });
+
+  it("should mark an item as completed when credit card finish to onboard", () => {
+    const state = runReducer(
+      [],
+      addCCAction,
+      addWalletCreditCardSuccess(walletResponse),
+      creditCardCheckout3dsRedirectionUrls(aUrlArray),
+      payCreditCardVerificationSuccess(aTransaction),
+      addWalletNewCreditCardSuccess()
+    );
+
+    const [cardItem] = state;
+
+    expect(cardItem.onboardingComplete).toBe(true);
   });
 });
 
