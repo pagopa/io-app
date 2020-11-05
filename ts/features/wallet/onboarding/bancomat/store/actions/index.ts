@@ -3,8 +3,8 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { AbiListResponse } from "../../../../../../../definitions/pagopa/bancomat/AbiListResponse";
-import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
+import { AbiListResponse } from "../../../../../../../definitions/pagopa/walletv2/AbiListResponse";
+import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { PatchedWalletV2 } from "../../../../../../types/pagopa";
 import { LoadPansError } from "../../saga/networking";
 

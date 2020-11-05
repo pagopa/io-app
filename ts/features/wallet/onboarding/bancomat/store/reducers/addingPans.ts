@@ -1,5 +1,5 @@
 import { getType } from "typesafe-actions";
-import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
+import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { PatchedWalletV2 } from "../../../../../../types/pagopa";
