@@ -16,6 +16,7 @@ import customVariables from "../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
   getCTA,
+  isExpirable,
   isExpired,
   isExpiring,
   paymentExpirationInfo
@@ -66,6 +67,10 @@ class MessageListCTABar extends React.PureComponent<Props> {
 
   get paid(): boolean {
     return this.props.payment !== undefined;
+  }
+
+  get isPaymentExpirable() {
+    return this.paymentExpirationInfo.fold(false, isExpirable);
   }
 
   get isPaymentExpired() {
@@ -164,15 +169,17 @@ class MessageListCTABar extends React.PureComponent<Props> {
           service={this.props.service}
         />
       ) : null;
-    const content = nestedCTA || (
-      <>
-        {calendarIcon}
-        {calendarIcon && <View hspacer={true} small={true} />}
-        {calendarEventButton}
-        {calendarEventButton && <View hspacer={true} small={true} />}
-        {this.renderPaymentButton()}
-      </>
-    );
+    const content =
+      nestedCTA ||
+      ((!this.isPaymentExpirable || !this.isPaymentExpired) && (
+        <>
+          {calendarIcon}
+          {calendarIcon && <View hspacer={true} small={true} />}
+          {calendarEventButton}
+          {calendarEventButton && <View hspacer={true} small={true} />}
+          {this.renderPaymentButton()}
+        </>
+      ));
     return (
       <View
         style={[styles.topContainer, this.paid && styles.topContainerPaid]}
