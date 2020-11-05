@@ -74,11 +74,11 @@ class MessageListCTABar extends React.PureComponent<Props> {
   }
 
   get isPaymentExpired() {
-    return this.paymentExpirationInfo.fold(false, info => isExpired(info));
+    return this.paymentExpirationInfo.fold(false, isExpired);
   }
 
   get isPaymentExpiring() {
-    return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
+    return this.paymentExpirationInfo.fold(false, isExpiring);
   }
 
   get hasPaymentData() {
