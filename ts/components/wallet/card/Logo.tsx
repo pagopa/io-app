@@ -4,7 +4,7 @@
  */
 import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
-import { CardInfo } from "../../../../definitions/pagopa/bancomat/CardInfo";
+import { CardInfo } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { CreditCard } from "../../../types/pagopa";
 import { CreditCardType } from "../../../types/pagopa";
 import { getResourceNameFromUrl } from "../../../utils/url";
