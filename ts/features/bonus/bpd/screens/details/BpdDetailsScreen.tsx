@@ -1,7 +1,5 @@
 import * as React from "react";
-import { useContext, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { NavigationContext } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import DarkLayout from "../../../../../components/screens/DarkLayout";

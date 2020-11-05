@@ -1634,6 +1634,7 @@ bonus:
     title: Cashback Pagamenti Digitali
     name: Cashback
     earned: Cashback accumulato
+    unsubscribe: "Cancella la tua iscrizione al cashback"
     onboarding:
       loadingActivationStatus:
         title: Verifico lo stato di attivazione
@@ -1700,10 +1701,6 @@ bonus:
         goToButton: "Dettaglio transazioni"
       paymentMethods:
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare le transazioni necessarie"
-
-      transaction:
-        title: "Le tue transazioni"
-        goToButton: "Dettaglio transazioni"
       card:
         status:
           active: Attivo

@@ -1669,9 +1669,6 @@ bonus:
         goToButton: "Transactions detail"
       paymentMethods:
         noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
-      transaction:
-        title: "Your transactions"
-        goToButton: "Transactions detail"
       card:
         status:
           active: Active
