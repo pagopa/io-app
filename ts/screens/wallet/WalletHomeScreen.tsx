@@ -274,7 +274,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           </React.Fragment>
         )}
         {this.cardHeader(false, noMethod)}
-        {bpdEnabled && <BpdCardsInWalletContainer />}
+
         {validWallets.length > 0 ? (
           <RotatedCards
             wallets={validWallets}
@@ -282,6 +282,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           />
         ) : null}
         {/* Display this item only if the flag is enabled */}
+
         {bonusVacanzeEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
@@ -291,6 +292,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             onBonusPress={this.props.navigateToBonusDetail}
           />
         )}
+        {bpdEnabled && <BpdCardsInWalletContainer />}
       </View>
     );
   }
@@ -515,19 +517,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         gradientHeader={true}
         headerPaddingMin={true}
       >
-        {/* TODO: temp only, for test purpose,to be removed with bpd details */}
-        {bpdEnabled && (
-          <>
-            <Button
-              style={{ width: "100%" }}
-              onPress={this.props.navigateToBpdTest}
-            >
-              <Label color={"white"}>BPD details</Label>
-            </Button>
-            {/* TODO: temp only, temporary display bpd periods */}
-            <TmpPeriods />
-          </>
-        )}
         {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
         {bonusVacanzeEnabled && (
           <NavigationEvents onWillFocus={this.loadBonusVacanze} />
@@ -600,9 +589,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(fetchTransactionsRequest({ start })),
   loadWallets: () => dispatch(fetchWalletsRequest()),
   dispatchAllTransactionLoaded: (transactions: ReadonlyArray<Transaction>) =>
-    dispatch(fetchTransactionsLoadComplete(transactions)),
-  // TODO: Temp only, remove after bpd details
-  navigateToBpdTest: () => dispatch(navigateToBpdTestScreen())
+    dispatch(fetchTransactionsLoadComplete(transactions))
 });
 
 export default withValidatedPagoPaVersion(

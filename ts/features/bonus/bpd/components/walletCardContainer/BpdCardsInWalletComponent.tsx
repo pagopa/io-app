@@ -1,14 +1,16 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
-import { H1 } from "../../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useRefreshDataWhenFocus } from "../../../../../utils/hooks/useRefreshDataWhenFocus";
+import { navigateToBpdDetails } from "../../navigation/actions";
 import { bpdDetailsLoadAll } from "../../store/actions/details";
+import { BpdPeriod } from "../../store/actions/periods";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
+import { BpdCardComponent } from "../bpdCardComponent/BpdCardComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -27,16 +29,24 @@ const BpdCardsInWalletContainer: React.FunctionComponent<Props> = props => {
     <View>
       {pot.isSome(props.periodsWithAmount) &&
         props.periodsWithAmount.value.map(pa => (
-          <H1 key={pa.period.awardPeriodId}>
-            {pa.period.startDate.toDateString()}
-          </H1>
+          <BpdCardComponent
+            key={pa.period.awardPeriodId}
+            period={pa.period}
+            totalAmount={pa.amount}
+            preview={true}
+            onPress={() => {
+              props.navigateToCashbackDetails(pa.period);
+            }}
+          />
         ))}
     </View>
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  load: () => dispatch(bpdDetailsLoadAll())
+  load: () => dispatch(bpdDetailsLoadAll()),
+  navigateToCashbackDetails: (period: BpdPeriod) =>
+    dispatch(navigateToBpdDetails(period))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

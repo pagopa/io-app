@@ -8,6 +8,7 @@ import { H3 } from "../../../../../components/core/typography/H3";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { BpdPeriod } from "../../store/actions/periods";
 import { bpdSelectPeriod } from "../../store/actions/selectedPeriod";
+import { bpdPeriodsAmountSnappedListSelector } from "../../store/reducers/details/combiner";
 import { bpdPeriodsSelector } from "../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import { TMPBpdPeriodsAsButtons } from "../test/TMPPeriods";
@@ -47,7 +48,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  periods: bpdPeriodsSelector(state),
+  periods: bpdPeriodsAmountSnappedListSelector(state),
   selectedPeriod: bpdSelectedPeriodSelector(state)
 });
 

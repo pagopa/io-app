@@ -63,3 +63,30 @@ export const bpdPeriodsAmountWalletVisibleSelector = createSelector(
       )
     )
 );
+
+/**
+ * The period should be visible in the snapped list only if:
+ * state === Closed (a closed period is always visible)
+ * bpdEnabled === true (a inactive or current period is visible only if bpd is Enabled)
+ * @param periodAmount
+ * @param bpdEnabled
+ */
+const isPeriodAmountSnappedVisible = (
+  periodAmount: BpdPeriodAmount,
+  bpdEnabled: RemoteValue<boolean, Error>
+) =>
+  periodAmount.period.status === "Closed" ||
+  (isReady(bpdEnabled) && bpdEnabled.value);
+
+/**
+ * Return the {@link BpdPeriodAmount} that should be visible in the snapped List selector
+ */
+export const bpdPeriodsAmountSnappedListSelector = createSelector(
+  [bpdAllPeriodsWithAmountSelector, bpdEnabledSelector],
+  (potPeriodsAmount, bpdEnabled) =>
+    pot.map(potPeriodsAmount, periodsAmountList =>
+      periodsAmountList.filter(periodAmount =>
+        isPeriodAmountSnappedVisible(periodAmount, bpdEnabled)
+      )
+    )
+);
