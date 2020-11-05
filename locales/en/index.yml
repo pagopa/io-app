@@ -1601,6 +1601,7 @@ bonus:
   bpd:
     title: Cashback Digital Payments
     name: Cashback
+    earned: Earned Cashback
     onboarding:
       loadingActivationStatus:
         title: Loading activation status
@@ -1665,6 +1666,11 @@ bonus:
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
+      card:
+        status:
+          active: Active
+          closed: Closed
+          inactive: Incoming
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
