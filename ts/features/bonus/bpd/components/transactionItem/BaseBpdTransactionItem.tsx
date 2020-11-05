@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   body: {
-    height: 64 - 12 - 12,
+    // 64 - 12*2
+    height: 40,
     backgroundColor: "white",
     justifyContent: "space-between",
     alignItems: "center"
