@@ -52,7 +52,7 @@ const updateStateHead = (
  * 3. if 2 is addWalletCreditCardSuccess -> creditCardCheckout3dsRequest
  * 4. creditCardCheckout3dsSuccess
  * 5. credit card payment verification outcome: payCreditCardVerificationSuccess | payCreditCardVerificationFailure
- * 5. addWalletNewCreditCardSuccess completed onboarded (add + pay + checkout)
+ * 6. addWalletNewCreditCardSuccess completed onboarded (add + pay + checkout)
  * see: https://docs.google.com/presentation/d/1nikV9vNGCFE_9Mxt31ZQuqzQXeJucMW3kdJvtjoBtC4/edit#slide=id.ga4eb40050a_0_4
  *
  * step 1 adds an item into the history.
