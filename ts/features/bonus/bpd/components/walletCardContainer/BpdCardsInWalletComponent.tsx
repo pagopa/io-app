@@ -3,19 +3,11 @@ import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useRefreshDataWhenFocus } from "../../../../../utils/hooks/useRefreshDataWhenFocus";
-import { BpdAmount } from "../../store/actions/amount";
 import { bpdDetailsLoadAll } from "../../store/actions/details";
-import { AwardPeriodId, BpdPeriod } from "../../store/actions/periods";
-import {
-  bpdAmountForSelectedPeriod,
-  bpdAmountSelector
-} from "../../store/reducers/details/amounts";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
-import { bpdPeriodsSelector } from "../../store/reducers/details/periods";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
