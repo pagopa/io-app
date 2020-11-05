@@ -4,6 +4,7 @@ import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { connect } from "react-redux";
+import reactotron from "reactotron-react-native";
 import { Dispatch } from "redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -18,6 +19,7 @@ import {
   formatDateAsMonth
 } from "../../utils/dates";
 import {
+  isExpirable,
   isExpired,
   isExpiring,
   paymentExpirationInfo
@@ -68,6 +70,10 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     return this.props.payment !== undefined;
   }
 
+  get isPaymentExpirable(): boolean {
+    return this.paymentExpirationInfo.fold(false, isExpirable);
+  }
+
   get isPaymentExpired(): boolean {
     return this.paymentExpirationInfo.fold(false, info => isExpired(info));
   }
@@ -86,6 +92,9 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     }
 
     if (this.isPaymentExpired) {
+      if (this.isPaymentExpirable) {
+        return { backgroundColor: customVariables.brandDarkGray };
+      }
       return { backgroundColor: customVariables.calendarExpirableColor };
     }
 
@@ -163,9 +172,9 @@ class MessageDueDateBar extends React.PureComponent<Props> {
 
       const textColor = this.paid
         ? customVariables.colorWhite
-        : this.isPaymentExpiring || this.isPaymentExpired
+        : this.isPaymentExpiring || !this.isPaymentExpirable
         ? customVariables.calendarExpirableColor
-        : this.isPaymentExpired
+        : this.isPaymentExpired && this.isPaymentExpirable
         ? customVariables.brandDarkGray
         : customVariables.colorWhite;
 
