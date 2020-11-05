@@ -36,6 +36,7 @@ import {
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
 import { navigateToBpdTestScreen } from "../../features/bonus/bpd/navigation/actions";
 import TmpPeriods from "../../features/bonus/bpd/screens/test/TMPPeriods";
 import I18n from "../../i18n";
@@ -273,6 +274,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           </React.Fragment>
         )}
         {this.cardHeader(false, noMethod)}
+        {bpdEnabled && <BpdCardsInWalletContainer />}
         {validWallets.length > 0 ? (
           <RotatedCards
             wallets={validWallets}
