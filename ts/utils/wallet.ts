@@ -77,34 +77,3 @@ export const handleSetFavourite = (
         I18n.t("global.genericAlert"),
         I18n.t("wallet.alert.favourite")
       );
-
-export const convertWalletV2toWalletV1 = (
-  walletV2: PatchedWalletV2
-): Wallet => {
-  const info = walletV2.info;
-  return {
-    idWallet: walletV2.idWallet,
-    type: TypeEnum.CREDIT_CARD,
-    favourite: walletV2.favourite,
-    creditCard: {
-      id: undefined,
-      holder: info.holder ?? "",
-      pan: info.blurredNumber as CreditCardPan,
-      expireMonth: info.expireMonth as CreditCardExpirationMonth,
-      expireYear: info.expireYear as CreditCardExpirationYear,
-      brandLogo: info.brandLogo,
-      flag3dsVerified: true,
-      brand: info.brand,
-      onUs: true,
-      securityCode: undefined
-    },
-    psp: undefined,
-    idPsp: undefined,
-    pspEditable: false,
-    lastUsage: walletV2.updateDate ? new Date(walletV2.updateDate) : undefined,
-    isPspToIgnore: false,
-    registeredNexi: false,
-    saved: true,
-    v2: walletV2
-  };
-};

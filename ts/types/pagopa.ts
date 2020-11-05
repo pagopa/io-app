@@ -7,7 +7,6 @@ import {
   requiredProp1 as reqP,
   tag
 } from "italia-ts-commons/lib/types";
-import { DateFromString } from "italia-ts-commons/lib/dates";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
@@ -114,7 +113,7 @@ export enum EnableableFunctionsTypeEnum {
 
 const WalletV2O = t.partial({
   updateDate: t.string,
-  createDate: DateFromString,
+  createDate: t.string,
   onboardingChannel: t.string,
   favourite: t.boolean
 });
