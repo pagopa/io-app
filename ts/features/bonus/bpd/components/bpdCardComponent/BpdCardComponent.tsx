@@ -279,7 +279,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           ]}
         >
           <H2 weight={"Bold"} color={"white"}>
-            {I18n.t("bonus.bpd.short_title")}
+            {I18n.t("bonus.bpd.name")}
           </H2>
           <View hspacer={true} extralarge={true} />
           <View
