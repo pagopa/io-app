@@ -59,7 +59,7 @@ const getNewCreditCard = () => {
   };
 };
 describe("credit card history", () => {
-  it("should add credit cards in the history", () => {
+  it("should add a credit card attempt into the history", () => {
     const state1 = runReducer([], addCCAction);
     expect(state1.length).toEqual(1);
 
@@ -68,7 +68,7 @@ describe("credit card history", () => {
     expect(state2.length).toEqual(2);
   });
 
-  it("should limit the attempts list on a maximum", () => {
+  it("should limit the stored attempts to a maximum", () => {
     const finalState = range(1, MAX_HISTORY_LENGTH + 10).reduce<
       CreditCardInsertionState
     >(
@@ -78,14 +78,14 @@ describe("credit card history", () => {
     expect(finalState.length).toBeLessThanOrEqual(MAX_HISTORY_LENGTH);
   });
 
-  it("should not add a credit card in the history (already present)", () => {
+  it("should not add a credit card attempt (already present)", () => {
     const state1 = runReducer([], addCCAction);
     expect(state1.length).toEqual(1);
     const state2 = runReducer(state1, addCCAction);
     expect(state2.length).toEqual(1);
   });
 
-  it("should store the add credit card info", () => {
+  it("should store the credit card attempts info", () => {
     const state1 = runReducer([], addCCAction);
     const creditCardInfo = state1[0];
     expect(creditCardInfo.blurredPan).toEqual("1234");
@@ -100,7 +100,7 @@ describe("credit card history", () => {
     );
   });
 
-  it("should add a credit card in the history and the relative wallet info", () => {
+  it("should add a credit card attempt and the relative wallet info (2nd step)", () => {
     const state1 = runReducer([], addCCAction);
     const state2 = runReducer(
       state1,
