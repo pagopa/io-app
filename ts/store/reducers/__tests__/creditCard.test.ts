@@ -1,4 +1,5 @@
 import { range } from "fp-ts/lib/Array";
+import sha from "sha.js";
 import { NullableWallet, WalletResponse } from "../../../types/pagopa";
 import {
   CreditCardExpirationMonth,
@@ -15,7 +16,6 @@ import {
   addWalletCreditCardSuccess
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
-import sha from "sha.js";
 
 const creditCardToAdd: NullableWallet = {
   creditCard: {
