@@ -4,7 +4,8 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { index, take, takeEnd } from "fp-ts/lib/Array";
 import {
   addWalletCreditCardRequest,
-  addWalletCreditCardSuccess
+  addWalletCreditCardSuccess,
+  creditCardCheckout3dsRedirectionUrls
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
 
@@ -85,6 +86,9 @@ const reducer = (
               ];
         return trimState(updateState);
       });
+    case getType(creditCardCheckout3dsRedirectionUrls):
+      // TODO stub, to be implemented
+      return state;
 
     default:
       return state;

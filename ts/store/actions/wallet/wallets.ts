@@ -79,6 +79,10 @@ export const creditCardCheckout3dsSuccess = createStandardAction(
   "WALLET_ADD_CREDITCARD_CHECKOUT_3DS_SUCCESS"
 )<string>();
 
+export const creditCardCheckout3dsRedirectionUrls = createStandardAction(
+  "WALLET_ADD_CREDITCARD_CHECKOUT_3DS_REDIRECTION_URLS"
+)<ReadonlyArray<string>>();
+
 type DeleteWalletRequestPayload = Readonly<{
   walletId: number;
   onSuccess?: (action: ActionType<typeof deleteWalletSuccess>) => void;
@@ -146,4 +150,5 @@ export type WalletsActions =
   | ActionType<typeof payCreditCardVerificationFailure>
   | ActionType<typeof creditCardCheckout3dsRequest>
   | ActionType<typeof creditCardCheckout3dsSuccess>
-  | ActionType<typeof setWalletSessionEnabled>;
+  | ActionType<typeof setWalletSessionEnabled>
+  | ActionType<typeof creditCardCheckout3dsRedirectionUrls>;

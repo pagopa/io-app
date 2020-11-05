@@ -30,6 +30,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import {
   addWalletCreditCardInit,
+  creditCardCheckout3dsRedirectionUrls,
   creditCardCheckout3dsSuccess,
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
@@ -285,8 +286,10 @@ const mapDispatchToProps = (
   };
   return {
     addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
-    creditCardCheckout3dsSuccess: () =>
-      dispatch(creditCardCheckout3dsSuccess("done")),
+    creditCardCheckout3dsSuccess: (redirectionUrl: ReadonlyArray<string>) => {
+      dispatch(creditCardCheckout3dsRedirectionUrls(redirectionUrl));
+      dispatch(creditCardCheckout3dsSuccess("done"));
+    },
     runStartOrResumeAddCreditCardSaga: (
       creditCard: CreditCard,
       setAsFavorite: boolean
