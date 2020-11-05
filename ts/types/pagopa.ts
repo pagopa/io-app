@@ -123,7 +123,7 @@ const WalletV2R = t.interface({
       EnableableFunctionsTypeEnum,
       "enableableFunctions"
     ),
-    "array of string"
+    "array of enableableFunctions"
   ),
   info: CardInfo,
   idWallet: t.Integer,
