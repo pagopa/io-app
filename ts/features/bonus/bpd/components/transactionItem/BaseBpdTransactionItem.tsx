@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Graphical settings and layouting for the BpdTransactionItem
+ * Graphical settings and layout for the BpdTransactionItem
  * @param props
  * @constructor
  */
@@ -45,7 +45,7 @@ export const BaseBpdTransactionItem: React.FunctionComponent<Props> = props => (
           <View hspacer={true} />
           <View>
             <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-              Intesa San paolo
+              {props.title}
             </H4>
             <H5 color={"bluegrey"}>{props.subtitle}</H5>
           </View>
