@@ -98,7 +98,7 @@ export type Psp = t.TypeOf<typeof Psp>;
  * - createDate and updateDate are generated from spec as UTCISODateFromString instead of DateFromString
  * - info is required
  * - info is CardInfo and not PaymentMethodInfo (empty interface)
- * - enableableFunctions is build as an array of strings instead of array of enum (code generation limit)
+ * - enableableFunctions is build as an array of strings instead of array of enum (io-utils code generation limit)
  */
 
 export enum EnableableFunctionsTypeEnum {
