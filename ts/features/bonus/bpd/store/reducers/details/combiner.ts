@@ -1,12 +1,23 @@
+import { Option, none, fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
+import { WalletTypeEnum } from "../../../../../../../definitions/pagopa/bancomat/WalletV2";
+import {
+  cardIcons,
+  getCardIconFromBrandLogo
+} from "../../../../../../components/wallet/card/Logo";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
+import { walletV2Selector } from "../../../../../../store/reducers/wallet/wallets";
+import { PatchedWalletV2 } from "../../../../../../types/pagopa";
+import { abiListSelector } from "../../../../../wallet/onboarding/store/abi";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { BpdAmount } from "../../actions/amount";
 import { BpdPeriod } from "../../actions/periods";
+import pagoBancomatImage from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { bpdEnabledSelector } from "./activation";
 import { bpdAllAmountSelector } from "./amounts";
 import { bpdPeriodsSelector } from "./periods";
+import { bpdTransactionsForSelectedPeriod } from "./transactions";
 
 /**
  * Combine the period & amount
@@ -88,5 +99,45 @@ export const bpdPeriodsAmountSnappedListSelector = createSelector(
       periodsAmountList.filter(periodAmount =>
         isPeriodAmountSnappedVisible(periodAmount, bpdEnabled)
       )
+    )
+);
+
+/**
+ * Pick a payment instrument from the wallet, using the provided hashpan
+ * @param hashPan
+ * @param potWalletV2
+ */
+const pickWalletFromHashpan = (
+  hashPan: string,
+  potWalletV2: pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>
+): Option<PatchedWalletV2> =>
+  pot.getOrElse(
+    pot.map(potWalletV2, walletV2 =>
+      fromNullable(walletV2.find(w => w.info.hashPan === hashPan))
+    ),
+    none
+  );
+
+const extractImageFromWallet = (w2: PatchedWalletV2) => {
+  switch (w2.walletType) {
+    case WalletTypeEnum.Card:
+      return getCardIconFromBrandLogo(w2.info);
+    case WalletTypeEnum.Bancomat:
+      return pagoBancomatImage;
+    default:
+      return cardIcons.UNKNOWN;
+  }
+};
+
+export const bpdDisplayTransactionsSelector = createSelector(
+  [bpdTransactionsForSelectedPeriod, walletV2Selector, abiListSelector],
+  (potTransactions, wallet, abiListSelector) =>
+    pot.map(potTransactions, transactions =>
+      transactions.map(t => ({
+        ...t,
+        imageMy: pickWalletFromHashpan(t.hashPan, wallet)
+          .map(extractImageFromWallet)
+          .getOrElse(cardIcons.UNKNOWN)
+      }))
     )
 );

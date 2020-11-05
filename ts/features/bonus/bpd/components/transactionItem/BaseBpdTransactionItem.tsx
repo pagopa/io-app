@@ -1,7 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
-import pagoBancomatImage from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { ShadowBox } from "../../screens/details/components/summary/base/ShadowBox";
@@ -42,7 +41,7 @@ export const BaseBpdTransactionItem: React.FunctionComponent<Props> = props => (
     <ShadowBox>
       <View style={[styles.body, styles.row]}>
         <View style={[styles.row]}>
-          <Image source={pagoBancomatImage} style={styles.cardIcon} />
+          <Image source={props.image} style={styles.cardIcon} />
           <View hspacer={true} />
           <View>
             <H4 weight={"SemiBold"} color={"bluegreyDark"}>

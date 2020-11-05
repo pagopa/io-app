@@ -10,6 +10,7 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { BpdTransactionItem } from "../../../components/transactionItem/BpdTransactionItem";
+import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
 import { bpdTransactionsForSelectedPeriod } from "../../../store/reducers/details/transactions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -43,7 +44,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => (
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  transactionForSelectedPeriod: bpdTransactionsForSelectedPeriod(state)
+  transactionForSelectedPeriod: bpdDisplayTransactionsSelector(state)
 });
 
 export default connect(

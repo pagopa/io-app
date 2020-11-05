@@ -1,16 +1,17 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { format } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { BpdTransaction } from "../../store/actions/transactions";
 import { BaseBpdTransactionItem } from "./BaseBpdTransactionItem";
 
 type Props = {
-  transaction: BpdTransaction;
+  transaction: any;
 };
 
-const styles = StyleSheet.create({});
-
+/**
+ * Create the subtitle for the transaction item, based on the trx date and trx amount
+ * @param transaction
+ */
 const getSubtitle = (transaction: BpdTransaction) =>
   `${format(transaction.trxDate, "DD MMM, HH:mm")} · € ${formatNumberAmount(
     transaction.amount
@@ -18,6 +19,7 @@ const getSubtitle = (transaction: BpdTransaction) =>
 
 export const BpdTransactionItem: React.FunctionComponent<Props> = props => (
   <BaseBpdTransactionItem
+    image={props.transaction.imageMy}
     subtitle={getSubtitle(props.transaction)}
     rightText={formatNumberAmount(props.transaction.cashback)}
   />
