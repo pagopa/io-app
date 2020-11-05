@@ -4,7 +4,6 @@ import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { connect } from "react-redux";
-import reactotron from "reactotron-react-native";
 import { Dispatch } from "redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
