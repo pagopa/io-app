@@ -9,7 +9,7 @@ import {
 } from "italia-ts-commons/lib/types";
 import { DateFromString } from "italia-ts-commons/lib/dates";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
-import { WalletTypeEnum } from "../../definitions/pagopa/bancomat/WalletV2";
+import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
 import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
@@ -30,7 +30,7 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
-import { CardInfo } from "../../definitions/pagopa/bancomat/CardInfo";
+import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
 
 /**
  * Union of all possible credit card types
@@ -99,7 +99,16 @@ export type Psp = t.TypeOf<typeof Psp>;
  * - createDate and updateDate are generated from spec as UTCISODateFromString instead of DateFromString
  * - info is required
  * - info is CardInfo and not PaymentMethodInfo (empty interface)
+ * - enableableFunctions is build as an array of strings instead of array of enum (code generation limit)
  */
+
+export enum EnableableFunctionsTypeEnum {
+  "pagoPA" = "pagoPA",
+
+  "BPD" = "BPD",
+
+  "FA" = "FA"
+}
 
 // required attributes
 
@@ -112,7 +121,13 @@ const WalletV2O = t.partial({
 
 // optional attributes
 const WalletV2R = t.interface({
-  enableableFunctions: t.readonlyArray(t.string, "array of string"),
+  enableableFunctions: t.readonlyArray(
+    enumType<EnableableFunctionsTypeEnum>(
+      EnableableFunctionsTypeEnum,
+      "enableableFunctions"
+    ),
+    "array of string"
+  ),
   info: CardInfo,
   idWallet: t.Integer,
   pagoPA: t.boolean,
