@@ -6,9 +6,11 @@ import * as React from "react";
 import { Animated, Dimensions, ScrollView, StyleSheet } from "react-native";
 import I18n from "../i18n";
 import variables from "../theme/variables";
+import { fromNullable } from "fp-ts/lib/Option";
 
 type Props = {
   cards: ReadonlyArray<JSX.Element>;
+  onCurrentElement?: (index: number) => void;
 };
 
 const itemWidth = 10; // Radius of the indicators
@@ -84,9 +86,15 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={props.cards.length}
         pagingEnabled={true}
-        onScroll={Animated.event([
-          { nativeEvent: { contentOffset: { x: animVal } } }
-        ])}
+        onScroll={event => {
+          const currentIndex = Math.floor(
+            event.nativeEvent.contentOffset.x / Dimensions.get("window").width
+          );
+          fromNullable(props.onCurrentElement).foldL(() => void 0, onCurrElement => onCurrElement(currentIndex));
+          Animated.event([{ nativeEvent: { contentOffset: { x: animVal } } }])(
+            event
+          );
+        }}
         accessible={true}
         accessibilityLabel={I18n.t(
           "authentication.landing.accessibility.carousel.label"
