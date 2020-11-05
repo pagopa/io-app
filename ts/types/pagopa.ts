@@ -103,9 +103,7 @@ export type Psp = t.TypeOf<typeof Psp>;
 
 export enum EnableableFunctionsTypeEnum {
   "pagoPA" = "pagoPA",
-
   "BPD" = "BPD",
-
   "FA" = "FA"
 }
 
