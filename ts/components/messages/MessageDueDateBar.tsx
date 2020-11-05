@@ -75,11 +75,11 @@ class MessageDueDateBar extends React.PureComponent<Props> {
   }
 
   get isPaymentExpired(): boolean {
-    return this.paymentExpirationInfo.fold(false, info => isExpired(info));
+    return this.paymentExpirationInfo.fold(false, isExpired);
   }
 
   get isPaymentExpiring(): boolean {
-    return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
+    return this.paymentExpirationInfo.fold(false, isExpiring);
   }
 
   get dueDate(): Option<Date> {
