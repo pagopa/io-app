@@ -30,12 +30,13 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => (
         totalAmount={props.selectedAmount.value}
       />
     )}
-    {pot.isSome(props.periods) && props.periods.value.length > 1 && (
-      <TMPBpdPeriodsAsButtons
-        potPeriods={props.periods}
-        onPeriodSelected={props.changeSelectPeriod}
-      />
-    )}
+    {pot.isSome(props.periodsWithAmount) &&
+      props.periodsWithAmount.value.length > 1 && (
+        <TMPBpdPeriodsAsButtons
+          potPeriods={props.periodsWithAmount}
+          onPeriodSelected={props.changeSelectPeriod}
+        />
+      )}
   </View>
 );
 
@@ -44,7 +45,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  periods: bpdPeriodsAmountSnappedListSelector(state),
+  periodsWithAmount: bpdPeriodsAmountSnappedListSelector(state),
   selectedPeriod: bpdSelectedPeriodSelector(state),
   selectedAmount: bpdAmountForSelectedPeriod(state)
 });
