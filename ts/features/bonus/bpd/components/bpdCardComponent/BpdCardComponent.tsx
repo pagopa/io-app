@@ -1,6 +1,7 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageBackground, StyleSheet } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import { format } from "../../../../../utils/dates";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -117,75 +118,92 @@ type BadgeDefinition = {
 export const BpdCardComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const formatStatusBadge = (): BadgeDefinition => {
-    const { period } = props;
+  const { period, totalAmount } = props;
 
-    switch (period.status) {
-      case "Active":
-        return {
-          style: {
-            backgroundColor: IOColors.white
-          },
-          label: I18n.t("bonus.bpd.detail.status.active")
-        };
-      case STATUS_CLOSED:
-        return {
-          style: {
-            backgroundColor: IOColors.black
-          },
-          label: I18n.t("bonus.bpd.detail.status.closed")
-        };
-      case "Inactive":
-        return {
-          style: {
-            backgroundColor: IOColors.aqua
-          },
-          label: I18n.t("bonus.bpd.detail.status.inactive")
-        };
-      default:
-        return {
-          style: {
-            backgroundColor: IOColors.white
-          },
-          label: "-"
-        };
-    }
+  const INITIAL_BADGE_DEFINITION = {
+    style: {
+      backgroundColor: IOColors.white
+    },
+    label: "-"
   };
+  const [amount, setAmount] = React.useState(["0", "00"]);
+  const [statusBadge, setStatusBadge] = React.useState<BadgeDefinition>(
+    INITIAL_BADGE_DEFINITION
+  );
+  const [showLock, setShowLock] = React.useState(false);
+  const [isInGracePeriod, setIsInGracePeriod] = React.useState(false);
 
-  const showLock = () => {
-    const { period } = props;
-
-    switch (period.status) {
-      case "Active":
-        return (
-          props.totalAmount.transactionNumber <
-          props.period.minTransactionNumber
-        );
-      case "Inactive":
-        return true;
-      default:
-        return false;
-    }
-  };
-
-  const conditionalAmount = (): ReadonlyArray<string> => {
-    // TODO: Add supercashback logic for amount
-    // eslint-disable-next-line sonarjs/no-collapsible-if
-    if (props.period.status === STATUS_CLOSED) {
-      if (
-        props.totalAmount.transactionNumber < props.period.minTransactionNumber
-      ) {
-        return ["0", "00"];
-      }
-    }
-    return formatNumberCentsToAmount(props.totalAmount.totalCashback).split(
-      ","
+  const statusClosedHandler = () => {
+    const actualDate = new Date();
+    const endDate = new Date(period.endDate.getTime());
+    endDate.setDate(endDate.getDate() + period.gracePeriod);
+    setStatusBadge({
+      style: {
+        backgroundColor: IOColors.black
+      },
+      label: I18n.t("bonus.bpd.detail.status.closed")
+    });
+    setShowLock(false);
+    setIsInGracePeriod(
+      actualDate.getTime() >= period.endDate.getTime() &&
+        actualDate.getTime() <= endDate.getTime()
+    );
+    // TODO: Add missing supercashback logic for amount
+    setAmount(
+      totalAmount.transactionNumber < period.minTransactionNumber
+        ? ["0", "00"]
+        : formatNumberCentsToAmount(props.totalAmount.totalCashback).split(",")
     );
   };
 
-  const amount = conditionalAmount();
+  const statusActiveHandler = () => {
+    setStatusBadge({
+      style: {
+        backgroundColor: IOColors.white
+      },
+      label: I18n.t("bonus.bpd.detail.status.active")
+    });
+    setShowLock(totalAmount.transactionNumber < period.minTransactionNumber);
+    setAmount(
+      formatNumberCentsToAmount(props.totalAmount.totalCashback).split(",")
+    );
+  };
 
-  const renderFullCard = () => (
+  const statusInactiveHandler = () => {
+    setStatusBadge({
+      style: {
+        backgroundColor: IOColors.aqua
+      },
+      label: I18n.t("bonus.bpd.detail.status.inactive")
+    });
+    setShowLock(true);
+    setAmount(
+      formatNumberCentsToAmount(props.totalAmount.totalCashback).split(",")
+    );
+  };
+
+  /**
+   * if the period is Closed we must check if minimum number of transactions has been reached
+   * Unless we'll show a Zero amount value
+   *
+   * Lock must be shown only if period is Inactive or the transactionNumber didn't reach the minimum target
+   *
+   * GracePeriod: check if we are in the grace period to show an alert instead of the value
+   * grace period is given adding the gracePeriod value of days to period.endDate
+   */
+  React.useEffect(() => {
+    const statusHandlersMap = new Map<BpdPeriod["status"], () => void>([
+      [STATUS_CLOSED, statusClosedHandler],
+      ["Active", statusActiveHandler],
+      ["Inactive", statusInactiveHandler]
+    ]);
+
+    fromNullable(statusHandlersMap.get(period.status)).map(handler =>
+      handler()
+    );
+  }, []);
+
+  const FullCard = () => (
     <View style={[styles.row, styles.spaced]}>
       <View style={[styles.column, styles.flex2, styles.spaced]}>
         <View>
@@ -201,14 +219,14 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         <View style={{ height: 32 }}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Text bold={true} white={true} style={styles.amountTextBaseFull}>
-              €
+              {"€ "}
               <Text white={true} style={styles.amountTextUpperFull}>
                 {amount[0]},
               </Text>
               {amount[1]}
             </Text>
             <View hspacer={true} small={true} />
-            {showLock() && (
+            {showLock && (
               <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
             )}
           </View>
@@ -218,13 +236,13 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
-        <Badge style={[formatStatusBadge().style, styles.badgeBase]}>
+        <Badge style={[statusBadge.style, styles.badgeBase]}>
           <Text
             semibold={true}
             style={styles.badgeTextBase}
             dark={props.period.status !== STATUS_CLOSED}
           >
-            {formatStatusBadge().label}
+            {statusBadge.label}
           </Text>
         </Badge>
         <Image source={bpdBonusLogo} style={styles.fullLogo} />
@@ -232,23 +250,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
     </View>
   );
 
-  const checkGracePeriod = (): boolean => {
-    const actualDate = new Date();
-    const endDate = new Date(props.period.endDate.getTime());
-    endDate.setDate(endDate.getDate() + props.period.gracePeriod);
-    if (
-      props.period.status === STATUS_CLOSED &&
-      actualDate.getTime() >= props.period.endDate.getTime() &&
-      actualDate.getTime() <= endDate.getTime()
-    ) {
-      return true;
-    }
-    return false;
-  };
-
-  const isInGracePeriod = checkGracePeriod();
-
-  const renderPreviewCard = () => (
+  const PreviewCard = () => (
     <TouchableDefaultOpacity
       style={[styles.row, styles.spaced]}
       onPress={props.onPress}
@@ -287,7 +289,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               styles.justifyContentCenter
             ]}
           >
-            {showLock() && (
+            {showLock && (
               <IconFont name="io-lucchetto" size={16} color={IOColors.white} />
             )}
             <View hspacer={true} small={true} />
@@ -303,7 +305,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
                 white={true}
                 style={styles.amountTextBasePreview}
               >
-                €
+                {"€ "}
                 <Text white={true} style={styles.amountTextUpperPreview}>
                   {amount[0]},
                 </Text>
@@ -328,7 +330,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           props.preview ? styles.paddedContentPreview : styles.paddedContentFull
         }
       >
-        {props.preview ? renderPreviewCard() : renderFullCard()}
+        {props.preview ? <PreviewCard /> : <FullCard />}
       </View>
     </ImageBackground>
   );
