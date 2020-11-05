@@ -66,6 +66,7 @@ global:
     search: Search
     skip: "Skip"
     add: Add
+    edit: "Edit"
   navigator:
     messages: messages
     wallet: payments
@@ -1599,7 +1600,7 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
     title: Cashback Digital Payments
-    short_title: Cashback
+    name: Cashback
     onboarding:
       loadingActivationStatus:
         title: Loading activation status
@@ -1646,13 +1647,6 @@ bonus:
         text2: "identify a current account that is not registered in your tax code: are you sure you want to use this IBAN?"
       loading:
         "We are verifying your IBAN\n\nPlease wait."
-    detail:
-      status:
-        active: Active
-        closed: Closed
-        inactive: Incoming
-      card:
-        earned: Earned Cashback
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

@@ -11,12 +11,14 @@ import {
   BpdPotPaymentMethodActivation
 } from "./paymentMethods";
 import { bpdPeriodsReducer } from "./periods";
+import { bpdSelectedPeriodsReducer } from "./selectedPeriod";
 import { bpdTransactionsReducer } from "./transactions";
 
 export type BpdDetailsState = {
   activation: BpdActivation;
   paymentMethods: IndexedById<BpdPotPaymentMethodActivation>;
   periods: pot.Pot<IndexedById<BpdPeriod>, Error>;
+  selectedPeriod: BpdPeriod | null;
   amounts: IndexedById<pot.Pot<BpdAmount, Error>>;
   transactions: IndexedById<pot.Pot<ReadonlyArray<BpdTransaction>, Error>>;
 };
@@ -28,6 +30,8 @@ const bpdDetailsReducer = combineReducers<BpdDetailsState, Action>({
   paymentMethods: bpdPaymentMethodsReducer,
   // All the periods of the cashback
   periods: bpdPeriodsReducer,
+  // the current period displayed, selected by the user
+  selectedPeriod: bpdSelectedPeriodsReducer,
   // The amounts (transactions and amount) foreach cashback period
   amounts: bpdAmountsReducer,
   transactions: bpdTransactionsReducer

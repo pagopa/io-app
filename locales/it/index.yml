@@ -66,6 +66,7 @@ global:
     search: Ricerca
     skip: "Salta"
     add: Aggiungi
+    edit: "Modifica"
   navigator:
     messages: messaggi
     wallet: pagamenti
@@ -1631,7 +1632,7 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
     title: Cashback Pagamenti Digitali
-    short_title: Cashback
+    name: Cashback
     onboarding:
       loadingActivationStatus:
         title: Verifico lo stato di attivazione
@@ -1678,13 +1679,6 @@ bonus:
         text2: "identifica un conto corrente che non risulta intestato al tuo codice fiscale: sei sicuro di voler usare questo IBAN?"
       loading:
         "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
-    detail:
-      status:
-        active: Attivo
-        closed: Concluso
-        inactive: In arrivo
-      card:
-        earned: Cashback accumulato
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
