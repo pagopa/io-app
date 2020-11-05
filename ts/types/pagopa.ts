@@ -95,7 +95,7 @@ export type Psp = t.TypeOf<typeof Psp>;
 
 /** A refined WalletV2
  * reasons:
- * - createDate and updateDate are generated from spec as UTCISODateFromString instead of DateFromString
+ * - createDate and updateDate are generated from spec as UTCISODateFromString but they have an invalid format (2020-11-03 22:20:29)
  * - info is required
  * - info is CardInfo and not PaymentMethodInfo (empty interface)
  * - enableableFunctions is build as an array of strings instead of array of enum (io-utils code generation limit)
