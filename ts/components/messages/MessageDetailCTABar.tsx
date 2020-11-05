@@ -10,7 +10,12 @@ import { loadServiceMetadata } from "../../store/actions/content";
 import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
-import { getCTA, isExpired, paymentExpirationInfo } from "../../utils/messages";
+import {
+  getCTA,
+  isExpirable,
+  isExpired,
+  paymentExpirationInfo
+} from "../../utils/messages";
 import { Dispatch } from "../../store/actions/types";
 import ExtractedCTABar from "../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
@@ -48,6 +53,10 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     return this.props.payment !== undefined;
   }
 
+  get isPaymentExpirable() {
+    return this.paymentExpirationInfo.fold(false, info => isExpirable(info));
+  }
+
   get isPaymentExpired() {
     return this.paymentExpirationInfo.fold(false, info => isExpired(info));
   }
@@ -74,6 +83,9 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
   // Render a button to display details of the payment related to the message
   private renderPaymentButton() {
     if (this.paid) {
+      return null;
+    }
+    if (this.isPaymentExpired && this.isPaymentExpirable) {
       return null;
     }
     // The button is displayed if the payment has an expiration date in the future
