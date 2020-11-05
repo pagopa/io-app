@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
-import { getValue, RemoteValue } from "../../../model/RemoteValue";
+import { getValue, isReady, RemoteValue } from "../../../model/RemoteValue";
 import { BpdAmount } from "../../actions/amount";
 import { BpdPeriod } from "../../actions/periods";
 import { bpdEnabledSelector } from "./activation";
@@ -46,9 +46,10 @@ const isPeriodAmountWalletVisible = (
   periodAmount: BpdPeriodAmount,
   bpdEnabled: RemoteValue<boolean, Error>
 ) =>
-  (periodAmount.period.status === "Active" && getValue(bpdEnabled)) ||
-  (periodAmount.period.status === "Closed" &&
-    periodAmount.amount.transactionNumber > 0);
+  isReady(bpdEnabled) &&
+  ((periodAmount.period.status === "Active" && bpdEnabled.value) ||
+    (periodAmount.period.status === "Closed" &&
+      periodAmount.amount.transactionNumber > 0));
 
 /**
  * Return the {@link BpdPeriodAmount} that can be visible in the wallet
