@@ -8,6 +8,7 @@ import {
 import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
 import { constNull } from "fp-ts/lib/function";
+import { fromNullable } from "fp-ts/lib/Option";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   enrollmentDecoder,
@@ -23,6 +24,17 @@ import {
   FindUsingGETT as FindPaymentUsingGETT
 } from "../../../../../definitions/bpd/payment/requestTypes";
 import { Iban } from "../../../../../definitions/backend/Iban";
+
+import {
+  findAllUsingGETDefaultDecoder,
+  FindAllUsingGETT
+} from "../../../../../definitions/bpd/award_periods/requestTypes";
+import {
+  findWinningTransactionsUsingGETDefaultDecoder,
+  FindWinningTransactionsUsingGETT,
+  getTotalScoreUsingGETDefaultDecoder,
+  GetTotalScoreUsingGETT
+} from "../../../../../definitions/bpd/winning_transactions/requestTypes";
 import { PatchedCitizenResource } from "./patchedTypes";
 
 const headersProducers = <
@@ -130,6 +142,38 @@ const deletePayment: DeleteUsingDELETET = {
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: deletePaymentResponseDecoders
+};
+
+/* AWARD PERIODS  */
+const awardPeriods: FindAllUsingGETT = {
+  method: "get",
+  url: () => `/bpd/io/award-periods`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findAllUsingGETDefaultDecoder()
+};
+
+/* TOTAL CASHBACK  */
+const totalCashback: GetTotalScoreUsingGETT = {
+  method: "get",
+  url: ({ awardPeriodId }) =>
+    `/bpd/io/winning-transactions/total-cashback?awardPeriodId=${awardPeriodId}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: getTotalScoreUsingGETDefaultDecoder()
+};
+
+const winningTransactions: FindWinningTransactionsUsingGETT = {
+  method: "get",
+  url: ({ awardPeriodId, hpan }) =>
+    `/bpd/io/winning-transactions?awardPeriodId=${awardPeriodId}${fromNullable(
+      hpan
+    )
+      .map(h => `&hpan=${h}`)
+      .getOrElse("")}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findWinningTransactionsUsingGETDefaultDecoder()
 };
 
 // decoders composition to handle updatePaymentMethod response
@@ -255,6 +299,15 @@ export function BackendBpdClient(
     ),
     deletePayment: withBearerToken(
       createFetchRequestForApi(deletePayment, options)
+    ),
+    awardPeriods: withBearerToken(
+      createFetchRequestForApi(awardPeriods, options)
+    ),
+    totalCashback: withBearerToken(
+      createFetchRequestForApi(totalCashback, options)
+    ),
+    winningTransactions: withBearerToken(
+      createFetchRequestForApi(winningTransactions, options)
     )
   };
 }

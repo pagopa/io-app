@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0-rc.1](https://github.com/pagopa/io-app/compare/1.9.0-rc.0...1.9.0-rc.1) (2020-11-04)
+
+
+### Features
+
+* [[#165090272](https://www.pivotaltracker.com/story/show/165090272)] Credit Card Brand Recognition ([#2319](https://github.com/pagopa/io-app/issues/2319)) ([4bed662](https://github.com/pagopa/io-app/commit/4bed6624f50e99b1a201f21f0bdbf3770e007281))
+* [[#174966797](https://www.pivotaltracker.com/story/show/174966797)] change message state when expiring or expired ([#2316](https://github.com/pagopa/io-app/issues/2316)) ([ab16e0d](https://github.com/pagopa/io-app/commit/ab16e0dfc505c36bac603ed9f0ee95940b2249f4))
+* [[#175285929](https://www.pivotaltracker.com/story/show/175285929)] Adds an alert when bonus is not yet supported by the app ([#2322](https://github.com/pagopa/io-app/issues/2322)) ([41abc58](https://github.com/pagopa/io-app/commit/41abc58c5508942b31591ef941bf6a05c8819a23))
+* **Bonus Pagamenti Digitali:** [[#175253344](https://www.pivotaltracker.com/story/show/175253344)] Implements Bottom sheet with react-native-bottom-sheet ([#2320](https://github.com/pagopa/io-app/issues/2320)) ([c3b8e0b](https://github.com/pagopa/io-app/commit/c3b8e0ba2b686bc18d0f07a58f142c02b614e33b))
+* **Bonus Pagamenti Digitali:** [[#175263873](https://www.pivotaltracker.com/story/show/175263873)] Add BPD award periods api ([#2324](https://github.com/pagopa/io-app/issues/2324)) ([adc5312](https://github.com/pagopa/io-app/commit/adc5312659c9183633f1f01d5ec14182b192c9e3))
+* **Bonus Pagamenti Digitali:** [[#175263900](https://www.pivotaltracker.com/story/show/175263900)] Add winning transaction API ([#2333](https://github.com/pagopa/io-app/issues/2333)) ([4c3bbae](https://github.com/pagopa/io-app/commit/4c3bbaea43fc872b9d3c8e3cde3cbcb78397b80a))
+* **Bonus Pagamenti Digitali:** [[#175263981](https://www.pivotaltracker.com/story/show/175263981)]  Add BPD cashback amount API ([#2329](https://github.com/pagopa/io-app/issues/2329)) ([72e9aa7](https://github.com/pagopa/io-app/commit/72e9aa7e0547f5b3790ca03bab2ef19e1e6cabd1))
+* **Bonus Pagamenti Digitali:** [[#175349901](https://www.pivotaltracker.com/story/show/175349901),[#175477189](https://www.pivotaltracker.com/story/show/175477189)] Action, store and reducer for bpd details and transactions ([#2321](https://github.com/pagopa/io-app/issues/2321)) ([8ab3bea](https://github.com/pagopa/io-app/commit/8ab3bea21fb48e7957547db333a351fa367f40df))
+
+
+### Bug Fixes
+
+* [[#173988115](https://www.pivotaltracker.com/story/show/173988115)] Fix insert manual payment item ([#2334](https://github.com/pagopa/io-app/issues/2334)) ([7dadbe5](https://github.com/pagopa/io-app/commit/7dadbe54fea10a64a44f39110dbef061b8a84f66))
+* [[#175438360](https://www.pivotaltracker.com/story/show/175438360)] send CIE_AUTHENTICATION_ERROR as code to mixpanel ([#2326](https://github.com/pagopa/io-app/issues/2326)) ([3fe0643](https://github.com/pagopa/io-app/commit/3fe0643a3890fae1d1bafccc6b64d7496a9348e8))
+* [[#175482067](https://www.pivotaltracker.com/story/show/175482067)] Link near footer button not clickable ([#2336](https://github.com/pagopa/io-app/issues/2336)) ([f148901](https://github.com/pagopa/io-app/commit/f1489013fb28c2c47b73cc804f86360c671900cb))
+* [[#175487236](https://www.pivotaltracker.com/story/show/175487236)] Update react-native-cie v0.3.2 ([#2325](https://github.com/pagopa/io-app/issues/2325)) ([7d30592](https://github.com/pagopa/io-app/commit/7d30592764085bcff73922b17b45d6a1917a4017))
+* [[#175492840](https://www.pivotaltracker.com/story/show/175492840)] removes tool-versions file ([#2323](https://github.com/pagopa/io-app/issues/2323)) ([3a522aa](https://github.com/pagopa/io-app/commit/3a522aa9afd4bd878c57e02bc02f06159a2fb688))
+
+## [1.9.0-rc.0](https://github.com/pagopa/io-app/compare/1.8.0-rc.7...1.9.0-rc.0) (2020-10-28)
+
+
+### Features
+
+* [[#174575010](https://www.pivotaltracker.com/story/show/174575010)] Add showroom listitem ([#2317](https://github.com/pagopa/io-app/issues/2317)) ([72c0200](https://github.com/pagopa/io-app/commit/72c020058ae00388d654eb10d1cdb4f1442306c3))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#175419552](https://www.pivotaltracker.com/story/show/175419552)] Enhance add bancomat response ([#2315](https://github.com/pagopa/io-app/issues/2315)) ([1705c39](https://github.com/pagopa/io-app/commit/1705c39d181abafd1bcda93f8751d0274d4c2259))
+* [[#174257087](https://www.pivotaltracker.com/story/show/174257087)] Update clipboard module ([#2318](https://github.com/pagopa/io-app/issues/2318)) ([ee084c9](https://github.com/pagopa/io-app/commit/ee084c9c8c4994cee42442d4ca01f20d81239b7a))
+
 ## [1.8.0-rc.7](https://github.com/pagopa/io-app/compare/1.8.0-rc.6...1.8.0-rc.7) (2020-10-23)
 
 ## [1.8.0-rc.6](https://github.com/pagopa/io-app/compare/1.8.0-rc.5...1.8.0-rc.6) (2020-10-23)

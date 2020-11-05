@@ -255,6 +255,7 @@ profile:
     appVersion: Versione App
     backendVersion: Versione Backend
     debugMode: Modalità debug
+    showroom: Showroom
   preferences:
     title: Preferenze
     subtitle:
@@ -1026,7 +1027,9 @@ messages:
       addMemo:
         block1: Aggiungi un promemoria per il
         block2: alle
-      expiringAlert: Questo avviso scade oggi alle
+      expiringAlert:
+        block1: Questo avviso scade il giorno
+        block2: alle ore
       expiredAlert:
         block1: Il pagamento è scaduto alle ore
         block2: del
@@ -1038,6 +1041,7 @@ messages:
         block2: del
 
     pay: Paga € {{amount}}
+    onlyPay: Paga
     paid: Pagato
     reminder: Promemoria
     reminderShort: Memo
@@ -1063,6 +1067,9 @@ messages:
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
     helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."
+  badge:
+    expired: Scaduto
+    paid: Pagato
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
   archive:
@@ -1250,6 +1257,9 @@ genericError: Si è verificato un errore
 titleUpdateApp: Aggiorna IO!
 msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
 messageUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare l'app è necessario aggiornarla all'ultima versione."
+titleUpdateAppAlert: Per continuare, aggiorna IO
+messageUpdateAppAlert: È disponibile una nuova versione di IO su {{storeName}}, scaricala subito per utilizzare questa funzionalità.
+openStore: Apri {{storeName}}
 btnUpdateApp: Aggiorna l'app IO
 systemsOff:
   title: Impossibile usare IO

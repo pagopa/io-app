@@ -255,6 +255,7 @@ profile:
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
+    showroom: Showroom
   preferences:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
@@ -997,7 +998,9 @@ messages:
       addMemo: 
           block1: Add a reminder for the 
           block2: at
-      expiringAlert: This notice expire today at
+      expiringAlert:
+        block1: This notice will expire on
+        block2: at
       expiredAlert: 
         block1: The notice expired at 
         block2: "on"
@@ -1008,6 +1011,7 @@ messages:
           block1: The prescription expired at 
           block2: "on"
     pay: Pay € {{amount}}
+    onlyPay: Pay
     paid: Paid
     reminder: Reminder
     reminderShort: Memo
@@ -1033,6 +1037,9 @@ messages:
     errors:
       fetchCalendars: Error fetching calendars
     helper: "IO will remember this choice, you can change it from the preference pane."
+  badge:
+    expired: Expired
+    paid: Paid
   unknownSender: Unknown sender
   noContent: Content not available
   archive:
@@ -1219,6 +1226,9 @@ titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
 messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need
   to update it to the latest version."
+titleUpdateAppAlert: To continue, update IO
+messageUpdateAppAlert: A new release of IO is now available on {{storeName}}. To start using this new feature, please download the update.
+openStore: Open {{storeName}}
 btnUpdateApp: Update the IO app
 systemsOff:
   title: Unable to start IO

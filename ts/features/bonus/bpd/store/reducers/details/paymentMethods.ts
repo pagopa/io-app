@@ -31,6 +31,7 @@ export const getPaymentStatus = (value: boolean): BpdPmActivationStatus =>
  * This reducer keep the activation state and the upsert request foreach payment method,
  * grouped by hPan.
  * Foreach hPan there is a {@link BpdPotPaymentMethodActivation} containing the related bpd activation information.
+ * TODO: refactor with the common function in IndexedByIdPot
  * @param state
  * @param action
  */

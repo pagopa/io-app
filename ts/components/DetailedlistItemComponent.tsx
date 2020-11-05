@@ -1,11 +1,14 @@
-import { Text, View } from "native-base";
+import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../theme/fonts";
 import customVariables from "../theme/variables";
+import I18n from "../i18n";
+import { IOColors } from "./core/variables/IOColors";
 import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
+import { H5 } from "./core/typography/H5";
 
 type OwnProps = Readonly<{
   text11: string;
@@ -13,6 +16,8 @@ type OwnProps = Readonly<{
   text2: string;
   text3: string;
   isNew: boolean;
+  isExpired?: boolean;
+  isPaid?: boolean;
   onPressItem: () => void;
   onLongPressItem?: () => void;
   isSelectionModeEnabled?: boolean;
@@ -76,6 +81,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     minHeight: 24
+  },
+  badgeInfoExpired: {
+    backgroundColor: IOColors.white,
+    borderColor: IOColors.red,
+    borderWidth: 1,
+    borderStyle: "solid"
+  },
+  badgeInfoPaid: {
+    backgroundColor: IOColors.aqua
   }
 });
 
@@ -130,6 +144,20 @@ export default class DetailedlistItemComponent extends React.PureComponent<
               {this.props.text3}
             </Text>
           </View>
+          {this.props.isExpired && (
+            <View>
+              <Badge style={styles.badgeInfoExpired}>
+                <H5 color="red">{I18n.t("messages.badge.expired")}</H5>
+              </Badge>
+            </View>
+          )}
+          {this.props.isPaid && (
+            <View>
+              <Badge style={styles.badgeInfoPaid}>
+                <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
+              </Badge>
+            </View>
+          )}
           <View style={styles.icon}>
             <IconFont
               name={this.getIconName()}

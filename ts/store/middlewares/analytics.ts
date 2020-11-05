@@ -246,6 +246,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload.error.message
       });
+    // Failures with reason as Error and optional description
+    case getType(cieAuthenticationError):
+      return mp.track(action.type, action.payload);
     // Failures with reason as Error
     case getType(sessionInformationLoadFailure):
     case getType(profileLoadFailure):
@@ -265,7 +268,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentDeletePayment.failure):
     case getType(paymentUpdateWalletPsp.failure):
     case getType(updateNotificationInstallationFailure):
-    case getType(cieAuthenticationError):
     //  Bonus vacanze
     case getType(loadAllBonusActivations.failure):
     case getType(loadAvailableBonuses.failure):

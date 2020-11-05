@@ -86,7 +86,7 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     }
 
     if (this.isPaymentExpired) {
-      return { backgroundColor: customVariables.brandDarkGray };
+      return { backgroundColor: customVariables.calendarExpirableColor };
     }
 
     if (this.isPaymentExpiring) {
@@ -118,8 +118,10 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     if (this.isPaymentExpiring) {
       return (
         <React.Fragment>
-          {I18n.t("messages.cta.payment.expiringAlert")}
-          <Text bold={true} white={true}>{` ${time}`}</Text>
+          {I18n.t("messages.cta.payment.expiringAlert.block1")}
+          <Text bold={true} white={true}>{` ${date} `}</Text>
+          {I18n.t("messages.cta.payment.expiringAlert.block2")}
+          <Text bold={true} white={true}>{` ${time} `}</Text>
         </React.Fragment>
       );
     }
@@ -161,7 +163,7 @@ class MessageDueDateBar extends React.PureComponent<Props> {
 
       const textColor = this.paid
         ? customVariables.colorWhite
-        : this.isPaymentExpiring
+        : this.isPaymentExpiring || this.isPaymentExpired
         ? customVariables.calendarExpirableColor
         : this.isPaymentExpired
         ? customVariables.brandDarkGray
