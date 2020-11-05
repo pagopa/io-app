@@ -1,11 +1,8 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { BpdCardComponent } from "../../components/bpdCardComponent/BpdCardComponent";
@@ -18,12 +15,6 @@ import { TMPBpdPeriodsAsButtons } from "../test/TMPPeriods";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-
-const styles = StyleSheet.create({
-  main: {
-    flex: 1
-  }
-});
 
 /**
  * An horizontal snap scroll view used to select a specific period of bpd.
