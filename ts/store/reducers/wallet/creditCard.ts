@@ -35,18 +35,15 @@ const trimState = (state: CreditCardInsertionState) =>
 /**
  * Given a current state (which is represented by a stack), replace the head with a given item
  * @param state the stack og items
- * @param updateItem item to put at the head 
- * 
+ * @param updateItem item to put at the head
+ *
  * @returns the new stafck with the head changed
  */
 const updateStateHead = (
   [, ...tail]: CreditCardInsertionState,
   updateItem: CreditCardInsertion
-) => 
-  trimState([
-    updateItem,
-    ...takeEnd<CreditCardInsertion>(tail.length, tail)
-  ]);
+) =>
+  trimState([updateItem, ...takeEnd<CreditCardInsertion>(tail.length, tail)]);
 
 /**
  * card insertion follow these step:
@@ -54,6 +51,7 @@ const updateStateHead = (
  * 2. adding result: addWalletCreditCardSuccess or addWalletCreditCardFailure
  * 3. if 2 is addWalletCreditCardSuccess -> creditCardCheckout3dsRequest
  * 4. creditCardCheckout3dsSuccess
+ * 5. credit card payment verification outcome: payCreditCardVerificationSuccess | payCreditCardVerificationFailure
  * 5. addWalletNewCreditCardSuccess completed onboarded (add + pay + checkout)
  * see: https://docs.google.com/presentation/d/1nikV9vNGCFE_9Mxt31ZQuqzQXeJucMW3kdJvtjoBtC4/edit#slide=id.ga4eb40050a_0_4
  *
@@ -96,7 +94,7 @@ const reducer = (
             idCreditCard: wallet.creditCard?.id,
             brand: wallet.creditCard?.brand
           }
-        })
+        });
       });
 
     case getType(addWalletCreditCardFailure):
@@ -113,7 +111,7 @@ const reducer = (
       // We expect addWalletCreditCardRequest not to be dispatched twice in a row,
       // so the current addWalletCreditCardRequest action refers to the last card added to the history.
       // As we don't pass an idientifer for the case, we have no other method do relate the success action to its request.
-      return index<CreditCardInsertion>(0, [...state]).fold(state, attempt => 
+      return index<CreditCardInsertion>(0, [...state]).fold(state, attempt =>
         updateStateHead(state, {
           ...attempt,
           urlHistory3ds: action.payload
