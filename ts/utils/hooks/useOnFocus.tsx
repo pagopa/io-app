@@ -7,7 +7,7 @@ import { NavigationContext } from "react-navigation";
  * @param loadAction
  * @param refreshAfter
  */
-export const useRefreshDataWhenFocus = (
+export const useOnFocus = (
   loadAction: () => void,
   refreshAfter: Millisecond | undefined = undefined
 ) => {
@@ -24,6 +24,19 @@ export const useRefreshDataWhenFocus = (
     if (navigation.isFocused() && shouldRefreshDelay) {
       loadAction();
       setLastUpdate(now);
+    }
+  }, [navigation.isFocused()]);
+};
+
+/**
+ * An hook to call an action when the component have the focus
+ * @param loadAction
+ */
+export const useRefreshOnFocus = (loadAction: () => void) => {
+  const navigation = useContext(NavigationContext);
+  useEffect(() => {
+    if (navigation.isFocused()) {
+      loadAction();
     }
   }, [navigation.isFocused()]);
 };

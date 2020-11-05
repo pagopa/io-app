@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
-import { getValue, isReady, RemoteValue } from "../../../model/RemoteValue";
+import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { BpdAmount } from "../../actions/amount";
 import { BpdPeriod } from "../../actions/periods";
 import { bpdEnabledSelector } from "./activation";

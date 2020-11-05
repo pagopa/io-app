@@ -1,11 +1,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useRefreshDataWhenFocus } from "../../../../../utils/hooks/useRefreshDataWhenFocus";
+import { useRefreshOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { navigateToBpdDetails } from "../../navigation/actions";
 import { bpdDetailsLoadAll } from "../../store/actions/details";
 import { BpdPeriod } from "../../store/actions/periods";
@@ -15,15 +14,14 @@ import { BpdCardComponent } from "../bpdCardComponent/BpdCardComponent";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const forceRefreshTime = 30000 as Millisecond;
-
 /**
  * Render the bpd card in the wallet
  * //TODO: handle error, render only if some
  * @constructor
  */
 const BpdCardsInWalletContainer: React.FunctionComponent<Props> = props => {
-  useRefreshDataWhenFocus(props.load, forceRefreshTime);
+  // TODO: a less aggressive refresh?
+  useRefreshOnFocus(props.load);
 
   return (
     <View>
