@@ -15,7 +15,7 @@ import customVariables from "../../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../../utils/dates";
 import { useImageResize } from "../hooks/useImageResize";
 import pagoBancomatLogo from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
-import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
+import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 
 type Props = {
   abiLogo?: string;
