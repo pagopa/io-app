@@ -9,6 +9,7 @@ import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
 import { H5 } from "./core/typography/H5";
+import { H3 } from "./core/typography/H3";
 
 type OwnProps = Readonly<{
   text11: string;
@@ -122,7 +123,7 @@ export default class DetailedlistItemComponent extends React.PureComponent<
         {...this.props}
       >
         <View style={styles.spaced}>
-          <Text dark={true}>{this.props.text11}</Text>
+          <H5>{this.props.text11}</H5>
           <Text bold={true} style={styles.text12}>
             {this.props.text12}
           </Text>
@@ -139,15 +140,7 @@ export default class DetailedlistItemComponent extends React.PureComponent<
                 <BadgeComponent />
               </View>
             )}
-            <Text
-              numberOfLines={2}
-              style={[
-                styles.text3,
-                this.props.isNew ? styles.new : styles.notNew
-              ]}
-            >
-              {this.props.text3}
-            </Text>
+            <H3 numberOfLines={2}>{this.props.text3}</H3>
           </View>
 
           <View style={styles.icon}>
