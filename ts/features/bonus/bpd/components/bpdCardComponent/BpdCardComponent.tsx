@@ -120,21 +120,21 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           style: {
             backgroundColor: IOColors.white
           },
-          label: I18n.t("bonus.bpd.detail.status.active")
+          label: I18n.t("bonus.bpd.details.card.status.active")
         };
       case "Closed":
         return {
           style: {
             backgroundColor: IOColors.black
           },
-          label: I18n.t("bonus.bpd.detail.status.closed")
+          label: I18n.t("bonus.bpd.details.card.status.closed")
         };
       case "Inactive":
         return {
           style: {
             backgroundColor: IOColors.aqua
           },
-          label: I18n.t("bonus.bpd.detail.status.inactive")
+          label: I18n.t("bonus.bpd.details.card.status.inactive")
         };
       default:
         return {
@@ -176,7 +176,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
           </View>
           <H5 color={"white"} weight={"Regular"}>
-            {I18n.t("bonus.bpd.detail.card.earned")}
+            {I18n.t("bonus.bpd.earned")}
           </H5>
         </View>
       </View>
@@ -222,7 +222,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           ]}
         >
           <H2 weight={"Bold"} color={"white"}>
-            {I18n.t("bonus.bpd.short_title")}
+            {I18n.t("bonus.bpd.name")}
           </H2>
           <View hspacer={true} extralarge={true} />
           <View
