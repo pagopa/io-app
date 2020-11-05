@@ -15,6 +15,11 @@ import {
   CreditCardPan
 } from "./input";
 
+/**
+ * true if the given wallet support the given walletFunction
+ * @param wallet
+ * @param walletFunction
+ */
 export const hasFunctionEnabled = (
   wallet: PatchedWalletV2,
   walletFunction: EnableableFunctionsTypeEnum
