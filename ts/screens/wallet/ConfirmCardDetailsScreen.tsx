@@ -220,7 +220,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   const error =
     (pot.isError(creditCardAddWallet) &&
-      creditCardAddWallet.error !== "ALREADY_EXISTS") ||
+      creditCardAddWallet.error.kind !== "ALREADY_EXISTS") ||
     pot.isError(creditCardVerification) ||
     pot.isError(walletById) ||
     pot.isError(psps)

@@ -1,6 +1,10 @@
 import { range } from "fp-ts/lib/Array";
 import sha from "sha.js";
-import { NullableWallet, TransactionResponse, WalletResponse } from "../../../types/pagopa";
+import {
+  NullableWallet,
+  TransactionResponse,
+  WalletResponse
+} from "../../../types/pagopa";
 import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
@@ -54,10 +58,10 @@ const walletResponse: WalletResponse = {
   }
 } as WalletResponse;
 
-const aUrlArray =  ["url1", "url2"] as ReadonlyArray<string>;
+const aUrlArray = ["url1", "url2"] as ReadonlyArray<string>;
 const aPaymentFailure = new Error("payment went wrong");
 
-const aTransaction = {
+const aTransaction = ({
   data: {
     id: 15977733,
     created: "2020-09-04T10:47:50Z",
@@ -92,11 +96,13 @@ const aTransaction = {
     orderNumber: 12345678,
     directAcquirer: false
   }
-} as unknown as TransactionResponse;
+} as unknown) as TransactionResponse;
 
 const addCCAction = addWalletCreditCardRequest({
   creditcard: creditCardToAdd
 });
+
+const aGenericError = { kind: "GENERIC_ERROR" as const, reason: "a reason" };
 
 // eslint-disable-next-line functional/no-let
 let salt = "X";
@@ -190,16 +196,15 @@ describe("credit card history", () => {
   });
 
   it("should add a credit card in the history and the relative failure reason in case of failure", () => {
-
     const state = runReducer(
       [],
       addCCAction,
-      addWalletCreditCardFailure("GENERIC_ERROR")
+      addWalletCreditCardFailure(aGenericError)
     );
-   
+
     const [cardItem] = state;
 
-    expect(cardItem.failureReason).toBe("GENERIC_ERROR");
+    expect(cardItem.failureReason).toEqual(aGenericError);
     expect(cardItem.onboardingComplete).toBe(false);
   });
 
@@ -210,41 +215,39 @@ describe("credit card history", () => {
       addWalletCreditCardRequest({
         creditcard: anotherCreditCardToAdd
       }),
-      addWalletCreditCardFailure("GENERIC_ERROR")
+      addWalletCreditCardFailure(aGenericError)
     );
 
     const [anotherCardItem, cardItem] = state;
-    expect(anotherCardItem.failureReason).toBe("GENERIC_ERROR");
+    expect(anotherCardItem.failureReason).toEqual(aGenericError);
     expect(cardItem.failureReason).not.toBeDefined();
     expect(cardItem.onboardingComplete).toBe(false);
-
   });
 
   it("should remove failure on new request for the same card", () => {
     const state = runReducer(
       [],
       addCCAction,
-      addWalletCreditCardFailure("GENERIC_ERROR"),
+      addWalletCreditCardFailure(aGenericError),
       addCCAction
     );
 
-    const [ cardItem ] = state;
+    const [cardItem] = state;
     expect(state.length).toBe(1);
     expect(cardItem.failureReason).not.toBeDefined();
     expect(cardItem.onboardingComplete).toBe(false);
   });
-
 
   it("should add the history of 3ds urls to a card item", () => {
     const state = runReducer(
       [],
       addCCAction,
       addWalletCreditCardSuccess(walletResponse),
-      creditCardCheckout3dsRedirectionUrls(aUrlArray),
+      creditCardCheckout3dsRedirectionUrls(aUrlArray)
     );
 
-    const [ cardItem ] = state;
-    
+    const [cardItem] = state;
+
     expect(cardItem.wallet).toBeDefined();
     expect(cardItem.urlHistory3ds).toEqual(aUrlArray);
     expect(cardItem.onboardingComplete).toBe(false);
@@ -259,8 +262,8 @@ describe("credit card history", () => {
       payCreditCardVerificationFailure(aPaymentFailure)
     );
 
-    const [ cardItem ] = state;
-    
+    const [cardItem] = state;
+
     expect(cardItem.verificationFailureReason).toBe(aPaymentFailure.message);
     expect(cardItem.failureReason).not.toBeDefined();
     expect(cardItem.onboardingComplete).toBe(false);
@@ -301,4 +304,5 @@ describe("credit card history", () => {
 const runReducer = (
   initialState: CreditCardInsertionState,
   ...actions: Array<Action>
-): CreditCardInsertionState => actions.reduce((s, a) => reducer(s, a), initialState);
+): CreditCardInsertionState =>
+  actions.reduce((s, a) => reducer(s, a), initialState);

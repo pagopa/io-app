@@ -8,6 +8,7 @@ import {
   addWalletCreditCardSuccess,
   addWalletNewCreditCardSuccess,
   creditCardCheckout3dsRedirectionUrls,
+  CreditCardFailure,
   payCreditCardVerificationFailure,
   payCreditCardVerificationSuccess
 } from "../../actions/wallet/wallets";
@@ -25,7 +26,7 @@ type CreditCardInsertion = {
     idCreditCard?: number;
     brand?: string;
   };
-  failureReason?: "GENERIC_ERROR" | "ALREADY_EXISTS";
+  failureReason?: CreditCardFailure;
   verificationFailureReason?: string;
   verificationTransaction?: TransactionResponse;
   urlHistory3ds?: ReadonlyArray<string>;
@@ -77,7 +78,7 @@ const updateStateHead = (
  * step 1 adds an item into the history.
  * all further steps add their info referring the item in the 0-index position
  * that is the one added in the step 1
- * 
+ *
  * Please note that actions are meant to be executed in order and the head of the stack is the one to be updated.
  */
 const reducer = (
@@ -136,7 +137,7 @@ const reducer = (
     case getType(payCreditCardVerificationFailure):
       return updateStateHead(state, attempt => ({
         ...attempt,
-        verificationFailureReason: action.payload.message
+        verificationFailureReason: action.payload.message ?? "n/a"
       }));
 
     case getType(addWalletNewCreditCardSuccess):

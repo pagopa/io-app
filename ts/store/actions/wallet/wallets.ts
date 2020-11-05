@@ -45,9 +45,18 @@ export const addWalletNewCreditCardSuccess = createStandardAction(
   "WALLET_ADD_NEW_CREDITCARD_SUCCESS"
 )();
 
+export type CreditCardFailure =
+  | {
+      kind: "GENERIC_ERROR";
+      reason: string;
+    }
+  | {
+      kind: "ALREADY_EXISTS";
+    };
+
 export const addWalletCreditCardFailure = createStandardAction(
   "WALLET_ADD_CREDITCARD_FAILURE"
-)<"GENERIC_ERROR" | "ALREADY_EXISTS">();
+)<CreditCardFailure>();
 
 type PayCreditCardVerificationRequestPayload = Readonly<{
   payRequest: PayRequest;
