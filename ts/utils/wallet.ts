@@ -1,15 +1,9 @@
 import * as t from "io-ts";
 import { Alert } from "react-native";
 import I18n from "../i18n";
-import { CreditCard, PatchedWalletV2, Wallet } from "../types/pagopa";
-import { TypeEnum } from "../../definitions/pagopa/Wallet";
+import { CreditCard } from "../types/pagopa";
 import { isExpired } from "./dates";
 import { NumberFromString } from "./number";
-import {
-  CreditCardExpirationMonth,
-  CreditCardExpirationYear,
-  CreditCardPan
-} from "./input";
 /*
     Contains utility functions to check conditions
     used across project (currently just in CardComponent)
