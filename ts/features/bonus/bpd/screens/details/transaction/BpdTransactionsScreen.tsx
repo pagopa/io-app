@@ -11,7 +11,6 @@ import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { BpdTransactionItem } from "../../../components/transactionItem/BpdTransactionItem";
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
-import { bpdTransactionsForSelectedPeriod } from "../../../store/reducers/details/transactions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
