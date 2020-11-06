@@ -6,11 +6,8 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { profileNameSelector } from "../../../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { isStringNullyOrEmpty } from "../../../../../../../utils/strings";
-import { isReady } from "../../../../model/RemoteValue";
 import { BpdAmount } from "../../../../store/actions/amount";
 import { BpdPeriod } from "../../../../store/actions/periods";
-import { bpdIbanSelector } from "../../../../store/reducers/details/activation";
 import { bpdAmountForSelectedPeriod } from "../../../../store/reducers/details/amounts";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import { TextualSummary } from "./TextualSummary";
@@ -46,27 +43,19 @@ const Content = (sd: SummaryData) => (
 const BpdSummaryComponent: React.FunctionComponent<Props> = props =>
   fromNullable(props.currentPeriod)
     .map(period =>
-      // In order to render the component in the active period, the iban should be defined
-      period.status !== "Active" ||
-      (isReady(props.iban) && !isStringNullyOrEmpty(props.iban.value))
-        ? pot.fold(
-            props.amount,
-            () => null,
-            () => null,
-            _ => null,
-            _ => null,
-            amount => (
-              <Content amount={amount} period={period} name={props.name} />
-            ),
-            amount => (
-              <Content amount={amount} period={period} name={props.name} />
-            ),
-            (amount, _) => (
-              <Content amount={amount} period={period} name={props.name} />
-            ),
-            _ => null
-          )
-        : null
+      pot.fold(
+        props.amount,
+        () => null,
+        () => null,
+        _ => null,
+        _ => null,
+        amount => <Content amount={amount} period={period} name={props.name} />,
+        amount => <Content amount={amount} period={period} name={props.name} />,
+        (amount, _) => (
+          <Content amount={amount} period={period} name={props.name} />
+        ),
+        _ => null
+      )
     )
     .getOrElse(null);
 
@@ -75,7 +64,6 @@ const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
   currentPeriod: bpdSelectedPeriodSelector(state),
   amount: bpdAmountForSelectedPeriod(state),
-  iban: bpdIbanSelector(state),
   name: profileNameSelector(state)
 });
 
