@@ -194,11 +194,11 @@ function* startOrResumeAddCreditCardSaga(
       if (isActionOf(addWalletCreditCardFailure, responseAction)) {
         // this step failed, exit the flow
         if (
-          responseAction.payload === "ALREADY_EXISTS" &&
+          responseAction.payload.kind === "ALREADY_EXISTS" &&
           action.payload.onFailure
         ) {
           // if the card already exists, run onFailure before exiting the flow
-          action.payload.onFailure(responseAction.payload);
+          action.payload.onFailure(responseAction.payload.kind);
         }
         return;
       }

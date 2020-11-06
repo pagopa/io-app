@@ -21,7 +21,7 @@ import {
   navigateToBpdOnboardingDeclaration,
   navigateToBpdOnboardingInformationTos,
   navigateToBpdOnboardingLoadActivationStatus
-} from "../../../navigation/action/onboarding";
+} from "../../../navigation/actions";
 import BPD_ROUTES from "../../../navigation/routes";
 import { bpdLoadActivationStatus } from "../../../store/actions/details";
 import {

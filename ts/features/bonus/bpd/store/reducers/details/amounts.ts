@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -11,6 +12,7 @@ import {
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { BpdAmount, bpdAmountLoad } from "../../actions/amount";
 import { AwardPeriodId } from "../../actions/periods";
+import { bpdSelectedPeriodSelector } from "./selectedPeriod";
 
 /**
  * Store the amounts (cashback and transaction count) foreach period
@@ -50,4 +52,18 @@ const bpdAmountByPeriodSelector = (
 export const bpdAmountSelector = createSelector(
   [bpdAmountByPeriodSelector],
   maybePotAmount => maybePotAmount ?? pot.none
+);
+
+/**
+ * Return the BpdAmount for the selected period (current displayed)
+ */
+export const bpdAmountForSelectedPeriod = createSelector(
+  [
+    (state: GlobalState) => state.bonus.bpd.details.amounts,
+    bpdSelectedPeriodSelector
+  ],
+  (amounts, period) =>
+    fromNullable(period)
+      .map(p => amounts[p.awardPeriodId] ?? pot.none)
+      .getOrElse(pot.none)
 );

@@ -45,9 +45,18 @@ export const addWalletNewCreditCardSuccess = createStandardAction(
   "WALLET_ADD_NEW_CREDITCARD_SUCCESS"
 )();
 
+export type CreditCardFailure =
+  | {
+      kind: "GENERIC_ERROR";
+      reason: string;
+    }
+  | {
+      kind: "ALREADY_EXISTS";
+    };
+
 export const addWalletCreditCardFailure = createStandardAction(
   "WALLET_ADD_CREDITCARD_FAILURE"
-)<"GENERIC_ERROR" | "ALREADY_EXISTS">();
+)<CreditCardFailure>();
 
 type PayCreditCardVerificationRequestPayload = Readonly<{
   payRequest: PayRequest;
@@ -78,6 +87,10 @@ export const creditCardCheckout3dsRequest = createStandardAction(
 export const creditCardCheckout3dsSuccess = createStandardAction(
   "WALLET_ADD_CREDITCARD_CHECKOUT_3DS_SUCCESS"
 )<string>();
+
+export const creditCardCheckout3dsRedirectionUrls = createStandardAction(
+  "WALLET_ADD_CREDITCARD_CHECKOUT_3DS_REDIRECTION_URLS"
+)<ReadonlyArray<string>>();
 
 type DeleteWalletRequestPayload = Readonly<{
   walletId: number;
@@ -146,4 +159,5 @@ export type WalletsActions =
   | ActionType<typeof payCreditCardVerificationFailure>
   | ActionType<typeof creditCardCheckout3dsRequest>
   | ActionType<typeof creditCardCheckout3dsSuccess>
-  | ActionType<typeof setWalletSessionEnabled>;
+  | ActionType<typeof setWalletSessionEnabled>
+  | ActionType<typeof creditCardCheckout3dsRedirectionUrls>;
