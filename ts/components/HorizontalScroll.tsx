@@ -7,7 +7,6 @@ import { Animated, Dimensions, ScrollView, StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "../i18n";
 import variables from "../theme/variables";
-import { RTron } from "../boot/configureStoreAndPersistor";
 
 type Props = {
   cards: ReadonlyArray<JSX.Element>;

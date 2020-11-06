@@ -6,7 +6,6 @@ import { StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { RTron } from "../../../../../boot/configureStoreAndPersistor";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { HorizontalScroll } from "../../../../../components/HorizontalScroll";
 import { GlobalState } from "../../../../../store/reducers/types";

@@ -113,12 +113,19 @@ const styles = StyleSheet.create({
   justifyContentCenter: {
     justifyContent: "center"
   },
-  shadowBox: {
+  upperShadowBox: {
     marginBottom: -13,
     borderRadius: 8,
-    borderTopWidth: 10,
+    borderTopWidth: 13,
     borderTopColor: "rgba(0,0,0,0.1)",
     height: 17,
+    width: "100%"
+  },
+  bottomShadowBox: {
+    marginBottom: 6,
+    borderRadius: 8,
+    borderBottomWidth: 15,
+    borderBottomColor: "rgba(0,0,0,0.1)",
     width: "100%"
   }
 });
@@ -365,7 +372,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
 
   return (
     <>
-      {Platform.OS === "android" && <View style={styles.shadowBox} />}
+      {Platform.OS === "android" && <View style={styles.upperShadowBox} />}
       <ImageBackground
         source={props.preview ? bpdCardBgPreview : bpdCardBgFull}
         style={[props.preview ? styles.preview : styles.container]}
@@ -381,6 +388,9 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           {props.preview ? <PreviewCard /> : <FullCard />}
         </View>
       </ImageBackground>
+      {Platform.OS === "android" && !props.preview && (
+        <View style={styles.bottomShadowBox} />
+      )}
     </>
   );
 };
