@@ -65,7 +65,7 @@ const updateStateHead = (
         ...takeEnd<CreditCardInsertion>(tail.length, tail)
       ]);
     });
-const INITIAL_STATE = [];
+const INITIAL_STATE: CreditCardInsertionState = [];
 /**
  * card insertion follow these step:
  * 1. request to add a credit card: addWalletCreditCardRequest
