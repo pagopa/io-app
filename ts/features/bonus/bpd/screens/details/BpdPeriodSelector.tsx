@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65
   }
 });
-
+        
 /**
  * An horizontal snap scroll view used to select a specific period of bpd.
  * Each period is represented as a BpdPeriodCard.

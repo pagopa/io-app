@@ -1,12 +1,28 @@
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
+import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
+import { WalletTypeEnum } from "../../../../../../../definitions/pagopa/walletv2/WalletV2";
+import pagoBancomatImage from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
+import {
+  cardIcons,
+  getCardIconFromBrandLogo
+} from "../../../../../../components/wallet/card/Logo";
+import I18n from "../../../../../../i18n";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { walletV2Selector } from "../../../../../../store/reducers/wallet/wallets";
+import { PatchedWalletV2 } from "../../../../../../types/pagopa";
+import { abiListSelector } from "../../../../../wallet/onboarding/store/abi";
+import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { BpdAmount } from "../../actions/amount";
 import { BpdPeriod } from "../../actions/periods";
+import { BpdTransaction } from "../../actions/transactions";
 import { bpdEnabledSelector } from "./activation";
 import { bpdAllAmountSelector } from "./amounts";
 import { bpdPeriodsSelector } from "./periods";
+import { bpdTransactionsForSelectedPeriod } from "./transactions";
 
 /**
  * Combine the period & amount
@@ -87,6 +103,98 @@ export const bpdPeriodsAmountSnappedListSelector = createSelector(
     pot.map(potPeriodsAmount, periodsAmountList =>
       periodsAmountList.filter(periodAmount =>
         isPeriodAmountSnappedVisible(periodAmount, bpdEnabled)
+      )
+    )
+);
+
+/**
+ * Pick a payment instrument from the wallet, using the provided hashpan
+ * @param hashPan
+ * @param potWalletV2
+ */
+const pickWalletFromHashpan = (
+  hashPan: string,
+  potWalletV2: pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>
+): Option<PatchedWalletV2> =>
+  pot.getOrElse(
+    pot.map(potWalletV2, walletV2 =>
+      fromNullable(walletV2.find(w => w.info.hashPan === hashPan))
+    ),
+    none
+  );
+
+/**
+ * Choose an image to represent a {@link PatchedWalletV2}
+ * @param w2
+ */
+const getImageFromWallet = (w2: PatchedWalletV2) => {
+  switch (w2.walletType) {
+    case WalletTypeEnum.Card:
+      return getCardIconFromBrandLogo(w2.info);
+    case WalletTypeEnum.Bancomat:
+      return pagoBancomatImage;
+    default:
+      return cardIcons.UNKNOWN;
+  }
+};
+
+// TODO: unify card representation (multiple part of the application use this)
+const FOUR_UNICODE_CIRCLES = "●".repeat(4);
+
+/**
+ * Choose a textual representation for a {@link PatchedWalletV2}
+ * @param w2
+ * @param abiList
+ */
+const getTitleFromWallet = (
+  w2: PatchedWalletV2,
+  abiList: ReadonlyArray<Abi>
+) => {
+  switch (w2.walletType) {
+    case WalletTypeEnum.Card:
+      return getTitleFromCard(w2);
+    case WalletTypeEnum.Bancomat:
+      return getTitleFromBancomat(w2, abiList);
+    default:
+      return FOUR_UNICODE_CIRCLES;
+  }
+};
+
+const getTitleFromCard = (w2: PatchedWalletV2) =>
+  `${FOUR_UNICODE_CIRCLES} ${w2.info.blurredNumber}`;
+
+const getTitleFromBancomat = (
+  w2: PatchedWalletV2,
+  abiList: ReadonlyArray<Abi>
+) =>
+  fromNullable(abiList.find(abi => abi.abi === w2.info.issuerAbiCode))
+    .map(abi => abi.name)
+    .getOrElse(I18n.t("wallet.methods.bancomat.name"));
+
+/**
+ * Enhance a {@link BpdTransaction} with an image and a title, using the wallet and the abilist
+ */
+export const bpdDisplayTransactionsSelector = createSelector<
+  GlobalState,
+  pot.Pot<ReadonlyArray<BpdTransaction>, Error>,
+  pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>,
+  ReadonlyArray<Abi>,
+  pot.Pot<ReadonlyArray<EnhancedBpdTransaction>, Error>
+>(
+  [bpdTransactionsForSelectedPeriod, walletV2Selector, abiListSelector],
+  (potTransactions, wallet, abiList) =>
+    pot.map(potTransactions, transactions =>
+      transactions.map(
+        t =>
+          ({
+            ...t,
+            image: pickWalletFromHashpan(t.hashPan, wallet)
+              .map(getImageFromWallet)
+              .getOrElse(cardIcons.UNKNOWN),
+            title: pickWalletFromHashpan(t.hashPan, wallet)
+              .map(w2 => getTitleFromWallet(w2, abiList))
+              .getOrElse(FOUR_UNICODE_CIRCLES)
+          } as EnhancedBpdTransaction)
       )
     )
 );
