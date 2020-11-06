@@ -1604,6 +1604,7 @@ bonus:
   bpd:
     title: Cashback Digital Payments
     name: Cashback
+    unsubscribe: "Disable cashback"
     earned: Earned Cashback
     onboarding:
       loadingActivationStatus:
@@ -1669,6 +1670,8 @@ bonus:
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
+      paymentMethods:
+        noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
       card:
         status:
           active: Active
