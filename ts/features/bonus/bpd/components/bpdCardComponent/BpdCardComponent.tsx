@@ -19,7 +19,7 @@ import I18n from "../../../../../i18n";
 import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_White.png";
 import bpdCardBgFull from "../../../../../../img/bonus/bpd/bonus_bg.png";
 import bpdCardBgPreview from "../../../../../../img/bonus/bpd/bonus_preview_bg.png";
-import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
+import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 
@@ -156,7 +156,7 @@ const statusClosedHandler = (props: Props): GraphicalState => {
       totalAmount.transactionNumber < period.minTransactionNumber &&
       !isInGracePeriod
         ? ["0", "00"]
-        : formatNumberCentsToAmount(props.totalAmount.totalCashback).split(","),
+        : formatNumberAmount(props.totalAmount.totalCashback).split(","),
     isInGracePeriod,
     // TODO: Add supercashback business logic
     statusBadge: isInGracePeriod
@@ -187,9 +187,7 @@ const statusActiveHandler = (props: Props): GraphicalState => {
       label: I18n.t("bonus.bpd.details.card.status.active")
     },
     showLock: totalAmount.transactionNumber < period.minTransactionNumber,
-    amount: formatNumberCentsToAmount(props.totalAmount.totalCashback).split(
-      ","
-    )
+    amount: formatNumberAmount(props.totalAmount.totalCashback).split(",")
   };
 };
 
@@ -202,7 +200,7 @@ const statusInactiveHandler = (props: Props): GraphicalState => ({
     label: I18n.t("bonus.bpd.details.card.status.inactive")
   },
   showLock: true,
-  amount: formatNumberCentsToAmount(props.totalAmount.totalCashback).split(",")
+  amount: formatNumberAmount(props.totalAmount.totalCashback).split(",")
 });
 
 const statusHandlersMap = new Map<
