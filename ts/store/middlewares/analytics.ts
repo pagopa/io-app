@@ -210,6 +210,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // Wallet / payment failure actions (reason in the payload)
     //
     case getType(addWalletCreditCardFailure):
+      return mp.track(action.type, {
+        reason: action.payload.kind,
+        // only GENERIC_ERROR could have details of the error
+        error:
+          action.payload.kind === "GENERIC_ERROR"
+            ? action.payload.reason
+            : "n/a"
+      });
     case getType(paymentAttiva.failure):
     case getType(paymentVerifica.failure):
     case getType(paymentIdPolling.failure):

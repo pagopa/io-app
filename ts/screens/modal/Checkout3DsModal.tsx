@@ -3,6 +3,7 @@ import { Alert, Modal, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import { NavigationInjectedProps, withNavigation } from "react-navigation";
+import URLParse from "url-parse";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -12,7 +13,7 @@ import { showToast } from "../../utils/showToast";
 
 type OwnProps = Readonly<{
   url: string;
-  onCheckout3dsSuccess: () => void;
+  onCheckout3dsSuccess: (redirectionUrls: ReadonlyArray<string>) => void;
 }>;
 
 type Props = OwnProps & NavigationInjectedProps;
@@ -35,11 +36,13 @@ const styles = StyleSheet.create({
 });
 
 class Checkout3DsModal extends React.Component<Props, State> {
+  private navigationUrls: Array<string>;
   constructor(props: Props) {
     super(props);
     this.state = {
       isWebViewLoading: true
     };
+    this.navigationUrls = [];
   }
 
   private updateLoadingState = (isLoading: boolean) =>
@@ -50,10 +53,16 @@ class Checkout3DsModal extends React.Component<Props, State> {
     // (visisted when the user taps the "close" button)
     const exitUrl = "/wallet/loginMethod";
 
-    if (navState.url !== undefined && navState.url.includes(exitUrl)) {
-      // time to leave, trigger the appropriate action
-      // to let the saga know that it can wrap things up
-      this.props.onCheckout3dsSuccess();
+    if (navState.url !== undefined) {
+      // collect all urls redirection for troubleshooting purposes
+      const url = new URLParse(navState.url);
+      // eslint-disable-next-line functional/immutable-data
+      this.navigationUrls.push(url.origin);
+      if (navState.url.includes(exitUrl)) {
+        // time to leave, trigger the appropriate action
+        // to let the saga know that it can wrap things up
+        this.props.onCheckout3dsSuccess(this.navigationUrls);
+      }
     }
   };
 
