@@ -21,9 +21,11 @@ import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import {
+  isExpirable,
   isExpired,
   isExpiring,
-  MessagePaymentExpirationInfo
+  MessagePaymentExpirationInfo,
+  paymentExpirationInfo
 } from "../../utils/messages";
 import {
   formatPaymentAmount,
@@ -61,6 +63,13 @@ const styles = StyleSheet.create({
  * paired with a message.
  */
 class PaymentButton extends React.PureComponent<Props> {
+  get paymentExpirationInfo() {
+    return paymentExpirationInfo(this.props.message);
+  }
+  get isPaymentExpirable() {
+    return this.paymentExpirationInfo.fold(false, isExpirable);
+  }
+
   private getButtonText = (): string => {
     const { messagePaymentExpirationInfo } = this.props;
     const { amount } = messagePaymentExpirationInfo;
@@ -108,7 +117,13 @@ class PaymentButton extends React.PureComponent<Props> {
       )
     );
 
-    if (this.isPaymentExpired || paid) {
+    // (small means in list -.-')
+    // if it is rendered in list and the payment is expired and it is not still valid to pay (invalid after due date)
+    // go the message detail screen
+    if (
+      (this.props.small && this.isPaymentExpired && this.isPaymentExpirable) ||
+      paid
+    ) {
       this.props.navigateToMessageDetail();
       return;
     }
