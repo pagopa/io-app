@@ -91,10 +91,11 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     }
 
     if (this.isPaymentExpired) {
-      if (this.isPaymentExpirable) {
-        return { backgroundColor: customVariables.brandDarkGray };
-      }
-      return { backgroundColor: customVariables.calendarExpirableColor };
+      return {
+        backgroundColor: this.isPaymentExpirable
+          ? customVariables.brandDarkGray
+          : customVariables.calendarExpirableColor
+      };
     }
 
     if (this.isPaymentExpiring) {

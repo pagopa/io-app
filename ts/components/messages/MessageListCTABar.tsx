@@ -158,6 +158,8 @@ class MessageListCTABar extends React.PureComponent<Props> {
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
     const maybeCTA = getCTA(this.props.message, this.props.serviceMetadata);
+    const isPaymentStillValid =
+      !this.isPaymentExpirable || !this.isPaymentExpired;
     // payment CTA has priority to nested CTA
     const nestedCTA =
       !this.hasPaymentData && maybeCTA.isSome() ? (
@@ -171,7 +173,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
       ) : null;
     const content =
       nestedCTA ||
-      ((!this.isPaymentExpirable || !this.isPaymentExpired) && (
+      (isPaymentStillValid && (
         <>
           {calendarIcon}
           {calendarIcon && <View hspacer={true} small={true} />}

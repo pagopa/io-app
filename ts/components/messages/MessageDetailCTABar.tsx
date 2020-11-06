@@ -85,6 +85,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     if (this.paid) {
       return null;
     }
+    // the payment is expired and it is not valid (can't pay after due date)
     if (this.isPaymentExpired && this.isPaymentExpirable) {
       return null;
     }
