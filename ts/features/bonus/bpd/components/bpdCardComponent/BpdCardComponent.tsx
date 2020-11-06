@@ -141,7 +141,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
       style: {
         backgroundColor: IOColors.black
       },
-      label: I18n.t("bonus.bpd.detail.status.closed")
+      label: I18n.t("bonus.bpd.details.card.status.closed")
     });
     setShowLock(false);
     setIsInGracePeriod(
@@ -161,7 +161,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
       style: {
         backgroundColor: IOColors.white
       },
-      label: I18n.t("bonus.bpd.detail.status.active")
+      label: I18n.t("bonus.bpd.details.card.status.active")
     });
     setShowLock(totalAmount.transactionNumber < period.minTransactionNumber);
     setAmount(
@@ -174,7 +174,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
       style: {
         backgroundColor: IOColors.aqua
       },
-      label: I18n.t("bonus.bpd.detail.status.inactive")
+      label: I18n.t("bonus.bpd.details.card.status.inactive")
     });
     setShowLock(true);
     setAmount(
@@ -231,7 +231,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             )}
           </View>
           <H5 color={"white"} weight={"Regular"}>
-            {I18n.t("bonus.bpd.detail.card.earned")}
+            {I18n.t("bonus.bpd.earned")}
           </H5>
         </View>
       </View>
