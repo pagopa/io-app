@@ -66,6 +66,7 @@ global:
     search: Search
     skip: "Skip"
     add: Add
+    edit: "Edit"
   navigator:
     messages: messages
     wallet: payments
@@ -1602,6 +1603,8 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
     title: Cashback Digital Payments
+    name: Cashback
+    earned: Earned Cashback
     onboarding:
       loadingActivationStatus:
         title: Loading activation status
@@ -1648,6 +1651,20 @@ bonus:
         text2: "identify a current account that is not registered in your tax code: are you sure you want to use this IBAN?"
       loading:
         "We are verifying your IBAN\n\nPlease wait."
+    details:
+      components:
+        iban:
+          title: "IBAN for accreditation"
+          noIbanBody: "Set your IBAN in order to receive the accumulated cashback"
+          button: "Set IBAN"
+      transaction:
+        title: "Your transactions"
+        goToButton: "Transactions detail"
+      card:
+        status:
+          active: Active
+          closed: Closed
+          inactive: Incoming
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
