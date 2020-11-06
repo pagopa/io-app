@@ -666,7 +666,7 @@ wallet:
       payment:
         read: Transazione
         unread: Transazione da leggere
-      label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
+      label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
   onboarding:
     bancomat:
       headerTitle: "Aggiungi carta Bancomat"
@@ -1021,8 +1021,11 @@ messages:
         block1: Questo avviso scade il giorno
         block2: alle ore
       expiredAlert:
-        block1: Il pagamento è scaduto alle ore
-        block2: del
+        expirable:
+          block1: Il pagamento è scaduto alle ore
+          block2: del
+        unexpirable:
+          block: Il pagamento è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad attualizzare l'importo.
     presctiption:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi

@@ -16,7 +16,7 @@ import { H4 } from "../../../../../../components/core/typography/H4";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { abiListSelector } from "../../../store/abi";
-import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
+import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import PanCardComponent from "./PanCardComponent";
 
 type Props = {
