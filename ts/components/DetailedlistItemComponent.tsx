@@ -9,6 +9,7 @@ import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
 import { H5 } from "./core/typography/H5";
+import { H3 } from "./core/typography/H3";
 
 type OwnProps = Readonly<{
   text11: string;
@@ -69,9 +70,10 @@ const styles = StyleSheet.create({
     marginBottom: -4
   },
   icon: {
-    width: 64,
-    alignItems: "flex-end",
-    justifyContent: "center"
+    width: 90,
+    alignItems: "flex-start",
+    justifyContent: "flex-end",
+    flexDirection: "row"
   },
   text3Line: {
     flex: 1,
@@ -86,10 +88,14 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     borderColor: IOColors.red,
     borderWidth: 1,
-    borderStyle: "solid"
+    borderStyle: "solid",
+    width: 65,
+    height: 22
   },
   badgeInfoPaid: {
-    backgroundColor: IOColors.aqua
+    backgroundColor: IOColors.aqua,
+    width: 65,
+    height: 22
   }
 });
 
@@ -117,7 +123,7 @@ export default class DetailedlistItemComponent extends React.PureComponent<
         {...this.props}
       >
         <View style={styles.spaced}>
-          <Text dark={true}>{this.props.text11}</Text>
+          <H5>{this.props.text11}</H5>
           <Text bold={true} style={styles.text12}>
             {this.props.text12}
           </Text>
@@ -134,31 +140,25 @@ export default class DetailedlistItemComponent extends React.PureComponent<
                 <BadgeComponent />
               </View>
             )}
-            <Text
-              numberOfLines={2}
-              style={[
-                styles.text3,
-                this.props.isNew ? styles.new : styles.notNew
-              ]}
-            >
-              {this.props.text3}
-            </Text>
+            <H3 numberOfLines={2}>{this.props.text3}</H3>
           </View>
-          {this.props.isExpired && (
-            <View>
-              <Badge style={styles.badgeInfoExpired}>
-                <H5 color="red">{I18n.t("messages.badge.expired")}</H5>
-              </Badge>
-            </View>
-          )}
-          {this.props.isPaid && (
-            <View>
-              <Badge style={styles.badgeInfoPaid}>
-                <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
-              </Badge>
-            </View>
-          )}
+
           <View style={styles.icon}>
+            {this.props.isExpired && (
+              <View>
+                <Badge style={styles.badgeInfoExpired}>
+                  <H5 color="red">{I18n.t("messages.badge.expired")}</H5>
+                </Badge>
+              </View>
+            )}
+            {this.props.isPaid && (
+              <View>
+                <Badge style={styles.badgeInfoPaid}>
+                  <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
+                </Badge>
+              </View>
+            )}
+
             <IconFont
               name={this.getIconName()}
               size={ICON_WIDTH}

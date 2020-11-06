@@ -13,7 +13,7 @@ import { Link } from "../../../../../../components/core/typography/Link";
 import { Label } from "../../../../../../components/core/typography/Label";
 import IconFont from "../../../../../../components/ui/IconFont";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
-import { Abi } from "../../../../../../../definitions/pagopa/bancomat/Abi";
+import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { sortAbiByName } from "../../utils/abi";
 import { BankPreviewItem } from "../../components/BankPreviewItem";
 import {

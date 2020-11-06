@@ -64,6 +64,18 @@ export const profileEmailSelector = createSelector(
     )
 );
 
+/**
+ * Return the name of the profile if some, else undefined
+ */
+export const profileNameSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): string | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => p.name),
+      undefined
+    )
+);
+
 // return the spid email address (as a string)
 export const profileSpidEmailSelector = createSelector(
   profileSelector,

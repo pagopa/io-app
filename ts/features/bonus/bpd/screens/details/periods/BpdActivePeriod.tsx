@@ -1,11 +1,14 @@
+import { View } from "native-base";
 import * as React from "react";
-import { View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { H1 } from "../../../../../../components/core/typography/H1";
+import { H5 } from "../../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import IbanInformationComponent from "../components/iban/IbanInformationComponent";
+import BpdSummaryComponent from "../components/summary/BpdSummaryComponent";
+import WalletPaymentMethodBpdList from "../components/WalletPaymentMethodBpdList";
+import UnsubscribeToBpd from "../components/UnsubscribeToBpd";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -16,8 +19,16 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const BpdActivePeriod: React.FunctionComponent<Props> = () => (
   <View style={IOStyles.horizontalContentPadding}>
-    <H1>Active Period placeholder!</H1>
+    <View spacer={true} />
+    <BpdSummaryComponent />
+    <View spacer={true} />
+    <WalletPaymentMethodBpdList />
+    <View spacer={true} />
     <IbanInformationComponent />
+    <View spacer={true} />
+    <UnsubscribeToBpd />
+    <H5>Active Period!</H5>
+    <View spacer={true} extralarge={true} />
   </View>
 );
 

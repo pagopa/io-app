@@ -2,7 +2,7 @@ import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { fromNullable } from "fp-ts/lib/Option";
 import { IndexedById } from "../../../../store/helpers/indexer";
-import { Abi } from "../../../../../definitions/pagopa/bancomat/Abi";
+import { Abi } from "../../../../../definitions/pagopa/walletv2/Abi";
 import {
   isReady,
   remoteError,

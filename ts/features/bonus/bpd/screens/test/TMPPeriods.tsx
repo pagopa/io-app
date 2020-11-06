@@ -26,7 +26,8 @@ const foldPeriods = (
     error => <H1>Error {error.message}</H1>,
     value =>
       value ? renderPeriods(value, action) : <H1>Periods Undefined</H1>,
-    _ => null,
+    value =>
+      value ? renderPeriods(value, action) : <H1>Periods Undefined</H1>,
     _ => null,
     _ => null
   );

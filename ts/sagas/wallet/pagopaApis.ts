@@ -46,7 +46,7 @@ import { PaymentManagerToken, Wallet } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
-import { convertWalletV2toWalletV1 } from "../../utils/wallet";
+import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import { bpdEnabled } from "../../config";
 import { getError } from "../../utils/errors";
 

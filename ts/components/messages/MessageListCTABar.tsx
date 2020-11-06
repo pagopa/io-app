@@ -16,6 +16,7 @@ import customVariables from "../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
   getCTA,
+  isExpirable,
   isExpired,
   isExpiring,
   paymentExpirationInfo
@@ -68,12 +69,16 @@ class MessageListCTABar extends React.PureComponent<Props> {
     return this.props.payment !== undefined;
   }
 
+  get isPaymentExpirable() {
+    return this.paymentExpirationInfo.fold(false, isExpirable);
+  }
+
   get isPaymentExpired() {
-    return this.paymentExpirationInfo.fold(false, info => isExpired(info));
+    return this.paymentExpirationInfo.fold(false, isExpired);
   }
 
   get isPaymentExpiring() {
-    return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
+    return this.paymentExpirationInfo.fold(false, isExpiring);
   }
 
   get hasPaymentData() {
@@ -153,6 +158,8 @@ class MessageListCTABar extends React.PureComponent<Props> {
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
     const maybeCTA = getCTA(this.props.message, this.props.serviceMetadata);
+    const isPaymentStillValid =
+      !this.isPaymentExpirable || !this.isPaymentExpired;
     // payment CTA has priority to nested CTA
     const nestedCTA =
       !this.hasPaymentData && maybeCTA.isSome() ? (
@@ -164,15 +171,17 @@ class MessageListCTABar extends React.PureComponent<Props> {
           service={this.props.service}
         />
       ) : null;
-    const content = nestedCTA || (
-      <>
-        {calendarIcon}
-        {calendarIcon && <View hspacer={true} small={true} />}
-        {calendarEventButton}
-        {calendarEventButton && <View hspacer={true} small={true} />}
-        {this.renderPaymentButton()}
-      </>
-    );
+    const content =
+      nestedCTA ||
+      (isPaymentStillValid && (
+        <>
+          {calendarIcon}
+          {calendarIcon && <View hspacer={true} small={true} />}
+          {calendarEventButton}
+          {calendarEventButton && <View hspacer={true} small={true} />}
+          {this.renderPaymentButton()}
+        </>
+      ));
     return (
       <View
         style={[styles.topContainer, this.paid && styles.topContainerPaid]}
