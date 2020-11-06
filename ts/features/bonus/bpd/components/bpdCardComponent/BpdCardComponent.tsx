@@ -1,18 +1,25 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { Image, ImageBackground, StyleSheet } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import { format } from "../../../../../utils/dates";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { BpdAmount } from "../../store/actions/amount";
-import { BpdPeriod } from "../../store/actions/periods";
+import { BpdPeriod, BpdPeriodStatus } from "../../store/actions/periods";
 import { H4 } from "../../../../../components/core/typography/H4";
 import I18n from "../../../../../i18n";
 import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_White.png";
 import bpdCardBgFull from "../../../../../../img/bonus/bpd/bonus_bg.png";
 import bpdCardBgPreview from "../../../../../../img/bonus/bpd/bonus_preview_bg.png";
-import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
+import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 
@@ -98,59 +105,140 @@ const styles = StyleSheet.create({
   alignItemsCenter: {
     alignItems: "center"
   },
+  badgePreview: {
+    backgroundColor: IOColors.white,
+    height: 18
+  },
   justifyContentCenter: {
     justifyContent: "center"
   }
 });
 
 type BadgeDefinition = {
-  style: any;
+  style: StyleProp<ViewStyle>;
   label: string;
 };
 
-export const BpdCardComponent: React.FunctionComponent<Props> = (
-  props: Props
-) => {
-  const formatStatusBadge = (): BadgeDefinition => {
-    const { period } = props;
+type GraphicalState = {
+  amount: ReadonlyArray<string>;
+  isInGracePeriod: boolean;
+  showLock: boolean;
+  statusBadge: BadgeDefinition;
+};
 
-    switch (period.status) {
-      case "Active":
-        return {
+const initialGraphicalState: GraphicalState = {
+  amount: ["0", "00"],
+  isInGracePeriod: false,
+  showLock: false,
+  statusBadge: {
+    style: {
+      backgroundColor: IOColors.white
+    },
+    label: "-"
+  }
+};
+
+const statusClosedHandler = (props: Props): GraphicalState => {
+  const { period, totalAmount } = props;
+
+  const actualDate = new Date();
+  const endDate = new Date(period.endDate.getTime());
+  endDate.setDate(endDate.getDate() + period.gracePeriod);
+
+  const isInGracePeriod =
+    actualDate.getTime() >= period.endDate.getTime() &&
+    actualDate.getTime() <= endDate.getTime();
+
+  return {
+    ...initialGraphicalState,
+    showLock: totalAmount.transactionNumber < period.minTransactionNumber,
+    amount:
+      totalAmount.transactionNumber < period.minTransactionNumber &&
+      !isInGracePeriod
+        ? ["0", "00"]
+        : formatNumberAmount(props.totalAmount.totalCashback).split(","),
+    isInGracePeriod,
+    // TODO: Add supercashback business logic
+    statusBadge: isInGracePeriod
+      ? {
           style: {
             backgroundColor: IOColors.white
           },
-          label: I18n.t("bonus.bpd.details.card.status.active")
-        };
-      case "Closed":
-        return {
+          label: I18n.t("profile.preferences.list.wip")
+        }
+      : {
           style: {
             backgroundColor: IOColors.black
           },
           label: I18n.t("bonus.bpd.details.card.status.closed")
-        };
-      case "Inactive":
-        return {
-          style: {
-            backgroundColor: IOColors.aqua
-          },
-          label: I18n.t("bonus.bpd.details.card.status.inactive")
-        };
-      default:
-        return {
-          style: {
-            backgroundColor: IOColors.white
-          },
-          label: "-"
-        };
-    }
+        }
   };
+};
 
-  const amount = formatNumberCentsToAmount(
-    props.totalAmount.totalCashback
-  ).split(",");
+const statusActiveHandler = (props: Props): GraphicalState => {
+  const { period, totalAmount } = props;
 
-  const renderFullCard = () => (
+  return {
+    ...initialGraphicalState,
+    statusBadge: {
+      style: {
+        backgroundColor: IOColors.white
+      },
+      label: I18n.t("bonus.bpd.details.card.status.active")
+    },
+    showLock: totalAmount.transactionNumber < period.minTransactionNumber,
+    amount: formatNumberAmount(props.totalAmount.totalCashback).split(",")
+  };
+};
+
+const statusInactiveHandler = (props: Props): GraphicalState => ({
+  ...initialGraphicalState,
+  statusBadge: {
+    style: {
+      backgroundColor: IOColors.aqua
+    },
+    label: I18n.t("bonus.bpd.details.card.status.inactive")
+  },
+  showLock: true,
+  amount: formatNumberAmount(props.totalAmount.totalCashback).split(",")
+});
+
+const statusHandlersMap = new Map<
+  BpdPeriodStatus,
+  (props: Props) => GraphicalState
+>([
+  ["Closed", statusClosedHandler],
+  ["Active", statusActiveHandler],
+  ["Inactive", statusInactiveHandler]
+]);
+
+/**
+ * if the period is Closed we must check if minimum number of transactions has been reached
+ * Unless we'll show a Zero amount value
+ *
+ * Lock must be shown only if period is Inactive or the transactionNumber didn't reach the minimum target
+ *
+ * GracePeriod: check if we are in the grace period to show an alert instead of the value
+ * grace period is given adding the gracePeriod value of days to period.endDate
+ */
+const calculateGraphicalState = (props: Props) =>
+  fromNullable(
+    statusHandlersMap.get(props.period.status)
+  ).fold(initialGraphicalState, handler => handler(props));
+
+export const BpdCardComponent: React.FunctionComponent<Props> = (
+  props: Props
+) => {
+  const {
+    amount,
+    isInGracePeriod,
+    showLock,
+    statusBadge
+  } = calculateGraphicalState(props);
+
+  const isPeriodClosed = props.period.status === "Closed";
+
+  const FullCard = () => (
     <View style={[styles.row, styles.spaced]}>
       <View style={[styles.column, styles.flex2, styles.spaced]}>
         <View>
@@ -166,14 +254,16 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         <View style={{ height: 32 }}>
           <View style={[styles.row, { alignItems: "center" }]}>
             <Text bold={true} white={true} style={styles.amountTextBaseFull}>
-              €
+              {"€ "}
               <Text white={true} style={styles.amountTextUpperFull}>
                 {amount[0]},
               </Text>
               {amount[1]}
             </Text>
             <View hspacer={true} small={true} />
-            <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
+            {showLock && (
+              <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
+            )}
           </View>
           <H5 color={"white"} weight={"Regular"}>
             {I18n.t("bonus.bpd.earned")}
@@ -181,13 +271,13 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
-        <Badge style={[formatStatusBadge().style, styles.badgeBase]}>
+        <Badge style={[statusBadge.style, styles.badgeBase]}>
           <Text
             semibold={true}
             style={styles.badgeTextBase}
-            dark={props.period.status !== "Closed"}
+            dark={!isPeriodClosed}
           >
-            {formatStatusBadge().label}
+            {statusBadge.label}
           </Text>
         </Badge>
         <Image source={bpdBonusLogo} style={styles.fullLogo} />
@@ -195,7 +285,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
     </View>
   );
 
-  const renderPreviewCard = () => (
+  const PreviewCard = () => (
     <TouchableDefaultOpacity
       style={[styles.row, styles.spaced]}
       onPress={props.onPress}
@@ -211,7 +301,9 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             {format(props.period.endDate, "MMMM YYYY")}
           </H5>
           <View hspacer={true} small={true} />
-          <IconFont name="io-tick-big" size={20} color={IOColors.white} />
+          {isPeriodClosed && (
+            <IconFont name="io-tick-big" size={20} color={IOColors.white} />
+          )}
         </View>
         <View
           style={[
@@ -232,15 +324,29 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               styles.justifyContentCenter
             ]}
           >
-            <IconFont name="io-lucchetto" size={16} color={IOColors.white} />
+            {showLock && (
+              <IconFont name="io-lucchetto" size={16} color={IOColors.white} />
+            )}
             <View hspacer={true} small={true} />
-            <Text bold={true} white={true} style={styles.amountTextBasePreview}>
-              €
-              <Text white={true} style={styles.amountTextUpperPreview}>
-                {amount[0]},
+            {isInGracePeriod ? (
+              <Badge style={styles.badgePreview}>
+                <Text semibold={true} style={styles.badgeTextBase} dark={true}>
+                  {I18n.t("profile.preferences.list.wip")}
+                </Text>
+              </Badge>
+            ) : (
+              <Text
+                bold={true}
+                white={true}
+                style={styles.amountTextBasePreview}
+              >
+                {"€ "}
+                <Text white={true} style={styles.amountTextUpperPreview}>
+                  {amount[0]},
+                </Text>
+                {amount[1]}
               </Text>
-              {amount[1]}
-            </Text>
+            )}
           </View>
         </View>
       </View>
@@ -259,7 +365,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           props.preview ? styles.paddedContentPreview : styles.paddedContentFull
         }
       >
-        {props.preview ? renderPreviewCard() : renderFullCard()}
+        {props.preview ? <PreviewCard /> : <FullCard />}
       </View>
     </ImageBackground>
   );
