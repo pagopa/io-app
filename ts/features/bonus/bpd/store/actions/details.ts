@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 
 /**
  * This file contains all the action related to the bpd details like the activation status, value, etc.
@@ -19,4 +23,8 @@ export const bpdLoadActivationStatus = createAsyncAction(
   "BPD_LOAD_ACTIVATION_STATUS_FAILURE"
 )<void, BpdActivationPayload, Error>();
 
-export type BpdDetailsActions = ActionType<typeof bpdLoadActivationStatus>;
+export const bpdDetailsLoadAll = createStandardAction("BPD_DETAILS_LOAD_ALL")();
+
+export type BpdDetailsActions =
+  | ActionType<typeof bpdLoadActivationStatus>
+  | ActionType<typeof bpdDetailsLoadAll>;
