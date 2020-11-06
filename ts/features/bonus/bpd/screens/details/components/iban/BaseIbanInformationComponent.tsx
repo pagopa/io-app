@@ -9,6 +9,7 @@ import { Link } from "../../../../../../../components/core/typography/Link";
 import { Monospace } from "../../../../../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
+import { isStringNullyOrEmpty } from "../../../../../../../utils/strings";
 
 export type BaseIbanProps = {
   iban: string | undefined;
@@ -52,7 +53,7 @@ export const BaseIbanInformationComponent: React.FunctionComponent<BaseIbanProps
   <View style={IOStyles.flex}>
     <View style={styles.row}>
       <H4>{I18n.t("bonus.bpd.details.components.iban.title")}</H4>
-      {props.iban !== undefined && (
+      {!isStringNullyOrEmpty(props.iban) && (
         <Link onPress={props.onInsertIban}>
           {I18n.t("global.buttons.edit").toLowerCase()}
         </Link>
