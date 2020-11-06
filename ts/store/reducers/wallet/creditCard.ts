@@ -14,6 +14,7 @@ import {
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
 import { TransactionResponse } from "../../../types/pagopa";
+import { clearCache } from "../../actions/profile";
 
 type CreditCardInsertion = {
   startDate: Date;
@@ -64,7 +65,7 @@ const updateStateHead = (
         ...takeEnd<CreditCardInsertion>(tail.length, tail)
       ]);
     });
-
+const INITIAL_STATE = [];
 /**
  * card insertion follow these step:
  * 1. request to add a credit card: addWalletCreditCardRequest
@@ -82,7 +83,7 @@ const updateStateHead = (
  * Please note that actions are meant to be executed in order and the head of the stack is the one to be updated.
  */
 const reducer = (
-  state: CreditCardInsertionState = [],
+  state: CreditCardInsertionState = INITIAL_STATE,
   action: Action
 ): CreditCardInsertionState => {
   switch (action.type) {
@@ -145,6 +146,9 @@ const reducer = (
         ...attempt,
         onboardingComplete: true
       }));
+    case getType(clearCache): {
+      return INITIAL_STATE;
+    }
 
     default:
       return state;
