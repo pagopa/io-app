@@ -48,6 +48,7 @@ import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import { bpdEnabled } from "../../config";
+import { getError } from "../../utils/errors";
 
 //
 // Payment Manager APIs
@@ -407,7 +408,7 @@ export function* addWalletCreditCardRequestHandler(
         response.value.status === 422 &&
         response.value.value.message === "creditcard.already_exists"
       ) {
-        yield put(addWalletCreditCardFailure("ALREADY_EXISTS"));
+        yield put(addWalletCreditCardFailure({ kind: "ALREADY_EXISTS" }));
       } else {
         throw Error(`response status ${response.value.status}`);
       }
@@ -415,7 +416,12 @@ export function* addWalletCreditCardRequestHandler(
       throw Error(readablePrivacyReport(response.value));
     }
   } catch (e) {
-    yield put(addWalletCreditCardFailure(e.message));
+    yield put(
+      addWalletCreditCardFailure({
+        kind: "GENERIC_ERROR",
+        reason: getError(e).message
+      })
+    );
   }
 }
 
