@@ -2,7 +2,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { H5 } from "../../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import BpdSummaryComponent from "../components/summary/BpdSummaryComponent";
@@ -19,7 +18,6 @@ const BpdClosedPeriod: React.FunctionComponent<Props> = () => (
     <View spacer={true} />
     <BpdSummaryComponent />
     <View spacer={true} extralarge={true} />
-    <H5>Closed period!</H5>
   </View>
 );
 
