@@ -245,7 +245,7 @@ profile:
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
-    showroom: Showroom
+    showroom: UI Showroom
   preferences:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
