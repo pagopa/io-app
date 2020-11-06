@@ -6,6 +6,7 @@ import {
 } from "../../../../../types/pagopa";
 import { HPan } from "../../store/actions/paymentMethods";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
+import I18n from "../../../../../i18n";
 import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
 
 type Props = {
@@ -26,6 +27,6 @@ export const BancomatBpdToggle: React.FunctionComponent<Props> = props => (
       EnableableFunctionsTypeEnum.BPD
     )}
     // TODO: load bank name and displayhere
-    caption={`bank name here!`}
+    caption={I18n.t("wallet.methods.bancomat.name")}
   />
 );
