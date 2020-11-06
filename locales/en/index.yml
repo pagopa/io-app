@@ -269,8 +269,8 @@ profile:
       preferred_language:
         title: Favourite language
         subtitle: In which language do you want to use the application?
-        alert:
-          title: Do you want to change the language to
+        alert: 
+          title: Do you want to change the language to 
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
     empty:
@@ -475,8 +475,8 @@ authentication:
     network:
       title: Access problem
       body: The selected identity provider is not available at this time, you can try again later.
-        If you have another SPID, choose an alternative provider.
-        You can report the problem with the bug icon at the top right of the screen.
+            If you have another SPID, choose an alternative provider.
+            You can report the problem with the bug icon at the top right of the screen.
     login:
       title: Login error
       body: There was an error with the login, please retry!
@@ -624,8 +624,8 @@ payment:
       help: If you have encountered a problem with this payment, write to us for more information and details
     list:
       empty:
-        title: No payment attempts
-        description: IO didn't store any payment attempts. Here you can find last payment attempts
+          title: No payment attempts
+          description: IO didn't store any payment attempts. Here you can find last payment attempts
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
@@ -645,7 +645,7 @@ wallet:
       payment:
         read: Transaction
         unread: Unread transaction
-      label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} at {{hours}} with reason {{reason}}. Activate for the full detail"
+      label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} at {{hours}} with reason {{reason}}. Activate for the full detail"
   onboarding:
     bancomat:
       headerTitle: "Add Bancomat card"
@@ -985,21 +985,24 @@ messages:
     payment:
       expired: Payment expired
       paid: This notice is paid. Show the receipt in your
-      addMemo:
-        block1: Add a reminder for the
-        block2: at
+      addMemo: 
+          block1: Add a reminder for the 
+          block2: at
       expiringAlert:
         block1: This notice will expire on
         block2: at
       expiredAlert:
-        block1: The notice expired at
-        block2: "on"
-    presctiption:
+        expirable:
+          block1: The notice expired at 
+          block2: "on"
+        unexpirable:
+          block: The payment is overdue. You can still pay; IO app will update the amount if needed.
+    presctiption:  
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
       expiredAlert:
-        block1: The prescription expired at
-        block2: "on"
+          block1: The prescription expired at 
+          block2: "on"
     pay: Pay € {{amount}}
     onlyPay: Pay
     paid: Paid
