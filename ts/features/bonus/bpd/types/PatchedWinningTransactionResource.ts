@@ -3,7 +3,7 @@ import { DateFromISOString } from "../../../../utils/dates";
 
 /**
  * Patched version of bpd/winning_transactions/WinningTransactionResource
- * - trxDate use DateFromISOStringType instead of UTCISODateFromString (can't decode datetime with offset, ex 2020-10-23T11:13:07.442+02:00)
+ * - trxDate uses DateFromISOStringType instead of UTCISODateFromString (can't decode datetime with offset, ex 2020-10-23T11:13:07.442+02:00)
  */
 
 // required attributes
