@@ -119,7 +119,7 @@ class PaymentButton extends React.PureComponent<Props> {
 
     // (small means in list -.-')
     // if it is rendered in list and the payment is expired and it is not still valid to pay (invalid after due date)
-    // go the message detail screen
+    // navigate to message detail screen
     if (
       (this.props.small && this.isPaymentExpired && this.isPaymentExpirable) ||
       paid
