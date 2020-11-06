@@ -3,6 +3,7 @@ import * as React from "react";
 import {
   Image,
   ImageBackground,
+  Platform,
   StyleProp,
   StyleSheet,
   ViewStyle
@@ -111,6 +112,14 @@ const styles = StyleSheet.create({
   },
   justifyContentCenter: {
     justifyContent: "center"
+  },
+  shadowBox: {
+    marginBottom: -13,
+    borderRadius: 8,
+    borderTopWidth: 10,
+    borderTopColor: "rgba(0,0,0,0.1)",
+    height: 17,
+    width: "100%"
   }
 });
 
@@ -355,18 +364,23 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
   );
 
   return (
-    <ImageBackground
-      source={props.preview ? bpdCardBgPreview : bpdCardBgFull}
-      style={[props.preview ? styles.preview : styles.container]}
-      imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
-    >
-      <View
-        style={
-          props.preview ? styles.paddedContentPreview : styles.paddedContentFull
-        }
+    <>
+      {Platform.OS === "android" && <View style={styles.shadowBox} />}
+      <ImageBackground
+        source={props.preview ? bpdCardBgPreview : bpdCardBgFull}
+        style={[props.preview ? styles.preview : styles.container]}
+        imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
       >
-        {props.preview ? <PreviewCard /> : <FullCard />}
-      </View>
-    </ImageBackground>
+        <View
+          style={
+            props.preview
+              ? styles.paddedContentPreview
+              : styles.paddedContentFull
+          }
+        >
+          {props.preview ? <PreviewCard /> : <FullCard />}
+        </View>
+      </ImageBackground>
+    </>
   );
 };

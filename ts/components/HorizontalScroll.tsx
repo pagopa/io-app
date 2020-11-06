@@ -7,10 +7,12 @@ import { Animated, Dimensions, ScrollView, StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "../i18n";
 import variables from "../theme/variables";
+import { RTron } from "../boot/configureStoreAndPersistor";
 
 type Props = {
   cards: ReadonlyArray<JSX.Element>;
   onCurrentElement?: (index: number) => void;
+  indexToScroll?: number;
 };
 
 const itemWidth = 10; // Radius of the indicators
@@ -48,20 +50,24 @@ const styles = StyleSheet.create({
 export const HorizontalScroll: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const animVal = new Animated.Value(0);
+  const animVal = new Animated.Value(
+    props.indexToScroll
+      ? props.indexToScroll * Dimensions.get("window").width
+      : 0
+  );
   const scrollRef = React.useRef<ScrollView>(null);
 
-  // React.useEffect(() => {
-  //   setTimeout(() => {
-  //     if (scrollRef.current) {
-  //       scrollRef.current.scrollTo({
-  //         x: 2 * Dimensions.get("window").width,
-  //         y: 0,
-  //         animated: false
-  //       });
-  //     }
-  //   }, 0);
-  // }, [scrollRef]);
+  React.useEffect(() => {
+    setTimeout(() => {
+      if (scrollRef.current && props.indexToScroll) {
+        scrollRef.current.scrollTo({
+          x: props.indexToScroll * Dimensions.get("window").width,
+          y: 0,
+          animated: false
+        });
+      }
+    }, 0);
+  }, [scrollRef]);
 
   const barArray = props.cards.map((_, i) => {
     const scrollBarVal = animVal.interpolate({
@@ -104,9 +110,8 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
           const currentIndex = Math.floor(
             event.nativeEvent.contentOffset.x / Dimensions.get("window").width
           );
-          fromNullable(props.onCurrentElement).foldL(
-            () => void 0,
-            onCurrElement => onCurrElement(currentIndex)
+          fromNullable(props.onCurrentElement).map(onCurrElement =>
+            onCurrElement(currentIndex)
           );
           Animated.event([{ nativeEvent: { contentOffset: { x: animVal } } }])(
             event

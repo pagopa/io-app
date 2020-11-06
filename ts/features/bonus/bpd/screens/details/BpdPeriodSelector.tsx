@@ -2,9 +2,11 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { RTron } from "../../../../../boot/configureStoreAndPersistor";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { HorizontalScroll } from "../../../../../components/HorizontalScroll";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -18,10 +20,22 @@ import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selected
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+const styles = StyleSheet.create({
+  cardWrapper: {
+    width: widthPercentageToDP("100%"),
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 7
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65
+  }
+});
+
 /**
  * An horizontal snap scroll view used to select a specific period of bpd.
  * Each period is represented as a BpdPeriodCard.
- * TODO: snapped list to choose and show the selected period: ATM only display current period
  * @constructor
  */
 const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
@@ -30,10 +44,7 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
     periodWithAmountList.map((periodWithAmount, i) => (
       <View
         key={`bpd-card-${i}`}
-        style={[
-          IOStyles.horizontalContentPadding,
-          { width: widthPercentageToDP("100%") }
-        ]}
+        style={[IOStyles.horizontalContentPadding, styles.cardWrapper]}
       >
         <BpdCardComponent
           period={periodWithAmount.period}
@@ -46,17 +57,19 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
     fromNullable(periodWithAmountList[index]).map(currentItem =>
       props.changeSelectPeriod(currentItem.period)
     );
+
+  const indexOfSelectedPeriod = props.selectedPeriod
+    ? periodWithAmountList.findIndex(
+        elem => elem.period === props.selectedPeriod
+      )
+    : 0;
+
   return (
     <View style={[IOStyles.flex]}>
-      {/* {props.selectedPeriod && pot.isSome(props.selectedAmount) && (
-      <BpdCardComponent
-        period={props.selectedPeriod}
-        totalAmount={props.selectedAmount.value}
-      />
-    )} */}
       {pot.isSome(props.periodsWithAmount) &&
         props.periodsWithAmount.value.length > 1 && (
           <HorizontalScroll
+            indexToScroll={indexOfSelectedPeriod}
             onCurrentElement={selectPeriod}
             cards={constructPeriodList()}
           />
