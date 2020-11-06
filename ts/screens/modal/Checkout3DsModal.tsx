@@ -3,6 +3,7 @@ import { Alert, Modal, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import { NavigationInjectedProps, withNavigation } from "react-navigation";
+import URLParse from "url-parse";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -54,8 +55,9 @@ class Checkout3DsModal extends React.Component<Props, State> {
 
     if (navState.url !== undefined) {
       // collect all urls redirection for troubleshooting purposes
+      const url = new URLParse(navState.url);
       // eslint-disable-next-line functional/immutable-data
-      this.navigationUrls.push(navState.url);
+      this.navigationUrls.push(url.origin);
       if (navState.url.includes(exitUrl)) {
         // time to leave, trigger the appropriate action
         // to let the saga know that it can wrap things up
