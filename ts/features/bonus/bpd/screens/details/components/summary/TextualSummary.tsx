@@ -119,7 +119,7 @@ const chooseTextualInfoBox = (props: Props) => {
       return <InactivePeriod period={props.period} />;
     case "Closed":
       const today = new Date();
-      const endGracePeriod = new Date();
+      const endGracePeriod = new Date(props.period.endDate);
       endGracePeriod.setDate(
         props.period.endDate.getDate() + props.period.gracePeriod
       );
