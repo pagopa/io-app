@@ -4,7 +4,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useRefreshOnFocus } from "../../../../../utils/hooks/useOnFocus";
+import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { navigateToBpdDetails } from "../../navigation/actions";
 import { bpdDetailsLoadAll } from "../../store/actions/details";
 import { BpdPeriod } from "../../store/actions/periods";
@@ -21,7 +21,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const BpdCardsInWalletContainer: React.FunctionComponent<Props> = props => {
   // TODO: a less aggressive refresh?
-  useRefreshOnFocus(props.load);
+  useActionOnFocus(props.load);
 
   return (
     <View>
