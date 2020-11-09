@@ -1,6 +1,5 @@
 ---
 global:
-  section_2: Portafoglio
   password: Password
   username: Username
   disclaimer_beta: Questa funzionalità è in beta. Se riscontri problemi di accesso, segnalacelo!
