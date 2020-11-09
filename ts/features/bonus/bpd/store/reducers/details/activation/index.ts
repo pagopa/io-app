@@ -69,6 +69,7 @@ export const bpdEnabledSelector = (
 
 /**
  * Return the Iban that the user has entered to receive the cashback amount
+ * @return {RemoteValue<string | undefined, Error>}
  */
 export const bpdIbanSelector = createSelector<
   GlobalState,
