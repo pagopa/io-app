@@ -1,6 +1,6 @@
-import { Button, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { BottomSheetContent } from "../../../../../../../components/bottomSheet/BottomSheetContent";
 import { H3 } from "../../../../../../../components/core/typography/H3";
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
@@ -9,14 +9,10 @@ import Markdown from "../../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../../i18n";
 import {
   cancelButtonProps,
-  confirmButtonProps,
   errorButtonProps
 } from "../../../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { BottomSheetContent } from "../../../../../../../components/bottomSheet/BottomSheetContent";
 
 type Props = { onCancel: () => void; onConfirm: () => void };
-
-const styles = StyleSheet.create({});
 
 const iconSize = 64;
 

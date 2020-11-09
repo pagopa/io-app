@@ -5,20 +5,10 @@ import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../../../../../../components/ButtonDefaultOpacity";
-import { H1 } from "../../../../../../../components/core/typography/H1";
 import { Label } from "../../../../../../../components/core/typography/Label";
-import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import {
-  bottomSheetContent,
-  bottomSheetRawConfig
-} from "../../../../../../../utils/bottomSheet";
-import {
-  cancelButtonProps,
-  confirmButtonProps,
-  disablePrimaryButtonProps
-} from "../../../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { bottomSheetRawConfig } from "../../../../../../../utils/bottomSheet";
 import { bpdDeleteUserFromProgram } from "../../../../store/actions/onboarding";
 import { UnsubscribeComponent } from "./UnsubscribeComponent";
 
@@ -36,7 +26,7 @@ const styles = StyleSheet.create({
  * TODO: ask confirmation to the user with bottomsheet, handle loading cancel, navigate to wallet with success
  * @constructor
  */
-const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
+const UnsubscribeToBpd: React.FunctionComponent<Props> = () => {
   const { present, dismiss } = useBottomSheetModal();
 
   const openModalBox = () => {
