@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import customVariables from "../../theme/variables";
 import I18n from "../../i18n";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
