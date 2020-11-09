@@ -4,11 +4,14 @@
 import { View } from "native-base";
 import * as React from "react";
 import { Animated, Dimensions, ScrollView, StyleSheet } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "../i18n";
 import variables from "../theme/variables";
 
 type Props = {
   cards: ReadonlyArray<JSX.Element>;
+  onCurrentElement?: (index: number) => void;
+  indexToScroll?: number;
 };
 
 const itemWidth = 10; // Radius of the indicators
@@ -46,7 +49,24 @@ const styles = StyleSheet.create({
 export const HorizontalScroll: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const animVal = new Animated.Value(0);
+  const scrollOffset =
+    (props.indexToScroll ?? 0) * Dimensions.get("window").width;
+  const animVal = new Animated.Value(scrollOffset);
+  const scrollRef = React.useRef<ScrollView>(null);
+
+  React.useEffect(() => {
+    fromNullable(props.indexToScroll).map(_ =>
+      setTimeout(() => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTo({
+            x: scrollOffset * Dimensions.get("window").width,
+            y: 0,
+            animated: false
+          });
+        }
+      }, 0)
+    );
+  }, [scrollRef]);
 
   const barArray = props.cards.map((_, i) => {
     const scrollBarVal = animVal.interpolate({
@@ -80,13 +100,22 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
   return (
     <View style={styles.scrollView}>
       <ScrollView
+        ref={scrollRef}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={props.cards.length}
         pagingEnabled={true}
-        onScroll={Animated.event([
-          { nativeEvent: { contentOffset: { x: animVal } } }
-        ])}
+        onScroll={event => {
+          const currentIndex = Math.floor(
+            event.nativeEvent.contentOffset.x / Dimensions.get("window").width
+          );
+          fromNullable(props.onCurrentElement).map(onCurrElement =>
+            onCurrElement(currentIndex)
+          );
+          Animated.event([{ nativeEvent: { contentOffset: { x: animVal } } }])(
+            event
+          );
+        }}
         accessible={true}
         accessibilityLabel={I18n.t(
           "authentication.landing.accessibility.carousel.label"
