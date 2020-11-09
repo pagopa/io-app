@@ -18,3 +18,9 @@ export const eligibleAmount: BpdAmount = {
   totalCashback: 83.52,
   transactionNumber: 50
 };
+
+export const eligibleMaxAmount: BpdAmount = {
+  awardPeriodId: 2 as AwardPeriodId,
+  totalCashback: 150,
+  transactionNumber: 50
+};

@@ -5,11 +5,13 @@ import MockDate from "mockdate";
 import * as React from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
+import I18n from "../../../../../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../../utils/accessibility";
 import { BpdAmount } from "../../../../../store/actions/amount";
 import { BpdPeriod } from "../../../../../store/actions/periods";
 import {
   eligibleAmount,
+  eligibleMaxAmount,
   notEligibleAmount,
   zeroAmount
 } from "../../../../../store/reducers/__mock__/amount";
@@ -112,7 +114,7 @@ describe("Bpd Summary Component graphical test for different states", () => {
   it("Render Closed period, grace period", () => {
     MockDate.set("2020-11-04");
     const store = mockStore(mockBpdState(closedPeriod, zeroAmount));
-    const component = render(
+    const componentGrace = render(
       <Provider store={store}>
         <BpdSummaryComponent />
       </Provider>
@@ -120,22 +122,67 @@ describe("Bpd Summary Component graphical test for different states", () => {
 
     // When the period is "Active" and transactionNumber>=minTransactionNumber,
     // no TextualSummary should be rendered.
-    const textualSummary = component.queryByTestId("gracePeriod");
+    const textualSummary = componentGrace.queryByTestId("gracePeriod");
     expect(textualSummary).toBeEnabled();
     expect(textualSummary).toHaveTextContent(
       dateToAccessibilityReadableFormat(closedPeriod.endDate)
     );
     MockDate.reset();
+
+    // Grace period ends
+    MockDate.set("2020-11-06");
+    const componentNoGrace = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+    expect(componentNoGrace.queryByTestId("gracePeriod")).toBeNull();
   });
 
-  MockDate.reset();
-  MockDate.set("2020-11-09");
+  it("Render Closed period, not enough transactions", () => {
+    MockDate.set("2020-11-09");
+    const store = mockStore(mockBpdState(closedPeriod, zeroAmount));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+    expect(component.queryByTestId("closedPeriodKO")).toBeEnabled();
+  });
 
-  it("Render Closed period, not enough transactions", () => {});
+  it("Render Closed period, cashback earned", () => {
+    MockDate.set("2020-11-09");
+    const store = mockStore(mockBpdState(closedPeriod, eligibleAmount));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+    const textualSummary = component.queryByTestId("closedPeriodOK");
+    expect(textualSummary).toBeEnabled();
+    expect(textualSummary).toHaveTextContent(
+      eligibleAmount.totalCashback.toString()
+    );
+  });
 
-  it("Render Closed period, cashback earned", () => {});
-
-  it("Render Closed period, max cashback earned", () => {});
+  it("Render Closed period, max cashback earned", () => {
+    MockDate.set("2020-11-09");
+    const store = mockStore(mockBpdState(closedPeriod, eligibleMaxAmount));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+    const textualSummary = component.queryByTestId("closedPeriodOK");
+    expect(textualSummary).toBeEnabled();
+    expect(textualSummary).toHaveTextContent(
+      eligibleMaxAmount.totalCashback.toString()
+    );
+    const maxAmount = I18n.t(
+      "bonus.bpd.details.components.transactionsCountOverview.closedPeriodMaxAmount"
+    );
+    expect(textualSummary).toHaveTextContent(maxAmount);
+  });
 
   MockDate.reset();
 });
