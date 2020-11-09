@@ -13,6 +13,7 @@ export type EnhancedBpdTransaction = {
   image: ImageSourcePropType;
   title: string;
   keyId: string;
+  maxCashbackForTransactionAmount: number | undefined;
 } & BpdTransaction;
 
 type Props = {

@@ -16,6 +16,7 @@ import {
 } from "../../../../../bonusVacanze/components/keyValueTable/KeyValueTable";
 import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
 import { H5 } from "../../../../../../../components/core/typography/H5";
+import { BpdTransactionWarning } from "./BpdTransactionWarning";
 
 type Props = { transaction: EnhancedBpdTransaction };
 
@@ -128,6 +129,7 @@ export const BpdTransactionDetailComponent: React.FunctionComponent<Props> = pro
         rightFlex={1}
         rows={getRows(props.transaction)}
       />
+      <BpdTransactionWarning transaction={props.transaction} />
       <View spacer={true} />
       <IdBlock title={acquirerId} value={props.transaction.idTrxAcquirer} />
       <View spacer={true} />

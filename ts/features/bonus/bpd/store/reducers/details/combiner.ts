@@ -22,6 +22,7 @@ import { BpdTransaction } from "../../actions/transactions";
 import { bpdEnabledSelector } from "./activation";
 import { bpdAllAmountSelector } from "./amounts";
 import { bpdPeriodsSelector } from "./periods";
+import { bpdSelectedPeriodSelector } from "./selectedPeriod";
 import { bpdTransactionsForSelectedPeriod } from "./transactions";
 
 /**
@@ -182,10 +183,16 @@ export const bpdDisplayTransactionsSelector = createSelector<
   pot.Pot<ReadonlyArray<BpdTransaction>, Error>,
   pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>,
   ReadonlyArray<Abi>,
+  BpdPeriod | undefined,
   pot.Pot<ReadonlyArray<EnhancedBpdTransaction>, Error>
 >(
-  [bpdTransactionsForSelectedPeriod, walletV2Selector, abiListSelector],
-  (potTransactions, wallet, abiList) =>
+  [
+    bpdTransactionsForSelectedPeriod,
+    walletV2Selector,
+    abiListSelector,
+    bpdSelectedPeriodSelector
+  ],
+  (potTransactions, wallet, abiList, period) =>
     pot.map(potTransactions, transactions =>
       transactions.map(
         t =>
@@ -197,7 +204,8 @@ export const bpdDisplayTransactionsSelector = createSelector<
             title: pickWalletFromHashpan(t.hashPan, wallet)
               .map(w2 => getTitleFromWallet(w2, abiList))
               .getOrElse(FOUR_UNICODE_CIRCLES),
-            keyId: getId(t)
+            keyId: getId(t),
+            maxCashbackForTransactionAmount: period?.maxTransactionCashback
           } as EnhancedBpdTransaction)
       )
     )
