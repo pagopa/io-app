@@ -49,23 +49,23 @@ const styles = StyleSheet.create({
 export const HorizontalScroll: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const animVal = new Animated.Value(
-    props.indexToScroll
-      ? props.indexToScroll * Dimensions.get("window").width
-      : 0
-  );
+  const scrollOffset =
+    (props.indexToScroll ?? 0) * Dimensions.get("window").width;
+  const animVal = new Animated.Value(scrollOffset);
   const scrollRef = React.useRef<ScrollView>(null);
 
   React.useEffect(() => {
-    setTimeout(() => {
-      if (scrollRef.current && props.indexToScroll) {
-        scrollRef.current.scrollTo({
-          x: props.indexToScroll * Dimensions.get("window").width,
-          y: 0,
-          animated: false
-        });
-      }
-    }, 0);
+    fromNullable(props.indexToScroll).map(_ =>
+      setTimeout(() => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTo({
+            x: scrollOffset * Dimensions.get("window").width,
+            y: 0,
+            animated: false
+          });
+        }
+      }, 0)
+    );
   }, [scrollRef]);
 
   const barArray = props.cards.map((_, i) => {

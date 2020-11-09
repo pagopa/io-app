@@ -1,3 +1,4 @@
+import { findIndex } from "fp-ts/lib/Array";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65
   }
 });
-        
+
 /**
  * An horizontal snap scroll view used to select a specific period of bpd.
  * Each period is represented as a BpdPeriodCard.
@@ -57,11 +58,10 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
       props.changeSelectPeriod(currentItem.period)
     );
 
-  const indexOfSelectedPeriod = props.selectedPeriod
-    ? periodWithAmountList.findIndex(
-        elem => elem.period === props.selectedPeriod
-      )
-    : 0;
+  const indexOfSelectedPeriod = findIndex(
+    periodWithAmountList,
+    elem => elem.period === props.selectedPeriod
+  ).getOrElse(0);
 
   return (
     <View style={[IOStyles.flex]}>
