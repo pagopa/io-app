@@ -1702,6 +1702,17 @@ bonus:
       transaction:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
+        detail:
+          title: "Dettaglio della transazione"
+          paymentCircuit: "Circuito di pagamento"
+          transactionAmount: "Importo transazione"
+          cashbackAmount: "Importo cashback"
+          acquirerId: "ID transazione Acquirer"
+          issuerId: "ID transazione Issuer"
+          maxCashbackWarning: "Per ogni transazione puoi ottenere un cashback massimo di € {{amount}}."
+          maxCashbackForPeriodWarning: "Hai già raggiunto il rimborso massimo previsto per questo periodo."
+          canceledOperationWarning: "Questa transazione è un rimborso, perciò è stato decurtato il relativo cashback."
+          canceled: "Storno"
       paymentMethods:
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare le transazioni necessarie"
       card:

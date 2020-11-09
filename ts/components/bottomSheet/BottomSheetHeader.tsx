@@ -4,6 +4,7 @@ import { Text, View } from "native-base";
 import customVariables from "../../theme/variables";
 import I18n from "../../i18n";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { H3 } from "../core/typography/H3";
 import IconFont from "../ui/IconFont";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
@@ -49,9 +50,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
   onClose
 }: Props) => (
   <View style={styles.row}>
-    <Text style={styles.title} semibold={true}>
-      {title}
-    </Text>
+    <H3>{title}</H3>
     <ButtonDefaultOpacity
       style={styles.modalClose}
       onPress={onClose}

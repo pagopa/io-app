@@ -171,6 +171,9 @@ const getTitleFromBancomat = (
     .map(abi => abi.name)
     .getOrElse(I18n.t("wallet.methods.bancomat.name"));
 
+const getId = (transaction: BpdTransaction) =>
+  `${transaction.awardPeriodId}${transaction.trxDate}${transaction.hashPan}${transaction.idTrxAcquirer}${transaction.idTrxIssuer}${transaction.amount}`;
+
 /**
  * Enhance a {@link BpdTransaction} with an image and a title, using the wallet and the abilist
  */
@@ -193,7 +196,8 @@ export const bpdDisplayTransactionsSelector = createSelector<
               .getOrElse(cardIcons.UNKNOWN),
             title: pickWalletFromHashpan(t.hashPan, wallet)
               .map(w2 => getTitleFromWallet(w2, abiList))
-              .getOrElse(FOUR_UNICODE_CIRCLES)
+              .getOrElse(FOUR_UNICODE_CIRCLES),
+            keyId: getId(t)
           } as EnhancedBpdTransaction)
       )
     )
