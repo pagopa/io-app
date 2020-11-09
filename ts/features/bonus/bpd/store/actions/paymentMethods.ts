@@ -60,6 +60,6 @@ export const bpdUpdatePaymentMethodActivation = createAsyncAction(
   BpdPaymentMethodFailure
 >();
 
-export type BpdPaymentMethod =
+export type BpdPaymentMethodActions =
   | ActionType<typeof bpdPaymentMethodActivation>
   | ActionType<typeof bpdUpdatePaymentMethodActivation>;

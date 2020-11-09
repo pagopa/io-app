@@ -6,16 +6,17 @@ import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { walletsSelector } from "../../../../../store/reducers/wallet/wallets";
-import { navigateToBpdIbanInsertion } from "../../navigation/action/iban";
 import {
+  navigateToBpdIbanInsertion,
   navigateToBpdOnboardingEnrollPaymentMethod,
   navigateToBpdOnboardingNoPaymentMethods
-} from "../../navigation/action/onboarding";
+} from "../../navigation/actions";
 import BPD_ROUTES from "../../navigation/routes";
 import {
   bpdIbanInsertionCancel,
   bpdIbanInsertionContinue
 } from "../../store/actions/iban";
+import { bpdOnboardingCompleted } from "../../store/actions/onboarding";
 import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing";
 
 // TODO: if isOnboarding===true, change with an action that triggers a saga that choose
@@ -66,6 +67,7 @@ export function* bpdIbanInsertionWorker() {
           : navigateToBpdOnboardingNoPaymentMethods();
       yield put(nextAction);
       yield put(navigationHistoryPop(1));
+      yield put(bpdOnboardingCompleted());
     } else {
       yield put(NavigationActions.back());
     }

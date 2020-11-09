@@ -8,6 +8,7 @@ import {
 import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
 import { constNull } from "fp-ts/lib/function";
+import { fromNullable } from "fp-ts/lib/Option";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   enrollmentDecoder,
@@ -23,10 +24,17 @@ import {
   FindUsingGETT as FindPaymentUsingGETT
 } from "../../../../../definitions/bpd/payment/requestTypes";
 import { Iban } from "../../../../../definitions/backend/Iban";
+
 import {
   findAllUsingGETDefaultDecoder,
   FindAllUsingGETT
 } from "../../../../../definitions/bpd/award_periods/requestTypes";
+import {
+  findWinningTransactionsUsingGETDecoder,
+  getTotalScoreUsingGETDefaultDecoder,
+  GetTotalScoreUsingGETT
+} from "../../../../../definitions/bpd/winning_transactions/requestTypes";
+import { PatchedBpdWinningTransactions } from "../types/PatchedWinningTransactionResource";
 import { PatchedCitizenResource } from "./patchedTypes";
 
 const headersProducers = <
@@ -143,6 +151,44 @@ const awardPeriods: FindAllUsingGETT = {
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: findAllUsingGETDefaultDecoder()
+};
+
+/* TOTAL CASHBACK  */
+const totalCashback: GetTotalScoreUsingGETT = {
+  method: "get",
+  url: ({ awardPeriodId }) =>
+    `/bpd/io/winning-transactions/total-cashback?awardPeriodId=${awardPeriodId}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: getTotalScoreUsingGETDefaultDecoder()
+};
+
+export type FindWinningTransactionsUsingGETTExtra = r.IGetApiRequestType<
+  {
+    readonly awardPeriodId: number;
+    readonly hpan: string;
+    readonly Authorization: string;
+  },
+  never,
+  never,
+  | r.IResponseType<200, PatchedBpdWinningTransactions>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<500, undefined>
+>;
+// winning transactions
+const winningTransactions: FindWinningTransactionsUsingGETTExtra = {
+  method: "get",
+  url: ({ awardPeriodId, hpan }) =>
+    `/bpd/io/winning-transactions?awardPeriodId=${awardPeriodId}${fromNullable(
+      hpan
+    )
+      .map(h => `&hpan=${h}`)
+      .getOrElse("")}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findWinningTransactionsUsingGETDecoder(
+    PatchedBpdWinningTransactions
+  )
 };
 
 // decoders composition to handle updatePaymentMethod response
@@ -271,6 +317,12 @@ export function BackendBpdClient(
     ),
     awardPeriods: withBearerToken(
       createFetchRequestForApi(awardPeriods, options)
+    ),
+    totalCashback: withBearerToken(
+      createFetchRequestForApi(totalCashback, options)
+    ),
+    winningTransactions: withBearerToken(
+      createFetchRequestForApi(winningTransactions, options)
     )
   };
 }

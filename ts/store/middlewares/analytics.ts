@@ -210,6 +210,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // Wallet / payment failure actions (reason in the payload)
     //
     case getType(addWalletCreditCardFailure):
+      return mp.track(action.type, {
+        reason: action.payload.kind,
+        // only GENERIC_ERROR could have details of the error
+        error:
+          action.payload.kind === "GENERIC_ERROR"
+            ? action.payload.reason
+            : "n/a"
+      });
     case getType(paymentAttiva.failure):
     case getType(paymentVerifica.failure):
     case getType(paymentIdPolling.failure):
@@ -245,6 +253,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload.error.message
       });
+    // Failures with reason as Error and optional description
+    case getType(cieAuthenticationError):
+      return mp.track(action.type, action.payload);
     // Failures with reason as Error
     case getType(sessionInformationLoadFailure):
     case getType(profileLoadFailure):
@@ -264,7 +275,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentDeletePayment.failure):
     case getType(paymentUpdateWalletPsp.failure):
     case getType(updateNotificationInstallationFailure):
-    case getType(cieAuthenticationError):
     //  Bonus vacanze
     case getType(loadAllBonusActivations.failure):
     case getType(loadAvailableBonuses.failure):

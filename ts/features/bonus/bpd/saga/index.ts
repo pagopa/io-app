@@ -6,7 +6,10 @@ import { bpdApiUrlPrefix } from "../../../../config";
 import { profileSelector } from "../../../../store/reducers/profile";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdAmountLoad } from "../store/actions/amount";
-import { bpdLoadActivationStatus } from "../store/actions/details";
+import {
+  bpdDetailsLoadAll,
+  bpdLoadActivationStatus
+} from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
 import {
   bpdDeleteUserFromProgram,
@@ -28,6 +31,7 @@ import {
   bpdUpdatePaymentMethodActivationSaga
 } from "./networking/paymentMethod";
 import { bpdLoadPeriodsSaga } from "./networking/periods";
+import { prefetchBpdData } from "./networking/prefetctBpdDetails";
 import { bpdLoadTransactionsSaga } from "./networking/transactions";
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
@@ -100,10 +104,21 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   );
 
   // load bpd amount for a period
-  yield takeEvery(bpdAmountLoad.request, bpdLoadAmountSaga);
+  yield takeEvery(
+    bpdAmountLoad.request,
+    bpdLoadAmountSaga,
+    bpdBackendClient.totalCashback
+  );
+
+  // prefetch all the bpd data
+  yield takeEvery(bpdDetailsLoadAll, prefetchBpdData);
 
   // load bpd transactions for a period
-  yield takeEvery(bpdTransactionsLoad.request, bpdLoadTransactionsSaga);
+  yield takeEvery(
+    bpdTransactionsLoad.request,
+    bpdLoadTransactionsSaga,
+    bpdBackendClient.winningTransactions
+  );
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
   yield takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);

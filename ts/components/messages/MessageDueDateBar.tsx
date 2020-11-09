@@ -18,6 +18,7 @@ import {
   formatDateAsMonth
 } from "../../utils/dates";
 import {
+  isExpirable,
   isExpired,
   isExpiring,
   paymentExpirationInfo
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
   },
   text: {
     flex: 1,
-    paddingRight: 60,
+    paddingRight: 50,
     paddingLeft: 5
   },
   highlight: {
@@ -68,12 +69,16 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     return this.props.payment !== undefined;
   }
 
+  get isPaymentExpirable(): boolean {
+    return this.paymentExpirationInfo.fold(false, isExpirable);
+  }
+
   get isPaymentExpired(): boolean {
-    return this.paymentExpirationInfo.fold(false, info => isExpired(info));
+    return this.paymentExpirationInfo.fold(false, isExpired);
   }
 
   get isPaymentExpiring(): boolean {
-    return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
+    return this.paymentExpirationInfo.fold(false, isExpiring);
   }
 
   get dueDate(): Option<Date> {
@@ -86,7 +91,11 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     }
 
     if (this.isPaymentExpired) {
-      return { backgroundColor: customVariables.brandDarkGray };
+      return {
+        backgroundColor: this.isPaymentExpirable
+          ? customVariables.brandDarkGray
+          : customVariables.calendarExpirableColor
+      };
     }
 
     if (this.isPaymentExpiring) {
@@ -118,19 +127,28 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     if (this.isPaymentExpiring) {
       return (
         <React.Fragment>
-          {I18n.t("messages.cta.payment.expiringAlert")}
-          <Text bold={true} white={true}>{` ${time}`}</Text>
+          {I18n.t("messages.cta.payment.expiringAlert.block1")}
+          <Text bold={true} white={true}>{` ${date} `}</Text>
+          {I18n.t("messages.cta.payment.expiringAlert.block2")}
+          <Text bold={true} white={true}>{` ${time} `}</Text>
         </React.Fragment>
       );
     }
 
     if (this.isPaymentExpired) {
+      if (this.isPaymentExpirable) {
+        return (
+          <React.Fragment>
+            {I18n.t("messages.cta.payment.expiredAlert.expirable.block1")}
+            <Text bold={true} white={true}>{` ${time} `}</Text>
+            {I18n.t("messages.cta.payment.expiredAlert.expirable.block2")}
+            <Text bold={true} white={true}>{` ${date}`}</Text>
+          </React.Fragment>
+        );
+      }
       return (
         <React.Fragment>
-          {I18n.t("messages.cta.payment.expiredAlert.block1")}
-          <Text bold={true} white={true}>{` ${time} `}</Text>
-          {I18n.t("messages.cta.payment.expiredAlert.block2")}
-          <Text bold={true} white={true}>{` ${date}`}</Text>
+          {I18n.t("messages.cta.payment.expiredAlert.unexpirable.block")}
         </React.Fragment>
       );
     }
@@ -161,9 +179,9 @@ class MessageDueDateBar extends React.PureComponent<Props> {
 
       const textColor = this.paid
         ? customVariables.colorWhite
-        : this.isPaymentExpiring
+        : this.isPaymentExpiring || !this.isPaymentExpirable
         ? customVariables.calendarExpirableColor
-        : this.isPaymentExpired
+        : this.isPaymentExpired && this.isPaymentExpirable
         ? customVariables.brandDarkGray
         : customVariables.colorWhite;
 

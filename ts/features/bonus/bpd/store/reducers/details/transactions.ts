@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -14,6 +15,7 @@ import {
   BpdTransaction,
   bpdTransactionsLoad
 } from "../../actions/transactions";
+import { bpdSelectedPeriodSelector } from "./selectedPeriod";
 
 /**
  * Store the transactions foreach period
@@ -57,4 +59,18 @@ const bpdTransactionsByPeriodSelector = (
 export const bpdTransactionsSelector = createSelector(
   [bpdTransactionsByPeriodSelector],
   maybePotTransactions => maybePotTransactions ?? pot.none
+);
+
+/**
+ * Return the list of transactions for the selected period (current displayed)
+ */
+export const bpdTransactionsForSelectedPeriod = createSelector(
+  [
+    (state: GlobalState) => state.bonus.bpd.details.transactions,
+    bpdSelectedPeriodSelector
+  ],
+  (transactions, period) =>
+    fromNullable(period)
+      .chain(p => fromNullable(transactions[p.awardPeriodId]))
+      .getOrElse(pot.none)
 );

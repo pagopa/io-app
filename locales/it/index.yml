@@ -66,6 +66,7 @@ global:
     search: Ricerca
     skip: "Salta"
     add: Aggiungi
+    edit: "Modifica"
   navigator:
     messages: messaggi
     wallet: pagamenti
@@ -244,7 +245,7 @@ profile:
     appVersion: Versione App
     backendVersion: Versione Backend
     debugMode: Modalità debug
-    showroom: Showroom
+    showroom: UI Showroom
   preferences:
     title: Preferenze
     subtitle:
@@ -665,7 +666,7 @@ wallet:
       payment:
         read: Transazione
         unread: Transazione da leggere
-      label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
+      label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
   onboarding:
     bancomat:
       headerTitle: "Aggiungi carta Bancomat"
@@ -1016,10 +1017,15 @@ messages:
       addMemo:
         block1: Aggiungi un promemoria per il
         block2: alle
-      expiringAlert: Questo avviso scade oggi alle
+      expiringAlert:
+        block1: Questo avviso scade il giorno
+        block2: alle ore
       expiredAlert:
-        block1: Il pagamento è scaduto alle ore
-        block2: del
+        expirable:
+          block1: Il pagamento è scaduto alle ore
+          block2: del
+        unexpirable:
+          block: Il pagamento è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad attualizzare l'importo.
     presctiption:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
@@ -1028,6 +1034,7 @@ messages:
         block2: del
 
     pay: Paga € {{amount}}
+    onlyPay: Paga
     paid: Pagato
     reminder: Promemoria
     reminderShort: Memo
@@ -1053,6 +1060,9 @@ messages:
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
     helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."
+  badge:
+    expired: Scaduto
+    paid: Pagato
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
   archive:
@@ -1625,6 +1635,9 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
     title: Cashback Pagamenti Digitali
+    name: Cashback
+    earned: Cashback accumulato
+    unsubscribe: "Cancella la tua iscrizione al cashback"
     onboarding:
       loadingActivationStatus:
         title: Verifico lo stato di attivazione
@@ -1671,6 +1684,31 @@ bonus:
         text2: "identifica un conto corrente che non risulta intestato al tuo codice fiscale: sei sicuro di voler usare questo IBAN?"
       loading:
         "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
+    details:
+      components:
+        iban:
+          title: "IBAN per l’accredito"
+          noIbanBody: "Imposta il tuo IBAN per poter ricevere il cashback accumulato"
+          button: "Imposta IBAN"
+        transactionsCountOverview:
+          title: "Transazioni valide"
+          of: "su"
+          closedPeriodKOBody: "Non hai raggiunto le {{transactions}} transazioni necessarie per ottenere un rimborso: avresti ricevuto € {{amount}}. Provaci nel prossimo periodo!"
+          currentPeriodKOBody: "Devi aver fatto almeno {{transactions}} transazioni per sbloccare il cashback che hai accumulato!"
+          gracePeriodBody: "Questo periodo del cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere dalle banche le ultime transazioni. Ancora un po’ di pazienza. TI avviseremo con un messaggio su IO!"
+          closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
+          closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
+          inactivePeriodBody: "Potrai iniziare ad accumulare transazioni valide a partire dal {{date}}"
+      transaction:
+        title: "Le tue transazioni"
+        goToButton: "Dettaglio transazioni"
+      paymentMethods:
+        noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare le transazioni necessarie"
+      card:
+        status:
+          active: Attivo
+          closed: Concluso
+          inactive: In arrivo
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
