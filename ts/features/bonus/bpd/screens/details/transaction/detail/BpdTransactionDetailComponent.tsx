@@ -1,21 +1,17 @@
-import { View } from "native-base";
+import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleProp, StyleSheet, TextStyle } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import CopyButtonComponent from "../../../../../../../components/CopyButtonComponent";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
+import { H5 } from "../../../../../../../components/core/typography/H5";
 import { Monospace } from "../../../../../../../components/core/typography/Monospace";
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
 import { format } from "../../../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../../../utils/stringBuilder";
-import {
-  KeyValueRow,
-  KeyValueTable
-} from "../../../../../bonusVacanze/components/keyValueTable/KeyValueTable";
 import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
-import { H5 } from "../../../../../../../components/core/typography/H5";
 import { BpdTransactionWarning } from "./BpdTransactionWarning";
 
 type Props = { transaction: EnhancedBpdTransaction };
@@ -25,6 +21,17 @@ const styles = StyleSheet.create({
   rowId: {
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  badgeText: {
+    color: IOColors.red,
+    fontSize: 12
+  },
+  badge: {
+    backgroundColor: IOColors.white,
+    borderColor: IOColors.red,
+    borderWidth: 1,
+    top: -10,
+    height: 25
   }
 });
 
@@ -34,64 +41,66 @@ const loadLocales = () => ({
   issuerId: I18n.t("bonus.bpd.details.transaction.detail.issuerId")
 });
 
-const keyStyle: StyleProp<TextStyle> = {
-  fontSize: 14
-};
-
-const valueStyle: StyleProp<TextStyle> = {
-  fontWeight: "500",
-  color: IOColors.bluegreyDark
-};
-
-const getRows = (
-  transaction: EnhancedBpdTransaction
-): ReadonlyArray<KeyValueRow> => [
-  {
-    key: {
-      text: I18n.t("payment.details.info.dateAndTime"),
-      style: keyStyle
-    },
-    value: {
-      text: format(transaction.trxDate, "DD MMM YYYY, HH:mm"),
-      style: valueStyle
-    }
-  },
-  {
-    key: {
-      text: I18n.t("bonus.bpd.details.transaction.detail.paymentCircuit"),
-      style: keyStyle
-    },
-    value: {
-      text: transaction.circuitType,
-      style: valueStyle
-    }
-  },
-  {
-    key: {
-      text: I18n.t("bonus.bpd.details.transaction.detail.transactionAmount"),
-      style: keyStyle
-    },
-    value: {
-      text: `€ ${formatNumberAmount(transaction.amount)}`,
-      style: valueStyle
-    }
-  },
-  {
-    key: {
-      text: I18n.t("bonus.bpd.details.transaction.detail.cashbackAmount"),
-      style: keyStyle
-    },
-    value: {
-      text: `€ ${formatNumberAmount(transaction.cashback)}`,
-      style: valueStyle
-    }
-  }
-];
-
 type IdBlockProps = {
   title: string;
   value: string;
 };
+
+const CancelBadge = () => (
+  <Badge style={styles.badge}>
+    <Text semibold={true} style={styles.badgeText}>
+      {I18n.t("bonus.bpd.details.transaction.detail.canceled")}
+    </Text>
+  </Badge>
+);
+
+const Table = (props: Props) => (
+  <View>
+    <View style={styles.rowId}>
+      <H5 weight={"Regular"} color={"bluegrey"}>
+        {I18n.t("payment.details.info.dateAndTime")}
+      </H5>
+      <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+        {format(props.transaction.trxDate, "DD MMM YYYY, HH:mm")}
+      </H4>
+    </View>
+    <View spacer={true} small={true} />
+    <View style={styles.rowId}>
+      <H5 weight={"Regular"} color={"bluegrey"}>
+        {I18n.t("bonus.bpd.details.transaction.detail.paymentCircuit")}
+      </H5>
+      <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+        {props.transaction.circuitType}
+      </H4>
+    </View>
+    <View spacer={true} small={true} />
+    <View style={styles.rowId}>
+      <H5 weight={"Regular"} color={"bluegrey"}>
+        {I18n.t("bonus.bpd.details.transaction.detail.transactionAmount")}
+      </H5>
+      <View style={styles.rowId}>
+        {props.transaction.amount < 0 && (
+          <>
+            <CancelBadge />
+            <View hspacer={true} />
+          </>
+        )}
+        <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+          {`€ ${formatNumberAmount(props.transaction.amount)}`}
+        </H4>
+      </View>
+    </View>
+    <View spacer={true} small={true} />
+    <View style={styles.rowId}>
+      <H5 weight={"Regular"} color={"bluegrey"}>
+        {I18n.t("bonus.bpd.details.transaction.detail.cashbackAmount")}
+      </H5>
+      <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+        {`€ ${formatNumberAmount(props.transaction.cashback)}`}
+      </H4>
+    </View>
+  </View>
+);
 
 const IdBlock = (props: IdBlockProps) => (
   <View>
@@ -124,11 +133,7 @@ export const BpdTransactionDetailComponent: React.FunctionComponent<Props> = pro
       </View>
       <View spacer={true} />
       {/* using the keyvaluetable with custom style in order to be quick */}
-      <KeyValueTable
-        leftFlex={1}
-        rightFlex={1}
-        rows={getRows(props.transaction)}
-      />
+      <Table transaction={props.transaction} />
       <BpdTransactionWarning transaction={props.transaction} />
       <View spacer={true} />
       <IdBlock title={acquirerId} value={props.transaction.idTrxAcquirer} />

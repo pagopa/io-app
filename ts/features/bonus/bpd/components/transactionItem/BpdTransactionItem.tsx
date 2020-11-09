@@ -36,7 +36,7 @@ export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
   const openModalBox = async () => {
     const bottomSheetProps = await bottomSheetContent(
       <BpdTransactionDetailComponent transaction={props.transaction} />,
-      I18n.t("bonus.bonusVacanze.name"),
+      I18n.t("bonus.bpd.details.transaction.detail.title"),
       522,
       dismiss
     );
