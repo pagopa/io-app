@@ -245,7 +245,7 @@ profile:
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
-    showroom: Showroom
+    showroom: UI Showroom
   preferences:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
@@ -991,9 +991,12 @@ messages:
       expiringAlert:
         block1: This notice will expire on
         block2: at
-      expiredAlert: 
-        block1: The notice expired at 
-        block2: "on"
+      expiredAlert:
+        expirable:
+          block1: The notice expired at 
+          block2: "on"
+        unexpirable:
+          block: The payment is overdue. You can still pay; IO app will update the amount if needed.
     presctiption:  
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
@@ -1601,6 +1604,8 @@ bonus:
   bpd:
     title: Cashback Digital Payments
     name: Cashback
+    unsubscribe: "Disable cashback"
+    earned: Earned Cashback
     onboarding:
       loadingActivationStatus:
         title: Loading activation status
@@ -1653,9 +1658,25 @@ bonus:
           title: "IBAN for accreditation"
           noIbanBody: "Set your IBAN in order to receive the accumulated cashback"
           button: "Set IBAN"
+        transactionsCountOverview:
+          title: "Valid transactions"
+          of: "out of"
+          closedPeriodKOBody: "You have not reached the {{transactions}} transactions necessary to obtain a refund: you would have received € {{amount}}. Try it in the next period!"
+          currentPeriodKOBody: "You must have done at least {{transactions}} transactions to unlock the cashback you have accumulated!"
+          gracePeriodBody: "This cashback period ended on {{date}}. We are waiting to receive the latest transactions from the banks. A little more patience. We will notify you with a message on IO!"
+          closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
+          closedPeriodMaxAmount: "it's the maximum possible refund!"
+          inactivePeriodBody: "You will be able to start accumulating valid transactions starting from {{date}}"
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
+      paymentMethods:
+        noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
+      card:
+        status:
+          active: Active
+          closed: Closed
+          inactive: Incoming
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

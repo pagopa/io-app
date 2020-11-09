@@ -30,11 +30,11 @@ import {
   FindAllUsingGETT
 } from "../../../../../definitions/bpd/award_periods/requestTypes";
 import {
-  findWinningTransactionsUsingGETDefaultDecoder,
-  FindWinningTransactionsUsingGETT,
+  findWinningTransactionsUsingGETDecoder,
   getTotalScoreUsingGETDefaultDecoder,
   GetTotalScoreUsingGETT
 } from "../../../../../definitions/bpd/winning_transactions/requestTypes";
+import { PatchedBpdWinningTransactions } from "../types/PatchedWinningTransactionResource";
 import { PatchedCitizenResource } from "./patchedTypes";
 
 const headersProducers = <
@@ -163,7 +163,20 @@ const totalCashback: GetTotalScoreUsingGETT = {
   response_decoder: getTotalScoreUsingGETDefaultDecoder()
 };
 
-const winningTransactions: FindWinningTransactionsUsingGETT = {
+export type FindWinningTransactionsUsingGETTExtra = r.IGetApiRequestType<
+  {
+    readonly awardPeriodId: number;
+    readonly hpan: string;
+    readonly Authorization: string;
+  },
+  never,
+  never,
+  | r.IResponseType<200, PatchedBpdWinningTransactions>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<500, undefined>
+>;
+// winning transactions
+const winningTransactions: FindWinningTransactionsUsingGETTExtra = {
   method: "get",
   url: ({ awardPeriodId, hpan }) =>
     `/bpd/io/winning-transactions?awardPeriodId=${awardPeriodId}${fromNullable(
@@ -173,7 +186,9 @@ const winningTransactions: FindWinningTransactionsUsingGETT = {
       .getOrElse("")}`,
   query: _ => ({}),
   headers: headersProducers(),
-  response_decoder: findWinningTransactionsUsingGETDefaultDecoder()
+  response_decoder: findWinningTransactionsUsingGETDecoder(
+    PatchedBpdWinningTransactions
+  )
 };
 
 // decoders composition to handle updatePaymentMethod response

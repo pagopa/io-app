@@ -36,6 +36,18 @@ export const bpdAmountsReducer = (
 };
 
 /**
+ * Return all the amounts
+ */
+export const bpdAllAmountSelector = createSelector<
+  GlobalState,
+  IndexedById<pot.Pot<BpdAmount, Error>>,
+  IndexedById<pot.Pot<BpdAmount, Error>>
+>(
+  [(state: GlobalState) => state.bonus.bpd.details.amounts],
+  amounts => amounts
+);
+
+/**
  * The rew selector to read a specific period amount
  * @param state
  * @param periodId
@@ -64,6 +76,6 @@ export const bpdAmountForSelectedPeriod = createSelector(
   ],
   (amounts, period) =>
     fromNullable(period)
-      .map(p => amounts[p.awardPeriodId])
+      .map(p => amounts[p.awardPeriodId] ?? pot.none)
       .getOrElse(pot.none)
 );

@@ -5,6 +5,7 @@ import { Dispatch } from "redux";
 import DarkLayout from "../../../../../components/screens/DarkLayout";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { bpdDetailsLoadAll } from "../../store/actions/details";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
@@ -53,7 +54,9 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = () => (
   </DarkLayout>
 );
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  load: () => dispatch(bpdDetailsLoadAll())
+});
 
 const mapStateToProps = (_: GlobalState) => ({});
 
