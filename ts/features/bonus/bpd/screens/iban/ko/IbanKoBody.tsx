@@ -33,12 +33,14 @@ const IbanKoBody: React.FunctionComponent<Props> = props => {
     iban => iban as string
   );
   return (
-    <View style={IOStyles.flex}>
+    <View>
       <H4 color={"bluegrey"} weight={"Regular"} style={styles.text}>
         {props.text1}
       </H4>
       <View spacer={true} small={true} />
-      <Monospace style={styles.text}>{iban}</Monospace>
+      <Monospace style={styles.text} weight={"SemiBold"}>
+        {iban}
+      </Monospace>
       <View spacer={true} small={true} />
       <H4 color={"bluegrey"} weight={"Regular"} style={styles.text}>
         {props.text2}

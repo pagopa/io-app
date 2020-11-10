@@ -1,8 +1,12 @@
+import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../img/pictograms/doubt.png";
+import { Body } from "../../../../../../components/core/typography/Body";
+import { Label } from "../../../../../../components/core/typography/Label";
+import { Monospace } from "../../../../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../../components/infoScreen/InfoScreenComponent";
@@ -14,6 +18,7 @@ import {
   bpdIbanInsertionContinue,
   bpdIbanInsertionResetScreen
 } from "../../../store/actions/iban";
+import { H4 } from "../../../../../../components/core/typography/H4";
 import IbanKoBody from "./IbanKoBody";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -28,6 +33,26 @@ const loadLocales = () => ({
   text2: I18n.t("bonus.bpd.iban.koNotOwned.text2")
 });
 
+const styles = StyleSheet.create({
+  profile: {
+    flex: 1,
+    alignContent: "flex-end"
+  },
+  text: {
+    textAlign: "center"
+  }
+});
+
+const ProfileInformation = (props: Props) => (
+  <View style={styles.profile}>
+    <H4 style={styles.text}>Mario Rossi,</H4>
+    <Body style={styles.text}>
+      {I18n.t("profile.fiscalCode.fiscalCode")}{" "}
+      <Monospace weight={"SemiBold"}>Mario Rossi</Monospace>
+    </Body>
+  </View>
+);
+
 /**
  * This screen warns the user that the provided iban does not belong to him.
  * This is just a warning, the user can continue and iban has been registered on the bpd remote system.
@@ -41,7 +66,12 @@ const IbanKoNotOwned: React.FunctionComponent<Props> = props => {
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}
-          body={<IbanKoBody text1={text1} text2={text2} />}
+          body={
+            <View style={IOStyles.flex}>
+              <IbanKoBody text1={text1} text2={text2} />
+              <ProfileInformation {...props} />
+            </View>
+          }
         />
         <FooterTwoButtons
           type={"TwoButtonsInlineHalf"}

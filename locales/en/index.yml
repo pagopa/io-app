@@ -1655,9 +1655,9 @@ bonus:
         text1: "If you are sure the IBAN"
         text2: "identify the account on which you want to receive credit, you can proceed."
       koNotOwned:
-        title: "The current account is not in your name"
-        text1: "The IBAN you entered"
-        text2: "identify a current account that is not registered in your tax code: are you sure you want to use this IBAN?"
+        title: "Check the IBAN entered"
+        text1: "IBAN"
+        text2: "is not registered to"
       loading:
         "We are verifying your IBAN\n\nPlease wait."
     details:
