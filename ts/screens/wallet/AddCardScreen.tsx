@@ -235,7 +235,7 @@ class AddCardScreen extends React.Component<Props, State> {
             <LabelledItem
               type={"masked"}
               label={I18n.t("wallet.dummyCard.labels.pan")}
-              icon={CreditCardDetector.getIcon(this.state.pan)}
+              icon={CreditCardDetector.validate(this.state.pan).iconForm}
               iconStyle={styles.creditCardForm}
               isValid={this.isValidPan()}
               inputMaskProps={{
