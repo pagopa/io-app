@@ -1674,6 +1674,7 @@ bonus:
     iban:
       iban: "IBAN"
       edit: "Modifica IBAN"
+      verify: "Controlla IBAN"
       insertion:
         title: "IBAN per l’accredito"
         body1: "Indica qui l’IBAN del tuo conto corrente, su cui vuoi ricevere l’accredito una volta consolidata la classifica."

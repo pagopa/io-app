@@ -12,6 +12,7 @@ import { bpdUpsertIbanSelector } from "../../../store/reducers/details/activatio
 type OwnProps = {
   text1: string;
   text2: string;
+  isFlex?: boolean;
 };
 
 export type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -32,8 +33,10 @@ const IbanKoBody: React.FunctionComponent<Props> = props => {
     "",
     iban => iban as string
   );
+  const style = fromNullable(props.isFlex).getOrElse(true) ? IOStyles.flex : {};
+
   return (
-    <View>
+    <View style={style}>
       <H4 color={"bluegrey"} weight={"Regular"} style={styles.text}>
         {props.text1}
       </H4>

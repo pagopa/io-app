@@ -1642,6 +1642,7 @@ bonus:
     iban:
       iban: "IBAN"
       edit: "Change IBAN"
+      verify: "Check IBAN"
       insertion:
         title: "IBAN for accreditation"
         body1: "Indicate here the IBAN of your current account, on which you want to receive credit once the ranking has been consolidated."
