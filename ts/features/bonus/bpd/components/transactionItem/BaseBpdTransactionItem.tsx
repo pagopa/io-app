@@ -1,6 +1,12 @@
 import { View } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import {
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedbackProps
+} from "react-native";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { ShadowBox } from "../../screens/details/components/summary/base/ShadowBox";
@@ -10,7 +16,7 @@ type Props = {
   title: string;
   subtitle: string;
   rightText: string;
-};
+} & Pick<TouchableWithoutFeedbackProps, "onPress">;
 
 const styles = StyleSheet.create({
   row: {
@@ -38,7 +44,7 @@ const styles = StyleSheet.create({
  * @constructor
  */
 export const BaseBpdTransactionItem: React.FunctionComponent<Props> = props => (
-  <View style={{ marginVertical: 4 }}>
+  <TouchableOpacity style={{ marginVertical: 4 }} onPress={props.onPress}>
     <ShadowBox>
       <View style={[styles.body, styles.row]}>
         <View style={[styles.row]}>
@@ -57,5 +63,5 @@ export const BaseBpdTransactionItem: React.FunctionComponent<Props> = props => (
         </H4>
       </View>
     </ShadowBox>
-  </View>
+  </TouchableOpacity>
 );
