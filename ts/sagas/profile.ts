@@ -10,7 +10,6 @@ import {
   put,
   select,
   take,
-  takeEvery,
   takeLatest
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
@@ -25,7 +24,6 @@ import {
   profileLoadRequest,
   profileLoadSuccess,
   profileUpsert,
-  removeAccountMotivation,
   startEmailValidation
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
@@ -38,11 +36,6 @@ import {
 import { Locales } from "../../locales/locales";
 import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
-import ROUTES from "../navigation/routes";
-import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
-import { isYesterday } from "date-fns";
-import { startAndReturnIdentificationResult } from "./identification";
-import { pass } from "fp-ts/lib/Writer";
 import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
