@@ -29,9 +29,10 @@ const styles = StyleSheet.create({
 const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
   const continueButtonProps = {
     block: true,
+    bordered: true,
     primary: true,
     onPress: props.logout,
-    title: I18n.t("profile.main.privacy.removeAccount.info.cta")
+    title: I18n.t("profile.main.privacy.removeAccount.success.cta")
   };
 
   const footerComponent = (
