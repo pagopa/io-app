@@ -200,8 +200,8 @@ profile:
         description: Cancella in modo permanente il tuo account e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
-          oldRequest: Hai già richiesto l'eliminazione del tuo account.
-          oldRequestSubtitle: Stiamo elaborando la tua richiesta. Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su "Annulla eliminazione” qui sotto.
+          oldRequest: Hai già richiesto la cancellazione del tuo account.
+          oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su “Annulla eliminazione” qui sotto."
           cta:
             return: Indietro
             cancel: Annulla l'eliminazione
