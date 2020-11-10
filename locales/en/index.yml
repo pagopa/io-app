@@ -197,7 +197,7 @@ profile:
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
-        description: Permanently delete your account and your information
+        description: Permanently delete your account and your personal data
         error: An error occurred while submit your deletion request, please retry!
         alert:
           oldRequest: We are already proceeding to delete your account.

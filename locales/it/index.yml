@@ -197,7 +197,7 @@ profile:
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
         title: Elimina il tuo account
-        description: Cancella in modo permanente il tuo account e le tue informazioni
+        description: Cancella in modo permanente il tuo account e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
           oldRequest: Hai già richiesto l'eliminazione del tuo account.
