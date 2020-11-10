@@ -20,6 +20,7 @@ import chalk from "chalk";
 import * as fs from "fs-extra";
 import * as yaml from "js-yaml";
 import * as prettier from "prettier";
+import * as _ from "lodash";
 
 interface LocaleDoc {
   locale: string;
@@ -44,14 +45,13 @@ const IncludeYamlType = (includeRoot: string) =>
   new yaml.Type("!include", {
     kind: "scalar",
 
-    resolve: (data: any) => (
-        data !== null &&
-        typeof data === "string" &&
-        path // included file must be under includeRoot
-          .normalize(path.join(includeRoot, data))
-          .startsWith(path.normalize(includeRoot)) &&
-        fs.statSync(path.join(includeRoot, data)).isFile()
-      ),
+    resolve: (data: any) =>
+      data !== null &&
+      typeof data === "string" &&
+      path // included file must be under includeRoot
+        .normalize(path.join(includeRoot, data))
+        .startsWith(path.normalize(includeRoot)) &&
+      fs.statSync(path.join(includeRoot, data)).isFile(),
 
     construct: data => fs.readFileSync(path.join(includeRoot, data)).toString(),
 
@@ -146,6 +146,31 @@ function reportBadLocale(locale: LocaleDocWithCheckedKeys): void {
     console.log(locale.extra.join("\n") + "\n");
   }
 }
+
+const replacePlaceholders = (locales: ReadonlyArray<LocaleDocWithKeys>) =>
+  locales.map(l => {
+    const readObject = (obj: any): any =>
+      Object.keys(obj).reduce((agg: any, curr) => {
+        if (_.isObject(obj[curr])) {
+          return { ...agg, ...readObject(obj[curr]) };
+        }
+        const value: string = obj[curr];
+        const matches = value.match(/\${.*?\}/g);
+        if (matches) {
+          const placeholders = matches
+            .map(x => x.replace(/[${}]/g, ""))
+            .reduce((a, c) => {
+              return { ...a, [c]: _.at(l.doc, [c])[0] };
+            }, {});
+          console.log(value, placeholders);
+          const compiled = _.template(value);
+          return compiled(placeholders);
+        }
+
+        return { ...agg, [curr]: obj[curr] };
+      }, {});
+    return readObject(l.doc);
+  });
 
 async function emitTsDefinitions(
   locales: ReadonlyArray<LocaleDocWithKeys>,
@@ -252,7 +277,7 @@ async function run(rootPath: string): Promise<void> {
       chalk.gray("[4/4]"),
       `Writing locales typescript to [${emitPath}]...`
     );
-    await emitTsDefinitions(localeKeys, emitPath);
+    await emitTsDefinitions(replacePlaceholders(localeKeys), emitPath);
   } catch (e) {
     console.log(e.message);
   }
