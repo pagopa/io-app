@@ -1,10 +1,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, View } from "native-base";
+import { Content, Form, Input, Item, Label, View } from "native-base";
 import * as React from "react";
 
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import I18n from "../../i18n";
 import { ReduxProps } from "../../store/actions/types";
@@ -30,6 +30,11 @@ type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const styles = StyleSheet.create({
+  noLeftMargin: {
+    marginLeft: 0
+  }
+});
 /**
  * A screen that ask user the motivation of the account removal
  * Here user can ask to delete his account
@@ -37,15 +42,24 @@ type Props = ReduxProps &
 const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   // Initially no motivation is selected
   const [selectedMotivation, setSelectedMotivation] = React.useState<
-    RemoveAccountMotivation | undefined
-  >(undefined);
+    RemoveAccountMotivation
+  >("undefined");
+
+  const [otherMotivation, setOtherMotivation] = React.useState<string>("");
 
   const continueButtonProps = {
     block: true,
     primary: true,
     onPress: () => {
-      if (selectedMotivation !== undefined) {
-        props.requestIdentification({ reason: selectedMotivation });
+      switch (selectedMotivation) {
+        case "others":
+          props.requestIdentification({
+            reason: selectedMotivation,
+            userText: otherMotivation
+          });
+          break;
+        default:
+          props.requestIdentification({ reason: selectedMotivation });
       }
     },
     title: I18n.t("profile.main.privacy.removeAccount.info.cta")
@@ -90,6 +104,20 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
                   setSelectedMotivation(motivationIndex);
                 }}
               />
+              {selectedMotivation === "others" && (
+                <Item style={styles.noLeftMargin} floatingLabel={true}>
+                  <Label>{I18n.t("wallet.insertManually.noticeCode")}</Label>
+                  <Input
+                    keyboardType={"default"}
+                    returnKeyType={"done"}
+                    autoFocus={true}
+                    maxLength={18}
+                    onChangeText={value => {
+                      setOtherMotivation(value);
+                    }}
+                  />
+                </Item>
+              )}
             </View>
           </Content>
           <FooterWithButtons
