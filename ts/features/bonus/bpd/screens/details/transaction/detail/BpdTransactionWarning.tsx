@@ -30,20 +30,6 @@ export const BpdTransactionWarning: React.FunctionComponent<Props> = props => {
       </>
     );
   }
-  if (props.transaction.cashback === 0) {
-    return (
-      <>
-        <View spacer={true} />
-        <InfoBox>
-          <Body>
-            {I18n.t(
-              "bonus.bpd.details.transaction.detail.maxCashbackForPeriodWarning"
-            )}
-          </Body>
-        </InfoBox>
-      </>
-    );
-  }
   if (props.transaction.cashback <= 0) {
     return (
       <>
@@ -51,13 +37,14 @@ export const BpdTransactionWarning: React.FunctionComponent<Props> = props => {
         <InfoBox>
           <Body>
             {I18n.t(
-              "bonus.bpd.details.transaction.detail.canceledOperationWarning"
+              props.transaction.cashback < 0
+                ? "bonus.bpd.details.transaction.detail.canceledOperationWarning"
+                : "bonus.bpd.details.transaction.detail.maxCashbackForPeriodWarning"
             )}
           </Body>
         </InfoBox>
       </>
     );
   }
-
   return null;
 };
