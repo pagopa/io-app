@@ -17,6 +17,7 @@ import { abiListSelector } from "../../../../../wallet/onboarding/store/abi";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { BpdAmount } from "../../actions/amount";
+import { BpdPaymentMethodActivation } from "../../actions/paymentMethods";
 import { BpdPeriod } from "../../actions/periods";
 import { BpdTransaction } from "../../actions/transactions";
 import { bpdEnabledSelector } from "./activation";
@@ -233,5 +234,37 @@ export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
         )
       ),
       false
+    )
+);
+
+export type WalletV2WithActivation = PatchedWalletV2 &
+  Partial<Pick<BpdPaymentMethodActivation, "activationStatus">>;
+
+/**
+ * Add the information of activationStatus to a PatchedWalletV2
+ * in order to group the elements "notActivable"
+ */
+export const walletV2WithActivationStatusSelector = createSelector(
+  [walletV2Selector, bpdPaymentMethodActivationSelector],
+  (walletV2Pot, bpdActivations) =>
+    pot.map(walletV2Pot, walletv2 =>
+      walletv2.map(pm => {
+        // try to extract the activation status to enhance the wallet
+        const activationStatus =
+          pm.info.hashPan !== undefined
+            ? fromNullable(bpdActivations[pm.info.hashPan])
+                .map(paymentMethodActivation =>
+                  pot.getOrElse(
+                    pot.map(
+                      paymentMethodActivation,
+                      activationStatus => activationStatus.activationStatus
+                    ),
+                    undefined
+                  )
+                )
+                .getOrElse(undefined)
+            : undefined;
+        return { ...pm, activationStatus };
+      })
     )
 );

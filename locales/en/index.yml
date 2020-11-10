@@ -67,6 +67,7 @@ global:
     skip: "Skip"
     add: Add
     edit: "Edit"
+    info: "Info"
   navigator:
     messages: messages
     wallet: wallet
@@ -1693,6 +1694,10 @@ bonus:
       paymentMethods:
         noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
         noActiveMethod: "You must have activated at least one payment method to collect transactions"
+        activateOnOthersChannel:
+          text1: "Activate on "
+          text2: "other channels"
+        notActivable: "Not activatable or incompatible"
       card:
         status:
           active: Active

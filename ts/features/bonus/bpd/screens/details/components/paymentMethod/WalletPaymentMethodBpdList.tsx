@@ -13,9 +13,13 @@ import { Link } from "../../../../../../../components/core/typography/Link";
 import I18n from "../../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { walletV2Selector } from "../../../../../../../store/reducers/wallet/wallets";
-import { PaymentMethodBpdList } from "../../../../components/PaymentMethodBpdList";
-import { atLeastOnePaymentMethodHasBpdEnabledSelector } from "../../../../store/reducers/details/combiner";
+import { PaymentMethodGroupedList } from "../../../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
+import { PaymentMethodRawList } from "../../../../components/paymentMethodActivationToggle/list/PaymentMethodRawList";
+import {
+  atLeastOnePaymentMethodHasBpdEnabledSelector,
+  walletV2WithActivationStatus,
+  walletV2WithActivationStatusSelector
+} from "../../../../store/reducers/details/combiner";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -35,6 +39,7 @@ const NoPaymentMethodAreActiveWarning = () => (
     <InfoBox>
       <Body>{I18n.t("bonus.bpd.details.paymentMethods.noActiveMethod")}</Body>
     </InfoBox>
+    <View spacer={true} small={true} />
   </View>
 );
 
@@ -56,10 +61,8 @@ const NoPaymentMethodFound = (props: Props) => (
  * @param props
  * @constructor
  */
-const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props => {
-  const asd;
-  console.log(props.atLeastOnePaymentMethodActive);
-  return pot.isSome(props.potWallets) ? (
+const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props =>
+  pot.isSome(props.potWallets) ? (
     <View>
       <View style={styles.row}>
         <H4>{I18n.t("wallet.paymentMethods")}</H4>
@@ -75,13 +78,12 @@ const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props => {
       )}
 
       {props.potWallets.value.length > 0 ? (
-        <PaymentMethodBpdList paymentList={props.potWallets.value} />
+        <PaymentMethodGroupedList paymentList={props.potWallets.value} />
       ) : (
         <NoPaymentMethodFound {...props} />
       )}
     </View>
   ) : null;
-};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addPaymentMethod: () => {
@@ -90,7 +92,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  potWallets: walletV2Selector(state),
+  potWallets: walletV2WithActivationStatusSelector(state),
   atLeastOnePaymentMethodActive: atLeastOnePaymentMethodHasBpdEnabledSelector(
     state
   )
