@@ -23,7 +23,6 @@ const chooseRenderScreen = (props: Props) => {
   if (isLoading(ibanStatus) || isError(ibanStatus)) {
     return <IbanLoadingUpsert />;
   } else if (isReady(ibanStatus)) {
-    return <IbanKoNotOwned />;
     switch (ibanStatus.value) {
       case IbanStatus.NOT_OWNED:
         return <IbanKoNotOwned />;
