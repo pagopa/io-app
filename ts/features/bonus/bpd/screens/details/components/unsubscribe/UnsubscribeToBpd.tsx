@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../../components/core/typography/Label";
+import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { bottomSheetRawConfig } from "../../../../../../../utils/bottomSheet";
@@ -16,7 +17,10 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const styles = StyleSheet.create({
   button: {
-    width: "100%"
+    width: "100%",
+    borderColor: IOColors.red,
+    borderWidth: 1,
+    backgroundColor: IOColors.white
   }
 });
 
@@ -46,12 +50,8 @@ const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
   };
 
   return (
-    <ButtonDefaultOpacity
-      alert={true}
-      style={styles.button}
-      onPress={openModalBox}
-    >
-      <Label color={"white"}>{I18n.t("bonus.bpd.unsubscribe.cta")}</Label>
+    <ButtonDefaultOpacity style={styles.button} onPress={openModalBox}>
+      <Label color={"red"}>{I18n.t("bonus.bpd.unsubscribe.cta")}</Label>
     </ButtonDefaultOpacity>
   );
 };
