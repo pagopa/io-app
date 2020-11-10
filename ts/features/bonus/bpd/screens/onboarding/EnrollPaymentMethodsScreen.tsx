@@ -12,11 +12,9 @@ import I18n from "../../../../../i18n";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { walletV2Selector } from "../../../../../store/reducers/wallet/wallets";
 import { PatchedWalletV2 } from "../../../../../types/pagopa";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 import { PaymentMethodGroupedList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
-import { PaymentMethodRawList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodRawList";
 import { walletV2WithActivationStatusSelector } from "../../store/reducers/details/combiner";
 
 const loadLocales = () => ({

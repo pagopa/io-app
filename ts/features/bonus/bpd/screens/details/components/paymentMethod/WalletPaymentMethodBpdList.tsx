@@ -14,10 +14,8 @@ import I18n from "../../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { PaymentMethodGroupedList } from "../../../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
-import { PaymentMethodRawList } from "../../../../components/paymentMethodActivationToggle/list/PaymentMethodRawList";
 import {
   atLeastOnePaymentMethodHasBpdEnabledSelector,
-  walletV2WithActivationStatus,
   walletV2WithActivationStatusSelector
 } from "../../../../store/reducers/details/combiner";
 
