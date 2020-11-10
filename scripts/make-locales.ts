@@ -147,7 +147,44 @@ function reportBadLocale(locale: LocaleDocWithCheckedKeys): void {
   }
 }
 
-const replacePlaceholders = (locales: ReadonlyArray<LocaleDocWithKeys>) =>
+const replacePlaceholders = (text: string, doc: any): string => {
+  const matches = text.match(/\${.*?\}/g);
+  if (matches) {
+    const placeholders: any = matches
+      .map(x => x.replace(/[${}]/g, ""))
+      .reduce((a, c) => {
+        const valueWithPlaceholder = _.at(doc, [c])[0];
+        const hook = `$\{${c}}`;
+        if (valueWithPlaceholder === undefined) {
+          throw Error(
+            chalk.red(`Error: cannot find placeholder with key ${hook}`)
+          );
+        }
+        if (_.isObject(valueWithPlaceholder)) {
+          throw Error(
+            chalk.red(`Error: ${hook} in not a leaf. It must be a string value`)
+          );
+        }
+        if (valueWithPlaceholder.indexOf(`$\{${c}}`) >= 0) {
+          throw Error(chalk.red(`Error: recursion reference detected ${hook}`));
+        }
+
+        return { ...a, [c]: valueWithPlaceholder };
+      }, {});
+
+    return Object.keys(placeholders).reduce(
+      (a, c) => a.replace(`$\{${c}}`, placeholders[c] as string),
+      text
+    );
+  }
+  return text;
+};
+
+/**
+ * check if a string value contains a placeholder ${obj.field.value}
+ * if yes it will be replaced with the relative entry contained in the object tree
+ */
+const withPlaceholders = (locales: ReadonlyArray<LocaleDocWithKeys>) =>
   locales.map(l => {
     const readObject = (obj: any): any =>
       Object.keys(obj).reduce((agg: any, curr) => {
@@ -155,42 +192,8 @@ const replacePlaceholders = (locales: ReadonlyArray<LocaleDocWithKeys>) =>
           return { ...agg, [curr]: readObject(obj[curr]) };
         }
         const value: string = obj[curr];
-        const matches = value.match(/\${.*?\}/g);
-        if (matches) {
-          const placeholders: any = matches
-            .map(x => x.replace(/[${}]/g, ""))
-            .reduce((a, c) => {
-              const valueWithPlaceholder = _.at(l.doc, [c])[0];
-              const hook = `$\{${c}}`;
-              if (valueWithPlaceholder === undefined) {
-                throw Error(
-                  chalk.red(`Error: cannot find placeholder with key ${hook}`)
-                );
-              }
-              if (_.isObject(valueWithPlaceholder)) {
-                throw Error(
-                  chalk.red(
-                    `Error: ${hook} in not a leaf. It must be a string value`
-                  )
-                );
-              }
-              if (valueWithPlaceholder.indexOf(`$\{${c}}`) >= 0) {
-                throw Error(
-                  chalk.red(`Error: recursion reference detected ${hook}`)
-                );
-              }
-
-              return { ...a, [c]: valueWithPlaceholder };
-            }, {});
-
-          const replacedValue = Object.keys(placeholders).reduce(
-            (a, c) => a.replace(`$\{${c}}`, placeholders[c] as string),
-            value
-          );
-          return { ...agg, [curr]: replacedValue };
-        }
-
-        return { ...agg, [curr]: value };
+        const replacedValue = replacePlaceholders(value, l.doc);
+        return { ...agg, [curr]: replacedValue };
       }, {});
     return { ...l, doc: readObject(l.doc) };
   });
@@ -300,7 +303,7 @@ async function run(rootPath: string): Promise<void> {
       chalk.gray("[4/4]"),
       `Writing locales typescript to [${emitPath}]...`
     );
-    const replacedPlaceholders = replacePlaceholders(localeKeys);
+    const replacedPlaceholders = withPlaceholders(localeKeys);
     await emitTsDefinitions(replacedPlaceholders, emitPath);
   } catch (e) {
     console.log(chalk.red(e.message));
