@@ -51,12 +51,13 @@ export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")();
 export const clearCache = createStandardAction("CLEAR_CACHE")();
 
 export type RemoveAccountMotivation =
+  | "undefined"
   | "notUtils"
   | "notSafe"
   | "neverUsed"
   | "others";
 export type RemoveAccountMotivationPayload = {
-  reason?: RemoveAccountMotivation;
+  reason: RemoveAccountMotivation;
   userText?: string;
 };
 export const removeAccountMotivation = createStandardAction(
