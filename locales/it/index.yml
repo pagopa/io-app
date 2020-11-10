@@ -908,11 +908,13 @@ wallet:
       pan: Numero della carta
       expirationDate: Data di scadenza
       securityCode: Codice di sicurezza
+      securityCode4D: CID (4 cifre)
     values:
       holder: Mario Rossi
       pan: 0000 0000 0000 0000
       expirationDate: mm/aa
       securityCode: "•••"
+      securityCode4D: "••••"
   acceptedCards: Carte accettate
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
