@@ -51,8 +51,8 @@ import {
   GetWalletsUsingGETT,
   payCreditCardVerificationUsingPOSTDecoder,
   PayCreditCardVerificationUsingPOSTT,
-  payUsingPOSTDecoder,
-  PayUsingPOSTT,
+  paySslUsingPOSTDecoder,
+  PaySslUsingPOSTT,
   startSessionUsingGETDecoder,
   StartSessionUsingGETT,
   updateWalletUsingPUTDecoder,
@@ -345,7 +345,7 @@ const addWalletCreditCard: AddWalletCreditCardUsingPOSTTExtra = {
 };
 
 type PayUsingPOSTTExtra = MapResponseType<
-  PayUsingPOSTT,
+  PaySslUsingPOSTT,
   200,
   TransactionResponse
 >;
@@ -356,7 +356,7 @@ const postPayment: PayUsingPOSTTExtra = {
   query: () => ({}),
   body: ({ payRequest }) => JSON.stringify(payRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: payUsingPOSTDecoder(TransactionResponse)
+  response_decoder: paySslUsingPOSTDecoder(TransactionResponse)
 };
 
 const deletePayment: DeleteBySessionCookieExpiredUsingDELETET = {
@@ -544,8 +544,8 @@ export function PaymentManagerClient(
         id
       }),
     postPayment: (
-      id: TypeofApiParams<PayUsingPOSTT>["id"],
-      payRequest: TypeofApiParams<PayUsingPOSTT>["payRequest"]
+      id: TypeofApiParams<PaySslUsingPOSTT>["id"],
+      payRequest: TypeofApiParams<PaySslUsingPOSTT>["payRequest"]
     ) =>
       flip(
         withPaymentManagerToken(
