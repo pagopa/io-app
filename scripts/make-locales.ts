@@ -20,7 +20,6 @@ import chalk from "chalk";
 import * as fs from "fs-extra";
 import * as yaml from "js-yaml";
 import * as prettier from "prettier";
-import * as _ from "lodash";
 
 interface LocaleDoc {
   locale: string;
@@ -147,31 +146,6 @@ function reportBadLocale(locale: LocaleDocWithCheckedKeys): void {
   }
 }
 
-const replacePlaceholders = (locales: ReadonlyArray<LocaleDocWithKeys>) =>
-  locales.map(l => {
-    const readObject = (obj: any): any =>
-      Object.keys(obj).reduce((agg: any, curr) => {
-        if (_.isObject(obj[curr])) {
-          return { ...agg, ...readObject(obj[curr]) };
-        }
-        const value: string = obj[curr];
-        const matches = value.match(/\${.*?\}/g);
-        if (matches) {
-          const placeholders = matches
-            .map(x => x.replace(/[${}]/g, ""))
-            .reduce((a, c) => {
-              return { ...a, [c]: _.at(l.doc, [c])[0] };
-            }, {});
-          console.log(value, placeholders);
-          const compiled = _.template(value);
-          return compiled(placeholders);
-        }
-
-        return { ...agg, [curr]: obj[curr] };
-      }, {});
-    return readObject(l.doc);
-  });
-
 async function emitTsDefinitions(
   locales: ReadonlyArray<LocaleDocWithKeys>,
   emitPath: string
@@ -277,7 +251,7 @@ async function run(rootPath: string): Promise<void> {
       chalk.gray("[4/4]"),
       `Writing locales typescript to [${emitPath}]...`
     );
-    await emitTsDefinitions(replacePlaceholders(localeKeys), emitPath);
+    await emitTsDefinitions(localeKeys, emitPath);
   } catch (e) {
     console.log(e.message);
   }
