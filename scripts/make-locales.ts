@@ -152,24 +152,47 @@ const replacePlaceholders = (locales: ReadonlyArray<LocaleDocWithKeys>) =>
     const readObject = (obj: any): any =>
       Object.keys(obj).reduce((agg: any, curr) => {
         if (_.isObject(obj[curr])) {
-          return { ...agg, ...readObject(obj[curr]) };
+          return { ...agg, [curr]: readObject(obj[curr]) };
         }
         const value: string = obj[curr];
         const matches = value.match(/\${.*?\}/g);
         if (matches) {
-          const placeholders = matches
+          const placeholders: any = matches
             .map(x => x.replace(/[${}]/g, ""))
             .reduce((a, c) => {
-              return { ...a, [c]: _.at(l.doc, [c])[0] };
+              const valueWithPlaceholder = _.at(l.doc, [c])[0];
+              const hook = `$\{${c}}`;
+              if (valueWithPlaceholder === undefined) {
+                throw Error(
+                  chalk.red(`Error: cannot find placeholder with key ${hook}`)
+                );
+              }
+              if (_.isObject(valueWithPlaceholder)) {
+                throw Error(
+                  chalk.red(
+                    `Error: ${hook} in not a leaf. It must be a string value`
+                  )
+                );
+              }
+              if (valueWithPlaceholder.indexOf(`$\{${c}}`) >= 0) {
+                throw Error(
+                  chalk.red(`Error: recursion reference detected ${hook}`)
+                );
+              }
+
+              return { ...a, [c]: valueWithPlaceholder };
             }, {});
-          console.log(value, placeholders);
-          const compiled = _.template(value);
-          return compiled(placeholders);
+
+          const replacedValue = Object.keys(placeholders).reduce(
+            (a, c) => a.replace(`$\{${c}}`, placeholders[c] as string),
+            value
+          );
+          return { ...agg, [curr]: replacedValue };
         }
 
-        return { ...agg, [curr]: obj[curr] };
+        return { ...agg, [curr]: value };
       }, {});
-    return readObject(l.doc);
+    return { ...l, doc: readObject(l.doc) };
   });
 
 async function emitTsDefinitions(
@@ -277,9 +300,10 @@ async function run(rootPath: string): Promise<void> {
       chalk.gray("[4/4]"),
       `Writing locales typescript to [${emitPath}]...`
     );
-    await emitTsDefinitions(replacePlaceholders(localeKeys), emitPath);
+    const replacedPlaceholders = replacePlaceholders(localeKeys);
+    await emitTsDefinitions(replacedPlaceholders, emitPath);
   } catch (e) {
-    console.log(e.message);
+    console.log(chalk.red(e.message));
   }
 }
 
