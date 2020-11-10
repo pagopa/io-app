@@ -1,12 +1,13 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
+import * as pot from "italia-ts-commons/lib/pot";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { Iban } from "../../../../../../definitions/backend/Iban";
 import { bpdUpsertIban, IbanUpsertResult } from "../../store/actions/iban";
-
+import { profileSelector } from "../../../../../store/reducers/profile";
 // representation of iban status
 export enum IbanStatus {
   "OK" = "OK",
@@ -53,10 +54,17 @@ export function* patchCitizenIban(
   action: ActionType<typeof bpdUpsertIban.request>
 ) {
   try {
+    const profileState: ReturnType<typeof profileSelector> = yield select(
+      profileSelector
+    );
+    if (pot.isNone(profileState)) {
+      // it should never happen
+      throw new Error(`profile is None`);
+    }
     const iban: Iban = action.payload;
     const updatePaymentMethodResult: SagaCallReturnType<ReturnType<
       typeof updatePaymentMethod
-    >> = yield call(updatePaymentMethod(iban), {});
+    >> = yield call(updatePaymentMethod(iban, profileState.value), {});
     if (updatePaymentMethodResult.isRight()) {
       const statusCode = updatePaymentMethodResult.value.status;
       if (statusCode === 200 && updatePaymentMethodResult.value.value) {
