@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../../store/reducers/types";
@@ -45,7 +46,7 @@ const enabledReducer = (
     case getType(bpdEnrollUserToProgram.success):
       return remoteReady(action.payload.enabled);
     case getType(bpdDeleteUserFromProgram.success):
-      return remoteReady(false);
+      return remoteUndefined;
     case getType(bpdLoadActivationStatus.failure):
     case getType(bpdEnrollUserToProgram.failure):
       return remoteError(action.payload);
@@ -65,5 +66,21 @@ const bpdActivationReducer = combineReducers<BpdActivation, Action>({
 export const bpdEnabledSelector = (
   state: GlobalState
 ): RemoteValue<boolean, Error> => state.bonus.bpd.details.activation.enabled;
+
+/**
+ * Return the Iban that the user has entered to receive the cashback amount
+ * @return {RemoteValue<string | undefined, Error>}
+ */
+export const bpdIbanSelector = createSelector<
+  GlobalState,
+  RemoteValue<string | undefined, Error>,
+  RemoteValue<string | undefined, Error>
+>(
+  [
+    (state: GlobalState) =>
+      state.bonus.bpd.details.activation.payoffInstr.enrolledValue
+  ],
+  iban => iban
+);
 
 export default bpdActivationReducer;

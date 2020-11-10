@@ -28,7 +28,7 @@ const convertPeriod = (
   statusFallback: BpdPeriodStatus = "Inactive"
 ): BpdPeriod => ({
   ...networkPeriod,
-  awardPeriodId: networkPeriod.awardPeriodId.toString() as AwardPeriodId,
+  awardPeriodId: networkPeriod.awardPeriodId as AwardPeriodId,
   superCashbackAmount: 0, // this field isn't yet present in AwardPeriodResource
   status: fromNullable(periodStatusMap.get(networkPeriod.status)).getOrElse(
     statusFallback

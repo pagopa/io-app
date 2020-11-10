@@ -2,7 +2,12 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { bpdLoadActivationStatus } from "../../actions/details";
-import { bpdOnboardingCancel, bpdUserActivate } from "../../actions/onboarding";
+import { bpdIbanInsertionCancel } from "../../actions/iban";
+import {
+  bpdOnboardingCancel,
+  bpdOnboardingCompleted,
+  bpdUserActivate
+} from "../../actions/onboarding";
 
 /**
  * This reducers is used to know if a current onboarding is ongoing
@@ -17,10 +22,11 @@ const ongoingOnboardingReducer = (
     case getType(bpdUserActivate):
       return true;
     case getType(bpdOnboardingCancel):
+    case getType(bpdOnboardingCompleted):
+    case getType(bpdIbanInsertionCancel):
       return false;
     case getType(bpdLoadActivationStatus.success):
       return action.payload.enabled ? false : state;
-    // TODO: check when moving the bpdLoadActivationStatus.success in the wallet if the value is ok
   }
   return state;
 };
