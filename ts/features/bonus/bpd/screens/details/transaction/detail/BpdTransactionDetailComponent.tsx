@@ -86,7 +86,7 @@ const Table = (props: Props) => (
           </>
         )}
         <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-          {`€ ${formatNumberAmount(props.transaction.amount)}`}
+          {formatNumberAmount(props.transaction.amount, true)}
         </H4>
       </View>
     </View>
