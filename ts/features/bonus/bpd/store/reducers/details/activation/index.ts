@@ -56,6 +56,11 @@ const enabledReducer = (
   return state;
 };
 
+/**
+ * Keep the stat of "unsubscribe" from bpd outcome
+ * @param state
+ * @param action
+ */
 const unsubscriptionReducer = (
   state: RemoteValue<true, Error> = remoteUndefined,
   action: Action

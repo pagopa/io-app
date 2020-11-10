@@ -17,7 +17,7 @@ type Props = { onCancel: () => void; onConfirm: () => void };
 const iconSize = 64;
 
 /**
- * Inform the user about the consequences of the cashback unsubscription
+ * Informs the user about the consequences of the cashback unsubscription
  * @param props
  * @constructor
  */

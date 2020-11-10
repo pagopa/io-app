@@ -48,8 +48,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
   useEffect(() => {
     if (isError(props.unsubscription)) {
       showToast(I18n.t("bonus.bpd.unsubscribe.failure"), "danger");
-    }
-    if (isReady(props.unsubscription)) {
+    } else if (isReady(props.unsubscription)) {
       showToast(I18n.t("bonus.bpd.unsubscribe.success"), "success");
       props.completeUnsubscription();
     }

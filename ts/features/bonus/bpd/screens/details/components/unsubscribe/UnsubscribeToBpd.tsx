@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
 
 /**
  * Allow the user to unsubscribe from bpd
- * TODO: ask confirmation to the user with bottomsheet, handle loading cancel, navigate to wallet with success
  * @constructor
  */
 const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
