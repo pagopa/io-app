@@ -1,7 +1,6 @@
 import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../../../../../../components/ButtonDefaultOpacity";
@@ -26,12 +25,18 @@ const styles = StyleSheet.create({
  * TODO: ask confirmation to the user with bottomsheet, handle loading cancel, navigate to wallet with success
  * @constructor
  */
-const UnsubscribeToBpd: React.FunctionComponent<Props> = () => {
+const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
   const { present, dismiss } = useBottomSheetModal();
 
   const openModalBox = () => {
     const bottomSheetProps = bottomSheetRawConfig(
-      <UnsubscribeComponent onCancel={dismiss} onConfirm={dismiss} />,
+      <UnsubscribeComponent
+        onCancel={dismiss}
+        onConfirm={() => {
+          dismiss();
+          props.cancelBpd();
+        }}
+      />,
       I18n.t("bonus.bpd.unsubscribe.title"),
       582,
       dismiss
@@ -55,7 +60,6 @@ const UnsubscribeToBpd: React.FunctionComponent<Props> = () => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancelBpd: () => {
     dispatch(bpdDeleteUserFromProgram.request());
-    dispatch(NavigationActions.back());
   }
 });
 

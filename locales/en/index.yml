@@ -1610,6 +1610,9 @@ bonus:
       body1: "Are you sure you want to cancel your digital payments cashback subscription?"
       body2: "If you confirm you will no longer be able to collect transactions or compete for the Super Cashback, and **you will not be able to collect a refund**, if you have been acknowledged. The deactivation of Digital Payments Cashback will have an effect **also in the other channels** that you used to activate it (eg Home Banking, app, etc ..) \ nIf you reactivate the cashback later **you will restart from zero transactions**."
       confirmCta: "Cancel subscription"
+      loading: "We are canceling your subscription"
+      success: "Your cashback membership has been canceled"
+      failure: "We were unable to unsubscribe, please try again"
     earned: Earned Cashback
     onboarding:
       loadingActivationStatus:
