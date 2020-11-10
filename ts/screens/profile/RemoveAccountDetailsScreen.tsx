@@ -19,6 +19,7 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import {
   RemoveAccountMotivation,
   removeAccountMotivation,
+  RemoveAccountMotivationEnum,
   RemoveAccountMotivationPayload
 } from "../../store/actions/profile";
 import { identificationRequest } from "../../store/actions/identification";
@@ -43,7 +44,7 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   // Initially no motivation is selected
   const [selectedMotivation, setSelectedMotivation] = React.useState<
     RemoveAccountMotivation
-  >("undefined");
+  >(RemoveAccountMotivationEnum.UNDEFINED);
 
   const [otherMotivation, setOtherMotivation] = React.useState<string>("");
 
@@ -52,7 +53,7 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
     primary: true,
     onPress: () => {
       switch (selectedMotivation) {
-        case "others":
+        case RemoveAccountMotivationEnum.OTHERS:
           // Only the "others" reason allow to insert a custom text
           props.requestIdentification({
             reason: selectedMotivation,
@@ -101,25 +102,25 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
                     label: I18n.t(
                       "profile.main.privacy.removeAccount.details.answer_1"
                     ),
-                    id: "notUtils"
+                    id: RemoveAccountMotivationEnum.NOT_UTILS
                   },
                   {
                     label: I18n.t(
                       "profile.main.privacy.removeAccount.details.answer_2"
                     ),
-                    id: "notSafe"
+                    id: RemoveAccountMotivationEnum.NOT_SAFE
                   },
                   {
                     label: I18n.t(
                       "profile.main.privacy.removeAccount.details.answer_3"
                     ),
-                    id: "neverUsed"
+                    id: RemoveAccountMotivationEnum.NEVER_USED
                   },
                   {
                     label: I18n.t(
                       "profile.main.privacy.removeAccount.details.answer_4"
                     ),
-                    id: "others"
+                    id: RemoveAccountMotivationEnum.OTHERS
                   }
                 ]}
                 selectedItem={selectedMotivation}

@@ -50,12 +50,20 @@ export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")();
 
 export const clearCache = createStandardAction("CLEAR_CACHE")();
 
+export enum RemoveAccountMotivationEnum {
+  "UNDEFINED" = "undefined",
+  "NOT_UTILS" = "notUtils",
+  "NOT_SAFE" = "notSafe",
+  "NEVER_USED" = "neverUsed",
+  "OTHERS" = "others"
+}
 export type RemoveAccountMotivation =
-  | "undefined"
-  | "notUtils"
-  | "notSafe"
-  | "neverUsed"
-  | "others";
+  | RemoveAccountMotivationEnum.UNDEFINED
+  | RemoveAccountMotivationEnum.NOT_UTILS
+  | RemoveAccountMotivationEnum.NOT_SAFE
+  | RemoveAccountMotivationEnum.NEVER_USED
+  | RemoveAccountMotivationEnum.OTHERS;
+
 export type RemoveAccountMotivationPayload = {
   reason: RemoveAccountMotivation;
   userText?: string;
