@@ -1,1 +1,1 @@
-All receipts remain visible in the 'Payments' section in the 'Your transactions' list (the most recent at the top). At this time it is not possible to remove them or organize them differently.
+All receipts remain visible in the 'Wallet' section in the 'Your transactions' list (the most recent at the top). At this time it is not possible to remove them or organize them differently.
