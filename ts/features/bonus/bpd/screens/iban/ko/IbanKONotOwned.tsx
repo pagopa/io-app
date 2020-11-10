@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const ProfileInformation = (props: Props) => {
+  // undefined profile should never happens
   const profile = pot.getOrElse(props.profile, undefined);
 
   return (
