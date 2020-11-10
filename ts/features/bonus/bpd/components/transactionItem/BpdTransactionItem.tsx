@@ -52,7 +52,7 @@ export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
       image={props.transaction.image}
       subtitle={getSubtitle(props.transaction)}
       rightText={formatNumberAmount(props.transaction.cashback)}
-      onPress={() => openModalBox()}
+      onPress={openModalBox}
     />
   );
 };
