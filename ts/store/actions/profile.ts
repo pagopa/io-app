@@ -56,7 +56,7 @@ export type RemoveAccountMotivation =
   | "neverUsed"
   | "others";
 export type RemoveAccountMotivationPayload = {
-  reason: RemoveAccountMotivation;
+  reason?: RemoveAccountMotivation;
   userText?: string;
 };
 export const removeAccountMotivation = createStandardAction(
