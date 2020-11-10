@@ -69,7 +69,7 @@ global:
     edit: "Edit"
   navigator:
     messages: messages
-    wallet: payments
+    wallet: wallet
     documents: documents
     profile: profile
     services: services
@@ -629,7 +629,7 @@ payment:
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
-  wallet: Payments
+  wallet: Wallet
   searchAbi:
     title: Add Bancomat card
     description:
@@ -1552,7 +1552,7 @@ bonus:
         description: We will send you a message in the app when your bonus is ready.
       alreadyRedeemed:
         title: The bonus for your family is already active!
-        body: You can view the details in the Payments section.
+        body: You can view the details in the Wallet section.
         cta: Show available Bonuses
       eligibilityExpired:
         title: Time expired.
@@ -1583,7 +1583,7 @@ bonus:
     contentTitle: Select one of the available bonus
     contextualHelp:
       title: Add a bonus or discount card
-      body: Here you can select the bonus or discount card you want to add. Once activated, they will then be displayed in the Payments section. You will always be able to see the details of the bonus or discount, entering the Payments section, and selecting the item in the list.
+      body: Here you can select the bonus or discount card you want to add. Once activated, they will then be displayed in the Wallet section. You will always be able to see the details of the bonus or discount, entering the Wallet section, and selecting the item in the list.
   bonusInformation:
     contextualHelp:
       title: The Bonus Vacanze
@@ -1670,6 +1670,17 @@ bonus:
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
+        detail:
+          title: "Detail of the transaction"
+          paymentCircuit: "Payment circuit"
+          transactionAmount: "Transaction amount"
+          cashbackAmount: "Cashback amount"
+          acquirerId: "Acquirer transaction ID"
+          issuerId: "Issuer transaction ID"
+          maxCashbackWarning: "For each transaction you can get a maximum cashback of € {{amount}}."
+          maxCashbackForPeriodWarning: "You have already reached the maximum refund for this period."
+          canceledOperationWarning: "This transaction is a refund, so the related cashback has been deducted."
+          canceled: "Refund"
       paymentMethods:
         noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
       card:
