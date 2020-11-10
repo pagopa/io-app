@@ -210,7 +210,13 @@ profile:
           cta: Continue
         details:
           body: "We would like to know why you are deleting your account, in order to improve in the future. You can also proceed directly with the deletion by clicking on the button below."
-          cta: Continue
+          question: What is the reason for the cancellation?
+          answer_1: I no longer consider "IO" useful
+          answer_2: I don't feel safe on IO
+          answer_3: I've never used the app
+          answer_4: None of the above
+          labelOpenAnswer: Tell us more
+          cta: Remove Account
         success:
           title: Stiamo processando la tua richiesta.
           body: !include profile/profile_remove_account_success.md

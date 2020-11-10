@@ -210,7 +210,13 @@ profile:
           cta: Continua
         details:
           body: "Ci piacerebbe sapere perchè stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
-          cta: Continua
+          question: Qual'è il motivo della cancellazione?
+          answer_1: Non ritengo più utile IO
+          answer_2: Non mi sento al sicuro su IO
+          answer_3: Non ho mai usato l'app
+          answer_4: Nessuno dei precedenti
+          labelOpenAnswer: Dicci di più
+          cta: Elimina Account
         success:
           title: Stiamo processando la tua richiesta.
           body:  !include profile/profile_remove_account_success.md

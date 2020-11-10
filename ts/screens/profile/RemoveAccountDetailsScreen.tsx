@@ -53,6 +53,7 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
     onPress: () => {
       switch (selectedMotivation) {
         case "others":
+          // Only the "others" reason allow to insert a custom text
           props.requestIdentification({
             reason: selectedMotivation,
             userText: otherMotivation
@@ -91,13 +92,35 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
             </H4>
             <View style={{ paddingTop: 25 }}>
               <RadioButtonList<RemoveAccountMotivation>
-                head="Qual'è il motivo della cancellazione?"
+                head={I18n.t(
+                  "profile.main.privacy.removeAccount.details.question"
+                )}
                 key="delete_reason"
                 items={[
-                  { label: "Non ritengo più utile IO", id: "notUtils" },
-                  { label: "Non mi sento al sicuro su IO", id: "notSafe" },
-                  { label: "Non ho mai usato l'app", id: "neverUsed" },
-                  { label: "Nessuno dei precedenti", id: "others" }
+                  {
+                    label: I18n.t(
+                      "profile.main.privacy.removeAccount.details.answer_1"
+                    ),
+                    id: "notUtils"
+                  },
+                  {
+                    label: I18n.t(
+                      "profile.main.privacy.removeAccount.details.answer_2"
+                    ),
+                    id: "notSafe"
+                  },
+                  {
+                    label: I18n.t(
+                      "profile.main.privacy.removeAccount.details.answer_3"
+                    ),
+                    id: "neverUsed"
+                  },
+                  {
+                    label: I18n.t(
+                      "profile.main.privacy.removeAccount.details.answer_4"
+                    ),
+                    id: "others"
+                  }
                 ]}
                 selectedItem={selectedMotivation}
                 onPress={motivationIndex => {
@@ -106,7 +129,11 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
               />
               {selectedMotivation === "others" && (
                 <Item style={styles.noLeftMargin} floatingLabel={true}>
-                  <Label>{I18n.t("wallet.insertManually.noticeCode")}</Label>
+                  <Label>
+                    {I18n.t(
+                      "profile.main.privacy.removeAccount.details.labelOpenAnswer"
+                    )}
+                  </Label>
                   <Input
                     keyboardType={"default"}
                     returnKeyType={"done"}
