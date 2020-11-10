@@ -1670,6 +1670,17 @@ bonus:
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
+        detail:
+          title: "Detail of the transaction"
+          paymentCircuit: "Payment circuit"
+          transactionAmount: "Transaction amount"
+          cashbackAmount: "Cashback amount"
+          acquirerId: "Acquirer transaction ID"
+          issuerId: "Issuer transaction ID"
+          maxCashbackWarning: "For each transaction you can get a maximum cashback of € {{amount}}."
+          maxCashbackForPeriodWarning: "You have already reached the maximum refund for this period."
+          canceledOperationWarning: "This transaction is a refund, so the related cashback has been deducted."
+          canceled: "Refund"
       paymentMethods:
         noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
       card:

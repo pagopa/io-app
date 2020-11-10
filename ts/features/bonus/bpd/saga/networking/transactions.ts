@@ -24,9 +24,17 @@ const mapNetworkCircuitType: Map<string, CircuitType> = new Map<
   string,
   CircuitType
 >([
-  ["PagoBancomat", "PagoBancomat"],
-  ["Visa", "PagoBancomat"],
-  ["Mastercard", "PagoBancomat"]
+  ["00", "PagoBancomat"],
+  ["01", "Visa"],
+  ["02", "Mastercard"],
+  ["03", "Amex"],
+  ["04", "JCB"],
+  ["05", "UnionPay"],
+  ["06", "Diners"],
+  ["07", "PostePay"],
+  ["08", "BancomatPay"],
+  ["09", "SatisPay"],
+  ["10", "Private"]
 ]);
 
 // convert a network payload amount into the relative app domain model
@@ -40,7 +48,7 @@ const convertTransactions = (
     awardPeriodId,
     circuitType: fromNullable(
       mapNetworkCircuitType.get(nt.circuitType)
-    ).getOrElse("PagoBancomat") // TODO which is the right default? maybe 'Unknown' can be added to CircuitType literal union?
+    ).getOrElse("Unknown") // TODO which is the right default? maybe 'Unknown' can be added to CircuitType literal union?
   }));
   return {
     results,
@@ -50,6 +58,7 @@ const convertTransactions = (
 
 /**
  * Networking code to request the transactions for a specified period.
+ * @param winningTransactions
  * @param action
  */
 export function* bpdLoadTransactionsSaga(
