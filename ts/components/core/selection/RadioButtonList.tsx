@@ -3,7 +3,6 @@ import * as React from "react";
 import { H4 } from "../typography/H4";
 import IconFont from "./../../ui/IconFont";
 import themeVariables from "./../../../theme/variables";
-import { Text } from "native-base";
 
 type RadioItem<T> = {
   label: string;
