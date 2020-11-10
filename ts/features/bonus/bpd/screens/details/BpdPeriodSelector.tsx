@@ -66,7 +66,7 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
   return (
     <View style={[IOStyles.flex]}>
       {pot.isSome(props.periodsWithAmount) &&
-        props.periodsWithAmount.value.length > 1 && (
+        props.periodsWithAmount.value.length > 0 && (
           <HorizontalScroll
             indexToScroll={indexOfSelectedPeriod}
             onCurrentElement={selectPeriod}
