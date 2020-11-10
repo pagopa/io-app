@@ -96,7 +96,7 @@ const Table = (props: Props) => (
         {I18n.t("bonus.bpd.details.transaction.detail.cashbackAmount")}
       </H5>
       <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {`€ ${formatNumberAmount(props.transaction.cashback)}`}
+        {formatNumberAmount(props.transaction.cashback, true)}
       </H4>
     </View>
   </View>
