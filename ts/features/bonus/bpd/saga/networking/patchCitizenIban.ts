@@ -19,8 +19,7 @@ export enum IbanStatus {
 const ibanStatusMapping: Map<string, IbanStatus> = new Map<string, IbanStatus>([
   ["OK", IbanStatus.OK],
   ["KO", IbanStatus.NOT_OWNED],
-  ["UNKNOWN_PSP", IbanStatus.CANT_VERIFY],
-  ["NOT_VALID", IbanStatus.NOT_VALID]
+  ["UNKNOWN_PSP", IbanStatus.CANT_VERIFY]
 ]);
 
 const successCases = new Set<IbanStatus>([
