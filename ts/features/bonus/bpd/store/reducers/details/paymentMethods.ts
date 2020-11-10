@@ -91,6 +91,18 @@ const bpdPaymentMethodActivationByHPanValue = (
   state.bonus.bpd.details.paymentMethods[hPan];
 
 /**
+ * Return all the activation states for payment methods, memoized
+ */
+export const bpdPaymentMethodActivationSelector = createSelector<
+  GlobalState,
+  IndexedById<BpdPotPaymentMethodActivation>,
+  IndexedById<BpdPotPaymentMethodActivation>
+>(
+  [(state: GlobalState) => state.bonus.bpd.details.paymentMethods],
+  paymentMethod => paymentMethod
+);
+
+/**
  * Return the pot representing the bpd activation status for a payment method.
  * It's wrapped with createSelector in order to memoize the value and avoid recalculation
  * when the state change.

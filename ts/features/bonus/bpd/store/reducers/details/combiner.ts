@@ -21,6 +21,7 @@ import { BpdPeriod } from "../../actions/periods";
 import { BpdTransaction } from "../../actions/transactions";
 import { bpdEnabledSelector } from "./activation";
 import { bpdAllAmountSelector } from "./amounts";
+import { bpdPaymentMethodActivationSelector } from "./paymentMethods";
 import { bpdPeriodsSelector } from "./periods";
 import { bpdSelectedPeriodSelector } from "./selectedPeriod";
 import { bpdTransactionsForSelectedPeriod } from "./transactions";
@@ -208,5 +209,29 @@ export const bpdDisplayTransactionsSelector = createSelector<
             maxCashbackForTransactionAmount: period?.maxTransactionCashback
           } as EnhancedBpdTransaction)
       )
+    )
+);
+
+/**
+ * There is at least one payment method with bpd enabled?
+ */
+export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
+  [walletV2Selector, bpdPaymentMethodActivationSelector],
+  (walletV2Pot, bpdActivations): boolean =>
+    pot.getOrElse(
+      pot.map(walletV2Pot, walletv2 =>
+        walletv2.some(w =>
+          fromNullable(w.info.hashPan)
+            .map(hpan => bpdActivations[hpan])
+            .map(
+              potActivation =>
+                potActivation &&
+                pot.isSome(potActivation) &&
+                potActivation.value.activationStatus === "active"
+            )
+            .getOrElse(false)
+        )
+      ),
+      false
     )
 );

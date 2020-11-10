@@ -1724,6 +1724,7 @@ bonus:
           canceled: "Storno"
       paymentMethods:
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare le transazioni necessarie"
+        noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per raccogliere le transazioni"
       card:
         status:
           active: Attivo
