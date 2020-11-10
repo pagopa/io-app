@@ -40,18 +40,12 @@ export interface ContextualHelpPropsMarkdown {
   body: TranslationKeys;
 }
 
-export interface ContextualHelpPropsMarkdownString {
-  title: TranslationKeys;
-  body: string;
-}
-
 interface OwnProps {
   onAccessibilityNavigationHeaderFocus?: () => void;
   accessibilityEvents?: AccessibilityEvents;
   accessibilityLabel?: string;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  contextualHelpPropsMarkdownString?: ContextualHelpPropsMarkdownString;
   headerBody?: React.ReactNode;
   appLogo?: boolean;
   isSearchAvailable?: boolean;
@@ -176,20 +170,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     customHandledLink.map(link => handleItemOnPress(link)());
   };
 
-  private chMarkdown = (chTitle: string, chBody: string) => ({
-    body: () => (
-      <Markdown
-        onLinkClicked={this.handleOnLinkClicked}
-        onLoadEnd={() => {
-          this.setState({ markdownContentLoaded: some(true) });
-        }}
-      >
-        {chBody}
-      </Markdown>
-    ),
-    title: chTitle
-  });
-
   public render() {
     const {
       accessibilityEvents,
@@ -198,7 +178,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       appLogo,
       contextualHelp,
       contextualHelpMarkdown,
-      contextualHelpPropsMarkdownString,
       goBack,
       headerBody,
       headerTitle,
@@ -222,15 +201,19 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     const ch = contextualHelp
       ? { body: contextualHelp.body, title: contextualHelp.title }
       : contextualHelpMarkdown
-      ? this.chMarkdown(
-          I18n.t(contextualHelpMarkdown.title),
-          I18n.t(contextualHelpMarkdown.body)
-        )
-      : contextualHelpPropsMarkdownString
-      ? this.chMarkdown(
-          I18n.t(contextualHelpPropsMarkdownString.title),
-          contextualHelpPropsMarkdownString.body
-        )
+      ? {
+          body: () => (
+            <Markdown
+              onLinkClicked={this.handleOnLinkClicked}
+              onLoadEnd={() => {
+                this.setState({ markdownContentLoaded: some(true) });
+              }}
+            >
+              {I18n.t(contextualHelpMarkdown.body)}
+            </Markdown>
+          ),
+          title: I18n.t(contextualHelpMarkdown.title)
+        }
       : undefined;
 
     return (
