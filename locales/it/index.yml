@@ -1733,12 +1733,14 @@ bonus:
         activateOnOthersChannel:
           text1: "Attivati su "
           text2: "altri canali"
-          title: "Metodo non compatibile"
-          body: "Il metodo di pagamento non è compatibile [MISSING TEXT]"
+          body: "placeholder [MISSING TEXT]"
         notActivable:
           header: "Non attivabili o non compatibili"
           title: "Metodo non attivabile"
-          body: "Qualcun altro ha già attivato in questo momento il cashback su questo metodo di pagamento: [MISSING TEXT]"
+          body: "Qualcun altro ha già attivo in questo momento il cashback su questo metodo di pagamento: il cashback pagamenti digitali può essere attivato da un solo utente alla volta per ciascun metodo di pagamento."
+        notCompatible:
+          title: "Metodo non compatibile"
+          body: "Il metodo di pagamento non è compatibile con il cashback pagamenti digitali perchè la banca non ha ancora attivato il supporto a queste funzionalità. Contatta la tua banca per maggiori dettagli."
         activate:
           title: "Attivazione metodo"
           body: "Confermi di voler attivare il cashback su questo metodo di pagamento?

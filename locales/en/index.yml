@@ -1701,20 +1701,22 @@ bonus:
         activateOnOthersChannel:
           text1: "Activate on"
           text2: "other channels"
-          title: "Method not compatible"
-          body: "The payment method is not compatible [MISSING TEXT]"
+          body: "placeholder [MISSING TEXT]"
         notActivable:
           header: "Not activatable or incompatible"
           title: "Method not activatable"
-          body: "Someone else has already activated cashback on this payment method at this time: [MISSING TEXT]"
+          body: "Someone else already has cashback on this payment method active at this time: digital payments cashback can only be activated by one user at a time for each payment method."
+        notCompatible:
+          title: "Method not compatible"
+          body: "The payment method is not compatible with cashback digital payments because the bank has not yet activated support for these features. Contact your bank for more details."
         activate:
           title: "Method activation"
           body: "Are you sure you want to activate cashback on this payment method?
-                 The activation will be operational ** from tomorrow **, so the transactions you make today will not be valid for cashback purposes. "
+                 The activation will be operational **from tomorrow**, so the transactions you make today will not be valid for cashback purposes. "
         deactivate:
           title: "Method deactivation"
           body: "Are you sure you want to disable the cashback on this payment method? If you confirm this choice, the method from now on will no longer contribute to the collection of transactions.
-                 The deactivation will be effective ** from tomorrow **, so the transactions you make today with this tool may still be considered. "
+                 The deactivation will be effective **from tomorrow**, so the transactions you make today with this tool may still be considered. "
       card:
         status:
           active: Active
