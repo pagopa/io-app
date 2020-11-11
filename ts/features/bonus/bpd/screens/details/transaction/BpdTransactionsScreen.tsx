@@ -9,11 +9,14 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import BPDTransactionSummaryComponent from "../../../components/BPDTransactionSummaryComponent";
 import {
   BpdTransactionItem,
   EnhancedBpdTransaction
 } from "../../../components/transactionItem/BpdTransactionItem";
+import { bpdAmountForSelectedPeriod } from "../../../store/reducers/details/amounts";
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
+import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -34,6 +37,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => (
         <View spacer={true} large={true} />
         <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
         <View spacer={true} />
+        <BPDTransactionSummaryComponent lastUpdateDate={"13"} />
         <FlatList
           data={dataForFlatList(props.transactionForSelectedPeriod)}
           renderItem={transaction => (
@@ -49,7 +53,9 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => (
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  transactionForSelectedPeriod: bpdDisplayTransactionsSelector(state)
+  transactionForSelectedPeriod: bpdDisplayTransactionsSelector(state),
+  selectedPeriod: bpdSelectedPeriodSelector(state),
+  selectedAmount: bpdAmountForSelectedPeriod(state)
 });
 
 export default connect(
