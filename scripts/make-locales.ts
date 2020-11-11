@@ -263,13 +263,13 @@ async function run(rootPath: string): Promise<void> {
     console.log("Locales path:", chalk.blueBright(rootPath));
 
     // read the YAML files for all locales
-    console.log(chalk.gray("[1/4]"), "Reading translations...");
+    console.log(chalk.gray("[1/5]"), "Reading translations...");
     const localeDocs = await Promise.all(
       locales.map(async l => await readLocaleDoc(rootPath, l))
     );
 
     // extract the keys from all locale files
-    console.log(chalk.gray("[2/4]"), "Extracting keys...");
+    console.log(chalk.gray("[2/5]"), "Extracting keys...");
     const localeKeys: ReadonlyArray<LocaleDocWithKeys> = localeDocs.map(d => ({
       ...d,
       keys: extractKeys(d.doc)
@@ -286,7 +286,7 @@ async function run(rootPath: string): Promise<void> {
     const otherLocaleKeys = localeKeys.slice(1);
 
     // compare keys of locales with master keys
-    console.log(chalk.gray("[3/4]"), "Comparing keys...");
+    console.log(chalk.gray("[3/5]"), "Comparing keys...");
     const checkedLocaleKeys: ReadonlyArray<LocaleDocWithCheckedKeys> = otherLocaleKeys.map(
       l => ({
         ...l,
@@ -305,13 +305,15 @@ async function run(rootPath: string): Promise<void> {
         throw Error("bad locales detected");
       }
     }
+    console.log(chalk.gray("[4/5]"), `Baking placeholders...`);
+    const replacedPlaceholders = withPlaceholders(localeKeys);
 
     const emitPath = path.join(rootPath, "locales.ts");
     console.log(
-      chalk.gray("[4/4]"),
+      chalk.gray("[5/5]"),
       `Writing locales typescript to [${emitPath}]...`
     );
-    const replacedPlaceholders = withPlaceholders(localeKeys);
+
     await emitTsDefinitions(replacedPlaceholders, emitPath);
   } catch (e) {
     console.log(chalk.red(e.message));
