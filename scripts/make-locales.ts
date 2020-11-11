@@ -20,6 +20,7 @@ import chalk from "chalk";
 import * as fs from "fs-extra";
 import * as yaml from "js-yaml";
 import * as prettier from "prettier";
+import * as _ from "lodash";
 
 interface LocaleDoc {
   locale: string;
@@ -146,6 +147,70 @@ function reportBadLocale(locale: LocaleDocWithCheckedKeys): void {
   }
 }
 
+const replacePlaceholders = (text: string, doc: any): string => {
+  const matches = text.match(/\${.*?\}/g);
+  if (matches) {
+    // check if there are any placeholders
+    const placeholders: any = matches
+      .map(x => x.replace(/[${}]/g, ""))
+      .reduce((a: any, c) => {
+        // the placeholder is already mapped
+        if (a[c] !== undefined) {
+          return a;
+        }
+        // for a placeholder take the relative value held by the doc
+        const valueWithPlaceholder = _.at(doc, [c])[0];
+        const hook = `$\{${c}}`;
+        // the value cannot find
+        if (valueWithPlaceholder === undefined) {
+          throw Error(
+            chalk.red(`Error: cannot find placeholder with key ${hook}`)
+          );
+        }
+        // the value is not a string
+        if (_.isObject(valueWithPlaceholder)) {
+          throw Error(
+            chalk.red(`Error: ${hook} in not a leaf. It must be a string value`)
+          );
+        }
+        // the placeholder value is the same where the placeholder is
+        if (valueWithPlaceholder.indexOf(`$\{${c}}`) >= 0) {
+          throw Error(chalk.red(`Error: recursion reference detected ${hook}`));
+        }
+        // build a mapping object where the key is the placeholder name
+        // and the value is the placeholder value
+        // ex {"obj.fieldOne.value" : "value"}
+        return { ...a, [c]: valueWithPlaceholder };
+      }, {});
+
+    return Object.keys(placeholders).reduce(
+      (a, c) =>
+        a.replace(new RegExp(`\\$\{${c}}`, "g"), placeholders[c] as string),
+      text
+    );
+  }
+  return text;
+};
+
+/**
+ * Pass through the whole locals object and replace all placeholders with their relative value.
+ * A placeholder can be added using the syntax ${obj.fieldOne.value}
+ * A placeholder CANNOT refer to a value containing another placeholder.
+ */
+const withPlaceholders = (locales: ReadonlyArray<LocaleDocWithKeys>) =>
+  locales.map(l => {
+    const replacedDoc = (obj: any): any =>
+      Object.keys(obj).reduce((agg: any, curr) => {
+        if (_.isObject(obj[curr])) {
+          return { ...agg, [curr]: replacedDoc(obj[curr]) };
+        }
+        const value: string = obj[curr];
+        const replacedValue = replacePlaceholders(value, l.doc);
+        return { ...agg, [curr]: replacedValue };
+      }, {});
+    return { ...l, doc: replacedDoc(l.doc) };
+  });
+
 async function emitTsDefinitions(
   locales: ReadonlyArray<LocaleDocWithKeys>,
   emitPath: string
@@ -203,13 +268,13 @@ async function run(rootPath: string): Promise<void> {
     console.log("Locales path:", chalk.blueBright(rootPath));
 
     // read the YAML files for all locales
-    console.log(chalk.gray("[1/4]"), "Reading translations...");
+    console.log(chalk.gray("[1/5]"), "Reading translations...");
     const localeDocs = await Promise.all(
       locales.map(async l => await readLocaleDoc(rootPath, l))
     );
 
     // extract the keys from all locale files
-    console.log(chalk.gray("[2/4]"), "Extracting keys...");
+    console.log(chalk.gray("[2/5]"), "Extracting keys...");
     const localeKeys: ReadonlyArray<LocaleDocWithKeys> = localeDocs.map(d => ({
       ...d,
       keys: extractKeys(d.doc)
@@ -226,7 +291,7 @@ async function run(rootPath: string): Promise<void> {
     const otherLocaleKeys = localeKeys.slice(1);
 
     // compare keys of locales with master keys
-    console.log(chalk.gray("[3/4]"), "Comparing keys...");
+    console.log(chalk.gray("[3/5]"), "Comparing keys...");
     const checkedLocaleKeys: ReadonlyArray<LocaleDocWithCheckedKeys> = otherLocaleKeys.map(
       l => ({
         ...l,
@@ -245,15 +310,18 @@ async function run(rootPath: string): Promise<void> {
         throw Error("bad locales detected");
       }
     }
+    console.log(chalk.gray("[4/5]"), `Baking placeholders...`);
+    const replacedPlaceholders = withPlaceholders(localeKeys);
 
     const emitPath = path.join(rootPath, "locales.ts");
     console.log(
-      chalk.gray("[4/4]"),
+      chalk.gray("[5/5]"),
       `Writing locales typescript to [${emitPath}]...`
     );
-    await emitTsDefinitions(localeKeys, emitPath);
+
+    await emitTsDefinitions(replacedPlaceholders, emitPath);
   } catch (e) {
-    console.log(e.message);
+    console.log(chalk.red(e.message));
   }
 }
 
