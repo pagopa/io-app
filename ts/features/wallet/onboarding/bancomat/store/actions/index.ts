@@ -20,7 +20,7 @@ export const loadAbi = createAsyncAction(
 
 // pans response contains pans (list of card) and messages (info services data provider)
 export type PansResponse = {
-  pans: ReadonlyArray<Card>;
+  cards: ReadonlyArray<Card>;
   messages: ReadonlyArray<Message>;
 };
 /**

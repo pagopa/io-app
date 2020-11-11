@@ -64,9 +64,9 @@ export function* handleLoadPans(
         return yield put(
           searchUserPans.success(
             fromNullable({
-              pans: response?.data ?? [],
+              cards: response?.data ?? [],
               messages: response?.messages ?? []
-            }).getOrElse({ pans: [], messages: [] })
+            }).getOrElse({ cards: [], messages: [] })
           )
         );
       } else {
