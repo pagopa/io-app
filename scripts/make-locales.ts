@@ -153,7 +153,11 @@ const replacePlaceholders = (text: string, doc: any): string => {
     // check if there are any placeholders
     const placeholders: any = matches
       .map(x => x.replace(/[${}]/g, ""))
-      .reduce((a, c) => {
+      .reduce((a: any, c) => {
+        // the placeholder is already mapped
+        if (a[c] !== undefined) {
+          return a;
+        }
         // for a placeholder take the relative value held by the doc
         const valueWithPlaceholder = _.at(doc, [c])[0];
         const hook = `$\{${c}}`;
@@ -180,7 +184,8 @@ const replacePlaceholders = (text: string, doc: any): string => {
       }, {});
 
     return Object.keys(placeholders).reduce(
-      (a, c) => a.replace(`$\{${c}}`, placeholders[c] as string),
+      (a, c) =>
+        a.replace(new RegExp(`\\$\{${c}}`, "g"), placeholders[c] as string),
       text
     );
   }
