@@ -7,6 +7,7 @@ import { AbiListResponse } from "../../../../../../../definitions/pagopa/walletv
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { PatchedWalletV2 } from "../../../../../../types/pagopa";
 import { LoadPansError } from "../../saga/networking";
+import { Message } from "../../../../../../../definitions/pagopa/walletv2/Message";
 
 /**
  * Request the list of all abi
@@ -17,6 +18,11 @@ export const loadAbi = createAsyncAction(
   "WALLET_LOAD_ABI_FAILURE"
 )<void, AbiListResponse, Error>();
 
+// pans response contains pans (list of card) and messages (info services data provider)
+export type PansResponse = {
+  pans: ReadonlyArray<Card>;
+  messages: ReadonlyArray<Message>;
+};
 /**
  * search for user's bancomat pans
  */
@@ -24,7 +30,7 @@ export const searchUserPans = createAsyncAction(
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_REQUEST",
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_SUCCESS",
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_FAILURE"
-)<string | undefined, ReadonlyArray<Card>, LoadPansError>();
+)<string | undefined, PansResponse, LoadPansError>();
 
 /**
  * The user select the current bancomat to add to the wallet

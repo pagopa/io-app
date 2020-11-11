@@ -100,13 +100,16 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => {
   const remotePans = onboardingBancomatFoundPansSelector(state);
   const addingResult = onboardingBancomatAddingResultSelector(state);
+  const pans = fromNullable(getValueOrElse(remotePans, undefined))
+    .map(p => p.pans)
+    .getOrElse([]);
   return {
     isAddingReady: isReady(addingResult),
     loading: isLoading(addingResult),
     isAddingResultError: isError(addingResult),
     remotePans,
     selectedPan: onboardingBancomatChosenPanSelector(state),
-    pans: getValueOrElse(remotePans, []),
+    pans,
     profile: pot.toUndefined(profileSelector(state))
   };
 };

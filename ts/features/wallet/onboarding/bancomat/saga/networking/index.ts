@@ -11,6 +11,7 @@ import {
   loadAbi,
   searchUserPans
 } from "../../store/actions";
+import { RTron } from "../../../../../../boot/configureStoreAndPersistor";
 
 // load all bancomat abi
 export function* handleLoadAbi(
@@ -60,11 +61,13 @@ export function* handleLoadPans(
     );
     if (getPansWithRefreshResult.isRight()) {
       if (getPansWithRefreshResult.value.status === 200) {
+        const response = getPansWithRefreshResult.value.value.data;
         return yield put(
           searchUserPans.success(
-            fromNullable(
-              getPansWithRefreshResult.value.value.data?.data
-            ).getOrElse([])
+            fromNullable({
+              pans: response?.data ?? [],
+              messages: response?.messages ?? []
+            }).getOrElse({ pans: [], messages: [] })
           )
         );
       } else {
