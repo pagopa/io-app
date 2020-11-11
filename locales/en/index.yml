@@ -883,11 +883,13 @@ wallet:
       pan: Card number
       expirationDate: Expiration date
       securityCode: Card security code
+      securityCode4D: CIN (4 digits)
     values:
       holder: John Doe
       pan: 0000 0000 0000 0000
       expirationDate: mm/yy
       securityCode: "•••"
+      securityCode4D: "••••"
   acceptedCards: Accepted cards
   chooseMethod: Select the desired method
   QRtoPay:
