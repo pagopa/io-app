@@ -13,7 +13,8 @@ import {
 import { bpdLoadActivationStatus } from "../../../actions/details";
 import {
   bpdDeleteUserFromProgram,
-  bpdEnrollUserToProgram
+  bpdEnrollUserToProgram,
+  bpdUnsubscribeCompleted
 } from "../../../actions/onboarding";
 import paymentInstrumentReducer, {
   PayoffInstrumentType
@@ -22,6 +23,7 @@ import paymentInstrumentReducer, {
 export type BpdActivation = {
   enabled: RemoteValue<boolean, Error>;
   payoffInstr: PayoffInstrumentType;
+  unsubscription: RemoteValue<true, Error>;
 };
 
 /**
@@ -54,9 +56,33 @@ const enabledReducer = (
   return state;
 };
 
+/**
+ * Keep the state of "unsubscribe" from bpd outcome
+ * @param state
+ * @param action
+ */
+const unsubscriptionReducer = (
+  state: RemoteValue<true, Error> = remoteUndefined,
+  action: Action
+): RemoteValue<true, Error> => {
+  switch (action.type) {
+    case getType(bpdDeleteUserFromProgram.request):
+      return remoteLoading;
+    case getType(bpdDeleteUserFromProgram.success):
+      return remoteReady(true);
+    case getType(bpdDeleteUserFromProgram.failure):
+      return remoteError(action.payload);
+    // reset the state when return to wallet
+    case getType(bpdUnsubscribeCompleted):
+      return remoteUndefined;
+  }
+  return state;
+};
+
 const bpdActivationReducer = combineReducers<BpdActivation, Action>({
   enabled: enabledReducer,
-  payoffInstr: paymentInstrumentReducer
+  payoffInstr: paymentInstrumentReducer,
+  unsubscription: unsubscriptionReducer
 });
 
 /**
@@ -81,6 +107,14 @@ export const bpdIbanSelector = createSelector<
       state.bonus.bpd.details.activation.payoffInstr.enrolledValue
   ],
   iban => iban
+);
+
+/**
+ * Return the unsubscription state, memoized
+ */
+export const bpdUnsubscriptionSelector = createSelector(
+  [(state: GlobalState) => state.bonus.bpd.details.activation.unsubscription],
+  unsubscription => unsubscription
 );
 
 export default bpdActivationReducer;
