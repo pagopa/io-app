@@ -1,9 +1,11 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import {
+  getValue,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -17,6 +19,7 @@ import {
   bpdUnsubscribeCompleted
 } from "../../../actions/onboarding";
 import paymentInstrumentReducer, {
+  bpdUpsertIbanSelector,
   PayoffInstrumentType
 } from "./payoffInstrument";
 
@@ -115,6 +118,20 @@ export const bpdIbanSelector = createSelector<
 export const bpdUnsubscriptionSelector = createSelector(
   [(state: GlobalState) => state.bonus.bpd.details.activation.unsubscription],
   unsubscription => unsubscription
+);
+
+/**
+ * Return the prefill text based on the iban upsert or iban inserted by user
+ * if the user tried to add a new iban (upsertIban.value !== undefined) return that iban
+ * else try to return the actual iban getValue(iban)
+ *
+ */
+export const bpdIbanPrefillSelector = createSelector(
+  [bpdIbanSelector, bpdUpsertIbanSelector],
+  (iban, upsertIban): string  =>
+    fromNullable(upsertIban.value as string).getOrElse(
+      fromNullable(getValue(iban)).getOrElse("")
+    )
 );
 
 export default bpdActivationReducer;
