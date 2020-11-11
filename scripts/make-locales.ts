@@ -20,6 +20,7 @@ import chalk from "chalk";
 import * as fs from "fs-extra";
 import * as yaml from "js-yaml";
 import * as prettier from "prettier";
+import * as _ from "lodash";
 
 interface LocaleDoc {
   locale: string;
@@ -251,9 +252,10 @@ async function run(rootPath: string): Promise<void> {
       chalk.gray("[4/4]"),
       `Writing locales typescript to [${emitPath}]...`
     );
+
     await emitTsDefinitions(localeKeys, emitPath);
   } catch (e) {
-    console.log(e.message);
+    console.log(chalk.red(e.message));
   }
 }
 

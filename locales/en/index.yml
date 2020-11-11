@@ -69,7 +69,7 @@ global:
     edit: "Edit"
   navigator:
     messages: messages
-    wallet: payments
+    wallet: wallet
     documents: documents
     profile: profile
     services: services
@@ -629,7 +629,7 @@ payment:
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
-  wallet: Payments
+  wallet: Wallet
   searchAbi:
     title: Add Bancomat card
     description:
@@ -882,11 +882,13 @@ wallet:
       pan: Card number
       expirationDate: Expiration date
       securityCode: Card security code
+      securityCode4D: CIN (4 digits)
     values:
       holder: John Doe
       pan: 0000 0000 0000 0000
       expirationDate: mm/yy
       securityCode: "•••"
+      securityCode4D: "••••"
   acceptedCards: Accepted cards
   chooseMethod: Select the desired method
   QRtoPay:
@@ -1552,7 +1554,7 @@ bonus:
         description: We will send you a message in the app when your bonus is ready.
       alreadyRedeemed:
         title: The bonus for your family is already active!
-        body: You can view the details in the Payments section.
+        body: You can view the details in the Wallet section.
         cta: Show available Bonuses
       eligibilityExpired:
         title: Time expired.
@@ -1583,7 +1585,7 @@ bonus:
     contentTitle: Select one of the available bonus
     contextualHelp:
       title: Add a bonus or discount card
-      body: Here you can select the bonus or discount card you want to add. Once activated, they will then be displayed in the Payments section. You will always be able to see the details of the bonus or discount, entering the Payments section, and selecting the item in the list.
+      body: Here you can select the bonus or discount card you want to add. Once activated, they will then be displayed in the Wallet section. You will always be able to see the details of the bonus or discount, entering the Wallet section, and selecting the item in the list.
   bonusInformation:
     contextualHelp:
       title: The Bonus Vacanze

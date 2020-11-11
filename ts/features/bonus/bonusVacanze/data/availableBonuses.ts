@@ -31,7 +31,7 @@ Questi sono i passaggi che ti chiederemo di effettuare:
 - l'app IO chiederà a INPS di verificare l'ISEE del tuo nucleo familiare; 
 - se hai un ISEE valido e sotto la soglia fissata, ti mostreremo a quanto ammonta il tuo bonus e chi sono i componenti del tuo nucleo familiare che potranno beneficiarne; 
 - se confermi la richiesta, IO genera il tuo Bonus Vacanze; 
-- una volta attivo, il tuo bonus sarà visibile nella sezione Pagamenti.
+- una volta attivo, il tuo bonus sarà visibile nella sezione Portafoglio.
 `;
 
 const contentBonusVacanzeEN = `#### Who can request it?
