@@ -1,16 +1,21 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import I18n from "../../../../i18n";
 import { Body } from "../../../../components/core/typography/Body";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
 import { BpdAmount } from "../store/actions/amount";
 import { BpdPeriod } from "../store/actions/periods";
+import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { format } from "../../../../utils/dates";
+import { H4 } from "../../../../components/core/typography/H4";
+import { TranslationKeys } from "../../../../../locales/locales";
 
 type Props = {
   lastUpdateDate: string;
-  transactionsNumber: number;
   period: BpdPeriod;
   totalAmount: BpdAmount;
 };
@@ -26,19 +31,41 @@ const BPDTransactionSummaryComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => (
   <>
-    <View style={styles.row}>
+    <TouchableDefaultOpacity style={styles.row}>
       <IconFont name={"io-notice"} size={24} color={IOColors.blue} />
-      <H5 color={"bluegrey"} weight={"Regular"}>
-        {"Ultimo aggiornamento "}{" "}
-        <H5 color={"bluegrey"} weight={"SemiBold"}>
-          {props.lastUpdateDate}
+      <View hspacer={true} small={true} />
+      <View>
+        <H5 color={"bluegrey"} weight={"Regular"}>
+          {I18n.t("bonus.bpd.details.transaction.detail.summary.lastUpdated")}
+          <H5 color={"bluegrey"} weight={"SemiBold"}>
+            {props.lastUpdateDate}
+          </H5>
         </H5>
-      </H5>
-    </View>
+        <H5 color={"blue"} weight={"SemiBold"}>
+          {I18n.t("bonus.bpd.details.transaction.detail.summary.link")}
+        </H5>
+      </View>
+    </TouchableDefaultOpacity>
     <View spacer={true} />
     <Body>
-      Nel periodo 01 gen 2021 - 30 giu 2021 hai totalizzato 56 transazioni
-      valide e maturato un cashback di 150,00 euro.
+      {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text1")}
+      <H4 weight={"Bold"}>{`${format(
+        props.period.startDate,
+        "DD MMM YYYY"
+      )} - ${format(props.period.endDate, "DD MMM YYYY")} `}</H4>
+      {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text2")}
+      <H4 weight={"Bold"}>
+        {I18n.t(
+          "bonus.bpd.details.transaction.detail.summary.body.text3" as TranslationKeys,
+          {
+            count: props.totalAmount.transactionNumber
+          }
+        )}
+      </H4>{" "}
+      {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text4")}
+      <H4 weight={"Bold"}>{`${I18n.t(
+        "bonus.bpd.details.transaction.detail.summary.body.text5"
+      )}${formatNumberAmount(props.totalAmount.totalCashback)} euro.`}</H4>
     </Body>
   </>
 );

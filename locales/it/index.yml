@@ -1705,6 +1705,17 @@ bonus:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
         detail:
+          summary:
+            lastUpdated: "Ultimo aggiornamento "
+            link: "Manca qualcosa?"
+            body:
+              text1: "Nel periodo "
+              text2: "hai totalizzato "
+              text3:
+                one: "1 transazione valida"
+                other: "{{count}} transazioni valide"
+              text4: "e maturato "
+              text5: "un cashback di "
           title: "Dettaglio della transazione"
           paymentCircuit: "Circuito di pagamento"
           transactionAmount: "Importo transazione"

@@ -9,7 +9,7 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-// import BPDTransactionSummaryComponent from "../../../components/BPDTransactionSummaryComponent";
+import BPDTransactionSummaryComponent from "../../../components/BPDTransactionSummaryComponent";
 import {
   BpdTransactionItem,
   EnhancedBpdTransaction
@@ -37,7 +37,13 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => (
         <View spacer={true} large={true} />
         <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
         <View spacer={true} />
-        {/* <BPDTransactionSummaryComponent lastUpdateDate={"13"} /> */}
+        {pot.isSome(props.selectedAmount) && props.selectedPeriod && (
+          <BPDTransactionSummaryComponent
+            lastUpdateDate={"13 Ottobre 2021"}
+            period={props.selectedPeriod}
+            totalAmount={props.selectedAmount.value}
+          />
+        )}
         <FlatList
           data={dataForFlatList(props.transactionForSelectedPeriod)}
           renderItem={transaction => (

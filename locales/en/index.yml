@@ -1673,6 +1673,17 @@ bonus:
         title: "Your transactions"
         goToButton: "Transactions detail"
         detail:
+          summary:
+            lastUpdated: "Last updated "
+            link: Anything missing?
+            body:
+              text1: "During the period "
+              text2: "you have totalized "
+              text3:
+                one: "1 valid transaction "
+                other: "{{count}} valid transactions"
+              text4: "and earned "
+              text5: "a cashback of "
           title: "Detail of the transaction"
           paymentCircuit: "Payment circuit"
           transactionAmount: "Transaction amount"
