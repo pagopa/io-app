@@ -38,6 +38,7 @@ const calculateStylePercentage = (progressPercentage: number) => {
 export const ProgressBar: React.FunctionComponent<Props> = props => (
   <View style={styles.progressBar}>
     <View
+      testID={"progressBar"}
       style={[
         styles.fillBar,
         { width: calculateStylePercentage(props.progressPercentage) }

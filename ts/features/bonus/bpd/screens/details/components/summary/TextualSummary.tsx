@@ -17,7 +17,7 @@ type Props = {
  */
 const CurrentPeriodWarning = (props: { period: BpdPeriod }) => (
   <InfoBox>
-    <Body>
+    <Body testID={"currentPeriodWarning"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.currentPeriodKOBody",
         {
@@ -35,7 +35,7 @@ const CurrentPeriodWarning = (props: { period: BpdPeriod }) => (
  */
 const ClosedPeriodKO = (props: Props) => (
   <InfoBox>
-    <Body>
+    <Body testID={"closedPeriodKO"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodKOBody",
         {
@@ -54,7 +54,7 @@ const ClosedPeriodKO = (props: Props) => (
  */
 const ClosedPeriodOK = (props: Props) => (
   <InfoBox iconName={"io-complete"}>
-    <Body>
+    <Body testID={"closedPeriodOK"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodOKBody",
         {
@@ -80,7 +80,7 @@ const ClosedPeriodOK = (props: Props) => (
  */
 const GracePeriod = (props: { period: BpdPeriod }) => (
   <InfoBox iconName={"io-timer"}>
-    <Body>
+    <Body testID={"gracePeriod"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.gracePeriodBody",
         {
@@ -98,7 +98,7 @@ const GracePeriod = (props: { period: BpdPeriod }) => (
  */
 const InactivePeriod = (props: { period: BpdPeriod }) => (
   <InfoBox>
-    <Body>
+    <Body testID={"inactivePeriod"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.inactivePeriodBody",
         {
