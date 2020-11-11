@@ -11,7 +11,6 @@ import {
   loadAbi,
   searchUserPans
 } from "../../store/actions";
-import { RTron } from "../../../../../../boot/configureStoreAndPersistor";
 
 // load all bancomat abi
 export function* handleLoadAbi(
