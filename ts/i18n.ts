@@ -28,7 +28,7 @@ export function setLocale(lang: locales.Locales) {
 
 type TranslateT = {
   // allow unsafe translations only when a defaultValue gets passed
-  (scope: string, options: { defaultValue: string }): string;
+  (scope: string, options: { defaultValue: string; count?: number }): string;
   // or else, the lookup must be safe
   (scope: locales.TranslationKeys, options?: I18n.TranslateOptions): string;
 };

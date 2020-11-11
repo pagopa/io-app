@@ -1667,6 +1667,9 @@ bonus:
           closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
           closedPeriodMaxAmount: "it's the maximum possible refund!"
           inactivePeriodBody: "You will be able to start accumulating valid transactions starting from {{date}}"
+          label:
+            one: "1 valid transaction" 
+            other: "{{count}} valid transactions"
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
