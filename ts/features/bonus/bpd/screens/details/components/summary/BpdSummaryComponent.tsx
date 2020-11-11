@@ -23,7 +23,7 @@ type SummaryData = {
 };
 
 const Content = (sd: SummaryData) => (
-  <View>
+  <View testID={"bpdSummaryComponent"}>
     {sd.period.status === "Inactive" ? null : (
       <TransactionsGraphicalSummary
         transactions={sd.amount.transactionNumber}
