@@ -1676,6 +1676,7 @@ bonus:
     iban:
       iban: "IBAN"
       edit: "Modifica IBAN"
+      verify: "Controlla IBAN"
       insertion:
         title: "IBAN per l’accredito"
         body1: "Indica qui l’IBAN del tuo conto corrente, su cui vuoi ricevere l’accredito una volta consolidata la classifica."
@@ -1689,9 +1690,9 @@ bonus:
         text1: "Se sei sicuro che l’IBAN"
         text2: "identifichi il conto su cui vuoi ricevere gli accrediti, puoi proseguire."
       koNotOwned:
-        title: "Il conto corrente non risulta intestato a te"
-        text1: "L’IBAN che hai inserito"
-        text2: "identifica un conto corrente che non risulta intestato al tuo codice fiscale: sei sicuro di voler usare questo IBAN?"
+        title: "Controlla l'IBAN inserito"
+        text1: "L’IBAN"
+        text2: "non risulta intestato a"
       loading:
         "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
     details:

@@ -32,6 +32,7 @@ const loadLocales = () => ({
  * This screen warns the user that the provided iban cannot be verified.
  * This is just a warning, the user can continue and the iban has been registered on the bpd remote system.
  * @constructor
+ * @deprecated not used anymore, still here just in case of change of mind
  */
 const IbanKoCannotVerify: React.FunctionComponent<Props> = props => {
   const { headerTitle, continueStr, edit, title, text1, text2 } = loadLocales();

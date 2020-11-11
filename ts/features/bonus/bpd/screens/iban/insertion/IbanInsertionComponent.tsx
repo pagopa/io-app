@@ -15,6 +15,7 @@ type Props = {
   onBack: () => void;
   onIbanConfirm: (iban: Iban) => void;
   onContinue: () => void;
+  startIban?: string;
 };
 
 // https://en.wikipedia.org/wiki/International_Bank_Account_Number
@@ -31,7 +32,7 @@ const loadLocales = () => ({
 });
 
 export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
-  const [iban, setIban] = useState("");
+  const [iban, setIban] = useState(props.startIban ?? "");
   const isInvalidIban = iban.length > 0 && Iban.decode(iban).isLeft();
   const userCanContinue = !isInvalidIban && iban.length > 0;
   const {
