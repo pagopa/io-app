@@ -188,8 +188,9 @@ const replacePlaceholders = (text: string, doc: any): string => {
 };
 
 /**
- * pass through the whole locals object and replace with the relative value the placeholders.
- * a placeholder can be added using the syntax ${obj.fieldOne.value}
+ * Pass through the whole locals object and replace all placeholders with their relative value.
+ * A placeholder can be added using the syntax ${obj.fieldOne.value}
+ * A placeholder CANNOT refer to a value containing another placeholder.
  */
 const withPlaceholders = (locales: ReadonlyArray<LocaleDocWithKeys>) =>
   locales.map(l => {
