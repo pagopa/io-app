@@ -68,6 +68,8 @@ global:
     add: Add
     edit: "Edit"
     info: "Info"
+    activate: "Activate"
+    deactivate: "Deactivate"
   navigator:
     messages: messages
     wallet: wallet
@@ -1697,9 +1699,20 @@ bonus:
         noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
         noActiveMethod: "You must have activated at least one payment method to collect transactions"
         activateOnOthersChannel:
-          text1: "Activate on "
+          text1: "Activate on"
           text2: "other channels"
-        notActivable: "Not activatable or incompatible"
+          title: "Method not compatible"
+          body: "The payment method is not compatible [MISSING TEXT]"
+        notActivable:
+          header: "Not activatable or incompatible"
+          title: "Method not activatable"
+          body: "Someone else has already activated cashback on this payment method at this time: [MISSING TEXT]"
+        activate:
+          title: "Method activation"
+          body: "Are you sure you want to enable cashback on this payment method? [MISSING TEXT]"
+        deactivate:
+          title: "Method deactivation"
+          body: "Are you sure you want to disable cashback on this payment method? [MISSING TEXT]"
       card:
         status:
           active: Active
