@@ -1,4 +1,3 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -29,11 +28,8 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const IbanKoBody: React.FunctionComponent<Props> = props => {
-  const iban: string = fromNullable(props.candidateIban.value).fold(
-    "",
-    iban => iban as string
-  );
-  const style = fromNullable(props.isFlex).getOrElse(true) ? IOStyles.flex : {};
+  const iban: string = props.candidateIban.value ?? "";
+  const style = props.isFlex ?? true ? IOStyles.flex : {};
 
   return (
     <View style={style}>

@@ -60,7 +60,7 @@ const enabledReducer = (
 };
 
 /**
- * Keep the stat of "unsubscribe" from bpd outcome
+ * Keep the state of "unsubscribe" from bpd outcome
  * @param state
  * @param action
  */
@@ -128,7 +128,7 @@ export const bpdUnsubscriptionSelector = createSelector(
  */
 export const bpdIbanPrefillSelector = createSelector(
   [bpdIbanSelector, bpdUpsertIbanSelector],
-  (iban, upsertIban): string | undefined =>
+  (iban, upsertIban): string  =>
     fromNullable(upsertIban.value as string).getOrElse(
       fromNullable(getValue(iban)).getOrElse("")
     )
