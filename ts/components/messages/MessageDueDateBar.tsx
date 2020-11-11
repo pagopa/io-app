@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const PaidMessage: React.FunctionComponent<{
+// Every possible state of the payment has it's component
+const PaidTextContent: React.FunctionComponent<{
   onPress: () => void;
 }> = ({ onPress }) => (
   <>
@@ -81,7 +82,7 @@ const PaidMessage: React.FunctionComponent<{
   </>
 );
 
-const ExpiringMessage: React.FunctionComponent<{
+const ExpiringTextContent: React.FunctionComponent<{
   time: string;
   date: string;
 }> = ({ time, date }) => (
@@ -93,7 +94,7 @@ const ExpiringMessage: React.FunctionComponent<{
   </>
 );
 
-const ExpiredExpirableMessage: React.FunctionComponent<{
+const ExpiredAndExpirableTextContent: React.FunctionComponent<{
   time: string;
   date: string;
 }> = ({ time, date }) => (
@@ -105,7 +106,7 @@ const ExpiredExpirableMessage: React.FunctionComponent<{
   </>
 );
 
-const ValidMessage: React.FunctionComponent<{
+const ValidTextContent: React.FunctionComponent<{
   time: string;
   date: string;
 }> = ({ time, date }) => (
@@ -119,7 +120,7 @@ const ValidMessage: React.FunctionComponent<{
   </>
 );
 
-const ExpiredNotExpirableMessage: React.FunctionComponent = () => (
+const ExpiredNotExpirableTextContent: React.FunctionComponent = () => (
   <>{I18n.t("messages.cta.payment.expiredAlert.unexpirable.block")}</>
 );
 
@@ -131,15 +132,15 @@ const TextContent: React.FunctionComponent<{
   const time = format(dueDate, "HH.mm");
   const date = formatDateAsLocal(dueDate, true, true);
   return status === "paid" ? (
-    <PaidMessage onPress={onPaidPress} />
+    <PaidTextContent onPress={onPaidPress} />
   ) : status === "expiring" ? (
-    <ExpiringMessage time={time} date={date} />
+    <ExpiringTextContent time={time} date={date} />
   ) : status === "expiredAndExpirable" ? (
-    <ExpiredExpirableMessage time={time} date={date} />
+    <ExpiredAndExpirableTextContent time={time} date={date} />
   ) : status === "expiredNotExpirable" ? (
-    <ExpiredNotExpirableMessage />
+    <ExpiredNotExpirableTextContent />
   ) : status === "valid" ? (
-    <ValidMessage time={time} date={date} />
+    <ValidTextContent time={time} date={date} />
   ) : (
     assertNever(status)
   );
@@ -184,107 +185,91 @@ const CalendarIcon: React.FunctionComponent<{
   );
 };
 
+const bannerStyle = (status: PaymentStatus): ViewStyle =>
+  status === "paid"
+    ? { backgroundColor: customVariables.brandGray }
+    : status === "expiredAndExpirable"
+    ? { backgroundColor: customVariables.brandDarkGray }
+    : status === "expiredNotExpirable"
+    ? { backgroundColor: customVariables.calendarExpirableColor }
+    : status === "expiring"
+    ? { backgroundColor: customVariables.calendarExpirableColor }
+    : status === "valid"
+    ? { backgroundColor: customVariables.brandGray }
+    : assertNever(status);
+
+const isPaymentExpirable = (message: CreatedMessageWithContent): boolean =>
+  paymentExpirationInfo(message).fold(false, isExpirable);
+
+const isPaymentExpired = (message: CreatedMessageWithContent): boolean =>
+  paymentExpirationInfo(message).fold(false, isExpired);
+
+const isPaymentExpiring = (message: CreatedMessageWithContent): boolean =>
+  paymentExpirationInfo(message).fold(false, isExpiring);
+
+const paid = (payment: PaidReason | undefined): boolean =>
+  payment !== undefined;
+
+const calculatePaymentStatus = (
+  payment: PaidReason | undefined,
+  message: CreatedMessageWithContent
+): PaymentStatus =>
+  isPaymentExpired(message) && isPaymentExpirable(message)
+    ? "expiredAndExpirable"
+    : isPaymentExpired(message) && !isPaymentExpirable(message)
+    ? "expiredNotExpirable"
+    : isPaymentExpiring(message)
+    ? "expiring"
+    : paid(payment)
+    ? "paid"
+    : "valid";
+
 /**
  * A component to show detailed info about the due date of a message
  */
-class MessageDueDateBar extends React.PureComponent<Props> {
-  get paymentExpirationInfo() {
-    return paymentExpirationInfo(this.props.message);
-  }
-
-  get paid(): boolean {
-    return this.props.payment !== undefined;
-  }
-
-  get isPaymentExpirable(): boolean {
-    return this.paymentExpirationInfo.fold(false, isExpirable);
-  }
-
-  get isPaymentExpired(): boolean {
-    return this.paymentExpirationInfo.fold(false, isExpired);
-  }
-
-  get isPaymentExpiring(): boolean {
-    return this.paymentExpirationInfo.fold(false, isExpiring);
-  }
-
-  get paymentStatus(): PaymentStatus {
-    return this.isPaymentExpired && this.isPaymentExpirable
-      ? "expiredAndExpirable"
-      : this.isPaymentExpired && !this.isPaymentExpirable
-      ? "expiredNotExpirable"
-      : this.isPaymentExpiring
-      ? "expiring"
-      : this.paid
-      ? "paid"
-      : "valid";
-  }
-
-  get maybeDueDate(): Option<Date> {
-    return fromNullable(this.props.message.content.due_date);
-  }
-
-  get bannerStyle(): ViewStyle {
-    const status = this.paymentStatus;
-
-    return status === "paid"
-      ? { backgroundColor: customVariables.brandGray }
-      : status === "expiredAndExpirable"
-      ? { backgroundColor: customVariables.brandDarkGray }
-      : status === "expiredNotExpirable"
-      ? { backgroundColor: customVariables.calendarExpirableColor }
-      : status === "expiring"
-      ? { backgroundColor: customVariables.calendarExpirableColor }
-      : status === "valid"
-      ? { backgroundColor: customVariables.brandGray }
-      : assertNever(status);
-  }
-
+const MessageDueDateBar: React.FunctionComponent<Props> = ({
+  onGoToWallet,
+  message,
+  payment
+}) => {
   /**
    * Display description on message deadlines
    */
-  public render() {
-    const {
-      maybeDueDate,
-      paymentStatus,
-      props: { onGoToWallet },
-      bannerStyle
-    } = this;
 
-    return maybeDueDate.fold(null, dueDate => (
-      <>
-        <View
-          style={[
-            styles.container,
-            bannerStyle,
-            paymentStatus === "paid" ? styles.center : undefined
-          ]}
-        >
-          <>
-            <CalendarIcon status={paymentStatus} dueDate={dueDate} />
-            <View hspacer={true} small={true} />
+  const paymentStatus = calculatePaymentStatus(payment, message);
+  return fromNullable(message.content.due_date).fold(null, dueDate => (
+    <>
+      <View
+        style={[
+          styles.container,
+          bannerStyle(paymentStatus),
+          paymentStatus === "paid" ? styles.center : undefined
+        ]}
+      >
+        <>
+          <CalendarIcon status={paymentStatus} dueDate={dueDate} />
+          <View hspacer={true} small={true} />
 
-            <Text
-              style={styles.text}
-              white={
-                paymentStatus === "expiring" ||
-                paymentStatus === "expiredAndExpirable" ||
-                paymentStatus === "expiredNotExpirable"
-              }
-            >
-              <TextContent
-                status={paymentStatus}
-                dueDate={dueDate}
-                onPaidPress={onGoToWallet}
-              />
-            </Text>
-          </>
-        </View>
-        <View spacer={true} large={true} />
-      </>
-    ));
-  }
-}
+          <Text
+            style={styles.text}
+            white={
+              paymentStatus === "expiring" ||
+              paymentStatus === "expiredAndExpirable" ||
+              paymentStatus === "expiredNotExpirable"
+            }
+          >
+            <TextContent
+              status={paymentStatus}
+              dueDate={dueDate}
+              onPaidPress={onGoToWallet}
+            />
+          </Text>
+        </>
+      </View>
+      <View spacer={true} large={true} />
+    </>
+  ));
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onGoToWallet: () => dispatch(navigateToWalletHome())
