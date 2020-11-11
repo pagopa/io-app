@@ -59,7 +59,6 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
       isLoading={loading}
       loadingCaption={I18n.t("bonus.bpd.unsubscribe.loading")}
       loadingOpacity={0.95}
-      onCancel={undefined}
     >
       <DarkLayout
         bounces={false}
