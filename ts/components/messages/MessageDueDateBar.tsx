@@ -4,7 +4,6 @@ import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { connect } from "react-redux";
-import reactotron from "reactotron-react-native";
 import { Dispatch } from "redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -26,6 +25,12 @@ import {
 } from "../../utils/messages";
 import CalendarIconComponent from "./CalendarIconComponent";
 
+const assertNever = (value: never): never => {
+  throw new Error(
+    `Unhandled case in switch. Value should be never, received this instead: ${value}`
+  );
+};
+
 type OwnProps = {
   message: CreatedMessageWithContent;
   service?: ServicePublic;
@@ -33,6 +38,13 @@ type OwnProps = {
 };
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+
+type PaymentStatus =
+  | "paid"
+  | "expiring"
+  | "expiredNotExpirable"
+  | "expiredAndExpirable"
+  | "valid";
 
 const CALENDAR_ICON_HEIGHT = 40;
 
@@ -57,15 +69,6 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
-/*
-
-const stringToOptionString = fromPredicate(s => s.length)
-stringToOptionString("") // none
-stringToOptionString("ciao") // some ciao
-
-fromPredicate(s => s.length)(input).fold()
-
-*/
 
 const PaidMessage: React.FunctionComponent<{
   onPress: () => void;
@@ -120,35 +123,66 @@ const ExpiredNotExpirableMessage: React.FunctionComponent = () => (
   <>{I18n.t("messages.cta.payment.expiredAlert.unexpirable.block")}</>
 );
 
-const nullNever = (_: never): null => null;
-type TextContentStatus =
-  | "paid"
-  | "expiring"
-  | "expiredNotExpirable"
-  | "expiredAndExpirable"
-  | "valid";
 const TextContent: React.FunctionComponent<{
-  status: TextContentStatus;
-  maybeDueDate: Option<Date>;
+  status: PaymentStatus;
+  dueDate: Date;
   onPaidPress: () => void;
-}> = ({ status, maybeDueDate, onPaidPress }) =>
-  maybeDueDate.fold(null, dueDate => {
-    const time = format(dueDate, "HH.mm");
-    const date = formatDateAsLocal(dueDate, true, true);
-    return status === "paid" ? (
-      <PaidMessage onPress={onPaidPress} />
-    ) : status === "expiring" ? (
-      <ExpiringMessage time={time} date={date} />
-    ) : status === "expiredAndExpirable" ? (
-      <ExpiredExpirableMessage time={time} date={date} />
-    ) : status === "expiredNotExpirable" ? (
-      <ExpiredNotExpirableMessage />
-    ) : status === "valid" ? (
-      <ValidMessage time={time} date={date} />
-    ) : (
-      nullNever(status)
-    );
-  });
+}> = ({ status, dueDate, onPaidPress }) => {
+  const time = format(dueDate, "HH.mm");
+  const date = formatDateAsLocal(dueDate, true, true);
+  return status === "paid" ? (
+    <PaidMessage onPress={onPaidPress} />
+  ) : status === "expiring" ? (
+    <ExpiringMessage time={time} date={date} />
+  ) : status === "expiredAndExpirable" ? (
+    <ExpiredExpirableMessage time={time} date={date} />
+  ) : status === "expiredNotExpirable" ? (
+    <ExpiredNotExpirableMessage />
+  ) : status === "valid" ? (
+    <ValidMessage time={time} date={date} />
+  ) : (
+    assertNever(status)
+  );
+};
+
+// The calendar icon is shown if:
+// - the payment related to the message is not yet paid
+// - the message has a due date
+const CalendarIcon: React.FunctionComponent<{
+  status: PaymentStatus;
+  dueDate: Date;
+}> = ({ status, dueDate }) => {
+  const iconBackgoundColor =
+    status === "paid"
+      ? customVariables.lighterGray
+      : status === "expiring" ||
+        status === "expiredAndExpirable" ||
+        status === "expiredNotExpirable"
+      ? customVariables.colorWhite
+      : status === "valid"
+      ? customVariables.brandDarkGray
+      : assertNever(status);
+
+  const textColor =
+    status === "paid"
+      ? customVariables.colorWhite
+      : status === "expiring" || status === "expiredNotExpirable"
+      ? customVariables.calendarExpirableColor
+      : status === "expiredAndExpirable"
+      ? customVariables.brandDarkGray
+      : status === "valid"
+      ? customVariables.colorWhite
+      : assertNever(status);
+
+  return (
+    <CalendarIconComponent
+      month={capitalize(formatDateAsMonth(dueDate))}
+      day={formatDateAsDay(dueDate)}
+      backgroundColor={iconBackgoundColor}
+      textColor={textColor}
+    />
+  );
+};
 
 /**
  * A component to show detailed info about the due date of a message
@@ -174,22 +208,7 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     return this.paymentExpirationInfo.fold(false, isExpiring);
   }
 
-  get statusLabel(): TextContentStatus {
-    reactotron.log(this.isPaymentExpired);
-    reactotron.log(this.isPaymentExpirable);
-    reactotron.log(this.isPaymentExpiring);
-    reactotron.log(this.paid);
-    reactotron.log(
-      this.isPaymentExpired && this.isPaymentExpirable
-        ? "expiredAndExpirable"
-        : this.isPaymentExpired && !this.isPaymentExpirable
-        ? "expiredNotExpirable"
-        : this.isPaymentExpiring
-        ? "expiring"
-        : this.paid
-        ? "paid"
-        : "valid"
-    );
+  get paymentStatus(): PaymentStatus {
     return this.isPaymentExpired && this.isPaymentExpirable
       ? "expiredAndExpirable"
       : this.isPaymentExpired && !this.isPaymentExpirable
@@ -201,99 +220,69 @@ class MessageDueDateBar extends React.PureComponent<Props> {
       : "valid";
   }
 
-  get dueDate(): Option<Date> {
+  get maybeDueDate(): Option<Date> {
     return fromNullable(this.props.message.content.due_date);
   }
 
   get bannerStyle(): ViewStyle {
-    if (this.paid) {
-      return { backgroundColor: customVariables.brandGray };
-    }
+    const status = this.paymentStatus;
 
-    if (this.isPaymentExpired) {
-      return {
-        backgroundColor: this.isPaymentExpirable
-          ? customVariables.brandDarkGray
-          : customVariables.calendarExpirableColor
-      };
-    }
-
-    if (this.isPaymentExpiring) {
-      return { backgroundColor: customVariables.calendarExpirableColor };
-    }
-    return { backgroundColor: customVariables.brandGray };
+    return status === "paid"
+      ? { backgroundColor: customVariables.brandGray }
+      : status === "expiredAndExpirable"
+      ? { backgroundColor: customVariables.brandDarkGray }
+      : status === "expiredNotExpirable"
+      ? { backgroundColor: customVariables.calendarExpirableColor }
+      : status === "expiring"
+      ? { backgroundColor: customVariables.calendarExpirableColor }
+      : status === "valid"
+      ? { backgroundColor: customVariables.brandGray }
+      : assertNever(status);
   }
-
-  // The calendar icon is shown if:
-  // - the payment related to the message is not yet paid
-  // - the message has a due date
-  private renderCalendarIcon = () => {
-    const { dueDate: maybeDueDate } = this;
-    return maybeDueDate.fold(null, dd => {
-      const iconBackgoundColor = this.paid
-        ? customVariables.lighterGray
-        : this.isPaymentExpiring || this.isPaymentExpired
-        ? customVariables.colorWhite
-        : customVariables.brandDarkGray;
-
-      const textColor = this.paid
-        ? customVariables.colorWhite
-        : this.isPaymentExpiring || !this.isPaymentExpirable
-        ? customVariables.calendarExpirableColor
-        : this.isPaymentExpired && this.isPaymentExpirable
-        ? customVariables.brandDarkGray
-        : customVariables.colorWhite;
-
-      return (
-        <CalendarIconComponent
-          month={capitalize(formatDateAsMonth(dd))}
-          day={formatDateAsDay(dd)}
-          backgroundColor={iconBackgoundColor}
-          textColor={textColor}
-        />
-      );
-    });
-  };
 
   /**
    * Display description on message deadlines
    */
   public render() {
-    const { dueDate, paid } = this;
+    const {
+      maybeDueDate,
+      paymentStatus,
+      props: { onGoToWallet },
+      bannerStyle
+    } = this;
 
-    if (dueDate.isNone()) {
-      return null;
-    }
-    return (
-      <React.Fragment>
+    return maybeDueDate.fold(null, dueDate => (
+      <>
         <View
           style={[
             styles.container,
-            this.bannerStyle,
-            paid ? styles.center : undefined
+            bannerStyle,
+            paymentStatus === "paid" ? styles.center : undefined
           ]}
         >
-          <React.Fragment>
-            {this.renderCalendarIcon()}
+          <>
+            <CalendarIcon status={paymentStatus} dueDate={dueDate} />
             <View hspacer={true} small={true} />
 
             <Text
               style={styles.text}
               white={
-                !this.paid && (this.isPaymentExpiring || this.isPaymentExpired)
+                paymentStatus === "expiring" ||
+                paymentStatus === "expiredAndExpirable" ||
+                paymentStatus === "expiredNotExpirable"
               }
             >
               <TextContent
-                status={this.statusLabel}
-                maybeDueDate={dueDate}
-                onPaidPress={this.props.onGoToWallet}
+                status={paymentStatus}
+                dueDate={dueDate}
+                onPaidPress={onGoToWallet}
               />
             </Text>
-          </React.Fragment>
+          </>
         </View>
         <View spacer={true} large={true} />
-      </React.Fragment>
-    );
+      </>
+    ));
   }
 }
 
