@@ -150,25 +150,32 @@ function reportBadLocale(locale: LocaleDocWithCheckedKeys): void {
 const replacePlaceholders = (text: string, doc: any): string => {
   const matches = text.match(/\${.*?\}/g);
   if (matches) {
+    // check if there are any placeholders
     const placeholders: any = matches
       .map(x => x.replace(/[${}]/g, ""))
       .reduce((a, c) => {
+        // for a placeholder take the relative value held by the doc
         const valueWithPlaceholder = _.at(doc, [c])[0];
         const hook = `$\{${c}}`;
+        // the value cannot find
         if (valueWithPlaceholder === undefined) {
           throw Error(
             chalk.red(`Error: cannot find placeholder with key ${hook}`)
           );
         }
+        // the value is not a string
         if (_.isObject(valueWithPlaceholder)) {
           throw Error(
             chalk.red(`Error: ${hook} in not a leaf. It must be a string value`)
           );
         }
+        // the placeholder value is the same where the placeholder is
         if (valueWithPlaceholder.indexOf(`$\{${c}}`) >= 0) {
           throw Error(chalk.red(`Error: recursion reference detected ${hook}`));
         }
-
+        // build a mapping object where the key is the placeholder name
+        // and the value is the placeholder value
+        // ex {"obj.fieldOne.value" : "value"}
         return { ...a, [c]: valueWithPlaceholder };
       }, {});
 
@@ -181,21 +188,21 @@ const replacePlaceholders = (text: string, doc: any): string => {
 };
 
 /**
- * check if a string value contains a placeholder ${obj.field.value}
- * if yes it will be replaced with the relative entry contained in the object tree
+ * pass through the whole locals object and replace with the relative value the placeholders.
+ * a placeholder can be added using the syntax ${obj.fieldOne.value}
  */
 const withPlaceholders = (locales: ReadonlyArray<LocaleDocWithKeys>) =>
   locales.map(l => {
-    const readObject = (obj: any): any =>
+    const replacedDoc = (obj: any): any =>
       Object.keys(obj).reduce((agg: any, curr) => {
         if (_.isObject(obj[curr])) {
-          return { ...agg, [curr]: readObject(obj[curr]) };
+          return { ...agg, [curr]: replacedDoc(obj[curr]) };
         }
         const value: string = obj[curr];
         const replacedValue = replacePlaceholders(value, l.doc);
         return { ...agg, [curr]: replacedValue };
       }, {});
-    return { ...l, doc: readObject(l.doc) };
+    return { ...l, doc: replacedDoc(l.doc) };
   });
 
 async function emitTsDefinitions(
