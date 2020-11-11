@@ -22,6 +22,7 @@ import { BpdTransaction } from "../../actions/transactions";
 import { bpdEnabledSelector } from "./activation";
 import { bpdAllAmountSelector } from "./amounts";
 import { bpdPeriodsSelector } from "./periods";
+import { bpdSelectedPeriodSelector } from "./selectedPeriod";
 import { bpdTransactionsForSelectedPeriod } from "./transactions";
 
 /**
@@ -171,6 +172,9 @@ const getTitleFromBancomat = (
     .map(abi => abi.name)
     .getOrElse(I18n.t("wallet.methods.bancomat.name"));
 
+const getId = (transaction: BpdTransaction) =>
+  `${transaction.awardPeriodId}${transaction.trxDate}${transaction.hashPan}${transaction.idTrxAcquirer}${transaction.idTrxIssuer}${transaction.amount}`;
+
 /**
  * Enhance a {@link BpdTransaction} with an image and a title, using the wallet and the abilist
  */
@@ -179,10 +183,16 @@ export const bpdDisplayTransactionsSelector = createSelector<
   pot.Pot<ReadonlyArray<BpdTransaction>, Error>,
   pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>,
   ReadonlyArray<Abi>,
+  BpdPeriod | undefined,
   pot.Pot<ReadonlyArray<EnhancedBpdTransaction>, Error>
 >(
-  [bpdTransactionsForSelectedPeriod, walletV2Selector, abiListSelector],
-  (potTransactions, wallet, abiList) =>
+  [
+    bpdTransactionsForSelectedPeriod,
+    walletV2Selector,
+    abiListSelector,
+    bpdSelectedPeriodSelector
+  ],
+  (potTransactions, wallet, abiList, period) =>
     pot.map(potTransactions, transactions =>
       transactions.map(
         t =>
@@ -193,7 +203,9 @@ export const bpdDisplayTransactionsSelector = createSelector<
               .getOrElse(cardIcons.UNKNOWN),
             title: pickWalletFromHashpan(t.hashPan, wallet)
               .map(w2 => getTitleFromWallet(w2, abiList))
-              .getOrElse(FOUR_UNICODE_CIRCLES)
+              .getOrElse(FOUR_UNICODE_CIRCLES),
+            keyId: getId(t),
+            maxCashbackForTransactionAmount: period?.maxTransactionCashback
           } as EnhancedBpdTransaction)
       )
     )

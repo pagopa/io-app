@@ -15,6 +15,7 @@ export const IOStyles = {
     paddingRight: themeVariables.contentPadding
   },
   row: {
+    flex: 1,
     flexDirection: "row"
   }
 };
