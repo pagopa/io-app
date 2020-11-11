@@ -4,7 +4,6 @@
 
 import { Option } from "fp-ts/lib/Option";
 import { Omit } from "italia-ts-commons/lib/types";
-import { NavigationActions } from "react-navigation";
 import {
   ActionType,
   createAction,
@@ -12,7 +11,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import ROUTES from "../../navigation/routes";
 
 export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();
 
