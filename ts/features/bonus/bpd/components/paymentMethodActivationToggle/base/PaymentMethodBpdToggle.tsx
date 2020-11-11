@@ -159,7 +159,10 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
     const bottomSheetProps = bottomSheetRawConfig(
       <BpdChangeActivationConfirmationScreen
         onCancel={dismiss}
-        onConfirm={dismiss}
+        onConfirm={() => {
+          dismiss();
+          props.updateValue(props.hPan, newVal);
+        }}
         type={newVal ? "Activation" : "Deactivation"}
         representation={{ caption: props.caption, icon: props.icon }}
       />,

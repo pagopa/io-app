@@ -33,6 +33,11 @@ const getText = (confirmationType: ConfirmationType) => ({
       : I18n.t("bonus.bpd.details.paymentMethods.deactivate.body")
 });
 
+/**
+ * Confirmation bottom sheet that informs the user about the consequences about the activation / deactivation
+ * @param props
+ * @constructor
+ */
 export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Props> = props => {
   const { cta, body } = getText(props.type);
 
