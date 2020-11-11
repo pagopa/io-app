@@ -38,7 +38,7 @@ export const errorButtonProps = (
   title?: string
 ): BlockButtonProps => ({
   alert: true,
-  title: title ? title : I18n.t("global.buttons.confirm"),
+  title: title ?? I18n.t("global.buttons.confirm"),
   onPress
 });
 
