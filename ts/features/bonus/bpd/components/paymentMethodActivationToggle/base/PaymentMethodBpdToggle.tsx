@@ -186,9 +186,7 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
         />
         <BpdToggle
           graphicalValue={graphicalState}
-          // TODO: ask for user confirm when disable the bpd on payment method
           onValueChanged={openModalBox}
-          // onValueChanged={b => props.updateValue(props.hPan, b)}
           // TODO: when onPress -> show bottomsheet explaining why the bpd cannot be activated
         />
       </View>
