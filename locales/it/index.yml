@@ -1706,6 +1706,12 @@ bonus:
         goToButton: "Dettaglio transazioni"
         detail:
           summary:
+            bottomSheet:
+              title: Quando troverai le transazioni?
+              body: "Le transazioni vengono registrate il giorno dopo che i circuiti bancari le hanno contabilizzate. 
+                Questo significa che normalmente possono passare fino a 72 ore prima che tu veda la tua transazione registrata su IO, anche se di solito il processo è più rapido. 
+                Potrebbe volerci un po’ di più nel caso in cui l’acquisto sia a ridosso del weekend o di qualche festività, oppure in qualche altra condizione particolare.
+                Non ti preoccupare: tutte le transazioni valide fatte durante il periodo del cashback verranno registrate e considerate per rimborsi e classifica!"
             lastUpdated: "Ultimo aggiornamento "
             link: "Manca qualcosa?"
             body:
