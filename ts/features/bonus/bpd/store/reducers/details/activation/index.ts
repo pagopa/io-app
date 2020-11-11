@@ -57,7 +57,7 @@ const enabledReducer = (
 };
 
 /**
- * Keep the stat of "unsubscribe" from bpd outcome
+ * Keep the state of "unsubscribe" from bpd outcome
  * @param state
  * @param action
  */
