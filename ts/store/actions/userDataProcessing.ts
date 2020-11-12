@@ -29,6 +29,19 @@ export const upsertUserDataProcessing = createAsyncAction(
   { choice: UserDataProcessingChoiceEnum; error: Error }
 >();
 
+export const deleteUserDataProcessing = createAsyncAction(
+  "DELETE_USER_DATA_PROCESSING_REQUEST",
+  "DELETE_USER_DATA_PROCESSING_SUCCESS",
+  "DELETE_USER_DATA_PROCESSING_FAILURE"
+)<
+  UserDataProcessingChoiceEnum,
+  {
+    choice: UserDataProcessingChoiceEnum;
+    value?: UserDataProcessing;
+  },
+  { choice: UserDataProcessingChoiceEnum; error: Error }
+>();
+
 export const resetUserDataProcessingRequest = createStandardAction(
   "RESET_USER_DATA_PROCESSING_REQUEST"
 )<UserDataProcessingChoiceEnum>();
@@ -36,4 +49,5 @@ export const resetUserDataProcessingRequest = createStandardAction(
 export type UserDataProcessingActions =
   | ActionType<typeof loadUserDataProcessing>
   | ActionType<typeof upsertUserDataProcessing>
+  | ActionType<typeof deleteUserDataProcessing>
   | ActionType<typeof resetUserDataProcessingRequest>;
