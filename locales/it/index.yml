@@ -1699,6 +1699,13 @@ bonus:
       loading:
         "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
     details:
+      howItWorks:
+        title: "Come funziona il Cashback?"
+        body: "1. Il programma Cashback si divide in periodi di durata variabile: il **periodo corrente** inizia il {{startDate}} e finisce il {{endDate}}. **Accumula transazioni** valide durante tutta la durata di ciascun periodo con i **metodi di pagamento che hai attivato**.\n
+
+               2. In questo periodo, se raggiungi le **{{minTransactionNumber}} transazioni**, riceverai un rimborso pari al {{cashbackPercentage}}% fino ad un rimborso massimo di **{{maxTransactionCashback}} euro** a transazione ed un massimo di **{{maxPeriodCashback}} euro** in tutto il periodo.\n
+
+               3. Al termine del periodo, ricevi il rimborso accumulato sull’IBAN da te indicato.\n\n‎"
       components:
         iban:
           title: "IBAN per l’accredito"

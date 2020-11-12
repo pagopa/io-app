@@ -1667,7 +1667,14 @@ bonus:
       loading:
         "We are verifying your IBAN\n\nPlease wait."
     details:
-      components:
+      howItWorks:
+        title: "How does Cashback work?"
+        body: "1. The Cashback program is divided into periods of variable duration: the **current period** begins on {{startDate}} and ends on {{endDate}}. **Accumulates transactions** valid for the entire duration of each period with the **payment methods you have activated**.\n
+
+               2. During this period, if you reach **{{minTransactionNumber}} transactions**, you will receive a refund equal to {{cashbackPercentage}}% up to a maximum refund of **{{maxTransactionCashback}} euro** per transaction and a maximum of **{{maxPeriodCashback}} euros** in the whole period.\n
+
+               3. At the end of the period, receive the accumulated refund on the IBAN indicated by you.\n\n‎"
+  components:
         iban:
           title: "IBAN for accreditation"
           noIbanBody: "Set your IBAN in order to receive the accumulated cashback"

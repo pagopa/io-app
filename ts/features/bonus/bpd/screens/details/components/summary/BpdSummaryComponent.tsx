@@ -28,6 +28,7 @@ const Content = (sd: SummaryData) => (
       <TransactionsGraphicalSummary
         transactions={sd.amount.transactionNumber}
         minTransactions={sd.period.minTransactionNumber}
+        period={sd.period}
       />
     )}
     <View spacer={true} />
