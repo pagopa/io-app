@@ -40,8 +40,10 @@ const BaseDailyTransactionHeader: React.FunctionComponent<Props> = (
           {` ${I18n.t(
             "bonus.bpd.details.components.transactionsCountOverview.label",
             {
-              defaultValue:
+              defaultValue: I18n.t(
                 "bonus.bpd.details.components.transactionsCountOverview.label.other",
+                { count: props.transactionsNumber }
+              ),
               count: props.transactionsNumber
             }
           )}`}
