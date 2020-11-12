@@ -630,6 +630,12 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Wallet
+  creditCard:
+    onboardingAttempts:
+      title: Attempts to onboard payment method
+      emptyTitle: No attempts to onboard payment method
+      emptyBody: IO did not log attempts to add a payment method. Here you will find the most recent attempts
+      lastAttemptsTitle: Last attempts
   searchAbi:
     title: Add Bancomat card
     description:
@@ -693,7 +699,7 @@ wallet:
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
   transactionHelpMessage:
-    text1: If you have had problems during a payment,
+    text1: If you have had problems during a payment or onboarding a payment instrument,
     text2: consult the help
     text3: at the top right of this page
   transactionsLoadMore: Load previous
@@ -1408,7 +1414,7 @@ faq:
     title: "How to delete all my personal data associated to IO?"
     content: !include faq/faq56.md
   57:
-    title: "Did you have problems during a payment?"
+    title: "Did you have problems during a payment or onboarding a payment instrument?"
     content: !include faq/faq57.md
   58:
     title: "How do I claim the Bonus Vacanze?"

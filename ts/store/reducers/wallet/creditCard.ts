@@ -2,6 +2,7 @@ import { getType } from "typesafe-actions";
 import sha from "sha.js";
 import { fromNullable } from "fp-ts/lib/Option";
 import { index, take, takeEnd } from "fp-ts/lib/Array";
+import { createSelector } from "reselect";
 import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
@@ -15,8 +16,9 @@ import {
 import { Action } from "../../actions/types";
 import { TransactionResponse } from "../../../types/pagopa";
 import { clearCache } from "../../actions/profile";
+import { GlobalState } from "../types";
 
-type CreditCardInsertion = {
+export type CreditCardInsertion = {
   startDate: Date;
   hashedPan: string; // hashed PAN
   blurredPan: string; // anonymized PAN
@@ -156,3 +158,11 @@ const reducer = (
 };
 
 export default reducer;
+
+const creditCardAttemptions = (state: GlobalState) =>
+  state.payments.creditCardInsertion;
+
+export const creditCardAttemptionsSelector = createSelector(
+  creditCardAttemptions,
+  (ca: CreditCardInsertionState): CreditCardInsertionState => ca
+);

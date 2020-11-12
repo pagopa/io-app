@@ -651,6 +651,12 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Portafoglio
+  creditCard:
+    onboardingAttempts:
+      title: Tentativi aggiunta metodo di pagamento
+      emptyTitle: Nessun tentitivo di aggiunta di un metodo di pagamento
+      emptyBody: IO non ha memorizzato tentativi di aggiunta di un metodo di pagamento. Qui troverai i tentativi più recenti
+      lastAttemptsTitle: Ultimi tentativi
   searchAbi:
     title: Aggiungi carta Bancomat
     description:
@@ -714,7 +720,7 @@ wallet:
   transactionsLoadMessage: Carico lo storico delle transazioni...
   transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
   transactionHelpMessage:
-    text1: Se hai avuto problemi durante un pagamento,
+    text1: Se hai avuto problemi durante un pagamento o l'inserimento di uno strumento di pagamento,
     text2: consulta l'help
     text3: in alto a destra su questa pagina
   transactionsLoadMore: Carica precedenti
@@ -1440,7 +1446,7 @@ faq:
     title: "Come cancellare tutti i tuoi dati da IO?"
     content: !include faq/faq56.md
   57:
-    title: "Hai avuto problemi durante un pagamento?"
+    title: "Hai avuto problemi durante un pagamento o l'inserimento di uno strumento di pagamento?"
     content: !include faq/faq57.md
   58:
     title: "Come faccio a richiedere il bonus?"
