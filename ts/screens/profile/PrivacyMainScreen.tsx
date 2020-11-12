@@ -46,16 +46,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.main.privacy.privacyPolicy.contextualHelpContent"
 };
 
-const requestProcessingAlertTitle = {
-  DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.oldRequest"),
-  DELETE: I18n.t("profile.main.privacy.removeAccount.alert.oldRequest")
-};
-
-const requestProcessingAlertSubtitle = {
-  DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.confirmSubtitle"),
-  DELETE: I18n.t("profile.main.privacy.removeAccount.alert.oldRequestSubtitle")
-};
-
 class PrivacyMainScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -97,6 +87,17 @@ class PrivacyMainScreen extends React.Component<Props, State> {
   private handleAlreadyProcessingAlert = (
     choice: UserDataProcessingChoiceEnum
   ) => {
+    const requestProcessingAlertTitle = {
+      DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.oldRequest"),
+      DELETE: I18n.t("profile.main.privacy.removeAccount.alert.oldRequest")
+    };
+
+    const requestProcessingAlertSubtitle = {
+      DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.confirmSubtitle"),
+      DELETE: I18n.t(
+        "profile.main.privacy.removeAccount.alert.oldRequestSubtitle"
+      )
+    };
     const alertButton: Array<AlertButton> =
       choice === UserDataProcessingChoiceEnum.DOWNLOAD
         ? []
