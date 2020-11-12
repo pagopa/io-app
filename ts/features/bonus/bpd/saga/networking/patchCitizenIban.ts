@@ -1,5 +1,4 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -8,6 +7,7 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { Iban } from "../../../../../../definitions/backend/Iban";
 import { bpdUpsertIban, IbanUpsertResult } from "../../store/actions/iban";
 import { profileSelector } from "../../../../../store/reducers/profile";
+import { readablePrivacyReport } from "../../../../../utils/reporters";
 // representation of iban status
 export enum IbanStatus {
   "OK" = "OK",
@@ -90,7 +90,7 @@ export function* patchCitizenIban(
         `response status ${updatePaymentMethodResult.value.status}`
       );
     } else {
-      throw new Error(readableReport(updatePaymentMethodResult.value));
+      throw new Error(readablePrivacyReport(updatePaymentMethodResult.value));
     }
   } catch (e) {
     yield put(bpdUpsertIban.failure(e));
