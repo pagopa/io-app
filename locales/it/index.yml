@@ -1713,6 +1713,9 @@ bonus:
           closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
           closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
           inactivePeriodBody: "Potrai iniziare ad accumulare transazioni valide a partire dal {{date}}"
+          label:
+            one: "1 transazione valida"
+            other: "{{count}} transazioni valide"
       transaction:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
