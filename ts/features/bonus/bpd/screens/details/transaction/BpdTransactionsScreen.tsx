@@ -4,6 +4,7 @@ import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { compareDesc } from "date-fns";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
@@ -17,6 +18,7 @@ import {
 import { bpdAmountForSelectedPeriod } from "../../../store/reducers/details/amounts";
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
+import { format } from "../../../../../../utils/dates";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -30,31 +32,39 @@ const dataForFlatList = (
  * TODO: scroll to refresh, display error, display loading
  * @constructor
  */
-const BpdTransactionsScreen: React.FunctionComponent<Props> = props => (
-  <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.bpd.title")}>
-    <SafeAreaView style={IOStyles.flex}>
-      <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-        <View spacer={true} large={true} />
-        <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
-        <View spacer={true} />
-        {pot.isSome(props.selectedAmount) && props.selectedPeriod && (
-          <BPDTransactionSummaryComponent
-            lastUpdateDate={"13 Ottobre 2021"}
-            period={props.selectedPeriod}
-            totalAmount={props.selectedAmount.value}
-          />
-        )}
-        <FlatList
-          data={dataForFlatList(props.transactionForSelectedPeriod)}
-          renderItem={transaction => (
-            <BpdTransactionItem transaction={transaction.item} />
+const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
+  const transactions = dataForFlatList(props.transactionForSelectedPeriod);
+
+  const trxSortByDate = [...transactions].sort((trx1, trx2) =>
+    compareDesc(trx1.trxDate, trx2.trxDate)
+  );
+
+  return (
+    <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.bpd.title")}>
+      <SafeAreaView style={IOStyles.flex}>
+        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+          <View spacer={true} large={true} />
+          <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
+          <View spacer={true} />
+          {pot.isSome(props.selectedAmount) && props.selectedPeriod && (
+            <BPDTransactionSummaryComponent
+              lastUpdateDate={format(trxSortByDate[0].trxDate, "DD MMMM YYYY")}
+              period={props.selectedPeriod}
+              totalAmount={props.selectedAmount.value}
+            />
           )}
-          keyExtractor={t => t.keyId}
-        />
-      </View>
-    </SafeAreaView>
-  </BaseScreenComponent>
-);
+          <FlatList
+            data={transactions}
+            renderItem={transaction => (
+              <BpdTransactionItem transaction={transaction.item} />
+            )}
+            keyExtractor={t => t.keyId}
+          />
+        </View>
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
