@@ -21,6 +21,8 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
+  abortUserDataProcessingDefaultDecoder,
+  AbortUserDataProcessingT,
   activatePaymentDefaultDecoder,
   ActivatePaymentT,
   createOrUpdateInstallationDefaultDecoder,
@@ -276,6 +278,15 @@ export function BackendClient(
     response_decoder: upsertUserDataProcessingDefaultDecoder()
   };
 
+  const deleteUserDataProcessingT: AbortUserDataProcessingT = {
+    method: "delete",
+    url: ({ userDataProcessingChoiceParam }) =>
+      `/api/v1/user-data-processing/${userDataProcessingChoiceParam}`,
+    query: _ => ({}),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    response_decoder: abortUserDataProcessingDefaultDecoder()
+  };
+
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
     method: "put",
     url: params => `/api/v1/installations/${params.installationID}`,
@@ -385,6 +396,9 @@ export function BackendClient(
     ),
     postUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(postUserDataProcessingT, options)
+    ),
+    deleteUserDataProcessingRequest: withBearerToken(
+      createFetchRequestForApi(deleteUserDataProcessingT, options)
     )
   };
 }
