@@ -1674,7 +1674,7 @@ bonus:
                2. During this period, if you reach **{{minTransactionNumber}} transactions**, you will receive a refund equal to {{cashbackPercentage}}% up to a maximum refund of **{{maxTransactionCashback}} euro** per transaction and a maximum of **{{maxPeriodCashback}} euros** in the whole period.\n
 
                3. At the end of the period, receive the accumulated refund on the IBAN indicated by you.\n\n‎"
-  components:
+      components:
         iban:
           title: "IBAN for accreditation"
           noIbanBody: "Set your IBAN in order to receive the accumulated cashback"
