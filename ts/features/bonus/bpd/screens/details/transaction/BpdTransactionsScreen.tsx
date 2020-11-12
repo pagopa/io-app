@@ -68,10 +68,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
     compareDesc(trx1.trxDate, trx2.trxDate)
   );
 
-  const lastUpdateDate = format(
-    index(0, trxSortByDate).fold(new Date(), t => t.trxDate),
-    "DD MMMM YYYY"
-  );
+  const maybeLastUpdateDate = index(0, trxSortByDate).map(t => t.trxDate);
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.bpd.title")}>
@@ -80,14 +77,18 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
           <View spacer={true} large={true} />
           <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
           <View spacer={true} />
-          {pot.isSome(props.selectedAmount) && props.selectedPeriod && (
-            <BPDTransactionSummaryComponent
-              lastUpdateDate={lastUpdateDate}
-              period={props.selectedPeriod}
-              totalAmount={props.selectedAmount.value}
-            />
-          )}
-          <View spacer={true} />
+          {pot.isSome(props.selectedAmount) &&
+            props.selectedPeriod &&
+            maybeLastUpdateDate.isSome() && (
+              <BPDTransactionSummaryComponent
+                lastUpdateDate={format(
+                  maybeLastUpdateDate.value,
+                  "DD MMMM YYYY"
+                )}
+                period={props.selectedPeriod}
+                totalAmount={props.selectedAmount.value}
+              />
+            )}
           <SectionList
             renderSectionHeader={renderSectionHeader}
             stickySectionHeadersEnabled={true}
