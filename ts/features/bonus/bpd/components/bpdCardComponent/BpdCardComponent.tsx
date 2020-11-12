@@ -172,7 +172,9 @@ const statusClosedHandler = (props: Props): GraphicalState => {
       totalAmount.transactionNumber < period.minTransactionNumber &&
       !isInGracePeriod
         ? ["0", "00"]
-        : formatNumberAmount(props.totalAmount.totalCashback).split(","),
+        : formatNumberAmount(props.totalAmount.totalCashback).split(
+            I18n.t("global.localization.decimalSeparator")
+          ),
     isInGracePeriod,
     // TODO: Add supercashback business logic
     statusBadge: isInGracePeriod
@@ -203,7 +205,9 @@ const statusActiveHandler = (props: Props): GraphicalState => {
       label: I18n.t("bonus.bpd.details.card.status.active")
     },
     showLock: totalAmount.transactionNumber < period.minTransactionNumber,
-    amount: formatNumberAmount(props.totalAmount.totalCashback).split(",")
+    amount: formatNumberAmount(props.totalAmount.totalCashback).split(
+      I18n.t("global.localization.decimalSeparator")
+    )
   };
 };
 
@@ -216,7 +220,9 @@ const statusInactiveHandler = (props: Props): GraphicalState => ({
     label: I18n.t("bonus.bpd.details.card.status.inactive")
   },
   showLock: true,
-  amount: formatNumberAmount(props.totalAmount.totalCashback).split(",")
+  amount: formatNumberAmount(props.totalAmount.totalCashback).split(
+    I18n.t("global.localization.decimalSeparator")
+  )
 });
 
 const statusHandlersMap = new Map<
@@ -272,7 +278,9 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             <Text bold={true} white={true} style={styles.amountTextBaseFull}>
               {"€ "}
               <Text white={true} style={styles.amountTextUpperFull}>
-                {amount[0]},
+                {`${amount[0]}${I18n.t(
+                  "global.localization.decimalSeparator"
+                )}`}
               </Text>
               {amount[1]}
             </Text>
@@ -358,7 +366,9 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               >
                 {"€ "}
                 <Text white={true} style={styles.amountTextUpperPreview}>
-                  {amount[0]},
+                  {`${amount[0]}${I18n.t(
+                    "global.localization.decimalSeparator"
+                  )}`}
                 </Text>
                 {amount[1]}
               </Text>
