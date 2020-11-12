@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 const BaseDailyTransactionHeader: React.FunctionComponent<Props> = (
   props: Props
 ) => (
-  <View style={styles.whiteBg}>
+  <View style={[styles.whiteBg, { paddingHorizontal: 8 }]}>
     <H3 weight={"Bold"} color={"black"}>
       {props.date}
     </H3>
