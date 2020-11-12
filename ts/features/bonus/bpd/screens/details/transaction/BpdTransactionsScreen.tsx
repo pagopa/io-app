@@ -2,8 +2,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import {
-  FlatList,
   SafeAreaView,
+  ScrollView,
   SectionList,
   SectionListData
 } from "react-native";
@@ -26,7 +26,6 @@ import {
 import { bpdAmountForSelectedPeriod } from "../../../store/reducers/details/amounts";
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
-import customVariables from "../../../../../../theme/variables";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -74,37 +73,35 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
   return (
     <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.bpd.title")}>
       <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.flex]}>
-          <View style={IOStyles.horizontalContentPadding}>
-            <View spacer={true} large={true} />
-            <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
-            <View spacer={true} />
-            {pot.isSome(props.selectedAmount) &&
-              props.selectedPeriod &&
-              maybeLastUpdateDate.isSome() && (
-                <BPDTransactionSummaryComponent
-                  lastUpdateDate={format(
-                    maybeLastUpdateDate.value,
-                    "DD MMMM YYYY"
-                  )}
-                  period={props.selectedPeriod}
-                  totalAmount={props.selectedAmount.value}
-                />
-              )}
-            <View spacer={true} />
-          </View>
-          <View style={{ paddingHorizontal: 16 }}>
-            <SectionList
-              renderSectionHeader={renderSectionHeader}
-              stickySectionHeadersEnabled={true}
-              sections={getTransactionsByDaySections(trxSortByDate)}
-              renderItem={transaction => (
-                <BpdTransactionItem transaction={transaction.item} />
-              )}
-              keyExtractor={t => t.keyId}
-            />
-          </View>
+        <View style={IOStyles.horizontalContentPadding}>
+          <View spacer={true} large={true} />
+          <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
+          <View spacer={true} />
+          {pot.isSome(props.selectedAmount) &&
+            props.selectedPeriod &&
+            maybeLastUpdateDate.isSome() && (
+              <BPDTransactionSummaryComponent
+                lastUpdateDate={format(
+                  maybeLastUpdateDate.value,
+                  "DD MMMM YYYY"
+                )}
+                period={props.selectedPeriod}
+                totalAmount={props.selectedAmount.value}
+              />
+            )}
+          <View spacer={true} />
         </View>
+        <SectionList
+          style={{ paddingHorizontal: 16 }}
+          renderSectionHeader={renderSectionHeader}
+          scrollEnabled={true}
+          stickySectionHeadersEnabled={true}
+          sections={getTransactionsByDaySections(trxSortByDate)}
+          renderItem={transaction => (
+            <BpdTransactionItem transaction={transaction.item} />
+          )}
+          keyExtractor={t => t.keyId}
+        />
       </SafeAreaView>
     </BaseScreenComponent>
   );
