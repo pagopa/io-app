@@ -1,9 +1,7 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { select, takeEvery, takeLatest } from "redux-saga/effects";
+import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { bpdApiUrlPrefix } from "../../../../config";
-import { profileSelector } from "../../../../store/reducers/profile";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdAmountLoad } from "../store/actions/amount";
 import {
@@ -39,19 +37,7 @@ import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOn
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
-  const profileState: ReturnType<typeof profileSelector> = yield select(
-    profileSelector
-  );
-  const bpdBackendClient = BackendBpdClient(
-    bpdApiUrlPrefix,
-    bpdBearerToken,
-    // TODO: FIX ME! this code must be removed!
-    // only for test purpose
-    pot.getOrElse(
-      pot.map(profileState, p => p.fiscal_code as string),
-      ""
-    )
-  );
+  const bpdBackendClient = BackendBpdClient(bpdApiUrlPrefix, bpdBearerToken);
 
   // load citizen details
   yield takeLatest(

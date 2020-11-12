@@ -69,7 +69,7 @@ global:
     edit: "Modifica"
   navigator:
     messages: messaggi
-    wallet: pagamenti
+    wallet: portafoglio
     documents: documenti
     profile: profilo
     services: servizi
@@ -667,7 +667,7 @@ payment:
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
 wallet:
-  wallet: Pagamenti
+  wallet: Portafoglio
   searchAbi:
     title: Aggiungi carta Bancomat
     description:
@@ -925,11 +925,13 @@ wallet:
       pan: Numero della carta
       expirationDate: Data di scadenza
       securityCode: Codice di sicurezza
+      securityCode4D: CID (4 cifre)
     values:
       holder: Mario Rossi
       pan: 0000 0000 0000 0000
       expirationDate: mm/aa
       securityCode: "•••"
+      securityCode4D: "••••"
   acceptedCards: Carte accettate
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
@@ -1030,7 +1032,7 @@ messages:
     deselectAll: Nessuno
     payment:
       expired: Pagamento scaduto
-      paid: Questo avviso è stato pagato. Visualizza la ricevuta nei tuoi
+      paid: Questo avviso è stato pagato. Visualizza la ricevuta nel tuo
       addMemo:
         block1: Aggiungi un promemoria per il
         block2: alle
@@ -1601,7 +1603,7 @@ bonus:
         description: Ti invieremo un messaggio in app quando il tuo bonus sarà pronto.
       alreadyRedeemed:
         title: Il bonus per il tuo nucleo familiare è già attivo!
-        body: Puoi visualizzarne i dettagli nella sezione Pagamenti.
+        body: Puoi visualizzarne i dettagli nella sezione Portafoglio.
         cta: Visualizza Bonus disponibili
       eligibilityExpired:
         title: Tempo scaduto.
@@ -1632,7 +1634,7 @@ bonus:
     contentTitle: Seleziona uno dei bonus disponibili
     contextualHelp:
       title: Aggiungere un bonus o una carta sconto
-      body: Qui puoi selezionare il bonus o la carta sconto che vuoi aggiungere. Una volta attivati, verranno poi visualizzati nella sezione Pagamenti. Potrai sempre visualizzare i dettagli del Bonus o dello sconto, entrando nella sezione Pagamenti, e selezionando l'elemento interessato all'interno della lista.
+      body: "Qui puoi selezionare il bonus o la carta sconto che vuoi aggiungere. Una volta attivati, verranno poi visualizzati nella sezione Portafoglio. Potrai sempre visualizzare i dettagli del Bonus o dello sconto, entrando nella sezione Portafoglio, e selezionando l'elemento interessato all'interno della lista."
   bonusInformation:
     contextualHelp:
       title: Il bonus vacanze
@@ -1654,7 +1656,15 @@ bonus:
     title: Cashback Pagamenti Digitali
     name: Cashback
     earned: Cashback accumulato
-    unsubscribe: "Cancella la tua iscrizione al cashback"
+    unsubscribe:
+      cta: "Cancella la tua iscrizione al cashback"
+      title: "Disattivazione cashback"
+      body1: "Sei sicuro di voler cancellare la tua iscrizione al cashback pagamenti digitali?"
+      body2: "Se confermi non potrai più raccogliere le transazioni nè concorrere per il Super Cashback, e **non potrai riscuotere un rimborso**, nel caso ti fosse stato riconsociuto. La disattivazione del Cashback Pagamenti Digitali avrà effetto **anche negli altri canali** che hai usato per attivarlo (es esempio Home Banking, app, etc..)\nSe riattivi il cashback in una secondo momento **ripartirai da zero transazioni.**"
+      confirmCta: "Cancella iscrizione"
+      loading: "Stiamo cancellando la tua iscrizione"
+      success: "La tua iscrizione al cashback è stata cancellata"
+      failure: "Non siamo riusciti a cancellare la tua iscrizione, riprova per favore"
     onboarding:
       loadingActivationStatus:
         title: Verifico lo stato di attivazione
@@ -1683,6 +1693,7 @@ bonus:
     iban:
       iban: "IBAN"
       edit: "Modifica IBAN"
+      verify: "Controlla IBAN"
       insertion:
         title: "IBAN per l’accredito"
         body1: "Indica qui l’IBAN del tuo conto corrente, su cui vuoi ricevere l’accredito una volta consolidata la classifica."
@@ -1696,9 +1707,9 @@ bonus:
         text1: "Se sei sicuro che l’IBAN"
         text2: "identifichi il conto su cui vuoi ricevere gli accrediti, puoi proseguire."
       koNotOwned:
-        title: "Il conto corrente non risulta intestato a te"
-        text1: "L’IBAN che hai inserito"
-        text2: "identifica un conto corrente che non risulta intestato al tuo codice fiscale: sei sicuro di voler usare questo IBAN?"
+        title: "Controlla l'IBAN inserito"
+        text1: "L’IBAN"
+        text2: "non risulta intestato a"
       loading:
         "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
     details:
@@ -1716,9 +1727,23 @@ bonus:
           closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
           closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
           inactivePeriodBody: "Potrai iniziare ad accumulare transazioni valide a partire dal {{date}}"
+          label:
+            one: "1 transazione valida"
+            other: "{{count}} transazioni valide"
       transaction:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
+        detail:
+          title: "Dettaglio della transazione"
+          paymentCircuit: "Circuito di pagamento"
+          transactionAmount: "Importo transazione"
+          cashbackAmount: "Importo cashback"
+          acquirerId: "ID transazione Acquirer"
+          issuerId: "ID transazione Issuer"
+          maxCashbackWarning: "Per ogni transazione puoi ottenere un cashback massimo di € {{amount}}."
+          maxCashbackForPeriodWarning: "Hai già raggiunto il rimborso massimo previsto per questo periodo."
+          canceledOperationWarning: "Questa transazione è un rimborso, perciò è stato decurtato il relativo cashback."
+          canceled: "Storno"
       paymentMethods:
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare le transazioni necessarie"
       card:

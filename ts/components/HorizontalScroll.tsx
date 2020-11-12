@@ -59,7 +59,7 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
       setTimeout(() => {
         if (scrollRef.current) {
           scrollRef.current.scrollTo({
-            x: scrollOffset * Dimensions.get("window").width,
+            x: scrollOffset,
             y: 0,
             animated: false
           });
@@ -103,6 +103,7 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
         ref={scrollRef}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
+        scrollEnabled={props.cards.length > 1}
         scrollEventThrottle={props.cards.length}
         pagingEnabled={true}
         onScroll={event => {
@@ -127,7 +128,9 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
         {props.cards}
       </ScrollView>
 
-      <View style={styles.barContainer}>{barArray}</View>
+      {props.cards.length > 1 && (
+        <View style={styles.barContainer}>{barArray}</View>
+      )}
       <View spacer={true} />
     </View>
   );

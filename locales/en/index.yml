@@ -69,7 +69,7 @@ global:
     edit: "Edit"
   navigator:
     messages: messages
-    wallet: payments
+    wallet: wallet
     documents: documents
     profile: profile
     services: services
@@ -646,7 +646,7 @@ payment:
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
-  wallet: Payments
+  wallet: Wallet
   searchAbi:
     title: Add Bancomat card
     description:
@@ -899,11 +899,13 @@ wallet:
       pan: Card number
       expirationDate: Expiration date
       securityCode: Card security code
+      securityCode4D: CIN (4 digits)
     values:
       holder: John Doe
       pan: 0000 0000 0000 0000
       expirationDate: mm/yy
       securityCode: "•••"
+      securityCode4D: "••••"
   acceptedCards: Accepted cards
   chooseMethod: Select the desired method
   QRtoPay:
@@ -1569,7 +1571,7 @@ bonus:
         description: We will send you a message in the app when your bonus is ready.
       alreadyRedeemed:
         title: The bonus for your family is already active!
-        body: You can view the details in the Payments section.
+        body: You can view the details in the Wallet section.
         cta: Show available Bonuses
       eligibilityExpired:
         title: Time expired.
@@ -1600,7 +1602,7 @@ bonus:
     contentTitle: Select one of the available bonus
     contextualHelp:
       title: Add a bonus or discount card
-      body: Here you can select the bonus or discount card you want to add. Once activated, they will then be displayed in the Payments section. You will always be able to see the details of the bonus or discount, entering the Payments section, and selecting the item in the list.
+      body: Here you can select the bonus or discount card you want to add. Once activated, they will then be displayed in the Wallet section. You will always be able to see the details of the bonus or discount, entering the Wallet section, and selecting the item in the list.
   bonusInformation:
     contextualHelp:
       title: The Bonus Vacanze
@@ -1621,7 +1623,15 @@ bonus:
   bpd:
     title: Cashback Digital Payments
     name: Cashback
-    unsubscribe: "Disable cashback"
+    unsubscribe:
+      cta: "Disable cashback"
+      title: "Cashback deactivation"
+      body1: "Are you sure you want to cancel your digital payments cashback subscription?"
+      body2: "If you confirm you will no longer be able to collect transactions or compete for the Super Cashback, and **you will not be able to collect a refund**, if you have been acknowledged. The deactivation of Digital Payments Cashback will have an effect **also in the other channels** that you used to activate it (eg Home Banking, app, etc ..) \ nIf you reactivate the cashback later **you will restart from zero transactions**."
+      confirmCta: "Cancel subscription"
+      loading: "We are canceling your subscription"
+      success: "Your cashback membership has been canceled"
+      failure: "We were unable to unsubscribe, please try again"
     earned: Earned Cashback
     onboarding:
       loadingActivationStatus:
@@ -1651,6 +1661,7 @@ bonus:
     iban:
       iban: "IBAN"
       edit: "Change IBAN"
+      verify: "Check IBAN"
       insertion:
         title: "IBAN for accreditation"
         body1: "Indicate here the IBAN of your current account, on which you want to receive credit once the ranking has been consolidated."
@@ -1664,9 +1675,9 @@ bonus:
         text1: "If you are sure the IBAN"
         text2: "identify the account on which you want to receive credit, you can proceed."
       koNotOwned:
-        title: "The current account is not in your name"
-        text1: "The IBAN you entered"
-        text2: "identify a current account that is not registered in your tax code: are you sure you want to use this IBAN?"
+        title: "Check the IBAN entered"
+        text1: "IBAN"
+        text2: "is not registered to"
       loading:
         "We are verifying your IBAN\n\nPlease wait."
     details:
@@ -1684,9 +1695,23 @@ bonus:
           closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
           closedPeriodMaxAmount: "it's the maximum possible refund!"
           inactivePeriodBody: "You will be able to start accumulating valid transactions starting from {{date}}"
+          label:
+            one: "1 valid transaction" 
+            other: "{{count}} valid transactions"
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
+        detail:
+          title: "Detail of the transaction"
+          paymentCircuit: "Payment circuit"
+          transactionAmount: "Transaction amount"
+          cashbackAmount: "Cashback amount"
+          acquirerId: "Acquirer transaction ID"
+          issuerId: "Issuer transaction ID"
+          maxCashbackWarning: "For each transaction you can get a maximum cashback of € {{amount}}."
+          maxCashbackForPeriodWarning: "You have already reached the maximum refund for this period."
+          canceledOperationWarning: "This transaction is a refund, so the related cashback has been deducted."
+          canceled: "Refund"
       paymentMethods:
         noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
       card:

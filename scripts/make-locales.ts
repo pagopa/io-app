@@ -20,6 +20,7 @@ import chalk from "chalk";
 import * as fs from "fs-extra";
 import * as yaml from "js-yaml";
 import * as prettier from "prettier";
+import * as _ from "lodash";
 
 interface LocaleDoc {
   locale: string;
@@ -44,14 +45,13 @@ const IncludeYamlType = (includeRoot: string) =>
   new yaml.Type("!include", {
     kind: "scalar",
 
-    resolve: (data: any) => (
-        data !== null &&
-        typeof data === "string" &&
-        path // included file must be under includeRoot
-          .normalize(path.join(includeRoot, data))
-          .startsWith(path.normalize(includeRoot)) &&
-        fs.statSync(path.join(includeRoot, data)).isFile()
-      ),
+    resolve: (data: any) =>
+      data !== null &&
+      typeof data === "string" &&
+      path // included file must be under includeRoot
+        .normalize(path.join(includeRoot, data))
+        .startsWith(path.normalize(includeRoot)) &&
+      fs.statSync(path.join(includeRoot, data)).isFile(),
 
     construct: data => fs.readFileSync(path.join(includeRoot, data)).toString(),
 
@@ -252,9 +252,10 @@ async function run(rootPath: string): Promise<void> {
       chalk.gray("[4/4]"),
       `Writing locales typescript to [${emitPath}]...`
     );
+
     await emitTsDefinitions(localeKeys, emitPath);
   } catch (e) {
-    console.log(e.message);
+    console.log(chalk.red(e.message));
   }
 }
 
