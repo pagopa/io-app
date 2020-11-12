@@ -22,6 +22,12 @@ import {
 } from "../../../../../store/reducers/__mock__/periods";
 import BpdSummaryComponent from "../BpdSummaryComponent";
 
+jest.mock("@gorhom/bottom-sheet", () => ({
+  useBottomSheetModal: () => ({
+    present: jest.fn()
+  })
+}));
+
 describe("Bpd Summary Component graphical test for different states", () => {
   const mockStore = configureMockStore();
   MockDate.set("2020-11-04");
