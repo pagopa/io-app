@@ -34,7 +34,7 @@ const GoToTransactions: React.FunctionComponent<Props> = props => {
       onPress={props.goToTransactions}
       activeOpacity={1}
     >
-      <IconFont name="io-receipt" style={{ color: "white" }} />
+      <IconFont name="io-transactions" size={24} color={"white"} />
       <Label color={"white"}>
         {I18n.t("bonus.bpd.details.transaction.goToButton")}
       </Label>
