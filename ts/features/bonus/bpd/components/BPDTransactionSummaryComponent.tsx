@@ -13,7 +13,6 @@ import { BpdPeriod } from "../store/actions/periods";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { format } from "../../../../utils/dates";
 import { H4 } from "../../../../components/core/typography/H4";
-import { TranslationKeys } from "../../../../../locales/locales";
 import { bottomSheetContent } from "../../../../utils/bottomSheet";
 
 type Props = {
