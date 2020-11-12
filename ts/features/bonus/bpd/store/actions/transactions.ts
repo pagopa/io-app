@@ -3,7 +3,19 @@ import { HPan } from "./paymentMethods";
 import { AwardPeriodId, WithAwardPeriodId } from "./periods";
 
 // TODO: placeholder, TBD how to map the circuit Type
-export type CircuitType = "PagoBancomat" | "Visa" | "Mastercard";
+export type CircuitType =
+  | "PagoBancomat"
+  | "Visa"
+  | "Mastercard"
+  | "Amex"
+  | "JCB"
+  | "UnionPay"
+  | "Diners"
+  | "PostePay"
+  | "BancomatPay"
+  | "SatisPay"
+  | "Private"
+  | "Unknown";
 
 /**
  * The single transaction acquired in a cashback period
@@ -23,7 +35,7 @@ export type BpdTransaction = WithAwardPeriodId & {
   circuitType: CircuitType;
 };
 
-type BpdTransactions = WithAwardPeriodId & {
+export type BpdTransactions = WithAwardPeriodId & {
   results: ReadonlyArray<BpdTransaction>;
 };
 

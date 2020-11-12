@@ -33,6 +33,8 @@ import {
   CreditCardPan
 } from "../../utils/input";
 
+import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
+
 type NavigationParams = Readonly<{
   inPayment: Option<{
     rptId: RptId;
@@ -64,6 +66,11 @@ const styles = StyleSheet.create({
     height: 45,
     resizeMode: "contain",
     marginTop: 5
+  },
+
+  creditCardForm: {
+    height: 24,
+    width: 24
   },
 
   verticalSpacing: {
@@ -191,6 +198,11 @@ class AddCardScreen extends React.Component<Props, State> {
         CARD_LOGOS_COLUMNS - (size(displayedCards) % CARD_LOGOS_COLUMNS)
       ).map(_ => ["", undefined])
     );
+
+    const detectedBrand: SupportedBrand = CreditCardDetector.validate(
+      this.state.pan
+    );
+
     return (
       <BaseScreenComponent
         goBack={true}
@@ -228,7 +240,8 @@ class AddCardScreen extends React.Component<Props, State> {
             <LabelledItem
               type={"masked"}
               label={I18n.t("wallet.dummyCard.labels.pan")}
-              icon="io-carta"
+              icon={detectedBrand.iconForm}
+              iconStyle={styles.creditCardForm}
               isValid={this.isValidPan()}
               inputMaskProps={{
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
@@ -278,14 +291,22 @@ class AddCardScreen extends React.Component<Props, State> {
               <Col>
                 <LabelledItem
                   type={"masked"}
-                  label={I18n.t("wallet.dummyCard.labels.securityCode")}
+                  label={I18n.t(
+                    detectedBrand.cvvLength === 4
+                      ? "wallet.dummyCard.labels.securityCode4D"
+                      : "wallet.dummyCard.labels.securityCode"
+                  )}
                   icon="io-lucchetto"
                   isValid={this.isValidSecurityCode()}
                   inputMaskProps={{
                     value: this.state.securityCode.getOrElse(
                       EMPTY_CARD_SECURITY_CODE
                     ),
-                    placeholder: I18n.t("wallet.dummyCard.values.securityCode"),
+                    placeholder: I18n.t(
+                      detectedBrand.cvvLength === 4
+                        ? "wallet.dummyCard.values.securityCode4D"
+                        : "wallet.dummyCard.values.securityCode"
+                    ),
                     returnKeyType: "done",
                     maxLength: 4,
                     type: "custom",

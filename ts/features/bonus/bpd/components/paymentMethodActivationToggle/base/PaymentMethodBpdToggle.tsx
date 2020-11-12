@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
 const retryTimeout = 5000 as Millisecond;
 /**
  * This custom hook handles the load of the initial state and the retry in case of error.
+ * TODO: refactor with  {@link useLoadPotValue}
+ * @deprecated
  * @param props
  */
 const useInitialValue = (props: Props) => {
@@ -151,10 +153,8 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
     <>
       <View style={styles.row}>
         <View style={styles.leftSection}>
-          {/* TODO: The image will be received by props / redux state */}
           <Image source={props.icon} style={styles.cardIcon} />
           <View hspacer={true} />
-          {/* TODO: The Text will be received by props / redux state */}
           <Body>{props.caption}</Body>
         </View>
         <BpdToggle

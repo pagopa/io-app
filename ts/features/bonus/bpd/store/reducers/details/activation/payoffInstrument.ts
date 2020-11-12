@@ -15,10 +15,12 @@ import { IbanStatus } from "../../../../saga/networking/patchCitizenIban";
 import { bpdLoadActivationStatus } from "../../../actions/details";
 import {
   bpdIbanInsertionResetScreen,
+  bpdIbanInsertionStart,
   bpdUpsertIban
 } from "../../../actions/iban";
+import { bpdDeleteUserFromProgram } from "../../../actions/onboarding";
 
-type UpsertIBAN = {
+export type UpsertIBAN = {
   // the results of the upsert operation
   outcome: RemoteValue<IbanStatus, Error>;
   // the value the user is trying to enter
@@ -43,6 +45,8 @@ const paymentInstrumentValueReducer = (
   action: Action
 ): RemoteValue<string | undefined, Error> => {
   switch (action.type) {
+    case getType(bpdDeleteUserFromProgram.success):
+      return remoteUndefined;
     case getType(bpdLoadActivationStatus.request):
       return remoteLoading;
     case getType(bpdLoadActivationStatus.success):
@@ -95,6 +99,8 @@ const paymentInstrumentUpsertReducer = (
         ...state,
         outcome: remoteUndefined
       };
+    case getType(bpdIbanInsertionStart):
+      return INITIAL_UPSERT;
   }
   return state;
 };

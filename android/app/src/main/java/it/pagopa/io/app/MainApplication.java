@@ -9,6 +9,7 @@ import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.swmansion.reanimated.ReanimatedPackage;
 import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.reactnativecommunity.cookies.CookieManagerPackage;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
@@ -69,6 +70,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
             new ClipboardPackage(),
+            new ReanimatedPackage(),
             new CookieManagerPackage(),
             new CameraRollPackage(),
             new RNViewShotPackage(),

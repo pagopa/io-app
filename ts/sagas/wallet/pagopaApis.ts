@@ -46,8 +46,9 @@ import { PaymentManagerToken, Wallet } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
-import { convertWalletV2toWalletV1 } from "../../utils/wallet";
+import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import { bpdEnabled } from "../../config";
+import { getError } from "../../utils/errors";
 
 //
 // Payment Manager APIs
@@ -278,12 +279,6 @@ export function* updateWalletPspRequestHandler(
     apiUpdateWalletPsp
   );
 
-  const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
-    getWallets,
-    pagoPaClient,
-    pmSessionManager
-  );
-
   try {
     const response: SagaCallReturnType<typeof updateWalletPspWithRefresh> = yield call(
       updateWalletPspWithRefresh
@@ -291,6 +286,11 @@ export function* updateWalletPspRequestHandler(
 
     if (response.isRight()) {
       if (response.value.status === 200) {
+        const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
+          getWallets,
+          pagoPaClient,
+          pmSessionManager
+        );
         if (maybeWallets.isRight()) {
           // look for the updated wallet
           const updatedWallet = maybeWallets.value.find(
@@ -345,17 +345,16 @@ export function* deleteWalletRequestHandler(
   const deleteWalletApi = pagoPaClient.deleteWallet(action.payload.walletId);
   const deleteWalletWithRefresh = pmSessionManager.withRefresh(deleteWalletApi);
 
-  const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
-    getWallets,
-    pagoPaClient,
-    pmSessionManager
-  );
-
   try {
     const deleteResponse: SagaCallReturnType<typeof deleteWalletWithRefresh> = yield call(
       deleteWalletWithRefresh
     );
     if (deleteResponse.isRight() && deleteResponse.value.status === 200) {
+      const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
+        getWallets,
+        pagoPaClient,
+        pmSessionManager
+      );
       if (maybeWallets.isRight()) {
         const successAction = deleteWalletSuccess(maybeWallets.value);
         yield put(successAction);
@@ -409,7 +408,7 @@ export function* addWalletCreditCardRequestHandler(
         response.value.status === 422 &&
         response.value.value.message === "creditcard.already_exists"
       ) {
-        yield put(addWalletCreditCardFailure("ALREADY_EXISTS"));
+        yield put(addWalletCreditCardFailure({ kind: "ALREADY_EXISTS" }));
       } else {
         throw Error(`response status ${response.value.status}`);
       }
@@ -417,7 +416,12 @@ export function* addWalletCreditCardRequestHandler(
       throw Error(readablePrivacyReport(response.value));
     }
   } catch (e) {
-    yield put(addWalletCreditCardFailure(e.message));
+    yield put(
+      addWalletCreditCardFailure({
+        kind: "GENERIC_ERROR",
+        reason: getError(e).message
+      })
+    );
   }
 }
 

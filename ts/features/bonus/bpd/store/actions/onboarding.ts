@@ -16,13 +16,20 @@ export const bpdEnrollUserToProgram = createAsyncAction(
 )<void, BpdActivationPayload, Error>();
 
 /**
- * delete user from bpd program
+ * Delete user from bpd program
  */
 export const bpdDeleteUserFromProgram = createAsyncAction(
   "BPD_DELETE_REQUEST",
   "BPD_DELETE_SUCCESS",
   "BPD_DELETE_FAILURE"
 )<void, void, Error>();
+
+/**
+ * The user ends the unsubscribe workflow
+ */
+export const bpdUnsubscribeCompleted = createStandardAction(
+  "BPD_UNSUBSCRIBE_COMPLETED"
+)<void>();
 
 /**
  * Start the onboarding workflow
@@ -46,6 +53,13 @@ export const bpdOnboardingCancel = createStandardAction(
 )<void>();
 
 /**
+ * The user completed the final step of the onboarding (choose to add iban)
+ */
+export const bpdOnboardingCompleted = createStandardAction(
+  "BPD_ONBOARDING_COMPLETED"
+)<void>();
+
+/**
  * The user accepts and confirms the declaration
  */
 export const bpdOnboardingAcceptDeclaration = createStandardAction(
@@ -58,4 +72,6 @@ export type BpdOnboardingActions =
   | ActionType<typeof bpdUserActivate>
   | ActionType<typeof bpdOnboardingAcceptDeclaration>
   | ActionType<typeof bpdOnboardingCancel>
-  | ActionType<typeof bpdDeleteUserFromProgram>;
+  | ActionType<typeof bpdOnboardingCompleted>
+  | ActionType<typeof bpdDeleteUserFromProgram>
+  | ActionType<typeof bpdUnsubscribeCompleted>;

@@ -1,12 +1,13 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { select, takeEvery, takeLatest } from "redux-saga/effects";
+import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { bpdApiUrlPrefix } from "../../../../config";
-import { profileSelector } from "../../../../store/reducers/profile";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdAmountLoad } from "../store/actions/amount";
-import { bpdLoadActivationStatus } from "../store/actions/details";
+import {
+  bpdDetailsLoadAll,
+  bpdLoadActivationStatus
+} from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
 import {
   bpdDeleteUserFromProgram,
@@ -28,6 +29,7 @@ import {
   bpdUpdatePaymentMethodActivationSaga
 } from "./networking/paymentMethod";
 import { bpdLoadPeriodsSaga } from "./networking/periods";
+import { prefetchBpdData } from "./networking/prefetctBpdDetails";
 import { bpdLoadTransactionsSaga } from "./networking/transactions";
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
@@ -35,19 +37,7 @@ import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOn
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
-  const profileState: ReturnType<typeof profileSelector> = yield select(
-    profileSelector
-  );
-  const bpdBackendClient = BackendBpdClient(
-    bpdApiUrlPrefix,
-    bpdBearerToken,
-    // TODO: FIX ME! this code must be removed!
-    // only for test purpose
-    pot.getOrElse(
-      pot.map(profileState, p => p.fiscal_code as string),
-      ""
-    )
-  );
+  const bpdBackendClient = BackendBpdClient(bpdApiUrlPrefix, bpdBearerToken);
 
   // load citizen details
   yield takeLatest(
@@ -100,10 +90,21 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   );
 
   // load bpd amount for a period
-  yield takeEvery(bpdAmountLoad.request, bpdLoadAmountSaga);
+  yield takeEvery(
+    bpdAmountLoad.request,
+    bpdLoadAmountSaga,
+    bpdBackendClient.totalCashback
+  );
+
+  // prefetch all the bpd data
+  yield takeEvery(bpdDetailsLoadAll, prefetchBpdData);
 
   // load bpd transactions for a period
-  yield takeEvery(bpdTransactionsLoad.request, bpdLoadTransactionsSaga);
+  yield takeEvery(
+    bpdTransactionsLoad.request,
+    bpdLoadTransactionsSaga,
+    bpdBackendClient.winningTransactions
+  );
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
   yield takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);

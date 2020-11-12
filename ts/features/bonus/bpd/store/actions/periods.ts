@@ -1,7 +1,7 @@
 import { IUnitTag } from "italia-ts-commons/lib/units";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
-export type AwardPeriodId = string & IUnitTag<"AwardPeriodId">;
+export type AwardPeriodId = number & IUnitTag<"AwardPeriodId">;
 
 /**
  * The possible state for a period:
