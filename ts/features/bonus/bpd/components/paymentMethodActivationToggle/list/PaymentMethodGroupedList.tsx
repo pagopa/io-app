@@ -98,7 +98,6 @@ export const PaymentMethodGroupedList: React.FunctionComponent<Props> = props =>
       {notActivable.length > 0 && (
         <NotActivablesSection paymentMethods={notActivable} />
       )}
-      <OtherChannelsSection paymentMethods={otherChannels} />
     </View>
   );
 };
