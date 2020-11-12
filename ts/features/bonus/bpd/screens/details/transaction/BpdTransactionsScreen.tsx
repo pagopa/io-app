@@ -1,12 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  SectionList,
-  SectionListData
-} from "react-native";
+import { SafeAreaView, SectionList, SectionListData } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { compareDesc } from "date-fns";
