@@ -80,13 +80,14 @@ const BPDTransactionSummaryComponent: React.FunctionComponent<Props> = (
         )} - ${format(props.period.endDate, "DD MMM YYYY")} `}</H4>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text2")}
         <H4 weight={"Bold"}>
-          {I18n.t(
-            "bonus.bpd.details.transaction.detail.summary.body.text3" as TranslationKeys,
-            {
-              count: props.totalAmount.transactionNumber
-            }
-          )}
-        </H4>{" "}
+          {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text3", {
+            defaultValue: I18n.t(
+              "bonus.bpd.details.transaction.detail.summary.body.text3.other",
+              { count: props.totalAmount.transactionNumber }
+            ),
+            count: props.totalAmount.transactionNumber
+          })}
+        </H4>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text4")}
         <H4 weight={"Bold"}>{`${I18n.t(
           "bonus.bpd.details.transaction.detail.summary.body.text5"

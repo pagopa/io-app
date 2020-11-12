@@ -5,6 +5,7 @@ import { FlatList, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { compareDesc } from "date-fns";
+import { index } from "fp-ts/lib/Array";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
@@ -39,6 +40,11 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
     compareDesc(trx1.trxDate, trx2.trxDate)
   );
 
+  const lastUpdateDate = index(0, trxSortByDate).fold(
+    format(new Date(), "DD MMMM YYYY"),
+    t => format(t.trxDate, "DD MMMM YYYY")
+  );
+
   return (
     <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.bpd.title")}>
       <SafeAreaView style={IOStyles.flex}>
@@ -48,7 +54,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
           <View spacer={true} />
           {pot.isSome(props.selectedAmount) && props.selectedPeriod && (
             <BPDTransactionSummaryComponent
-              lastUpdateDate={format(trxSortByDate[0].trxDate, "DD MMMM YYYY")}
+              lastUpdateDate={lastUpdateDate}
               period={props.selectedPeriod}
               totalAmount={props.selectedAmount.value}
             />

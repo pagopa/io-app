@@ -1699,7 +1699,7 @@ bonus:
               text2: "you have totalized "
               text3:
                 one: "1 valid transaction "
-                other: "{{count}} valid transactions"
+                other: "{{count}} valid transactions "
               text4: "and earned "
               text5: "a cashback of "
           title: "Detail of the transaction"
