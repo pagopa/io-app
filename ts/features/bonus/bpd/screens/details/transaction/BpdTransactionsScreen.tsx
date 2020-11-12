@@ -40,9 +40,9 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
     compareDesc(trx1.trxDate, trx2.trxDate)
   );
 
-  const lastUpdateDate = index(0, trxSortByDate).fold(
-    format(new Date(), "DD MMMM YYYY"),
-    t => format(t.trxDate, "DD MMMM YYYY")
+  const lastUpdateDate = format(
+    index(0, trxSortByDate).fold(new Date(), t => t.trxDate),
+    "DD MMMM YYYY"
   );
 
   return (
