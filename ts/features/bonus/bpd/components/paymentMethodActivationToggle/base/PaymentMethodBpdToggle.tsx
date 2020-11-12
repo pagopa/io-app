@@ -18,6 +18,10 @@ import {
 } from "../../../store/actions/paymentMethods";
 import { bpdPaymentMethodValueSelector } from "../../../store/reducers/details/paymentMethods";
 import { useChangeActivationConfirmationBottomSheet } from "../bottomsheet/BpdChangeActivationConfirmationScreen";
+import {
+  NotActivableType,
+  useNotActivableInformationBottomSheet
+} from "../bottomsheet/BpdNotActivableInformation";
 import { BpdToggle } from "./BpdToggle";
 import { PaymentMethodRepresentation } from "./PaymentMethodRepresentation";
 
@@ -150,8 +154,15 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
     useInitialValue(props);
   }
 
+  // a simplification because the onPress is dispatched only when is not activable / compatible
+  const notActivableType: NotActivableType = !props.hasBpdCapability
+    ? "NotCompatible"
+    : "NotActivable";
+
   const askConfirmation = useChangeActivationConfirmationBottomSheet(props)
     .present;
+
+  const showExplanation = useNotActivableInformationBottomSheet(props).present;
 
   return (
     <>
@@ -165,7 +176,7 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
           onValueChanged={newVal =>
             askConfirmation(newVal, () => props.updateValue(props.hPan, newVal))
           }
-          // TODO: when onPress -> show bottomsheet explaining why the bpd cannot be activated
+          onPress={() => showExplanation(notActivableType)}
         />
       </View>
     </>
