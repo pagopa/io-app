@@ -19,13 +19,16 @@ const styles = StyleSheet.create({
   },
   container: {
     justifyContent: "space-between"
+  },
+  whiteBg: {
+    backgroundColor: IOColors.white
   }
 });
 
 const BaseDailyTransactionHeader: React.FunctionComponent<Props> = (
   props: Props
 ) => (
-  <>
+  <View style={styles.whiteBg}>
     <H3 weight={"Bold"} color={"black"}>
       {props.date}
     </H3>
@@ -51,7 +54,7 @@ const BaseDailyTransactionHeader: React.FunctionComponent<Props> = (
       </View>
       <H5 color={"bluegrey"}>{`${I18n.t("bonus.bpd.name")} (€)`} </H5>
     </View>
-  </>
+  </View>
 );
 
 export default BaseDailyTransactionHeader;

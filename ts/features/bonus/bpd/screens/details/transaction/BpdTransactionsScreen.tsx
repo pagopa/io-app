@@ -1,7 +1,12 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { FlatList, SafeAreaView } from "react-native";
+import {
+  FlatList,
+  SafeAreaView,
+  SectionList,
+  SectionListData
+} from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { compareDesc } from "date-fns";
@@ -12,6 +17,8 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import BPDTransactionSummaryComponent from "../../../components/BPDTransactionSummaryComponent";
+import { format } from "../../../../../../utils/dates";
+import BaseDailyTransactionHeader from "../../../components/BaseDailyTransactionHeader";
 import {
   BpdTransactionItem,
   EnhancedBpdTransaction
@@ -19,7 +26,6 @@ import {
 import { bpdAmountForSelectedPeriod } from "../../../store/reducers/details/amounts";
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
-import { format } from "../../../../../../utils/dates";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -27,6 +33,28 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const dataForFlatList = (
   transactions: pot.Pot<ReadonlyArray<EnhancedBpdTransaction>, Error>
 ) => pot.getOrElse(transactions, []);
+
+const getTransactionsByDaySections = (
+  transactions: ReadonlyArray<EnhancedBpdTransaction>
+): ReadonlyArray<SectionListData<EnhancedBpdTransaction>> => {
+  const dates = [
+    ...new Set(transactions.map(trx => format(trx.trxDate, "DD MMMM")))
+  ];
+
+  return dates.map(d => ({
+    title: d,
+    data: transactions.filter(t => format(t.trxDate, "DD MMMM") === d)
+  }));
+};
+
+const renderSectionHeader = (info: {
+  section: SectionListData<EnhancedBpdTransaction>;
+}): React.ReactNode => (
+  <BaseDailyTransactionHeader
+    date={info.section.title}
+    transactionsNumber={info.section.data.length}
+  />
+);
 
 /**
  * Display all the transactions for a specific period
@@ -59,8 +87,11 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
               totalAmount={props.selectedAmount.value}
             />
           )}
-          <FlatList
-            data={transactions}
+          <View spacer={true} />
+          <SectionList
+            renderSectionHeader={renderSectionHeader}
+            stickySectionHeadersEnabled={true}
+            sections={getTransactionsByDaySections(trxSortByDate)}
             renderItem={transaction => (
               <BpdTransactionItem transaction={transaction.item} />
             )}
