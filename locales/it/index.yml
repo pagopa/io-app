@@ -1736,7 +1736,10 @@ bonus:
         activateOnOthersChannel:
           text1: "Attivati su "
           text2: "altri canali"
-          body: "placeholder [MISSING TEXT]"
+          title: "Metodi aggiunti da altri canali"
+          body: "Hai aggiunto al cashback questi metodi di pagamento direttamente dai canali messi a disposizione dalla tua banca. Puoi attivare o disattivare la raccolta delle transazioni di questi metodi anche da IO.\n
+                 Se vuoi usare alcuni di questi metodi anche per pagare tramite IO, aggiungili al tuo portafoglio!"
+          addWallet: "Aggiungi al portafoglio"
         notActivable:
           header: "Non attivabili o non compatibili"
           title: "Metodo non attivabile"

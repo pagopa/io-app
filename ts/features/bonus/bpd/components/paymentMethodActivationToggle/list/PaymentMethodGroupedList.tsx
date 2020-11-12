@@ -7,6 +7,7 @@ import I18n from "../../../../../../i18n";
 import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
 import { WalletV2WithActivation } from "../../../store/reducers/details/combiner";
 import { Link } from "../../../../../../components/core/typography/Link";
+import { useOtherChannelInformationBottomSheet } from "../bottomsheet/OtherChannelInformation";
 import { PaymentMethodRawList } from "./PaymentMethodRawList";
 
 type Props = { paymentList: ReadonlyArray<WalletV2WithActivation> };
@@ -37,26 +38,32 @@ const clusterizePaymentMethods = (
 
 const OtherChannelsSection = (props: {
   paymentMethods: ReadonlyArray<WalletV2WithActivation>;
-}) => (
-  <View>
-    <View spacer={true} />
-    <View style={styles.row}>
-      <Body>
-        {I18n.t(
-          "bonus.bpd.details.paymentMethods.activateOnOthersChannel.text1"
-        )}
-        <H4>
+}) => {
+  const { present } = useOtherChannelInformationBottomSheet();
+
+  return (
+    <View>
+      <View spacer={true} />
+      <View style={styles.row}>
+        <Body>
           {I18n.t(
-            "bonus.bpd.details.paymentMethods.activateOnOthersChannel.text2"
+            "bonus.bpd.details.paymentMethods.activateOnOthersChannel.text1"
           )}
-        </H4>
-      </Body>
-      <Link>{I18n.t("global.buttons.info").toLowerCase()}</Link>
+          <H4>
+            {I18n.t(
+              "bonus.bpd.details.paymentMethods.activateOnOthersChannel.text2"
+            )}
+          </H4>
+        </Body>
+        <Link onPress={present}>
+          {I18n.t("global.buttons.info").toLowerCase()}
+        </Link>
+      </View>
+      <View spacer={true} />
+      <PaymentMethodRawList paymentList={props.paymentMethods} />
     </View>
-    <View spacer={true} />
-    <PaymentMethodRawList paymentList={props.paymentMethods} />
-  </View>
-);
+  );
+};
 
 const NotActivablesSection = (props: {
   paymentMethods: ReadonlyArray<WalletV2WithActivation>;
@@ -91,6 +98,7 @@ export const PaymentMethodGroupedList: React.FunctionComponent<Props> = props =>
       {notActivable.length > 0 && (
         <NotActivablesSection paymentMethods={notActivable} />
       )}
+      <OtherChannelsSection paymentMethods={otherChannels} />
     </View>
   );
 };

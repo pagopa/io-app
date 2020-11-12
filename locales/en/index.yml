@@ -1704,7 +1704,10 @@ bonus:
         activateOnOthersChannel:
           text1: "Activate on"
           text2: "other channels"
-          body: "placeholder [MISSING TEXT]"
+          title: "Methods added by other channels"
+          body: "You have added these payment methods to the cashback directly from the channels made available by your bank. You can activate or deactivate the collection of transactions of these methods also from IO. \n
+                 If you want to use some of these methods to pay via IO as well, add them to your wallet! "
+          addWallet: "Add to wallet"
         notActivable:
           header: "Not activatable or incompatible"
           title: "Method not activatable"
