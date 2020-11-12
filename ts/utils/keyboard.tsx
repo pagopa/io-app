@@ -13,7 +13,6 @@ export const withKeyboard = (
   insideSafeAreaView: boolean = false
 ) => (
   <KeyboardAvoidingView
-    style={{ flex: 1 }}
     behavior={Platform.OS === "android" ? undefined : "padding"}
     keyboardVerticalOffset={Platform.select({
       ios: customVariables.contentPadding + (insideSafeAreaView ? 90 : 0),

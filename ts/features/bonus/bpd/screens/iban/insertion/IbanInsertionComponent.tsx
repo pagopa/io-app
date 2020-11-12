@@ -48,37 +48,37 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
   return (
     <BaseScreenComponent goBack={props.onBack} headerTitle={headerTitle}>
       <SafeAreaView style={IOStyles.flex}>
-        {withKeyboard(
-          <>
-            <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-              <View spacer={true} large={true} />
-              <H1>{title}</H1>
-              <View spacer={true} large={true} />
-              <Body>{body1}</Body>
-              <View spacer={true} large={true} />
-              <H5>{ibanDescription}</H5>
-              <Item error={isInvalidIban}>
-                <Input
-                  value={iban}
-                  maxLength={IbanMaxLength}
-                  onChangeText={text => setIban(text.toUpperCase().trim())}
-                />
-              </Item>
-              <View spacer={true} large={true} />
-              <View spacer={true} small={true} />
-              <Body>{body2}</Body>
-            </View>
+        <>
+          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+            <View spacer={true} large={true} />
+            <H1>{title}</H1>
+            <View spacer={true} large={true} />
+            <Body>{body1}</Body>
+            <View spacer={true} large={true} />
+            <H5>{ibanDescription}</H5>
+            <Item error={isInvalidIban}>
+              <Input
+                value={iban}
+                maxLength={IbanMaxLength}
+                onChangeText={text => setIban(text.toUpperCase().trim())}
+              />
+            </Item>
+            <View spacer={true} large={true} />
+            <View spacer={true} small={true} />
+            <Body>{body2}</Body>
+          </View>
 
+          {withKeyboard(
             <FooterTwoButtons
               rightDisabled={!userCanContinue}
               onRight={() => Iban.decode(iban).map(props.onIbanConfirm)}
               onCancel={props.onContinue}
               rightText={I18n.t("global.buttons.continue")}
               leftText={skip}
-            />
-          </>,
-          true
-        )}
+            />,
+            true
+          )}
+        </>
       </SafeAreaView>
     </BaseScreenComponent>
   );
