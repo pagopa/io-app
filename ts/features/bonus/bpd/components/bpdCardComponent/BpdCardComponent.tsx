@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
   amountTextBaseFull: {
     fontSize: 24,
     lineHeight: 35,
+    // solution taken from https://github.com/facebook/react-native/issues/7687#issuecomment-309168661
     paddingTop: Platform.select({
       ios: 0,
       android: 10
