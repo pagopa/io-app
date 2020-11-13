@@ -177,7 +177,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
     EnhancedBpdTransaction | TotalCashbackPerDate
   > = info => {
     if (isTotalCashback(info.item)) {
-      // PLACEHOLDER
+      // PLACEHOLDER Component waiting for
       return (
         <View style={{ backgroundColor: IOColors.blue }}>
           <H1 color={"white"}>CASHBACK!</H1>
