@@ -1,12 +1,12 @@
 import { format, format as dateFnsFormat } from "date-fns";
 import * as pot from "italia-ts-commons/lib/pot";
+import { fromNullable } from "fp-ts/lib/Option";
 import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality } from "../../definitions/content/Municipality";
 import { ProfileState } from "../store/reducers/profile";
-import { fromNullable } from "fp-ts/lib/Option";
 
 type GenderType = "M" | "F" | undefined;
 
