@@ -1,5 +1,6 @@
 import { format, format as dateFnsFormat } from "date-fns";
 import * as pot from "italia-ts-commons/lib/pot";
+import { fromNullable } from "fp-ts/lib/Option";
 import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -237,3 +238,14 @@ export const getBlockedChannels = (
     ...profileBlockedChannels
   };
 };
+
+// a string log containing profile details
+export const getProfileDetailsLog = (
+  profile: InitializedProfile,
+  separator: string = " / "
+) =>
+  `- spid_email: ${fromNullable(profile.spid_email as string).getOrElse(
+    "n/a"
+  )}${separator}- email: ${fromNullable(profile.email as string).getOrElse(
+    "n/a"
+  )}${separator}- cf: ${profile.fiscal_code as string}`;
