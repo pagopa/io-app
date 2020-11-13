@@ -1,12 +1,14 @@
 import { left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import reactotron from "reactotron-react-native";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
   loadUserDataProcessing,
-  upsertUserDataProcessing
+  upsertUserDataProcessing,
+  deleteUserDataProcessing
 } from "../../store/actions/userDataProcessing";
 import { SagaCallReturnType } from "../../types/utils";
 
@@ -87,6 +89,50 @@ export function* upsertUserDataProcessingSaga(
   }
 }
 
+export function* deleteUserDataProcessingSaga(
+  deleteUserDataProcessingRequest: ReturnType<
+    typeof BackendClient
+  >["deleteUserDataProcessingRequest"],
+  action: ActionType<typeof deleteUserDataProcessing["request"]>
+): SagaIterator {
+  const choice = action.payload;
+
+  try {
+    const response: SagaCallReturnType<typeof deleteUserDataProcessingRequest> = yield call(
+      deleteUserDataProcessingRequest,
+      {
+        userDataProcessingChoiceParam: choice
+      }
+    );
+    reactotron.log(response);
+    if (response.isRight()) {
+      reactotron.log(response.value.status);
+
+      if (response.value.status === 404 || response.value.status === 202) {
+        yield put(
+          deleteUserDataProcessing.success({
+            choice
+            // value:
+            //   response.value.status === 202 ? response.value.value : undefined
+          })
+        );
+      } else {
+        throw new Error(
+          `deleteUserDataProcessing response status ${response.value.status}`
+        );
+      }
+    } else {
+      throw new Error(readableReport(response.value));
+    }
+  } catch (e) {
+    yield put(
+      deleteUserDataProcessing.failure({
+        choice,
+        error: e
+      })
+    );
+  }
+}
 /**
  * Listen for requests related to the user data processing (profile deletion or profile-related data downloading)
  */
@@ -96,12 +142,21 @@ export function* watchUserDataProcessingSaga(
   >["getUserDataProcessingRequest"],
   postUserDataProcessingRequest: ReturnType<
     typeof BackendClient
-  >["postUserDataProcessingRequest"]
+  >["postUserDataProcessingRequest"],
+  deleteUserDataProcessingRequest: ReturnType<
+    typeof BackendClient
+  >["deleteUserDataProcessingRequest"]
 ): SagaIterator {
   yield takeEvery(
     loadUserDataProcessing.request,
     loadUserDataProcessingSaga,
     getUserDataProcessingRequest
+  );
+
+  yield takeEvery(
+    deleteUserDataProcessing.request,
+    deleteUserDataProcessingSaga,
+    deleteUserDataProcessingRequest
   );
 
   yield takeEvery(

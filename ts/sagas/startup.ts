@@ -341,7 +341,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield fork(
     watchUserDataProcessingSaga,
     backendClient.getUserDataProcessingRequest,
-    backendClient.postUserDataProcessingRequest
+    backendClient.postUserDataProcessingRequest,
+    backendClient.deleteUserDataProcessingRequest
   );
 
   // Load visible services and service details from backend when requested
