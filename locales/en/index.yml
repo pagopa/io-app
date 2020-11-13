@@ -1734,7 +1734,7 @@ bonus:
         deactivate:
           title: "Method deactivation"
           body: "Are you sure you want to disable the cashback on this payment method? If you confirm this choice, the method from now on will no longer contribute to the collection of transactions.
-                 The deactivation will be effective ** from tomorrow **, so the transactions you make today with this tool may still be considered. "
+                 The deactivation will be effective **from tomorrow**, so the transactions you make today with this tool may still be considered. "
       card:
         status:
           active: Active
