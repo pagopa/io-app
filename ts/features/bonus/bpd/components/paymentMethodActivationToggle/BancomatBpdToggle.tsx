@@ -59,7 +59,7 @@ const BancomatBpdToggle: React.FunctionComponent<Props> = props => {
         props.card,
         EnableableFunctionsTypeEnum.BPD
       )}
-      caption={"very veru veru veru veru veru long name name name name"}
+      caption={abiDescription}
     />
   );
 };
