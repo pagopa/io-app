@@ -245,7 +245,7 @@ export const getProfileDetailsLog = (
   separator: string = " / "
 ) =>
   `- spid_email: ${fromNullable(profile.spid_email as string).getOrElse(
-    "spid email: n/a"
+    "n/a"
   )}${separator}- email: ${fromNullable(profile.email as string).getOrElse(
-    "email: n/a"
+    "n/a"
   )}${separator}- cf: ${profile.fiscal_code as string}`;
