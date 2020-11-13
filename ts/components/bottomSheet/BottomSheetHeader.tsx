@@ -1,13 +1,13 @@
+import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
+import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { View } from "native-base";
-import customVariables from "../../theme/variables";
 import I18n from "../../i18n";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import customVariables from "../../theme/variables";
 import { H3 } from "../core/typography/H3";
-import IconFont from "../ui/IconFont";
-import { IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
+import IconFont from "../ui/IconFont";
 
 const styles = StyleSheet.create({
   row: {
@@ -51,10 +51,9 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
 }: Props) => (
   <View style={styles.row}>
     <H3>{title}</H3>
-    <ButtonDefaultOpacity
+    <TouchableWithoutFeedback
       style={styles.modalClose}
       onPress={onClose}
-      transparent={true}
       accessible={true}
       accessibilityRole={"button"}
       accessibilityLabel={I18n.t("global.buttons.close")}
@@ -64,6 +63,6 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
         color={customVariables.lightGray}
         style={styles.icon}
       />
-    </ButtonDefaultOpacity>
+    </TouchableWithoutFeedback>
   </View>
 );
