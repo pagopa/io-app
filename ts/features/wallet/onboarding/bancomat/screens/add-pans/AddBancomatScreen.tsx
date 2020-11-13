@@ -23,7 +23,6 @@ import {
   onboardingBancomatChosenPanSelector
 } from "../../store/reducers/addingPans";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
-import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import AddBancomatComponent from "./AddBancomatComponent";
 import LoadAddBancomatComponent from "./LoadAddBancomatComponent";
 
@@ -54,7 +53,6 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
       currentIndex >= props.cards.length &&
       (currentAction.skip || props.isAddingReady)
     ) {
-      props.loadWallets();
       props.onCompleted();
     }
   }, [currentAction, props.isAddingReady]);
@@ -93,7 +91,6 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addBancomat: (pan: Card) => dispatch(addBancomatToWallet.request(pan)),
-  loadWallets: () => dispatch(fetchWalletsRequest()),
   onCompleted: () => dispatch(walletAddBancomatCompleted()),
   onCancel: () => dispatch(walletAddBancomatCancel()),
   onRetry: (panSelected: Card) =>
