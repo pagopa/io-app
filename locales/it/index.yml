@@ -68,6 +68,8 @@ global:
     add: Aggiungi
     edit: "Modifica"
     info: "Info"
+    activate: "Attiva"
+    deactivate: "Disattiva"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -1751,7 +1753,20 @@ bonus:
         activateOnOthersChannel:
           text1: "Attivati su "
           text2: "altri canali"
-        notActivable: "Non attivabili o non compatibili"
+          title: "Metodo non compatibile"
+          body: "Il metodo di pagamento non è compatibile [MISSING TEXT]"
+        notActivable:
+          header: "Non attivabili o non compatibili"
+          title: "Metodo non attivabile"
+          body: "Qualcun altro ha già attivato in questo momento il cashback su questo metodo di pagamento: [MISSING TEXT]"
+        activate:
+          title: "Attivazione metodo"
+          body: "Confermi di voler attivare il cashback su questo metodo di pagamento?
+                 L’attivazione sarà operativa **da domani**, quindi non saranno valide ai fini del cashback le transazioni che farai nella giornata di oggi."
+        deactivate:
+          title: "Disattivazione metodo"
+          body: "Sei sicuro di voler disattivare il cashback su questo metodo di pagamento? Se confermi questa scelta, il metodo d’ora in poi non concorrerà più alla collezione delle transazioni.
+                 La disattivazione sarà operativa **da domani**, quindi potrebbero essere ancora considerate le transazioni che fai oggi con questo strumento."
       card:
         status:
           active: Attivo

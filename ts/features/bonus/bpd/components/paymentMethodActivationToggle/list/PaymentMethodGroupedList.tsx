@@ -65,7 +65,9 @@ const NotActivablesSection = (props: {
   <View>
     <View spacer={true} />
     <View style={styles.row}>
-      <Body>{I18n.t("bonus.bpd.details.paymentMethods.notActivable")}</Body>
+      <Body>
+        {I18n.t("bonus.bpd.details.paymentMethods.notActivable.header")}
+      </Body>
     </View>
     <View spacer={true} />
     <PaymentMethodRawList paymentList={props.paymentMethods} />
