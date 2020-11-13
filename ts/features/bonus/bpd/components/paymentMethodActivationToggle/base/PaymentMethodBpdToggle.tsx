@@ -18,6 +18,7 @@ import {
   HPan
 } from "../../../store/actions/paymentMethods";
 import { bpdPaymentMethodValueSelector } from "../../../store/reducers/details/paymentMethods";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { BpdToggle } from "./BpdToggle";
 
 // TODO: accept only hpan, read all the other information with a selector from payment methods
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     resizeMode: "contain"
   },
-  leftSection: { flexDirection: "row", flex: 1 }
+  leftSection: { flexDirection: "row", flex: 1, paddingRight: 6 }
 });
 
 const retryTimeout = 5000 as Millisecond;
@@ -155,7 +156,7 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
         <View style={styles.leftSection}>
           <Image source={props.icon} style={styles.cardIcon} />
           <View hspacer={true} />
-          <Body>{props.caption}</Body>
+          <Body style={IOStyles.flex}>{props.caption}</Body>
         </View>
         <BpdToggle
           graphicalValue={graphicalState}
