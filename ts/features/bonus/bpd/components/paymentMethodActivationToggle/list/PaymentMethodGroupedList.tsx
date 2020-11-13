@@ -7,8 +7,8 @@ import I18n from "../../../../../../i18n";
 import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
 import { WalletV2WithActivation } from "../../../store/reducers/details/combiner";
 import { Link } from "../../../../../../components/core/typography/Link";
-import { PaymentMethodRawList } from "./PaymentMethodRawList";
 import { hasFunctionEnabled } from "../../../../../../utils/walletv2";
+import { PaymentMethodRawList } from "./PaymentMethodRawList";
 
 type Props = { paymentList: ReadonlyArray<WalletV2WithActivation> };
 
