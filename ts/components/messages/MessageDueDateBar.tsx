@@ -1,4 +1,4 @@
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
@@ -146,6 +146,28 @@ const TextContent: React.FunctionComponent<{
   );
 };
 
+const getCalendarIconBackgoundColor = (status: PaymentStatus) =>
+  status === "paid"
+    ? customVariables.lighterGray
+    : status === "expiring" ||
+      status === "expiredAndExpirable" ||
+      status === "expiredNotExpirable"
+    ? customVariables.colorWhite
+    : status === "valid"
+    ? customVariables.brandDarkGray
+    : assertNever(status);
+
+const getCalendarTextColor = (status: PaymentStatus) =>
+  status === "paid"
+    ? customVariables.colorWhite
+    : status === "expiring" || status === "expiredNotExpirable"
+    ? customVariables.calendarExpirableColor
+    : status === "expiredAndExpirable"
+    ? customVariables.brandDarkGray
+    : status === "valid"
+    ? customVariables.colorWhite
+    : assertNever(status);
+
 // The calendar icon is shown if:
 // - the payment related to the message is not yet paid
 // - the message has a due date
@@ -153,27 +175,9 @@ const CalendarIcon: React.FunctionComponent<{
   status: PaymentStatus;
   dueDate: Date;
 }> = ({ status, dueDate }) => {
-  const iconBackgoundColor =
-    status === "paid"
-      ? customVariables.lighterGray
-      : status === "expiring" ||
-        status === "expiredAndExpirable" ||
-        status === "expiredNotExpirable"
-      ? customVariables.colorWhite
-      : status === "valid"
-      ? customVariables.brandDarkGray
-      : assertNever(status);
+  const iconBackgoundColor = getCalendarIconBackgoundColor(status);
 
-  const textColor =
-    status === "paid"
-      ? customVariables.colorWhite
-      : status === "expiring" || status === "expiredNotExpirable"
-      ? customVariables.calendarExpirableColor
-      : status === "expiredAndExpirable"
-      ? customVariables.brandDarkGray
-      : status === "valid"
-      ? customVariables.colorWhite
-      : assertNever(status);
+  const textColor = getCalendarTextColor(status);
 
   return (
     <CalendarIconComponent
