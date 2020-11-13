@@ -704,9 +704,8 @@ wallet:
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
   transactionHelpMessage:
-    text1: If you have had problems during a payment or onboarding a payment instrument,
-    text2: consult the help
-    text3: at the top right of this page
+    text1: Problems with a payment or adding a new method?
+    text2: Consult the help at the top right of this page.
   transactionsLoadMore: Load previous
   transacionsLoadingMore: Loading previous...
   pickPaymentMethod:
@@ -1481,6 +1480,9 @@ faq:
   77:
     title: "Is any kind of ISEE right to request the Bonus Vacanze?"
     content: !include bonus/faq/faq77.md
+  78:
+    title: "Did you have problems adding a new payment method?"
+    content: !include bonus/bpd/faq/faqBpd1.md
 bonus:
   bonusVacanze:
     accessibility:

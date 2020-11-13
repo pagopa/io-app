@@ -348,7 +348,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         <Text style={alignCenter ? styles.centered : undefined} bold={true}>
           {I18n.t("wallet.transactionHelpMessage.text2")}
         </Text>
-        {` ${I18n.t("wallet.transactionHelpMessage.text3")}`}
       </Text>
     </React.Fragment>
   );

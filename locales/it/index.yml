@@ -725,9 +725,8 @@ wallet:
   transactionsLoadMessage: Carico lo storico delle transazioni...
   transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
   transactionHelpMessage:
-    text1: Se hai avuto problemi durante un pagamento o l'inserimento di uno strumento di pagamento,
-    text2: consulta l'help
-    text3: in alto a destra su questa pagina
+    text1: Problemi con un pagamento o l’aggiunta di un nuovo metodo?
+    text2: Consulta l’help in alto a destra su questa pagina.
   transactionsLoadMore: Carica precedenti
   transacionsLoadingMore: Carico precedenti...
   pickPaymentMethod:
@@ -1451,7 +1450,7 @@ faq:
     title: "Come cancellare tutti i tuoi dati da IO?"
     content: !include faq/faq56.md
   57:
-    title: "Hai avuto problemi durante un pagamento o l'inserimento di uno strumento di pagamento?"
+    title: "Hai avuto problemi durante un pagamento?"
     content: !include faq/faq57.md
   58:
     title: "Come faccio a richiedere il bonus?"
@@ -1513,6 +1512,9 @@ faq:
   77:
     title: "Qualsiasi tipo di ISEE è valido per richiedere il Bonus Vacanze tramite l’app IO?"
     content: !include bonus/faq/faq77.md
+  78:
+    title: "Hai avuto problemi nell’aggiunta di un nuovo metodo di pagamento?"
+    content: !include bonus/bpd/faq/faqBpd1.md
 bonus:
   bonusVacanze:
     accessibility:
