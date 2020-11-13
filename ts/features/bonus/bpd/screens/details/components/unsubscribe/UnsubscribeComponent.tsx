@@ -26,11 +26,17 @@ export const UnsubscribeComponent: React.FunctionComponent<Props> = props => (
     footer={
       <FooterWithButtons
         type={"TwoButtonsInlineThird"}
-        leftButton={cancelButtonProps(props.onCancel)}
-        rightButton={errorButtonProps(
-          props.onConfirm,
-          I18n.t("bonus.bpd.unsubscribe.confirmCta")
-        )}
+        leftButton={{
+          ...cancelButtonProps(props.onCancel),
+          wrapWithTouchableWithoutFeedback: true
+        }}
+        rightButton={{
+          ...errorButtonProps(
+            props.onConfirm,
+            I18n.t("bonus.bpd.unsubscribe.confirmCta")
+          ),
+          wrapWithTouchableWithoutFeedback: true
+        }}
       />
     }
   >

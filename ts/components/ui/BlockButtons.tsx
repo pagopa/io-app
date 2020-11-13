@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnButtonProps = {
+  wrapWithTouchableWithoutFeedback?: true;
   title: string;
   buttonFontSize?: number;
   iconName?: string;
@@ -130,7 +131,11 @@ export default class BlockButtons extends React.Component<Props, never> {
     props: BlockButtonProps,
     style: ComponentProps<typeof ButtonDefaultOpacity>["style"]
   ) => (
-    <ButtonDefaultOpacity style={style} {...props}>
+    <ButtonDefaultOpacity
+      style={style}
+      {...props}
+      wrapWithTouchableWithoutFeedback={props.wrapWithTouchableWithoutFeedback}
+    >
       {props.iconName && (
         <IconFont
           name={props.iconName}
