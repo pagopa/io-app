@@ -9,12 +9,14 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import { H2 } from "../../../components/core/typography/H2";
 import I18n from "../../../i18n";
-import { navigateToPaymentHistoryDetail } from "../../../store/actions/navigation";
+import { navigateToCreditCardOnboardingAttempt } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { PaymentHistory } from "../../../store/reducers/payments/history";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
-import { creditCardAttemptionsSelector } from "../../../store/reducers/wallet/creditCard";
+import {
+  creditCardAttemptionsSelector,
+  CreditCardInsertion
+} from "../../../store/reducers/wallet/creditCard";
 import { Body } from "../../../components/core/typography/Body";
 import { CreditCardAttemptsList } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
 
@@ -67,9 +69,9 @@ class CreditCardOnboardingAttemptsScreen extends React.Component<Props, never> {
           )}
           creditCardAttempts={creditCardOnboardingAttempts}
           ListEmptyComponent={ListEmptyComponent}
-          navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
-            this.props.navigateToPaymentHistoryDetail({
-              payment
+          onAttemptPress={(attempt: CreditCardInsertion) =>
+            this.props.navigateToCreditCardAttemptDetail({
+              attempt
             })
           }
         />
@@ -83,8 +85,9 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToPaymentHistoryDetail: (param: { payment: PaymentHistory }) =>
-    dispatch(navigateToPaymentHistoryDetail(param))
+  navigateToCreditCardAttemptDetail: (param: {
+    attempt: CreditCardInsertion;
+  }) => dispatch(navigateToCreditCardOnboardingAttempt(param))
 });
 
 export default withValidatedPagoPaVersion(

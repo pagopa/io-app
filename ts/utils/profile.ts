@@ -6,6 +6,7 @@ import { InitializedProfile } from "../../definitions/backend/InitializedProfile
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality } from "../../definitions/content/Municipality";
 import { ProfileState } from "../store/reducers/profile";
+import { fromNullable } from "fp-ts/lib/Option";
 
 type GenderType = "M" | "F" | undefined;
 
@@ -237,3 +238,14 @@ export const getBlockedChannels = (
     ...profileBlockedChannels
   };
 };
+
+// a string log containing profile details
+export const getProfileDetailsLog = (
+  profile: InitializedProfile,
+  separator: string = " / "
+) =>
+  `- spid_email: ${fromNullable(profile.spid_email as string).getOrElse(
+    "spid email: n/a"
+  )}${separator}- email: ${fromNullable(profile.email as string).getOrElse(
+    "email: n/a"
+  )}${separator}- cf: ${profile.fiscal_code as string}`;

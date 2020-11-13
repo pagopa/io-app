@@ -657,6 +657,11 @@ wallet:
       emptyTitle: Nessun tentitivo di aggiunta di un metodo di pagamento
       emptyBody: IO non ha memorizzato tentativi di aggiunta di un metodo di pagamento. Qui troverai i tentativi più recenti
       lastAttemptsTitle: Ultimi tentativi
+      success: Aggiunto
+      failure: Fallito
+      dateTime: Data e ora
+      detailTitle: Dettaglio
+      help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
   searchAbi:
     title: Aggiungi carta Bancomat
     description:

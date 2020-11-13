@@ -1,10 +1,6 @@
-/**
- * This component displays a list of attempts of payment instrument onboarding
- */
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
-import { PaymentHistory } from "../../../store/reducers/payments/history";
 import variables from "../../../theme/variables";
 import I18n from "../../../i18n";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
@@ -19,11 +15,12 @@ import { BadgeComponent } from "../../screens/BadgeComponent";
 import IconFont from "../../ui/IconFont";
 import customVariables from "../../../theme/variables";
 import { Label } from "../../core/typography/Label";
+import { IOStyles } from "../../core/variables/IOStyles";
 
 type Props = Readonly<{
   title: string;
   creditCardAttempts: CreditCardInsertionState;
-  navigateToPaymentHistoryDetail: (payment: PaymentHistory) => void;
+  onAttemptPress: (attempt: CreditCardInsertion) => void;
   ListEmptyComponent: React.ReactNode;
 }>;
 
@@ -61,57 +58,68 @@ const itemStyles = StyleSheet.create({
 });
 
 const FOUR_UNICODE_CIRCLES = "●".repeat(4);
-const notAvailable = I18n.t("global.remoteStates.notAvailable");
 const ICON_WIDTH = 24;
+const labelColor = "bluegrey";
+export const getPanDescription = (attempt: CreditCardInsertion) =>
+  `${FOUR_UNICODE_CIRCLES} ${attempt.blurredPan}\n ${I18n.t(
+    "cardComponent.validUntil"
+  ).toLowerCase()} ${attempt.expireMonth}/${attempt.expireYear}`;
+
+const getAttemptData = (attempt: CreditCardInsertion) => {
+  const conditionalData = attempt.onboardingComplete
+    ? {
+        color: "green",
+        header: I18n.t("wallet.creditCard.onboardingAttempts.success")
+      }
+    : {
+        color: "red",
+        header: I18n.t("wallet.creditCard.onboardingAttempts.failure")
+      };
+  const startDate = new Date(attempt.startDate);
+  const when = `${formatDateAsLocal(
+    startDate,
+    true,
+    true
+  )} - ${startDate.toLocaleTimeString()}`;
+  return {
+    panAndExpiringDate: getPanDescription(attempt),
+    when,
+    ...conditionalData
+  };
+};
+
+/**
+ * This component show a list with the last credit card onboarding attempts
+ */
 export const CreditCardAttemptsList: React.FC<Props> = (props: Props) => {
   const { ListEmptyComponent, creditCardAttempts } = props;
   const renderCreditCardAttempt = (
     info: ListRenderItemInfo<CreditCardInsertion>
   ) => {
-    const attempt = info.item;
-    const conditionalData = attempt.onboardingComplete
-      ? {
-          color: "green",
-          header: I18n.t("payment.details.state.successful")
-        }
-      : { color: "red", header: I18n.t("payment.details.state.failed") };
-    const startDate = new Date(attempt.startDate);
-    const data = {
-      when: `${formatDateAsLocal(
-        startDate,
-        true,
-        true
-      )} - ${startDate.toLocaleTimeString()}`,
-      ...conditionalData
-    };
+    const attemptData = getAttemptData(info.item);
     return (
-      <View style={{ flex: 1 }}>
+      <View style={IOStyles.flex}>
         <TouchableDefaultOpacity
-          onPress={undefined}
+          onPress={() => props.onAttemptPress(info.item)}
           style={itemStyles.verticalPad}
         >
-          <View style={{ flexDirection: "row", flex: 1 }}>
-            <View style={{ flex: 1 }}>
+          <View style={[IOStyles.flex, IOStyles.row]}>
+            <View style={IOStyles.flex}>
               <View style={itemStyles.spaced}>
-                <BadgeComponent color={data.color} />
-                <Label color={"bluegrey"} style={itemStyles.text11}>
-                  {data.header}
+                <BadgeComponent color={attemptData.color} />
+                <Label color={labelColor} style={itemStyles.text11}>
+                  {attemptData.header}
                 </Label>
               </View>
-              <Text>{data.when}</Text>
               <View small={true} />
-              <Label color={"bluegrey"} weight={"Regular"}>
-                {`${FOUR_UNICODE_CIRCLES} ${attempt.blurredPan}\n ${I18n.t(
-                  "cardComponent.validUntil"
-                )}  ${attempt.expireMonth}/${attempt.expireYear}`}
+              <Label color={labelColor} weight={"Regular"}>
+                {attemptData.panAndExpiringDate}
+              </Label>
+              <Label color={labelColor} weight={"Regular"}>
+                {attemptData.when}
               </Label>
             </View>
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "flex-end"
-              }}
-            >
+            <View style={itemStyles.icon}>
               <IconFont
                 name={"io-right"}
                 size={ICON_WIDTH}

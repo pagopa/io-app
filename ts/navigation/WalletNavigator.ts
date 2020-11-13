@@ -24,6 +24,7 @@ import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
 import CreditCardOnboardingAttemptsScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptsScreen";
+import CreditCardOnboardingAttemptDetailScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -75,11 +76,14 @@ const baseRouteConfigMap = {
   [ROUTES.PAYMENTS_HISTORY_SCREEN]: {
     screen: PaymentsHistoryScreen
   },
+  [ROUTES.PAYMENT_HISTORY_DETAIL_INFO]: {
+    screen: PaymentHistoryDetailsScreen
+  },
   [ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN]: {
     screen: CreditCardOnboardingAttemptsScreen
   },
-  [ROUTES.PAYMENT_HISTORY_DETAIL_INFO]: {
-    screen: PaymentHistoryDetailsScreen
+  [ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL]: {
+    screen: CreditCardOnboardingAttemptDetailScreen
   }
 };
 

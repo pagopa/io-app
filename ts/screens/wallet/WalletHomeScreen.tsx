@@ -486,7 +486,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       ? this.transactionError()
       : this.transactionList(
           potTransactions,
-          anyHistoryPayments | anyCreditCardAttempts
+          anyHistoryPayments || anyCreditCardAttempts
         );
 
     const footerContent =

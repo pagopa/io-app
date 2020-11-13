@@ -636,6 +636,11 @@ wallet:
       emptyTitle: No attempts to onboard payment method
       emptyBody: IO did not log attempts to add a payment method. Here you will find the most recent attempts
       lastAttemptsTitle: Last attempts
+      success: Success
+      failure: Failure
+      dateTime: Date and time
+      detailTitle: Details
+      help: If you have encountered a problem entering this payment method, write for more information and details
   searchAbi:
     title: Add Bancomat card
     description:
