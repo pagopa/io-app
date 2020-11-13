@@ -52,6 +52,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
   <View style={styles.row}>
     <H3>{title}</H3>
     <ButtonDefaultOpacity
+      onPressWithGestureHandler={true}
       style={styles.modalClose}
       onPress={onClose}
       transparent={true}
