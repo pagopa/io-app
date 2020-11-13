@@ -10,11 +10,10 @@ import {
   bpdIbanInsertionResetScreen
 } from "../../store/actions/iban";
 import { bpdUpsertIbanSelector } from "../../store/reducers/details/activation/payoffInstrument";
-import IbanKoCannotVerify from "./ko/IbanKOCannotVerify";
-import IbanKoNotOwned from "./ko/IbanKONotOwned";
-import IbanKOWrong from "./ko/IbanKOWrong";
 import IbanLoadingUpsert from "./IbanLoadingUpsert";
 import IbanInsertionScreen from "./insertion/IbanInsertionScreen";
+import IbanKoNotOwned from "./ko/IbanKONotOwned";
+import IbanKOWrong from "./ko/IbanKOWrong";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -25,13 +24,12 @@ const chooseRenderScreen = (props: Props) => {
     return <IbanLoadingUpsert />;
   } else if (isReady(ibanStatus)) {
     switch (ibanStatus.value) {
-      case IbanStatus.CANT_VERIFY:
-        return <IbanKoCannotVerify />;
       case IbanStatus.NOT_OWNED:
         return <IbanKoNotOwned />;
       case IbanStatus.NOT_VALID:
         return <IbanKOWrong />;
       case IbanStatus.OK:
+      case IbanStatus.CANT_VERIFY:
         props.reset();
         props.completed();
     }

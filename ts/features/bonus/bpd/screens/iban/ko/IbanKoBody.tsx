@@ -1,4 +1,3 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -12,6 +11,7 @@ import { bpdUpsertIbanSelector } from "../../../store/reducers/details/activatio
 type OwnProps = {
   text1: string;
   text2: string;
+  isFlex?: boolean;
 };
 
 export type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -28,17 +28,18 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const IbanKoBody: React.FunctionComponent<Props> = props => {
-  const iban: string = fromNullable(props.candidateIban.value).fold(
-    "",
-    iban => iban as string
-  );
+  const iban: string = props.candidateIban.value ?? "";
+  const style = props.isFlex ?? true ? IOStyles.flex : {};
+
   return (
-    <View style={IOStyles.flex}>
+    <View style={style}>
       <H4 color={"bluegrey"} weight={"Regular"} style={styles.text}>
         {props.text1}
       </H4>
       <View spacer={true} small={true} />
-      <Monospace style={styles.text}>{iban}</Monospace>
+      <Monospace style={styles.text} weight={"SemiBold"}>
+        {iban}
+      </Monospace>
       <View spacer={true} small={true} />
       <H4 color={"bluegrey"} weight={"Regular"} style={styles.text}>
         {props.text2}

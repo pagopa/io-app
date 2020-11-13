@@ -4,7 +4,10 @@ import { IOColorType } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { typographyFactory } from "./Factory";
 
-type AllowedColors = Extract<IOColorType, "blue" | "bluegrey" | "white">;
+type AllowedColors = Extract<
+  IOColorType,
+  "blue" | "bluegrey" | "white" | "red"
+>;
 type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular">;
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>

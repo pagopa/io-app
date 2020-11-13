@@ -7,11 +7,11 @@ import { typographyFactory } from "./Factory";
 // these colors are allowed only when the weight is SemiBold
 type AllowedSemiBoldColors = Extract<
   IOColorType,
-  "bluegreyDark" | "bluegreyLight" | "white"
+  "bluegreyDark" | "bluegreyLight" | "white" | "red"
 >;
 
 // when the weight is bold, only the white color is allowed
-type AllowedBoldColors = Extract<IOColorType, "white">;
+type AllowedBoldColors = Extract<IOColorType, "white" | "black">;
 
 // all the possible colors
 type AllowedColors = AllowedBoldColors | AllowedSemiBoldColors;

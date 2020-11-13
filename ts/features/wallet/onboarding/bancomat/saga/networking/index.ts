@@ -60,11 +60,13 @@ export function* handleLoadPans(
     );
     if (getPansWithRefreshResult.isRight()) {
       if (getPansWithRefreshResult.value.status === 200) {
+        const response = getPansWithRefreshResult.value.value.data;
         return yield put(
           searchUserPans.success(
-            fromNullable(
-              getPansWithRefreshResult.value.value.data?.data
-            ).getOrElse([])
+            fromNullable({
+              cards: response?.data ?? [],
+              messages: response?.messages ?? []
+            }).getOrElse({ cards: [], messages: [] })
           )
         );
       } else {
@@ -107,7 +109,7 @@ export function* handleAddPan(
   try {
     const addPansWithRefresh = sessionManager.withRefresh(
       // add a card as an array of one element
-      addPans({ data: [action.payload] })
+      addPans({ data: { data: [action.payload] } })
     );
     const addPansWithRefreshResult: SagaCallReturnType<typeof addPansWithRefresh> = yield call(
       addPansWithRefresh

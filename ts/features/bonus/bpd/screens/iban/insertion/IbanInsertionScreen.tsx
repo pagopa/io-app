@@ -8,6 +8,7 @@ import {
   bpdIbanInsertionContinue,
   bpdUpsertIban
 } from "../../../store/actions/iban";
+import { bpdIbanPrefillSelector } from "../../../store/reducers/details/activation";
 import { IbanInsertionComponent } from "./IbanInsertionComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -22,6 +23,7 @@ const IbanInsertionScreen: React.FunctionComponent<Props> = props => (
     onBack={props.cancel}
     onContinue={props.continue}
     onIbanConfirm={props.submitIban}
+    startIban={props.prefillIban}
   />
 );
 
@@ -31,7 +33,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   submitIban: (iban: Iban) => dispatch(bpdUpsertIban.request(iban))
 });
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  prefillIban: bpdIbanPrefillSelector(state)
+});
 
 export default connect(
   mapStateToProps,

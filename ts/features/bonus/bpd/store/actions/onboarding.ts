@@ -25,6 +25,13 @@ export const bpdDeleteUserFromProgram = createAsyncAction(
 )<void, void, Error>();
 
 /**
+ * The user ends the unsubscribe workflow
+ */
+export const bpdUnsubscribeCompleted = createStandardAction(
+  "BPD_UNSUBSCRIBE_COMPLETED"
+)<void>();
+
+/**
  * Start the onboarding workflow
  */
 export const bpdOnboardingStart = createStandardAction("BPD_ONBOARDING_START")<
@@ -66,4 +73,5 @@ export type BpdOnboardingActions =
   | ActionType<typeof bpdOnboardingAcceptDeclaration>
   | ActionType<typeof bpdOnboardingCancel>
   | ActionType<typeof bpdOnboardingCompleted>
-  | ActionType<typeof bpdDeleteUserFromProgram>;
+  | ActionType<typeof bpdDeleteUserFromProgram>
+  | ActionType<typeof bpdUnsubscribeCompleted>;

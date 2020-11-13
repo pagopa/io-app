@@ -1606,7 +1606,15 @@ bonus:
   bpd:
     title: Cashback Digital Payments
     name: Cashback
-    unsubscribe: "Disable cashback"
+    unsubscribe:
+      cta: "Disable cashback"
+      title: "Cashback deactivation"
+      body1: "Are you sure you want to cancel your digital payments cashback subscription?"
+      body2: "If you confirm you will no longer be able to collect transactions or compete for the Super Cashback, and **you will not be able to collect a refund**, if you have been acknowledged. The deactivation of Digital Payments Cashback will have an effect **also in the other channels** that you used to activate it (eg Home Banking, app, etc ..) \ nIf you reactivate the cashback later **you will restart from zero transactions**."
+      confirmCta: "Cancel subscription"
+      loading: "We are canceling your subscription"
+      success: "Your cashback membership has been canceled"
+      failure: "We were unable to unsubscribe, please try again"
     earned: Earned Cashback
     onboarding:
       loadingActivationStatus:
@@ -1636,6 +1644,7 @@ bonus:
     iban:
       iban: "IBAN"
       edit: "Change IBAN"
+      verify: "Check IBAN"
       insertion:
         title: "IBAN for accreditation"
         body1: "Indicate here the IBAN of your current account, on which you want to receive credit once the ranking has been consolidated."
@@ -1649,9 +1658,9 @@ bonus:
         text1: "If you are sure the IBAN"
         text2: "identify the account on which you want to receive credit, you can proceed."
       koNotOwned:
-        title: "The current account is not in your name"
-        text1: "The IBAN you entered"
-        text2: "identify a current account that is not registered in your tax code: are you sure you want to use this IBAN?"
+        title: "Check the IBAN entered"
+        text1: "IBAN"
+        text2: "is not registered to"
       loading:
         "We are verifying your IBAN\n\nPlease wait."
     details:
@@ -1669,10 +1678,30 @@ bonus:
           closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
           closedPeriodMaxAmount: "it's the maximum possible refund!"
           inactivePeriodBody: "You will be able to start accumulating valid transactions starting from {{date}}"
+          label:
+            one: "1 valid transaction" 
+            other: "{{count}} valid transactions"
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
         detail:
+          summary:
+            bottomSheet:
+              title: "When will you find your transactions?"
+              body: "Transactions are recorded the day after they are booked by the banks. 
+                This means that normally it can take up to 72 hours before you see your transaction recorded on IO, although the process is usually faster. 
+                It may take a little longer if the purchase is close to the weekend or some holidays, or in some other special condition. 
+                Don't worry: all valid transactions made during the cashback period will be recorded and considered for refunds and ranking!"
+            lastUpdated: "Last updated "
+            link: Anything missing?
+            body:
+              text1: "During the period "
+              text2: "you have totalized "
+              text3:
+                one: "1 valid transaction "
+                other: "{{count}} valid transactions "
+              text4: "and earned "
+              text5: "a cashback of "
           title: "Detail of the transaction"
           paymentCircuit: "Payment circuit"
           transactionAmount: "Transaction amount"
