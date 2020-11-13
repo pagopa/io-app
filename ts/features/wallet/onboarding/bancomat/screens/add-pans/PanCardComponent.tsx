@@ -12,7 +12,7 @@ import I18n from "../../../../../../i18n";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H5 } from "../../../../../../components/core/typography/H5";
 import customVariables from "../../../../../../theme/variables";
-import { formatDateAsLocal } from "../../../../../../utils/dates";
+import { format } from "../../../../../../utils/dates";
 import { useImageResize } from "../hooks/useImageResize";
 import pagoBancomatLogo from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
@@ -91,7 +91,7 @@ const PanCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           {props.pan.expiringDate && (
             <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
               "cardComponent.validUntil"
-            )} ${formatDateAsLocal(props.pan.expiringDate)}`}</H5>
+            )} ${format(props.pan.expiringDate, "MM/YYYY")}`}</H5>
           )}
         </View>
         <View style={styles.bottomRow}>

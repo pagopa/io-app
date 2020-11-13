@@ -7,13 +7,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
-import {
-  Alert,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet
-} from "react-native";
+import { Alert, Keyboard, Platform, StyleSheet } from "react-native";
 import { NavigationScreenProps, StackActions } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -42,6 +36,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
+import { withKeyboard } from "../../utils/keyboard";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -306,15 +301,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             </View>
           </Content>
         </View>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "android" ? "height" : "padding"}
-          keyboardVerticalOffset={Platform.select({
-            ios: 0,
-            android: customVariables.contentPadding
-          })}
-        >
-          {this.renderFooterButtons()}
-        </KeyboardAvoidingView>
+        {withKeyboard(this.renderFooterButtons())}
       </BaseScreenComponent>
     );
   }
