@@ -19,7 +19,9 @@ import {
   bpdIbanInsertionStart,
   bpdUpsertIban
 } from "../store/actions/iban";
+import { bpdTransactionsLoad } from "../store/actions/transactions";
 
+// eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
@@ -52,6 +54,24 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, { ibanStatus: action.payload.status });
     case getType(bpdUpsertIban.failure):
       return mp.track(action.type, { reason: action.payload.message });
+
+    // transactions
+    case getType(bpdTransactionsLoad.request):
+      return mp.track(action.type, { awardPeriodId: action.payload });
+    case getType(bpdTransactionsLoad.success):
+      return mp.track(action.type, {
+        awardPeriodId: action.payload.awardPeriodId,
+        hashPan: action.payload.results.map(r => r.hashPan),
+        idTrxAcquirer: action.payload.results.map(r => r.idTrxAcquirer),
+        idTrxIssuer: action.payload.results.map(r => r.idTrxIssuer),
+        trxDate: action.payload.results.map(r => r.trxDate),
+        circuitType: action.payload.results.map(r => r.circuitType)
+      });
+    case getType(bpdTransactionsLoad.failure):
+      return mp.track(action.type, {
+        awardPeriodId: action.payload.awardPeriodId,
+        reason: action.payload.error
+      });
   }
   return Promise.resolve();
 };
