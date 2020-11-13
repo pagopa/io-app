@@ -8,6 +8,7 @@ import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
 import { WalletV2WithActivation } from "../../../store/reducers/details/combiner";
 import { Link } from "../../../../../../components/core/typography/Link";
 import { PaymentMethodRawList } from "./PaymentMethodRawList";
+import { hasFunctionEnabled } from "../../../../../../utils/walletv2";
 
 type Props = { paymentList: ReadonlyArray<WalletV2WithActivation> };
 
@@ -20,7 +21,7 @@ const isOtherChannel = (w: WalletV2WithActivation) =>
 
 const isNotActivable = (w: WalletV2WithActivation) =>
   w.activationStatus === "notActivable" ||
-  !w.enableableFunctions.includes(EnableableFunctionsTypeEnum.BPD);
+  !hasFunctionEnabled(w, EnableableFunctionsTypeEnum.BPD);
 
 /**
  * A quick solution, not the best but the cardinality of the entities

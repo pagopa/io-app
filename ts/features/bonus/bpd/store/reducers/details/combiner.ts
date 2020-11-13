@@ -250,20 +250,18 @@ export const walletV2WithActivationStatusSelector = createSelector(
     pot.map(walletV2Pot, walletv2 =>
       walletv2.map(pm => {
         // try to extract the activation status to enhance the wallet
-        const activationStatus =
-          pm.info.hashPan !== undefined
-            ? fromNullable(bpdActivations[pm.info.hashPan])
-                .map(paymentMethodActivation =>
-                  pot.getOrElse(
-                    pot.map(
-                      paymentMethodActivation,
-                      activationStatus => activationStatus.activationStatus
-                    ),
-                    undefined
-                  )
-                )
-                .getOrElse(undefined)
-            : undefined;
+        const activationStatus = fromNullable(pm.info.hashPan)
+          .chain(hp => fromNullable(bpdActivations[hp]))
+          .map(paymentMethodActivation =>
+            pot.getOrElse(
+              pot.map(
+                paymentMethodActivation,
+                activationStatus => activationStatus.activationStatus
+              ),
+              undefined
+            )
+          )
+          .getOrElse(undefined);
         return { ...pm, activationStatus };
       })
     )
