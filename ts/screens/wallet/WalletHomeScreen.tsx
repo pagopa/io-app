@@ -55,10 +55,7 @@ import {
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
 import { navSelector } from "../../store/reducers/navigationHistory";
-import {
-  paymentsHistorySelector,
-  PaymentsHistoryState
-} from "../../store/reducers/payments/history";
+import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import {
@@ -73,6 +70,7 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { creditCardAttemptionsSelector } from "../../store/reducers/wallet/creditCard";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -350,7 +348,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         <Text style={alignCenter ? styles.centered : undefined} bold={true}>
           {I18n.t("wallet.transactionHelpMessage.text2")}
         </Text>
-        {` ${I18n.t("wallet.transactionHelpMessage.text3")}`}
       </Text>
     </React.Fragment>
   );
@@ -383,11 +380,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     );
   }
 
-  private listEmptyComponent(potPayments: PaymentsHistoryState) {
+  private listEmptyComponent(renderHelpInfoBox: boolean) {
     return (
       <Content scrollEnabled={false} noPadded={true}>
         <View style={styles.emptyListWrapper}>
-          {potPayments.length > 0 && this.renderHelpMessage(true)}
+          {renderHelpInfoBox && this.renderHelpMessage(true)}
           <Text style={styles.emptyListContentTitle}>
             {I18n.t("wallet.noTransactionsInWalletHome")}
           </Text>
@@ -405,23 +402,21 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
   private transactionList(
     potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>,
-    potPayments: PaymentsHistoryState
+    renderHelpInfoBox: boolean
   ) {
     return (
       <TransactionsList
         title={I18n.t("wallet.latestTransactions")}
         amount={I18n.t("wallet.amount")}
         transactions={potTransactions}
-        helpMessage={
-          potPayments.length > 0 ? this.renderHelpMessage() : undefined
-        }
+        helpMessage={renderHelpInfoBox ? this.renderHelpMessage() : undefined}
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
         readTransactions={this.props.readTransactions}
-        ListEmptyComponent={this.listEmptyComponent(potPayments)}
+        ListEmptyComponent={this.listEmptyComponent(renderHelpInfoBox)}
       />
     );
   }
@@ -473,7 +468,12 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { potWallets, potTransactions, historyPayments } = this.props;
+    const {
+      potWallets,
+      potTransactions,
+      anyHistoryPayments,
+      anyCreditCardAttempts
+    } = this.props;
 
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
@@ -483,7 +483,10 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
     const transactionContent = pot.isError(potTransactions)
       ? this.transactionError()
-      : this.transactionList(potTransactions, historyPayments);
+      : this.transactionList(
+          potTransactions,
+          anyHistoryPayments || anyCreditCardAttempts
+        );
 
     const footerContent =
       pot.isSome(potWallets) && !this.newMethodAdded
@@ -541,7 +544,8 @@ const mapStateToProps = (state: GlobalState) => {
     allActiveBonus: allBonusActiveSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     potWallets: walletsSelector(state),
-    historyPayments: paymentsHistorySelector(state),
+    anyHistoryPayments: paymentsHistorySelector(state).length > 0,
+    anyCreditCardAttempts: creditCardAttemptionsSelector(state).length > 0,
     potTransactions: latestTransactionsSelector(state),
     transactionsLoadedLength: getTransactionsLoadedLength(state),
     areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
