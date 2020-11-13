@@ -1,11 +1,10 @@
 import * as React from "react";
 import { View } from "react-native";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { PatchedWalletV2 } from "../../../../types/pagopa";
-import { bpdToggleFactory } from "./paymentMethodActivationToggle/BpdPaymentMethodToggleFactory";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import { PatchedWalletV2 } from "../../../../../../types/pagopa";
+import { bpdToggleFactory } from "../BpdPaymentMethodToggleFactory";
 
 type Props = {
-  // TODO: waiting for conversion to WalletV2
   paymentList: ReadonlyArray<PatchedWalletV2>;
 };
 
@@ -14,7 +13,7 @@ type Props = {
  * @param props
  * @constructor
  */
-export const PaymentMethodBpdList: React.FunctionComponent<Props> = props => (
+export const PaymentMethodRawList: React.FunctionComponent<Props> = props => (
   <View style={IOStyles.flex}>
     {props.paymentList.map(pm => bpdToggleFactory(pm))}
   </View>

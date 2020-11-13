@@ -67,6 +67,7 @@ global:
     skip: "Salta"
     add: Aggiungi
     edit: "Modifica"
+    info: "Info"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -1746,6 +1747,11 @@ bonus:
           canceled: "Storno"
       paymentMethods:
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare le transazioni necessarie"
+        noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per raccogliere le transazioni"
+        activateOnOthersChannel:
+          text1: "Attivati su "
+          text2: "altri canali"
+        notActivable: "Non attivabili o non compatibili"
       card:
         status:
           active: Attivo
