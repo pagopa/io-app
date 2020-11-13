@@ -1730,7 +1730,7 @@ bonus:
         activate:
           title: "Method activation"
           body: "Are you sure you want to activate cashback on this payment method?
-                 The activation will be operational ** from tomorrow **, so the transactions you make today will not be valid for cashback purposes. "
+                 The activation will be operational **from tomorrow**, so the transactions you make today will not be valid for cashback purposes. "
         deactivate:
           title: "Method deactivation"
           body: "Are you sure you want to disable the cashback on this payment method? If you confirm this choice, the method from now on will no longer contribute to the collection of transactions.
