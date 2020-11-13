@@ -89,7 +89,7 @@ const getAttemptData = (attempt: CreditCardInsertion) => {
 };
 
 /**
- * This component show a list with the last credit card onboarding attempts
+ * This component shows a list with the last credit card onboarding attempts
  */
 export const CreditCardAttemptsList: React.FC<Props> = (props: Props) => {
   const { ListEmptyComponent, creditCardAttempts } = props;
