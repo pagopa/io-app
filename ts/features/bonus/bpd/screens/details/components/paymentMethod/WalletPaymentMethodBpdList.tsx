@@ -71,9 +71,10 @@ const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props =>
         )}
       </View>
       <View spacer={true} />
-      {!props.atLeastOnePaymentMethodActive && (
-        <NoPaymentMethodAreActiveWarning />
-      )}
+      {!props.atLeastOnePaymentMethodActive &&
+        props.potWallets.value.length > 0 && (
+          <NoPaymentMethodAreActiveWarning />
+        )}
 
       {props.potWallets.value.length > 0 ? (
         <PaymentMethodGroupedList paymentList={props.potWallets.value} />
