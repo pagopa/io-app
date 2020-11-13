@@ -12,11 +12,10 @@ import I18n from "../../../../../i18n";
 import { getValueOrElse, isReady } from "../../model/RemoteValue";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { loadAbi } from "../../../../wallet/onboarding/bancomat/store/actions";
-import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
-import { Dispatch } from "redux";
-
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { abiSelector } from "../../../../wallet/onboarding/store/abi";
+import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
+import { Dispatch } from "redux";
 
 type Props = {
   card: PatchedWalletV2;
