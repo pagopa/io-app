@@ -20,6 +20,10 @@ import {
   bpdUpsertIban
 } from "../store/actions/iban";
 import { bpdTransactionsLoad } from "../store/actions/transactions";
+import {
+  bpdDetailsLoadAll,
+  bpdLoadActivationStatus
+} from "../store/actions/details";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -70,8 +74,20 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdTransactionsLoad.failure):
       return mp.track(action.type, {
         awardPeriodId: action.payload.awardPeriodId,
-        reason: action.payload.error
+        reason: action.payload.error.message
       });
+
+    // CashBack details
+    case getType(bpdDetailsLoadAll):
+    case getType(bpdLoadActivationStatus.request):
+      return mp.track(action.type);
+    case getType(bpdLoadActivationStatus.success):
+      return mp.track(action.type, {
+        enabled: action.payload.enabled,
+        payoffInstr: action.payload.payoffInstr
+      });
+    case getType(bpdLoadActivationStatus.failure):
+      return mp.track(action.type, { reason: action.payload.message });
   }
   return Promise.resolve();
 };
