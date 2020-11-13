@@ -1678,10 +1678,30 @@ bonus:
           closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
           closedPeriodMaxAmount: "it's the maximum possible refund!"
           inactivePeriodBody: "You will be able to start accumulating valid transactions starting from {{date}}"
+          label:
+            one: "1 valid transaction" 
+            other: "{{count}} valid transactions"
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
         detail:
+          summary:
+            bottomSheet:
+              title: "When will you find your transactions?"
+              body: "Transactions are recorded the day after they are booked by the banks. 
+                This means that normally it can take up to 72 hours before you see your transaction recorded on IO, although the process is usually faster. 
+                It may take a little longer if the purchase is close to the weekend or some holidays, or in some other special condition. 
+                Don't worry: all valid transactions made during the cashback period will be recorded and considered for refunds and ranking!"
+            lastUpdated: "Last updated "
+            link: Anything missing?
+            body:
+              text1: "During the period "
+              text2: "you have totalized "
+              text3:
+                one: "1 valid transaction "
+                other: "{{count}} valid transactions "
+              text4: "and earned "
+              text5: "a cashback of "
           title: "Detail of the transaction"
           paymentCircuit: "Payment circuit"
           transactionAmount: "Transaction amount"
