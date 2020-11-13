@@ -1,4 +1,4 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
+import { useBottomSheetModal, TouchableOpacity } from "@gorhom/bottom-sheet";
 import { none } from "fp-ts/lib/Option";
 import { Button, View } from "native-base";
 import * as React from "react";
@@ -10,6 +10,7 @@ import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../store/actions/navigation";
 import { bottomSheetContent } from "../../../../../../utils/bottomSheet";
+import { isIos } from "../../../../../../utils/platform";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
@@ -23,6 +24,25 @@ const styles = StyleSheet.create({
   }
 });
 
+// A very quick fix for android
+const addPaymentMethodButton = (onPress: () => void) => {
+  const button = (
+    <Button style={styles.button} onPress={isIos ? onPress : undefined}>
+      <Label color={"white"}>
+        {I18n.t(
+          "bonus.bpd.details.paymentMethods.activateOnOthersChannel.addWallet"
+        )}
+      </Label>
+    </Button>
+  );
+
+  return !isIos ? (
+    <TouchableOpacity onPress={onPress}>{button}</TouchableOpacity>
+  ) : (
+    button
+  );
+};
+
 export const OtherChannelInformation: React.FunctionComponent<Props> = props => (
   <View>
     <View spacer={true} />
@@ -31,13 +51,7 @@ export const OtherChannelInformation: React.FunctionComponent<Props> = props => 
     </Markdown>
     <View spacer={true} />
     <View spacer={true} />
-    <Button style={styles.button} onPress={props.onAddPayment}>
-      <Label color={"white"}>
-        {I18n.t(
-          "bonus.bpd.details.paymentMethods.activateOnOthersChannel.addWallet"
-        )}
-      </Label>
-    </Button>
+    {addPaymentMethodButton(props.onAddPayment)}
   </View>
 );
 
