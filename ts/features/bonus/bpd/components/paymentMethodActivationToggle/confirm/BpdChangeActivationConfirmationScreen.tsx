@@ -46,8 +46,14 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
       footer={
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps(props.onCancel)}
-          rightButton={confirmButtonProps(props.onConfirm, cta)}
+          leftButton={{
+            ...cancelButtonProps(props.onCancel),
+            onPressWithGestureHandler: true
+          }}
+          rightButton={{
+            ...confirmButtonProps(props.onConfirm, cta),
+            onPressWithGestureHandler: true
+          }}
         />
       }
     >
