@@ -23,6 +23,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import {
+  deleteUserDataProcessing,
   loadUserDataProcessing,
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
@@ -114,7 +115,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               ),
               style: "cancel",
               onPress: () => {
-                this.props.upsertUserDataProcessing(choice);
+                this.props.abortUserDataProcessing(choice);
               }
             }
           ];
@@ -270,6 +271,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loadUserDataProcessing.request(choice)),
   upsertUserDataProcessing: (choice: UserDataProcessingChoiceEnum) =>
     dispatch(upsertUserDataProcessing.request(choice)),
+  abortUserDataProcessing: (choice: UserDataProcessingChoiceEnum) =>
+    dispatch(deleteUserDataProcessing.request(choice)),
   resetRequest: (choice: UserDataProcessingChoiceEnum) =>
     dispatch(resetUserDataProcessingRequest(choice))
 });
