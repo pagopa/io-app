@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnButtonProps = {
+  onPressWithGestureHandler?: true;
   title: string;
   buttonFontSize?: number;
   iconName?: string;
@@ -80,7 +81,7 @@ type Props =
   | TwoButtonsInlineThirdInverted
   | ThreeButtonsInLine;
 
-export type BlockButtonsProps = Props;
+export type blockbuttonsprops = Props;
 
 /**
  * Implements a component that show buttons on a line on 1, 2 or 3 buttons

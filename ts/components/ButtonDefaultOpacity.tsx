@@ -6,12 +6,14 @@ import {
   TapGestureHandlerStateChangeEvent
 } from "react-native-gesture-handler";
 import customVariables from "../theme/variables";
-import { isIos } from "../utils/platform";
 import { calculateSlop } from "./core/accessibility";
 
 const defaultActiveOpacity = 1.0;
 
-type Props = NativeBase.Button & React.Props<Button>;
+type CustomProps = {
+  onPressWithGestureHandler?: true;
+};
+type Props = NativeBase.Button & React.Props<Button> & CustomProps;
 
 const smallSlop = calculateSlop(customVariables.btnSmallHeight);
 const xsmallSlop = calculateSlop(customVariables.btnXSmallHeight);
@@ -46,7 +48,7 @@ const ButtonDefaultOpacity = (props: Props) => {
         ...props,
         activeOpacity: props.activeOpacity || defaultActiveOpacity
       }}
-      onPress={isIos ? props.onPress : undefined}
+      onPress={props.onPressWithGestureHandler ? undefined : props.onPress}
       accessible={true} // allows with TalkBack the feedback request to touch for button activation
       accessibilityRole={"button"}
       hitSlop={{ top: slop, bottom: slop }}
@@ -55,9 +57,7 @@ const ButtonDefaultOpacity = (props: Props) => {
     </Button>
   );
 
-  return isIos ? (
-    button
-  ) : (
+  return props.onPressWithGestureHandler ? (
     <TapGestureHandler
       onHandlerStateChange={(event: TapGestureHandlerStateChangeEvent) => {
         // call on press when touch ends
@@ -68,6 +68,8 @@ const ButtonDefaultOpacity = (props: Props) => {
     >
       {button}
     </TapGestureHandler>
+  ) : (
+    button
   );
 };
 
