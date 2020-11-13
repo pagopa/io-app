@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
+import { Dispatch } from "redux";
 import pagoBancomatImage from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import {
   EnableableFunctionsTypeEnum,
@@ -15,7 +16,6 @@ import { loadAbi } from "../../../../wallet/onboarding/bancomat/store/actions";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { abiSelector } from "../../../../wallet/onboarding/store/abi";
 import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
-import { Dispatch } from "redux";
 
 type Props = {
   card: PatchedWalletV2;
