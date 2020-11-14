@@ -2,7 +2,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { Label } from "../../../components/core/typography/Label";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
@@ -11,7 +10,7 @@ type Props = {};
 
 const styles = StyleSheet.create({
   card: {
-    // iOS and Andorid card shadow
+    // iOS and Android card shadow
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 0.15,
     transform: [{ perspective: 1200 }, { rotateX: "-20deg" }, { scaleX: 0.99 }],
-    height: 90
+    height: 95
   },
   shadowBox: {
     marginBottom: -15,
@@ -58,30 +57,28 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A Generic preview card layout
+ * A Generic preview card layout extracted from {@link CardComponent} and simplified.
+ * Can be used to render a generic wallet preview card.
+ * TODO: in this phase the CardComponent is preserved and no refactoring has been done on the pre-existing code
  * @param props
  * @constructor
  */
 export const CardPreview: React.FunctionComponent<Props> = props => (
-  <TouchableDefaultOpacity
-    onPress={() => console.log("asd")}
-    accessible={true}
-    accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
-    accessibilityRole={"button"}
-  >
+  <>
+    {/* In order to render the shadow on android */}
     {Platform.OS === "android" && <View style={styles.shadowBox} />}
-    <View style={styles.rotatedCard}>
+    <TouchableDefaultOpacity
+      onPress={() => console.log("asd")}
+      accessible={true}
+      accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
+      accessibilityRole={"button"}
+      style={styles.rotatedCard}
+    >
       <View style={[styles.card]}>
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
             <View style={styles.row}>
               <Label>Ciao</Label>
-              {/* <Text style={[CreditCardStyles.smallTextStyle]}> */}
-              {/*  {`${FOUR_UNICODE_CIRCLES} `} */}
-              {/* </Text> */}
-              {/* <Text style={[CreditCardStyles.largeTextStyle]}> */}
-              {/*  {`${wallet.creditCard.pan.slice(-4)}`} */}
-              {/* </Text> */}
             </View>
             <View>
               <Label>DX</Label>
@@ -90,6 +87,6 @@ export const CardPreview: React.FunctionComponent<Props> = props => (
           <View spacer={true} />
         </View>
       </View>
-    </View>
-  </TouchableDefaultOpacity>
+    </TouchableDefaultOpacity>
+  </>
 );
