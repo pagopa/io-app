@@ -1,12 +1,17 @@
 /**
  * Reducers, states, selectors and guards for the cards
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
+import { WalletTypeEnum } from "../../../../definitions/pagopa/WalletV2";
+import { Abi } from "../../../../definitions/pagopa/walletv2/Abi";
+import { getValue } from "../../../features/bonus/bpd/model/RemoteValue";
+import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
 
-import { Wallet } from "../../../types/pagopa";
+import { PatchedWalletV2, Wallet } from "../../../types/pagopa";
 import { PotFromActions } from "../../../types/utils";
 import { isDefined } from "../../../utils/guards";
 import { Action } from "../../actions/types";
@@ -109,6 +114,36 @@ export const walletsSelector = createSelector(
  */
 export const walletV2Selector = createSelector([walletsSelector], potWallet =>
   pot.map(potWallet, wallets => wallets.map(w => w.v2).filter(isDefined))
+);
+
+export type EnhancedBancomat = PatchedWalletV2 & {
+  abiInfo?: Abi;
+};
+
+/**
+ * Return a bancomat list enhanced with the additional abi information
+ */
+export const bancomatSelector = createSelector(
+  [walletV2Selector, abiSelector],
+  (walletv2Pot, abiRemote): pot.Pot<ReadonlyArray<EnhancedBancomat>, Error> =>
+    pot.map(walletv2Pot, walletv2 =>
+      walletv2
+        .filter(w => w.walletType === WalletTypeEnum.Bancomat)
+        .map(
+          (bancomat): EnhancedBancomat => {
+            const maybeAbiCode = fromNullable(bancomat.info.issuerAbiCode);
+            const maybeAbis = fromNullable(getValue(abiRemote));
+            const maybeAbiInfo = maybeAbiCode.chain(val =>
+              maybeAbis.chain(a => fromNullable(a[val]))
+            );
+            // getOrElse cannot infer undefined
+            const abiInfo = maybeAbiInfo.isSome()
+              ? maybeAbiInfo.value
+              : undefined;
+            return { ...bancomat, abiInfo };
+          }
+        )
+    )
 );
 
 // reducer

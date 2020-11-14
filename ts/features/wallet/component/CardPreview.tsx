@@ -1,12 +1,11 @@
 import { View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
-import { Label } from "../../../components/core/typography/Label";
+import { Image, ImageSourcePropType, Platform, StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 
-type Props = {};
+type Props = { left: React.ReactNode; image: ImageSourcePropType };
 
 const styles = StyleSheet.create({
   card: {
@@ -68,7 +67,7 @@ export const CardPreview: React.FunctionComponent<Props> = props => (
     {/* In order to render the shadow on android */}
     {Platform.OS === "android" && <View style={styles.shadowBox} />}
     <TouchableDefaultOpacity
-      onPress={() => console.log("asd")}
+      onPress={() => console.log("card")}
       accessible={true}
       accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
       accessibilityRole={"button"}
@@ -77,11 +76,9 @@ export const CardPreview: React.FunctionComponent<Props> = props => (
       <View style={[styles.card]}>
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
-            <View style={styles.row}>
-              <Label>Ciao</Label>
-            </View>
+            <View style={styles.row}>{props.left}</View>
             <View>
-              <Label>DX</Label>
+              <Image source={props.image} style={styles.cardLogo} />
             </View>
           </View>
           <View spacer={true} />
