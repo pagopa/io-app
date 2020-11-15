@@ -1,17 +1,15 @@
 import { View } from "native-base";
-import { useContext } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationContext, NavigationInjectedProps } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { EnhancedBancomat } from "../../../../store/reducers/wallet/wallets";
 import GoToTransactions from "../../../bonus/bpd/screens/details/transaction/GoToTransactions";
-import PanCardComponent from "../../onboarding/bancomat/screens/add-pans/PanCardComponent";
+import BancomatCard from "../component/bancomatCard/BancomatCard";
 
 type NavigationParams = Readonly<{
   bancomat: EnhancedBancomat;
@@ -23,7 +21,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const styles = StyleSheet.create({
   cardContainer: {
-    height: 192 + 10 + 16 + 16,
+    height: 235,
     width: "100%",
     position: "absolute",
     top: 16,
@@ -54,7 +52,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       footerContent={<GoToTransactions />}
     >
       <View style={styles.cardContainer}>
-        <PanCardComponent pan={bancomat.info} user={"ciao"} />
+        <BancomatCard bancomat={bancomat} />
       </View>
     </DarkLayout>
   );
