@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../store/reducers/types";
 import { bancomatSelector } from "../../../store/reducers/wallet/wallets";
-import { BancomatWalletPreview } from "../onboarding/bancomat/components/BancomatWalletPreview";
+import BancomatWalletPreview from "../bancomat/component/BancomatWalletPreview";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
