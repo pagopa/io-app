@@ -899,6 +899,7 @@ wallet:
     newCome: Novità
     card:
       name: Carta di credito/debito
+      shortName: "Carta"
       maxFee: Commissione massima 1.50€
     sovvenzione:
       name: Sovvenzione

@@ -873,6 +873,7 @@ wallet:
     newCome: New
     card:
       name: Credit/debit card
+      shortName: "Card"
       maxFee: Maximum fee of 1.50€
     sovvenzione:
       name: Subsidy
