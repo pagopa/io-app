@@ -42,6 +42,20 @@ const styles = StyleSheet.create({
   }
 });
 
+const BrandIconsBar = () => (
+  <View style={styles.row}>
+    <Image source={visa} style={styles.brandLogo} />
+    <View hspacer={true} />
+    <Image source={mastercard} style={styles.brandLogo} />
+    <View hspacer={true} />
+    <Image source={maestro} style={styles.brandLogo} />
+    <View hspacer={true} />
+    <Image source={visaElectron} style={styles.brandLogo} />
+    <View hspacer={true} />
+    <Image source={vPay} style={styles.vPay} />
+  </View>
+);
+
 /**
  * Display generic information on bancomat and a cta to start the onboarding of a new
  * payment method.
@@ -62,17 +76,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => (
     <View spacer={true} small={true} />
     <H4>{I18n.t("wallet.bancomat.details.debit.title")}</H4>
     <View spacer={true} />
-    <View style={styles.row}>
-      <Image source={visa} style={styles.brandLogo} />
-      <View hspacer={true} />
-      <Image source={mastercard} style={styles.brandLogo} />
-      <View hspacer={true} />
-      <Image source={maestro} style={styles.brandLogo} />
-      <View hspacer={true} />
-      <Image source={visaElectron} style={styles.brandLogo} />
-      <View hspacer={true} />
-      <Image source={vPay} style={styles.vPay} />
-    </View>
+    <BrandIconsBar />
     <View spacer={true} />
     <Markdown>{I18n.t("wallet.bancomat.details.debit.body")}</Markdown>
     <View spacer={true} />
