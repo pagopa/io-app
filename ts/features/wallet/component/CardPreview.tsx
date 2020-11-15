@@ -5,7 +5,11 @@ import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 
-type Props = { left: React.ReactNode; image: ImageSourcePropType };
+type Props = {
+  left: React.ReactNode;
+  image: ImageSourcePropType;
+  onPress?: () => void;
+};
 
 const styles = StyleSheet.create({
   card: {
@@ -67,7 +71,7 @@ export const CardPreview: React.FunctionComponent<Props> = props => (
     {/* In order to render the shadow on android */}
     {Platform.OS === "android" && <View style={styles.shadowBox} />}
     <TouchableDefaultOpacity
-      onPress={() => console.log("card")}
+      onPress={props.onPress}
       accessible={true}
       accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
       accessibilityRole={"button"}

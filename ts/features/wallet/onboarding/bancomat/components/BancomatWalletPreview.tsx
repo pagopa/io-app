@@ -38,6 +38,11 @@ const renderLeft = (props: Props, size: Option<[number, number]>) =>
     }
   );
 
+/**
+ * A card preview for a bancomat card
+ * @param props
+ * @constructor
+ */
 export const BancomatWalletPreview: React.FunctionComponent<Props> = props => {
   const imgDimensions = useImageResize(
     BASE_IMG_W,
