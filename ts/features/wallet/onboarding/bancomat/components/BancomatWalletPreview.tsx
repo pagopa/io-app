@@ -1,17 +1,55 @@
+import { Option } from "fp-ts/lib/Option";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import pagoBancomatImage from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { Body } from "../../../../../components/core/typography/Body";
 import { EnhancedBancomat } from "../../../../../store/reducers/wallet/wallets";
 import { CardPreview } from "../../../component/CardPreview";
+import { useImageResize } from "../screens/hooks/useImageResize";
+import I18n from "../../../../../i18n";
 
 type Props = { bancomat: EnhancedBancomat };
 
 const styles = StyleSheet.create({});
 
-export const BancomatWalletPreview: React.FunctionComponent<Props> = props => (
-  <CardPreview
-    left={<Body>{props.bancomat.abiInfo?.name}</Body>}
-    image={pagoBancomatImage}
-  />
-);
+const BASE_IMG_W = 160;
+const BASE_IMG_H = 20;
+
+/**
+ * Render the image (if available) or the bank name (if available)
+ * or the generic bancomat string (final fallback).
+ * @param props
+ * @param size
+ */
+const renderLeft = (props: Props, size: Option<[number, number]>) =>
+  size.fold(
+    <Body>
+      {props.bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")}
+    </Body>,
+    imgDim => {
+      const imageUrl = props.bancomat.abiInfo?.logoUrl;
+      const imageStyle: StyleProp<ImageStyle> = {
+        width: imgDim[0],
+        height: imgDim[1],
+        resizeMode: "contain"
+      };
+      return imageUrl ? (
+        <Image source={{ uri: imageUrl }} style={imageStyle} />
+      ) : null;
+    }
+  );
+
+export const BancomatWalletPreview: React.FunctionComponent<Props> = props => {
+  const imgDimensions = useImageResize(
+    BASE_IMG_W,
+    BASE_IMG_H,
+    props.bancomat.abiInfo?.logoUrl
+  );
+
+  return (
+    <CardPreview
+      left={renderLeft(props, imgDimensions)}
+      image={pagoBancomatImage}
+    />
+  );
+};
