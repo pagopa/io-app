@@ -82,16 +82,19 @@ const renderItem = (label: string, value?: string) => {
     </React.Fragment>
   );
 };
+
+const instabugTag = "payment-support";
 /**
  * Payment Details
  */
 class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private instabugLogAndOpenReport = () => {
-    Instabug.appendTags(["payment-support"]);
+    Instabug.appendTags([instabugTag]);
     pot.map(this.props.profile, p => {
       instabugLog(
         getPaymentHistoryDetails(this.props.navigation.getParam("payment"), p),
-        TypeLogs.INFO
+        TypeLogs.INFO,
+        instabugTag
       );
     });
     openInstabugBugReport();
