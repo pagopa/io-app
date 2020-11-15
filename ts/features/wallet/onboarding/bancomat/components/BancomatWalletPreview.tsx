@@ -3,6 +3,7 @@ import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import pagoBancomatImage from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { Body } from "../../../../../components/core/typography/Body";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { EnhancedBancomat } from "../../../../../store/reducers/wallet/wallets";
 import { CardPreview } from "../../../component/CardPreview";
 import { useImageResize } from "../screens/hooks/useImageResize";
@@ -23,7 +24,7 @@ const BASE_IMG_H = 20;
  */
 const renderLeft = (props: Props, size: Option<[number, number]>) =>
   size.fold(
-    <Body>
+    <Body style={IOStyles.flex} numberOfLines={1}>
       {props.bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")}
     </Body>,
     imgDim => {
