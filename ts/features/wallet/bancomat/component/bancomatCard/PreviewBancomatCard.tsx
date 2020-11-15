@@ -1,30 +1,25 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Card } from "../../../../../../definitions/pagopa/walletv2/Card";
 import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { EnhancedBancomat } from "../../../../../store/reducers/wallet/wallets";
 import BaseBancomatCard from "./BaseBancomatCard";
 
-type OwnProps = { bancomat: EnhancedBancomat };
+type OnboardingData = { bancomat: Card; logoUrl?: string };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  OwnProps;
+  OnboardingData;
 
 /**
- * Render a bancomat already added to the wallet
- * @param props
+ * Display a preview of a bancomat that the user could add to the wallet
  * @constructor
  */
-const BancomatCard: React.FunctionComponent<Props> = props => (
+const PreviewBancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
-    abiLogo={props.bancomat.abiInfo?.logoUrl}
-    expiringDate={
-      new Date(
-        `${props.bancomat.info.expireYear}/${props.bancomat.info.expireMonth}/01`
-      )
-    }
+    abiLogo={props.logoUrl}
+    expiringDate={props.bancomat.expiringDate}
     user={props.nameSurname ?? ""}
   />
 );
@@ -35,4 +30,7 @@ const mapStateToProps = (state: GlobalState) => ({
   nameSurname: profileNameSurnameSelector(state)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BancomatCard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PreviewBancomatCard);
