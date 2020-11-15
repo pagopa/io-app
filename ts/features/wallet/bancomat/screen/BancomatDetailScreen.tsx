@@ -1,15 +1,20 @@
-import { View } from "native-base";
+import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Label } from "../../../../components/core/typography/Label";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
+import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
 import { EnhancedBancomat } from "../../../../store/reducers/wallet/wallets";
-import GoToTransactions from "../../../bonus/bpd/screens/details/transaction/GoToTransactions";
+import { showToast } from "../../../../utils/showToast";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
+import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
   bancomat: EnhancedBancomat;
@@ -31,8 +36,18 @@ const styles = StyleSheet.create({
   },
   headerSpacer: {
     height: 172
+  },
+  cancelButton: {
+    borderColor: IOColors.red,
+    width: "100%"
   }
 });
+
+const UnsubscribeButton = (props: { onPress?: () => void }) => (
+  <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
+    <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
+  </Button>
+);
 
 /**
  * Detail screen for a bancomat
@@ -49,16 +64,41 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       topContent={<View style={styles.headerSpacer} />}
       gradientHeader={true}
       hideHeader={true}
-      footerContent={<GoToTransactions />}
+      footerContent={
+        <UnsubscribeButton
+          onPress={() => props.deleteWallet(bancomat.idWallet)}
+        />
+      }
     >
       <View style={styles.cardContainer}>
         <BancomatCard bancomat={bancomat} />
+      </View>
+      <View spacer={true} extralarge={true} />
+      <View spacer={true} />
+      <View style={IOStyles.horizontalContentPadding}>
+        <BancomatInformation />
       </View>
     </DarkLayout>
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  // using the legacy action with callback instead of using the redux state to read the results
+  // for time reasons...
+  deleteWallet: (walletId: number) =>
+    dispatch(
+      deleteWalletRequest({
+        walletId,
+        onSuccess: _ => {
+          showToast(I18n.t("wallet.delete.successful"), "success");
+          dispatch(NavigationActions.back());
+        },
+        onFailure: _ => {
+          showToast(I18n.t("wallet.delete.failed"), "danger");
+        }
+      })
+    )
+});
 
 const mapStateToProps = (_: GlobalState) => ({});
 

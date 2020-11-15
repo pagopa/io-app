@@ -948,6 +948,17 @@ wallet:
   walletCardTransaction:
     contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
+  bancomat:
+    details:
+      infobox:
+        one: "PagoBANCOMAT "
+        two: "cards do not allow you to pay via IO"
+        three: ", but only at physical points (POS)."
+      debit:
+        title: "Debit Card"
+        body: "If your PagoBANCOMAT card also has the logo of another circuit (** Maestro, Visa, Mastercard, V-Pay **, etc ..) remember to add it to your wallet also as a ** debit card ** for to be able to make payments on IO or activate the available functions. "
+        addCta: "Add Debit Card"
+      removeCta: "Delete this payment method"
 saveCard:
   saveCard: Save the card
   header: Do you whant to save this card?
