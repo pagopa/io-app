@@ -1,17 +1,15 @@
 import { Option } from "fp-ts/lib/Option";
 import * as React from "react";
-import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
+import { Image, ImageStyle, StyleProp } from "react-native";
 import pagoBancomatImage from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { Body } from "../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import I18n from "../../../../../i18n";
 import { EnhancedBancomat } from "../../../../../store/reducers/wallet/wallets";
 import { CardPreview } from "../../../component/CardPreview";
 import { useImageResize } from "../screens/hooks/useImageResize";
-import I18n from "../../../../../i18n";
 
 type Props = { bancomat: EnhancedBancomat };
-
-const styles = StyleSheet.create({});
 
 const BASE_IMG_W = 160;
 const BASE_IMG_H = 20;
