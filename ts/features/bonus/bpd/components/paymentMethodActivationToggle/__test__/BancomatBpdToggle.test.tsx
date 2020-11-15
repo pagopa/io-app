@@ -21,9 +21,7 @@ import { BpdPotPaymentMethodActivation } from "../../../store/reducers/details/p
 import { HPan } from "../../../store/actions/paymentMethods";
 jest.mock("../../../../../../utils/hooks/useOnFocus", () => ({
   useNavigationContext: () => ({ isFocused: () => true }),
-  useActionOnFocus: jest
-    .fn()
-    .mockImplementation(() => (action: () => void) => action())
+  useActionOnFocus: () => (action: () => void) => action()
 }));
 
 jest.mock("@gorhom/bottom-sheet", () => ({
