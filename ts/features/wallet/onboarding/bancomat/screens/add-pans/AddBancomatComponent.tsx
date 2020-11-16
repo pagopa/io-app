@@ -1,23 +1,23 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
-import { fromNullable } from "fp-ts/lib/Option";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
-import I18n from "../../../../../../i18n";
-import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import customVariables from "../../../../../../theme/variables";
+import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
+import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { H1 } from "../../../../../../components/core/typography/H1";
+import { H4 } from "../../../../../../components/core/typography/H4";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../../i18n";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import customVariables from "../../../../../../theme/variables";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
-import { H4 } from "../../../../../../components/core/typography/H4";
-import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import PreviewBancomatCard from "../../../../bancomat/component/bancomatCard/PreviewBancomatCard";
 import { abiListSelector } from "../../../store/abi";
-import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
-import PanCardComponent from "./PanCardComponent";
 
 type Props = {
   pan: Card;
@@ -60,15 +60,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
         >
           <H1>{I18n.t("wallet.onboarding.bancomat.add.screenTitle")}</H1>
           <View spacer={true} large={true} />
-          <PanCardComponent
-            pan={props.pan}
-            abiLogo={abiLogo}
-            user={
-              props.profile
-                ? `${props.profile.name} ${props.profile.family_name}`
-                : ""
-            }
-          />
+          <PreviewBancomatCard bancomat={props.pan} logoUrl={abiLogo} />
           <View spacer={true} large={true} />
           <H4 color={"bluegrey"} weight={"Regular"}>
             {props.pansNumber > 1
