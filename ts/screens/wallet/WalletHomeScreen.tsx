@@ -64,7 +64,7 @@ import {
   getTransactionsLoadedLength,
   latestTransactionsSelector
 } from "../../store/reducers/wallet/transactions";
-import { walletsSelector } from "../../store/reducers/wallet/wallets";
+import { pagoPaCreditCardSelector } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
@@ -546,7 +546,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     allActiveBonus: allBonusActiveSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
-    potWallets: walletsSelector(state),
+    potWallets: pagoPaCreditCardSelector(state),
     anyHistoryPayments: paymentsHistorySelector(state).length > 0,
     anyCreditCardAttempts: creditCardAttemptionsSelector(state).length > 0,
     potTransactions: latestTransactionsSelector(state),
