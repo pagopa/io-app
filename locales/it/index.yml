@@ -687,7 +687,7 @@ wallet:
       headerTitle: "Aggiungi carta Bancomat"
       koTimeout:
         title: "Non siamo riusciti a contattare Bancomat."
-        body: "Ripova per favore"
+        body: "Riprova per favore"
       koNotFound:
         title: "Spiacenti, non abbiamo trovato nessuna carta"
         body: "Non risultano Bancomat intestati a te"
