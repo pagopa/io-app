@@ -12,6 +12,18 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
 
+const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
+  if (!fullYear || !month) {
+    return undefined;
+  }
+  const year = parseInt(fullYear, 10);
+  const indexedMonth = parseInt(month, 10);
+  if (isNaN(year) || isNaN(indexedMonth)) {
+    return undefined;
+  }
+  return new Date(year, indexedMonth - 1);
+};
+
 /**
  * Render a bancomat already added to the wallet
  * @param props
@@ -20,11 +32,10 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const BancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
     abiLogo={props.bancomat.abiInfo?.logoUrl}
-    expiringDate={
-      new Date(
-        `${props.bancomat.info.expireYear}/${props.bancomat.info.expireMonth}/01`
-      )
-    }
+    expiringDate={getExpireDate(
+      props.bancomat.info.expireYear,
+      props.bancomat.info.expireMonth
+    )}
     user={props.nameSurname ?? ""}
   />
 );
