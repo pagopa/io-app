@@ -1,5 +1,5 @@
 # see https://help.github.com/en/articles/about-code-owners#example-of-a-codeowners-file
 
-* @francescopersico @undermaken @fabriziofff @CrisTofani
+* @undermaken @fabriziofff @CrisTofani
 
 /locales/ @undermaken @fabriziofff @CrisTofani
