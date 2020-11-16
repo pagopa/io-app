@@ -19,6 +19,7 @@ export const formatNumberAmount = (
 ): string =>
   I18n.toCurrency(amount, {
     precision: DISPLAYED_DIGITS,
+    delimiter: I18n.t("global.localization.delimiterSeparator"),
     separator: I18n.t("global.localization.decimalSeparator"),
     format: displayCurrency ? "€ %n" : "%n"
   });
