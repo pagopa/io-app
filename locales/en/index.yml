@@ -875,26 +875,26 @@ wallet:
     comingSoon: incoming
     newCome: New
     card:
-      name: Carta di credito, debito o prepagata
+      name: Credit, debit or prepaid card
       shortName: "Card"
-      description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
+      description: The card issued by your bank that you normally use to pay in stores and online
     bonus:
-      name: Sconto, bonus e altri servizi
-      description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
+      name: Discount, bonus and other services
+      description: Initiatives by public bodies to support spending, or services related to payments
     digital:
-      name: App e strumenti di pagamento digitali
-      description: Usa i tuoi strumenti digitali preferiti per pagare su IO
+      name: App and digital payment tools
+      description: Use your favourite digital tools to pay upon IO
     pagobancomat:
-      name: Carta PagoBANCOMAT
-      description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
+      name: PagoBANCOMAT card
+      description: The card with the PagoBANCOMAT logo that you use to withdraw cash or pay in stores
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
     satispay:
       name: Satispay
     postepay:
-      name: Carta BancoPosta o Postepay
-      description: Le carte emesse da Poste Italiane
+      name: BancoPosta or Postepay card
+      description: Cards issued by Poste Italiane
     paypal:
       name: Paypal
     bancomat:
