@@ -23,6 +23,7 @@ import { getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
+import { getProfileDetailsLog } from "./profile";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -163,11 +164,7 @@ export const getPaymentHistoryDetails = (
   profile: InitializedProfile
 ): string => {
   const separator = " / ";
-  const profileDetails = `- spid_email: ${fromNullable(
-    profile.spid_email as string
-  ).getOrElse("spid email: n/a")}${separator}- email: ${fromNullable(
-    profile.email as string
-  ).getOrElse("email: n/a")}${separator}- cf: ${profile.fiscal_code as string}`;
+  const profileDetails = getProfileDetailsLog(profile, separator);
   const paymentDetails = `- payment start time: ${formatDateAsReminder(
     new Date(payment.started_at)
   )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;

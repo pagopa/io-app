@@ -1,7 +1,7 @@
 import * as React from "react";
 import { WalletTypeEnum } from "../../../../../../definitions/pagopa/walletv2/WalletV2";
 import { PatchedWalletV2 } from "../../../../../types/pagopa";
-import { BancomatBpdToggle } from "./BancomatBpdToggle";
+import BancomatBpdToggle from "./BancomatBpdToggle";
 import { CardBpdToggle } from "./CardBpdToggle";
 
 /**
