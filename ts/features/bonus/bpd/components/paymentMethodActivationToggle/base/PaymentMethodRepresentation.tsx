@@ -30,6 +30,6 @@ export const PaymentMethodRepresentation: React.FunctionComponent<Props> = props
   <View style={styles.row}>
     <Image source={props.icon} style={styles.cardIcon} />
     <View hspacer={true} />
-    <Body>{props.caption}</Body>
+    <Body testID={"paymentMethodCaptionId"}>{props.caption}</Body>
   </View>
 );
