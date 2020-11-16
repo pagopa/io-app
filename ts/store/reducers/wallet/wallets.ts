@@ -141,11 +141,7 @@ export const bancomatSelector = createSelector(
             const maybeAbiInfo = maybeAbiCode.chain(val =>
               maybeAbis.chain(a => fromNullable(a[val]))
             );
-            // getOrElse cannot infer undefined
-            const abiInfo = maybeAbiInfo.isSome()
-              ? maybeAbiInfo.value
-              : undefined;
-            return { ...bancomat, abiInfo };
+            return { ...bancomat, abiInfo: maybeAbiInfo.toUndefined() };
           }
         )
     )

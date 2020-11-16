@@ -5,7 +5,9 @@ import { call, put, select, take } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
-import { pagoPaCreditCardSelector } from "../../../../../store/reducers/wallet/wallets";
+import { walletV2Selector } from "../../../../../store/reducers/wallet/wallets";
+import { EnableableFunctionsTypeEnum } from "../../../../../types/pagopa";
+import { hasFunctionEnabled } from "../../../../../utils/walletv2";
 import {
   navigateToBpdIbanInsertion,
   navigateToBpdOnboardingEnrollPaymentMethod,
@@ -57,14 +59,16 @@ export function* bpdIbanInsertionWorker() {
     yield put(NavigationActions.back());
   } else {
     if (onboardingOngoing) {
-      const pagoPaCrediCardSelector: ReturnType<typeof pagoPaCreditCardSelector> = yield select(
-        pagoPaCreditCardSelector
+      const paymentMethods: ReturnType<typeof walletV2Selector> = yield select(
+        walletV2Selector
       );
-      const hasCreditCards = pot.getOrElse(
-        pot.map(pagoPaCrediCardSelector, pcc => pcc.length > 0),
+      const hasAtLeastOnePaymentMethodWithBpd = pot.getOrElse(
+        pot.map(paymentMethods, pm =>
+          pm.some(p => hasFunctionEnabled(p, EnableableFunctionsTypeEnum.BPD))
+        ),
         false
       );
-      const nextAction = hasCreditCards
+      const nextAction = hasAtLeastOnePaymentMethodWithBpd
         ? navigateToBpdOnboardingEnrollPaymentMethod()
         : navigateToBpdOnboardingNoPaymentMethods();
       yield put(nextAction);
