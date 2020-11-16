@@ -986,6 +986,10 @@ wallet:
         body: "Se la tua carta PagoBANCOMAT ha anche il logo di un altro circuito (**Maestro, Visa, Mastercard, V-Pay**, etc..) ricordati di aggiungerlo al portafoglio anche come **carta di debito** per poter effettuare pagamenti su IO o attivare le funzioni disponibili. "
         addCta: "Aggiungi Carta di Debito"
       removeCta: "Elimina questo metodo di pagamento"
+  newRemove:
+    title: "Eliminazione metodo"
+    body: "Sei sicuro di voler eliminare questo metodo di pagamento?"
+    warningCapability: "Verranno disattivate anche le funzioni: "
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?

@@ -13,7 +13,9 @@ import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
 import { EnhancedBancomat } from "../../../../store/reducers/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
+import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
+import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
@@ -55,6 +57,10 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  */
 const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
   const bancomat = props.navigation.getParam("bancomat");
+  const { present } = useRemovePaymentMethodBottomSheet({
+    icon: pagoBancomatImage,
+    caption: bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")
+  });
   return (
     <DarkLayout
       bounces={false}
@@ -66,7 +72,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       hideHeader={true}
       footerContent={
         <UnsubscribeButton
-          onPress={() => props.deleteWallet(bancomat.idWallet)}
+          onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
         />
       }
     >
