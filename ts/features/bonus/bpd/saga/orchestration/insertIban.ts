@@ -5,7 +5,7 @@ import { call, put, select, take } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
-import { walletsSelector } from "../../../../../store/reducers/wallet/wallets";
+import { pagoPaCreditCardSelector } from "../../../../../store/reducers/wallet/wallets";
 import {
   navigateToBpdIbanInsertion,
   navigateToBpdOnboardingEnrollPaymentMethod,
@@ -57,14 +57,16 @@ export function* bpdIbanInsertionWorker() {
     yield put(NavigationActions.back());
   } else {
     if (onboardingOngoing) {
-      const paymentMethodsAvailable: ReturnType<typeof walletsSelector> = yield select(
-        walletsSelector
+      const pagoPaCrediCardSelector: ReturnType<typeof pagoPaCreditCardSelector> = yield select(
+        pagoPaCreditCardSelector
       );
-      const nextAction =
-        pot.isSome(paymentMethodsAvailable) &&
-        paymentMethodsAvailable.value.length > 0
-          ? navigateToBpdOnboardingEnrollPaymentMethod()
-          : navigateToBpdOnboardingNoPaymentMethods();
+      const hasCreditCards = pot.getOrElse(
+        pot.map(pagoPaCrediCardSelector, pcc => pcc.length > 0),
+        false
+      );
+      const nextAction = hasCreditCards
+        ? navigateToBpdOnboardingEnrollPaymentMethod()
+        : navigateToBpdOnboardingNoPaymentMethods();
       yield put(nextAction);
       yield put(navigationHistoryPop(1));
       yield put(bpdOnboardingCompleted());
