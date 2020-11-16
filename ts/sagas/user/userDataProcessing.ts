@@ -106,8 +106,6 @@ export function* deleteUserDataProcessingSaga(
     );
     reactotron.log(response);
     if (response.isRight()) {
-      reactotron.log(response.value.status);
-
       if (response.value.status === 404 || response.value.status === 202) {
         yield put(
           deleteUserDataProcessing.success({
@@ -125,6 +123,7 @@ export function* deleteUserDataProcessingSaga(
       throw new Error(readableReport(response.value));
     }
   } catch (e) {
+    reactotron.log(e.message);
     yield put(
       deleteUserDataProcessing.failure({
         choice,

@@ -278,13 +278,47 @@ export function BackendClient(
     response_decoder: upsertUserDataProcessingDefaultDecoder()
   };
 
+  function abortUserDataProcessingDecoderTest() {
+    return r.composeResponseDecoders(
+      r.composeResponseDecoders(
+        r.composeResponseDecoders(
+          r.composeResponseDecoders(
+            r.composeResponseDecoders(
+              r.composeResponseDecoders(
+                r.constantResponseDecoder<undefined, 202>(202, undefined),
+                r.ioResponseDecoder<
+                  400,
+                  typeof ProblemJson["_A"],
+                  typeof ProblemJson["_O"]
+                >(400, ProblemJson)
+              ),
+              r.constantResponseDecoder<undefined, 401>(401, undefined)
+            ),
+            r.constantResponseDecoder<undefined, 404>(404, undefined)
+          ),
+          r.ioResponseDecoder<
+            409,
+            typeof ProblemJson["_A"],
+            typeof ProblemJson["_O"]
+          >(409, ProblemJson)
+        ),
+        r.constantResponseDecoder<undefined, 429>(429, undefined)
+      ),
+      r.ioResponseDecoder<
+        500,
+        typeof ProblemJson["_A"],
+        typeof ProblemJson["_O"]
+      >(500, ProblemJson)
+    );
+  }
+
   const deleteUserDataProcessingT: AbortUserDataProcessingT = {
     method: "delete",
     url: ({ userDataProcessingChoiceParam }) =>
       `/api/v1/user-data-processing/${userDataProcessingChoiceParam}`,
     query: _ => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    response_decoder: abortUserDataProcessingDefaultDecoder()
+    response_decoder: abortUserDataProcessingDecoderTest()
   };
 
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
