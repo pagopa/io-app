@@ -67,6 +67,9 @@ global:
     skip: "Salta"
     add: Aggiungi
     edit: "Modifica"
+    info: "Info"
+    activate: "Attiva"
+    deactivate: "Disattiva"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -651,6 +654,17 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Portafoglio
+  creditCard:
+    onboardingAttempts:
+      title: Tentativi aggiunta metodo di pagamento
+      emptyTitle: Nessun tentitivo di aggiunta di un metodo di pagamento
+      emptyBody: IO non ha memorizzato tentativi di aggiunta di un metodo di pagamento. Qui troverai i tentativi più recenti
+      lastAttemptsTitle: Ultimi tentativi
+      success: Aggiunto
+      failure: Fallito
+      dateTime: Data e ora
+      detailTitle: Dettaglio
+      help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
   searchAbi:
     title: Aggiungi carta Bancomat
     description:
@@ -714,9 +728,8 @@ wallet:
   transactionsLoadMessage: Carico lo storico delle transazioni...
   transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
   transactionHelpMessage:
-    text1: Se hai avuto problemi durante un pagamento,
-    text2: consulta l'help
-    text3: in alto a destra su questa pagina
+    text1: Problemi con un pagamento o l’aggiunta di un nuovo metodo?
+    text2: Consulta l’help in alto a destra su questa pagina.
   transactionsLoadMore: Carica precedenti
   transacionsLoadingMore: Carico precedenti...
   pickPaymentMethod:
@@ -725,6 +738,9 @@ wallet:
       message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   delete:
+    bancomat:
+      successful: Bancomat rimosso correttamente
+      failed: Impossibile rimuovere il bancomat
     successful: Carta rimossa correttamente
     failed: Impossibile rimuovere la carta
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
@@ -886,6 +902,7 @@ wallet:
     newCome: Novità
     card:
       name: Carta di credito/debito
+      shortName: "Carta"
       maxFee: Commissione massima 1.50€
     sovvenzione:
       name: Sovvenzione
@@ -961,6 +978,21 @@ wallet:
   walletCardTransaction:
     contextualHelpTitle: Transazioni effettuate con questo metodo
     contextualHelpContent: !include wallet/wallet_card_transaction.md
+  bancomat:
+    details:
+      infobox:
+        one: "Le carte PagoBANCOMAT "
+        two: "non consentono di pagare tramite IO"
+        three: ", ma solo presso i punti fisici (POS)."
+      debit:
+        title: "Carta di Debito"
+        body: "Se la tua carta PagoBANCOMAT ha anche il logo di un altro circuito (**Maestro, Visa, Mastercard, V-Pay**, etc..) ricordati di aggiungerlo al portafoglio anche come **carta di debito** per poter effettuare pagamenti su IO o attivare le funzioni disponibili. "
+        addCta: "Aggiungi Carta di Debito"
+      removeCta: "Elimina questo metodo di pagamento"
+  newRemove:
+    title: "Eliminazione metodo"
+    body: "Sei sicuro di voler eliminare questo metodo di pagamento?"
+    warningCapability: "Verranno disattivate anche le funzioni: "
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -1502,6 +1534,9 @@ faq:
   77:
     title: "Qualsiasi tipo di ISEE è valido per richiedere il Bonus Vacanze tramite l’app IO?"
     content: !include bonus/faq/faq77.md
+  78:
+    title: "Hai avuto problemi nell’aggiunta di un nuovo metodo di pagamento?"
+    content: !include bonus/bpd/faq/faqBpd1.md
 bonus:
   bonusVacanze:
     accessibility:
@@ -1746,6 +1781,24 @@ bonus:
           canceled: "Storno"
       paymentMethods:
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare le transazioni necessarie"
+        noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per raccogliere le transazioni"
+        activateOnOthersChannel:
+          text1: "Attivati su "
+          text2: "altri canali"
+          title: "Metodo non compatibile"
+          body: "Il metodo di pagamento non è compatibile [MISSING TEXT]"
+        notActivable:
+          header: "Non attivabili o non compatibili"
+          title: "Metodo non attivabile"
+          body: "Qualcun altro ha già attivato in questo momento il cashback su questo metodo di pagamento: [MISSING TEXT]"
+        activate:
+          title: "Attivazione metodo"
+          body: "Confermi di voler attivare il cashback su questo metodo di pagamento?
+                 L’attivazione sarà operativa **da domani**, quindi non saranno valide ai fini del cashback le transazioni che farai nella giornata di oggi."
+        deactivate:
+          title: "Disattivazione metodo"
+          body: "Sei sicuro di voler disattivare il cashback su questo metodo di pagamento? Se confermi questa scelta, il metodo d’ora in poi non concorrerà più alla collezione delle transazioni.
+                 La disattivazione sarà operativa **da domani**, quindi potrebbero essere ancora considerate le transazioni che fai oggi con questo strumento."
       card:
         status:
           active: Attivo

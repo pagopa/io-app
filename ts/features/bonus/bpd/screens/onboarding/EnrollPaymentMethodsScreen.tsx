@@ -12,10 +12,10 @@ import I18n from "../../../../../i18n";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { walletV2Selector } from "../../../../../store/reducers/wallet/wallets";
 import { PatchedWalletV2 } from "../../../../../types/pagopa";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
-import { PaymentMethodBpdList } from "../../components/PaymentMethodBpdList";
+import { PaymentMethodGroupedList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
+import { walletV2WithActivationStatusSelector } from "../../store/reducers/details/combiner";
 
 const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.title"),
@@ -39,10 +39,10 @@ const renderPaymentMethod = (
     () => null,
     _ => null,
     _ => null,
-    value => <PaymentMethodBpdList paymentList={value} />,
-    value => <PaymentMethodBpdList paymentList={value} />,
-    value => <PaymentMethodBpdList paymentList={value} />,
-    value => <PaymentMethodBpdList paymentList={value} />
+    value => <PaymentMethodGroupedList paymentList={value} />,
+    value => <PaymentMethodGroupedList paymentList={value} />,
+    value => <PaymentMethodGroupedList paymentList={value} />,
+    value => <PaymentMethodGroupedList paymentList={value} />
   );
 
 /**
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  potWallets: walletV2Selector(state)
+  potWallets: walletV2WithActivationStatusSelector(state)
 });
 
 export default connect(
