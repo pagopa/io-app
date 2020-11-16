@@ -74,11 +74,15 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdTransactionsLoad.success):
       return mp.track(action.type, {
         awardPeriodId: action.payload.awardPeriodId,
-        hashPan: action.payload.results.map(r => r.hashPan),
-        idTrxAcquirer: action.payload.results.map(r => r.idTrxAcquirer),
-        idTrxIssuer: action.payload.results.map(r => r.idTrxIssuer),
-        trxDate: action.payload.results.map(r => r.trxDate),
-        circuitType: action.payload.results.map(r => r.circuitType)
+        hashPan: action.payload.results.map(r => r.hashPan).join(","),
+        idTrxAcquirer: action.payload.results
+          .map(r => r.idTrxAcquirer)
+          .join(","),
+        idTrxIssuer: action.payload.results.map(r => r.idTrxIssuer).join(","),
+        trxDate: action.payload.results
+          .map(r => r.trxDate.toString())
+          .join(","),
+        circuitType: action.payload.results.map(r => r.circuitType).join(",")
       });
     case getType(bpdTransactionsLoad.failure):
       return mp.track(action.type, {
