@@ -58,6 +58,7 @@ import { navSelector } from "../../store/reducers/navigationHistory";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
+import { creditCardAttemptionsSelector } from "../../store/reducers/wallet/creditCard";
 import {
   areMoreTransactionsAvailable,
   getTransactionsLoadedLength,
@@ -70,7 +71,7 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { creditCardAttemptionsSelector } from "../../store/reducers/wallet/creditCard";
+import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -276,8 +277,10 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             onClick={this.props.navigateToWalletTransactionsScreen}
           />
         ) : null}
-        {/* Display this item only if the flag is enabled */}
+        {/* new payment method rendering (bancomat, bancomatPay, satispay) */}
+        {bpdEnabled && <WalletV2PreviewCards />}
 
+        {/* Display this item only if the flag is enabled */}
         {bonusVacanzeEnabled && (
           <RequestBonus
             onButtonPress={this.props.navigateToBonusList}
