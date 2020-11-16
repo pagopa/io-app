@@ -717,6 +717,9 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
+    bancomat:
+      successful: Bancomat successfully removed
+      failed: The bancomat could not be removed
     successful: Card successfully removed
     failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
@@ -873,6 +876,7 @@ wallet:
     newCome: New
     card:
       name: Credit/debit card
+      shortName: "Card"
       maxFee: Maximum fee of 1.50€
     sovvenzione:
       name: Subsidy
@@ -947,6 +951,21 @@ wallet:
   walletCardTransaction:
     contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
+  bancomat:
+    details:
+      infobox:
+        one: "PagoBANCOMAT "
+        two: "cards do not allow you to pay via IO"
+        three: ", but only at physical points (POS)."
+      debit:
+        title: "Debit Card"
+        body: "If your PagoBANCOMAT card also has the logo of another circuit (** Maestro, Visa, Mastercard, V-Pay **, etc ..) remember to add it to your wallet also as a ** debit card ** for to be able to make payments on IO or activate the available functions. "
+        addCta: "Add Debit Card"
+      removeCta: "Delete this payment method"
+  newRemove:
+    title: "Method deletion"
+    body: "Are you sure you want to delete this payment method?"
+    warningCapability: "The functions will also be disabled:"
 saveCard:
   saveCard: Save the card
   header: Do you whant to save this card?

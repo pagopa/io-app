@@ -8,18 +8,17 @@ import {
   StyleSheet
 } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import I18n from "../../../../../../i18n";
-import { Body } from "../../../../../../components/core/typography/Body";
-import { H5 } from "../../../../../../components/core/typography/H5";
-import customVariables from "../../../../../../theme/variables";
-import { format } from "../../../../../../utils/dates";
-import { useImageResize } from "../hooks/useImageResize";
-import pagoBancomatLogo from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
-import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
+import pagoBancomatLogo from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
+import { Body } from "../../../../../components/core/typography/Body";
+import { H5 } from "../../../../../components/core/typography/H5";
+import I18n from "../../../../../i18n";
+import customVariables from "../../../../../theme/variables";
+import { format } from "../../../../../utils/dates";
+import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
   abiLogo?: string;
-  pan: Card;
+  expiringDate?: Date;
   user: string;
 };
 
@@ -69,7 +68,12 @@ const styles = StyleSheet.create({
 const BASE_IMG_W = 160;
 const BASE_IMG_H = 40;
 
-const PanCardComponent: React.FunctionComponent<Props> = (props: Props) => {
+/**
+ * The base component that represents a full bancomat card
+ * @param props
+ * @constructor
+ */
+const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
   const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, props.abiLogo);
 
   const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
@@ -88,10 +92,10 @@ const PanCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         <View>
           <Image style={imageStyle} source={{ uri: props.abiLogo }} />
           <View spacer={true} />
-          {props.pan.expiringDate && (
+          {props.expiringDate && (
             <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
               "cardComponent.validUntil"
-            )} ${format(props.pan.expiringDate, "MM/YYYY")}`}</H5>
+            )} ${format(props.expiringDate, "MM/YYYY")}`}</H5>
           )}
         </View>
         <View style={styles.bottomRow}>
@@ -103,4 +107,4 @@ const PanCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-export default PanCardComponent;
+export default BaseBancomatCard;
