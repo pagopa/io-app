@@ -72,6 +72,9 @@ import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
+import { H3 } from "../../components/core/typography/H3";
+import FeaturedCard from "../../features/wallet/component/FeaturedCard";
+import { HorizontalScroll } from "../../components/HorizontalScroll";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -520,7 +523,21 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         gradientHeader={true}
         headerPaddingMin={true}
       >
-        {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
+        {this.newMethodAdded ? (
+          this.newMethodAddedContent
+        ) : (
+          <>
+            <Content>
+              <H3 weight={"SemiBold"} color={"bluegreyDark"}>
+                {"In evidenza"}
+              </H3>
+              <HorizontalScroll
+                cards={[<FeaturedCard key={0} />, <FeaturedCard key={1} />]}
+              ></HorizontalScroll>
+            </Content>
+            {transactionContent}
+          </>
+        )}
         {bonusVacanzeEnabled && (
           <NavigationEvents onWillFocus={this.loadBonusVacanze} />
         )}
