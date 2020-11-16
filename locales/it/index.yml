@@ -738,6 +738,9 @@ wallet:
       message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   delete:
+    bancomat:
+      successful: Bancomat rimosso correttamente
+      failed: Impossibile rimuovere il bancomat
     successful: Carta rimossa correttamente
     failed: Impossibile rimuovere la carta
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"

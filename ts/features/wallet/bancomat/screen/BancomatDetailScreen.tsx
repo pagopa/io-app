@@ -96,11 +96,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       deleteWalletRequest({
         walletId,
         onSuccess: _ => {
-          showToast(I18n.t("wallet.delete.successful"), "success");
+          showToast(I18n.t("wallet.delete.bancomat.successful"), "success");
           dispatch(NavigationActions.back());
         },
         onFailure: _ => {
-          showToast(I18n.t("wallet.delete.failed"), "danger");
+          showToast(I18n.t("wallet.delete.bancomat.failed"), "danger");
         }
       })
     )

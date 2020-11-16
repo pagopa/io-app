@@ -717,6 +717,9 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
+    bancomat:
+      successful: Bancomat successfully removed
+      failed: The bancomat could not be removed
     successful: Card successfully removed
     failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
