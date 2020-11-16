@@ -28,6 +28,7 @@ global:
     question: "?"
     asterisk: "*"
   localization:
+    delimiterSeparator: "."
     decimalSeparator: ","
   date:
     today: "oggi"
