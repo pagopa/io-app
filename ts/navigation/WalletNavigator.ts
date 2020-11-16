@@ -4,6 +4,7 @@ import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/nav
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
+import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
@@ -42,6 +43,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_CARD_TRANSACTIONS]: {
     screen: TransactionsScreen
+  },
+  [ROUTES.WALLET_BANCOMAT_DETAIL]: {
+    screen: BancomatDetailScreen
   },
   [ROUTES.WALLET_ADD_CARD]: {
     screen: AddCardScreen
