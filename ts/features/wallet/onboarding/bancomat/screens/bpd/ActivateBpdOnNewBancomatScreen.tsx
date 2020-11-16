@@ -11,7 +11,7 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
-import { PaymentMethodBpdList } from "../../../../../bonus/bpd/components/PaymentMethodBpdList";
+import { PaymentMethodRawList } from "../../../../../bonus/bpd/components/paymentMethodActivationToggle/list/PaymentMethodRawList";
 import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -38,7 +38,7 @@ const ActivateBpdOnNewBancomatScreen: React.FunctionComponent<Props> = props => 
             <View spacer={true} large={true} />
             <Body>{body1}</Body>
             <View spacer={true} large={true} />
-            <PaymentMethodBpdList paymentList={props.newBancomat} />
+            <PaymentMethodRawList paymentList={props.newBancomat} />
             <View spacer={true} large={true} />
             <Body>{body2}</Body>
           </View>

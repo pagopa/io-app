@@ -1,6 +1,6 @@
 import { View } from "native-base";
-import { useState } from "react";
 import * as React from "react";
+import { useState } from "react";
 import { Platform, StyleSheet } from "react-native";
 
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
@@ -10,10 +10,10 @@ import {
   bpdApiSitUrlPrefix,
   bpdApiUatUrlPrefix,
   bpdApiUrlPrefix,
-  bpdEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../../../../config";
+import { getAppVersion } from "../../../../utils/appVersion";
 
 const styles = StyleSheet.create({
   versionContainer: {
@@ -59,13 +59,11 @@ export const BpdTestOverlay: React.FunctionComponent = () => {
           <Label
             style={styles.versionText}
             onPress={() => setEnabled(!enabled)}
-          >{`🛠️BPD TEST VERSION🛠️`}</Label>
+          >{`🛠️ BPD TEST VERSION 🛠️`}</Label>
           <Body
             style={styles.versionText}
             onPress={() => setEnabled(!enabled)}
-          >{`${
-            bpdEnabled ? "active" : "not active"
-          } - bpd: ${bpdEndpointStr} - PM: ${pmEndpointStr}`}</Body>
+          >{`${getAppVersion()} - bpd: ${bpdEndpointStr} - PM: ${pmEndpointStr}`}</Body>
         </>
       ) : null}
     </View>

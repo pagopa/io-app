@@ -7,7 +7,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import IbanInformationComponent from "../components/iban/IbanInformationComponent";
 import BpdSummaryComponent from "../components/summary/BpdSummaryComponent";
 import UnsubscribeToBpd from "../components/unsubscribe/UnsubscribeToBpd";
-import WalletPaymentMethodBpdList from "../components/WalletPaymentMethodBpdList";
+import WalletPaymentMethodBpdList from "../components/paymentMethod/WalletPaymentMethodBpdList";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

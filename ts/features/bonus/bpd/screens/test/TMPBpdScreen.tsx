@@ -16,7 +16,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { walletV2Selector } from "../../../../../store/reducers/wallet/wallets";
 import { PatchedWalletV2 } from "../../../../../types/pagopa";
 import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { PaymentMethodBpdList } from "../../components/PaymentMethodBpdList";
+import { PaymentMethodRawList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodRawList";
 import {
   fold,
   isReady,
@@ -65,10 +65,10 @@ const renderPaymentMethod = (
         Errore nel recuperare i metodi di pagamento
       </LabelSmall>
     ),
-    value => <PaymentMethodBpdList paymentList={value} />,
-    value => <PaymentMethodBpdList paymentList={value} />,
-    value => <PaymentMethodBpdList paymentList={value} />,
-    value => <PaymentMethodBpdList paymentList={value} />
+    value => <PaymentMethodRawList paymentList={value} />,
+    value => <PaymentMethodRawList paymentList={value} />,
+    value => <PaymentMethodRawList paymentList={value} />,
+    value => <PaymentMethodRawList paymentList={value} />
   );
 
 /**
