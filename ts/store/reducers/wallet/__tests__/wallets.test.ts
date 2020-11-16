@@ -1,4 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
+import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
 import { PatchedWalletV2ListResponse } from "../../../../types/pagopa";
 import {
   walletV2List1Bancomat1CCNotPagoPA,
@@ -27,7 +28,8 @@ describe("walletV2 selectors", () => {
     wallet: {
       wallets: {
         walletById: pot.some(indexedWallets)
-      }
+      },
+      abi: remoteUndefined
     }
   } as any) as GlobalState;
   it("should decode walletv2 list", () => {
