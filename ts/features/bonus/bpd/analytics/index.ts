@@ -118,7 +118,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       });
     case getType(searchUserPans.success):
       return mp.track(action.type, {
-        count: action.payload.cards.length
+        count: action.payload.cards.length,
+        messages: action.payload.messages
       });
 
     case getType(loadAbi.failure):
