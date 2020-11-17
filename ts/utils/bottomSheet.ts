@@ -73,7 +73,7 @@ export const bottomSheetRawConfig = (
 });
 
 /**
- * Hook to use a modal
+ * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
  * @param component
  * @param title
  * @param snapPoint
