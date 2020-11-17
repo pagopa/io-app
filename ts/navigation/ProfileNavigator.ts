@@ -16,8 +16,8 @@ import WebPlayground from "../screens/profile/WebPlayground";
 import { Showroom } from "../screens/showroom/Showroom";
 import RemoveAccountInfo from "../screens/profile/RemoveAccountInfoScreen";
 import RemoveAccountDetails from "../screens/profile/RemoveAccountDetailsScreen";
-import ROUTES from "./routes";
 import RemoveAccountSuccess from "../screens/profile/RemoveAccountSuccessScreen";
+import ROUTES from "./routes";
 
 /**
  * A navigator for all the screens of the Profile section
