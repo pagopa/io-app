@@ -537,10 +537,18 @@ class WalletHomeScreen extends React.PureComponent<Props> {
               <H3 weight={"SemiBold"} color={"bluegreyDark"}>
                 {"In evidenza"}
               </H3>
-              <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
-                {this.props.availableBonusesList.map((_, i) => (
-                  <FeaturedCard key={`featured_bonus_${i}`} />
-                ))}
+              <ScrollView horizontal={true}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    flex: 1
+                  }}
+                >
+                  {this.props.availableBonusesList.map((_, i) => (
+                    <FeaturedCard key={`featured_bonus_${i}`} />
+                  ))}
+                </View>
               </ScrollView>
             </View>
             {transactionContent}
