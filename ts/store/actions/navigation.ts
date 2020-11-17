@@ -14,6 +14,7 @@ import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
+import CreditCardOnboardingAttemptDetailScreen from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
 import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../../screens/wallet/payment/ManualDataInsertionScreen";
 import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
@@ -26,6 +27,7 @@ import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScr
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import { InferNavigationParams } from "../../types/react";
+import { EnhancedBancomat } from "../reducers/wallet/wallets";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -202,6 +204,12 @@ export const navigateToWalletTransactionsScreen = (
     params
   });
 
+export const navigateToBancomatDetailScreen = (bancomat: EnhancedBancomat) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_BANCOMAT_DETAIL,
+    params: { bancomat }
+  });
+
 export const navigateToPaymentPickPspScreen = (
   params: InferNavigationParams<typeof PickPspScreen>
 ) =>
@@ -223,6 +231,14 @@ export const navigateToPaymentHistoryDetail = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
+    params
+  });
+
+export const navigateToCreditCardOnboardingAttempt = (
+  params: InferNavigationParams<typeof CreditCardOnboardingAttemptDetailScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL,
     params
   });
 
