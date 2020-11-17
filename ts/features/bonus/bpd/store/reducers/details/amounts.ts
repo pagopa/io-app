@@ -11,6 +11,7 @@ import {
 } from "../../../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { BpdAmount, bpdAmountLoad } from "../../actions/amount";
+import { bpdDeleteUserFromProgram } from "../../actions/onboarding";
 import { AwardPeriodId } from "../../actions/periods";
 import { bpdSelectedPeriodSelector } from "./selectedPeriod";
 
@@ -30,6 +31,8 @@ export const bpdAmountsReducer = (
       return toSome(action.payload.awardPeriodId, state, action.payload);
     case getType(bpdAmountLoad.failure):
       return toError(action.payload.awardPeriodId, state, action.payload.error);
+    case getType(bpdDeleteUserFromProgram.success):
+      return {};
   }
 
   return state;

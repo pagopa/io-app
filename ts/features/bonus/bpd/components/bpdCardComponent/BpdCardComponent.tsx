@@ -95,6 +95,11 @@ const styles = StyleSheet.create({
   amountTextBaseFull: {
     fontSize: 24,
     lineHeight: 35,
+    // solution taken from https://github.com/facebook/react-native/issues/7687#issuecomment-309168661
+    paddingTop: Platform.select({
+      ios: 0,
+      android: 10
+    }),
     marginBottom: -8
   },
   amountTextUpperFull: { fontSize: 32 },
@@ -172,7 +177,9 @@ const statusClosedHandler = (props: Props): GraphicalState => {
       totalAmount.transactionNumber < period.minTransactionNumber &&
       !isInGracePeriod
         ? ["0", "00"]
-        : formatNumberAmount(props.totalAmount.totalCashback).split(","),
+        : formatNumberAmount(props.totalAmount.totalCashback).split(
+            I18n.t("global.localization.decimalSeparator")
+          ),
     isInGracePeriod,
     // TODO: Add supercashback business logic
     statusBadge: isInGracePeriod
@@ -203,7 +210,9 @@ const statusActiveHandler = (props: Props): GraphicalState => {
       label: I18n.t("bonus.bpd.details.card.status.active")
     },
     showLock: totalAmount.transactionNumber < period.minTransactionNumber,
-    amount: formatNumberAmount(props.totalAmount.totalCashback).split(",")
+    amount: formatNumberAmount(props.totalAmount.totalCashback).split(
+      I18n.t("global.localization.decimalSeparator")
+    )
   };
 };
 
@@ -216,7 +225,9 @@ const statusInactiveHandler = (props: Props): GraphicalState => ({
     label: I18n.t("bonus.bpd.details.card.status.inactive")
   },
   showLock: true,
-  amount: formatNumberAmount(props.totalAmount.totalCashback).split(",")
+  amount: formatNumberAmount(props.totalAmount.totalCashback).split(
+    I18n.t("global.localization.decimalSeparator")
+  )
 });
 
 const statusHandlersMap = new Map<
@@ -257,34 +268,30 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
   const FullCard = () => (
     <View style={[styles.row, styles.spaced]}>
       <View style={[styles.column, styles.flex2, styles.spaced]}>
-        <View>
-          <H2 weight={"Bold"} color={"white"}>
-            {I18n.t("bonus.bpd.title")}
-          </H2>
-          <H4 color={"white"} weight={"Regular"}>
-            {format(props.period.startDate, "DD MMM YYYY")} -{" "}
-            {format(props.period.endDate, "DD MMM YYYY")}
-          </H4>
-        </View>
+        <H2 weight={"Bold"} color={"white"}>
+          {I18n.t("bonus.bpd.title")}
+        </H2>
+        <H4 color={"white"} weight={"Regular"}>
+          {format(props.period.startDate, "DD MMM YYYY")} -{" "}
+          {format(props.period.endDate, "DD MMM YYYY")}
+        </H4>
         <View spacer={true} large />
-        <View style={{ height: 32 }}>
-          <View style={[styles.row, { alignItems: "center" }]}>
-            <Text bold={true} white={true} style={styles.amountTextBaseFull}>
-              {"€ "}
-              <Text white={true} style={styles.amountTextUpperFull}>
-                {amount[0]},
-              </Text>
-              {amount[1]}
+        <View style={[styles.row, { alignItems: "center" }]}>
+          <Text bold={true} white={true} style={[styles.amountTextBaseFull]}>
+            {"€ "}
+            <Text white={true} style={styles.amountTextUpperFull}>
+              {`${amount[0]}${I18n.t("global.localization.decimalSeparator")}`}
             </Text>
-            <View hspacer={true} small={true} />
-            {showLock && (
-              <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
-            )}
-          </View>
-          <H5 color={"white"} weight={"Regular"}>
-            {I18n.t("bonus.bpd.earned")}
-          </H5>
+            {amount[1]}
+          </Text>
+          <View hspacer={true} small={true} />
+          {showLock && (
+            <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
+          )}
         </View>
+        <H5 color={"white"} weight={"Regular"}>
+          {I18n.t("bonus.bpd.earned")}
+        </H5>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
         <Badge style={[statusBadge.style, styles.badgeBase]}>
@@ -358,7 +365,9 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               >
                 {"€ "}
                 <Text white={true} style={styles.amountTextUpperPreview}>
-                  {amount[0]},
+                  {`${amount[0]}${I18n.t(
+                    "global.localization.decimalSeparator"
+                  )}`}
                 </Text>
                 {amount[1]}
               </Text>

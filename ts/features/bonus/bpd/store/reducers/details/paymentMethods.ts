@@ -5,6 +5,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { bpdDeleteUserFromProgram } from "../../actions/onboarding";
 import {
   BpdPaymentMethodActivation,
   bpdPaymentMethodActivation,
@@ -75,6 +76,8 @@ export const bpdPaymentMethodsReducer = (
         ...state,
         [action.payload.hPan]: pot.toError(updateFailure, action.payload.error)
       };
+    case getType(bpdDeleteUserFromProgram.success):
+      return {};
   }
   return state;
 };
