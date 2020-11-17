@@ -1700,6 +1700,13 @@ bonus:
       loading:
         "We are verifying your IBAN\n\nPlease wait."
     details:
+      howItWorks:
+        title: "How does Cashback work?"
+        body: "1. The Cashback program is divided into periods of variable duration: the **current period** begins on {{startDate}} and ends on {{endDate}}. **Accumulates transactions** valid for the entire duration of each period with the **payment methods you have activated**.\n
+
+               2. During this period, if you reach **{{minTransactionNumber}} transactions**, you will receive a refund equal to {{cashbackPercentage}}% up to a maximum refund of **{{maxTransactionCashback}} euro** per transaction and a maximum of **{{maxPeriodCashback}} euros** in the whole period.\n
+
+               3. At the end of the period, receive the accumulated refund on the IBAN indicated by you.\n\n‎"
       components:
         iban:
           title: "IBAN for accreditation"
@@ -1754,12 +1761,17 @@ bonus:
         activateOnOthersChannel:
           text1: "Activate on"
           text2: "other channels"
-          title: "Method not compatible"
-          body: "The payment method is not compatible [MISSING TEXT]"
+          title: "Methods added by other channels"
+          body: "You have added these payment methods to the cashback directly from the channels made available by your bank. You can activate or deactivate the collection of transactions of these methods also from IO. \n
+                 If you want to use some of these methods to pay via IO as well, add them to your wallet! "
+          addWallet: "Add to wallet"
         notActivable:
           header: "Not activatable or incompatible"
           title: "Method not activatable"
-          body: "Someone else has already activated cashback on this payment method at this time: [MISSING TEXT]"
+          body: "Someone else already has cashback on this payment method active at this time: digital payments cashback can only be activated by one user at a time for each payment method."
+        notCompatible:
+          title: "Method not compatible"
+          body: "The payment method is not compatible with cashback digital payments because the bank has not yet activated support for these features. Contact your bank for more details."
         activate:
           title: "Method activation"
           body: "Are you sure you want to activate cashback on this payment method?
