@@ -10,8 +10,10 @@ import {
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import AddBancomatScreen from "../add-pans/AddBancomatScreen";
 import BancomatKoNotFound from "./BancomatKoNotFound";
+import BancomatKoServiceError from "./BancomatKoServicesError";
 import BancomatKoTimeout from "./BancomatKoTimeout";
 import LoadBancomatSearch from "./LoadBancomatSearch";
+import BancomatKoSingleBankNotFound from "./BancomatKoSingleBankNotFound";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

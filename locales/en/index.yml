@@ -663,14 +663,21 @@ wallet:
       label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} at {{hours}} with reason {{reason}}. Activate for the full detail"
   onboarding:
     bancomat:
-      headerTitle: "Add Bancomat card"
+      headerTitle: "Add PagoBANCOMAT"
       koTimeout:
-        title: "We were unable to contact Bancomat."
-        body: "Please retry"
+        title: "At the moment it is impossible to recover your cards"
+        body: "Please try again"
       koNotFound:
         title: "Sorry, we couldn't find any cards"
-        body: "There are no Bancomat registered to you"
+        body: "There are no PagoBANCOMAT cards in your name: contact your bank for further information"
+      koNotFoundSingleBank:
+        title: "Sorry, we didn't find any cards on this bank"
+        body: "There are no PagoBANCOMAT cards in your name"
         chooseAnother: "Choose another bank"
+      koServicesError:
+        title: "The cards could not be recovered: choose the bank"
+        body: "Indicate the bank where your account resides to see the list of PagoBANCOMAT cards in your name"
+        chooseTheBank: "Choose the bank"
       loadingSearch:
         title: "We are asking Bancomat for the list of your cards\n\nPlease wait"
       add:

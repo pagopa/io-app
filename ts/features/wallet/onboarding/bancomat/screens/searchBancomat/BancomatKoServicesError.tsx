@@ -1,5 +1,6 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
+import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../img/servicesStatus/error-detail-icon.png";
@@ -10,7 +11,10 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { cancelButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { walletAddBancomatCancel } from "../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -18,17 +22,19 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 
 const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.bancomat.headerTitle"),
-  title: I18n.t("wallet.onboarding.bancomat.koNotFound.title"),
-  body: I18n.t("wallet.onboarding.bancomat.koNotFound.body")
+  title: I18n.t("wallet.onboarding.bancomat.koServicesError.title"),
+  body: I18n.t("wallet.onboarding.bancomat.koServicesError.body"),
+  cta: I18n.t("wallet.onboarding.bancomat.koServicesError.chooseTheBank")
 });
 
 /**
- * This screen informs the user that no Bancomat in his name were found.
- * No abi selected, all the services returned 0
+ * This screen informs the user that no Bancomat in his name were found because not all
+ * the services reply with success. The user should try to choose a single bank where
+ * search the bancomat.
  * @constructor
  */
-const BancomatKoNotFound: React.FunctionComponent<Props> = props => {
-  const { headerTitle, title, body } = loadLocales();
+const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
+  const { headerTitle, title, body, cta } = loadLocales();
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
@@ -39,8 +45,9 @@ const BancomatKoNotFound: React.FunctionComponent<Props> = props => {
           body={body}
         />
         <FooterWithButtons
-          type={"SingleButton"}
+          type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(props.cancel)}
+          rightButton={confirmButtonProps(props.back, cta)}
         />
       </SafeAreaView>
     </BaseScreenComponent>
@@ -48,9 +55,13 @@ const BancomatKoNotFound: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  cancel: () => dispatch(walletAddBancomatCancel())
+  cancel: () => dispatch(walletAddBancomatCancel()),
+  back: () => dispatch(NavigationActions.back())
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(BancomatKoNotFound);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BancomatKoServiceError);
