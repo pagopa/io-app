@@ -27,7 +27,7 @@ const IbanInsertionScreen: React.FunctionComponent<Props> = props => (
     onIbanConfirm={props.submitIban}
     startIban={props.prefillIban}
     cancelText={
-      props.onboarding
+      props.onboardingOngoing
         ? I18n.t("global.buttons.skip")
         : I18n.t("global.buttons.cancel")
     }
@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   prefillIban: bpdIbanPrefillSelector(state),
-  onboarding: isBpdOnboardingOngoing(state)
+  onboardingOngoing: isBpdOnboardingOngoing(state)
 });
 
 export default connect(
