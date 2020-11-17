@@ -37,7 +37,6 @@ export const deleteUserDataProcessing = createAsyncAction(
   UserDataProcessingChoiceEnum,
   {
     choice: UserDataProcessingChoiceEnum;
-    value?: UserDataProcessing;
   },
   { choice: UserDataProcessingChoiceEnum; error: Error }
 >();
