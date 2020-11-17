@@ -2,13 +2,7 @@ import { fromNullable, fromPredicate, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import {
-  BackHandler,
-  Image,
-  RefreshControl,
-  ScrollView,
-  StyleSheet
-} from "react-native";
+import { BackHandler, Image, RefreshControl, StyleSheet } from "react-native";
 import {
   NavigationEvents,
   NavigationEventSubscription,
@@ -78,9 +72,8 @@ import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
-import { H3 } from "../../components/core/typography/H3";
-import FeaturedCard from "../../features/wallet/component/FeaturedCard";
-import { HorizontalScroll } from "../../components/HorizontalScroll";
+import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
+import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -533,24 +526,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           this.newMethodAddedContent
         ) : (
           <>
-            <View style={{ padding: customVariables.contentPadding }}>
-              <H3 weight={"SemiBold"} color={"bluegreyDark"}>
-                {"In evidenza"}
-              </H3>
-              <ScrollView horizontal={true}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    flex: 1
-                  }}
-                >
-                  {this.props.availableBonusesList.map((_, i) => (
-                    <FeaturedCard key={`featured_bonus_${i}`} />
-                  ))}
-                </View>
-              </ScrollView>
-            </View>
+            <FeaturedCardCarousel
+              availableBonusesList={this.props.availableBonusesList}
+              bpdActive={this.props.bpdActiveBonus}
+              bvActive={this.props.allActiveBonus.length > 0}
+            />
             {transactionContent}
           </>
         )}
@@ -577,6 +557,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
+    bpdActiveBonus: bpdEnabledSelector(state),
     allActiveBonus: allBonusActiveSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     potWallets: pagoPaCreditCardSelector(state),
