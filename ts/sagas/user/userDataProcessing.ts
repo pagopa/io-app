@@ -1,6 +1,5 @@
 import { left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import reactotron from "reactotron-react-native";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
@@ -104,26 +103,18 @@ export function* deleteUserDataProcessingSaga(
         userDataProcessingChoiceParam: choice
       }
     );
-    reactotron.log(response);
-    if (response.isRight()) {
-      if (response.value.status === 404 || response.value.status === 202) {
-        yield put(
-          deleteUserDataProcessing.success({
-            choice
-            // value:
-            //   response.value.status === 202 ? response.value.value : undefined
-          })
-        );
-      } else {
-        throw new Error(
-          `deleteUserDataProcessing response status ${response.value.status}`
-        );
-      }
+    if (response.isRight() && response.value.status === 202) {
+      yield put(
+        deleteUserDataProcessing.success({
+          choice
+        })
+      );
     } else {
-      throw new Error(readableReport(response.value));
+      throw new Error(
+        `An error occurred while submitting an abort request to ${choice} the profile`
+      );
     }
   } catch (e) {
-    reactotron.log(e.message);
     yield put(
       deleteUserDataProcessing.failure({
         choice,
