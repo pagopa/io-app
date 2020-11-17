@@ -2,6 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { UserDataProcessing } from "../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
 import {
@@ -70,7 +71,16 @@ const userDataProcessingReducer = (
         [action.payload.choice]: pot.some(action.payload)
       };
     }
-
+    case getType(deleteUserDataProcessing.success): {
+      const maybeValue = state[action.payload.choice];
+      return {
+        ...state,
+        [action.payload.choice]: pot.map(maybeValue, val => ({
+          ...val,
+          status: UserDataProcessingStatusEnum.ABORTED
+        }))
+      };
+    }
     case getType(resetUserDataProcessingRequest): {
       return {
         ...state,
