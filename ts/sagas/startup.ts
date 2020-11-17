@@ -1,6 +1,7 @@
 import { fromNullable, isNone, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import { Alert } from "react-native";
 import { NavigationActions, NavigationState } from "react-navigation";
 import {
   call,
@@ -13,8 +14,9 @@ import {
   takeEvery,
   takeLatest
 } from "redux-saga/effects";
-import { getType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../api/backend";
+import { store } from "../App";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
@@ -23,7 +25,7 @@ import {
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
-
+import I18n from "../i18n";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
@@ -33,7 +35,9 @@ import { previousInstallationDataDeleteSuccess } from "../store/actions/installa
 import { loadMessageWithRelations } from "../store/actions/messages";
 import {
   navigateToMainNavigatorAction,
-  navigateToMessageDetailScreenAction
+  navigateToMessageDetailScreenAction,
+  navigateToTosScreen,
+  navigateToPrivacyScreen
 } from "../store/actions/navigation";
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
@@ -43,11 +47,14 @@ import {
   removeAccountMotivation,
   resetProfileState
 } from "../store/actions/profile";
+import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
+import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -345,6 +352,51 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     backendClient.deleteUserDataProcessingRequest
   );
 
+  if (isSessionRefreshed) {
+    // Only if the user are logging in check the account removal status and,
+    // if is PENDING show an alert to notify him.
+    const checkUserDeletePendingTask: any = yield takeLatest(
+      loadUserDataProcessing.success,
+      function* (
+        loadUserDataProcessingSuccess: ActionType<
+          typeof loadUserDataProcessing.success
+        >
+      ) {
+        const maybeDeletePending = fromNullable(
+          loadUserDataProcessingSuccess.payload.value
+        ).filter(
+          uc =>
+            uc.choice === UserDataProcessingChoiceEnum.DELETE &&
+            uc.status === UserDataProcessingStatusEnum.PENDING
+        );
+
+        if (maybeDeletePending.isSome()) {
+          yield cancel(checkUserDeletePendingTask);
+          Alert.alert(
+            I18n.t("startup.userDeletePendingAlert.title"),
+            I18n.t("startup.userDeletePendingAlert.message"),
+            [
+              {
+                text: I18n.t("startup.userDeletePendingAlert.cta_1"),
+                style: "cancel",
+                onPress: () => {
+                  store.dispatch(navigateToPrivacyScreen);
+                }
+              },
+              {
+                text: I18n.t("startup.userDeletePendingAlert.cta_2"),
+                style: "default"
+              }
+            ]
+          );
+        }
+      }
+    );
+
+    yield put(
+      loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
+    );
+  }
   // Load visible services and service details from backend when requested
   yield fork(watchLoadServicesSaga, backendClient);
 
