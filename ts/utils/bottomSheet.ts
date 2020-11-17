@@ -1,3 +1,4 @@
+import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { BottomSheetModalConfigs } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
 import { AccessibilityContent } from "../components/bottomSheet/AccessibilityContent";
@@ -70,3 +71,30 @@ export const bottomSheetRawConfig = (
     handleComponent: () => BottomSheetHeader({ title, onClose })
   }
 });
+
+/**
+ * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
+ * @param component
+ * @param title
+ * @param snapPoint
+ */
+export const useIOBottomSheet = (
+  component: React.ReactNode,
+  title: string,
+  snapPoint: number
+) => {
+  const { present, dismiss } = useBottomSheetModal();
+
+  const openModalBox = async () => {
+    const bottomSheetProps = await bottomSheetContent(
+      component,
+      title,
+      snapPoint,
+      dismiss
+    );
+    present(bottomSheetProps.content, {
+      ...bottomSheetProps.config
+    });
+  };
+  return { present: openModalBox, dismiss };
+};
