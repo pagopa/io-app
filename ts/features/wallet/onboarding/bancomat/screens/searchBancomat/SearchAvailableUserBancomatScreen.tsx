@@ -7,16 +7,19 @@ import {
   isLoading,
   isReady
 } from "../../../../../bonus/bpd/model/RemoteValue";
+import { onboardingBancomatAbiSelectedSelector } from "../../store/reducers/abiSelected";
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import AddBancomatScreen from "../add-pans/AddBancomatScreen";
 import BancomatKoNotFound from "./BancomatKoNotFound";
-import BancomatKoServiceError from "./BancomatKoServicesError";
+import BancomatKoServicesError from "./BancomatKoServicesError";
+import BancomatKoSingleBankNotFound from "./BancomatKoSingleBankNotFound";
 import BancomatKoTimeout from "./BancomatKoTimeout";
 import LoadBancomatSearch from "./LoadBancomatSearch";
-import BancomatKoSingleBankNotFound from "./BancomatKoSingleBankNotFound";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const bancomatServiceSuccessCode = 0;
 
 /**
  * This screen handle the errors and loading for the user bancomat.
@@ -26,9 +29,19 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
   const pans = props.pans;
 
   const noBancomatFound = isReady(pans) && pans.value.cards.length === 0;
+  const allServicesResponseSuccess =
+    isReady(pans) &&
+    pans.value.messages.every(m => m.code === bancomatServiceSuccessCode);
 
+  // The user choose a specific bank to search and no results are found
+  if (props.abiSelected && noBancomatFound) {
+    return <BancomatKoSingleBankNotFound />;
+  }
   if (noBancomatFound) {
-    return <BancomatKoNotFound />;
+    if (allServicesResponseSuccess) {
+      return <BancomatKoNotFound />;
+    }
+    return <BancomatKoServicesError />;
   }
   if (isError(pans) && pans.error.kind === "timeout") {
     return <BancomatKoTimeout />;
@@ -43,7 +56,8 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  pans: onboardingBancomatFoundPansSelector(state)
+  pans: onboardingBancomatFoundPansSelector(state),
+  abiSelected: onboardingBancomatAbiSelectedSelector(state)
 });
 
 export default connect(

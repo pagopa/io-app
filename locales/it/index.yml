@@ -700,7 +700,7 @@ wallet:
         body: "Indica la banca su cui risiede il tuo conto per vedere le lista delle Carte PagoBANCOMAT intestate a te"
         chooseTheBank: "Scegli la banca"
       loadingSearch:
-        title: "Stiamo chiedendo a Bancomat la lista delle tue carte\n\nAttendi qualche secondo"
+        title: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo"
       add:
         title: "Aggiungi bancomat {{current}} di {{length}}"
         screenTitle: "Vuoi aggiungere questa carta?"
