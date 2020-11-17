@@ -42,7 +42,7 @@ const dataForFlatList = (
 ) => pot.getOrElse(transactions, []);
 
 export const isTotalCashback = (item: any): item is TotalCashbackPerDate =>
-  item.totalCashBack;
+  item.totalCashBack !== undefined;
 
 /**
  * Builds the array of objects needed to show the sectionsList grouped by transaction day.
@@ -67,6 +67,8 @@ const getTransactionsByDaySections = (
 
   const transactionsAsc = reverse([...transactions]);
 
+  // accumulator to define when the user reached the cashback award amount
+  // and tracing the sum of all the cashback value to check if any negative trx may cause a revoke of cashback award
   const amountWinnerAccumulator = transactionsAsc.reduce(
     (
       acc: {
@@ -107,6 +109,9 @@ const getTransactionsByDaySections = (
 
   const maybeWinner = fromNullable(amountWinnerAccumulator.winner);
 
+  // If the user reached the cashback amount within transactions we actualize all the cashback value starting from the index of winning transaction
+  // if the the winning transaction makes cashback value exceed the limit we set the amount to the difference of transaction cashback value, total amout at winnign transaction and cashback award limit.
+  // all the following transactions will be set to 0 cashback value, since the limit has been reached (a dedicated item will be displayed)
   const updatedTransactions = [...transactionsAsc].map((t, i) => {
     if (maybeWinner.isSome()) {
       if (
@@ -131,6 +136,8 @@ const getTransactionsByDaySections = (
     title: d,
     data: [
       ...updatedTransactions.filter(t => format(t.trxDate, "DD MMMM") === d),
+      // we add the the data array an item to display the milestone reached
+      // in order to display the milestone after the latest transaction summed in the total we add 1 ms so that the ordering will set it correctly
       ...maybeWinner.fold([], w => {
         if (format(w.date, "DD MMMM") === d) {
           return [
