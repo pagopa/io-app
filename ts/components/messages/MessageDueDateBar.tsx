@@ -168,6 +168,11 @@ const getCalendarTextColor = (status: PaymentStatus) =>
     ? customVariables.colorWhite
     : assertNever(status);
 
+const isExpiringOrExpired = (paymentStatus: PaymentStatus): boolean =>
+  paymentStatus === "expiring" ||
+  paymentStatus === "expiredAndExpirable" ||
+  paymentStatus === "expiredNotExpirable";
+
 // The calendar icon is shown if:
 // - the payment related to the message is not yet paid
 // - the message has a due date
@@ -257,14 +262,7 @@ const MessageDueDateBar: React.FunctionComponent<Props> = ({
           <CalendarIcon status={paymentStatus} dueDate={dueDate} />
           <View hspacer={true} small={true} />
 
-          <Text
-            style={styles.text}
-            white={
-              paymentStatus === "expiring" ||
-              paymentStatus === "expiredAndExpirable" ||
-              paymentStatus === "expiredNotExpirable"
-            }
-          >
+          <Text style={styles.text} white={isExpiringOrExpired(paymentStatus)}>
             <TextContent
               status={paymentStatus}
               dueDate={dueDate}
