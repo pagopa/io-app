@@ -1,11 +1,11 @@
 import { Badge, View, Text } from "native-base";
 import * as React from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
-import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "../../../i18n";
 
 type Props = {
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 });
 
 const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
-  <TouchableDefaultOpacity style={styles.container}>
+  <TouchableDefaultOpacity style={styles.container} onPress={props.onPress}>
     <View style={styles.row}>
       {fromNullable(props.image).fold(
         <View

@@ -73,7 +73,6 @@ import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
 import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
-import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -526,11 +525,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           this.newMethodAddedContent
         ) : (
           <>
-            <FeaturedCardCarousel
-              availableBonusesList={this.props.availableBonusesList}
-              bpdActive={this.props.bpdActiveBonus}
-              bvActive={this.props.allActiveBonus.length > 0}
-            />
+            {bpdEnabled && (
+              <FeaturedCardCarousel
+                bvActive={this.props.allActiveBonus.length > 0}
+              />
+            )}
             {transactionContent}
           </>
         )}
@@ -557,7 +556,6 @@ const mapStateToProps = (state: GlobalState) => {
 
   const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
-    bpdActiveBonus: bpdEnabledSelector(state),
     allActiveBonus: allBonusActiveSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     potWallets: pagoPaCreditCardSelector(state),
