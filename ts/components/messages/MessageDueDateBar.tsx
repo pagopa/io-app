@@ -217,16 +217,19 @@ const paid = (payment: PaidReason | undefined): boolean =>
 const calculatePaymentStatus = (
   payment: PaidReason | undefined,
   message: CreatedMessageWithContent
-): PaymentStatus =>
-  isPaymentExpired(message) && isPaymentExpirable(message)
-    ? "expiredAndExpirable"
-    : isPaymentExpired(message) && !isPaymentExpirable(message)
-    ? "expiredNotExpirable"
-    : isPaymentExpiring(message)
-    ? "expiring"
-    : paid(payment)
-    ? "paid"
-    : "valid";
+): PaymentStatus => {
+  if (isPaymentExpired(message) && isPaymentExpirable(message)) {
+    return "expiredAndExpirable";
+  } else if (isPaymentExpired(message) && !isPaymentExpirable(message)) {
+    return "expiredNotExpirable";
+  } else if (isPaymentExpiring(message)) {
+    return "expiring";
+  } else if (paid(payment)) {
+    return "paid";
+  } else {
+    return "valid";
+  }
+};
 
 /**
  * A component to show detailed info about the due date of a message
