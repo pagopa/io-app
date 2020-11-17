@@ -6,8 +6,7 @@ import { ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import { nullType } from "io-ts";
-import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
-import { getValue, RemoteValue } from "../../bonus/bpd/model/RemoteValue";
+import { getValue } from "../../bonus/bpd/model/RemoteValue";
 import {
   ID_BONUS_VACANZE_TYPE,
   ID_BPD_TYPE
