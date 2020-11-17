@@ -13,6 +13,8 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
+jest.unmock("react-navigation");
+
 describe("saveNavigationStateSaga", () => {
   it("should not set a deep link when not in main navigator", () =>
     expectSaga(saveNavigationStateSaga)

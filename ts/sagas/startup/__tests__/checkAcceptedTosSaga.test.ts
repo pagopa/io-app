@@ -16,6 +16,8 @@ import { tosAccepted } from "../../../store/actions/onboarding";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
 
+jest.unmock("react-navigation");
+
 describe("checkAcceptedTosSaga", () => {
   const firstOnboardingProfile: InitializedProfile = {
     has_profile: false,

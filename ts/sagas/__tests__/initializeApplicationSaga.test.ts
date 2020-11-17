@@ -40,6 +40,8 @@ jest.mock("react-native-share", () => ({
 
 jest.mock("../../api/backend");
 
+jest.unmock("react-navigation");
+
 const profile: InitializedProfile = {
   has_profile: true,
   is_inbox_enabled: true,

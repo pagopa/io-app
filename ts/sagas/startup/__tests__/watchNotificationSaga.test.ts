@@ -8,6 +8,8 @@ import {
 import { isPaymentOngoingSelector } from "../../../store/reducers/wallet/payment";
 import { watchNotificationSaga } from "../watchNotificationSaga";
 
+jest.unmock("react-navigation");
+
 describe("watchNotificationSaga", () => {
   const mockedPendingMessageState: PendingMessageState = {
     id: "M01",

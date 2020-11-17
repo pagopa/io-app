@@ -17,6 +17,8 @@ import {
 } from "../../../store/actions/onboarding";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
 
+jest.unmock("react-navigation");
+
 const userProfileWithEmailAndValidated: InitializedProfile = {
   has_profile: true,
   is_inbox_enabled: true,

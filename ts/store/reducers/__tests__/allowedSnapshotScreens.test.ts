@@ -19,6 +19,8 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
+jest.unmock("react-navigation");
+
 describe("allowed Snapshot Screens Selector test", () => {
   it("Test high level composition", () => {
     // with a blacklisted screen, expected false

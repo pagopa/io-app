@@ -20,6 +20,8 @@ jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
 }));
 
+jest.unmock("react-navigation");
+
 describe("authenticationSaga", () => {
   it("should always navigate to authentication screen and return the session token on login success", () => {
     const watchCieAuthentication: Task = createMockTask();

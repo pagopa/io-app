@@ -35,6 +35,8 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
+jest.unmock("react-navigation");
+
 const activationReducer = combineReducers<MockActivationState, Action>({
   activation: bonusVacanzeActivationReducer,
   allActive: allActiveReducer

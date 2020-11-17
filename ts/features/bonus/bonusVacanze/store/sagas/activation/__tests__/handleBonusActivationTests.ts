@@ -26,6 +26,8 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
+jest.unmock("react-navigation");
+
 type BonusVacanzeReturnType = ActionType<typeof activateBonusVacanze>;
 
 describe("Bonus Activation Saga, mock networking saga", () => {

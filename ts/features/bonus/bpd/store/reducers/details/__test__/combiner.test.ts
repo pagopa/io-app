@@ -16,6 +16,8 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
+jest.unmock("react-navigation");
+
 describe("Bpd reducers combiner tests", () => {
   it("Periods NOT pot.Some should return not pot.Some", () => {
     expect(bpdAllPeriodsWithAmountSelector.resultFunc(pot.none, {})).toBe(
