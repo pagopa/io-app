@@ -35,7 +35,8 @@ class CieButtonCheckTest(unittest.TestCase):
                 uri="https://app-backend.io.germania.it/login?entityID=xx_servizicie&authLevel=SpidL2",
                 headers=CieBtn.cieHeaders,
                 payload=CieBtn.ciePayload,
-                maxAttempts=5)
+                maxAttempts=5,
+                timeoutPerRequest=1)
 
     def testUriFailureRequestCiePage(self):
         # Wrong uri
@@ -44,7 +45,8 @@ class CieButtonCheckTest(unittest.TestCase):
                 uri="https://app-backend.io.germania.it/login?entityID=xx_servizicie&authLevel=SpidL2",
                 headers=CieBtn.cieHeaders,
                 payload=CieBtn.ciePayload,
-                maxAttempts=5)
+                maxAttempts=5,
+                timeout=1)
 
     def testPatternFailure(self):
         with self.assertRaises(SystemExit):
@@ -53,7 +55,8 @@ class CieButtonCheckTest(unittest.TestCase):
                 headers=CieBtn.cieHeaders,
                 payload=CieBtn.ciePayload,
                 maxAttempts=5,
-                pattern="Trump Wins")
+                pattern="Abracadabra",
+                timeoutPerRequest=1)
 
 
 if __name__ == '__main__':

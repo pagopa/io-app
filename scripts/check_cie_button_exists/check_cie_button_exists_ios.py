@@ -29,7 +29,8 @@ def requestCieAuthPage(
         uri,
         headers,
         payload,
-        maxAttempts):
+        maxAttempts,
+        timeout):
 
     statusFlag = False
     nAttempts = 0
@@ -39,9 +40,9 @@ def requestCieAuthPage(
     while not (nAttempts >= maxAttempts or statusFlag):
         # do the requests
         response = requests.get(
-            uri, headers=headers, allow_redirects=True)
+            uri, headers=headers, allow_redirects=True, timeout=timeout)
         response = requests.post(
-            response.url, headers=headers, data=payload, allow_redirects=True)
+            response.url, headers=headers, data=payload, allow_redirects=True, timeout=timeout)
         # set conditions for next step
         nAttempts += 1
         statusFlag = (response.status_code == 200)
@@ -73,11 +74,12 @@ def main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&auth
          headers=cieHeaders,
          payload=ciePayload,
          maxAttempts=5,
-         pattern="apriIosUL"):
+         pattern="apriIosUL",
+         timeoutPerRequest=1):  # timeout in seconds
     cieAuthPageResponse = None
     try:
         cieAuthPageResponse = requestCieAuthPage(
-            uri, headers, payload, maxAttempts)
+            uri, headers, payload, maxAttempts, timeoutPerRequest)
         cieAuthPageResponse.raise_for_status()
     except requests.exceptions.RequestException:
         print("[Fatal Error] Page containing CIE button unrechable", file=sys.stderr)
@@ -96,4 +98,5 @@ if __name__ == "__main__":
          headers=cieHeaders,
          payload=ciePayload,
          maxAttempts=5,
-         pattern="apriIosUL")
+         pattern="apriIosUL",
+         timeoutPerRequest=5)
