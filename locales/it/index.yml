@@ -127,6 +127,11 @@ startup:
   sessionInfo: Attributi SPID caricati
   profileInfo: Profilo utente caricato
   profileEnabled: Profilo utente abilitato
+  userDeletePendingAlert:
+    title: Eliminazione profilo in corso
+    message: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
+    cta_1: Vai a Privacy
+    cta_2: Ignora
 login:
   welcome:
     line1: benvenuto nella tua

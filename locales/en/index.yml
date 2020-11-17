@@ -127,6 +127,11 @@ startup:
   sessionInfo: SPID attributes loaded
   profileInfo: User profile loaded
   profileEnabled: User profile activated
+  userDeletePendingAlert:
+    title: Profile deletion in progress
+    message: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
+    cta_1: Browse Privacy
+    cta_2: Discard
 login:
   welcome:
     line1: welcome in your
