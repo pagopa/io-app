@@ -28,6 +28,7 @@ global:
     question: "?"
     asterisk: "*"
   localization:
+    delimiterSeparator: "."
     decimalSeparator: ","
   date:
     today: "oggi"
@@ -686,7 +687,7 @@ wallet:
       headerTitle: "Aggiungi carta Bancomat"
       koTimeout:
         title: "Non siamo riusciti a contattare Bancomat."
-        body: "Ripova per favore"
+        body: "Riprova per favore"
       koNotFound:
         title: "Spiacenti, non abbiamo trovato nessuna carta"
         body: "Non risultano Bancomat intestati a te"
@@ -1739,6 +1740,13 @@ bonus:
       loading:
         "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
     details:
+      howItWorks:
+        title: "Come funziona il Cashback?"
+        body: "1. Il programma Cashback si divide in periodi di durata variabile: il **periodo corrente** inizia il {{startDate}} e finisce il {{endDate}}. **Accumula transazioni** valide durante tutta la durata di ciascun periodo con i **metodi di pagamento che hai attivato**.\n
+
+               2. In questo periodo, se raggiungi le **{{minTransactionNumber}} transazioni**, riceverai un rimborso pari al {{cashbackPercentage}}% fino ad un rimborso massimo di **{{maxTransactionCashback}} euro** a transazione ed un massimo di **{{maxPeriodCashback}} euro** in tutto il periodo.\n
+
+               3. Al termine del periodo, ricevi il rimborso accumulato sull’IBAN da te indicato.\n\n‎"
       components:
         iban:
           title: "IBAN per l’accredito"
@@ -1793,12 +1801,17 @@ bonus:
         activateOnOthersChannel:
           text1: "Attivati su "
           text2: "altri canali"
-          title: "Metodo non compatibile"
-          body: "Il metodo di pagamento non è compatibile [MISSING TEXT]"
+          title: "Metodi aggiunti da altri canali"
+          body: "Hai aggiunto al cashback questi metodi di pagamento direttamente dai canali messi a disposizione dalla tua banca. Puoi attivare o disattivare la raccolta delle transazioni di questi metodi anche da IO.\n
+                 Se vuoi usare alcuni di questi metodi anche per pagare tramite IO, aggiungili al tuo portafoglio!"
+          addWallet: "Aggiungi al portafoglio"
         notActivable:
           header: "Non attivabili o non compatibili"
           title: "Metodo non attivabile"
-          body: "Qualcun altro ha già attivato in questo momento il cashback su questo metodo di pagamento: [MISSING TEXT]"
+          body: "Qualcun altro ha già attivo in questo momento il cashback su questo metodo di pagamento: il cashback pagamenti digitali può essere attivato da un solo utente alla volta per ciascun metodo di pagamento."
+        notCompatible:
+          title: "Metodo non compatibile"
+          body: "Il metodo di pagamento non è compatibile con il cashback pagamenti digitali perchè la banca non ha ancora attivato il supporto a queste funzionalità. Contatta la tua banca per maggiori dettagli."
         activate:
           title: "Attivazione metodo"
           body: "Confermi di voler attivare il cashback su questo metodo di pagamento?

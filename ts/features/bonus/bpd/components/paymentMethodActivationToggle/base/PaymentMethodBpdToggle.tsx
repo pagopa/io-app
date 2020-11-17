@@ -19,8 +19,8 @@ import {
   HPan
 } from "../../../store/actions/paymentMethods";
 import { bpdPaymentMethodValueSelector } from "../../../store/reducers/details/paymentMethods";
-import { BpdChangeActivationConfirmationScreen } from "../confirm/BpdChangeActivationConfirmationScreen";
 import { useNavigationContext } from "../../../../../../utils/hooks/useOnFocus";
+import { BpdChangeActivationConfirmationScreen } from "../bottomsheet/BpdChangeActivationConfirmationScreen";
 import { BpdToggle } from "./BpdToggle";
 import { PaymentMethodRepresentation } from "./PaymentMethodRepresentation";
 

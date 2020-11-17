@@ -1,15 +1,18 @@
 import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { H2 } from "../../../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../../../components/core/typography/H5";
 import I18n from "../../../../../../../i18n";
+import { BpdPeriod } from "../../../../store/actions/periods";
+import { useHowItWorksBottomSheet } from "../bottomsheet/HowItWorks";
 import { BpdBaseShadowBoxLayout } from "./base/BpdBaseShadowBoxLayout";
 import { ProgressBar } from "./base/ProgressBar";
 
 type Props = {
   transactions: number;
   minTransactions: number;
+  period: BpdPeriod;
 };
 
 const styles = StyleSheet.create({
@@ -94,9 +97,15 @@ const TextualTransactionsSummary = (props: Props) => {
  * @param props
  * @constructor
  */
-export const TransactionsGraphicalSummary: React.FunctionComponent<Props> = props =>
-  props.transactions < props.minTransactions ? (
-    <PercentageTransactionsSummary {...props} />
+export const TransactionsGraphicalSummary: React.FunctionComponent<Props> = props => {
+  const { present } = useHowItWorksBottomSheet(props.period);
+  const onPress = props.period.status === "Active" ? present : undefined;
+
+  return props.transactions < props.minTransactions ? (
+    <TouchableOpacity onPress={onPress}>
+      <PercentageTransactionsSummary {...props} />
+    </TouchableOpacity>
   ) : (
     <TextualTransactionsSummary {...props} />
   );
+};
