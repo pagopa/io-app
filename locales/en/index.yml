@@ -686,6 +686,7 @@ wallet:
         bodySingular: "We found 1 card headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
         bodyPlural: "We found {{number}} cards headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
         loading: "We are adding your PagoBANCOMAT card\n\nPlease wait a few seconds"
+        warning: "If you don't find all the cards you have, try adding the missing one later by indicating your bank where you have your current account."
       bpd:
         suggestActivation:
           title: "Do you want to activate Digital Payments Cashback?"
@@ -967,7 +968,7 @@ wallet:
         three: ", but only at physical points (POS)."
       debit:
         title: "Debit Card"
-        body: "If your PagoBANCOMAT card also has the logo of another circuit (** Maestro, Visa, Mastercard, V-Pay **, etc ..) remember to add it to your wallet also as a ** debit card ** for to be able to make payments on IO or activate the available functions. "
+        body: "If your PagoBANCOMAT card also has the logo of another circuit (** Maestro, Visa, Mastercard **, etc ..) remember to add it to your wallet also as a ** debit card ** for to be able to make payments on IO or activate the available functions. "
         addCta: "Add Debit Card"
       removeCta: "Delete this payment method"
   newRemove:

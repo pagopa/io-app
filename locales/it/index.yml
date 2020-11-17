@@ -707,6 +707,7 @@ wallet:
         bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo"
+        warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento indicando la tua Banca dove hai il tuo conto corrente."
       bpd:
         suggestActivation:
           title: "Vuoi attivare il Cashback Pagamenti Digitali?"
@@ -994,7 +995,7 @@ wallet:
         three: ", ma solo presso i punti fisici (POS)."
       debit:
         title: "Carta di Debito"
-        body: "Se la tua carta PagoBANCOMAT ha anche il logo di un altro circuito (**Maestro, Visa, Mastercard, V-Pay**, etc..) ricordati di aggiungerlo al portafoglio anche come **carta di debito** per poter effettuare pagamenti su IO o attivare le funzioni disponibili. "
+        body: "Se la tua carta PagoBANCOMAT ha anche il logo di un altro circuito (**Maestro, Visa, Mastercard**, etc..) ricordati di aggiungerlo al portafoglio anche come **carta di debito** per poter effettuare pagamenti su IO o attivare le funzioni disponibili. "
         addCta: "Aggiungi Carta di Debito"
       removeCta: "Elimina questo metodo di pagamento"
   newRemove:

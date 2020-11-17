@@ -8,7 +8,6 @@ import maestro from "../../../../../img/wallet/cards-icons/maestro.png";
 import mastercard from "../../../../../img/wallet/cards-icons/mastercard.png";
 import visaElectron from "../../../../../img/wallet/cards-icons/visa-electron.png";
 import visa from "../../../../../img/wallet/cards-icons/visa.png";
-import vPay from "../../../../../img/wallet/cards-icons/vPay.png";
 import { InfoBox } from "../../../../components/box/InfoBox";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -51,8 +50,6 @@ const BrandIconsBar = () => (
     <Image source={maestro} style={styles.brandLogo} />
     <View hspacer={true} />
     <Image source={visaElectron} style={styles.brandLogo} />
-    <View hspacer={true} />
-    <Image source={vPay} style={styles.vPay} />
   </View>
 );
 
