@@ -25,12 +25,6 @@ import {
 } from "../../utils/messages";
 import CalendarIconComponent from "./CalendarIconComponent";
 
-const assertNever = (value: never): never => {
-  throw new Error(
-    `Unhandled case in switch. Value should be never, received this instead: ${value}`
-  );
-};
-
 type OwnProps = {
   message: CreatedMessageWithContent;
   service?: ServicePublic;
@@ -131,42 +125,45 @@ const TextContent: React.FunctionComponent<{
 }> = ({ status, dueDate, onPaidPress }) => {
   const time = format(dueDate, "HH.mm");
   const date = formatDateAsLocal(dueDate, true, true);
-  return status === "paid" ? (
-    <PaidTextContent onPress={onPaidPress} />
-  ) : status === "expiring" ? (
-    <ExpiringTextContent time={time} date={date} />
-  ) : status === "expiredAndExpirable" ? (
-    <ExpiredAndExpirableTextContent time={time} date={date} />
-  ) : status === "expiredNotExpirable" ? (
-    <ExpiredNotExpirableTextContent />
-  ) : status === "valid" ? (
-    <ValidTextContent time={time} date={date} />
-  ) : (
-    assertNever(status)
-  );
+  switch (status) {
+    case "paid":
+      return <PaidTextContent onPress={onPaidPress} />;
+    case "expiring":
+      return <ExpiringTextContent time={time} date={date} />;
+    case "expiredNotExpirable":
+      return <ExpiredNotExpirableTextContent />;
+    case "expiredAndExpirable":
+      return <ExpiredAndExpirableTextContent time={time} date={date} />;
+    case "valid":
+      return <ValidTextContent time={time} date={date} />;
+  }
 };
 
-const getCalendarIconBackgoundColor = (status: PaymentStatus) =>
-  status === "paid"
-    ? customVariables.lighterGray
-    : status === "expiring" ||
-      status === "expiredAndExpirable" ||
-      status === "expiredNotExpirable"
-    ? customVariables.colorWhite
-    : status === "valid"
-    ? customVariables.brandDarkGray
-    : assertNever(status);
+const getCalendarIconBackgoundColor = (status: PaymentStatus) => {
+  switch (status) {
+    case "paid":
+      return customVariables.lighterGray;
+    case "expiring":
+    case "expiredNotExpirable":
+    case "expiredAndExpirable":
+      return customVariables.colorWhite;
+    case "valid":
+      return customVariables.brandDarkGray;
+  }
+};
 
-const getCalendarTextColor = (status: PaymentStatus) =>
-  status === "paid"
-    ? customVariables.colorWhite
-    : status === "expiring" || status === "expiredNotExpirable"
-    ? customVariables.calendarExpirableColor
-    : status === "expiredAndExpirable"
-    ? customVariables.brandDarkGray
-    : status === "valid"
-    ? customVariables.colorWhite
-    : assertNever(status);
+const getCalendarTextColor = (status: PaymentStatus) => {
+  switch (status) {
+    case "paid":
+    case "valid":
+      return customVariables.colorWhite;
+    case "expiring":
+    case "expiredNotExpirable":
+      return customVariables.calendarExpirableColor;
+    case "expiredAndExpirable":
+      return customVariables.brandDarkGray;
+  }
+};
 
 const isExpiringOrExpired = (paymentStatus: PaymentStatus): boolean =>
   paymentStatus === "expiring" ||
@@ -194,18 +191,18 @@ const CalendarIcon: React.FunctionComponent<{
   );
 };
 
-const bannerStyle = (status: PaymentStatus): ViewStyle =>
-  status === "paid"
-    ? { backgroundColor: customVariables.brandGray }
-    : status === "expiredAndExpirable"
-    ? { backgroundColor: customVariables.brandDarkGray }
-    : status === "expiredNotExpirable"
-    ? { backgroundColor: customVariables.calendarExpirableColor }
-    : status === "expiring"
-    ? { backgroundColor: customVariables.calendarExpirableColor }
-    : status === "valid"
-    ? { backgroundColor: customVariables.brandGray }
-    : assertNever(status);
+const bannerStyle = (status: PaymentStatus): ViewStyle => {
+  switch (status) {
+    case "paid":
+    case "valid":
+      return { backgroundColor: customVariables.brandGray };
+    case "expiring":
+    case "expiredNotExpirable":
+      return { backgroundColor: customVariables.calendarExpirableColor };
+    case "expiredAndExpirable":
+      return { backgroundColor: customVariables.brandDarkGray };
+  }
+};
 
 const isPaymentExpirable = (message: CreatedMessageWithContent): boolean =>
   paymentExpirationInfo(message).fold(false, isExpirable);
