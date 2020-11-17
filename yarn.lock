@@ -687,6 +687,14 @@
     pirates "^4.0.0"
     source-map-support "^0.5.16"
 
+"@babel/runtime-corejs3@^7.10.2":
+  version "7.12.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.12.5.tgz#ffee91da0eb4c6dae080774e94ba606368e414f4"
+  integrity sha512-roGr54CsTmNPPzZoCP1AmDXuBoNao7tnSA83TXTwt+UK5QVyh1DIJnrgYRPWKCF2flqZQXwa7Yr8v7VmLzF0YQ==
+  dependencies:
+    core-js-pure "^3.0.0"
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime-corejs3@^7.8.3":
   version "7.11.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.11.2.tgz#02c3029743150188edeb66541195f54600278419"
@@ -699,6 +707,13 @@
   version "7.11.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
   integrity sha512-TeWkU52so0mPtDcaCTxNBI/IHiz0pZgr8VEFqXFtZWpYD08ZB6FaSwVAS8MKRQAP3bYKiVjwysOJgMFY28o6Tw==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.10.2", "@babel/runtime@^7.9.2":
+  version "7.12.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.5.tgz#410e7e487441e1b360c29be715d870d9b985882e"
+  integrity sha512-plcc+hbExy3McchJCEQG3knOsuh3HH+Prx1P6cLIkET/0dLuQDEnrT+s27Axgc9bqfsmNUNHfscgMUdBpC9xfg==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -1410,6 +1425,20 @@
   dependencies:
     type-detect "4.0.8"
 
+"@testing-library/jest-dom@^5.11.6":
+  version "5.11.6"
+  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.11.6.tgz#782940e82e5cd17bc0a36f15156ba16f3570ac81"
+  integrity sha512-cVZyUNRWwUKI0++yepYpYX7uhrP398I+tGz4zOlLVlUYnZS+Svuxv4fwLeCIy7TnBYKXUaOlQr3vopxL8ZfEnA==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
+    "@types/testing-library__jest-dom" "^5.9.1"
+    aria-query "^4.2.2"
+    chalk "^3.0.0"
+    css "^3.0.0"
+    css.escape "^1.5.1"
+    lodash "^4.17.15"
+    redent "^3.0.0"
+
 "@testing-library/jest-native@^3.4.3":
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/@testing-library/jest-native/-/jest-native-3.4.3.tgz#fa6f902a442e2693f27563568a71e61bf11f8a53"
@@ -1512,7 +1541,7 @@
   resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.36.tgz#17ce0a235e9ffbcdcdf5095646b374c2bf615a4c"
   integrity sha512-7TUK/k2/QGpEAv/BCwSHlYu3NXZhQ9ZwBYpzr9tjlPIL2C5BeGhH3DmVavRx3ZNyELX5TLC91JTz/cen6AAtIQ==
 
-"@types/hoist-non-react-statics@^3.0.1":
+"@types/hoist-non-react-statics@^3.0.1", "@types/hoist-non-react-statics@^3.3.0":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
   integrity sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
@@ -1551,6 +1580,14 @@
   integrity sha512-nwKNbvnwJ2/mndE9ItP/zc2TCzw6uuodnF4EHYWD+gCQDVBuRQL5UzbZD0/ezy1iKsFU2ZQiDqg4M9dN4+wZgA==
   dependencies:
     "@types/istanbul-lib-report" "*"
+
+"@types/jest@*":
+  version "26.0.15"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.15.tgz#12e02c0372ad0548e07b9f4e19132b834cb1effe"
+  integrity sha512-s2VMReFXRg9XXxV+CW9e5Nz8fH2K1aEhwgjUqPPbQd7g95T0laAcvLv032EhFHIa5GHsZ8W7iJEQVaJq6k3Gog==
+  dependencies:
+    jest-diff "^26.0.0"
+    pretty-format "^26.0.0"
 
 "@types/jest@^25.1.0":
   version "25.2.3"
@@ -1691,6 +1728,16 @@
     "@types/react" "*"
     redux "^4.0.0"
 
+"@types/react-redux@^7.1.9":
+  version "7.1.11"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.11.tgz#a18e8ab3651e8e8cc94798934927937c66021217"
+  integrity sha512-OjaFlmqy0CRbYKBoaWF84dub3impqnLJUrz4u8PRjDzaa4n1A2cVmjMV81shwXyAD5x767efhA8STFGJz/r1Zg==
+  dependencies:
+    "@types/hoist-non-react-statics" "^3.3.0"
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
+    redux "^4.0.0"
+
 "@types/react-test-renderer@16.0.3":
   version "16.0.3"
   resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-16.0.3.tgz#cce5c983d66cc5c3582e7c2f44b274ab635a8acc"
@@ -1698,7 +1745,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.7.18":
+"@types/react@*", "@types/react@16.7.18", "@types/react@^16.9.35":
   version "16.7.18"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.7.18.tgz#f4ce0d539a893dd61e36cd11ae3a5e54f5a48337"
   integrity sha512-Tx4uu3ppK53/iHk6VpamMP3f3ahfDLEVt3ZQc8TFm30a1H3v9lMsCntBREswZIW/SKrvJjkb3Hq8UwO6GREBng==
@@ -1749,6 +1796,13 @@
   version "0.0.32"
   resolved "https://registry.yarnpkg.com/@types/stacktrace-js/-/stacktrace-js-0.0.32.tgz#d23e4a36a5073d39487fbea8234cc6186862d389"
   integrity sha512-SdxmlrHfO0BxgbBP9HZWMUo2rima8lwMjPiWm6S0dyKkDa5CseamktFhXg8umu3TPVBkSlX6ZoB5uUDJK89yvg==
+
+"@types/testing-library__jest-dom@^5.9.1":
+  version "5.9.5"
+  resolved "https://registry.yarnpkg.com/@types/testing-library__jest-dom/-/testing-library__jest-dom-5.9.5.tgz#5bf25c91ad2d7b38f264b12275e5c92a66d849b0"
+  integrity sha512-ggn3ws+yRbOHog9GxnXiEZ/35Mow6YtPZpd7Z5mKDeZS/o7zx3yAle0ov/wjhVB5QT4N2Dt+GNoGCdqkBGCajQ==
+  dependencies:
+    "@types/jest" "*"
 
 "@types/unist@*", "@types/unist@^2.0.0", "@types/unist@^2.0.2":
   version "2.0.3"
@@ -2158,6 +2212,14 @@ argparse@^1.0.7:
   integrity sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==
   dependencies:
     sprintf-js "~1.0.2"
+
+aria-query@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/aria-query/-/aria-query-4.2.2.tgz#0d2ca6c9aceb56b8977e9fed6aed7e15bbd2f83b"
+  integrity sha512-o/HelwhuKpTj/frsOsbNLNgnNGVIFsVP/SW2BSF14gVl7kAfMOJ6/8wUAUvG1R1NHKrfG+2sHZTu0yauT1qBrA==
+  dependencies:
+    "@babel/runtime" "^7.10.2"
+    "@babel/runtime-corejs3" "^7.10.2"
 
 arr-diff@^1.0.1:
   version "1.1.0"
@@ -4012,6 +4074,20 @@ css-what@^3.2.1:
   resolved "https://registry.yarnpkg.com/css-what/-/css-what-3.3.0.tgz#10fec696a9ece2e591ac772d759aacabac38cd39"
   integrity sha512-pv9JPyatiPaQ6pf4OvD/dbfm0o5LviWmwxNWzblYf/1u9QZd0ihV+PMwy5jdQWQ3349kZmKEx9WXuSka2dM4cg==
 
+css.escape@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/css.escape/-/css.escape-1.5.1.tgz#42e27d4fa04ae32f931a4b4d4191fa9cddee97cb"
+  integrity sha1-QuJ9T6BK4y+TGktNQZH6nN3ul8s=
+
+css@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/css/-/css-3.0.0.tgz#4447a4d58fdd03367c516ca9f64ae365cee4aa5d"
+  integrity sha512-DG9pFfwOrzc+hawpmqX/dHYHJG+Bsdb0klhyi1sDneOgGOXy9wQIC8hzyVp1e4NRYDBdxcylvywPkkXCHAzTyQ==
+  dependencies:
+    inherits "^2.0.4"
+    source-map "^0.6.1"
+    source-map-resolve "^0.6.0"
+
 cssfilter@0.0.10:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/cssfilter/-/cssfilter-0.0.10.tgz#c6d2672632a2e5c83e013e6864a42ce8defd20ae"
@@ -4332,6 +4408,11 @@ diff-sequences@^25.2.6:
   version "25.2.6"
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-25.2.6.tgz#5f467c00edd35352b7bca46d7927d60e687a76dd"
   integrity sha512-Hq8o7+6GaZeoFjtpgvRBUknSXNeJiCx7V9Fr94ZMljNiCr9n9L8H8aJqgWOQiDDGdyn29fRNcDdRVJ5fdyihfg==
+
+diff-sequences@^26.6.2:
+  version "26.6.2"
+  resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-26.6.2.tgz#48ba99157de1923412eed41db6b6d4aa9ca7c0b1"
+  integrity sha512-Mv/TDa3nZ9sbc5soK+OoA74BsS3mL37yixCvUAQkiuA4Wz6YtwP/K47n2rv2ovzHZvoiQeA5FTQOschKkEwB0Q==
 
 diff@^3.1.0:
   version "3.5.0"
@@ -6647,6 +6728,16 @@ jest-diff@^25.2.1, jest-diff@^25.5.0:
     jest-get-type "^25.2.6"
     pretty-format "^25.5.0"
 
+jest-diff@^26.0.0:
+  version "26.6.2"
+  resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-26.6.2.tgz#1aa7468b52c3a68d7d5c5fdcdfcd5e49bd164394"
+  integrity sha512-6m+9Z3Gv9wN0WFVasqjCL/06+EFCMTqDEUl/b87HYK2rAPTyfz4ZIuSlPhY51PIQRWx5TaxeF1qmXKe9gfN3sA==
+  dependencies:
+    chalk "^4.0.0"
+    diff-sequences "^26.6.2"
+    jest-get-type "^26.3.0"
+    pretty-format "^26.6.2"
+
 jest-docblock@^25.3.0:
   version "25.3.0"
   resolved "https://registry.yarnpkg.com/jest-docblock/-/jest-docblock-25.3.0.tgz#8b777a27e3477cd77a168c05290c471a575623ef"
@@ -6698,6 +6789,11 @@ jest-get-type@^25.2.6:
   version "25.2.6"
   resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-25.2.6.tgz#0b0a32fab8908b44d508be81681487dbabb8d877"
   integrity sha512-DxjtyzOHjObRM+sM1knti6or+eOgcGU4xVSb2HNP1TqO4ahsT+rqZg+nyqHWJSvWgKC5cG3QjGFBqxLghiF/Ig==
+
+jest-get-type@^26.3.0:
+  version "26.3.0"
+  resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-26.3.0.tgz#e97dc3c3f53c2b406ca7afaed4493b1d099199e0"
+  integrity sha512-TpfaviN1R2pQWkIihlfEanwOXK0zcxrKEE4MlU6Tn7keoXdN6/3gK/xl0yEh8DOunn5pOVGKf8hB4R9gVh04ig==
 
 jest-haste-map@^24.7.1:
   version "24.9.0"
@@ -8486,6 +8582,15 @@ mock-http-server@^1.3.0:
     multiparty "^4.1.2"
     underscore "^1.8.3"
 
+mock-react-redux@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/mock-react-redux/-/mock-react-redux-0.4.0.tgz#9166fd857ff2eac7580b269558b80c023ed2a181"
+  integrity sha512-InDFKfvwkOqwssntXxQ1XFtIuemBBYn1l1vdBJDRzUstvsUDuibfrcN0ZuLa0VWat7edBRrNdXriFJVt7ATHdQ==
+  dependencies:
+    "@types/react" "^16.9.35"
+    "@types/react-redux" "^7.1.9"
+    lodash.mapvalues "^4.6.0"
+
 mockdate@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-3.0.2.tgz#a5a7bb5820da617747af424d7a4dcb22c6c03d79"
@@ -9474,7 +9579,7 @@ pretty-format@^25.1.0, pretty-format@^25.2.0, pretty-format@^25.2.1, pretty-form
     ansi-styles "^4.0.0"
     react-is "^16.12.0"
 
-pretty-format@^26.0.1:
+pretty-format@^26.0.0, pretty-format@^26.0.1, pretty-format@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-26.6.2.tgz#e35c2705f14cb7fe2fe94fa078345b444120fc93"
   integrity sha512-7AeGuCYNGmycyQbCqd/3PWH4eOoX/OiCa0uphp57NVTeAGdJGaAliecxwBDHYQCIvrW7aDBZCYeNTP/WX69mkg==
@@ -11147,6 +11252,14 @@ source-map-resolve@^0.5.0:
     resolve-url "^0.2.1"
     source-map-url "^0.4.0"
     urix "^0.1.0"
+
+source-map-resolve@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/source-map-resolve/-/source-map-resolve-0.6.0.tgz#3d9df87e236b53f16d01e58150fc7711138e5ed2"
+  integrity sha512-KXBr9d/fO/bWo97NXsPIAW1bFSBOuCnjbNTBMO7N59hsv5i9yzRDfcYwwt0l04+VqnKC+EwzvJZIP/qkuMgR/w==
+  dependencies:
+    atob "^2.1.2"
+    decode-uri-component "^0.2.0"
 
 source-map-support@^0.5.16, source-map-support@^0.5.6:
   version "0.5.19"
