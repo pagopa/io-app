@@ -6,9 +6,11 @@ import { UserDataProcessingChoiceEnum } from "../../../../definitions/backend/Us
 import { UserDataProcessingStatusEnum } from "../../../../definitions/backend/UserDataProcessingStatus";
 import {
   loadUserDataProcessing,
-  upsertUserDataProcessing
+  upsertUserDataProcessing,
+  deleteUserDataProcessing
 } from "../../../store/actions/userDataProcessing";
 import {
+  deleteUserDataProcessingSaga,
   loadUserDataProcessingSaga,
   upsertUserDataProcessingSaga
 } from "../userDataProcessing";
@@ -149,6 +151,31 @@ describe("upsertUserDataProcessingSaga", () => {
           error: mokedError
         })
       )
+      .next()
+      .isDone();
+  });
+});
+
+describe("upsertUserDataProcessingSaga", () => {
+  const deleteUserDataProcessingRequest = jest.fn();
+  const requestAction: ActionType<typeof deleteUserDataProcessing.request> = {
+    type: "DELETE_USER_DATA_PROCESSING_REQUEST",
+    payload: UserDataProcessingChoiceEnum.DELETE
+  };
+
+  it("if response is 202, the request has been submitted", () => {
+    const post202Response = right({ status: 202 });
+    testSaga(
+      deleteUserDataProcessingSaga,
+      deleteUserDataProcessingRequest,
+      requestAction
+    )
+      .next()
+      .call(deleteUserDataProcessingRequest, {
+        userDataProcessingChoiceParam: requestAction.payload
+      })
+      .next(post202Response)
+      .put(deleteUserDataProcessing.success({ choice: requestAction.payload }))
       .next()
       .isDone();
   });
