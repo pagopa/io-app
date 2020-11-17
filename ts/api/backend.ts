@@ -21,7 +21,6 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
-  abortUserDataProcessingDefaultDecoder,
   AbortUserDataProcessingT,
   activatePaymentDefaultDecoder,
   ActivatePaymentT,
