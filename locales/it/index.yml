@@ -66,9 +66,10 @@ global:
     search: Ricerca
     skip: "Salta"
     add: Aggiungi
+    edit: "Modifica"
   navigator:
     messages: messaggi
-    wallet: pagamenti
+    wallet: portafoglio
     documents: documenti
     profile: profilo
     services: servizi
@@ -244,7 +245,7 @@ profile:
     appVersion: Versione App
     backendVersion: Versione Backend
     debugMode: Modalità debug
-    showroom: Showroom
+    showroom: UI Showroom
   preferences:
     title: Preferenze
     subtitle:
@@ -649,7 +650,7 @@ payment:
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
 wallet:
-  wallet: Pagamenti
+  wallet: Portafoglio
   searchAbi:
     title: Aggiungi carta Bancomat
     description:
@@ -665,7 +666,7 @@ wallet:
       payment:
         read: Transazione
         unread: Transazione da leggere
-      label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
+      label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
   onboarding:
     bancomat:
       headerTitle: "Aggiungi carta Bancomat"
@@ -907,11 +908,13 @@ wallet:
       pan: Numero della carta
       expirationDate: Data di scadenza
       securityCode: Codice di sicurezza
+      securityCode4D: CID (4 cifre)
     values:
       holder: Mario Rossi
       pan: 0000 0000 0000 0000
       expirationDate: mm/aa
       securityCode: "•••"
+      securityCode4D: "••••"
   acceptedCards: Carte accettate
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
@@ -1012,14 +1015,19 @@ messages:
     deselectAll: Nessuno
     payment:
       expired: Pagamento scaduto
-      paid: Questo avviso è stato pagato. Visualizza la ricevuta nei tuoi
+      paid: Questo avviso è stato pagato. Visualizza la ricevuta nel tuo
       addMemo:
         block1: Aggiungi un promemoria per il
         block2: alle
-      expiringAlert: Questo avviso scade oggi alle
+      expiringAlert:
+        block1: Questo avviso scade il giorno
+        block2: alle ore
       expiredAlert:
-        block1: Il pagamento è scaduto alle ore
-        block2: del
+        expirable:
+          block1: Il pagamento è scaduto alle ore
+          block2: del
+        unexpirable:
+          block: Il pagamento è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad attualizzare l'importo.
     presctiption:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
@@ -1028,6 +1036,7 @@ messages:
         block2: del
 
     pay: Paga € {{amount}}
+    onlyPay: Paga
     paid: Pagato
     reminder: Promemoria
     reminderShort: Memo
@@ -1053,6 +1062,9 @@ messages:
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
     helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."
+  badge:
+    expired: Scaduto
+    paid: Pagato
   unknownSender: Mittente sconosciuto
   noContent: Contenuto non disponibile
   archive:
@@ -1574,7 +1586,7 @@ bonus:
         description: Ti invieremo un messaggio in app quando il tuo bonus sarà pronto.
       alreadyRedeemed:
         title: Il bonus per il tuo nucleo familiare è già attivo!
-        body: Puoi visualizzarne i dettagli nella sezione Pagamenti.
+        body: Puoi visualizzarne i dettagli nella sezione Portafoglio.
         cta: Visualizza Bonus disponibili
       eligibilityExpired:
         title: Tempo scaduto.
@@ -1605,7 +1617,7 @@ bonus:
     contentTitle: Seleziona uno dei bonus disponibili
     contextualHelp:
       title: Aggiungere un bonus o una carta sconto
-      body: Qui puoi selezionare il bonus o la carta sconto che vuoi aggiungere. Una volta attivati, verranno poi visualizzati nella sezione Pagamenti. Potrai sempre visualizzare i dettagli del Bonus o dello sconto, entrando nella sezione Pagamenti, e selezionando l'elemento interessato all'interno della lista.
+      body: "Qui puoi selezionare il bonus o la carta sconto che vuoi aggiungere. Una volta attivati, verranno poi visualizzati nella sezione Portafoglio. Potrai sempre visualizzare i dettagli del Bonus o dello sconto, entrando nella sezione Portafoglio, e selezionando l'elemento interessato all'interno della lista."
   bonusInformation:
     contextualHelp:
       title: Il bonus vacanze
@@ -1625,6 +1637,17 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
     title: Cashback Pagamenti Digitali
+    name: Cashback
+    earned: Cashback accumulato
+    unsubscribe:
+      cta: "Cancella la tua iscrizione al cashback"
+      title: "Disattivazione cashback"
+      body1: "Sei sicuro di voler cancellare la tua iscrizione al cashback pagamenti digitali?"
+      body2: "Se confermi non potrai più raccogliere le transazioni nè concorrere per il Super Cashback, e **non potrai riscuotere un rimborso**, nel caso ti fosse stato riconsociuto. La disattivazione del Cashback Pagamenti Digitali avrà effetto **anche negli altri canali** che hai usato per attivarlo (es esempio Home Banking, app, etc..)\nSe riattivi il cashback in una secondo momento **ripartirai da zero transazioni.**"
+      confirmCta: "Cancella iscrizione"
+      loading: "Stiamo cancellando la tua iscrizione"
+      success: "La tua iscrizione al cashback è stata cancellata"
+      failure: "Non siamo riusciti a cancellare la tua iscrizione, riprova per favore"
     onboarding:
       loadingActivationStatus:
         title: Verifico lo stato di attivazione
@@ -1653,6 +1676,7 @@ bonus:
     iban:
       iban: "IBAN"
       edit: "Modifica IBAN"
+      verify: "Controlla IBAN"
       insertion:
         title: "IBAN per l’accredito"
         body1: "Indica qui l’IBAN del tuo conto corrente, su cui vuoi ricevere l’accredito una volta consolidata la classifica."
@@ -1666,11 +1690,67 @@ bonus:
         text1: "Se sei sicuro che l’IBAN"
         text2: "identifichi il conto su cui vuoi ricevere gli accrediti, puoi proseguire."
       koNotOwned:
-        title: "Il conto corrente non risulta intestato a te"
-        text1: "L’IBAN che hai inserito"
-        text2: "identifica un conto corrente che non risulta intestato al tuo codice fiscale: sei sicuro di voler usare questo IBAN?"
+        title: "Controlla l'IBAN inserito"
+        text1: "L’IBAN"
+        text2: "non risulta intestato a"
       loading:
         "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
+    details:
+      components:
+        iban:
+          title: "IBAN per l’accredito"
+          noIbanBody: "Imposta il tuo IBAN per poter ricevere il cashback accumulato"
+          button: "Imposta IBAN"
+        transactionsCountOverview:
+          title: "Transazioni valide"
+          of: "su"
+          closedPeriodKOBody: "Non hai raggiunto le {{transactions}} transazioni necessarie per ottenere un rimborso: avresti ricevuto € {{amount}}. Provaci nel prossimo periodo!"
+          currentPeriodKOBody: "Devi aver fatto almeno {{transactions}} transazioni per sbloccare il cashback che hai accumulato!"
+          gracePeriodBody: "Questo periodo del cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere dalle banche le ultime transazioni. Ancora un po’ di pazienza. TI avviseremo con un messaggio su IO!"
+          closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
+          closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
+          inactivePeriodBody: "Potrai iniziare ad accumulare transazioni valide a partire dal {{date}}"
+          label:
+            one: "1 transazione valida"
+            other: "{{count}} transazioni valide"
+      transaction:
+        title: "Le tue transazioni"
+        goToButton: "Dettaglio transazioni"
+        detail:
+          summary:
+            bottomSheet:
+              title: Quando troverai le transazioni?
+              body: "Le transazioni vengono registrate il giorno dopo che i circuiti bancari le hanno contabilizzate. 
+                Questo significa che normalmente possono passare fino a 72 ore prima che tu veda la tua transazione registrata su IO, anche se di solito il processo è più rapido. 
+                Potrebbe volerci un po’ di più nel caso in cui l’acquisto sia a ridosso del weekend o di qualche festività, oppure in qualche altra condizione particolare.
+                Non ti preoccupare: tutte le transazioni valide fatte durante il periodo del cashback verranno registrate e considerate per rimborsi e classifica!"
+            lastUpdated: "Ultimo aggiornamento "
+            link: "Manca qualcosa?"
+            body:
+              text1: "Nel periodo "
+              text2: "hai totalizzato "
+              text3:
+                one: "1 transazione valida "
+                other: "{{count}} transazioni valide "
+              text4: "e maturato "
+              text5: "un cashback di "
+          title: "Dettaglio della transazione"
+          paymentCircuit: "Circuito di pagamento"
+          transactionAmount: "Importo transazione"
+          cashbackAmount: "Importo cashback"
+          acquirerId: "ID transazione Acquirer"
+          issuerId: "ID transazione Issuer"
+          maxCashbackWarning: "Per ogni transazione puoi ottenere un cashback massimo di € {{amount}}."
+          maxCashbackForPeriodWarning: "Hai già raggiunto il rimborso massimo previsto per questo periodo."
+          canceledOperationWarning: "Questa transazione è un rimborso, perciò è stato decurtato il relativo cashback."
+          canceled: "Storno"
+      paymentMethods:
+        noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare le transazioni necessarie"
+      card:
+        status:
+          active: Attivo
+          closed: Concluso
+          inactive: In arrivo
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

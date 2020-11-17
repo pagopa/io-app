@@ -95,6 +95,8 @@ type MessagePaymentUnexpirable = {
   amount: NonNullable<
     CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >["amount"];
+  expireStatus?: ExpireStatus;
+  dueDate?: Date;
 };
 export type ExpireStatus = "VALID" | "EXPIRING" | "EXPIRED";
 type MessagePaymentExpirable = {
@@ -113,6 +115,15 @@ export type MessagePaymentExpirationInfo =
   | MessagePaymentUnexpirable
   | MessagePaymentExpirable;
 
+/**
+ * Given a payment data and a due date return an object that specifies if the data are expirable or not.
+ * There are 3 cases:
+ *  - if the due date is undefined -> the message is unexpirable
+ *  - if the due date is defined and the message is valid after the due date -> the message is expirable
+ * - if the due date is defined and the message is invalid after the due date -> the message is unexpirable
+ * @param paymentData
+ * @param dueDate -> optional
+ */
 export function getMessagePaymentExpirationInfo(
   paymentData: NonNullable<
     CreatedMessageWithContentAndAttachments["content"]["payment_data"]
@@ -121,11 +132,11 @@ export function getMessagePaymentExpirationInfo(
 ): MessagePaymentExpirationInfo {
   const { notice_number, amount, invalid_after_due_date } = paymentData;
 
-  if (invalid_after_due_date && dueDate !== undefined) {
+  if (dueDate !== undefined) {
     const expireStatus = getExpireStatus(dueDate);
 
     return {
-      kind: "EXPIRABLE",
+      kind: invalid_after_due_date ? "EXPIRABLE" : "UNEXPIRABLE",
       expireStatus,
       noticeNumber: notice_number,
       amount,
@@ -136,6 +147,10 @@ export function getMessagePaymentExpirationInfo(
   return { kind: "UNEXPIRABLE", noticeNumber: notice_number, amount };
 }
 
+/**
+ * Given a message return an object of type MessagePaymentExpirationInfo
+ * @param message
+ */
 export const paymentExpirationInfo = (message: CreatedMessageWithContent) => {
   const { payment_data, due_date } = message.content;
   return fromNullable(payment_data).map(paymentData =>
@@ -161,15 +176,11 @@ export const isValid = (
 
 export const isExpiring = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-) =>
-  isExpirable(messagePaymentExpirationInfo) &&
-  messagePaymentExpirationInfo.expireStatus === "EXPIRING";
+) => messagePaymentExpirationInfo.expireStatus === "EXPIRING";
 
 export const isExpired = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-) =>
-  isExpirable(messagePaymentExpirationInfo) &&
-  messagePaymentExpirationInfo.expireStatus === "EXPIRED";
+) => messagePaymentExpirationInfo.expireStatus === "EXPIRED";
 
 /**
  * given a name, return the relative prescription data value if it corresponds to a field

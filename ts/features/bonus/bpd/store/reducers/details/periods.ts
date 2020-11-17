@@ -4,6 +4,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { isDefined } from "../../../../../../utils/guards";
 import {
   AwardPeriodId,
   BpdPeriod,
@@ -44,7 +45,8 @@ export const bpdPeriodsReducer = (
  */
 export const bpdPeriodsSelector = createSelector(
   [(state: GlobalState) => state.bonus.bpd.details.periods],
-  potValue => potValue
+  potValue =>
+    pot.map(potValue, potValue => Object.values(potValue).filter(isDefined))
 );
 
 /**

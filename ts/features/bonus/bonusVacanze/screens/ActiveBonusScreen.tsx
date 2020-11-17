@@ -13,6 +13,7 @@ import {
 import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
@@ -23,10 +24,7 @@ import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderCo
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
-import {
-  BottomTopAnimation,
-  LightModalContextInterface
-} from "../../../../components/ui/LightModal";
+import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
@@ -66,6 +64,7 @@ import {
 } from "../utils/bonus";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import { bottomSheetContent } from "../../../../utils/bottomSheet";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -278,6 +277,7 @@ const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
+  const { present, dismiss } = useBottomSheetModal();
   const bonusFromNav = props.navigation.getParam("bonus");
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
   const screenShotRef = React.createRef<ViewShot>();
@@ -399,17 +399,27 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   };
 
-  const openModalBox = () => {
+  const openModalBox = async () => {
     const modalBox = (
       <QrModalBox
         codeToDisplay={getBonusCodeFormatted(bonus)}
         codeToCopy={bonus.id}
-        onClose={props.hideModal}
+        onClose={dismiss}
         qrCode={qrCode[QR_CODE_MIME_TYPE]}
         logo={props.logo}
       />
     );
-    props.showAnimatedModal(modalBox, BottomTopAnimation);
+
+    const bottomSheetProps = await bottomSheetContent(
+      modalBox,
+      I18n.t("bonus.bonusVacanze.name"),
+      466,
+      dismiss
+    );
+
+    present(bottomSheetProps.content, {
+      ...bottomSheetProps.config
+    });
   };
 
   const handleShare = () =>

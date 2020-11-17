@@ -8,13 +8,13 @@ import { typographyFactory } from "./Factory";
 type AllowedSemiBoldColors = Extract<
   IOColorType,
   // tslint:disable-next-line:max-union-size
-  "bluegreyDark" | "bluegrey" | "blue" | "white"
+  "bluegreyDark" | "bluegrey" | "blue" | "white" | "red"
 >;
 
 // when the weight is bold, only the white color is allowed
 type AllowedRegularColors = Extract<
   IOColorType,
-  "bluegreyDark" | "bluegrey" | "blue"
+  "bluegreyDark" | "bluegrey" | "blue" | "white"
 >;
 
 // all the possible colors

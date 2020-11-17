@@ -60,11 +60,13 @@ export function* handleLoadPans(
     );
     if (getPansWithRefreshResult.isRight()) {
       if (getPansWithRefreshResult.value.status === 200) {
+        const response = getPansWithRefreshResult.value.value.data;
         return yield put(
           searchUserPans.success(
-            fromNullable(getPansWithRefreshResult.value.value.data).getOrElse(
-              []
-            )
+            fromNullable({
+              cards: response?.data ?? [],
+              messages: response?.messages ?? []
+            }).getOrElse({ cards: [], messages: [] })
           )
         );
       } else {
