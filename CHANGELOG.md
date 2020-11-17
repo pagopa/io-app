@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0-rc.5](https://github.com/pagopa/io-app/compare/1.9.0-rc.4...1.9.0-rc.5) (2020-11-16)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#175311250](https://www.pivotaltracker.com/story/show/175311250), [#175044606](https://www.pivotaltracker.com/story/show/175044606), [#175044635](https://www.pivotaltracker.com/story/show/175044635)] Add bpd events to mixpanel ([#2391](https://github.com/pagopa/io-app/issues/2391)) ([33b974b](https://github.com/pagopa/io-app/commit/33b974b5c106736f96d9f88e24e3234cd26aef27))
+* **Bonus Pagamenti Digitali:** [[#175433663](https://www.pivotaltracker.com/story/show/175433663)] Show bank name in bancomat toggle ([#2379](https://github.com/pagopa/io-app/issues/2379)) ([690afa6](https://github.com/pagopa/io-app/commit/690afa67627144a244880e7c0926dfce5d9ed7f6))
+* **Bonus Pagamenti Digitali:** [[#175553856](https://www.pivotaltracker.com/story/show/175553856)] Wallet V1 compatibile with Wallet V2 ([#2390](https://github.com/pagopa/io-app/issues/2390)) ([2539fdb](https://github.com/pagopa/io-app/commit/2539fdbe3d4268a763d3435c2b4ca4725128ff41))
+* **Bonus Pagamenti Digitali:** [[#175663885](https://www.pivotaltracker.com/story/show/175663885)] Bancomat detail screen ([#2388](https://github.com/pagopa/io-app/issues/2388)) ([8d99c3a](https://github.com/pagopa/io-app/commit/8d99c3a5e35e237ae9c8e6b53459d3764d1c4853)), closes [#175682399](https://www.pivotaltracker.com/story/show/175682399) [#175682399](https://www.pivotaltracker.com/story/show/175682399) [#175682399](https://www.pivotaltracker.com/story/show/175682399) [#175682399](https://www.pivotaltracker.com/story/show/175682399) [#175682399](https://www.pivotaltracker.com/story/show/175682399) [#175682399](https://www.pivotaltracker.com/story/show/175682399)
+* **Bonus Pagamenti Digitali:** [[#175682399](https://www.pivotaltracker.com/story/show/175682399)] Bancomat card preview in wallet ([#2386](https://github.com/pagopa/io-app/issues/2386)) ([126df64](https://github.com/pagopa/io-app/commit/126df643d07aba3f7b9c491ca8483f92113cb259))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#175717721](https://www.pivotaltracker.com/story/show/175717721)] Fixes cashback amount cut on android ([#2384](https://github.com/pagopa/io-app/issues/2384)) ([3f21c9c](https://github.com/pagopa/io-app/commit/3f21c9cdaba38364294213349f97b286c3090b82))
+* **Bonus Pagamenti Digitali:** [[#175745708](https://www.pivotaltracker.com/story/show/175745708)] Clean store after unsubscription ([#2394](https://github.com/pagopa/io-app/issues/2394)) ([bb15787](https://github.com/pagopa/io-app/commit/bb15787653c1676a500bd663cc50542f38926bfe))
+* **Bonus Vacanze:** [[#175744639](https://www.pivotaltracker.com/story/show/175744639)] Bancomat expiration date is build as invalid  ([#2393](https://github.com/pagopa/io-app/issues/2393)) ([3547f9f](https://github.com/pagopa/io-app/commit/3547f9fc7a972ae04808b6b92586d220b8a53524))
+
 ## [1.9.0-rc.4](https://github.com/pagopa/io-app/compare/1.9.0-rc.3...1.9.0-rc.4) (2020-11-14)
 
 

@@ -28,6 +28,7 @@ global:
     question: "?"
     asterisk: "*"
   localization:
+    delimiterSeparator: "."
     decimalSeparator: ","
   date:
     today: "oggi"
@@ -686,7 +687,7 @@ wallet:
       headerTitle: "Aggiungi carta Bancomat"
       koTimeout:
         title: "Non siamo riusciti a contattare Bancomat."
-        body: "Ripova per favore"
+        body: "Riprova per favore"
       koNotFound:
         title: "Spiacenti, non abbiamo trovato nessuna carta"
         body: "Non risultano Bancomat intestati a te"
@@ -738,6 +739,9 @@ wallet:
       message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   delete:
+    bancomat:
+      successful: Bancomat rimosso correttamente
+      failed: Impossibile rimuovere il bancomat
     successful: Carta rimossa correttamente
     failed: Impossibile rimuovere la carta
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
@@ -899,6 +903,7 @@ wallet:
     newCome: Novità
     card:
       name: Carta di credito/debito
+      shortName: "Carta"
       maxFee: Commissione massima 1.50€
     sovvenzione:
       name: Sovvenzione
@@ -974,6 +979,21 @@ wallet:
   walletCardTransaction:
     contextualHelpTitle: Transazioni effettuate con questo metodo
     contextualHelpContent: !include wallet/wallet_card_transaction.md
+  bancomat:
+    details:
+      infobox:
+        one: "Le carte PagoBANCOMAT "
+        two: "non consentono di pagare tramite IO"
+        three: ", ma solo presso i punti fisici (POS)."
+      debit:
+        title: "Carta di Debito"
+        body: "Se la tua carta PagoBANCOMAT ha anche il logo di un altro circuito (**Maestro, Visa, Mastercard, V-Pay**, etc..) ricordati di aggiungerlo al portafoglio anche come **carta di debito** per poter effettuare pagamenti su IO o attivare le funzioni disponibili. "
+        addCta: "Aggiungi Carta di Debito"
+      removeCta: "Elimina questo metodo di pagamento"
+  newRemove:
+    title: "Eliminazione metodo"
+    body: "Sei sicuro di voler eliminare questo metodo di pagamento?"
+    warningCapability: "Verranno disattivate anche le funzioni: "
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?

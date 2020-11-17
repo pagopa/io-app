@@ -32,8 +32,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
-const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(4);
+const FOUR_UNICODE_CIRCLES = "●".repeat(4);
 
 interface Props {
   // tslint-prettier doesn't yet support the readonly tuple syntax
@@ -55,7 +54,7 @@ export class RotatedCards extends React.PureComponent<Props> {
           <View style={[CreditCardStyles.cardInner, CreditCardStyles.row]}>
             <View style={[CreditCardStyles.row, CreditCardStyles.numberArea]}>
               <Text style={[CreditCardStyles2.smallTextStyle]}>
-                {`${HIDDEN_CREDITCARD_NUMBERS}`}
+                {`${FOUR_UNICODE_CIRCLES}`}
               </Text>
             </View>
             <View style={CreditCardStyles.cardLogo}>

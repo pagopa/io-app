@@ -1,4 +1,5 @@
 /* eslint-disable functional/immutable-data */
+import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
@@ -7,8 +8,9 @@ import { useEffect, useRef } from "react";
 import { ImageSourcePropType, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { useNavigationContext } from "../../../../../../utils/hooks/useOnFocus";
+import { bottomSheetRawConfig } from "../../../../../../utils/bottomSheet";
 import {
   bpdPaymentMethodActivation,
   BpdPaymentMethodActivation,
@@ -17,11 +19,8 @@ import {
   HPan
 } from "../../../store/actions/paymentMethods";
 import { bpdPaymentMethodValueSelector } from "../../../store/reducers/details/paymentMethods";
-import { useChangeActivationConfirmationBottomSheet } from "../bottomsheet/BpdChangeActivationConfirmationScreen";
-import {
-  NotActivableType,
-  useNotActivableInformationBottomSheet
-} from "../bottomsheet/BpdNotActivableInformation";
+import { BpdChangeActivationConfirmationScreen } from "../confirm/BpdChangeActivationConfirmationScreen";
+import { useNavigationContext } from "../../../../../../utils/hooks/useOnFocus";
 import { BpdToggle } from "./BpdToggle";
 import { PaymentMethodRepresentation } from "./PaymentMethodRepresentation";
 
@@ -154,15 +153,29 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
     useInitialValue(props);
   }
 
-  // a simplification because the onPress is dispatched only when is not activable / compatible
-  const notActivableType: NotActivableType = !props.hasBpdCapability
-    ? "NotCompatible"
-    : "NotActivable";
+  const { present, dismiss } = useBottomSheetModal();
 
-  const askConfirmation = useChangeActivationConfirmationBottomSheet(props)
-    .present;
-
-  const showExplanation = useNotActivableInformationBottomSheet(props).present;
+  const openModalBox = (newVal: boolean) => {
+    const bottomSheetProps = bottomSheetRawConfig(
+      <BpdChangeActivationConfirmationScreen
+        onCancel={dismiss}
+        onConfirm={() => {
+          dismiss();
+          props.updateValue(props.hPan, newVal);
+        }}
+        type={newVal ? "Activation" : "Deactivation"}
+        representation={{ caption: props.caption, icon: props.icon }}
+      />,
+      newVal
+        ? I18n.t("bonus.bpd.details.paymentMethods.activate.title")
+        : I18n.t("bonus.bpd.details.paymentMethods.deactivate.title"),
+      466,
+      dismiss
+    );
+    present(bottomSheetProps.content, {
+      ...bottomSheetProps.config
+    });
+  };
 
   return (
     <>
@@ -173,10 +186,8 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
         />
         <BpdToggle
           graphicalValue={graphicalState}
-          onValueChanged={newVal =>
-            askConfirmation(newVal, () => props.updateValue(props.hPan, newVal))
-          }
-          onPress={() => showExplanation(notActivableType)}
+          onValueChanged={openModalBox}
+          // TODO: when onPress -> show bottomsheet explaining why the bpd cannot be activated
         />
       </View>
     </>

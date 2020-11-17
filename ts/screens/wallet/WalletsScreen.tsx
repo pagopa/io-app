@@ -15,7 +15,6 @@ import {
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
@@ -37,8 +36,9 @@ import {
 import { navSelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import {
+  creditCardSelector,
   getFavoriteWalletId,
-  walletsSelector
+  pagoPaCreditCardSelector
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
@@ -156,11 +156,9 @@ const WalletsScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => {
-  const potWallets = walletsSelector(state);
+  const potWallets = pagoPaCreditCardSelector(state);
   return {
-    wallets: pot
-      .getOrElse(potWallets, [])
-      .filter(w => w.type === TypeEnum.CREDIT_CARD),
+    wallets: pot.getOrElse(creditCardSelector(state), []),
     isLoading: pot.isLoading(potWallets),
     favoriteWallet: getFavoriteWalletId(state),
     nav: navSelector(state)
