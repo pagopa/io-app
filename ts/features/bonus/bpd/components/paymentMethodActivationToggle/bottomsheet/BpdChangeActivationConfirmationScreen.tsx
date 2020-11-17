@@ -1,9 +1,11 @@
+import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
+import { bottomSheetRawConfig } from "../../../../../../utils/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -65,4 +67,39 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
       </View>
     </BottomSheetContent>
   );
+};
+
+export const useChangeActivationConfirmationBottomSheet = (
+  representation: Omit<
+    React.ComponentProps<typeof PaymentMethodRepresentation>,
+    "children"
+  >
+) => {
+  const { present, dismiss } = useBottomSheetModal();
+
+  const openModalBox = (newVal: boolean, onConfirm: () => void) => {
+    const bottomSheetProps = bottomSheetRawConfig(
+      <BpdChangeActivationConfirmationScreen
+        onCancel={dismiss}
+        onConfirm={() => {
+          dismiss();
+          onConfirm();
+        }}
+        type={newVal ? "Activation" : "Deactivation"}
+        representation={{
+          caption: representation.caption,
+          icon: representation.icon
+        }}
+      />,
+      newVal
+        ? I18n.t("bonus.bpd.details.paymentMethods.activate.title")
+        : I18n.t("bonus.bpd.details.paymentMethods.deactivate.title"),
+      466,
+      dismiss
+    );
+    present(bottomSheetProps.content, {
+      ...bottomSheetProps.config
+    });
+  };
+  return { present: openModalBox, dismiss };
 };
