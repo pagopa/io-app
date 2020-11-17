@@ -95,6 +95,7 @@ import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 
 import {
+  EnableableFunctionsTypeEnum,
   NullableWallet,
   PaymentManagerToken,
   PayRequest
@@ -126,6 +127,11 @@ import {
 } from "./wallet/pagopaApis";
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import _ from "lodash";
+import { RTron } from "../boot/configureStoreAndPersistor";
+import { hasFunctionEnabled } from "../utils/walletv2";
+import { bpdEnrollSelector } from "../features/bonus/bpd/store/reducers/onboarding/enroll";
+import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
+import { isReady } from "../features/bonus/bpd/model/RemoteValue";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -298,7 +304,27 @@ function* startOrResumeAddCreditCardSaga(
       const maybeAddedWallet = updatedWallets.find(
         _ => _.idWallet === idWallet
       );
+      // if the new method hab been added
       if (maybeAddedWallet !== undefined) {
+        const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
+          bpdEnabledSelector
+        );
+        // check if the new method is compliant with bpd
+        if (maybeAddedWallet.v2) {
+          const hasBpdFeature = hasFunctionEnabled(
+            maybeAddedWallet.v2,
+            EnableableFunctionsTypeEnum.BPD
+          );
+          // if the user has not joined the bpd, ask if he/she want
+          if (
+            hasBpdFeature &&
+            isReady(bpdEnroll) &&
+            bpdEnroll.value === false
+          ) {
+            // navigate to screen to ask user to join bpd
+          }
+        }
+
         // dispatch the action: a new card has been added
         yield put(addWalletNewCreditCardSuccess());
         if (action.payload.setAsFavorite === true) {
