@@ -4,7 +4,7 @@
  */
 import { ListItem, View } from "native-base";
 import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { H3 } from "../core/typography/H3";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
@@ -49,42 +49,45 @@ const styles = StyleSheet.create({
   descriptionPadding: { paddingRight: 24 }
 });
 
-const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
-  <>
-    <View spacer={true} large={true} />
-    <FlatList
-      removeClippedSubviews={false}
-      data={props.paymentMethods}
-      keyExtractor={item => item.name}
-      ListFooterComponent={<View spacer />}
-      renderItem={itemInfo =>
-        itemInfo.item.implemented && (
-          <ListItem
-            onPress={itemInfo.item.onPress}
-            style={styles.container}
-            first={itemInfo.index === 0}
-            last={itemInfo.index === props.paymentMethods.length - 1}
+const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => {
+  const renderListItem = (itemInfo: ListRenderItemInfo<IPaymentMethod>) =>
+    itemInfo.item.implemented && (
+      <ListItem
+        onPress={itemInfo.item.onPress}
+        style={styles.container}
+        first={itemInfo.index === 0}
+        last={itemInfo.index === props.paymentMethods.length - 1}
+      >
+        <View style={styles.flexColumn}>
+          <View style={styles.row}>
+            <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+              {itemInfo.item.name}
+            </H3>
+            <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+          </View>
+          <H5
+            color={"bluegrey"}
+            weight={"Regular"}
+            style={styles.descriptionPadding}
           >
-            <View style={styles.flexColumn}>
-              <View style={styles.row}>
-                <H3 color={"bluegreyDark"} weight={"SemiBold"}>
-                  {itemInfo.item.name}
-                </H3>
-                <IconFont name={"io-right"} color={IOColors.blue} size={24} />
-              </View>
-              <H5
-                color={"bluegrey"}
-                weight={"Regular"}
-                style={styles.descriptionPadding}
-              >
-                {itemInfo.item.description}
-              </H5>
-            </View>
-          </ListItem>
-        )
-      }
-    />
-  </>
-);
+            {itemInfo.item.description}
+          </H5>
+        </View>
+      </ListItem>
+    );
+
+  return (
+    <>
+      <View spacer={true} large={true} />
+      <FlatList
+        removeClippedSubviews={false}
+        data={props.paymentMethods}
+        keyExtractor={item => item.name}
+        ListFooterComponent={<View spacer />}
+        renderItem={renderListItem}
+      />
+    </>
+  );
+};
 
 export default withLightModalContext(PaymentMethodsList);
