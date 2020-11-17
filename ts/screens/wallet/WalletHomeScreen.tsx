@@ -2,7 +2,13 @@ import { fromNullable, fromPredicate, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, RefreshControl, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  Image,
+  RefreshControl,
+  ScrollView,
+  StyleSheet
+} from "react-native";
 import {
   NavigationEvents,
   NavigationEventSubscription,
@@ -527,14 +533,16 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           this.newMethodAddedContent
         ) : (
           <>
-            <Content>
+            <View style={{ padding: customVariables.contentPadding }}>
               <H3 weight={"SemiBold"} color={"bluegreyDark"}>
                 {"In evidenza"}
               </H3>
-              <HorizontalScroll
-                cards={[<FeaturedCard key={0} />, <FeaturedCard key={1} />]}
-              ></HorizontalScroll>
-            </Content>
+              <ScrollView horizontal={true} style={{ paddingVertical: 10 }}>
+                {this.props.availableBonusesList.map((_, i) => (
+                  <FeaturedCard key={`featured_bonus_${i}`} />
+                ))}
+              </ScrollView>
+            </View>
             {transactionContent}
           </>
         )}
