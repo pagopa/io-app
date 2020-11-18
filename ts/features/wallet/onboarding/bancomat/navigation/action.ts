@@ -1,6 +1,6 @@
 import { NavigationActions } from "react-navigation";
 import { InferNavigationParams } from "../../../../../types/react";
-import ActivateBpdOnNewBancomatScreen from "../screens/bpd/ActivateBpdOnNewPaymentMethodScreen";
+import { ActivateBpdOnNewCreditCardScreen } from "../screens/bpd/ActivateBpdOnNewCreditCardScreen";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";
 
 export const navigateToOnboardingBancomatChooseBank = () =>
@@ -23,10 +23,15 @@ export const navigateToSuggestBpdActivation = () =>
     routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.SUGGEST_BPD_ACTIVATION
   });
 
-export const navigateToActivateBpdOnNewMethod = (
-  params?: InferNavigationParams<typeof ActivateBpdOnNewBancomatScreen>
+export const navigateToActivateBpdOnNewBancomat = () =>
+  NavigationActions.navigate({
+    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_BANCOMAT
+  });
+
+export const navigateToActivateBpdOnNewCreditCard = (
+  params: InferNavigationParams<typeof ActivateBpdOnNewCreditCardScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_BANCOMAT,
+    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_CREDIT_CARD,
     params
   });

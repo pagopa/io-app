@@ -131,7 +131,7 @@ import { hasFunctionEnabled } from "../utils/walletv2";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import { isReady } from "../features/bonus/bpd/model/RemoteValue";
 import {
-  navigateToActivateBpdOnNewMethod,
+  navigateToActivateBpdOnNewCreditCard,
   navigateToSuggestBpdActivation
 } from "../features/wallet/onboarding/bancomat/navigation/action";
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
@@ -324,14 +324,16 @@ function* startOrResumeAddCreditCardSaga(
             // otherwise navigate to a screen where is asked to join bpd
             if (bpdEnroll.value) {
               yield put(
-                navigateToActivateBpdOnNewMethod({
-                  newAddedMethods: [maybeAddedWallet.v2]
+                navigateToActivateBpdOnNewCreditCard({
+                  creditCards: [maybeAddedWallet.v2]
                 })
               );
             } else {
               yield put(navigateToSuggestBpdActivation());
             }
             // remove these screen from the navigation stack: method choice, credit card form, credit card resume
+            // this pop could be easily break when this flow is entered by other points
+            // different from the current ones (i.e see https://www.pivotaltracker.com/story/show/175757212)
             yield put(navigationHistoryPop(3));
             return;
           }
