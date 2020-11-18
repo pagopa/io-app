@@ -369,7 +369,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
             uc.choice === UserDataProcessingChoiceEnum.DELETE &&
             uc.status === UserDataProcessingStatusEnum.PENDING
         );
-        const downloadFileChannel = channel();
+        const alertChoiceChannel = channel();
         if (maybeDeletePending.isSome()) {
           Alert.alert(
             I18n.t("startup.userDeletePendingAlert.title"),
@@ -379,19 +379,20 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
                 text: I18n.t("startup.userDeletePendingAlert.cta_1"),
                 style: "cancel",
                 onPress: () => {
-                  downloadFileChannel.put("left");
+                  alertChoiceChannel.put("left");
                 }
               },
               {
                 text: I18n.t("startup.userDeletePendingAlert.cta_2"),
                 style: "default",
                 onPress: () => {
-                  downloadFileChannel.put("right");
+                  alertChoiceChannel.put("right");
                 }
               }
-            ]
+            ],
+            { cancelable: false }
           );
-          const action: string = yield take(downloadFileChannel);
+          const action: string = yield take(alertChoiceChannel);
           if (action === "left") {
             yield put(navigateToPrivacyScreen);
           }
