@@ -5,7 +5,7 @@ import * as React from "react";
 import { ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
-import { nullType } from "io-ts";
+import { constUndefined } from "fp-ts/lib/function";
 import { getValue } from "../../bonus/bpd/model/RemoteValue";
 import {
   ID_BONUS_VACANZE_TYPE,
@@ -17,12 +17,11 @@ import { H3 } from "../../../components/core/typography/H3";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { Dispatch } from "../../../store/actions/types";
-import { bpdEnabled } from "../../../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../../../config";
 import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
 import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import { navigateToBonusRequestInformation } from "../../bonus/bonusVacanze/navigation/action";
-import { navigationHistoryPop } from "../../../store/actions/navigationHistory";
 import { availableBonusTypesSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import FeaturedCard from "./FeaturedCard";
 
@@ -35,14 +34,19 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const handlersMap: Map<number, (bonus: BonusAvailable) => void> = new Map<
     number,
     (bonus: BonusAvailable) => void
-  >([[ID_BONUS_VACANZE_TYPE, bonus => props.navigateToBonusRequest(bonus)]]);
+  >([]);
 
   if (bpdEnabled) {
     handlersMap.set(ID_BPD_TYPE, _ => props.startBpdOnboarding());
   }
+  if (bonusVacanzeEnabled) {
+    handlersMap.set(ID_BONUS_VACANZE_TYPE, bonus =>
+      props.navigateToBonusRequest(bonus)
+    );
+  }
 
-  const isOneBonusActive = !props.bvActive || !getValue(props.bpdActiveBonus);
-  return isOneBonusActive ? (
+  const anyBonusNotActive = !props.bvActive || !getValue(props.bpdActiveBonus);
+  return anyBonusNotActive ? (
     <>
       <View
         style={[
@@ -51,7 +55,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
         ]}
       >
         <H3 weight={"SemiBold"} color={"bluegreyDark"}>
-          {"In evidenza"}
+          {I18n.t("wallet.featured")}
         </H3>
       </View>
       <ScrollView
@@ -62,28 +66,32 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
       >
         {reverse([...props.availableBonusesList]).map((b, i) => {
           const handler = fromNullable(handlersMap.get(b.id_type)).getOrElse(
-            () => nullType
+            () => constUndefined
           );
           switch (b.id_type) {
             case ID_BONUS_VACANZE_TYPE:
-              return props.bvActive ? null : (
-                <FeaturedCard
-                  key={`featured_bonus_${i}`}
-                  title={b[getLocalePrimaryWithFallback()].name}
-                  image={b.cover}
-                  isNew={false}
-                  onPress={() => handler(b)}
-                />
+              return (
+                !props.bvActive && (
+                  <FeaturedCard
+                    key={`featured_bonus_${i}`}
+                    title={b[getLocalePrimaryWithFallback()].name}
+                    image={b.cover}
+                    isNew={false}
+                    onPress={() => handler(b)}
+                  />
+                )
               );
             case ID_BPD_TYPE:
-              return getValue(props.bpdActiveBonus) ? null : (
-                <FeaturedCard
-                  key={`featured_bonus_${i}`}
-                  title={I18n.t("bonus.bpd.name")}
-                  image={b.cover}
-                  isNew={true}
-                  onPress={() => handler(b)}
-                />
+              return (
+                !getValue(props.bpdActiveBonus) && (
+                  <FeaturedCard
+                    key={`featured_bonus_${i}`}
+                    title={I18n.t("bonus.bpd.name")}
+                    image={b.cover}
+                    isNew={true}
+                    onPress={() => handler(b)}
+                  />
+                )
               );
             default:
               return null;
@@ -103,7 +111,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   startBpdOnboarding: () => dispatch(bpdOnboardingStart()),
   navigateToBonusRequest: (bonusItem: BonusAvailable) => {
     dispatch(navigateToBonusRequestInformation({ bonusItem }));
-    dispatch(navigationHistoryPop(1));
   }
 });
 
