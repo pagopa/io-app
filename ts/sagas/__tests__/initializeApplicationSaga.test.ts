@@ -38,10 +38,6 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
-jest.mock("@react-native-community/async-storage", () => ({
-  AsyncStorage: jest.fn()
-}));
-
 jest.mock("../../api/backend");
 
 const profile: InitializedProfile = {

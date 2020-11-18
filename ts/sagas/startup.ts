@@ -11,12 +11,13 @@ import {
   put,
   select,
   spawn,
+  take,
   takeEvery,
   takeLatest
 } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
+import { channel } from "redux-saga";
 import { BackendClient } from "../api/backend";
-import { store } from "../App";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
@@ -25,7 +26,6 @@ import {
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
-import I18n from "../i18n";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
@@ -64,6 +64,7 @@ import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
+import I18n from "../i18n";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -368,9 +369,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
             uc.choice === UserDataProcessingChoiceEnum.DELETE &&
             uc.status === UserDataProcessingStatusEnum.PENDING
         );
-
+        const downloadFileChannel = channel();
         if (maybeDeletePending.isSome()) {
-          yield cancel(checkUserDeletePendingTask);
           Alert.alert(
             I18n.t("startup.userDeletePendingAlert.title"),
             I18n.t("startup.userDeletePendingAlert.message"),
@@ -379,15 +379,23 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
                 text: I18n.t("startup.userDeletePendingAlert.cta_1"),
                 style: "cancel",
                 onPress: () => {
-                  store.dispatch(navigateToPrivacyScreen);
+                  downloadFileChannel.put("left");
                 }
               },
               {
                 text: I18n.t("startup.userDeletePendingAlert.cta_2"),
-                style: "default"
+                style: "default",
+                onPress: () => {
+                  downloadFileChannel.put("right");
+                }
               }
             ]
           );
+          const action: string = yield take(downloadFileChannel);
+          if (action === "left") {
+            yield put(navigateToPrivacyScreen);
+          }
+          yield cancel(checkUserDeletePendingTask);
         }
       }
     );
