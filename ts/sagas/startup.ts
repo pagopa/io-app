@@ -36,7 +36,6 @@ import { loadMessageWithRelations } from "../store/actions/messages";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageDetailScreenAction,
-  navigateToTosScreen,
   navigateToPrivacyScreen
 } from "../store/actions/navigation";
 import { navigationHistoryPush } from "../store/actions/navigationHistory";

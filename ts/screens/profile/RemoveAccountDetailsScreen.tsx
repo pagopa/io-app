@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Form, Input, Item, Label, View } from "native-base";
+import { Content, Input, Item, Label, View } from "native-base";
 import * as React from "react";
 
 import { connect } from "react-redux";

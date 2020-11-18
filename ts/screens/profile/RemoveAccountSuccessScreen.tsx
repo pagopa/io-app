@@ -1,6 +1,6 @@
 import { Content, View, Text } from "native-base";
 import * as React from "react";
-import { Image, SafeAreaView, StyleSheet } from "react-native";
+import { Image, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { NavigationScreenProps } from "react-navigation";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -8,19 +8,11 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { H4 } from "../../components/core/typography/H4";
-import ROUTES from "../../navigation/routes";
 import { H2 } from "../../components/core/typography/H2";
 import { Dispatch } from "../../store/actions/types";
 import { logoutRequest } from "../../store/actions/authentication";
 
 type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
-
-const styles = StyleSheet.create({
-  center: {
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
 
 /**
  * A screen to explain how the account removal works.
