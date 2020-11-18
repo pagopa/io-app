@@ -1642,6 +1642,7 @@ bonus:
   bpd:
     title: Cashback Digital Payments
     name: Cashback
+    description: "Get credit every time you use the card for your purchases!"
     unsubscribe:
       cta: "Disable cashback"
       title: "Cashback deactivation"

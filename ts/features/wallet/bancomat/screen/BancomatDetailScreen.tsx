@@ -7,6 +7,7 @@ import { Dispatch } from "redux";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
@@ -16,6 +17,7 @@ import { showToast } from "../../../../utils/showToast";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
+import CardCapabilities from "../../component/CardCapabilities";
 import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
@@ -81,9 +83,15 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       </View>
       <View spacer={true} extralarge={true} />
       <View spacer={true} />
+
       <View style={IOStyles.horizontalContentPadding}>
+        <CardCapabilities paymentMethod={bancomat} />
+        <View spacer={true} />
+        <ItemSeparatorComponent noPadded={true} />
+        <View spacer={true} />
         <BancomatInformation />
       </View>
+      <View spacer={true} extralarge={true} />
     </DarkLayout>
   );
 };
