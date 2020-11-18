@@ -72,6 +72,7 @@ import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
+import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -532,6 +533,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     return (
       250 +
       (bonusVacanzeEnabled ? this.props.allActiveBonus.length * 65 : 0) +
+      (bpdEnabled
+        ? pot.getOrElse(this.props.periodsWithAmount, []).length * 88
+        : 0) +
       this.getCreditCards().length * 56
     );
   }
@@ -544,6 +548,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
+    periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
     allActiveBonus: allBonusActiveSelector(state),
     availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
     potWallets: pagoPaCreditCardSelector(state),
