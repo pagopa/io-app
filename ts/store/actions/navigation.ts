@@ -26,6 +26,7 @@ import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScr
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import { InferNavigationParams } from "../../types/react";
+import CreditCardOnboardingAttemptDetailScreen from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -232,6 +233,14 @@ export const navigateToPaymentHistoryDetail = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
+    params
+  });
+
+export const navigateToCreditCardOnboardingAttempt = (
+  params: InferNavigationParams<typeof CreditCardOnboardingAttemptDetailScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL,
     params
   });
 

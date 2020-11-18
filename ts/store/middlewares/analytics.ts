@@ -116,6 +116,8 @@ import {
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
 
+import trackBpdAction from "../../features/bonus/bpd/analytics/index";
+
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
@@ -414,6 +416,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     // call mixpanel tracking only after we have initialized mixpanel with the
     // API token
     trackAction(mixpanel)(action).then(constNull, constNull);
+    trackBpdAction(mixpanel)(action).then(constNull, constNull);
   }
   return next(action);
 };

@@ -25,7 +25,7 @@ export const bpdDeleteUserFromProgram = createAsyncAction(
 )<void, void, Error>();
 
 /**
- * The user starts the unsubscribe workflow
+ * The user ends the unsubscribe workflow
  */
 export const bpdUnsubscribeCompleted = createStandardAction(
   "BPD_UNSUBSCRIBE_COMPLETED"
