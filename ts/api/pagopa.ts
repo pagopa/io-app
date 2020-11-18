@@ -88,6 +88,9 @@ const constantEmptyDecoder = composeResponseDecoders(
   constantResponseDecoder<undefined, 403>(403, undefined)
 );
 
+const startSessionUsingGETDecoderUtils = startSessionUsingGETDecoder(
+  SessionResponse
+);
 const getSession: MapResponseType<
   StartSessionUsingGETT,
   200,
@@ -97,7 +100,7 @@ const getSession: MapResponseType<
   url: _ => "/v1/users/actions/start-session",
   query: _ => _,
   headers: () => ({}),
-  response_decoder: startSessionUsingGETDecoder(SessionResponse)
+  response_decoder: startSessionUsingGETDecoderUtils
 };
 
 // to support 'start' param in query string we re-define the type GetTransactionsUsingGETT
@@ -133,13 +136,16 @@ const ParamAuthorizationBearerHeaderProducer = <
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 const transactionsSliceLength = 10;
+const getTransactionsUsingGETDecoderUtils = getTransactionsUsingGETDecoder(
+  TransactionListResponse
+);
 const getTransactions: GetTransactionsUsingGETTExtra = {
   method: "get",
   url: ({ start }) =>
     `/v1/transactions?start=${start}&size=${transactionsSliceLength}`,
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getTransactionsUsingGETDecoder(TransactionListResponse)
+  response_decoder: getTransactionsUsingGETDecoderUtils
 };
 
 type GetTransactionUsingGETTExtra = MapResponseType<
@@ -148,12 +154,15 @@ type GetTransactionUsingGETTExtra = MapResponseType<
   TransactionResponse
 >;
 
+const getTransactionUsingGETDecoderUtils = getTransactionUsingGETDecoder(
+  TransactionResponse
+);
 const getTransaction: GetTransactionUsingGETTExtra = {
   method: "get",
   url: ({ id }) => `/v1/transactions/${id}`,
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getTransactionUsingGETDecoder(TransactionResponse)
+  response_decoder: getTransactionUsingGETDecoderUtils
 };
 
 type GetWalletsUsingGETExtraT = MapResponseType<
@@ -217,12 +226,16 @@ export type GetWalletsV2UsingGETTExtra = r.IGetApiRequestType<
   | r.IResponseType<403, undefined>
   | r.IResponseType<404, undefined>
 >;
+
+const getWalletsV2UsingGETDecoderUtils = getWalletsV2UsingGETDecoder(
+  PatchedWalletV2ListResponse
+);
 const getWalletsV2: GetWalletsV2UsingGETTExtra = {
   method: "get",
   url: () => "/v2/wallet",
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getWalletsV2UsingGETDecoder(PatchedWalletV2ListResponse)
+  response_decoder: getWalletsV2UsingGETDecoderUtils
 };
 
 const checkPayment: CheckPaymentUsingGETT = {
@@ -246,6 +259,9 @@ type GetPspListUsingGETTExtra = MapResponseType<
   PspListResponse
 >;
 
+const getPspListUsingGETDecoderUtils = getPspListUsingGETDecoder(
+  PspListResponse
+);
 const getPspList: GetPspListUsingGETTExtra = {
   method: "get",
   url: () => "/v1/psps",
@@ -263,7 +279,7 @@ const getPspList: GetPspListUsingGETTExtra = {
           language
         },
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getPspListUsingGETDecoder(PspListResponse)
+  response_decoder: getPspListUsingGETDecoderUtils
 };
 
 type GetAllPspListUsingGETTExtra = MapResponseType<
@@ -281,17 +297,18 @@ const getAllPspList: GetAllPspListUsingGETTExtra = {
     language
   }),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getPspListUsingGETDecoder(PspListResponse)
+  response_decoder: getPspListUsingGETDecoderUtils
 };
 
 type GetPspUsingGETTExtra = MapResponseType<GetPspUsingGETT, 200, PspResponse>;
 
+const getPspUsingGETDecoderUtils = getPspUsingGETDecoder(PspResponse);
 const getPsp: GetPspUsingGETTExtra = {
   method: "get",
   url: ({ id }) => `/v1/psps/${id}`,
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getPspUsingGETDecoder(PspResponse)
+  response_decoder: getPspUsingGETDecoderUtils
 };
 
 type UpdateWalletUsingPUTTExtra = MapResponseType<
@@ -300,13 +317,16 @@ type UpdateWalletUsingPUTTExtra = MapResponseType<
   WalletResponse
 >;
 
+const updateWalletUsingPUTDecoderutils = updateWalletUsingPUTDecoder(
+  WalletResponse
+);
 const updateWalletPsp: UpdateWalletUsingPUTTExtra = {
   method: "put",
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: updateWalletUsingPUTDecoder(WalletResponse)
+  response_decoder: updateWalletUsingPUTDecoderutils
 };
 
 type FavouriteWalletUsingPOSTTExtra = MapResponseType<
@@ -315,13 +335,16 @@ type FavouriteWalletUsingPOSTTExtra = MapResponseType<
   WalletResponse
 >;
 
+const favouriteWalletUsingPOSTDecoderUtils = favouriteWalletUsingPOSTDecoder(
+  WalletResponse
+);
 const favouriteWallet: FavouriteWalletUsingPOSTTExtra = {
   method: "post",
   url: ({ id }) => `/v1/wallet/${id}/actions/favourite`,
   query: () => ({}),
   body: () => "",
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: favouriteWalletUsingPOSTDecoder(WalletResponse)
+  response_decoder: favouriteWalletUsingPOSTDecoderUtils
 };
 
 // Remove this patch once SIA has fixed the spec.
@@ -332,16 +355,17 @@ type AddWalletCreditCardUsingPOSTTExtra = MapResponseType<
   WalletResponse
 >;
 
+const addWalletCreditCardDecoderUtils = composeResponseDecoders(
+  addWalletCreditCardUsingPOSTDecoder(WalletResponse),
+  ioResponseDecoder<422, PagoPAErrorResponse>(422, PagoPAErrorResponse)
+);
 const addWalletCreditCard: AddWalletCreditCardUsingPOSTTExtra = {
   method: "post",
   url: () => "/v1/wallet/cc",
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: composeResponseDecoders(
-    addWalletCreditCardUsingPOSTDecoder(WalletResponse),
-    ioResponseDecoder<422, PagoPAErrorResponse>(422, PagoPAErrorResponse)
-  )
+  response_decoder: addWalletCreditCardDecoderUtils
 };
 
 type PayUsingPOSTTExtra = MapResponseType<
@@ -350,13 +374,14 @@ type PayUsingPOSTTExtra = MapResponseType<
   TransactionResponse
 >;
 
+const paySslUsingPOSTDecoderUtils = paySslUsingPOSTDecoder(TransactionResponse);
 const postPayment: PayUsingPOSTTExtra = {
   method: "post",
   url: ({ id }) => `/v1/payments/${id}/actions/pay`,
   query: () => ({}),
   body: ({ payRequest }) => JSON.stringify(payRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: paySslUsingPOSTDecoder(TransactionResponse)
+  response_decoder: paySslUsingPOSTDecoderUtils
 };
 
 const deletePayment: DeleteBySessionCookieExpiredUsingDELETET = {
@@ -373,15 +398,16 @@ type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
   TransactionResponse
 >;
 
+const payCreditCardVerificationUsingPOSTDecoderUtils = payCreditCardVerificationUsingPOSTDecoder(
+  TransactionResponse
+);
 const boardPay: PayCreditCardVerificationUsingPOSTTExtra = {
   method: "post",
   url: () => "/v1/payments/cc/actions/pay",
   query: () => ({}),
   body: ({ payRequest }) => JSON.stringify(payRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: payCreditCardVerificationUsingPOSTDecoder(
-    TransactionResponse
-  )
+  response_decoder: payCreditCardVerificationUsingPOSTDecoderUtils
 };
 
 const deleteWallet: DeleteWalletUsingDELETET = {
@@ -427,15 +453,16 @@ export type AddWalletsBancomatCardUsingPOSTTExtra = r.IPostApiRequestType<
   | r.IResponseType<404, undefined>
 >;
 
+const addWalletsBancomatCardUsingPOSTDecoderUtils = addWalletsBancomatCardUsingPOSTDecoder(
+  PatchedWalletV2ListResponse
+);
 const addPans: AddWalletsBancomatCardUsingPOSTTExtra = {
   method: "post",
   url: () => `/v1/bancomat/add-wallets`,
   query: () => ({}),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   body: p => JSON.stringify(p.bancomatCardsRequest),
-  response_decoder: addWalletsBancomatCardUsingPOSTDecoder(
-    PatchedWalletV2ListResponse
-  )
+  response_decoder: addWalletsBancomatCardUsingPOSTDecoderUtils
 };
 
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
