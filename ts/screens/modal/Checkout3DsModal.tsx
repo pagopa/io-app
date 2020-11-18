@@ -52,21 +52,16 @@ class Checkout3DsModal extends React.Component<Props, State> {
     // pagoPA-designated URL for exiting the webview
     // (visisted when the user taps the "close" button)
     const exitUrl = "/wallet/loginMethod";
-    const resultUrl = "wallet/result";
+
     if (navState.url !== undefined) {
+      // collect all urls redirection for troubleshooting purposes
+      const url = new URLParse(navState.url);
+      // eslint-disable-next-line functional/immutable-data
+      this.navigationUrls.push(url.origin);
       if (navState.url.includes(exitUrl)) {
         // time to leave, trigger the appropriate action
         // to let the saga know that it can wrap things up
         this.props.onCheckout3dsSuccess(this.navigationUrls);
-      } else if (navState.url.includes(resultUrl)) {
-        // only for the exit url log the entire string
-        // eslint-disable-next-line functional/immutable-data
-        this.navigationUrls.push(navState.url);
-      } else {
-        // collect all urls redirection for troubleshooting purposes
-        const url = new URLParse(navState.url);
-        // eslint-disable-next-line functional/immutable-data
-        this.navigationUrls.push(url.origin);
       }
     }
   };
