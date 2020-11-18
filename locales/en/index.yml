@@ -28,6 +28,7 @@ global:
     question: "?"
     asterisk: "*"
   localization:
+    delimiterSeparator: ","
     decimalSeparator: "."
   date:
     today: "today"
@@ -67,6 +68,9 @@ global:
     skip: "Skip"
     add: Add
     edit: "Edit"
+    info: "Info"
+    activate: "Activate"
+    deactivate: "Deactivate"
   navigator:
     messages: messages
     wallet: wallet
@@ -630,6 +634,17 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Wallet
+  creditCard:
+    onboardingAttempts:
+      title: Attempts to onboard payment method
+      emptyTitle: No attempts to onboard payment method
+      emptyBody: IO did not log attempts to add a payment method. Here you will find the most recent attempts
+      lastAttemptsTitle: Last attempts
+      success: Success
+      failure: Failure
+      dateTime: Date and time
+      detailTitle: Details
+      help: If you have encountered a problem entering this payment method, write for more information and details
   searchAbi:
     title: Add Bancomat card
     description:
@@ -693,9 +708,8 @@ wallet:
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
   transactionHelpMessage:
-    text1: If you have had problems during a payment,
-    text2: consult the help
-    text3: at the top right of this page
+    text1: Problems with a payment or adding a new method?
+    text2: Consult the help at the top right of this page.
   transactionsLoadMore: Load previous
   transacionsLoadingMore: Loading previous...
   pickPaymentMethod:
@@ -704,6 +718,9 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
+    bancomat:
+      successful: Bancomat successfully removed
+      failed: The bancomat could not be removed
     successful: Card successfully removed
     failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
@@ -860,6 +877,7 @@ wallet:
     newCome: New
     card:
       name: Credit/debit card
+      shortName: "Card"
       maxFee: Maximum fee of 1.50€
     sovvenzione:
       name: Subsidy
@@ -934,6 +952,21 @@ wallet:
   walletCardTransaction:
     contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
+  bancomat:
+    details:
+      infobox:
+        one: "PagoBANCOMAT "
+        two: "cards do not allow you to pay via IO"
+        three: ", but only at physical points (POS)."
+      debit:
+        title: "Debit Card"
+        body: "If your PagoBANCOMAT card also has the logo of another circuit (** Maestro, Visa, Mastercard, V-Pay **, etc ..) remember to add it to your wallet also as a ** debit card ** for to be able to make payments on IO or activate the available functions. "
+        addCta: "Add Debit Card"
+      removeCta: "Delete this payment method"
+  newRemove:
+    title: "Method deletion"
+    body: "Are you sure you want to delete this payment method?"
+    warningCapability: "The functions will also be disabled:"
 saveCard:
   saveCard: Save the card
   header: Do you whant to save this card?
@@ -1408,7 +1441,7 @@ faq:
     title: "How to delete all my personal data associated to IO?"
     content: !include faq/faq56.md
   57:
-    title: "Did you have problems during a payment?"
+    title: "Did you have problems during a payment or onboarding a payment instrument?"
     content: !include faq/faq57.md
   58:
     title: "How do I claim the Bonus Vacanze?"
@@ -1470,6 +1503,9 @@ faq:
   77:
     title: "Is any kind of ISEE right to request the Bonus Vacanze?"
     content: !include bonus/faq/faq77.md
+  78:
+    title: "Did you have problems adding a new payment method?"
+    content: !include bonus/bpd/faq/faqBpd1.md
 bonus:
   bonusVacanze:
     accessibility:
@@ -1663,7 +1699,15 @@ bonus:
         text2: "is not registered to"
       loading:
         "We are verifying your IBAN\n\nPlease wait."
+      success: "IBAN successfully entered"
     details:
+      howItWorks:
+        title: "How does Cashback work?"
+        body: "1. The Cashback program is divided into periods of variable duration: the **current period** begins on {{startDate}} and ends on {{endDate}}. **Accumulates transactions** valid for the entire duration of each period with the **payment methods you have activated**.\n
+
+               2. During this period, if you reach **{{minTransactionNumber}} transactions**, you will receive a refund equal to {{cashbackPercentage}}% up to a maximum refund of **{{maxTransactionCashback}} euro** per transaction and a maximum of **{{maxPeriodCashback}} euros** in the whole period.\n
+
+               3. At the end of the period, receive the accumulated refund on the IBAN indicated by you.\n\n‎"
       components:
         iban:
           title: "IBAN for accreditation"
@@ -1714,6 +1758,29 @@ bonus:
           canceled: "Refund"
       paymentMethods:
         noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
+        noActiveMethod: "You must have activated at least one payment method to collect transactions"
+        activateOnOthersChannel:
+          text1: "Activate on"
+          text2: "other channels"
+          title: "Methods added by other channels"
+          body: "You have added these payment methods to the cashback directly from the channels made available by your bank. You can activate or deactivate the collection of transactions of these methods also from IO. \n
+                 If you want to use some of these methods to pay via IO as well, add them to your wallet! "
+          addWallet: "Add to wallet"
+        notActivable:
+          header: "Not activatable or incompatible"
+          title: "Method not activatable"
+          body: "Someone else already has cashback on this payment method active at this time: digital payments cashback can only be activated by one user at a time for each payment method."
+        notCompatible:
+          title: "Method not compatible"
+          body: "The payment method is not compatible with cashback digital payments because the bank has not yet activated support for these features. Contact your bank for more details."
+        activate:
+          title: "Method activation"
+          body: "Are you sure you want to activate cashback on this payment method?
+                 The activation will be operational **from tomorrow**, so the transactions you make today will not be valid for cashback purposes. "
+        deactivate:
+          title: "Method deactivation"
+          body: "Are you sure you want to disable the cashback on this payment method? If you confirm this choice, the method from now on will no longer contribute to the collection of transactions.
+                 The deactivation will be effective **from tomorrow**, so the transactions you make today with this tool may still be considered. "
       card:
         status:
           active: Active

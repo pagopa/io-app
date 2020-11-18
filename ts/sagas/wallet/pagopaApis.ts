@@ -47,7 +47,6 @@ import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
-import { bpdEnabled } from "../../config";
 import { getError } from "../../utils/errors";
 
 //
@@ -62,36 +61,7 @@ export function* getWallets(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>
 ): Generator<Effect, Either<Error, ReadonlyArray<Wallet>>, any> {
-  return yield call(
-    bpdEnabled ? getWalletsV2 : getWalletsV1,
-    pagoPaClient,
-    pmSessionManager
-  );
-}
-
-function* getWalletsV1(
-  pagoPaClient: PaymentManagerClient,
-  pmSessionManager: SessionManager<PaymentManagerToken>
-): Generator<Effect, Either<Error, ReadonlyArray<Wallet>>, any> {
-  try {
-    const request = pmSessionManager.withRefresh(pagoPaClient.getWallets);
-    const getResponse: SagaCallReturnType<typeof request> = yield call(request);
-    if (getResponse.isRight()) {
-      if (getResponse.value.status === 200) {
-        yield put(fetchWalletsSuccess(getResponse.value.value.data));
-        return right<Error, ReadonlyArray<Wallet>>(
-          getResponse.value.value.data
-        );
-      } else {
-        throw Error(`response status ${getResponse.value.status}`);
-      }
-    } else {
-      throw Error(readablePrivacyReport(getResponse.value));
-    }
-  } catch (error) {
-    yield put(fetchWalletsFailure(error));
-    return left<Error, ReadonlyArray<Wallet>>(error);
-  }
+  return yield call(getWalletsV2, pagoPaClient, pmSessionManager);
 }
 
 // load wallet from api /v2/wallet
