@@ -1,3 +1,4 @@
+import { debug } from "console";
 import "@testing-library/jest-native/extend-expect";
 // import { render } from "@testing-library/react-native";
 import * as React from "react";
@@ -32,7 +33,7 @@ it("Renders Correctly with Mocked Store ", () => {
     actions: {}
     // dispatch: jest.fn()
   };
-  const { toJSON, getByPlaceholderText } = renderWithRedux(
+  const { toJSON, getByPlaceholderText, UNSAFE_getByType } = renderWithRedux(
     <AddCardScreen navigation={navigation} />,
     {
       initialState: initState,
@@ -45,4 +46,7 @@ it("Renders Correctly with Mocked Store ", () => {
   const myElement = getByPlaceholderText(/John Doe/);
   fireEvent.changeText(myElement, "Aulo Agerio");
   expect(myElement.props.value).toEqual("Aulo Agerio");
+
+  const myRootElement = UNSAFE_getByType(AddCardScreen);
+  debug("ROOT", myRootElement);
 });

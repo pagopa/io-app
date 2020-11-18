@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders Correctly when Disconnected from the Store 1`] = `
+exports[`AddCardScreen Rendering Logic Test Should Render Correctly when Disconnected from the Store 1`] = `
 <View
   style={
     Object {

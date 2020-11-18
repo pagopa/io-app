@@ -1,4 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Either";
+
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
 import "@testing-library/jest-dom/extend-expect";
@@ -16,7 +17,7 @@ jest.useFakeTimers();
 // Navigation mock (It's a custom mock. In particular mocks useNavigation hook)
 jest.mock("react-navigation");
 
-it("Renders Correctly when Disconnected from the Store", () => {
+describe("AddCardScreen Rendering Logic Test", () => {
   const navigation: any = {
     navigate: jest.fn(),
     state: {
@@ -31,14 +32,35 @@ it("Renders Correctly when Disconnected from the Store", () => {
     actions: {}
   };
 
-  mockReactRedux().state(initState); // disconnect the component from the store
-  const { toJSON, getByPlaceholderText } = render(
-    <AddCardScreen navigation={navigation} />
-  );
-  expect(toJSON()).toMatchSnapshot();
+  test("Should Render Correctly when Disconnected from the Store", () => {
+    mockReactRedux().state(initState); // disconnect the component from the store
+    const { toJSON } = render(<AddCardScreen navigation={navigation} />);
+    expect(toJSON()).toMatchSnapshot();
+  });
 
-  // Check in the snapshot a good value to search for, but be aware of locales!
-  const myElement = getByPlaceholderText(/John Doe/);
-  fireEvent.changeText(myElement, "Aulo Agerio");
-  expect(myElement.props.value).toEqual("Aulo Agerio");
+  test("Should Change Credit Card Owner on User Input", () => {
+    // Useless Test. Just to show how to use the library
+    mockReactRedux().state(initState); // disconnect the component from the store
+    const { getByPlaceholderText } = render(
+      <AddCardScreen navigation={navigation} />
+    );
+    // Check in the snapshot a good value to search for, but be aware of locales!
+    const owner = getByPlaceholderText(/John Doe/);
+    fireEvent.changeText(owner, "Aulo Agerio");
+    expect(owner.props.value).toEqual("Aulo Agerio");
+  });
+
+  test("Should Update Icon When User Inserts a PAN of a Supported Brand", () => {
+    mockReactRedux().state(initState); // disconnect the component from the store
+    const { getByPlaceholderText, getAllByA11yLabel } = render(
+      <AddCardScreen navigation={navigation} />
+    );
+    const pan = getByPlaceholderText(/0000 0000 0000 0000/);
+
+    fireEvent.changeText(pan, "4012888888881881"); // visa
+    const fields = getAllByA11yLabel(/labelled-item-icon/);
+    const regExp = new RegExp(/visa/);
+    const match = fields.find(items => regExp.test(items.props.source.testUri));
+    expect(match).toBeTruthy();
+  });
 });

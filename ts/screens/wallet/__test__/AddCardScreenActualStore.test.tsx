@@ -1,3 +1,4 @@
+import { debug } from "console";
 import { fromNullable } from "fp-ts/lib/Either";
 import React from "react";
 import { createStore, combineReducers, Reducer } from "redux";
@@ -48,9 +49,12 @@ it("Renders Correctly with the Full Store", () => {
     // dispatch: jest.fn()
   };
 
-  const { toJSON, getByPlaceholderText } = renderWithRedux(
+  const { toJSON, getByPlaceholderText, UNSAFE_getByType } = renderWithRedux(
     <AddCardScreen navigation={navigation} />,
-    { initialState: initState, store: createStore(appReducer, initState) }
+    {
+      initialState: initState,
+      store: createStore(appReducer, initState)
+    }
   );
 
   expect(toJSON()).toMatchSnapshot();
@@ -59,4 +63,7 @@ it("Renders Correctly with the Full Store", () => {
   const myElement = getByPlaceholderText(/John Doe/);
   fireEvent.changeText(myElement, "Aulo Agerio");
   expect(myElement.props.value).toEqual("Aulo Agerio");
+
+  const myRootElement = UNSAFE_getByType(AddCardScreen);
+  debug("ROOT", myRootElement);
 });

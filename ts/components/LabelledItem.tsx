@@ -139,13 +139,18 @@ export class LabelledItem extends React.Component<Props, State> {
           {this.props.icon &&
             (isString(this.props.icon) ? (
               <IconFont
+                accessibilityLabel="labelled-item-icon"
                 size={variables.iconSize3}
                 color={variables.brandDarkGray}
                 name={this.props.icon}
                 style={this.props.iconStyle}
               />
             ) : (
-              <Image source={this.props.icon} style={this.props.iconStyle} />
+              <Image
+                accessibilityLabel="labelled-item-icon"
+                source={this.props.icon}
+                style={this.props.iconStyle}
+              />
             ))}
 
           {this.props.type === "masked" ? (
