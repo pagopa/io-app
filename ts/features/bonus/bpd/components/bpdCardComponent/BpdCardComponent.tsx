@@ -210,7 +210,7 @@ const statusActiveHandler = (props: Props): GraphicalState => {
       label: I18n.t("bonus.bpd.details.card.status.active")
     },
     showLock: totalAmount.transactionNumber < period.minTransactionNumber,
-    amount: formatNumberAmount(1230.12).split(
+    amount: formatNumberAmount(props.totalAmount.totalCashback).split(
       I18n.t("global.localization.decimalSeparator")
     )
   };
