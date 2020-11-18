@@ -9,7 +9,7 @@ import { navigationCurrentRouteSelector } from "../../../../../../store/reducers
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { isBpdEnabled } from "../../../../../bonus/bpd/saga/orchestration/onboarding/startOnboarding";
 import {
-  navigateToActivateBpdOnNewBancomat,
+  navigateToActivateBpdOnNewMethod,
   navigateToOnboardingBancomatChooseBank,
   navigateToSuggestBpdActivation
 } from "../../navigation/action";
@@ -113,7 +113,7 @@ function* activateBpdOnNewBancomat() {
   } else {
     if (isBpdEnabledResponse.value) {
       // navigate to onboarding new bancomat
-      yield put(navigateToActivateBpdOnNewBancomat());
+      yield put(navigateToActivateBpdOnNewMethod());
     } else {
       // navigate to "ask if u want to start bpd onboarding"
       yield put(navigateToSuggestBpdActivation());

@@ -1,5 +1,5 @@
 import { createStackNavigator } from "react-navigation";
-import ActivateBpdOnNewBancomatScreen from "../screens/bpd/ActivateBpdOnNewBancomatScreen";
+import ActivateBpdOnNewBancomatScreen from "../screens/bpd/ActivateBpdOnNewPaymentMethodScreen";
 import SuggestBpdActivationScreen from "../screens/bpd/SuggestBpdActivationScreen";
 import SearchBankScreen from "../screens/search/SearchBankScreen";
 import SearchAvailableUserBancomatScreen from "../screens/searchBancomat/SearchAvailableUserBancomatScreen";

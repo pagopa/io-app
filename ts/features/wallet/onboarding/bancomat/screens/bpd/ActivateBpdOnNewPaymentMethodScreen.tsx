@@ -1,7 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -13,9 +13,17 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import { PaymentMethodRawList } from "../../../../../bonus/bpd/components/paymentMethodActivationToggle/list/PaymentMethodRawList";
 import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
+import { PatchedWalletV2 } from "../../../../../../types/pagopa";
+
+type ActivateBpdOnNewPaymentMethodScreen = {
+  newAddedMethods?: ReadonlyArray<PatchedWalletV2>;
+};
+
+type OwnProps = NavigationScreenProps<ActivateBpdOnNewPaymentMethodScreen>;
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  OwnProps;
 
 const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.bancomat.headerTitle"),
@@ -26,8 +34,10 @@ const loadLocales = () => ({
   continueStr: I18n.t("global.buttons.continue")
 });
 
-const ActivateBpdOnNewBancomatScreen: React.FunctionComponent<Props> = props => {
+const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body1, body2, skip, continueStr } = loadLocales();
+  const newMethodAdded =
+    props.navigation.getParam("newAddedMethods") ?? props.newBancomat;
   return (
     <BaseScreenComponent headerTitle={headerTitle}>
       <SafeAreaView style={IOStyles.flex}>
@@ -38,7 +48,7 @@ const ActivateBpdOnNewBancomatScreen: React.FunctionComponent<Props> = props => 
             <View spacer={true} large={true} />
             <Body>{body1}</Body>
             <View spacer={true} large={true} />
-            <PaymentMethodRawList paymentList={props.newBancomat} />
+            <PaymentMethodRawList paymentList={newMethodAdded} />
             <View spacer={true} large={true} />
             <Body>{body2}</Body>
           </View>
@@ -67,4 +77,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ActivateBpdOnNewBancomatScreen);
+)(ActivateBpdOnNewPaymentMethodScreen);

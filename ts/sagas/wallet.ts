@@ -127,11 +127,14 @@ import {
 } from "./wallet/pagopaApis";
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import _ from "lodash";
-import { RTron } from "../boot/configureStoreAndPersistor";
 import { hasFunctionEnabled } from "../utils/walletv2";
-import { bpdEnrollSelector } from "../features/bonus/bpd/store/reducers/onboarding/enroll";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import { isReady } from "../features/bonus/bpd/model/RemoteValue";
+import {
+  navigateToActivateBpdOnNewMethod,
+  navigateToSuggestBpdActivation
+} from "../features/wallet/onboarding/bancomat/navigation/action";
+import { navigationHistoryPop } from "../store/actions/navigationHistory";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -304,24 +307,33 @@ function* startOrResumeAddCreditCardSaga(
       const maybeAddedWallet = updatedWallets.find(
         _ => _.idWallet === idWallet
       );
-      // if the new method hab been added
+      // if the new method has been added
       if (maybeAddedWallet !== undefined) {
         const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
           bpdEnabledSelector
         );
         // check if the new method is compliant with bpd
-        if (maybeAddedWallet.v2) {
+        if (bpdEnabled && maybeAddedWallet.v2) {
           const hasBpdFeature = hasFunctionEnabled(
             maybeAddedWallet.v2,
             EnableableFunctionsTypeEnum.BPD
           );
-          // if the user has not joined the bpd, ask if he/she want
-          if (
-            hasBpdFeature &&
-            isReady(bpdEnroll) &&
-            bpdEnroll.value === false
-          ) {
-            // navigate to screen to ask user to join bpd
+          // if the method is bpd compliant check if we have info about bpd activation
+          if (hasBpdFeature && isReady(bpdEnroll)) {
+            // if bdp is active navigate to a screen where it asked to enroll that method in bpd
+            // otherwise navigate to a screen where is asked to join bpd
+            if (bpdEnroll.value) {
+              yield put(
+                navigateToActivateBpdOnNewMethod({
+                  newAddedMethods: [maybeAddedWallet.v2]
+                })
+              );
+            } else {
+              yield put(navigateToSuggestBpdActivation());
+            }
+            // remove these screen from the navigation stack: method choice, credit card form, credit card resume
+            yield put(navigationHistoryPop(3));
+            return;
           }
         }
 
