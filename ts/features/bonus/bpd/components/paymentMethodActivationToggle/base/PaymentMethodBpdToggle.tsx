@@ -4,9 +4,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { ImageSourcePropType, StyleSheet } from "react-native";
-import { NavigationContext } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../../../i18n";
@@ -20,7 +19,8 @@ import {
   HPan
 } from "../../../store/actions/paymentMethods";
 import { bpdPaymentMethodValueSelector } from "../../../store/reducers/details/paymentMethods";
-import { BpdChangeActivationConfirmationScreen } from "../confirm/BpdChangeActivationConfirmationScreen";
+import { useNavigationContext } from "../../../../../../utils/hooks/useOnFocus";
+import { BpdChangeActivationConfirmationScreen } from "../bottomsheet/BpdChangeActivationConfirmationScreen";
 import { BpdToggle } from "./BpdToggle";
 import { PaymentMethodRepresentation } from "./PaymentMethodRepresentation";
 
@@ -68,7 +68,7 @@ const retryTimeout = 5000 as Millisecond;
  */
 const useInitialValue = (props: Props) => {
   const timerRetry = useRef<number | undefined>(undefined);
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigationContext();
   const retry = () => {
     timerRetry.current = undefined;
     props.loadActualValue(props.hPan);

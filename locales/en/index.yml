@@ -28,6 +28,7 @@ global:
     question: "?"
     asterisk: "*"
   localization:
+    delimiterSeparator: ","
     decimalSeparator: "."
   date:
     today: "today"
@@ -739,6 +740,9 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
+    bancomat:
+      successful: Bancomat successfully removed
+      failed: The bancomat could not be removed
     successful: Card successfully removed
     failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
@@ -895,6 +899,7 @@ wallet:
     newCome: New
     card:
       name: Credit/debit card
+      shortName: "Card"
       maxFee: Maximum fee of 1.50€
     sovvenzione:
       name: Subsidy
@@ -969,6 +974,21 @@ wallet:
   walletCardTransaction:
     contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
+  bancomat:
+    details:
+      infobox:
+        one: "PagoBANCOMAT "
+        two: "cards do not allow you to pay via IO"
+        three: ", but only at physical points (POS)."
+      debit:
+        title: "Debit Card"
+        body: "If your PagoBANCOMAT card also has the logo of another circuit (** Maestro, Visa, Mastercard, V-Pay **, etc ..) remember to add it to your wallet also as a ** debit card ** for to be able to make payments on IO or activate the available functions. "
+        addCta: "Add Debit Card"
+      removeCta: "Delete this payment method"
+  newRemove:
+    title: "Method deletion"
+    body: "Are you sure you want to delete this payment method?"
+    warningCapability: "The functions will also be disabled:"
 saveCard:
   saveCard: Save the card
   header: Do you whant to save this card?
@@ -1702,6 +1722,13 @@ bonus:
       loading:
         "We are verifying your IBAN\n\nPlease wait."
     details:
+      howItWorks:
+        title: "How does Cashback work?"
+        body: "1. The Cashback program is divided into periods of variable duration: the **current period** begins on {{startDate}} and ends on {{endDate}}. **Accumulates transactions** valid for the entire duration of each period with the **payment methods you have activated**.\n
+
+               2. During this period, if you reach **{{minTransactionNumber}} transactions**, you will receive a refund equal to {{cashbackPercentage}}% up to a maximum refund of **{{maxTransactionCashback}} euro** per transaction and a maximum of **{{maxPeriodCashback}} euros** in the whole period.\n
+
+               3. At the end of the period, receive the accumulated refund on the IBAN indicated by you.\n\n‎"
       components:
         iban:
           title: "IBAN for accreditation"
@@ -1756,12 +1783,17 @@ bonus:
         activateOnOthersChannel:
           text1: "Activate on"
           text2: "other channels"
-          title: "Method not compatible"
-          body: "The payment method is not compatible [MISSING TEXT]"
+          title: "Methods added by other channels"
+          body: "You have added these payment methods to the cashback directly from the channels made available by your bank. You can activate or deactivate the collection of transactions of these methods also from IO. \n
+                 If you want to use some of these methods to pay via IO as well, add them to your wallet! "
+          addWallet: "Add to wallet"
         notActivable:
           header: "Not activatable or incompatible"
           title: "Method not activatable"
-          body: "Someone else has already activated cashback on this payment method at this time: [MISSING TEXT]"
+          body: "Someone else already has cashback on this payment method active at this time: digital payments cashback can only be activated by one user at a time for each payment method."
+        notCompatible:
+          title: "Method not compatible"
+          body: "The payment method is not compatible with cashback digital payments because the bank has not yet activated support for these features. Contact your bank for more details."
         activate:
           title: "Method activation"
           body: "Are you sure you want to activate cashback on this payment method?

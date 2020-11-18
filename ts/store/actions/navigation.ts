@@ -14,6 +14,7 @@ import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
+import CreditCardOnboardingAttemptDetailScreen from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
 import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../../screens/wallet/payment/ManualDataInsertionScreen";
 import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
@@ -26,7 +27,7 @@ import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScr
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import { InferNavigationParams } from "../../types/react";
-import CreditCardOnboardingAttemptDetailScreen from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
+import { EnhancedBancomat } from "../reducers/wallet/wallets";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -210,6 +211,12 @@ export const navigateToWalletTransactionsScreen = (
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_CARD_TRANSACTIONS,
     params
+  });
+
+export const navigateToBancomatDetailScreen = (bancomat: EnhancedBancomat) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_BANCOMAT_DETAIL,
+    params: { bancomat }
   });
 
 export const navigateToPaymentPickPspScreen = (

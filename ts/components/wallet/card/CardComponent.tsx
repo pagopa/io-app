@@ -26,8 +26,7 @@ import { CreditCardStyles } from "./style";
 
 // TODO: the "*" character renders differently (i.e. a larger circle) on
 // some devices @https://www.pivotaltracker.com/story/show/159231780
-const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
-const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
+const FOUR_UNICODE_CIRCLES = "●".repeat(4);
 
 interface BaseProps {
   wallet: Wallet;
@@ -300,7 +299,7 @@ export default class CardComponent extends React.Component<Props> {
           <View style={[styles.row, styles.spaced]}>
             <View style={styles.row}>
               <Text style={[CreditCardStyles.smallTextStyle]}>
-                {`${HIDDEN_CREDITCARD_NUMBERS}`}
+                {`${FOUR_UNICODE_CIRCLES} `}
               </Text>
               <Text style={[CreditCardStyles.largeTextStyle]}>
                 {`${wallet.creditCard.pan.slice(-4)}`}

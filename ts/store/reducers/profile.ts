@@ -76,6 +76,18 @@ export const profileNameSelector = createSelector(
     )
 );
 
+/**
+ * The complete name + surname
+ */
+export const profileNameSurnameSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): string | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => `${p.name} ${p.family_name}`),
+      undefined
+    )
+);
+
 // return the spid email address (as a string)
 export const profileSpidEmailSelector = createSelector(
   profileSelector,
