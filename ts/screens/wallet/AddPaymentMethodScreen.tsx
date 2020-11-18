@@ -75,6 +75,12 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
 
   const paymentMethods: ReadonlyArray<IPaymentMethod> = [
     {
+      name: I18n.t("wallet.methods.card.name"),
+      description: I18n.t("wallet.methods.card.description"),
+      onPress: props.navigateToAddCreditCard,
+      implemented: true
+    },
+    {
       name: I18n.t("wallet.methods.pagobancomat.name"),
       description: I18n.t("wallet.methods.pagobancomat.description"),
       onPress: props.startAddBancomat,
@@ -83,12 +89,6 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
     {
       name: I18n.t("wallet.methods.postepay.name"),
       description: I18n.t("wallet.methods.postepay.description"),
-      onPress: props.navigateToAddCreditCard,
-      implemented: true
-    },
-    {
-      name: I18n.t("wallet.methods.card.name"),
-      description: I18n.t("wallet.methods.card.description"),
       onPress: props.navigateToAddCreditCard,
       implemented: true
     },
