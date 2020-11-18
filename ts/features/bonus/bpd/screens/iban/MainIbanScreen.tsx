@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { showToast } from "../../../../../utils/showToast";
 import { isError, isLoading, isReady } from "../../model/RemoteValue";
 import { IbanStatus } from "../../saga/networking/patchCitizenIban";
 import {
@@ -10,6 +11,8 @@ import {
   bpdIbanInsertionResetScreen
 } from "../../store/actions/iban";
 import { bpdUpsertIbanSelector } from "../../store/reducers/details/activation/payoffInstrument";
+import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing";
+import I18n from "../../../../../i18n";
 import IbanLoadingUpsert from "./IbanLoadingUpsert";
 import IbanInsertionScreen from "./insertion/IbanInsertionScreen";
 import IbanKoNotOwned from "./ko/IbanKONotOwned";
@@ -32,6 +35,9 @@ const chooseRenderScreen = (props: Props) => {
       case IbanStatus.CANT_VERIFY:
         props.reset();
         props.completed();
+        if (!props.onboardingOngoing) {
+          showToast(I18n.t("bonus.bpd.iban.success"), "success");
+        }
     }
   }
   return <IbanInsertionScreen />;
@@ -50,7 +56,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  upsertValue: bpdUpsertIbanSelector(state)
+  upsertValue: bpdUpsertIbanSelector(state),
+  onboardingOngoing: isBpdOnboardingOngoing(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainIbanScreen);

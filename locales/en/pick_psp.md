@@ -1,2 +1,4 @@
-**Here you can select the Provider of Payment Services (PSP) that you want to use for your payment.**  
-We kindly remember that each provider managing pagoPA payments (PSP) can autonomously apply different costs for the transaction, based on their commercial and contractual policies: you can verify the applied fee before completing the payment.
+**Here you can select the Payment Service Provider (PSP) for your transaction.** 
+pagoPA shows you by default, whenever it's possible, the issuer of your card.
+Alternatively, pagoPA will pick the provider with the cheapest fee.
+In any moment you can select another provider from the list: all of them are compatible with your card, even if you don't have any account with them.

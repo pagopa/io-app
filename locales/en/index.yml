@@ -951,7 +951,7 @@ wallet:
     contextualHelpTitle: How to pay a notice
     contextualHelpContent: !include wallet/wallet_qrcode.md
   whyAFee:
-    title: Why do I have to pay a fee?
+    title: Why is there a transaction fee?
     text: !include wallet/why_a_fee.md
   errors:
     PAYMENT_DUPLICATED: This notice has been already paid! ;-)
@@ -1721,6 +1721,7 @@ bonus:
         text2: "is not registered to"
       loading:
         "We are verifying your IBAN\n\nPlease wait."
+      success: "IBAN successfully entered"
     details:
       howItWorks:
         title: "How does Cashback work?"
