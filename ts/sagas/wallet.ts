@@ -331,7 +331,7 @@ function* startOrResumeAddCreditCardSaga(
             } else {
               yield put(navigateToSuggestBpdActivation());
             }
-            // remove these screen from the navigation stack: method choice, credit card form, credit card resume
+            // remove these screens from the navigation stack: method choice, credit card form, credit card resume
             // this pop could be easily break when this flow is entered by other points
             // different from the current ones (i.e see https://www.pivotaltracker.com/story/show/175757212)
             yield put(navigationHistoryPop(3));
