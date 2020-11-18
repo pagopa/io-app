@@ -1739,6 +1739,7 @@ bonus:
         text2: "non risulta intestato a"
       loading:
         "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
+      success: "IBAN inserito con successo"
     details:
       howItWorks:
         title: "Come funziona il Cashback?"

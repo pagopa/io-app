@@ -17,6 +17,7 @@ type Props = {
   onIbanConfirm: (iban: Iban) => void;
   onContinue: () => void;
   startIban?: string;
+  cancelText: string;
 };
 
 // https://en.wikipedia.org/wiki/International_Bank_Account_Number
@@ -28,22 +29,14 @@ const loadLocales = () => ({
   title: I18n.t("bonus.bpd.iban.insertion.title"),
   body1: I18n.t("bonus.bpd.iban.insertion.body1"),
   body2: I18n.t("bonus.bpd.iban.insertion.body2"),
-  ibanDescription: I18n.t("bonus.bpd.iban.iban"),
-  skip: I18n.t("global.buttons.skip")
+  ibanDescription: I18n.t("bonus.bpd.iban.iban")
 });
 
 export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
   const [iban, setIban] = useState(props.startIban ?? "");
   const isInvalidIban = iban.length > 0 && Iban.decode(iban).isLeft();
   const userCanContinue = !isInvalidIban && iban.length > 0;
-  const {
-    headerTitle,
-    title,
-    body1,
-    body2,
-    ibanDescription,
-    skip
-  } = loadLocales();
+  const { headerTitle, title, body1, body2, ibanDescription } = loadLocales();
 
   return (
     <BaseScreenComponent goBack={props.onBack} headerTitle={headerTitle}>
@@ -73,7 +66,7 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
             onRight={() => Iban.decode(iban).map(props.onIbanConfirm)}
             onCancel={props.onContinue}
             rightText={I18n.t("global.buttons.continue")}
-            leftText={skip}
+            leftText={props.cancelText}
           />,
           true
         )}
