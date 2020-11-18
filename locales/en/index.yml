@@ -1699,6 +1699,7 @@ bonus:
         text2: "is not registered to"
       loading:
         "We are verifying your IBAN\n\nPlease wait."
+      success: "IBAN successfully entered"
     details:
       howItWorks:
         title: "How does Cashback work?"
