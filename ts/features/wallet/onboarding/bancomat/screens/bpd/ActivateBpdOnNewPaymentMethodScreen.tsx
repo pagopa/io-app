@@ -36,7 +36,9 @@ const loadLocales = () => ({
 
 const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body1, body2, skip, continueStr } = loadLocales();
-  const newMethodAdded =
+  // show new added methods from navigation params
+  // if they aren't, read the new bancomat added from the store
+  const newMethodsAdded =
     props.navigation.getParam("newAddedMethods") ?? props.newBancomat;
   return (
     <BaseScreenComponent headerTitle={headerTitle}>
@@ -48,7 +50,7 @@ const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = prop
             <View spacer={true} large={true} />
             <Body>{body1}</Body>
             <View spacer={true} large={true} />
-            <PaymentMethodRawList paymentList={newMethodAdded} />
+            <PaymentMethodRawList paymentList={newMethodsAdded} />
             <View spacer={true} large={true} />
             <Body>{body2}</Body>
           </View>
