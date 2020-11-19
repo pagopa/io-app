@@ -655,6 +655,7 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Portafoglio
+  featured: In evidenza
   creditCard:
     onboardingAttempts:
       title: Tentativi aggiunta metodo di pagamento

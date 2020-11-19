@@ -72,6 +72,7 @@ import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
+import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -520,7 +521,18 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         gradientHeader={true}
         headerPaddingMin={true}
       >
-        {this.newMethodAdded ? this.newMethodAddedContent : transactionContent}
+        {this.newMethodAdded ? (
+          this.newMethodAddedContent
+        ) : (
+          <>
+            {bpdEnabled && (
+              <FeaturedCardCarousel
+                bvActive={this.props.allActiveBonus.length > 0}
+              />
+            )}
+            {transactionContent}
+          </>
+        )}
         {bonusVacanzeEnabled && (
           <NavigationEvents onWillFocus={this.loadBonusVacanze} />
         )}

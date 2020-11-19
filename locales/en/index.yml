@@ -634,6 +634,7 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Wallet
+  featured: Higlighted 
   creditCard:
     onboardingAttempts:
       title: Attempts to onboard payment method
