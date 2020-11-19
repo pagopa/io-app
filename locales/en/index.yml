@@ -634,6 +634,7 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Wallet
+  featured: Higlighted 
   creditCard:
     onboardingAttempts:
       title: Attempts to onboard payment method
@@ -884,18 +885,26 @@ wallet:
     comingSoon: incoming
     newCome: New
     card:
-      name: Credit/debit card
+      name: Credit, debit or prepaid card
       shortName: "Card"
-      maxFee: Maximum fee of 1.50€
-    sovvenzione:
-      name: Subsidy
+      description: The card issued by your bank that you normally use to pay in stores and online
+    bonus:
+      name: Discount, bonus and other services
+      description: Initiatives by public bodies to support spending, or services related to payments
+    digital:
+      name: App and digital payment tools
+      description: Use your favourite digital tools to pay upon IO
+    pagobancomat:
+      name: PagoBANCOMAT card
+      description: The card with the PagoBANCOMAT logo that you use to withdraw cash or pay in stores
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
     satispay:
       name: Satispay
     postepay:
-      name: Postepay
+      name: BancoPosta or Postepay card
+      description: Cards issued by Poste Italiane
     paypal:
       name: Paypal
     bancomat:
@@ -937,7 +946,7 @@ wallet:
     contextualHelpTitle: How to pay a notice
     contextualHelpContent: !include wallet/wallet_qrcode.md
   whyAFee:
-    title: Why do I have to pay a fee?
+    title: Why is there a transaction fee?
     text: !include wallet/why_a_fee.md
   errors:
     PAYMENT_DUPLICATED: This notice has been already paid! ;-)
