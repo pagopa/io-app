@@ -159,7 +159,7 @@ export const isCreditCard = (
 ): paymentMethodInfo is CardInfo =>
   paymentMethodInfo && wallet.walletType === WalletTypeEnum.Card;
 
-export const getWalletV2Haspan = (
+export const getWalletV2Hashpan = (
   wallet: PatchedWalletV2
 ): string | undefined => {
   if (isCard(wallet, wallet.info)) {

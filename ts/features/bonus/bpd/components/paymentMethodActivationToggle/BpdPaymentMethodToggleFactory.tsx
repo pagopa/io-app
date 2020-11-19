@@ -2,7 +2,7 @@ import * as React from "react";
 import { WalletTypeEnum } from "../../../../../../definitions/pagopa/walletv2/WalletV2";
 import { PatchedWalletV2, WalletV2WithInfo } from "../../../../../types/pagopa";
 import {
-  getWalletV2Haspan,
+  getWalletV2Hashpan,
   isCard
 } from "../../../../../store/reducers/wallet/wallets";
 import { CardInfo } from "../../../../../../definitions/pagopa/walletv2/CardInfo";
@@ -27,6 +27,6 @@ export const bpdToggleFactory = (wallet: PatchedWalletV2) => {
   }
   // TODO: temp, default view with default icon
   return (
-    <CardBpdToggle key={getWalletV2Haspan(wallet)} card={walletWithInfo} />
+    <CardBpdToggle key={getWalletV2Hashpan(wallet)} card={walletWithInfo} />
   );
 };

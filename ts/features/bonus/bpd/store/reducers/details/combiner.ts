@@ -12,7 +12,7 @@ import I18n from "../../../../../../i18n";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
-  getWalletV2Haspan,
+  getWalletV2Hashpan,
   isBancomat,
   isCreditCard,
   walletV2Selector
@@ -130,7 +130,7 @@ const pickWalletFromHashpan = (
 ): Option<PatchedWalletV2> =>
   pot.getOrElse(
     pot.map(potWalletV2, walletV2 =>
-      fromNullable(walletV2.find(w => getWalletV2Haspan(w) === hashPan))
+      fromNullable(walletV2.find(w => getWalletV2Hashpan(w) === hashPan))
     ),
     none
   );
@@ -230,7 +230,7 @@ export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
     pot.getOrElse(
       pot.map(walletV2Pot, walletv2 =>
         walletv2.some(w =>
-          fromNullable(getWalletV2Haspan(w))
+          fromNullable(getWalletV2Hashpan(w))
             .map(hpan => bpdActivations[hpan])
             .map(
               potActivation =>
@@ -258,7 +258,7 @@ export const walletV2WithActivationStatusSelector = createSelector(
     pot.map(walletV2Pot, walletv2 =>
       walletv2.map(pm => {
         // try to extract the activation status to enhance the wallet
-        const activationStatus = fromNullable(getWalletV2Haspan(pm))
+        const activationStatus = fromNullable(getWalletV2Hashpan(pm))
           .chain(hp => fromNullable(bpdActivations[hp]))
           .map(paymentMethodActivation =>
             pot.getOrElse(
