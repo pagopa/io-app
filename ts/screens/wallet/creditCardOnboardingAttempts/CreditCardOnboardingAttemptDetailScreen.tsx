@@ -1,4 +1,3 @@
-import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -72,7 +71,6 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
 ) => {
   const attempt = props.navigation.getParam("attempt");
   const instabugLogAndOpenReport = () => {
-    Instabug.appendTags(["credit-card-support"]);
     pot.map(props.profile, p => {
       const profileDetails = getProfileDetailsLog(p);
       instabugLog(profileDetails, TypeLogs.INFO, instabugTag);
