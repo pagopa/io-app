@@ -10,6 +10,7 @@ import {
 } from "../../../types/pagopa";
 import BpdCardCapability from "../../bonus/bpd/components/BpdCardCapability";
 import { isBpdEnabled } from "../../bonus/bpd/saga/orchestration/onboarding/startOnboarding";
+import { HPan } from "../../bonus/bpd/store/actions/paymentMethods";
 
 type OwnProps = { paymentMethod: PatchedWalletV2 };
 
@@ -17,13 +18,18 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
 
-const capabilityFactory = (capability: EnableableFunctionsTypeEnum) => {
+const capabilityFactory = (
+  paymentMethod: PatchedWalletV2,
+  capability: EnableableFunctionsTypeEnum
+) => {
   switch (capability) {
     case EnableableFunctionsTypeEnum.FA:
     case EnableableFunctionsTypeEnum.pagoPA:
       return null;
     case EnableableFunctionsTypeEnum.BPD:
-      return isBpdEnabled() ? <BpdCardCapability /> : null;
+      return isBpdEnabled() && paymentMethod.info.hashPan ? (
+        <BpdCardCapability hPan={paymentMethod.info.hashPan as HPan} />
+      ) : null;
   }
 };
 
@@ -31,7 +37,7 @@ const generateCapabilityItems = (paymentMethod: PatchedWalletV2) =>
   paymentMethod.enableableFunctions.reduce((acc, val): ReadonlyArray<
     React.ReactNode
   > => {
-    const handlerForCapability = capabilityFactory(val);
+    const handlerForCapability = capabilityFactory(paymentMethod, val);
     return handlerForCapability === null ? acc : [...acc, handlerForCapability];
   }, [] as ReadonlyArray<React.ReactNode>);
 

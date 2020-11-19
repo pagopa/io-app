@@ -116,7 +116,7 @@ const loading: GraphicalValue = { state: "loading", value: undefined };
  * Calculate the graphical state based on the pot possible states
  * @param potBpdActivation
  */
-const calculateGraphicalState = (
+export const calculateBpdToggleGraphicalState = (
   potBpdActivation: pot.Pot<BpdPaymentMethodActivation, Error>
 ): GraphicalValue =>
   pot.fold<BpdPaymentMethodActivation, Error, GraphicalValue>(
@@ -147,7 +147,7 @@ const calculateGraphicalState = (
 const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
   // Calculate the graphical state based on the potActivation and capability
   const graphicalState: GraphicalValue = props.hasBpdCapability
-    ? calculateGraphicalState(props.bpdPotActivation)
+    ? calculateBpdToggleGraphicalState(props.bpdPotActivation)
     : { state: "ready", value: "notActivable" };
   if (props.hasBpdCapability) {
     // trigger the initial loading / retry only if the method has the bpd capability
