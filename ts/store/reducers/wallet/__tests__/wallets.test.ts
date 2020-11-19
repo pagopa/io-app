@@ -9,6 +9,7 @@ import { toIndexed } from "../../../helpers/indexer";
 import {
   bancomatSelector,
   creditCardWalletV1Selector,
+  getWalletV2Hashpan,
   isCreditCard,
   pagoPaCreditCardWalletV1Selector
 } from "../wallets";
@@ -45,11 +46,9 @@ describe("walletV2 selectors", () => {
       const wallet = maybeCC.value[0].v2;
       if (wallet) {
         expect(isCreditCard(wallet, wallet.info)).toBeTruthy();
-        if (isCreditCard(wallet, wallet.info)) {
-          expect(wallet.info.hashPan).toEqual(
-            "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
-          );
-        }
+        expect(getWalletV2Hashpan(wallet)).toEqual(
+          "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
+        );
       }
     }
   });
@@ -64,7 +63,9 @@ describe("walletV2 selectors", () => {
     if (pot.isSome(maybeBancomat)) {
       expect(maybeBancomat.value.length).toEqual(2);
       maybeBancomat.value.forEach(w => {
-        expect(hpans.find(h => h === w.info.hashPan)).toBeDefined();
+        expect(
+          hpans.find(h => h === getWalletV2Hashpan(w.wallet))
+        ).toBeDefined();
       });
     }
   });
@@ -77,11 +78,9 @@ describe("walletV2 selectors", () => {
       const wallet = maybePagoPaCC.value[0].v2;
       if (wallet) {
         expect(isCreditCard(wallet, wallet.info)).toBeTruthy();
-        if (isCreditCard(wallet, wallet.info)) {
-          expect(wallet.info.hashPan).toEqual(
-            "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
-          );
-        }
+        expect(getWalletV2Hashpan(wallet)).toEqual(
+          "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
+        );
       }
     }
   });
