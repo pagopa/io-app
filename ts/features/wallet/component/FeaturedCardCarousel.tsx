@@ -2,7 +2,7 @@ import { reverse } from "fp-ts/lib/Array";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import { constUndefined } from "fp-ts/lib/function";
@@ -37,6 +37,10 @@ type BonusUtils = {
   handler: (bonus: BonusAvailable) => void;
 };
 
+const styles = StyleSheet.create({
+  container: { backgroundColor: "white", paddingTop: 14 },
+  scrollViewPadding: { paddingVertical: 15 }
+});
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
 
@@ -55,20 +59,15 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 
   const anyBonusNotActive = !props.bvActive || !getValue(props.bpdActiveBonus);
   return anyBonusNotActive ? (
-    <>
-      <View
-        style={[
-          IOStyles.horizontalContentPadding,
-          { paddingTop: 14, paddingBottom: 4 }
-        ]}
-      >
+    <View style={styles.container}>
+      <View style={[IOStyles.horizontalContentPadding]}>
         <H3 weight={"SemiBold"} color={"bluegreyDark"}>
           {I18n.t("wallet.featured")}
         </H3>
       </View>
       <ScrollView
         horizontal={true}
-        style={[IOStyles.horizontalContentPadding, { paddingVertical: 10 }]}
+        style={[IOStyles.horizontalContentPadding, styles.scrollViewPadding]}
         alwaysBounceHorizontal={false}
         showsHorizontalScrollIndicator={false}
       >
@@ -111,7 +110,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
           }
         })}
       </ScrollView>
-    </>
+    </View>
   ) : null;
 };
 

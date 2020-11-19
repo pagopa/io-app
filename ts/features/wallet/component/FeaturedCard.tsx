@@ -7,6 +7,7 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import I18n from "../../../i18n";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 
 type Props = {
   title: string;
@@ -15,18 +16,15 @@ type Props = {
   isNew: boolean;
 };
 
-const CARD_WIDTH = 158;
-
-const rightCardMargin =
-  Dimensions.get("screen").width - 2 * 158 - 2 * customVariables.contentPadding;
+const CARD_WIDTH = widthPercentageToDP("42.13%");
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: customVariables.contentPadding / 2,
     paddingVertical: 14,
+    marginBottom: 10,
     borderRadius: 8,
     width: CARD_WIDTH,
-    height: 102,
     backgroundColor: "white",
     shadowColor: "#00274e",
     shadowOffset: {
@@ -36,7 +34,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
     elevation: 2,
-    marginRight: rightCardMargin
+    marginRight: widthPercentageToDP("2.93%")
   },
   row: {
     flexDirection: "row",
@@ -50,7 +48,9 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     resizeMode: "contain"
-  }
+  },
+  badgeContainer: { height: 18, backgroundColor: IOColors.blue },
+  badgeText: { fontSize: 12, lineHeight: 18 }
 });
 
 const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
@@ -68,8 +68,8 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
         )
       )}
       {props.isNew && (
-        <Badge style={{ height: 18, backgroundColor: IOColors.blue }}>
-          <Text style={{ fontSize: 12, lineHeight: 18 }} semibold={true}>
+        <Badge style={styles.badgeContainer}>
+          <Text style={styles.badgeText} semibold={true}>
             {I18n.t("wallet.methods.newCome")}
           </Text>
         </Badge>
