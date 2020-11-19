@@ -1,6 +1,6 @@
 import { Badge, View, Text } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { H3 } from "../../../components/core/typography/H3";
@@ -12,7 +12,7 @@ import I18n from "../../../i18n";
 type Props = {
   title: string;
   onPress?: () => void;
-  image?: number;
+  image?: ImageSourcePropType;
   isNew: boolean;
 };
 
