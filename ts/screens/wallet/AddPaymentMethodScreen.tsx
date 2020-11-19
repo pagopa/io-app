@@ -44,6 +44,37 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.newPaymentMethod.contextualHelpContent"
 };
 
+const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
+  {
+    name: I18n.t("wallet.methods.card.name"),
+    description: I18n.t("wallet.methods.card.description"),
+    onPress: props.navigateToAddCreditCard,
+    implemented: true
+  },
+  {
+    name: I18n.t("wallet.methods.pagobancomat.name"),
+    description: I18n.t("wallet.methods.pagobancomat.description"),
+    onPress: props.startAddBancomat,
+    implemented: bpdEnabled
+  },
+  {
+    name: I18n.t("wallet.methods.postepay.name"),
+    description: I18n.t("wallet.methods.postepay.description"),
+    onPress: props.navigateToAddCreditCard,
+    implemented: true
+  },
+  {
+    name: I18n.t("wallet.methods.digital.name"),
+    description: I18n.t("wallet.methods.digital.description"),
+    implemented: false
+  },
+  {
+    name: I18n.t("wallet.methods.bonus.name"),
+    description: I18n.t("wallet.methods.bonus.description"),
+    implemented: false
+  }
+];
+
 /**
  * This is the screen presented to the user
  * when they request adding a new payment method.
@@ -73,37 +104,6 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
       : I18n.t("global.buttons.cancel")
   };
 
-  const paymentMethods: ReadonlyArray<IPaymentMethod> = [
-    {
-      name: I18n.t("wallet.methods.card.name"),
-      description: I18n.t("wallet.methods.card.description"),
-      onPress: props.navigateToAddCreditCard,
-      implemented: true
-    },
-    {
-      name: I18n.t("wallet.methods.pagobancomat.name"),
-      description: I18n.t("wallet.methods.pagobancomat.description"),
-      onPress: props.startAddBancomat,
-      implemented: bpdEnabled
-    },
-    {
-      name: I18n.t("wallet.methods.postepay.name"),
-      description: I18n.t("wallet.methods.postepay.description"),
-      onPress: props.navigateToAddCreditCard,
-      implemented: true
-    },
-    {
-      name: I18n.t("wallet.methods.digital.name"),
-      description: I18n.t("wallet.methods.digital.description"),
-      implemented: false
-    },
-    {
-      name: I18n.t("wallet.methods.bonus.name"),
-      description: I18n.t("wallet.methods.bonus.description"),
-      implemented: false
-    }
-  ];
-
   return (
     <BaseScreenComponent
       goBack={true}
@@ -127,7 +127,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
               <H1>{I18n.t("wallet.payWith.title")}</H1>
               <View spacer={true} />
               <PaymentMethodsList
-                paymentMethods={paymentMethods}
+                paymentMethods={getpaymentMethods(props)}
                 navigateToAddCreditCard={props.navigateToAddCreditCard}
               />
             </View>
@@ -136,7 +136,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
           <Content noPadded={true} style={IOStyles.horizontalContentPadding}>
             <PaymentMethodsList
               navigateToAddCreditCard={props.navigateToAddCreditCard}
-              paymentMethods={paymentMethods}
+              paymentMethods={getpaymentMethods(props)}
             />
           </Content>
         )}

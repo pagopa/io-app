@@ -49,45 +49,46 @@ const styles = StyleSheet.create({
   descriptionPadding: { paddingRight: 24 }
 });
 
-const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => {
-  const renderListItem = (itemInfo: ListRenderItemInfo<IPaymentMethod>) =>
-    itemInfo.item.implemented && (
-      <ListItem
-        onPress={itemInfo.item.onPress}
-        style={styles.container}
-        first={itemInfo.index === 0}
-        last={itemInfo.index === props.paymentMethods.length - 1}
-      >
-        <View style={styles.flexColumn}>
-          <View style={styles.row}>
-            <H3 color={"bluegreyDark"} weight={"SemiBold"}>
-              {itemInfo.item.name}
-            </H3>
-            <IconFont name={"io-right"} color={IOColors.blue} size={24} />
-          </View>
-          <H5
-            color={"bluegrey"}
-            weight={"Regular"}
-            style={styles.descriptionPadding}
-          >
-            {itemInfo.item.description}
-          </H5>
+const renderListItem = (
+  itemInfo: ListRenderItemInfo<IPaymentMethod>,
+  paymentMethodsLength: number
+) =>
+  itemInfo.item.implemented && (
+    <ListItem
+      onPress={itemInfo.item.onPress}
+      style={styles.container}
+      first={itemInfo.index === 0}
+      last={itemInfo.index === paymentMethodsLength}
+    >
+      <View style={styles.flexColumn}>
+        <View style={styles.row}>
+          <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+            {itemInfo.item.name}
+          </H3>
+          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
         </View>
-      </ListItem>
-    );
-
-  return (
-    <>
-      <View spacer={true} large={true} />
-      <FlatList
-        removeClippedSubviews={false}
-        data={props.paymentMethods}
-        keyExtractor={item => item.name}
-        ListFooterComponent={<View spacer />}
-        renderItem={renderListItem}
-      />
-    </>
+        <H5
+          color={"bluegrey"}
+          weight={"Regular"}
+          style={styles.descriptionPadding}
+        >
+          {itemInfo.item.description}
+        </H5>
+      </View>
+    </ListItem>
   );
-};
+
+const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
+  <>
+    <View spacer={true} large={true} />
+    <FlatList
+      removeClippedSubviews={false}
+      data={props.paymentMethods}
+      keyExtractor={item => item.name}
+      ListFooterComponent={<View spacer />}
+      renderItem={i => renderListItem(i, props.paymentMethods.length - 1)}
+    />
+  </>
+);
 
 export default withLightModalContext(PaymentMethodsList);
