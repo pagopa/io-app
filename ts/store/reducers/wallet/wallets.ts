@@ -10,7 +10,12 @@ import { Abi } from "../../../../definitions/pagopa/walletv2/Abi";
 import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
 import { getValue } from "../../../features/bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
-import { PatchedWalletV2, Wallet } from "../../../types/pagopa";
+import {
+  PatchedWalletV2,
+  PaymentMethodInfo,
+  Wallet,
+  WalletV2WithInfo
+} from "../../../types/pagopa";
 
 import { PotFromActions } from "../../../types/utils";
 import { isDefined } from "../../../utils/guards";
@@ -38,6 +43,8 @@ import {
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
+import { CardInfo } from "../../../../definitions/pagopa/walletv2/CardInfo";
+import { SatispayInfo } from "../../../../definitions/pagopa/walletv2/SatispayInfo";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -87,8 +94,8 @@ export const getFavoriteWallet = (state: GlobalState) =>
 
 /**
  * @deprecated Using API v2 this selector is deprecated
- * If you are searching for credit card or bancomat use {@link creditCardSelector}
- * - {@link pagoPaCreditCardSelector} {@link bancomatSelector} instead
+ * If you are searching for credit card or bancomat use {@link creditCardWalletV1Selector}
+ * - {@link pagoPaCreditCardWalletV1Selector} {@link bancomatSelector} instead
  */
 export const walletsSelector = createSelector(
   getWallets,
@@ -117,12 +124,51 @@ export const walletsSelector = createSelector(
 /**
  * Get a list of WalletV2 extracted from WalletV1
  */
-export const walletV2Selector = createSelector([walletsSelector], potWallet =>
-  pot.map(potWallet, wallets => wallets.map(w => w.v2).filter(isDefined))
+export const walletV2Selector = createSelector(
+  [walletsSelector],
+  (potWallet): pot.Pot<ReadonlyArray<PatchedWalletV2>, Error> =>
+    pot.map(potWallet, wallets => wallets.map(w => w.v2).filter(isDefined))
 );
 
-export type EnhancedBancomat = PatchedWalletV2 & {
+export type EnhancedBancomat = WalletV2WithInfo<CardInfo> & {
   abiInfo?: Abi;
+};
+
+export const isCard = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PaymentMethodInfo
+): paymentMethodInfo is CardInfo =>
+  (paymentMethodInfo && wallet.walletType === WalletTypeEnum.Bancomat) ||
+  wallet.walletType === WalletTypeEnum.Card;
+
+export const isSatispay = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PaymentMethodInfo
+): paymentMethodInfo is SatispayInfo =>
+  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Satispay;
+
+export const isBancomat = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PaymentMethodInfo
+): paymentMethodInfo is CardInfo =>
+  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Bancomat;
+
+export const isCreditCard = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PaymentMethodInfo
+): paymentMethodInfo is CardInfo =>
+  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Card;
+
+export const getWalletV2Haspan = (
+  wallet: PatchedWalletV2
+): string | undefined => {
+  if (isCard(wallet, wallet.info)) {
+    return wallet.info.hashPan;
+  }
+  if (isSatispay(wallet, wallet.info)) {
+    return wallet.info.uuid;
+  }
+  return undefined;
 };
 
 /**
@@ -133,15 +179,20 @@ export const bancomatSelector = createSelector(
   (walletv2Pot, abiRemote): pot.Pot<ReadonlyArray<EnhancedBancomat>, Error> =>
     pot.map(walletv2Pot, walletv2 =>
       walletv2
-        .filter(w => w.walletType === WalletTypeEnum.Bancomat)
+        .filter(w => isBancomat(w, w.info))
         .map(
           (bancomat): EnhancedBancomat => {
-            const maybeAbiCode = fromNullable(bancomat.info.issuerAbiCode);
+            const bancomatInfo = bancomat.info as CardInfo;
+            const maybeAbiCode = fromNullable(bancomatInfo.issuerAbiCode);
             const maybeAbis = fromNullable(getValue(abiRemote));
             const maybeAbiInfo = maybeAbiCode.chain(val =>
               maybeAbis.chain(a => fromNullable(a[val]))
             );
-            return { ...bancomat, abiInfo: maybeAbiInfo.toUndefined() };
+            return {
+              wallet: { ...bancomat },
+              info: bancomatInfo,
+              abiInfo: maybeAbiInfo.toUndefined()
+            };
           }
         )
     )
@@ -150,7 +201,7 @@ export const bancomatSelector = createSelector(
 /**
  * Get the list of credit cards using the info contained in v2 (Walletv2) to distinguish
  */
-export const creditCardSelector = createSelector(
+export const creditCardWalletV1Selector = createSelector(
   [walletsSelector],
   (
     potWallet: pot.Pot<ReadonlyArray<Wallet>, Error>
@@ -160,12 +211,27 @@ export const creditCardSelector = createSelector(
     )
 );
 
+export const creditCardSelector = createSelector(
+  [walletV2Selector],
+  (
+    wallets: pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>
+  ): ReadonlyArray<WalletV2WithInfo<CardInfo>> =>
+    pot.getOrElse(
+      pot.map(wallets, w =>
+        w
+          .filter(w => isCreditCard(w, w.info))
+          .map(w => ({ wallet: w, info: w.info }))
+      ),
+      []
+    )
+);
+
 /**
  * Get the list of credit cards usable as payment instrument in pagoPA
  * using the info contained in v2 (Walletv2) to distinguish
  */
-export const pagoPaCreditCardSelector = createSelector(
-  [creditCardSelector],
+export const pagoPaCreditCardWalletV1Selector = createSelector(
+  [creditCardWalletV1Selector],
   (
     potCreditCards: pot.Pot<ReadonlyArray<Wallet>, Error>
   ): pot.Pot<ReadonlyArray<Wallet>, Error> =>

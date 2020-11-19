@@ -9,6 +9,7 @@ import {
 } from "../types/pagopa";
 import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
 import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
+import { isCreditCard } from "../store/reducers/wallet/wallets";
 import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
@@ -33,6 +34,20 @@ export const convertWalletV2toWalletV1 = (
   walletV2: PatchedWalletV2
 ): Wallet => {
   const info = walletV2.info;
+  const cc = isCreditCard(walletV2, info)
+    ? {
+        id: undefined,
+        holder: info.holder ?? "",
+        pan: info.blurredNumber as CreditCardPan,
+        expireMonth: info.expireMonth as CreditCardExpirationMonth,
+        expireYear: info.expireYear as CreditCardExpirationYear,
+        brandLogo: info.brandLogo,
+        flag3dsVerified: true,
+        brand: info.brand,
+        onUs: true,
+        securityCode: undefined
+      }
+    : undefined;
   return {
     idWallet: walletV2.idWallet,
     type:
@@ -40,18 +55,7 @@ export const convertWalletV2toWalletV1 = (
         ? WalletTypeEnumV1.CREDIT_CARD
         : WalletTypeEnumV1.EXTERNAL_PS,
     favourite: walletV2.favourite,
-    creditCard: {
-      id: undefined,
-      holder: info.holder ?? "",
-      pan: info.blurredNumber as CreditCardPan,
-      expireMonth: info.expireMonth as CreditCardExpirationMonth,
-      expireYear: info.expireYear as CreditCardExpirationYear,
-      brandLogo: info.brandLogo,
-      flag3dsVerified: true,
-      brand: info.brand,
-      onUs: true,
-      securityCode: undefined
-    },
+    creditCard: cc,
     psp: undefined,
     idPsp: undefined,
     pspEditable: false,

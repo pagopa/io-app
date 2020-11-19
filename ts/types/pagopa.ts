@@ -30,6 +30,8 @@ import {
   CreditCardPan
 } from "../utils/input";
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
+import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
+import { BPayInfo } from "../../definitions/pagopa/walletv2/BPayInfo";
 
 /**
  * Union of all possible credit card types
@@ -108,7 +110,8 @@ export enum EnableableFunctionsTypeEnum {
 }
 
 // required attributes
-
+const PaymentMethodInfo = t.union([CardInfo, SatispayInfo, BPayInfo]);
+export type PaymentMethodInfo = t.TypeOf<typeof PaymentMethodInfo>;
 const WalletV2O = t.partial({
   updateDate: t.string,
   createDate: t.string,
@@ -125,7 +128,7 @@ const WalletV2R = t.interface({
     ),
     "array of enableableFunctions"
   ),
-  info: CardInfo,
+  info: PaymentMethodInfo,
   idWallet: t.Integer,
   pagoPA: t.boolean,
   walletType: enumType<WalletTypeEnum>(WalletTypeEnum, "walletType")
@@ -137,6 +140,11 @@ export const PatchedWalletV2 = t.intersection(
 );
 
 export type PatchedWalletV2 = t.TypeOf<typeof PatchedWalletV2>;
+
+export type WalletV2WithInfo<T extends CardInfo | SatispayInfo | BPayInfo> = {
+  wallet: PatchedWalletV2;
+  info: T;
+};
 
 /**
  * A refined Wallet

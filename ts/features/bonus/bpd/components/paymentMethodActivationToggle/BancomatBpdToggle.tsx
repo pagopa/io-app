@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import pagoBancomatImage from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import {
   EnableableFunctionsTypeEnum,
-  PatchedWalletV2
+  WalletV2WithInfo
 } from "../../../../../types/pagopa";
 import { HPan } from "../../store/actions/paymentMethods";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
@@ -15,10 +15,11 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { loadAbi } from "../../../../wallet/onboarding/bancomat/store/actions";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { abiSelector } from "../../../../wallet/onboarding/store/abi";
+import { CardInfo } from "../../../../../../definitions/pagopa/walletv2/CardInfo";
 import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
 
 type Props = {
-  card: PatchedWalletV2;
+  card: WalletV2WithInfo<CardInfo>;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -56,7 +57,7 @@ const BancomatBpdToggle: React.FunctionComponent<Props> = props => {
       hPan={props.card.info.hashPan as HPan}
       icon={pagoBancomatImage}
       hasBpdCapability={hasFunctionEnabled(
-        props.card,
+        props.card.wallet,
         EnableableFunctionsTypeEnum.BPD
       )}
       caption={abiDescription}

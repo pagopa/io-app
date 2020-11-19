@@ -16,9 +16,13 @@ import {
 } from "../../../../../../store/helpers/indexer";
 import { bancomat } from "../../../store/reducers/__mock__/bancomat";
 import I18n from "../../../../../../i18n";
-import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
+import {
+  EnableableFunctionsTypeEnum,
+  WalletV2WithInfo
+} from "../../../../../../types/pagopa";
 import { BpdPotPaymentMethodActivation } from "../../../store/reducers/details/paymentMethods";
 import { HPan } from "../../../store/actions/paymentMethods";
+import { CardInfo } from "../../../../../../../definitions/pagopa/walletv2/CardInfo";
 jest.mock("../../../../../../utils/hooks/useOnFocus", () => ({
   useNavigationContext: () => ({ isFocused: () => true }),
   useActionOnFocus: () => (action: () => void) => action()
@@ -28,6 +32,10 @@ jest.mock("@gorhom/bottom-sheet", () => ({
   useBottomSheetModal: () => ({ present: jest.fn(), dismiss: jest.fn() })
 }));
 
+const walletWithInfo = {
+  wallet: bancomat,
+  info: bancomat.info
+} as WalletV2WithInfo<CardInfo>;
 const fallbackBankName = I18n.t("wallet.methods.bancomat.name");
 describe("BancomatBpdToggle UI states tests", () => {
   const mockStore = configureMockStore();
@@ -35,7 +43,7 @@ describe("BancomatBpdToggle UI states tests", () => {
     const store = mockStore(mockAbiStore(remoteUndefined));
     const component = render(
       <Provider store={store}>
-        <BancomatBpdToggle card={bancomat} />
+        <BancomatBpdToggle card={walletWithInfo} />
       </Provider>
     );
     expect(component).not.toBeNull();
@@ -53,8 +61,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...bancomat,
-            info: { ...bancomat.info, issuerAbiCode: "12345" }
+            ...walletWithInfo,
+            info: { ...walletWithInfo.info, issuerAbiCode: "12345" }
           }}
         />
       </Provider>
@@ -74,8 +82,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...bancomat,
-            info: { ...bancomat.info, issuerAbiCode: "1234" }
+            ...walletWithInfo,
+            info: { ...walletWithInfo.info, issuerAbiCode: "1234" }
           }}
         />
       </Provider>
@@ -90,8 +98,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       mockAbiStore(
         remoteReady(getAbiIndexed([{ abi: "12345", name: "rightName" }])),
         {
-          [bancomat.info!.hashPan!]: pot.some({
-            hPan: bancomat.info!.hashPan! as HPan,
+          [walletWithInfo.info!.hashPan!]: pot.some({
+            hPan: walletWithInfo.info!.hashPan! as HPan,
             activationStatus: "active",
             activationDate: "2020-11-11"
           })
@@ -102,8 +110,11 @@ describe("BancomatBpdToggle UI states tests", () => {
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...bancomat,
-            enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+            ...walletWithInfo,
+            wallet: {
+              ...bancomat,
+              enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+            }
           }}
         />
       </Provider>
@@ -120,8 +131,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       mockAbiStore(
         remoteReady(getAbiIndexed([{ abi: "12345", name: "rightName" }])),
         {
-          [bancomat.info!.hashPan!]: pot.some({
-            hPan: bancomat.info!.hashPan! as HPan,
+          [walletWithInfo.info!.hashPan!]: pot.some({
+            hPan: walletWithInfo.info!.hashPan! as HPan,
             activationStatus: "inactive",
             activationDate: "2020-11-11"
           })
@@ -132,8 +143,11 @@ describe("BancomatBpdToggle UI states tests", () => {
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...bancomat,
-            enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+            ...walletWithInfo,
+            wallet: {
+              ...bancomat,
+              enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+            }
           }}
         />
       </Provider>
@@ -150,8 +164,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       mockAbiStore(
         remoteReady(getAbiIndexed([{ abi: "12345", name: "rightName" }])),
         {
-          [bancomat.info!.hashPan!]: pot.some({
-            hPan: bancomat.info!.hashPan! as HPan,
+          [walletWithInfo.info!.hashPan!]: pot.some({
+            hPan: walletWithInfo.info!.hashPan! as HPan,
             activationStatus: "active",
             activationDate: "2020-11-11"
           })
@@ -162,8 +176,11 @@ describe("BancomatBpdToggle UI states tests", () => {
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...bancomat,
-            enableableFunctions: [EnableableFunctionsTypeEnum.FA]
+            ...walletWithInfo,
+            wallet: {
+              ...bancomat,
+              enableableFunctions: [EnableableFunctionsTypeEnum.FA]
+            }
           }}
         />
       </Provider>
@@ -178,8 +195,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       mockAbiStore(
         remoteReady(getAbiIndexed([{ abi: "12345", name: "rightName" }])),
         {
-          [bancomat.info!.hashPan!]: pot.some({
-            hPan: bancomat.info!.hashPan! as HPan,
+          [walletWithInfo.info!.hashPan!]: pot.some({
+            hPan: walletWithInfo.info!.hashPan! as HPan,
             activationStatus: "notActivable"
           })
         }
@@ -189,8 +206,11 @@ describe("BancomatBpdToggle UI states tests", () => {
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...bancomat,
-            enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+            ...walletWithInfo,
+            wallet: {
+              ...bancomat,
+              enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+            }
           }}
         />
       </Provider>

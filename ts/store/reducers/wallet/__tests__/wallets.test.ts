@@ -8,8 +8,9 @@ import {
 import { toIndexed } from "../../../helpers/indexer";
 import {
   bancomatSelector,
-  creditCardSelector,
-  pagoPaCreditCardSelector
+  creditCardWalletV1Selector,
+  isCreditCard,
+  pagoPaCreditCardWalletV1Selector
 } from "../wallets";
 import { GlobalState } from "../../types";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
@@ -37,13 +38,19 @@ describe("walletV2 selectors", () => {
   });
 
   it("should return credit cards", () => {
-    const maybeCC = creditCardSelector(globalState);
+    const maybeCC = creditCardWalletV1Selector(globalState);
     expect(pot.isSome(maybeCC)).toBeTruthy();
     if (pot.isSome(maybeCC)) {
       expect(maybeCC.value.length).toEqual(1);
-      expect(maybeCC.value[0].v2!.info.hashPan).toEqual(
-        "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
-      );
+      const wallet = maybeCC.value[0].v2;
+      if (wallet) {
+        expect(isCreditCard(wallet, wallet.info)).toBeTruthy();
+        if (isCreditCard(wallet, wallet.info)) {
+          expect(wallet.info.hashPan).toEqual(
+            "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
+          );
+        }
+      }
     }
   });
 
@@ -63,13 +70,19 @@ describe("walletV2 selectors", () => {
   });
 
   it("should return credit card supporting pagoPa payments", () => {
-    const maybePagoPaCC = pagoPaCreditCardSelector(globalState);
+    const maybePagoPaCC = pagoPaCreditCardWalletV1Selector(globalState);
     expect(pot.isSome(maybePagoPaCC)).toBeTruthy();
     if (pot.isSome(maybePagoPaCC)) {
       expect(maybePagoPaCC.value.length).toEqual(1);
-      expect(maybePagoPaCC.value[0].v2!.info.hashPan).toEqual(
-        "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
-      );
+      const wallet = maybePagoPaCC.value[0].v2;
+      if (wallet) {
+        expect(isCreditCard(wallet, wallet.info)).toBeTruthy();
+        if (isCreditCard(wallet, wallet.info)) {
+          expect(wallet.info.hashPan).toEqual(
+            "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
+          );
+        }
+      }
     }
   });
 
@@ -90,7 +103,7 @@ describe("walletV2 selectors", () => {
         }
       }
     } as any) as GlobalState;
-    const maybePagoPaCC = pagoPaCreditCardSelector(globalState);
+    const maybePagoPaCC = pagoPaCreditCardWalletV1Selector(globalState);
     expect(pot.isSome(maybePagoPaCC)).toBeTruthy();
     if (pot.isSome(maybePagoPaCC)) {
       expect(maybePagoPaCC.value.length).toEqual(0);

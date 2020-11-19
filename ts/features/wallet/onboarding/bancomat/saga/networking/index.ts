@@ -11,6 +11,7 @@ import {
   loadAbi,
   searchUserPans
 } from "../../store/actions";
+import { isCreditCard } from "../../../../../../store/reducers/wallet/wallets";
 
 // load all bancomat abi
 export function* handleLoadAbi(
@@ -119,7 +120,10 @@ export function* handleAddPan(
         const wallets = addPansWithRefreshResult.value.value.data ?? [];
         // search for the added bancomat.
         const maybeWallet = fromNullable(
-          wallets.find(w => w.info.hashPan === action.payload.hpan)
+          wallets.find(
+            w =>
+              isCreditCard(w, w.info) && w.info.hashPan === action.payload.hpan
+          )
         );
         if (maybeWallet.isSome()) {
           yield put(

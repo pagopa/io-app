@@ -11,8 +11,16 @@ import {
 import I18n from "../../../../../../i18n";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { walletV2Selector } from "../../../../../../store/reducers/wallet/wallets";
-import { PatchedWalletV2 } from "../../../../../../types/pagopa";
+import {
+  getWalletV2Haspan,
+  isBancomat,
+  isCreditCard,
+  walletV2Selector
+} from "../../../../../../store/reducers/wallet/wallets";
+import {
+  PatchedWalletV2,
+  WalletV2WithInfo
+} from "../../../../../../types/pagopa";
 import { abiListSelector } from "../../../../../wallet/onboarding/store/abi";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
@@ -20,6 +28,7 @@ import { BpdAmount } from "../../actions/amount";
 import { BpdPaymentMethodActivation } from "../../actions/paymentMethods";
 import { BpdPeriod } from "../../actions/periods";
 import { BpdTransaction } from "../../actions/transactions";
+import { CardInfo } from "../../../../../../../definitions/pagopa/walletv2/CardInfo";
 import { bpdEnabledSelector } from "./activation";
 import { bpdAllAmountSelector } from "./amounts";
 import { bpdPaymentMethodActivationSelector } from "./paymentMethods";
@@ -121,7 +130,7 @@ const pickWalletFromHashpan = (
 ): Option<PatchedWalletV2> =>
   pot.getOrElse(
     pot.map(potWalletV2, walletV2 =>
-      fromNullable(walletV2.find(w => w.info.hashPan === hashPan))
+      fromNullable(walletV2.find(w => getWalletV2Haspan(w) === hashPan))
     ),
     none
   );
@@ -153,21 +162,20 @@ const getTitleFromWallet = (
   w2: PatchedWalletV2,
   abiList: ReadonlyArray<Abi>
 ) => {
-  switch (w2.walletType) {
-    case WalletTypeEnum.Card:
-      return getTitleFromCard(w2);
-    case WalletTypeEnum.Bancomat:
-      return getTitleFromBancomat(w2, abiList);
-    default:
-      return FOUR_UNICODE_CIRCLES;
+  if (isCreditCard(w2, w2.info)) {
+    return getTitleFromCard({ wallet: w2, info: w2.info });
   }
+  if (isBancomat(w2, w2.info)) {
+    return getTitleFromBancomat({ wallet: w2, info: w2.info }, abiList);
+  }
+  return FOUR_UNICODE_CIRCLES;
 };
 
-const getTitleFromCard = (w2: PatchedWalletV2) =>
+const getTitleFromCard = (w2: WalletV2WithInfo<CardInfo>) =>
   `${FOUR_UNICODE_CIRCLES} ${w2.info.blurredNumber}`;
 
 const getTitleFromBancomat = (
-  w2: PatchedWalletV2,
+  w2: WalletV2WithInfo<CardInfo>,
   abiList: ReadonlyArray<Abi>
 ) =>
   fromNullable(abiList.find(abi => abi.abi === w2.info.issuerAbiCode))
@@ -222,7 +230,7 @@ export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
     pot.getOrElse(
       pot.map(walletV2Pot, walletv2 =>
         walletv2.some(w =>
-          fromNullable(w.info.hashPan)
+          fromNullable(getWalletV2Haspan(w))
             .map(hpan => bpdActivations[hpan])
             .map(
               potActivation =>
@@ -250,7 +258,7 @@ export const walletV2WithActivationStatusSelector = createSelector(
     pot.map(walletV2Pot, walletv2 =>
       walletv2.map(pm => {
         // try to extract the activation status to enhance the wallet
-        const activationStatus = fromNullable(pm.info.hashPan)
+        const activationStatus = fromNullable(getWalletV2Haspan(pm))
           .chain(hp => fromNullable(bpdActivations[hp]))
           .map(paymentMethodActivation =>
             pot.getOrElse(
