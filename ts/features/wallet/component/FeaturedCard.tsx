@@ -1,13 +1,13 @@
 import { Badge, View, Text } from "native-base";
 import * as React from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import I18n from "../../../i18n";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 
 type Props = {
   title: string;
@@ -16,15 +16,13 @@ type Props = {
   isNew: boolean;
 };
 
-const CARD_WIDTH = widthPercentageToDP("42.13%");
-
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: customVariables.contentPadding / 2,
     paddingVertical: 14,
     marginBottom: 10,
     borderRadius: 8,
-    width: CARD_WIDTH,
+    width: widthPercentageToDP("42.13%"),
     backgroundColor: "white",
     shadowColor: "#00274e",
     shadowOffset: {
