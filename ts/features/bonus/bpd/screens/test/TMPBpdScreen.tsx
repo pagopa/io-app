@@ -13,7 +13,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { walletV2Selector } from "../../../../../store/reducers/wallet/wallets";
+import { paymentMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
 import { PatchedWalletV2 } from "../../../../../types/pagopa";
 import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { PaymentMethodRawList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodRawList";
@@ -129,7 +129,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   bpdActive: bpdEnabledSelector(state),
-  potWallets: walletV2Selector(state)
+  potWallets: paymentMethodsSelector(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TmpBpdScreen);

@@ -11,7 +11,8 @@ import {
   loadAbi,
   searchUserPans
 } from "../../store/actions";
-import { isCreditCard } from "../../../../../../store/reducers/wallet/wallets";
+import { getPaymentMethodHash } from "../../../../../../store/reducers/wallet/wallets";
+import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
 
 // load all bancomat abi
 export function* handleLoadAbi(
@@ -122,7 +123,9 @@ export function* handleAddPan(
         const maybeWallet = fromNullable(
           wallets.find(
             w =>
-              isCreditCard(w, w.info) && w.info.hashPan === action.payload.hpan
+              getPaymentMethodHash(
+                convertWalletV2toWalletV1(w).paymentMethod
+              ) === action.payload.hpan
           )
         );
         if (maybeWallet.isSome()) {

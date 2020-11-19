@@ -4,12 +4,16 @@
  */
 import {
   EnableableFunctionsTypeEnum,
+  PatchedPaymentMethodInfo,
   PatchedWalletV2,
+  PaymentMethod,
+  PaymentMethodInfo,
   Wallet
 } from "../types/pagopa";
 import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
 import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
-import { isCreditCard } from "../store/reducers/wallet/wallets";
+import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
+import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
@@ -22,9 +26,50 @@ import {
  * @param walletFunction
  */
 export const hasFunctionEnabled = (
-  wallet: PatchedWalletV2,
+  paymentMethod: PaymentMethod,
   walletFunction: EnableableFunctionsTypeEnum
-) => wallet.enableableFunctions.includes(walletFunction);
+) => paymentMethod.enableableFunctions.includes(walletFunction);
+
+const isBPay = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PatchedPaymentMethodInfo
+): paymentMethodInfo is CardInfo =>
+  (paymentMethodInfo && wallet.walletType === WalletTypeEnum.BPay) ||
+  wallet.walletType === WalletTypeEnum.BPay;
+
+const isSatispay = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PatchedPaymentMethodInfo
+): paymentMethodInfo is SatispayInfo =>
+  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Satispay;
+
+const isBancomat = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PatchedPaymentMethodInfo
+): paymentMethodInfo is CardInfo =>
+  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Bancomat;
+
+const isCreditCard = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PatchedPaymentMethodInfo
+): paymentMethodInfo is CardInfo =>
+  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Card;
+
+const getPaymentMethodInfo = (wallet: PatchedWalletV2): PaymentMethodInfo => {
+  if (isCreditCard(wallet, wallet.info)) {
+    return { creditCard: wallet.info, type: WalletTypeEnum.Card };
+  }
+  if (isBancomat(wallet, wallet.info)) {
+    return { bancomat: wallet.info, type: WalletTypeEnum.Bancomat };
+  }
+  if (isSatispay(wallet, wallet.info)) {
+    return { satispay: wallet.info, type: WalletTypeEnum.Satispay };
+  }
+  if (isBPay(wallet, wallet.info)) {
+    return { bPay: wallet.info, type: WalletTypeEnum.BPay };
+  }
+  return { type: "UNKNOWN" };
+};
 
 /**
  * inject walletV2 into walletV1 structure
@@ -48,6 +93,7 @@ export const convertWalletV2toWalletV1 = (
         securityCode: undefined
       }
     : undefined;
+
   return {
     idWallet: walletV2.idWallet,
     type:
@@ -63,6 +109,9 @@ export const convertWalletV2toWalletV1 = (
     isPspToIgnore: false,
     registeredNexi: false,
     saved: true,
-    v2: walletV2
+    paymentMethod: {
+      ...walletV2,
+      info: getPaymentMethodInfo(walletV2)
+    }
   };
 };

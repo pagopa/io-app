@@ -11,10 +11,15 @@ import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2
 import { getValue } from "../../../features/bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
 import {
-  PatchedWalletV2,
-  PaymentMethodInfo,
   Wallet,
-  WalletV2WithInfo
+  PaymentMethod,
+  isBancomatInfo,
+  isCreditCardInfo,
+  isSatispayInfo,
+  isBpayInfo,
+  isBancomat,
+  CreditCardPaymentMethod,
+  isCreditCard
 } from "../../../types/pagopa";
 
 import { PotFromActions } from "../../../types/utils";
@@ -43,8 +48,6 @@ import {
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
-import { CardInfo } from "../../../../definitions/pagopa/walletv2/CardInfo";
-import { SatispayInfo } from "../../../../definitions/pagopa/walletv2/SatispayInfo";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -124,49 +127,32 @@ export const walletsSelector = createSelector(
 /**
  * Get a list of WalletV2 extracted from WalletV1
  */
-export const walletV2Selector = createSelector(
+export const paymentMethodsSelector = createSelector(
   [walletsSelector],
-  (potWallet): pot.Pot<ReadonlyArray<PatchedWalletV2>, Error> =>
-    pot.map(potWallet, wallets => wallets.map(w => w.v2).filter(isDefined))
+  (potWallet): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
+    pot.map(potWallet, wallets =>
+      wallets.map(w => w.paymentMethod).filter(isDefined)
+    )
 );
 
-export type EnhancedBancomat = WalletV2WithInfo<CardInfo> & {
+export type EnhancedBancomat = PaymentMethod & {
   abiInfo?: Abi;
 };
 
-export const isCard = (
-  wallet: PatchedWalletV2,
-  paymentMethodInfo: PaymentMethodInfo
-): paymentMethodInfo is CardInfo =>
-  (paymentMethodInfo && wallet.walletType === WalletTypeEnum.Bancomat) ||
-  wallet.walletType === WalletTypeEnum.Card;
-
-export const isSatispay = (
-  wallet: PatchedWalletV2,
-  paymentMethodInfo: PaymentMethodInfo
-): paymentMethodInfo is SatispayInfo =>
-  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Satispay;
-
-export const isBancomat = (
-  wallet: PatchedWalletV2,
-  paymentMethodInfo: PaymentMethodInfo
-): paymentMethodInfo is CardInfo =>
-  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Bancomat;
-
-export const isCreditCard = (
-  wallet: PatchedWalletV2,
-  paymentMethodInfo: PaymentMethodInfo
-): paymentMethodInfo is CardInfo =>
-  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Card;
-
-export const getWalletV2Hashpan = (
-  wallet: PatchedWalletV2
+export const getPaymentMethodHash = (
+  paymentMethod: PaymentMethod
 ): string | undefined => {
-  if (isCard(wallet, wallet.info)) {
-    return wallet.info.hashPan;
+  if (isBancomatInfo(paymentMethod.info)) {
+    return paymentMethod.info.bancomat.hashPan;
   }
-  if (isSatispay(wallet, wallet.info)) {
-    return wallet.info.uuid;
+  if (isCreditCardInfo(paymentMethod.info)) {
+    return paymentMethod.info.creditCard.hashPan;
+  }
+  if (isSatispayInfo(paymentMethod.info)) {
+    return paymentMethod.info.satispay.uuid;
+  }
+  if (isBpayInfo(paymentMethod.info)) {
+    return paymentMethod.info.bPay.uidHash;
   }
   return undefined;
 };
@@ -175,26 +161,28 @@ export const getWalletV2Hashpan = (
  * Return a bancomat list enhanced with the additional abi information
  */
 export const bancomatSelector = createSelector(
-  [walletV2Selector, abiSelector],
-  (walletv2Pot, abiRemote): pot.Pot<ReadonlyArray<EnhancedBancomat>, Error> =>
-    pot.map(walletv2Pot, walletv2 =>
-      walletv2
-        .filter(w => isBancomat(w, w.info))
-        .map(
-          (bancomat): EnhancedBancomat => {
-            const bancomatInfo = bancomat.info as CardInfo;
-            const maybeAbiCode = fromNullable(bancomatInfo.issuerAbiCode);
-            const maybeAbis = fromNullable(getValue(abiRemote));
-            const maybeAbiInfo = maybeAbiCode.chain(val =>
-              maybeAbis.chain(a => fromNullable(a[val]))
-            );
-            return {
-              wallet: { ...bancomat },
-              info: bancomatInfo,
-              abiInfo: maybeAbiInfo.toUndefined()
-            };
-          }
-        )
+  [paymentMethodsSelector, abiSelector],
+  (
+    paymentMethodPot,
+    abiRemote
+  ): pot.Pot<ReadonlyArray<EnhancedBancomat>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod =>
+      paymentMethod.filter(isBancomat).map(
+        (bancomat): EnhancedBancomat => {
+          const bancomatInfo = bancomat.info;
+          const maybeAbiCode = fromNullable(
+            bancomatInfo.bancomat.issuerAbiCode
+          );
+          const maybeAbis = fromNullable(getValue(abiRemote));
+          const maybeAbiInfo = maybeAbiCode.chain(val =>
+            maybeAbis.chain(a => fromNullable(a[val]))
+          );
+          return {
+            ...bancomat,
+            abiInfo: maybeAbiInfo.toUndefined()
+          };
+        }
+      )
     )
 );
 
@@ -207,21 +195,17 @@ export const creditCardWalletV1Selector = createSelector(
     potWallet: pot.Pot<ReadonlyArray<Wallet>, Error>
   ): pot.Pot<ReadonlyArray<Wallet>, Error> =>
     pot.map(potWallet, wallets =>
-      wallets.filter(w => w.v2?.walletType === WalletTypeEnum.Card)
+      wallets.filter(w => w.paymentMethod.walletType === WalletTypeEnum.Card)
     )
 );
 
 export const creditCardSelector = createSelector(
-  [walletV2Selector],
+  [paymentMethodsSelector],
   (
-    wallets: pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>
-  ): ReadonlyArray<WalletV2WithInfo<CardInfo>> =>
+    paymentMethods: pot.Pot<ReadonlyArray<PaymentMethod>, Error>
+  ): ReadonlyArray<CreditCardPaymentMethod> =>
     pot.getOrElse(
-      pot.map(wallets, w =>
-        w
-          .filter(w => isCreditCard(w, w.info))
-          .map(w => ({ wallet: w, info: w.info }))
-      ),
+      pot.map(paymentMethods, w => w.filter(isCreditCard)),
       []
     )
 );
@@ -236,7 +220,7 @@ export const pagoPaCreditCardWalletV1Selector = createSelector(
     potCreditCards: pot.Pot<ReadonlyArray<Wallet>, Error>
   ): pot.Pot<ReadonlyArray<Wallet>, Error> =>
     pot.map(potCreditCards, wallets =>
-      wallets.filter(w => w.v2?.pagoPA === true)
+      wallets.filter(w => w.paymentMethod?.pagoPA === true)
     )
 );
 

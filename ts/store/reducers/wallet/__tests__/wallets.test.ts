@@ -9,8 +9,8 @@ import { toIndexed } from "../../../helpers/indexer";
 import {
   bancomatSelector,
   creditCardWalletV1Selector,
-  getWalletV2Hashpan,
-  isCreditCard,
+  getPaymentMethodHash,
+  isCreditCardInfo,
   pagoPaCreditCardWalletV1Selector
 } from "../wallets";
 import { GlobalState } from "../../types";
@@ -46,7 +46,7 @@ describe("walletV2 selectors", () => {
       const wallet = maybeCC.value[0].v2;
       if (wallet) {
         expect(isCreditCard(wallet, wallet.info)).toBeTruthy();
-        expect(getWalletV2Hashpan(wallet)).toEqual(
+        expect(getPaymentMethodHash(wallet)).toEqual(
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
         );
       }
@@ -64,7 +64,7 @@ describe("walletV2 selectors", () => {
       expect(maybeBancomat.value.length).toEqual(2);
       maybeBancomat.value.forEach(w => {
         expect(
-          hpans.find(h => h === getWalletV2Hashpan(w.wallet))
+          hpans.find(h => h === getPaymentMethodHash(w.wallet))
         ).toBeDefined();
       });
     }
@@ -78,7 +78,7 @@ describe("walletV2 selectors", () => {
       const wallet = maybePagoPaCC.value[0].v2;
       if (wallet) {
         expect(isCreditCard(wallet, wallet.info)).toBeTruthy();
-        expect(getWalletV2Hashpan(wallet)).toEqual(
+        expect(getPaymentMethodHash(wallet)).toEqual(
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
         );
       }

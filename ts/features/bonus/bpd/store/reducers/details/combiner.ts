@@ -12,10 +12,10 @@ import I18n from "../../../../../../i18n";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
-  getWalletV2Hashpan,
-  isBancomat,
-  isCreditCard,
-  walletV2Selector
+  getPaymentMethodHash,
+  isBancomatInfo,
+  isCreditCardInfo,
+  paymentMethodsSelector
 } from "../../../../../../store/reducers/wallet/wallets";
 import {
   PatchedWalletV2,
@@ -130,7 +130,7 @@ const pickWalletFromHashpan = (
 ): Option<PatchedWalletV2> =>
   pot.getOrElse(
     pot.map(potWalletV2, walletV2 =>
-      fromNullable(walletV2.find(w => getWalletV2Hashpan(w) === hashPan))
+      fromNullable(walletV2.find(w => getPaymentMethodHash(w) === hashPan))
     ),
     none
   );
@@ -198,7 +198,7 @@ export const bpdDisplayTransactionsSelector = createSelector<
 >(
   [
     bpdTransactionsForSelectedPeriod,
-    walletV2Selector,
+    paymentMethodsSelector,
     abiListSelector,
     bpdSelectedPeriodSelector
   ],
@@ -225,12 +225,12 @@ export const bpdDisplayTransactionsSelector = createSelector<
  * There is at least one payment method with bpd enabled?
  */
 export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
-  [walletV2Selector, bpdPaymentMethodActivationSelector],
+  [paymentMethodsSelector, bpdPaymentMethodActivationSelector],
   (walletV2Pot, bpdActivations): boolean =>
     pot.getOrElse(
       pot.map(walletV2Pot, walletv2 =>
         walletv2.some(w =>
-          fromNullable(getWalletV2Hashpan(w))
+          fromNullable(getPaymentMethodHash(w))
             .map(hpan => bpdActivations[hpan])
             .map(
               potActivation =>
@@ -253,12 +253,12 @@ export type WalletV2WithActivation = PatchedWalletV2 &
  * in order to group the elements "notActivable"
  */
 export const walletV2WithActivationStatusSelector = createSelector(
-  [walletV2Selector, bpdPaymentMethodActivationSelector],
+  [paymentMethodsSelector, bpdPaymentMethodActivationSelector],
   (walletV2Pot, bpdActivations) =>
     pot.map(walletV2Pot, walletv2 =>
       walletv2.map(pm => {
         // try to extract the activation status to enhance the wallet
-        const activationStatus = fromNullable(getWalletV2Hashpan(pm))
+        const activationStatus = fromNullable(getPaymentMethodHash(pm))
           .chain(hp => fromNullable(bpdActivations[hp]))
           .map(paymentMethodActivation =>
             pot.getOrElse(
