@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0-rc.0](https://github.com/pagopa/io-app/compare/1.9.0-rc.5...1.10.0-rc.0) (2020-11-19)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#175269056](https://www.pivotaltracker.com/story/show/175269056),[#175667950](https://www.pivotaltracker.com/story/show/175667950)] Implements transactions list organized by date ([#2383](https://github.com/pagopa/io-app/issues/2383)) ([0dca10f](https://github.com/pagopa/io-app/commit/0dca10f2b868cee9a2f34fb8366609ffac07f8fa)), closes [#175269135](https://www.pivotaltracker.com/story/show/175269135) [#175269135](https://www.pivotaltracker.com/story/show/175269135) [#175269135](https://www.pivotaltracker.com/story/show/175269135) [#175269135](https://www.pivotaltracker.com/story/show/175269135) [#175269135](https://www.pivotaltracker.com/story/show/175269135) [#175269135](https://www.pivotaltracker.com/story/show/175269135) [#175269135](https://www.pivotaltracker.com/story/show/175269135)
+* **Bonus Pagamenti Digitali:** [[#175271334](https://www.pivotaltracker.com/story/show/175271334),[#175271269](https://www.pivotaltracker.com/story/show/175271269),[#175272149](https://www.pivotaltracker.com/story/show/175272149)] Payment method not activable, other channels, and how it works bottomsheet ([#2373](https://github.com/pagopa/io-app/issues/2373)) ([4882289](https://github.com/pagopa/io-app/commit/48822895e9075f2d0b2e0f792fdd7dd3a94e423b)), closes [#175269179](https://www.pivotaltracker.com/story/show/175269179) [#175269179](https://www.pivotaltracker.com/story/show/175269179) [#175269179](https://www.pivotaltracker.com/story/show/175269179) [#175266668](https://www.pivotaltracker.com/story/show/175266668) [#175266668](https://www.pivotaltracker.com/story/show/175266668) [#175266668](https://www.pivotaltracker.com/story/show/175266668) [#175266668](https://www.pivotaltracker.com/story/show/175266668) [#175488300](https://www.pivotaltracker.com/story/show/175488300) [#175488300](https://www.pivotaltracker.com/story/show/175488300) [#175488300](https://www.pivotaltracker.com/story/show/175488300) [#175269179](https://www.pivotaltracker.com/story/show/175269179) [#175488300](https://www.pivotaltracker.com/story/show/175488300) [#175488300](https://www.pivotaltracker.com/story/show/175488300) [#175265955](https://www.pivotaltracker.com/story/show/175265955) [#175265955](https://www.pivotaltracker.com/story/show/175265955) [#175265955](https://www.pivotaltracker.com/story/show/175265955) [#175420435](https://www.pivotaltracker.com/story/show/175420435) [#175488300](https://www.pivotaltracker.com/story/show/175488300) [#175271100](https://www.pivotaltracker.com/story/show/175271100) [#175271100](https://www.pivotaltracker.com/story/show/175271100) [#175271100](https://www.pivotaltracker.com/story/show/175271100) [#175265955](https://www.pivotaltracker.com/story/show/175265955)
+* **Bonus Pagamenti Digitali:** [[#175579023](https://www.pivotaltracker.com/story/show/175579023)] FeaturedCards carousel in wallet home screen ([#2398](https://github.com/pagopa/io-app/issues/2398)) ([5b36805](https://github.com/pagopa/io-app/commit/5b36805dbc6adcfe1be0794bb242b1747dd51fd8))
+* **Bonus Pagamenti Digitali:** [[#175683744](https://www.pivotaltracker.com/story/show/175683744)] UI Rework for Add payment methods list screen ([#2392](https://github.com/pagopa/io-app/issues/2392)) ([cb4f4bb](https://github.com/pagopa/io-app/commit/cb4f4bb6f5745c97f88c9b91ef6aa9e1db3cd288))
+* **Bonus Pagamenti Digitali:** [[#175683801](https://www.pivotaltracker.com/story/show/175683801)] When credit card has been added, join BPD or enroll the new method to BPD ([#2399](https://github.com/pagopa/io-app/issues/2399)) ([86fb44c](https://github.com/pagopa/io-app/commit/86fb44c05378966e9879c828f463cedf663c22df))
+* **Bonus Pagamenti Digitali:** [[#175717926](https://www.pivotaltracker.com/story/show/175717926),[#175717778](https://www.pivotaltracker.com/story/show/175717778),[#175717794](https://www.pivotaltracker.com/story/show/175717794)] Don't save rejected iban as valid iban, wrong "skip" CTA when edit iban from detail screen, added toast to confirm an IBAN insertion ([#2397](https://github.com/pagopa/io-app/issues/2397)) ([e5a331b](https://github.com/pagopa/io-app/commit/e5a331b1fda0622386c31d66035fce984cf491c3))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#175700724](https://www.pivotaltracker.com/story/show/175700724)] Fixes wrong format of bpd amount ([#2376](https://github.com/pagopa/io-app/issues/2376)) ([1d6183b](https://github.com/pagopa/io-app/commit/1d6183b6c087d9b3c34a31483be4b3ce508af662))
+* **instabug-report:** remove duplicated append tag ([0192451](https://github.com/pagopa/io-app/commit/0192451e81c97d3ea095950aa1fcfc837f6ccf2b))
+* **instabug-report:** remove useless import ([47b6830](https://github.com/pagopa/io-app/commit/47b6830d52d99354205c038fb22b4538d3bd5866))
+
+
+### Chores
+
+* [[#175420010](https://www.pivotaltracker.com/story/show/175420010)] Added in Circle CI a job to test if the CIE button exists ([#2375](https://github.com/pagopa/io-app/issues/2375)) ([a3dd9d3](https://github.com/pagopa/io-app/commit/a3dd9d3776203c227f8ada0603b498cac005f7fb))
+* [[#175612963](https://www.pivotaltracker.com/story/show/175612963)] Refactor MessageDueDate component ([#2382](https://github.com/pagopa/io-app/issues/2382)) ([abee48e](https://github.com/pagopa/io-app/commit/abee48e77e38a832ba70b5dce2e1dc3251c113e4))
+* **Bonus Pagamenti Digitali:** [[#175785820](https://www.pivotaltracker.com/story/show/175785820)] Restore missing content [#2404](https://github.com/pagopa/io-app/issues/2404) ([f6ec61d](https://github.com/pagopa/io-app/commit/f6ec61d6b035f257f94b2edbed0485a9f2689d22))
+* remove jest workers limit (using default) ([dc6c448](https://github.com/pagopa/io-app/commit/dc6c448225028a78d44c2bf246b789064804d43d))
+
 ## [1.9.0-rc.5](https://github.com/pagopa/io-app/compare/1.9.0-rc.4...1.9.0-rc.5) (2020-11-16)
 
 
