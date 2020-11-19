@@ -957,7 +957,7 @@ wallet:
     contextualHelpTitle: Come puoi pagare un avviso
     contextualHelpContent: !include wallet/wallet_qrcode.md
   whyAFee:
-    title: Perché devo pagare le commissioni?
+    title: Perché i costi di transazione?
     text: !include wallet/why_a_fee.md
   errors:
     PAYMENT_DUPLICATED: Questo avviso è già stato pagato! ;-)
