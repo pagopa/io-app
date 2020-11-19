@@ -23,6 +23,8 @@ import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import { navigateToBonusRequestInformation } from "../../bonus/bonusVacanze/navigation/action";
 import { availableBonusTypesSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import bonusVacanzeLogo from "../../../../img/bonus/bonusVacanze/logo_bonusvacanze_blue.png";
+import cashbackLogo from "../../../../img/bonus/bpd/logo_cashback_blue.png";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = {
@@ -30,19 +32,25 @@ type Props = {
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+type BonusUtils = {
+  logo?: typeof bonusVacanzeLogo | typeof cashbackLogo;
+  handler: (bonus: BonusAvailable) => void;
+};
+
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
-  const handlersMap: Map<number, (bonus: BonusAvailable) => void> = new Map<
-    number,
-    (bonus: BonusAvailable) => void
-  >([]);
+  const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
 
   if (bpdEnabled) {
-    handlersMap.set(ID_BPD_TYPE, _ => props.startBpdOnboarding());
+    bonusMap.set(ID_BPD_TYPE, {
+      logo: cashbackLogo,
+      handler: _ => props.startBpdOnboarding()
+    });
   }
   if (bonusVacanzeEnabled) {
-    handlersMap.set(ID_BONUS_VACANZE_TYPE, bonus =>
-      props.navigateToBonusRequest(bonus)
-    );
+    bonusMap.set(ID_BONUS_VACANZE_TYPE, {
+      logo: bonusVacanzeLogo,
+      handler: bonus => props.navigateToBonusRequest(bonus)
+    });
   }
 
   const anyBonusNotActive = !props.bvActive || !getValue(props.bpdActiveBonus);
@@ -65,8 +73,13 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
         showsHorizontalScrollIndicator={false}
       >
         {reverse([...props.availableBonusesList]).map((b, i) => {
-          const handler = fromNullable(handlersMap.get(b.id_type)).getOrElse(
-            () => constUndefined
+          const handler = fromNullable(bonusMap.get(b.id_type)).fold(
+            () => constUndefined,
+            bu => bu.handler
+          );
+          const logo = fromNullable(bonusMap.get(b.id_type)).fold(
+            undefined,
+            bu => bu.logo
           );
           switch (b.id_type) {
             case ID_BONUS_VACANZE_TYPE:
@@ -75,7 +88,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={b[getLocalePrimaryWithFallback()].name}
-                    image={b.cover}
+                    image={logo}
                     isNew={false}
                     onPress={() => handler(b)}
                   />
@@ -87,7 +100,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={I18n.t("bonus.bpd.name")}
-                    image={b.cover}
+                    image={logo}
                     isNew={true}
                     onPress={() => handler(b)}
                   />
