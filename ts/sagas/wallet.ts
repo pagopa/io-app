@@ -96,6 +96,7 @@ import { GlobalState } from "../store/reducers/types";
 
 import {
   EnableableFunctionsTypeEnum,
+  isCreditCard,
   NullableWallet,
   PaymentManagerToken,
   PayRequest
@@ -313,19 +314,22 @@ function* startOrResumeAddCreditCardSaga(
           bpdEnabledSelector
         );
         // check if the new method is compliant with bpd
-        if (bpdEnabled && maybeAddedWallet.v2) {
+        if (bpdEnabled) {
           const hasBpdFeature = hasFunctionEnabled(
-            maybeAddedWallet.v2,
+            maybeAddedWallet.paymentMethod,
             EnableableFunctionsTypeEnum.BPD
           );
           // if the method is bpd compliant check if we have info about bpd activation
           if (hasBpdFeature && isReady(bpdEnroll)) {
             // if bdp is active navigate to a screen where it asked to enroll that method in bpd
             // otherwise navigate to a screen where is asked to join bpd
-            if (bpdEnroll.value) {
+            if (
+              bpdEnroll.value &&
+              isCreditCard(maybeAddedWallet.paymentMethod)
+            ) {
               yield put(
                 navigateToActivateBpdOnNewCreditCard({
-                  creditCards: [maybeAddedWallet.v2]
+                  creditCards: [maybeAddedWallet.paymentMethod]
                 })
               );
             } else {

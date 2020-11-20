@@ -58,7 +58,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  * @constructor
  */
 const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
-  const bancomat = props.navigation.getParam("bancomat");
+  const bancomat: EnhancedBancomat = props.navigation.getParam("bancomat");
   const { present } = useRemovePaymentMethodBottomSheet({
     icon: pagoBancomatImage,
     caption: bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")
@@ -79,7 +79,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       }
     >
       <View style={styles.cardContainer}>
-        <BancomatCard bancomat={bancomat} />
+        <BancomatCard enhancedBancomat={bancomat} />
       </View>
       <View spacer={true} extralarge={true} />
       <View spacer={true} />

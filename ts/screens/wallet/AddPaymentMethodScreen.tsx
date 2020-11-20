@@ -55,7 +55,7 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
     name: I18n.t("wallet.methods.pagobancomat.name"),
     description: I18n.t("wallet.methods.pagobancomat.description"),
     onPress: props.startAddBancomat,
-    implemented: bpdEnabled
+    implemented: bpdEnabled && props.navigation.getParam("inPayment").isNone()
   },
   {
     name: I18n.t("wallet.methods.postepay.name"),

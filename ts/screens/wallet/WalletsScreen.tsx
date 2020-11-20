@@ -36,9 +36,9 @@ import {
 import { navSelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  creditCardSelector,
+  creditCardWalletV1Selector,
   getFavoriteWalletId,
-  pagoPaCreditCardSelector
+  pagoPaCreditCardWalletV1Selector
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
@@ -156,9 +156,9 @@ const WalletsScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => {
-  const potWallets = pagoPaCreditCardSelector(state);
+  const potWallets = pagoPaCreditCardWalletV1Selector(state);
   return {
-    wallets: pot.getOrElse(creditCardSelector(state), []),
+    wallets: pot.getOrElse(creditCardWalletV1Selector(state), []),
     isLoading: pot.isLoading(potWallets),
     favoriteWallet: getFavoriteWalletId(state),
     nav: navSelector(state)
