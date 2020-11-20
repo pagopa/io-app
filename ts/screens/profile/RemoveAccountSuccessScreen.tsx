@@ -3,6 +3,7 @@ import * as React from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { NavigationScreenProps } from "react-navigation";
+import { constNull, constUndefined } from "fp-ts/lib/function";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -12,6 +13,7 @@ import { H2 } from "../../components/core/typography/H2";
 import { Dispatch } from "../../store/actions/types";
 import { logoutRequest } from "../../store/actions/authentication";
 import expiredIcon from "../../../img/wallet/errors/payment-expired-icon.png";
+import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 
 type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
 const styles = StyleSheet.create({
@@ -27,6 +29,9 @@ const styles = StyleSheet.create({
  * Here user can ask to delete his account
  */
 const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
+  // do nothing
+  useHardwareBackButton(() => true);
+
   const continueButtonProps = {
     block: true,
     bordered: true,
@@ -38,7 +43,7 @@ const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
   const footerComponent = (
     <FooterWithButtons type={"SingleButton"} leftButton={continueButtonProps} />
   );
-  // TODO handle back Android (use useHardwareBackButton)
+
   return (
     <BaseScreenComponent headerTitle={I18n.t("profile.main.title")}>
       <SafeAreaView style={IOStyles.flex}>
