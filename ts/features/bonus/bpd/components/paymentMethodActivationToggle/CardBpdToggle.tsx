@@ -1,15 +1,16 @@
 import * as React from "react";
 import { getCardIconFromBrandLogo } from "../../../../../components/wallet/card/Logo";
+import { getPaymentMethodHash } from "../../../../../store/reducers/wallet/wallets";
 import {
-  EnableableFunctionsTypeEnum,
-  PatchedWalletV2
+  CreditCardPaymentMethod,
+  EnableableFunctionsTypeEnum
 } from "../../../../../types/pagopa";
-import { HPan } from "../../store/actions/paymentMethods";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
+import { HPan } from "../../store/actions/paymentMethods";
 import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
 
 type Props = {
-  card: PatchedWalletV2;
+  card: CreditCardPaymentMethod;
 };
 
 const FOUR_UNICODE_CIRCLES = "●".repeat(4);
@@ -21,12 +22,12 @@ const FOUR_UNICODE_CIRCLES = "●".repeat(4);
  */
 export const CardBpdToggle: React.FunctionComponent<Props> = props => (
   <PaymentMethodBpdToggle
-    hPan={props.card.info.hashPan as HPan}
-    icon={getCardIconFromBrandLogo(props.card.info)}
+    hPan={getPaymentMethodHash(props.card.info) as HPan}
+    icon={getCardIconFromBrandLogo(props.card)}
     hasBpdCapability={hasFunctionEnabled(
       props.card,
       EnableableFunctionsTypeEnum.BPD
     )}
-    caption={`${FOUR_UNICODE_CIRCLES} ${props.card.info.blurredNumber}`}
+    caption={`${FOUR_UNICODE_CIRCLES} ${props.card.info.creditCard.blurredNumber}`}
   />
 );
