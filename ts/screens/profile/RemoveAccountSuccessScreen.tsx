@@ -1,6 +1,6 @@
-import { Content, View, Text } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
-import { Image, SafeAreaView } from "react-native";
+import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { NavigationScreenProps } from "react-navigation";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -11,9 +11,17 @@ import { H4 } from "../../components/core/typography/H4";
 import { H2 } from "../../components/core/typography/H2";
 import { Dispatch } from "../../store/actions/types";
 import { logoutRequest } from "../../store/actions/authentication";
+import expiredIcon from "../../../img/wallet/errors/payment-expired-icon.png";
 
 type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
-
+const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 /**
  * A screen to explain how the account removal works.
  * Here user can ask to delete his account
@@ -30,29 +38,16 @@ const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
   const footerComponent = (
     <FooterWithButtons type={"SingleButton"} leftButton={continueButtonProps} />
   );
+  // TODO handle back Android (use useHardwareBackButton)
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("profile.main.title")}
-    >
+    <BaseScreenComponent headerTitle={I18n.t("profile.main.title")}>
       <SafeAreaView style={IOStyles.flex}>
-        <Content
-          contentContainerStyle={{
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >
-          <Image
-            source={require("../../../img/wallet/errors/payment-expired-icon.png")}
-          />
+        <Content contentContainerStyle={styles.content}>
+          <Image source={expiredIcon} />
           <View spacer={true} />
           <H2>{I18n.t("profile.main.privacy.removeAccount.success.title")}</H2>
-          <H4 weight="Regular">
-            <Text alignCenter={true}>
-              {I18n.t("profile.main.privacy.removeAccount.success.body")}
-            </Text>
+          <H4 weight="Regular" style={{ textAlign: "center" }}>
+            {I18n.t("profile.main.privacy.removeAccount.success.body")}
           </H4>
         </Content>
         {footerComponent}
