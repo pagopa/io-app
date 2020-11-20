@@ -4,12 +4,18 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { values } from "lodash";
+import { ImageSourcePropType } from "react-native";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
 import { Abi } from "../../../../definitions/pagopa/walletv2/Abi";
 import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
-import { getValue } from "../../../features/bonus/bpd/model/RemoteValue";
+import pagoBancomatImage from "../../../../img/wallet/cards-icons/pagobancomat.png";
+import {
+  cardIcons,
+  getCardIconFromBrandLogo
+} from "../../../components/wallet/card/Logo";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
+import I18n from "../../../i18n";
 import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod,
@@ -47,6 +53,7 @@ import {
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
+import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -123,20 +130,121 @@ export const walletsSelector = createSelector(
       )
     )
 );
+
+type PaymentMethodRepresentation = {
+  caption: string;
+  icon: ImageSourcePropType;
+};
+
+export type EnhancedPaymentMethod =
+  | EnhancedBancomat
+  | (PaymentMethod & PaymentMethodRepresentation);
+
 /**
- * Get a list of WalletV2 extracted from WalletV1
+ * Choose an image to represent a {@link PaymentMethod}
+ * @param paymentMethod
+ */
+const getImageFromPaymentMethod = (paymentMethod: PaymentMethod) => {
+  if (isCreditCard(paymentMethod)) {
+    return getCardIconFromBrandLogo(paymentMethod.creditCard);
+  }
+  if (isBancomat(paymentMethod)) {
+    return pagoBancomatImage;
+  }
+  return cardIcons.UNKNOWN;
+};
+
+// TODO: unify card representation (multiple part of the application use this)
+const FOUR_UNICODE_CIRCLES = "●".repeat(4);
+
+/**
+ * Choose a textual representation for a {@link PatchedWalletV2}
+ * @param paymentMethod
+ * @param abiList
+ */
+const getTitleFromPaymentMethod = (
+  paymentMethod: PaymentMethod,
+  abiList: IndexedById<Abi>
+) => {
+  if (isCreditCard(paymentMethod)) {
+    return getTitleFromCard(paymentMethod);
+  }
+  if (isBancomat(paymentMethod)) {
+    return getTitleFromBancomat(paymentMethod, abiList);
+  }
+  return FOUR_UNICODE_CIRCLES;
+};
+
+export const getTitleFromCard = (creditCard: CreditCardPaymentMethod) =>
+  `${FOUR_UNICODE_CIRCLES} ${creditCard.creditCard.blurredNumber}`;
+
+const getTitleFromBancomat = (
+  bancomatInfo: BancomatPaymentMethod,
+  abiList: IndexedById<Abi>
+) =>
+  fromNullable(bancomatInfo.bancomat.issuerAbiCode)
+    .chain(abiCode => fromNullable(abiList[abiCode]))
+    .chain(abi => fromNullable(abi.name))
+    .getOrElse(I18n.t("wallet.methods.bancomat.name"));
+
+export const enhanceBancomat = (
+  bancomat: BancomatPaymentMethod,
+  abiList: IndexedById<Abi>
+): EnhancedBancomat => ({
+  ...bancomat,
+  abiInfo: bancomat.bancomat.issuerAbiCode
+    ? abiList[bancomat.bancomat.issuerAbiCode]
+    : undefined,
+  caption: getTitleFromBancomat(bancomat, abiList),
+  icon: getImageFromPaymentMethod(bancomat)
+});
+
+export const enhancePaymentMethod = (
+  pm: PaymentMethod,
+  abiList: IndexedById<Abi>
+): EnhancedPaymentMethod => {
+  switch (pm.kind) {
+    // bancomat need a special handling, we need to reconciliate the abi
+    case "Bancomat":
+      return enhanceBancomat(pm, abiList);
+    case "CreditCard":
+    case "BPay":
+    case "Satispay":
+      return {
+        ...pm,
+        caption: getTitleFromPaymentMethod(pm, abiList),
+        icon: getImageFromPaymentMethod(pm)
+      };
+  }
+};
+
+/**
+ * Get a list of the payment methods in the wallet
  */
 export const paymentMethodsSelector = createSelector(
-  [walletsSelector],
-  (potWallet): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
+  [walletsSelector, abiSelector],
+  (
+    potWallet,
+    remoteAbi
+  ): pot.Pot<ReadonlyArray<EnhancedPaymentMethod>, Error> =>
     pot.map(potWallet, wallets =>
-      wallets.map(w => w.paymentMethod).filter(isDefined)
+      wallets
+        .map(w =>
+          w.paymentMethod
+            ? enhancePaymentMethod(
+                w.paymentMethod,
+                getValueOrElse(remoteAbi, {})
+              )
+            : undefined
+        )
+        .filter(isDefined)
     )
 );
 
-export type EnhancedBancomat = BancomatPaymentMethod & {
-  abiInfo?: Abi;
-};
+export type EnhancedBancomat = BancomatPaymentMethod &
+  PaymentMethodRepresentation & {
+    abiInfo?: Abi;
+  };
 
 export const getPaymentMethodHash = (pm: PaymentMethod): string | undefined => {
   if (isBancomat(pm)) {
@@ -154,30 +262,18 @@ export const getPaymentMethodHash = (pm: PaymentMethod): string | undefined => {
   return undefined;
 };
 
+const isEnhancedBancomat = (
+  epm: EnhancedPaymentMethod
+): epm is EnhancedBancomat => epm.kind === "Bancomat";
+
 /**
  * Return a bancomat list enhanced with the additional abi information
  */
 export const bancomatSelector = createSelector(
-  [paymentMethodsSelector, abiSelector],
-  (
-    paymentMethodPot,
-    abiRemote
-  ): pot.Pot<ReadonlyArray<EnhancedBancomat>, Error> =>
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<EnhancedBancomat>, Error> =>
     pot.map(paymentMethodPot, paymentMethod =>
-      paymentMethod.filter(isBancomat).map(
-        (bancomat): EnhancedBancomat => {
-          const bancomatInfo = bancomat.bancomat;
-          const maybeAbiCode = fromNullable(bancomatInfo.issuerAbiCode);
-          const maybeAbis = fromNullable(getValue(abiRemote));
-          const maybeAbiInfo = maybeAbiCode.chain(val =>
-            maybeAbis.chain(a => fromNullable(a[val]))
-          );
-          return {
-            ...bancomat,
-            abiInfo: maybeAbiInfo.toUndefined()
-          };
-        }
-      )
+      paymentMethod.filter(isEnhancedBancomat)
     )
 );
 
