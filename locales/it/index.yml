@@ -708,18 +708,17 @@ wallet:
         bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
-        warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la banca che ha emesso la tua carta."
+        warning: "Manca qualcosa? Non preoccuparti, puoi aggiungere altre carte PagoBANCOMAT più tardi, selezionando la banca che ha emesso la tua carta."
       bpd:
         suggestActivation:
           title: "Vuoi attivare il Cashback Pagamenti Digitali?"
-          body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback Pagamenti Digitali, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri per promuovere l’uso della moneta elettronica.\n\n
-                 Ogni volta che pagherai con uno dei metodi di pagamento elettronico compatibili (carte, bancomat, app, etc..), riceverai un riborso parziale in base alla tua spesa.\n\n
-                 In base a quante trasnazioni avrai accumulato, in ciascuno periodo, potrai ricevere un premio in denaro fino a XXXX euro."
+          body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback Pagamenti Digitali, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri e dal Ministero dell’Economia e delle Finanze, allo scopo di incentivare un maggiore utilizzo di moneta elettronica nel Paese.\n\n
+                 Puoi ricevere un rimborso sugli acquisti effettuati con carte, bancomat e app di pagamento.\n\n"
           skip: "No, grazie"
           confirm: "Info e attivazione"
         activateNew:
           title: "Vuoi attivare il Cashback Pagamenti Digitali?"
-          body1: "I pagamenti che farai con questi metodi riceveranno il cashback e concorreranno alla tua posizione in classifica."
+          body1: "Attiva i metodi salvati nel tuo portafoglio per iniziare a registrare le transazioni valide ai fini del cashback."
           body2: "Se preferisci, puoi attivare il cashback su questi metodi anche in un secondo momento."
           skip: "Non ora, grazie"
   alert:
