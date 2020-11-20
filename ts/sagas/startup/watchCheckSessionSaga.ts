@@ -5,12 +5,36 @@ import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
   checkCurrentSession,
+  loadSupportToken,
   sessionExpired,
   sessionInformationLoadSuccess
 } from "../../store/actions/authentication";
 import { SagaCallReturnType } from "../../types/utils";
 
-export function* checkSession(
+function* handleLoadSupportToken(
+  getSupportToken: ReturnType<typeof BackendClient>["getSupportToken"]
+): SagaIterator {
+  try {
+    const response: SagaCallReturnType<typeof getSupportToken> = yield call(
+      getSupportToken,
+      {}
+    );
+
+    if (response.isLeft()) {
+      throw Error(readableReport(response.value));
+    } else {
+      if (response.value.status === 200) {
+        yield put(loadSupportToken.success(response.value.value));
+      } else {
+        throw Error(`response status code ${response.value.status}`);
+      }
+    }
+  } catch (error) {
+    yield put(loadSupportToken.failure(error));
+  }
+}
+
+function* checkSession(
   getSessionValidity: ReturnType<typeof BackendClient>["getSession"]
 ): SagaIterator {
   try {
@@ -49,7 +73,8 @@ export function* checkSessionResult(
 
 // Saga that listen to check session dispatch and returns it's validity
 export function* watchCheckSessionSaga(
-  getSessionValidity: ReturnType<typeof BackendClient>["getSession"]
+  getSessionValidity: ReturnType<typeof BackendClient>["getSession"],
+  getSupportToken: ReturnType<typeof BackendClient>["getSupportToken"]
 ): SagaIterator {
   yield takeLatest(
     getType(checkCurrentSession.request),
@@ -57,4 +82,10 @@ export function* watchCheckSessionSaga(
     getSessionValidity
   );
   yield takeLatest(getType(checkCurrentSession.success), checkSessionResult);
+
+  yield takeLatest(
+    getType(loadSupportToken.request),
+    handleLoadSupportToken,
+    getSupportToken
+  );
 }
