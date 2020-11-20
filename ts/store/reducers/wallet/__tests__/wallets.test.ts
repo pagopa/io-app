@@ -1,6 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
-import { PatchedWalletV2ListResponse } from "../../../../types/pagopa";
+import {
+  isCreditCard,
+  PatchedWalletV2ListResponse
+} from "../../../../types/pagopa";
 import {
   walletV2List1Bancomat1CCNotPagoPA,
   walletV2List2Bancomat1PagoPACC
@@ -10,7 +13,6 @@ import {
   bancomatSelector,
   creditCardWalletV1Selector,
   getPaymentMethodHash,
-  isCreditCardInfo,
   pagoPaCreditCardWalletV1Selector
 } from "../wallets";
 import { GlobalState } from "../../types";
@@ -43,10 +45,10 @@ describe("walletV2 selectors", () => {
     expect(pot.isSome(maybeCC)).toBeTruthy();
     if (pot.isSome(maybeCC)) {
       expect(maybeCC.value.length).toEqual(1);
-      const wallet = maybeCC.value[0].v2;
-      if (wallet) {
-        expect(isCreditCard(wallet, wallet.info)).toBeTruthy();
-        expect(getPaymentMethodHash(wallet)).toEqual(
+      const paymentMethod = maybeCC.value[0].paymentMethod;
+      if (paymentMethod) {
+        expect(isCreditCard(paymentMethod)).toBeTruthy();
+        expect(getPaymentMethodHash(paymentMethod.info)).toEqual(
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
         );
       }
@@ -64,7 +66,7 @@ describe("walletV2 selectors", () => {
       expect(maybeBancomat.value.length).toEqual(2);
       maybeBancomat.value.forEach(w => {
         expect(
-          hpans.find(h => h === getPaymentMethodHash(w.wallet))
+          hpans.find(h => h === getPaymentMethodHash(w.info))
         ).toBeDefined();
       });
     }
@@ -75,10 +77,10 @@ describe("walletV2 selectors", () => {
     expect(pot.isSome(maybePagoPaCC)).toBeTruthy();
     if (pot.isSome(maybePagoPaCC)) {
       expect(maybePagoPaCC.value.length).toEqual(1);
-      const wallet = maybePagoPaCC.value[0].v2;
-      if (wallet) {
-        expect(isCreditCard(wallet, wallet.info)).toBeTruthy();
-        expect(getPaymentMethodHash(wallet)).toEqual(
+      const paymentMethod = maybePagoPaCC.value[0].paymentMethod;
+      if (paymentMethod) {
+        expect(isCreditCard(paymentMethod)).toBeTruthy();
+        expect(getPaymentMethodHash(paymentMethod.info)).toEqual(
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
         );
       }

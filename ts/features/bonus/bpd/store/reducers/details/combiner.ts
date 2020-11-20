@@ -13,13 +13,15 @@ import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   getPaymentMethodHash,
-  isBancomatInfo,
-  isCreditCardInfo,
   paymentMethodsSelector
 } from "../../../../../../store/reducers/wallet/wallets";
 import {
+  BancomatInfo,
+  CreditCardInfo,
+  isBancomat,
+  isCreditCard,
   PatchedWalletV2,
-  WalletV2WithInfo
+  PaymentMethod
 } from "../../../../../../types/pagopa";
 import { abiListSelector } from "../../../../../wallet/onboarding/store/abi";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
@@ -28,7 +30,6 @@ import { BpdAmount } from "../../actions/amount";
 import { BpdPaymentMethodActivation } from "../../actions/paymentMethods";
 import { BpdPeriod } from "../../actions/periods";
 import { BpdTransaction } from "../../actions/transactions";
-import { CardInfo } from "../../../../../../../definitions/pagopa/walletv2/CardInfo";
 import { bpdEnabledSelector } from "./activation";
 import { bpdAllAmountSelector } from "./amounts";
 import { bpdPaymentMethodActivationSelector } from "./paymentMethods";
@@ -124,13 +125,15 @@ export const bpdPeriodsAmountSnappedListSelector = createSelector(
  * @param hashPan
  * @param potWalletV2
  */
-const pickWalletFromHashpan = (
+const pickPaymentMethodFromHashpan = (
   hashPan: string,
-  potWalletV2: pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>
-): Option<PatchedWalletV2> =>
+  potPaymentMethods: pot.Pot<ReadonlyArray<PaymentMethod>, Error>
+): Option<PaymentMethod> =>
   pot.getOrElse(
-    pot.map(potWalletV2, walletV2 =>
-      fromNullable(walletV2.find(w => getPaymentMethodHash(w) === hashPan))
+    pot.map(potPaymentMethods, paymentMethods =>
+      fromNullable(
+        paymentMethods.find(w => getPaymentMethodHash(w.info) === hashPan)
+      )
     ),
     none
   );
@@ -158,27 +161,27 @@ const FOUR_UNICODE_CIRCLES = "●".repeat(4);
  * @param w2
  * @param abiList
  */
-const getTitleFromWallet = (
-  w2: PatchedWalletV2,
+const getTitleFromPaymentMethod = (
+  paymentMethod: PaymentMethod,
   abiList: ReadonlyArray<Abi>
 ) => {
-  if (isCreditCard(w2, w2.info)) {
-    return getTitleFromCard({ wallet: w2, info: w2.info });
+  if (isCreditCard(paymentMethod)) {
+    return getTitleFromCard(paymentMethod.info);
   }
-  if (isBancomat(w2, w2.info)) {
-    return getTitleFromBancomat({ wallet: w2, info: w2.info }, abiList);
+  if (isBancomat(paymentMethod)) {
+    return getTitleFromBancomat(paymentMethod.info, abiList);
   }
   return FOUR_UNICODE_CIRCLES;
 };
 
-const getTitleFromCard = (w2: WalletV2WithInfo<CardInfo>) =>
-  `${FOUR_UNICODE_CIRCLES} ${w2.info.blurredNumber}`;
+const getTitleFromCard = (creditCard: CreditCardInfo) =>
+  `${FOUR_UNICODE_CIRCLES} ${creditCard.creditCard.blurredNumber}`;
 
 const getTitleFromBancomat = (
-  w2: WalletV2WithInfo<CardInfo>,
+  bancomat: BancomatInfo,
   abiList: ReadonlyArray<Abi>
 ) =>
-  fromNullable(abiList.find(abi => abi.abi === w2.info.issuerAbiCode))
+  fromNullable(abiList.find(abi => abi.abi === bancomat.bancomat.issuerAbiCode))
     .map(abi => abi.name)
     .getOrElse(I18n.t("wallet.methods.bancomat.name"));
 
@@ -191,7 +194,7 @@ const getId = (transaction: BpdTransaction) =>
 export const bpdDisplayTransactionsSelector = createSelector<
   GlobalState,
   pot.Pot<ReadonlyArray<BpdTransaction>, Error>,
-  pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>,
+  pot.Pot<ReadonlyArray<PaymentMethod>, Error>,
   ReadonlyArray<Abi>,
   BpdPeriod | undefined,
   pot.Pot<ReadonlyArray<EnhancedBpdTransaction>, Error>
@@ -202,17 +205,17 @@ export const bpdDisplayTransactionsSelector = createSelector<
     abiListSelector,
     bpdSelectedPeriodSelector
   ],
-  (potTransactions, wallet, abiList, period) =>
+  (potTransactions, paymentMethod, abiList, period) =>
     pot.map(potTransactions, transactions =>
       transactions.map(
         t =>
           ({
             ...t,
-            image: pickWalletFromHashpan(t.hashPan, wallet)
+            image: pickPaymentMethodFromHashpan(t.hashPan, paymentMethod)
               .map(getImageFromWallet)
               .getOrElse(cardIcons.UNKNOWN),
-            title: pickWalletFromHashpan(t.hashPan, wallet)
-              .map(w2 => getTitleFromWallet(w2, abiList))
+            title: pickPaymentMethodFromHashpan(t.hashPan, paymentMethod)
+              .map(w2 => getTitleFromPaymentMethod(w2, abiList))
               .getOrElse(FOUR_UNICODE_CIRCLES),
             keyId: getId(t),
             maxCashbackForTransactionAmount: period?.maxTransactionCashback
@@ -226,11 +229,11 @@ export const bpdDisplayTransactionsSelector = createSelector<
  */
 export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
   [paymentMethodsSelector, bpdPaymentMethodActivationSelector],
-  (walletV2Pot, bpdActivations): boolean =>
+  (paymentMethodsPot, bpdActivations): boolean =>
     pot.getOrElse(
-      pot.map(walletV2Pot, walletv2 =>
-        walletv2.some(w =>
-          fromNullable(getPaymentMethodHash(w))
+      pot.map(paymentMethodsPot, paymentMethods =>
+        paymentMethods.some(pm =>
+          fromNullable(getPaymentMethodHash(pm.info))
             .map(hpan => bpdActivations[hpan])
             .map(
               potActivation =>
@@ -245,7 +248,7 @@ export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
     )
 );
 
-export type WalletV2WithActivation = PatchedWalletV2 &
+export type PaymentMethodWithActivation = PaymentMethod &
   Partial<Pick<BpdPaymentMethodActivation, "activationStatus">>;
 
 /**
@@ -254,11 +257,11 @@ export type WalletV2WithActivation = PatchedWalletV2 &
  */
 export const walletV2WithActivationStatusSelector = createSelector(
   [paymentMethodsSelector, bpdPaymentMethodActivationSelector],
-  (walletV2Pot, bpdActivations) =>
-    pot.map(walletV2Pot, walletv2 =>
-      walletv2.map(pm => {
+  (paymentMethodsPot, bpdActivations) =>
+    pot.map(paymentMethodsPot, paymentMethods =>
+      paymentMethods.map(pm => {
         // try to extract the activation status to enhance the wallet
-        const activationStatus = fromNullable(getPaymentMethodHash(pm))
+        const activationStatus = fromNullable(getPaymentMethodHash(pm.info))
           .chain(hp => fromNullable(bpdActivations[hp]))
           .map(paymentMethodActivation =>
             pot.getOrElse(

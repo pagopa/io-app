@@ -19,7 +19,9 @@ import {
   isBpayInfo,
   isBancomat,
   CreditCardPaymentMethod,
-  isCreditCard
+  isCreditCard,
+  PaymentMethodInfo,
+  BancomatPaymentMethod
 } from "../../../types/pagopa";
 
 import { PotFromActions } from "../../../types/utils";
@@ -135,24 +137,24 @@ export const paymentMethodsSelector = createSelector(
     )
 );
 
-export type EnhancedBancomat = PaymentMethod & {
+export type EnhancedBancomat = BancomatPaymentMethod & {
   abiInfo?: Abi;
 };
 
 export const getPaymentMethodHash = (
-  paymentMethod: PaymentMethod
+  paymentMethodInfo: PaymentMethodInfo
 ): string | undefined => {
-  if (isBancomatInfo(paymentMethod.info)) {
-    return paymentMethod.info.bancomat.hashPan;
+  if (isBancomatInfo(paymentMethodInfo)) {
+    return paymentMethodInfo.bancomat.hashPan;
   }
-  if (isCreditCardInfo(paymentMethod.info)) {
-    return paymentMethod.info.creditCard.hashPan;
+  if (isCreditCardInfo(paymentMethodInfo)) {
+    return paymentMethodInfo.creditCard.hashPan;
   }
-  if (isSatispayInfo(paymentMethod.info)) {
-    return paymentMethod.info.satispay.uuid;
+  if (isSatispayInfo(paymentMethodInfo)) {
+    return paymentMethodInfo.satispay.uuid;
   }
-  if (isBpayInfo(paymentMethod.info)) {
-    return paymentMethod.info.bPay.uidHash;
+  if (isBpayInfo(paymentMethodInfo)) {
+    return paymentMethodInfo.bPay.uidHash;
   }
   return undefined;
 };
@@ -195,7 +197,10 @@ export const creditCardWalletV1Selector = createSelector(
     potWallet: pot.Pot<ReadonlyArray<Wallet>, Error>
   ): pot.Pot<ReadonlyArray<Wallet>, Error> =>
     pot.map(potWallet, wallets =>
-      wallets.filter(w => w.paymentMethod.walletType === WalletTypeEnum.Card)
+      wallets.filter(
+        w =>
+          w.paymentMethod && w.paymentMethod.walletType === WalletTypeEnum.Card
+      )
     )
 );
 

@@ -17,12 +17,15 @@ import {
 import { bancomat } from "../../../store/reducers/__mock__/bancomat";
 import I18n from "../../../../../../i18n";
 import {
-  EnableableFunctionsTypeEnum,
-  WalletV2WithInfo
+  BancomatInfo,
+  BancomatPaymentMethod,
+  EnableableFunctionsTypeEnum
 } from "../../../../../../types/pagopa";
 import { BpdPotPaymentMethodActivation } from "../../../store/reducers/details/paymentMethods";
 import { HPan } from "../../../store/actions/paymentMethods";
-import { CardInfo } from "../../../../../../../definitions/pagopa/walletv2/CardInfo";
+import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
+import { getPaymentMethodHash } from "../../../../../../store/reducers/wallet/wallets";
+
 jest.mock("../../../../../../utils/hooks/useOnFocus", () => ({
   useNavigationContext: () => ({ isFocused: () => true }),
   useActionOnFocus: () => (action: () => void) => action()
@@ -32,10 +35,12 @@ jest.mock("@gorhom/bottom-sheet", () => ({
   useBottomSheetModal: () => ({ present: jest.fn(), dismiss: jest.fn() })
 }));
 
-const walletWithInfo = {
-  wallet: bancomat,
-  info: bancomat.info
-} as WalletV2WithInfo<CardInfo>;
+const bancomatMethod: BancomatPaymentMethod = convertWalletV2toWalletV1(
+  bancomat
+).paymentMethod as BancomatPaymentMethod;
+const bancomatInfo: BancomatInfo = convertWalletV2toWalletV1(bancomat)
+  .paymentMethod!.info as BancomatInfo;
+const hashPan = getPaymentMethodHash(bancomatInfo)!;
 const fallbackBankName = I18n.t("wallet.methods.bancomat.name");
 describe("BancomatBpdToggle UI states tests", () => {
   const mockStore = configureMockStore();
@@ -43,7 +48,7 @@ describe("BancomatBpdToggle UI states tests", () => {
     const store = mockStore(mockAbiStore(remoteUndefined));
     const component = render(
       <Provider store={store}>
-        <BancomatBpdToggle card={walletWithInfo} />
+        <BancomatBpdToggle card={bancomatMethod} />
       </Provider>
     );
     expect(component).not.toBeNull();
@@ -57,12 +62,19 @@ describe("BancomatBpdToggle UI states tests", () => {
         remoteReady(getAbiIndexed([{ abi: "12345", name: "rightName" }]))
       )
     );
+
     const component = render(
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...walletWithInfo,
-            info: { ...walletWithInfo.info, issuerAbiCode: "12345" }
+            ...bancomatMethod,
+            info: {
+              ...bancomatMethod.info,
+              bancomat: {
+                ...bancomatMethod.info.bancomat,
+                issuerAbiCode: "12345"
+              }
+            }
           }}
         />
       </Provider>
@@ -82,8 +94,14 @@ describe("BancomatBpdToggle UI states tests", () => {
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...walletWithInfo,
-            info: { ...walletWithInfo.info, issuerAbiCode: "1234" }
+            ...bancomatMethod,
+            info: {
+              ...bancomatMethod.info,
+              bancomat: {
+                ...bancomatMethod.info.bancomat,
+                issuerAbiCode: "1234"
+              }
+            }
           }}
         />
       </Provider>
@@ -98,8 +116,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       mockAbiStore(
         remoteReady(getAbiIndexed([{ abi: "12345", name: "rightName" }])),
         {
-          [walletWithInfo.info!.hashPan!]: pot.some({
-            hPan: walletWithInfo.info!.hashPan! as HPan,
+          [hashPan]: pot.some({
+            hPan: hashPan as HPan,
             activationStatus: "active",
             activationDate: "2020-11-11"
           })
@@ -110,11 +128,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...walletWithInfo,
-            wallet: {
-              ...bancomat,
-              enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
-            }
+            ...bancomatMethod,
+            enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
           }}
         />
       </Provider>
@@ -131,8 +146,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       mockAbiStore(
         remoteReady(getAbiIndexed([{ abi: "12345", name: "rightName" }])),
         {
-          [walletWithInfo.info!.hashPan!]: pot.some({
-            hPan: walletWithInfo.info!.hashPan! as HPan,
+          [hashPan]: pot.some({
+            hPan: hashPan as HPan,
             activationStatus: "inactive",
             activationDate: "2020-11-11"
           })
@@ -143,11 +158,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...walletWithInfo,
-            wallet: {
-              ...bancomat,
-              enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
-            }
+            ...bancomatMethod,
+            enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
           }}
         />
       </Provider>
@@ -164,8 +176,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       mockAbiStore(
         remoteReady(getAbiIndexed([{ abi: "12345", name: "rightName" }])),
         {
-          [walletWithInfo.info!.hashPan!]: pot.some({
-            hPan: walletWithInfo.info!.hashPan! as HPan,
+          [hashPan]: pot.some({
+            hPan: hashPan as HPan,
             activationStatus: "active",
             activationDate: "2020-11-11"
           })
@@ -176,11 +188,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...walletWithInfo,
-            wallet: {
-              ...bancomat,
-              enableableFunctions: [EnableableFunctionsTypeEnum.FA]
-            }
+            ...bancomatMethod,
+            enableableFunctions: [EnableableFunctionsTypeEnum.FA]
           }}
         />
       </Provider>
@@ -195,8 +204,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       mockAbiStore(
         remoteReady(getAbiIndexed([{ abi: "12345", name: "rightName" }])),
         {
-          [walletWithInfo.info!.hashPan!]: pot.some({
-            hPan: walletWithInfo.info!.hashPan! as HPan,
+          [hashPan]: pot.some({
+            hPan: hashPan as HPan,
             activationStatus: "notActivable"
           })
         }
@@ -206,11 +215,8 @@ describe("BancomatBpdToggle UI states tests", () => {
       <Provider store={store}>
         <BancomatBpdToggle
           card={{
-            ...walletWithInfo,
-            wallet: {
-              ...bancomat,
-              enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
-            }
+            ...bancomatMethod,
+            enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
           }}
         />
       </Provider>

@@ -180,32 +180,43 @@ export type BPayInfoMethod = PaymentMethod & { info: BPayInfo };
 export type SatispayInfoMethod = PaymentMethod & { info: SatispayInfo };
 
 export const isBancomat = (
-  methodInfo: PaymentMethod
-): methodInfo is BancomatPaymentMethod => isBancomatInfo(methodInfo.info);
+  methodInfo: PaymentMethod | undefined
+): methodInfo is BancomatPaymentMethod =>
+  methodInfo === undefined ? false : isBancomatInfo(methodInfo.info);
 
 export const isSatispay = (
-  methodInfo: PaymentMethod
-): methodInfo is SatispayInfoMethod => isSatispayInfo(methodInfo.info);
+  methodInfo: PaymentMethod | undefined
+): methodInfo is SatispayInfoMethod =>
+  methodInfo === undefined ? false : isSatispayInfo(methodInfo.info);
 
 export const isCreditCard = (
-  methodInfo: PaymentMethod
-): methodInfo is CreditCardPaymentMethod => isCreditCardInfo(methodInfo.info);
+  methodInfo: PaymentMethod | undefined
+): methodInfo is CreditCardPaymentMethod =>
+  methodInfo === undefined ? false : isCreditCardInfo(methodInfo.info);
 
 export const isBancomatInfo = (
-  methodInfo: PaymentMethodInfo
-): methodInfo is BancomatInfo => methodInfo.type === WalletTypeEnum.Bancomat;
+  methodInfo: PaymentMethodInfo | undefined
+): methodInfo is BancomatInfo =>
+  methodInfo === undefined
+    ? false
+    : methodInfo.type === WalletTypeEnum.Bancomat;
 
 export const isCreditCardInfo = (
-  methodInfo: PaymentMethodInfo
-): methodInfo is CreditCardInfo => methodInfo.type === WalletTypeEnum.Card;
+  methodInfo: PaymentMethodInfo | undefined
+): methodInfo is CreditCardInfo =>
+  methodInfo === undefined ? false : methodInfo.type === WalletTypeEnum.Card;
 
 export const isSatispayInfo = (
-  methodInfo: PaymentMethodInfo
-): methodInfo is SatispayInfo => methodInfo.type === WalletTypeEnum.Satispay;
+  methodInfo: PaymentMethodInfo | undefined
+): methodInfo is SatispayInfo =>
+  methodInfo === undefined
+    ? false
+    : methodInfo.type === WalletTypeEnum.Satispay;
 
 export const isBpayInfo = (
-  methodInfo: PaymentMethodInfo
-): methodInfo is BPayInfo => methodInfo.type === WalletTypeEnum.BPay;
+  methodInfo: PaymentMethodInfo | undefined
+): methodInfo is BPayInfo =>
+  methodInfo === undefined ? false : methodInfo.type === WalletTypeEnum.BPay;
 
 /**
  * A refined Wallet
@@ -222,7 +233,7 @@ export const Wallet = repP(
 );
 
 export type Wallet = t.TypeOf<typeof Wallet> & {
-  paymentMethod: PaymentMethod;
+  paymentMethod?: PaymentMethod;
 };
 
 /**

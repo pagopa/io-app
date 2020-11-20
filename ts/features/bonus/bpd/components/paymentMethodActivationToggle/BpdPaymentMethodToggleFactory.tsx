@@ -1,32 +1,32 @@
 import * as React from "react";
-import { WalletTypeEnum } from "../../../../../../definitions/pagopa/walletv2/WalletV2";
-import { PatchedWalletV2, WalletV2WithInfo } from "../../../../../types/pagopa";
+import { getPaymentMethodHash } from "../../../../../store/reducers/wallet/wallets";
 import {
-  getPaymentMethodHash,
-  isCard
-} from "../../../../../store/reducers/wallet/wallets";
-import { CardInfo } from "../../../../../../definitions/pagopa/walletv2/CardInfo";
-import BancomatBpdToggle from "./BancomatBpdToggle";
+  isBancomat,
+  isCreditCard,
+  PaymentMethod
+} from "../../../../../types/pagopa";
 import { CardBpdToggle } from "./CardBpdToggle";
 
 /**
  * Return a specific toggle based on the WalletTypeEnum
  * @param wallet
  */
-export const bpdToggleFactory = (wallet: PatchedWalletV2) => {
-  const walletWithInfo: WalletV2WithInfo<CardInfo> = {
-    wallet,
-    info: wallet.info
-  };
-  if (isCard(wallet, wallet.info)) {
-    return wallet.walletType === WalletTypeEnum.Bancomat ? (
-      <BancomatBpdToggle key={wallet.info.hashPan} card={walletWithInfo} />
-    ) : (
-      <CardBpdToggle key={wallet.info.hashPan} card={walletWithInfo} />
+export const bpdToggleFactory = (paymentMethod: PaymentMethod) => {
+  if (isCreditCard(paymentMethod) || isBancomat(paymentMethod)) {
+    return (
+      <CardBpdToggle
+        key={getPaymentMethodHash(paymentMethod.info)}
+        card={paymentMethod}
+      />
     );
   }
-  // TODO: temp, default view with default icon
-  return (
-    <CardBpdToggle key={getPaymentMethodHash(wallet)} card={walletWithInfo} />
-  );
+  if (isBancomat(paymentMethod)) {
+    return (
+      <CardBpdToggle
+        key={getPaymentMethodHash(paymentMethod.info)}
+        card={paymentMethod}
+      />
+    );
+  }
+  return null;
 };

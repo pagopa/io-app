@@ -5,7 +5,10 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
-import { PaymentManagerToken } from "../../../../../../types/pagopa";
+import {
+  isBancomat,
+  PaymentManagerToken
+} from "../../../../../../types/pagopa";
 import {
   addBancomatToWallet,
   loadAbi,
@@ -118,20 +121,24 @@ export function* handleAddPan(
     );
     if (addPansWithRefreshResult.isRight()) {
       if (addPansWithRefreshResult.value.status === 200) {
-        const wallets = addPansWithRefreshResult.value.value.data ?? [];
+        const wallets = (addPansWithRefreshResult.value.value.data ?? []).map(
+          convertWalletV2toWalletV1
+        );
         // search for the added bancomat.
         const maybeWallet = fromNullable(
           wallets.find(
             w =>
-              getPaymentMethodHash(
-                convertWalletV2toWalletV1(w).paymentMethod
-              ) === action.payload.hpan
+              w.paymentMethod &&
+              getPaymentMethodHash(w.paymentMethod.info) === action.payload.hpan
           )
         );
-        if (maybeWallet.isSome()) {
+        if (
+          maybeWallet.isSome() &&
+          isBancomat(maybeWallet.value.paymentMethod)
+        ) {
           yield put(
             // success
-            addBancomatToWallet.success(maybeWallet.value)
+            addBancomatToWallet.success(maybeWallet.value.paymentMethod)
           );
         } else {
           throw new Error(

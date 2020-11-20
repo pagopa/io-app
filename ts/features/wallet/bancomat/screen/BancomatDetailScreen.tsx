@@ -72,9 +72,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       hideHeader={true}
       footerContent={
         <UnsubscribeButton
-          onPress={() =>
-            present(() => props.deleteWallet(bancomat.wallet.idWallet))
-          }
+          onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
         />
       }
     >

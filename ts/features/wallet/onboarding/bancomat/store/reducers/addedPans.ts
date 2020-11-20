@@ -1,13 +1,13 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { PatchedWalletV2 } from "../../../../../../types/pagopa";
+import { BancomatPaymentMethod } from "../../../../../../types/pagopa";
 import { addBancomatToWallet, walletAddBancomatStart } from "../actions";
 
 const addedPansReducer = (
-  state: ReadonlyArray<PatchedWalletV2> = [],
+  state: ReadonlyArray<BancomatPaymentMethod> = [],
   action: Action
-): ReadonlyArray<PatchedWalletV2> => {
+): ReadonlyArray<BancomatPaymentMethod> => {
   switch (action.type) {
     // Register a new Bancomat added in the current onboarding session
     case getType(addBancomatToWallet.success):
@@ -21,6 +21,7 @@ const addedPansReducer = (
 
 export const onboardingBancomatAddedPansSelector = (
   state: GlobalState
-): ReadonlyArray<PatchedWalletV2> => state.wallet.onboarding.bancomat.addedPans;
+): ReadonlyArray<BancomatPaymentMethod> =>
+  state.wallet.onboarding.bancomat.addedPans;
 
 export default addedPansReducer;

@@ -26,46 +26,48 @@ import {
  * @param walletFunction
  */
 export const hasFunctionEnabled = (
-  paymentMethod: PaymentMethod,
+  paymentMethod: PaymentMethod | undefined,
   walletFunction: EnableableFunctionsTypeEnum
-) => paymentMethod.enableableFunctions.includes(walletFunction);
+): boolean =>
+  paymentMethod !== undefined &&
+  paymentMethod.enableableFunctions.includes(walletFunction);
 
-const isBPay = (
+const isWalletV2BPay = (
   wallet: PatchedWalletV2,
   paymentMethodInfo: PatchedPaymentMethodInfo
 ): paymentMethodInfo is CardInfo =>
   (paymentMethodInfo && wallet.walletType === WalletTypeEnum.BPay) ||
   wallet.walletType === WalletTypeEnum.BPay;
 
-const isSatispay = (
+const isWalletV2Satispay = (
   wallet: PatchedWalletV2,
   paymentMethodInfo: PatchedPaymentMethodInfo
 ): paymentMethodInfo is SatispayInfo =>
   paymentMethodInfo && wallet.walletType === WalletTypeEnum.Satispay;
 
-const isBancomat = (
+const isWalletV2Bancomat = (
   wallet: PatchedWalletV2,
   paymentMethodInfo: PatchedPaymentMethodInfo
 ): paymentMethodInfo is CardInfo =>
   paymentMethodInfo && wallet.walletType === WalletTypeEnum.Bancomat;
 
-const isCreditCard = (
+const isWalletV2CreditCard = (
   wallet: PatchedWalletV2,
   paymentMethodInfo: PatchedPaymentMethodInfo
 ): paymentMethodInfo is CardInfo =>
   paymentMethodInfo && wallet.walletType === WalletTypeEnum.Card;
 
 const getPaymentMethodInfo = (wallet: PatchedWalletV2): PaymentMethodInfo => {
-  if (isCreditCard(wallet, wallet.info)) {
+  if (isWalletV2CreditCard(wallet, wallet.info)) {
     return { creditCard: wallet.info, type: WalletTypeEnum.Card };
   }
-  if (isBancomat(wallet, wallet.info)) {
+  if (isWalletV2Bancomat(wallet, wallet.info)) {
     return { bancomat: wallet.info, type: WalletTypeEnum.Bancomat };
   }
-  if (isSatispay(wallet, wallet.info)) {
+  if (isWalletV2Satispay(wallet, wallet.info)) {
     return { satispay: wallet.info, type: WalletTypeEnum.Satispay };
   }
-  if (isBPay(wallet, wallet.info)) {
+  if (isWalletV2BPay(wallet, wallet.info)) {
     return { bPay: wallet.info, type: WalletTypeEnum.BPay };
   }
   return { type: "UNKNOWN" };
@@ -78,17 +80,23 @@ const getPaymentMethodInfo = (wallet: PatchedWalletV2): PaymentMethodInfo => {
 export const convertWalletV2toWalletV1 = (
   walletV2: PatchedWalletV2
 ): Wallet => {
-  const info = walletV2.info;
-  const cc = isCreditCard(walletV2, info)
+  const paymentMethodInfo = getPaymentMethodInfo(walletV2);
+  const card =
+    paymentMethodInfo.type === WalletTypeEnum.Card
+      ? paymentMethodInfo.creditCard
+      : paymentMethodInfo.type === WalletTypeEnum.Bancomat
+      ? paymentMethodInfo.bancomat
+      : undefined;
+  const cc = card
     ? {
         id: undefined,
-        holder: info.holder ?? "",
-        pan: info.blurredNumber as CreditCardPan,
-        expireMonth: info.expireMonth as CreditCardExpirationMonth,
-        expireYear: info.expireYear as CreditCardExpirationYear,
-        brandLogo: info.brandLogo,
+        holder: card.holder ?? "",
+        pan: card.blurredNumber as CreditCardPan,
+        expireMonth: card.expireMonth as CreditCardExpirationMonth,
+        expireYear: card.expireYear as CreditCardExpirationYear,
+        brandLogo: card.brandLogo,
         flag3dsVerified: true,
-        brand: info.brand,
+        brand: card.brand,
         onUs: true,
         securityCode: undefined
       }
