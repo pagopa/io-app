@@ -23,6 +23,7 @@ import { identificationRequest } from "../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../config";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { withKeyboard } from "../../utils/keyboard";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
@@ -142,10 +143,13 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
               )}
             </View>
           </Content>
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={continueButtonProps}
-          />
+          {withKeyboard(
+            <FooterWithButtons
+              type={"SingleButton"}
+              leftButton={continueButtonProps}
+            />,
+            true
+          )}
         </SafeAreaView>
       )}
     </BaseScreenComponent>
