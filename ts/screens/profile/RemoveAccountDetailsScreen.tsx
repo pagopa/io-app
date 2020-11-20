@@ -88,9 +88,8 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
     title: I18n.t("profile.main.privacy.removeAccount.info.cta")
   };
 
-  // TODO show the proper message
   const loadingCaption = I18n.t(
-    "bonus.bpd.onboarding.loadingActivationStatus.title"
+    "profile.main.privacy.removeAccount.success.title"
   );
   return (
     <BaseScreenComponent

@@ -369,7 +369,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
             uc.choice === UserDataProcessingChoiceEnum.DELETE &&
             uc.status === UserDataProcessingStatusEnum.PENDING
         );
-        const alertChoiceChannel = channel();
+        type leftOrRight = "left" | "right";
+        const alertChoiceChannel = channel<leftOrRight>();
         if (maybeDeletePending.isSome()) {
           Alert.alert(
             I18n.t("startup.userDeletePendingAlert.title"),
@@ -392,7 +393,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
             ],
             { cancelable: false }
           );
-          const action: string = yield take(alertChoiceChannel);
+          const action: leftOrRight = yield take(alertChoiceChannel);
           if (action === "left") {
             yield put(navigateToPrivacyScreen);
           }
