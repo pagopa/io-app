@@ -164,12 +164,24 @@ export type BPayInfo = {
   type: WalletTypeEnum.BPay;
   bPay: BPayInfoPagoPa;
 };
+/**
+ * PaymentMethodInfo could be
+ * - credit card
+ * - bancomat
+ * - satispay
+ * - bancomat pay
+ * - unknown
+ */
 export type PaymentMethodInfo =
   | BancomatInfo
   | CreditCardInfo
   | SatispayInfo
   | BPayInfo
   | { type: "UNKNOWN" };
+/**
+ * PaymentMethod is a PatchedWalletV2 without info and walletType fields
+ * and with a new field info of type PaymentMethodInfo
+ */
 export type PaymentMethod = Exclude<PatchedWalletV2, "info" | "walletType"> & {
   info: PaymentMethodInfo;
 };
@@ -179,6 +191,7 @@ export type CreditCardPaymentMethod = PaymentMethod & { info: CreditCardInfo };
 export type BPayInfoMethod = PaymentMethod & { info: BPayInfo };
 export type SatispayInfoMethod = PaymentMethod & { info: SatispayInfo };
 
+// payment methods type guards
 export const isBancomat = (
   methodInfo: PaymentMethod | undefined
 ): methodInfo is BancomatPaymentMethod =>
