@@ -20,8 +20,11 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
     {pot.getOrElse(
       pot.map(props.bancomatList, b => (
         <>
-          {b.map(w2 => (
-            <BancomatWalletPreview key={w2.idWallet} bancomat={w2} />
+          {b.map(enhancedBancomat => (
+            <BancomatWalletPreview
+              key={enhancedBancomat.idWallet}
+              bancomat={enhancedBancomat}
+            />
           ))}
         </>
       )),
