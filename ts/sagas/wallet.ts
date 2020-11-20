@@ -95,6 +95,8 @@ import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 
 import {
+  EnableableFunctionsTypeEnum,
+  isCreditCard,
   NullableWallet,
   PaymentManagerToken,
   PayRequest
@@ -126,6 +128,14 @@ import {
 } from "./wallet/pagopaApis";
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import _ from "lodash";
+import { hasFunctionEnabled } from "../utils/walletv2";
+import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
+import { isReady } from "../features/bonus/bpd/model/RemoteValue";
+import {
+  navigateToActivateBpdOnNewCreditCard,
+  navigateToSuggestBpdActivation
+} from "../features/wallet/onboarding/bancomat/navigation/action";
+import { navigationHistoryPop } from "../store/actions/navigationHistory";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -298,7 +308,41 @@ function* startOrResumeAddCreditCardSaga(
       const maybeAddedWallet = updatedWallets.find(
         _ => _.idWallet === idWallet
       );
+      // if the new method has been added
       if (maybeAddedWallet !== undefined) {
+        const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
+          bpdEnabledSelector
+        );
+        // check if the new method is compliant with bpd
+        if (bpdEnabled) {
+          const hasBpdFeature = hasFunctionEnabled(
+            maybeAddedWallet.paymentMethod,
+            EnableableFunctionsTypeEnum.BPD
+          );
+          // if the method is bpd compliant check if we have info about bpd activation
+          if (hasBpdFeature && isReady(bpdEnroll)) {
+            // if bdp is active navigate to a screen where it asked to enroll that method in bpd
+            // otherwise navigate to a screen where is asked to join bpd
+            if (
+              bpdEnroll.value &&
+              isCreditCard(maybeAddedWallet.paymentMethod)
+            ) {
+              yield put(
+                navigateToActivateBpdOnNewCreditCard({
+                  creditCards: [maybeAddedWallet.paymentMethod]
+                })
+              );
+            } else {
+              yield put(navigateToSuggestBpdActivation());
+            }
+            // remove these screens from the navigation stack: method choice, credit card form, credit card resume
+            // this pop could be easily break when this flow is entered by other points
+            // different from the current ones (i.e see https://www.pivotaltracker.com/story/show/175757212)
+            yield put(navigationHistoryPop(3));
+            return;
+          }
+        }
+
         // dispatch the action: a new card has been added
         yield put(addWalletNewCreditCardSuccess());
         if (action.payload.setAsFavorite === true) {

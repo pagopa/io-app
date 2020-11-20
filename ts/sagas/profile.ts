@@ -4,8 +4,15 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
+import {
+  call,
+  Effect,
+  put,
+  select,
+  take,
+  takeLatest
+} from "redux-saga/effects";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { BackendClient } from "../api/backend";
@@ -29,6 +36,9 @@ import {
 import { Locales } from "../../locales/locales";
 import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
+import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
+import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
+import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -257,4 +267,27 @@ export function* watchProfile(
   );
   // check the loaded profile
   yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
+}
+
+// watch for action of removing account
+export function* handleRemoveAccount() {
+  // dispatch an action to request account deletion
+  yield put(
+    upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
+  );
+  // wait for response (success/failure)
+  const upsertUserDataProcessingResponse = yield take([
+    upsertUserDataProcessing.success,
+    upsertUserDataProcessing.failure
+  ]);
+
+  // if success go to remove account success screen
+  if (
+    isActionOf(
+      upsertUserDataProcessing.success,
+      upsertUserDataProcessingResponse
+    )
+  ) {
+    yield put(navigateToRemoveAccountSuccess());
+  }
 }

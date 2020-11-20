@@ -25,7 +25,7 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
-import { pagoPaCreditCardSelector } from "../../../store/reducers/wallet/wallets";
+import { pagoPaCreditCardWalletV1Selector } from "../../../store/reducers/wallet/wallets";
 import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
@@ -127,7 +127,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potWallets = pagoPaCreditCardSelector(state);
+  const potWallets = pagoPaCreditCardWalletV1Selector(state);
   const potPsps = state.wallet.payment.psps;
   const isLoading = pot.isLoading(potWallets) || pot.isLoading(potPsps);
   return {

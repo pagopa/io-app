@@ -131,6 +131,11 @@ startup:
   sessionInfo: SPID attributes loaded
   profileInfo: User profile loaded
   profileEnabled: User profile activated
+  userDeletePendingAlert:
+    title: Profile deletion in progress
+    message: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
+    cta_1: Browse Privacy
+    cta_2: Discard
 login:
   welcome:
     line1: welcome in your
@@ -200,14 +205,31 @@ profile:
       subtitle: Here you find information on the legal conditions and on the processing of your personal data.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
-        title: Delete your profile
-        description: Request cancellation of information related to your IO profile
-        alert:
-          requestTitle: Are you sure you want request the cancellation of your account?
-          requestSubtitle: To use IO you will need to register again. The cancellation does not concern the data processed by public administrations.
-          oldRequest: We are already proceeding to delete your account
-          confirmSubtitle: After processing, you will receive an email confirming the deletion.
+        title: Delete your account
+        description: Permanently delete your account and your personal data
         error: An error occurred while submit your deletion request, please retry!
+        alert:
+          oldRequest: We are already proceeding to delete your account.
+          oldRequestSubtitle: To use IO you will need to register again. The cancellation does not concern the data processed by public administrations.
+          cta:
+            return: Return
+            cancel: Cancel the deletion
+        info:
+          body: "You can exercise your right to have your IO profile deleted at any time\n\nWe inform you that the deletion of your account is final and will take place within 30 days of the request.\n\nIf you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.\n\nWe also point out that any bonuses or discounts obtained through the IO app will no longer be accessible.\n\nYou can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE."
+          cta: Continue
+        details:
+          body: "We would like to know why you are deleting your account, in order to improve in the future. You can also proceed directly with the deletion by clicking on the button below."
+          question: What is the reason for the cancellation?
+          answer_1: I no longer consider "IO" useful
+          answer_2: I don't feel safe on IO
+          answer_3: I've never used the app
+          answer_4: None of the above
+          labelOpenAnswer: Tell us more
+          cta: Remove Account
+        success:
+          title: Stiamo processando la tua richiesta.
+          body: "Your request has been taken care of and we will delete your account within 30 days.\n\nYou can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE. By clicking on Exit, your session will be terminated.\n\nThanks for using IO"
+          cta: Logout
       exportData:
         cta: Request a copy of your data
         title: Access your data
@@ -634,6 +656,7 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Wallet
+  featured: Higlighted 
   creditCard:
     onboardingAttempts:
       title: Attempts to onboard payment method
@@ -876,18 +899,26 @@ wallet:
     comingSoon: incoming
     newCome: New
     card:
-      name: Credit/debit card
+      name: Credit, debit or prepaid card
       shortName: "Card"
-      maxFee: Maximum fee of 1.50€
-    sovvenzione:
-      name: Subsidy
+      description: The card issued by your bank that you normally use to pay in stores and online
+    bonus:
+      name: Discount, bonus and other services
+      description: Initiatives by public bodies to support spending, or services related to payments
+    digital:
+      name: App and digital payment tools
+      description: Use your favourite digital tools to pay upon IO
+    pagobancomat:
+      name: PagoBANCOMAT card
+      description: The card with the PagoBANCOMAT logo that you use to withdraw cash or pay in stores
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
     satispay:
       name: Satispay
     postepay:
-      name: Postepay
+      name: BancoPosta or Postepay card
+      description: Cards issued by Poste Italiane
     paypal:
       name: Paypal
     bancomat:
@@ -929,7 +960,7 @@ wallet:
     contextualHelpTitle: How to pay a notice
     contextualHelpContent: !include wallet/wallet_qrcode.md
   whyAFee:
-    title: Why do I have to pay a fee?
+    title: Why is there a transaction fee?
     text: !include wallet/why_a_fee.md
   errors:
     PAYMENT_DUPLICATED: This notice has been already paid! ;-)
