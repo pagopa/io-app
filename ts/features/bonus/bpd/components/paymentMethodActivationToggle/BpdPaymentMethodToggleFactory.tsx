@@ -20,13 +20,5 @@ export const bpdToggleFactory = (paymentMethod: PaymentMethod) => {
       />
     );
   }
-  if (isBancomat(paymentMethod)) {
-    return (
-      <CardBpdToggle
-        key={getPaymentMethodHash(paymentMethod.info)}
-        card={paymentMethod}
-      />
-    );
-  }
   return null;
 };
