@@ -2,7 +2,6 @@ import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
-import { WalletTypeEnum } from "../../../../../../../definitions/pagopa/walletv2/WalletV2";
 import pagoBancomatImage from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import {
   cardIcons,
@@ -20,7 +19,6 @@ import {
   CreditCardInfo,
   isBancomat,
   isCreditCard,
-  PatchedWalletV2,
   PaymentMethod
 } from "../../../../../../types/pagopa";
 import { abiListSelector } from "../../../../../wallet/onboarding/store/abi";
@@ -139,18 +137,17 @@ const pickPaymentMethodFromHashpan = (
   );
 
 /**
- * Choose an image to represent a {@link PatchedWalletV2}
- * @param w2
+ * Choose an image to represent a {@link PaymentMethod}
+ * @param paymentMethod
  */
-const getImageFromWallet = (w2: PatchedWalletV2) => {
-  switch (w2.walletType) {
-    case WalletTypeEnum.Card:
-      return getCardIconFromBrandLogo(w2.info);
-    case WalletTypeEnum.Bancomat:
-      return pagoBancomatImage;
-    default:
-      return cardIcons.UNKNOWN;
+const getImageFromPaymentMethod = (paymentMethod: PaymentMethod) => {
+  if (isCreditCard(paymentMethod)) {
+    return getCardIconFromBrandLogo(paymentMethod);
   }
+  if (isBancomat(paymentMethod)) {
+    return pagoBancomatImage;
+  }
+  return cardIcons.UNKNOWN;
 };
 
 // TODO: unify card representation (multiple part of the application use this)
@@ -158,7 +155,7 @@ const FOUR_UNICODE_CIRCLES = "●".repeat(4);
 
 /**
  * Choose a textual representation for a {@link PatchedWalletV2}
- * @param w2
+ * @param paymentMethod
  * @param abiList
  */
 const getTitleFromPaymentMethod = (
@@ -212,7 +209,7 @@ export const bpdDisplayTransactionsSelector = createSelector<
           ({
             ...t,
             image: pickPaymentMethodFromHashpan(t.hashPan, paymentMethod)
-              .map(getImageFromWallet)
+              .map(getImageFromPaymentMethod)
               .getOrElse(cardIcons.UNKNOWN),
             title: pickPaymentMethodFromHashpan(t.hashPan, paymentMethod)
               .map(w2 => getTitleFromPaymentMethod(w2, abiList))

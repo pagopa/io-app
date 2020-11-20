@@ -34,7 +34,7 @@ export const CardBpdToggle: React.FunctionComponent<Props> = props => {
         props.card,
         EnableableFunctionsTypeEnum.BPD
       )}
-      caption={`${FOUR_UNICODE_CIRCLES} ${card.blurredNumber ?? ""}`}
+      caption={`${FOUR_UNICODE_CIRCLES} ${card.blurredNumber}`}
     />
   );
 };
