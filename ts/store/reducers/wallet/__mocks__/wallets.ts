@@ -1,4 +1,5 @@
-export const walletV2List2Bancomat1PagoPACC = {
+// 2 bancomat, 1 credit card. All compliant with pagoPa
+export const walletsV2_1 = {
   data: [
     {
       walletType: "Bancomat",
@@ -74,8 +75,8 @@ export const walletV2List2Bancomat1PagoPACC = {
     }
   ]
 };
-
-export const walletV2List1Bancomat1CCNotPagoPA = {
+// 1 bancomat, 1 credit card. No compliant with pagoPa
+export const walletsV2_2 = {
   data: [
     {
       walletType: "Bancomat",
@@ -98,7 +99,7 @@ export const walletV2List1Bancomat1CCNotPagoPA = {
         type: "PP"
       },
       onboardingChannel: "I",
-      pagoPA: true,
+      pagoPA: false,
       updateDate: "2020-11-16"
     },
     {
