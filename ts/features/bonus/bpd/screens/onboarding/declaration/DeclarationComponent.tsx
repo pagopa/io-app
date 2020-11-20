@@ -1,21 +1,17 @@
 import { View } from "native-base";
-import { useContext, useReducer } from "react";
 import * as React from "react";
+import { useContext, useReducer } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { Label } from "../../../../../../components/core/typography/Label";
+import { Link } from "../../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import {
-  LightModalConsumer,
-  LightModalContext,
-  LightModalContextInterface
-} from "../../../../../../components/ui/LightModal";
+import { LightModalContext } from "../../../../../../components/ui/LightModal";
 import I18n from "../../../../../../i18n";
 import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
-import { Body } from "../../../../../../components/core/typography/Body";
-import { Link } from "../../../../../../components/core/typography/Link";
 import TosBonusComponent from "../../../../bonusVacanze/components/TosBonusComponent";
 import { DeclarationEntry } from "./DeclarationEntry";
 
