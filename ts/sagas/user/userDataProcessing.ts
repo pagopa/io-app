@@ -104,16 +104,20 @@ export function* deleteUserDataProcessingSaga(
         userDataProcessingChoiceParam: choice
       }
     );
-    if (response.isRight() && response.value.status === 202) {
-      yield put(
-        deleteUserDataProcessing.success({
-          choice
-        })
-      );
+    if (response.isRight()) {
+      if (response.value.status === 202) {
+        yield put(
+          deleteUserDataProcessing.success({
+            choice
+          })
+        );
+      } else {
+        throw new Error(
+          `response status ${response.value.status} with choice ${choice} `
+        );
+      }
     } else {
-      throw new Error(
-        `An error occurred while submitting an abort request to ${choice} the profile`
-      );
+      throw new Error(readableReport(response.value));
     }
   } catch (e) {
     yield put(

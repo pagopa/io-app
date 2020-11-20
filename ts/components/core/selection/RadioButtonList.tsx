@@ -62,7 +62,12 @@ export const RadioButtonList = <T extends any>(props: Props<T>) => (
             onPress={() => props.onPress(item.id)}
             style={styles.icon}
           />
-          <H4 color={"bluegreyDark"} weight={"Regular"} style={IOStyles.flex}>
+          <H4
+            color={"bluegreyDark"}
+            weight={"Regular"}
+            style={IOStyles.flex}
+            onPress={() => props.onPress(item.id)}
+          >
             {item.label}
           </H4>
         </View>
