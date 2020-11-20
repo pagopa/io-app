@@ -1,11 +1,11 @@
 import * as React from "react";
 import { View } from "react-native";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import { PatchedWalletV2 } from "../../../../../../types/pagopa";
 import { bpdToggleFactory } from "../BpdPaymentMethodToggleFactory";
+import { PaymentMethod } from "../../../../../../types/pagopa";
 
 type Props = {
-  paymentList: ReadonlyArray<PatchedWalletV2>;
+  paymentList: ReadonlyArray<PaymentMethod>;
 };
 
 /**

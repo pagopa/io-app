@@ -13,8 +13,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { walletV2Selector } from "../../../../../store/reducers/wallet/wallets";
-import { PatchedWalletV2 } from "../../../../../types/pagopa";
+import { paymentMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
 import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { PaymentMethodRawList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodRawList";
 import {
@@ -26,6 +25,7 @@ import {
 import { bpdLoadActivationStatus } from "../../store/actions/details";
 import { bpdDeleteUserFromProgram } from "../../store/actions/onboarding";
 import { bpdEnabledSelector } from "../../store/reducers/details/activation";
+import { PaymentMethod } from "../../../../../types/pagopa";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -44,10 +44,10 @@ const renderBpdActive = (value: RemoteValue<boolean, Error>) =>
   );
 
 const renderPaymentMethod = (
-  potWallets: pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>
+  potPaymentMethod: pot.Pot<ReadonlyArray<PaymentMethod>, Error>
 ) =>
   pot.fold(
-    potWallets,
+    potPaymentMethod,
     // TODO: handle error, loading with spinner if needed
     () => (
       <LabelSmall color={"bluegrey"}>
@@ -129,7 +129,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   bpdActive: bpdEnabledSelector(state),
-  potWallets: walletV2Selector(state)
+  potWallets: paymentMethodsSelector(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TmpBpdScreen);

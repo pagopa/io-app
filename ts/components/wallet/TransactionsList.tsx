@@ -22,11 +22,11 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { H3 } from "../core/typography/H3";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
-import H5 from "../ui/H5";
 
 type State = {
   loadingMore: boolean;
@@ -188,9 +188,9 @@ export default class TransactionsList extends React.Component<Props, State> {
       <Content scrollEnabled={false} style={styles.whiteContent}>
         <View>
           <View style={styles.subHeaderContent}>
-            <H5 style={styles.brandDarkGray}>
+            <H3 weight={"SemiBold"} color={"bluegreyDark"}>
               {I18n.t("wallet.latestTransactions")}
-            </H5>
+            </H3>
             <Text>{I18n.t("wallet.amount")}</Text>
           </View>
         </View>

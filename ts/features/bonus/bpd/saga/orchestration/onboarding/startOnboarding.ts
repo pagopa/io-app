@@ -11,6 +11,7 @@ import {
   take
 } from "redux-saga/effects";
 import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
+import ROUTES from "../../../../../../navigation/routes";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
@@ -70,7 +71,10 @@ export function* bpdStartOnboardingWorker() {
   // go to the loading page (if I'm not on that screen)
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
     yield put(navigateToBpdOnboardingLoadActivationStatus());
-    yield put(navigationHistoryPop(1));
+
+    if (currentRoute.value !== ROUTES.WALLET_HOME) {
+      yield put(navigationHistoryPop(1));
+    }
   }
 
   // read if the bpd is active for the user
