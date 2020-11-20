@@ -3,7 +3,6 @@ import * as React from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { NavigationScreenProps } from "react-navigation";
-import { constNull, constUndefined } from "fp-ts/lib/function";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";

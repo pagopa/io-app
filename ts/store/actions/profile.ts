@@ -55,15 +55,9 @@ export enum RemoveAccountMotivationEnum {
   "NEVER_USED" = "neverUsed",
   "OTHERS" = "others"
 }
-export type RemoveAccountMotivation =
-  | RemoveAccountMotivationEnum.UNDEFINED
-  | RemoveAccountMotivationEnum.NOT_UTILS
-  | RemoveAccountMotivationEnum.NOT_SAFE
-  | RemoveAccountMotivationEnum.NEVER_USED
-  | RemoveAccountMotivationEnum.OTHERS;
 
 export type RemoveAccountMotivationPayload = {
-  reason: RemoveAccountMotivation;
+  reason: RemoveAccountMotivationEnum;
   userText?: string;
 };
 export const removeAccountMotivation = createStandardAction(

@@ -14,7 +14,6 @@ import { H4 } from "../../components/core/typography/H4";
 import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import {
-  RemoveAccountMotivation,
   removeAccountMotivation,
   RemoveAccountMotivationEnum,
   RemoveAccountMotivationPayload
@@ -64,7 +63,7 @@ const getMotivationItems = (): ReadonlyArray<{
 const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   // Initially no motivation is selected
   const [selectedMotivation, setSelectedMotivation] = React.useState<
-    RemoveAccountMotivation
+    RemoveAccountMotivationEnum
   >(RemoveAccountMotivationEnum.UNDEFINED);
 
   const [otherMotivation, setOtherMotivation] = React.useState<string>("");
@@ -115,7 +114,7 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
               {I18n.t("profile.main.privacy.removeAccount.details.body")}
             </H4>
             <View style={{ paddingTop: 25 }}>
-              <RadioButtonList<RemoveAccountMotivation>
+              <RadioButtonList<RemoveAccountMotivationEnum>
                 head={I18n.t(
                   "profile.main.privacy.removeAccount.details.question"
                 )}

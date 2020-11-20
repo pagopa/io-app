@@ -71,16 +71,6 @@ const userDataProcessingReducer = (
         [action.payload.choice]: pot.some(action.payload)
       };
     }
-    case getType(deleteUserDataProcessing.success): {
-      const maybeValue = state[action.payload.choice];
-      return {
-        ...state,
-        [action.payload.choice]: pot.map(maybeValue, val => ({
-          ...val,
-          status: UserDataProcessingStatusEnum.ABORTED
-        }))
-      };
-    }
     case getType(resetUserDataProcessingRequest): {
       return {
         ...state,

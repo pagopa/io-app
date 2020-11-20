@@ -11,6 +11,7 @@ import {
 } from "../../store/actions/userDataProcessing";
 import { SagaCallReturnType } from "../../types/utils";
 import { getError } from "../../utils/errors";
+import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 
 /**
  * The following logic:
@@ -110,6 +111,10 @@ export function* deleteUserDataProcessingSaga(
           deleteUserDataProcessing.success({
             choice
           })
+        );
+        // reload user data processing
+        yield put(
+          loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
         );
       } else {
         throw new Error(
