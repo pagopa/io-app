@@ -4,7 +4,7 @@ import {
   isCreditCard,
   PatchedWalletV2ListResponse
 } from "../../../../types/pagopa";
-import { walletV2_2, walletsV2_1 } from "../__mocks__/wallets";
+import { walletsV2_2, walletsV2_1 } from "../__mocks__/wallets";
 import { toIndexed } from "../../../helpers/indexer";
 import {
   bancomatSelector,
@@ -83,7 +83,7 @@ describe("walletV2 selectors", () => {
   });
 
   it("should return empty list since there is no method compliant with pagoPa", () => {
-    const maybeWallets = PatchedWalletV2ListResponse.decode(walletV2_2);
+    const maybeWallets = PatchedWalletV2ListResponse.decode(walletsV2_2);
     const indexedWallets = toIndexed(
       (maybeWallets.value as PatchedWalletV2ListResponse).data!.map(
         convertWalletV2toWalletV1
