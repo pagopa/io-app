@@ -6,7 +6,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { EnhancedBancomat } from "../../../../../store/reducers/wallet/wallets";
 import BaseBancomatCard from "./BaseBancomatCard";
 
-type OwnProps = { bancomat: EnhancedBancomat };
+type OwnProps = { enhancedBancomat: EnhancedBancomat };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -31,10 +31,10 @@ const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
  */
 const BancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
-    abiLogo={props.bancomat.abiInfo?.logoUrl}
+    abiLogo={props.enhancedBancomat.abiInfo?.logoUrl}
     expiringDate={getExpireDate(
-      props.bancomat.info.bancomat.expireYear,
-      props.bancomat.info.bancomat.expireMonth
+      props.enhancedBancomat.info.bancomat.expireYear,
+      props.enhancedBancomat.info.bancomat.expireMonth
     )}
     user={props.nameSurname ?? ""}
   />
