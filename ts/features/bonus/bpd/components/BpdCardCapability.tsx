@@ -51,9 +51,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const handleValueChanged = (props: Props) => {
-  console.log(props.bpdEnabled);
+const handleValueChanged = (props: Props, changeActivation: () => void) => {
   if (getValueOrElse(props.bpdEnabled, false)) {
+    changeActivation();
   } else {
     props.onboardToBpd();
   }
@@ -97,7 +97,13 @@ const BpdCardCapability: React.FunctionComponent<Props> = props => {
       <BpdToggle
         graphicalValue={graphicalState}
         onPress={() => showExplanation("NotActivable")}
-        onValueChanged={_ => handleValueChanged(props)}
+        onValueChanged={newVal =>
+          handleValueChanged(props, () =>
+            askConfirmation(newVal, () =>
+              props.updateValue(hash as HPan, newVal)
+            )
+          )
+        }
       />
     </View>
   );
@@ -114,7 +120,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
   bpdPotActivation: bpdPaymentMethodValueSelector(
     state,
-    getPaymentMethodHash(props.paymentMethod)
+    getPaymentMethodHash(props.paymentMethod) as HPan
   ),
   bpdEnabled: bpdEnabledSelector(state)
 });

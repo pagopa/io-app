@@ -30,7 +30,6 @@ const loadLocales = () => ({
 
 const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body1, body2, skip, continueStr } = loadLocales();
-  console.log("boh");
   return (
     <BaseScreenComponent headerTitle={headerTitle}>
       <SafeAreaView style={IOStyles.flex}>
