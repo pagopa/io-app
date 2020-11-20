@@ -18,6 +18,10 @@ import { screenContextualHelpDataSelector } from "../store/reducers/content";
 import { GlobalState } from "../store/reducers/types";
 import themeVariables from "../theme/variables";
 import { FAQsCategoriesType } from "../utils/faq";
+import {
+  supportTokenSelector,
+  SupportTokenState
+} from "../store/reducers/authentication";
 import FAQComponent from "./FAQComponent";
 import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import { BaseHeader } from "./screens/BaseHeader";
@@ -35,7 +39,10 @@ type OwnProps = Readonly<{
   onLinkClicked?: (url: string) => void;
   modalAnimation?: ModalBaseProps["animationType"];
   close: () => void;
-  onRequestAssistance: (type: BugReporting.reportType) => void;
+  onRequestAssistance: (
+    type: BugReporting.reportType,
+    supportToken: SupportTokenState
+  ) => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
@@ -160,7 +167,9 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
               <React.Fragment>
                 <View spacer={true} extralarge={true} />
                 <InstabugAssistanceComponent
-                  requestAssistance={props.onRequestAssistance}
+                  requestAssistance={reportType =>
+                    props.onRequestAssistance(reportType, props.supportToken)
+                  }
                 />
                 <View spacer={true} />
                 <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
@@ -187,7 +196,9 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const potContextualData = screenContextualHelpDataSelector(state);
   const maybeContextualData = pot.getOrElse(potContextualData, none);
+  const supportToken = supportTokenSelector(state);
   return {
+    supportToken,
     potContextualData,
     maybeContextualData
   };

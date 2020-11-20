@@ -10,7 +10,9 @@ import {
   sessionInformationLoadSuccess
 } from "../../store/actions/authentication";
 import { SagaCallReturnType } from "../../types/utils";
+import { isTestEnv } from "../../utils/environment";
 
+// load the support token useful for user assistance
 function* handleLoadSupportToken(
   getSupportToken: ReturnType<typeof BackendClient>["getSupportToken"]
 ): SagaIterator {
@@ -19,7 +21,6 @@ function* handleLoadSupportToken(
       getSupportToken,
       {}
     );
-
     if (response.isLeft()) {
       throw Error(readableReport(response.value));
     } else {
@@ -88,4 +89,7 @@ export function* watchCheckSessionSaga(
     handleLoadSupportToken,
     getSupportToken
   );
+  yield put(loadSupportToken.request());
 }
+
+export const testableCheckSession = isTestEnv ? checkSession : undefined;

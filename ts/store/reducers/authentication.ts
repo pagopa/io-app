@@ -21,6 +21,7 @@ import {
   remoteError,
   remoteLoading,
   remoteReady,
+  remoteUndefined,
   RemoteValue
 } from "../../features/bonus/bpd/model/RemoteValue";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
@@ -147,6 +148,11 @@ export const sessionInfoSelector = (state: GlobalState) =>
     ? some(state.authentication.sessionInfo)
     : none;
 
+export const supportTokenSelector = (state: GlobalState): SupportTokenState =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.supportToken ?? remoteUndefined
+    : remoteUndefined;
+
 export const tokenFromNameSelector = (
   tokenName: TokenName
 ): ((state: GlobalState) => Option<string>) =>
@@ -177,6 +183,7 @@ export const idpSelector = ({
 }: GlobalState): Option<IdentityProvider> =>
   matchWithIdp(authentication, none, ({ idp }) => some(idp));
 
+// eslint-disable-next-line complexity
 const reducer = (
   state: AuthenticationState = INITIAL_STATE,
   action: Action
