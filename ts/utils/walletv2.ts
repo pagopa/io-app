@@ -32,6 +32,7 @@ export const hasFunctionEnabled = (
   paymentMethod !== undefined &&
   paymentMethod.enableableFunctions.includes(walletFunction);
 
+// check if a PatchedWalletV2 has BPay as paymentInfo
 const isWalletV2BPay = (
   wallet: PatchedWalletV2,
   paymentMethodInfo: PatchedPaymentMethodInfo
@@ -39,18 +40,21 @@ const isWalletV2BPay = (
   (paymentMethodInfo && wallet.walletType === WalletTypeEnum.BPay) ||
   wallet.walletType === WalletTypeEnum.BPay;
 
+// check if a PatchedWalletV2 has Satispay as paymentInfo
 const isWalletV2Satispay = (
   wallet: PatchedWalletV2,
   paymentMethodInfo: PatchedPaymentMethodInfo
 ): paymentMethodInfo is SatispayInfo =>
   paymentMethodInfo && wallet.walletType === WalletTypeEnum.Satispay;
 
+// check if a PatchedWalletV2 has Bancomat as paymentInfo
 const isWalletV2Bancomat = (
   wallet: PatchedWalletV2,
   paymentMethodInfo: PatchedPaymentMethodInfo
 ): paymentMethodInfo is CardInfo =>
   paymentMethodInfo && wallet.walletType === WalletTypeEnum.Bancomat;
 
+// check if a PatchedWalletV2 has CreditCard  as paymentInfo
 const isWalletV2CreditCard = (
   wallet: PatchedWalletV2,
   paymentMethodInfo: PatchedPaymentMethodInfo
@@ -84,9 +88,9 @@ export const convertWalletV2toWalletV1 = (
   const card =
     paymentMethodInfo.type === WalletTypeEnum.Card
       ? paymentMethodInfo.creditCard
-      : paymentMethodInfo.type === WalletTypeEnum.Bancomat
-      ? paymentMethodInfo.bancomat
       : undefined;
+  // if the payment method is a credit card
+  // fill the creditCard field of Wallet
   const cc = card
     ? {
         id: undefined,
