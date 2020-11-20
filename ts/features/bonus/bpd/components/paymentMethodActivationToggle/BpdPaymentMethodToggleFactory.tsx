@@ -5,6 +5,7 @@ import {
   isCreditCard,
   PaymentMethod
 } from "../../../../../types/pagopa";
+import BancomatBpdToggle from "./BancomatBpdToggle";
 import { CardBpdToggle } from "./CardBpdToggle";
 
 /**
@@ -12,9 +13,17 @@ import { CardBpdToggle } from "./CardBpdToggle";
  * @param wallet
  */
 export const bpdToggleFactory = (paymentMethod: PaymentMethod) => {
-  if (isCreditCard(paymentMethod) || isBancomat(paymentMethod)) {
+  if (isCreditCard(paymentMethod)) {
     return (
       <CardBpdToggle
+        key={getPaymentMethodHash(paymentMethod.info)}
+        card={paymentMethod}
+      />
+    );
+  }
+  if (isBancomat(paymentMethod)) {
+    return (
+      <BancomatBpdToggle
         key={getPaymentMethodHash(paymentMethod.info)}
         card={paymentMethod}
       />

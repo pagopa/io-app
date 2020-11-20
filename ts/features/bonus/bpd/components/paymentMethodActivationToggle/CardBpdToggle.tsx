@@ -1,18 +1,16 @@
 import * as React from "react";
 import { getCardIconFromBrandLogo } from "../../../../../components/wallet/card/Logo";
-import {
-  BancomatPaymentMethod,
-  CreditCardPaymentMethod,
-  EnableableFunctionsTypeEnum,
-  isCreditCard
-} from "../../../../../types/pagopa";
-import { HPan } from "../../store/actions/paymentMethods";
-import { hasFunctionEnabled } from "../../../../../utils/walletv2";
 import { getPaymentMethodHash } from "../../../../../store/reducers/wallet/wallets";
+import {
+  CreditCardPaymentMethod,
+  EnableableFunctionsTypeEnum
+} from "../../../../../types/pagopa";
+import { hasFunctionEnabled } from "../../../../../utils/walletv2";
+import { HPan } from "../../store/actions/paymentMethods";
 import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
 
 type Props = {
-  card: CreditCardPaymentMethod | BancomatPaymentMethod;
+  card: CreditCardPaymentMethod;
 };
 
 const FOUR_UNICODE_CIRCLES = "●".repeat(4);
@@ -22,19 +20,14 @@ const FOUR_UNICODE_CIRCLES = "●".repeat(4);
  * @param props
  * @constructor
  */
-export const CardBpdToggle: React.FunctionComponent<Props> = props => {
-  const card = isCreditCard(props.card)
-    ? props.card.info.creditCard
-    : props.card.info.bancomat;
-  return (
-    <PaymentMethodBpdToggle
-      hPan={getPaymentMethodHash(props.card.info) as HPan}
-      icon={getCardIconFromBrandLogo(card)}
-      hasBpdCapability={hasFunctionEnabled(
-        props.card,
-        EnableableFunctionsTypeEnum.BPD
-      )}
-      caption={`${FOUR_UNICODE_CIRCLES} ${card.blurredNumber}`}
-    />
-  );
-};
+export const CardBpdToggle: React.FunctionComponent<Props> = props => (
+  <PaymentMethodBpdToggle
+    hPan={getPaymentMethodHash(props.card.info) as HPan}
+    icon={getCardIconFromBrandLogo(props.card)}
+    hasBpdCapability={hasFunctionEnabled(
+      props.card,
+      EnableableFunctionsTypeEnum.BPD
+    )}
+    caption={`${FOUR_UNICODE_CIRCLES} ${props.card.info.creditCard.blurredNumber}`}
+  />
+);
