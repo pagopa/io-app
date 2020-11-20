@@ -118,7 +118,7 @@ export function* deleteUserDataProcessingSaga(
         );
       } else {
         throw new Error(
-          `response status ${response.value.status} with choice ${choice} `
+          `response status ${response.value.status} with choice ${choice}`
         );
       }
     } else {

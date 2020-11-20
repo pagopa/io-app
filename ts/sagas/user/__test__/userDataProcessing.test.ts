@@ -181,13 +181,15 @@ describe("deleteUserDataProcessingSaga", () => {
       .next(post202Response)
       .put(deleteUserDataProcessing.success({ choice: requestAction.payload }))
       .next()
+      .put(loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE))
+      .next()
       .isDone();
   });
 
   it("return a generic error if the backend returns 409", () => {
     const choice = requestActionDownload.payload;
     const mokedError = new Error(
-      `An error occurred while submitting an abort request to ${choice} the profile`
+      `response status ${409} with choice ${choice}`
     );
     const get409Response = right({ status: 409 });
 
