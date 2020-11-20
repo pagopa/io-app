@@ -27,7 +27,6 @@ import {
 import { bpdAmountForSelectedPeriod } from "../../../store/reducers/details/amounts";
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import BpdCashbackMilestoneComponent from "./BpdCashbackMilestoneComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
