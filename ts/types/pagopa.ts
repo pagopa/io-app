@@ -207,6 +207,11 @@ export const isCreditCard = (
 ): methodInfo is CreditCardPaymentMethod =>
   methodInfo === undefined ? false : isCreditCardInfo(methodInfo.info);
 
+export const isBPay = (
+  methodInfo: PaymentMethod | undefined
+): methodInfo is BancomatPaymentMethod =>
+  methodInfo === undefined ? false : isBpayInfo(methodInfo.info);
+
 export const isBancomatInfo = (
   methodInfo: PaymentMethodInfo | undefined
 ): methodInfo is BancomatInfo =>
