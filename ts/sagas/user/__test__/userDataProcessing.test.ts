@@ -6,9 +6,11 @@ import { UserDataProcessingChoiceEnum } from "../../../../definitions/backend/Us
 import { UserDataProcessingStatusEnum } from "../../../../definitions/backend/UserDataProcessingStatus";
 import {
   loadUserDataProcessing,
-  upsertUserDataProcessing
+  upsertUserDataProcessing,
+  deleteUserDataProcessing
 } from "../../../store/actions/userDataProcessing";
 import {
+  deleteUserDataProcessingSaga,
   loadUserDataProcessingSaga,
   upsertUserDataProcessingSaga
 } from "../userDataProcessing";
@@ -146,6 +148,64 @@ describe("upsertUserDataProcessingSaga", () => {
       .put(
         upsertUserDataProcessing.failure({
           choice: requestAction.payload,
+          error: mokedError
+        })
+      )
+      .next()
+      .isDone();
+  });
+});
+
+describe("deleteUserDataProcessingSaga", () => {
+  const deleteUserDataProcessingRequest = jest.fn();
+  const requestAction: ActionType<typeof deleteUserDataProcessing.request> = {
+    type: "DELETE_USER_DATA_PROCESSING_REQUEST",
+    payload: UserDataProcessingChoiceEnum.DELETE
+  };
+
+  const requestActionDownload: ActionType<typeof deleteUserDataProcessing.request> = {
+    type: "DELETE_USER_DATA_PROCESSING_REQUEST",
+    payload: UserDataProcessingChoiceEnum.DOWNLOAD
+  };
+  it("if response is 202, the request has been submitted", () => {
+    const post202Response = right({ status: 202 });
+    testSaga(
+      deleteUserDataProcessingSaga,
+      deleteUserDataProcessingRequest,
+      requestAction
+    )
+      .next()
+      .call(deleteUserDataProcessingRequest, {
+        userDataProcessingChoiceParam: requestAction.payload
+      })
+      .next(post202Response)
+      .put(deleteUserDataProcessing.success({ choice: requestAction.payload }))
+      .next()
+      .put(loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE))
+      .next()
+      .isDone();
+  });
+
+  it("return a generic error if the backend returns 409", () => {
+    const choice = requestActionDownload.payload;
+    const mokedError = new Error(
+      `response status ${409} with choice ${choice}`
+    );
+    const get409Response = right({ status: 409 });
+
+    testSaga(
+      deleteUserDataProcessingSaga,
+      deleteUserDataProcessingRequest,
+      requestActionDownload
+    )
+      .next()
+      .call(deleteUserDataProcessingRequest, {
+        userDataProcessingChoiceParam: choice
+      })
+      .next(get409Response)
+      .put(
+        deleteUserDataProcessing.failure({
+          choice,
           error: mokedError
         })
       )
