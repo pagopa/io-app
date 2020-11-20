@@ -3,13 +3,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
-import { useContext, useEffect, useRef } from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
-import { NavigationContext } from "react-navigation";
+import { useEffect, useRef } from "react";
+import { ImageSourcePropType, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Body } from "../../../../../../components/core/typography/Body";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { useNavigationContext } from "../../../../../../utils/hooks/useOnFocus";
 import {
   bpdPaymentMethodActivation,
   BpdPaymentMethodActivation,
@@ -18,7 +17,13 @@ import {
   HPan
 } from "../../../store/actions/paymentMethods";
 import { bpdPaymentMethodValueSelector } from "../../../store/reducers/details/paymentMethods";
+import { useChangeActivationConfirmationBottomSheet } from "../bottomsheet/BpdChangeActivationConfirmationScreen";
+import {
+  NotActivableType,
+  useNotActivableInformationBottomSheet
+} from "../bottomsheet/BpdNotActivableInformation";
 import { BpdToggle } from "./BpdToggle";
+import { PaymentMethodRepresentation } from "./PaymentMethodRepresentation";
 
 // TODO: accept only hpan, read all the other information with a selector from payment methods
 export type BpdToggleProps = {
@@ -64,7 +69,7 @@ const retryTimeout = 5000 as Millisecond;
  */
 const useInitialValue = (props: Props) => {
   const timerRetry = useRef<number | undefined>(undefined);
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigationContext();
   const retry = () => {
     timerRetry.current = undefined;
     props.loadActualValue(props.hPan);
@@ -149,19 +154,29 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
     useInitialValue(props);
   }
 
+  // a simplification because the onPress is dispatched only when is not activable / compatible
+  const notActivableType: NotActivableType = !props.hasBpdCapability
+    ? "NotCompatible"
+    : "NotActivable";
+
+  const askConfirmation = useChangeActivationConfirmationBottomSheet(props)
+    .present;
+
+  const showExplanation = useNotActivableInformationBottomSheet(props).present;
+
   return (
     <>
       <View style={styles.row}>
-        <View style={styles.leftSection}>
-          <Image source={props.icon} style={styles.cardIcon} />
-          <View hspacer={true} />
-          <Body>{props.caption}</Body>
-        </View>
+        <PaymentMethodRepresentation
+          icon={props.icon}
+          caption={props.caption}
+        />
         <BpdToggle
           graphicalValue={graphicalState}
-          // TODO: ask for user confirm when disable the bpd on payment method
-          onValueChanged={b => props.updateValue(props.hPan, b)}
-          // TODO: when onPress -> show bottomsheet explaining why the bpd cannot be activated
+          onValueChanged={newVal =>
+            askConfirmation(newVal, () => props.updateValue(props.hPan, newVal))
+          }
+          onPress={() => showExplanation(notActivableType)}
         />
       </View>
     </>

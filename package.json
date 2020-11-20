@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "1.9.0-rc.3",
+  "version": "1.10.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.0.0/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.0.0/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^1.4.1",
-    "@pagopa/react-native-cie": "0.3.2",
+    "@pagopa/react-native-cie": "0.3.3",
     "@react-native-community/async-storage": "^1.6.1",
     "@react-native-community/cameraroll": "^4.0.0",
     "@react-native-community/clipboard": "^1.5.0",

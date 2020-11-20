@@ -1,6 +1,9 @@
-import { put, take, all } from "redux-saga/effects";
+import { select } from "redux-saga-test-plan/matchers";
+import { all, put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { loadAbi } from "../../../../wallet/onboarding/bancomat/store/actions";
+import { abiSelector } from "../../../../wallet/onboarding/store/abi";
+import { isReady } from "../../model/RemoteValue";
 import { bpdAmountLoad } from "../../store/actions/amount";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
 import { bpdPeriodsLoad } from "../../store/actions/periods";
@@ -17,7 +20,15 @@ import { bpdTransactionsLoad } from "../../store/actions/transactions";
 export function* prefetchBpdData() {
   yield put(bpdLoadActivationStatus.request());
   yield put(bpdPeriodsLoad.request());
-  yield put(loadAbi.request());
+
+  const abiList: ReturnType<typeof abiSelector> = yield select(abiSelector);
+
+  // The volatility of the bank list is extremely low.
+  // There is no need to refresher it every time.
+  // A further refinement could be to insert an expiring cache
+  if (!isReady(abiList)) {
+    yield put(loadAbi.request());
+  }
 
   const result: ActionType<
     typeof bpdPeriodsLoad.success | typeof bpdPeriodsLoad.failure

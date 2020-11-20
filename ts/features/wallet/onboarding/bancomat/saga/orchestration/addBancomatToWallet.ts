@@ -22,6 +22,7 @@ import {
 import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
 import { hasFunctionEnabled } from "../../../../../../utils/walletv2";
 import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
+import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 
 /**
  * Define the workflow that allows the user to add a bancomat to the wallet.
@@ -79,6 +80,8 @@ export function* addBancomatToWalletAndActivateBpd() {
   }
 
   if (res === "completed") {
+    // refresh wallets list
+    yield put(fetchWalletsRequest());
     yield call(activateBpdOnNewBancomat);
   }
 }
