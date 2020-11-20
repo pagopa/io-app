@@ -269,15 +269,19 @@ export function* watchProfile(
   yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
 }
 
+// watch for action of removing account
 export function* handleRemoveAccount() {
+  // dispatch an action to request account deletion
   yield put(
     upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
   );
+  // wait for response (success/failure)
   const upsertUserDataProcessingResponse = yield take([
     upsertUserDataProcessing.success,
     upsertUserDataProcessing.failure
   ]);
 
+  // if success go to remove account success screen
   if (
     isActionOf(
       upsertUserDataProcessing.success,
