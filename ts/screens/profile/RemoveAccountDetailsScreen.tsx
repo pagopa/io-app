@@ -1,16 +1,13 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Input, Item, Label, View } from "native-base";
 import * as React from "react";
-
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import I18n from "../../i18n";
 import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
@@ -36,6 +33,29 @@ const styles = StyleSheet.create({
     marginLeft: 0
   }
 });
+
+const getMotivationItems = (): ReadonlyArray<{
+  label: string;
+  id: RemoveAccountMotivationEnum;
+}> => [
+  {
+    label: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
+    id: RemoveAccountMotivationEnum.NOT_UTILS
+  },
+  {
+    label: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
+    id: RemoveAccountMotivationEnum.NOT_SAFE
+  },
+  {
+    label: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
+    id: RemoveAccountMotivationEnum.NEVER_USED
+  },
+  {
+    label: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
+    id: RemoveAccountMotivationEnum.OTHERS
+  }
+];
+
 /**
  * A screen that ask user the motivation of the account removal
  * Here user can ask to delete his account
@@ -67,6 +87,7 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
     title: I18n.t("profile.main.privacy.removeAccount.info.cta")
   };
 
+  // TODO show the proper message
   const loadingCaption = I18n.t(
     "bonus.bpd.onboarding.loadingActivationStatus.title"
   );
@@ -75,15 +96,17 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
       goBack={true}
       headerTitle={I18n.t("profile.main.title")}
     >
-      {props.isLoading ||
-      pot.isError(
-        props.userDataProcessing[UserDataProcessingChoiceEnum.DELETE]
-      ) ? (
+      {props.isLoading || props.isError ? (
         <LoadingErrorComponent
           isLoading={props.isLoading}
           loadingCaption={loadingCaption}
-          onRetry={() => true}
-        ></LoadingErrorComponent>
+          onRetry={() => {
+            props.onIdentificationSuccess({
+              reason: selectedMotivation,
+              userText: otherMotivation
+            });
+          }}
+        />
       ) : (
         <SafeAreaView style={IOStyles.flex}>
           <Content>
@@ -97,38 +120,11 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
                   "profile.main.privacy.removeAccount.details.question"
                 )}
                 key="delete_reason"
-                items={[
-                  {
-                    label: I18n.t(
-                      "profile.main.privacy.removeAccount.details.answer_1"
-                    ),
-                    id: RemoveAccountMotivationEnum.NOT_UTILS
-                  },
-                  {
-                    label: I18n.t(
-                      "profile.main.privacy.removeAccount.details.answer_2"
-                    ),
-                    id: RemoveAccountMotivationEnum.NOT_SAFE
-                  },
-                  {
-                    label: I18n.t(
-                      "profile.main.privacy.removeAccount.details.answer_3"
-                    ),
-                    id: RemoveAccountMotivationEnum.NEVER_USED
-                  },
-                  {
-                    label: I18n.t(
-                      "profile.main.privacy.removeAccount.details.answer_4"
-                    ),
-                    id: RemoveAccountMotivationEnum.OTHERS
-                  }
-                ]}
+                items={getMotivationItems()}
                 selectedItem={selectedMotivation}
-                onPress={motivationIndex => {
-                  setSelectedMotivation(motivationIndex);
-                }}
+                onPress={setSelectedMotivation}
               />
-              {selectedMotivation === "others" && (
+              {selectedMotivation === RemoveAccountMotivationEnum.OTHERS && (
                 <Item style={styles.noLeftMargin} floatingLabel={true}>
                   <Label>
                     {I18n.t(
@@ -140,9 +136,7 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
                     returnKeyType={"done"}
                     autoFocus={true}
                     maxLength={18}
-                    onChangeText={value => {
-                      setOtherMotivation(value);
-                    }}
+                    onChangeText={setOtherMotivation}
                   />
                 </Item>
               )}
@@ -164,6 +158,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   ) => dispatch(removeAccountMotivation(motivationPayload));
 
   return {
+    onIdentificationSuccess,
     requestIdentification: (
       motivationPayload: RemoveAccountMotivationPayload
     ) =>
@@ -190,11 +185,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 const mapStateToProps = (state: GlobalState) => {
   const userDataProcessing = userDataProcessingSelector(state);
   const isLoading =
-    pot.isLoading(userDataProcessing.DOWNLOAD) ||
-    pot.isUpdating(userDataProcessing.DOWNLOAD);
+    pot.isLoading(userDataProcessing.DELETE) ||
+    pot.isUpdating(userDataProcessing.DELETE);
+  const isError = pot.isError(userDataProcessing.DELETE);
   return {
     userDataProcessing,
-    isLoading
+    isLoading,
+    isError
   };
 };
 
