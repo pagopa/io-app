@@ -28,7 +28,7 @@ const capabilityFactory = (
     case EnableableFunctionsTypeEnum.pagoPA:
       return null;
     case EnableableFunctionsTypeEnum.BPD:
-      const pmHash = getPaymentMethodHash(paymentMethod.info);
+      const pmHash = getPaymentMethodHash(paymentMethod);
       return isBpdEnabled() && pmHash ? (
         <BpdCardCapability hPan={pmHash as HPan} />
       ) : null;

@@ -22,12 +22,12 @@ const FOUR_UNICODE_CIRCLES = "●".repeat(4);
  */
 export const CardBpdToggle: React.FunctionComponent<Props> = props => (
   <PaymentMethodBpdToggle
-    hPan={getPaymentMethodHash(props.card.info) as HPan}
+    hPan={getPaymentMethodHash(props.card) as HPan}
     icon={getCardIconFromBrandLogo(props.card)}
     hasBpdCapability={hasFunctionEnabled(
       props.card,
       EnableableFunctionsTypeEnum.BPD
     )}
-    caption={`${FOUR_UNICODE_CIRCLES} ${props.card.info.creditCard.blurredNumber}`}
+    caption={`${FOUR_UNICODE_CIRCLES} ${props.card.creditCard.blurredNumber}`}
   />
 );

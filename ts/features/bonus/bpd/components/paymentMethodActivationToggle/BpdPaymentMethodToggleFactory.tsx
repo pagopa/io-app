@@ -16,7 +16,7 @@ export const bpdToggleFactory = (paymentMethod: PaymentMethod) => {
   if (isCreditCard(paymentMethod)) {
     return (
       <CardBpdToggle
-        key={getPaymentMethodHash(paymentMethod.info)}
+        key={getPaymentMethodHash(paymentMethod)}
         card={paymentMethod}
       />
     );
@@ -24,7 +24,7 @@ export const bpdToggleFactory = (paymentMethod: PaymentMethod) => {
   if (isBancomat(paymentMethod)) {
     return (
       <BancomatBpdToggle
-        key={getPaymentMethodHash(paymentMethod.info)}
+        key={getPaymentMethodHash(paymentMethod)}
         card={paymentMethod}
       />
     );

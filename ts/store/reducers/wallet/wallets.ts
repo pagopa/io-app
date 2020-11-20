@@ -11,17 +11,14 @@ import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2
 import { getValue } from "../../../features/bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
 import {
-  Wallet,
-  PaymentMethod,
-  isBancomatInfo,
-  isCreditCardInfo,
-  isSatispayInfo,
-  isBpayInfo,
-  isBancomat,
+  BancomatPaymentMethod,
   CreditCardPaymentMethod,
+  isBancomat,
+  isBPay,
   isCreditCard,
-  PaymentMethodInfo,
-  BancomatPaymentMethod
+  isSatispay,
+  PaymentMethod,
+  Wallet
 } from "../../../types/pagopa";
 
 import { PotFromActions } from "../../../types/utils";
@@ -141,20 +138,18 @@ export type EnhancedBancomat = BancomatPaymentMethod & {
   abiInfo?: Abi;
 };
 
-export const getPaymentMethodHash = (
-  paymentMethodInfo: PaymentMethodInfo
-): string | undefined => {
-  if (isBancomatInfo(paymentMethodInfo)) {
-    return paymentMethodInfo.bancomat.hashPan;
+export const getPaymentMethodHash = (pm: PaymentMethod): string | undefined => {
+  if (isBancomat(pm)) {
+    return pm.bancomat.hashPan;
   }
-  if (isCreditCardInfo(paymentMethodInfo)) {
-    return paymentMethodInfo.creditCard.hashPan;
+  if (isCreditCard(pm)) {
+    return pm.creditCard.hashPan;
   }
-  if (isSatispayInfo(paymentMethodInfo)) {
-    return paymentMethodInfo.satispay.uuid;
+  if (isSatispay(pm)) {
+    return pm.satispay.uuid;
   }
-  if (isBpayInfo(paymentMethodInfo)) {
-    return paymentMethodInfo.bPay.uidHash;
+  if (isBPay(pm)) {
+    return pm.bPay.uidHash;
   }
   return undefined;
 };
@@ -171,10 +166,8 @@ export const bancomatSelector = createSelector(
     pot.map(paymentMethodPot, paymentMethod =>
       paymentMethod.filter(isBancomat).map(
         (bancomat): EnhancedBancomat => {
-          const bancomatInfo = bancomat.info;
-          const maybeAbiCode = fromNullable(
-            bancomatInfo.bancomat.issuerAbiCode
-          );
+          const bancomatInfo = bancomat.bancomat;
+          const maybeAbiCode = fromNullable(bancomatInfo.issuerAbiCode);
           const maybeAbis = fromNullable(getValue(abiRemote));
           const maybeAbiInfo = maybeAbiCode.chain(val =>
             maybeAbis.chain(a => fromNullable(a[val]))

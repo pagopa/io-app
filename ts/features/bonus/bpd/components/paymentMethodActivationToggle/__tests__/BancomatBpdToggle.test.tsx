@@ -17,7 +17,6 @@ import {
 import { bancomat } from "../../../store/reducers/__mock__/bancomat";
 import I18n from "../../../../../../i18n";
 import {
-  BancomatInfo,
   BancomatPaymentMethod,
   EnableableFunctionsTypeEnum
 } from "../../../../../../types/pagopa";
@@ -71,7 +70,7 @@ describe("BancomatBpdToggle UI states tests", () => {
             info: {
               ...bancomatMethod.info,
               bancomat: {
-                ...bancomatMethod.info.bancomat,
+                ...bancomatMethod.bancomat,
                 issuerAbiCode: "12345"
               }
             }
@@ -98,7 +97,7 @@ describe("BancomatBpdToggle UI states tests", () => {
             info: {
               ...bancomatMethod.info,
               bancomat: {
-                ...bancomatMethod.info.bancomat,
+                ...bancomatMethod.bancomat,
                 issuerAbiCode: "1234"
               }
             }

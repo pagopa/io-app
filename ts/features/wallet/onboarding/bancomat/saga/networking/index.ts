@@ -129,7 +129,7 @@ export function* handleAddPan(
           wallets.find(
             w =>
               w.paymentMethod &&
-              getPaymentMethodHash(w.paymentMethod.info) === action.payload.hpan
+              getPaymentMethodHash(w.paymentMethod) === action.payload.hpan
           )
         );
         if (

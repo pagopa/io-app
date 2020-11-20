@@ -33,8 +33,8 @@ const BancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
     abiLogo={props.enhancedBancomat.abiInfo?.logoUrl}
     expiringDate={getExpireDate(
-      props.enhancedBancomat.info.bancomat.expireYear,
-      props.enhancedBancomat.info.bancomat.expireMonth
+      props.enhancedBancomat.bancomat.expireYear,
+      props.enhancedBancomat.bancomat.expireMonth
     )}
     user={props.nameSurname ?? ""}
   />

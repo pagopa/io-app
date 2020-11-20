@@ -15,8 +15,8 @@ import {
   paymentMethodsSelector
 } from "../../../../../../store/reducers/wallet/wallets";
 import {
-  BancomatInfo,
-  CreditCardInfo,
+  BancomatPaymentMethod,
+  CreditCardPaymentMethod,
   isBancomat,
   isCreditCard,
   PaymentMethod
@@ -130,7 +130,7 @@ const pickPaymentMethodFromHashpan = (
   pot.getOrElse(
     pot.map(potPaymentMethods, paymentMethods =>
       fromNullable(
-        paymentMethods.find(w => getPaymentMethodHash(w.info) === hashPan)
+        paymentMethods.find(w => getPaymentMethodHash(w) === hashPan)
       )
     ),
     none
@@ -163,19 +163,19 @@ const getTitleFromPaymentMethod = (
   abiList: ReadonlyArray<Abi>
 ) => {
   if (isCreditCard(paymentMethod)) {
-    return getTitleFromCard(paymentMethod.info);
+    return getTitleFromCard(paymentMethod);
   }
   if (isBancomat(paymentMethod)) {
-    return getTitleFromBancomat(paymentMethod.info, abiList);
+    return getTitleFromBancomat(paymentMethod, abiList);
   }
   return FOUR_UNICODE_CIRCLES;
 };
 
-const getTitleFromCard = (creditCard: CreditCardInfo) =>
+const getTitleFromCard = (creditCard: CreditCardPaymentMethod) =>
   `${FOUR_UNICODE_CIRCLES} ${creditCard.creditCard.blurredNumber}`;
 
 const getTitleFromBancomat = (
-  bancomatInfo: BancomatInfo,
+  bancomatInfo: BancomatPaymentMethod,
   abiList: ReadonlyArray<Abi>
 ) =>
   fromNullable(
@@ -232,7 +232,7 @@ export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
     pot.getOrElse(
       pot.map(paymentMethodsPot, paymentMethods =>
         paymentMethods.some(pm =>
-          fromNullable(getPaymentMethodHash(pm.info))
+          fromNullable(getPaymentMethodHash(pm))
             .map(hpan => bpdActivations[hpan])
             .map(
               potActivation =>
@@ -260,7 +260,7 @@ export const walletV2WithActivationStatusSelector = createSelector(
     pot.map(paymentMethodsPot, paymentMethods =>
       paymentMethods.map(pm => {
         // try to extract the activation status to enhance the wallet
-        const activationStatus = fromNullable(getPaymentMethodHash(pm.info))
+        const activationStatus = fromNullable(getPaymentMethodHash(pm))
           .chain(hp => fromNullable(bpdActivations[hp]))
           .map(paymentMethodActivation =>
             pot.getOrElse(

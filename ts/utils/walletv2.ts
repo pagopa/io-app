@@ -2,18 +2,17 @@
  * Return true if function is enabled for the wallet (aka payment method)
  * @param wallet
  */
+import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
+import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
+import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
+import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import {
   EnableableFunctionsTypeEnum,
   PatchedPaymentMethodInfo,
   PatchedWalletV2,
   PaymentMethod,
-  PaymentMethodInfo,
   Wallet
 } from "../types/pagopa";
-import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
-import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
-import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
-import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
@@ -61,20 +60,22 @@ const isWalletV2CreditCard = (
 ): paymentMethodInfo is CardInfo =>
   paymentMethodInfo && wallet.walletType === WalletTypeEnum.Card;
 
-const getPaymentMethodInfo = (wallet: PatchedWalletV2): PaymentMethodInfo => {
+const getPaymentMethod = (
+  wallet: PatchedWalletV2
+): PaymentMethod | undefined => {
   if (isWalletV2CreditCard(wallet, wallet.info)) {
-    return { creditCard: wallet.info, type: WalletTypeEnum.Card };
+    return { ...wallet, kind: "CreditCard", creditCard: wallet.info };
   }
   if (isWalletV2Bancomat(wallet, wallet.info)) {
-    return { bancomat: wallet.info, type: WalletTypeEnum.Bancomat };
+    return { ...wallet, kind: "Bancomat", bancomat: wallet.info };
   }
   if (isWalletV2Satispay(wallet, wallet.info)) {
-    return { satispay: wallet.info, type: WalletTypeEnum.Satispay };
+    return { ...wallet, kind: "Satispay", satispay: wallet.info };
   }
   if (isWalletV2BPay(wallet, wallet.info)) {
-    return { bPay: wallet.info, type: WalletTypeEnum.BPay };
+    return { ...wallet, kind: "BPay", bPay: wallet.info };
   }
-  return { type: "UNKNOWN" };
+  return undefined;
 };
 
 /**
@@ -84,9 +85,9 @@ const getPaymentMethodInfo = (wallet: PatchedWalletV2): PaymentMethodInfo => {
 export const convertWalletV2toWalletV1 = (
   walletV2: PatchedWalletV2
 ): Wallet => {
-  const paymentMethodInfo = getPaymentMethodInfo(walletV2);
+  const paymentMethodInfo = getPaymentMethod(walletV2);
   const card =
-    paymentMethodInfo.type === WalletTypeEnum.Card
+    paymentMethodInfo?.kind === "CreditCard"
       ? paymentMethodInfo.creditCard
       : undefined;
   // if the payment method is a credit card
@@ -121,9 +122,6 @@ export const convertWalletV2toWalletV1 = (
     isPspToIgnore: false,
     registeredNexi: false,
     saved: true,
-    paymentMethod: {
-      ...walletV2,
-      info: getPaymentMethodInfo(walletV2)
-    }
+    paymentMethod: getPaymentMethod(walletV2)
   };
 };

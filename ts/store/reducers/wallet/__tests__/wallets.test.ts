@@ -43,7 +43,7 @@ describe("walletV2 selectors", () => {
       const paymentMethod = maybeCC.value[0].paymentMethod;
       if (paymentMethod) {
         expect(isCreditCard(paymentMethod)).toBeTruthy();
-        expect(getPaymentMethodHash(paymentMethod.info)).toEqual(
+        expect(getPaymentMethodHash(paymentMethod)).toEqual(
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
         );
       }
@@ -60,9 +60,7 @@ describe("walletV2 selectors", () => {
     if (pot.isSome(maybeBancomat)) {
       expect(maybeBancomat.value.length).toEqual(2);
       maybeBancomat.value.forEach(w => {
-        expect(
-          hpans.find(h => h === getPaymentMethodHash(w.info))
-        ).toBeDefined();
+        expect(hpans.find(h => h === getPaymentMethodHash(w))).toBeDefined();
       });
     }
   });
@@ -75,7 +73,7 @@ describe("walletV2 selectors", () => {
       const paymentMethod = maybePagoPaCC.value[0].paymentMethod;
       if (paymentMethod) {
         expect(isCreditCard(paymentMethod)).toBeTruthy();
-        expect(getPaymentMethodHash(paymentMethod.info)).toEqual(
+        expect(getPaymentMethodHash(paymentMethod)).toEqual(
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
         );
       }

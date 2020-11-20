@@ -28,7 +28,7 @@ type Props = {
  * @constructor
  */
 const BancomatBpdToggle: React.FunctionComponent<Props> = props => {
-  const bancomat = props.card.info.bancomat;
+  const bancomat = props.card.bancomat;
   const [abiDescription, setAbiDescription] = React.useState(
     I18n.t("wallet.methods.bancomat.name")
   );
