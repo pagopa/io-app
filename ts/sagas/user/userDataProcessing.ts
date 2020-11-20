@@ -10,6 +10,7 @@ import {
   deleteUserDataProcessing
 } from "../../store/actions/userDataProcessing";
 import { SagaCallReturnType } from "../../types/utils";
+import { getError } from "../../utils/errors";
 
 /**
  * The following logic:
@@ -118,7 +119,7 @@ export function* deleteUserDataProcessingSaga(
     yield put(
       deleteUserDataProcessing.failure({
         choice,
-        error: e
+        error: getError(e)
       })
     );
   }

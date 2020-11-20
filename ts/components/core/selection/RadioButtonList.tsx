@@ -40,10 +40,10 @@ const styles = StyleSheet.create({
 
 /**
  * A list of radio button with an optional heading.
- * The management of the selection is demanded and drived by the `selectedItem` prop.
+ * The management of the selection is demanded and derived by the `selectedItem` prop.
  * The item with the `id` equal to the `selectedItem` is the active one.
  */
-export const RadioButtonList = <T,>(props: Props<T>) => (
+export const RadioButtonList = <T extends any>(props: Props<T>) => (
   <View>
     {props.head && (
       <H4 color={"bluegreyDark"} weight={"Regular"} style={styles.head}>
