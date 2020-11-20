@@ -1,15 +1,15 @@
 import * as React from "react";
 import { View } from "react-native";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import { EnhancedPaymentMethod } from "../../../../../../store/reducers/wallet/wallets";
 import { bpdToggleFactory } from "../BpdPaymentMethodToggleFactory";
-import { PaymentMethod } from "../../../../../../types/pagopa";
 
 type Props = {
-  paymentList: ReadonlyArray<PaymentMethod>;
+  paymentList: ReadonlyArray<EnhancedPaymentMethod>;
 };
 
 /**
- * Render a {@link ReadOnlyArray} of {@link Wallet} using {@link PaymentMethodBpdToggle}
+ * Render a {@link ReadOnlyArray} of {@link EnhancedPaymentMethod} using {@link PaymentMethodBpdToggle}
  * @param props
  * @constructor
  */

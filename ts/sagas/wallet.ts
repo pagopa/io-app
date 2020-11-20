@@ -24,6 +24,7 @@ import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
 import { PaymentManagerClient } from "../api/pagopa";
+import { getCardIconFromBrandLogo } from "../components/wallet/card/Logo";
 import {
   apiUrlPrefix,
   bpdEnabled,
@@ -93,6 +94,7 @@ import {
 } from "../store/actions/wallet/wallets";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
+import { getTitleFromCard } from "../store/reducers/wallet/wallets";
 
 import {
   EnableableFunctionsTypeEnum,
@@ -329,7 +331,15 @@ function* startOrResumeAddCreditCardSaga(
             ) {
               yield put(
                 navigateToActivateBpdOnNewCreditCard({
-                  creditCards: [maybeAddedWallet.paymentMethod]
+                  creditCards: [
+                    {
+                      ...maybeAddedWallet.paymentMethod,
+                      icon: getCardIconFromBrandLogo(
+                        maybeAddedWallet.paymentMethod
+                      ),
+                      caption: getTitleFromCard(maybeAddedWallet.paymentMethod)
+                    }
+                  ]
                 })
               );
             } else {

@@ -12,10 +12,10 @@ import I18n from "../../../../../i18n";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { EnhancedPaymentMethod } from "../../../../../store/reducers/wallet/wallets";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 import { PaymentMethodGroupedList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
 import { walletV2WithActivationStatusSelector } from "../../store/reducers/details/combiner";
-import { PaymentMethod } from "../../../../../types/pagopa";
 
 const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.title"),
@@ -30,7 +30,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const renderPaymentMethod = (
-  potWallets: pot.Pot<ReadonlyArray<PaymentMethod>, Error>
+  potWallets: pot.Pot<ReadonlyArray<EnhancedPaymentMethod>, Error>
 ) =>
   pot.fold(
     potWallets,

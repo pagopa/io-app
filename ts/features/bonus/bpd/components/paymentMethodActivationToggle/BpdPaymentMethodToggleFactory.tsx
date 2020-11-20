@@ -1,33 +1,29 @@
 import * as React from "react";
-import { getPaymentMethodHash } from "../../../../../store/reducers/wallet/wallets";
 import {
-  isBancomat,
-  isCreditCard,
-  PaymentMethod
-} from "../../../../../types/pagopa";
-import BancomatBpdToggle from "./BancomatBpdToggle";
-import { CardBpdToggle } from "./CardBpdToggle";
+  EnhancedPaymentMethod,
+  getPaymentMethodHash
+} from "../../../../../store/reducers/wallet/wallets";
+import { EnableableFunctionsTypeEnum } from "../../../../../types/pagopa";
+import { hasFunctionEnabled } from "../../../../../utils/walletv2";
+import { HPan } from "../../store/actions/paymentMethods";
+import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
 
 /**
  * Return a specific toggle based on the WalletTypeEnum
- * @param wallet
+ * @param paymentMethod
  */
-export const bpdToggleFactory = (paymentMethod: PaymentMethod) => {
-  if (isCreditCard(paymentMethod)) {
-    return (
-      <CardBpdToggle
-        key={getPaymentMethodHash(paymentMethod)}
-        card={paymentMethod}
-      />
-    );
-  }
-  if (isBancomat(paymentMethod)) {
-    return (
-      <BancomatBpdToggle
-        key={getPaymentMethodHash(paymentMethod)}
-        card={paymentMethod}
-      />
-    );
-  }
-  return null;
+export const bpdToggleFactory = (paymentMethod: EnhancedPaymentMethod) => {
+  const hash = getPaymentMethodHash(paymentMethod);
+  return hash ? (
+    <PaymentMethodBpdToggle
+      key={hash}
+      hPan={hash as HPan}
+      icon={paymentMethod.icon}
+      hasBpdCapability={hasFunctionEnabled(
+        paymentMethod,
+        EnableableFunctionsTypeEnum.BPD
+      )}
+      caption={paymentMethod.caption}
+    />
+  ) : null;
 };

@@ -9,12 +9,12 @@ import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
+import { EnhancedPaymentMethod } from "../../../../../../store/reducers/wallet/wallets";
 import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import { PaymentMethodRawList } from "../../../../../bonus/bpd/components/paymentMethodActivationToggle/list/PaymentMethodRawList";
-import { PaymentMethod } from "../../../../../../types/pagopa";
 
 type OwnProps = {
-  paymentMethods: ReadonlyArray<PaymentMethod>;
+  paymentMethods: ReadonlyArray<EnhancedPaymentMethod>;
 };
 
 export type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
@@ -30,6 +30,7 @@ const loadLocales = () => ({
 
 const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body1, body2, skip, continueStr } = loadLocales();
+  console.log("boh");
   return (
     <BaseScreenComponent headerTitle={headerTitle}>
       <SafeAreaView style={IOStyles.flex}>

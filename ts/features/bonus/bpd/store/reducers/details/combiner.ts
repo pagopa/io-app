@@ -11,6 +11,7 @@ import I18n from "../../../../../../i18n";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
+  EnhancedPaymentMethod,
   getPaymentMethodHash,
   paymentMethodsSelector
 } from "../../../../../../store/reducers/wallet/wallets";
@@ -247,7 +248,7 @@ export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
     )
 );
 
-export type PaymentMethodWithActivation = PaymentMethod &
+export type PaymentMethodWithActivation = EnhancedPaymentMethod &
   Partial<Pick<BpdPaymentMethodActivation, "activationStatus">>;
 
 /**

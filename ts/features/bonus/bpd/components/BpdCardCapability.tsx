@@ -12,6 +12,10 @@ import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
+import {
+  EnhancedPaymentMethod,
+  getPaymentMethodHash
+} from "../../../../store/reducers/wallet/wallets";
 import { useLoadPotValue } from "../../../../utils/hooks/useLoadPotValue";
 import { getValueOrElse } from "../model/RemoteValue";
 import { bpdOnboardingStart } from "../store/actions/onboarding";
@@ -30,7 +34,7 @@ import {
 import { useChangeActivationConfirmationBottomSheet } from "./paymentMethodActivationToggle/bottomsheet/BpdChangeActivationConfirmationScreen";
 import { useNotActivableInformationBottomSheet } from "./paymentMethodActivationToggle/bottomsheet/BpdNotActivableInformation";
 
-type OwnProps = { hPan: HPan };
+type OwnProps = { paymentMethod: EnhancedPaymentMethod };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -60,17 +64,27 @@ const handleValueChanged = (props: Props) => {
  * @constructor
  */
 const BpdCardCapability: React.FunctionComponent<Props> = props => {
-  useLoadPotValue(props.hPan, props.bpdPotActivation, () =>
-    props.loadActualValue(props.hPan)
+  const hash = getPaymentMethodHash(props.paymentMethod);
+  // Without hash we cannot asks the state for bpd
+  if (hash === undefined) {
+    return null;
+  }
+  useLoadPotValue(hash, props.bpdPotActivation, () =>
+    props.loadActualValue(hash as HPan)
   );
   const graphicalState: GraphicalValue = calculateBpdToggleGraphicalState(
     props.bpdPotActivation
   );
 
-  const askConfirmation = useChangeActivationConfirmationBottomSheet(props)
-    .present;
+  const askConfirmation = useChangeActivationConfirmationBottomSheet({
+    caption: props.paymentMethod.caption,
+    icon: props.paymentMethod.icon
+  }).present;
 
-  const showExplanation = useNotActivableInformationBottomSheet(props).present;
+  const showExplanation = useNotActivableInformationBottomSheet({
+    caption: props.paymentMethod.caption,
+    icon: props.paymentMethod.icon
+  }).present;
 
   return (
     <View style={styles.row}>
@@ -82,7 +96,7 @@ const BpdCardCapability: React.FunctionComponent<Props> = props => {
       </View>
       <BpdToggle
         graphicalValue={graphicalState}
-        onPress={showExplanation}
+        onPress={() => showExplanation("NotActivable")}
         onValueChanged={_ => handleValueChanged(props)}
       />
     </View>
@@ -98,7 +112,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
-  bpdPotActivation: bpdPaymentMethodValueSelector(state, props.hPan),
+  bpdPotActivation: bpdPaymentMethodValueSelector(
+    state,
+    getPaymentMethodHash(props.paymentMethod)
+  ),
   bpdEnabled: bpdEnabledSelector(state)
 });
 
