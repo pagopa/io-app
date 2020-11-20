@@ -277,6 +277,8 @@ export function BackendClient(
     response_decoder: upsertUserDataProcessingDefaultDecoder()
   };
 
+  // Custom decoder until we fix the problem in the io-utils generator
+  // https://www.pivotaltracker.com/story/show/169915207
   function abortUserDataProcessingDecoderTest() {
     return r.composeResponseDecoders(
       r.composeResponseDecoders(
