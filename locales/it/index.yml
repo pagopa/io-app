@@ -1002,8 +1002,8 @@ wallet:
         two: "non consentono di pagare tramite IO"
         three: ", ma solo presso i punti fisici (POS)."
       debit:
-        title: "Carta di Debito"
-        body: "Se la tua carta PagoBANCOMAT ha anche il logo di un altro circuito (**Maestro, Visa, Mastercard, etc.) ricordati di aggiungerla al portafoglio anche come **carta di debito** per poter effettuare pagamenti su IO o attivare le funzioni disponibili. "
+        title: "La tua carta ha più di un logo?"
+        body: "Se su questa carta è presente anche il logo di un altro circuito (**Maestro, Visa, Mastercard, etc.), aggiungila al portafoglio anche come **carta di debito**. In questo modo potrai registrare correttamente le transazioni ai fini del Cashback ed effettuare pagamenti su IO. "
         addCta: "Aggiungi Carta di Debito"
       removeCta: "Elimina questo metodo di pagamento"
   newRemove:
@@ -1719,11 +1719,11 @@ bonus:
         body: "Ti preghiamo di attendere..."
       noPaymentMethod:
         title: "Aggiungi almeno un metodo di pagamento"
-        body: "Per inziare a raccogliere punti devi aggiungere su IO i tuoi metodi di pagamento elettronico preferiti: oggi sono supportate carte di credito, prepagate, ricaricabili, carte di debito, Bancomat e app e altri strumenti digitali.\n\n
-        In futuro il cashback supporterà altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno la raccolta dei punti!"
+        body: "Per inziare a registrare transazioni valide devi aggiungere su IO i tuoi metodi di pagamento elettronico preferiti: oggi sono supportate carte di credito, debito, prepagate, PagoBancomat, app e altri strumenti digitali.\n\n
+        In futuro verranno supportati altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno il cashback!"
       enrollPaymentMethod:
         title: "Scegli quali metodi di pagamento attivare"
-        body1: "I pagamenti che farai con questi metodi riceveranno il cashback concorreranno alla tua posizione in classifica"
+        body1: "Attiva i metodi salvati nel tuo portafoglio per iniziare a registrare le transazioni valide ai fini del cashback."
         body2: "Potrai aggiungere in ogni momento altri metodi di pagamento su IO e attivare il cashback."
     iban:
       iban: "IBAN"
