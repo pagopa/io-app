@@ -215,7 +215,7 @@ profile:
             return: Return
             cancel: Cancel the deletion
         info:
-          body: !include profile/profile_remove_account_info.md
+          body: "You can exercise your right to have your IO profile deleted at any time\n\nWe inform you that the deletion of your account is final and will take place within 30 days of the request.\n\nIf you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.\n\nWe also point out that any bonuses or discounts obtained through the IO app will no longer be accessible.\n\nYou can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE."
           cta: Continue
         details:
           body: "We would like to know why you are deleting your account, in order to improve in the future. You can also proceed directly with the deletion by clicking on the button below."
@@ -228,7 +228,7 @@ profile:
           cta: Remove Account
         success:
           title: Stiamo processando la tua richiesta.
-          body: !include profile/profile_remove_account_success.md
+          body: "Your request has been taken care of and we will delete your account within 30 days.\n\nYou can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE. By clicking on Exit, your session will be terminated.\n\nThanks for using IO"
           cta: Logout
       exportData:
         cta: Request a copy of your data
