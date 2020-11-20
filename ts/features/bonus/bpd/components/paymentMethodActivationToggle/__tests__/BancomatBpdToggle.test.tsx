@@ -1,29 +1,29 @@
-import * as React from "react";
-import configureMockStore from "redux-mock-store";
 import { render } from "@testing-library/react-native";
-import { Provider } from "react-redux";
 import * as pot from "italia-ts-commons/lib/pot";
-import BancomatBpdToggle from "../BancomatBpdToggle";
+import * as React from "react";
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
+import I18n from "../../../../../../i18n";
+import {
+  IndexedById,
+  toIndexed
+} from "../../../../../../store/helpers/indexer";
+import { getPaymentMethodHash } from "../../../../../../store/reducers/wallet/wallets";
+import {
+  BancomatPaymentMethod,
+  EnableableFunctionsTypeEnum
+} from "../../../../../../types/pagopa";
+import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
 import {
   remoteReady,
   remoteUndefined,
   RemoteValue
 } from "../../../model/RemoteValue";
-import {
-  IndexedById,
-  toIndexed
-} from "../../../../../../store/helpers/indexer";
-import { bancomat } from "../../../store/reducers/__mock__/bancomat";
-import I18n from "../../../../../../i18n";
-import {
-  BancomatPaymentMethod,
-  EnableableFunctionsTypeEnum
-} from "../../../../../../types/pagopa";
-import { BpdPotPaymentMethodActivation } from "../../../store/reducers/details/paymentMethods";
 import { HPan } from "../../../store/actions/paymentMethods";
-import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
-import { getPaymentMethodHash } from "../../../../../../store/reducers/wallet/wallets";
+import { bancomat } from "../../../store/reducers/__mock__/bancomat";
+import { BpdPotPaymentMethodActivation } from "../../../store/reducers/details/paymentMethods";
+import BancomatBpdToggle from "../BancomatBpdToggle";
 
 jest.mock("../../../../../../utils/hooks/useOnFocus", () => ({
   useNavigationContext: () => ({ isFocused: () => true }),
@@ -37,9 +37,7 @@ jest.mock("@gorhom/bottom-sheet", () => ({
 const bancomatMethod: BancomatPaymentMethod = convertWalletV2toWalletV1(
   bancomat
 ).paymentMethod as BancomatPaymentMethod;
-const bancomatInfo: BancomatInfo = convertWalletV2toWalletV1(bancomat)
-  .paymentMethod!.info as BancomatInfo;
-const hashPan = getPaymentMethodHash(bancomatInfo)!;
+const hashPan = getPaymentMethodHash(bancomatMethod)!;
 const fallbackBankName = I18n.t("wallet.methods.bancomat.name");
 describe("BancomatBpdToggle UI states tests", () => {
   const mockStore = configureMockStore();
