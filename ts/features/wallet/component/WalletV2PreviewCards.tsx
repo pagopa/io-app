@@ -18,10 +18,13 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
   <>
     {pot.getOrElse(
-      pot.map(props.bancomatList, walletv2 => (
+      pot.map(props.bancomatList, b => (
         <>
-          {walletv2.map(w2 => (
-            <BancomatWalletPreview key={w2.idWallet} bancomat={w2} />
+          {b.map(enhancedBancomat => (
+            <BancomatWalletPreview
+              key={enhancedBancomat.idWallet}
+              bancomat={enhancedBancomat}
+            />
           ))}
         </>
       )),

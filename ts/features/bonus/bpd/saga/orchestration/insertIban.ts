@@ -5,7 +5,7 @@ import { call, put, select, take } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
-import { walletV2Selector } from "../../../../../store/reducers/wallet/wallets";
+import { paymentMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
 import { EnableableFunctionsTypeEnum } from "../../../../../types/pagopa";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
 import {
@@ -59,8 +59,8 @@ export function* bpdIbanInsertionWorker() {
     yield put(NavigationActions.back());
   } else {
     if (onboardingOngoing) {
-      const paymentMethods: ReturnType<typeof walletV2Selector> = yield select(
-        walletV2Selector
+      const paymentMethods: ReturnType<typeof paymentMethodsSelector> = yield select(
+        paymentMethodsSelector
       );
       const hasAtLeastOnePaymentMethodWithBpd = pot.getOrElse(
         pot.map(paymentMethods, pm =>
