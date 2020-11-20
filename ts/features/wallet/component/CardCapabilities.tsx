@@ -4,22 +4,23 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H3 } from "../../../components/core/typography/H3";
 import { GlobalState } from "../../../store/reducers/types";
+import { getPaymentMethodHash } from "../../../store/reducers/wallet/wallets";
 import {
   EnableableFunctionsTypeEnum,
-  PatchedWalletV2
+  PaymentMethod
 } from "../../../types/pagopa";
 import BpdCardCapability from "../../bonus/bpd/components/BpdCardCapability";
 import { isBpdEnabled } from "../../bonus/bpd/saga/orchestration/onboarding/startOnboarding";
 import { HPan } from "../../bonus/bpd/store/actions/paymentMethods";
 
-type OwnProps = { paymentMethod: PatchedWalletV2 };
+type OwnProps = { paymentMethod: PaymentMethod };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const capabilityFactory = (
-  paymentMethod: PatchedWalletV2,
+  paymentMethod: PaymentMethod,
   capability: EnableableFunctionsTypeEnum
 ) => {
   switch (capability) {
@@ -27,13 +28,14 @@ const capabilityFactory = (
     case EnableableFunctionsTypeEnum.pagoPA:
       return null;
     case EnableableFunctionsTypeEnum.BPD:
-      return isBpdEnabled() && paymentMethod.info.hashPan ? (
-        <BpdCardCapability hPan={paymentMethod.info.hashPan as HPan} />
+      const pmHash = getPaymentMethodHash(paymentMethod.info);
+      return isBpdEnabled() && pmHash ? (
+        <BpdCardCapability hPan={pmHash as HPan} />
       ) : null;
   }
 };
 
-const generateCapabilityItems = (paymentMethod: PatchedWalletV2) =>
+const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
   paymentMethod.enableableFunctions.reduce((acc, val): ReadonlyArray<
     React.ReactNode
   > => {
