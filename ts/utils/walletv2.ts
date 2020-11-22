@@ -64,16 +64,16 @@ const getPaymentMethod = (
   wallet: PatchedWalletV2
 ): PaymentMethod | undefined => {
   if (isWalletV2CreditCard(wallet, wallet.info)) {
-    return { ...wallet, kind: "CreditCard", creditCard: wallet.info };
+    return { ...wallet, kind: "CreditCard", info: wallet.info };
   }
   if (isWalletV2Bancomat(wallet, wallet.info)) {
-    return { ...wallet, kind: "Bancomat", bancomat: wallet.info };
+    return { ...wallet, kind: "Bancomat", info: wallet.info };
   }
   if (isWalletV2Satispay(wallet, wallet.info)) {
-    return { ...wallet, kind: "Satispay", satispay: wallet.info };
+    return { ...wallet, kind: "Satispay", info: wallet.info };
   }
   if (isWalletV2BPay(wallet, wallet.info)) {
-    return { ...wallet, kind: "BPay", bPay: wallet.info };
+    return { ...wallet, kind: "BPay", info: wallet.info };
   }
   return undefined;
 };
@@ -88,7 +88,7 @@ export const convertWalletV2toWalletV1 = (
   const paymentMethodInfo = getPaymentMethod(walletV2);
   const card =
     paymentMethodInfo?.kind === "CreditCard"
-      ? paymentMethodInfo.creditCard
+      ? paymentMethodInfo.info
       : undefined;
   // if the payment method is a credit card
   // fill the creditCard field of Wallet

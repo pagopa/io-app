@@ -173,15 +173,13 @@ const getTitleFromPaymentMethod = (
 };
 
 const getTitleFromCard = (creditCard: CreditCardPaymentMethod) =>
-  `${FOUR_UNICODE_CIRCLES} ${creditCard.creditCard.blurredNumber}`;
+  `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
 
 const getTitleFromBancomat = (
   bancomatInfo: BancomatPaymentMethod,
   abiList: ReadonlyArray<Abi>
 ) =>
-  fromNullable(
-    abiList.find(abi => abi.abi === bancomatInfo.bancomat.issuerAbiCode)
-  )
+  fromNullable(abiList.find(abi => abi.abi === bancomatInfo.info.issuerAbiCode))
     .map(abi => abi.name)
     .getOrElse(I18n.t("wallet.methods.bancomat.name"));
 

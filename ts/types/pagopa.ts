@@ -161,22 +161,22 @@ export type PaymentMethod =
 
 export type BancomatPaymentMethod = WalletV2WithoutInfo & {
   kind: "Bancomat";
-  bancomat: CardInfo;
+  info: CardInfo;
 };
 
 export type CreditCardPaymentMethod = WalletV2WithoutInfo & {
   kind: "CreditCard";
-  creditCard: CardInfo;
+  info: CardInfo;
 };
 
 export type BPayPaymentMethod = WalletV2WithoutInfo & {
   kind: "BPay";
-  bPay: BPayInfoPagoPa;
+  info: BPayInfoPagoPa;
 };
 
 export type SatispayPaymentMethod = WalletV2WithoutInfo & {
   kind: "Satispay";
-  satispay: SatispayInfoPagoPa;
+  info: SatispayInfoPagoPa;
 };
 
 // payment methods type guards

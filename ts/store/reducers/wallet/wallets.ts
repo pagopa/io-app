@@ -146,7 +146,7 @@ export type EnhancedPaymentMethod =
  */
 const getImageFromPaymentMethod = (paymentMethod: PaymentMethod) => {
   if (isCreditCard(paymentMethod)) {
-    return getCardIconFromBrandLogo(paymentMethod.creditCard);
+    return getCardIconFromBrandLogo(paymentMethod.info);
   }
   if (isBancomat(paymentMethod)) {
     return pagoBancomatImage;
@@ -176,13 +176,13 @@ const getTitleFromPaymentMethod = (
 };
 
 export const getTitleFromCard = (creditCard: CreditCardPaymentMethod) =>
-  `${FOUR_UNICODE_CIRCLES} ${creditCard.creditCard.blurredNumber}`;
+  `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
 
 const getTitleFromBancomat = (
   bancomatInfo: BancomatPaymentMethod,
   abiList: IndexedById<Abi>
 ) =>
-  fromNullable(bancomatInfo.bancomat.issuerAbiCode)
+  fromNullable(bancomatInfo.info.issuerAbiCode)
     .chain(abiCode => fromNullable(abiList[abiCode]))
     .chain(abi => fromNullable(abi.name))
     .getOrElse(I18n.t("wallet.methods.bancomat.name"));
@@ -192,8 +192,8 @@ export const enhanceBancomat = (
   abiList: IndexedById<Abi>
 ): EnhancedBancomat => ({
   ...bancomat,
-  abiInfo: bancomat.bancomat.issuerAbiCode
-    ? abiList[bancomat.bancomat.issuerAbiCode]
+  abiInfo: bancomat.info.issuerAbiCode
+    ? abiList[bancomat.info.issuerAbiCode]
     : undefined,
   caption: getTitleFromBancomat(bancomat, abiList),
   icon: getImageFromPaymentMethod(bancomat)
@@ -248,16 +248,16 @@ export type EnhancedBancomat = BancomatPaymentMethod &
 
 export const getPaymentMethodHash = (pm: PaymentMethod): string | undefined => {
   if (isBancomat(pm)) {
-    return pm.bancomat.hashPan;
+    return pm.info.hashPan;
   }
   if (isCreditCard(pm)) {
-    return pm.creditCard.hashPan;
+    return pm.info.hashPan;
   }
   if (isSatispay(pm)) {
-    return pm.satispay.uuid;
+    return pm.info.uuid;
   }
   if (isBPay(pm)) {
-    return pm.bPay.uidHash;
+    return pm.info.uidHash;
   }
   return undefined;
 };

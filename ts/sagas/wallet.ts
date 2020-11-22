@@ -335,7 +335,7 @@ function* startOrResumeAddCreditCardSaga(
                     {
                       ...maybeAddedWallet.paymentMethod,
                       icon: getCardIconFromBrandLogo(
-                        maybeAddedWallet.paymentMethod.creditCard
+                        maybeAddedWallet.paymentMethod.info
                       ),
                       caption: getTitleFromCard(maybeAddedWallet.paymentMethod)
                     }
