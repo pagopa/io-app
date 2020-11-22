@@ -1,7 +1,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
 import {
-  isCreditCard,
+  getPaymentMethodHash,
+  isRawCreditCard,
   PatchedWalletV2ListResponse
 } from "../../../../types/pagopa";
 import { walletsV2_2, walletsV2_1 } from "../__mocks__/wallets";
@@ -9,7 +10,6 @@ import { toIndexed } from "../../../helpers/indexer";
 import {
   bancomatSelector,
   creditCardWalletV1Selector,
-  getPaymentMethodHash,
   pagoPaCreditCardWalletV1Selector
 } from "../wallets";
 import { GlobalState } from "../../types";
@@ -42,7 +42,7 @@ describe("walletV2 selectors", () => {
       expect(maybeCC.value.length).toEqual(1);
       const paymentMethod = maybeCC.value[0].paymentMethod;
       if (paymentMethod) {
-        expect(isCreditCard(paymentMethod)).toBeTruthy();
+        expect(isRawCreditCard(paymentMethod)).toBeTruthy();
         expect(getPaymentMethodHash(paymentMethod)).toEqual(
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
         );
@@ -72,7 +72,7 @@ describe("walletV2 selectors", () => {
       expect(maybePagoPaCC.value.length).toEqual(1);
       const paymentMethod = maybePagoPaCC.value[0].paymentMethod;
       if (paymentMethod) {
-        expect(isCreditCard(paymentMethod)).toBeTruthy();
+        expect(isRawCreditCard(paymentMethod)).toBeTruthy();
         expect(getPaymentMethodHash(paymentMethod)).toEqual(
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
         );

@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { EnhancedBancomat } from "../../../../../store/reducers/wallet/wallets";
+import { BancomatPaymentMethod } from "../../../../../types/pagopa";
 import BaseBancomatCard from "./BaseBancomatCard";
 
-type OwnProps = { enhancedBancomat: EnhancedBancomat };
+type OwnProps = { enhancedBancomat: BancomatPaymentMethod };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &

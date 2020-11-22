@@ -12,7 +12,7 @@ import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
-import { EnhancedBancomat } from "../../../../store/reducers/wallet/wallets";
+import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
@@ -21,7 +21,7 @@ import CardCapabilities from "../../component/CardCapabilities";
 import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
-  bancomat: EnhancedBancomat;
+  bancomat: BancomatPaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -58,7 +58,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  * @constructor
  */
 const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
-  const bancomat: EnhancedBancomat = props.navigation.getParam("bancomat");
+  const bancomat: BancomatPaymentMethod = props.navigation.getParam("bancomat");
   const { present } = useRemovePaymentMethodBottomSheet({
     icon: pagoBancomatImage,
     caption: bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")

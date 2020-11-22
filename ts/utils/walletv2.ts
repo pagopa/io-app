@@ -10,7 +10,7 @@ import {
   EnableableFunctionsTypeEnum,
   PatchedPaymentMethodInfo,
   PatchedWalletV2,
-  PaymentMethod,
+  RawPaymentMethod,
   Wallet
 } from "../types/pagopa";
 import {
@@ -25,7 +25,7 @@ import {
  * @param walletFunction
  */
 export const hasFunctionEnabled = (
-  paymentMethod: PaymentMethod | undefined,
+  paymentMethod: RawPaymentMethod | undefined,
   walletFunction: EnableableFunctionsTypeEnum
 ): boolean =>
   paymentMethod !== undefined &&
@@ -62,7 +62,7 @@ const isWalletV2CreditCard = (
 
 const getPaymentMethod = (
   wallet: PatchedWalletV2
-): PaymentMethod | undefined => {
+): RawPaymentMethod | undefined => {
   if (isWalletV2CreditCard(wallet, wallet.info)) {
     return { ...wallet, kind: "CreditCard", info: wallet.info };
   }

@@ -1,9 +1,9 @@
 import * as React from "react";
 import {
-  EnhancedPaymentMethod,
-  getPaymentMethodHash
-} from "../../../../../store/reducers/wallet/wallets";
-import { EnableableFunctionsTypeEnum } from "../../../../../types/pagopa";
+  EnableableFunctionsTypeEnum,
+  getPaymentMethodHash,
+  PaymentMethod
+} from "../../../../../types/pagopa";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
 import { HPan } from "../../store/actions/paymentMethods";
 import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
@@ -12,7 +12,7 @@ import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
  * Return a specific toggle based on the WalletTypeEnum
  * @param paymentMethod
  */
-export const bpdToggleFactory = (paymentMethod: EnhancedPaymentMethod) => {
+export const bpdToggleFactory = (paymentMethod: PaymentMethod) => {
   const hash = getPaymentMethodHash(paymentMethod);
   return hash ? (
     <PaymentMethodBpdToggle

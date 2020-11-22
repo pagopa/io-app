@@ -1,5 +1,5 @@
 import { Action, combineReducers } from "redux";
-import { BancomatPaymentMethod } from "../../../../../../types/pagopa";
+import { RawBancomatPaymentMethod } from "../../../../../../types/pagopa";
 import abiSelectedReducer, { AbiSelected } from "./abiSelected";
 import addedPansReducer from "./addedPans";
 import addingPansReducer, { AddingPansState } from "./addingPans";
@@ -8,7 +8,7 @@ import pansReducer, { Pans } from "./pans";
 export type BancomatState = {
   foundPans: Pans;
   addingPans: AddingPansState;
-  addedPans: ReadonlyArray<BancomatPaymentMethod>;
+  addedPans: ReadonlyArray<RawBancomatPaymentMethod>;
   abiSelected: AbiSelected;
 };
 

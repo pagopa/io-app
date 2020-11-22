@@ -2,18 +2,18 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import {
+  BancomatPaymentMethod,
   enhanceBancomat,
-  EnhancedBancomat
-} from "../../../../../../store/reducers/wallet/wallets";
-import { BancomatPaymentMethod } from "../../../../../../types/pagopa";
+  RawBancomatPaymentMethod
+} from "../../../../../../types/pagopa";
 import { getValueOrElse } from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../store/abi";
 import { addBancomatToWallet, walletAddBancomatStart } from "../actions";
 
 const addedPansReducer = (
-  state: ReadonlyArray<BancomatPaymentMethod> = [],
+  state: ReadonlyArray<RawBancomatPaymentMethod> = [],
   action: Action
-): ReadonlyArray<BancomatPaymentMethod> => {
+): ReadonlyArray<RawBancomatPaymentMethod> => {
   switch (action.type) {
     // Register a new Bancomat added in the current onboarding session
     case getType(addBancomatToWallet.success):
@@ -25,14 +25,9 @@ const addedPansReducer = (
   return state;
 };
 
-// export const onboardingBancomatAddedPansSelector = (
-//   state: GlobalState
-// ): ReadonlyArray<BancomatPaymentMethod> =>
-//   state.wallet.onboarding.bancomat.addedPans;
-
 export const onboardingBancomatAddedPansSelector = createSelector(
   [state => state.wallet.onboarding.bancomat.addedPans, abiSelector],
-  (addedPans, remoteAbi): ReadonlyArray<EnhancedBancomat> =>
+  (addedPans, remoteAbi): ReadonlyArray<BancomatPaymentMethod> =>
     addedPans.map(p => enhanceBancomat(p, getValueOrElse(remoteAbi, {})))
 );
 

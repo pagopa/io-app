@@ -9,12 +9,12 @@ import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
-import { EnhancedPaymentMethod } from "../../../../../../store/reducers/wallet/wallets";
+import { PaymentMethod } from "../../../../../../types/pagopa";
 import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import { PaymentMethodRawList } from "../../../../../bonus/bpd/components/paymentMethodActivationToggle/list/PaymentMethodRawList";
 
 type OwnProps = {
-  paymentMethods: ReadonlyArray<EnhancedPaymentMethod>;
+  paymentMethods: ReadonlyArray<PaymentMethod>;
 };
 
 export type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;

@@ -4,19 +4,21 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H3 } from "../../../components/core/typography/H3";
 import { GlobalState } from "../../../store/reducers/types";
-import { EnhancedPaymentMethod } from "../../../store/reducers/wallet/wallets";
-import { EnableableFunctionsTypeEnum } from "../../../types/pagopa";
+import {
+  EnableableFunctionsTypeEnum,
+  PaymentMethod
+} from "../../../types/pagopa";
 import BpdCardCapability from "../../bonus/bpd/components/BpdCardCapability";
 import { isBpdEnabled } from "../../bonus/bpd/saga/orchestration/onboarding/startOnboarding";
 
-type OwnProps = { paymentMethod: EnhancedPaymentMethod };
+type OwnProps = { paymentMethod: PaymentMethod };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const capabilityFactory = (
-  paymentMethod: EnhancedPaymentMethod,
+  paymentMethod: PaymentMethod,
   capability: EnableableFunctionsTypeEnum
 ) => {
   switch (capability) {
@@ -30,7 +32,7 @@ const capabilityFactory = (
   }
 };
 
-const generateCapabilityItems = (paymentMethod: EnhancedPaymentMethod) =>
+const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
   paymentMethod.enableableFunctions.reduce((acc, val): ReadonlyArray<
     React.ReactNode
   > => {

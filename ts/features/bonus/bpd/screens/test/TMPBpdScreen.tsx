@@ -13,10 +13,8 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  EnhancedPaymentMethod,
-  paymentMethodsSelector
-} from "../../../../../store/reducers/wallet/wallets";
+import { paymentMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
+import { PaymentMethod } from "../../../../../types/pagopa";
 import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { PaymentMethodRawList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodRawList";
 import {
@@ -46,7 +44,7 @@ const renderBpdActive = (value: RemoteValue<boolean, Error>) =>
   );
 
 const renderPaymentMethod = (
-  potPaymentMethod: pot.Pot<ReadonlyArray<EnhancedPaymentMethod>, Error>
+  potPaymentMethod: pot.Pot<ReadonlyArray<PaymentMethod>, Error>
 ) =>
   pot.fold(
     potPaymentMethod,

@@ -10,16 +10,14 @@ import {
 import I18n from "../../../../../../i18n";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { paymentMethodsSelector } from "../../../../../../store/reducers/wallet/wallets";
 import {
-  EnhancedPaymentMethod,
+  RawBancomatPaymentMethod,
+  RawCreditCardPaymentMethod,
+  isRawBancomat,
+  isRawCreditCard,
+  RawPaymentMethod,
   getPaymentMethodHash,
-  paymentMethodsSelector
-} from "../../../../../../store/reducers/wallet/wallets";
-import {
-  BancomatPaymentMethod,
-  CreditCardPaymentMethod,
-  isBancomat,
-  isCreditCard,
   PaymentMethod
 } from "../../../../../../types/pagopa";
 import { abiListSelector } from "../../../../../wallet/onboarding/store/abi";
@@ -126,8 +124,8 @@ export const bpdPeriodsAmountSnappedListSelector = createSelector(
  */
 const pickPaymentMethodFromHashpan = (
   hashPan: string,
-  potPaymentMethods: pot.Pot<ReadonlyArray<PaymentMethod>, Error>
-): Option<PaymentMethod> =>
+  potPaymentMethods: pot.Pot<ReadonlyArray<RawPaymentMethod>, Error>
+): Option<RawPaymentMethod> =>
   pot.getOrElse(
     pot.map(potPaymentMethods, paymentMethods =>
       fromNullable(
@@ -138,14 +136,14 @@ const pickPaymentMethodFromHashpan = (
   );
 
 /**
- * Choose an image to represent a {@link PaymentMethod}
+ * Choose an image to represent a {@link RawPaymentMethod}
  * @param paymentMethod
  */
-const getImageFromPaymentMethod = (paymentMethod: PaymentMethod) => {
-  if (isCreditCard(paymentMethod)) {
+const getImageFromPaymentMethod = (paymentMethod: RawPaymentMethod) => {
+  if (isRawCreditCard(paymentMethod)) {
     return getCardIconFromBrandLogo(paymentMethod);
   }
-  if (isBancomat(paymentMethod)) {
+  if (isRawBancomat(paymentMethod)) {
     return pagoBancomatImage;
   }
   return cardIcons.UNKNOWN;
@@ -160,23 +158,23 @@ const FOUR_UNICODE_CIRCLES = "●".repeat(4);
  * @param abiList
  */
 const getTitleFromPaymentMethod = (
-  paymentMethod: PaymentMethod,
+  paymentMethod: RawPaymentMethod,
   abiList: ReadonlyArray<Abi>
 ) => {
-  if (isCreditCard(paymentMethod)) {
+  if (isRawCreditCard(paymentMethod)) {
     return getTitleFromCard(paymentMethod);
   }
-  if (isBancomat(paymentMethod)) {
+  if (isRawBancomat(paymentMethod)) {
     return getTitleFromBancomat(paymentMethod, abiList);
   }
   return FOUR_UNICODE_CIRCLES;
 };
 
-const getTitleFromCard = (creditCard: CreditCardPaymentMethod) =>
+const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
   `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
 
 const getTitleFromBancomat = (
-  bancomatInfo: BancomatPaymentMethod,
+  bancomatInfo: RawBancomatPaymentMethod,
   abiList: ReadonlyArray<Abi>
 ) =>
   fromNullable(abiList.find(abi => abi.abi === bancomatInfo.info.issuerAbiCode))
@@ -192,7 +190,7 @@ const getId = (transaction: BpdTransaction) =>
 export const bpdDisplayTransactionsSelector = createSelector<
   GlobalState,
   pot.Pot<ReadonlyArray<BpdTransaction>, Error>,
-  pot.Pot<ReadonlyArray<PaymentMethod>, Error>,
+  pot.Pot<ReadonlyArray<RawPaymentMethod>, Error>,
   ReadonlyArray<Abi>,
   BpdPeriod | undefined,
   pot.Pot<ReadonlyArray<EnhancedBpdTransaction>, Error>
@@ -246,7 +244,7 @@ export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
     )
 );
 
-export type PaymentMethodWithActivation = EnhancedPaymentMethod &
+export type PaymentMethodWithActivation = PaymentMethod &
   Partial<Pick<BpdPaymentMethodActivation, "activationStatus">>;
 
 /**

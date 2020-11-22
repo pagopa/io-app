@@ -6,7 +6,8 @@ import { SagaCallReturnType } from "../../../../../../types/utils";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import {
-  isBancomat,
+  getPaymentMethodHash,
+  isRawBancomat,
   PaymentManagerToken
 } from "../../../../../../types/pagopa";
 import {
@@ -14,7 +15,6 @@ import {
   loadAbi,
   searchUserPans
 } from "../../store/actions";
-import { getPaymentMethodHash } from "../../../../../../store/reducers/wallet/wallets";
 import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
 
 // load all bancomat abi
@@ -134,7 +134,7 @@ export function* handleAddPan(
         );
         if (
           maybeWallet.isSome() &&
-          isBancomat(maybeWallet.value.paymentMethod)
+          isRawBancomat(maybeWallet.value.paymentMethod)
         ) {
           yield put(
             // success

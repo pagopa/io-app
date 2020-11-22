@@ -12,10 +12,7 @@ import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  EnhancedPaymentMethod,
-  getPaymentMethodHash
-} from "../../../../store/reducers/wallet/wallets";
+import { getPaymentMethodHash, PaymentMethod } from "../../../../types/pagopa";
 import { useLoadPotValue } from "../../../../utils/hooks/useLoadPotValue";
 import { getValueOrElse } from "../model/RemoteValue";
 import { bpdOnboardingStart } from "../store/actions/onboarding";
@@ -34,7 +31,7 @@ import {
 import { useChangeActivationConfirmationBottomSheet } from "./paymentMethodActivationToggle/bottomsheet/BpdChangeActivationConfirmationScreen";
 import { useNotActivableInformationBottomSheet } from "./paymentMethodActivationToggle/bottomsheet/BpdNotActivableInformation";
 
-type OwnProps = { paymentMethod: EnhancedPaymentMethod };
+type OwnProps = { paymentMethod: PaymentMethod };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &

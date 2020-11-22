@@ -1,10 +1,10 @@
 import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
-import { EnhancedPaymentMethod } from "../../../../../../store/reducers/wallet/wallets";
+import { PaymentMethod } from "../../../../../../types/pagopa";
 import ActivateBpdOnNewPaymentMethodScreen from "./ActivateBpdOnNewPaymentMethodScreen";
 
 type ActivateBpdOnNewCreditCardScreenNavigationParams = {
-  creditCards: ReadonlyArray<EnhancedPaymentMethod>;
+  creditCards: ReadonlyArray<PaymentMethod>;
 };
 type Props = NavigationScreenProps<
   ActivateBpdOnNewCreditCardScreenNavigationParams

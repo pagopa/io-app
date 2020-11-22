@@ -94,11 +94,11 @@ import {
 } from "../store/actions/wallet/wallets";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
-import { getTitleFromCard } from "../store/reducers/wallet/wallets";
 
 import {
   EnableableFunctionsTypeEnum,
-  isCreditCard,
+  getTitleFromCard,
+  isRawCreditCard,
   NullableWallet,
   PaymentManagerToken,
   PayRequest
@@ -327,7 +327,7 @@ function* startOrResumeAddCreditCardSaga(
             // otherwise navigate to a screen where is asked to join bpd
             if (
               bpdEnroll.value &&
-              isCreditCard(maybeAddedWallet.paymentMethod)
+              isRawCreditCard(maybeAddedWallet.paymentMethod)
             ) {
               yield put(
                 navigateToActivateBpdOnNewCreditCard({
