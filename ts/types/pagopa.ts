@@ -41,6 +41,7 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
+import { FOUR_UNICODE_CIRCLES } from "../utils/wallet";
 
 /**
  * Union of all possible credit card types
@@ -274,9 +275,6 @@ export const getPaymentMethodHash = (
   }
   return undefined;
 };
-
-// TODO: unify card representation (multiple part of the application use this)
-const FOUR_UNICODE_CIRCLES = "●".repeat(4);
 
 /**
  * Choose an image to represent a {@link RawPaymentMethod}

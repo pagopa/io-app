@@ -3,13 +3,13 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H3 } from "../../../components/core/typography/H3";
+import { bpdEnabled } from "../../../config";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   EnableableFunctionsTypeEnum,
   PaymentMethod
 } from "../../../types/pagopa";
 import BpdCardCapability from "../../bonus/bpd/components/BpdCardCapability";
-import { isBpdEnabled } from "../../bonus/bpd/saga/orchestration/onboarding/startOnboarding";
 
 type OwnProps = { paymentMethod: PaymentMethod };
 
@@ -26,7 +26,7 @@ const capabilityFactory = (
     case EnableableFunctionsTypeEnum.pagoPA:
       return null;
     case EnableableFunctionsTypeEnum.BPD:
-      return isBpdEnabled() ? (
+      return bpdEnabled ? (
         <BpdCardCapability paymentMethod={paymentMethod} />
       ) : null;
   }
@@ -40,7 +40,7 @@ const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
     return handlerForCapability === null ? acc : [...acc, handlerForCapability];
   }, [] as ReadonlyArray<React.ReactNode>);
 
-const CardCapabilities: React.FunctionComponent<Props> = props => {
+const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
   const capabilityItems = generateCapabilityItems(props.paymentMethod);
   if (capabilityItems.length === 0) {
     return null;
@@ -58,4 +58,7 @@ const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardCapabilities);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaymentMethodCapabilities);

@@ -17,16 +17,12 @@ import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
-import { isExpiredCard } from "../../../utils/wallet";
+import { FOUR_UNICODE_CIRCLES, isExpiredCard } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
-
-// TODO: the "*" character renders differently (i.e. a larger circle) on
-// some devices @https://www.pivotaltracker.com/story/show/159231780
-const FOUR_UNICODE_CIRCLES = "●".repeat(4);
 
 interface BaseProps {
   wallet: Wallet;

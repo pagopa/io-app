@@ -14,10 +14,10 @@ import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
+import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
-import CardCapabilities from "../../component/CardCapabilities";
 import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
@@ -85,7 +85,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       <View spacer={true} />
 
       <View style={IOStyles.horizontalContentPadding}>
-        <CardCapabilities paymentMethod={bancomat} />
+        <PaymentMethodCapabilities paymentMethod={bancomat} />
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />

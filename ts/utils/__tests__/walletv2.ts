@@ -64,6 +64,7 @@ describe("convert and recognize 1 bancomat, 1 satispay, 1 bancomat pay, 1 credit
       wallets.filter(w => isRawCreditCard(w.paymentMethod)).length
     ).toEqual(1);
   });
+  // eslint-disable-next-line sonarjs/no-identical-functions
   it("should recognize bancomat", () => {
     expect(wallets.filter(w => isRawBancomat(w.paymentMethod)).length).toEqual(
       1

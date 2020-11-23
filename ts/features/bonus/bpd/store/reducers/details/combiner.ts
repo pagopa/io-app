@@ -1,26 +1,14 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
-import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
-import pagoBancomatImage from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
-import {
-  cardIcons,
-  getCardIconFromBrandLogo
-} from "../../../../../../components/wallet/card/Logo";
-import I18n from "../../../../../../i18n";
+import { cardIcons } from "../../../../../../components/wallet/card/Logo";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
-import { GlobalState } from "../../../../../../store/reducers/types";
 import { paymentMethodsSelector } from "../../../../../../store/reducers/wallet/wallets";
 import {
-  RawBancomatPaymentMethod,
-  RawCreditCardPaymentMethod,
-  isRawBancomat,
-  isRawCreditCard,
-  RawPaymentMethod,
   getPaymentMethodHash,
   PaymentMethod
 } from "../../../../../../types/pagopa";
-import { abiListSelector } from "../../../../../wallet/onboarding/store/abi";
+import { FOUR_UNICODE_CIRCLES } from "../../../../../../utils/wallet";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { BpdAmount } from "../../actions/amount";
@@ -120,12 +108,12 @@ export const bpdPeriodsAmountSnappedListSelector = createSelector(
 /**
  * Pick a payment instrument from the wallet, using the provided hashpan
  * @param hashPan
- * @param potWalletV2
+ * @param potPaymentMethods
  */
 const pickPaymentMethodFromHashpan = (
   hashPan: string,
-  potPaymentMethods: pot.Pot<ReadonlyArray<RawPaymentMethod>, Error>
-): Option<RawPaymentMethod> =>
+  potPaymentMethods: pot.Pot<ReadonlyArray<PaymentMethod>, Error>
+): Option<PaymentMethod> =>
   pot.getOrElse(
     pot.map(potPaymentMethods, paymentMethods =>
       fromNullable(
@@ -135,83 +123,34 @@ const pickPaymentMethodFromHashpan = (
     none
   );
 
-/**
- * Choose an image to represent a {@link RawPaymentMethod}
- * @param paymentMethod
- */
-const getImageFromPaymentMethod = (paymentMethod: RawPaymentMethod) => {
-  if (isRawCreditCard(paymentMethod)) {
-    return getCardIconFromBrandLogo(paymentMethod);
-  }
-  if (isRawBancomat(paymentMethod)) {
-    return pagoBancomatImage;
-  }
-  return cardIcons.UNKNOWN;
-};
-
-// TODO: unify card representation (multiple part of the application use this)
-const FOUR_UNICODE_CIRCLES = "●".repeat(4);
-
-/**
- * Choose a textual representation for a {@link PatchedWalletV2}
- * @param paymentMethod
- * @param abiList
- */
-const getTitleFromPaymentMethod = (
-  paymentMethod: RawPaymentMethod,
-  abiList: ReadonlyArray<Abi>
-) => {
-  if (isRawCreditCard(paymentMethod)) {
-    return getTitleFromCard(paymentMethod);
-  }
-  if (isRawBancomat(paymentMethod)) {
-    return getTitleFromBancomat(paymentMethod, abiList);
-  }
-  return FOUR_UNICODE_CIRCLES;
-};
-
-const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
-  `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
-
-const getTitleFromBancomat = (
-  bancomatInfo: RawBancomatPaymentMethod,
-  abiList: ReadonlyArray<Abi>
-) =>
-  fromNullable(abiList.find(abi => abi.abi === bancomatInfo.info.issuerAbiCode))
-    .map(abi => abi.name)
-    .getOrElse(I18n.t("wallet.methods.bancomat.name"));
-
 const getId = (transaction: BpdTransaction) =>
   `${transaction.awardPeriodId}${transaction.trxDate}${transaction.hashPan}${transaction.idTrxAcquirer}${transaction.idTrxIssuer}${transaction.amount}`;
 
 /**
- * Enhance a {@link BpdTransaction} with an image and a title, using the wallet and the abilist
+ * Enhance a {@link BpdTransaction}, trying to found the payment method in the wallet,
+ * in order to associate a caption and an icon
  */
-export const bpdDisplayTransactionsSelector = createSelector<
-  GlobalState,
-  pot.Pot<ReadonlyArray<BpdTransaction>, Error>,
-  pot.Pot<ReadonlyArray<RawPaymentMethod>, Error>,
-  ReadonlyArray<Abi>,
-  BpdPeriod | undefined,
-  pot.Pot<ReadonlyArray<EnhancedBpdTransaction>, Error>
->(
+export const bpdDisplayTransactionsSelector = createSelector(
   [
     bpdTransactionsForSelectedPeriod,
     paymentMethodsSelector,
-    abiListSelector,
     bpdSelectedPeriodSelector
   ],
-  (potTransactions, paymentMethod, abiList, period) =>
+  (
+    potTransactions,
+    paymentMethod,
+    period
+  ): pot.Pot<ReadonlyArray<EnhancedBpdTransaction>, Error> =>
     pot.map(potTransactions, transactions =>
       transactions.map(
         t =>
           ({
             ...t,
             image: pickPaymentMethodFromHashpan(t.hashPan, paymentMethod)
-              .map(getImageFromPaymentMethod)
+              .map(pm => pm.icon)
               .getOrElse(cardIcons.UNKNOWN),
             title: pickPaymentMethodFromHashpan(t.hashPan, paymentMethod)
-              .map(w2 => getTitleFromPaymentMethod(w2, abiList))
+              .map(pm => pm.caption)
               .getOrElse(FOUR_UNICODE_CIRCLES),
             keyId: getId(t),
             maxCashbackForTransactionAmount: period?.maxTransactionCashback
