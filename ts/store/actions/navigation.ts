@@ -152,6 +152,15 @@ export const navigateToLanguagePreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_LANGUAGE
   });
 
+export const navigateToRemoveAccountSuccess = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
+  });
+
+export const navigateToPrivacyScreen = NavigationActions.navigate({
+  routeName: ROUTES.PROFILE_PRIVACY_MAIN,
+  action: NavigationActions.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
+});
 /**
  * Wallet & Payments
  */
