@@ -143,7 +143,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     // Amount
     case getType(bpdAmountLoad.request):
-      return mp.track(action.type, { reason: action.payload });
+      return mp.track(action.type, { awardPeriodId: action.payload });
     case getType(bpdAmountLoad.success):
       return mp.track(action.type);
     case getType(bpdAmountLoad.failure):
