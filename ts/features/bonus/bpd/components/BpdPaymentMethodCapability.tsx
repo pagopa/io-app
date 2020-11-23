@@ -57,7 +57,9 @@ const handleValueChanged = (props: Props, changeActivation: () => void) => {
 };
 
 /**
- *
+ * Represent the bpd capability on a payment method.
+ * The user can choose to activate o deactivate bpd on that payment method.
+ * If the user is not enrolled to bpd, the activation triggers the onboarding to bpd.
  * @constructor
  */
 const BpdPaymentMethodCapability: React.FunctionComponent<Props> = props => {
