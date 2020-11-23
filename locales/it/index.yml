@@ -1792,6 +1792,7 @@ bonus:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
         detail:
+          empty: "Qui visualizzerai le transazioni valide ai fini del cashback: per ora non è ancora attiva transazione valida."
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?

@@ -28,6 +28,7 @@ import { bpdAmountForSelectedPeriod } from "../../../store/reducers/details/amou
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import BpdEmptyTransactionsList from "./BpdEmptyTransactionsList";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -214,6 +215,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
                 totalAmount={props.selectedAmount.value}
               />
             )}
+          {transactions.length === 0 && <BpdEmptyTransactionsList />}
           <View spacer={true} />
         </View>
         {props.selectedPeriod && (
@@ -242,7 +244,9 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  transactionForSelectedPeriod: bpdDisplayTransactionsSelector(state),
+  transactionForSelectedPeriod: /* bpdDisplayTransactionsSelector(state) */ pot.some(
+    []
+  ),
   selectedPeriod: bpdSelectedPeriodSelector(state),
   selectedAmount: bpdAmountForSelectedPeriod(state)
 });

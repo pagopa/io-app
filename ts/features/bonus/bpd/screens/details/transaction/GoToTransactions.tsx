@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -23,16 +24,26 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const GoToTransactions: React.FunctionComponent<Props> = props => {
-  const canRenderButton = pot.getOrElse(
-    pot.map(props.transactions, val => val.length > 0),
-    false
-  );
+  const canRenderButton = fromNullable(props.selectedPeriod).fold(false, sp => {
+    switch (sp.status) {
+      case "Closed":
+        return pot.getOrElse(
+          pot.map(props.transactions, val => val.length > 0),
+          false
+        );
+      case "Inactive":
+        return false;
+      default:
+        return true;
+    }
+  });
 
   return canRenderButton ? (
     <ButtonDefaultOpacity
       block={true}
       onPress={props.goToTransactions}
       activeOpacity={1}
+      style={{ marginBottom: 23 }}
     >
       <IconFont name="io-transactions" size={24} color={"white"} />
       <Label color={"white"}>
