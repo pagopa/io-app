@@ -33,7 +33,7 @@ const mapNetworkCircuitType: Map<string, CircuitType> = new Map<
   ["06", "Diners"],
   ["07", "PostePay"],
   ["08", "BancomatPay"],
-  ["09", "SatisPaya"],
+  ["09", "SatisPay"],
   ["10", "Private"]
 ]);
 
