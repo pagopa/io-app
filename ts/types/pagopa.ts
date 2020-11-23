@@ -30,6 +30,8 @@ import {
   CreditCardPan
 } from "../utils/input";
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
+import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
+import { BPayInfo as BPayInfoPagoPa } from "../../definitions/pagopa/walletv2/BPayInfo";
 
 /**
  * Union of all possible credit card types
@@ -108,7 +110,14 @@ export enum EnableableFunctionsTypeEnum {
 }
 
 // required attributes
-
+const PatchedPaymentMethodInfo = t.union([
+  CardInfo,
+  SatispayInfoPagoPa,
+  BPayInfoPagoPa
+]);
+export type PatchedPaymentMethodInfo = t.TypeOf<
+  typeof PatchedPaymentMethodInfo
+>;
 const WalletV2O = t.partial({
   updateDate: t.string,
   createDate: t.string,
@@ -125,7 +134,7 @@ const WalletV2R = t.interface({
     ),
     "array of enableableFunctions"
   ),
-  info: CardInfo,
+  info: PatchedPaymentMethodInfo,
   idWallet: t.Integer,
   pagoPA: t.boolean,
   walletType: enumType<WalletTypeEnum>(WalletTypeEnum, "walletType")
@@ -137,6 +146,95 @@ export const PatchedWalletV2 = t.intersection(
 );
 
 export type PatchedWalletV2 = t.TypeOf<typeof PatchedWalletV2>;
+
+export type BancomatInfo = {
+  type: WalletTypeEnum.Bancomat;
+  bancomat: CardInfo;
+};
+export type CreditCardInfo = {
+  type: WalletTypeEnum.Card;
+  creditCard: CardInfo;
+};
+export type SatispayInfo = {
+  type: WalletTypeEnum.Satispay;
+  satispay: SatispayInfoPagoPa;
+};
+
+export type BPayInfo = {
+  type: WalletTypeEnum.BPay;
+  bPay: BPayInfoPagoPa;
+};
+/**
+ * PaymentMethodInfo could be
+ * - credit card
+ * - bancomat
+ * - satispay
+ * - bancomat pay
+ * - unknown
+ */
+export type PaymentMethodInfo =
+  | BancomatInfo
+  | CreditCardInfo
+  | SatispayInfo
+  | BPayInfo
+  | { type: "UNKNOWN" };
+/**
+ * PaymentMethod is a PatchedWalletV2 without info and walletType fields
+ * and with a new field info of type PaymentMethodInfo
+ */
+export type PaymentMethod = Exclude<PatchedWalletV2, "info" | "walletType"> & {
+  info: PaymentMethodInfo;
+};
+
+export type BancomatPaymentMethod = PaymentMethod & { info: BancomatInfo };
+export type CreditCardPaymentMethod = PaymentMethod & { info: CreditCardInfo };
+export type BPayInfoMethod = PaymentMethod & { info: BPayInfo };
+export type SatispayInfoMethod = PaymentMethod & { info: SatispayInfo };
+
+// payment methods type guards
+export const isBancomat = (
+  methodInfo: PaymentMethod | undefined
+): methodInfo is BancomatPaymentMethod =>
+  methodInfo === undefined ? false : isBancomatInfo(methodInfo.info);
+
+export const isSatispay = (
+  methodInfo: PaymentMethod | undefined
+): methodInfo is SatispayInfoMethod =>
+  methodInfo === undefined ? false : isSatispayInfo(methodInfo.info);
+
+export const isCreditCard = (
+  methodInfo: PaymentMethod | undefined
+): methodInfo is CreditCardPaymentMethod =>
+  methodInfo === undefined ? false : isCreditCardInfo(methodInfo.info);
+
+export const isBPay = (
+  methodInfo: PaymentMethod | undefined
+): methodInfo is BancomatPaymentMethod =>
+  methodInfo === undefined ? false : isBpayInfo(methodInfo.info);
+
+export const isBancomatInfo = (
+  methodInfo: PaymentMethodInfo | undefined
+): methodInfo is BancomatInfo =>
+  methodInfo === undefined
+    ? false
+    : methodInfo.type === WalletTypeEnum.Bancomat;
+
+export const isCreditCardInfo = (
+  methodInfo: PaymentMethodInfo | undefined
+): methodInfo is CreditCardInfo =>
+  methodInfo === undefined ? false : methodInfo.type === WalletTypeEnum.Card;
+
+export const isSatispayInfo = (
+  methodInfo: PaymentMethodInfo | undefined
+): methodInfo is SatispayInfo =>
+  methodInfo === undefined
+    ? false
+    : methodInfo.type === WalletTypeEnum.Satispay;
+
+export const isBpayInfo = (
+  methodInfo: PaymentMethodInfo | undefined
+): methodInfo is BPayInfo =>
+  methodInfo === undefined ? false : methodInfo.type === WalletTypeEnum.BPay;
 
 /**
  * A refined Wallet
@@ -151,9 +249,10 @@ export const Wallet = repP(
   t.union([Psp, t.undefined]),
   "Wallet"
 );
-// add v2 optional field. It may contain a PatchedWalletV2 object
-const WalletV1V2 = t.intersection([Wallet, t.partial({ v2: PatchedWalletV2 })]);
-export type Wallet = t.TypeOf<typeof WalletV1V2>;
+
+export type Wallet = t.TypeOf<typeof Wallet> & {
+  paymentMethod?: PaymentMethod;
+};
 
 /**
  * A Wallet that has not being saved yet

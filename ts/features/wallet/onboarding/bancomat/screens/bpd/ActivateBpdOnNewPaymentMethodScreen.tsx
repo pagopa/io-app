@@ -11,10 +11,10 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import I18n from "../../../../../../i18n";
 import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import { PaymentMethodRawList } from "../../../../../bonus/bpd/components/paymentMethodActivationToggle/list/PaymentMethodRawList";
-import { PatchedWalletV2 } from "../../../../../../types/pagopa";
+import { PaymentMethod } from "../../../../../../types/pagopa";
 
 type OwnProps = {
-  paymentMethods: ReadonlyArray<PatchedWalletV2>;
+  paymentMethods: ReadonlyArray<PaymentMethod>;
 };
 
 export type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
