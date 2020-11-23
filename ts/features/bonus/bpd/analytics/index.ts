@@ -35,6 +35,7 @@ import {
 } from "../../../wallet/onboarding/bancomat/store/actions";
 import { bpdAmountLoad } from "../store/actions/amount";
 import { bpdPeriodsLoad } from "../store/actions/periods";
+import { bpdSelectPeriod } from "../store/actions/selectedPeriod";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -153,6 +154,12 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       });
     case getType(bpdPeriodsLoad.failure):
       return mp.track(action.type, { reason: action.payload.message });
+
+    // SelectedPeriod
+    case getType(bpdSelectPeriod):
+      return mp.track(action.type, {
+        awardPeriodId: action.payload.awardPeriodId
+      });
   }
   return Promise.resolve();
 };
