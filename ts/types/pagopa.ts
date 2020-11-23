@@ -29,6 +29,8 @@ import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
 import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
+import satispayImage from "../../img/wallet/cards-icons/satispay.png";
+import bPayImage from "../../img/wallet/cards-icons/bPay.png";
 import {
   cardIcons,
   getCardIconFromBrandLogo
@@ -287,6 +289,12 @@ const getImageFromPaymentMethod = (paymentMethod: RawPaymentMethod) => {
   if (isRawBancomat(paymentMethod)) {
     return pagoBancomatImage;
   }
+  if (isRawSatispay(paymentMethod)) {
+    return satispayImage;
+  }
+  if (isRawBPay(paymentMethod)) {
+    return bPayImage;
+  }
   return cardIcons.UNKNOWN;
 };
 
@@ -304,6 +312,16 @@ const getTitleFromPaymentMethod = (
   }
   if (isRawBancomat(paymentMethod)) {
     return getTitleFromBancomat(paymentMethod, abiList);
+  }
+  if (isRawSatispay(paymentMethod)) {
+    return I18n.t("wallet.methods.satispay.name");
+  }
+  if (isRawBPay(paymentMethod)) {
+    return (
+      paymentMethod.info.numberObfuscated?.replace(/\*/g, "●") ??
+      paymentMethod.info.bankName ??
+      FOUR_UNICODE_CIRCLES
+    );
   }
   return FOUR_UNICODE_CIRCLES;
 };
