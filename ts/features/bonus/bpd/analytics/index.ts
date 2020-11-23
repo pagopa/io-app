@@ -34,6 +34,7 @@ import {
   walletAddBancomatStart
 } from "../../../wallet/onboarding/bancomat/store/actions";
 import { bpdAmountLoad } from "../store/actions/amount";
+import { bpdPeriodsLoad } from "../store/actions/periods";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -142,6 +143,16 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type);
     case getType(bpdAmountLoad.failure):
       return mp.track(action.type, { reason: action.payload.error.message });
+
+    // Period
+    case getType(bpdPeriodsLoad.request):
+      return mp.track(action.type);
+    case getType(bpdPeriodsLoad.success):
+      return mp.track(action.type, {
+        count: action.payload.length
+      });
+    case getType(bpdPeriodsLoad.failure):
+      return mp.track(action.type, { reason: action.payload.message });
   }
   return Promise.resolve();
 };
