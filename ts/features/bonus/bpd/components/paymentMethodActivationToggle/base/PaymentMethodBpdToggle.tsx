@@ -23,7 +23,7 @@ import {
   useNotActivableInformationBottomSheet
 } from "../bottomsheet/BpdNotActivableInformation";
 import { BpdToggle } from "./BpdToggle";
-import { PaymentMethodRepresentation } from "./PaymentMethodRepresentation";
+import { PaymentMethodRepresentationComponent } from "./PaymentMethodRepresentationComponent";
 
 // TODO: accept only hpan, read all the other information with a selector from payment methods
 export type BpdToggleProps = {
@@ -167,7 +167,7 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
   return (
     <>
       <View style={styles.row}>
-        <PaymentMethodRepresentation
+        <PaymentMethodRepresentationComponent
           icon={props.icon}
           caption={props.caption}
         />

@@ -3,8 +3,9 @@ import { View } from "native-base";
 import * as React from "react";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
+import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 import { bottomSheetContent } from "../../../../../../utils/bottomSheet";
-import { PaymentMethodRepresentation } from "../base/PaymentMethodRepresentation";
+import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
@@ -12,10 +13,7 @@ export type NotActivableType = "NotActivable" | "NotCompatible";
 
 type Props = {
   type: NotActivableType;
-  representation: Omit<
-    React.ComponentProps<typeof PaymentMethodRepresentation>,
-    "children"
-  >;
+  representation: PaymentMethodRepresentation;
 };
 
 const getBody = (type: NotActivableType) => {
@@ -39,17 +37,14 @@ const getTitle = (type: NotActivableType) => {
 export const BpdNotActivableInformation: React.FunctionComponent<Props> = props => (
   <View>
     <View spacer={true} />
-    <PaymentMethodRepresentation {...props.representation} />
+    <PaymentMethodRepresentationComponent {...props.representation} />
     <View spacer={true} />
     <Markdown>{getBody(props.type)}</Markdown>
   </View>
 );
 
 export const useNotActivableInformationBottomSheet = (
-  representation: Omit<
-    React.ComponentProps<typeof PaymentMethodRepresentation>,
-    "children"
-  >
+  representation: PaymentMethodRepresentation
 ) => {
   const { present, dismiss } = useBottomSheetModal();
 

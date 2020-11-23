@@ -13,7 +13,7 @@ import {
   EnableableFunctionsTypeEnum,
   PaymentMethod
 } from "../../../types/pagopa";
-import BpdCardCapability from "../../bonus/bpd/components/BpdCardCapability";
+import BpdPaymentMethodCapability from "../../bonus/bpd/components/BpdPaymentMethodCapability";
 
 type OwnProps = { paymentMethod: PaymentMethod };
 
@@ -36,7 +36,7 @@ const capabilityFactory = (
       return null;
     case EnableableFunctionsTypeEnum.BPD:
       return bpdEnabled ? (
-        <BpdCardCapability paymentMethod={paymentMethod} />
+        <BpdPaymentMethodCapability paymentMethod={paymentMethod} />
       ) : null;
   }
 };

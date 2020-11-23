@@ -60,7 +60,7 @@ const handleValueChanged = (props: Props, changeActivation: () => void) => {
  *
  * @constructor
  */
-const BpdCardCapability: React.FunctionComponent<Props> = props => {
+const BpdPaymentMethodCapability: React.FunctionComponent<Props> = props => {
   const hash = getPaymentMethodHash(props.paymentMethod);
   // Without hash we cannot asks the state for bpd
   if (hash === undefined) {
@@ -122,4 +122,7 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
   bpdEnabled: bpdEnabledSelector(state)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BpdCardCapability);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BpdPaymentMethodCapability);
