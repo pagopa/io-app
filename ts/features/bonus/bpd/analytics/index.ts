@@ -36,6 +36,10 @@ import {
 import { bpdAmountLoad } from "../store/actions/amount";
 import { bpdPeriodsLoad } from "../store/actions/periods";
 import { bpdSelectPeriod } from "../store/actions/selectedPeriod";
+import {
+  bpdPaymentMethodActivation,
+  bpdUpdatePaymentMethodActivation
+} from "../store/actions/paymentMethods";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -159,6 +163,29 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdSelectPeriod):
       return mp.track(action.type, {
         awardPeriodId: action.payload.awardPeriodId
+      });
+
+    // PaymentMethod
+    case getType(bpdPaymentMethodActivation.request):
+      return mp.track(action.type, { hashPan: action.payload });
+    case getType(bpdUpdatePaymentMethodActivation.request):
+      return mp.track(action.type, {
+        hashPan: action.payload.hPan,
+        value: action.payload.value
+      });
+    case getType(bpdPaymentMethodActivation.success):
+    case getType(bpdUpdatePaymentMethodActivation.success):
+      return mp.track(action.type, {
+        hashPan: action.payload.hPan,
+        activationStatus: action.payload.activationStatus,
+        activationDate: action.payload.activationDate,
+        deactivationDate: action.payload.deactivationDate
+      });
+    case getType(bpdPaymentMethodActivation.failure):
+    case getType(bpdUpdatePaymentMethodActivation.failure):
+      return mp.track(action.type, {
+        hashPan: action.payload.hPan,
+        reason: action.payload.error.message
       });
   }
   return Promise.resolve();
