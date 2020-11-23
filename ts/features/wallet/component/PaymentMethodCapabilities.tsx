@@ -1,11 +1,10 @@
 import { View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StyleSheet } from "react-native";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import IconFont from "../../../components/ui/IconFont";
 import { bpdEnabled } from "../../../config";
 import I18n from "../../../i18n";
@@ -22,7 +21,10 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
 
-const styles = StyleSheet.create({ icon: { alignSelf: "center" } });
+const styles = StyleSheet.create({
+  icon: { alignSelf: "center" },
+  row: { flex: 1, flexDirection: "row" }
+});
 
 const capabilityFactory = (
   paymentMethod: PaymentMethod,
@@ -61,7 +63,7 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
 
   return (
     <>
-      <View style={[IOStyles.row, {}]}>
+      <View style={styles.row}>
         <IconFont
           name={"io-preferenze"}
           size={20}

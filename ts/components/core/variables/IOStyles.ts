@@ -1,4 +1,3 @@
-import { StyleProp, ViewStyle } from "react-native";
 import themeVariables from "../../../theme/variables";
 
 /**
@@ -7,7 +6,7 @@ import themeVariables from "../../../theme/variables";
 
 // TODO: in a first iteration, to avoid overlaps,
 //  if a value already exists, will be used from themeVariables
-export const IOStyles: { [key: string]: StyleProp<ViewStyle> } = {
+export const IOStyles = {
   flex: {
     flex: 1
   },
