@@ -33,6 +33,7 @@ import {
   walletAddBancomatCompleted,
   walletAddBancomatStart
 } from "../../../wallet/onboarding/bancomat/store/actions";
+import { bpdAmountLoad } from "../store/actions/amount";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -133,6 +134,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
             ? action.payload.kind
             : action.payload.value.message
       });
+
+    // Amount
+    case getType(bpdAmountLoad.request):
+      return mp.track(action.type, { reason: action.payload });
+    case getType(bpdAmountLoad.success):
+      return mp.track(action.type);
+    case getType(bpdAmountLoad.failure):
+      return mp.track(action.type, { reason: action.payload.error.message });
   }
   return Promise.resolve();
 };
