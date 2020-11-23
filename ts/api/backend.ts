@@ -443,7 +443,8 @@ export function BackendClient(
       createFetchRequestForApi(postUserDataProcessingT, options)
     ),
     getSupportToken: withBearerToken(
-      createFetchRequestForApi(getSupportToken, options),
+      createFetchRequestForApi(getSupportToken, options)
+    ),
     deleteUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(deleteUserDataProcessingT, options)
     )
