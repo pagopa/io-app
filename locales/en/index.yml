@@ -998,6 +998,8 @@ wallet:
     title: "Method deletion"
     body: "Are you sure you want to delete this payment method?"
     warningCapability: "The functions will also be disabled:"
+  capability:
+    title: "Available Functions"
 saveCard:
   saveCard: Save the card
   header: Do you whant to save this card?

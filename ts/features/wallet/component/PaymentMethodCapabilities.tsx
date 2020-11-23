@@ -2,8 +2,13 @@ import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { StyleSheet } from "react-native";
 import { H3 } from "../../../components/core/typography/H3";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import IconFont from "../../../components/ui/IconFont";
 import { bpdEnabled } from "../../../config";
+import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   EnableableFunctionsTypeEnum,
@@ -16,6 +21,8 @@ type OwnProps = { paymentMethod: PaymentMethod };
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
+
+const styles = StyleSheet.create({ icon: { alignSelf: "center" } });
 
 const capabilityFactory = (
   paymentMethod: PaymentMethod,
@@ -40,17 +47,33 @@ const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
     return handlerForCapability === null ? acc : [...acc, handlerForCapability];
   }, [] as ReadonlyArray<React.ReactNode>);
 
+/**
+ * Display the capabilities available for a payment method
+ * @param props
+ * @constructor
+ */
 const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
   const capabilityItems = generateCapabilityItems(props.paymentMethod);
+  // The capability section is not rendered if there is not at least one capacity
   if (capabilityItems.length === 0) {
     return null;
   }
 
   return (
-    <View>
-      <H3 color={"bluegrey"}>Funzioni Disponibili</H3>
+    <>
+      <View style={[IOStyles.row, {}]}>
+        <IconFont
+          name={"io-preferenze"}
+          size={20}
+          color={IOColors.bluegreyDark}
+          style={styles.icon}
+        />
+        <View hspacer={true} />
+        <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
+      </View>
+      <View spacer={true} />
       {capabilityItems.map(c => c)}
-    </View>
+    </>
   );
 };
 

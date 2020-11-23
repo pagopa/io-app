@@ -1025,6 +1025,8 @@ wallet:
     title: "Eliminazione metodo"
     body: "Sei sicuro di voler eliminare questo metodo di pagamento?"
     warningCapability: "Verranno disattivate anche le funzioni: "
+  capability:
+    title: "Funzioni Disponibili"
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
