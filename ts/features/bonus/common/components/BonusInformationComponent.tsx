@@ -2,6 +2,7 @@ import { Content, Text, View } from "native-base";
 import { ComponentProps } from "react";
 import * as React from "react";
 import { Image, StyleSheet, SafeAreaView } from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
@@ -45,7 +46,7 @@ h4 {
   font-size: ${customVariables.fontSize2}px;
 }
 `;
-
+const coverWidth = Math.min(48, widthPercentageToDP("30%"));
 const styles = StyleSheet.create({
   noPadded: {
     paddingLeft: 0,
@@ -58,16 +59,13 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   flexStart: {
+    width: widthPercentageToDP("70%"),
     alignSelf: "center"
   },
   cover: {
     resizeMode: "contain",
-    width: 48,
-    height: 48
-  },
-  bonusImage: {
-    width: 48,
-    height: 48
+    width: coverWidth,
+    height: coverWidth
   },
   row: {
     flexDirection: "row",
