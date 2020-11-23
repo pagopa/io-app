@@ -1,4 +1,4 @@
-import { Content, Text, View } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import { ComponentProps } from "react";
 import * as React from "react";
 import { Image, StyleSheet, SafeAreaView } from "react-native";
@@ -22,6 +22,7 @@ import { useScreenReaderEnabled } from "../../../../utils/accessibility";
 import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
+import { openWebUrl } from "../../../../utils/url";
 
 type OwnProps = {
   bonus: BonusAvailable;
@@ -118,6 +119,23 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
   const onMarkdownLoaded = () => {
     setMarkdownLoaded(true);
   };
+
+  const renderUrls = () => {
+    const urls = bonusTypeLocalizedContent.urls;
+    if (urls === undefined || urls.length === 0) {
+      return null;
+    }
+    const buttons = urls.map((url, idx) => (
+      <Button
+        bordered={true}
+        key={`${idx}_${url.url}`}
+        onPress={() => openWebUrl(url.url)}
+      >
+        <Text style={{ flex: 1, textAlign: "center" }}>{url.name}</Text>
+      </Button>
+    ));
+    return <View>{buttons}</View>;
+  };
   const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
   const maybeCover = maybeNotNullyString(bonusType.cover);
   const maybeSponsorshipDescription = maybeNotNullyString(
@@ -184,12 +202,14 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           >
             {bonusTypeLocalizedContent.content}
           </Markdown>
+          <View spacer={true} extralarge={true} />
+          {renderUrls()}
           {maybeBonusTos.isSome() && (
             <>
               <View spacer={true} extralarge={true} />
               <ItemSeparatorComponent noPadded={true} />
               <View spacer={true} extralarge={true} />
-              <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
+
               <TouchableDefaultOpacity
                 onPress={() => handleModalPress(maybeBonusTos.value)}
                 accessibilityRole={"link"}
@@ -205,6 +225,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
               </TouchableDefaultOpacity>
             </>
           )}
+
           {isMarkdownLoaded && <EdgeBorderComponent />}
         </Content>
         {!isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
