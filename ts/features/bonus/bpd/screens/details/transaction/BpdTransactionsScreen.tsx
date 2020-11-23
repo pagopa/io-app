@@ -244,9 +244,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  transactionForSelectedPeriod: /* bpdDisplayTransactionsSelector(state) */ pot.some(
-    []
-  ),
+  transactionForSelectedPeriod: bpdDisplayTransactionsSelector(state),
   selectedPeriod: bpdSelectedPeriodSelector(state),
   selectedAmount: bpdAmountForSelectedPeriod(state)
 });
