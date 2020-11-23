@@ -22,6 +22,7 @@ import {
   supportTokenSelector,
   SupportTokenState
 } from "../store/reducers/authentication";
+import { loadSupportToken } from "../store/actions/authentication";
 import FAQComponent from "./FAQComponent";
 import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import { BaseHeader } from "./screens/BaseHeader";
@@ -81,6 +82,8 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     ) {
       props.loadContextualHelpData();
     }
+    // refresh / load support token
+    props.loadSupportToken();
   }, [
     pot.isNone(props.potContextualData) || pot.isError(props.potContextualData)
   ]);
@@ -196,6 +199,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const potContextualData = screenContextualHelpDataSelector(state);
   const maybeContextualData = pot.getOrElse(potContextualData, none);
+
   const supportToken = supportTokenSelector(state);
   return {
     supportToken,
@@ -205,7 +209,8 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadContextualHelpData: () => dispatch(loadContextualHelpData.request())
+  loadContextualHelpData: () => dispatch(loadContextualHelpData.request()),
+  loadSupportToken: () => dispatch(loadSupportToken.request())
 });
 
 export default connect(

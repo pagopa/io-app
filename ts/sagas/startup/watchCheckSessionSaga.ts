@@ -89,7 +89,6 @@ export function* watchCheckSessionSaga(
     handleLoadSupportToken,
     getSupportToken
   );
-  yield put(loadSupportToken.request());
 }
 
 export const testableCheckSession = isTestEnv ? checkSession : undefined;
