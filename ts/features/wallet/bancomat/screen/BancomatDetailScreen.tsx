@@ -72,11 +72,6 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       topContent={<View style={styles.headerSpacer} />}
       gradientHeader={true}
       hideHeader={true}
-      footerContent={
-        <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
-        />
-      }
     >
       <View style={styles.cardContainer}>
         <BancomatCard enhancedBancomat={bancomat} />
@@ -90,6 +85,10 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
         <BancomatInformation />
+        <View spacer={true} />
+        <UnsubscribeButton
+          onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
+        />
       </View>
       <View spacer={true} extralarge={true} />
     </DarkLayout>
