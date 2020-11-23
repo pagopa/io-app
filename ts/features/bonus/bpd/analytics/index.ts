@@ -145,7 +145,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdAmountLoad.request):
       return mp.track(action.type, { awardPeriodId: action.payload });
     case getType(bpdAmountLoad.success):
-      return mp.track(action.type);
+    case getType(bpdSelectPeriod): // SelectedPeriod
+      return mp.track(action.type, {
+        awardPeriodId: action.payload.awardPeriodId
+      });
     case getType(bpdAmountLoad.failure):
       return mp.track(action.type, { reason: action.payload.error.message });
 
@@ -158,12 +161,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       });
     case getType(bpdPeriodsLoad.failure):
       return mp.track(action.type, { reason: action.payload.message });
-
-    // SelectedPeriod
-    case getType(bpdSelectPeriod):
-      return mp.track(action.type, {
-        awardPeriodId: action.payload.awardPeriodId
-      });
 
     // PaymentMethod
     case getType(bpdPaymentMethodActivation.request):
