@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   flexEnd: {
-    alignSelf: "center"
+    alignSelf: "flex-start"
   },
   flexStart: {
     width: widthPercentageToDP("70%"),
@@ -110,7 +110,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     block: true,
     primary: true,
     onPress: props.onConfirm,
-    title: I18n.t("bonus.bonusVacanze.cta.requestBonus")
+    title: I18n.t("bonus.bpd.cta.activeBonus")
   };
 
   const onMarkdownLoaded = () => {
