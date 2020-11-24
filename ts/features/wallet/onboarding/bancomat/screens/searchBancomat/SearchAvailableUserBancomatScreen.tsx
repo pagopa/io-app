@@ -49,8 +49,11 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
         m => m.code && servicesSuccessCodes.includes(m.code)
       )
     ) {
+      // The user doesn't have a bancomat
       return <BancomatKoNotFound />;
     }
+    // One of the ca returned with error, the user could have a bancomat
+    // and he should try to search for a single bank
     return <BancomatKoServicesError />;
   }
   if (isError(pans) && pans.error.kind === "timeout") {
