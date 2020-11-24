@@ -45,7 +45,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
   const openTosModal = () => {
     props.showModal(
       <TosBonusComponent
-        tos_url={"https://google.com"}
+        tos_url={"https://io.italia.it/app-content/privacy_bancomat.html"}
         onClose={props.hideModal}
       />
     );
