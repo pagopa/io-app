@@ -5,7 +5,7 @@ import { Body } from "../../../../../../components/core/typography/Body";
 
 const BpdEmptyTransactionsList: React.FunctionComponent = () => (
   <>
-    <Body>I {I18n.t("bonus.bpd.details.transaction.detail.empty")}</Body>
+    <Body>{I18n.t("bonus.bpd.details.transaction.detail.empty")}</Body>
     <View spacer={true} large={true} />
     <Body>
       {I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.body")}
