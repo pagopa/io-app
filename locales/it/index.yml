@@ -719,9 +719,9 @@ wallet:
         body: "Non risultano carte PagoBANCOMAT a te intestate: contatta la tua banca per maggiori informazioni."
         chooseAnother: "Scegli un'altra banca"
       koServicesError:
-         title: "Non è stato possibile recuperare le carte: seleziona la tua banca"
-         body: "Indica la banca che ha emesso la tua carta per vedere le lista delle carte PagoBANCOMAT a te intestate."
-         chooseTheBank: "Seleziona banca"
+        title: "Non è stato possibile recuperare le carte: seleziona la tua banca"
+        body: "Indica la banca che ha emesso la tua carta per vedere le lista delle carte PagoBANCOMAT a te intestate."
+        chooseTheBank: "Seleziona banca"
       loadingSearch:
         title: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo..."
       add:

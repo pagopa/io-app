@@ -698,9 +698,9 @@ wallet:
         body: "There are no PagoBANCOMAT cards registered to you: please contact your bank for further information."
         chooseAnother: "Choose another bank"
       koServicesError:
-         title: "Unable to retrieve your PagoBANCOMAT cards: please select your bank"
-         body: "Choose the bank which issued your card to retrieve all the PagoBANCOMAT cards registered to you."
-         chooseTheBank: "Select bank"
+        title: "Unable to retrieve your PagoBANCOMAT cards: please select your bank"
+        body: "Choose the bank which issued your card to retrieve all the PagoBANCOMAT cards registered to you."
+        chooseTheBank: "Select bank"
       loadingSearch:
         title: "We're retrieving your cards\n\nPlease hold on..."
       add:
