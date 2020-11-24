@@ -1699,6 +1699,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
+  termsAndConditionFooter: "Premendo \"Attiva il cashback\" dichiari di aver letto e compreso il [regolamento]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -1706,6 +1707,8 @@ bonus:
     title: Cashback Pagamenti Digitali
     name: Cashback
     earned: Cashback accumulato
+    cta:
+      activeBonus: Attiva il cashback
     unsubscribe:
       cta: "Cancella la tua iscrizione al cashback"
       title: "Disattivazione cashback"
