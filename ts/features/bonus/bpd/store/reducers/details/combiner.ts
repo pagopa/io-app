@@ -4,10 +4,7 @@ import { createSelector } from "reselect";
 import { cardIcons } from "../../../../../../components/wallet/card/Logo";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
 import { paymentMethodsSelector } from "../../../../../../store/reducers/wallet/wallets";
-import {
-  getPaymentMethodHash,
-  PaymentMethod
-} from "../../../../../../types/pagopa";
+import { PaymentMethod } from "../../../../../../types/pagopa";
 import { FOUR_UNICODE_CIRCLES } from "../../../../../../utils/wallet";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
@@ -15,6 +12,7 @@ import { BpdAmount } from "../../actions/amount";
 import { BpdPaymentMethodActivation } from "../../actions/paymentMethods";
 import { BpdPeriod } from "../../actions/periods";
 import { BpdTransaction } from "../../actions/transactions";
+import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { bpdEnabledSelector } from "./activation";
 import { bpdAllAmountSelector } from "./amounts";
 import { bpdPaymentMethodActivationSelector } from "./paymentMethods";

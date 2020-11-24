@@ -42,6 +42,7 @@ import {
   CreditCardPan
 } from "../utils/input";
 import { FOUR_UNICODE_CIRCLES } from "../utils/wallet";
+import { getTitleFromCard } from "../utils/paymentMethod";
 
 /**
  * Union of all possible credit card types
@@ -258,24 +259,6 @@ export const isBPay = (
   pm: PaymentMethod | undefined
 ): pm is BPayPaymentMethod => (pm === undefined ? false : pm.kind === "BPay");
 
-export const getPaymentMethodHash = (
-  pm: RawPaymentMethod
-): string | undefined => {
-  if (isRawBancomat(pm)) {
-    return pm.info.hashPan;
-  }
-  if (isRawCreditCard(pm)) {
-    return pm.info.hashPan;
-  }
-  if (isRawSatispay(pm)) {
-    return pm.info.uuid;
-  }
-  if (isRawBPay(pm)) {
-    return pm.info.uidHash;
-  }
-  return undefined;
-};
-
 /**
  * Choose an image to represent a {@link RawPaymentMethod}
  * @param paymentMethod
@@ -289,27 +272,6 @@ const getImageFromPaymentMethod = (paymentMethod: RawPaymentMethod) => {
   }
   return cardIcons.UNKNOWN;
 };
-
-/**
- * Choose a textual representation for a {@link PatchedWalletV2}
- * @param paymentMethod
- * @param abiList
- */
-const getTitleFromPaymentMethod = (
-  paymentMethod: RawPaymentMethod,
-  abiList: IndexedById<Abi>
-) => {
-  if (isRawCreditCard(paymentMethod)) {
-    return getTitleFromCard(paymentMethod);
-  }
-  if (isRawBancomat(paymentMethod)) {
-    return getTitleFromBancomat(paymentMethod, abiList);
-  }
-  return FOUR_UNICODE_CIRCLES;
-};
-
-export const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
-  `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
 
 const getTitleFromBancomat = (
   bancomatInfo: RawBancomatPaymentMethod,
@@ -331,6 +293,24 @@ export const enhanceBancomat = (
   caption: getTitleFromBancomat(bancomat, abiList),
   icon: getImageFromPaymentMethod(bancomat)
 });
+
+/**
+ * Choose a textual representation for a {@link PatchedWalletV2}
+ * @param paymentMethod
+ * @param abiList
+ */
+const getTitleFromPaymentMethod = (
+  paymentMethod: RawPaymentMethod,
+  abiList: IndexedById<Abi>
+) => {
+  if (isRawCreditCard(paymentMethod)) {
+    return getTitleFromCard(paymentMethod);
+  }
+  if (isRawBancomat(paymentMethod)) {
+    return getTitleFromBancomat(paymentMethod, abiList);
+  }
+  return FOUR_UNICODE_CIRCLES;
+};
 
 export const enhancePaymentMethod = (
   pm: RawPaymentMethod,

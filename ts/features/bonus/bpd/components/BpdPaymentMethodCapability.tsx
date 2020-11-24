@@ -12,7 +12,7 @@ import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import { getPaymentMethodHash, PaymentMethod } from "../../../../types/pagopa";
+import { PaymentMethod } from "../../../../types/pagopa";
 import { useLoadPotValue } from "../../../../utils/hooks/useLoadPotValue";
 import { getValueOrElse } from "../model/RemoteValue";
 import { bpdOnboardingStart } from "../store/actions/onboarding";
@@ -23,6 +23,7 @@ import {
 } from "../store/actions/paymentMethods";
 import { bpdEnabledSelector } from "../store/reducers/details/activation";
 import { bpdPaymentMethodValueSelector } from "../store/reducers/details/paymentMethods";
+import { getPaymentMethodHash } from "../../../../utils/paymentMethod";
 import { BpdToggle } from "./paymentMethodActivationToggle/base/BpdToggle";
 import {
   calculateBpdToggleGraphicalState,

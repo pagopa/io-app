@@ -1,7 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
 import {
-  getPaymentMethodHash,
   isRawCreditCard,
   PatchedWalletV2ListResponse
 } from "../../../../types/pagopa";
@@ -14,6 +13,7 @@ import {
 } from "../wallets";
 import { GlobalState } from "../../types";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
+import { getPaymentMethodHash } from "../../../../utils/paymentMethod";
 
 describe("walletV2 selectors", () => {
   const maybeWalletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1);
