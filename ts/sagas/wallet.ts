@@ -97,7 +97,6 @@ import { GlobalState } from "../store/reducers/types";
 
 import {
   EnableableFunctionsTypeEnum,
-  getTitleFromCard,
   isRawCreditCard,
   NullableWallet,
   PaymentManagerToken,
@@ -138,6 +137,7 @@ import {
   navigateToSuggestBpdActivation
 } from "../features/wallet/onboarding/bancomat/navigation/action";
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
+import { getTitleFromCard } from "../utils/paymentMethod";
 
 /**
  * Configure the max number of retries and delay between retries when polling
