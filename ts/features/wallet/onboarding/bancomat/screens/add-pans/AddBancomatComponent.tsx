@@ -5,8 +5,9 @@ import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
+import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
-import { H4 } from "../../../../../../components/core/typography/H4";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
@@ -62,14 +63,19 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} large={true} />
           <PreviewBancomatCard bancomat={props.pan} logoUrl={abiLogo} />
           <View spacer={true} large={true} />
-          <H4 color={"bluegrey"} weight={"Regular"}>
+          <Body>
             {props.pansNumber > 1
               ? I18n.t("wallet.onboarding.bancomat.add.bodyPlural", {
                   number: props.pansNumber
                 })
               : I18n.t("wallet.onboarding.bancomat.add.bodySingular")}
-          </H4>
+          </Body>
+          <View spacer={true} large={true} />
+          <InfoBox>
+            <Body>{I18n.t("wallet.onboarding.bancomat.add.warning")}</Body>
+          </InfoBox>
         </View>
+
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(

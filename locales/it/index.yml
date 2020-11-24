@@ -1706,6 +1706,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
+  termsAndConditionFooter: "Premendo \"Attiva il cashback\" dichiari di aver letto e compreso il [regolamento]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -1713,6 +1714,8 @@ bonus:
     title: Cashback Pagamenti Digitali
     name: Cashback
     earned: Cashback accumulato
+    cta:
+      activeBonus: Attiva il cashback
     unsubscribe:
       cta: "Cancella la tua iscrizione al cashback"
       title: "Disattivazione cashback"
@@ -1799,6 +1802,7 @@ bonus:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
         detail:
+          empty: "Qui visualizzerai le transazioni valide ai fini del cashback: per ora non è ancora attiva transazione valida."
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
@@ -1816,6 +1820,9 @@ bonus:
                 other: "{{count}} transazioni valide "
               text4: "e accumulato "
               text5: "un cashback di "
+            milestone:
+              title: "Complimenti, hai ottenuto {{cashbackValue}}"
+              body: "Hai raggiunto il rimborso massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
           title: "Dettaglio della transazione"
           paymentCircuit: "Circuito di pagamento"
           transactionAmount: "Importo transazione"
