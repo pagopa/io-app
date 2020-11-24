@@ -1763,6 +1763,7 @@ bonus:
         title: "Your transactions"
         goToButton: "Transactions detail"
         detail:
+          empty: "Here you will find valid transactions for cashback purposes: no valid transaction is active yet."
           summary:
             bottomSheet:
               title: "When will you find your transactions?"
