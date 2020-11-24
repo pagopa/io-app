@@ -27,7 +27,7 @@ import {
 import { bpdAmountForSelectedPeriod } from "../../../store/reducers/details/amounts";
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import BpdCashbackMilestoneComponent from "./BpdCashbackMilestoneComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -158,12 +158,14 @@ const getTransactionsByDaySections = (
 const renderSectionHeader = (info: {
   section: SectionListData<EnhancedBpdTransaction | TotalCashbackPerDate>;
 }): React.ReactNode => (
-  <BaseDailyTransactionHeader
-    date={info.section.title}
-    transactionsNumber={
-      [...info.section.data].filter(i => !isTotalCashback(i)).length
-    }
-  />
+  <View style={{ paddingHorizontal: 16 }}>
+    <BaseDailyTransactionHeader
+      date={info.section.title}
+      transactionsNumber={
+        [...info.section.data].filter(i => !isTotalCashback(i)).length
+      }
+    />
+  </View>
 );
 
 /**
@@ -187,12 +189,19 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
       // PLACEHOLDER component waiting for story
       // https://www.pivotaltracker.com/story/show/175271516
       return (
-        <View style={{ backgroundColor: IOColors.blue }}>
-          <H1 color={"white"}>CASHBACK!</H1>
-        </View>
+        <BpdCashbackMilestoneComponent
+          cashbackValue={fromNullable(props.selectedPeriod).fold(
+            0,
+            p => p.maxPeriodCashback
+          )}
+        />
       );
     }
-    return <BpdTransactionItem transaction={info.item} />;
+    return (
+      <View style={{ paddingHorizontal: 16 }}>
+        <BpdTransactionItem transaction={info.item} />
+      </View>
+    );
   };
 
   return (
@@ -218,7 +227,6 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
         </View>
         {props.selectedPeriod && (
           <SectionList
-            style={{ paddingHorizontal: 16 }}
             renderSectionHeader={renderSectionHeader}
             scrollEnabled={true}
             stickySectionHeadersEnabled={true}
