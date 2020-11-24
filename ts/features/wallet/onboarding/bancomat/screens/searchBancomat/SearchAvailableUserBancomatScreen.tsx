@@ -42,7 +42,7 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
     return <BancomatKoSingleBankNotFound />;
   }
   if (noBancomatFound) {
-    // check if all services response successfully
+    // check if all services respond without error (success or not found)
     if (
       isReady(pans) &&
       pans.value.messages.every(
