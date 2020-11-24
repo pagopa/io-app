@@ -16,6 +16,8 @@ import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
 import { IndexedById } from "../store/helpers/indexer";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import I18n from "../i18n";
+import satispayImage from "../../img/wallet/cards-icons/satispay.png";
+import bPayImage from "../../img/wallet/cards-icons/bPay.png";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
 
 export const getPaymentMethodHash = (
@@ -50,6 +52,12 @@ export const getImageFromPaymentMethod = (paymentMethod: RawPaymentMethod) => {
   if (isRawBancomat(paymentMethod)) {
     return pagoBancomatImage;
   }
+  if (isRawSatispay(paymentMethod)) {
+    return satispayImage;
+  }
+  if (isRawBPay(paymentMethod)) {
+    return bPayImage;
+  }
   return cardIcons.UNKNOWN;
 };
 
@@ -76,6 +84,16 @@ export const getTitleFromPaymentMethod = (
   }
   if (isRawBancomat(paymentMethod)) {
     return getTitleFromBancomat(paymentMethod, abiList);
+  }
+  if (isRawSatispay(paymentMethod)) {
+    return I18n.t("wallet.methods.satispay.name");
+  }
+  if (isRawBPay(paymentMethod)) {
+    return (
+      paymentMethod.info.numberObfuscated?.replace(/\*/g, "●") ??
+      paymentMethod.info.bankName ??
+      FOUR_UNICODE_CIRCLES
+    );
   }
   return FOUR_UNICODE_CIRCLES;
 };
