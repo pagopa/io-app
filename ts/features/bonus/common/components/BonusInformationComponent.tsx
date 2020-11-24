@@ -47,7 +47,7 @@ h4 {
   font-size: ${customVariables.fontSize2}px;
 }
 `;
-const coverWidth = Math.min(48, widthPercentageToDP("30%"));
+const coverImageWidth = Math.min(48, widthPercentageToDP("30%"));
 const styles = StyleSheet.create({
   noPadded: {
     paddingLeft: 0,
@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
   },
   cover: {
     resizeMode: "contain",
-    width: coverWidth,
-    height: coverWidth
+    width: coverImageWidth,
+    height: coverImageWidth
   },
   row: {
     flexDirection: "row",
@@ -122,9 +122,12 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
       <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
     );
 
+  // bonus rules url should be the first one in the urls list
   const maybeRegulationUrl = fromNullable(
     bonusTypeLocalizedContent.urls
   ).chain(urls => index(0, [...urls]));
+
+  // render a stack of button each one representing a url
   const renderUrls = () => {
     const urls = bonusTypeLocalizedContent.urls;
     if (urls === undefined || urls.length === 0) {
