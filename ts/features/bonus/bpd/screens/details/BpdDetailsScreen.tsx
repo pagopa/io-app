@@ -4,6 +4,8 @@ import { StyleSheet, View } from "react-native";
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import DarkLayout from "../../../../../components/screens/DarkLayout";
 import I18n from "../../../../../i18n";
@@ -13,14 +15,12 @@ import { isError, isLoading, isReady } from "../../model/RemoteValue";
 import { bpdDetailsLoadAll } from "../../store/actions/details";
 import { bpdUnsubscribeCompleted } from "../../store/actions/onboarding";
 import { bpdUnsubscriptionSelector } from "../../store/reducers/details/activation";
-import BpdPeriodSelector from "./BpdPeriodSelector";
-import BpdPeriodDetail from "./periods/BpdPeriodDetail";
-import GoToTransactions from "./transaction/GoToTransactions";
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { bpdTransactionsForSelectedPeriod } from "../../store/reducers/details/transactions";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import { navigateToBpdTransactions } from "../../navigation/actions";
+import BpdPeriodSelector from "./BpdPeriodSelector";
+import BpdPeriodDetail from "./periods/BpdPeriodDetail";
+import GoToTransactions from "./transaction/GoToTransactions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
