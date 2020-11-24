@@ -18,7 +18,7 @@ import {
   isActivationResponseTrackable,
   isEligibilityResponseTrackable
 } from "../../features/bonus/bonusVacanze/utils/bonus";
-import { mixpanel } from "../../mixpanel";
+import { initializeMixPanel, mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
   analyticsAuthenticationCompleted,
@@ -150,15 +150,33 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       // as soon as we have the user fiscal code, attach the mixpanel
       // session to the hashed fiscal code of the user
       const fiscalnumber = action.payload.fiscal_code;
-      const hashedFiscalNumber = sha256(fiscalnumber);
 
       const riconciliation = async () => {
-        const hashedCf = await sha256(fiscalnumber);
+        try {
+          await initializeMixPanel().then(() =>
+            console.log("finish initialization")
+          );
 
-        await mp.alias(hashedCf, DeviceInfo.getUniqueId());
-        await mp.identify(hashedCf);
+          console.log(fiscalnumber);
+          const hashedCf = await sha256(fiscalnumber);
+
+          console.log(hashedCf);
+          await mp.alias(hashedCf, DeviceInfo.getUniqueId());
+          console.log("step 1");
+          await mp.identify(hashedCf);
+        } catch (e) {
+          console.log("entra error fc");
+          console.log(e);
+        }
+
+        // const hashedCf = await sha256(fiscalnumber);
+
+        // reactotron.log(hashedCf);
       };
-      return Promise.all([mp.track(action.type), riconciliation()]);
+      return Promise.all([
+        mp.track(action.type).then(constNull, constNull),
+        riconciliation().then(constNull, constNull)
+      ]);
 
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
