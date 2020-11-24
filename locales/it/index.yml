@@ -707,22 +707,30 @@ wallet:
       label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
   onboarding:
     bancomat:
-      headerTitle: "Aggiungi carta Bancomat"
+      headerTitle: "Aggiungi PagoBANCOMAT"
       koTimeout:
-        title: "Non siamo riusciti a contattare Bancomat."
+        title: "Al momento è impossibile recuperare le tue carte"
         body: "Riprova per favore"
       koNotFound:
         title: "Spiacenti, non abbiamo trovato nessuna carta"
-        body: "Non risultano Bancomat intestati a te"
+        body: "Non risultano Carte PagoBANCOMAT intestate a te: contatta la tua Banca per ulteriori informazioni"
+      koNotFoundSingleBank:
+        title: "Spiacenti, non abbiamo trovato nessuna carta su questa Banca"
+        body: "Non risultano Carte PagoBANCOMAT intestate a te"
         chooseAnother: "Scegli un'altra banca"
+      koServicesError:
+        title: "Non è stato possibile recuperare le carte: scegli la banca"
+        body: "Indica la banca su cui risiede il tuo conto per vedere le lista delle Carte PagoBANCOMAT intestate a te"
+        chooseTheBank: "Scegli la banca"
       loadingSearch:
-        title: "Stiamo chiedendo a Bancomat la lista delle tue carte\n\nAttendi qualche secondo"
+        title: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo"
       add:
         title: "Aggiungi bancomat {{current}} di {{length}}"
         screenTitle: "Vuoi aggiungere questa carta?"
         bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo"
+        warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento indicando la tua Banca dove hai il tuo conto corrente."
       bpd:
         suggestActivation:
           title: "Vuoi attivare il Cashback Pagamenti Digitali?"
@@ -1018,7 +1026,7 @@ wallet:
         three: ", ma solo presso i punti fisici (POS)."
       debit:
         title: "Carta di Debito"
-        body: "Se la tua carta PagoBANCOMAT ha anche il logo di un altro circuito (**Maestro, Visa, Mastercard, V-Pay**, etc..) ricordati di aggiungerlo al portafoglio anche come **carta di debito** per poter effettuare pagamenti su IO o attivare le funzioni disponibili. "
+        body: "Se la tua carta PagoBANCOMAT ha anche il logo di un altro circuito (**Maestro, Visa, Mastercard**, etc..) ricordati di aggiungerlo al portafoglio anche come **carta di debito** per poter effettuare pagamenti su IO o attivare le funzioni disponibili. "
         addCta: "Aggiungi Carta di Debito"
       removeCta: "Elimina questo metodo di pagamento"
   newRemove:
@@ -1701,6 +1709,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
+  termsAndConditionFooter: "Premendo \"Attiva il cashback\" dichiari di aver letto e compreso il [regolamento]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -1709,6 +1718,8 @@ bonus:
     description: "Ottieni un credito ogni volta che usi la carta per i tuoi acquisti!"
     name: Cashback
     earned: Cashback accumulato
+    cta:
+      activeBonus: Attiva il cashback
     unsubscribe:
       cta: "Cancella la tua iscrizione al cashback"
       title: "Disattivazione cashback"
@@ -1795,6 +1806,7 @@ bonus:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
         detail:
+          empty: "Qui visualizzerai le transazioni valide ai fini del cashback: per ora non è ancora attiva transazione valida."
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
