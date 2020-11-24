@@ -83,23 +83,10 @@ export function* bpdStartOnboardingWorker() {
   // wait for the user that choose to continue
   yield take(bpdUserActivate);
 
-  // read if the bpd is active for the user
-  const isBpdActive: SagaCallReturnType<typeof isBpdEnabled> = yield call(
-    isBpdEnabled
-  );
+  // Navigate to the Onboarding Declaration and wait for the action that complete the saga
+  yield put(navigateToBpdOnboardingDeclaration());
+  yield put(navigationHistoryPop(1));
 
-  if (isBpdActive.isRight()) {
-    if (isBpdActive.value) {
-      // The bpd is already active, go directly to the bpd details screen
-      // TODO: navigate to bpd details
-      yield put(navigateToWalletHome());
-      yield put(navigationHistoryPop(1));
-    } else {
-      // Navigate to the Onboarding Declaration and wait for the action that complete the saga
-      yield put(navigateToBpdOnboardingDeclaration());
-      yield put(navigationHistoryPop(1));
-    }
-  }
   // The saga ends when the user accepts the declaration
   yield take(bpdOnboardingAcceptDeclaration);
 }
