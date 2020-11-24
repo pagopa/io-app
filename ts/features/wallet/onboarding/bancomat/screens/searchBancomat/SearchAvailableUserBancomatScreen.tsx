@@ -27,17 +27,16 @@ const bancomatServiceSuccessCode = 0;
  */
 const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props => {
   const pans = props.pans;
-
   const noBancomatFound = isReady(pans) && pans.value.cards.length === 0;
-  const allServicesResponseSuccess =
-    isReady(pans) &&
-    pans.value.messages.every(m => m.code === bancomatServiceSuccessCode);
 
   // The user choose a specific bank to search and no results are found
   if (props.abiSelected && noBancomatFound) {
     return <BancomatKoSingleBankNotFound />;
   }
   if (noBancomatFound) {
+    const allServicesResponseSuccess =
+      isReady(pans) &&
+      pans.value.messages.every(m => m.code === bancomatServiceSuccessCode);
     if (allServicesResponseSuccess) {
       return <BancomatKoNotFound />;
     }
