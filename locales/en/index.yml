@@ -1684,6 +1684,11 @@ bonus:
       failure: "We were unable to unsubscribe, please try again"
     earned: Earned Cashback
     onboarding:
+      alert:
+        title: Cashback is aleady active
+        body: You can find more details in your Wallet.
+        cancel: Close
+        confirm: Back to Wallet
       loadingActivationStatus:
         title: Loading activation status
       declaration:
