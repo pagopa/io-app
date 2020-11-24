@@ -17,9 +17,9 @@ export const initializeMixPanel = async () => {
   await setupMixpanel(mixpanel);
 };
 
-// initializeMixPanel()
-//   .then()
-//   .catch(() => 0);
+initializeMixPanel()
+  .then()
+  .catch(() => 0);
 
 const setupMixpanel = async (mp: MixpanelInstance) => {
   const screenReaderEnabled: boolean = await isScreenReaderEnabled();
@@ -31,6 +31,5 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   });
 
   // Identify the user using the smartphone uniqueId
-  // await mp.identify(DeviceInfo.getUniqueId());
-  await mp.alias(DeviceInfo.getUniqueId());
+  await mp.identify(DeviceInfo.getUniqueId());
 };

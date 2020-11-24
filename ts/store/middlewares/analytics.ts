@@ -151,31 +151,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       // session to the hashed fiscal code of the user
       const fiscalnumber = action.payload.fiscal_code;
 
-      const riconciliation = async () => {
-        try {
-          await initializeMixPanel().then(() =>
-            console.log("finish initialization")
-          );
+      const aliasAndIdentify = sha256(fiscalnumber).then(hash =>
+        mp.alias(hash, DeviceInfo.getUniqueId()).then(() => mp.identify(hash))
+      );
 
-          console.log(fiscalnumber);
-          const hashedCf = await sha256(fiscalnumber);
-
-          console.log(hashedCf);
-          await mp.alias(hashedCf, DeviceInfo.getUniqueId());
-          console.log("step 1");
-          await mp.identify(hashedCf);
-        } catch (e) {
-          console.log("entra error fc");
-          console.log(e);
-        }
-
-        // const hashedCf = await sha256(fiscalnumber);
-
-        // reactotron.log(hashedCf);
-      };
       return Promise.all([
         mp.track(action.type).then(constNull, constNull),
-        riconciliation().then(constNull, constNull)
+        aliasAndIdentify.then(constNull, constNull)
       ]);
 
     case getType(idpLoginUrlChanged):
