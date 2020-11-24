@@ -5,20 +5,18 @@ import { BottomSheetContent } from "../../../components/bottomSheet/BottomSheetC
 import { Body } from "../../../components/core/typography/Body";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
+import { PaymentMethodRepresentation } from "../../../types/pagopa";
 import { bottomSheetRawConfig } from "../../../utils/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { PaymentMethodRepresentation } from "../../bonus/bpd/components/paymentMethodActivationToggle/base/PaymentMethodRepresentation";
+import { PaymentMethodRepresentationComponent } from "../../bonus/bpd/components/paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
 
 type Props = {
   onCancel: () => void;
   onConfirm: () => void;
-  representation: Omit<
-    React.ComponentProps<typeof PaymentMethodRepresentation>,
-    "children"
-  >;
+  representation: PaymentMethodRepresentation;
 };
 
 /**
@@ -47,7 +45,7 @@ export const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
   >
     <View>
       <View spacer={true} />
-      <PaymentMethodRepresentation {...props.representation} />
+      <PaymentMethodRepresentationComponent {...props.representation} />
       <View spacer={true} />
       <Body>{I18n.t("wallet.newRemove.body")}</Body>
     </View>
@@ -55,10 +53,7 @@ export const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
 );
 
 export const useRemovePaymentMethodBottomSheet = (
-  representation: Omit<
-    React.ComponentProps<typeof PaymentMethodRepresentation>,
-    "children"
-  >
+  representation: PaymentMethodRepresentation
 ) => {
   const { present, dismiss } = useBottomSheetModal();
 

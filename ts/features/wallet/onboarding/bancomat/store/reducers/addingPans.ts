@@ -2,7 +2,7 @@ import { getType } from "typesafe-actions";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { BancomatPaymentMethod } from "../../../../../../types/pagopa";
+import { RawBancomatPaymentMethod } from "../../../../../../types/pagopa";
 import {
   remoteError,
   remoteLoading,
@@ -13,7 +13,7 @@ import {
 import { addBancomatToWallet } from "../actions";
 
 export type AddingPansState = {
-  addingResult: RemoteValue<BancomatPaymentMethod, Error>;
+  addingResult: RemoteValue<RawBancomatPaymentMethod, Error>;
   selectedPan?: Card;
 };
 
@@ -51,7 +51,7 @@ export const onboardingBancomatChosenPanSelector = (
 
 export const onboardingBancomatAddingResultSelector = (
   state: GlobalState
-): RemoteValue<BancomatPaymentMethod, Error> =>
+): RemoteValue<RawBancomatPaymentMethod, Error> =>
   state.wallet.onboarding.bancomat.addingPans.addingResult;
 
 export default addingPansReducer;

@@ -2,16 +2,17 @@ import { Content, Text, View } from "native-base";
 import { ComponentProps } from "react";
 import * as React from "react";
 import { Image, StyleSheet, SafeAreaView } from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
+import { fromNullable } from "fp-ts/lib/Option";
+import { index } from "fp-ts/lib/Array";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderComponent";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import Markdown from "../../../../components/ui/Markdown";
@@ -20,7 +21,9 @@ import customVariables from "../../../../theme/variables";
 import { useScreenReaderEnabled } from "../../../../utils/accessibility";
 import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
 import { maybeNotNullyString } from "../../../../utils/strings";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 
 type OwnProps = {
   bonus: BonusAvailable;
@@ -45,7 +48,7 @@ h4 {
   font-size: ${customVariables.fontSize2}px;
 }
 `;
-
+const coverImageWidth = Math.min(48, widthPercentageToDP("30%"));
 const styles = StyleSheet.create({
   noPadded: {
     paddingLeft: 0,
@@ -55,19 +58,16 @@ const styles = StyleSheet.create({
     flex: 1
   },
   flexEnd: {
-    alignSelf: "center"
+    alignSelf: "flex-start"
   },
   flexStart: {
+    width: widthPercentageToDP("70%"),
     alignSelf: "center"
   },
   cover: {
     resizeMode: "contain",
-    width: 48,
-    height: 48
-  },
-  bonusImage: {
-    width: 48,
-    height: 48
+    width: coverImageWidth,
+    height: coverImageWidth
   },
   row: {
     flexDirection: "row",
@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSize3,
     lineHeight: customVariables.lineHeightH3,
     color: customVariables.colorBlack
-  }
+  },
+  urlButton: { flex: 1, textAlign: "center" }
 });
 
 const loadingOpacity = 0.9;
@@ -110,17 +111,93 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     block: true,
     primary: true,
     onPress: props.onConfirm,
-    title: I18n.t("bonus.bonusVacanze.cta.requestBonus")
+    title: I18n.t("bonus.bpd.cta.activeBonus")
+  };
+
+  const onMarkdownLoaded = () => {
+    setMarkdownLoaded(true);
   };
 
   const handleModalPress = (tos: string) =>
     props.showModal(
       <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
     );
-  const onMarkdownLoaded = () => {
-    setMarkdownLoaded(true);
+
+  // bonus rules url should be the first one in the urls list
+  const maybeRegulationUrl = fromNullable(
+    bonusTypeLocalizedContent.urls
+  ).chain(urls => index(0, [...urls]));
+
+  // render a stack of button each one representing a url
+  const renderUrls = () => {
+    const urls = bonusTypeLocalizedContent.urls;
+    if (urls === undefined || urls.length === 0) {
+      return null;
+    }
+    const buttons = urls.map((url, idx) => (
+      <>
+        <ButtonDefaultOpacity
+          bordered={true}
+          key={`${idx}_${url.url}`}
+          onPress={() => handleModalPress(url.url)}
+        >
+          <Text style={styles.urlButton}>{url.name}</Text>
+        </ButtonDefaultOpacity>
+        {idx !== urls.length - 1 && <View spacer={true} small={true} />}
+      </>
+    ));
+    return <>{buttons}</>;
   };
   const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
+
+  // TODO get the tos footer from props
+  const getTosFooter = () => {
+    // if tos and regulation url is defined return a markdown footer including both links reference (BPD)
+    if (maybeBonusTos.isSome() && maybeRegulationUrl.isSome()) {
+      return (
+        <>
+          <View spacer={true} extralarge={true} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} extralarge={true} />
+          <Markdown
+            cssStyle={CSS_STYLE}
+            extraBodyHeight={extraMarkdownBodyHeight}
+          >
+            {I18n.t("bonus.termsAndConditionFooter", {
+              regulationLink: maybeRegulationUrl.value.url,
+              tosUrl: maybeBonusTos.value
+            })}
+          </Markdown>
+        </>
+      );
+    }
+    // if tos is defined return the link (BONUS VACANZE)
+    if (maybeBonusTos.isSome()) {
+      return (
+        <>
+          <View spacer={true} extralarge={true} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} extralarge={true} />
+          <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
+          <TouchableDefaultOpacity
+            onPress={() => handleModalPress(maybeBonusTos.value)}
+            accessibilityRole={"link"}
+          >
+            <Text
+              link={true}
+              semibold={true}
+              ellipsizeMode={"tail"}
+              numberOfLines={1}
+            >
+              {I18n.t("bonus.tos.title")}
+            </Text>
+          </TouchableDefaultOpacity>
+        </>
+      );
+    }
+    return null;
+  };
+
   const maybeCover = maybeNotNullyString(bonusType.cover);
   const maybeSponsorshipDescription = maybeNotNullyString(
     bonusType.sponsorship_description
@@ -165,20 +242,9 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           </View>
           <View spacer={true} large={true} />
           <Text dark={true}>{bonusTypeLocalizedContent.subtitle}</Text>
-          {maybeBonusTos.isSome() && (
-            <ButtonDefaultOpacity
-              style={styles.noPadded}
-              transparent={true}
-              onPress={() => handleModalPress(maybeBonusTos.value)}
-            >
-              <Text semibold={true} link={true}>
-                {I18n.t("bonus.tos.title")}
-              </Text>
-            </ButtonDefaultOpacity>
-          )}
+
           <View spacer={true} />
           <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} />
           <Markdown
             cssStyle={CSS_STYLE}
             extraBodyHeight={extraMarkdownBodyHeight}
@@ -186,27 +252,9 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           >
             {bonusTypeLocalizedContent.content}
           </Markdown>
-          {maybeBonusTos.isSome() && (
-            <>
-              <View spacer={true} extralarge={true} />
-              <ItemSeparatorComponent noPadded={true} />
-              <View spacer={true} extralarge={true} />
-              <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
-              <TouchableDefaultOpacity
-                onPress={() => handleModalPress(maybeBonusTos.value)}
-                accessibilityRole={"link"}
-              >
-                <Text
-                  link={true}
-                  semibold={true}
-                  ellipsizeMode={"tail"}
-                  numberOfLines={1}
-                >
-                  {I18n.t("bonus.tos.title")}
-                </Text>
-              </TouchableDefaultOpacity>
-            </>
-          )}
+          <View spacer={true} extralarge={true} />
+          {isMarkdownLoaded && renderUrls()}
+          {getTosFooter()}
           {isMarkdownLoaded && <EdgeBorderComponent />}
         </Content>
         {!isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
