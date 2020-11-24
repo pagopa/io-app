@@ -107,7 +107,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   const contextualHelpData = props.maybeContextualData.fold<ContextualHelpData>(
     {
       title: props.title,
-      faqs: props.faqCategories && getFAQsFromCategories(props.faqCategories),
+      faqs: getFAQsFromCategories(props.faqCategories ?? []),
       content
     },
     data => {
@@ -117,7 +117,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
         </Markdown>
       );
       const faqs = fromNullable(data.faqs).fold(
-        props.faqCategories && getFAQsFromCategories(props.faqCategories),
+        getFAQsFromCategories(props.faqCategories ?? []),
         fqs => fqs.map(f => ({ title: f.title, content: f.body }))
       );
       return { title: data.title, content, faqs };
