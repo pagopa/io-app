@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSize3,
     lineHeight: customVariables.lineHeightH3,
     color: customVariables.colorBlack
-  }
+  },
+  urlButton: { flex: 1, textAlign: "center" }
 });
 
 const loadingOpacity = 0.9;
@@ -126,15 +127,18 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
       return null;
     }
     const buttons = urls.map((url, idx) => (
-      <Button
-        bordered={true}
-        key={`${idx}_${url.url}`}
-        onPress={() => openWebUrl(url.url)}
-      >
-        <Text style={{ flex: 1, textAlign: "center" }}>{url.name}</Text>
-      </Button>
+      <>
+        <Button
+          bordered={true}
+          key={`${idx}_${url.url}`}
+          onPress={() => openWebUrl(url.url)}
+        >
+          <Text style={styles.urlButton}>{url.name}</Text>
+        </Button>
+        {idx !== urls.length - 1 && <View spacer={true} small={true} />}
+      </>
     ));
-    return <View>{buttons}</View>;
+    return <>{buttons}</>;
   };
   const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
   const maybeCover = maybeNotNullyString(bonusType.cover);
@@ -181,20 +185,9 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           </View>
           <View spacer={true} large={true} />
           <Text dark={true}>{bonusTypeLocalizedContent.subtitle}</Text>
-          {maybeBonusTos.isSome() && (
-            <ButtonDefaultOpacity
-              style={styles.noPadded}
-              transparent={true}
-              onPress={() => handleModalPress(maybeBonusTos.value)}
-            >
-              <Text semibold={true} link={true}>
-                {I18n.t("bonus.tos.title")}
-              </Text>
-            </ButtonDefaultOpacity>
-          )}
+
           <View spacer={true} />
           <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} />
           <Markdown
             cssStyle={CSS_STYLE}
             extraBodyHeight={extraMarkdownBodyHeight}
@@ -206,9 +199,9 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           {renderUrls()}
           {maybeBonusTos.isSome() && (
             <>
-              <View spacer={true} extralarge={true} />
+              <View spacer={true} large={true} />
               <ItemSeparatorComponent noPadded={true} />
-              <View spacer={true} extralarge={true} />
+              <View spacer={true} large={true} />
 
               <TouchableDefaultOpacity
                 onPress={() => handleModalPress(maybeBonusTos.value)}
