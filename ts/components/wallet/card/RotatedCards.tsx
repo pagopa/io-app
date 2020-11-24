@@ -5,6 +5,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "../../../i18n";
 
 import { Wallet } from "../../../types/pagopa";
+import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import CreditCardStyles from "./../card/CardComponent.style";
 import { CreditCardStyles as CreditCardStyles2 } from "./../card/style";
@@ -32,11 +33,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const FOUR_UNICODE_CIRCLES = "●".repeat(4);
-
 interface Props {
-  // tslint-prettier doesn't yet support the readonly tuple syntax
-  // eslint-disable-next-line
   wallets?: ReadonlyArray<Wallet>;
   onClick: (wallet: Wallet) => void;
 }

@@ -26,8 +26,8 @@ import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDeta
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
+import { BancomatPaymentMethod } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
-import { EnhancedBancomat } from "../reducers/wallet/wallets";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -213,7 +213,9 @@ export const navigateToWalletTransactionsScreen = (
     params
   });
 
-export const navigateToBancomatDetailScreen = (bancomat: EnhancedBancomat) =>
+export const navigateToBancomatDetailScreen = (
+  bancomat: BancomatPaymentMethod
+) =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_BANCOMAT_DETAIL,
     params: { bancomat }

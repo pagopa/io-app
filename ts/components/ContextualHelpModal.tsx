@@ -1,4 +1,4 @@
-import { none } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Container, Content, H3, Text, View } from "native-base";
@@ -17,12 +17,16 @@ import { Dispatch } from "../store/actions/types";
 import { screenContextualHelpDataSelector } from "../store/reducers/content";
 import { GlobalState } from "../store/reducers/types";
 import themeVariables from "../theme/variables";
-import { FAQsCategoriesType } from "../utils/faq";
 import {
   supportTokenSelector,
   SupportTokenState
 } from "../store/reducers/authentication";
 import { loadSupportToken } from "../store/actions/authentication";
+import {
+  FAQsCategoriesType,
+  FAQType,
+  getFAQsFromCategories
+} from "../utils/faq";
 import FAQComponent from "./FAQComponent";
 import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import { BaseHeader } from "./screens/BaseHeader";
@@ -57,13 +61,19 @@ const styles = StyleSheet.create({
   }
 });
 
+type ContextualHelpData = {
+  title: string;
+  content: React.ReactNode;
+  faqs?: ReadonlyArray<FAQType>;
+};
+
 /**
  * A modal to show the contextual help reelated to a screen.
  * The contextual help is characterized by:
  * - a title
  * - a textual or a component containing the screen description
  * - [optional] if on SPID authentication once the user selected an idp, content to link the support desk of the selected identity provider
- * - a list of questions and aswers. They are selected by the component depending on the cathegories passed to the component
+ * - a list of questions and answers. They are selected by the component depending on the cathegories passed to the component
  *
  * Optionally, the title and the content are injected from the content presented in the related clinet response.
  */
@@ -102,17 +112,30 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 
   /**
    *  If contextualData (loaded from the content server) contains the route of the current screen,
-   *  title and content are read from it, otherwise they came from the locales sotred in app
+   *  title, content, faqs are read from it, otherwise they came from the locales stored in app
    */
-  const customizedTitle = props.maybeContextualData.fold(
-    props.title,
-    data => data.title
+  const contextualHelpData = props.maybeContextualData.fold<ContextualHelpData>(
+    {
+      title: props.title,
+      faqs: getFAQsFromCategories(props.faqCategories ?? []),
+      content
+    },
+    data => {
+      const content = (
+        <Markdown onLoadEnd={() => setContentLoaded(true)}>
+          {data.content}
+        </Markdown>
+      );
+      const faqs = fromNullable(data.faqs)
+        // ensure the array is defined and not empty
+        .mapNullable(faqs => (faqs.length > 0 ? faqs : undefined))
+        // if remote faqs are not defined or empty, fallback to the local ones
+        .fold(getFAQsFromCategories(props.faqCategories ?? []), fqs =>
+          fqs.map(f => ({ title: f.title, content: f.body }))
+        );
+      return { title: data.title, content, faqs };
+    }
   );
-
-  // content could be the one provided from props or the remote one
-  const customizedContent = props.maybeContextualData.fold(content, data => (
-    <Markdown onLoadEnd={() => setContentLoaded(true)}>{data.content}</Markdown>
-  ));
 
   // content is loaded is when:
   // - provided one from props is loaded or
@@ -146,24 +169,24 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
           }}
         />
 
-        {!customizedContent && (
+        {!contextualHelpData.content && (
           <View centerJustified={true}>
             <ActivityIndicator color={themeVariables.brandPrimaryLight} />
           </View>
         )}
-        {customizedContent && (
+        {contextualHelpData.content && (
           <Content
             contentContainerStyle={styles.contentContainerStyle}
             noPadded={true}
           >
-            <H3 accessible={true}>{customizedTitle}</H3>
+            <H3 accessible={true}>{contextualHelpData.title}</H3>
             <View spacer={true} />
-            {customizedContent}
+            {contextualHelpData.content}
             <View spacer={true} />
-            {props.faqCategories && isContentLoaded && (
+            {contextualHelpData.faqs && isContentLoaded && (
               <FAQComponent
                 onLinkClicked={props.onLinkClicked}
-                faqCategories={props.faqCategories}
+                faqs={contextualHelpData.faqs}
               />
             )}
             {isContentLoaded && (

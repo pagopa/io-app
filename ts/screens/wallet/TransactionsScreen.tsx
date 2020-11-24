@@ -8,6 +8,8 @@ import * as React from "react";
 import { RefreshControl, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
@@ -15,6 +17,7 @@ import H5 from "../../components/ui/H5";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
+import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
 import I18n from "../../i18n";
 import {
   navigateToTransactionDetailsScreen,
@@ -37,7 +40,10 @@ import {
   getTransactions,
   getTransactionsLoadedLength
 } from "../../store/reducers/wallet/transactions";
-import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
+import {
+  getFavoriteWalletId,
+  paymentMethodsSelector
+} from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
@@ -141,6 +147,14 @@ class TransactionsScreen extends React.Component<Props> {
       _ => _ === selectedWallet.idWallet
     );
 
+    // to retro-compatibility purpose
+    const pm = pot.getOrElse(
+      pot.map(this.props.paymentMethods, pms =>
+        pms.find(pm => pm.idWallet === selectedWallet.idWallet)
+      ),
+      undefined
+    );
+
     const transactionsRefreshControl = (
       <RefreshControl
         onRefresh={() => {
@@ -166,6 +180,14 @@ class TransactionsScreen extends React.Component<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_transaction"]}
       >
+        {pm && (
+          <View style={IOStyles.horizontalContentPadding}>
+            <View spacer={true} extralarge={true} />
+            <PaymentMethodCapabilities paymentMethod={pm} />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+          </View>
+        )}
         <TransactionsList
           title={I18n.t("wallet.transactions")}
           amount={I18n.t("wallet.amount")}
@@ -189,7 +211,8 @@ const mapStateToProps = (state: GlobalState) => ({
   transactionsLoadedLength: getTransactionsLoadedLength(state),
   favoriteWallet: getFavoriteWalletId(state),
   readTransactions: state.entities.transactionsRead,
-  areMoreTransactionsAvailable: areMoreTransactionsAvailable(state)
+  areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
+  paymentMethods: paymentMethodsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
