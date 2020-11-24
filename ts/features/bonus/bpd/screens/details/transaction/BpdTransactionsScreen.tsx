@@ -19,7 +19,7 @@ import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { format } from "../../../../../../utils/dates";
 import BaseDailyTransactionHeader from "../../../components/BaseDailyTransactionHeader";
-import BPDTransactionSummaryComponent from "../../../components/BPDTransactionSummaryComponent";
+import BpdTransactionSummaryComponent from "../../../components/BpdTransactionSummaryComponent";
 import {
   BpdTransactionItem,
   EnhancedBpdTransaction
@@ -213,7 +213,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
           {pot.isSome(props.selectedAmount) &&
             props.selectedPeriod &&
             maybeLastUpdateDate.isSome() && (
-              <BPDTransactionSummaryComponent
+              <BpdTransactionSummaryComponent
                 lastUpdateDate={format(
                   maybeLastUpdateDate.value,
                   "DD MMMM YYYY"
