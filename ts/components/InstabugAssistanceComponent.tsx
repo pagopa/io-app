@@ -53,7 +53,7 @@ const InstabugAssistanceComponent: React.FunctionComponent<Props> = ({
           </Markdown>
           <View spacer={true} />
           <ButtonWithImage
-            icon={"io-bug"}
+            icon={""}
             onPress={() => requestAssistance(BugReporting.reportType.question)}
             text={I18n.t("instabug.contextualHelp.buttonChat")}
             disabled={false}
