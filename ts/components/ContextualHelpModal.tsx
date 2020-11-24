@@ -116,10 +116,12 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
           {data.content}
         </Markdown>
       );
-      const faqs = fromNullable(data.faqs).fold(
-        getFAQsFromCategories(props.faqCategories ?? []),
-        fqs => fqs.map(f => ({ title: f.title, content: f.body }))
-      );
+      const faqs = fromNullable(data.faqs)
+        // ensure the array is defined and not empty
+        .mapNullable(faqs => (faqs.length > 0 ? faqs : undefined))
+        .fold(getFAQsFromCategories(props.faqCategories ?? []), fqs =>
+          fqs.map(f => ({ title: f.title, content: f.body }))
+        );
       return { title: data.title, content, faqs };
     }
   );
