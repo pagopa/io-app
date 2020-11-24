@@ -119,6 +119,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
       const faqs = fromNullable(data.faqs)
         // ensure the array is defined and not empty
         .mapNullable(faqs => (faqs.length > 0 ? faqs : undefined))
+        // if remote faqs are not defined or empty, fallback to the local ones
         .fold(getFAQsFromCategories(props.faqCategories ?? []), fqs =>
           fqs.map(f => ({ title: f.title, content: f.body }))
         );
