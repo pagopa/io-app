@@ -1667,12 +1667,15 @@ bonus:
   active: Active
   failed: Failed
   redeemed: Consumed
+  termsAndConditionFooter: "By pressing \"Request cashback\" you declare that you have read and understood the [regulation]({{regulationLink}}) and the [information on the processing of personal data]({{tosUrl}}) of the service."
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
     title: Cashback Digital Payments
     name: Cashback
+    cta:
+      activeBonus: Request cashback
     unsubscribe:
       cta: "Disable cashback"
       title: "Cashback deactivation"
