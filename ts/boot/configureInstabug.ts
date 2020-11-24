@@ -73,7 +73,7 @@ export const initialiseInstabug = () => {
 };
 
 export const openInstabugBugReport = () => {
-  BugReporting.showWithOptions(BugReporting.reportType.bug, [
+  BugReporting.showWithOptions(BugReporting.reportType.question, [
     BugReporting.option.commentFieldRequired,
     BugReporting.option.emailFieldOptional
   ]);
@@ -85,6 +85,10 @@ export const openInstabugChat = (hasChats: boolean = false) => {
   } else {
     Chats.show();
   }
+};
+
+export const openInstabugReplies = () => {
+  Replies.show();
 };
 
 export const setInstabugUserAttribute = (
