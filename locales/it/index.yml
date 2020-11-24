@@ -690,10 +690,10 @@ wallet:
       detailTitle: Dettaglio
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
   searchAbi:
-    title: Aggiungi carta Bancomat
+    title: Aggiungi PagoBANCOMAT
     description:
       text1: Se vuoi, puoi indicare la banca
-      text2: " su cui hai un carta Pagobancomat attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
+      text2: " su cui hai un carta PagoBANCOMAT attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
       text3: informativa sul trattamento dei dati personali
     bankName: Denominazione della banca
     noName: Nome non disponibile
@@ -707,41 +707,40 @@ wallet:
       label: "{{payment}} verso {{merchant}} di {{amount}} euro, del {{datetime}} alle ore {{hours}} con causale {{reason}}. Attiva per il dettaglio completo"
   onboarding:
     bancomat:
-      headerTitle: "Aggiungi PagoBANCOMAT"
+      headerTitle: "Aggiungi carta PagoBANCOMAT"
       koTimeout:
-        title: "Al momento è impossibile recuperare le tue carte"
+        title: "Non siamo riusciti a recuperare le tue carte PagoBancomat"
         body: "Riprova per favore"
       koNotFound:
         title: "Spiacenti, non abbiamo trovato nessuna carta"
-        body: "Non risultano Carte PagoBANCOMAT intestate a te: contatta la tua Banca per ulteriori informazioni"
+        body: "Non risultano carte PagoBANCOMAT a te intestate: contatta la tua banca per maggiori informazioni."
       koNotFoundSingleBank:
-        title: "Spiacenti, non abbiamo trovato nessuna carta su questa Banca"
-        body: "Non risultano Carte PagoBANCOMAT intestate a te"
+        title: "Spiacenti, non abbiamo trovato nessuna carta su questa banca"
+        body: "Non risultano carte PagoBANCOMAT a te intestate: contatta la tua banca per maggiori informazioni."
         chooseAnother: "Scegli un'altra banca"
       koServicesError:
-        title: "Non è stato possibile recuperare le carte: scegli la banca"
-        body: "Indica la banca su cui risiede il tuo conto per vedere le lista delle Carte PagoBANCOMAT intestate a te"
-        chooseTheBank: "Scegli la banca"
+        title: "Non è stato possibile recuperare le carte: seleziona la tua banca"
+        body: "Indica la banca che ha emesso la tua carta per vedere le lista delle carte PagoBANCOMAT a te intestate."
+        chooseTheBank: "Seleziona banca"
       loadingSearch:
-        title: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo"
+        title: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo..."
       add:
         title: "Aggiungi bancomat {{current}} di {{length}}"
         screenTitle: "Vuoi aggiungere questa carta?"
         bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
-        loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo"
-        warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento indicando la tua Banca dove hai il tuo conto corrente."
+        loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
+        warning: "Manca qualcosa? Non preoccuparti, puoi aggiungere altre carte PagoBANCOMAT più tardi, selezionando la banca che ha emesso la tua carta."
       bpd:
         suggestActivation:
           title: "Vuoi attivare il Cashback Pagamenti Digitali?"
-          body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback Pagamenti Digitali, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri per promuovere l’uso della moneta elettronica.\n\n
-                 Ogni volta che pagherai con uno dei metodi di pagamento elettronico compatibili (carte, bancomat, app, etc..), riceverai un riborso parziale in base alla tua spesa.\n\n
-                 In base a quante trasnazioni avrai accumulato, in ciascuno periodo, potrai ricevere un premio in denaro fino a XXXX euro."
+          body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback Pagamenti Digitali, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri e dal Ministero dell’Economia e delle Finanze, allo scopo di incentivare un maggiore utilizzo di moneta elettronica nel Paese.\n\n
+                 Puoi ricevere un rimborso sugli acquisti effettuati con carte, bancomat e app di pagamento.\n\n"
           skip: "No, grazie"
           confirm: "Info e attivazione"
         activateNew:
           title: "Vuoi attivare il Cashback Pagamenti Digitali?"
-          body1: "I pagamenti che farai con questi metodi riceveranno il cashback e concorreranno alla tua posizione in classifica."
+          body1: "Attiva i metodi salvati nel tuo portafoglio per iniziare a registrare le transazioni valide ai fini del cashback."
           body2: "Se preferisci, puoi attivare il cashback su questi metodi anche in un secondo momento."
           skip: "Non ora, grazie"
   alert:
@@ -1025,13 +1024,13 @@ wallet:
         two: "non consentono di pagare tramite IO"
         three: ", ma solo presso i punti fisici (POS)."
       debit:
-        title: "Carta di Debito"
-        body: "Se la tua carta PagoBANCOMAT ha anche il logo di un altro circuito (**Maestro, Visa, Mastercard**, etc..) ricordati di aggiungerlo al portafoglio anche come **carta di debito** per poter effettuare pagamenti su IO o attivare le funzioni disponibili. "
+        title: "La tua carta ha più di un logo?"
+        body: "Se su questa carta è presente anche il logo di un altro circuito (**Maestro, Visa, Mastercard, etc.), aggiungila al portafoglio anche come **carta di debito**. In questo modo potrai registrare correttamente le transazioni ai fini del Cashback ed effettuare pagamenti su IO. "
         addCta: "Aggiungi Carta di Debito"
       removeCta: "Elimina questo metodo di pagamento"
   newRemove:
     title: "Eliminazione metodo"
-    body: "Sei sicuro di voler eliminare questo metodo di pagamento?"
+    body: "Confermi di voler eliminare questo metodo di pagamento?"
     warningCapability: "Verranno disattivate anche le funzioni: "
 saveCard:
   saveCard: Salva la carta
@@ -1699,7 +1698,7 @@ bonus:
       body: Qui sono visualizzate tutte le informazioni relative al bonus vacanze, il provvedimento istituito dal Decreto Rilancio per incentivare  il turismo dopo il lockdown dovuto all'emergenza Coronavirus.
     requestAlert:
       title: Attenzione
-      content: "Hai già ottenuto un bonus, continua la richiesta solo se la tua situazione si è modificata e hai presentato una nuova DSU per l’aggiornamento dell’ISEE.\n Ti informiamo che l’utilizzo di bonus generati in base a DSU non corrette, determina azioni di recupero dell’agevolazione verso l’utilizzatore.\n Sei sicuro di voler continuare?"
+      content: "Hai già ottenuto un bonus, continua la richiesta solo se la tua situazione si è modificata e hai presentato una nuova DSU per l’aggiornamento dell’ISEE.\n Ti informiamo che l’utilizzo di bonus generati in base a DSU non corrette, determina azioni di recupero dell’agevolazione verso l’utilizzatore.\n Confermi di voler continuare?"
   request: Richiedi un nuovo bonus
   requestLabel: Bonus e sconti
   requestTitle: Richiesta
@@ -1720,8 +1719,8 @@ bonus:
     unsubscribe:
       cta: "Cancella la tua iscrizione al cashback"
       title: "Disattivazione cashback"
-      body1: "Sei sicuro di voler cancellare la tua iscrizione al cashback pagamenti digitali?"
-      body2: "Se confermi non potrai più raccogliere le transazioni nè concorrere per il Super Cashback, e **non potrai riscuotere un rimborso**, nel caso ti fosse stato riconsociuto. La disattivazione del Cashback Pagamenti Digitali avrà effetto **anche negli altri canali** che hai usato per attivarlo (es esempio Home Banking, app, etc..)\nSe riattivi il cashback in una secondo momento **ripartirai da zero transazioni.**"
+      body1: "Vuoi davvero cancellare la tua iscrizione al Cashback Pagamenti Digitali?"
+      body2: "Se confermi non potrai più registrare le transazioni né concorrere per il Super Cashback, e **non potrai riscuotere un rimborso**, nel caso ti fosse stato riconsociuto. La disattivazione del Cashback Pagamenti Digitali avrà effetto **anche negli altri canali** che hai usato per attivarlo (Home Banking, app, etc.)\n\nSe riattivi il cashback in una secondo momento **ripartirai da zero transazioni.**"
       confirmCta: "Cancella iscrizione"
       loading: "Stiamo cancellando la tua iscrizione"
       success: "La tua iscrizione al cashback è stata cancellata"
@@ -1742,14 +1741,14 @@ bonus:
           link: dpr 28 dicembre 2000 n. 445 art 46 e 47
       loadingActivateBpd:
         title: "Stiamo attivando il cashback"
-        body: "Ti preghiamo di attendere."
+        body: "Ti preghiamo di attendere..."
       noPaymentMethod:
         title: "Aggiungi almeno un metodo di pagamento"
-        body: "Per inziare a raccogliere punti devi aggiungere su IO i tuoi metodi di pagamento elettronico preferiti: oggi sono supportate carte di credito, prepagate, ricaricabili, carte di debito, Bancomat e app e altri strumenti digitali.\n\n
-        In futuro il cashback supporterà altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno la raccolta dei punti!"
+        body: "Per inziare a registrare transazioni valide devi aggiungere su IO i tuoi metodi di pagamento elettronico preferiti: oggi sono supportate carte di credito, debito, prepagate, PagoBancomat, app e altri strumenti digitali.\n\n
+        In futuro verranno supportati altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno il cashback!"
       enrollPaymentMethod:
         title: "Scegli quali metodi di pagamento attivare"
-        body1: "I pagamenti che farai con questi metodi riceveranno il cashback concorreranno alla tua posizione in classifica"
+        body1: "Attiva i metodi salvati nel tuo portafoglio per iniziare a registrare le transazioni valide ai fini del cashback."
         body2: "Potrai aggiungere in ogni momento altri metodi di pagamento su IO e attivare il cashback."
     iban:
       iban: "IBAN"
@@ -1757,7 +1756,7 @@ bonus:
       verify: "Controlla IBAN"
       insertion:
         title: "IBAN per l’accredito"
-        body1: "Indica qui l’IBAN del tuo conto corrente, su cui vuoi ricevere l’accredito una volta consolidata la classifica."
+        body1: "Indica qui l’IBAN del tuo conto su cui ricevere l’accredito, una volta consolidate le transazioni valide."
         body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
       koWrong:
         title: "IBAN non corretto"
@@ -1808,10 +1807,10 @@ bonus:
             bottomSheet:
               title: Quando troverai le transazioni?
               body: "Le transazioni vengono registrate il giorno dopo che i circuiti bancari le hanno contabilizzate. 
-                Questo significa che normalmente possono passare fino a 72 ore prima che tu veda la tua transazione registrata su IO, anche se di solito il processo è più rapido. 
+                Di solito possono passare fino a 72 ore prima che tu veda la tua transazione registrata su IO, anche se di solito il processo è più rapido. 
                 Potrebbe volerci un po’ di più nel caso in cui l’acquisto sia a ridosso del weekend o di qualche festività, oppure in qualche altra condizione particolare.
                 Non ti preoccupare: tutte le transazioni valide fatte durante il periodo del cashback verranno registrate e considerate per rimborsi e classifica!"
-            lastUpdated: "Ultimo aggiornamento "
+            lastUpdated: "Ultima transazione valida: "
             link: "Manca qualcosa?"
             body:
               text1: "Nel periodo "
@@ -1819,7 +1818,7 @@ bonus:
               text3:
                 one: "1 transazione valida "
                 other: "{{count}} transazioni valide "
-              text4: "e maturato "
+              text4: "e accumulato "
               text5: "un cashback di "
             milestone:
               title: "Complimenti, hai ottenuto {{cashbackValue}}"
@@ -1835,13 +1834,13 @@ bonus:
           canceledOperationWarning: "Questa transazione è un rimborso, perciò è stato decurtato il relativo cashback."
           canceled: "Storno"
       paymentMethods:
-        noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare le transazioni necessarie"
-        noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per raccogliere le transazioni"
+        noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a registrare le transazioni necessarie"
+        noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per registrare le transazioni"
         activateOnOthersChannel:
           text1: "Attivati su "
           text2: "altri canali"
           title: "Metodi aggiunti da altri canali"
-          body: "Hai aggiunto al cashback questi metodi di pagamento direttamente dai canali messi a disposizione dalla tua banca. Puoi attivare o disattivare la raccolta delle transazioni di questi metodi anche da IO.\n
+          body: "Hai aggiunto al cashback questi metodi di pagamento direttamente dai canali messi a disposizione dalla tua banca o app di pagamenti. Puoi attivare o disattivare la registrazione delle transazioni di questi metodi anche da IO.\n
                  Se vuoi usare alcuni di questi metodi anche per pagare tramite IO, aggiungili al tuo portafoglio!"
           addWallet: "Aggiungi al portafoglio"
         notActivable:
@@ -1857,8 +1856,9 @@ bonus:
                  L’attivazione sarà operativa **da domani**, quindi non saranno valide ai fini del cashback le transazioni che farai nella giornata di oggi."
         deactivate:
           title: "Disattivazione metodo"
-          body: "Sei sicuro di voler disattivare il cashback su questo metodo di pagamento? Se confermi questa scelta, il metodo d’ora in poi non concorrerà più alla collezione delle transazioni.
-                 La disattivazione sarà operativa **da domani**, quindi potrebbero essere ancora considerate le transazioni che fai oggi con questo strumento."
+          body: "Vuoi davvero disattivare il cashback su questo metodo di pagamento?
+                 Se confermi questa scelta, d’ora in poi le transazioni effettuate con questo metodo non verranno più registrate.
+                 La disattivazione sarà operativa **da domani**, quindi potrebbero essere ancora registrate le transazioni eseguite oggi con questo strumento."
       card:
         status:
           active: Attivo
