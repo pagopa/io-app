@@ -28,12 +28,6 @@ import { BPayInfo as BPayInfoPagoPa } from "../../definitions/pagopa/walletv2/BP
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
 import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
-import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
-import {
-  cardIcons,
-  getCardIconFromBrandLogo
-} from "../components/wallet/card/Logo";
-import I18n from "../i18n";
 import { IndexedById } from "../store/helpers/indexer";
 import {
   CreditCardCVC,
@@ -41,8 +35,11 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
-import { FOUR_UNICODE_CIRCLES } from "../utils/wallet";
-import { getTitleFromCard } from "../utils/paymentMethod";
+import {
+  getImageFromPaymentMethod,
+  getTitleFromBancomat,
+  getTitleFromPaymentMethod
+} from "../utils/paymentMethod";
 
 /**
  * Union of all possible credit card types
@@ -259,29 +256,6 @@ export const isBPay = (
   pm: PaymentMethod | undefined
 ): pm is BPayPaymentMethod => (pm === undefined ? false : pm.kind === "BPay");
 
-/**
- * Choose an image to represent a {@link RawPaymentMethod}
- * @param paymentMethod
- */
-const getImageFromPaymentMethod = (paymentMethod: RawPaymentMethod) => {
-  if (isRawCreditCard(paymentMethod)) {
-    return getCardIconFromBrandLogo(paymentMethod.info);
-  }
-  if (isRawBancomat(paymentMethod)) {
-    return pagoBancomatImage;
-  }
-  return cardIcons.UNKNOWN;
-};
-
-const getTitleFromBancomat = (
-  bancomatInfo: RawBancomatPaymentMethod,
-  abiList: IndexedById<Abi>
-) =>
-  fromNullable(bancomatInfo.info.issuerAbiCode)
-    .chain(abiCode => fromNullable(abiList[abiCode]))
-    .chain(abi => fromNullable(abi.name))
-    .getOrElse(I18n.t("wallet.methods.bancomat.name"));
-
 export const enhanceBancomat = (
   bancomat: RawBancomatPaymentMethod,
   abiList: IndexedById<Abi>
@@ -293,24 +267,6 @@ export const enhanceBancomat = (
   caption: getTitleFromBancomat(bancomat, abiList),
   icon: getImageFromPaymentMethod(bancomat)
 });
-
-/**
- * Choose a textual representation for a {@link PatchedWalletV2}
- * @param paymentMethod
- * @param abiList
- */
-const getTitleFromPaymentMethod = (
-  paymentMethod: RawPaymentMethod,
-  abiList: IndexedById<Abi>
-) => {
-  if (isRawCreditCard(paymentMethod)) {
-    return getTitleFromCard(paymentMethod);
-  }
-  if (isRawBancomat(paymentMethod)) {
-    return getTitleFromBancomat(paymentMethod, abiList);
-  }
-  return FOUR_UNICODE_CIRCLES;
-};
 
 export const enhancePaymentMethod = (
   pm: RawPaymentMethod,
