@@ -95,7 +95,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
               );
             case ID_BPD_TYPE:
               return (
-                !getValue(props.bpdActiveBonus) && (
+                getValue(props.bpdActiveBonus) === false && (
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={I18n.t("bonus.bpd.name")}
