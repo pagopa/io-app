@@ -1673,6 +1673,7 @@ bonus:
   bpd:
     title: Cashback Digital Payments
     name: Cashback
+    termsAndConditionFooter: "By clicking on \"Activate cashback\" you declare that you have read and understood the [regulation]({{regulationLink}}) and the [information on the processing of personal data]({{tosUrl}}) of the service."
     unsubscribe:
       cta: "Disable cashback"
       title: "Cashback deactivation"

@@ -1704,6 +1704,7 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
     title: Cashback Pagamenti Digitali
+    termsAndConditionFooter: "Cliccando su \"Attiva il cashback\" dichiari di aver letto e compreso il [regolamento]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
     name: Cashback
     earned: Cashback accumulato
     unsubscribe:

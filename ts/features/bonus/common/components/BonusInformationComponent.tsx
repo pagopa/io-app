@@ -1,18 +1,18 @@
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import { ComponentProps } from "react";
 import * as React from "react";
 import { Image, StyleSheet, SafeAreaView } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { fromNullable } from "fp-ts/lib/Option";
+import { index } from "fp-ts/lib/Array";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderComponent";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import Markdown from "../../../../components/ui/Markdown";
@@ -21,8 +21,8 @@ import customVariables from "../../../../theme/variables";
 import { useScreenReaderEnabled } from "../../../../utils/accessibility";
 import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
 import { maybeNotNullyString } from "../../../../utils/strings";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
-import { openWebUrl } from "../../../../utils/url";
 
 type OwnProps = {
   bonus: BonusAvailable;
@@ -113,14 +113,18 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     title: I18n.t("bonus.bonusVacanze.cta.requestBonus")
   };
 
-  const handleModalPress = (tos: string) =>
-    props.showModal(
-      <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
-    );
   const onMarkdownLoaded = () => {
     setMarkdownLoaded(true);
   };
 
+  const handleModalPress = (tos: string) =>
+    props.showModal(
+      <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
+    );
+
+  const maybeRegulationUrl = fromNullable(
+    bonusTypeLocalizedContent.urls
+  ).chain(urls => index(0, [...urls]));
   const renderUrls = () => {
     const urls = bonusTypeLocalizedContent.urls;
     if (urls === undefined || urls.length === 0) {
@@ -128,13 +132,13 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     }
     const buttons = urls.map((url, idx) => (
       <>
-        <Button
+        <ButtonDefaultOpacity
           bordered={true}
           key={`${idx}_${url.url}`}
-          onPress={() => openWebUrl(url.url)}
+          onPress={() => handleModalPress(url.url)}
         >
           <Text style={styles.urlButton}>{url.name}</Text>
-        </Button>
+        </ButtonDefaultOpacity>
         {idx !== urls.length - 1 && <View spacer={true} small={true} />}
       </>
     ));
@@ -196,28 +200,25 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
             {bonusTypeLocalizedContent.content}
           </Markdown>
           <View spacer={true} extralarge={true} />
-          {renderUrls()}
-          {maybeBonusTos.isSome() && (
-            <>
-              <View spacer={true} large={true} />
-              <ItemSeparatorComponent noPadded={true} />
-              <View spacer={true} large={true} />
-
-              <TouchableDefaultOpacity
-                onPress={() => handleModalPress(maybeBonusTos.value)}
-                accessibilityRole={"link"}
-              >
-                <Text
-                  link={true}
-                  semibold={true}
-                  ellipsizeMode={"tail"}
-                  numberOfLines={1}
+          {isMarkdownLoaded && renderUrls()}
+          {isMarkdownLoaded &&
+            maybeBonusTos.isSome() &&
+            maybeRegulationUrl.isSome() && (
+              <>
+                <View spacer={true} extralarge={true} />
+                <ItemSeparatorComponent noPadded={true} />
+                <View spacer={true} extralarge={true} />
+                <Markdown
+                  cssStyle={CSS_STYLE}
+                  extraBodyHeight={extraMarkdownBodyHeight}
                 >
-                  {I18n.t("bonus.tos.title")}
-                </Text>
-              </TouchableDefaultOpacity>
-            </>
-          )}
+                  {I18n.t("bonus.bpd.termsAndConditionFooter", {
+                    regulationLink: maybeRegulationUrl.value.url,
+                    tosUrl: maybeBonusTos.value
+                  })}
+                </Markdown>
+              </>
+            )}
 
           {isMarkdownLoaded && <EdgeBorderComponent />}
         </Content>
