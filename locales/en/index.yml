@@ -686,14 +686,21 @@ wallet:
       label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} at {{hours}} with reason {{reason}}. Activate for the full detail"
   onboarding:
     bancomat:
-      headerTitle: "Add Bancomat card"
+      headerTitle: "Add PagoBANCOMAT"
       koTimeout:
-        title: "We were unable to contact Bancomat."
-        body: "Please retry"
+        title: "At the moment it is impossible to recover your cards"
+        body: "Please try again"
       koNotFound:
         title: "Sorry, we couldn't find any cards"
-        body: "There are no Bancomat registered to you"
+        body: "There are no PagoBANCOMAT cards in your name: contact your bank for further information"
+      koNotFoundSingleBank:
+        title: "Sorry, we didn't find any cards on this bank"
+        body: "There are no PagoBANCOMAT cards in your name"
         chooseAnother: "Choose another bank"
+      koServicesError:
+        title: "The cards could not be recovered: choose the bank"
+        body: "Indicate the bank where your account resides to see the list of PagoBANCOMAT cards in your name"
+        chooseTheBank: "Choose the bank"
       loadingSearch:
         title: "We are asking Bancomat for the list of your cards\n\nPlease wait"
       add:
@@ -702,6 +709,7 @@ wallet:
         bodySingular: "We found 1 card headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
         bodyPlural: "We found {{number}} cards headed to you. Proceed with the addition of this card by clicking Add or click Skip to cancel the operation."
         loading: "We are adding your PagoBANCOMAT card\n\nPlease wait a few seconds"
+        warning: "If you don't find all the cards you have, try adding the missing one later by indicating your bank where you have your current account."
       bpd:
         suggestActivation:
           title: "Do you want to activate Digital Payments Cashback?"
@@ -991,7 +999,7 @@ wallet:
         three: ", but only at physical points (POS)."
       debit:
         title: "Debit Card"
-        body: "If your PagoBANCOMAT card also has the logo of another circuit (** Maestro, Visa, Mastercard, V-Pay **, etc ..) remember to add it to your wallet also as a ** debit card ** for to be able to make payments on IO or activate the available functions. "
+        body: "If your PagoBANCOMAT card also has the logo of another circuit (** Maestro, Visa, Mastercard **, etc ..) remember to add it to your wallet also as a ** debit card ** for to be able to make payments on IO or activate the available functions. "
         addCta: "Add Debit Card"
       removeCta: "Delete this payment method"
   newRemove:
