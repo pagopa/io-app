@@ -1,4 +1,3 @@
-import { ColorValue } from "react-native";
 import { getType } from "typesafe-actions";
 import { mixpanel } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
