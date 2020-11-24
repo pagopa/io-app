@@ -34,10 +34,11 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
     return <BancomatKoSingleBankNotFound />;
   }
   if (noBancomatFound) {
-    const allServicesResponseSuccess =
+    // check if all services response successfully
+    if (
       isReady(pans) &&
-      pans.value.messages.every(m => m.code === bancomatServiceSuccessCode);
-    if (allServicesResponseSuccess) {
+      pans.value.messages.every(m => m.code === bancomatServiceSuccessCode)
+    ) {
       return <BancomatKoNotFound />;
     }
     return <BancomatKoServicesError />;
