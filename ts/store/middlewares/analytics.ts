@@ -152,15 +152,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       const fiscalnumber = action.payload.fiscal_code;
       const hashedFiscalNumber = sha256(fiscalnumber);
 
-      const riconciliation = hashedFiscalNumber.then(hash =>
-        mp.alias(hash, DeviceInfo.getUniqueId()).then(() => mp.identify(hash))
-      );
-      const identify = hashedFiscalNumber.then(hash => mp.identify(hash));
-      return Promise.all([
-        mp.track(action.type).then(constNull, constNull),
-        riconciliation.then(constNull, constNull),
-        identify.then(constNull, constNull)
-      ]);
+      const riconciliation = async () => {
+        const hashedCf = await sha256(fiscalnumber);
+
+        await mp.alias(hashedCf, DeviceInfo.getUniqueId());
+        await mp.identify(hashedCf);
+      };
+      return Promise.all([mp.track(action.type), riconciliation()]);
+
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
         SPID_URL: action.payload.url
