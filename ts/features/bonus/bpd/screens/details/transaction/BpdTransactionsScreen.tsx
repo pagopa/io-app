@@ -187,8 +187,6 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
     EnhancedBpdTransaction | TotalCashbackPerDate
   > = info => {
     if (isTotalCashback(info.item)) {
-      // PLACEHOLDER component waiting for story
-      // https://www.pivotaltracker.com/story/show/175271516
       return (
         <BpdCashbackMilestoneComponent
           cashbackValue={fromNullable(props.selectedPeriod).fold(
