@@ -114,6 +114,7 @@ locales:
 clipboard:
   copyFeedback: Copied to clipboard
   copyText: copy
+  copyFeedbackButton: Copied
 betaBanner:
   title: 'The IO app is in beta version.'
   description: Your reports help us to improve day after day.

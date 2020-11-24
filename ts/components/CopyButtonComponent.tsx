@@ -1,11 +1,12 @@
-import I18n from "i18n-js";
 import { Text } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
+import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
 import customVariables from "../theme/variables";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { IOColors } from "./core/variables/IOColors";
 
 type Props = Readonly<{
   textToCopy: string;
@@ -22,22 +23,43 @@ const styles = StyleSheet.create({
   },
   text: {
     ...makeFontStyleObject(Platform.select, customVariables.textNormalWeight),
-    color: customVariables.brandPrimary,
     paddingLeft: 0,
     paddingRight: 0
+  },
+  colorBlue: {
+    color: IOColors.blue
+  },
+  colorWhite: {
+    color: IOColors.white
   }
 });
 
-export default function CopyButtonComponent(props: Props) {
+const CopyButtonComponent: React.FunctionComponent<Props> = (props: Props) => {
+  const [isTap, setIsTap] = React.useState(false);
+
+  const handlePress = () => {
+    setIsTap(true);
+    clipboardSetStringWithFeedback(props.textToCopy);
+    setTimeout(() => setIsTap(false), 4000);
+  };
+
   return (
     <ButtonDefaultOpacity
-      onPress={() => clipboardSetStringWithFeedback(props.textToCopy)}
+      onPress={handlePress}
       style={styles.button}
-      bordered={true}
+      bordered={!isTap}
+      primary={isTap}
     >
-      <Text style={styles.text} small={true}>
-        {I18n.t("clipboard.copyText")}
+      <Text
+        style={[styles.text, isTap ? styles.colorWhite : styles.colorBlue]}
+        small={true}
+      >
+        {isTap
+          ? I18n.t("clipboard.copyFeedbackButton")
+          : I18n.t("clipboard.copyText")}
       </Text>
     </ButtonDefaultOpacity>
   );
-}
+};
+
+export default CopyButtonComponent;
