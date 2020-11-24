@@ -1,3 +1,4 @@
+import { ColorValue } from "react-native";
 import { getType } from "typesafe-actions";
 import { mixpanel } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
@@ -81,17 +82,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdTransactionsLoad.success):
       return mp.track(action.type, {
         awardPeriodId: action.payload.awardPeriodId,
-        hashPan: action.payload.results.map(r => r.hashPan).join(","),
-        idTrxAcquirer: action.payload.results
-          .map(r => r.idTrxAcquirer)
-          .join(","),
-        idTrxIssuer: action.payload.results.map(r => r.idTrxIssuer).join(","),
-        trxDate: action.payload.results
-          .map(r => r.trxDate.toString())
-          .join(","),
-        circuitType: action.payload.results.map(r => r.circuitType).join(",")
+        hashPan: action.payload.results.map(r => r.hashPan),
+        idTrxAcquirer: action.payload.results.map(r => r.idTrxAcquirer),
+        idTrxIssuer: action.payload.results.map(r => r.idTrxIssuer),
+        trxDate: action.payload.results.map(r => r.trxDate.toString()),
+        circuitType: action.payload.results.map(r => r.circuitType)
       });
     case getType(bpdTransactionsLoad.failure):
+    case getType(bpdAmountLoad.failure):
       return mp.track(action.type, {
         awardPeriodId: action.payload.awardPeriodId,
         reason: action.payload.error.message
@@ -124,9 +122,28 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         count: action.payload.data?.length
       });
     case getType(searchUserPans.success):
+      const messages = action.payload.messages.reduce(
+        (acc, val) => {
+          if (
+            val.caName !== undefined &&
+            val.cardsNumber !== undefined &&
+            val.code !== undefined
+          ) {
+            return {
+              ...acc,
+              [`${val.caName}cardsNumber`]: val.cardsNumber,
+              [`${val.caName}code`]: val.code
+            };
+          }
+          return acc;
+        },
+        { caNames: action.payload.messages.map(m => m.caName?.toString()) } as {
+          [key: string]: string | number | ReadonlyArray<string>;
+        }
+      );
       return mp.track(action.type, {
         count: action.payload.cards.length,
-        messages: action.payload.messages
+        ...messages
       });
 
     case getType(loadAbi.failure):
@@ -149,8 +166,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         awardPeriodId: action.payload.awardPeriodId
       });
-    case getType(bpdAmountLoad.failure):
-      return mp.track(action.type, { reason: action.payload.error.message });
 
     // Period
     case getType(bpdPeriodsLoad.request):
