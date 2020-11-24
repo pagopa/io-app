@@ -20,6 +20,14 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const bancomatServiceSuccessCode = 0;
+const bancomatServiceCustomerNotFound = 21;
+const bancomatServiceCardNotFound = 23;
+
+const servicesSuccessCodes = [
+  bancomatServiceSuccessCode,
+  bancomatServiceCardNotFound,
+  bancomatServiceCustomerNotFound
+];
 
 /**
  * This screen handle the errors and loading for the user bancomat.
@@ -37,7 +45,9 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
     // check if all services response successfully
     if (
       isReady(pans) &&
-      pans.value.messages.every(m => m.code === bancomatServiceSuccessCode)
+      pans.value.messages.every(
+        m => m.code && servicesSuccessCodes.includes(m.code)
+      )
     ) {
       return <BancomatKoNotFound />;
     }
