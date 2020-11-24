@@ -1,8 +1,8 @@
 import {
-  isBancomat,
-  isBPay,
-  isCreditCard,
-  isSatispay,
+  isRawBancomat,
+  isRawBPay,
+  isRawCreditCard,
+  isRawSatispay,
   PatchedWalletV2
 } from "../../types/pagopa";
 import {
@@ -20,12 +20,14 @@ describe("convert and recognize 2 bancomat and 1 credit card", () => {
     expect(wallets.length).toEqual(3);
   });
   it("should recognize credit card", () => {
-    expect(wallets.filter(w => isCreditCard(w.paymentMethod)).length).toEqual(
-      1
-    );
+    expect(
+      wallets.filter(w => isRawCreditCard(w.paymentMethod)).length
+    ).toEqual(1);
   });
   it("should recognize bancomat", () => {
-    expect(wallets.filter(w => isBancomat(w.paymentMethod)).length).toEqual(2);
+    expect(wallets.filter(w => isRawBancomat(w.paymentMethod)).length).toEqual(
+      2
+    );
   });
 });
 
@@ -38,12 +40,14 @@ describe("convert and recognize 1 bancomat and 1 credit card", () => {
   });
   // eslint-disable-next-line sonarjs/no-identical-functions
   it("should recognize credit card", () => {
-    expect(wallets.filter(w => isCreditCard(w.paymentMethod)).length).toEqual(
-      1
-    );
+    expect(
+      wallets.filter(w => isRawCreditCard(w.paymentMethod)).length
+    ).toEqual(1);
   });
   it("should recognize bancomat", () => {
-    expect(wallets.filter(w => isBancomat(w.paymentMethod)).length).toEqual(1);
+    expect(wallets.filter(w => isRawBancomat(w.paymentMethod)).length).toEqual(
+      1
+    );
   });
 });
 
@@ -56,19 +60,24 @@ describe("convert and recognize 1 bancomat, 1 satispay, 1 bancomat pay, 1 credit
   });
   // eslint-disable-next-line sonarjs/no-identical-functions
   it("should recognize credit card", () => {
-    expect(wallets.filter(w => isCreditCard(w.paymentMethod)).length).toEqual(
+    expect(
+      wallets.filter(w => isRawCreditCard(w.paymentMethod)).length
+    ).toEqual(1);
+  });
+  // eslint-disable-next-line sonarjs/no-identical-functions
+  it("should recognize bancomat", () => {
+    expect(wallets.filter(w => isRawBancomat(w.paymentMethod)).length).toEqual(
       1
     );
   });
-  it("should recognize bancomat", () => {
-    expect(wallets.filter(w => isBancomat(w.paymentMethod)).length).toEqual(1);
-  });
 
   it("should recognize bancomatpay", () => {
-    expect(wallets.filter(w => isBPay(w.paymentMethod)).length).toEqual(1);
+    expect(wallets.filter(w => isRawBPay(w.paymentMethod)).length).toEqual(1);
   });
 
   it("should recognize satispay", () => {
-    expect(wallets.filter(w => isSatispay(w.paymentMethod)).length).toEqual(1);
+    expect(wallets.filter(w => isRawSatispay(w.paymentMethod)).length).toEqual(
+      1
+    );
   });
 });

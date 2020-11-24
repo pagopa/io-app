@@ -1,33 +1,18 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
-import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
-import pagoBancomatImage from "../../../../../../../img/wallet/cards-icons/pagobancomat.png";
-import {
-  cardIcons,
-  getCardIconFromBrandLogo
-} from "../../../../../../components/wallet/card/Logo";
-import I18n from "../../../../../../i18n";
+import { cardIcons } from "../../../../../../components/wallet/card/Logo";
 import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import {
-  getPaymentMethodHash,
-  paymentMethodsSelector
-} from "../../../../../../store/reducers/wallet/wallets";
-import {
-  BancomatInfo,
-  CreditCardInfo,
-  isBancomat,
-  isCreditCard,
-  PaymentMethod
-} from "../../../../../../types/pagopa";
-import { abiListSelector } from "../../../../../wallet/onboarding/store/abi";
+import { paymentMethodsSelector } from "../../../../../../store/reducers/wallet/wallets";
+import { PaymentMethod } from "../../../../../../types/pagopa";
+import { FOUR_UNICODE_CIRCLES } from "../../../../../../utils/wallet";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { BpdAmount } from "../../actions/amount";
 import { BpdPaymentMethodActivation } from "../../actions/paymentMethods";
 import { BpdPeriod } from "../../actions/periods";
 import { BpdTransaction } from "../../actions/transactions";
+import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { bpdEnabledSelector } from "./activation";
 import { bpdAllAmountSelector } from "./amounts";
 import { bpdPaymentMethodActivationSelector } from "./paymentMethods";
@@ -121,7 +106,7 @@ export const bpdPeriodsAmountSnappedListSelector = createSelector(
 /**
  * Pick a payment instrument from the wallet, using the provided hashpan
  * @param hashPan
- * @param potWalletV2
+ * @param potPaymentMethods
  */
 const pickPaymentMethodFromHashpan = (
   hashPan: string,
@@ -130,91 +115,40 @@ const pickPaymentMethodFromHashpan = (
   pot.getOrElse(
     pot.map(potPaymentMethods, paymentMethods =>
       fromNullable(
-        paymentMethods.find(w => getPaymentMethodHash(w.info) === hashPan)
+        paymentMethods.find(w => getPaymentMethodHash(w) === hashPan)
       )
     ),
     none
   );
 
-/**
- * Choose an image to represent a {@link PaymentMethod}
- * @param paymentMethod
- */
-const getImageFromPaymentMethod = (paymentMethod: PaymentMethod) => {
-  if (isCreditCard(paymentMethod)) {
-    return getCardIconFromBrandLogo(paymentMethod);
-  }
-  if (isBancomat(paymentMethod)) {
-    return pagoBancomatImage;
-  }
-  return cardIcons.UNKNOWN;
-};
-
-// TODO: unify card representation (multiple part of the application use this)
-const FOUR_UNICODE_CIRCLES = "●".repeat(4);
-
-/**
- * Choose a textual representation for a {@link PatchedWalletV2}
- * @param paymentMethod
- * @param abiList
- */
-const getTitleFromPaymentMethod = (
-  paymentMethod: PaymentMethod,
-  abiList: ReadonlyArray<Abi>
-) => {
-  if (isCreditCard(paymentMethod)) {
-    return getTitleFromCard(paymentMethod.info);
-  }
-  if (isBancomat(paymentMethod)) {
-    return getTitleFromBancomat(paymentMethod.info, abiList);
-  }
-  return FOUR_UNICODE_CIRCLES;
-};
-
-const getTitleFromCard = (creditCard: CreditCardInfo) =>
-  `${FOUR_UNICODE_CIRCLES} ${creditCard.creditCard.blurredNumber}`;
-
-const getTitleFromBancomat = (
-  bancomatInfo: BancomatInfo,
-  abiList: ReadonlyArray<Abi>
-) =>
-  fromNullable(
-    abiList.find(abi => abi.abi === bancomatInfo.bancomat.issuerAbiCode)
-  )
-    .map(abi => abi.name)
-    .getOrElse(I18n.t("wallet.methods.bancomat.name"));
-
 const getId = (transaction: BpdTransaction) =>
   `${transaction.awardPeriodId}${transaction.trxDate}${transaction.hashPan}${transaction.idTrxAcquirer}${transaction.idTrxIssuer}${transaction.amount}`;
 
 /**
- * Enhance a {@link BpdTransaction} with an image and a title, using the wallet and the abilist
+ * Enhance a {@link BpdTransaction}, trying to found the payment method in the wallet,
+ * in order to associate a caption and an icon
  */
-export const bpdDisplayTransactionsSelector = createSelector<
-  GlobalState,
-  pot.Pot<ReadonlyArray<BpdTransaction>, Error>,
-  pot.Pot<ReadonlyArray<PaymentMethod>, Error>,
-  ReadonlyArray<Abi>,
-  BpdPeriod | undefined,
-  pot.Pot<ReadonlyArray<EnhancedBpdTransaction>, Error>
->(
+export const bpdDisplayTransactionsSelector = createSelector(
   [
     bpdTransactionsForSelectedPeriod,
     paymentMethodsSelector,
-    abiListSelector,
     bpdSelectedPeriodSelector
   ],
-  (potTransactions, paymentMethod, abiList, period) =>
+  (
+    potTransactions,
+    paymentMethod,
+    period
+  ): pot.Pot<ReadonlyArray<EnhancedBpdTransaction>, Error> =>
     pot.map(potTransactions, transactions =>
       transactions.map(
         t =>
           ({
             ...t,
             image: pickPaymentMethodFromHashpan(t.hashPan, paymentMethod)
-              .map(getImageFromPaymentMethod)
+              .map(pm => pm.icon)
               .getOrElse(cardIcons.UNKNOWN),
             title: pickPaymentMethodFromHashpan(t.hashPan, paymentMethod)
-              .map(w2 => getTitleFromPaymentMethod(w2, abiList))
+              .map(pm => pm.caption)
               .getOrElse(FOUR_UNICODE_CIRCLES),
             keyId: getId(t),
             maxCashbackForTransactionAmount: period?.maxTransactionCashback
@@ -232,7 +166,7 @@ export const atLeastOnePaymentMethodHasBpdEnabledSelector = createSelector(
     pot.getOrElse(
       pot.map(paymentMethodsPot, paymentMethods =>
         paymentMethods.some(pm =>
-          fromNullable(getPaymentMethodHash(pm.info))
+          fromNullable(getPaymentMethodHash(pm))
             .map(hpan => bpdActivations[hpan])
             .map(
               potActivation =>
@@ -260,7 +194,7 @@ export const walletV2WithActivationStatusSelector = createSelector(
     pot.map(paymentMethodsPot, paymentMethods =>
       paymentMethods.map(pm => {
         // try to extract the activation status to enhance the wallet
-        const activationStatus = fromNullable(getPaymentMethodHash(pm.info))
+        const activationStatus = fromNullable(getPaymentMethodHash(pm))
           .chain(hp => fromNullable(bpdActivations[hp]))
           .map(paymentMethodActivation =>
             pot.getOrElse(

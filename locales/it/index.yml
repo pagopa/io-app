@@ -1032,6 +1032,8 @@ wallet:
     title: "Eliminazione metodo"
     body: "Confermi di voler eliminare questo metodo di pagamento?"
     warningCapability: "Verranno disattivate anche le funzioni: "
+  capability:
+    title: "Funzioni Disponibili"
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -1712,6 +1714,7 @@ bonus:
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
     title: Cashback Pagamenti Digitali
+    description: "Ottieni un credito ogni volta che usi la carta per i tuoi acquisti!"
     name: Cashback
     earned: Cashback accumulato
     cta:

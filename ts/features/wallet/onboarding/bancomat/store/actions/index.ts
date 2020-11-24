@@ -5,7 +5,7 @@ import {
 } from "typesafe-actions";
 import { AbiListResponse } from "../../../../../../../definitions/pagopa/walletv2/AbiListResponse";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
-import { BancomatPaymentMethod } from "../../../../../../types/pagopa";
+import { RawBancomatPaymentMethod } from "../../../../../../types/pagopa";
 import { LoadPansError } from "../../saga/networking";
 import { Message } from "../../../../../../../definitions/pagopa/walletv2/Message";
 
@@ -39,7 +39,7 @@ export const addBancomatToWallet = createAsyncAction(
   "WALLET_ONBOARDING_BANCOMAT_ADD_REQUEST",
   "WALLET_ONBOARDING_BANCOMAT_ADD_SUCCESS",
   "WALLET_ONBOARDING_BANCOMAT_ADD_FAILURE"
-)<Card, BancomatPaymentMethod, Error>();
+)<Card, RawBancomatPaymentMethod, Error>();
 
 /**
  * The user choose to start the workflow to add a new bancomat to the wallet
