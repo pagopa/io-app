@@ -6,8 +6,8 @@ import {
 import { AbiListResponse } from "../../../../../../../definitions/pagopa/walletv2/AbiListResponse";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { RawBancomatPaymentMethod } from "../../../../../../types/pagopa";
-import { LoadPansError } from "../../saga/networking";
 import { Message } from "../../../../../../../definitions/pagopa/walletv2/Message";
+import { NetworkError } from "../../../../../../utils/errors";
 
 /**
  * Request the list of all abi
@@ -30,7 +30,7 @@ export const searchUserPans = createAsyncAction(
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_REQUEST",
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_SUCCESS",
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_FAILURE"
-)<string | undefined, PansResponse, LoadPansError>();
+)<string | undefined, PansResponse, NetworkError>();
 
 /**
  * The user select the current bancomat to add to the wallet

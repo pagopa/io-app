@@ -138,6 +138,8 @@ import {
 } from "../features/wallet/onboarding/bancomat/navigation/action";
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { getTitleFromCard } from "../utils/paymentMethod";
+import { searchUserSatispay } from "../features/wallet/onboarding/satispay/store/actions";
+import { handleSearchUserSatispay } from "../features/wallet/onboarding/satispay/saga/networking";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -810,6 +812,14 @@ export function* watchWalletSaga(
 
     // watch for add Bancomat to Wallet workflow
     yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
+
+    // watch for load satispay request
+    yield takeLatest(
+      searchUserSatispay.request,
+      handleSearchUserSatispay,
+      paymentManagerClient.searchSatispay,
+      pmSessionManager
+    );
   }
 
   yield fork(paymentsDeleteUncompletedSaga);
