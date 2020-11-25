@@ -111,7 +111,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(walletAddBancomatCancel):
     case getType(walletAddBancomatBack):
     case getType(loadAbi.request):
-    case getType(searchUserPans.request):
     case getType(addBancomatToWallet.request):
     case getType(addBancomatToWallet.success):
       return mp.track(action.type);
@@ -120,6 +119,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         count: action.payload.data?.length
       });
+    case getType(searchUserPans.request):
+      return mp.track(action.type, { abi: action.payload ?? "all" });
     case getType(searchUserPans.success):
       const messages = action.payload.messages.reduce(
         (acc, val) => {
