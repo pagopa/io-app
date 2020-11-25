@@ -116,8 +116,7 @@ export const getStoryChangelogScope = (
   // search for scope labels associated with the story
   const maybeChangelogScopeTag = story.labels
     .filter(l => l.name.match(regex))
-    .map(l => l.name.match(regex)!.pop())
-    .filter(tag => tag && allowedScope.has(tag));
+    .map(l => l.name.match(regex)!.pop());
 
   // multiple scope labels found on the story
   if (maybeChangelogScopeTag.length > 1) {
