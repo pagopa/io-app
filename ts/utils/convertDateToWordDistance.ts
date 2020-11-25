@@ -16,7 +16,7 @@ export function convertDateToWordDistance(
   const distance = differenceInCalendarDays(new Date(), date);
   // 0 days, distance < one day
   if (distance < 1) {
-    const formatted = format(date, "H.mm");
+    const formatted = format(date, "H:mm");
     return todayAtLabel ? `${todayAtLabel} ${formatted}` : formatted;
   } // distance = 1 day
   else if (distance === 1) {
