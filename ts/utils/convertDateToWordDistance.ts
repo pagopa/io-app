@@ -7,11 +7,11 @@ import { format, formatDateAsLocal } from "./dates";
  * This function converts the distance from now to date in :
  * H.mm, yesterday, MM/DD (or DD/MM) and MM/DD/YY (or DD/MM/YY) depending on the system locale
  */
+
 export function convertDateToWordDistance(
   date: Date,
   lastDayLabel: string,
-  todayAtLabel?: string,
-  invalidDateLabel?: string
+  todayAtLabel?: string
 ): string {
   const distance = differenceInCalendarDays(new Date(), date);
   // 0 days, distance < one day
@@ -24,10 +24,6 @@ export function convertDateToWordDistance(
   } // 1 day < distance < 365 days, current year
   else if (distance > 1 && distance < 365) {
     return formatDateAsLocal(date);
-  } // the original date is invalid (distance is NaN)
-  else if (isNaN(distance)) {
-    // todo: define a default invalidDateLabel
-    return invalidDateLabel ? invalidDateLabel : "?";
   } else {
     // distance > current year
     return formatDateAsLocal(date, true);

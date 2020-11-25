@@ -1,55 +1,25 @@
-import { addHours, addYears, format } from "date-fns";
+import { format, subDays, subYears } from "date-fns";
 import { convertDateToWordDistance } from "../convertDateToWordDistance";
+import { formatDateAsLocal } from "../dates";
 
-describe("convertDateToWordDistance test plan", () => {
-  it("should compare now date with 2 hours earlier, expected  hh:mm", () => {
-    const nowDate = new Date();
-    const testDate = addHours(nowDate, -2);
-    expect(convertDateToWordDistance(testDate, "yesterday")).toBe(
-      format(testDate, "H.mm")
-    );
+describe("convertDateToWordDistance", () => {
+  it("should be in H:mm format", () => {
+    const now = new Date();
+
+    expect(convertDateToWordDistance(now, "")).toBe(format(now, "H:mm"));
   });
 
-  it("should compare now date with 2 hours earlier, expected 'today, at hh:mm'", () => {
-    const nowDate = new Date();
-    const testDate = addHours(nowDate, -2);
-    expect(convertDateToWordDistance(testDate, "yesterday", "today, at")).toBe(
-      `today, at ${format(testDate, "H.mm")}`
-    );
+  it("should be 'Yesterday'", () => {
+    const yesterday = subDays(Date.now(), 1);
+
+    expect(convertDateToWordDistance(yesterday, "Yesterday")).toBe("Yesterday");
   });
 
-  it("should compare now date with 24 hours earlier, expected yesterday", () => {
-    const nowDate = new Date();
-    const testDate = addHours(nowDate, -24);
-    expect(convertDateToWordDistance(testDate, "yesterday")).toBe("yesterday");
-  });
-  // eslint-disable-next-line
-  it("should compare now date with 48 hours earlier, expected DD/MM", () => {
-    const nowDate = new Date();
-    const testDate = addHours(nowDate, -48);
-    expect(convertDateToWordDistance(testDate, "yesterday")).toBe(
-      format(testDate, "MM/DD")
-    );
-  });
+  it("should be the localized date with the year", () => {
+    const twoYearsAgo = subYears(Date.now(), 2);
 
-  it("should return a custom 'invalid date' string if the original date is invalid", () => {
-    const testDate = new Date("?");
-    const customInvalidString = "Invalid date provided";
-    expect(
-      convertDateToWordDistance(
-        testDate,
-        "yesterday",
-        undefined,
-        customInvalidString
-      )
-    ).toBe(customInvalidString);
-  });
-
-  it("should compare now date with last year date, expected MM/DD/YY", () => {
-    const nowDate = new Date();
-    const testDate = addYears(nowDate, -1);
-    expect(convertDateToWordDistance(testDate, "yesterday")).toBe(
-      format(testDate, "MM/DD/YY")
+    expect(convertDateToWordDistance(twoYearsAgo, "")).toBe(
+      formatDateAsLocal(twoYearsAgo, true)
     );
   });
 });
