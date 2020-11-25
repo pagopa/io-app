@@ -1,15 +1,20 @@
+import { Either } from "fp-ts/lib/Either";
+import { Errors } from "io-ts";
 import * as pot from "italia-ts-commons/lib/pot";
 import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
 import {
   isRawCreditCard,
   PatchedWalletV2ListResponse
 } from "../../../../types/pagopa";
-import { walletsV2_2, walletsV2_1 } from "../__mocks__/wallets";
+import { walletsV2_2, walletsV2_1, walletsV2_3 } from "../__mocks__/wallets";
 import { toIndexed } from "../../../helpers/indexer";
 import {
   bancomatListSelector,
+  bPayListSelector,
+  creditCardListSelector,
   creditCardWalletV1Selector,
-  pagoPaCreditCardWalletV1Selector
+  pagoPaCreditCardWalletV1Selector,
+  satispayListSelector
 } from "../wallets";
 import { GlobalState } from "../../types";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
@@ -82,23 +87,70 @@ describe("walletV2 selectors", () => {
 
   it("should return empty list since there is no method compliant with pagoPa", () => {
     const maybeWallets = PatchedWalletV2ListResponse.decode(walletsV2_2);
-    const indexedWallets = toIndexed(
-      (maybeWallets.value as PatchedWalletV2ListResponse).data!.map(
-        convertWalletV2toWalletV1
-      ),
-      w => w.idWallet
-    );
-    const globalState = ({
-      wallet: {
-        wallets: {
-          walletById: pot.some(indexedWallets)
-        }
-      }
-    } as any) as GlobalState;
+    const globalState = mockWalletState(maybeWallets);
     const maybePagoPaCC = pagoPaCreditCardWalletV1Selector(globalState);
     expect(pot.isSome(maybePagoPaCC)).toBeTruthy();
     if (pot.isSome(maybePagoPaCC)) {
       expect(maybePagoPaCC.value.length).toEqual(0);
     }
   });
+  it("should filter credit card and return one", () => {
+    const maybeWallets = PatchedWalletV2ListResponse.decode(walletsV2_3);
+    const globalState = mockWalletState(maybeWallets);
+    const potCreditCard = creditCardListSelector(globalState);
+    expect(pot.isSome(potCreditCard)).toBeTruthy();
+    expect(pot.getOrElse(potCreditCard, undefined)).toBeDefined();
+    if (pot.isSome(potCreditCard)) {
+      expect(potCreditCard.value.length).toEqual(1);
+    }
+  });
+  it("should filter bancomat and return one", () => {
+    const maybeWallets = PatchedWalletV2ListResponse.decode(walletsV2_3);
+    const globalState = mockWalletState(maybeWallets);
+    const potBancomat = bancomatListSelector(globalState);
+    expect(pot.isSome(potBancomat)).toBeTruthy();
+    expect(pot.getOrElse(potBancomat, undefined)).toBeDefined();
+    if (pot.isSome(potBancomat)) {
+      expect(potBancomat.value.length).toEqual(1);
+    }
+  });
+  it("should filter BPay and return one", () => {
+    const maybeWallets = PatchedWalletV2ListResponse.decode(walletsV2_3);
+    const globalState = mockWalletState(maybeWallets);
+    const potBPay = bPayListSelector(globalState);
+    expect(pot.isSome(potBPay)).toBeTruthy();
+    expect(pot.getOrElse(potBPay, undefined)).toBeDefined();
+    if (pot.isSome(potBPay)) {
+      expect(potBPay.value.length).toEqual(1);
+    }
+  });
+  it("should filter satispay and return one", () => {
+    const maybeWallets = PatchedWalletV2ListResponse.decode(walletsV2_3);
+    const globalState = mockWalletState(maybeWallets);
+    const potSatispay = satispayListSelector(globalState);
+    expect(pot.isSome(potSatispay)).toBeTruthy();
+    expect(pot.getOrElse(potSatispay, undefined)).toBeDefined();
+    if (pot.isSome(potSatispay)) {
+      expect(potSatispay.value.length).toEqual(1);
+    }
+  });
 });
+
+const mockWalletState = (
+  walletResponse: Either<Errors, PatchedWalletV2ListResponse>
+) => {
+  const indexedWallets = toIndexed(
+    (walletResponse.value as PatchedWalletV2ListResponse).data!.map(
+      convertWalletV2toWalletV1
+    ),
+    w => w.idWallet
+  );
+  return {
+    wallet: {
+      abi: remoteUndefined,
+      wallets: {
+        walletById: pot.some(indexedWallets)
+      }
+    }
+  } as GlobalState;
+};
