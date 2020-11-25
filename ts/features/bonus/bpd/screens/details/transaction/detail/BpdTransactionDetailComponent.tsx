@@ -1,6 +1,7 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import CopyButtonComponent from "../../../../../../../components/CopyButtonComponent";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
@@ -32,6 +33,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     top: -10,
     height: 25
+  },
+  copyText: {
+    width: widthPercentageToDP("70%")
   }
 });
 
@@ -70,7 +74,9 @@ const Table = (props: Props) => (
         {I18n.t("bonus.bpd.details.transaction.detail.paymentCircuit")}
       </H5>
       <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {props.transaction.circuitType}
+        {props.transaction.circuitType === "Unknown"
+          ? I18n.t("global.unknown")
+          : props.transaction.circuitType}
       </H4>
     </View>
     <View spacer={true} small={true} />
@@ -106,8 +112,10 @@ const IdBlock = (props: IdBlockProps) => (
   <View>
     <H5 weight={"Regular"}>{props.title}</H5>
     <View style={styles.rowId}>
-      <Monospace weight={"SemiBold"}>{props.value}</Monospace>
-      <CopyButtonComponent textToCopy={props.value} />
+      <Monospace weight={"SemiBold"} style={styles.copyText}>
+        {props.value}
+      </Monospace>
+      <CopyButtonComponent textToCopy={props.value} feedback={"inPlace"} />
     </View>
   </View>
 );
