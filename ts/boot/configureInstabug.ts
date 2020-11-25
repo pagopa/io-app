@@ -1,7 +1,6 @@
 import { Option } from "fp-ts/lib/Option";
 import Instabug, {
   BugReporting,
-  Chats,
   NetworkLogger,
   Replies
 } from "instabug-reactnative";
