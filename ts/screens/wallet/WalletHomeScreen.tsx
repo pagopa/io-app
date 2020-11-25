@@ -74,7 +74,6 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
 import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
-import { searchUserSatispay } from "../../features/wallet/onboarding/satispay/store/actions";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -601,7 +600,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     validTo?: Date
   ) =>
     dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo })),
-  navigateToBonusList: () => dispatch(searchUserSatispay.request()),
+  navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   refreshTransactions: () => {
     dispatch(clearTransactions());
