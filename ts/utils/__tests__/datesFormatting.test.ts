@@ -15,10 +15,10 @@ describe("convertDateToWordDistance", () => {
   });
 
   it("should be 'Invalid Date'", () => {
-    const invalidDate = Date.parse("NaN");
+    const invalidDate = new Date("");
 
     expect(
-      convertDateToWordDistance(invalidDate, null, undefined, "Invalid Date")
+      convertDateToWordDistance(invalidDate, "", undefined, "Invalid Date")
     ).toBe("Invalid Date");
   });
 });
