@@ -79,14 +79,6 @@ export const openInstabugBugReport = () => {
   ]);
 };
 
-export const openInstabugChat = (hasChats: boolean = false) => {
-  if (hasChats) {
-    Replies.show();
-  } else {
-    Chats.show();
-  }
-};
-
 export const openInstabugReplies = () => {
   Replies.show();
 };
