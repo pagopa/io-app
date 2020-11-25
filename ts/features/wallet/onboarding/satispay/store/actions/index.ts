@@ -3,18 +3,19 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { AbiListResponse } from "../../../../../../../definitions/pagopa/walletv2/AbiListResponse";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
+import { Satispay } from "../../../../../../../definitions/pagopa/walletv2/Satispay";
 import { RawBancomatPaymentMethod } from "../../../../../../types/pagopa";
+import { NetworkError } from "../../../../../../utils/errors";
 
 /**
  * Request the satispay account for the user
  */
 export const searchUserSatispay = createAsyncAction(
-  "WALLET_LOAD_SATISPAY_REQUEST",
-  "WALLET_LOAD_SATISPAY_SUCCESS",
-  "WALLET_LOAD_SATISPAY_FAILURE"
-)<void, AbiListResponse, Error>();
+  "WALLET_ONBOARDING_SATISPAY_LOAD_REQUEST",
+  "WALLET_ONBOARDING_SATISPAY_LOAD_SUCCESS",
+  "WALLET_ONBOARDING_SATISPAY_LOAD_FAILURE"
+)<void, Satispay, NetworkError>();
 
 /**
  * The user add the satispay account to the wallet
