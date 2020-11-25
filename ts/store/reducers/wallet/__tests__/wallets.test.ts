@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
 import {
-  isCreditCard,
+  isRawCreditCard,
   PatchedWalletV2ListResponse
 } from "../../../../types/pagopa";
 import { walletsV2_2, walletsV2_1 } from "../__mocks__/wallets";
@@ -9,11 +9,11 @@ import { toIndexed } from "../../../helpers/indexer";
 import {
   bancomatSelector,
   creditCardWalletV1Selector,
-  getPaymentMethodHash,
   pagoPaCreditCardWalletV1Selector
 } from "../wallets";
 import { GlobalState } from "../../types";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
+import { getPaymentMethodHash } from "../../../../utils/paymentMethod";
 
 describe("walletV2 selectors", () => {
   const maybeWalletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1);
@@ -42,8 +42,8 @@ describe("walletV2 selectors", () => {
       expect(maybeCC.value.length).toEqual(1);
       const paymentMethod = maybeCC.value[0].paymentMethod;
       if (paymentMethod) {
-        expect(isCreditCard(paymentMethod)).toBeTruthy();
-        expect(getPaymentMethodHash(paymentMethod.info)).toEqual(
+        expect(isRawCreditCard(paymentMethod)).toBeTruthy();
+        expect(getPaymentMethodHash(paymentMethod)).toEqual(
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
         );
       }
@@ -60,9 +60,7 @@ describe("walletV2 selectors", () => {
     if (pot.isSome(maybeBancomat)) {
       expect(maybeBancomat.value.length).toEqual(2);
       maybeBancomat.value.forEach(w => {
-        expect(
-          hpans.find(h => h === getPaymentMethodHash(w.info))
-        ).toBeDefined();
+        expect(hpans.find(h => h === getPaymentMethodHash(w))).toBeDefined();
       });
     }
   });
@@ -74,8 +72,8 @@ describe("walletV2 selectors", () => {
       expect(maybePagoPaCC.value.length).toEqual(1);
       const paymentMethod = maybePagoPaCC.value[0].paymentMethod;
       if (paymentMethod) {
-        expect(isCreditCard(paymentMethod)).toBeTruthy();
-        expect(getPaymentMethodHash(paymentMethod.info)).toEqual(
+        expect(isRawCreditCard(paymentMethod)).toBeTruthy();
+        expect(getPaymentMethodHash(paymentMethod)).toEqual(
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871"
         );
       }

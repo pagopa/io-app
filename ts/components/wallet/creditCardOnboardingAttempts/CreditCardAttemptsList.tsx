@@ -3,6 +3,7 @@ import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import variables from "../../../theme/variables";
 import I18n from "../../../i18n";
+import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../../screens/EdgeBorderComponent";
 import { formatDateAsLocal } from "../../../utils/dates";
@@ -57,7 +58,6 @@ const itemStyles = StyleSheet.create({
   }
 });
 
-const FOUR_UNICODE_CIRCLES = "●".repeat(4);
 const ICON_WIDTH = 24;
 const labelColor = "bluegrey";
 export const getPanDescription = (attempt: CreditCardInsertion) =>

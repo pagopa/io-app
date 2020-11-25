@@ -1,12 +1,8 @@
 import { View } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { Body } from "../../../../../../components/core/typography/Body";
-
-type Props = {
-  icon: ImageSourcePropType;
-  caption: string;
-};
+import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 
 const styles = StyleSheet.create({
   row: {
@@ -26,7 +22,7 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-export const PaymentMethodRepresentation: React.FunctionComponent<Props> = props => (
+export const PaymentMethodRepresentationComponent: React.FunctionComponent<PaymentMethodRepresentation> = props => (
   <View style={styles.row}>
     <Image source={props.icon} style={styles.cardIcon} />
     <View hspacer={true} />

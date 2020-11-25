@@ -23,7 +23,7 @@ import {
   useNotActivableInformationBottomSheet
 } from "../bottomsheet/BpdNotActivableInformation";
 import { BpdToggle } from "./BpdToggle";
-import { PaymentMethodRepresentation } from "./PaymentMethodRepresentation";
+import { PaymentMethodRepresentationComponent } from "./PaymentMethodRepresentationComponent";
 
 // TODO: accept only hpan, read all the other information with a selector from payment methods
 export type BpdToggleProps = {
@@ -116,7 +116,7 @@ const loading: GraphicalValue = { state: "loading", value: undefined };
  * Calculate the graphical state based on the pot possible states
  * @param potBpdActivation
  */
-const calculateGraphicalState = (
+export const calculateBpdToggleGraphicalState = (
   potBpdActivation: pot.Pot<BpdPaymentMethodActivation, Error>
 ): GraphicalValue =>
   pot.fold<BpdPaymentMethodActivation, Error, GraphicalValue>(
@@ -147,7 +147,7 @@ const calculateGraphicalState = (
 const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
   // Calculate the graphical state based on the potActivation and capability
   const graphicalState: GraphicalValue = props.hasBpdCapability
-    ? calculateGraphicalState(props.bpdPotActivation)
+    ? calculateBpdToggleGraphicalState(props.bpdPotActivation)
     : { state: "ready", value: "notActivable" };
   if (props.hasBpdCapability) {
     // trigger the initial loading / retry only if the method has the bpd capability
@@ -167,7 +167,7 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
   return (
     <>
       <View style={styles.row}>
-        <PaymentMethodRepresentation
+        <PaymentMethodRepresentationComponent
           icon={props.icon}
           caption={props.caption}
         />
