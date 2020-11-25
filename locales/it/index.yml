@@ -1837,6 +1837,8 @@ bonus:
           canceledOperationWarning: "Questa transazione è un rimborso, perciò è stato decurtato il relativo cashback."
           canceled: "Storno"
       paymentMethods:
+        add:
+          alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a registrare le transazioni necessarie"
         noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per registrare le transazioni"
         activateOnOthersChannel:
