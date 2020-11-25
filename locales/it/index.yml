@@ -3,7 +3,6 @@ global:
   password: Password
   username: Username
   disclaimer_beta: Questa funzionalità è in beta. Se riscontri problemi di accesso, segnalacelo!
-  unknown: sconosciuto
   accessibility:
     date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
