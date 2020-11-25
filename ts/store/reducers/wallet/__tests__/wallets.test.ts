@@ -7,7 +7,7 @@ import {
 import { walletsV2_2, walletsV2_1 } from "../__mocks__/wallets";
 import { toIndexed } from "../../../helpers/indexer";
 import {
-  bancomatSelector,
+  bancomatListSelector,
   creditCardWalletV1Selector,
   pagoPaCreditCardWalletV1Selector
 } from "../wallets";
@@ -51,7 +51,7 @@ describe("walletV2 selectors", () => {
   });
 
   it("should return bancomat", () => {
-    const maybeBancomat = bancomatSelector(globalState);
+    const maybeBancomat = bancomatListSelector(globalState);
     expect(pot.isSome(maybeBancomat)).toBeTruthy();
     const hpans = [
       "a591ab131bd9492e6df0357f1ac52785a96ddc8e772baddbb02e2169af9474f4",
