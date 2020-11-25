@@ -371,7 +371,7 @@ export function BackendClient(
 
   const getSupportToken: GetSupportTokenT = {
     method: "get",
-    url: () => `/api/v1/token`,
+    url: () => `/api/v1/token/support`,
     headers: tokenHeaderProducer,
     query: () => ({}),
     response_decoder: getSupportTokenDefaultDecoder()
