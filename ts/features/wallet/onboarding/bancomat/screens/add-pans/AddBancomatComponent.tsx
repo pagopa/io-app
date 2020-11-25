@@ -8,6 +8,7 @@ import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
+import { H3 } from "../../../../../../components/core/typography/H3";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
@@ -40,10 +41,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <BaseScreenComponent
       customGoBack={<View hspacer={true} spacer={true} />}
-      headerTitle={I18n.t("wallet.onboarding.bancomat.add.title", {
-        current: props.currentIndex + 1,
-        length: props.pansNumber
-      })}
+      headerTitle={I18n.t("wallet.onboarding.bancomat.add.title")}
       // TODO Replace with right CH texts
       contextualHelpMarkdown={{
         title: "wallet.walletCardTransaction.contextualHelpTitle",
@@ -55,12 +53,17 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
         <View
           style={{
             flex: 1,
-            alignItems: "center",
             paddingHorizontal: customVariables.contentPadding
           }}
         >
           <H1>{I18n.t("wallet.onboarding.bancomat.add.screenTitle")}</H1>
           <View spacer={true} large={true} />
+          <H3>
+            {I18n.t("wallet.onboarding.bancomat.add.label", {
+              current: props.currentIndex + 1,
+              length: props.pansNumber
+            })}
+          </H3>
           <PreviewBancomatCard bancomat={props.pan} logoUrl={abiLogo} />
           <View spacer={true} large={true} />
           <Body>
