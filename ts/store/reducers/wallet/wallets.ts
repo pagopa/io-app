@@ -148,9 +148,6 @@ export const paymentMethodsSelector = createSelector(
     )
 );
 
-/**
- * Return the
- */
 export const rawCreditCardListSelector = createSelector(
   [paymentMethodsSelector],
   (
@@ -163,7 +160,7 @@ export const rawCreditCardListSelector = createSelector(
 );
 
 /**
- * Return a bancomat list enhanced with the additional abi information
+ * Return a bancomat list enhanced with the additional abi information in the wallet
  */
 export const bancomatListSelector = createSelector(
   [paymentMethodsSelector],
@@ -172,7 +169,7 @@ export const bancomatListSelector = createSelector(
 );
 
 /**
- * Return a credit card list
+ * Return a credit card list in the wallet
  */
 export const creditCardListSelector = createSelector(
   [paymentMethodsSelector],
@@ -183,7 +180,7 @@ export const creditCardListSelector = createSelector(
 );
 
 /**
- * Return a satispay list
+ * Return a satispay list in the wallet
  */
 export const satispayListSelector = createSelector(
   [paymentMethodsSelector],
@@ -192,7 +189,7 @@ export const satispayListSelector = createSelector(
 );
 
 /**
- * Return a BPay list
+ * Return a BPay list in the wallet
  */
 export const bPayListSelector = createSelector(
   [paymentMethodsSelector],
