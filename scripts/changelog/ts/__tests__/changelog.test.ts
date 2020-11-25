@@ -75,9 +75,12 @@ describe("Test pivotal Utility", () => {
     const eitherScope = getStoryChangelogScope(clashScopeLabelStory);
     expect(eitherScope.isLeft()).toBeTruthy();
   });
-  it("getStoryChangelogScope on a story with scope label not allowed should return Left,Error", () => {
+  it("getStoryChangelogScope on a story with scope label not allowed should return Right,none", () => {
     const eitherScope = getStoryChangelogScope(scopeLabelNotAllowedStory);
-    expect(eitherScope.isLeft()).toBeTruthy();
+    expect(eitherScope.isRight()).toBeTruthy();
+    if (eitherScope.isRight()) {
+      expect(eitherScope.value).toBe(none);
+    }
   });
   it("getStoryChangelogScope on a story with a scope labels and belonging to a project that assigns a scope should return Left,Error", () => {
     const eitherScope = getStoryChangelogScope(bonusVacanzeStoryWithScopeLabel);
