@@ -26,7 +26,8 @@ export function convertDateToWordDistance(
     return formatDateAsLocal(date);
   } // the original date is invalid (distance is NaN)
   else if (isNaN(distance)) {
-    return invalidDateLabel ? invalidDateLabel : format(date);
+    // todo: define a default invalidDateLabel
+    return invalidDateLabel ? invalidDateLabel : "?";
   } else {
     // distance > current year
     return formatDateAsLocal(date, true);
