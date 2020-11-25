@@ -13,6 +13,7 @@ import { BpdActions } from "../../features/bonus/bpd/store/actions";
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
+import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
