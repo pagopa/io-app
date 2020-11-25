@@ -10,6 +10,7 @@ import {
 
 import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { BpdActions } from "../../features/bonus/bpd/store/actions";
+import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { AnalyticsActions } from "./analytics";
@@ -78,7 +79,8 @@ export type Action =
   | ProfileEmailValidationAction
   | BonusActions
   | BpdActions
-  | AbiActions;
+  | AbiActions
+  | SatispayActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
