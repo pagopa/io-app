@@ -5,7 +5,7 @@ import {
   Option,
   some
 } from "fp-ts/lib/Option";
-import { BugReporting, Replies } from "instabug-reactnative";
+import { BugReporting } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
@@ -15,7 +15,7 @@ import { ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
   openInstabugBugReport,
-  openInstabugChat
+  openInstabugReplies
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -125,9 +125,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             openInstabugBugReport();
             break;
           case BugReporting.reportType.question:
-            Replies.hasChats(hasChats => {
-              openInstabugChat(hasChats);
-            });
+            openInstabugReplies();
 
             break;
         }
