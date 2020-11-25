@@ -1,3 +1,4 @@
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Text } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
@@ -34,13 +35,24 @@ const styles = StyleSheet.create({
   }
 });
 
+const FEEDBACK_MS = 4000 as Millisecond;
+
 const CopyButtonComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [isTap, setIsTap] = React.useState(false);
+  const timerRetry = React.useRef<number | undefined>(undefined);
+
+  React.useEffect(
+    () => () => {
+      clearTimeout(timerRetry.current);
+    },
+    []
+  );
 
   const handlePress = () => {
     setIsTap(true);
     clipboardSetStringWithFeedback(props.textToCopy);
-    setTimeout(() => setIsTap(false), 4000);
+    // eslint-disable-next-line functional/immutable-data
+    timerRetry.current = setTimeout(() => setIsTap(false), FEEDBACK_MS);
   };
 
   return (

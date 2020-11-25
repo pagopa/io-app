@@ -114,7 +114,7 @@ locales:
 clipboard:
   copyFeedback: Copiato negli appunti
   copyText: copia
-  copyFeedbackButton: Copiato
+  copyFeedbackButton: copiato
 betaBanner:
   title: "L’app IO è in versione beta."
   description: Le tue segnalazioni ci aiutano a migliorare giorno dopo giorno.
