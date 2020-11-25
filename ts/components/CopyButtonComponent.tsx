@@ -55,8 +55,8 @@ export default function CopyButtonComponent(props: Props) {
     }
   };
 
-  // when the button is render, store the width. This is because
-  // if we change the button text we don't want it resized its width
+  // when the button is rendered, store the width. This is because
+  // if we change the button text we don't want it resizes its width
   const handleButtonLayoutChange = (le: LayoutChangeEvent) => {
     if (buttonWidth === undefined) {
       setButtonWidth(le.nativeEvent.layout.width);
