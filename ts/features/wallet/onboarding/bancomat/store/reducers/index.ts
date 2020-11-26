@@ -5,14 +5,17 @@ import addedPansReducer from "./addedPans";
 import addingPansReducer, { AddingPansState } from "./addingPans";
 import pansReducer, { Pans } from "./pans";
 
-export type BancomatState = {
+export type OnboardingBancomatState = {
   foundPans: Pans;
   addingPans: AddingPansState;
   addedPans: ReadonlyArray<RawBancomatPaymentMethod>;
   abiSelected: AbiSelected;
 };
 
-const bancomatReducer = combineReducers<BancomatState, Action>({
+const onboardingBancomatReducer = combineReducers<
+  OnboardingBancomatState,
+  Action
+>({
   // the bancomat pans found for the user during the onboarding phase of a new bancomat
   foundPans: pansReducer,
   // the bancomat pan that user is adding to his wallet
@@ -23,4 +26,4 @@ const bancomatReducer = combineReducers<BancomatState, Action>({
   abiSelected: abiSelectedReducer
 });
 
-export default bancomatReducer;
+export default onboardingBancomatReducer;

@@ -3,9 +3,9 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import {
   BancomatPaymentMethod,
-  enhanceBancomat,
   RawBancomatPaymentMethod
 } from "../../../../../../types/pagopa";
+import { enhanceBancomat } from "../../../../../../utils/paymentMethod";
 import { getValueOrElse } from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../store/abi";
 import { addBancomatToWallet, walletAddBancomatStart } from "../actions";

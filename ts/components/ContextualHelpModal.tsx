@@ -1,14 +1,13 @@
 import { fromNullable, none } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Container, Content, H3, Text, View } from "native-base";
+import { Container, Content, H3, View } from "native-base";
 import * as React from "react";
 import {
   InteractionManager,
   Modal,
   ModalBaseProps,
-  StyleSheet,
-  TouchableWithoutFeedback
+  StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../i18n";
@@ -34,7 +33,6 @@ import BetaBannerComponent from "./screens/BetaBannerComponent";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import Markdown from "./ui/Markdown";
-import { openLink } from "./ui/Markdown/handlers/link";
 
 type OwnProps = Readonly<{
   title: string;
@@ -197,17 +195,6 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
                     props.onRequestAssistance(reportType, props.supportToken)
                   }
                 />
-                <View spacer={true} />
-                <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
-                <View spacer={true} />
-                <Text>
-                  {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
-                  <TouchableWithoutFeedback
-                    onPress={() => openLink(I18n.t("global.ioWebSite"))}
-                  >
-                    <Text link={true}>{I18n.t("global.ioWebSite")}</Text>
-                  </TouchableWithoutFeedback>
-                </Text>
               </React.Fragment>
             )}
             {isContentLoaded && <EdgeBorderComponent />}
