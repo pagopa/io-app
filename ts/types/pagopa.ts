@@ -208,7 +208,7 @@ export type PaymentMethodRepresentation = {
   caption: string;
   // An icon that represent the payment method
   icon: ImageSourcePropType;
-  // An icon that represent the payment method used in list representation
+  // An icon that represent the payment method used for in list representation
   listIcon?: ImageSourcePropType;
 };
 
