@@ -18,7 +18,7 @@ import {
   isActivationResponseTrackable,
   isEligibilityResponseTrackable
 } from "../../features/bonus/bonusVacanze/utils/bonus";
-import { initializeMixPanel, mixpanel } from "../../mixpanel";
+import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
   analyticsAuthenticationCompleted,
