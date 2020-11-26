@@ -10,7 +10,7 @@ import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario"
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   instabugLog,
-  openInstabugBugReport,
+  openInstabugQuestionReport,
   TypeLogs
 } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -97,7 +97,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
         instabugTag
       );
     });
-    openInstabugBugReport();
+    openInstabugQuestionReport();
   };
 
   private getData = () => {
