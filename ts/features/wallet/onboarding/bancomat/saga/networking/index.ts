@@ -43,12 +43,6 @@ export function* handleLoadAbi(
   }
 }
 
-export type LoadPansError = TimeoutError | GenericError;
-
-type TimeoutError = { readonly kind: "timeout" };
-
-type GenericError = { kind: "generic"; value: Error };
-
 // get user's pans
 export function* handleLoadPans(
   getPans: ReturnType<typeof PaymentManagerClient>["getPans"],
