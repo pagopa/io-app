@@ -113,7 +113,7 @@ const IdBlock = (props: IdBlockProps) => (
     <H5 weight={"Regular"}>{props.title}</H5>
     <View style={styles.rowId}>
       <Monospace weight={"SemiBold"} style={styles.copyText}>
-        {"TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST "}
+        {props.value}
       </Monospace>
       <CopyButtonComponent textToCopy={props.value} />
     </View>
