@@ -3,7 +3,7 @@ import { BugReporting, dismissType, Replies } from "instabug-reactnative";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
-import { openInstabugChat } from "../boot/configureInstabug";
+import { openInstabugReplies } from "../boot/configureInstabug";
 import I18n from "../i18n";
 import {
   instabugReportClosed,
@@ -64,7 +64,7 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
       instabugReportType: some(BugReporting.reportType.question)
     });
     this.props.dispatchIBReportOpen(BugReporting.reportType.question);
-    openInstabugChat(this.state.hasChats);
+    openInstabugReplies();
   };
 
   constructor(props: Props) {

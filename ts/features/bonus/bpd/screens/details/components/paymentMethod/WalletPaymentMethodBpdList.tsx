@@ -2,7 +2,7 @@ import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../../../../../../components/box/InfoBox";
@@ -59,13 +59,29 @@ const NoPaymentMethodFound = (props: Props) => (
  * @param props
  * @constructor
  */
-const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props =>
-  pot.isSome(props.potWallets) ? (
+const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props => {
+  const onAddPress = () =>
+    Alert.alert(
+      I18n.t("global.genericAlert"),
+      I18n.t("bonus.bpd.details.paymentMethods.add.alertBody"),
+      [
+        {
+          text: I18n.t("global.buttons.continue"),
+          onPress: props.addPaymentMethod
+        },
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        }
+      ]
+    );
+
+  return pot.isSome(props.potWallets) ? (
     <View>
       <View style={styles.row}>
         <H4>{I18n.t("wallet.paymentMethods")}</H4>
         {props.potWallets.value.length > 0 && (
-          <Link onPress={props.addPaymentMethod}>
+          <Link onPress={onAddPress}>
             {I18n.t("global.buttons.add").toLowerCase()}
           </Link>
         )}
@@ -83,6 +99,7 @@ const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props =>
       )}
     </View>
   ) : null;
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addPaymentMethod: () => {
