@@ -16,8 +16,6 @@ type Props = {
   onValueChange: (value: boolean) => void;
 };
 
-type OwnProps = Props;
-
 /**
  * Choose between a string or a node
  * @param text
@@ -29,7 +27,7 @@ const pickText = (text: XOR<string, React.ReactNode>) =>
  * A declaration entry (checkbox + text) that the user have to accept in order to continue
  * @constructor
  */
-export const DeclarationEntry: React.FunctionComponent<OwnProps> = props => {
+export const DeclarationEntry: React.FunctionComponent<Props> = props => {
   const [isChecked, setIsChecked] = React.useState<boolean>(false);
   const handleOnPress = () => {
     const newValue = !isChecked;
