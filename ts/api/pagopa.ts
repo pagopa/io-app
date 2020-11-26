@@ -69,7 +69,6 @@ import {
   PaymentManagerToken,
   PspListResponse,
   PspResponse,
-  SatispayPaymentMethod,
   SessionResponse,
   TransactionListResponse,
   TransactionResponse,
