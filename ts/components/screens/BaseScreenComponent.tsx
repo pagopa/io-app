@@ -15,7 +15,7 @@ import { ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
   instabugLog,
-  TypeLogs
+  TypeLogs,
   openInstabugQuestionReport,
   openInstabugReplies
 } from "../../boot/configureInstabug";
