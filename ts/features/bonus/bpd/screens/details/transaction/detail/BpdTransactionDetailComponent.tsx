@@ -1,7 +1,6 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 import CopyButtonComponent from "../../../../../../../components/CopyButtonComponent";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
@@ -35,7 +34,8 @@ const styles = StyleSheet.create({
     height: 25
   },
   copyText: {
-    width: widthPercentageToDP("70%")
+    flex: 1,
+    paddingRight: 16
   }
 });
 
@@ -113,7 +113,7 @@ const IdBlock = (props: IdBlockProps) => (
     <H5 weight={"Regular"}>{props.title}</H5>
     <View style={styles.rowId}>
       <Monospace weight={"SemiBold"} style={styles.copyText}>
-        {props.value}
+        {"TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST "}
       </Monospace>
       <CopyButtonComponent textToCopy={props.value} />
     </View>
