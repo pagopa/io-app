@@ -86,11 +86,13 @@ export function* handleAddUserSatispayToWallet(
     if (addSatispayToWalletWithRefreshResult.isRight()) {
       const statusCode = addSatispayToWalletWithRefreshResult.value.status;
       if (statusCode === 200) {
+        // satispay has been added to the user wallet
+        // response is the list wallets, dispatch an action to update the sore
         const wallets = (
           addSatispayToWalletWithRefreshResult.value.value.data ?? []
         ).map(convertWalletV2toWalletV1);
         yield put(fetchWalletsSuccess(wallets));
-        yield put(addSatispayToWalletAction.success());
+        return yield put(addSatispayToWalletAction.success());
       } else {
         return yield put(
           addSatispayToWalletAction.failure(
