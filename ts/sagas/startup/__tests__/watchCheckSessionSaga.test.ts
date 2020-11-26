@@ -7,7 +7,10 @@ import {
   sessionExpired,
   sessionInformationLoadSuccess
 } from "../../../store/actions/authentication";
-import { checkSession, checkSessionResult } from "../watchCheckSessionSaga";
+import {
+  testableCheckSession,
+  checkSessionResult
+} from "../watchCheckSessionSaga";
 
 describe("checkSession", () => {
   const getSessionValidity = jest.fn();
@@ -21,7 +24,7 @@ describe("checkSession", () => {
       status: 200,
       value: responseValue
     });
-    testSaga(checkSession, getSessionValidity)
+    testSaga(testableCheckSession!, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(responseOK)
@@ -38,7 +41,7 @@ describe("checkSession", () => {
 
   it("if response is 401 the session is invalid", () => {
     const responseUnauthorized = right({ status: 401 });
-    testSaga(checkSession, getSessionValidity)
+    testSaga(testableCheckSession!, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(responseUnauthorized)
@@ -53,7 +56,7 @@ describe("checkSession", () => {
 
   it("if response is 500 the session is valid", () => {
     const response500 = right({ status: 500 });
-    testSaga(checkSession, getSessionValidity)
+    testSaga(testableCheckSession!, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(response500)
@@ -72,7 +75,7 @@ describe("checkSession", () => {
       context: [{ key: "", type: t.string }]
     };
     const responeLeft = left([validatorError]);
-    testSaga(checkSession, getSessionValidity)
+    testSaga(testableCheckSession!, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(responeLeft)
