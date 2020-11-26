@@ -31,7 +31,7 @@ const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
           confirmText: I18n.t("bonus.bpd.onboarding.alert.confirm"),
           onConfirmAction: props.onCancel
         })
-      : props.userActivateBpd;
+      : props.userActivateBpd();
 
   return (
     <>
