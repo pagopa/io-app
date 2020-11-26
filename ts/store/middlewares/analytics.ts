@@ -151,22 +151,17 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       // session to the hashed fiscal code of the user
       const fiscalnumber = action.payload.fiscal_code;
 
-      // const aliasAndIdentify = sha256(fiscalnumber).then(hash =>
-      //   mp.alias(hash, DeviceInfo.getUniqueId()).then(() => mp.identify(hash))
-      // );
-
-      const aliasAndIdentify = sha256(fiscalnumber).then(hash =>
-        mp.alias("yyyyy", hash).then(() => mp.identify(hash))
+      // Re-identify the user using the hashed fiscal code.
+      // It's important the flow order and the order in which the arguments are passed to the
+      // mp.alias function because the second argument is the 'Main ID' for mixpanel so the events
+      // will be showned in the Main ID page.
+      const identifyAndAlias = sha256(fiscalnumber).then(hash =>
+        mp.identify(hash).then(() => mp.alias(DeviceInfo.getUniqueId(), hash))
       );
-
-      // FUNZIONA
-      // const aliasAndIdentify = sha256(fiscalnumber).then(hash =>
-      //   mp.identify(hash).then(() => mp.alias("yyyyy", hash))
-      // );
 
       return Promise.all([
         mp.track(action.type).then(constNull, constNull),
-        aliasAndIdentify.then(constNull, constNull)
+        identifyAndAlias.then(constNull, constNull)
       ]);
 
     case getType(idpLoginUrlChanged):
