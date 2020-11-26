@@ -10,7 +10,7 @@ export let mixpanel: MixpanelInstance | undefined;
 /**
  * Initialize mixpanel at start
  */
-export const initializeMixPanel = async () => {
+const initializeMixPanel = async () => {
   const privateInstance = new MixpanelInstance(mixpanelToken);
   await privateInstance.initialize();
   mixpanel = privateInstance;
@@ -30,6 +30,6 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
     appReadableVersion: getAppVersion()
   });
 
-  // Identify the user using the smartphone uniqueId
+  // Identify the user using the device uniqueId
   await mp.identify(DeviceInfo.getUniqueId());
 };
