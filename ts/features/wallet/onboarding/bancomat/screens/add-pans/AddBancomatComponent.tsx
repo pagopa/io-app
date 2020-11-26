@@ -36,9 +36,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
   React.useEffect(
     () =>
       setAbiLogo(
-        fromNullable(props.pan.abi)
-          .map(abi => getBancomatAbiIconUrl(abi))
-          .toUndefined()
+        fromNullable(props.pan.abi).map(getBancomatAbiIconUrl).toUndefined()
       ),
     [props.currentIndex]
   );
