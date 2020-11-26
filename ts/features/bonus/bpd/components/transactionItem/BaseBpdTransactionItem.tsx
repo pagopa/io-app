@@ -44,7 +44,10 @@ const styles = StyleSheet.create({
  * @constructor
  */
 export const BaseBpdTransactionItem: React.FunctionComponent<Props> = props => (
-  <TouchableOpacity style={{ marginVertical: 4 }} onPress={props.onPress}>
+  <TouchableOpacity
+    style={{ marginVertical: 4, paddingHorizontal: 16 }}
+    onPress={props.onPress}
+  >
     <ShadowBox>
       <View style={[styles.body, styles.row]}>
         <View style={[styles.row]}>
