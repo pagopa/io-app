@@ -1,14 +1,62 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { Satispay } from "../../../../../../../definitions/pagopa/walletv2/Satispay";
 import { NetworkError } from "../../../../../../utils/errors";
 
 /**
- * search for user's satispay
+ * Request the satispay account for the user
  */
 export const searchUserSatispay = createAsyncAction(
   "WALLET_ONBOARDING_SATISPAY_LOAD_REQUEST",
   "WALLET_ONBOARDING_SATISPAY_LOAD_SUCCESS",
   "WALLET_ONBOARDING_SATISPAY_LOAD_FAILURE"
-)<void, Satispay, NetworkError>();
+)<void, Satispay | null, NetworkError>();
 
-export type SatispayActions = ActionType<typeof searchUserSatispay>;
+/**
+ * The user add the satispay account to the wallet
+ */
+export const addSatispayToWallet = createAsyncAction(
+  "WALLET_ONBOARDING_SATISPAY_ADD_REQUEST",
+  "WALLET_ONBOARDING_SATISPAY_ADD_SUCCESS",
+  "WALLET_ONBOARDING_SATISPAY_ADD_FAILURE"
+  // TODO: replace void with the right type
+)<Satispay, void, Error>();
+
+/**
+ * The user choose to start the workflow to add a new satispay account to the wallet
+ */
+export const walletAddSatispayStart = createStandardAction(
+  "WALLET_ONBOARDING_SATISPAY_START"
+)<void>();
+
+/**
+ * The user complete the workflow to add a new satispay account to the wallet
+ */
+export const walletAddSatispayCompleted = createStandardAction(
+  "WALLET_ONBOARDING_SATISPAY_COMPLETED"
+)<void>();
+
+/**
+ * The user choose to cancel the addition of a new satispay account to the wallet
+ */
+export const walletAddSatispayCancel = createStandardAction(
+  "WALLET_ONBOARDING_SATISPAY_CANCEL"
+)<void>();
+
+/**
+ * The user choose `back` from the first screen
+ */
+export const walletAddSatispayBack = createStandardAction(
+  "WALLET_ONBOARDING_SATISPAY_BACK"
+)<void>();
+
+export type SatispayActions =
+  | ActionType<typeof searchUserSatispay>
+  | ActionType<typeof addSatispayToWallet>
+  | ActionType<typeof walletAddSatispayStart>
+  | ActionType<typeof walletAddSatispayCompleted>
+  | ActionType<typeof walletAddSatispayCancel>
+  | ActionType<typeof walletAddSatispayBack>;

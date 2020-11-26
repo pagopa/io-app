@@ -1,5 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import _ from "lodash";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
@@ -21,12 +22,17 @@ export function* handleSearchUserSatispay(
       searchSatispayWithRefresh
     );
     if (searchSatispayWithRefreshResult.isRight()) {
-      if (searchSatispayWithRefreshResult.value.status === 200) {
+      const statusCode = searchSatispayWithRefreshResult.value.status;
+      if (statusCode === 200) {
+        const value = searchSatispayWithRefreshResult.value.value;
+        // even if the user doesn't own satispay the response is 200 but the payload is empty
+        // FIXME 200 must always contain a non-empty payload
         return yield put(
-          searchUserSatispay.success(
-            searchSatispayWithRefreshResult.value.value
-          )
+          searchUserSatispay.success(_.isEmpty(value.data) ? null : value)
         );
+      } else if (statusCode === 404) {
+        // the user doesn't own any satispay
+        return yield put(searchUserSatispay.success(null));
       } else {
         return yield put(
           searchUserSatispay.failure({

@@ -43,6 +43,7 @@ import {
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
+import { handleSearchUserSatispay } from "../features/wallet/onboarding/satispay/saga/networking";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
@@ -139,7 +140,6 @@ import {
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { getTitleFromCard } from "../utils/paymentMethod";
 import { searchUserSatispay } from "../features/wallet/onboarding/satispay/store/actions";
-import { handleSearchUserSatispay } from "../features/wallet/onboarding/satispay/saga/networking";
 
 /**
  * Configure the max number of retries and delay between retries when polling
