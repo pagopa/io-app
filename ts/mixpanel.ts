@@ -31,5 +31,6 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   });
 
   // Identify the user using the smartphone uniqueId
-  await mp.identify(DeviceInfo.getUniqueId());
+  // await mp.identify(DeviceInfo.getUniqueId());
+  await mp.identify("yyyyy");
 };

@@ -151,9 +151,18 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       // session to the hashed fiscal code of the user
       const fiscalnumber = action.payload.fiscal_code;
 
+      // const aliasAndIdentify = sha256(fiscalnumber).then(hash =>
+      //   mp.alias(hash, DeviceInfo.getUniqueId()).then(() => mp.identify(hash))
+      // );
+
       const aliasAndIdentify = sha256(fiscalnumber).then(hash =>
-        mp.alias(hash, DeviceInfo.getUniqueId()).then(() => mp.identify(hash))
+        mp.alias("yyyyy", hash).then(() => mp.identify(hash))
       );
+
+      // FUNZIONA
+      // const aliasAndIdentify = sha256(fiscalnumber).then(hash =>
+      //   mp.identify(hash).then(() => mp.alias("yyyyy", hash))
+      // );
 
       return Promise.all([
         mp.track(action.type).then(constNull, constNull),
