@@ -71,7 +71,7 @@ export const initialiseInstabug = () => {
   setInstabugUserAttribute("appVersion", getAppVersion());
 };
 
-export const openInstabugBugReport = () => {
+export const openInstabugQuestionReport = () => {
   BugReporting.showWithOptions(BugReporting.reportType.question, [
     BugReporting.option.commentFieldRequired,
     BugReporting.option.emailFieldOptional

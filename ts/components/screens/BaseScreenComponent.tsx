@@ -14,7 +14,7 @@ import * as React from "react";
 import { ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
-  openInstabugBugReport,
+  openInstabugQuestionReport,
   openInstabugReplies
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
@@ -122,7 +122,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       maybeReport.map(type => {
         switch (type) {
           case BugReporting.reportType.bug:
-            openInstabugBugReport();
+            openInstabugQuestionReport();
             break;
           case BugReporting.reportType.question:
             openInstabugReplies();
