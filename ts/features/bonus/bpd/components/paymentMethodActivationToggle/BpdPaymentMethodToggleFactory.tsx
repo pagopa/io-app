@@ -18,7 +18,8 @@ export const bpdToggleFactory = (paymentMethod: PaymentMethod) => {
     <PaymentMethodBpdToggle
       key={hash}
       hPan={hash as HPan}
-      icon={paymentMethod.icon}
+      // prefer list icon if it's present
+      icon={paymentMethod.listIcon ?? paymentMethod.icon}
       hasBpdCapability={hasFunctionEnabled(
         paymentMethod,
         EnableableFunctionsTypeEnum.BPD

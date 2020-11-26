@@ -121,7 +121,8 @@ export const enhanceBancomat = (
     ? abiList[bancomat.info.issuerAbiCode]
     : undefined,
   caption: getTitleFromBancomat(bancomat, abiList),
-  icon: getImageFromPaymentMethod(bancomat)
+  icon: getImageFromPaymentMethod(bancomat),
+  listIcon: pagoBancomatImage
 });
 
 export const enhancePaymentMethod = (
