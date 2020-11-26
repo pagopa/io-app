@@ -10,10 +10,9 @@ import {
 
 import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { BpdActions } from "../../features/bonus/bpd/store/actions";
-import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
-import { GlobalState } from "../reducers/types";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
+import { GlobalState } from "../reducers/types";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -27,6 +26,7 @@ import { DeepLinkActions } from "./deepLink";
 import { IdentificationActions } from "./identification";
 import { InstabugInfoActions } from "./instabug";
 import { InstallationActions } from "./installation";
+import { InternalRouteNavigationActions } from "./internalRouteNavigation";
 import { MessagesActions } from "./messages";
 import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
@@ -44,7 +44,6 @@ import { ServicesActions } from "./services";
 import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
-import { InternalRouteNavigationActions } from "./internalRouteNavigation";
 
 export type Action =
   | AnalyticsActions

@@ -13,9 +13,11 @@ import {
 import { searchUserSatispay } from "../actions";
 
 export type OnboardSatispayState = {
+  // A RemoteValue that represent the found satispay account for the user
   foundSatispay: RemoteSatispay;
 };
 
+// The satispay account found could be one (Satispay) or null (no satispay account found)
 export type RemoteSatispay = RemoteValue<Satispay | null, NetworkError>;
 
 const foundSatispayReducer = (
