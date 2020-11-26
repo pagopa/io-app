@@ -17,6 +17,11 @@ import { screenContextualHelpDataSelector } from "../store/reducers/content";
 import { GlobalState } from "../store/reducers/types";
 import themeVariables from "../theme/variables";
 import {
+  supportTokenSelector,
+  SupportTokenState
+} from "../store/reducers/authentication";
+import { loadSupportToken } from "../store/actions/authentication";
+import {
   FAQsCategoriesType,
   FAQType,
   getFAQsFromCategories
@@ -37,7 +42,10 @@ type OwnProps = Readonly<{
   onLinkClicked?: (url: string) => void;
   modalAnimation?: ModalBaseProps["animationType"];
   close: () => void;
-  onRequestAssistance: (type: BugReporting.reportType) => void;
+  onRequestAssistance: (
+    type: BugReporting.reportType,
+    supportToken: SupportTokenState
+  ) => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
@@ -82,6 +90,8 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     ) {
       props.loadContextualHelpData();
     }
+    // refresh / load support token
+    props.loadSupportToken();
   }, [
     pot.isNone(props.potContextualData) || pot.isError(props.potContextualData)
   ]);
@@ -181,7 +191,9 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
               <React.Fragment>
                 <View spacer={true} extralarge={true} />
                 <InstabugAssistanceComponent
-                  requestAssistance={props.onRequestAssistance}
+                  requestAssistance={reportType =>
+                    props.onRequestAssistance(reportType, props.supportToken)
+                  }
                 />
               </React.Fragment>
             )}
@@ -197,14 +209,18 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const potContextualData = screenContextualHelpDataSelector(state);
   const maybeContextualData = pot.getOrElse(potContextualData, none);
+
+  const supportToken = supportTokenSelector(state);
   return {
+    supportToken,
     potContextualData,
     maybeContextualData
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadContextualHelpData: () => dispatch(loadContextualHelpData.request())
+  loadContextualHelpData: () => dispatch(loadContextualHelpData.request()),
+  loadSupportToken: () => dispatch(loadSupportToken.request())
 });
 
 export default connect(
