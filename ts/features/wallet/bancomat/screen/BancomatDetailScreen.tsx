@@ -19,8 +19,6 @@ import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePayment
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import BancomatInformation from "./BancomatInformation";
-import SatispayCard from "../../satispay/SatispayCard";
-import BPayCard from "../../bancomatpay/BPayCard";
 
 type NavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
@@ -76,12 +74,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       hideHeader={true}
     >
       <View style={styles.cardContainer}>
-        {/* <BancomatCard enhancedBancomat={bancomat} /> */}
-        {/* <SatispayCard /> */}
-        <BPayCard
-          abiLogo={bancomat.abiInfo?.logoUrl}
-          bankName={bancomat.abiInfo?.name}
-        />
+        <BancomatCard enhancedBancomat={bancomat} />
       </View>
       <View spacer={true} extralarge={true} />
       <View spacer={true} />
