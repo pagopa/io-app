@@ -69,7 +69,10 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
             <View spacer={true} large={true} />
             <InfoBox>
               <Body>
-                {I18n.t("bonus.bpd.details.paymentMethods.activate.disclaimer")}
+                {I18n.t(
+                  "bonus.bpd.details.paymentMethods.activate.disclaimer",
+                  { activate: I18n.t("global.buttons.activate") }
+                )}
               </Body>
             </InfoBox>
           </>
