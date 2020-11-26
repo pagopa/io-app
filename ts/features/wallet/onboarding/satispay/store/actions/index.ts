@@ -13,7 +13,7 @@ export const searchUserSatispay = createAsyncAction(
   "WALLET_ONBOARDING_SATISPAY_LOAD_REQUEST",
   "WALLET_ONBOARDING_SATISPAY_LOAD_SUCCESS",
   "WALLET_ONBOARDING_SATISPAY_LOAD_FAILURE"
-)<void, Satispay, NetworkError>();
+)<void, Satispay | null, NetworkError>();
 
 /**
  * The user add the satispay account to the wallet
