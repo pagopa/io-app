@@ -67,7 +67,7 @@ const CopyButtonComponent: React.FunctionComponent<Props> = (props: Props) => {
         small={true}
       >
         {isTap
-          ? I18n.t("clipboard.copyFeedbackButtona")
+          ? I18n.t("clipboard.copyFeedbackButton")
           : I18n.t("clipboard.copyText")}
       </Text>
     </ButtonDefaultOpacity>

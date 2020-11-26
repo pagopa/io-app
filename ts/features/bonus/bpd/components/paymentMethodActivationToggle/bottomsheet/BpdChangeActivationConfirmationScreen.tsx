@@ -2,6 +2,8 @@ import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
+import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { Body } from "../../../../../../components/core/typography/Body";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
@@ -62,6 +64,16 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
         <PaymentMethodRepresentationComponent {...props.representation} />
         <View spacer={true} />
         <Markdown>{body}</Markdown>
+        {props.type === "Activation" && (
+          <>
+            <View spacer={true} large={true} />
+            <InfoBox>
+              <Body>
+                {I18n.t("bonus.bpd.details.paymentMethods.activate.disclaimer")}
+              </Body>
+            </InfoBox>
+          </>
+        )}
       </View>
     </BottomSheetContent>
   );
