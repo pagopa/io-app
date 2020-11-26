@@ -3,6 +3,7 @@ global:
   password: Password
   username: Username
   disclaimer_beta: Questa funzionalità è in beta. Se riscontri problemi di accesso, segnalacelo!
+  unknown: sconosciuto
   accessibility:
     date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
@@ -114,6 +115,7 @@ locales:
 clipboard:
   copyFeedback: Copiato negli appunti
   copyText: copia
+  copyFeedbackButton: copiato
 betaBanner:
   title: "L’app IO è in versione beta."
   description: Le tue segnalazioni ci aiutano a migliorare giorno dopo giorno.
@@ -1337,13 +1339,10 @@ contextualHelp:
 instabug:
   contextualHelp:
     title1: Hai bisogno di aiuto?
-    description: "Ricorda che se hai dubbi sul contenuto di un messaggio, ti consigliamo di contattare direttamente l'ente che te lo ha inviato: troverai i recapiti in fondo al messaggio o nella scheda del relativo servizio."
-    buttonChat: Inviaci un messaggio
-    descriptionChat: "Se invece hai trovato un errore o qualcosa che non funziona nell’app, segnala un bug agli sviluppatori: si prenderanno carico del problema al più presto e ti risponderanno direttamente tramite IO."
-    buttonBug: Segnala un bug
-    descriptionBug: Se vuoi suggerirci un miglioramento o un nuovo servizio che vorresti avere su IO, puoi inviare un messaggio al team direttamente da qui.
-    title2: Sei nuovo in IO?
-    descriptionLink: Scopri di più sul progetto IO, sulla sua storia e su quali novità ti attendono, visitando il sito
+    descriptionBug: "Se qualcosa **non funziona** come dovrebbe o se vuoi **suggerirci un miglioramento** o una nuova funzionalità, scrivici! Il team di IO ti risponderà direttamente tramite l'app."
+    buttonBug: Scrivi al team di IO
+    descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
+    buttonChat: Riapri una segnalazione
     assistanceWorkHours: L'assistenza di IO è disponibile nei giorni feriali dalle ore 8.00 alle 20.00 e nei festivi dalle ore 8.00 alle 12.00
 faq:
   1:
@@ -1837,6 +1836,8 @@ bonus:
           canceledOperationWarning: "Questa transazione è un rimborso, perciò è stato decurtato il relativo cashback."
           canceled: "Storno"
       paymentMethods:
+        add:
+          alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a registrare le transazioni necessarie"
         noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per registrare le transazioni"
         activateOnOthersChannel:

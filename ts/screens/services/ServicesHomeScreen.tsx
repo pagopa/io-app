@@ -42,7 +42,7 @@ import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import {
   instabugLog,
-  openInstabugBugReport,
+  openInstabugQuestionReport,
   TypeLogs
 } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -336,7 +336,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
   private instabugLogAndOpenReport = () => {
     this.sendDataToInstabug();
-    openInstabugBugReport();
+    openInstabugQuestionReport();
   };
   /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
   private instabugReportTag = "services-loading-error";
