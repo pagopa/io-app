@@ -2,6 +2,7 @@
 global:
   password: Password
   username: Username
+  unknown: unknown
   disclaimer_beta: This feature is in beta. If you're having trouble signing in, please let us know!
   accessibility:
     date_format: MMMM Do YYYY

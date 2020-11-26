@@ -159,14 +159,12 @@ const getTransactionsByDaySections = (
 const renderSectionHeader = (info: {
   section: SectionListData<EnhancedBpdTransaction | TotalCashbackPerDate>;
 }): React.ReactNode => (
-  <View style={{ paddingHorizontal: 16 }}>
-    <BaseDailyTransactionHeader
-      date={info.section.title}
-      transactionsNumber={
-        [...info.section.data].filter(i => !isTotalCashback(i)).length
-      }
-    />
-  </View>
+  <BaseDailyTransactionHeader
+    date={info.section.title}
+    transactionsNumber={
+      [...info.section.data].filter(i => !isTotalCashback(i)).length
+    }
+  />
 );
 
 /**
@@ -196,11 +194,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
         />
       );
     }
-    return (
-      <View style={{ paddingHorizontal: 16 }}>
-        <BpdTransactionItem transaction={info.item} />
-      </View>
-    );
+    return <BpdTransactionItem transaction={info.item} />;
   };
 
   return (
