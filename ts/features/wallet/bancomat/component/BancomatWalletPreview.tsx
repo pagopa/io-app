@@ -1,6 +1,6 @@
 import { Option } from "fp-ts/lib/Option";
 import * as React from "react";
-import { Image, ImageStyle, StyleProp } from "react-native";
+import { Image, ImageStyle, ImageURISource, StyleProp } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
@@ -34,7 +34,7 @@ const renderLeft = (props: Props, size: Option<[number, number]>) =>
       {props.bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")}
     </Body>,
     imgDim => {
-      const imageUrl = props.bancomat.abiInfo?.logoUrl;
+      const imageUrl = (props.bancomat.icon as ImageURISource).uri;
       const imageStyle: StyleProp<ImageStyle> = {
         width: imgDim[0],
         height: imgDim[1],
@@ -55,7 +55,7 @@ const BancomatWalletPreview: React.FunctionComponent<Props> = props => {
   const imgDimensions = useImageResize(
     BASE_IMG_W,
     BASE_IMG_H,
-    props.bancomat.abiInfo?.logoUrl
+    (props.bancomat.icon as ImageURISource).uri
   );
 
   return (

@@ -1,8 +1,9 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import { ImageSourcePropType } from "react-native";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import bPayImage from "../../img/wallet/cards-icons/bPay.png";
-import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
 import satispayImage from "../../img/wallet/cards-icons/satispay.png";
+import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
 import {
   cardIcons,
   getCardIconFromBrandLogo
@@ -20,6 +21,7 @@ import {
   RawCreditCardPaymentMethod,
   RawPaymentMethod
 } from "../types/pagopa";
+import { contentRepoUrl } from "../config";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
 
 export const getPaymentMethodHash = (
@@ -43,16 +45,25 @@ export const getPaymentMethodHash = (
 export const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
   `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
 
+export const getBancomatAbiIconUrl = (abi: string) =>
+  `${contentRepoUrl}/logos/abi/${abi}.png`;
+
 /**
  * Choose an image to represent a {@link RawPaymentMethod}
  * @param paymentMethod
  */
-export const getImageFromPaymentMethod = (paymentMethod: RawPaymentMethod) => {
+export const getImageFromPaymentMethod = (
+  paymentMethod: RawPaymentMethod
+): ImageSourcePropType => {
   if (isRawCreditCard(paymentMethod)) {
     return getCardIconFromBrandLogo(paymentMethod.info);
   }
   if (isRawBancomat(paymentMethod)) {
-    return pagoBancomatImage;
+    return paymentMethod.info.issuerAbiCode
+      ? {
+          uri: getBancomatAbiIconUrl(paymentMethod.info.issuerAbiCode)
+        }
+      : pagoBancomatImage;
   }
   if (isRawSatispay(paymentMethod)) {
     return satispayImage;
