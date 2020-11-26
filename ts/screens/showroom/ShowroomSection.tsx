@@ -1,26 +1,22 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { CheckBox } from "../../../components/core/selection/CheckBox";
-import { Label } from "../../../components/core/typography/Label";
-import { ShowroomSection } from "../ShowroomSection";
+import { H1 } from "../../components/core/typography/H1";
 
 const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    width: "100%",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-evenly"
+  alignCenter: {
+    alignItems: "center"
   }
 });
 
-export const SelectionShowroom = () => (
-  <ShowroomSection title={"Selection"}>
-    <Label>{"<CheckBox />"}</Label>
-    <View style={styles.content}>
-      <CheckBox />
-      <CheckBox checked={true} />
-    </View>
-  </ShowroomSection>
+type OwnProps = {
+  title: string;
+};
+
+export const ShowroomSection: React.FunctionComponent<OwnProps> = props => (
+  <View style={styles.alignCenter}>
+    <H1>{props.title}</H1>
+    <View spacer={true} />
+    {props.children}
+  </View>
 );
