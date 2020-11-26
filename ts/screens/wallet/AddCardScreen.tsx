@@ -34,6 +34,8 @@ import {
 } from "../../utils/input";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
+import { GlobalState } from "../../store/reducers/types";
+import { profileNameSurnameSelector } from "../../store/reducers/profile";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -47,7 +49,9 @@ type NavigationParams = Readonly<{
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
+  OwnProps;
 
 type State = Readonly<{
   pan: Option<string>;
@@ -221,12 +225,16 @@ class AddCardScreen extends React.Component<Props, State> {
               label={I18n.t("wallet.dummyCard.labels.holder")}
               icon="io-titolare"
               isValid={
-                this.state.holder.getOrElse(EMPTY_CARD_HOLDER) === ""
+                this.state.holder.getOrElse(
+                  this.props.profileNameSurname ?? EMPTY_CARD_HOLDER
+                ) === ""
                   ? undefined
                   : true
               }
               inputProps={{
-                value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
+                value: this.state.holder.getOrElse(
+                  this.props.profileNameSurname ?? EMPTY_CARD_HOLDER
+                ),
                 placeholder: I18n.t("wallet.dummyCard.values.holder"),
                 autoCapitalize: "words",
                 keyboardType: "default",
@@ -400,6 +408,10 @@ class AddCardScreen extends React.Component<Props, State> {
   }
 }
 
+const mapStateToProps = (state: GlobalState) => ({
+  profileNameSurname: profileNameSurnameSelector(state)
+});
+
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
@@ -412,4 +424,4 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     )
 });
 
-export default connect(undefined, mapDispatchToProps)(AddCardScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(AddCardScreen);
