@@ -255,8 +255,12 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Start watching for requests of refresh the profile
   yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
 
-  // Start watching for requests of checkSession
-  yield fork(watchCheckSessionSaga, backendClient.getSession);
+  // Start watching for requests about session and support token
+  yield fork(
+    watchCheckSessionSaga,
+    backendClient.getSession,
+    backendClient.getSupportToken
+  );
 
   // Sart watching for request of remove profile
   yield takeEvery(removeAccountMotivation, handleRemoveAccount);

@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../store/reducers/types";
-import { bancomatSelector } from "../../../store/reducers/wallet/wallets";
+import { bancomatListSelector } from "../../../store/reducers/wallet/wallets";
 import BancomatWalletPreview from "../bancomat/component/BancomatWalletPreview";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -36,7 +36,7 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  bancomatList: bancomatSelector(state)
+  bancomatList: bancomatListSelector(state)
 });
 
 export default connect(

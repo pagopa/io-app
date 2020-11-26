@@ -34,6 +34,8 @@ import {
   GetServiceT,
   getSessionStateDefaultDecoder,
   GetSessionStateT,
+  getSupportTokenDefaultDecoder,
+  GetSupportTokenT,
   getUserDataProcessingDefaultDecoder,
   GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
@@ -367,6 +369,14 @@ export function BackendClient(
     response_decoder: getActivationStatusDefaultDecoder()
   };
 
+  const getSupportToken: GetSupportTokenT = {
+    method: "get",
+    url: () => `/api/v1/token/support`,
+    headers: tokenHeaderProducer,
+    query: () => ({}),
+    response_decoder: getSupportTokenDefaultDecoder()
+  };
+
   // withBearerToken injects the field 'Baerer' with value token into the parameter P
   // of the f function
   const withBearerToken = <P extends { Bearer: string }, R>(
@@ -431,6 +441,9 @@ export function BackendClient(
     ),
     postUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(postUserDataProcessingT, options)
+    ),
+    getSupportToken: withBearerToken(
+      createFetchRequestForApi(getSupportToken, options)
     ),
     deleteUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(deleteUserDataProcessingT, options)

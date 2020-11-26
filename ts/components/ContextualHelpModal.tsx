@@ -1,14 +1,13 @@
 import { fromNullable, none } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Container, Content, H3, Text, View } from "native-base";
+import { Container, Content, H3, View } from "native-base";
 import * as React from "react";
 import {
   InteractionManager,
   Modal,
   ModalBaseProps,
-  StyleSheet,
-  TouchableWithoutFeedback
+  StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../i18n";
@@ -17,6 +16,11 @@ import { Dispatch } from "../store/actions/types";
 import { screenContextualHelpDataSelector } from "../store/reducers/content";
 import { GlobalState } from "../store/reducers/types";
 import themeVariables from "../theme/variables";
+import {
+  supportTokenSelector,
+  SupportTokenState
+} from "../store/reducers/authentication";
+import { loadSupportToken } from "../store/actions/authentication";
 import {
   FAQsCategoriesType,
   FAQType,
@@ -29,7 +33,6 @@ import BetaBannerComponent from "./screens/BetaBannerComponent";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import Markdown from "./ui/Markdown";
-import { openLink } from "./ui/Markdown/handlers/link";
 
 type OwnProps = Readonly<{
   title: string;
@@ -39,7 +42,10 @@ type OwnProps = Readonly<{
   onLinkClicked?: (url: string) => void;
   modalAnimation?: ModalBaseProps["animationType"];
   close: () => void;
-  onRequestAssistance: (type: BugReporting.reportType) => void;
+  onRequestAssistance: (
+    type: BugReporting.reportType,
+    supportToken: SupportTokenState
+  ) => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
@@ -84,6 +90,8 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     ) {
       props.loadContextualHelpData();
     }
+    // refresh / load support token
+    props.loadSupportToken();
   }, [
     pot.isNone(props.potContextualData) || pot.isError(props.potContextualData)
   ]);
@@ -183,19 +191,10 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
               <React.Fragment>
                 <View spacer={true} extralarge={true} />
                 <InstabugAssistanceComponent
-                  requestAssistance={props.onRequestAssistance}
+                  requestAssistance={reportType =>
+                    props.onRequestAssistance(reportType, props.supportToken)
+                  }
                 />
-                <View spacer={true} />
-                <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
-                <View spacer={true} />
-                <Text>
-                  {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
-                  <TouchableWithoutFeedback
-                    onPress={() => openLink(I18n.t("global.ioWebSite"))}
-                  >
-                    <Text link={true}>{I18n.t("global.ioWebSite")}</Text>
-                  </TouchableWithoutFeedback>
-                </Text>
               </React.Fragment>
             )}
             {isContentLoaded && <EdgeBorderComponent />}
@@ -210,14 +209,18 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const potContextualData = screenContextualHelpDataSelector(state);
   const maybeContextualData = pot.getOrElse(potContextualData, none);
+
+  const supportToken = supportTokenSelector(state);
   return {
+    supportToken,
     potContextualData,
     maybeContextualData
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadContextualHelpData: () => dispatch(loadContextualHelpData.request())
+  loadContextualHelpData: () => dispatch(loadContextualHelpData.request()),
+  loadSupportToken: () => dispatch(loadSupportToken.request())
 });
 
 export default connect(
