@@ -1,8 +1,10 @@
 import * as React from "react";
+import { useState } from "react";
 import { RawCheckBox } from "./RawCheckBox";
 
 type Props = {
-  onPress?: () => void;
+  // dispatch the new value after the checkbox changes state
+  onValueChange?: (newValue: boolean) => void;
 };
 
 // disabled: the component is no longer touchable
@@ -17,10 +19,19 @@ type OwnProps = Props &
  * @param props
  * @constructor
  */
-export const CheckBox: React.FunctionComponent<OwnProps> = props => (
-  <RawCheckBox
-    checked={props.checked}
-    disabled={props.disabled}
-    onPress={props.onPress}
-  />
-);
+export const CheckBox: React.FunctionComponent<OwnProps> = props => {
+  const [toggleValue, setToggleValue] = useState(props.checked ?? false);
+
+  return (
+    <RawCheckBox
+      checked={toggleValue}
+      disabled={props.disabled}
+      onPress={() => {
+        setToggleValue(!toggleValue);
+        if (props.onValueChange !== undefined) {
+          props.onValueChange(!toggleValue);
+        }
+      }}
+    />
+  );
+};

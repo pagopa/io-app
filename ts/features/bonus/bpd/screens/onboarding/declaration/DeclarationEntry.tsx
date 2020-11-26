@@ -1,6 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet } from "react-native";
 import { CheckBox } from "../../../../../../components/core/selection/CheckBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { XOR } from "../../../../../../types/utils";
@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
 type Props = {
   // in order to accepts composite text with bold
   text: XOR<string, React.ReactNode>;
-  onValueChange?: (value: boolean) => void;
 };
 
 type OwnProps = Props & React.ComponentProps<typeof CheckBox>;
@@ -29,25 +28,13 @@ const pickText = (text: XOR<string, React.ReactNode>) =>
  * A declaration entry (checkbox + text) that the user have to accept in order to continue
  * @constructor
  */
-export const DeclarationEntry: React.FunctionComponent<OwnProps> = props => {
-  const [cbValue, setCbValue] = React.useState(false);
-  const onItemPressed = () => {
-    const newState = !cbValue;
-    setCbValue(newState);
-    props.onValueChange?.(newState);
-  };
-  return (
-    <View>
-      <View style={styles.main}>
-        <CheckBox onPress={onItemPressed} checked={cbValue} />
-        <View hspacer={true} />
-        <View style={styles.shrink}>
-          <TouchableWithoutFeedback onPress={onItemPressed}>
-            {pickText(props.text)}
-          </TouchableWithoutFeedback>
-        </View>
-      </View>
-      <View spacer={true} large={true} />
+export const DeclarationEntry: React.FunctionComponent<OwnProps> = props => (
+  <View>
+    <View style={styles.main}>
+      <CheckBox onValueChange={props.onValueChange} />
+      <View hspacer={true} />
+      <View style={styles.shrink}>{pickText(props.text)}</View>
     </View>
-  );
-};
+    <View spacer={true} large={true} />
+  </View>
+);
