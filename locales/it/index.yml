@@ -1858,6 +1858,7 @@ bonus:
           title: "Attivazione metodo"
           body: "Confermi di voler attivare il cashback su questo metodo di pagamento?
                  L’attivazione sarà operativa **da domani**, quindi non saranno valide ai fini del cashback le transazioni che farai nella giornata di oggi."
+          disclaimer: "Scegliendo {{activate}}, dichiari di essere il titolare di questo metodo di pagamento."
         deactivate:
           title: "Disattivazione metodo"
           body: "Vuoi davvero disattivare il cashback su questo metodo di pagamento?
