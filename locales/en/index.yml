@@ -2,6 +2,7 @@
 global:
   password: Password
   username: Username
+  unknown: unknown
   disclaimer_beta: This feature is in beta. If you're having trouble signing in, please let us know!
   accessibility:
     date_format: MMMM Do YYYY
@@ -1825,6 +1826,7 @@ bonus:
           title: "Method activation"
           body: "Activate cashback on this payment method?
                  This will start **tomorrow**, so the transactions performed today will not be valid for cashback purposes. "
+          disclaimer: "Choosing {{activate}}, you declare that you are the owner of this payment method."
         deactivate:
           title: "Method deactivation"
           body: "Are you sure you want to disable the cashback on this payment method? By continuing,from now on this method will no longer contribute to the collection of transactions.
