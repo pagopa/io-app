@@ -6,7 +6,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import {
   instabugLog,
-  openInstabugBugReport,
+  openInstabugQuestionReport,
   TypeLogs
 } from "../../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -76,7 +76,7 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
       instabugLog(profileDetails, TypeLogs.INFO, instabugTag);
       instabugLog(JSON.stringify(attempt), TypeLogs.INFO, instabugTag);
     });
-    openInstabugBugReport();
+    openInstabugQuestionReport();
   };
 
   const renderSeparator = () => (
