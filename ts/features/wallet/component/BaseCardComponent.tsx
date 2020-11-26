@@ -1,20 +1,8 @@
 import { View } from "native-base";
 import * as React from "react";
-import {
-  Image,
-  ImageStyle,
-  Platform,
-  StyleProp,
-  StyleSheet
-} from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
-import { Body } from "../../../components/core/typography/Body";
-import { H5 } from "../../../components/core/typography/H5";
-import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { format } from "../../../utils/dates";
-import { useImageResize } from "../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
   topLeftCorner: React.ReactNode;
@@ -65,42 +53,18 @@ const styles = StyleSheet.create({
   }
 });
 
-const BASE_IMG_W = 160;
-const BASE_IMG_H = 40;
-
 /**
  * The base component that represents a full bancomat card
  * @param props
  * @constructor
  */
 const BaseCardComponent: React.FunctionComponent<Props> = (props: Props) => (
-  /*   const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, props.abiLogo);
-
-  const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
-    undefined,
-    imgDim => ({
-      width: imgDim[0],
-      height: imgDim[1],
-      resizeMode: "contain"
-    })
-  ); */
   <>
     {Platform.OS === "android" && <View style={styles.shadowBox} />}
     <View style={styles.cardBox}>
-      <View>
-        {props.topLeftCorner}
-        {/* <Image style={imageStyle} source={{ uri: props.abiLogo }} />
-          <View spacer={true} />
-          {props.expiringDate && (
-            <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
-              "cardComponent.validUntil"
-            )} ${format(props.expiringDate, "MM/YYYY")}`}</H5>
-          )} */}
-      </View>
+      <View>{props.topLeftCorner}</View>
       <View style={styles.bottomRow}>
         {props.bottomLeftCorner}
-        {/* <Body>{props.user.toLocaleUpperCase()}</Body>
-          <Image style={styles.bancomatLogo} source={pagoBancomatLogo} /> */}
         {props.bottomRightCorner}
       </View>
     </View>
