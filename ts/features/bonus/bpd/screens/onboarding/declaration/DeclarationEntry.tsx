@@ -1,9 +1,9 @@
 import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { CheckBox } from "../../../../../../components/core/selection/CheckBox";
+import { StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { XOR } from "../../../../../../types/utils";
+import { RawCheckBox } from "../../../../../../components/core/selection/RawCheckBox";
 
 const styles = StyleSheet.create({
   main: { flex: 1, flexDirection: "row", flexWrap: "nowrap" },
@@ -13,9 +13,10 @@ const styles = StyleSheet.create({
 type Props = {
   // in order to accepts composite text with bold
   text: XOR<string, React.ReactNode>;
+  onValueChange: (value: boolean) => void;
 };
 
-type OwnProps = Props & React.ComponentProps<typeof CheckBox>;
+type OwnProps = Props;
 
 /**
  * Choose between a string or a node
@@ -28,13 +29,26 @@ const pickText = (text: XOR<string, React.ReactNode>) =>
  * A declaration entry (checkbox + text) that the user have to accept in order to continue
  * @constructor
  */
-export const DeclarationEntry: React.FunctionComponent<OwnProps> = props => (
-  <View>
-    <View style={styles.main}>
-      <CheckBox onValueChange={props.onValueChange} />
-      <View hspacer={true} />
-      <View style={styles.shrink}>{pickText(props.text)}</View>
+export const DeclarationEntry: React.FunctionComponent<OwnProps> = props => {
+  const [isChecked, setIsChecked] = React.useState<boolean>(false);
+  const handleOnPress = () => {
+    const newValue = !isChecked;
+    setIsChecked(newValue);
+    props.onValueChange(newValue);
+  };
+
+  return (
+    <View>
+      <View style={styles.main}>
+        <RawCheckBox checked={isChecked} onPress={handleOnPress} />
+        <View hspacer={true} />
+        <View style={styles.shrink}>
+          <TouchableWithoutFeedback onPress={handleOnPress}>
+            {pickText(props.text)}
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
+      <View spacer={true} large={true} />
     </View>
-    <View spacer={true} large={true} />
-  </View>
-);
+  );
+};
