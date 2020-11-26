@@ -10,8 +10,6 @@ import { SagaCallReturnType } from "../../../../../../types/utils";
 import { searchUserSatispay } from "../../store/actions";
 import { getError, getNetworkError } from "../../../../../../utils/errors";
 import { addSatispayToWallet as addSatispayToWalletAction } from "../../store/actions";
-import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
-import { fetchWalletsSuccess } from "../../../../../../store/actions/wallet/wallets";
 
 /**
  * search for user's satispay
@@ -87,11 +85,6 @@ export function* handleAddUserSatispayToWallet(
       const statusCode = addSatispayToWalletWithRefreshResult.value.status;
       if (statusCode === 200) {
         // satispay has been added to the user wallet
-        // response is the list wallets, dispatch an action to update the sore
-        const wallets = (
-          addSatispayToWalletWithRefreshResult.value.value.data ?? []
-        ).map(convertWalletV2toWalletV1);
-        yield put(fetchWalletsSuccess(wallets));
         return yield put(addSatispayToWalletAction.success());
       } else {
         return yield put(
