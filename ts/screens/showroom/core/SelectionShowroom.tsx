@@ -15,21 +15,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export const SelectionShowroom = () => {
-  const [cbState, setCbState] = React.useState({ cb1: false, cb2: true });
-  return (
-    <ShowroomSection title={"Selection"}>
-      <Label>{"<CheckBox />"}</Label>
-      <View style={styles.content}>
-        <CheckBox
-          checked={cbState.cb1}
-          onPress={() => setCbState(ov => ({ ...ov, cb1: !ov.cb1 }))}
-        />
-        <CheckBox
-          checked={cbState.cb2}
-          onPress={() => setCbState(ov => ({ ...ov, cb2: !ov.cb2 }))}
-        />
-      </View>
-    </ShowroomSection>
-  );
-};
+export const SelectionShowroom = () => (
+  <ShowroomSection title={"Selection"}>
+    <Label>{"<CheckBox />"}</Label>
+    <View style={styles.content}>
+      <CheckBox />
+      <CheckBox checked={true} />
+    </View>
+  </ShowroomSection>
+);
