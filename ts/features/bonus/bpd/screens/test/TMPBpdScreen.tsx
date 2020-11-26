@@ -14,6 +14,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { paymentMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
+import { PaymentMethod } from "../../../../../types/pagopa";
 import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { PaymentMethodRawList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodRawList";
 import {
@@ -25,7 +26,6 @@ import {
 import { bpdLoadActivationStatus } from "../../store/actions/details";
 import { bpdDeleteUserFromProgram } from "../../store/actions/onboarding";
 import { bpdEnabledSelector } from "../../store/reducers/details/activation";
-import { PaymentMethod } from "../../../../../types/pagopa";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

@@ -5,12 +5,13 @@ import { BottomSheetContent } from "../../../../../../components/bottomSheet/Bot
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
+import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 import { bottomSheetRawConfig } from "../../../../../../utils/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { PaymentMethodRepresentation } from "../base/PaymentMethodRepresentation";
+import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
 
 export type ConfirmationType = "Activation" | "Deactivation";
 
@@ -18,10 +19,7 @@ type Props = {
   onCancel: () => void;
   onConfirm: () => void;
   type: ConfirmationType;
-  representation: Omit<
-    React.ComponentProps<typeof PaymentMethodRepresentation>,
-    "children"
-  >;
+  representation: PaymentMethodRepresentation;
 };
 
 const getText = (confirmationType: ConfirmationType) => ({
@@ -61,7 +59,7 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
     >
       <View>
         <View spacer={true} />
-        <PaymentMethodRepresentation {...props.representation} />
+        <PaymentMethodRepresentationComponent {...props.representation} />
         <View spacer={true} />
         <Markdown>{body}</Markdown>
       </View>
@@ -70,10 +68,7 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
 };
 
 export const useChangeActivationConfirmationBottomSheet = (
-  representation: Omit<
-    React.ComponentProps<typeof PaymentMethodRepresentation>,
-    "children"
-  >
+  representation: PaymentMethodRepresentation
 ) => {
   const { present, dismiss } = useBottomSheetModal();
 

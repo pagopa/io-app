@@ -24,6 +24,7 @@ import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
 import { PaymentManagerClient } from "../api/pagopa";
+import { getCardIconFromBrandLogo } from "../components/wallet/card/Logo";
 import {
   apiUrlPrefix,
   bpdEnabled,
@@ -42,6 +43,7 @@ import {
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
+import { handleSearchUserSatispay } from "../features/wallet/onboarding/satispay/saga/networking";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
@@ -96,7 +98,7 @@ import { GlobalState } from "../store/reducers/types";
 
 import {
   EnableableFunctionsTypeEnum,
-  isCreditCard,
+  isRawCreditCard,
   NullableWallet,
   PaymentManagerToken,
   PayRequest
@@ -136,6 +138,8 @@ import {
   navigateToSuggestBpdActivation
 } from "../features/wallet/onboarding/bancomat/navigation/action";
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
+import { getTitleFromCard } from "../utils/paymentMethod";
+import { searchUserSatispay } from "../features/wallet/onboarding/satispay/store/actions";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -325,11 +329,19 @@ function* startOrResumeAddCreditCardSaga(
             // otherwise navigate to a screen where is asked to join bpd
             if (
               bpdEnroll.value &&
-              isCreditCard(maybeAddedWallet.paymentMethod)
+              isRawCreditCard(maybeAddedWallet.paymentMethod)
             ) {
               yield put(
                 navigateToActivateBpdOnNewCreditCard({
-                  creditCards: [maybeAddedWallet.paymentMethod]
+                  creditCards: [
+                    {
+                      ...maybeAddedWallet.paymentMethod,
+                      icon: getCardIconFromBrandLogo(
+                        maybeAddedWallet.paymentMethod.info
+                      ),
+                      caption: getTitleFromCard(maybeAddedWallet.paymentMethod)
+                    }
+                  ]
                 })
               );
             } else {
@@ -800,6 +812,14 @@ export function* watchWalletSaga(
 
     // watch for add Bancomat to Wallet workflow
     yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
+
+    // watch for load satispay request
+    yield takeLatest(
+      searchUserSatispay.request,
+      handleSearchUserSatispay,
+      paymentManagerClient.searchSatispay,
+      pmSessionManager
+    );
   }
 
   yield fork(paymentsDeleteUncompletedSaga);

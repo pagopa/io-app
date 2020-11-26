@@ -27,6 +27,7 @@ import {
   addWalletsBancomatCardUsingPOSTDecoder,
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
+  GetConsumerUsingGETT,
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT,
   getWalletsV2UsingGETDecoder
@@ -41,6 +42,7 @@ import {
   favouriteWalletUsingPOSTDecoder,
   FavouriteWalletUsingPOSTT,
   GetAllPspsUsingGETT,
+  getConsumerUsingGETDefaultDecoder,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
   getPspUsingGETDecoder,
@@ -438,6 +440,14 @@ const addPans: AddWalletsBancomatCardUsingPOSTTExtra = {
   )
 };
 
+const searchSatispay: GetConsumerUsingGETT = {
+  method: "get",
+  url: () => `/v1/satispay/consumers`,
+  query: () => ({}),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: getConsumerUsingGETDefaultDecoder()
+};
+
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
@@ -603,7 +613,12 @@ export function PaymentManagerClient(
     addPans: (cards: BancomatCardsRequest) =>
       flip(
         withPaymentManagerToken(createFetchRequestForApi(addPans, altOptions))
-      )({ bancomatCardsRequest: cards })
+      )({ bancomatCardsRequest: cards }),
+    searchSatispay: flip(
+      withPaymentManagerToken(
+        createFetchRequestForApi(searchSatispay, altOptions)
+      )
+    )
   };
 }
 

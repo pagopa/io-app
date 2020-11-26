@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const BPDTransactionSummaryComponent: React.FunctionComponent<Props> = (
+const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const { present, dismiss } = useBottomSheetModal();
@@ -96,4 +96,4 @@ const BPDTransactionSummaryComponent: React.FunctionComponent<Props> = (
   );
 };
 
-export default BPDTransactionSummaryComponent;
+export default BpdTransactionSummaryComponent;

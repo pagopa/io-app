@@ -1,14 +1,13 @@
-import { none } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Container, Content, H3, Text, View } from "native-base";
+import { Container, Content, H3, View } from "native-base";
 import * as React from "react";
 import {
   InteractionManager,
   Modal,
   ModalBaseProps,
-  StyleSheet,
-  TouchableWithoutFeedback
+  StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../i18n";
@@ -17,7 +16,16 @@ import { Dispatch } from "../store/actions/types";
 import { screenContextualHelpDataSelector } from "../store/reducers/content";
 import { GlobalState } from "../store/reducers/types";
 import themeVariables from "../theme/variables";
-import { FAQsCategoriesType } from "../utils/faq";
+import {
+  supportTokenSelector,
+  SupportTokenState
+} from "../store/reducers/authentication";
+import { loadSupportToken } from "../store/actions/authentication";
+import {
+  FAQsCategoriesType,
+  FAQType,
+  getFAQsFromCategories
+} from "../utils/faq";
 import FAQComponent from "./FAQComponent";
 import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import { BaseHeader } from "./screens/BaseHeader";
@@ -25,7 +33,6 @@ import BetaBannerComponent from "./screens/BetaBannerComponent";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import Markdown from "./ui/Markdown";
-import { openLink } from "./ui/Markdown/handlers/link";
 
 type OwnProps = Readonly<{
   title: string;
@@ -35,7 +42,10 @@ type OwnProps = Readonly<{
   onLinkClicked?: (url: string) => void;
   modalAnimation?: ModalBaseProps["animationType"];
   close: () => void;
-  onRequestAssistance: (type: BugReporting.reportType) => void;
+  onRequestAssistance: (
+    type: BugReporting.reportType,
+    supportToken: SupportTokenState
+  ) => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
@@ -49,13 +59,19 @@ const styles = StyleSheet.create({
   }
 });
 
+type ContextualHelpData = {
+  title: string;
+  content: React.ReactNode;
+  faqs?: ReadonlyArray<FAQType>;
+};
+
 /**
  * A modal to show the contextual help reelated to a screen.
  * The contextual help is characterized by:
  * - a title
  * - a textual or a component containing the screen description
  * - [optional] if on SPID authentication once the user selected an idp, content to link the support desk of the selected identity provider
- * - a list of questions and aswers. They are selected by the component depending on the cathegories passed to the component
+ * - a list of questions and answers. They are selected by the component depending on the cathegories passed to the component
  *
  * Optionally, the title and the content are injected from the content presented in the related clinet response.
  */
@@ -74,6 +90,8 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     ) {
       props.loadContextualHelpData();
     }
+    // refresh / load support token
+    props.loadSupportToken();
   }, [
     pot.isNone(props.potContextualData) || pot.isError(props.potContextualData)
   ]);
@@ -92,17 +110,30 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 
   /**
    *  If contextualData (loaded from the content server) contains the route of the current screen,
-   *  title and content are read from it, otherwise they came from the locales sotred in app
+   *  title, content, faqs are read from it, otherwise they came from the locales stored in app
    */
-  const customizedTitle = props.maybeContextualData.fold(
-    props.title,
-    data => data.title
+  const contextualHelpData = props.maybeContextualData.fold<ContextualHelpData>(
+    {
+      title: props.title,
+      faqs: getFAQsFromCategories(props.faqCategories ?? []),
+      content
+    },
+    data => {
+      const content = (
+        <Markdown onLoadEnd={() => setContentLoaded(true)}>
+          {data.content}
+        </Markdown>
+      );
+      const faqs = fromNullable(data.faqs)
+        // ensure the array is defined and not empty
+        .mapNullable(faqs => (faqs.length > 0 ? faqs : undefined))
+        // if remote faqs are not defined or empty, fallback to the local ones
+        .fold(getFAQsFromCategories(props.faqCategories ?? []), fqs =>
+          fqs.map(f => ({ title: f.title, content: f.body }))
+        );
+      return { title: data.title, content, faqs };
+    }
   );
-
-  // content could be the one provided from props or the remote one
-  const customizedContent = props.maybeContextualData.fold(content, data => (
-    <Markdown onLoadEnd={() => setContentLoaded(true)}>{data.content}</Markdown>
-  ));
 
   // content is loaded is when:
   // - provided one from props is loaded or
@@ -136,43 +167,34 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
           }}
         />
 
-        {!customizedContent && (
+        {!contextualHelpData.content && (
           <View centerJustified={true}>
             <ActivityIndicator color={themeVariables.brandPrimaryLight} />
           </View>
         )}
-        {customizedContent && (
+        {contextualHelpData.content && (
           <Content
             contentContainerStyle={styles.contentContainerStyle}
             noPadded={true}
           >
-            <H3 accessible={true}>{customizedTitle}</H3>
+            <H3 accessible={true}>{contextualHelpData.title}</H3>
             <View spacer={true} />
-            {customizedContent}
+            {contextualHelpData.content}
             <View spacer={true} />
-            {props.faqCategories && isContentLoaded && (
+            {contextualHelpData.faqs && isContentLoaded && (
               <FAQComponent
                 onLinkClicked={props.onLinkClicked}
-                faqCategories={props.faqCategories}
+                faqs={contextualHelpData.faqs}
               />
             )}
             {isContentLoaded && (
               <React.Fragment>
                 <View spacer={true} extralarge={true} />
                 <InstabugAssistanceComponent
-                  requestAssistance={props.onRequestAssistance}
+                  requestAssistance={reportType =>
+                    props.onRequestAssistance(reportType, props.supportToken)
+                  }
                 />
-                <View spacer={true} />
-                <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
-                <View spacer={true} />
-                <Text>
-                  {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
-                  <TouchableWithoutFeedback
-                    onPress={() => openLink(I18n.t("global.ioWebSite"))}
-                  >
-                    <Text link={true}>{I18n.t("global.ioWebSite")}</Text>
-                  </TouchableWithoutFeedback>
-                </Text>
               </React.Fragment>
             )}
             {isContentLoaded && <EdgeBorderComponent />}
@@ -187,14 +209,18 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const potContextualData = screenContextualHelpDataSelector(state);
   const maybeContextualData = pot.getOrElse(potContextualData, none);
+
+  const supportToken = supportTokenSelector(state);
   return {
+    supportToken,
     potContextualData,
     maybeContextualData
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadContextualHelpData: () => dispatch(loadContextualHelpData.request())
+  loadContextualHelpData: () => dispatch(loadContextualHelpData.request()),
+  loadSupportToken: () => dispatch(loadSupportToken.request())
 });
 
 export default connect(

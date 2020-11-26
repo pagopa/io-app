@@ -1,3 +1,6 @@
+import { compareDesc } from "date-fns";
+import { index, reverse } from "fp-ts/lib/Array";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
@@ -9,17 +12,14 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { compareDesc } from "date-fns";
-import { index, reverse } from "fp-ts/lib/Array";
-import { fromNullable } from "fp-ts/lib/Option";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import BPDTransactionSummaryComponent from "../../../components/BPDTransactionSummaryComponent";
 import { format } from "../../../../../../utils/dates";
 import BaseDailyTransactionHeader from "../../../components/BaseDailyTransactionHeader";
+import BpdTransactionSummaryComponent from "../../../components/BpdTransactionSummaryComponent";
 import {
   BpdTransactionItem,
   EnhancedBpdTransaction
@@ -27,7 +27,8 @@ import {
 import { bpdAmountForSelectedPeriod } from "../../../store/reducers/details/amounts";
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import BpdCashbackMilestoneComponent from "./BpdCashbackMilestoneComponent";
+import BpdEmptyTransactionsList from "./BpdEmptyTransactionsList";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -184,12 +185,13 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
     EnhancedBpdTransaction | TotalCashbackPerDate
   > = info => {
     if (isTotalCashback(info.item)) {
-      // PLACEHOLDER component waiting for story
-      // https://www.pivotaltracker.com/story/show/175271516
       return (
-        <View style={{ backgroundColor: IOColors.blue }}>
-          <H1 color={"white"}>CASHBACK!</H1>
-        </View>
+        <BpdCashbackMilestoneComponent
+          cashbackValue={fromNullable(props.selectedPeriod).fold(
+            0,
+            p => p.maxPeriodCashback
+          )}
+        />
       );
     }
     return <BpdTransactionItem transaction={info.item} />;
@@ -205,7 +207,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
           {pot.isSome(props.selectedAmount) &&
             props.selectedPeriod &&
             maybeLastUpdateDate.isSome() && (
-              <BPDTransactionSummaryComponent
+              <BpdTransactionSummaryComponent
                 lastUpdateDate={format(
                   maybeLastUpdateDate.value,
                   "DD MMMM YYYY"
@@ -214,11 +216,11 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
                 totalAmount={props.selectedAmount.value}
               />
             )}
+          {transactions.length === 0 && <BpdEmptyTransactionsList />}
           <View spacer={true} />
         </View>
         {props.selectedPeriod && (
           <SectionList
-            style={{ paddingHorizontal: 16 }}
             renderSectionHeader={renderSectionHeader}
             scrollEnabled={true}
             stickySectionHeadersEnabled={true}

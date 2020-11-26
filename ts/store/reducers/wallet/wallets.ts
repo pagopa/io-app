@@ -1,31 +1,32 @@
 /**
  * Reducers, states, selectors and guards for the cards
  */
-import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
-import { Abi } from "../../../../definitions/pagopa/walletv2/Abi";
 import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
-import { getValue } from "../../../features/bonus/bpd/model/RemoteValue";
+import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
 import {
-  Wallet,
-  PaymentMethod,
-  isBancomatInfo,
-  isCreditCardInfo,
-  isSatispayInfo,
-  isBpayInfo,
-  isBancomat,
+  BancomatPaymentMethod,
+  BPayPaymentMethod,
   CreditCardPaymentMethod,
+  isBancomat,
+  isBPay,
   isCreditCard,
-  PaymentMethodInfo,
-  BancomatPaymentMethod
+  isRawCreditCard,
+  isSatispay,
+  PaymentMethod,
+  RawCreditCardPaymentMethod,
+  RawPaymentMethod,
+  SatispayPaymentMethod,
+  Wallet
 } from "../../../types/pagopa";
 
 import { PotFromActions } from "../../../types/utils";
 import { isDefined } from "../../../utils/guards";
+import { enhancePaymentMethod } from "../../../utils/paymentMethod";
 import { Action } from "../../actions/types";
 import { paymentUpdateWalletPsp } from "../../actions/wallet/payment";
 import {
@@ -100,7 +101,7 @@ export const getFavoriteWallet = (state: GlobalState) =>
 /**
  * @deprecated Using API v2 this selector is deprecated
  * If you are searching for credit card or bancomat use {@link creditCardWalletV1Selector}
- * - {@link pagoPaCreditCardWalletV1Selector} {@link bancomatSelector} instead
+ * - {@link pagoPaCreditCardWalletV1Selector} {@link bancomatListSelector} instead
  */
 export const walletsSelector = createSelector(
   getWallets,
@@ -126,66 +127,74 @@ export const walletsSelector = createSelector(
       )
     )
 );
+
 /**
- * Get a list of WalletV2 extracted from WalletV1
+ * Get a list of the payment methods in the wallet
  */
 export const paymentMethodsSelector = createSelector(
-  [walletsSelector],
-  (potWallet): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
+  [walletsSelector, abiSelector],
+  (potWallet, remoteAbi): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
     pot.map(potWallet, wallets =>
-      wallets.map(w => w.paymentMethod).filter(isDefined)
+      wallets
+        .map(w =>
+          w.paymentMethod
+            ? enhancePaymentMethod(
+                w.paymentMethod,
+                getValueOrElse(remoteAbi, {})
+              )
+            : undefined
+        )
+        .filter(isDefined)
     )
 );
 
-export type EnhancedBancomat = BancomatPaymentMethod & {
-  abiInfo?: Abi;
-};
-
-export const getPaymentMethodHash = (
-  paymentMethodInfo: PaymentMethodInfo
-): string | undefined => {
-  if (isBancomatInfo(paymentMethodInfo)) {
-    return paymentMethodInfo.bancomat.hashPan;
-  }
-  if (isCreditCardInfo(paymentMethodInfo)) {
-    return paymentMethodInfo.creditCard.hashPan;
-  }
-  if (isSatispayInfo(paymentMethodInfo)) {
-    return paymentMethodInfo.satispay.uuid;
-  }
-  if (isBpayInfo(paymentMethodInfo)) {
-    return paymentMethodInfo.bPay.uidHash;
-  }
-  return undefined;
-};
+export const rawCreditCardListSelector = createSelector(
+  [paymentMethodsSelector],
+  (
+    paymentMethods: pot.Pot<ReadonlyArray<RawPaymentMethod>, Error>
+  ): ReadonlyArray<RawCreditCardPaymentMethod> =>
+    pot.getOrElse(
+      pot.map(paymentMethods, w => w.filter(isRawCreditCard)),
+      []
+    )
+);
 
 /**
- * Return a bancomat list enhanced with the additional abi information
+ * Return a bancomat list enhanced with the additional abi information in the wallet
  */
-export const bancomatSelector = createSelector(
-  [paymentMethodsSelector, abiSelector],
-  (
-    paymentMethodPot,
-    abiRemote
-  ): pot.Pot<ReadonlyArray<EnhancedBancomat>, Error> =>
+export const bancomatListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<BancomatPaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isBancomat))
+);
+
+/**
+ * Return a credit card list in the wallet
+ */
+export const creditCardListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<CreditCardPaymentMethod>, Error> =>
     pot.map(paymentMethodPot, paymentMethod =>
-      paymentMethod.filter(isBancomat).map(
-        (bancomat): EnhancedBancomat => {
-          const bancomatInfo = bancomat.info;
-          const maybeAbiCode = fromNullable(
-            bancomatInfo.bancomat.issuerAbiCode
-          );
-          const maybeAbis = fromNullable(getValue(abiRemote));
-          const maybeAbiInfo = maybeAbiCode.chain(val =>
-            maybeAbis.chain(a => fromNullable(a[val]))
-          );
-          return {
-            ...bancomat,
-            abiInfo: maybeAbiInfo.toUndefined()
-          };
-        }
-      )
+      paymentMethod.filter(isCreditCard)
     )
+);
+
+/**
+ * Return a satispay list in the wallet
+ */
+export const satispayListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<SatispayPaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isSatispay))
+);
+
+/**
+ * Return a BPay list in the wallet
+ */
+export const bPayListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<BPayPaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isBPay))
 );
 
 /**
@@ -201,17 +210,6 @@ export const creditCardWalletV1Selector = createSelector(
         w =>
           w.paymentMethod && w.paymentMethod.walletType === WalletTypeEnum.Card
       )
-    )
-);
-
-export const creditCardSelector = createSelector(
-  [paymentMethodsSelector],
-  (
-    paymentMethods: pot.Pot<ReadonlyArray<PaymentMethod>, Error>
-  ): ReadonlyArray<CreditCardPaymentMethod> =>
-    pot.getOrElse(
-      pot.map(paymentMethods, w => w.filter(isCreditCard)),
-      []
     )
 );
 
