@@ -57,7 +57,7 @@ const getAbiEnhanced = (indexedAbis: IndexedById<Abi>): IndexedById<Abi> => {
   return getIndexedAbi(
     abis.map(a => ({
       ...a,
-      logoUrl: a && a.abi && getBancomatAbiIconUrl(a.abi)
+      logoUrl: a?.abi && getBancomatAbiIconUrl(a.abi)
     }))
   );
 };
