@@ -61,13 +61,13 @@ const NewReporting: React.FunctionComponent<ownProps> = ({
       showInstabugChat={false}
     />
     <Content contentContainerStyle={styles.contentContainer} noPadded={true}>
-      <H1 accessible={true}>{"Nuova segnalazione"}</H1>
-      <View style={{ height: heightPercentageToDP(52) }}>
+      <H1 accessible={true}>
+        {I18n.t("contextualHelp.sendPersonalInfo.title")}
+      </H1>
+      <View spacer={true} />
+      <View style={{ height: heightPercentageToDP(50) }}>
         <Markdown>
-          {`Il Team di IO è a disposizione per risolvere eventuali **problemi** dell’app o per 
-                    ascoltare i **suggerimenti** dei nostri utenti relativi a **migliorie o nuove funzionalità.**
-                    \n\nSe hai dubbi sul **contenuto di un messaggio** o su un servizio, ti consigliamo di **contattare l'ente relativo**: 
-                    troverai i contatti in fondo al messaggio o nella scheda del servizio in questione.`}
+          {I18n.t("contextualHelp.sendPersonalInfo.description")}
         </Markdown>
       </View>
       <View
@@ -80,18 +80,12 @@ const NewReporting: React.FunctionComponent<ownProps> = ({
         <CheckBox />
         <View hspacer={true} />
         <View style={{ flex: 1 }}>
-          <Markdown>
-            {`Condividi il tuo codice fiscale, in modo da rendere più
-                        semplice la risoluzione del problema.`}
-          </Markdown>
+          <Markdown>{I18n.t("contextualHelp.sendPersonalInfo.cta")}</Markdown>
           <Accordion
-            title={"Come sapete il mio codice fiscale?"}
-            content={`Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità 
-                elettronica con cui hai effettuato l’accesso.
-                Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO
-                di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema.
-                Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
-                `}
+            title={I18n.t("contextualHelp.sendPersonalInfo.informativeTitle")}
+            content={I18n.t(
+              "contextualHelp.sendPersonalInfo.informativeDescription"
+            )}
           ></Accordion>
         </View>
       </View>

@@ -1305,6 +1305,12 @@ systemsOff:
   closeApp: close the application and try again
 contextualHelp:
   title: IO helps you
+  sendPersonalInfo:
+    title: Nuova segnalazione
+    description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."
+    cta: Share your fiscal code, in order to make it easier to solve the problem.
+    informativeTitle: How do you know my fiscal code?
+    informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
 instabug:
   contextualHelp:
     title1: Do you need help?
