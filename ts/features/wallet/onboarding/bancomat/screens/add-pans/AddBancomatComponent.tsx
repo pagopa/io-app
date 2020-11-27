@@ -14,7 +14,6 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import customVariables from "../../../../../../theme/variables";
 import {
   cancelButtonProps,
   confirmButtonProps
