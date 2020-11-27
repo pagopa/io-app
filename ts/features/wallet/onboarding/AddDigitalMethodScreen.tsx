@@ -20,8 +20,6 @@ import { Dispatch } from "../../../store/actions/types";
 import { navigateBack } from "../../../store/actions/navigation";
 import { H3 } from "../../../components/core/typography/H3";
 import { H5 } from "../../../components/core/typography/H5";
-import satispayLogoMin from "../../../../img/wallet/cards-icons/satispay.png";
-import bancomatLogoMin from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -55,13 +53,13 @@ const getMethods = (_: Props): ReadonlyArray<DigitalPaymentItem> => [
   {
     name: "BANCOMAT Pay",
     subtitle: "Paga con BANCOMAT Pay",
-    logo: bancomatLogoMin,
+    logo: require("../../../../img/wallet/payment-methods/bancomatpay-logo.png"),
     implemented: true
   },
   {
     name: "Satispay",
     subtitle: "Paga con Satispay",
-    logo: satispayLogoMin,
+    logo: require("../../../../img/wallet/cards-icons/satispay.png"),
     implemented: true
   },
   {

@@ -26,8 +26,8 @@ import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
 import CreditCardOnboardingAttemptsScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptsScreen";
 import CreditCardOnboardingAttemptDetailScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
-import ROUTES from "./routes";
 import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
+import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
   [ROUTES.WALLET_HOME]: {
