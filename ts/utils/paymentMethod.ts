@@ -23,7 +23,6 @@ import {
 } from "../types/pagopa";
 import { contentRepoUrl } from "../config";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
-import { maybeNotNullyString } from "./strings";
 
 export const getPaymentMethodHash = (
   pm: RawPaymentMethod
@@ -60,11 +59,7 @@ export const getImageFromPaymentMethod = (
     return getCardIconFromBrandLogo(paymentMethod.info);
   }
   if (isRawBancomat(paymentMethod)) {
-    return maybeNotNullyString(paymentMethod.info.issuerAbiCode).fold<
-      ImageSourcePropType
-    >(pagoBancomatImage, abi => ({
-      uri: getBancomatAbiIconUrl(abi)
-    }));
+    return pagoBancomatImage;
   }
   if (isRawSatispay(paymentMethod)) {
     return satispayImage;
@@ -121,8 +116,7 @@ export const enhanceBancomat = (
     ? abiList[bancomat.info.issuerAbiCode]
     : undefined,
   caption: getTitleFromBancomat(bancomat, abiList),
-  icon: getImageFromPaymentMethod(bancomat),
-  listIcon: pagoBancomatImage
+  icon: getImageFromPaymentMethod(bancomat)
 });
 
 export const enhancePaymentMethod = (

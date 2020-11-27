@@ -51,6 +51,7 @@ import {
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -147,7 +148,6 @@ export const paymentMethodsSelector = createSelector(
         .filter(isDefined)
     )
 );
-
 export const rawCreditCardListSelector = createSelector(
   [paymentMethodsSelector],
   (

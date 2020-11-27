@@ -208,8 +208,6 @@ export type PaymentMethodRepresentation = {
   caption: string;
   // An icon that represent the payment method
   icon: ImageSourcePropType;
-  // An icon that represent the payment method used for in list representation
-  listIcon?: ImageSourcePropType;
 };
 
 // In addition to the representation, a bancomat have also the abiInfo

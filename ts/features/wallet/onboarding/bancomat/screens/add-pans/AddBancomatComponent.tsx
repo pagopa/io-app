@@ -19,7 +19,6 @@ import {
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import PreviewBancomatCard from "../../../../bancomat/component/bancomatCard/PreviewBancomatCard";
 import { abiListSelector } from "../../../store/abi";
-import { getBancomatAbiIconUrl } from "../../../../../../utils/paymentMethod";
 
 type Props = {
   pan: Card;
@@ -33,13 +32,10 @@ type Props = {
 const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiLogo, setAbiLogo] = React.useState<string | undefined>();
 
-  React.useEffect(
-    () =>
-      setAbiLogo(
-        fromNullable(props.pan.abi).map(getBancomatAbiIconUrl).toUndefined()
-      ),
-    [props.currentIndex]
-  );
+  React.useEffect(() => {
+    const abi = props.abiList.find(elem => elem.abi === props.pan.abi);
+    setAbiLogo(fromNullable(abi).fold(undefined, a => a.logoUrl));
+  }, [props.currentIndex]);
 
   return (
     <BaseScreenComponent

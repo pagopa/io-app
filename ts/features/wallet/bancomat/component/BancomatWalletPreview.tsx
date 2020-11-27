@@ -1,6 +1,6 @@
 import { Option } from "fp-ts/lib/Option";
 import * as React from "react";
-import { Image, ImageStyle, ImageURISource, StyleProp } from "react-native";
+import { Image, ImageStyle, StyleProp } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
@@ -12,7 +12,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { CardPreview } from "../../component/CardPreview";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
-import { isImageURISource } from "../../../../utils/image";
 
 type OwnProps = { bancomat: BancomatPaymentMethod };
 
@@ -29,22 +28,21 @@ const BASE_IMG_H = 20;
  * @param props
  * @param size
  */
-const renderLeft = (
-  props: Props,
-  size: Option<[number, number]>,
-  imageURI: ImageURISource | undefined
-) =>
+const renderLeft = (props: Props, size: Option<[number, number]>) =>
   size.fold(
     <Body style={IOStyles.flex} numberOfLines={1}>
       {props.bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")}
     </Body>,
     imgDim => {
+      const imageUrl = props.bancomat.abiInfo?.logoUrl;
       const imageStyle: StyleProp<ImageStyle> = {
         width: imgDim[0],
         height: imgDim[1],
         resizeMode: "contain"
       };
-      return imageURI ? <Image source={imageURI} style={imageStyle} /> : null;
+      return imageUrl ? (
+        <Image source={{ uri: imageUrl }} style={imageStyle} />
+      ) : null;
     }
   );
 
@@ -54,14 +52,15 @@ const renderLeft = (
  * @constructor
  */
 const BancomatWalletPreview: React.FunctionComponent<Props> = props => {
-  const imageURI = isImageURISource(props.bancomat.icon)
-    ? props.bancomat.icon
-    : undefined;
-  const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, imageURI?.uri);
+  const imgDimensions = useImageResize(
+    BASE_IMG_W,
+    BASE_IMG_H,
+    props.bancomat.abiInfo?.logoUrl
+  );
 
   return (
     <CardPreview
-      left={renderLeft(props, imgDimensions, imageURI)}
+      left={renderLeft(props, imgDimensions)}
       image={pagoBancomatImage}
       onPress={() => props.navigateToBancomatDetails(props.bancomat)}
     />
