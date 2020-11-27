@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 const BASE_IMG_W = 160;
 const BASE_IMG_H = 40;
 
-const SatispayCard: React.FunctionComponent<Props> = (props: Props) => {
+const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
   const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, props.abiLogo);
 
   const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
@@ -61,4 +61,4 @@ const mapStateToProps = (state: GlobalState) => ({
   nameSurname: profileNameSurnameSelector(state)
 });
 
-export default connect(mapStateToProps)(SatispayCard);
+export default connect(mapStateToProps)(BPayCard);
