@@ -1,0 +1,49 @@
+import { NavigationNavigateAction } from "react-navigation";
+import { call, put, select } from "redux-saga/effects";
+import { navigateToWalletHome } from "../../../../../store/actions/navigation";
+import {
+  EnableableFunctionsTypeEnum,
+  PaymentMethod
+} from "../../../../../types/pagopa";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { hasFunctionEnabled } from "../../../../../utils/walletv2";
+import {
+  navigateToActivateBpdOnNewBancomat,
+  navigateToSuggestBpdActivation
+} from "../../../../wallet/onboarding/bancomat/navigation/action";
+import { onboardingBancomatAddedPansSelector } from "../../../../wallet/onboarding/bancomat/store/reducers/addedPans";
+import { isBpdEnabled } from "./onboarding/startOnboarding";
+
+/**
+ * Allows the user to activate bpd on a set of new added payment methods
+ */
+function* activateBpdOnNewPaymentMethods(
+  paymentMethods: ReadonlyArray<PaymentMethod>,
+  navigateToActivateNewMethods: NavigationNavigateAction
+) {
+  // TODO: change enableableFunction with types representing the possibles functionalities
+  const atLeastOneBancomatWithBpdCapability = paymentMethods.some(b =>
+    hasFunctionEnabled(b, EnableableFunctionsTypeEnum.BPD)
+  );
+
+  // No bancomat with bpd capability added in the current workflow, return to wallet home
+  if (!atLeastOneBancomatWithBpdCapability) {
+    return yield put(navigateToWalletHome());
+  }
+  const isBpdEnabledResponse: SagaCallReturnType<typeof isBpdEnabled> = yield call(
+    isBpdEnabled
+  );
+
+  // Error while reading the bpdEnabled, return to wallet
+  if (isBpdEnabledResponse.isLeft()) {
+    yield put(navigateToWalletHome());
+  } else {
+    if (isBpdEnabledResponse.value) {
+      // navigate to onboarding new bancomat
+      yield put(navigateToActivateNewMethods);
+    } else {
+      // navigate to "ask if u want to start bpd onboarding"
+      yield put(navigateToSuggestBpdActivation());
+    }
+  }
+}
