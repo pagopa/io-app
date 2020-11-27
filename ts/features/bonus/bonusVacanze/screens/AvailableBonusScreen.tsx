@@ -92,8 +92,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 
     /**
      * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
-     * if a new bonus is visible from the github repository means that there's a new official version of the app which handles the newly added bonus.
-     * If the handler is missing from the map user should update to correctly start the new flow, otherwise an alert appears to update the app from store.
+     * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
      */
     const onItemPress = () => {
       // if the bonus is not active, do nothing
