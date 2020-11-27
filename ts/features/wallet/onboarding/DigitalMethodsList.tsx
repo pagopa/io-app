@@ -34,7 +34,7 @@ const getMethods = (): ReadonlyArray<DigitalPaymentItem> => [
     name: I18n.t("wallet.methods.bancomatPay.name"),
     subtitle: I18n.t("wallet.methods.bancomatPay.description"),
     logo: require("../../../../img/wallet/payment-methods/bancomatpay-logo.png"),
-    implemented: true
+    implemented: false
   },
   {
     name: I18n.t("wallet.methods.satispay.name"),
