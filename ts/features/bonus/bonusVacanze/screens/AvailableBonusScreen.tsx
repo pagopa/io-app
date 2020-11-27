@@ -90,39 +90,41 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
     }
 
-    return (
-      <AvailableBonusItem
-        bonusItem={item}
-        onPress={() =>
-          /**
-           * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
-           * if a new bonus is visible from the github repository means that there's a new official version of the app which handles the newly added bonus.
-           * If the handler is missing from the map user should update to correctly start the new flow, otherwise an alert appears to update the app from store.
-           */
-          fromNullable(handlersMap.get(item.id_type)).foldL(
-            () =>
-              actionWithAlert({
-                title: I18n.t("titleUpdateAppAlert"),
-                body: I18n.t("messageUpdateAppAlert", {
-                  storeName: Platform.select({
-                    ios: "App Store",
-                    default: "Play Store"
-                  })
-                }),
-                cancelText: I18n.t("global.buttons.cancel"),
-                confirmText: I18n.t("openStore", {
-                  storeName: Platform.select({
-                    ios: "App Store",
-                    default: "Play Store"
-                  })
-                }),
-                onConfirmAction: this.openAppStore
-              }),
-            h => h(item)
-          )
-        }
-      />
-    );
+    /**
+     * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
+     * if a new bonus is visible from the github repository means that there's a new official version of the app which handles the newly added bonus.
+     * If the handler is missing from the map user should update to correctly start the new flow, otherwise an alert appears to update the app from store.
+     */
+    const onItemPress = () => {
+      // if the bonus is not active, do nothing
+      if (item.is_active === false) {
+        return;
+      }
+      // if the bonus is active ask for app update
+      fromNullable(handlersMap.get(item.id_type)).foldL(
+        () =>
+          actionWithAlert({
+            title: I18n.t("titleUpdateAppAlert"),
+            body: I18n.t("messageUpdateAppAlert", {
+              storeName: Platform.select({
+                ios: "App Store",
+                default: "Play Store"
+              })
+            }),
+            cancelText: I18n.t("global.buttons.cancel"),
+            confirmText: I18n.t("openStore", {
+              storeName: Platform.select({
+                ios: "App Store",
+                default: "Play Store"
+              })
+            }),
+            onConfirmAction: this.openAppStore
+          }),
+        h => h(item)
+      );
+    };
+
+    return <AvailableBonusItem bonusItem={item} onPress={onItemPress} />;
   };
 
   public componentDidMount() {
