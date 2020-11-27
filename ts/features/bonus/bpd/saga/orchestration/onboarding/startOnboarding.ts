@@ -76,15 +76,22 @@ export function* bpdStartOnboardingWorker() {
     }
   }
 
-  yield put(navigateToBpdOnboardingInformationTos());
-  yield put(navigationHistoryPop(1));
+  // read if the bpd is active for the user
+  const isBpdActive: SagaCallReturnType<typeof isBpdEnabled> = yield call(
+    isBpdEnabled
+  );
 
-  // wait for the user that choose to continue
-  yield take(bpdUserActivate);
+  if (isBpdActive.isRight()) {
+    yield put(navigateToBpdOnboardingInformationTos());
+    yield put(navigationHistoryPop(1));
 
-  // Navigate to the Onboarding Declaration and wait for the action that complete the saga
-  yield put(navigateToBpdOnboardingDeclaration());
-  yield put(navigationHistoryPop(1));
+    // wait for the user that choose to continue
+    yield take(bpdUserActivate);
+
+    // Navigate to the Onboarding Declaration and wait for the action that complete the saga
+    yield put(navigateToBpdOnboardingDeclaration());
+    yield put(navigationHistoryPop(1));
+  }
 
   // The saga ends when the user accepts the declaration
   yield take(bpdOnboardingAcceptDeclaration);
