@@ -1,7 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
@@ -9,6 +9,7 @@ import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../../components/core/typography/H4";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
@@ -30,6 +31,13 @@ type Props = {
   profile?: InitializedProfile;
 } & ReturnType<typeof mapStateToProps>;
 
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center"
+  },
+  title: { lineHeight: 33, alignSelf: "flex-start" },
+  flexStart: { alignSelf: "flex-start" }
+});
 const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiLogo, setAbiLogo] = React.useState<string | undefined>();
 
@@ -48,16 +56,20 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
         body: "wallet.walletCardTransaction.contextualHelpContent"
       }}
     >
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={IOStyles.flex}>
         <View spacer={true} />
         <View
-          style={{
-            flex: 1,
-            paddingHorizontal: customVariables.contentPadding
-          }}
+          style={[
+            styles.container,
+            IOStyles.flex,
+            IOStyles.horizontalContentPadding
+          ]}
         >
-          <H1>{I18n.t("wallet.onboarding.bancomat.add.screenTitle")}</H1>
-          <H4 weight={"Regular"}>
+          <H1 style={styles.title}>
+            {I18n.t("wallet.onboarding.bancomat.add.screenTitle")}
+          </H1>
+          <View spacer small />
+          <H4 weight={"Regular"} style={styles.flexStart}>
             {I18n.t("wallet.onboarding.bancomat.add.label", {
               current: props.currentIndex + 1,
               length: props.pansNumber
