@@ -48,6 +48,7 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   return (
     <BonusInformationComponent
       bonus={bonusType}
+      confirmCtaText={I18n.t("bonus.bonusVacanze.cta.requestBonus")}
       onCancel={props.navigateBack}
       onConfirm={handleBonusRequestOnPress}
       contextualHelpMarkdown={contextualHelpMarkdown}

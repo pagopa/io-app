@@ -9,6 +9,7 @@ import {
   bpdOnboardingCancel,
   bpdUserActivate
 } from "../../store/actions/onboarding";
+import I18n from "../../../../../i18n";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -21,6 +22,7 @@ const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => (
   <>
     {props.bonus ? (
       <BonusInformationComponent
+        confirmCtaText={I18n.t("bonus.bpd.cta.activeBonus")}
         bonus={props.bonus}
         onConfirm={props.userActivateBpd}
         onCancel={props.onCancel}

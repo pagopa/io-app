@@ -27,6 +27,7 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 
 type OwnProps = {
   bonus: BonusAvailable;
+  confirmCtaText: string;
   onConfirm?: () => void;
   onCancel?: () => void;
 };
@@ -111,7 +112,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     block: true,
     primary: true,
     onPress: props.onConfirm,
-    title: I18n.t("bonus.bpd.cta.activeBonus")
+    title: props.confirmCtaText
   };
 
   const onMarkdownLoaded = () => {
