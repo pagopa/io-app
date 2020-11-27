@@ -122,7 +122,7 @@ export const enhanceBancomat = (
     : undefined,
   caption: getTitleFromBancomat(bancomat, abiList),
   icon: getImageFromPaymentMethod(bancomat),
-  listIcon: pagoBancomatImage
+  listIcon: pagoBancomatImage // default icon
 });
 
 export const enhancePaymentMethod = (

@@ -12,6 +12,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { CardPreview } from "../../component/CardPreview";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
+import { isImageURISource } from "../../../../utils/image";
 
 type OwnProps = { bancomat: BancomatPaymentMethod };
 
@@ -28,21 +29,22 @@ const BASE_IMG_H = 20;
  * @param props
  * @param size
  */
-const renderLeft = (props: Props, size: Option<[number, number]>) =>
+const renderLeft = (
+  props: Props,
+  size: Option<[number, number]>,
+  imageURI: ImageURISource | undefined
+) =>
   size.fold(
     <Body style={IOStyles.flex} numberOfLines={1}>
       {props.bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")}
     </Body>,
     imgDim => {
-      const imageUrl = (props.bancomat.icon as ImageURISource).uri;
       const imageStyle: StyleProp<ImageStyle> = {
         width: imgDim[0],
         height: imgDim[1],
         resizeMode: "contain"
       };
-      return imageUrl ? (
-        <Image source={{ uri: imageUrl }} style={imageStyle} />
-      ) : null;
+      return imageURI ? <Image source={imageURI} style={imageStyle} /> : null;
     }
   );
 
@@ -52,15 +54,14 @@ const renderLeft = (props: Props, size: Option<[number, number]>) =>
  * @constructor
  */
 const BancomatWalletPreview: React.FunctionComponent<Props> = props => {
-  const imgDimensions = useImageResize(
-    BASE_IMG_W,
-    BASE_IMG_H,
-    (props.bancomat.icon as ImageURISource).uri
-  );
+  const imageUrl = isImageURISource(props.bancomat.icon)
+    ? props.bancomat.icon
+    : undefined;
+  const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, imageUrl?.uri);
 
   return (
     <CardPreview
-      left={renderLeft(props, imgDimensions)}
+      left={renderLeft(props, imgDimensions, imageUrl)}
       image={pagoBancomatImage}
       onPress={() => props.navigateToBancomatDetails(props.bancomat)}
     />
