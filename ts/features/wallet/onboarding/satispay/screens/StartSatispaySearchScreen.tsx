@@ -1,22 +1,68 @@
-import { View } from "native-base";
 import * as React from "react";
+import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { View } from "native-base";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../i18n";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { GlobalState } from "../../../../../store/reducers/types";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { navigateToOnboardingBancomatSearchAvailableUserBancomat } from "../../bancomat/navigation/action";
+import { searchUserPans } from "../../bancomat/store/actions";
+import { navigateToOnboardingSatispaySearchAvailableUserAccount } from "../navigation/action";
+import {
+  searchUserSatispay,
+  walletAddSatispayBack,
+  walletAddSatispayCancel
+} from "../store/actions";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
+export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const loadLocales = () => ({
+  headerTitle: I18n.t("wallet.onboarding.satispay.headerTitle")
+});
 
 /**
  * Entrypoint for the satispay onboarding. The user can choose to start the search or
  * cancel and return back.
  * @constructor
  */
-const StartSatispaySearchScreen: React.FunctionComponent<Props> = () => (
-  <View />
-);
+const StartSatispaySearchScreen: React.FunctionComponent<Props> = props => {
+  const { headerTitle } = loadLocales();
+  return (
+    <BaseScreenComponent goBack={props.goBack} headerTitle={headerTitle}>
+      <SafeAreaView style={IOStyles.flex}>
+        <View style={IOStyles.flex} />
+        <FooterWithButtons
+          type={"TwoButtonsInlineThird"}
+          leftButton={cancelButtonProps(
+            props.cancel,
+            I18n.t("global.buttons.cancel")
+          )}
+          rightButton={confirmButtonProps(
+            props.search,
+            I18n.t("global.buttons.continue")
+          )}
+        />
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  goBack: () => dispatch(walletAddSatispayBack()),
+  cancel: () => dispatch(walletAddSatispayCancel()),
+  search: () => {
+    dispatch(searchUserSatispay.request());
+    dispatch(navigateToOnboardingSatispaySearchAvailableUserAccount());
+  }
+});
 
 const mapStateToProps = (_: GlobalState) => ({});
 

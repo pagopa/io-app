@@ -724,6 +724,8 @@ wallet:
           body1: "Turn on your methods saved into your wallet and start collecting cashback on your valid transactions."
           body2: "If you prefer, you can activate cashback on these methods later as well."
           skip: "Maybe later"
+    satispay:
+      headerTitle: "Add Satispay"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required

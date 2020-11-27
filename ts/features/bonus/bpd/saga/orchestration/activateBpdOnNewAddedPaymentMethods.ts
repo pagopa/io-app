@@ -1,5 +1,5 @@
 import { NavigationNavigateAction } from "react-navigation";
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import {
   EnableableFunctionsTypeEnum,
@@ -7,17 +7,13 @@ import {
 } from "../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
-import {
-  navigateToActivateBpdOnNewBancomat,
-  navigateToSuggestBpdActivation
-} from "../../../../wallet/onboarding/bancomat/navigation/action";
-import { onboardingBancomatAddedPansSelector } from "../../../../wallet/onboarding/bancomat/store/reducers/addedPans";
+import { navigateToSuggestBpdActivation } from "../../../../wallet/onboarding/bancomat/navigation/action";
 import { isBpdEnabled } from "./onboarding/startOnboarding";
 
 /**
  * Allows the user to activate bpd on a set of new added payment methods
  */
-function* activateBpdOnNewPaymentMethods(
+export function* activateBpdOnNewPaymentMethods(
   paymentMethods: ReadonlyArray<PaymentMethod>,
   navigateToActivateNewMethods: NavigationNavigateAction
 ) {
