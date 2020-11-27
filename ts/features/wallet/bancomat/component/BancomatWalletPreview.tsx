@@ -54,14 +54,14 @@ const renderLeft = (
  * @constructor
  */
 const BancomatWalletPreview: React.FunctionComponent<Props> = props => {
-  const imageUrl = isImageURISource(props.bancomat.icon)
+  const imageURI = isImageURISource(props.bancomat.icon)
     ? props.bancomat.icon
     : undefined;
-  const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, imageUrl?.uri);
+  const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, imageURI?.uri);
 
   return (
     <CardPreview
-      left={renderLeft(props, imgDimensions, imageUrl)}
+      left={renderLeft(props, imgDimensions, imageURI)}
       image={pagoBancomatImage}
       onPress={() => props.navigateToBancomatDetails(props.bancomat)}
     />
