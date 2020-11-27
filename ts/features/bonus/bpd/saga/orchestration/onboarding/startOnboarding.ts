@@ -12,7 +12,6 @@ import {
 } from "redux-saga/effects";
 import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
 import ROUTES from "../../../../../../navigation/routes";
-import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -83,24 +82,17 @@ export function* bpdStartOnboardingWorker() {
   );
 
   if (isBpdActive.isRight()) {
-    if (isBpdActive.value) {
-      // The bpd is already active, go directly to the bpd details screen
-      // TODO: navigate to bpd details
-      yield put(navigateToWalletHome());
-      yield put(navigationHistoryPop(1));
-    } else {
-      // The bpd is not active, continue with the onboarding
-      yield put(navigateToBpdOnboardingInformationTos());
-      yield put(navigationHistoryPop(1));
+    yield put(navigateToBpdOnboardingInformationTos());
+    yield put(navigationHistoryPop(1));
 
-      // wait for the user that choose to continue
-      yield take(bpdUserActivate);
+    // wait for the user that choose to continue
+    yield take(bpdUserActivate);
 
-      // Navigate to the Onboarding Declaration and wait for the action that complete the saga
-      yield put(navigateToBpdOnboardingDeclaration());
-      yield put(navigationHistoryPop(1));
-    }
+    // Navigate to the Onboarding Declaration and wait for the action that complete the saga
+    yield put(navigateToBpdOnboardingDeclaration());
+    yield put(navigationHistoryPop(1));
   }
+
   // The saga ends when the user accepts the declaration
   yield take(bpdOnboardingAcceptDeclaration);
 }
