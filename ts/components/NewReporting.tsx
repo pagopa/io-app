@@ -11,6 +11,7 @@ import Accordion from "./ui/Accordion";
 import Markdown from "./ui/Markdown";
 import IconFont from "./ui/IconFont";
 import FooterWithButtons from "./ui/FooterWithButtons";
+import { heightPercentageToDP } from "react-native-responsive-screen";
 
 type ownProps = {
   onClose: () => void;
@@ -20,7 +21,6 @@ type ownProps = {
 const styles = StyleSheet.create({
   contentContainer: {
     padding: themeVariables.contentPadding
-    // flex: 1
   }
 });
 const cancelButtonProps = (onContinue: () => void) => ({
@@ -62,63 +62,46 @@ const NewReporting: React.FunctionComponent<ownProps> = ({
     />
     <Content contentContainerStyle={styles.contentContainer} noPadded={true}>
       <H1 accessible={true}>{"Nuova segnalazione"}</H1>
+      <View style={{ height: heightPercentageToDP(52) }}>
+        <Markdown>
+          {`Il Team di IO è a disposizione per risolvere eventuali **problemi** dell’app o per 
+                    ascoltare i **suggerimenti** dei nostri utenti relativi a **migliorie o nuove funzionalità.**
+                    \n\nSe hai dubbi sul **contenuto di un messaggio** o su un servizio, ti consigliamo di **contattare l'ente relativo**: 
+                    troverai i contatti in fondo al messaggio o nella scheda del servizio in questione.`}
+        </Markdown>
+      </View>
       <View
         style={{
-          flex: 1,
-          flexDirection: "column",
-          justifyContent: "space-between",
-          height: "100%"
+          flexDirection: "row",
+          alignItems: "flex-start",
+          justifyContent: "space-evenly"
         }}
       >
-        <View>
-          <View spacer={true} />
+        <CheckBox />
+        <View hspacer={true} />
+        <View style={{ flex: 1 }}>
           <Markdown>
-            {`Il Team di IO è a disposizione per risolvere eventuali **problemi** dell’app o per 
-                    ascoltare i **suggerimenti** dei nostri utenti relativi a **migliorie o nuove funzionalità.**`}
-          </Markdown>
-          <View spacer={true} />
-          <Markdown>
-            {`Se hai dubbi sul **contenuto di un messaggio** o su un servizio, ti consigliamo di **contattare l'ente relativo**: 
-                troverai i contatti in fondo al messaggio o nella scheda del servizio in questione.`}
-          </Markdown>
-        </View>
-        <View
-          style={{
-            flexDirection: "column",
-            justifyContent: "flex-end"
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "flex-start",
-              justifyContent: "space-evenly"
-            }}
-          >
-            <CheckBox />
-            <View hspacer={true} />
-            <View style={{ flex: 1 }}>
-              <Markdown>
-                {`Condividi il tuo codice fiscale, in modo da rendere più
+            {`Condividi il tuo codice fiscale, in modo da rendere più
                         semplice la risoluzione del problema.`}
-              </Markdown>
-              <Accordion
-                title={"Come sapete il mio codice fiscale?"}
-                content={`Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità 
+          </Markdown>
+          <Accordion
+            title={"Come sapete il mio codice fiscale?"}
+            content={`Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità 
                 elettronica con cui hai effettuato l’accesso.
                 Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO
                 di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema.
-                Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.`}
-              ></Accordion>
-            </View>
-          </View>
+                Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
+                `}
+          ></Accordion>
         </View>
       </View>
     </Content>
-    <FooterWithButtons
-      type={"SingleButton"}
-      leftButton={cancelButtonProps(onClose)}
-    />
+    <View style={{ paddingBottom: 30 }}>
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={cancelButtonProps(onClose)}
+      />
+    </View>
   </>
 );
 
