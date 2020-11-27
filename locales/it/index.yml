@@ -1728,6 +1728,11 @@ bonus:
       success: "La tua iscrizione al cashback è stata cancellata"
       failure: "Non siamo riusciti a cancellare la tua iscrizione, riprova per favore"
     onboarding:
+      alert:
+        title: Il cashback è già attivo
+        body: Puoi vedere maggiori dettagli nel tuo Portafoglio.
+        cancel: Chiudi
+        confirm: Torna al Portafoglio
       loadingActivationStatus:
         title: Verifico lo stato di attivazione
       declaration:
