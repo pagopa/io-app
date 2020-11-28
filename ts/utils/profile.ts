@@ -1,4 +1,4 @@
-import { format, format as dateFnsFormat } from "date-fns";
+import { format as dateFnsFormat } from "date-fns";
 import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable } from "fp-ts/lib/Option";
 import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
@@ -82,10 +82,11 @@ export function extractFiscalCodeData(
     tempYear +
     (new Date().getFullYear() - (1900 + tempYear) >= 100 ? 2000 : 1900);
   const birthday = new Date(year, month - 1, day);
-  const birthDateRepr = format(
-    new Date(year, month - 1, day), // months are 0-index
-    "DD/MM/YYYY"
-  );
+  // we have to use manual formatting instead of format of date-fns due to a bug (Android/hermes)
+  // see https://github.com/date-fns/date-fns/issues/1272
+  const birthDateRepr = `${day
+    .toString()
+    .padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year}`;
 
   return {
     gender,
