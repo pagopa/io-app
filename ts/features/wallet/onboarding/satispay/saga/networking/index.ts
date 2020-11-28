@@ -1,13 +1,13 @@
-import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import _ from "lodash";
+import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
-import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { addSatispayToWallet, searchUserSatispay } from "../../store/actions";
 import { getError, getNetworkError } from "../../../../../../utils/errors";
+import { SessionManager } from "../../../../../../utils/SessionManager";
+import { addSatispayToWallet, searchUserSatispay } from "../../store/actions";
 
 /**
  * search for user's satispay
@@ -31,7 +31,7 @@ export function* handleSearchUserSatispay(
         // even if the user doesn't own satispay the response is 200 but the payload is empty
         // FIXME 200 must always contain a non-empty payload
         return yield put(
-          searchUserSatispay.success(_.isEmpty(value.data) ? null : value)
+          searchUserSatispay.success(_.isEmpty(value.data) ? null : value.data)
         );
       } else if (statusCode === 404) {
         // the user doesn't own any satispay
@@ -82,12 +82,10 @@ export function* handleAddUserSatispayToWallet(
     if (addSatispayToWalletWithRefreshResult.isRight()) {
       const statusCode = addSatispayToWalletWithRefreshResult.value.status;
       if (statusCode === 200) {
+        const newSatispay =
+          addSatispayToWalletWithRefreshResult.value.value.data;
         // satispay has been added to the user wallet
-        return yield put(
-          addSatispayToWallet.success(
-            addSatispayToWalletWithRefreshResult.value.value.data
-          )
-        );
+        return yield put(addSatispayToWallet.success(newSatispay));
       } else {
         return yield put(
           addSatispayToWallet.failure(
@@ -103,6 +101,6 @@ export function* handleAddUserSatispayToWallet(
       );
     }
   } catch (e) {
-    return yield put(addSatispayToWalletAction.failure(getError(e)));
+    return yield put(addSatispayToWallet.failure(getError(e)));
   }
 }

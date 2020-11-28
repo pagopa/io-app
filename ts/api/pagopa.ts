@@ -37,6 +37,7 @@ import {
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
+  addWalletSatispayUsingPOSTDecoder,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
   DeleteBySessionCookieExpiredUsingDELETET,
@@ -66,6 +67,7 @@ import {
   NullableWallet,
   PagoPAErrorResponse,
   PatchedWalletV2ListResponse,
+  PatchedWalletV2Response,
   PaymentManagerToken,
   PspListResponse,
   PspResponse,
@@ -457,7 +459,7 @@ const addSatispayToWallet: AddWalletSatispayUsingPOSTT = {
   query: () => ({}),
   body: ({ satispayRequest }) => JSON.stringify(satispayRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: addWalletSatispayUsingPOSTDefaultDecoder()
+  response_decoder: addWalletSatispayUsingPOSTDecoder(PatchedWalletV2Response)
 };
 
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
