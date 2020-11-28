@@ -1716,6 +1716,7 @@ bonus:
     description: "Ottieni un rimborso quando paghi nei negozi con questo metodo"
     name: Cashback
     earned: Cashback accumulato
+    comingSoonDescription: "Il cashback sta arrivando! Sarà presto disponibile una nuova versione di IO che supporta questa funzionalità"
     cta:
       activeBonus: Attiva il cashback
     unsubscribe:

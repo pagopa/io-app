@@ -13,7 +13,7 @@ type Props = {
   title: string;
   onPress?: () => void;
   image?: ImageSourcePropType;
-  isNew: boolean;
+  status: "new" | "incoming" | "default";
 };
 
 const styles = StyleSheet.create({
@@ -65,10 +65,12 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
           <Image style={styles.image} source={i} />
         )
       )}
-      {props.isNew && (
+      {(props.status === "new" || props.status === "incoming") && (
         <Badge style={styles.badgeContainer}>
           <Text style={styles.badgeText} semibold={true}>
-            {I18n.t("wallet.methods.newCome")}
+            {props.status === "new"
+              ? I18n.t("wallet.methods.newCome")
+              : I18n.t("wallet.methods.comingSoon")}
           </Text>
         </Badge>
       )}

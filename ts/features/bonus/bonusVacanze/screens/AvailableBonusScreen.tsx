@@ -19,7 +19,6 @@ import BaseScreenComponent, {
 } from "../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { bpdEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../store/actions/navigationHistory";
@@ -38,6 +37,7 @@ import { ID_BONUS_VACANZE_TYPE, ID_BPD_TYPE } from "../utils/bonus";
 import { actionWithAlert } from "../components/alert/ActionWithAlert";
 import { storeUrl } from "../../../../utils/appVersion";
 import { showToast } from "../../../../utils/showToast";
+import { showAlertBpdIsComing } from "../../../wallet/component/FeaturedCardCarousel";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -86,15 +86,18 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       [ID_BONUS_VACANZE_TYPE, bonus => this.props.navigateToBonusRequest(bonus)]
     ]);
 
-    if (bpdEnabled) {
-      handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
-    }
+    handlersMap.set(ID_BPD_TYPE, _ => showAlertBpdIsComing());
 
     /**
      * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
      * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
      */
     const onItemPress = () => {
+      // TODO remove this if block when cashaback is active
+      if (handlersMap.has(item.id_type) && item.id_type === ID_BPD_TYPE) {
+        handlersMap.get(item.id_type)?.(item);
+        return;
+      }
       // if the bonus is not active, do nothing
       if (item.is_active === false) {
         return;

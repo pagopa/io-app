@@ -1683,6 +1683,7 @@ bonus:
     title: Cashback
     name: Cashback
     description: "Get a refund on in-store purchases when paying with this method"
+    comingSoonDescription: "Cashback is coming! A new version of IO will soon be available that supports this functionality"
     cta:
       activeBonus: Request cashback
     unsubscribe:

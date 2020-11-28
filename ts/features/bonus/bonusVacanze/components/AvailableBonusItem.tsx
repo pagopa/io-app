@@ -1,12 +1,13 @@
 import { Badge, Grid, ListItem, Row, Text, View } from "native-base";
 import * as React from "react";
-import { Image, Platform, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import I18n from "../../../../i18n";
 import variables from "../../../../theme/variables";
 import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
 import { maybeNotNullyString } from "../../../../utils/strings";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type Props = {
   bonusItem: BonusAvailable;
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     opacity: 0.75
   },
   bonusItem: {
-    flexDirection: "column"
+    flexDirection: "row"
   },
   methodTitle: {
     color: variables.colorBlack
@@ -44,12 +45,14 @@ const styles = StyleSheet.create({
     alignContent: "center"
   },
   notImplementedBadge: {
-    height: 18,
+    marginLeft: 6,
     marginTop: 2,
-    backgroundColor: variables.lightGray
+    height: 18,
+    backgroundColor: IOColors.blue
   },
   notImplementedText: {
-    lineHeight: Platform.OS === "ios" ? 20 : 21
+    fontSize: 12,
+    lineHeight: 18
   },
   centeredContents: {
     alignItems: "center"
