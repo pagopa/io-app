@@ -161,7 +161,7 @@ class AddCardScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       ...INITIAL_STATE,
-      holder: fromNullable(props.profileNameSurname ?? EMPTY_CARD_HOLDER)
+      holder: fromNullable(props.profileNameSurname)
     };
   }
 
