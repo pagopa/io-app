@@ -1,6 +1,6 @@
 import { Badge, Grid, ListItem, Row, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, Platform, StyleSheet } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import I18n from "../../../../i18n";
@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
   },
   notImplementedText: {
     fontSize: 12,
-    lineHeight: 18
+    lineHeight: 18,
+    marginBottom: Platform.select({ android: 1, default: 0 })
   },
   centeredContents: {
     alignItems: "center"
