@@ -85,7 +85,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     >([
       [ID_BONUS_VACANZE_TYPE, bonus => this.props.navigateToBonusRequest(bonus)]
     ]);
-
+    // TODO when cashback is active remove this handler and restore this.props.startBpdOnboarding()
     handlersMap.set(ID_BPD_TYPE, _ => showAlertBpdIsComing());
 
     /**
