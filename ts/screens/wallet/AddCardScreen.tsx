@@ -2,7 +2,7 @@
  * Screen for entering the credit card details
  * (holder, pan, cvc, expiration date)
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { entries, range, size } from "lodash";
 import { Content, Item, Text, View } from "native-base";
@@ -159,7 +159,10 @@ const displayedCards: { [key: string]: any } = {
 class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = INITIAL_STATE;
+    this.state = {
+      ...INITIAL_STATE,
+      holder: fromNullable(props.profileNameSurname ?? EMPTY_CARD_HOLDER)
+    };
   }
 
   public render(): React.ReactNode {
@@ -225,9 +228,7 @@ class AddCardScreen extends React.Component<Props, State> {
               label={I18n.t("wallet.dummyCard.labels.holder")}
               icon="io-titolare"
               isValid={
-                this.state.holder.getOrElse(
-                  this.props.profileNameSurname ?? EMPTY_CARD_HOLDER
-                ) === ""
+                this.state.holder.getOrElse(EMPTY_CARD_HOLDER) === ""
                   ? undefined
                   : true
               }
