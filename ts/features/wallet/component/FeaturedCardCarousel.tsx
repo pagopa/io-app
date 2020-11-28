@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
 // TODO remove me when cashaback is active
 export const showAlertBpdIsComing = () =>
   Alert.alert(
-    I18n.t("bonus.bpd.title"),
-    I18n.t("bonus.bpd.comingSoonDescription"),
+    I18n.t("bonus.bpd.comingSoon.title"),
+    I18n.t("bonus.bpd.comingSoon.message"),
     undefined,
     { cancelable: true }
   );
