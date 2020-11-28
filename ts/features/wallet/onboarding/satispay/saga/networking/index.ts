@@ -6,9 +6,8 @@ import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { searchUserSatispay } from "../../store/actions";
+import { addSatispayToWallet, searchUserSatispay } from "../../store/actions";
 import { getError, getNetworkError } from "../../../../../../utils/errors";
-import { addSatispayToWallet as addSatispayToWalletAction } from "../../store/actions";
 
 /**
  * search for user's satispay
@@ -66,15 +65,15 @@ export function* handleSearchUserSatispay(
  * add the user's satispay to the wallet
  */
 export function* handleAddUserSatispayToWallet(
-  addSatispayToWallet: ReturnType<
+  addSatispayToWalletClient: ReturnType<
     typeof PaymentManagerClient
   >["addSatispayToWallet"],
   sessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof addSatispayToWalletAction.request>
+  action: ActionType<typeof addSatispayToWallet.request>
 ) {
   try {
     const addSatispayToWalletWithRefresh = sessionManager.withRefresh(
-      addSatispayToWallet({ data: action.payload })
+      addSatispayToWalletClient({ data: action.payload })
     );
 
     const addSatispayToWalletWithRefreshResult: SagaCallReturnType<typeof addSatispayToWalletWithRefresh> = yield call(
@@ -84,17 +83,21 @@ export function* handleAddUserSatispayToWallet(
       const statusCode = addSatispayToWalletWithRefreshResult.value.status;
       if (statusCode === 200) {
         // satispay has been added to the user wallet
-        return yield put(addSatispayToWalletAction.success());
+        return yield put(
+          addSatispayToWallet.success(
+            addSatispayToWalletWithRefreshResult.value.value.data
+          )
+        );
       } else {
         return yield put(
-          addSatispayToWalletAction.failure(
+          addSatispayToWallet.failure(
             new Error(`response status ${statusCode}`)
           )
         );
       }
     } else {
       return yield put(
-        addSatispayToWalletAction.failure(
+        addSatispayToWallet.failure(
           new Error(readableReport(addSatispayToWalletWithRefreshResult.value))
         )
       );

@@ -1,19 +1,17 @@
+import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { View } from "native-base";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { navigateToOnboardingBancomatSearchAvailableUserBancomat } from "../../bancomat/navigation/action";
-import { searchUserPans } from "../../bancomat/store/actions";
 import { navigateToOnboardingSatispaySearchAvailableUserAccount } from "../navigation/action";
 import {
   searchUserSatispay,
