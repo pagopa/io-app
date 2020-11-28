@@ -56,6 +56,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 
   bonusMap.set(ID_BPD_TYPE, {
     logo: cashbackLogo,
+    // TODO when cashback is active remove this handler and restore props.startBpdOnboarding()
     handler: _ => showAlertBpdIsComing()
   });
 
