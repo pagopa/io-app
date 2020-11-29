@@ -36,7 +36,9 @@ import {
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
-import { walletAddSatispayStart } from "../../features/wallet/onboarding/satispay/store/actions";
+import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
+import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
+import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -72,9 +74,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
-import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
-import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -583,7 +582,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  navigateToPaymentScanQrCode: () => dispatch(walletAddSatispayStart()),
+  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(

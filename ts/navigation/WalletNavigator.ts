@@ -5,6 +5,7 @@ import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/route
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
+import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
 import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
@@ -28,9 +29,6 @@ import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
-import CreditCardOnboardingAttemptsScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptsScreen";
-import CreditCardOnboardingAttemptDetailScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
-import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
