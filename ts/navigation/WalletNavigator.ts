@@ -26,6 +26,7 @@ import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
 import CreditCardOnboardingAttemptsScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptsScreen";
 import CreditCardOnboardingAttemptDetailScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
+import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -49,6 +50,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_ADD_CARD]: {
     screen: AddCardScreen
+  },
+  [ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD]: {
+    screen: AddDigitalMethodScreen
   },
   [ROUTES.WALLET_CONFIRM_CARD_DETAILS]: {
     screen: ConfirmCardDetailsScreen
