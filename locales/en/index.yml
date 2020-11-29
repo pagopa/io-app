@@ -927,6 +927,13 @@ wallet:
       maxFee: Maximum fee of 0.50€
     satispay:
       name: Satispay
+      description: Pay with Satispay
+    bancomatPay:
+      name: BANCOMAT Pay
+      description: Pay with BANCOMAT Pay
+    postepayApp: 
+      name: Postepay
+      description: your Postepay app
     postepay:
       name: BancoPosta or Postepay card
       description: Cards issued by Poste Italiane

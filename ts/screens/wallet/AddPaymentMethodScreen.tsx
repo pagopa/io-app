@@ -21,7 +21,8 @@ import I18n from "../../i18n";
 import {
   navigateBack,
   navigateToPaymentTransactionSummaryScreen,
-  navigateToWalletAddCreditCard
+  navigateToWalletAddCreditCard,
+  navigateToWalletAddDigitalPaymentMethod
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 
@@ -66,7 +67,8 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
   {
     name: I18n.t("wallet.methods.digital.name"),
     description: I18n.t("wallet.methods.digital.description"),
-    implemented: false
+    onPress: props.navigateToWalletAddDigitalPaymentMethod,
+    implemented: bpdEnabled && props.navigation.getParam("inPayment").isNone()
   },
   {
     name: I18n.t("wallet.methods.bonus.name"),
@@ -152,6 +154,8 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateBack: () => dispatch(navigateBack()),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
+  navigateToWalletAddDigitalPaymentMethod: () =>
+    dispatch(navigateToWalletAddDigitalPaymentMethod()),
   navigateToTransactionSummary: () => {
     const maybeInPayment = props.navigation.getParam("inPayment");
     maybeInPayment.map(inPayment =>
