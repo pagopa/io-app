@@ -76,7 +76,7 @@ export function* addSatispayToWalletAndActivateBpd() {
       yield put(NavigationActions.back());
     }
   }
-
+  console.log(res);
   if (res === "completed") {
     // refresh wallets list
     yield put(fetchWalletsRequest());

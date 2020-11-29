@@ -5,12 +5,11 @@ import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { onboardingBancomatAbiSelectedSelector } from "../../../bancomat/store/reducers/abiSelected";
-import { onboardingBancomatPansIsError } from "../../../bancomat/store/reducers/pans";
 import {
   searchUserSatispay,
   walletAddSatispayCancel
 } from "../../store/actions";
+import { onboardingSatispayIsErrorSelector } from "../../store/reducers/foundSatispay";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -42,8 +41,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  abiSelected: onboardingBancomatAbiSelectedSelector(state),
-  isLoading: !onboardingBancomatPansIsError(state)
+  isLoading: !onboardingSatispayIsErrorSelector(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoadSatispaySearch);

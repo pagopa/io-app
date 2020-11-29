@@ -6,15 +6,14 @@ import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
 import {
-  getValueOrElse,
+  fold,
+  isError,
   remoteError,
   remoteLoading,
   remoteReady,
   remoteUndefined,
-  RemoteValue,
-  fold
+  RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { Pans } from "../../../bancomat/store/reducers/pans";
 import { searchUserSatispay } from "../actions";
 
 export type RemoteSatispay = RemoteValue<Satispay | null, NetworkError>;
@@ -43,7 +42,7 @@ export const onboardingSatispayFoundRemoteSelector = (
 ): RemoteSatispay => state.wallet.onboarding.satispay.foundSatispay;
 
 /**
- * Return the found satispay
+ * Return the found satispay, without the remote state
  * @param state
  */
 export const onboardingSatispayFoundSelector = createSelector(
@@ -56,4 +55,9 @@ export const onboardingSatispayFoundSelector = createSelector(
       val => (val !== null ? val : undefined),
       _ => undefined
     )
+);
+
+export const onboardingSatispayIsErrorSelector = createSelector(
+  [onboardingSatispayFoundRemoteSelector],
+  remoteSatispay => isError(remoteSatispay)
 );

@@ -3,6 +3,7 @@ import { Action } from "../../../../../../store/actions/types";
 import { RawSatispayPaymentMethod } from "../../../../../../types/pagopa";
 import { addSatispayToWallet, walletAddSatispayStart } from "../actions";
 
+// TODO: can remove this ad using only addingSatispay??
 export const addedSatispayReducer = (
   state: RawSatispayPaymentMethod | null = null,
   action: Action

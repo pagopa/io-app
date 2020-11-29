@@ -13,19 +13,23 @@ import {
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import {
+  isError,
+  isLoading,
+  isUndefined
+} from "../../../../../bonus/bpd/model/RemoteValue";
+import {
   addSatispayToWallet,
-  walletAddSatispayCancel
+  walletAddSatispayCancel,
+  walletAddSatispayCompleted
 } from "../../store/actions";
+import { onboardingSatispayAddingResultSelector } from "../../store/reducers/addingSatispay";
 import { onboardingSatispayFoundSelector } from "../../store/reducers/foundSatispay";
+import LoadAddSatispayComponent from "./LoadAddSatispayComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-/**
- * The user can choose to add the found Satispay account to the wallet
- * @constructor
- */
-const AddSatispayScreen = (props: Props) => (
+const DisplayFoundSatispay = (props: Props) => (
   <SafeAreaView style={IOStyles.flex}>
     <View style={IOStyles.flex}>
       <H1>Satispay Account found</H1>
@@ -40,14 +44,31 @@ const AddSatispayScreen = (props: Props) => (
   </SafeAreaView>
 );
 
+/**
+ * The user can choose to add the found Satispay account to the wallet
+ * @constructor
+ */
+const AddSatispayScreen = (props: Props) => {
+  if (isUndefined(props.addingSatispay)) {
+    return <DisplayFoundSatispay {...props} />;
+  }
+  if (isError(props.addingSatispay) || isLoading(props.addingSatispay)) {
+    return <LoadAddSatispayComponent />;
+  }
+  props.completed();
+  return null;
+};
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddSatispayCancel()),
   confirm: (satispay: Satispay) =>
-    dispatch(addSatispayToWallet.request(satispay))
+    dispatch(addSatispayToWallet.request(satispay)),
+  completed: () => dispatch(walletAddSatispayCompleted())
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  satispay: onboardingSatispayFoundSelector(state)
+  satispay: onboardingSatispayFoundSelector(state),
+  addingSatispay: onboardingSatispayAddingResultSelector(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddSatispayScreen);
