@@ -1,11 +1,18 @@
-import { Button, View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { RawSatispayPaymentMethod } from "../../../../../../types/pagopa";
+import {
+  isError,
+  isLoading,
+  isReady
+} from "../../../../../bonus/bpd/model/RemoteValue";
 import { addSatispayToWallet } from "../../store/actions";
-import { isReady } from "../../../../../bonus/bpd/model/RemoteValue";
+import AddSatispayScreen from "../add/AddSatispayScreen";
+import LoadSatispaySearch from "./LoadSatispaySearch";
+import SatispayKoNotFound from "./SatispayKoNotFound";
+import SatispayKoTimeout from "./SatispayKoTimeout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -14,16 +21,22 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * This screen handles the different search state (loading, ko, error, success)
  * @constructor
  */
-const SearchSatispayManagerScreen: React.FunctionComponent<Props> = props => (
-  <View>
-    <View spacer={true} extralarge={true} />
-    <Button
-      onPress={() =>
-        isReady(props.satispay) && props.addSatispay(props.satispay.value)
-      }
-    ></Button>
-  </View>
-);
+const SearchSatispayManagerScreen: React.FunctionComponent<Props> = props => {
+  const satispay = props.foundSatispay;
+  if (isError(satispay) && satispay.error.kind === "timeout") {
+    return <SatispayKoTimeout />;
+  }
+  if (isError(satispay) || isLoading(satispay)) {
+    return <LoadSatispaySearch />;
+  }
+  if (isReady(satispay)) {
+    if (satispay.value === null) {
+      return <SatispayKoNotFound />;
+    }
+    return <AddSatispayScreen />;
+  }
+  return null;
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addSatispay: (w: RawSatispayPaymentMethod) =>
@@ -31,7 +44,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  satispay: state.wallet.onboarding.satispay.foundSatispay
+  foundSatispay: state.wallet.onboarding.satispay.foundSatispay
 });
 
 export default connect(

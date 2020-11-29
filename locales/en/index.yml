@@ -726,6 +726,8 @@ wallet:
           skip: "Maybe later"
     satispay:
       headerTitle: "Add Satispay"
+      loadingSearch:
+        title: "We are verifying your Satispay account \n\n Please wait a few seconds"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
