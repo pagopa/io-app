@@ -679,6 +679,9 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Portafoglio
+  incoming:
+    title: "In arrivo"
+    message: "Una prossima versione di IO renderà disponibile anche questo metodo di pagamento"
   featured: In evidenza
   creditCard:
     onboardingAttempts:

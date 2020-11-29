@@ -50,30 +50,36 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
     name: I18n.t("wallet.methods.card.name"),
     description: I18n.t("wallet.methods.card.description"),
     onPress: props.navigateToAddCreditCard,
-    implemented: true
-  },
-  {
-    name: I18n.t("wallet.methods.pagobancomat.name"),
-    description: I18n.t("wallet.methods.pagobancomat.description"),
-    onPress: props.startAddBancomat,
-    implemented: bpdEnabled && props.navigation.getParam("inPayment").isNone()
+    status: "implemented"
   },
   {
     name: I18n.t("wallet.methods.postepay.name"),
     description: I18n.t("wallet.methods.postepay.description"),
     onPress: props.navigateToAddCreditCard,
-    implemented: true
+    status: "implemented"
+  },
+  {
+    name: I18n.t("wallet.methods.pagobancomat.name"),
+    description: I18n.t("wallet.methods.pagobancomat.description"),
+    onPress: props.startAddBancomat,
+    status:
+      bpdEnabled && props.navigation.getParam("inPayment").isNone()
+        ? "implemented"
+        : "incoming"
   },
   {
     name: I18n.t("wallet.methods.digital.name"),
     description: I18n.t("wallet.methods.digital.description"),
     onPress: props.navigateToWalletAddDigitalPaymentMethod,
-    implemented: bpdEnabled && props.navigation.getParam("inPayment").isNone()
+    status:
+      bpdEnabled && props.navigation.getParam("inPayment").isNone()
+        ? "implemented"
+        : "incoming"
   },
   {
     name: I18n.t("wallet.methods.bonus.name"),
     description: I18n.t("wallet.methods.bonus.description"),
-    implemented: false
+    status: "notImplemented"
   }
 ];
 

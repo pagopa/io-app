@@ -658,6 +658,9 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Wallet
+  incoming:
+    title: "Incoming"
+    message: "This payment method will be available in a future version"
   featured: Higlighted 
   creditCard:
     onboardingAttempts:
