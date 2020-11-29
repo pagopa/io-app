@@ -58,6 +58,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "bonus.bonusList.contextualHelp.body"
 };
 
+type OnBonusTapHandlers = {
+  whenActive: (bonus: BonusAvailable) => void;
+  whenNotActive?: (bonus: BonusAvailable) => void;
+};
+
 /**
  * This component presents the list of available bonus the user can request
  * if the bonus is already active, the component shows the active bonus item and user can navigate to the bonus detail
@@ -78,51 +83,60 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       return undefined;
     }
 
+    const alertAppUpdate = () =>
+      actionWithAlert({
+        title: I18n.t("titleUpdateAppAlert"),
+        body: I18n.t("messageUpdateAppAlert", {
+          storeName: Platform.select({
+            ios: "App Store",
+            default: "Play Store"
+          })
+        }),
+        cancelText: I18n.t("global.buttons.cancel"),
+        confirmText: I18n.t("openStore", {
+          storeName: Platform.select({
+            ios: "App Store",
+            default: "Play Store"
+          })
+        }),
+        onConfirmAction: this.openAppStore
+      });
+
     // only bonus vacanze tap is handled
-    const handlersMap: Map<number, (bonus: BonusAvailable) => void> = new Map<
+    const handlersMap: Map<number, OnBonusTapHandlers> = new Map<
       number,
-      (bonus: BonusAvailable) => void
+      OnBonusTapHandlers
     >([
-      [ID_BONUS_VACANZE_TYPE, bonus => this.props.navigateToBonusRequest(bonus)]
+      [
+        ID_BONUS_VACANZE_TYPE,
+        {
+          whenActive: this.props.navigateToBonusRequest
+        }
+      ]
     ]);
-    // TODO when cashback is active remove this handler and restore this.props.startBpdOnboarding()
-    handlersMap.set(ID_BPD_TYPE, _ => showAlertBpdIsComing());
+
+    handlersMap.set(ID_BPD_TYPE, {
+      whenActive: alertAppUpdate,
+      whenNotActive: showAlertBpdIsComing
+    });
 
     /**
      * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
      * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
      */
     const onItemPress = () => {
-      // TODO remove this if block when cashaback is active
-      if (handlersMap.has(item.id_type) && item.id_type === ID_BPD_TYPE) {
-        handlersMap.get(item.id_type)?.(item);
-        return;
-      }
-      // if the bonus is not active, do nothing
+      // if the bonus is not active search for whenNotActive handler
+      // if it's not present do nothing
       if (item.is_active === false) {
+        fromNullable(handlersMap.get(item.id_type))
+          .mapNullable(handlers => handlers.whenNotActive)
+          .map(whenNotActive => whenNotActive(item));
         return;
       }
-      // if the bonus is active ask for app update
-      fromNullable(handlersMap.get(item.id_type)).foldL(
-        () =>
-          actionWithAlert({
-            title: I18n.t("titleUpdateAppAlert"),
-            body: I18n.t("messageUpdateAppAlert", {
-              storeName: Platform.select({
-                ios: "App Store",
-                default: "Play Store"
-              })
-            }),
-            cancelText: I18n.t("global.buttons.cancel"),
-            confirmText: I18n.t("openStore", {
-              storeName: Platform.select({
-                ios: "App Store",
-                default: "Play Store"
-              })
-            }),
-            onConfirmAction: this.openAppStore
-          }),
-        h => h(item)
+      // if the bonus is not active search for whenActive handler
+      // if it's not present ask to update the app
+      fromNullable(handlersMap.get(item.id_type)).foldL(alertAppUpdate, h =>
+        h.whenActive(item)
       );
     };
 

@@ -1718,7 +1718,7 @@ bonus:
     earned: Cashback accumulato
     comingSoon:
       title: "Il cashback sta arrivando!"
-      message: "A breve potrai attivare il cashback e inserire il tuo IBAN per il rimborso."
+      message: "A breve potrai attivare il cashback e inserire il tuo IBAN per il rimborso: attendi il prossimo aggiornamento di IO!"
     cta:
       activeBonus: Attiva il cashback
     unsubscribe:
