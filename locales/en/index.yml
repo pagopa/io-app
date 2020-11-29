@@ -1693,6 +1693,9 @@ bonus:
     title: Cashback
     name: Cashback
     description: "Get a refund on in-store purchases when paying with this method"
+    comingSoon:
+      title: "Cashback is coming soon!"
+      message: "You’ll be able to activate the feature and add your IBAN for the refund: wait for the next IO update!"
     cta:
       activeBonus: Request cashback
     unsubscribe:
