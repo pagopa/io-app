@@ -7,7 +7,6 @@ import I18n from "../../../../i18n";
 import variables from "../../../../theme/variables";
 import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
 import { maybeNotNullyString } from "../../../../utils/strings";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type Props = {
   bonusItem: BonusAvailable;
@@ -24,7 +23,7 @@ const styles = StyleSheet.create({
     opacity: 0.75
   },
   bonusItem: {
-    flexDirection: "row"
+    flexDirection: "column"
   },
   methodTitle: {
     color: variables.colorBlack
@@ -45,15 +44,12 @@ const styles = StyleSheet.create({
     alignContent: "center"
   },
   notImplementedBadge: {
-    marginLeft: 6,
-    marginTop: 2,
     height: 18,
-    backgroundColor: IOColors.blue
+    marginTop: 2,
+    backgroundColor: variables.lightGray
   },
   notImplementedText: {
-    fontSize: 12,
-    lineHeight: 18,
-    marginBottom: Platform.select({ android: 1, default: 0 })
+    lineHeight: Platform.OS === "ios" ? 20 : 21
   },
   centeredContents: {
     alignItems: "center"
