@@ -714,13 +714,13 @@ wallet:
         warning: "Anything missing? Don't worry, you can add your PagoBANCOMAT cards later, by selecting the bank which issued your card."
       bpd:
         suggestActivation:
-          title: "Do you want to activate Cashback Digital Payments?"
-          body: "You have added payment methods compatible with Cashback Digital Payments, the initiative promoted by the Presidency of the Council of Ministers and the Ministry of Economy and Finance, to promote the use of electronic money in Italy.\n\n
+          title: "Do you want to activate Cashback?"
+          body: "You have added payment methods compatible with Cashback, the initiative promoted by the Presidency of the Council of Ministers and the Ministry of Economy and Finance, to promote the use of electronic money in Italy.\n\n
                  You can get a money refund when you shop using your cards and apps."
           skip: "No, thanks"
           confirm: "Info and activation"
         activateNew:
-          title: "Do you want to activate Cashback Digital Payments?"
+          title: "Do you want to activate Cashback?"
           body1: "Turn on your methods saved into your wallet and start collecting cashback on your valid transactions."
           body2: "If you prefer, you can activate cashback on these methods later as well."
           skip: "Maybe later"
@@ -729,7 +729,7 @@ wallet:
     titlePagoPaUpdateApp: Update required
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
     btnUpdateApp: Update the IO app
-    favourite: It is not possible to remove a favourite payment method, to edit it select another one
+    favourite: This method is already set as favourite. To change this, please set another method as favourite.
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
@@ -1006,19 +1006,19 @@ wallet:
         two: "can't be used to make in-app payments"
         three: ", but they can only be used at physical stores (POS)."
       debit:
-        title: "Does your card have more logos?"
-        body: "If this card has also the logo of another circuit (** Maestro, Visa, Mastercard, etc.), don't forget to add it to your wallet as a ** debit card ** as well. By doing so, you'll be able to track all the valid transactions for the cashback initiative and make in-app payments. "
+        title: "Does your card have other logos?"
+        body: "If this card has also the logo of another circuit (Maestro, Visa, Mastercard, etc.), don't forget to add it to your wallet as a ** debit card ** as well. By doing so, you'll be able to collect all the valid transactions for the cashback initiative and make in-app payments. "
         addCta: "Add Debit Card"
       removeCta: "Delete this payment method"
   newRemove:
-    title: "Method deletion"
-    body: "Are you sure you want to delete this payment method?"
+    title: "Delete this payment method?"
+    body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available Functions"
 saveCard:
   saveCard: Save the card
-  header: Do you whant to save this card?
+  header: Do you want to save this card?
   favoriteTitle: Set the cart as favourite payment method
   favoriteText: This payment method will be automatically prompt on the next payment
 cardComponent:
@@ -1027,8 +1027,8 @@ cardComponent:
   actions: Actions
   setFavourite: Set as favourite
   unsetFavourite: Remove from favourites
-  deleteTitle: Do you want to proceed?
-  deleteMsg: This payment method will be removed
+  deleteTitle: Delete this payment method?
+  deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
@@ -1687,22 +1687,27 @@ bonus:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
-    title: Cashback Digital Payments
+    title: Cashback
     name: Cashback
-    description: "Get credit every time you use the card for your purchases!"
+    description: "Get a refund on in-store purchases when paying with this method"
     cta:
       activeBonus: Request cashback
     unsubscribe:
       cta: "Quit cashback"
       title: "Cashback opt-out"
-      body1: "Are you sure you want to quit Cashback Digital Payments?"
-      body2: "By continuing you will no longer be able to collect transactions or compete for the Super Cashback, and **you will not be able to collect any refund**, if you had the right to claim one. This opt-out will affect **also the other channels** you used to activate it (e.g.: Home Banking, app, etc.) \ nIf you activate Cashback Digital Payments again later **you will restart from zero transactions**."
+      body1: "Are you sure you want to quit Cashback?"
+      body2: "By continuing you will no longer be able to collect transactions or compete for the Super Cashback, and **you will not be able to collect any refund**, if you had the right to claim one. This opt-out will affect **also the other channels** you used to activate it (e.g.: Home Banking, app, etc.) \ nIf you activate Cashback again later **you will restart from zero transactions**."
       confirmCta: "Quit"
       loading: "We are processing your request"
       success: "Cashback has been removed"
       failure: "We were unable to remove, please try again"
     earned: Collected Cashback
     onboarding:
+      alert:
+        title: Cashback is aleady active
+        body: You can find more details in your Wallet.
+        cancel: Close
+        confirm: Back to Wallet
       loadingActivationStatus:
         title: Loading activation status
       declaration:
@@ -1721,11 +1726,11 @@ bonus:
         body: "Please wait."
       noPaymentMethod:
         title: "Add at least one payment method"
-        body: "To start collecting valid transactions you must add your favorite electronic payment methods on IO: we currently support credit, debit, prepaid and PagoBancomat cards, and other mobile payment apps.\n\n
+        body: "To start collecting valid transactions, add your favorite payment methods in your Wallet: we currently support the main payment cards and several mobile payment apps.\n\n
         In the future, we'll support other methods: you can add new payment methods into your wallet anytime and start collecting cashback!"
       enrollPaymentMethod:
         title: "Choose which payment methods to activate"
-        body1: "Turn on your methods saved into your wallet and start collecting cashback on your valid transactions."
+        body1: "Enable Cashback on your saved methods and start collecting valid transactions."
         body2: "You can add other payment methods to your wallet anytime and activate cashback."
     iban:
       iban: "IBAN"
@@ -1768,7 +1773,7 @@ bonus:
           of: "out of"
           closedPeriodKOBody: "You have not reached the {{transactions}} transactions necessary to get a refund: you would have received € {{amount}}. Try again during the next phase!"
           currentPeriodKOBody: "You must have reached at least {{transactions}} transactions to unlock the cashback collected so far!"
-          gracePeriodBody: "This cashback phase ended on {{date}}. We are still waiting for the latest transactions from the banks. Just bear with us: we'll notify you when ready!"
+          gracePeriodBody: "This cashback phase ended on {{date}}. We are still waiting for the latest transactions from the banks. Just bear with us: we'll keep you posted here!"
           closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
           closedPeriodMaxAmount: "it's the highest refund possible!"
           inactivePeriodBody: "You will be able to start collecting valid transactions starting from {{date}}"
@@ -1779,14 +1784,14 @@ bonus:
         title: "Your transactions"
         goToButton: "Transactions detail"
         detail:
-          empty: "Here you will find valid transactions for cashback purposes: no valid transaction is active yet."
+          empty: "In this page you will find all the transactions eligible for cashback: there are no valid transactions yet. Check this page again later!"
           summary:
             bottomSheet:
               title: "When will you find your transactions?"
-              body: "Transactions are sent the day after they are recorded by the banks. 
-                It might take up to 72 hours before you see your transaction recorded on IO, although the process is usually faster. 
+              body: "Transactions are collected the day after they are recorded by the banks. 
+                It might take up to 72 hours before you see your transaction on IO, although the process is usually faster. 
                 It may take a little longer if the purchase has been performed duing the weekend or holidays, or in other exceptional occasions. 
-                Don't worry: all valid transactions made throughout the phase will be recorded and considered for refunds and ranking!"
+                Don't worry: all valid transactions occurred throughout the phase will be collected and considered for refunds and ranking!"
             lastUpdated: "Latest valid transaction: "
             link: Anything missing?
             body:
@@ -1799,7 +1804,7 @@ bonus:
               text5: "a cashback of "
             milestone:
               title: "Congratulation, you earned {{cashbackValue}}"
-              body: "You have reached the maximum refund foreseen in this period. Continue to accumulate valid transactions to climb the ranking!"
+              body: "You have reached the maximum refund foreseen in this period."
           title: "Transaction details"
           paymentCircuit: "Payment circuit"
           transactionAmount: "Transaction amount"
@@ -1813,8 +1818,8 @@ bonus:
       paymentMethods:
         add:
           alertBody: "The payment method you are adding will be saved in the IO app wallet and, if compatible, can also be used for any payments within the app."
-        noPaymentMethods: "You must add at least one payment method to start collecting the necessary transactions"
-        noActiveMethod: "You must have activated at least one payment method to collect transactions"
+        noPaymentMethods: "You must add at least one payment method to start collecting valid transactions"
+        noActiveMethod: "You must have activated at least one payment method to collect valid transactions"
         activateOnOthersChannel:
           text1: "Activate on"
           text2: "other channels"
@@ -1825,19 +1830,18 @@ bonus:
         notActivable:
           header: "Not available or incompatible"
           title: "Method not available"
-          body: "Someone else already has cashback on this payment method active at this time: digital payments cashback can only be activated by one user at a time for each payment method."
+          body: "Someone else already has cashback on this payment method active at this time: cashback can only be activated by one user at a time for each payment method."
         notCompatible:
           title: "Method not compatible"
-          body: "The payment method is not compatible with Cashback Digital Payments because the bank has not activated support for these features yet. Please contact your bank for more details."
+          body: "The payment method is not compatible with Cashback because the bank has not activated support for these features yet. Please contact your bank for more details."
         activate:
-          title: "Method activation"
-          body: "Activate cashback on this payment method?
-                 This will start **tomorrow**, so the transactions performed today will not be valid for cashback purposes. "
+          title: "Enable cashback on this payment method?"
+          body: "This will start **tomorrow**, so any transaction occurred today will not be collected. "
           disclaimer: "Choosing {{activate}}, you declare that you are the owner of this payment method."
         deactivate:
-          title: "Method deactivation"
-          body: "Are you sure you want to disable the cashback on this payment method? By continuing,from now on this method will no longer contribute to the collection of transactions.
-                 The deactivation will be effective **from tomorrow**, so the transactions performed today with this method may still be considered. "
+          title: "Disable cashback on this method?"
+          body: "By continuing, transactions made using this payment method will be no longer collected.
+                 This will be effective **from tomorrow**, so any transaction occurred today with this method may still be considered. "
       card:
         status:
           active: Active
