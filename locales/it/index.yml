@@ -749,6 +749,8 @@ wallet:
       headerTitle: "Aggiungi Satispay"
       loadingSearch:
         title: "Stiamo verificando il tuo account Satispay\n\nAttendi qualche secondo"
+      loadingAdd:
+        title: "Stiamo aggiungendo il tuo account Satispay\n\nAttendi qualche secondo"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto

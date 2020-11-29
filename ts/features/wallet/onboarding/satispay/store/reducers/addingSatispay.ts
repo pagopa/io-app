@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { RawSatispayPaymentMethod } from "../../../../../../types/pagopa";

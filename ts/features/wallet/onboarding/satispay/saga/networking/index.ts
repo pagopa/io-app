@@ -7,6 +7,7 @@ import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getError, getNetworkError } from "../../../../../../utils/errors";
 import { SessionManager } from "../../../../../../utils/SessionManager";
+import { fromPatchedWalletV2ToRawSatispay } from "../../../../../../utils/walletv2";
 import { addSatispayToWallet, searchUserSatispay } from "../../store/actions";
 
 /**
@@ -82,10 +83,19 @@ export function* handleAddUserSatispayToWallet(
     if (addSatispayToWalletWithRefreshResult.isRight()) {
       const statusCode = addSatispayToWalletWithRefreshResult.value.status;
       if (statusCode === 200) {
-        const newSatispay =
-          addSatispayToWalletWithRefreshResult.value.value.data;
-        // satispay has been added to the user wallet
-        return yield put(addSatispayToWallet.success(newSatispay));
+        const newSatispay = fromPatchedWalletV2ToRawSatispay(
+          addSatispayToWalletWithRefreshResult.value.value.data
+        );
+        if (newSatispay) {
+          // satispay has been added to the user wallet
+          return yield put(addSatispayToWallet.success(newSatispay));
+        } else {
+          return yield put(
+            addSatispayToWallet.failure(
+              new Error(`cannot transform in RawSatispayPaymentMethod`)
+            )
+          );
+        }
       } else {
         return yield put(
           addSatispayToWallet.failure(

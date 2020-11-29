@@ -24,7 +24,6 @@ import {
 import { Omit } from "italia-ts-commons/lib/types";
 import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
 import {
-  addWalletSatispayUsingPOSTDefaultDecoder,
   AddWalletSatispayUsingPOSTT,
   addWalletsBancomatCardUsingPOSTDecoder,
   getAbiListUsingGETDefaultDecoder,

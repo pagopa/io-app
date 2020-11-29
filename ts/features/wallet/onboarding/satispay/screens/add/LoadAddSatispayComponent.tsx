@@ -32,7 +32,7 @@ const LoadAddSatispayComponent = (props: Props) => {
   return (
     <LoadingErrorComponent
       {...props}
-      loadingCaption={I18n.t("wallet.onboarding.satispay.loadingSearch.title")}
+      loadingCaption={I18n.t("wallet.onboarding.satispay.loadingAdd.title")}
       onAbort={props.cancel}
       onRetry={() => props.foundSatispay && props.retry(props.foundSatispay)}
     />

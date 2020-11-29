@@ -9,7 +9,6 @@ import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wall
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
-import { onboardingBancomatAddedPansSelector } from "../../../bancomat/store/reducers/addedPans";
 import {
   navigateToActivateBpdOnNewSatispay,
   navigateToOnboardingSatispayStart
@@ -20,6 +19,7 @@ import {
   walletAddSatispayCancel,
   walletAddSatispayCompleted
 } from "../../store/actions";
+import { onboardingSatispayAddedResultSelector } from "../../store/reducers/addedSatispay";
 
 /**
  * Define the workflow that allows the user to add a satispay to the wallet.
@@ -71,24 +71,26 @@ export function* addSatispayToWalletAndActivateBpd() {
     if (
       // TODO: The page will be WALLET_ADD_DIGITAL_PAYMENT_METHOD and should do two back
       currentRoute.isSome() &&
-      currentRoute.value === "WALLET_ADD_PAYMENT_METHOD"
+      currentRoute.value === "WALLET_ADD_DIGITAL_PAYMENT_METHOD"
     ) {
+      yield put(NavigationActions.back());
       yield put(NavigationActions.back());
     }
   }
-  console.log(res);
   if (res === "completed") {
     // refresh wallets list
     yield put(fetchWalletsRequest());
     // read the new added satispay
-    const satispayAdded: ReturnType<typeof onboardingBancomatAddedPansSelector> = yield select(
-      onboardingBancomatAddedPansSelector
+    const satispayAdded: ReturnType<typeof onboardingSatispayAddedResultSelector> = yield select(
+      onboardingSatispayAddedResultSelector
     );
 
-    yield call(
-      activateBpdOnNewPaymentMethods,
-      satispayAdded,
-      navigateToActivateBpdOnNewSatispay()
-    );
+    if (satispayAdded) {
+      yield call(
+        activateBpdOnNewPaymentMethods,
+        [satispayAdded],
+        navigateToActivateBpdOnNewSatispay()
+      );
+    }
   }
 }
