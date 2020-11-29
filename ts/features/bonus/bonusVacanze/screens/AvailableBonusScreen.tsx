@@ -133,7 +133,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
           .map(whenNotActive => whenNotActive(item));
         return;
       }
-      // if the bonus is not active search for whenActive handler
+      // if the bonus is active search for whenActive handler
       // if it's not present ask to update the app
       fromNullable(handlersMap.get(item.id_type)).foldL(alertAppUpdate, h =>
         h.whenActive(item)
