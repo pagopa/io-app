@@ -1,6 +1,6 @@
 import { Badge, View, Text } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { Image, ImageSourcePropType, Platform, StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { H3 } from "../../../components/core/typography/H3";
@@ -13,7 +13,7 @@ type Props = {
   title: string;
   onPress?: () => void;
   image?: ImageSourcePropType;
-  isNew: boolean;
+  status: "new" | "incoming" | "default";
 };
 
 const styles = StyleSheet.create({
@@ -48,7 +48,11 @@ const styles = StyleSheet.create({
     resizeMode: "contain"
   },
   badgeContainer: { height: 18, backgroundColor: IOColors.blue },
-  badgeText: { fontSize: 12, lineHeight: 18 }
+  badgeText: {
+    fontSize: 12,
+    lineHeight: 18,
+    marginBottom: Platform.select({ android: 1, default: 0 })
+  }
 });
 
 const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
@@ -65,10 +69,12 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
           <Image style={styles.image} source={i} />
         )
       )}
-      {props.isNew && (
+      {(props.status === "new" || props.status === "incoming") && (
         <Badge style={styles.badgeContainer}>
           <Text style={styles.badgeText} semibold={true}>
-            {I18n.t("wallet.methods.newCome")}
+            {props.status === "new"
+              ? I18n.t("wallet.methods.newCome")
+              : I18n.t("wallet.methods.comingSoon")}
           </Text>
         </Badge>
       )}
