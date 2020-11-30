@@ -8,7 +8,6 @@ import {
   satispayListSelector
 } from "../../../store/reducers/wallet/wallets";
 import BancomatWalletPreview from "../bancomat/component/BancomatWalletPreview";
-import SatispayCard from "../satispay/SatispayCard";
 import SatispayWalletPreview from "../satispay/SatispayWalletPreview";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -39,7 +38,7 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
       pot.map(props.satispayList, s => (
         <>
           {s.map((_, i) => (
-            <SatispayCard key={`satispay_card_${i}`} />
+            <SatispayWalletPreview key={`satispay_card_${i}`} />
           ))}
         </>
       )),
