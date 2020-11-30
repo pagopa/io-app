@@ -9,7 +9,7 @@ import I18n from "../../../../i18n";
 /**
  * Display generic information on bancomat and a cta to start the onboarding of a new
  * payment method.
- * TODO: this will be also visualized inside a bottomsheet after an addition of a new bancomat
+ * TODO: this will be also visualized inside a bottomsheet after an addition of satispay
  * @constructor
  */
 
