@@ -32,9 +32,11 @@ global:
     delimiterSeparator: "."
     decimalSeparator: ","
   date:
+    invalid: "data non valida"
     today: "oggi"
     tomorrow: "domani"
   dateFormats:
+    shortFormat: "%d/%m/%Y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "DD/MM"
@@ -679,6 +681,9 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Portafoglio
+  incoming:
+    title: "In arrivo"
+    message: "Una prossima versione di IO renderà disponibile anche questo metodo di pagamento"
   featured: In evidenza
   creditCard:
     onboardingAttempts:
