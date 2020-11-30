@@ -83,6 +83,7 @@ import {
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
   addWalletNewCreditCardSuccess,
+  addWalletNewCreditCardFailure,
   creditCardCheckout3dsRequest,
   creditCardCheckout3dsSuccess,
   deleteWalletRequest,
@@ -371,6 +372,8 @@ function* startOrResumeAddCreditCardSaga(
           action.payload.onSuccess(maybeAddedWallet);
         }
       } else {
+        yield put(addWalletNewCreditCardFailure());
+
         if (action.payload.onFailure) {
           action.payload.onFailure();
         }
