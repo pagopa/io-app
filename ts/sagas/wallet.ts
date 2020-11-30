@@ -43,7 +43,10 @@ import {
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
-import { handleSearchUserSatispay } from "../features/wallet/onboarding/satispay/saga/networking";
+import {
+  handleAddUserSatispayToWallet,
+  handleSearchUserSatispay
+} from "../features/wallet/onboarding/satispay/saga/networking";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
@@ -80,6 +83,7 @@ import {
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
   addWalletNewCreditCardSuccess,
+  addWalletNewCreditCardFailure,
   creditCardCheckout3dsRequest,
   creditCardCheckout3dsSuccess,
   deleteWalletRequest,
@@ -139,7 +143,10 @@ import {
 } from "../features/wallet/onboarding/bancomat/navigation/action";
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { getTitleFromCard } from "../utils/paymentMethod";
-import { searchUserSatispay } from "../features/wallet/onboarding/satispay/store/actions";
+import {
+  addSatispayToWallet,
+  searchUserSatispay
+} from "../features/wallet/onboarding/satispay/store/actions";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -365,6 +372,8 @@ function* startOrResumeAddCreditCardSaga(
           action.payload.onSuccess(maybeAddedWallet);
         }
       } else {
+        yield put(addWalletNewCreditCardFailure());
+
         if (action.payload.onFailure) {
           action.payload.onFailure();
         }
@@ -818,6 +827,14 @@ export function* watchWalletSaga(
       searchUserSatispay.request,
       handleSearchUserSatispay,
       paymentManagerClient.searchSatispay,
+      pmSessionManager
+    );
+
+    // watch for add satispay to the user's wallet
+    yield takeLatest(
+      addSatispayToWallet.request,
+      handleAddUserSatispayToWallet,
+      paymentManagerClient.addSatispayToWallet,
       pmSessionManager
     );
   }

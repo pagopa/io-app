@@ -23,6 +23,7 @@ import WalletTabIcon from "../components/WalletTabIcon";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
+import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
 
 const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.WALLET_ADD_PAYMENT_METHOD,
+  ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD,
   ROUTES.PAYMENT_SCAN_QR_CODE,
   ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
   ROUTES.WALLET_ADD_CARD,
@@ -97,6 +99,7 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   BONUSVACANZE_ROUTES.MAIN,
   BPD_ROUTES.MAIN,
   WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN,
+  WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN,
   ROUTES.MARKDOWN_PLAYGROUND,
   ROUTES.WEB_PLAYGROUND,
   ROUTES.SHOWROOM,

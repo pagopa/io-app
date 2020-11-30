@@ -274,6 +274,11 @@ export const navigateToWalletAddPaymentMethod = (
     params
   });
 
+export const navigateToWalletAddDigitalPaymentMethod = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD
+  });
+
 export const navigateToWalletAddCreditCard = (
   params: InferNavigationParams<typeof AddCardScreen>
 ) =>
