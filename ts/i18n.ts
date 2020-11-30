@@ -49,6 +49,7 @@ interface TypedI18n {
   readonly currentLocale: () => locales.Locales;
   readonly toNumber: typeof I18n.toNumber;
   readonly toCurrency: typeof I18n.toCurrency;
+  readonly strftime: typeof I18n.strftime;
 }
 
 const TypedI18n = I18n as TypedI18n;
