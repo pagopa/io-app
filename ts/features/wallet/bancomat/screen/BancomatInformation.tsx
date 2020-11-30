@@ -19,8 +19,11 @@ import I18n from "../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 
+type OwnProps = { onAddPaymentMethod?: () => void };
+
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  OwnProps;
 
 const styles = StyleSheet.create({
   button: {
@@ -81,7 +84,12 @@ const BancomatInformation: React.FunctionComponent<Props> = props => (
     <ButtonDefaultOpacity
       style={styles.button}
       bordered={true}
-      onPress={props.addPaymentMethod}
+      onPress={() => {
+        if (props.onAddPaymentMethod) {
+          props.onAddPaymentMethod();
+        }
+        props.addPaymentMethod();
+      }}
       onPressWithGestureHandler={true}
     >
       <Label>{I18n.t("wallet.bancomat.details.debit.addCta")}</Label>
