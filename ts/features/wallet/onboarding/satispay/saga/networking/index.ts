@@ -5,7 +5,6 @@ import { ActionType } from "typesafe-actions";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
-import { searchUserPans } from "../../../bancomat/store/actions";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { searchUserSatispay } from "../../store/actions";
 import { getError, getNetworkError } from "../../../../../../utils/errors";
@@ -59,7 +58,7 @@ export function* handleSearchUserSatispay(
       );
     }
   } catch (e) {
-    return yield put(searchUserPans.failure(getNetworkError(e)));
+    return yield put(searchUserSatispay.failure(getNetworkError(e)));
   }
 }
 
