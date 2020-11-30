@@ -34,8 +34,8 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
       )),
       null
     )}
-    {pot.getOrElse(
-      pot.map(props.satispayList, s => (
+    {pot.toUndefined(
+      pot.mapNullable(props.satispayList, s => (
         <>
           {s.map((satispayMethod, i) => (
             <SatispayWalletPreview
@@ -44,8 +44,7 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
             />
           ))}
         </>
-      )),
-      null
+      ))
     )}
   </>
 );
