@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { nullType } from "io-ts";
 import satispayImage from "../../../../img/wallet/cards-icons/satispay.png";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
