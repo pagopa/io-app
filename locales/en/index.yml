@@ -35,6 +35,7 @@ global:
     today: "today"
     tomorrow: "tomorrow"
   dateFormats:
+    shortFormat: "%d/%m/%Y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "MM/DD"

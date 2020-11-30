@@ -7,7 +7,7 @@ import { InitializedProfile } from "../../definitions/backend/InitializedProfile
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality } from "../../definitions/content/Municipality";
 import { ProfileState } from "../store/reducers/profile";
-
+import { formatDateAsShortFormat } from "./dates";
 type GenderType = "M" | "F" | undefined;
 
 /**
@@ -82,16 +82,12 @@ export function extractFiscalCodeData(
     tempYear +
     (new Date().getFullYear() - (1900 + tempYear) >= 100 ? 2000 : 1900);
   const birthday = new Date(year, month - 1, day);
-  // we have to use manual formatting instead of format of date-fns due to a bug (Android/hermes)
-  // see https://github.com/date-fns/date-fns/issues/1272
-  const birthDateRepr = `${day
-    .toString()
-    .padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year}`;
+  const birthDate = formatDateAsShortFormat(birthday);
 
   return {
     gender,
     birthday,
-    birthDate: birthDateRepr,
+    birthDate,
     siglaProvincia,
     denominazione
   };
