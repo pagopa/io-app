@@ -1,6 +1,8 @@
 import { Content, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { heightPercentageToDP } from "react-native-responsive-screen";
+import { BugReporting } from "instabug-reactnative";
 import I18n from "../i18n";
 import themeVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
@@ -11,11 +13,14 @@ import Accordion from "./ui/Accordion";
 import Markdown from "./ui/Markdown";
 import IconFont from "./ui/IconFont";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import { heightPercentageToDP } from "react-native-responsive-screen";
 
 type ownProps = {
   onClose: () => void;
   onGoBack: () => void;
+  requestAssistance: (
+    reportType: BugReporting.reportType,
+    sendToken: boolean
+  ) => void;
 };
 
 const styles = StyleSheet.create({
@@ -23,12 +28,11 @@ const styles = StyleSheet.create({
     padding: themeVariables.contentPadding
   }
 });
-const cancelButtonProps = (onContinue: () => void) => ({
+const continueButtonProps = (onContinue: () => void) => ({
   block: true,
-  light: true,
   bordered: true,
   onPress: onContinue,
-  title: I18n.t("global.buttons.cancel")
+  title: I18n.t("global.buttons.continue")
 });
 const CustomGoBackButton: React.FunctionComponent<{
   onPressHandler: () => void;
@@ -44,59 +48,71 @@ const CustomGoBackButton: React.FunctionComponent<{
 
 const NewReporting: React.FunctionComponent<ownProps> = ({
   onClose,
-  onGoBack
-}) => (
-  <>
-    <BaseHeader
-      accessibilityEvents={{
-        avoidNavigationEventsUsage: true
-      }}
-      headerTitle={I18n.t("contextualHelp.title")}
-      customRightIcon={{
-        iconName: "io-close",
-        onPress: onClose,
-        accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
-      }}
-      customGoBack={<CustomGoBackButton onPressHandler={onGoBack} />}
-      showInstabugChat={false}
-    />
-    <Content contentContainerStyle={styles.contentContainer} noPadded={true}>
-      <H1 accessible={true}>
-        {I18n.t("contextualHelp.sendPersonalInfo.title")}
-      </H1>
-      <View spacer={true} />
-      <View style={{ height: heightPercentageToDP(50) }}>
-        <Markdown>
-          {I18n.t("contextualHelp.sendPersonalInfo.description")}
-        </Markdown>
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "flex-start",
-          justifyContent: "space-evenly"
+  onGoBack,
+  requestAssistance
+}) => {
+  const [sendPersonalInfo, setSendPersonalInfo] = React.useState(false);
+
+  return (
+    <>
+      <BaseHeader
+        accessibilityEvents={{
+          avoidNavigationEventsUsage: true
         }}
-      >
-        <CheckBox />
-        <View hspacer={true} />
-        <View style={{ flex: 1 }}>
-          <Markdown>{I18n.t("contextualHelp.sendPersonalInfo.cta")}</Markdown>
-          <Accordion
-            title={I18n.t("contextualHelp.sendPersonalInfo.informativeTitle")}
-            content={I18n.t(
-              "contextualHelp.sendPersonalInfo.informativeDescription"
-            )}
-          ></Accordion>
-        </View>
-      </View>
-    </Content>
-    <View style={{ paddingBottom: 30 }}>
-      <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={cancelButtonProps(onClose)}
+        headerTitle={I18n.t("contextualHelp.title")}
+        customRightIcon={{
+          iconName: "io-close",
+          onPress: onClose,
+          accessibilityLabel: I18n.t(
+            "global.accessibility.contextualHelp.close"
+          )
+        }}
+        customGoBack={<CustomGoBackButton onPressHandler={onGoBack} />}
+        showInstabugChat={false}
       />
-    </View>
-  </>
-);
+      <Content contentContainerStyle={styles.contentContainer} noPadded={true}>
+        <H1 accessible={true}>
+          {I18n.t("contextualHelp.sendPersonalInfo.title")}
+        </H1>
+        <View spacer={true} />
+        <View style={{ height: heightPercentageToDP(50) }}>
+          <Markdown>
+            {I18n.t("contextualHelp.sendPersonalInfo.description")}
+          </Markdown>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "flex-start",
+            justifyContent: "space-evenly"
+          }}
+        >
+          <CheckBox
+            onValueChange={() => setSendPersonalInfo(!sendPersonalInfo)}
+          />
+          <View hspacer={true} />
+          <View style={{ flex: 1 }}>
+            <Markdown>{I18n.t("contextualHelp.sendPersonalInfo.cta")}</Markdown>
+            <Accordion
+              title={I18n.t("contextualHelp.sendPersonalInfo.informativeTitle")}
+              content={I18n.t(
+                "contextualHelp.sendPersonalInfo.informativeDescription"
+              )}
+            ></Accordion>
+          </View>
+        </View>
+      </Content>
+      <View style={{ paddingBottom: 30 }}>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={continueButtonProps(() => {
+            requestAssistance(BugReporting.reportType.bug, sendPersonalInfo);
+            onClose();
+          })}
+        />
+      </View>
+    </>
+  );
+};
 
 export default NewReporting;

@@ -35,6 +35,7 @@ import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import Markdown from "./ui/Markdown";
 import NewReporting from "./NewReporting";
+import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
 
 type OwnProps = Readonly<{
   title: string;
@@ -153,6 +154,16 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     _ => contentLoaded
   );
 
+  const requestAssistance = (
+    reportType: BugReporting.reportType,
+    sendToken: boolean
+  ) => {
+    if (sendToken) {
+      props.onRequestAssistance(reportType, props.supportToken);
+    } else {
+      props.onRequestAssistance(reportType, remoteUndefined);
+    }
+  };
   return (
     <Modal
       visible={props.isVisible}
@@ -167,12 +178,10 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
           <NewReporting
             onClose={onClose}
             onGoBack={() => setShowSendPersonalInfo(false)}
-            requestAssistance={() =>
-              props.onRequestAssistance(
-                BugReporting.reportType.bug,
-                props.supportToken
-              )
-            }
+            requestAssistance={(
+              reportType: BugReporting.reportType,
+              sendToken: boolean
+            ) => requestAssistance(reportType, sendToken)}
           />
         ) : (
           <>
