@@ -1,41 +1,29 @@
 import { fromNullable, none } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Container, Content, H3, View } from "native-base";
+import { Container } from "native-base";
 import * as React from "react";
-import {
-  InteractionManager,
-  Modal,
-  ModalBaseProps,
-  StyleSheet
-} from "react-native";
+import { InteractionManager, Modal, ModalBaseProps } from "react-native";
 import { connect } from "react-redux";
-import I18n from "../i18n";
 import { loadContextualHelpData } from "../store/actions/content";
 import { Dispatch } from "../store/actions/types";
 import { screenContextualHelpDataSelector } from "../store/reducers/content";
 import { GlobalState } from "../store/reducers/types";
-import themeVariables from "../theme/variables";
 import {
   isLoggedIn,
   supportTokenSelector,
   SupportTokenState
 } from "../store/reducers/authentication";
 import { loadSupportToken } from "../store/actions/authentication";
+import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
 import {
   FAQsCategoriesType,
   FAQType,
   getFAQsFromCategories
 } from "../utils/faq";
-import FAQComponent from "./FAQComponent";
-import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
-import { BaseHeader } from "./screens/BaseHeader";
-import BetaBannerComponent from "./screens/BetaBannerComponent";
-import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
-import ActivityIndicator from "./ui/ActivityIndicator";
 import Markdown from "./ui/Markdown";
-import NewReporting from "./NewReporting";
-import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
+import SendSupportTokenInfo from "./SendSupportTokenInfo";
+import ContextualHelpHome from "./ContextualHelpHome";
 
 type OwnProps = Readonly<{
   title: string;
@@ -56,20 +44,30 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
-const styles = StyleSheet.create({
-  contentContainer: {
-    padding: themeVariables.contentPadding
-  },
-  personalInfoContentContainer: {
-    padding: themeVariables.contentPadding,
-    flex: 1
-  }
-});
-
-type ContextualHelpData = {
+export type ContextualHelpData = {
   title: string;
   content: React.ReactNode;
   faqs?: ReadonlyArray<FAQType>;
+};
+
+/**
+  When the user open an assistance request he can choice if send he's identification data.
+  If the user is not logged the token is not available by default.
+*/
+const requestAssistance = (
+  reportType: BugReporting.reportType,
+  sendToken: boolean,
+  onRequestAssistance: (
+    type: BugReporting.reportType,
+    supportToken: SupportTokenState
+  ) => void,
+  supportToken: SupportTokenState
+) => {
+  if (sendToken) {
+    onRequestAssistance(reportType, supportToken);
+  } else {
+    onRequestAssistance(reportType, remoteUndefined);
+  }
 };
 
 /**
@@ -120,8 +118,8 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   /**
-   *  If contextualData (loaded from the content server) contains the route of the current screen,
-   *  title, content, faqs are read from it, otherwise they came from the locales stored in app
+    If contextualData (loaded from the content server) contains the route of the current screen,
+    title, content, faqs are read from it, otherwise they came from the locales stored in app
    */
   const contextualHelpData = props.maybeContextualData.fold<ContextualHelpData>(
     {
@@ -146,24 +144,16 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     }
   );
 
-  // content is loaded is when:
-  // - provided one from props is loaded or
-  // - when the remote one is loaded
+  /**
+    content is loaded is when:
+    - provided one from props is loaded or
+    - when the remote one is loaded
+   */
   const isContentLoaded = props.maybeContextualData.fold(
     props.contentLoaded,
     _ => contentLoaded
   );
 
-  const requestAssistance = (
-    reportType: BugReporting.reportType,
-    sendToken: boolean
-  ) => {
-    if (sendToken) {
-      props.onRequestAssistance(reportType, props.supportToken);
-    } else {
-      props.onRequestAssistance(reportType, remoteUndefined);
-    }
-  };
   return (
     <Modal
       visible={props.isVisible}
@@ -175,70 +165,32 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     >
       <Container>
         {showSendPersonalInfo ? (
-          <NewReporting
+          <SendSupportTokenInfo
             onClose={onClose}
             onGoBack={() => setShowSendPersonalInfo(false)}
             requestAssistance={(
               reportType: BugReporting.reportType,
               sendToken: boolean
-            ) => requestAssistance(reportType, sendToken)}
+            ) =>
+              requestAssistance(
+                reportType,
+                sendToken,
+                props.onRequestAssistance,
+                props.supportToken
+              )
+            }
           />
         ) : (
-          <>
-            <BaseHeader
-              accessibilityEvents={{
-                avoidNavigationEventsUsage: true
-              }}
-              headerTitle={I18n.t("contextualHelp.title")}
-              customRightIcon={{
-                iconName: "io-close",
-                onPress: onClose,
-                accessibilityLabel: I18n.t(
-                  "global.accessibility.contextualHelp.close"
-                )
-              }}
-            />
-
-            {!contextualHelpData.content && (
-              <View centerJustified={true}>
-                <ActivityIndicator color={themeVariables.brandPrimaryLight} />
-              </View>
-            )}
-            {contextualHelpData.content && (
-              <Content
-                contentContainerStyle={styles.contentContainer}
-                noPadded={true}
-              >
-                <H3 accessible={true}>{contextualHelpData.title}</H3>
-                <View spacer={true} />
-                {contextualHelpData.content}
-                <View spacer={true} />
-                {contextualHelpData.faqs && isContentLoaded && (
-                  <FAQComponent
-                    onLinkClicked={props.onLinkClicked}
-                    faqs={contextualHelpData.faqs}
-                  />
-                )}
-                {isContentLoaded && (
-                  <>
-                    <View spacer={true} extralarge={true} />
-                    <InstabugAssistanceComponent
-                      showSendPersonalInfo={props.isAuthenticated}
-                      onBugPressLoggedUser={() => setShowSendPersonalInfo(true)}
-                      requestAssistance={reportType =>
-                        props.onRequestAssistance(
-                          reportType,
-                          props.supportToken
-                        )
-                      }
-                    />
-                  </>
-                )}
-                {isContentLoaded && <EdgeBorderComponent />}
-              </Content>
-            )}
-            <BetaBannerComponent />
-          </>
+          <ContextualHelpHome
+            isAuthenticated={props.isAuthenticated}
+            onClose={onClose}
+            contextualHelpData={contextualHelpData}
+            isContentLoaded={isContentLoaded}
+            onBugPressLoggedUser={() => setShowSendPersonalInfo(true)}
+            onRequestAssistance={reportType =>
+              props.onRequestAssistance(reportType, props.supportToken)
+            }
+          />
         )}
       </Container>
     </Modal>
