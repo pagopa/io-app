@@ -1749,15 +1749,20 @@ bonus:
         title: Verifico lo stato di attivazione
       declaration:
         header: Per poter attivare il cashback devi dichiarare
+        cta: "Dichiaro"
         conditions:
           age: di essere maggiorenne
           resident: di risiedere in Italia
+          owner:
+            normal: "di attivare ai fini del Cashback "
+            bold: "solo metodi di pagamento di cui sei il titolare"
           personal_use:
-            normal: "che userai gli strumenti di pagamento su cui è attivo il cashback solo per "
-            bold: acquisti effettuati fuori dall'esercizio di attività di Impresa, Arte o Professione
+            normal: "che userai i metodi di pagamento su cui è attivo il cashback solo per acquisti effettuati per finalità personali, "
+            bold: "non legati ad attività di Impresa, Arte o Professione"
         disclaimer:
-          normal: "Questa autodichirazione è resa ai sensi del "
-          link: dpr 28 dicembre 2000 n. 445 art 46 e 47
+          normal1: "Questa autodichirazione è resa ai sensi del "
+          link: "dpr 28 dicembre 2000 n. 445 art 46 e 47"
+          normal2: " e consapevole delle sanzioni penali e della perdita di diritto al rimborso in caso di falsa dichiarazione"
       loadingActivateBpd:
         title: "Stiamo attivando il cashback"
         body: "Ti preghiamo di attendere..."
