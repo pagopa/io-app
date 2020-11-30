@@ -53,7 +53,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
 );
 
 /**
- * Detail screen for a bancomat
+ * Detail screen for a satispay
  * @constructor
  */
 const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
