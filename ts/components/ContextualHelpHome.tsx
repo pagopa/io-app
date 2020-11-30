@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 type HomeProps = {
   onClose: () => void;
   contextualHelpData: ContextualHelpData;
-  isContentLoaded: boolean;
+  isContentLoaded: boolean | undefined;
   onLinkClicked?: (url: string) => void;
   onRequestAssistance: (reportType: BugReporting.reportType) => void;
   onBugPressLoggedUser: () => void;
