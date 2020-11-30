@@ -84,18 +84,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     minHeight: 24
   },
-  badgeInfoExpired: {
-    backgroundColor: IOColors.white,
-    borderColor: IOColors.red,
+  badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",
     width: 65,
-    height: 22
+    height: 25,
+    flexDirection: "row"
+  },
+  badgeInfoExpired: {
+    backgroundColor: IOColors.white,
+    borderColor: IOColors.red
   },
   badgeInfoPaid: {
-    backgroundColor: IOColors.aqua,
-    width: 65,
-    height: 22
+    backgroundColor: IOColors.aqua
   }
 });
 
@@ -146,14 +147,14 @@ export default class DetailedlistItemComponent extends React.PureComponent<
           <View style={styles.icon}>
             {this.props.isExpired && (
               <View>
-                <Badge style={styles.badgeInfoExpired}>
+                <Badge style={[styles.badgeInfo, styles.badgeInfoExpired]}>
                   <H5 color="red">{I18n.t("messages.badge.expired")}</H5>
                 </Badge>
               </View>
             )}
             {this.props.isPaid && (
               <View>
-                <Badge style={styles.badgeInfoPaid}>
+                <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
                   <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
                 </Badge>
               </View>
