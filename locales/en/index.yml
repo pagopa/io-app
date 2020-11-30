@@ -1697,6 +1697,11 @@ bonus:
       failure: "We were unable to remove, please try again"
     earned: Collected Cashback
     onboarding:
+      alert:
+        title: Cashback is aleady active
+        body: You can find more details in your Wallet.
+        cancel: Close
+        confirm: Back to Wallet
       loadingActivationStatus:
         title: Loading activation status
       declaration:
@@ -1827,6 +1832,7 @@ bonus:
           title: "Method activation"
           body: "Activate cashback on this payment method?
                  This will start **tomorrow**, so the transactions performed today will not be valid for cashback purposes. "
+          disclaimer: "Choosing {{activate}}, you declare that you are the owner of this payment method."
         deactivate:
           title: "Method deactivation"
           body: "Are you sure you want to disable the cashback on this payment method? By continuing,from now on this method will no longer contribute to the collection of transactions.
