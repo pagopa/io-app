@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
 
 const capabilityFactory = (
   paymentMethod: PaymentMethod,
-  capability: EnableableFunctionsTypeEnum
+  capability: EnableableFunctionsTypeEnum,
+  index: number
 ) => {
   switch (capability) {
     case EnableableFunctionsTypeEnum.FA:
@@ -38,17 +39,17 @@ const capabilityFactory = (
       return bpdEnabled ? (
         <BpdPaymentMethodCapability
           paymentMethod={paymentMethod}
-          key={EnableableFunctionsTypeEnum.BPD}
+          key={`capability_item_${index}`}
         />
       ) : null;
   }
 };
 
 const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
-  paymentMethod.enableableFunctions.reduce((acc, val): ReadonlyArray<
+  paymentMethod.enableableFunctions.reduce((acc, val, i): ReadonlyArray<
     React.ReactNode
   > => {
-    const handlerForCapability = capabilityFactory(paymentMethod, val);
+    const handlerForCapability = capabilityFactory(paymentMethod, val, i);
     return handlerForCapability === null ? acc : [...acc, handlerForCapability];
   }, [] as ReadonlyArray<React.ReactNode>);
 
