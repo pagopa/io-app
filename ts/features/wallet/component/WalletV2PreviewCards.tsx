@@ -37,8 +37,11 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
     {pot.getOrElse(
       pot.map(props.satispayList, s => (
         <>
-          {s.map((_, i) => (
-            <SatispayWalletPreview key={`satispay_card_${i}`} />
+          {s.map((satispayMethod, i) => (
+            <SatispayWalletPreview
+              key={`satispay_card_${i}`}
+              satispay={satispayMethod}
+            />
           ))}
         </>
       )),

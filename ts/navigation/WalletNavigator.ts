@@ -28,6 +28,7 @@ import CreditCardOnboardingAttemptsScreen from "../screens/wallet/creditCardOnbo
 import CreditCardOnboardingAttemptDetailScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
 import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import ROUTES from "./routes";
+import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
 
 const baseRouteConfigMap = {
   [ROUTES.WALLET_HOME]: {
@@ -47,6 +48,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_BANCOMAT_DETAIL]: {
     screen: BancomatDetailScreen
+  },
+  [ROUTES.WALLET_SATISPAY_DETAIL]: {
+    screen: SatispayDetailScreen
   },
   [ROUTES.WALLET_ADD_CARD]: {
     screen: AddCardScreen

@@ -36,7 +36,10 @@ const capabilityFactory = (
       return null;
     case EnableableFunctionsTypeEnum.BPD:
       return bpdEnabled ? (
-        <BpdPaymentMethodCapability paymentMethod={paymentMethod} />
+        <BpdPaymentMethodCapability
+          paymentMethod={paymentMethod}
+          key={EnableableFunctionsTypeEnum.BPD}
+        />
       ) : null;
   }
 };
