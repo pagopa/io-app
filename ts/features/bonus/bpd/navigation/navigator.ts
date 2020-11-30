@@ -9,7 +9,7 @@ import LoadActivateBpdScreen from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
 import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
 import TMPBpdScreen from "../screens/test/TMPBpdScreen";
-import CtaLandingScreen from "../screens/onboarding/CtaLandingScreen";
+import CtaLandingScreen from "../screens/onboarding/BpdCTAStartOnboardingScreen";
 import BPD_ROUTES from "./routes";
 
 const BpdNavigator = createStackNavigator(

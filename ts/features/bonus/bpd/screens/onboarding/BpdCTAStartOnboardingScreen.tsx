@@ -18,7 +18,7 @@ const loadingCaption = () => I18n.t("global.remoteStates.loading");
 /**
  * this is a dummy screen reachable only from a message CTA
  */
-const CtaLandingScreen: React.FC<Props> = (props: Props) => {
+const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
   const hasError = () => pot.isError(props.availableBonus);
 
   // load available bonus when component is focuses
@@ -51,4 +51,7 @@ const mapStateToProps = (globalState: GlobalState) => ({
   availableBonus: availableBonusTypesSelector(globalState)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CtaLandingScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BpdCTAStartOnboardingScreen);
