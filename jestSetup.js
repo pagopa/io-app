@@ -17,7 +17,6 @@ NativeModules.RNGestureHandlerModule = {
 jest.mock("@react-native-community/push-notification-ios", jest.fn());
 jest.mock("react-native-permissions", jest.fn());
 jest.mock("@react-native-community/cookies", jest.fn());
-jest.mock("astral-regex", jest.fn());
 
 /**
  * adds as for documentation suggestion
