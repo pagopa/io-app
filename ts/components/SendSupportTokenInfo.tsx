@@ -46,7 +46,7 @@ const CustomGoBackButton: React.FunctionComponent<{
   </ButtonDefaultOpacity>
 );
 
-const NewReporting: React.FunctionComponent<ownProps> = ({
+const SendSupportTokenInfo: React.FunctionComponent<ownProps> = ({
   onClose,
   onGoBack,
   requestAssistance
@@ -115,4 +115,4 @@ const NewReporting: React.FunctionComponent<ownProps> = ({
   );
 };
 
-export default NewReporting;
+export default SendSupportTokenInfo;
