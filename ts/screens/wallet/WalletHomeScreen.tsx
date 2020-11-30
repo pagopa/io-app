@@ -526,11 +526,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           this.newMethodAddedContent
         ) : (
           <>
-            {bpdEnabled && (
-              <FeaturedCardCarousel
-                bvActive={this.props.allActiveBonus.length > 0}
-              />
-            )}
+            <FeaturedCardCarousel
+              bvActive={this.props.allActiveBonus.length > 0}
+            />
             {transactionContent}
           </>
         )}

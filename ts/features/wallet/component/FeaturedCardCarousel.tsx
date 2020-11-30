@@ -2,7 +2,7 @@ import { reverse } from "fp-ts/lib/Array";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { Alert, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import { constUndefined } from "fp-ts/lib/function";
@@ -17,7 +17,7 @@ import { H3 } from "../../../components/core/typography/H3";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { Dispatch } from "../../../store/actions/types";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../../config";
+import { bonusVacanzeEnabled } from "../../../config";
 import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
 import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
@@ -41,15 +41,25 @@ const styles = StyleSheet.create({
   container: { backgroundColor: "white", paddingTop: 14 },
   scrollViewPadding: { paddingVertical: 15 }
 });
+
+// TODO remove me when cashaback is active
+export const showAlertBpdIsComing = () =>
+  Alert.alert(
+    I18n.t("bonus.bpd.comingSoon.title"),
+    I18n.t("bonus.bpd.comingSoon.message"),
+    undefined,
+    { cancelable: true }
+  );
+
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
 
-  if (bpdEnabled) {
-    bonusMap.set(ID_BPD_TYPE, {
-      logo: cashbackLogo,
-      handler: _ => props.startBpdOnboarding()
-    });
-  }
+  bonusMap.set(ID_BPD_TYPE, {
+    logo: cashbackLogo,
+    // TODO when cashback is active remove this handler and restore props.startBpdOnboarding()
+    handler: _ => showAlertBpdIsComing()
+  });
+
   if (bonusVacanzeEnabled) {
     bonusMap.set(ID_BONUS_VACANZE_TYPE, {
       logo: bonusVacanzeLogo,
@@ -88,22 +98,20 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
                     key={`featured_bonus_${i}`}
                     title={b[getLocalePrimaryWithFallback()].name}
                     image={logo}
-                    isNew={false}
+                    status={"default"}
                     onPress={() => handler(b)}
                   />
                 )
               );
             case ID_BPD_TYPE:
               return (
-                getValue(props.bpdActiveBonus) === false && (
-                  <FeaturedCard
-                    key={`featured_bonus_${i}`}
-                    title={I18n.t("bonus.bpd.name")}
-                    image={logo}
-                    isNew={true}
-                    onPress={() => handler(b)}
-                  />
-                )
+                <FeaturedCard
+                  key={`featured_bonus_${i}`}
+                  title={I18n.t("bonus.bpd.name")}
+                  image={logo}
+                  status={"incoming"}
+                  onPress={() => handler(b)}
+                />
               );
             default:
               return null;
