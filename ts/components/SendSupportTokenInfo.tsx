@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 });
 const continueButtonProps = (onContinue: () => void) => ({
   block: true,
-  bordered: true,
+  primary: true,
   onPress: onContinue,
   title: I18n.t("global.buttons.continue")
 });
