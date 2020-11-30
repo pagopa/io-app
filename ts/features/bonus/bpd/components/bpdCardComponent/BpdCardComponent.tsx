@@ -274,8 +274,11 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         <H4 color={"white"} weight={"Regular"}>
           {`${localeDateFormat(
             props.period.startDate,
-            "%d %b %Y"
-          )} - ${localeDateFormat(props.period.endDate, "%d %b %Y")}`}
+            I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
+          )} - ${localeDateFormat(
+            props.period.endDate,
+            I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
+          )}`}
         </H4>
         <View spacer={true} large />
         <View style={[styles.row, { alignItems: "center" }]}>
@@ -324,8 +327,11 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           >
             {`${localeDateFormat(
               props.period.startDate,
-              "%B"
-            )} - ${localeDateFormat(props.period.endDate, "%B %Y")}`}
+              I18n.t("global.dateFormats.fullMonthLiteral")
+            )} - ${localeDateFormat(
+              props.period.endDate,
+              I18n.t("global.dateFormats.fullMonthLiteralWithYear")
+            )}`}
           </H5>
           <View hspacer={true} small={true} />
           {isPeriodClosed && (

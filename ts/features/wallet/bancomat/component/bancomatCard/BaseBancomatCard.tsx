@@ -95,7 +95,10 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
           {props.expiringDate && (
             <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
               "cardComponent.validUntil"
-            )} ${localeDateFormat(props.expiringDate, "%m/%Y")}`}</H5>
+            )} ${localeDateFormat(
+              props.expiringDate,
+              I18n.t("global.dateFormats.numericMonthYear")
+            )}`}</H5>
           )}
         </View>
         <View style={styles.bottomRow}>

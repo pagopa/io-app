@@ -65,7 +65,10 @@ const Table = (props: Props) => (
         {I18n.t("payment.details.info.dateAndTime")}
       </H5>
       <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {localeDateFormat(props.transaction.trxDate, "%d %b %Y, %H:%M")}
+        {localeDateFormat(
+          props.transaction.trxDate,
+          I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
+        )}
       </H4>
     </View>
     <View spacer={true} small={true} />

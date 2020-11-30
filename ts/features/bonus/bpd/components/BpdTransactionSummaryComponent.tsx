@@ -75,8 +75,11 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text1")}
         <H4 weight={"Bold"}>{`${localeDateFormat(
           props.period.startDate,
-          "%d %B %Y"
-        )} - ${localeDateFormat(props.period.endDate, "%d %B %Y")} `}</H4>
+          I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+        )} - ${localeDateFormat(
+          props.period.endDate,
+          I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+        )} `}</H4>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text2")}
         <H4 weight={"Bold"}>
           {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text3", {

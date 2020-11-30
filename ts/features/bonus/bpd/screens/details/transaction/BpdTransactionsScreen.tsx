@@ -63,7 +63,11 @@ const getTransactionsByDaySections = (
   SectionListData<EnhancedBpdTransaction | TotalCashbackPerDate>
 > => {
   const dates = [
-    ...new Set(transactions.map(trx => localeDateFormat(trx.trxDate, "%d %B")))
+    ...new Set(
+      transactions.map(trx =>
+        localeDateFormat(trx.trxDate, I18n.t("global.dateFormats.dayFullMonth"))
+      )
+    )
   ];
 
   const transactionsAsc = reverse([...transactions]);
@@ -137,12 +141,21 @@ const getTransactionsByDaySections = (
     title: d,
     data: [
       ...updatedTransactions.filter(
-        t => localeDateFormat(t.trxDate, "%d %B") === d
+        t =>
+          localeDateFormat(
+            t.trxDate,
+            I18n.t("global.dateFormats.dayFullMonth")
+          ) === d
       ),
       // we add the the data array an item to display the milestone reached
       // in order to display the milestone after the latest transaction summed in the total we add 1 ms so that the ordering will set it correctly
       ...maybeWinner.fold([], w => {
-        if (localeDateFormat(w.date, "%d %B") === d) {
+        if (
+          localeDateFormat(
+            w.date,
+            I18n.t("global.dateFormats.dayFullMonth")
+          ) === d
+        ) {
           return [
             {
               totalCashBack: w.amount,

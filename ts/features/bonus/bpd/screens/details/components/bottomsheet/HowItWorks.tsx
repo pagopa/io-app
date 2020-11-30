@@ -21,8 +21,14 @@ export const HowItWorks: React.FunctionComponent<Props> = props => (
       <Markdown>
         {I18n.t("bonus.bpd.details.howItWorks.body", {
           ...props.period,
-          startDate: localeDateFormat(props.period.startDate, "%d %B %Y"),
-          endDate: localeDateFormat(props.period.endDate, "%d %B %Y")
+          startDate: localeDateFormat(
+            props.period.startDate,
+            I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+          ),
+          endDate: localeDateFormat(
+            props.period.endDate,
+            I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+          )
         })}
       </Markdown>
     </View>

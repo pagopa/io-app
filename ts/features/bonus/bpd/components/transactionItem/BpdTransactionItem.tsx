@@ -28,7 +28,7 @@ type Props = {
 const getSubtitle = (transaction: BpdTransaction) =>
   `${localeDateFormat(
     transaction.trxDate,
-    "%d %b, %H:%M"
+    I18n.t("global.dateFormats.dayMonthWithTime")
   )} · € ${formatNumberAmount(transaction.amount)} `;
 
 export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
