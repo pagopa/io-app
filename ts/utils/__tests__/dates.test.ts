@@ -24,7 +24,7 @@ describe("formatDateAsShortFormat", () => {
     [new Date(2020, 10, 30), "30/11/2020"],
     [new Date(1900, 5, 5), "05/06/1900"],
     [new Date(1900, 13, 55), "27/03/1901"], // handle the overflow,
-    [new Date("not a date"), I18n.t("global.date.invalid")] // handle the overflow
+    [new Date("not a date"), I18n.t("global.date.invalid")] // handle invalid date
   ];
 
   toTest.forEach(tt => {
