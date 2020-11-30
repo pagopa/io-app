@@ -225,7 +225,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
               <BpdTransactionSummaryComponent
                 lastUpdateDate={localeDateFormat(
                   maybeLastUpdateDate.value,
-                  "%d %B %Y"
+                  I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
                 )}
                 period={props.selectedPeriod}
                 totalAmount={props.selectedAmount.value}
