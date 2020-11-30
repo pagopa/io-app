@@ -37,8 +37,11 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
     {pot.toUndefined(
       pot.mapNullable(props.satispayList, s => (
         <>
-          {s.map(s => (
-            <SatispayWalletPreview key={s.idWallet} />
+          {s.map(satispayMethod => (
+            <SatispayWalletPreview
+              key={satispayMethod.idWallet}
+              satispay={satispayMethod}
+            />
           ))}
         </>
       ))
