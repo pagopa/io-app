@@ -32,6 +32,7 @@ global:
     delimiterSeparator: ","
     decimalSeparator: "."
   date:
+    invalid: "not valid date"
     today: "today"
     tomorrow: "tomorrow"
   dateFormats:

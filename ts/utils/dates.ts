@@ -15,7 +15,9 @@ const locales: DFNSLocales = { it: dfns_it, en: dfns_en };
 
 // return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970)
 export const formatDateAsShortFormat = (date: Date): string =>
-  I18n.strftime(date, I18n.t("global.dateFormats.shortFormat"));
+  isNaN(date.getTime())
+    ? I18n.t("global.date.invalid")
+    : I18n.strftime(date, I18n.t("global.dateFormats.shortFormat"));
 
 export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
   return format(date, "MMM");
