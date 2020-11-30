@@ -1734,8 +1734,8 @@ bonus:
             normal: "to activate for Cashback "
             bold: "only payment methods of which you are the owner"
           personal_use:
-            normal: "that you will use the payment methods on which the cashback is active only for purchases made for personal purposes, "
-            bold: "not related to business, art or profession"
+            normal: "that you will use the payment instruments on which the cashback is active only for purchases made for personal purposes, "
+            bold: "made outside the exercise of business, art or profession"
         disclaimer:
           normal1: "This self-declaration is made pursuant to "
           link: "dpr 28 December 2000 n. 445 art 46 and 47"
