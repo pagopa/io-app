@@ -17,6 +17,7 @@ import { screenContextualHelpDataSelector } from "../store/reducers/content";
 import { GlobalState } from "../store/reducers/types";
 import themeVariables from "../theme/variables";
 import {
+  isLoggedIn,
   supportTokenSelector,
   SupportTokenState
 } from "../store/reducers/authentication";
@@ -33,6 +34,7 @@ import BetaBannerComponent from "./screens/BetaBannerComponent";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import Markdown from "./ui/Markdown";
+import NewReporting from "./NewReporting";
 
 type OwnProps = Readonly<{
   title: string;
@@ -54,8 +56,12 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-  contentContainerStyle: {
+  contentContainer: {
     padding: themeVariables.contentPadding
+  },
+  personalInfoContentContainer: {
+    padding: themeVariables.contentPadding,
+    flex: 1
   }
 });
 
@@ -80,6 +86,9 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   const [contentLoaded, setContentLoaded] = React.useState<boolean | undefined>(
     undefined
   );
+  const [showSendPersonalInfo, setShowSendPersonalInfo] = React.useState<
+    boolean
+  >(false);
 
   React.useEffect(() => {
     // if the contextual data is empty or is in error -> try to reload
@@ -106,6 +115,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   const onClose = () => {
     void InteractionManager.runAfterInteractions(() => setContent(null));
     props.close();
+    setShowSendPersonalInfo(false);
   };
 
   /**
@@ -153,54 +163,74 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
       onRequestClose={onClose}
     >
       <Container>
-        <BaseHeader
-          accessibilityEvents={{
-            avoidNavigationEventsUsage: true
-          }}
-          headerTitle={I18n.t("contextualHelp.title")}
-          customRightIcon={{
-            iconName: "io-close",
-            onPress: onClose,
-            accessibilityLabel: I18n.t(
-              "global.accessibility.contextualHelp.close"
-            )
-          }}
-        />
+        {showSendPersonalInfo ? (
+          <NewReporting
+            onClose={onClose}
+            onGoBack={() => setShowSendPersonalInfo(false)}
+            requestAssistance={() =>
+              props.onRequestAssistance(
+                BugReporting.reportType.bug,
+                props.supportToken
+              )
+            }
+          />
+        ) : (
+          <>
+            <BaseHeader
+              accessibilityEvents={{
+                avoidNavigationEventsUsage: true
+              }}
+              headerTitle={I18n.t("contextualHelp.title")}
+              customRightIcon={{
+                iconName: "io-close",
+                onPress: onClose,
+                accessibilityLabel: I18n.t(
+                  "global.accessibility.contextualHelp.close"
+                )
+              }}
+            />
 
-        {!contextualHelpData.content && (
-          <View centerJustified={true}>
-            <ActivityIndicator color={themeVariables.brandPrimaryLight} />
-          </View>
-        )}
-        {contextualHelpData.content && (
-          <Content
-            contentContainerStyle={styles.contentContainerStyle}
-            noPadded={true}
-          >
-            <H3 accessible={true}>{contextualHelpData.title}</H3>
-            <View spacer={true} />
-            {contextualHelpData.content}
-            <View spacer={true} />
-            {contextualHelpData.faqs && isContentLoaded && (
-              <FAQComponent
-                onLinkClicked={props.onLinkClicked}
-                faqs={contextualHelpData.faqs}
-              />
+            {!contextualHelpData.content && (
+              <View centerJustified={true}>
+                <ActivityIndicator color={themeVariables.brandPrimaryLight} />
+              </View>
             )}
-            {isContentLoaded && (
-              <React.Fragment>
-                <View spacer={true} extralarge={true} />
-                <InstabugAssistanceComponent
-                  requestAssistance={reportType =>
-                    props.onRequestAssistance(reportType, props.supportToken)
-                  }
-                />
-              </React.Fragment>
+            {contextualHelpData.content && (
+              <Content
+                contentContainerStyle={styles.contentContainer}
+                noPadded={true}
+              >
+                <H3 accessible={true}>{contextualHelpData.title}</H3>
+                <View spacer={true} />
+                {contextualHelpData.content}
+                <View spacer={true} />
+                {contextualHelpData.faqs && isContentLoaded && (
+                  <FAQComponent
+                    onLinkClicked={props.onLinkClicked}
+                    faqs={contextualHelpData.faqs}
+                  />
+                )}
+                {isContentLoaded && (
+                  <>
+                    <View spacer={true} extralarge={true} />
+                    <InstabugAssistanceComponent
+                      showSendPersonalInfo={props.isAuthenticated}
+                      onBugPressLoggedUser={() => setShowSendPersonalInfo(true)}
+                      requestAssistance={reportType =>
+                        props.onRequestAssistance(
+                          reportType,
+                          props.supportToken
+                        )
+                      }
+                    />
+                  </>
+                )}
+                {isContentLoaded && <EdgeBorderComponent />}
+              </Content>
             )}
-            {isContentLoaded && <EdgeBorderComponent />}
-          </Content>
+            <BetaBannerComponent />
+          </>
         )}
-        <BetaBannerComponent />
       </Container>
     </Modal>
   );
@@ -209,12 +239,14 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const potContextualData = screenContextualHelpDataSelector(state);
   const maybeContextualData = pot.getOrElse(potContextualData, none);
+  const isAuthenticated = isLoggedIn(state.authentication);
 
   const supportToken = supportTokenSelector(state);
   return {
     supportToken,
     potContextualData,
-    maybeContextualData
+    maybeContextualData,
+    isAuthenticated
   };
 };
 
