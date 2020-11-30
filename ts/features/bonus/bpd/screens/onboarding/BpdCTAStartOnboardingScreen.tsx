@@ -21,7 +21,7 @@ const loadingCaption = () => I18n.t("global.remoteStates.loading");
 const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
   const hasError = () => pot.isError(props.availableBonus);
 
-  // load available bonus when component is focuses
+  // load available bonus when component is focused
   useActionOnFocus(props.loadAvailableBonus);
 
   React.useEffect(() => {
