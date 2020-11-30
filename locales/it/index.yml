@@ -680,6 +680,9 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Portafoglio
+  incoming:
+    title: "In arrivo"
+    message: "Una prossima versione di IO renderà disponibile anche questo metodo di pagamento"
   featured: In evidenza
   creditCard:
     onboardingAttempts:
@@ -952,6 +955,13 @@ wallet:
       maxFee: Commissione massima 0.50€
     satispay:
       name: Satispay
+      description: Paga con Satispay
+    bancomatPay:
+      name: BANCOMAT Pay
+      description: Paga con BANCOMAT Pay
+    postepayApp: 
+      name: Postepay
+      description: la tua app Postepay
     postepay:
       name: Carta BancoPosta o Postepay
       description: Le carte emesse da Poste Italiane
