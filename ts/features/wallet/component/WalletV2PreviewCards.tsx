@@ -39,7 +39,7 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
         <>
           {s.map((satispayMethod, i) => (
             <SatispayWalletPreview
-              key={`satispay_card_${i}`}
+              key={satispayMethod.idWallet}
               satispay={satispayMethod}
             />
           ))}
