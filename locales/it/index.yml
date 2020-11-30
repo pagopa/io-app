@@ -32,9 +32,11 @@ global:
     delimiterSeparator: "."
     decimalSeparator: ","
   date:
+    invalid: "data non valida"
     today: "oggi"
     tomorrow: "domani"
   dateFormats:
+    shortFormat: "%d/%m/%Y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "DD/MM"
