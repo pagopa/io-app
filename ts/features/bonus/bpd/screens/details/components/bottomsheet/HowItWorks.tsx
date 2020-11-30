@@ -3,7 +3,7 @@ import * as React from "react";
 import Markdown from "../../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../../i18n";
 import { useIOBottomSheet } from "../../../../../../../utils/bottomSheet";
-import { format } from "../../../../../../../utils/dates";
+import { localeDateFormat } from "../../../../../../../utils/locale";
 import { BpdPeriod } from "../../../../store/actions/periods";
 
 type Props = {
@@ -21,8 +21,8 @@ export const HowItWorks: React.FunctionComponent<Props> = props => (
       <Markdown>
         {I18n.t("bonus.bpd.details.howItWorks.body", {
           ...props.period,
-          startDate: format(props.period.startDate, "DD MMMM YYYY"),
-          endDate: format(props.period.endDate, "DD MMMM YYYY")
+          startDate: localeDateFormat(props.period.startDate, "%d %B %Y"),
+          endDate: localeDateFormat(props.period.endDate, "%d %B %Y")
         })}
       </Markdown>
     </View>

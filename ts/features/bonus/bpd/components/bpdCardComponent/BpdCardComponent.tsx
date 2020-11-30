@@ -9,7 +9,6 @@ import {
   ViewStyle
 } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
-import { format } from "../../../../../utils/dates";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -23,6 +22,7 @@ import bpdCardBgPreview from "../../../../../../img/bonus/bpd/bonus_preview_bg.p
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import { localeDateFormat } from "../../../../../utils/locale";
 
 type Props = {
   period: BpdPeriod;
@@ -272,8 +272,10 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           {I18n.t("bonus.bpd.title")}
         </H2>
         <H4 color={"white"} weight={"Regular"}>
-          {format(props.period.startDate, "DD MMM YYYY")} -{" "}
-          {format(props.period.endDate, "DD MMM YYYY")}
+          {`${localeDateFormat(
+            props.period.startDate,
+            "%d %b %Y"
+          )} - ${localeDateFormat(props.period.endDate, "%d %b %Y")}`}
         </H4>
         <View spacer={true} large />
         <View style={[styles.row, { alignItems: "center" }]}>
@@ -320,8 +322,13 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             weight={"Regular"}
             style={{ textTransform: "capitalize" }}
           >
-            {format(props.period.startDate, "MMMM")} -{" "}
-            {format(props.period.endDate, "MMMM YYYY")}
+            {`${localeDateFormat(
+              props.period.startDate,
+              I18n.t("global.dateFormats.extendedMonthLiteral")
+            )} - ${localeDateFormat(
+              props.period.endDate,
+              I18n.t("global.dateFormats.shortMonthLiteral")
+            )}`}
           </H5>
           <View hspacer={true} small={true} />
           {isPeriodClosed && (

@@ -11,9 +11,9 @@ import IconFont from "../../../../components/ui/IconFont";
 import { BpdAmount } from "../store/actions/amount";
 import { BpdPeriod } from "../store/actions/periods";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
-import { format } from "../../../../utils/dates";
 import { H4 } from "../../../../components/core/typography/H4";
 import { bottomSheetContent } from "../../../../utils/bottomSheet";
+import { localeDateFormat } from "../../../../utils/locale";
 
 type Props = {
   lastUpdateDate: string;
@@ -73,10 +73,10 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
       <View spacer={true} />
       <Body>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text1")}
-        <H4 weight={"Bold"}>{`${format(
+        <H4 weight={"Bold"}>{`${localeDateFormat(
           props.period.startDate,
-          "DD MMM YYYY"
-        )} - ${format(props.period.endDate, "DD MMM YYYY")} `}</H4>
+          "%d %B %Y"
+        )} - ${localeDateFormat(props.period.endDate, "%d %B %Y")} `}</H4>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text2")}
         <H4 weight={"Bold"}>
           {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text3", {

@@ -9,7 +9,7 @@ import { Monospace } from "../../../../../../../components/core/typography/Monos
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
-import { format } from "../../../../../../../utils/dates";
+import { localeDateFormat } from "../../../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../../../utils/stringBuilder";
 import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
 import { BpdTransactionWarning } from "./BpdTransactionWarning";
@@ -65,7 +65,7 @@ const Table = (props: Props) => (
         {I18n.t("payment.details.info.dateAndTime")}
       </H5>
       <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {format(props.transaction.trxDate, "DD MMM YYYY, HH:mm")}
+        {localeDateFormat(props.transaction.trxDate, "%d %b %Y, %H:%M")}
       </H4>
     </View>
     <View spacer={true} small={true} />

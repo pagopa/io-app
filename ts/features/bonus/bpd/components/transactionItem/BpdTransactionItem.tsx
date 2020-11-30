@@ -3,7 +3,7 @@ import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import I18n from "../../../../../i18n";
 import { bottomSheetContent } from "../../../../../utils/bottomSheet";
-import { format } from "../../../../../utils/dates";
+import { localeDateFormat } from "../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { BpdTransactionDetailComponent } from "../../screens/details/transaction/detail/BpdTransactionDetailComponent";
 import { BpdTransaction } from "../../store/actions/transactions";
@@ -26,9 +26,10 @@ type Props = {
  * @param transaction
  */
 const getSubtitle = (transaction: BpdTransaction) =>
-  `${format(transaction.trxDate, "DD MMM, HH:mm")} · € ${formatNumberAmount(
-    transaction.amount
-  )} `;
+  `${localeDateFormat(
+    transaction.trxDate,
+    "%d %b, %H:%M"
+  )} · € ${formatNumberAmount(transaction.amount)} `;
 
 export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
   const { present, dismiss } = useBottomSheetModal();

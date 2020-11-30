@@ -17,7 +17,7 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { format } from "../../../../../../utils/dates";
+import { localeDateFormat } from "../../../../../../utils/locale";
 import BaseDailyTransactionHeader from "../../../components/BaseDailyTransactionHeader";
 import BpdTransactionSummaryComponent from "../../../components/BpdTransactionSummaryComponent";
 import {
@@ -63,7 +63,7 @@ const getTransactionsByDaySections = (
   SectionListData<EnhancedBpdTransaction | TotalCashbackPerDate>
 > => {
   const dates = [
-    ...new Set(transactions.map(trx => format(trx.trxDate, "DD MMMM")))
+    ...new Set(transactions.map(trx => localeDateFormat(trx.trxDate, "%d %B")))
   ];
 
   const transactionsAsc = reverse([...transactions]);
@@ -136,11 +136,13 @@ const getTransactionsByDaySections = (
   return dates.map(d => ({
     title: d,
     data: [
-      ...updatedTransactions.filter(t => format(t.trxDate, "DD MMMM") === d),
+      ...updatedTransactions.filter(
+        t => localeDateFormat(t.trxDate, "%d %B") === d
+      ),
       // we add the the data array an item to display the milestone reached
       // in order to display the milestone after the latest transaction summed in the total we add 1 ms so that the ordering will set it correctly
       ...maybeWinner.fold([], w => {
-        if (format(w.date, "DD MMMM") === d) {
+        if (localeDateFormat(w.date, "%d %B") === d) {
           return [
             {
               totalCashBack: w.amount,
@@ -208,9 +210,9 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
             props.selectedPeriod &&
             maybeLastUpdateDate.isSome() && (
               <BpdTransactionSummaryComponent
-                lastUpdateDate={format(
+                lastUpdateDate={localeDateFormat(
                   maybeLastUpdateDate.value,
-                  "DD MMMM YYYY"
+                  "%d %B %Y"
                 )}
                 period={props.selectedPeriod}
                 totalAmount={props.selectedAmount.value}
