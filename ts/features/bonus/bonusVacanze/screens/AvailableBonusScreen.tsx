@@ -19,6 +19,7 @@ import BaseScreenComponent, {
 } from "../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { bpdEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../store/actions/navigationHistory";
@@ -37,7 +38,6 @@ import { ID_BONUS_VACANZE_TYPE, ID_BPD_TYPE } from "../utils/bonus";
 import { actionWithAlert } from "../components/alert/ActionWithAlert";
 import { storeUrl } from "../../../../utils/appVersion";
 import { showToast } from "../../../../utils/showToast";
-import { showAlertBpdIsComing } from "../../../wallet/component/FeaturedCardCarousel";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -56,11 +56,6 @@ const styles = StyleSheet.create({
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "bonus.bonusList.contextualHelp.title",
   body: "bonus.bonusList.contextualHelp.body"
-};
-
-type OnBonusTapHandlers = {
-  whenActive: (bonus: BonusAvailable) => void;
-  whenNotActive?: (bonus: BonusAvailable) => void;
 };
 
 /**
@@ -83,60 +78,48 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       return undefined;
     }
 
-    const alertAppUpdate = () =>
-      actionWithAlert({
-        title: I18n.t("titleUpdateAppAlert"),
-        body: I18n.t("messageUpdateAppAlert", {
-          storeName: Platform.select({
-            ios: "App Store",
-            default: "Play Store"
-          })
-        }),
-        cancelText: I18n.t("global.buttons.cancel"),
-        confirmText: I18n.t("openStore", {
-          storeName: Platform.select({
-            ios: "App Store",
-            default: "Play Store"
-          })
-        }),
-        onConfirmAction: this.openAppStore
-      });
-
     // only bonus vacanze tap is handled
-    const handlersMap: Map<number, OnBonusTapHandlers> = new Map<
+    const handlersMap: Map<number, (bonus: BonusAvailable) => void> = new Map<
       number,
-      OnBonusTapHandlers
+      (bonus: BonusAvailable) => void
     >([
-      [
-        ID_BONUS_VACANZE_TYPE,
-        {
-          whenActive: this.props.navigateToBonusRequest
-        }
-      ]
+      [ID_BONUS_VACANZE_TYPE, bonus => this.props.navigateToBonusRequest(bonus)]
     ]);
 
-    handlersMap.set(ID_BPD_TYPE, {
-      whenActive: alertAppUpdate,
-      whenNotActive: showAlertBpdIsComing
-    });
+    if (bpdEnabled) {
+      handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
+    }
 
     /**
      * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
      * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
      */
     const onItemPress = () => {
-      // if the bonus is not active search for whenNotActive handler
-      // if it's not present do nothing
+      // if the bonus is not active, do nothing
       if (item.is_active === false) {
-        fromNullable(handlersMap.get(item.id_type))
-          .mapNullable(handlers => handlers.whenNotActive)
-          .map(whenNotActive => whenNotActive(item));
         return;
       }
-      // if the bonus is active search for whenActive handler
-      // if it's not present ask to update the app
-      fromNullable(handlersMap.get(item.id_type)).foldL(alertAppUpdate, h =>
-        h.whenActive(item)
+      // if the bonus is active ask for app update
+      fromNullable(handlersMap.get(item.id_type)).foldL(
+        () =>
+          actionWithAlert({
+            title: I18n.t("titleUpdateAppAlert"),
+            body: I18n.t("messageUpdateAppAlert", {
+              storeName: Platform.select({
+                ios: "App Store",
+                default: "Play Store"
+              })
+            }),
+            cancelText: I18n.t("global.buttons.cancel"),
+            confirmText: I18n.t("openStore", {
+              storeName: Platform.select({
+                ios: "App Store",
+                default: "Play Store"
+              })
+            }),
+            onConfirmAction: this.openAppStore
+          }),
+        h => h(item)
       );
     };
 
