@@ -32,9 +32,11 @@ global:
     delimiterSeparator: ","
     decimalSeparator: "."
   date:
+    invalid: "invalid date"
     today: "today"
     tomorrow: "tomorrow"
   dateFormats:
+    shortFormat: "%d/%m/%Y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "MM/DD"
@@ -658,6 +660,9 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Wallet
+  incoming:
+    title: "Incoming"
+    message: "This payment method will be available in a future version"
   featured: Higlighted 
   creditCard:
     onboardingAttempts:
@@ -926,6 +931,13 @@ wallet:
       maxFee: Maximum fee of 0.50€
     satispay:
       name: Satispay
+      description: Pay with Satispay
+    bancomatPay:
+      name: BANCOMAT Pay
+      description: Pay with BANCOMAT Pay
+    postepayApp: 
+      name: Postepay
+      description: your Postepay app
     postepay:
       name: BancoPosta or Postepay card
       description: Cards issued by Poste Italiane

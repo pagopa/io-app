@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0-rc.4](https://github.com/pagopa/io-app/compare/1.10.0-rc.3...1.10.0-rc.4) (2020-11-29)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#175883088](https://www.pivotaltracker.com/story/show/175883088)] Adds page to select the digital method to add ([#2447](https://github.com/pagopa/io-app/issues/2447)) ([4f511da](https://github.com/pagopa/io-app/commit/4f511daff01e9faf1e0f5e4d472881a3c3acaee1))
+* **Bonus Pagamenti Digitali:** [[#175923816](https://www.pivotaltracker.com/story/show/175923816)] Show that cashback is incoming ([#2454](https://github.com/pagopa/io-app/issues/2454)) ([bda7583](https://github.com/pagopa/io-app/commit/bda7583763939a3dd1bc497d435f4ab8a220f99f))
+* **Bonus Pagamenti Digitali:** [[#175926004](https://www.pivotaltracker.com/story/show/175926004)] Show incoming payment methods ([#2455](https://github.com/pagopa/io-app/issues/2455)) ([6c775b2](https://github.com/pagopa/io-app/commit/6c775b273efa58ffe1e3d597c1443c5b48d7911f))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#175922698](https://www.pivotaltracker.com/story/show/175922698)] On credit card insertion CTA is disabled ([#2451](https://github.com/pagopa/io-app/issues/2451)) ([4535941](https://github.com/pagopa/io-app/commit/4535941ff0873d4e3f22fff02bcb105f1a9dc8a8))
+* **Bonus Pagamenti Digitali:** [[#175922831](https://www.pivotaltracker.com/story/show/175922831)] CTA text is wrong in bonus vacanze details screen [#2452](https://github.com/pagopa/io-app/issues/2452) ([f3917a3](https://github.com/pagopa/io-app/commit/f3917a322fbee528f7f0a1950c279c60badcd6a5))
+
 ## [1.10.0-rc.3](https://github.com/pagopa/io-app/compare/1.10.0-rc.2...1.10.0-rc.3) (2020-11-27)
 
 ## [1.10.0-rc.2](https://github.com/pagopa/io-app/compare/1.10.0-rc.1...1.10.0-rc.2) (2020-11-27)
