@@ -17,6 +17,14 @@ describe("convertDateToWordDistance", () => {
     expect(convertDateToWordDistance(yesterday, "Yesterday")).toBe("Yesterday");
   });
 
+  it("should contain 'Custom todayAtLabel'", () => {
+    const now = new Date();
+
+    expect(convertDateToWordDistance(now, "", "", "Custom todayAtLabel")).toBe(
+      "Custom todayAtLabel" + " " + format(now, "H:mm")
+    );
+  });
+
   it("should be 'Custom invalid label'", () => {
     expect(
       convertDateToWordDistance(new Date(NaN), "", "Custom invalid label")
