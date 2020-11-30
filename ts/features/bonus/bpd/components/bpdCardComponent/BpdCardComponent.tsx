@@ -324,11 +324,8 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           >
             {`${localeDateFormat(
               props.period.startDate,
-              I18n.t("global.dateFormats.extendedMonthLiteral")
-            )} - ${localeDateFormat(
-              props.period.endDate,
-              I18n.t("global.dateFormats.shortMonthLiteral")
-            )}`}
+              "%B"
+            )} - ${localeDateFormat(props.period.endDate, "%B %Y")}`}
           </H5>
           <View hspacer={true} small={true} />
           {isPeriodClosed && (
