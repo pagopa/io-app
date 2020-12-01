@@ -24,7 +24,6 @@ import {
 import Markdown from "./ui/Markdown";
 import SendSupportTokenInfo from "./SendSupportTokenInfo";
 import ContextualHelpComponent from "./ContextualHelpComponent";
-import reactotron from "reactotron-react-native";
 
 type OwnProps = Readonly<{
   title: string;
@@ -139,6 +138,12 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     _ => contentLoaded
   );
 
+  /**
+   * If the user is authenticated we show the screen that allows to choice or not to send the personal token
+   * to the assistance.
+   * Otherwise we allow the user to open directly a new assistance request without sending the personal token.
+   * @param reportType
+   */
   const handleOnRequestAssistance = (reportType: BugReporting.reportType) => {
     if (props.isAuthenticated) {
       setShowSendPersonalInfo(true);
@@ -148,6 +153,11 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     props.onRequestAssistance(reportType, props.supportToken);
   };
 
+  /**
+   * If an authenticated user choice to send the personal token we send it to the assistance.
+   * Otherwise we allow the user to open a new assistance request without sending the personal token.
+   * @param sendSupportToken
+   */
   const handleSendSupportTokenInfoContinue = (sendSupportToken: boolean) => {
     fromNullable(supportType).map(st => {
       props.onRequestAssistance(
