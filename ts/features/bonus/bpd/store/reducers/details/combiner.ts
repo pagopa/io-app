@@ -65,7 +65,9 @@ const isPeriodAmountWalletVisible = (
   ((periodAmount.period.status === "Active" && bpdEnabled.value) ||
     (periodAmount.period.status === "Closed" &&
       periodAmount.amount.transactionNumber > 0) ||
+    // All the periods are inactive
     (periodList.every(p => p.period.status === "Inactive") &&
+      // This is the first inactive period
       periodList.indexOf(periodAmount) === 0 &&
       periodAmount.period.status === "Inactive" &&
       bpdEnabled.value));
