@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0-rc.5](https://github.com/pagopa/io-app/compare/1.10.0-rc.4...1.10.0-rc.5) (2020-11-30)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#175883276](https://www.pivotaltracker.com/story/show/175883276)] Adds the SatispayCard Wallet preview ([#2456](https://github.com/pagopa/io-app/issues/2456)) ([5892971](https://github.com/pagopa/io-app/commit/589297160d756b420e35528ad7d22f87fc225bea))
+* **Bonus Pagamenti Digitali:** [[#175883374](https://www.pivotaltracker.com/story/show/175883374)] Satispay detail screen ([#2458](https://github.com/pagopa/io-app/issues/2458)) ([f888614](https://github.com/pagopa/io-app/commit/f888614fcf3c5839dfbadbf5fa015817c72ebfcb)), closes [#175883276](https://www.pivotaltracker.com/story/show/175883276) [#175883276](https://www.pivotaltracker.com/story/show/175883276) [#175883276](https://www.pivotaltracker.com/story/show/175883276)
+* **Bonus Pagamenti Digitali:** [[#175883764](https://www.pivotaltracker.com/story/show/175883764)] Satispay screens and navigation ([#2443](https://github.com/pagopa/io-app/issues/2443)) ([c095f94](https://github.com/pagopa/io-app/commit/c095f94abb7168ec3ba32ce682cc85d172dc4212))
+
+
+### Bug Fixes
+
+* [[#175877314](https://www.pivotaltracker.com/story/show/175877314)] An error occurred while opening external web url ([#2445](https://github.com/pagopa/io-app/issues/2445)) ([b87e4eb](https://github.com/pagopa/io-app/commit/b87e4ebdba03483b9ee1a5b3b0a64dc99266afe0))
+* [[#175922873](https://www.pivotaltracker.com/story/show/175922873)] Birthday is wrong in FiscalCode screen ([#2453](https://github.com/pagopa/io-app/issues/2453)) ([d93b679](https://github.com/pagopa/io-app/commit/d93b679322a72774984e0230f37ad02eca262ce4))
+* **Bonus Pagamenti Digitali:** [[#175938380](https://www.pivotaltracker.com/story/show/175938380)] restore bonus is incoming ([#2462](https://github.com/pagopa/io-app/issues/2462)) ([bebc071](https://github.com/pagopa/io-app/commit/bebc0710a497d40081e845729a159eaa4aa8a6ef))
+
+
+### Chores
+
+* **Payments:** [[#175845944](https://www.pivotaltracker.com/story/show/175845944)] Dispatch action to MixPanel on credit card addition failure [#2460](https://github.com/pagopa/io-app/issues/2460) ([3af4f1c](https://github.com/pagopa/io-app/commit/3af4f1c53eecbfde478cc1d8c230c2875c330bcd))
+
 ## [1.10.0-rc.4](https://github.com/pagopa/io-app/compare/1.10.0-rc.3...1.10.0-rc.4) (2020-11-29)
 
 

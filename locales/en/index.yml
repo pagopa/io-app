@@ -729,6 +729,12 @@ wallet:
           body1: "Turn on your methods saved into your wallet and start collecting cashback on your valid transactions."
           body2: "If you prefer, you can activate cashback on these methods later as well."
           skip: "Maybe later"
+    satispay:
+      headerTitle: "Add Satispay"
+      loadingSearch:
+        title: "We are verifying your Satispay account\n\nPlease wait a few seconds"
+      loadingAdd:
+        title: "We are adding your Satispay account\n\nPlease wait a few seconds"
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
@@ -758,6 +764,9 @@ wallet:
     bancomat:
       successful: Bancomat successfully removed
       failed: The bancomat could not be removed
+    satispay:
+      successful: Satispay successfully removed
+      failed: Satispay could not be removed
     successful: Card successfully removed
     failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
@@ -1015,6 +1024,12 @@ wallet:
         body: "If this card has also the logo of another circuit (Maestro, Visa, Mastercard, etc.), don't forget to add it to your wallet as a ** debit card ** as well. By doing so, you'll be able to collect all the valid transactions for the cashback initiative and make in-app payments. "
         addCta: "Add Debit Card"
       removeCta: "Delete this payment method"
+  satispay:
+    details:
+      infobox:
+        one: "Satispay"
+        two: " can't be used yet to make payments through IO"
+        three: ": this feature will be enabled on future app version release."
   newRemove:
     title: "Delete this payment method?"
     body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
@@ -1456,7 +1471,7 @@ faq:
     title: "How can you add a payment method?"
     content: !include faq/faq42.md
   43:
-    title: "What is the CVC/CVV?"
+    title: "Where can I find the security code?"
     content: !include faq/faq43.md
   44:
     title: "Why do I have to pay a transaction fee?"
@@ -1718,20 +1733,25 @@ bonus:
         title: Cashback is aleady active
         body: You can find more details in your Wallet.
         cancel: Close
-        confirm: Back to Wallet
+        confirm: Go back
       loadingActivationStatus:
         title: Loading activation status
       declaration:
         header: In order to activate the cashback you must declare
+        cta: "I declare"
         conditions:
           age: to be of legal age
           resident: to reside in Italy
+          owner:
+            normal: "to activate for Cashback "
+            bold: "only payment methods of which you are the owner"
           personal_use:
-            normal: "that you will use the payment instruments on which the cashback is active only for "
-            bold: "purchases made outside the exercise of business, art or profession "
+            normal: "that you will use the payment instruments on which the cashback is active only for purchases made for personal purposes, "
+            bold: "made outside the exercise of business, art or profession"
         disclaimer:
-          normal: This self-declaration is made pursuant to
-          link: dpr 28 december 2000 n. 445 art 46 and 47
+          normal1: "This self-declaration is made pursuant to "
+          link: "dpr 28 December 2000 n. 445 art 46 and 47"
+          normal2: " is aware of the penal sanctions and the loss of the right to reimbursement in the event of a false declaration"
       loadingActivateBpd:
         title: "We are activating the cashback"
         body: "Please wait."
