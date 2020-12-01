@@ -1721,7 +1721,7 @@ bonus:
         title: Cashback is aleady active
         body: You can find more details in your Wallet.
         cancel: Close
-        confirm: Back to Wallet
+        confirm: Go back
       loadingActivationStatus:
         title: Loading activation status
       declaration:
