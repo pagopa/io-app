@@ -15,7 +15,10 @@ import {
   SupportTokenState
 } from "../store/reducers/authentication";
 import { loadSupportToken } from "../store/actions/authentication";
-import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
+import {
+  remoteUndefined,
+  RemoteValue
+} from "../features/bonus/bpd/model/RemoteValue";
 import {
   FAQsCategoriesType,
   FAQType,
@@ -48,6 +51,25 @@ export type ContextualHelpData = {
   title: string;
   content: React.ReactNode;
   faqs?: ReadonlyArray<FAQType>;
+};
+
+/**
+ * If an authenticated user choice to send the personal token we send it to the assistance.
+ * Otherwise we allow the user to open a new assistance request without sending the personal token.
+ * @param sendSupportToken
+ */
+const handleSendSupportTokenInfoContinue = (
+  onRequestAssistance: (
+    type: BugReporting.reportType,
+    supportToken: SupportTokenState
+  ) => void,
+  supportType: BugReporting.reportType | undefined,
+  sendSupportToken: boolean,
+  supportToken: SupportTokenState
+) => {
+  fromNullable(supportType).map(st => {
+    onRequestAssistance(st, sendSupportToken ? supportToken : remoteUndefined);
+  });
 };
 
 /**
@@ -153,20 +175,6 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     props.onRequestAssistance(reportType, props.supportToken);
   };
 
-  /**
-   * If an authenticated user choice to send the personal token we send it to the assistance.
-   * Otherwise we allow the user to open a new assistance request without sending the personal token.
-   * @param sendSupportToken
-   */
-  const handleSendSupportTokenInfoContinue = (sendSupportToken: boolean) => {
-    fromNullable(supportType).map(st => {
-      props.onRequestAssistance(
-        st,
-        sendSupportToken ? props.supportToken : remoteUndefined
-      );
-    });
-  };
-
   return (
     <Modal
       visible={props.isVisible}
@@ -181,7 +189,14 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
           <SendSupportTokenInfo
             onClose={onClose}
             onGoBack={() => setShowSendPersonalInfo(false)}
-            onContinue={handleSendSupportTokenInfoContinue}
+            onContinue={(sendSupportToken: boolean) =>
+              handleSendSupportTokenInfoContinue(
+                props.onRequestAssistance,
+                supportType,
+                sendSupportToken,
+                props.supportToken
+              )
+            }
           />
         ) : (
           <ContextualHelpComponent
