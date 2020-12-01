@@ -14,7 +14,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const SatispayKoNotFound: React.FunctionComponent<Props> = () => (
   <SafeAreaView>
-     // TODO replace with localized message
+    {/* TODO replace with the real screen */}
     <H1>No Satispay account found for the user</H1>
   </SafeAreaView>
 );
