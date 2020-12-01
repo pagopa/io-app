@@ -10,6 +10,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { availableBonusTypesSelector } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { isStrictSome } from "../../../../../utils/pot";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -32,11 +33,13 @@ const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
   }, [props.availableBonus]);
 
   return (
-    <LoadingErrorComponent
-      isLoading={!hasError()}
-      loadingCaption={loadingCaption()}
-      onRetry={props.loadAvailableBonus}
-    />
+    <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.bpd.title")}>
+      <LoadingErrorComponent
+        isLoading={!hasError()}
+        loadingCaption={loadingCaption()}
+        onRetry={props.loadAvailableBonus}
+      />
+    </BaseScreenComponent>
   );
 };
 
