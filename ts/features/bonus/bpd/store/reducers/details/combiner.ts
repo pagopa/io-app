@@ -50,7 +50,8 @@ export const bpdAllPeriodsWithAmountSelector = createSelector(
 
 /**
  * A period is visible in the wallet if the bpd is enabled and the period is active OR
- * the period is closed and the transactionNumber > 0
+ * the period is closed and the transactionNumber > 0 OR
+ * bpd is enabled and the period is inactive (future)
  * @param periodAmount
  * @param bpdEnabled
  */
@@ -61,7 +62,8 @@ const isPeriodAmountWalletVisible = (
   isReady(bpdEnabled) &&
   ((periodAmount.period.status === "Active" && bpdEnabled.value) ||
     (periodAmount.period.status === "Closed" &&
-      periodAmount.amount.transactionNumber > 0));
+      periodAmount.amount.transactionNumber > 0) ||
+    (periodAmount.period.status === "Inactive" && bpdEnabled.value));
 
 /**
  * Return the {@link BpdPeriodAmount} that can be visible in the wallet
