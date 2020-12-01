@@ -47,6 +47,7 @@ import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
 } from "../features/wallet/onboarding/satispay/saga/networking";
+import { addSatispayToWalletAndActivateBpd } from "../features/wallet/onboarding/satispay/saga/orchestration/addSatispayToWallet";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
@@ -145,7 +146,8 @@ import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { getTitleFromCard } from "../utils/paymentMethod";
 import {
   addSatispayToWallet,
-  searchUserSatispay
+  searchUserSatispay,
+  walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
 
 /**
@@ -821,6 +823,9 @@ export function* watchWalletSaga(
 
     // watch for add Bancomat to Wallet workflow
     yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
+
+    // watch for add Satispay to Wallet workflow
+    yield takeLatest(walletAddSatispayStart, addSatispayToWalletAndActivateBpd);
 
     // watch for load satispay request
     yield takeLatest(
