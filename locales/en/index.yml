@@ -732,7 +732,7 @@ wallet:
     satispay:
       headerTitle: "Add Satispay"
       loadingSearch:
-        title: "We are verifying your Satispay account \n\n Please wait a few seconds"
+        title: "We are verifying your Satispay account\n\nPlease wait a few seconds"
       loadingAdd:
         title: "We are adding your Satispay account \n\n Please wait a few seconds"
   alert:
