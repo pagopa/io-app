@@ -197,6 +197,56 @@ export const bPayListSelector = createSelector(
 );
 
 /**
+ * return true if the payment method is visible in the wallet (the onboardingChannel
+ * is IO or WISP)
+ * @param pm
+ */
+export const isVisibleInWallet = (pm: PaymentMethod) =>
+  pm.onboardingChannel === "IO" || pm.onboardingChannel === "WISP";
+
+/**
+ * Return a credit card list visible in the wallet
+ */
+export const creditCardListVisibleInWalletSelector = createSelector(
+  [creditCardListSelector],
+  (creditCardListPot): pot.Pot<ReadonlyArray<CreditCardPaymentMethod>, Error> =>
+    pot.map(creditCardListPot, creditCardList =>
+      creditCardList.filter(isVisibleInWallet)
+    )
+);
+
+/**
+ * Return a bancomat list visible in the wallet
+ */
+export const bancomatListVisibleInWalletSelector = createSelector(
+  [bancomatListSelector],
+  (bancomatListPot): pot.Pot<ReadonlyArray<BancomatPaymentMethod>, Error> =>
+    pot.map(bancomatListPot, bancomatList =>
+      bancomatList.filter(isVisibleInWallet)
+    )
+);
+
+/**
+ * Return a satispay list visible in the wallet
+ */
+export const satispayListVisibleInWalletSelector = createSelector(
+  [satispayListSelector],
+  (satispayListPot): pot.Pot<ReadonlyArray<SatispayPaymentMethod>, Error> =>
+    pot.map(satispayListPot, satispayList =>
+      satispayList.filter(isVisibleInWallet)
+    )
+);
+
+/**
+ * Return a BPay list visible in the wallet
+ */
+export const bPayListVisibleInWalletSelector = createSelector(
+  [bPayListSelector],
+  (bPayListPot): pot.Pot<ReadonlyArray<BPayPaymentMethod>, Error> =>
+    pot.map(bPayListPot, bPayList => bPayList.filter(isVisibleInWallet))
+);
+
+/**
  * Get the list of credit cards using the info contained in v2 (Walletv2) to distinguish
  */
 export const creditCardWalletV1Selector = createSelector(
