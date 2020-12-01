@@ -127,7 +127,7 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
             <View spacer={true} small={true} />
             <InfoBox>
               <Body>
-                {disclaimer.normal}
+                {disclaimer.normal1}
                 <Link onPress={() => openWebUrl(disclaimerLink)}>
                   {disclaimer.link}
                 </Link>
