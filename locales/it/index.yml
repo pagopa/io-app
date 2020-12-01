@@ -1497,7 +1497,7 @@ faq:
     title: "Come puoi aggiungere un metodo di pagamento?"
     content: !include faq/faq42.md
   43:
-    title: "Cos'è il CVC/CVV?"
+    title: "Dove trovo il codice di sicurezza?"
     content: !include faq/faq43.md
   44:
     title: "Perché devo pagare una commissione?"
