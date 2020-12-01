@@ -175,11 +175,9 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
           />
         ) : (
           <ContextualHelpComponent
-            isAuthenticated={props.isAuthenticated}
             onClose={onClose}
             contextualHelpData={contextualHelpData}
             isContentLoaded={isContentLoaded}
-            onBugPressLoggedUser={() => setShowSendPersonalInfo(true)}
             onRequestAssistance={handleOnRequestAssistance}
           />
         )}
