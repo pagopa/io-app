@@ -17,7 +17,6 @@ export function* activateBpdOnNewPaymentMethods(
   paymentMethods: ReadonlyArray<PaymentMethod>,
   navigateToActivateNewMethods: NavigationNavigateAction
 ) {
-  // TODO: change enableableFunction with types representing the possibles functionalities
   const atLeastOneBancomatWithBpdCapability = paymentMethods.some(b =>
     hasFunctionEnabled(b, EnableableFunctionsTypeEnum.BPD)
   );
