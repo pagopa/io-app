@@ -26,7 +26,10 @@ import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDeta
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
-import { BancomatPaymentMethod } from "../../types/pagopa";
+import {
+  BancomatPaymentMethod,
+  SatispayPaymentMethod
+} from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
@@ -219,6 +222,14 @@ export const navigateToBancomatDetailScreen = (
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_BANCOMAT_DETAIL,
     params: { bancomat }
+  });
+
+export const navigateToSatispayDetailScreen = (
+  satispay: SatispayPaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_SATISPAY_DETAIL,
+    params: { satispay }
   });
 
 export const navigateToPaymentPickPspScreen = (
