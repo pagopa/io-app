@@ -4,6 +4,7 @@ import { Dispatch } from "redux";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { remoteContextualHelp } from "../../../../../../utils/remoteContextualHelp";
 import {
   bpdIbanInsertionCancel,
   bpdIbanInsertionContinue,
@@ -31,6 +32,7 @@ const IbanInsertionScreen: React.FunctionComponent<Props> = props => (
         ? I18n.t("global.buttons.skip")
         : I18n.t("global.buttons.cancel")
     }
+    contextualHelp={remoteContextualHelp()}
   />
 );
 
