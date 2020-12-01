@@ -13,11 +13,11 @@ import {
 import { bpdUpsertIbanSelector } from "../../store/reducers/details/activation/payoffInstrument";
 import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing";
 import I18n from "../../../../../i18n";
+import { remoteContextualHelp } from "../../../../../utils/remoteContextualHelp";
 import IbanLoadingUpsert from "./IbanLoadingUpsert";
 import IbanInsertionScreen from "./insertion/IbanInsertionScreen";
 import IbanKoNotOwned from "./ko/IbanKONotOwned";
 import IbanKOWrong from "./ko/IbanKOWrong";
-import { remoteContextualHelp } from "../../../../../utils/remoteContextualHelp";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

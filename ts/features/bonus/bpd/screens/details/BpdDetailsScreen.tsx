@@ -18,10 +18,10 @@ import { bpdUnsubscriptionSelector } from "../../store/reducers/details/activati
 import { bpdTransactionsForSelectedPeriod } from "../../store/reducers/details/transactions";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import { navigateToBpdTransactions } from "../../navigation/actions";
+import { remoteContextualHelp } from "../../../../../utils/remoteContextualHelp";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
-import { remoteContextualHelp } from "../../../../../utils/remoteContextualHelp";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
