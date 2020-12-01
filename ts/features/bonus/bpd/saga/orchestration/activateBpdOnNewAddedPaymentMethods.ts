@@ -17,12 +17,11 @@ export function* activateBpdOnNewPaymentMethods(
   paymentMethods: ReadonlyArray<PaymentMethod>,
   navigateToActivateNewMethods: NavigationNavigateAction
 ) {
-  // TODO: change enableableFunction with types representing the possibles functionalities
   const atLeastOneBancomatWithBpdCapability = paymentMethods.some(b =>
     hasFunctionEnabled(b, EnableableFunctionsTypeEnum.BPD)
   );
 
-  // No bancomat with bpd capability added in the current workflow, return to wallet home
+  // No payment method with bpd capability added in the current workflow, return to wallet home
   if (!atLeastOneBancomatWithBpdCapability) {
     return yield put(navigateToWalletHome());
   }

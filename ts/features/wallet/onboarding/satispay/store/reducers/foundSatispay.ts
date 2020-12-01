@@ -52,7 +52,7 @@ export const onboardingSatispayFoundSelector = createSelector(
       remoteSatispay,
       () => undefined,
       () => undefined,
-      val => (val !== null ? val : undefined),
+      val => (val ?? undefined),
       _ => undefined
     )
 );
