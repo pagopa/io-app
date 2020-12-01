@@ -17,6 +17,7 @@ import IbanLoadingUpsert from "./IbanLoadingUpsert";
 import IbanInsertionScreen from "./insertion/IbanInsertionScreen";
 import IbanKoNotOwned from "./ko/IbanKONotOwned";
 import IbanKOWrong from "./ko/IbanKOWrong";
+import { remoteContextualHelp } from "../../../../../utils/remoteContextualHelp";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -28,9 +29,9 @@ const chooseRenderScreen = (props: Props) => {
   } else if (isReady(ibanStatus)) {
     switch (ibanStatus.value) {
       case IbanStatus.NOT_OWNED:
-        return <IbanKoNotOwned />;
+        return <IbanKoNotOwned contextualHelp={remoteContextualHelp()} />;
       case IbanStatus.NOT_VALID:
-        return <IbanKOWrong />;
+        return <IbanKOWrong contextualHelp={remoteContextualHelp()} />;
       case IbanStatus.OK:
       case IbanStatus.CANT_VERIFY:
         props.reset();
