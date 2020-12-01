@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     minHeight: 24
   },
+  text3SubContainer: { width: `95%` },
   badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",
@@ -141,23 +142,21 @@ export default class DetailedlistItemComponent extends React.PureComponent<
                 <BadgeComponent />
               </View>
             )}
-            <H3 numberOfLines={2}>{this.props.text3}</H3>
+            <View style={styles.text3SubContainer}>
+              <H3 numberOfLines={2}>{this.props.text3}</H3>
+            </View>
           </View>
 
           <View style={styles.icon}>
             {this.props.isExpired && (
-              <View>
-                <Badge style={[styles.badgeInfo, styles.badgeInfoExpired]}>
-                  <H5 color="red">{I18n.t("messages.badge.expired")}</H5>
-                </Badge>
-              </View>
+              <Badge style={[styles.badgeInfo, styles.badgeInfoExpired]}>
+                <H5 color="red">{I18n.t("messages.badge.expired")}</H5>
+              </Badge>
             )}
             {this.props.isPaid && (
-              <View>
-                <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
-                  <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
-                </Badge>
-              </View>
+              <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
+                <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
+              </Badge>
             )}
 
             <IconFont
