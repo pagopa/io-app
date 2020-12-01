@@ -1759,7 +1759,7 @@ bonus:
         title: Il Cashback è già attivo
         body: Puoi vedere maggiori dettagli nel tuo Portafoglio.
         cancel: Chiudi
-        confirm: Torna al Portafoglio
+        confirm: Torna indietro
       loadingActivationStatus:
         title: Verifico lo stato di attivazione
       declaration:
