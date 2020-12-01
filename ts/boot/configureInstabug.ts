@@ -1,7 +1,6 @@
 import { Option } from "fp-ts/lib/Option";
 import Instabug, {
   BugReporting,
-  Chats,
   NetworkLogger,
   Replies
 } from "instabug-reactnative";
@@ -72,19 +71,15 @@ export const initialiseInstabug = () => {
   setInstabugUserAttribute("appVersion", getAppVersion());
 };
 
-export const openInstabugBugReport = () => {
-  BugReporting.showWithOptions(BugReporting.reportType.bug, [
+export const openInstabugQuestionReport = () => {
+  BugReporting.showWithOptions(BugReporting.reportType.question, [
     BugReporting.option.commentFieldRequired,
     BugReporting.option.emailFieldOptional
   ]);
 };
 
-export const openInstabugChat = (hasChats: boolean = false) => {
-  if (hasChats) {
-    Replies.show();
-  } else {
-    Chats.show();
-  }
+export const openInstabugReplies = () => {
+  Replies.show();
 };
 
 export const setInstabugUserAttribute = (
