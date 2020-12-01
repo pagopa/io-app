@@ -1732,15 +1732,20 @@ bonus:
         title: Loading activation status
       declaration:
         header: In order to activate the cashback you must declare
+        cta: "I declare"
         conditions:
           age: to be of legal age
           resident: to reside in Italy
+          owner:
+            normal: "to activate for Cashback "
+            bold: "only payment methods of which you are the owner"
           personal_use:
-            normal: "that you will use the payment instruments on which the cashback is active only for "
-            bold: "purchases made outside the exercise of business, art or profession "
+            normal: "that you will use the payment instruments on which the cashback is active only for purchases made for personal purposes, "
+            bold: "made outside the exercise of business, art or profession"
         disclaimer:
-          normal: This self-declaration is made pursuant to
-          link: dpr 28 december 2000 n. 445 art 46 and 47
+          normal1: "This self-declaration is made pursuant to "
+          link: "dpr 28 December 2000 n. 445 art 46 and 47"
+          normal2: " is aware of the penal sanctions and the loss of the right to reimbursement in the event of a false declaration"
       loadingActivateBpd:
         title: "We are activating the cashback"
         body: "Please wait."
