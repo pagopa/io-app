@@ -2,7 +2,6 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
-import { BugReporting } from "instabug-reactnative";
 import I18n from "../i18n";
 import themeVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
@@ -14,13 +13,10 @@ import Markdown from "./ui/Markdown";
 import IconFont from "./ui/IconFont";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
-type ownProps = {
+type Props = {
   onClose: () => void;
   onGoBack: () => void;
-  requestAssistance: (
-    reportType: BugReporting.reportType,
-    sendToken: boolean
-  ) => void;
+  onContinue: (sharingPersonalData: boolean) => void;
 };
 
 const styles = StyleSheet.create({
@@ -46,10 +42,10 @@ const CustomGoBackButton: React.FunctionComponent<{
   </ButtonDefaultOpacity>
 );
 
-const SendSupportTokenInfo: React.FunctionComponent<ownProps> = ({
+const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
   onClose,
   onGoBack,
-  requestAssistance
+  onContinue
 }) => {
   const [sendPersonalInfo, setSendPersonalInfo] = React.useState(false);
 
@@ -106,7 +102,7 @@ const SendSupportTokenInfo: React.FunctionComponent<ownProps> = ({
         <FooterWithButtons
           type={"SingleButton"}
           leftButton={continueButtonProps(() => {
-            requestAssistance(BugReporting.reportType.bug, sendPersonalInfo);
+            onContinue(sendPersonalInfo);
             onClose();
           })}
         />
