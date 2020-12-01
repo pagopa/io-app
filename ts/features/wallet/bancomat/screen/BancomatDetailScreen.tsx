@@ -19,6 +19,7 @@ import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePayment
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import BancomatInformation from "./BancomatInformation";
+import { remoteContextualHelp } from "../../../../utils/remoteContextualHelp";
 
 type NavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
@@ -72,6 +73,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       topContent={<View style={styles.headerSpacer} />}
       gradientHeader={true}
       hideHeader={true}
+      contextualHelp={remoteContextualHelp()}
     >
       <View style={styles.cardContainer}>
         <BancomatCard enhancedBancomat={bancomat} />
