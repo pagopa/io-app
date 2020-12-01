@@ -45,6 +45,8 @@ describe("localeDateFormat on locale", () => {
 
   const data: ReadonlyArray<[() => string, string, string]> = [
     [() => I18n.t("date.formats.default"), "17/05/1995", "17/05/1995"],
+    [() => I18n.t("date.formats.short"), "17 Maggio", "17 May"],
+    [() => I18n.t("date.formats.long"), "17 Maggio 1995", "17 May 1995"],
     [
       () => I18n.t("global.dateFormats.fullFormatShortMonthLiteral"),
       "17 Mag 1995",

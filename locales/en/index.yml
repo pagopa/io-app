@@ -2,8 +2,8 @@
 date: 
   formats:
     default: "%d/%m/%Y"
-    short: "%d de %B"
-    long: "%d de %B de %Y"
+    short: "%d %B"
+    long: "%d %B %Y"
   day_names:
     - "Sunday"
     - "Monday"
