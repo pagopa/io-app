@@ -4,6 +4,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { Satispay } from "../../../../../../../definitions/pagopa/walletv2/Satispay";
+import { RawSatispayPaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
 
 /**
@@ -22,8 +23,7 @@ export const addSatispayToWallet = createAsyncAction(
   "WALLET_ONBOARDING_SATISPAY_ADD_REQUEST",
   "WALLET_ONBOARDING_SATISPAY_ADD_SUCCESS",
   "WALLET_ONBOARDING_SATISPAY_ADD_FAILURE"
-  // TODO: replace void with the right type
-)<Satispay, void, Error>();
+)<Satispay, RawSatispayPaymentMethod, Error>();
 
 /**
  * The user choose to start the workflow to add a new satispay account to the wallet

@@ -19,7 +19,9 @@ import {
   PaymentMethod,
   RawBancomatPaymentMethod,
   RawCreditCardPaymentMethod,
-  RawPaymentMethod
+  RawPaymentMethod,
+  RawSatispayPaymentMethod,
+  SatispayPaymentMethod
 } from "../types/pagopa";
 import { contentRepoUrl } from "../config";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
@@ -79,6 +81,8 @@ export const getTitleFromBancomat = (
     .chain(abi => fromNullable(abi.name))
     .getOrElse(I18n.t("wallet.methods.bancomat.name"));
 
+export const getTitleForSatispay = () => I18n.t("wallet.methods.satispay.name");
+
 /**
  * Choose a textual representation for a {@link PatchedWalletV2}
  * @param paymentMethod
@@ -95,7 +99,7 @@ export const getTitleFromPaymentMethod = (
     return getTitleFromBancomat(paymentMethod, abiList);
   }
   if (isRawSatispay(paymentMethod)) {
-    return I18n.t("wallet.methods.satispay.name");
+    return getTitleForSatispay();
   }
   if (isRawBPay(paymentMethod)) {
     return (
@@ -117,6 +121,14 @@ export const enhanceBancomat = (
     : undefined,
   caption: getTitleFromBancomat(bancomat, abiList),
   icon: getImageFromPaymentMethod(bancomat)
+});
+
+export const enhanceSatispay = (
+  raw: RawSatispayPaymentMethod
+): SatispayPaymentMethod => ({
+  ...raw,
+  caption: getTitleForSatispay(),
+  icon: getImageFromPaymentMethod(raw)
 });
 
 export const enhancePaymentMethod = (
