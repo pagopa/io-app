@@ -29,7 +29,7 @@ type HomeProps = {
   isAuthenticated: boolean;
 };
 
-const ContextualHelpHome: React.FunctionComponent<HomeProps> = ({
+const ContextualHelpComponent: React.FunctionComponent<HomeProps> = ({
   onClose,
   contextualHelpData,
   isContentLoaded,
@@ -85,4 +85,4 @@ const ContextualHelpHome: React.FunctionComponent<HomeProps> = ({
   </>
 );
 
-export default ContextualHelpHome;
+export default ContextualHelpComponent;

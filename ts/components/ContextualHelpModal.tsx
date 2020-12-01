@@ -23,7 +23,7 @@ import {
 } from "../utils/faq";
 import Markdown from "./ui/Markdown";
 import SendSupportTokenInfo from "./SendSupportTokenInfo";
-import ContextualHelpHome from "./ContextualHelpHome";
+import ContextualHelpComponent from "./ContextualHelpComponent";
 
 type OwnProps = Readonly<{
   title: string;
@@ -181,7 +181,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
             }
           />
         ) : (
-          <ContextualHelpHome
+          <ContextualHelpComponent
             isAuthenticated={props.isAuthenticated}
             onClose={onClose}
             contextualHelpData={contextualHelpData}
