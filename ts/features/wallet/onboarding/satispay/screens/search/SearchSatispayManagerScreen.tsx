@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { RawSatispayPaymentMethod } from "../../../../../../types/pagopa";
-import { isTimoutError } from "../../../../../../utils/errors";
+import { isTimeoutError } from "../../../../../../utils/errors";
 import {
   isError,
   isLoading,
@@ -24,7 +24,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const SearchSatispayManagerScreen: React.FunctionComponent<Props> = props => {
   const satispay = props.foundSatispay;
-  if (isError(satispay) && isTimoutError(satispay.error)) {
+  if (isError(satispay) && isTimeoutError(satispay.error)) {
     return <SatispayKoTimeout />;
   }
   if (isError(satispay) || isLoading(satispay)) {

@@ -10,6 +10,7 @@ import {
 import { onboardingBancomatAbiSelectedSelector } from "../../store/reducers/abiSelected";
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import AddBancomatScreen from "../add-pans/AddBancomatScreen";
+import { isTimeoutError } from "../../../../../../utils/errors";
 import BancomatKoNotFound from "./BancomatKoNotFound";
 import BancomatKoSingleBankNotFound from "./BancomatKoSingleBankNotFound";
 import BancomatKoTimeout from "./BancomatKoTimeout";
@@ -56,7 +57,7 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
     // and he should try to search for a single bank
     return <BancomatKoServicesError />;
   }
-  if (isError(pans) && pans.error.kind === "timeout") {
+  if (isError(pans) && isTimeoutError(pans.error)) {
     return <BancomatKoTimeout />;
   }
   if (isLoading(pans) || isError(pans)) {

@@ -30,7 +30,7 @@ const LoadSatispaySearch = (props: Props) => {
       {...props}
       loadingCaption={I18n.t("wallet.onboarding.satispay.loadingSearch.title")}
       onAbort={props.cancel}
-      onRetry={() => props.retry()}
+      onRetry={props.retry}
     />
   );
 };
