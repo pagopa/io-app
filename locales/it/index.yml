@@ -751,6 +751,12 @@ wallet:
           body1: "Attiva il cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
           body2: "Se preferisci, puoi attivare il cashback su questi metodi anche in un secondo momento."
           skip: "Non ora, grazie"
+    satispay:
+      headerTitle: "Aggiungi Satispay"
+      loadingSearch:
+        title: "Stiamo verificando il tuo account Satispay\n\nAttendi qualche secondo"
+      loadingAdd:
+        title: "Stiamo aggiungendo il tuo account Satispay\n\nAttendi qualche secondo"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
@@ -780,6 +786,9 @@ wallet:
     bancomat:
       successful: Bancomat rimosso correttamente
       failed: Impossibile rimuovere il bancomat
+    satispay:
+      successful: Satispay rimosso correttamente
+      failed: Impossibile rimuovere Satispay
     successful: Carta rimossa correttamente
     failed: Impossibile rimuovere la carta
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
@@ -1043,6 +1052,12 @@ wallet:
         body: "Se su questa carta è presente anche il logo di un altro circuito (Maestro, Visa, Mastercard, etc.), aggiungila al portafoglio anche come **carta di debito**. In questo modo potrai collezionare correttamente le transazioni ai fini del Cashback ed effettuare pagamenti su IO."
         addCta: "Aggiungi Carta di Debito"
       removeCta: "Elimina questo metodo di pagamento"
+  satispay:
+    details:
+      infobox:
+        one: "Satispay"
+        two: " non consente ancora di pagare tramite IO"
+        three: ": questa funzione verrà abilitata con le prossime versioni dell’app."
   newRemove:
     title: "Vuoi eliminare questo metodo?"
     body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il cashback, verranno disattivate entro 24h."
@@ -1750,15 +1765,20 @@ bonus:
         title: Verifico lo stato di attivazione
       declaration:
         header: Per poter attivare il cashback devi dichiarare
+        cta: "Dichiaro"
         conditions:
           age: di essere maggiorenne
           resident: di risiedere in Italia
+          owner:
+            normal: "di attivare ai fini del Cashback "
+            bold: "solo metodi di pagamento di cui sei il titolare"
           personal_use:
-            normal: "che userai gli strumenti di pagamento su cui è attivo il cashback solo per "
-            bold: acquisti effettuati fuori dall'esercizio di attività di Impresa, Arte o Professione
+            normal: "che userai i metodi di pagamento su cui è attivo il cashback solo per acquisti effettuati per finalità personali, "
+            bold: "non legati ad attività di Impresa, Arte o Professione"
         disclaimer:
-          normal: "Questa autodichirazione è resa ai sensi del "
-          link: dpr 28 dicembre 2000 n. 445 art 46 e 47
+          normal1: "Questa autodichirazione è resa ai sensi del "
+          link: "dpr 28 dicembre 2000 n. 445 art 46 e 47"
+          normal2: " e consapevole delle sanzioni penali e della perdita di diritto al rimborso in caso di falsa dichiarazione"
       loadingActivateBpd:
         title: "Stiamo attivando il cashback"
         body: "Ti preghiamo di attendere..."
