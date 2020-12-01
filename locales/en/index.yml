@@ -764,6 +764,9 @@ wallet:
     bancomat:
       successful: Bancomat successfully removed
       failed: The bancomat could not be removed
+    satispay:
+      successful: Satispay successfully removed
+      failed: Satispay could not be removed
     successful: Card successfully removed
     failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
@@ -1021,6 +1024,12 @@ wallet:
         body: "If this card has also the logo of another circuit (Maestro, Visa, Mastercard, etc.), don't forget to add it to your wallet as a ** debit card ** as well. By doing so, you'll be able to collect all the valid transactions for the cashback initiative and make in-app payments. "
         addCta: "Add Debit Card"
       removeCta: "Delete this payment method"
+  satispay:
+    details:
+      infobox:
+        one: "Satispay"
+        two: " can't be used yet to make payments through IO"
+        three: ": this feature will be enabled on future app version release."
   newRemove:
     title: "Delete this payment method?"
     body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
