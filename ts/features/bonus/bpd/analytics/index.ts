@@ -40,6 +40,7 @@ import {
   bpdPaymentMethodActivation,
   bpdUpdatePaymentMethodActivation
 } from "../store/actions/paymentMethods";
+import { isTimeoutError } from "../../../../utils/errors";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -152,10 +153,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(searchUserPans.failure):
       return mp.track(action.type, {
-        reason:
-          action.payload.kind === "timeout"
-            ? action.payload.kind
-            : action.payload.value.message
+        reason: isTimeoutError(action.payload)
+          ? action.payload.kind
+          : action.payload.value.message
       });
 
     // Amount
