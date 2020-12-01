@@ -2,6 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
@@ -56,32 +57,34 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
       }}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <View spacer={true} />
-        <View
-          style={[
-            styles.container,
-            IOStyles.flex,
-            IOStyles.horizontalContentPadding
-          ]}
-        >
-          <H1 style={styles.title}>
-            {I18n.t("wallet.onboarding.bancomat.add.screenTitle")}
-          </H1>
-          <View spacer small />
-          <H4 weight={"Regular"} style={styles.flexStart}>
-            {I18n.t("wallet.onboarding.bancomat.add.label", {
-              current: props.currentIndex + 1,
-              length: props.pansNumber
-            })}
-          </H4>
-          <View spacer={true} large={true} />
-          <PreviewBancomatCard bancomat={props.pan} logoUrl={abiLogo} />
-          <View spacer={true} large={true} />
-          <InfoBox>
-            <Body>{I18n.t("wallet.onboarding.bancomat.add.warning")}</Body>
-          </InfoBox>
-        </View>
-
+        <ScrollView style={IOStyles.flex}>
+          <View spacer={true} />
+          <View
+            style={[
+              styles.container,
+              IOStyles.flex,
+              IOStyles.horizontalContentPadding
+            ]}
+          >
+            <H1 style={styles.title}>
+              {I18n.t("wallet.onboarding.bancomat.add.screenTitle")}
+            </H1>
+            <View spacer small />
+            <H4 weight={"Regular"} style={styles.flexStart}>
+              {I18n.t("wallet.onboarding.bancomat.add.label", {
+                current: props.currentIndex + 1,
+                length: props.pansNumber
+              })}
+            </H4>
+            <View spacer={true} large={true} />
+            <PreviewBancomatCard bancomat={props.pan} logoUrl={abiLogo} />
+            <View spacer={true} large={true} />
+            <InfoBox>
+              <Body>{I18n.t("wallet.onboarding.bancomat.add.warning")}</Body>
+            </InfoBox>
+          </View>
+          <View spacer />
+        </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(
