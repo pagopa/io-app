@@ -13,6 +13,7 @@ import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../../types/pagopa";
+import { remoteContextualHelp } from "../../../../../utils/remoteContextualHelp";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 import { PaymentMethodGroupedList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
 import { walletV2WithActivationStatusSelector } from "../../store/reducers/details/combiner";
@@ -51,7 +52,11 @@ const renderPaymentMethod = (
 const EnrollPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle, continueStr, skip, title, body1, body2 } = loadLocales();
   return (
-    <BaseScreenComponent goBack={false} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={false}
+      headerTitle={headerTitle}
+      contextualHelp={remoteContextualHelp()}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
