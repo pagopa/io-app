@@ -188,7 +188,7 @@ export type PaymentMethodWithActivation = PaymentMethod &
  * Add the information of activationStatus to a PatchedWalletV2
  * in order to group the elements "notActivable"
  */
-export const walletV2WithActivationStatusSelector = createSelector(
+export const paymentMethodsWithActivationStatusSelector = createSelector(
   [paymentMethodsSelector, bpdPaymentMethodActivationSelector],
   (paymentMethodsPot, bpdActivations) =>
     pot.map(paymentMethodsPot, paymentMethods =>
