@@ -21,6 +21,7 @@ import { navigateToBpdTransactions } from "../../navigation/actions";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
+import { remoteContextualHelp } from "../../../../../utils/remoteContextualHelp";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -93,6 +94,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
         topContent={<View style={styles.headerSpacer} />}
         gradientHeader={true}
         hideHeader={true}
+        contextualHelp={remoteContextualHelp()}
         footerContent={
           canRenderButton && (
             <GoToTransactions goToTransactions={props.goToTransactions} />
