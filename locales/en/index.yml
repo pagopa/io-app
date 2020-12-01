@@ -1318,7 +1318,7 @@ systemsOff:
 contextualHelp:
   title: IO helps you
   sendPersonalInfo:
-    title: Nuova segnalazione
+    title: New report
     description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."
     cta: Share your fiscal code, in order to make it easier to solve the problem.
     informativeTitle: How do you know my fiscal code?
