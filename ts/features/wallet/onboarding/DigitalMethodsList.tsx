@@ -7,9 +7,16 @@ import {
   ListRenderItemInfo,
   StyleSheet
 } from "react-native";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import I18n from "../../../i18n";
 import { H3 } from "../../../components/core/typography/H3";
 import { H5 } from "../../../components/core/typography/H5";
+import { GlobalState } from "../../../store/reducers/types";
+import { walletAddSatispayStart } from "./satispay/store/actions";
+
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 type DigitalPaymentItem = {
   name: string;
@@ -29,7 +36,7 @@ const styles = StyleSheet.create({
   logo: { width: 80, height: 40, resizeMode: "cover" }
 });
 
-const getMethods = (): ReadonlyArray<DigitalPaymentItem> => [
+const getMethods = (props: Props): ReadonlyArray<DigitalPaymentItem> => [
   {
     name: I18n.t("wallet.methods.bancomatPay.name"),
     subtitle: I18n.t("wallet.methods.bancomatPay.description"),
@@ -40,6 +47,7 @@ const getMethods = (): ReadonlyArray<DigitalPaymentItem> => [
     name: I18n.t("wallet.methods.satispay.name"),
     subtitle: I18n.t("wallet.methods.satispay.description"),
     logo: require("../../../../img/wallet/cards-icons/satispay.png"),
+    onPress: props.startSatispayOnboarding,
     implemented: true
   },
   {
@@ -53,10 +61,10 @@ const getMethods = (): ReadonlyArray<DigitalPaymentItem> => [
   }
 ];
 
-const DigitalMethodsList: React.FunctionComponent = () => (
+const DigitalMethodsList = (props: Props) => (
   <FlatList
     scrollEnabled={false}
-    data={getMethods()}
+    data={getMethods(props)}
     renderItem={({ item }: ListRenderItemInfo<DigitalPaymentItem>) =>
       item.implemented && (
         <ListItem style={styles.listItem} onPress={item.onPress}>
@@ -72,4 +80,10 @@ const DigitalMethodsList: React.FunctionComponent = () => (
   />
 );
 
-export default DigitalMethodsList;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  startSatispayOnboarding: () => dispatch(walletAddSatispayStart())
+});
+
+const mapStateToProps = (_: GlobalState) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DigitalMethodsList);
