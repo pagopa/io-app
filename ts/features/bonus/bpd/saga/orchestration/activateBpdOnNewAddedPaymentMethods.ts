@@ -21,7 +21,7 @@ export function* activateBpdOnNewPaymentMethods(
     hasFunctionEnabled(b, EnableableFunctionsTypeEnum.BPD)
   );
 
-  // No bancomat with bpd capability added in the current workflow, return to wallet home
+  // No payment method with bpd capability added in the current workflow, return to wallet home
   if (!atLeastOneBancomatWithBpdCapability) {
     return yield put(navigateToWalletHome());
   }
