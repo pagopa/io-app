@@ -55,7 +55,7 @@ import {
 } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
 
-type NavigationParams = Readonly<{
+export type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
@@ -178,10 +178,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               </Text>
             </TouchableDefaultOpacity>
             <View spacer={true} large={true} />
-            <TouchableDefaultOpacity
-              accessibilityLabel="why-a-fee"
-              onPress={this.showHelp}
-            >
+            <TouchableDefaultOpacity testID="why-a-fee" onPress={this.showHelp}>
               <Text link={true}>{I18n.t("wallet.whyAFee.title")}</Text>
             </TouchableDefaultOpacity>
           </View>
