@@ -18,6 +18,7 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { format } from "../../../../../../utils/dates";
+import { remoteContextualHelp } from "../../../../../../utils/remoteContextualHelp";
 import BaseDailyTransactionHeader from "../../../components/BaseDailyTransactionHeader";
 import BpdTransactionSummaryComponent from "../../../components/BpdTransactionSummaryComponent";
 import {
@@ -198,7 +199,11 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
   };
 
   return (
-    <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.bpd.title")}>
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("bonus.bpd.title")}
+      contextualHelp={remoteContextualHelp()}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <View style={IOStyles.horizontalContentPadding}>
           <View spacer={true} large={true} />
