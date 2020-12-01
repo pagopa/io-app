@@ -11,6 +11,7 @@ import {
   PatchedPaymentMethodInfo,
   PatchedWalletV2,
   RawPaymentMethod,
+  RawSatispayPaymentMethod,
   Wallet
 } from "../types/pagopa";
 import {
@@ -60,7 +61,7 @@ const isWalletV2CreditCard = (
 ): paymentMethodInfo is CardInfo =>
   paymentMethodInfo && wallet.walletType === WalletTypeEnum.Card;
 
-const getPaymentMethod = (
+export const fromPatchedWalletV2ToRawPaymentMethod = (
   wallet: PatchedWalletV2
 ): RawPaymentMethod | undefined => {
   if (isWalletV2CreditCard(wallet, wallet.info)) {
@@ -78,6 +79,16 @@ const getPaymentMethod = (
   return undefined;
 };
 
+// TODO: should be Either instead of return undefined
+export const fromPatchedWalletV2ToRawSatispay = (
+  wallet: PatchedWalletV2
+): RawSatispayPaymentMethod | undefined => {
+  if (isWalletV2Satispay(wallet, wallet.info)) {
+    return { ...wallet, kind: "Satispay", info: wallet.info };
+  }
+  return undefined;
+};
+
 /**
  * inject walletV2 into walletV1 structure
  * @param walletV2
@@ -85,7 +96,7 @@ const getPaymentMethod = (
 export const convertWalletV2toWalletV1 = (
   walletV2: PatchedWalletV2
 ): Wallet => {
-  const paymentMethodInfo = getPaymentMethod(walletV2);
+  const paymentMethodInfo = fromPatchedWalletV2ToRawPaymentMethod(walletV2);
   const card =
     paymentMethodInfo?.kind === "CreditCard"
       ? paymentMethodInfo.info
@@ -122,6 +133,6 @@ export const convertWalletV2toWalletV1 = (
     isPspToIgnore: false,
     registeredNexi: false,
     saved: true,
-    paymentMethod: getPaymentMethod(walletV2)
+    paymentMethod: fromPatchedWalletV2ToRawPaymentMethod(walletV2)
   };
 };

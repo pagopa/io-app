@@ -1,44 +1,26 @@
 import { combineReducers } from "redux";
-import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
-import { Satispay } from "../../../../../../../definitions/pagopa/walletv2/Satispay";
-import { NetworkError } from "../../../../../../utils/errors";
-import {
-  remoteError,
-  remoteLoading,
-  remoteReady,
-  remoteUndefined,
-  RemoteValue
-} from "../../../../../bonus/bpd/model/RemoteValue";
-import { searchUserSatispay } from "../actions";
+import { RawSatispayPaymentMethod } from "../../../../../../types/pagopa";
+import { RemoteValue } from "../../../../../bonus/bpd/model/RemoteValue";
+import { addedSatispayReducer } from "./addedSatispay";
+import { addingSatispayReducer } from "./addingSatispay";
+import { foundSatispayReducer, RemoteSatispay } from "./foundSatispay";
 
 export type OnboardSatispayState = {
   // A RemoteValue that represent the found satispay account for the user
   foundSatispay: RemoteSatispay;
-};
-
-// The satispay account found could be one (Satispay) or null (no satispay account found)
-export type RemoteSatispay = RemoteValue<Satispay | null, NetworkError>;
-
-const foundSatispayReducer = (
-  state: RemoteSatispay = remoteUndefined,
-  action: Action
-): RemoteSatispay => {
-  switch (action.type) {
-    case getType(searchUserSatispay.request):
-      return remoteLoading;
-    case getType(searchUserSatispay.success):
-      return remoteReady(action.payload);
-    case getType(searchUserSatispay.failure):
-      return remoteError(action.payload);
-  }
-  return state;
+  addingSatispay: RemoteValue<RawSatispayPaymentMethod, Error>;
+  addedSatispay: RawSatispayPaymentMethod | null;
 };
 
 const onboardingSatispayReducer = combineReducers<OnboardSatispayState, Action>(
   {
     // the satispay account found for the user during the onboarding phase
-    foundSatispay: foundSatispayReducer
+    foundSatispay: foundSatispayReducer,
+    // the user is trying to add the satispay account to the wallet
+    addingSatispay: addingSatispayReducer,
+    // the satispay account that the user choose to add to the wallet
+    addedSatispay: addedSatispayReducer
   }
 );
 
