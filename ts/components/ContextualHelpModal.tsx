@@ -139,6 +139,15 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     _ => contentLoaded
   );
 
+  const handleOnRequestAssistance = (reportType: BugReporting.reportType) => {
+    if (props.isAuthenticated) {
+      setShowSendPersonalInfo(true);
+      setSupportType(reportType);
+      return;
+    }
+    props.onRequestAssistance(reportType, props.supportToken);
+  };
+
   const handleSendSupportTokenInfoContinue = (sendSupportToken: boolean) => {
     fromNullable(supportType).map(st => {
       props.onRequestAssistance(
@@ -171,9 +180,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
             contextualHelpData={contextualHelpData}
             isContentLoaded={isContentLoaded}
             onBugPressLoggedUser={() => setShowSendPersonalInfo(true)}
-            onRequestAssistance={reportType =>
-              props.onRequestAssistance(reportType, props.supportToken)
-            }
+            onRequestAssistance={handleOnRequestAssistance}
           />
         )}
       </Container>
