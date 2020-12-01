@@ -45,6 +45,10 @@ export const addWalletNewCreditCardSuccess = createStandardAction(
   "WALLET_ADD_NEW_CREDITCARD_SUCCESS"
 )();
 
+export const addWalletNewCreditCardFailure = createStandardAction(
+  "WALLET_ADD_NEW_CREDITCARD_FAILURE"
+)();
+
 export type CreditCardFailure =
   | {
       kind: "GENERIC_ERROR";
@@ -154,6 +158,7 @@ export type WalletsActions =
   | ActionType<typeof addWalletCreditCardSuccess>
   | ActionType<typeof addWalletCreditCardFailure>
   | ActionType<typeof addWalletNewCreditCardSuccess>
+  | ActionType<typeof addWalletNewCreditCardFailure>
   | ActionType<typeof payCreditCardVerificationRequest>
   | ActionType<typeof payCreditCardVerificationSuccess>
   | ActionType<typeof payCreditCardVerificationFailure>

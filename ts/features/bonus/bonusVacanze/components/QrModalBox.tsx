@@ -76,7 +76,10 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
               {codeToDisplay}
             </Text>
             <View hspacer={true} />
-            <CopyButtonComponent textToCopy={codeToCopy} />
+            <CopyButtonComponent
+              textToCopy={codeToCopy}
+              onPressWithGestureHandler={true}
+            />
           </View>
         </View>
         {props.logo && (

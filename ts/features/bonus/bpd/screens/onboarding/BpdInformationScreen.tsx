@@ -37,6 +37,7 @@ const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
     <>
       {props.bonus ? (
         <BonusInformationComponent
+          primaryCtaText={I18n.t("bonus.bpd.cta.activeBonus")}
           bonus={props.bonus}
           onConfirm={onConfirm}
           onCancel={props.onCancel}
