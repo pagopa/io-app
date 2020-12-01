@@ -11,7 +11,7 @@ import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import { ModalBaseProps, Platform } from "react-native";
+import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
   openInstabugBugReport,
@@ -47,6 +47,7 @@ interface OwnProps {
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
+  headerBackgroundColor?: ColorValue;
   appLogo?: boolean;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
@@ -181,6 +182,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       goBack,
       headerBody,
       headerTitle,
+      headerBackgroundColor,
       primary,
       isSearchAvailable,
       searchType,
@@ -229,6 +231,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           dark={dark}
           goBack={goBack}
           headerTitle={headerTitle}
+          backgroundColor={headerBackgroundColor}
           onShowHelp={
             contextualHelp || contextualHelpMarkdown ? this.showHelp : undefined
           }

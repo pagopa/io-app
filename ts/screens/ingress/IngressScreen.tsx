@@ -66,6 +66,8 @@ class IngressScreen extends React.PureComponent<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_methods"]}
         primary={true}
+        headerBackgroundColor={variables.brandPrimary}
+        appLogo={true}
       >
         <Container style={styles.container}>
           <ConnectionBar />
