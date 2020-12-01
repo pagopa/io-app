@@ -15,10 +15,7 @@ import {
   SupportTokenState
 } from "../store/reducers/authentication";
 import { loadSupportToken } from "../store/actions/authentication";
-import {
-  remoteUndefined,
-  RemoteValue
-} from "../features/bonus/bpd/model/RemoteValue";
+import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
 import {
   FAQsCategoriesType,
   FAQType,
