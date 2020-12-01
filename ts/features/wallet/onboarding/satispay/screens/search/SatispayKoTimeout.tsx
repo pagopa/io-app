@@ -14,6 +14,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const SatispayKoTimeout: React.FunctionComponent<Props> = () => (
   <SafeAreaView>
+     // TODO replace with localized message
     <H1>Timeout during the satispay account request</H1>
   </SafeAreaView>
 );
