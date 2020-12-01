@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type HomeProps = {
+type Props = {
   onClose: () => void;
   contextualHelpData: ContextualHelpData;
   isContentLoaded: boolean | undefined;
@@ -27,7 +27,7 @@ type HomeProps = {
   onRequestAssistance: (reportType: BugReporting.reportType) => void;
 };
 
-const ContextualHelpComponent: React.FunctionComponent<HomeProps> = ({
+const ContextualHelpComponent: React.FunctionComponent<Props> = ({
   onClose,
   contextualHelpData,
   isContentLoaded,
@@ -68,7 +68,7 @@ const ContextualHelpComponent: React.FunctionComponent<HomeProps> = ({
           <>
             <View spacer={true} extralarge={true} />
             <InstabugAssistanceComponent
-              requestAssistance={reportType => onRequestAssistance(reportType)}
+              requestAssistance={onRequestAssistance}
             />
           </>
         )}

@@ -51,25 +51,6 @@ export type ContextualHelpData = {
 };
 
 /**
- * If an authenticated user choice to send the personal token we send it to the assistance.
- * Otherwise we allow the user to open a new assistance request without sending the personal token.
- * @param sendSupportToken
- */
-const handleSendSupportTokenInfoContinue = (
-  onRequestAssistance: (
-    type: BugReporting.reportType,
-    supportToken: SupportTokenState
-  ) => void,
-  supportType: BugReporting.reportType | undefined,
-  sendSupportToken: boolean,
-  supportToken: SupportTokenState
-) => {
-  fromNullable(supportType).map(st => {
-    onRequestAssistance(st, sendSupportToken ? supportToken : remoteUndefined);
-  });
-};
-
-/**
  * A modal to show the contextual help reelated to a screen.
  * The contextual help is characterized by:
  * - a title
@@ -79,6 +60,7 @@ const handleSendSupportTokenInfoContinue = (
  *
  * Optionally, the title and the content are injected from the content presented in the related clinet response.
  */
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   const [content, setContent] = React.useState<React.ReactNode>(null);
   const [contentLoaded, setContentLoaded] = React.useState<boolean | undefined>(
@@ -172,6 +154,21 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     props.onRequestAssistance(reportType, props.supportToken);
   };
 
+  /**
+   * If an authenticated user choice to send the personal token we send it to the assistance.
+   * Otherwise we allow the user to open a new assistance request without sending the personal token.
+   * @param type
+   * @param sendSupportToken
+   */
+  const handleSendSupportTokenInfoContinue = (sendSupportToken: boolean) => {
+    fromNullable(supportType).map(st => {
+      props.onRequestAssistance(
+        st,
+        sendSupportToken ? props.supportToken : remoteUndefined
+      );
+    });
+  };
+
   return (
     <Modal
       visible={props.isVisible}
@@ -186,14 +183,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
           <SendSupportTokenInfo
             onClose={onClose}
             onGoBack={() => setShowSendPersonalInfo(false)}
-            onContinue={(sendSupportToken: boolean) =>
-              handleSendSupportTokenInfoContinue(
-                props.onRequestAssistance,
-                supportType,
-                sendSupportToken,
-                props.supportToken
-              )
-            }
+            onContinue={handleSendSupportTokenInfoContinue}
           />
         ) : (
           <ContextualHelpComponent

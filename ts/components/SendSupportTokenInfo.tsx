@@ -1,6 +1,6 @@
 import { Content, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import I18n from "../i18n";
 import themeVariables from "../theme/variables";
@@ -13,6 +13,8 @@ import IconFont from "./ui/IconFont";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { Label } from "./core/typography/Label";
 import { RawCheckBox } from "./core/selection/RawCheckBox";
+import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
+import { IOStyles } from "./core/variables/IOStyles";
 
 type Props = {
   onClose: () => void;
@@ -56,7 +58,7 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
   const [sendPersonalInfo, setSendPersonalInfo] = React.useState(false);
 
   return (
-    <>
+    <SafeAreaView style={IOStyles.flex}>
       <BaseHeader
         accessibilityEvents={{
           avoidNavigationEventsUsage: true
@@ -104,8 +106,9 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
             />
           </View>
         </View>
+        <EdgeBorderComponent />
       </Content>
-      <View style={{ paddingBottom: 30 }}>
+      <View>
         <FooterWithButtons
           type={"SingleButton"}
           leftButton={continueButtonProps(() => {
@@ -114,7 +117,7 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
           })}
         />
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
