@@ -115,7 +115,10 @@ const IdBlock = (props: IdBlockProps) => (
       <Monospace weight={"SemiBold"} style={styles.copyText}>
         {props.value}
       </Monospace>
-      <CopyButtonComponent textToCopy={props.value} />
+      <CopyButtonComponent
+        textToCopy={props.value}
+        onPressWithGestureHandler={true}
+      />
     </View>
   </View>
 );
