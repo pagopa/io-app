@@ -1,2 +1,2 @@
-At the moment you can only request the Holiday Bonus. The addition of additional bonuses or discount cards is planned for the coming months.
+At the moment you can request the Holiday Bonus or activate Cashback.
 The list on this page already shows all bonuses or discounts that can be requested via the IO app.
