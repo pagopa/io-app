@@ -2,6 +2,7 @@ import { createStackNavigator } from "react-navigation";
 import BpdDetailsScreen from "../screens/details/BpdDetailsScreen";
 import BpdTransactionsScreen from "../screens/details/transaction/BpdTransactionsScreen";
 import MainIbanScreen from "../screens/iban/MainIbanScreen";
+import CtaLandingScreen from "../screens/onboarding/BpdCTAStartOnboardingScreen";
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
 import DeclarationScreen from "../screens/onboarding/declaration/DeclarationScreen";
 import EnrollPaymentMethodsScreen from "../screens/onboarding/EnrollPaymentMethodsScreen";
@@ -38,6 +39,9 @@ const BpdNavigator = createStackNavigator(
     },
     [BPD_ROUTES.TRANSACTIONS]: {
       screen: BpdTransactionsScreen
+    },
+    [BPD_ROUTES.CTA_START_BPD]: {
+      screen: CtaLandingScreen
     }
   },
   {

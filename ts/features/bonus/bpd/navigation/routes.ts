@@ -11,7 +11,9 @@ const BPD_ROUTES = {
   },
   IBAN: "BPD_IBAN",
   DETAILS: "BPD_DETAILS",
-  TRANSACTIONS: "BPD_TRANSACTIONS"
+  TRANSACTIONS: "BPD_TRANSACTIONS",
+  // used from message CTA
+  CTA_START_BPD: "CTA_START_BPD"
 };
 
 export default BPD_ROUTES;

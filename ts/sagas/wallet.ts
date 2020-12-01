@@ -326,6 +326,8 @@ function* startOrResumeAddCreditCardSaga(
         const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
           bpdEnabledSelector
         );
+        // dispatch the action: a new card has been added
+        yield put(addWalletNewCreditCardSuccess());
         // check if the new method is compliant with bpd
         if (bpdEnabled) {
           const hasBpdFeature = hasFunctionEnabled(
@@ -363,9 +365,6 @@ function* startOrResumeAddCreditCardSaga(
             return;
           }
         }
-
-        // dispatch the action: a new card has been added
-        yield put(addWalletNewCreditCardSuccess());
         if (action.payload.setAsFavorite === true) {
           yield put(setFavouriteWalletRequest(maybeAddedWallet.idWallet));
         }
