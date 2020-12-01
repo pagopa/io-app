@@ -5,13 +5,14 @@ import { heightPercentageToDP } from "react-native-responsive-screen";
 import I18n from "../i18n";
 import themeVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { CheckBox } from "./core/selection/CheckBox";
 import { H1 } from "./core/typography/H1";
 import { BaseHeader } from "./screens/BaseHeader";
 import Accordion from "./ui/Accordion";
 import Markdown from "./ui/Markdown";
 import IconFont from "./ui/IconFont";
 import FooterWithButtons from "./ui/FooterWithButtons";
+import { Label } from "./core/typography/Label";
+import { RawCheckBox } from "./core/selection/RawCheckBox";
 
 type Props = {
   onClose: () => void;
@@ -22,6 +23,11 @@ type Props = {
 const styles = StyleSheet.create({
   contentContainer: {
     padding: themeVariables.contentPadding
+  },
+  checkBoxContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-evenly"
   }
 });
 const continueButtonProps = (onContinue: () => void) => ({
@@ -76,25 +82,26 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
             {I18n.t("contextualHelp.sendPersonalInfo.description")}
           </Markdown>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "flex-start",
-            justifyContent: "space-evenly"
-          }}
-        >
-          <CheckBox
-            onValueChange={() => setSendPersonalInfo(!sendPersonalInfo)}
+        <View style={styles.checkBoxContainer}>
+          <RawCheckBox
+            checked={sendPersonalInfo}
+            onPress={() => setSendPersonalInfo(ov => !ov)}
           />
           <View hspacer={true} />
           <View style={{ flex: 1 }}>
-            <Markdown>{I18n.t("contextualHelp.sendPersonalInfo.cta")}</Markdown>
+            <Label
+              color={"bluegrey"}
+              weight={"Regular"}
+              onPress={() => setSendPersonalInfo(ov => !ov)}
+            >
+              {I18n.t("contextualHelp.sendPersonalInfo.cta")}
+            </Label>
             <Accordion
               title={I18n.t("contextualHelp.sendPersonalInfo.informativeTitle")}
               content={I18n.t(
                 "contextualHelp.sendPersonalInfo.informativeDescription"
               )}
-            ></Accordion>
+            />
           </View>
         </View>
       </Content>
