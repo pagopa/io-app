@@ -49,7 +49,9 @@ const preferredLanguageMappingToLocale = new Map<
 >(Array.from(localeToPreferredLanguageMapping).map(item => [item[1], item[0]]));
 
 export const localeDateFormat = (date: Date, format: string): string =>
-  I18n.strftime(date, format);
+  isNaN(date.getTime())
+    ? I18n.t("global.date.invalid")
+    : I18n.strftime(date, format);
 
 // from a given Locales return the relative PreferredLanguageEnum (fallback is en_GB)
 export const fromLocaleToPreferredLanguage = (
