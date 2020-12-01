@@ -3,8 +3,12 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../store/reducers/types";
-import { bancomatListSelector } from "../../../store/reducers/wallet/wallets";
+import {
+  bancomatListSelector,
+  satispayListSelector
+} from "../../../store/reducers/wallet/wallets";
 import BancomatWalletPreview from "../bancomat/component/BancomatWalletPreview";
+import SatispayWalletPreview from "../satispay/SatispayWalletPreview";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -30,13 +34,26 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
       )),
       null
     )}
+    {pot.toUndefined(
+      pot.mapNullable(props.satispayList, s => (
+        <>
+          {s.map(satispayMethod => (
+            <SatispayWalletPreview
+              key={satispayMethod.idWallet}
+              satispay={satispayMethod}
+            />
+          ))}
+        </>
+      ))
+    )}
   </>
 );
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  bancomatList: bancomatListSelector(state)
+  bancomatList: bancomatListSelector(state),
+  satispayList: satispayListSelector(state)
 });
 
 export default connect(

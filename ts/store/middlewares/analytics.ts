@@ -100,6 +100,7 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardInit,
   addWalletCreditCardRequest,
+  addWalletNewCreditCardFailure,
   addWalletNewCreditCardSuccess,
   creditCardCheckout3dsRequest,
   creditCardCheckout3dsSuccess,
@@ -231,6 +232,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
             ? action.payload.reason
             : "n/a"
       });
+    case getType(addWalletNewCreditCardFailure):
+      return mp.track(action.type);
+
     case getType(paymentAttiva.failure):
     case getType(paymentVerifica.failure):
     case getType(paymentIdPolling.failure):
