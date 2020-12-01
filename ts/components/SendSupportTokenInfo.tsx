@@ -108,15 +108,13 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
         </View>
         <EdgeBorderComponent />
       </Content>
-      <View>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={continueButtonProps(() => {
-            onContinue(sendPersonalInfo);
-            onClose();
-          })}
-        />
-      </View>
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={continueButtonProps(() => {
+          onContinue(sendPersonalInfo);
+          onClose();
+        })}
+      />
     </SafeAreaView>
   );
 };
