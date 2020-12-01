@@ -8,7 +8,6 @@ import EnrollPaymentMethodsScreen from "../screens/onboarding/EnrollPaymentMetho
 import LoadActivateBpdScreen from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
 import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
-import TMPBpdScreen from "../screens/test/TMPBpdScreen";
 import BPD_ROUTES from "./routes";
 
 const BpdNavigator = createStackNavigator(
@@ -39,10 +38,6 @@ const BpdNavigator = createStackNavigator(
     },
     [BPD_ROUTES.TRANSACTIONS]: {
       screen: BpdTransactionsScreen
-    },
-    // TODO: remove after the introduction of the bpd detail screen
-    [BPD_ROUTES.TEST]: {
-      screen: TMPBpdScreen
     }
   },
   {

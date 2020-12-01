@@ -49,13 +49,15 @@ export const bpdAllPeriodsWithAmountSelector = createSelector(
 );
 
 /**
- * A period is visible in the wallet if the bpd is enabled and the period is active OR
+ * A period is visible in the wallet if the bpd is enabled AND the period is active OR
  * the period is closed and the transactionNumber > 0 OR
- * bpd is enabled and the period is inactive (future)
+ * bpd is enabled AND the period is inactive (future) AND there are no active or closed period
+ * @param periodList
  * @param periodAmount
  * @param bpdEnabled
  */
 const isPeriodAmountWalletVisible = (
+  periodList: ReadonlyArray<BpdPeriodAmount>,
   periodAmount: BpdPeriodAmount,
   bpdEnabled: RemoteValue<boolean, Error>
 ) =>
@@ -63,7 +65,10 @@ const isPeriodAmountWalletVisible = (
   ((periodAmount.period.status === "Active" && bpdEnabled.value) ||
     (periodAmount.period.status === "Closed" &&
       periodAmount.amount.transactionNumber > 0) ||
-    (periodAmount.period.status === "Inactive" && bpdEnabled.value));
+    (periodList.every(p => p.period.status === "Inactive") &&
+      periodList.indexOf(periodAmount) === 0 &&
+      periodAmount.period.status === "Inactive" &&
+      bpdEnabled.value));
 
 /**
  * Return the {@link BpdPeriodAmount} that can be visible in the wallet
@@ -71,11 +76,25 @@ const isPeriodAmountWalletVisible = (
 export const bpdPeriodsAmountWalletVisibleSelector = createSelector(
   [bpdAllPeriodsWithAmountSelector, bpdEnabledSelector],
   (potPeriodsAmount, bpdEnabled) =>
-    pot.map(potPeriodsAmount, periodsAmountList =>
-      periodsAmountList.filter(periodAmount =>
-        isPeriodAmountWalletVisible(periodAmount, bpdEnabled)
-      )
-    )
+    pot.map(potPeriodsAmount, periodsAmountList => {
+      const periodsOrderedByDate = periodsAmountList
+        // create a sorted copy of the array
+        .concat()
+        .sort((pa1, pa2) =>
+          pa1.period.startDate < pa2.period.startDate
+            ? -1
+            : pa1.period.startDate > pa2.period.startDate
+            ? 1
+            : 0
+        );
+      return periodsOrderedByDate.filter(periodAmount =>
+        isPeriodAmountWalletVisible(
+          periodsOrderedByDate,
+          periodAmount,
+          bpdEnabled
+        )
+      );
+    })
 );
 
 /**
