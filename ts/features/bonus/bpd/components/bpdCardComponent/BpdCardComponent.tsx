@@ -264,7 +264,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
     statusBadge
   } = calculateGraphicalState(props);
 
-  const isPeriodClosed = props.period.status === "Closed";
+  const isPeriodClosed = props.period.status === "Closed" && !isInGracePeriod;
   const isPeriodInactive = props.period.status === "Inactive";
 
   const FullCard = () => (
