@@ -212,7 +212,7 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is disabled", () =
       expect(visiblePeriods.value.length).toBe(0);
     }
   });
-  it("with multiple inactive period should return the most recent inactive period", () => {
+  it("with multiple inactive period should return no periods", () => {
     const visiblePeriods = bpdPeriodsAmountWalletVisibleSelector.resultFunc(
       pot.some([inactivePeriodA, inactivePeriodB, inactivePeriodC]),
       remoteReady(false)
