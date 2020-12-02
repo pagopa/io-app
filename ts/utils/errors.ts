@@ -20,3 +20,6 @@ export const getNetworkError = (error: unknown): NetworkError => {
   }
   return { kind: "generic", value: getError(error) };
 };
+
+export const isTimeoutError = (error: NetworkError): error is TimeoutError =>
+  error.kind === "timeout";

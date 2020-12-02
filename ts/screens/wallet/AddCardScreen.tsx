@@ -233,9 +233,7 @@ class AddCardScreen extends React.Component<Props, State> {
                   : true
               }
               inputProps={{
-                value: this.state.holder.getOrElse(
-                  this.props.profileNameSurname ?? EMPTY_CARD_HOLDER
-                ),
+                value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 placeholder: I18n.t("wallet.dummyCard.values.holder"),
                 autoCapitalize: "words",
                 keyboardType: "default",
