@@ -714,12 +714,13 @@ wallet:
       loadingSearch:
         title: "We're retrieving your cards\n\nPlease hold on..."
       add:
-        title: "Add PagoBANCOMAT {{current}} of {{length}}"
+        title: "Add PagoBANCOMAT"
+        label: "PagoBancomat card {{current}} of {{length}}"
         screenTitle: "Do you want to add this card?"
         bodySingular: "We found 1 card registered to you. Continue to add it or skip to cancel the operation."
         bodyPlural: "We found {{number}} cards registered to you. Continue to add this card skip to cancel the operation."
         loading: "We are adding your PagoBANCOMAT card\n\nPlease hold on..."
-        warning: "Anything missing? Don't worry, you can add your PagoBANCOMAT cards later, by selecting the bank which issued your card."
+        warning: "If you don't find all the cards of your own, you can try to add the missing one at a later time by selecting the Bank where you have your personal account."
       bpd:
         suggestActivation:
           title: "Do you want to activate Cashback?"
