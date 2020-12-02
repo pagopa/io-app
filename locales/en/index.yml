@@ -200,6 +200,9 @@ startup:
     message: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
     cta_1: Browse Privacy
     cta_2: Discard
+  contextualHelp:
+    title: Startup problems?
+    body: If you are experiencing issues during IO-app startup, we recommend to report them to our support team. We'll take care of your request as soon as possible.
 login:
   welcome:
     line1: welcome in your
@@ -1525,7 +1528,7 @@ faq:
     title: "How can you add a payment method?"
     content: !include faq/faq42.md
   43:
-    title: "What is the CVC/CVV?"
+    title: "Where can I find the security code?"
     content: !include faq/faq43.md
   44:
     title: "Why do I have to pay a transaction fee?"
@@ -1787,7 +1790,7 @@ bonus:
         title: Cashback is aleady active
         body: You can find more details in your Wallet.
         cancel: Close
-        confirm: Back to Wallet
+        confirm: Go back
       loadingActivationStatus:
         title: Loading activation status
       declaration:

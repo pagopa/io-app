@@ -14,7 +14,7 @@ import { BpdCardComponent } from "../../components/bpdCardComponent/BpdCardCompo
 import { BpdPeriod } from "../../store/actions/periods";
 import { bpdSelectPeriod } from "../../store/actions/selectedPeriod";
 import { bpdAmountForSelectedPeriod } from "../../store/reducers/details/amounts";
-import { bpdPeriodsAmountSnappedListSelector } from "../../store/reducers/details/combiner";
+import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -82,7 +82,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  periodsWithAmount: bpdPeriodsAmountSnappedListSelector(state),
+  // ATM the rules of visualization of a period in the selector is the same of the wallet
+  periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
   selectedPeriod: bpdSelectedPeriodSelector(state),
   selectedAmount: bpdAmountForSelectedPeriod(state)
 });
