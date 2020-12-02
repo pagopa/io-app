@@ -53,7 +53,7 @@ export const bpdAllPeriodsWithAmountSelector = createSelector(
  * the period is closed and the transactionNumber > 0 OR
  * bpd is enabled AND the period is inactive (future) AND there are no active or closed period
  * @param periodList
- * @param periodAmount
+ * @param periodAmount should be a period in periodList
  * @param bpdEnabled
  */
 const isPeriodAmountWalletVisible = (
