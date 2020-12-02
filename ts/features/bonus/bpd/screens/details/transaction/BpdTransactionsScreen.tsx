@@ -17,6 +17,7 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { localeDateFormat } from "../../../../../../utils/locale";
 import BaseDailyTransactionHeader from "../../../components/BaseDailyTransactionHeader";
 import BpdTransactionSummaryComponent from "../../../components/BpdTransactionSummaryComponent";
@@ -213,7 +214,11 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
   };
 
   return (
-    <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.bpd.title")}>
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("bonus.bpd.title")}
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <View style={IOStyles.horizontalContentPadding}>
           <View spacer={true} large={true} />
