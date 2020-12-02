@@ -7,7 +7,7 @@ import { ContextualHelpProps } from "../components/screens/BaseScreenComponent";
  * when the Contextual Help is filled remotely.
  *
  */
-export const remoteContextualHelp = (): ContextualHelpProps => ({
+export const emptyContextualHelp: ContextualHelpProps = {
   title: "",
   body: () => <View />
-});
+};
