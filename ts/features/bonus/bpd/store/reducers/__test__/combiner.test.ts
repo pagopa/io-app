@@ -269,7 +269,7 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is disabled", () =
 
   it(
     "with multiple inactive period, an active period and a closed period (with amount > zero) " +
-      "should return the active period and the closed period",
+      "should return the closed period",
     () => {
       const visiblePeriods = bpdPeriodsAmountWalletVisibleSelector.resultFunc(
         pot.some([
