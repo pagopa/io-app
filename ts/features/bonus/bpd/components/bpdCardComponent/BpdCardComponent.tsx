@@ -1,13 +1,6 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import {
-  Image,
-  ImageBackground,
-  Platform,
-  StyleProp,
-  StyleSheet,
-  ViewStyle
-} from "react-native";
+import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { format } from "../../../../../utils/dates";
 import { H2 } from "../../../../../components/core/typography/H2";
@@ -76,6 +69,7 @@ const styles = StyleSheet.create({
   },
   badgeBase: {
     alignSelf: "flex-end",
+    backgroundColor: IOColors.white,
     height: 18,
     marginTop: 9
   },
@@ -137,7 +131,6 @@ const styles = StyleSheet.create({
 });
 
 type BadgeDefinition = {
-  style: StyleProp<ViewStyle>;
   label: string;
 };
 
@@ -153,9 +146,6 @@ const initialGraphicalState: GraphicalState = {
   isInGracePeriod: false,
   showLock: false,
   statusBadge: {
-    style: {
-      backgroundColor: IOColors.white
-    },
     label: "-"
   }
 };
@@ -185,15 +175,9 @@ const statusClosedHandler = (props: Props): GraphicalState => {
     // TODO: Add supercashback business logic
     statusBadge: isInGracePeriod
       ? {
-          style: {
-            backgroundColor: IOColors.white
-          },
           label: I18n.t("profile.preferences.list.wip")
         }
       : {
-          style: {
-            backgroundColor: IOColors.black
-          },
           label: I18n.t("bonus.bpd.details.card.status.closed")
         }
   };
@@ -205,9 +189,6 @@ const statusActiveHandler = (props: Props): GraphicalState => {
   return {
     ...initialGraphicalState,
     statusBadge: {
-      style: {
-        backgroundColor: IOColors.white
-      },
       label: I18n.t("bonus.bpd.details.card.status.active")
     },
     showLock: totalAmount.transactionNumber < period.minTransactionNumber,
@@ -220,9 +201,6 @@ const statusActiveHandler = (props: Props): GraphicalState => {
 const statusInactiveHandler = (props: Props): GraphicalState => ({
   ...initialGraphicalState,
   statusBadge: {
-    style: {
-      backgroundColor: IOColors.aqua
-    },
     label: I18n.t("bonus.bpd.details.card.status.inactive")
   },
   showLock: true,
@@ -308,12 +286,8 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
-        <Badge style={[statusBadge.style, styles.badgeBase]}>
-          <Text
-            semibold={true}
-            style={styles.badgeTextBase}
-            dark={!isPeriodClosed}
-          >
+        <Badge style={[styles.badgeBase]}>
+          <Text semibold={true} style={styles.badgeTextBase} dark={true}>
             {statusBadge.label}
           </Text>
         </Badge>
