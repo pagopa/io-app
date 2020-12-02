@@ -1,4 +1,56 @@
 ---
+date: 
+  formats:
+    default: "%d/%m/%Y"
+    short: "%d %B"
+    long: "%d %B %Y"
+  day_names:
+    - "Sunday"
+    - "Monday"
+    - "Tuesday"
+    - "Wednesday"
+    - "Thursday"
+    - "Friday"
+    - "Saturday"
+  abbr_day_names:
+    - "Sun"
+    - "Mon"
+    - "Tue"
+    - "Wed"
+    - "Thu"
+    - "Fri"
+    - "Sat"
+  month_names:
+    - ""
+    - "January"
+    - "February"
+    - "March"
+    - "April"
+    - "May"
+    - "June"
+    - "July"
+    - "August"
+    - "September"
+    - "October"
+    - "November"
+    - "December"
+  abbr_month_names:
+    - ""
+    - "Jan"
+    - "Feb"
+    - "Mar"
+    - "Apr"
+    - "May"
+    - "Jun"
+    - "Jul"
+    - "Aug"
+    - "Sept"
+    - "Oct"
+    - "Nov"
+    - "Dec"
+  meridian:
+    - "am"
+    - "pm"
 global:
   password: Password
   username: Username
@@ -37,6 +89,14 @@ global:
     tomorrow: "tomorrow"
   dateFormats:
     shortFormat: "%d/%m/%Y"
+    fullFormatShortMonthLiteral: "%d %b %Y"
+    fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatFullMonthLiteral: "%d %B %Y"
+    fullMonthLiteral: "%B"
+    fullMonthLiteralWithYear: "%B %Y"
+    numericMonthYear: "%m/%Y"
+    dayMonthWithTime: "%d %b, %H:%M"
+    dayFullMonth: "%d %B"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "MM/DD"
@@ -1773,7 +1833,7 @@ bonus:
       verify: "Check IBAN"
       insertion:
         title: "IBAN for transfer"
-        body1: "Please enter the IBAN of your account on which you want to receive the credit, once the valid transactions have been consolidated."
+        body1: "Please enter the IBAN of your account on which you want to receive the refund."
         body2: "The IBAN will be checked to make sure it's registered to you. You can also add your IBAN later."
       koWrong:
         title: "Incorrect IBAN"
@@ -1792,8 +1852,8 @@ bonus:
       success: "IBAN successfully entered"
     details:
       howItWorks:
-        title: "How does Cashback work?"
-        body: "1. The Cashback program is divided into phases of variable duration: the **current phase** begins on {{startDate}} and ends on {{endDate}}. **Collect valid transactions** within each phase using the **payment methods you enrolled**.\n
+        title: "Christmas Extra Cashback"
+        body: "1. The Cashback program is divided into several phases. The current one begins on **{{startDate}} and ends on {{endDate}}**. **Collect valid transactions** within each phase using the **payment methods you enrolled**.\n
 
                2. During this phase, if you reach **{{minTransactionNumber}} transactions**, you will receive a {{cashbackPercentage}}% cashback, up to a maximum of **€{{maxTransactionCashback}}** per transaction and a maximum refund of **€{{maxPeriodCashback}}** in the whole phase.\n
 
