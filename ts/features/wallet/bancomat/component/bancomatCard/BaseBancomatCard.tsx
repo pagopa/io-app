@@ -13,7 +13,7 @@ import { Body } from "../../../../../components/core/typography/Body";
 import { H5 } from "../../../../../components/core/typography/H5";
 import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
-import { format } from "../../../../../utils/dates";
+import { localeDateFormat } from "../../../../../utils/locale";
 import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
@@ -95,7 +95,10 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
           {props.expiringDate && (
             <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
               "cardComponent.validUntil"
-            )} ${format(props.expiringDate, "MM/YYYY")}`}</H5>
+            )} ${localeDateFormat(
+              props.expiringDate,
+              I18n.t("global.dateFormats.numericMonthYear")
+            )}`}</H5>
           )}
         </View>
         <View style={styles.bottomRow}>
