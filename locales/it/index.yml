@@ -1,4 +1,56 @@
 ---
+date: 
+  formats:
+    default: "%d/%m/%Y"
+    short: "%d %B"
+    long: "%d %B %Y"
+  day_names:
+    - "Domenica"
+    - "Lunedì"
+    - "Martedì"
+    - "Mercoledì"
+    - "Giovedì"
+    - "Venerdì"
+    - "Sabato"
+  abbr_day_names:
+    - "Dom"
+    - "Lun"
+    - "Mar"
+    - "Mer"
+    - "Gio"
+    - "Ven"
+    - "Sab"
+  month_names:
+    - ""
+    - "Gennaio"
+    - "Febbraio"
+    - "Marzo"
+    - "Aprile"
+    - "Maggio"
+    - "Giugno"
+    - "Luglio"
+    - "Agosto"
+    - "Settembre"
+    - "Ottobre"
+    - "Novembre"
+    - "Dicembre"
+  abbr_month_names:
+    - ""
+    - "Gen"
+    - "Feb"
+    - "Mar"
+    - "Apr"
+    - "Mag"
+    - "Giu"
+    - "Lug"
+    - "Ago"
+    - "Set"
+    - "Ott"
+    - "Nov"
+    - "Dic"
+  meridian:
+    - "am"
+    - "pm"
 global:
   password: Password
   username: Username
@@ -37,6 +89,14 @@ global:
     tomorrow: "domani"
   dateFormats:
     shortFormat: "%d/%m/%Y"
+    fullFormatShortMonthLiteral: "%d %b %Y"
+    fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatFullMonthLiteral: "%d %B %Y"
+    fullMonthLiteral: "%B"
+    fullMonthLiteralWithYear: "%B %Y"
+    dayMonthWithTime: "%d %b, %H:%M"
+    dayFullMonth: "%d %B"
+    numericMonthYear: "%m/%Y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "DD/MM"
@@ -1805,7 +1865,7 @@ bonus:
       verify: "Controlla IBAN"
       insertion:
         title: "IBAN per l’accredito"
-        body1: "Indica qui l’IBAN del tuo conto su cui ricevere l’accredito, una volta consolidate le transazioni valide."
+        body1: "Indica qui l’IBAN del tuo conto su cui ricevere l’accredito."
         body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
       koWrong:
         title: "IBAN non corretto"
@@ -1824,8 +1884,8 @@ bonus:
       success: "IBAN inserito con successo"
     details:
       howItWorks:
-        title: "Come funziona il Cashback?"
-        body: "1. Il programma Cashback si divide in periodi di durata variabile: il **periodo corrente** inizia il {{startDate}} e finisce il {{endDate}}. **Accumula transazioni** valide durante tutta la durata di ciascun periodo con i **metodi di pagamento che hai attivato**.\n
+        title: "Extra Cashback di Natale"
+        body: "1. Il programma Cashback si divide in periodi. Il periodo corrente inizia il **{{startDate}}** e finisce il **{{endDate}}**. **Accumula transazioni** valide durante tutta la durata di ciascun periodo con i **metodi di pagamento che hai attivato**.\n
 
                2. In questo periodo, se raggiungi le **{{minTransactionNumber}} transazioni**, riceverai un rimborso pari al {{cashbackPercentage}}% fino ad un rimborso massimo di **{{maxTransactionCashback}} euro** a transazione ed un massimo di **{{maxPeriodCashback}} euro** in tutto il periodo.\n
 
