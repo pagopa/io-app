@@ -19,6 +19,8 @@ type OwnProps = {
   onConfirm: () => void;
 };
 
+type Props = OwnProps &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 type NormalBold = {
   normal: string;
   bold: string;
@@ -92,7 +94,7 @@ const disclaimerLink =
  * This screen allows the user to declare the required conditions.
  * When all the condition are accepted, the continue button will be enabled
  */
-export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => {
+export const DeclarationComponent: React.FunctionComponent<Props> = props => {
   const {
     title,
     header,
@@ -116,7 +118,11 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
   ];
 
   return (
-    <BaseScreenComponent goBack={props.onCancel} headerTitle={title}>
+    <BaseScreenComponent
+      goBack={props.onCancel}
+      headerTitle={title}
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
