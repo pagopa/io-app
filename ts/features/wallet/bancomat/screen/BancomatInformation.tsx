@@ -86,8 +86,6 @@ const BancomatInformation: React.FunctionComponent<Props> = props => (
       bordered={true}
       onPress={() => {
         props.onAddPaymentMethod?.();
-          props.onAddPaymentMethod();
-        }
         props.addPaymentMethod();
       }}
       onPressWithGestureHandler={true}
