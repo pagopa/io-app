@@ -735,12 +735,13 @@ wallet:
       loadingSearch:
         title: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo..."
       add:
-        title: "Aggiungi bancomat {{current}} di {{length}}"
+        title: "Aggiungi PagoBancomat"
+        label: "Carta PagoBancomat {{current}} di {{length}}"
         screenTitle: "Vuoi aggiungere questa carta?"
         bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
-        warning: "Manca qualcosa? Non preoccuparti, puoi aggiungere altre carte PagoBANCOMAT più tardi, selezionando la banca che ha emesso la tua carta."
+        warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente."
       bpd:
         suggestActivation:
           title: "Vuoi attivare il Cashback?"
@@ -1366,6 +1367,12 @@ systemsOff:
   closeApp: chiudi l'applicazione e riprova
 contextualHelp:
   title: IO ti aiuto
+  sendPersonalInfo:
+    title: Nuova segnalazione
+    description: "Il Team di IO è a disposizione per risolvere eventuali **problemi** dell’app o per ascoltare i **suggerimenti** dei nostri utenti relativi a **migliorie o nuove funzionalità.**\n\nSe hai dubbi sul **contenuto di un messaggio** o su un servizio, ti consigliamo di **contattare l'ente relativo**: troverai i contatti in fondo al messaggio o nella scheda del servizio in questione."
+    cta: Condividi il tuo codice fiscale, in modo da rendere più semplice la risoluzione del problema.
+    informativeTitle: Come sapete il mio codice fiscale?
+    informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 instabug:
   contextualHelp:
     title1: Hai bisogno di aiuto?
