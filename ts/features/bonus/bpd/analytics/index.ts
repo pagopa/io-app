@@ -40,6 +40,7 @@ import {
   bpdPaymentMethodActivation,
   bpdUpdatePaymentMethodActivation
 } from "../store/actions/paymentMethods";
+import { isTimeoutError } from "../../../../utils/errors";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -111,7 +112,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(walletAddBancomatCancel):
     case getType(walletAddBancomatBack):
     case getType(loadAbi.request):
-    case getType(searchUserPans.request):
     case getType(addBancomatToWallet.request):
     case getType(addBancomatToWallet.success):
       return mp.track(action.type);
@@ -120,6 +120,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         count: action.payload.data?.length
       });
+    case getType(searchUserPans.request):
+      return mp.track(action.type, { abi: action.payload ?? "all" });
     case getType(searchUserPans.success):
       const messages = action.payload.messages.reduce(
         (acc, val) => {
@@ -151,10 +153,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(searchUserPans.failure):
       return mp.track(action.type, {
-        reason:
-          action.payload.kind === "timeout"
-            ? action.payload.kind
-            : action.payload.value.message
+        reason: isTimeoutError(action.payload)
+          ? action.payload.kind
+          : action.payload.value.message
       });
 
     // Amount

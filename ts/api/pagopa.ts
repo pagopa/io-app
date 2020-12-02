@@ -24,9 +24,11 @@ import {
 import { Omit } from "italia-ts-commons/lib/types";
 import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
 import {
+  AddWalletSatispayUsingPOSTT,
   addWalletsBancomatCardUsingPOSTDecoder,
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
+  GetConsumerUsingGETT,
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT,
   getWalletsV2UsingGETDecoder
@@ -34,6 +36,7 @@ import {
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
+  addWalletSatispayUsingPOSTDecoder,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
   DeleteBySessionCookieExpiredUsingDELETET,
@@ -41,6 +44,7 @@ import {
   favouriteWalletUsingPOSTDecoder,
   FavouriteWalletUsingPOSTT,
   GetAllPspsUsingGETT,
+  getConsumerUsingGETDefaultDecoder,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
   getPspUsingGETDecoder,
@@ -62,6 +66,7 @@ import {
   NullableWallet,
   PagoPAErrorResponse,
   PatchedWalletV2ListResponse,
+  PatchedWalletV2Response,
   PaymentManagerToken,
   PspListResponse,
   PspResponse,
@@ -73,6 +78,7 @@ import {
 } from "../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
+import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayRequest";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -438,6 +444,23 @@ const addPans: AddWalletsBancomatCardUsingPOSTTExtra = {
   )
 };
 
+const searchSatispay: GetConsumerUsingGETT = {
+  method: "get",
+  url: () => `/v1/satispay/consumers`,
+  query: () => ({}),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: getConsumerUsingGETDefaultDecoder()
+};
+
+const addSatispayToWallet: AddWalletSatispayUsingPOSTT = {
+  method: "post",
+  url: () => `/v1/satispay/add-wallet`,
+  query: () => ({}),
+  body: ({ satispayRequest }) => JSON.stringify(satispayRequest),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: addWalletSatispayUsingPOSTDecoder(PatchedWalletV2Response)
+};
+
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
@@ -603,7 +626,18 @@ export function PaymentManagerClient(
     addPans: (cards: BancomatCardsRequest) =>
       flip(
         withPaymentManagerToken(createFetchRequestForApi(addPans, altOptions))
-      )({ bancomatCardsRequest: cards })
+      )({ bancomatCardsRequest: cards }),
+    searchSatispay: flip(
+      withPaymentManagerToken(
+        createFetchRequestForApi(searchSatispay, altOptions)
+      )
+    ),
+    addSatispayToWallet: (satispayRequest: SatispayRequest) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(addSatispayToWallet, altOptions)
+        )
+      )({ satispayRequest })
   };
 }
 

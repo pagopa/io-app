@@ -10,6 +10,7 @@ import {
 import { onboardingBancomatAbiSelectedSelector } from "../../store/reducers/abiSelected";
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import AddBancomatScreen from "../add-pans/AddBancomatScreen";
+import { isTimeoutError } from "../../../../../../utils/errors";
 import BancomatKoNotFound from "./BancomatKoNotFound";
 import BancomatKoSingleBankNotFound from "./BancomatKoSingleBankNotFound";
 import BancomatKoTimeout from "./BancomatKoTimeout";
@@ -20,6 +21,14 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const bancomatServiceSuccessCode = 0;
+const bancomatServiceCustomerNotFound = 21;
+const bancomatServiceCardNotFound = 23;
+
+const servicesSuccessCodes = [
+  bancomatServiceSuccessCode,
+  bancomatServiceCardNotFound,
+  bancomatServiceCustomerNotFound
+];
 
 /**
  * This screen handle the errors and loading for the user bancomat.
@@ -34,16 +43,21 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
     return <BancomatKoSingleBankNotFound />;
   }
   if (noBancomatFound) {
-    // check if all services response successfully
+    // check if all services respond without error (success or not found)
     if (
       isReady(pans) &&
-      pans.value.messages.every(m => m.code === bancomatServiceSuccessCode)
+      pans.value.messages.every(
+        m => m.code && servicesSuccessCodes.includes(m.code)
+      )
     ) {
+      // The user doesn't have a bancomat
       return <BancomatKoNotFound />;
     }
+    // One of the ca returned with error, the user could have a bancomat
+    // and he should try to search for a single bank
     return <BancomatKoServicesError />;
   }
-  if (isError(pans) && pans.error.kind === "timeout") {
+  if (isError(pans) && isTimeoutError(pans.error)) {
     return <BancomatKoTimeout />;
   }
   if (isLoading(pans) || isError(pans)) {

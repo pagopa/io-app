@@ -20,7 +20,7 @@ type OwnProps = {
   onConfirm: () => void;
 };
 
-type PersonalUse = {
+type NormalBold = {
   normal: string;
   bold: string;
 };
@@ -31,6 +31,10 @@ const loadLocales = () => ({
   title: I18n.t("bonus.bpd.title"),
   header: I18n.t("bonus.bpd.onboarding.declaration.header"),
   age: I18n.t("bonus.bpd.onboarding.declaration.conditions.age"),
+  owner: {
+    normal: I18n.t("bonus.bpd.onboarding.declaration.conditions.owner.normal"),
+    bold: I18n.t("bonus.bpd.onboarding.declaration.conditions.owner.bold")
+  },
   resident: I18n.t("bonus.bpd.onboarding.declaration.conditions.resident"),
   personal_use: {
     normal: I18n.t(
@@ -41,16 +45,18 @@ const loadLocales = () => ({
     )
   },
   disclaimer: {
-    normal: I18n.t("bonus.bpd.onboarding.declaration.disclaimer.normal"),
-    link: I18n.t("bonus.bpd.onboarding.declaration.disclaimer.link")
-  }
+    normal1: I18n.t("bonus.bpd.onboarding.declaration.disclaimer.normal1"),
+    link: I18n.t("bonus.bpd.onboarding.declaration.disclaimer.link"),
+    normal2: I18n.t("bonus.bpd.onboarding.declaration.disclaimer.normal2")
+  },
+  cta: I18n.t("bonus.bpd.onboarding.declaration.cta")
 });
 
 /**
  * Need a specific rendering of this component because have some bold parts
  * @param personalUse
  */
-const personalUseText = (personalUse: PersonalUse) => (
+const normalBoldText = (personalUse: NormalBold) => (
   <Body>
     {personalUse.normal}
     <Label color={"bluegrey"}>{personalUse.bold}</Label>
@@ -99,16 +105,23 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
     title,
     header,
     age,
+    owner,
     resident,
     personal_use,
-    disclaimer
+    disclaimer,
+    cta
   } = loadLocales();
 
   // tracks the condition accepted, used to enabled the "continue" button
   const [state, dispatch] = useReducer(reducer, 0);
 
   // transform the required textual conditions to graphical objects with checkbox
-  const requiredConditions = [age, resident, personalUseText(personal_use)];
+  const requiredConditions = [
+    age,
+    resident,
+    normalBoldText(owner),
+    normalBoldText(personal_use)
+  ];
 
   const modal = useContext(LightModalContext);
 
@@ -124,10 +137,11 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
             <View spacer={true} small={true} />
             <InfoBox>
               <Body>
-                {disclaimer.normal}
+                {disclaimer.normal1}
                 <Link onPress={() => modal.showModal(<Disclaimer />)}>
                   {disclaimer.link}
                 </Link>
+                {disclaimer.normal2}
               </Body>
             </InfoBox>
           </View>
@@ -136,7 +150,7 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
           rightDisabled={state !== requiredConditions.length}
           onCancel={props.onCancel}
           onRight={props.onConfirm}
-          rightText={I18n.t("global.buttons.continue")}
+          rightText={cta}
         />
       </SafeAreaView>
     </BaseScreenComponent>

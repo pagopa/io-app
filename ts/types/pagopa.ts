@@ -28,18 +28,12 @@ import { BPayInfo as BPayInfoPagoPa } from "../../definitions/pagopa/walletv2/BP
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
 import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
-import { IndexedById } from "../store/helpers/indexer";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
-import {
-  getImageFromPaymentMethod,
-  getTitleFromBancomat,
-  getTitleFromPaymentMethod
-} from "../utils/paymentMethod";
 
 /**
  * Union of all possible credit card types
@@ -255,37 +249,6 @@ export const isCreditCard = (
 export const isBPay = (
   pm: PaymentMethod | undefined
 ): pm is BPayPaymentMethod => (pm === undefined ? false : pm.kind === "BPay");
-
-export const enhanceBancomat = (
-  bancomat: RawBancomatPaymentMethod,
-  abiList: IndexedById<Abi>
-): BancomatPaymentMethod => ({
-  ...bancomat,
-  abiInfo: bancomat.info.issuerAbiCode
-    ? abiList[bancomat.info.issuerAbiCode]
-    : undefined,
-  caption: getTitleFromBancomat(bancomat, abiList),
-  icon: getImageFromPaymentMethod(bancomat)
-});
-
-export const enhancePaymentMethod = (
-  pm: RawPaymentMethod,
-  abiList: IndexedById<Abi>
-): PaymentMethod => {
-  switch (pm.kind) {
-    // bancomat need a special handling, we need to include the abi
-    case "Bancomat":
-      return enhanceBancomat(pm, abiList);
-    case "CreditCard":
-    case "BPay":
-    case "Satispay":
-      return {
-        ...pm,
-        caption: getTitleFromPaymentMethod(pm, abiList),
-        icon: getImageFromPaymentMethod(pm)
-      };
-  }
-};
 
 /**
  * A refined Wallet
@@ -503,3 +466,18 @@ export const PatchedWalletV2ListResponse = t.intersection(
 export type PatchedWalletV2ListResponse = t.TypeOf<
   typeof PatchedWalletV2ListResponse
 >;
+
+// required attributes
+const PatchedWalletV2ResponseR = t.interface({});
+
+// optional attributes
+const PatchedWalletV2ResponseO = t.partial({
+  data: PatchedWalletV2
+});
+
+export const PatchedWalletV2Response = t.intersection(
+  [PatchedWalletV2ResponseR, PatchedWalletV2ResponseO],
+  "PatchedWalletV2Response"
+);
+
+export type PatchedWalletV2Response = t.TypeOf<typeof PatchedWalletV2Response>;

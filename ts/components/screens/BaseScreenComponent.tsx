@@ -5,7 +5,7 @@ import {
   Option,
   some
 } from "fp-ts/lib/Option";
-import { BugReporting, Replies } from "instabug-reactnative";
+import { BugReporting } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
@@ -14,8 +14,10 @@ import * as React from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
-  openInstabugBugReport,
-  openInstabugChat
+  instabugLog,
+  TypeLogs,
+  openInstabugQuestionReport,
+  openInstabugReplies
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -28,6 +30,8 @@ import {
   deriveCustomHandledLink,
   isIoInternalLink
 } from "../ui/Markdown/handlers/link";
+import { SupportTokenState } from "../../store/reducers/authentication";
+import { getValueOrElse } from "../../features/bonus/bpd/model/RemoteValue";
 import { AccessibilityEvents, BaseHeader } from "./BaseHeader";
 
 export interface ContextualHelpProps {
@@ -60,6 +64,7 @@ type Props = OwnProps &
 interface State {
   isHelpVisible: boolean;
   requestReport: Option<BugReporting.reportType>;
+  supportToken?: SupportTokenState;
   markdownContentLoaded: Option<boolean>;
   contextualHelpModalAnimation: ModalBaseProps["animationType"];
 }
@@ -85,11 +90,14 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     };
   }
 
-  private handleOnRequestAssistance = (type: BugReporting.reportType) => {
+  private handleOnRequestAssistance = (
+    type: BugReporting.reportType,
+    supportToken: SupportTokenState
+  ) => {
     // don't close modal if the report isn't a bug (bug brings a screenshot)
     if (type !== BugReporting.reportType.bug) {
       this.setState(
-        { requestReport: some(type) },
+        { requestReport: some(type), supportToken },
         this.handleOnContextualHelpDismissed
       );
       return;
@@ -102,7 +110,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     });
     this.setState({ contextualHelpModalAnimation }, () => {
       this.setState({ isHelpVisible: false }, () => {
-        this.setState({ requestReport: some(type) }, () => {
+        this.setState({ requestReport: some(type), supportToken }, () => {
           // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
           // we force handling here. The timeout is due to wait until the modal is completely hidden
           // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
@@ -121,14 +129,18 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     const maybeReport = this.state.requestReport;
     this.setState({ requestReport: none }, () => {
       maybeReport.map(type => {
+        fromNullable(this.state.supportToken)
+          .mapNullable(rsp => getValueOrElse(rsp, undefined))
+          .map(st => {
+            instabugLog(JSON.stringify(st), TypeLogs.INFO, "support-token");
+          });
+
         switch (type) {
           case BugReporting.reportType.bug:
-            openInstabugBugReport();
+            openInstabugQuestionReport();
             break;
           case BugReporting.reportType.question:
-            Replies.hasChats(hasChats => {
-              openInstabugChat(hasChats);
-            });
+            openInstabugReplies();
 
             break;
         }

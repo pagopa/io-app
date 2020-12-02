@@ -94,8 +94,8 @@ const getAvailableBonusesT: GetBonusListT = {
   method: "get",
   url: () =>
     bpdEnabled
-      ? "/bonus/bonus_available.json"
-      : "/bonus/vacanze/bonuses_available.json",
+      ? "/bonus/bonus_available_v2.json"
+      : "/bonus/bonus_available_v1.json",
   query: _ => ({}),
   headers: () => ({}),
   response_decoder: basicResponseDecoder(BonusesAvailable)

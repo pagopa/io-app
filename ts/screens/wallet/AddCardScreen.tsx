@@ -2,7 +2,7 @@
  * Screen for entering the credit card details
  * (holder, pan, cvc, expiration date)
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { entries, range, size } from "lodash";
 import { Content, Item, Text, View } from "native-base";
@@ -34,6 +34,8 @@ import {
 } from "../../utils/input";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
+import { GlobalState } from "../../store/reducers/types";
+import { profileNameSurnameSelector } from "../../store/reducers/profile";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -47,7 +49,9 @@ type NavigationParams = Readonly<{
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
+  OwnProps;
 
 type State = Readonly<{
   pan: Option<string>;
@@ -155,7 +159,10 @@ const displayedCards: { [key: string]: any } = {
 class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = INITIAL_STATE;
+    this.state = {
+      ...INITIAL_STATE,
+      holder: fromNullable(props.profileNameSurname)
+    };
   }
 
   public render(): React.ReactNode {
@@ -400,6 +407,10 @@ class AddCardScreen extends React.Component<Props, State> {
   }
 }
 
+const mapStateToProps = (state: GlobalState) => ({
+  profileNameSurname: profileNameSurnameSelector(state)
+});
+
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
@@ -412,4 +423,4 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     )
 });
 
-export default connect(undefined, mapDispatchToProps)(AddCardScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(AddCardScreen);
