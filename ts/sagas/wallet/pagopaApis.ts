@@ -48,6 +48,7 @@ import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import { getError } from "../../utils/errors";
+import { sessionExpired } from "../../store/actions/authentication";
 
 //
 // Payment Manager APIs
@@ -88,6 +89,7 @@ export function* getWalletsV2(
     }
   } catch (error) {
     yield put(fetchWalletsFailure(error));
+    yield put(sessionExpired());
     return left<Error, ReadonlyArray<Wallet>>(error);
   }
 }
