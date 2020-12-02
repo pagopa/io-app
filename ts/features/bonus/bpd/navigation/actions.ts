@@ -38,12 +38,6 @@ export const navigateToBpdIbanInsertion = () =>
     routeName: BPD_ROUTES.IBAN
   });
 
-// TODO: remove after the introduction of the bpd detail screen
-export const navigateToBpdTestScreen = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.TEST
-  });
-
 // Details
 
 export const navigateToBpdDetails = (specificPeriod?: BpdPeriod) =>
