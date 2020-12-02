@@ -36,6 +36,7 @@ import {
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
+import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
 import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
@@ -537,6 +538,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {bonusVacanzeEnabled && (
           <NavigationEvents onWillFocus={this.loadBonusVacanze} />
         )}
+        {bpdEnabled && <NewPaymentMethodAddedNotifier />}
       </WalletLayout>
     );
   }
