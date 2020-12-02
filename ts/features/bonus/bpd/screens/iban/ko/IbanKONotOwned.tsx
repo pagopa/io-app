@@ -23,7 +23,8 @@ import {
 import IbanKoBody from "./IbanKoBody";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.title"),
@@ -74,7 +75,11 @@ const ProfileInformation = (props: Props) => {
 const IbanKoNotOwned: React.FunctionComponent<Props> = props => {
   const { headerTitle, verify, cancel, title, text1, text2 } = loadLocales();
   return (
-    <BaseScreenComponent goBack={props.modifyIban} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={props.modifyIban}
+      headerTitle={headerTitle}
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
