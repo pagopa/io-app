@@ -140,6 +140,9 @@ startup:
     message: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
     cta_1: Vai a Privacy
     cta_2: Ignora
+  contextualHelp:
+    title: Problemi di inizializzazione?
+    body: Se stai riscontrando problemi ad accedere all'app, segnalalo al nostro team e provvederemo a risolvere il problema quanto prima.
 login:
   welcome:
     line1: benvenuto nella tua
@@ -733,12 +736,13 @@ wallet:
       loadingSearch:
         title: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo..."
       add:
-        title: "Aggiungi bancomat {{current}} di {{length}}"
+        title: "Aggiungi PagoBancomat"
+        label: "Carta PagoBancomat {{current}} di {{length}}"
         screenTitle: "Vuoi aggiungere questa carta?"
         bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
-        warning: "Manca qualcosa? Non preoccuparti, puoi aggiungere altre carte PagoBANCOMAT più tardi, selezionando la banca che ha emesso la tua carta."
+        warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente."
       bpd:
         suggestActivation:
           title: "Vuoi attivare il Cashback?"

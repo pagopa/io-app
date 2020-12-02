@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0-rc.0](https://github.com/pagopa/io-app/compare/1.10.0-rc.5...1.11.0-rc.0) (2020-12-02)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#175883778](https://www.pivotaltracker.com/story/show/175883778),[#175883201](https://www.pivotaltracker.com/story/show/175883201),[#175883970](https://www.pivotaltracker.com/story/show/175883970)] Onboard Satispay account orchestration ([#2444](https://github.com/pagopa/io-app/issues/2444)) ([48b6d91](https://github.com/pagopa/io-app/commit/48b6d915aa397435438fbaa713602ec6ab8388f9)), closes [#175883764](https://www.pivotaltracker.com/story/show/175883764) [#175883764](https://www.pivotaltracker.com/story/show/175883764)
+* **Bonus Pagamenti Digitali:** [[#175919231](https://www.pivotaltracker.com/story/show/175919231)] Update self declaration screen ([#2464](https://github.com/pagopa/io-app/issues/2464)) ([ea7218e](https://github.com/pagopa/io-app/commit/ea7218e99a37f2e4e5c2d51ca2a325fcfffd0cce))
+* **Bonus Pagamenti Digitali:** [[#175932765](https://www.pivotaltracker.com/story/show/175932765)] Start cashback from CTA ([#2465](https://github.com/pagopa/io-app/issues/2465)) ([4865bb1](https://github.com/pagopa/io-app/commit/4865bb1fb06bd077a8e24271f4c889de49ea649e))
+* **Bonus Pagamenti Digitali:** [[#175949561](https://www.pivotaltracker.com/story/show/175949561)] Display cashback future periods ("Inactive") in wallet ([#2470](https://github.com/pagopa/io-app/issues/2470)) ([08e1e9d](https://github.com/pagopa/io-app/commit/08e1e9d044bdb0ccc40a3cd23970442e8bc0e9b0))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#175923455](https://www.pivotaltracker.com/story/show/175923455)] Fixes copy button press on android [#2469](https://github.com/pagopa/io-app/issues/2469) ([9b73c1f](https://github.com/pagopa/io-app/commit/9b73c1f13e4932bbf7f8cee0610ba6ec50722e1e))
+* **Bonus Pagamenti Digitali:** [[#175934342](https://www.pivotaltracker.com/story/show/175934342)] Onboarding credit card failure instead of success [#2459](https://github.com/pagopa/io-app/issues/2459) ([6ca2db2](https://github.com/pagopa/io-app/commit/6ca2db29b01d805839b4e94d608bbb4368fd86c2))
+* [[#173745888](https://www.pivotaltracker.com/story/show/173745888)] Ingress screen contextual help [#2478](https://github.com/pagopa/io-app/issues/2478) ([f53125e](https://github.com/pagopa/io-app/commit/f53125e045a117928c31efb99180dabf3672e5ec))
+* [[#175848198](https://www.pivotaltracker.com/story/show/175848198),[#175641468](https://www.pivotaltracker.com/story/show/175641468)] Fixed: overlapping label when message is too long, label text not being centered in its wrapper ([#2475](https://github.com/pagopa/io-app/issues/2475)) ([676bd90](https://github.com/pagopa/io-app/commit/676bd9006b0278f32f390a0102eb8df7c0f9552a))
+* **Bonus Pagamenti Digitali:** [[#175953061](https://www.pivotaltracker.com/story/show/175953061)] Fix overflow in transaction item ([#2477](https://github.com/pagopa/io-app/issues/2477)) ([8f19134](https://github.com/pagopa/io-app/commit/8f19134dc401a18336d4c9bd1a2a182962df38a6))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#175953788](https://www.pivotaltracker.com/story/show/175953788)] General FAQ update [#2472](https://github.com/pagopa/io-app/issues/2472) ([e7d4289](https://github.com/pagopa/io-app/commit/e7d42894539c1e581050c920a059b864ae0dfdc0))
+* [[#175855068](https://www.pivotaltracker.com/story/show/175855068)] Mixpanel user id reconciliation ([#2439](https://github.com/pagopa/io-app/issues/2439)) ([0d51036](https://github.com/pagopa/io-app/commit/0d51036cd38bb1aad50b8af0d6ccc84871b2cd77))
+* [[#175948985](https://www.pivotaltracker.com/story/show/175948985)] Update bpd copy [#2474](https://github.com/pagopa/io-app/issues/2474) ([b17767f](https://github.com/pagopa/io-app/commit/b17767f40a9c4b0d68a69036fd2e7a283c1c82ab))
+
 ## [1.10.0-rc.5](https://github.com/pagopa/io-app/compare/1.10.0-rc.4...1.10.0-rc.5) (2020-11-30)
 
 
