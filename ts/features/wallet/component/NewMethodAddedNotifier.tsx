@@ -1,12 +1,12 @@
 import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { bottomSheetContent } from "../../../utils/bottomSheet";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
+import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
 import BancomatInformation from "../bancomat/screen/BancomatInformation";
 import { onboardingBancomatAddedPansSelector } from "../onboarding/bancomat/store/reducers/addedPans";
 
@@ -36,7 +36,6 @@ const newBancomatBottomSheet = () => {
  * @constructor
  */
 const NewPaymentMethodAddedNotifier = (props: Props) => {
-  const navigation = useNavigationContext();
   // Save the latest visualized bottom sheet, in order to avoid to show it again if focus changed
   const [lastNotifiedBancomatHash, setLastNotifiedBancomatHash] = useState<
     string
@@ -44,19 +43,17 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
 
   const { present } = newBancomatBottomSheet();
 
-  useEffect(() => {
-    if (navigation.isFocused()) {
-      const lastAddedHash = props.addedBancomat.reduce(
-        (acc, val) => acc + val.idWallet.toString(),
-        ""
-      );
-      // a new set of bancomat has been added and no bottomsheet has been dispayed
-      if (lastAddedHash !== "" && lastNotifiedBancomatHash !== lastAddedHash) {
-        setLastNotifiedBancomatHash(lastAddedHash);
-        void present();
-      }
+  useActionOnFocus(() => {
+    const lastAddedHash = props.addedBancomat.reduce(
+      (acc, val) => acc + val.idWallet.toString(),
+      ""
+    );
+    // a new set of bancomat has been added and no bottomsheet has been dispayed
+    if (lastAddedHash !== "" && lastNotifiedBancomatHash !== lastAddedHash) {
+      setLastNotifiedBancomatHash(lastAddedHash);
+      void present();
     }
-  }, [navigation.isFocused()]);
+  });
 
   return null;
 };
