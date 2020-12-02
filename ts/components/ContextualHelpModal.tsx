@@ -1,38 +1,29 @@
 import { fromNullable, none } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Container, Content, H3, View } from "native-base";
+import { Container } from "native-base";
 import * as React from "react";
-import {
-  InteractionManager,
-  Modal,
-  ModalBaseProps,
-  StyleSheet
-} from "react-native";
+import { InteractionManager, Modal, ModalBaseProps } from "react-native";
 import { connect } from "react-redux";
-import I18n from "../i18n";
 import { loadContextualHelpData } from "../store/actions/content";
 import { Dispatch } from "../store/actions/types";
 import { screenContextualHelpDataSelector } from "../store/reducers/content";
 import { GlobalState } from "../store/reducers/types";
-import themeVariables from "../theme/variables";
 import {
+  isLoggedIn,
   supportTokenSelector,
   SupportTokenState
 } from "../store/reducers/authentication";
 import { loadSupportToken } from "../store/actions/authentication";
+import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
 import {
   FAQsCategoriesType,
   FAQType,
   getFAQsFromCategories
 } from "../utils/faq";
-import FAQComponent from "./FAQComponent";
-import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
-import { BaseHeader } from "./screens/BaseHeader";
-import BetaBannerComponent from "./screens/BetaBannerComponent";
-import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
-import ActivityIndicator from "./ui/ActivityIndicator";
 import Markdown from "./ui/Markdown";
+import SendSupportTokenInfo from "./SendSupportTokenInfo";
+import ContextualHelpComponent from "./ContextualHelpComponent";
 
 type OwnProps = Readonly<{
   title: string;
@@ -53,13 +44,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
-const styles = StyleSheet.create({
-  contentContainerStyle: {
-    padding: themeVariables.contentPadding
-  }
-});
-
-type ContextualHelpData = {
+export type ContextualHelpData = {
   title: string;
   content: React.ReactNode;
   faqs?: ReadonlyArray<FAQType>;
@@ -75,11 +60,19 @@ type ContextualHelpData = {
  *
  * Optionally, the title and the content are injected from the content presented in the related clinet response.
  */
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   const [content, setContent] = React.useState<React.ReactNode>(null);
   const [contentLoaded, setContentLoaded] = React.useState<boolean | undefined>(
     undefined
   );
+  const [showSendPersonalInfo, setShowSendPersonalInfo] = React.useState<
+    boolean
+  >(false);
+
+  const [supportType, setSupportType] = React.useState<
+    BugReporting.reportType | undefined
+  >(undefined);
 
   React.useEffect(() => {
     // if the contextual data is empty or is in error -> try to reload
@@ -106,11 +99,12 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   const onClose = () => {
     void InteractionManager.runAfterInteractions(() => setContent(null));
     props.close();
+    setShowSendPersonalInfo(false);
   };
 
   /**
-   *  If contextualData (loaded from the content server) contains the route of the current screen,
-   *  title, content, faqs are read from it, otherwise they came from the locales stored in app
+    If contextualData (loaded from the content server) contains the route of the current screen,
+    title, content, faqs are read from it, otherwise they came from the locales stored in app
    */
   const contextualHelpData = props.maybeContextualData.fold<ContextualHelpData>(
     {
@@ -135,13 +129,46 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     }
   );
 
-  // content is loaded is when:
-  // - provided one from props is loaded or
-  // - when the remote one is loaded
+  /**
+    content is loaded is when:
+    - provided one from props is loaded or
+    - when the remote one is loaded
+   */
   const isContentLoaded = props.maybeContextualData.fold(
     props.contentLoaded,
     _ => contentLoaded
   );
+
+  /**
+   * If the user is authenticated we show the screen that allows to choice or not to send the personal token
+   * to the assistance.
+   * Otherwise we allow the user to open directly a new assistance request without sending the personal token.
+   * @param reportType
+   */
+  const handleOnRequestAssistance = (reportType: BugReporting.reportType) => {
+    if (props.isAuthenticated) {
+      setShowSendPersonalInfo(true);
+      setSupportType(reportType);
+      return;
+    }
+    props.onRequestAssistance(reportType, props.supportToken);
+  };
+
+  /**
+   * If an authenticated user choice to send the personal token we send it to the assistance.
+   * Otherwise we allow the user to open a new assistance request without sending the personal token.
+   * @param type
+   * @param sendSupportToken
+   */
+  const handleSendSupportTokenInfoContinue = (sendSupportToken: boolean) => {
+    setShowSendPersonalInfo(false);
+    fromNullable(supportType).map(st => {
+      props.onRequestAssistance(
+        st,
+        sendSupportToken ? props.supportToken : remoteUndefined
+      );
+    });
+  };
 
   return (
     <Modal
@@ -153,54 +180,20 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
       onRequestClose={onClose}
     >
       <Container>
-        <BaseHeader
-          accessibilityEvents={{
-            avoidNavigationEventsUsage: true
-          }}
-          headerTitle={I18n.t("contextualHelp.title")}
-          customRightIcon={{
-            iconName: "io-close",
-            onPress: onClose,
-            accessibilityLabel: I18n.t(
-              "global.accessibility.contextualHelp.close"
-            )
-          }}
-        />
-
-        {!contextualHelpData.content && (
-          <View centerJustified={true}>
-            <ActivityIndicator color={themeVariables.brandPrimaryLight} />
-          </View>
+        {showSendPersonalInfo ? (
+          <SendSupportTokenInfo
+            onClose={onClose}
+            onGoBack={() => setShowSendPersonalInfo(false)}
+            onContinue={handleSendSupportTokenInfoContinue}
+          />
+        ) : (
+          <ContextualHelpComponent
+            onClose={onClose}
+            contextualHelpData={contextualHelpData}
+            isContentLoaded={isContentLoaded}
+            onRequestAssistance={handleOnRequestAssistance}
+          />
         )}
-        {contextualHelpData.content && (
-          <Content
-            contentContainerStyle={styles.contentContainerStyle}
-            noPadded={true}
-          >
-            <H3 accessible={true}>{contextualHelpData.title}</H3>
-            <View spacer={true} />
-            {contextualHelpData.content}
-            <View spacer={true} />
-            {contextualHelpData.faqs && isContentLoaded && (
-              <FAQComponent
-                onLinkClicked={props.onLinkClicked}
-                faqs={contextualHelpData.faqs}
-              />
-            )}
-            {isContentLoaded && (
-              <React.Fragment>
-                <View spacer={true} extralarge={true} />
-                <InstabugAssistanceComponent
-                  requestAssistance={reportType =>
-                    props.onRequestAssistance(reportType, props.supportToken)
-                  }
-                />
-              </React.Fragment>
-            )}
-            {isContentLoaded && <EdgeBorderComponent />}
-          </Content>
-        )}
-        <BetaBannerComponent />
       </Container>
     </Modal>
   );
@@ -209,12 +202,14 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const potContextualData = screenContextualHelpDataSelector(state);
   const maybeContextualData = pot.getOrElse(potContextualData, none);
+  const isAuthenticated = isLoggedIn(state.authentication);
 
   const supportToken = supportTokenSelector(state);
   return {
     supportToken,
     potContextualData,
-    maybeContextualData
+    maybeContextualData,
+    isAuthenticated
   };
 };
 
