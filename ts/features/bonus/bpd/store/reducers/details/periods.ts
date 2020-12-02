@@ -30,7 +30,7 @@ export const bpdPeriodsReducer = (
             ...acc,
             [curr.awardPeriodId]: curr
           }),
-          pot.getOrElse(state, {})
+          {}
         )
       );
     case getType(bpdPeriodsLoad.failure):
