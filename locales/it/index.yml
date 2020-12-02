@@ -1805,7 +1805,7 @@ bonus:
       verify: "Controlla IBAN"
       insertion:
         title: "IBAN per l’accredito"
-        body1: "Indica qui l’IBAN del tuo conto su cui ricevere l’accredito, una volta consolidate le transazioni valide."
+        body1: "Indica qui l’IBAN del tuo conto su cui ricevere l’accredito."
         body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
       koWrong:
         title: "IBAN non corretto"
@@ -1824,8 +1824,8 @@ bonus:
       success: "IBAN inserito con successo"
     details:
       howItWorks:
-        title: "Come funziona il Cashback?"
-        body: "1. Il programma Cashback si divide in periodi di durata variabile: il **periodo corrente** inizia il {{startDate}} e finisce il {{endDate}}. **Accumula transazioni** valide durante tutta la durata di ciascun periodo con i **metodi di pagamento che hai attivato**.\n
+        title: "Extra Cashback di Natale"
+        body: "1. Il programma Cashback si divide in periodi. Il periodo corrente inizia il **{{startDate}}** e finisce il **{{endDate}}**. **Accumula transazioni** valide durante tutta la durata di ciascun periodo con i **metodi di pagamento che hai attivato**.\n
 
                2. In questo periodo, se raggiungi le **{{minTransactionNumber}} transazioni**, riceverai un rimborso pari al {{cashbackPercentage}}% fino ad un rimborso massimo di **{{maxTransactionCashback}} euro** a transazione ed un massimo di **{{maxPeriodCashback}} euro** in tutto il periodo.\n
 
