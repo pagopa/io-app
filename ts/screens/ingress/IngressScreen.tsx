@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "wallet.saveCard.contextualHelpTitle",
-  body: "wallet.saveCard.contextualHelpContent"
+  title: "startup.contextualHelp.title",
+  body: "startup.contextualHelp.body"
 };
 
 class IngressScreen extends React.PureComponent<Props> {
@@ -62,12 +62,10 @@ class IngressScreen extends React.PureComponent<Props> {
     return (
       <BaseScreenComponent
         goBack={false}
-        headerTitle={I18n.t("wallet.addCardTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_methods"]}
         primary={true}
         headerBackgroundColor={variables.brandPrimary}
-        appLogo={true}
+        appLogo={false}
       >
         <Container style={styles.container}>
           <ConnectionBar />
