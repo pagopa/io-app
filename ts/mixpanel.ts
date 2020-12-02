@@ -29,4 +29,7 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
     fontScale: DeviceInfo.getFontScaleSync(),
     appReadableVersion: getAppVersion()
   });
+
+  // Identify the user using the device uniqueId
+  await mp.identify(DeviceInfo.getUniqueId());
 };

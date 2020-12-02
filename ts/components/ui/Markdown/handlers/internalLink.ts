@@ -4,12 +4,17 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import URLParse from "url-parse";
-import { bonusVacanzeEnabled, myPortalEnabled } from "../../../../config";
+import {
+  bonusVacanzeEnabled,
+  bpdEnabled,
+  myPortalEnabled
+} from "../../../../config";
 import BONUSVACANZE_ROUTES from "../../../../features/bonus/bonusVacanze/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
 import { isTestEnv } from "../../../../utils/environment";
 import { addInternalRouteNavigation } from "../../../../store/actions/internalRouteNavigation";
+import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
 
 // Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
 const IO_INTERNAL_LINK_PROTOCOL = "ioit:";
@@ -33,11 +38,14 @@ const BONUS_VACANZE_ROUTE_NAMES: ReadonlyArray<string> = [
   BONUSVACANZE_ROUTES.BONUS_CTA_ELIGILITY_START
 ];
 
+const BPD_ROUTE_NAMES: ReadonlyArray<string> = [BPD_ROUTES.CTA_START_BPD];
+
 const MY_PORTAL_ROUTES: ReadonlyArray<string> = [ROUTES.SERVICE_WEBVIEW];
 
 const ALLOWED_ROUTE_NAMES = ROUTE_NAMES.concat(
   bonusVacanzeEnabled ? BONUS_VACANZE_ROUTE_NAMES : [],
-  myPortalEnabled ? MY_PORTAL_ROUTES : []
+  myPortalEnabled ? MY_PORTAL_ROUTES : [],
+  bpdEnabled ? BPD_ROUTE_NAMES : []
 );
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv
