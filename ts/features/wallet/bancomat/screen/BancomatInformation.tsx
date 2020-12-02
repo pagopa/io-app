@@ -85,7 +85,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => (
       style={styles.button}
       bordered={true}
       onPress={() => {
-        if (props.onAddPaymentMethod) {
+        props.onAddPaymentMethod?.();
           props.onAddPaymentMethod();
         }
         props.addPaymentMethod();
