@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
   paddedContentFull: {
     paddingLeft: 16,
     paddingTop: 24,
-    paddingRight: 20
+    paddingRight: 20,
+    paddingBottom: 16
   },
   paddedContentPreview: {
     paddingLeft: 18,
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   },
   imageFull: {
     resizeMode: "stretch",
-    height: 192
+    height: "100%"
   },
   imagePreview: {
     resizeMode: "stretch",
@@ -267,32 +268,44 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
   const isPeriodInactive = props.period.status === "Inactive";
 
   const FullCard = () => (
-    <View style={[styles.row, styles.spaced]}>
+    <View
+      style={[
+        styles.row,
+        styles.spaced,
+        styles.paddedContentFull,
+        { height: "100%" }
+      ]}
+    >
       <View style={[styles.column, styles.flex2, styles.spaced]}>
-        <H2 weight={"Bold"} color={"white"}>
-          {I18n.t("bonus.bpd.title")}
-        </H2>
-        <H4 color={"white"} weight={"Regular"}>
-          {format(props.period.startDate, "DD MMM YYYY")} -{" "}
-          {format(props.period.endDate, "DD MMM YYYY")}
-        </H4>
-        <View spacer={true} large />
-        <View style={[styles.row, { alignItems: "center" }]}>
-          <Text bold={true} white={true} style={[styles.amountTextBaseFull]}>
-            {"€ "}
-            <Text white={true} style={styles.amountTextUpperFull}>
-              {`${amount[0]}${I18n.t("global.localization.decimalSeparator")}`}
-            </Text>
-            {amount[1]}
-          </Text>
-          <View hspacer={true} small={true} />
-          {showLock && (
-            <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
-          )}
+        <View>
+          <H2 weight={"Bold"} color={"white"}>
+            {I18n.t("bonus.bpd.title")}
+          </H2>
+          <H4 color={"white"} weight={"Regular"}>
+            {format(props.period.startDate, "DD MMM YYYY")} -{" "}
+            {format(props.period.endDate, "DD MMM YYYY")}
+          </H4>
         </View>
-        <H5 color={"white"} weight={"Regular"}>
-          {I18n.t("bonus.bpd.earned")}
-        </H5>
+        <View>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Text bold={true} white={true} style={[styles.amountTextBaseFull]}>
+              {"€ "}
+              <Text white={true} style={styles.amountTextUpperFull}>
+                {`${amount[0]}${I18n.t(
+                  "global.localization.decimalSeparator"
+                )}`}
+              </Text>
+              {amount[1]}
+            </Text>
+            <View hspacer={true} small={true} />
+            {showLock && (
+              <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
+            )}
+          </View>
+          <H5 color={"white"} weight={"Regular"}>
+            {I18n.t("bonus.bpd.earned")}
+          </H5>
+        </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
         <Badge style={[statusBadge.style, styles.badgeBase]}>
@@ -311,7 +324,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
 
   const PreviewCard = () => (
     <TouchableDefaultOpacity
-      style={[styles.row, styles.spaced]}
+      style={[styles.row, styles.spaced, styles.paddedContentPreview]}
       onPress={props.onPress}
     >
       <View style={styles.column}>
@@ -388,15 +401,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         style={[props.preview ? styles.preview : styles.container]}
         imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
       >
-        <View
-          style={
-            props.preview
-              ? styles.paddedContentPreview
-              : styles.paddedContentFull
-          }
-        >
-          {props.preview ? <PreviewCard /> : <FullCard />}
-        </View>
+        {props.preview ? <PreviewCard /> : <FullCard />}
       </ImageBackground>
       {Platform.OS === "android" && !props.preview && (
         <View style={styles.bottomShadowBox} />
