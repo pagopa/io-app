@@ -1,13 +1,6 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import {
-  Image,
-  ImageBackground,
-  Platform,
-  StyleProp,
-  StyleSheet,
-  ViewStyle
-} from "react-native";
+import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -45,7 +38,8 @@ const styles = StyleSheet.create({
   paddedContentFull: {
     paddingLeft: 16,
     paddingTop: 24,
-    paddingRight: 20
+    paddingRight: 20,
+    paddingBottom: 16
   },
   paddedContentPreview: {
     paddingLeft: 18,
@@ -75,6 +69,7 @@ const styles = StyleSheet.create({
   },
   badgeBase: {
     alignSelf: "flex-end",
+    backgroundColor: IOColors.white,
     height: 18,
     marginTop: 9
   },
@@ -85,7 +80,7 @@ const styles = StyleSheet.create({
   },
   imageFull: {
     resizeMode: "stretch",
-    height: 192
+    height: "100%"
   },
   imagePreview: {
     resizeMode: "stretch",
@@ -136,7 +131,6 @@ const styles = StyleSheet.create({
 });
 
 type BadgeDefinition = {
-  style: StyleProp<ViewStyle>;
   label: string;
 };
 
@@ -152,9 +146,6 @@ const initialGraphicalState: GraphicalState = {
   isInGracePeriod: false,
   showLock: false,
   statusBadge: {
-    style: {
-      backgroundColor: IOColors.white
-    },
     label: "-"
   }
 };
@@ -184,15 +175,9 @@ const statusClosedHandler = (props: Props): GraphicalState => {
     // TODO: Add supercashback business logic
     statusBadge: isInGracePeriod
       ? {
-          style: {
-            backgroundColor: IOColors.white
-          },
           label: I18n.t("profile.preferences.list.wip")
         }
       : {
-          style: {
-            backgroundColor: IOColors.black
-          },
           label: I18n.t("bonus.bpd.details.card.status.closed")
         }
   };
@@ -204,9 +189,6 @@ const statusActiveHandler = (props: Props): GraphicalState => {
   return {
     ...initialGraphicalState,
     statusBadge: {
-      style: {
-        backgroundColor: IOColors.white
-      },
       label: I18n.t("bonus.bpd.details.card.status.active")
     },
     showLock: totalAmount.transactionNumber < period.minTransactionNumber,
@@ -219,9 +201,6 @@ const statusActiveHandler = (props: Props): GraphicalState => {
 const statusInactiveHandler = (props: Props): GraphicalState => ({
   ...initialGraphicalState,
   statusBadge: {
-    style: {
-      backgroundColor: IOColors.aqua
-    },
     label: I18n.t("bonus.bpd.details.card.status.inactive")
   },
   showLock: true,
@@ -267,45 +246,53 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
   const isPeriodInactive = props.period.status === "Inactive";
 
   const FullCard = () => (
-    <View style={[styles.row, styles.spaced]}>
+    <View
+      style={[
+        styles.row,
+        styles.spaced,
+        styles.paddedContentFull,
+        { height: "100%" }
+      ]}
+    >
       <View style={[styles.column, styles.flex2, styles.spaced]}>
-        <H2 weight={"Bold"} color={"white"}>
-          {I18n.t("bonus.bpd.title")}
-        </H2>
-        <H4 color={"white"} weight={"Regular"}>
-          {`${localeDateFormat(
-            props.period.startDate,
-            I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
-          )} - ${localeDateFormat(
-            props.period.endDate,
-            I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
-          )}`}
-        </H4>
-        <View spacer={true} large />
-        <View style={[styles.row, { alignItems: "center" }]}>
-          <Text bold={true} white={true} style={[styles.amountTextBaseFull]}>
-            {"€ "}
-            <Text white={true} style={styles.amountTextUpperFull}>
-              {`${amount[0]}${I18n.t("global.localization.decimalSeparator")}`}
-            </Text>
-            {amount[1]}
-          </Text>
-          <View hspacer={true} small={true} />
-          {showLock && (
-            <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
-          )}
+        <View>
+          <H2 weight={"Bold"} color={"white"}>
+            {I18n.t("bonus.bpd.title")}
+          </H2>
+          <H4 color={"white"} weight={"Regular"}>
+            {`${localeDateFormat(
+              props.period.startDate,
+              I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
+            )} - ${localeDateFormat(
+              props.period.endDate,
+              I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
+            )}`}
+          </H4>
         </View>
-        <H5 color={"white"} weight={"Regular"}>
-          {I18n.t("bonus.bpd.earned")}
-        </H5>
+        <View>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Text bold={true} white={true} style={[styles.amountTextBaseFull]}>
+              {"€ "}
+              <Text white={true} style={styles.amountTextUpperFull}>
+                {`${amount[0]}${I18n.t(
+                  "global.localization.decimalSeparator"
+                )}`}
+              </Text>
+              {amount[1]}
+            </Text>
+            <View hspacer={true} small={true} />
+            {showLock && (
+              <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
+            )}
+          </View>
+          <H5 color={"white"} weight={"Regular"}>
+            {I18n.t("bonus.bpd.earned")}
+          </H5>
+        </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
-        <Badge style={[statusBadge.style, styles.badgeBase]}>
-          <Text
-            semibold={true}
-            style={styles.badgeTextBase}
-            dark={!isPeriodClosed}
-          >
+        <Badge style={[styles.badgeBase]}>
+          <Text semibold={true} style={styles.badgeTextBase} dark={true}>
             {statusBadge.label}
           </Text>
         </Badge>
@@ -316,7 +303,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
 
   const PreviewCard = () => (
     <TouchableDefaultOpacity
-      style={[styles.row, styles.spaced]}
+      style={[styles.row, styles.spaced, styles.paddedContentPreview]}
       onPress={props.onPress}
     >
       <View style={styles.column}>
@@ -398,15 +385,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         style={[props.preview ? styles.preview : styles.container]}
         imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
       >
-        <View
-          style={
-            props.preview
-              ? styles.paddedContentPreview
-              : styles.paddedContentFull
-          }
-        >
-          {props.preview ? <PreviewCard /> : <FullCard />}
-        </View>
+        {props.preview ? <PreviewCard /> : <FullCard />}
       </ImageBackground>
       {Platform.OS === "android" && !props.preview && (
         <View style={styles.bottomShadowBox} />
