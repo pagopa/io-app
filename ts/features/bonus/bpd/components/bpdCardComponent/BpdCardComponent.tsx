@@ -263,7 +263,8 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
     statusBadge
   } = calculateGraphicalState(props);
 
-  const isPeriodClosed = props.period.status === "Closed";
+  const isPeriodClosed = props.period.status === "Closed" && !isInGracePeriod;
+  const isPeriodInactive = props.period.status === "Inactive";
 
   const FullCard = () => (
     <View style={[styles.row, styles.spaced]}>
@@ -351,10 +352,10 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               <IconFont name="io-lucchetto" size={16} color={IOColors.white} />
             )}
             <View hspacer={true} small={true} />
-            {isInGracePeriod ? (
+            {isInGracePeriod || isPeriodInactive ? (
               <Badge style={styles.badgePreview}>
                 <Text semibold={true} style={styles.badgeTextBase} dark={true}>
-                  {I18n.t("profile.preferences.list.wip")}
+                  {statusBadge.label}
                 </Text>
               </Badge>
             ) : (

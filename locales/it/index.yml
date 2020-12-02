@@ -140,6 +140,9 @@ startup:
     message: Se hai cambiato idea, puoi annullare la richiesta nella sezione Privacy del tuo Profilo.
     cta_1: Vai a Privacy
     cta_2: Ignora
+  contextualHelp:
+    title: Problemi di inizializzazione?
+    body: Se stai riscontrando problemi ad accedere all'app, segnalalo al nostro team e provvederemo a risolvere il problema quanto prima.
 login:
   welcome:
     line1: benvenuto nella tua
@@ -732,12 +735,13 @@ wallet:
       loadingSearch:
         title: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo..."
       add:
-        title: "Aggiungi bancomat {{current}} di {{length}}"
+        title: "Aggiungi PagoBancomat"
+        label: "Carta PagoBancomat {{current}} di {{length}}"
         screenTitle: "Vuoi aggiungere questa carta?"
         bodySingular: "Abbiamo trovato 1 carta a te intestata. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per annullare l'operazione."
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
-        warning: "Manca qualcosa? Non preoccuparti, puoi aggiungere altre carte PagoBANCOMAT più tardi, selezionando la banca che ha emesso la tua carta."
+        warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente."
       bpd:
         suggestActivation:
           title: "Vuoi attivare il Cashback?"
@@ -747,9 +751,15 @@ wallet:
           confirm: "Info e attivazione"
         activateNew:
           title: "Vuoi attivare il Cashback?"
-          body1: "Attiva il cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
-          body2: "Se preferisci, puoi attivare il cashback su questi metodi anche in un secondo momento."
+          body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
+          body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
           skip: "Non ora, grazie"
+    satispay:
+      headerTitle: "Aggiungi Satispay"
+      loadingSearch:
+        title: "Stiamo verificando il tuo account Satispay\n\nAttendi qualche secondo"
+      loadingAdd:
+        title: "Stiamo aggiungendo il tuo account Satispay\n\nAttendi qualche secondo"
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
@@ -1053,7 +1063,7 @@ wallet:
         three: ": questa funzione verrà abilitata con le prossime versioni dell’app."
   newRemove:
     title: "Vuoi eliminare questo metodo?"
-    body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il cashback, verranno disattivate entro 24h."
+    body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
     title: "Funzioni Disponibili"
@@ -1071,7 +1081,7 @@ cardComponent:
   setFavourite: Imposta come preferita
   unsetFavourite: Rimuovi dai preferiti
   deleteTitle: Vuoi eliminare questo metodo?
-  deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il cashback, verranno disattivate entro 24h.
+  deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h.
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
@@ -1357,6 +1367,12 @@ systemsOff:
   closeApp: chiudi l'applicazione e riprova
 contextualHelp:
   title: IO ti aiuto
+  sendPersonalInfo:
+    title: Nuova segnalazione
+    description: "Il Team di IO è a disposizione per risolvere eventuali **problemi** dell’app o per ascoltare i **suggerimenti** dei nostri utenti relativi a **migliorie o nuove funzionalità.**\n\nSe hai dubbi sul **contenuto di un messaggio** o su un servizio, ti consigliamo di **contattare l'ente relativo**: troverai i contatti in fondo al messaggio o nella scheda del servizio in questione."
+    cta: Condividi il tuo codice fiscale, in modo da rendere più semplice la risoluzione del problema.
+    informativeTitle: Come sapete il mio codice fiscale?
+    informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 instabug:
   contextualHelp:
     title1: Hai bisogno di aiuto?
@@ -1491,7 +1507,7 @@ faq:
     title: "Come puoi aggiungere un metodo di pagamento?"
     content: !include faq/faq42.md
   43:
-    title: "Cos'è il CVC/CVV?"
+    title: "Dove trovo il codice di sicurezza?"
     content: !include faq/faq43.md
   44:
     title: "Perché devo pagare una commissione?"
@@ -1728,7 +1744,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: "Premendo \"Attiva il cashback\" dichiari di aver letto e compreso il [regolamento]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
+  termsAndConditionFooter: "Premendo \"Attiva il Cashback\" dichiari di aver letto e compreso la [guida]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -1738,46 +1754,51 @@ bonus:
     name: Cashback
     earned: Cashback accumulato
     cta:
-      activeBonus: Attiva il cashback
+      activeBonus: Attiva il Cashback
     unsubscribe:
-      cta: "Cancella la tua iscrizione al cashback"
-      title: "Disattivazione cashback"
+      cta: "Cancella la tua iscrizione al Cashback"
+      title: "Disattivazione Cashback"
       body1: "Vuoi davvero cancellare la tua iscrizione al Cashback?"
-      body2: "Se confermi non potrai più collezionare transazioni valide né concorrere per il Super Cashback, e **non potrai riscuotere un rimborso**, nel caso ti fosse stato riconsociuto. La disattivazione del Cashback avrà effetto **anche negli altri canali** che hai usato per attivarlo (Home Banking, app, etc.)\n\nSe riattivi il cashback in una secondo momento **ripartirai da zero transazioni.**"
+      body2: "Se confermi, le tue transazioni non potranno più essere registrate per il Cashback né potrai concorrere per il Super Cashback; inoltre, **non potrai riscuotere un rimborso**, nel caso ti fosse stato riconosciuto. La disattivazione del Cashback avrà effetto **anche negli altri canali** che hai usato per attivarlo (home banking, app, etc).\n\nSe riattivi il Cashback in un secondo momento, **ripartirai da zero transazioni**."
       confirmCta: "Cancella iscrizione"
       loading: "Stiamo cancellando la tua iscrizione"
-      success: "La tua iscrizione al cashback è stata cancellata"
+      success: "La tua iscrizione al Cashback è stata cancellata"
       failure: "Non siamo riusciti a cancellare la tua iscrizione, riprova per favore"
     onboarding:
       alert:
-        title: Il cashback è già attivo
+        title: Il Cashback è già attivo
         body: Puoi vedere maggiori dettagli nel tuo Portafoglio.
         cancel: Chiudi
-        confirm: Torna al Portafoglio
+        confirm: Torna indietro
       loadingActivationStatus:
         title: Verifico lo stato di attivazione
       declaration:
-        header: Per poter attivare il cashback devi dichiarare
+        header: Per poter attivare il Cashback devi dichiarare
+        cta: "Dichiaro"
         conditions:
           age: di essere maggiorenne
           resident: di risiedere in Italia
+          owner:
+            normal: "di attivare ai fini del Cashback "
+            bold: "solo metodi di pagamento di cui sei il titolare"
           personal_use:
-            normal: "che userai gli strumenti di pagamento su cui è attivo il cashback solo per "
-            bold: acquisti effettuati fuori dall'esercizio di attività di Impresa, Arte o Professione
+            normal: "che userai i metodi di pagamento su cui è attivo il Cashback solo per acquisti effettuati per finalità personali, "
+            bold: "non legati ad attività di Impresa, Arte o Professione"
         disclaimer:
-          normal: "Questa autodichirazione è resa ai sensi del "
-          link: dpr 28 dicembre 2000 n. 445 art 46 e 47
+          normal1: "Questa autodichirazione è resa ai sensi del "
+          link: "dpr 28 dicembre 2000 n. 445 art 46 e 47"
+          normal2: " e consapevole delle sanzioni penali e della perdita di diritto al rimborso in caso di falsa dichiarazione"
       loadingActivateBpd:
-        title: "Stiamo attivando il cashback"
+        title: "Stiamo attivando il Cashback"
         body: "Ti preghiamo di attendere..."
       noPaymentMethod:
         title: "Aggiungi almeno un metodo di pagamento"
         body: "Per inziare a collezionare transazioni valide, aggiungi al tuo Portafoglio i tuoi metodi di pagamento preferiti: oggi sono supportate le principali carte di pagamento, app e altri strumenti digitali.\n\n
-        In futuro verranno supportati altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno il cashback!"
+        In futuro verranno supportati altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno il Cashback!"
       enrollPaymentMethod:
         title: "Scegli quali metodi di pagamento attivare"
-        body1: "Attiva il cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
-        body2: "Potrai aggiungere in ogni momento altri metodi di pagamento su IO e attivare il cashback."
+        body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
+        body2: "Potrai aggiungere in ogni momento altri metodi di pagamento su IO e attivare il Cashback."
     iban:
       iban: "IBAN"
       edit: "Modifica IBAN"
@@ -1812,14 +1833,14 @@ bonus:
       components:
         iban:
           title: "IBAN per l’accredito"
-          noIbanBody: "Imposta il tuo IBAN per poter ricevere il cashback accumulato"
+          noIbanBody: "Imposta il tuo IBAN per poter ricevere il Cashback accumulato"
           button: "Imposta IBAN"
         transactionsCountOverview:
           title: "Transazioni valide"
           of: "su"
           closedPeriodKOBody: "Non hai raggiunto le {{transactions}} transazioni necessarie per ottenere un rimborso: avresti ricevuto € {{amount}}. Provaci nel prossimo periodo!"
-          currentPeriodKOBody: "Devi aver fatto almeno {{transactions}} transazioni per sbloccare il cashback che hai accumulato!"
-          gracePeriodBody: "Questo periodo del cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere dalle banche le ultime transazioni. Ancora un po’ di pazienza. Ti avviseremo qui!"
+          currentPeriodKOBody: "Devi aver fatto almeno {{transactions}} transazioni per sbloccare il Cashback che hai accumulato!"
+          gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere dalle banche le ultime transazioni. Ancora un po’ di pazienza. Ti avviseremo qui!"
           closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
           closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
           inactivePeriodBody: "Potrai iniziare a collezionare transazioni valide a partire dal {{date}}"
@@ -1830,14 +1851,14 @@ bonus:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
         detail:
-          empty: "Qui visualizzerai le transazioni valide ai fini del cashback: per ora non ci sono ancora transazioni valide. Controlla di nuovo nei prossimi giorni!"
+          empty: "Qui visualizzerai le transazioni valide ai fini del Cashback: per ora non ci sono ancora transazioni valide. Controlla di nuovo nei prossimi giorni!"
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
               body: "Le transazioni vengono collezionate il giorno dopo che i circuiti bancari le hanno contabilizzate. 
                 Possono passare fino a 72 ore prima che tu veda la transazione su IO, anche se di solito il processo è più rapido. 
                 Potrebbe volerci un po’ di più nel caso in cui l’acquisto sia a ridosso del weekend o di qualche festività, oppure in qualche altra condizione particolare.
-                Non ti preoccupare: tutte le transazioni valide fatte durante il periodo del cashback verranno collezionate e considerate per rimborsi e classifica!"
+                Non ti preoccupare: tutte le transazioni valide fatte durante il periodo del Cashback verranno collezionate e considerate per rimborsi e classifica!"
             lastUpdated: "Ultima transazione valida: "
             link: "Manca qualcosa?"
             body:
@@ -1847,19 +1868,19 @@ bonus:
                 one: "1 transazione valida "
                 other: "{{count}} transazioni valide "
               text4: "e accumulato "
-              text5: "un cashback di "
+              text5: "un Cashback di "
             milestone:
               title: "Complimenti, hai ottenuto {{cashbackValue}}"
               body: "Hai raggiunto il rimborso massimo previsto in questo periodo."
           title: "Dettaglio della transazione"
           paymentCircuit: "Circuito di pagamento"
           transactionAmount: "Importo transazione"
-          cashbackAmount: "Importo cashback"
+          cashbackAmount: "Importo Cashback"
           acquirerId: "ID transazione Acquirer"
           issuerId: "ID transazione Issuer"
-          maxCashbackWarning: "Per ogni transazione puoi ottenere un cashback massimo di € {{amount}}."
+          maxCashbackWarning: "Per ogni transazione puoi ottenere un Cashback massimo di € {{amount}}."
           maxCashbackForPeriodWarning: "Hai già raggiunto il rimborso massimo previsto per questo periodo."
-          canceledOperationWarning: "Questa transazione è un rimborso, perciò è stato decurtato il relativo cashback."
+          canceledOperationWarning: "Questa transazione è un rimborso, perciò è stato decurtato il relativo Cashback."
           canceled: "Storno"
       paymentMethods:
         add:
@@ -1870,22 +1891,22 @@ bonus:
           text1: "Attivati su "
           text2: "altri canali"
           title: "Metodi aggiunti da altri canali"
-          body: "Hai aggiunto al cashback questi metodi di pagamento direttamente dai canali messi a disposizione dalla tua banca o app di pagamenti. Puoi attivare o disattivare la registrazione delle transazioni di questi metodi anche da IO.\n
+          body: "Hai aggiunto al Cashback questi metodi di pagamento direttamente dai canali messi a disposizione dalla tua banca o app di pagamenti. Puoi attivare o disattivare la registrazione delle transazioni di questi metodi anche da IO.\n
                  Se vuoi usare alcuni di questi metodi anche per pagare tramite IO, aggiungili al tuo portafoglio!"
           addWallet: "Aggiungi al portafoglio"
         notActivable:
           header: "Non attivabili o non compatibili"
           title: "Metodo non attivabile"
-          body: "Qualcun altro ha già attivo in questo momento il cashback su questo metodo di pagamento: il cashback può essere attivato da un solo utente alla volta per ciascun metodo di pagamento."
+          body: "Qualcun altro ha già attivo in questo momento il Cashback su questo metodo di pagamento: il Cashback può essere attivato da un solo utente alla volta per ciascun metodo di pagamento."
         notCompatible:
           title: "Metodo non compatibile"
-          body: "Il metodo di pagamento non è compatibile con il cashback perché la banca non ha ancora attivato il supporto a queste funzionalità. Contatta la tua banca per maggiori dettagli."
+          body: "Il metodo di pagamento non è compatibile con il Cashback perché la banca non ha ancora attivato il supporto a queste funzionalità. Contatta la tua banca per maggiori dettagli."
         activate:
-          title: "Attivare il cashback su questo metodo?"
-          body: "L’attivazione sarà operativa **da domani**, quindi non saranno valide ai fini del cashback le transazioni effettuate nella giornata di oggi."
+          title: "Attivare il Cashback su questo metodo?"
+          body: "L’attivazione sarà operativa **da domani**, quindi non saranno valide ai fini del Cashback le transazioni effettuate nella giornata di oggi."
           disclaimer: "Scegliendo {{activate}}, dichiari di essere il titolare di questo metodo di pagamento."
         deactivate:
-          title: "Disattivare il cashback su questo metodo?"
+          title: "Disattivare il Cashback su questo metodo?"
           body: "Se confermi questa scelta, le transazioni effettuate con questo metodo non verranno più collezionate.
                  La disattivazione sarà operativa **da domani**, quindi potrebbero essere ancora collezionate le transazioni effettuate oggi."
       card:
