@@ -260,8 +260,13 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             {I18n.t("bonus.bpd.title")}
           </H2>
           <H4 color={"white"} weight={"Regular"}>
-            {format(props.period.startDate, "DD MMM YYYY")} -{" "}
-            {format(props.period.endDate, "DD MMM YYYY")}
+            {`${localeDateFormat(
+              props.period.startDate,
+              I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
+            )} - ${localeDateFormat(
+              props.period.endDate,
+              I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
+            )}`}
           </H4>
         </View>
         <View>
