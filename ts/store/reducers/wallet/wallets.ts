@@ -147,7 +147,6 @@ export const paymentMethodsSelector = createSelector(
         .filter(isDefined)
     )
 );
-
 export const rawCreditCardListSelector = createSelector(
   [paymentMethodsSelector],
   (

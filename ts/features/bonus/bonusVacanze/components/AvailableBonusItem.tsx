@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: variables.lightGray
   },
   notImplementedText: {
-    lineHeight: Platform.OS === "ios" ? 14 : 16
+    lineHeight: Platform.OS === "ios" ? 20 : 21
   },
   centeredContents: {
     alignItems: "center"

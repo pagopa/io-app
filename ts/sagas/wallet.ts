@@ -43,7 +43,11 @@ import {
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
-import { handleSearchUserSatispay } from "../features/wallet/onboarding/satispay/saga/networking";
+import {
+  handleAddUserSatispayToWallet,
+  handleSearchUserSatispay
+} from "../features/wallet/onboarding/satispay/saga/networking";
+import { addSatispayToWalletAndActivateBpd } from "../features/wallet/onboarding/satispay/saga/orchestration/addSatispayToWallet";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
@@ -80,6 +84,7 @@ import {
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
   addWalletNewCreditCardSuccess,
+  addWalletNewCreditCardFailure,
   creditCardCheckout3dsRequest,
   creditCardCheckout3dsSuccess,
   deleteWalletRequest,
@@ -139,7 +144,11 @@ import {
 } from "../features/wallet/onboarding/bancomat/navigation/action";
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { getTitleFromCard } from "../utils/paymentMethod";
-import { searchUserSatispay } from "../features/wallet/onboarding/satispay/store/actions";
+import {
+  addSatispayToWallet,
+  searchUserSatispay,
+  walletAddSatispayStart
+} from "../features/wallet/onboarding/satispay/store/actions";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -317,6 +326,8 @@ function* startOrResumeAddCreditCardSaga(
         const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
           bpdEnabledSelector
         );
+        // dispatch the action: a new card has been added
+        yield put(addWalletNewCreditCardSuccess());
         // check if the new method is compliant with bpd
         if (bpdEnabled) {
           const hasBpdFeature = hasFunctionEnabled(
@@ -354,9 +365,6 @@ function* startOrResumeAddCreditCardSaga(
             return;
           }
         }
-
-        // dispatch the action: a new card has been added
-        yield put(addWalletNewCreditCardSuccess());
         if (action.payload.setAsFavorite === true) {
           yield put(setFavouriteWalletRequest(maybeAddedWallet.idWallet));
         }
@@ -365,6 +373,8 @@ function* startOrResumeAddCreditCardSaga(
           action.payload.onSuccess(maybeAddedWallet);
         }
       } else {
+        yield put(addWalletNewCreditCardFailure());
+
         if (action.payload.onFailure) {
           action.payload.onFailure();
         }
@@ -813,11 +823,22 @@ export function* watchWalletSaga(
     // watch for add Bancomat to Wallet workflow
     yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
 
+    // watch for add Satispay to Wallet workflow
+    yield takeLatest(walletAddSatispayStart, addSatispayToWalletAndActivateBpd);
+
     // watch for load satispay request
     yield takeLatest(
       searchUserSatispay.request,
       handleSearchUserSatispay,
       paymentManagerClient.searchSatispay,
+      pmSessionManager
+    );
+
+    // watch for add satispay to the user's wallet
+    yield takeLatest(
+      addSatispayToWallet.request,
+      handleAddUserSatispayToWallet,
+      paymentManagerClient.addSatispayToWallet,
       pmSessionManager
     );
   }

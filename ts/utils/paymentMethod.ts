@@ -1,8 +1,9 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import { ImageSourcePropType } from "react-native";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import bPayImage from "../../img/wallet/cards-icons/bPay.png";
-import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
 import satispayImage from "../../img/wallet/cards-icons/satispay.png";
+import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
 import {
   cardIcons,
   getCardIconFromBrandLogo
@@ -18,8 +19,11 @@ import {
   PaymentMethod,
   RawBancomatPaymentMethod,
   RawCreditCardPaymentMethod,
-  RawPaymentMethod
+  RawPaymentMethod,
+  RawSatispayPaymentMethod,
+  SatispayPaymentMethod
 } from "../types/pagopa";
+import { contentRepoUrl } from "../config";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
 
 export const getPaymentMethodHash = (
@@ -43,11 +47,16 @@ export const getPaymentMethodHash = (
 export const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
   `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
 
+export const getBancomatAbiIconUrl = (abi: string) =>
+  `${contentRepoUrl}/logos/abi/${abi}.png`;
+
 /**
  * Choose an image to represent a {@link RawPaymentMethod}
  * @param paymentMethod
  */
-export const getImageFromPaymentMethod = (paymentMethod: RawPaymentMethod) => {
+export const getImageFromPaymentMethod = (
+  paymentMethod: RawPaymentMethod
+): ImageSourcePropType => {
   if (isRawCreditCard(paymentMethod)) {
     return getCardIconFromBrandLogo(paymentMethod.info);
   }
@@ -72,6 +81,8 @@ export const getTitleFromBancomat = (
     .chain(abi => fromNullable(abi.name))
     .getOrElse(I18n.t("wallet.methods.bancomat.name"));
 
+export const getTitleForSatispay = () => I18n.t("wallet.methods.satispay.name");
+
 /**
  * Choose a textual representation for a {@link PatchedWalletV2}
  * @param paymentMethod
@@ -88,7 +99,7 @@ export const getTitleFromPaymentMethod = (
     return getTitleFromBancomat(paymentMethod, abiList);
   }
   if (isRawSatispay(paymentMethod)) {
-    return I18n.t("wallet.methods.satispay.name");
+    return getTitleForSatispay();
   }
   if (isRawBPay(paymentMethod)) {
     return (
@@ -110,6 +121,14 @@ export const enhanceBancomat = (
     : undefined,
   caption: getTitleFromBancomat(bancomat, abiList),
   icon: getImageFromPaymentMethod(bancomat)
+});
+
+export const enhanceSatispay = (
+  raw: RawSatispayPaymentMethod
+): SatispayPaymentMethod => ({
+  ...raw,
+  caption: getTitleForSatispay(),
+  icon: getImageFromPaymentMethod(raw)
 });
 
 export const enhancePaymentMethod = (
