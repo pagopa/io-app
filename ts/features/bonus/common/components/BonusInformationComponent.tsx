@@ -36,7 +36,7 @@ type Props = OwnProps &
   LightModalContextInterface &
   Pick<
     ComponentProps<typeof BaseScreenComponent>,
-    "contextualHelpMarkdown" | "faqCategories"
+    "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
 
 const CSS_STYLE = `
@@ -215,6 +215,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
       goBack={true}
       headerTitle={bonusTypeLocalizedContent.name}
       contextualHelpMarkdown={props.contextualHelpMarkdown}
+      contextualHelp={props.contextualHelp}
       faqCategories={props.faqCategories}
     >
       <SafeAreaView style={IOStyles.flex}>
