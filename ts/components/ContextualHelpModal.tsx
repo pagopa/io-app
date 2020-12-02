@@ -161,6 +161,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
    * @param sendSupportToken
    */
   const handleSendSupportTokenInfoContinue = (sendSupportToken: boolean) => {
+    setShowSendPersonalInfo(false);
     fromNullable(supportType).map(st => {
       props.onRequestAssistance(
         st,

@@ -112,7 +112,6 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
         type={"SingleButton"}
         leftButton={continueButtonProps(() => {
           onContinue(sendPersonalInfo);
-          onClose();
         })}
       />
     </SafeAreaView>
