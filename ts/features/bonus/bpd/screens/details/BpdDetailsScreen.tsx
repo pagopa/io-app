@@ -18,7 +18,7 @@ import { bpdUnsubscriptionSelector } from "../../store/reducers/details/activati
 import { bpdTransactionsForSelectedPeriod } from "../../store/reducers/details/transactions";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import { navigateToBpdTransactions } from "../../navigation/actions";
-import { remoteContextualHelp } from "../../../../../utils/remoteContextualHelp";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
@@ -94,7 +94,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
         topContent={<View style={styles.headerSpacer} />}
         gradientHeader={true}
         hideHeader={true}
-        contextualHelp={remoteContextualHelp()}
+        contextualHelp={emptyContextualHelp}
         footerContent={
           canRenderButton && (
             <GoToTransactions goToTransactions={props.goToTransactions} />

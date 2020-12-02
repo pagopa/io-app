@@ -13,7 +13,7 @@ import {
 import { bpdUpsertIbanSelector } from "../../store/reducers/details/activation/payoffInstrument";
 import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing";
 import I18n from "../../../../../i18n";
-import { remoteContextualHelp } from "../../../../../utils/remoteContextualHelp";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import IbanLoadingUpsert from "./IbanLoadingUpsert";
 import IbanInsertionScreen from "./insertion/IbanInsertionScreen";
 import IbanKoNotOwned from "./ko/IbanKONotOwned";
@@ -29,9 +29,9 @@ const chooseRenderScreen = (props: Props) => {
   } else if (isReady(ibanStatus)) {
     switch (ibanStatus.value) {
       case IbanStatus.NOT_OWNED:
-        return <IbanKoNotOwned contextualHelp={remoteContextualHelp()} />;
+        return <IbanKoNotOwned contextualHelp={emptyContextualHelp} />;
       case IbanStatus.NOT_VALID:
-        return <IbanKOWrong contextualHelp={remoteContextualHelp()} />;
+        return <IbanKOWrong contextualHelp={emptyContextualHelp} />;
       case IbanStatus.OK:
       case IbanStatus.CANT_VERIFY:
         props.reset();

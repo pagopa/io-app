@@ -15,7 +15,7 @@ import {
 } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { remoteContextualHelp } from "../../../../../utils/remoteContextualHelp";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -35,7 +35,7 @@ const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> = props =>
     <BaseScreenComponent
       goBack={false}
       headerTitle={headerTitle}
-      contextualHelp={remoteContextualHelp()}
+      contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
         <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
