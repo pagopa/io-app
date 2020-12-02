@@ -201,7 +201,7 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is enabled", () =>
 });
 
 describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is disabled", () => {
-  it("one inactive period should return one inactive period", () => {
+  it("one inactive period should return no periods", () => {
     const visiblePeriods = bpdPeriodsAmountWalletVisibleSelector.resultFunc(
       pot.some([inactivePeriodB]),
       remoteReady(false)
