@@ -140,6 +140,9 @@ startup:
     message: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
     cta_1: Browse Privacy
     cta_2: Discard
+  contextualHelp:
+    title: Startup problems?
+    body: If you are experiencing issues during IO-app startup, we recommend to report them to our support team. We'll take care of your request as soon as possible.
 login:
   welcome:
     line1: welcome in your
@@ -711,12 +714,13 @@ wallet:
       loadingSearch:
         title: "We're retrieving your cards\n\nPlease hold on..."
       add:
-        title: "Add PagoBANCOMAT {{current}} of {{length}}"
+        title: "Add PagoBANCOMAT"
+        label: "PagoBancomat card {{current}} of {{length}}"
         screenTitle: "Do you want to add this card?"
         bodySingular: "We found 1 card registered to you. Continue to add it or skip to cancel the operation."
         bodyPlural: "We found {{number}} cards registered to you. Continue to add this card skip to cancel the operation."
         loading: "We are adding your PagoBANCOMAT card\n\nPlease hold on..."
-        warning: "Anything missing? Don't worry, you can add your PagoBANCOMAT cards later, by selecting the bank which issued your card."
+        warning: "If you don't find all the cards of your own, you can try to add the missing one at a later time by selecting the Bank where you have your personal account."
       bpd:
         suggestActivation:
           title: "Do you want to activate Cashback?"
@@ -1465,7 +1469,7 @@ faq:
     title: "How can you add a payment method?"
     content: !include faq/faq42.md
   43:
-    title: "What is the CVC/CVV?"
+    title: "Where can I find the security code?"
     content: !include faq/faq43.md
   44:
     title: "Why do I have to pay a transaction fee?"
@@ -1727,7 +1731,7 @@ bonus:
         title: Cashback is aleady active
         body: You can find more details in your Wallet.
         cancel: Close
-        confirm: Back to Wallet
+        confirm: Go back
       loadingActivationStatus:
         title: Loading activation status
       declaration:

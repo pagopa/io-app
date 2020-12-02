@@ -1,6 +1,7 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
 import { constNull } from "fp-ts/lib/function";
+import DeviceInfo from "react-native-device-info";
 import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
@@ -150,11 +151,20 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       // as soon as we have the user fiscal code, attach the mixpanel
       // session to the hashed fiscal code of the user
       const fiscalnumber = action.payload.fiscal_code;
-      const identify = sha256(fiscalnumber).then(hash => mp.identify(hash));
+
+      // Re-identify the user using the hashed fiscal code.
+      // It's important the flow order and the order in which the arguments are passed to the
+      // mp.alias function because the second argument is the 'Main ID' for mixpanel so the events
+      // will be showned in the Main ID page.
+      const identifyAndAlias = sha256(fiscalnumber).then(hash =>
+        mp.identify(hash).then(() => mp.alias(DeviceInfo.getUniqueId(), hash))
+      );
+
       return Promise.all([
         mp.track(action.type).then(constNull, constNull),
-        identify.then(constNull, constNull)
+        identifyAndAlias.then(constNull, constNull)
       ]);
+
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
         SPID_URL: action.payload.url
