@@ -327,10 +327,10 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           >
             {`${localeDateFormat(
               props.period.startDate,
-              I18n.t("global.dateFormats.fullMonthLiteral")
+              I18n.t("global.dateFormats.dayFullMonth")
             )} - ${localeDateFormat(
               props.period.endDate,
-              I18n.t("global.dateFormats.fullMonthLiteralWithYear")
+              I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
             )}`}
           </H5>
           <View hspacer={true} small={true} />
@@ -342,8 +342,8 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           style={[
             styles.row,
             styles.spaced,
-            styles.alignItemsCenter,
-            styles.justifyContentCenter
+            styles.alignItemsCenter
+            // styles.justifyContentCenter
           ]}
         >
           <H2 weight={"Bold"} color={"white"}>
