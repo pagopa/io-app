@@ -1,4 +1,56 @@
 ---
+date: 
+  formats:
+    default: "%d/%m/%Y"
+    short: "%d %B"
+    long: "%d %B %Y"
+  day_names:
+    - "Sunday"
+    - "Monday"
+    - "Tuesday"
+    - "Wednesday"
+    - "Thursday"
+    - "Friday"
+    - "Saturday"
+  abbr_day_names:
+    - "Sun"
+    - "Mon"
+    - "Tue"
+    - "Wed"
+    - "Thu"
+    - "Fri"
+    - "Sat"
+  month_names:
+    - ""
+    - "January"
+    - "February"
+    - "March"
+    - "April"
+    - "May"
+    - "June"
+    - "July"
+    - "August"
+    - "September"
+    - "October"
+    - "November"
+    - "December"
+  abbr_month_names:
+    - ""
+    - "Jan"
+    - "Feb"
+    - "Mar"
+    - "Apr"
+    - "May"
+    - "Jun"
+    - "Jul"
+    - "Aug"
+    - "Sept"
+    - "Oct"
+    - "Nov"
+    - "Dec"
+  meridian:
+    - "am"
+    - "pm"
 global:
   password: Password
   username: Username
@@ -37,6 +89,14 @@ global:
     tomorrow: "tomorrow"
   dateFormats:
     shortFormat: "%d/%m/%Y"
+    fullFormatShortMonthLiteral: "%d %b %Y"
+    fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatFullMonthLiteral: "%d %B %Y"
+    fullMonthLiteral: "%B"
+    fullMonthLiteralWithYear: "%B %Y"
+    numericMonthYear: "%m/%Y"
+    dayMonthWithTime: "%d %b, %H:%M"
+    dayFullMonth: "%d %B"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "MM/DD"
@@ -1026,8 +1086,8 @@ wallet:
         three: ", but they can only be used at physical stores (POS)."
       debit:
         title: "Does your card have other logos?"
-        body: "If this card has also the logo of another circuit (Maestro, Visa, Mastercard, etc.), don't forget to add it to your wallet as a ** debit card ** as well. By doing so, you'll be able to collect all the valid transactions for the cashback initiative and make in-app payments. "
-        addCta: "Add Debit Card"
+        body: "If this card has also the logo of another circuit (Maestro, Visa, Mastercard, etc.), don't forget to add it to your wallet as a ** debit (or credit) card ** as well. By doing so, you'll be able to collect all the valid transactions for the cashback initiative and make in-app payments. "
+        addCta: "Add as Debit/Credit Card"
       removeCta: "Delete this payment method"
   satispay:
     details:
@@ -1337,6 +1397,12 @@ systemsOff:
   closeApp: close the application and try again
 contextualHelp:
   title: IO helps you
+  sendPersonalInfo:
+    title: New report
+    description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."
+    cta: Share your fiscal code, in order to make it easier to solve the problem.
+    informativeTitle: How do you know my fiscal code?
+    informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
 instabug:
   contextualHelp:
     title1: Do you need help?
@@ -1344,7 +1410,7 @@ instabug:
     buttonBug: Write to the IO team
     descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
     buttonChat: Reopen a report
-    assistanceWorkHours: IO assistance is available on weekdays from 8.00 to 20.00 and on holidays from 8.00 to 12.00
+    assistanceWorkHours: IO assistance is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun and holidays from 8.00 to 13.00
 faq:
   1:
     title: "What is SPID?"
@@ -1768,7 +1834,7 @@ bonus:
       verify: "Check IBAN"
       insertion:
         title: "IBAN for transfer"
-        body1: "Please enter the IBAN of your account on which you want to receive the credit, once the valid transactions have been consolidated."
+        body1: "Please enter the IBAN of your account on which you want to receive the refund."
         body2: "The IBAN will be checked to make sure it's registered to you. You can also add your IBAN later."
       koWrong:
         title: "Incorrect IBAN"
@@ -1787,8 +1853,8 @@ bonus:
       success: "IBAN successfully entered"
     details:
       howItWorks:
-        title: "How does Cashback work?"
-        body: "1. The Cashback program is divided into phases of variable duration: the **current phase** begins on {{startDate}} and ends on {{endDate}}. **Collect valid transactions** within each phase using the **payment methods you enrolled**.\n
+        title: "Christmas Extra Cashback"
+        body: "1. The Cashback program is divided into several phases. The current one begins on **{{startDate}} and ends on {{endDate}}**. **Collect valid transactions** within each phase using the **payment methods you enrolled**.\n
 
                2. During this phase, if you reach **{{minTransactionNumber}} transactions**, you will receive a {{cashbackPercentage}}% cashback, up to a maximum of **€{{maxTransactionCashback}}** per transaction and a maximum refund of **€{{maxPeriodCashback}}** in the whole phase.\n
 

@@ -1,4 +1,56 @@
 ---
+date: 
+  formats:
+    default: "%d/%m/%Y"
+    short: "%d %B"
+    long: "%d %B %Y"
+  day_names:
+    - "Domenica"
+    - "Lunedì"
+    - "Martedì"
+    - "Mercoledì"
+    - "Giovedì"
+    - "Venerdì"
+    - "Sabato"
+  abbr_day_names:
+    - "Dom"
+    - "Lun"
+    - "Mar"
+    - "Mer"
+    - "Gio"
+    - "Ven"
+    - "Sab"
+  month_names:
+    - ""
+    - "Gennaio"
+    - "Febbraio"
+    - "Marzo"
+    - "Aprile"
+    - "Maggio"
+    - "Giugno"
+    - "Luglio"
+    - "Agosto"
+    - "Settembre"
+    - "Ottobre"
+    - "Novembre"
+    - "Dicembre"
+  abbr_month_names:
+    - ""
+    - "Gen"
+    - "Feb"
+    - "Mar"
+    - "Apr"
+    - "Mag"
+    - "Giu"
+    - "Lug"
+    - "Ago"
+    - "Set"
+    - "Ott"
+    - "Nov"
+    - "Dic"
+  meridian:
+    - "am"
+    - "pm"
 global:
   password: Password
   username: Username
@@ -37,6 +89,14 @@ global:
     tomorrow: "domani"
   dateFormats:
     shortFormat: "%d/%m/%Y"
+    fullFormatShortMonthLiteral: "%d %b %Y"
+    fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatFullMonthLiteral: "%d %B %Y"
+    fullMonthLiteral: "%B"
+    fullMonthLiteralWithYear: "%B %Y"
+    dayMonthWithTime: "%d %b, %H:%M"
+    dayFullMonth: "%d %B"
+    numericMonthYear: "%m/%Y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "DD/MM"
@@ -1053,8 +1113,8 @@ wallet:
         three: ", ma solo presso i punti fisici (POS)."
       debit:
         title: "La tua carta ha più di un logo?"
-        body: "Se su questa carta è presente anche il logo di un altro circuito (Maestro, Visa, Mastercard, etc.), aggiungila al portafoglio anche come **carta di debito**. In questo modo potrai collezionare correttamente le transazioni ai fini del Cashback ed effettuare pagamenti su IO."
-        addCta: "Aggiungi Carta di Debito"
+        body: "Se su questa carta è presente anche il logo di un altro circuito (Maestro, Visa, Mastercard, etc.), aggiungila al portafoglio anche come **carta di debito (o credito)**. In questo modo potrai collezionare correttamente le transazioni ai fini del Cashback ed effettuare pagamenti su IO."
+        addCta: "Aggiungi Carta di Debito/Credito"
       removeCta: "Elimina questo metodo di pagamento"
   satispay:
     details:
@@ -1368,6 +1428,12 @@ systemsOff:
   closeApp: chiudi l'applicazione e riprova
 contextualHelp:
   title: IO ti aiuto
+  sendPersonalInfo:
+    title: Nuova segnalazione
+    description: "Il Team di IO è a disposizione per risolvere eventuali **problemi** dell’app o per ascoltare i **suggerimenti** dei nostri utenti relativi a **migliorie o nuove funzionalità.**\n\nSe hai dubbi sul **contenuto di un messaggio** o su un servizio, ti consigliamo di **contattare l'ente relativo**: troverai i contatti in fondo al messaggio o nella scheda del servizio in questione."
+    cta: Condividi il tuo codice fiscale, in modo da rendere più semplice la risoluzione del problema.
+    informativeTitle: Come sapete il mio codice fiscale?
+    informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 instabug:
   contextualHelp:
     title1: Hai bisogno di aiuto?
@@ -1375,7 +1441,7 @@ instabug:
     buttonBug: Scrivi al team di IO
     descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
     buttonChat: Riapri una segnalazione
-    assistanceWorkHours: L'assistenza di IO è disponibile nei giorni feriali dalle ore 8.00 alle 20.00 e nei festivi dalle ore 8.00 alle 12.00
+    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8.00 alle 20.00; sabato, domenica e giorni festivi dalle ore 8.00 alle 13.00
 faq:
   1:
     title: "Cos'è SPID?"
@@ -1800,7 +1866,7 @@ bonus:
       verify: "Controlla IBAN"
       insertion:
         title: "IBAN per l’accredito"
-        body1: "Indica qui l’IBAN del tuo conto su cui ricevere l’accredito, una volta consolidate le transazioni valide."
+        body1: "Indica qui l’IBAN del tuo conto su cui ricevere l’accredito."
         body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
       koWrong:
         title: "IBAN non corretto"
@@ -1819,8 +1885,8 @@ bonus:
       success: "IBAN inserito con successo"
     details:
       howItWorks:
-        title: "Come funziona il Cashback?"
-        body: "1. Il programma Cashback si divide in periodi di durata variabile: il **periodo corrente** inizia il {{startDate}} e finisce il {{endDate}}. **Accumula transazioni** valide durante tutta la durata di ciascun periodo con i **metodi di pagamento che hai attivato**.\n
+        title: "Extra Cashback di Natale"
+        body: "1. Il programma Cashback si divide in periodi. Il periodo corrente inizia il **{{startDate}}** e finisce il **{{endDate}}**. **Accumula transazioni** valide durante tutta la durata di ciascun periodo con i **metodi di pagamento che hai attivato**.\n
 
                2. In questo periodo, se raggiungi le **{{minTransactionNumber}} transazioni**, riceverai un rimborso pari al {{cashbackPercentage}}% fino ad un rimborso massimo di **{{maxTransactionCashback}} euro** a transazione ed un massimo di **{{maxPeriodCashback}} euro** in tutto il periodo.\n
 

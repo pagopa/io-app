@@ -65,7 +65,6 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
       <SectionCardComponent
         label={I18n.t("bonus.requestLabel")}
         onPress={onButtonPress}
-        isNew={true}
         cardStyle={
           noMethod
             ? { backgroundColor: customVariables.brandPrimary }

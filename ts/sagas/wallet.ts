@@ -584,7 +584,8 @@ export function* watchWalletSaga(
   const paymentManagerClient: PaymentManagerClient = PaymentManagerClient(
     paymentManagerUrlPrefix,
     walletToken,
-    defaultRetryingFetch(),
+    // despite both fetch have same configuration, keeping both ensures possible modding
+    defaultRetryingFetch(fetchPaymentManagerLongTimeout, 0),
     defaultRetryingFetch(fetchPaymentManagerLongTimeout, 0)
   );
 
