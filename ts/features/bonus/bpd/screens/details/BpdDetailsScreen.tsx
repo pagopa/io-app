@@ -19,11 +19,11 @@ import { bpdTransactionsForSelectedPeriod } from "../../store/reducers/details/t
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import { navigateToBpdTransactions } from "../../navigation/actions";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { navigateBack } from "../../../../../store/actions/navigation";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
-import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
-import { navigateBack } from "../../../../../store/actions/navigation";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
