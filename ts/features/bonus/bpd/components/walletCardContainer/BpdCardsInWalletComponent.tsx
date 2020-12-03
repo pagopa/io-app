@@ -1,4 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -20,8 +21,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const BpdCardsInWalletContainer: React.FunctionComponent<Props> = props => {
-  // TODO: a less aggressive refresh?
-  useActionOnFocus(props.load);
+  // If the user does "pull to refresh", this timer is ignored and the refresh is forced
+  useActionOnFocus(props.load, 30000 as Millisecond);
 
   return (
     <View>
