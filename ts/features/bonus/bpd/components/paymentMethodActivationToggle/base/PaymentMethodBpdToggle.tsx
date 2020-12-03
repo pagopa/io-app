@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   leftSection: { flexDirection: "row", flex: 1 }
 });
 
-const retryTimeout = 5000 as Millisecond;
+const retryTimeout = 10000 as Millisecond;
 /**
  * This custom hook handles the load of the initial state and the retry in case of error.
  * TODO: refactor with  {@link useLoadPotValue}
