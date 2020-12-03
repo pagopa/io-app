@@ -1,3 +1,4 @@
+import { Option } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import {
@@ -8,6 +9,7 @@ import {
   StyleSheet
 } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import pagoBancomatLogo from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -17,7 +19,7 @@ import { localeDateFormat } from "../../../../../utils/locale";
 import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
-  abiLogo?: string;
+  abi: Abi;
   expiringDate?: Date;
   user: string;
 };
@@ -69,20 +71,40 @@ const BASE_IMG_W = 160;
 const BASE_IMG_H = 40;
 
 /**
+ * Render the image (if available) or the bank name (if available)
+ * or the generic bancomat string (final fallback).
+ * @param abi
+ * @param size
+ * TODO: refactor with {@link BancomatWalletPreview}
+ */
+const renderBankLogo = (abi: Abi, size: Option<[number, number]>) =>
+  size.fold(
+    <Body numberOfLines={1}>
+      {abi.name ?? I18n.t("wallet.methods.bancomat.name")}
+    </Body>,
+    imgDim => {
+      const imageUrl = abi.logoUrl;
+      const imageStyle: StyleProp<ImageStyle> = {
+        width: imgDim[0],
+        height: imgDim[1],
+        resizeMode: "contain"
+      };
+      return imageUrl ? (
+        <Image source={{ uri: imageUrl }} style={imageStyle} />
+      ) : null;
+    }
+  );
+
+/**
  * The base component that represents a full bancomat card
  * @param props
  * @constructor
  */
 const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
-  const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, props.abiLogo);
-
-  const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
-    undefined,
-    imgDim => ({
-      width: imgDim[0],
-      height: imgDim[1],
-      resizeMode: "contain"
-    })
+  const imgDimensions = useImageResize(
+    BASE_IMG_W,
+    BASE_IMG_H,
+    props.abi?.logoUrl
   );
 
   return (
@@ -90,7 +112,7 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
       <View style={styles.cardBox}>
         <View>
-          <Image style={imageStyle} source={{ uri: props.abiLogo }} />
+          {renderBankLogo(props.abi, imgDimensions)}
           <View spacer={true} />
           {props.expiringDate && (
             <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(

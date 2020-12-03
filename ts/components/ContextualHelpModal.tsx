@@ -83,8 +83,6 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     ) {
       props.loadContextualHelpData();
     }
-    // refresh / load support token
-    props.loadSupportToken();
   }, [
     pot.isNone(props.potContextualData) || pot.isError(props.potContextualData)
   ]);
@@ -147,6 +145,9 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
    */
   const handleOnRequestAssistance = (reportType: BugReporting.reportType) => {
     if (props.isAuthenticated) {
+      // refresh / load support token
+      props.loadSupportToken();
+
       setShowSendPersonalInfo(true);
       setSupportType(reportType);
       return;

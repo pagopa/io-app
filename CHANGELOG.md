@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0-rc.2](https://github.com/pagopa/io-app/compare/1.11.0-rc.1...1.11.0-rc.2) (2020-12-03)
+
+
+### Features
+
+* **Bonus pagamenti digitali:** Valid transactions text update ([#2487](https://github.com/pagopa/io-app/issues/2487)) ([9594272](https://github.com/pagopa/io-app/commit/9594272f716871f4e84424bbe2d083b7721fc070))
+* **Bonus Pagamenti Digitali:** [[#175777655](https://www.pivotaltracker.com/story/show/175777655)] Display bank fallback if logo is not available in bancomat card ([#2488](https://github.com/pagopa/io-app/issues/2488)) ([70eedd7](https://github.com/pagopa/io-app/commit/70eedd7e30ae91e5ebad2bbe422afdc5b9355a23))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#175991108](https://www.pivotaltracker.com/story/show/175991108)] Copy updates [#2486](https://github.com/pagopa/io-app/issues/2486) ([cdb8f43](https://github.com/pagopa/io-app/commit/cdb8f43db09fde32d59abe8a1a3b093fe6cc27c5))
+
 ## [1.11.0-rc.1](https://github.com/pagopa/io-app/compare/1.11.0-rc.0...1.11.0-rc.1) (2020-12-03)
 
 
