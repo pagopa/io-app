@@ -16,7 +16,7 @@ import { PaymentMethod } from "../../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 import { PaymentMethodGroupedList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
-import { walletV2WithActivationStatusSelector } from "../../store/reducers/details/combiner";
+import { paymentMethodsWithActivationStatusSelector } from "../../store/reducers/details/combiner";
 
 const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.title"),
@@ -89,7 +89,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  potWallets: walletV2WithActivationStatusSelector(state)
+  potWallets: paymentMethodsWithActivationStatusSelector(state)
 });
 
 export default connect(
