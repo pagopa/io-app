@@ -1883,10 +1883,7 @@ bonus:
           summary:
             bottomSheet:
               title: "When will you find your transactions?"
-              body: "Transactions are collected the day after they are recorded by the banks. 
-                It might take up to 72 hours before you see your transaction on IO, although the process is usually faster. 
-                It may take a little longer if the purchase has been performed duing the weekend or holidays, or in other exceptional occasions. 
-                Don't worry: all valid transactions occurred throughout the phase will be collected and considered for refunds and ranking!"
+              body: "Transactions are collected the day after they are recorded by the banks.\n\n**It might take up to 72 hours before you see your transaction on IO**, although the process is usually faster.\n\n**It may take a little longer if the purchase has been performed duing the weekend or holidays**, or in other exceptional occasions.\n\nDon't worry: all valid transactions occurred throughout the phase will be collected and considered for refunds and ranking!"
             lastUpdated: "Latest valid transaction: "
             link: Anything missing?
             body:

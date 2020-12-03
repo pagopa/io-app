@@ -1,19 +1,20 @@
+import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
-import I18n from "../../../../i18n";
 import { Body } from "../../../../components/core/typography/Body";
+import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
-import { BpdAmount } from "../store/actions/amount";
-import { BpdPeriod } from "../store/actions/periods";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
-import { H4 } from "../../../../components/core/typography/H4";
+import Markdown from "../../../../components/ui/Markdown";
+import I18n from "../../../../i18n";
 import { bottomSheetContent } from "../../../../utils/bottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
+import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { BpdAmount } from "../store/actions/amount";
+import { BpdPeriod } from "../store/actions/periods";
 
 type Props = {
   lastUpdateDate: string;
@@ -37,11 +38,11 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
     const bottomSheetProps = await bottomSheetContent(
       <>
         <View spacer />
-        <Body>
+        <Markdown>
           {I18n.t(
             "bonus.bpd.details.transaction.detail.summary.bottomSheet.body"
           )}
-        </Body>
+        </Markdown>
       </>,
       I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.title"),
       522,
