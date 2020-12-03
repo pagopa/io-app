@@ -54,7 +54,6 @@ class UpdateAppModal extends React.PureComponent<never, State> {
       hasError: false
     };
   }
-  private idTimeout?: number;
   // No Event on back button android
   private handleBackPress = () => true;
 
@@ -63,9 +62,6 @@ class UpdateAppModal extends React.PureComponent<never, State> {
   }
 
   public componentWillUnmount() {
-    if (this.idTimeout) {
-      clearTimeout(this.idTimeout);
-    }
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
@@ -85,21 +81,22 @@ class UpdateAppModal extends React.PureComponent<never, State> {
     }
 
     // Play/App store native URL
+    // eslint-disable-next-line
     Linking.openURL(storeUrl)
       // Try to fallback to the web URL
       .catch(() => Linking.openURL(webStoreURL))
       // No URL could be opened, show an error message
       .catch(() => this.setError())
       // Hide the error after 5 seconds
-      .then(() => {
-        this.idTimeout = setTimeout(
+      .then(() =>
+        setTimeout(
           () =>
             this.setState({
               hasError: false
             }),
           timeoutErrorMsg
-        );
-      });
+        )
+      );
   };
 
   /**
