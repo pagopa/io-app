@@ -1915,10 +1915,7 @@ bonus:
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
-              body: "Le transazioni vengono collezionate il giorno dopo che i circuiti bancari le hanno contabilizzate. 
-                Possono passare fino a 72 ore prima che tu veda la transazione su IO, anche se di solito il processo è più rapido. 
-                Potrebbe volerci un po’ di più nel caso in cui l’acquisto sia a ridosso del weekend o di qualche festività, oppure in qualche altra condizione particolare.
-                Non ti preoccupare: tutte le transazioni valide fatte durante il periodo del Cashback verranno collezionate e considerate per rimborsi e classifica!"
+              body: "Le transazioni vengono collezionate il giorno dopo che i circuiti bancari le hanno contabilizzate.\n**Possono passare fino a 72 ore prima che tu veda la transazione su IO**, anche se di solito il processo è più rapido.\n**Potrebbe volerci un po’ di più nel caso in cui l’acquisto sia a ridosso del weekend o di qualche festività**, oppure in qualche altra condizione particolare.\nNon ti preoccupare: tutte le transazioni valide fatte durante il periodo del Cashback verranno collezionate e considerate per rimborsi e classifica!"
             lastUpdated: "Ultima transazione valida: "
             link: "Manca qualcosa?"
             body:
