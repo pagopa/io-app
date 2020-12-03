@@ -39,6 +39,7 @@ import {
   CitizenPatchDTO,
   PayoffInstrTypeEnum
 } from "../../../../../definitions/bpd/citizen/CitizenPatchDTO";
+import { fetchPaymentManagerLongTimeout } from "../../../../config";
 import { PatchedCitizenResource } from "./patchedTypes";
 
 const headersProducers = <
@@ -254,7 +255,10 @@ type Options = {
 export function BackendBpdClient(
   baseUrl: string,
   token: string,
-  fetchApi: typeof fetch = defaultRetryingFetch()
+  fetchApi: typeof fetch = defaultRetryingFetch(
+    fetchPaymentManagerLongTimeout,
+    0
+  )
 ) {
   const options: Options = {
     baseUrl,
