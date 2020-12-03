@@ -32,9 +32,9 @@ export class SessionManager<T> {
    *    again (depending on the state of their retry policy) and the flow starts
    *    again from (1)
    */
-  private exclusiveTokenUpdate = async () => {
+  private exclusiveTokenUpdate = async (forceUpdate = false) => {
     await this.mutex.runExclusive(async () => {
-      if (this.token === undefined) {
+      if (this.token === undefined || forceUpdate) {
         // token is not available, attempt to fetch a new token
         try {
           this.token = (await this.refreshSession()).toUndefined();
@@ -80,6 +80,28 @@ export class SessionManager<T> {
    * Returns the current token, is there's one
    */
   public get = () => fromNullable(this.token);
+
+  /**
+   * Returns a new token
+   */
+  public getNewToken = () => async () => {
+    let count = 0;
+    while (count <= this.maxRetries) {
+      count += 1;
+      this.exclusiveTokenUpdate(true);
+      if (this.token === undefined) {
+        const waitSeconds = (Math.ceil(Math.random() * 100) +
+          50) as Millisecond;
+
+        await delayAsync(waitSeconds);
+
+        continue;
+      }
+      return fromNullable(this.token);
+    }
+    // max retries reached, reject the promise
+    throw new Error("max-retries");
+  };
 
   /**
    * Returns a new function, with the same params of the provided function but
