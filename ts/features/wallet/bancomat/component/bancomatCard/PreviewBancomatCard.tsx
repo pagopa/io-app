@@ -4,9 +4,10 @@ import { Dispatch } from "redux";
 import { Card } from "../../../../../../definitions/pagopa/walletv2/Card";
 import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import BaseBancomatCard from "./BaseBancomatCard";
 
-type OnboardingData = { bancomat: Card; logoUrl?: string };
+type OnboardingData = { bancomat: Card; abi?: Abi };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -18,7 +19,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const PreviewBancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
-    abiLogo={props.logoUrl}
+    abiLogo={props.abi?.logoUrl}
+    abiName={props.abi?.name}
     expiringDate={props.bancomat.expiringDate}
     user={props.nameSurname ?? ""}
   />

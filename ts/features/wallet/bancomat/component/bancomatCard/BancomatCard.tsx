@@ -31,6 +31,7 @@ const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
  */
 const BancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
+    abiName={props.enhancedBancomat.abiInfo?.name}
     abiLogo={props.enhancedBancomat.abiInfo?.logoUrl}
     expiringDate={getExpireDate(
       props.enhancedBancomat.info.expireYear,
