@@ -1,12 +1,12 @@
 /* eslint-disable functional/immutable-data */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useRef } from "react";
 import { ImageSourcePropType, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { fetchPaymentManagerLongTimeout } from "../../../../../../config";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { useNavigationContext } from "../../../../../../utils/hooks/useOnFocus";
 import {
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
   leftSection: { flexDirection: "row", flex: 1 }
 });
 
-const retryTimeout = 10000 as Millisecond;
 /**
  * This custom hook handles the load of the initial state and the retry in case of error.
  * TODO: refactor with  {@link useLoadPotValue}
@@ -97,7 +96,7 @@ const useInitialValue = (props: Props) => {
     ) {
       // If the pot is NoneError, the navigation focus is on the element
       // and no other retry are scheduled
-      timerRetry.current = setTimeout(retry, retryTimeout);
+      timerRetry.current = setTimeout(retry, fetchPaymentManagerLongTimeout);
     }
   }, [props.bpdPotActivation, timerRetry.current, navigation.isFocused()]);
 
