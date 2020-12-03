@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../store/reducers/types";
 import {
-  bancomatListSelector,
-  satispayListSelector
+  bancomatListVisibleInWalletSelector,
+  satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
 import BancomatWalletPreview from "../bancomat/component/BancomatWalletPreview";
 import SatispayWalletPreview from "../satispay/SatispayWalletPreview";
@@ -52,8 +52,8 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  bancomatList: bancomatListSelector(state),
-  satispayList: satispayListSelector(state)
+  bancomatList: bancomatListVisibleInWalletSelector(state),
+  satispayList: satispayListVisibleInWalletSelector(state)
 });
 
 export default connect(

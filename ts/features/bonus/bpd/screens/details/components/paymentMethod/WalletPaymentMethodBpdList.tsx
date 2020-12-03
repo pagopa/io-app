@@ -16,7 +16,7 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import { PaymentMethodGroupedList } from "../../../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
 import {
   atLeastOnePaymentMethodHasBpdEnabledSelector,
-  walletV2WithActivationStatusSelector
+  paymentMethodsWithActivationStatusSelector
 } from "../../../../store/reducers/details/combiner";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -108,7 +108,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  potWallets: walletV2WithActivationStatusSelector(state),
+  potWallets: paymentMethodsWithActivationStatusSelector(state),
   atLeastOnePaymentMethodActive: atLeastOnePaymentMethodHasBpdEnabledSelector(
     state
   )
