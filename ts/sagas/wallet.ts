@@ -191,7 +191,6 @@ function* startOrResumeAddCreditCardSaga(
     creditCard: action.payload.creditCard,
     psp: undefined
   };
-
   while (true) {
     // before each step we select the updated payment state to know what has
     // been already done.
@@ -205,7 +204,6 @@ function* startOrResumeAddCreditCardSaga(
     // Note that the new wallet will not be visibile to the user until all the
     // card onboarding steps have been completed.
     //
-
     if (pot.isNone(state.creditCardAddWallet)) {
       yield put(addWalletCreditCardRequest({ creditcard: creditCardWallet }));
       const responseAction = yield take([
@@ -226,7 +224,6 @@ function* startOrResumeAddCreditCardSaga(
       // all is ok, continue to the next step
       continue;
     }
-
     //
     // Second step: verify the card with a "fake" payment.
     //
@@ -274,28 +271,35 @@ function* startOrResumeAddCreditCardSaga(
     // Even though this step is optional, in practice Pagopa will always
     // require the 3DS checkout for cards that gets added to the wallet.
     //
-
     const urlCheckout3ds =
       state.creditCardVerification.value.data.urlCheckout3ds;
-    const pagoPaToken = pmSessionManager.get();
-
-    if (pot.isNone(state.creditCardCheckout3ds)) {
-      if (urlCheckout3ds !== undefined && pagoPaToken.isSome()) {
-        yield put(
-          creditCardCheckout3dsRequest({
-            urlCheckout3ds,
-            paymentManagerToken: pagoPaToken.value
-          })
-        );
-        yield take(getType(creditCardCheckout3dsSuccess));
-        // all is ok, continue to the next step
-        continue;
-      } else {
-        // if there is no need for a 3ds checkout, simulate a success checkout
-        // to proceed to the next step
-        yield put(creditCardCheckout3dsSuccess("done"));
-        continue;
+    try {
+      // Request a new token to the PM. This prevent expired token during the webview navigation.
+      // If the request for the new token fails a new Error is catched, the step fails and we exit the flow.
+      const pagoPaToken = yield call(pmSessionManager.getNewToken());
+      if (pot.isNone(state.creditCardCheckout3ds)) {
+        if (urlCheckout3ds !== undefined && pagoPaToken.isSome()) {
+          yield put(
+            creditCardCheckout3dsRequest({
+              urlCheckout3ds,
+              paymentManagerToken: pagoPaToken.value
+            })
+          );
+          yield take(getType(creditCardCheckout3dsSuccess));
+          // all is ok, continue to the next step
+          continue;
+        } else {
+          // if there is no need for a 3ds checkout, simulate a success checkout
+          // to proceed to the next step
+          yield put(creditCardCheckout3dsSuccess("done"));
+          continue;
+        }
       }
+    } catch (e) {
+      if (action.payload.onFailure) {
+        action.payload.onFailure(e.message);
+      }
+      return;
     }
 
     //
