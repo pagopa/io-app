@@ -82,6 +82,10 @@ export function* getWalletsV2(
         yield put(fetchWalletsSuccess(wallets));
         return right<Error, ReadonlyArray<Wallet>>(wallets);
       } else {
+        if (getResponse.value.status === 401) {
+          yield put(sessionExpired());
+        }
+
         throw Error(`response status ${getResponse.value.status}`);
       }
     } else {
@@ -89,7 +93,6 @@ export function* getWalletsV2(
     }
   } catch (error) {
     yield put(fetchWalletsFailure(error));
-    yield put(sessionExpired());
     return left<Error, ReadonlyArray<Wallet>>(error);
   }
 }
