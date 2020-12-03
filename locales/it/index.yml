@@ -1112,8 +1112,8 @@ wallet:
         three: ", ma solo presso i punti fisici (POS)."
       debit:
         title: "La tua carta ha più di un logo?"
-        body: "Se su questa carta è presente anche il logo di un altro circuito (Maestro, Visa, Mastercard, etc.), aggiungila al portafoglio anche come **carta di debito**. In questo modo potrai collezionare correttamente le transazioni ai fini del Cashback ed effettuare pagamenti su IO."
-        addCta: "Aggiungi Carta di Debito"
+        body: "Se su questa carta è presente anche il logo di un altro circuito (Maestro, Visa, Mastercard, etc.), aggiungila al portafoglio anche come **carta di debito (o credito)**. In questo modo potrai collezionare correttamente le transazioni ai fini del Cashback ed effettuare pagamenti su IO."
+        addCta: "Aggiungi Carta di Debito/Credito"
       removeCta: "Elimina questo metodo di pagamento"
   satispay:
     details:
@@ -1440,7 +1440,7 @@ instabug:
     buttonBug: Scrivi al team di IO
     descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
     buttonChat: Riapri una segnalazione
-    assistanceWorkHours: L'assistenza di IO è disponibile nei giorni feriali dalle ore 8.00 alle 20.00 e nei festivi dalle ore 8.00 alle 12.00
+    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8.00 alle 20.00; sabato, domenica e giorni festivi dalle ore 8.00 alle 13.00
 faq:
   1:
     title: "Cos'è SPID?"
