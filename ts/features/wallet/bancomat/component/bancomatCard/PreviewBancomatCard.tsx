@@ -7,7 +7,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import BaseBancomatCard from "./BaseBancomatCard";
 
-type OnboardingData = { bancomat: Card; abi?: Abi };
+type OnboardingData = { bancomat: Card; abi: Abi };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -19,8 +19,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const PreviewBancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
-    abiLogo={props.abi?.logoUrl}
-    abiName={props.abi?.name}
+    abi={props.abi}
     expiringDate={props.bancomat.expiringDate}
     user={props.nameSurname ?? ""}
   />

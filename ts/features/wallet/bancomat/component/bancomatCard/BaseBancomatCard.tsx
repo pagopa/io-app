@@ -15,9 +15,10 @@ import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 
 type Props = {
-  abiLogo?: string;
+  abi: Abi;
   expiringDate?: Date;
   user: string;
 };
@@ -74,7 +75,11 @@ const BASE_IMG_H = 40;
  * @constructor
  */
 const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
-  const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, props.abiLogo);
+  const imgDimensions = useImageResize(
+    BASE_IMG_W,
+    BASE_IMG_H,
+    props.abi?.logoUrl
+  );
 
   const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
     undefined,
@@ -90,7 +95,7 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
       <View style={styles.cardBox}>
         <View>
-          <Image style={imageStyle} source={{ uri: props.abiLogo }} />
+          <Image style={imageStyle} source={{ uri: props.abi?.logoUrl }} />
           <View spacer={true} />
           {props.expiringDate && (
             <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(

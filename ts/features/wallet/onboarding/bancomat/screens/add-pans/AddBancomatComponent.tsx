@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
   flexStart: { alignSelf: "flex-start" }
 });
 const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const [abiInfo, setAbiInfo] = React.useState<Abi | undefined>(undefined);
+  const [abiInfo, setAbiInfo] = React.useState<Abi>({});
 
   React.useEffect(() => {
     const abi: Abi | undefined = props.abiList.find(
       elem => elem.abi === props.pan.abi
     );
-    setAbiInfo(abi ?? undefined);
+    setAbiInfo(abi ?? {});
   }, [props.currentIndex]);
 
   return (
