@@ -19,7 +19,7 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
-import { storeUrl } from "../../utils/appVersion";
+import { storeUrl, webStoreURL } from "../../utils/appVersion";
 
 const timeoutErrorMsg: Millisecond = 5000 as Millisecond;
 
@@ -69,25 +69,37 @@ class UpdateAppModal extends React.PureComponent<never, State> {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
+  private setError = () =>
+    new Promise(resolve => {
+      this.setState(
+        {
+          hasError: true
+        },
+        resolve
+      );
+    });
+
   private openAppStore = () => {
-    // the error is already displayed
     if (this.state.hasError) {
       return;
     }
-    // storeUrl is not a webUrl, try to open it
-    Linking.openURL(storeUrl).catch(() => {
-      // Change state to show the error message
-      this.setState({
-        hasError: true
+
+    // Play/App store native URL
+    Linking.openURL(storeUrl)
+      // Try to fallback to the web URL
+      .catch(() => Linking.openURL(webStoreURL))
+      // No URL could be opened, show an error message
+      .catch(() => this.setError())
+      // Hide the error after 5 seconds
+      .then(() => {
+        this.idTimeout = setTimeout(
+          () =>
+            this.setState({
+              hasError: false
+            }),
+          timeoutErrorMsg
+        );
       });
-      // After 5 seconds restore state
-      // eslint-disable-next-line
-      this.idTimeout = setTimeout(() => {
-        this.setState({
-          hasError: false
-        });
-      }, timeoutErrorMsg);
-    });
   };
 
   /**
