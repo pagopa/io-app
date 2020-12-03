@@ -1,6 +1,5 @@
 /* eslint-disable functional/immutable-data */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useRef } from "react";
