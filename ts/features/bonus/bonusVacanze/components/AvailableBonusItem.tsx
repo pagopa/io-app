@@ -72,9 +72,6 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
   const disabledStyle = isComingSoon ? styles.disabled : {};
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusItem[getLocalePrimaryWithFallback()];
-  const maybeSponsorDescription = maybeNotNullyString(
-    bonusItem.sponsorship_description
-  );
   return (
     <ListItem style={styles.listItem} onPress={props.onPress}>
       <View style={styles.columnLeft}>
@@ -93,13 +90,11 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
               )}
             </View>
           </Row>
-          {maybeSponsorDescription.isSome() && (
-            <Row>
-              <Text style={[styles.servicesName, disabledStyle]}>
-                {maybeSponsorDescription.value}
-              </Text>
-            </Row>
-          )}
+          <Row>
+            <Text style={[styles.servicesName, disabledStyle]}>
+              {bonusTypeLocalizedContent.description}
+            </Text>
+          </Row>
         </Grid>
       </View>
       <View style={styles.columnRight}>
