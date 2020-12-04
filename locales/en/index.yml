@@ -724,9 +724,9 @@ payment:
 wallet:
   wallet: Wallet
   incoming:
-    title: "Incoming"
-    message: "This payment method will be available in a future version"
-  featured: Higlighted 
+    title: "Upcoming"
+    message: "This payment method will be available in a future release"
+  featured: Highlighted 
   creditCard:
     onboardingAttempts:
       title: Attempts to onboard payment method
@@ -983,7 +983,7 @@ wallet:
   continue: Pay this notice
   backToPayments: Back to payments
   methods:
-    comingSoon: incoming
+    comingSoon: upcoming
     newCome: New
     card:
       name: Credit, debit or prepaid card
@@ -1938,7 +1938,7 @@ bonus:
         status:
           active: Active
           closed: Closed
-          inactive: Incoming
+          inactive: Upcoming
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
