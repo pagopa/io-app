@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { BackHandler, ScrollView, StyleSheet } from "react-native";
 import { NavigationContext, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -26,7 +26,6 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { getBrightness, setBrightness } from "../../utils/brightness";
-import { navSelector } from "../../store/reducers/navigationHistory";
 
 type Props = ReturnType<typeof mapStateToProps> &
   NavigationInjectedProps &
@@ -70,15 +69,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.fiscalCode.help"
 };
 
-/* type State = {
-  baseBrightnessValue?: number;
-}; */
-
 const HIGH_BRIGHTNESS = 1.0; // Target screen brightness for a very bright screen
 
 const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
   const navigation = React.useContext(NavigationContext);
 
+  // Store the device brightness value before navigating to this screen
   const [initialBrightness, storeInitialBrightness] = useState(0.0);
 
   const setHighDeviceBrightnessTask = getBrightness()
@@ -97,6 +93,9 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
   const restoreDeviceBrightness = async () =>
     await restoreDeviceBrightnessTask.run();
 
+  const setHighDeviceBrightness = async () =>
+    await setHighDeviceBrightnessTask.run();
+
   const handleBackPress = () => {
     // TODO: add log or silent exception
     void restoreDeviceBrightness();
@@ -104,27 +103,38 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
     return true;
   };
 
-  // Add and remove EventListener effect manager
-
-  useEffect(() => {
-    if (navigation.isFocused()) {
-      BackHandler.addEventListener("hardwareBackPress", handleBackPress);
-    } else {
-      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
-    }
-  }, [navigation.isFocused()]);
-
   // Set and unset brightness effect manager
 
   useEffect(() => {
+    // Using willFocus listener would be less responsive
     if (navigation.isFocused()) {
-      const setHighDeviceBrightness = async () =>
-        await setHighDeviceBrightnessTask.run();
-
       void setHighDeviceBrightness();
-    } else {
-      void restoreDeviceBrightness();
     }
+
+    const didBlurSubscription = navigation.addListener(
+      "didBlur",
+      () => void restoreDeviceBrightness()
+    );
+
+    return () => {
+      didBlurSubscription.remove();
+    };
+  }, [navigation.isFocused()]);
+
+  // Add and remove EventListener effect manager
+  useEffect(() => {
+    // Using willFocus listener would be less responsive
+    if (navigation.isFocused()) {
+      BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+    }
+
+    const didBlurSubscription = navigation.addListener("didBlur", () =>
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress)
+    );
+
+    return () => {
+      didBlurSubscription.remove();
+    };
   }, [navigation.isFocused()]);
 
   // Decode codice catastale effect manager
@@ -151,7 +161,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   };
 
-  const customGoBack: React.FunctionComponent = () => (
+  const customGoBack: ReactElement = (
     <TouchableDefaultOpacity
       onPress={handleBackPress}
       accessible={true}
@@ -236,160 +246,9 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-/*
-class FiscalCodeScreen extends React.PureComponent<Props, State> {
-  private showModal(showBackSide: boolean = false) {
-    if (this.props.profile) {
-      const component = (
-        <FiscalCodeLandscapeOverlay
-          onCancel={this.props.hideModal}
-          profile={this.props.profile}
-          municipality={this.props.municipality.data}
-          showBackSide={showBackSide}
-        />
-      );
-      this.props.showAnimatedModal(component, BottomTopAnimation);
-    }
-  }
-
-  public async componentDidMount() {
-    const screenBrightness = await getBrightness().run();
-    screenBrightness.fold(
-      _ => {
-        this.setState({
-          baseBrightnessValue: undefined
-        });
-      },
-      brightness => {
-        this.setState(
-          {
-            baseBrightnessValue: brightness
-          },
-          async () => await setBrightness(SCREEN_BRIGHTNESS).run()
-        );
-      }
-    );
-
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
-    if (this.props.profile !== undefined) {
-      const maybeCodiceCatastale = CodiceCatastale.decode(
-        this.props.profile.fiscal_code.substring(11, 15)
-      );
-
-      maybeCodiceCatastale.map(c => this.props.loadMunicipality(c));
-    }
-  }
-
-  public async componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
-    await this.resetAppBrightness();
-  }
-
-  private resetAppBrightness = async () => {
-    fromNullable(this.state.baseBrightnessValue).map(
-      async v => await setBrightness(v).run()
-    );
-  };
-
-  private goBack = () => {
-    this.props.navigation.goBack();
-  };
-
-
-
-  private customGoBack = (
-    <TouchableDefaultOpacity
-      onPress={this.handleBackPress}
-      accessible={true}
-      accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}
-    >
-      <IconFont
-        name={"io-back"}
-        style={{ color: customVariables.colorWhite }}
-      />
-    </TouchableDefaultOpacity>
-  );
-
-  public render() {
-    return (
-      <React.Fragment>
-        <DarkLayout
-          allowGoBack={true}
-          customGoBack={this.customGoBack}
-          headerBody={
-            <TouchableDefaultOpacity onPress={this.goBack}>
-              <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
-            </TouchableDefaultOpacity>
-          }
-          contentStyle={styles.darkBg}
-          contextualHelpMarkdown={contextualHelpMarkdown}
-          faqCategories={["profile"]}
-          hideHeader={true}
-          topContent={
-            <React.Fragment>
-              <View spacer={true} />
-              <H5 style={styles.white}>
-                {I18n.t("profile.fiscalCode.fiscalCode")}
-              </H5>
-              <View spacer={true} />
-            </React.Fragment>
-          }
-        >
-          {this.props.profile && (
-            <React.Fragment>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-              >
-                <View style={styles.largeSpacer} />
-                <TouchableDefaultOpacity
-                  onPress={() => this.showModal()}
-                  accessibilityRole={"button"}
-                >
-                  <View style={styles.shadow}>
-                    <FiscalCodeComponent
-                      type={"Full"}
-                      profile={this.props.profile}
-                      getBackSide={false}
-                      municipality={this.props.municipality.data}
-                    />
-                  </View>
-                </TouchableDefaultOpacity>
-                <View style={styles.spacer} />
-                <TouchableDefaultOpacity
-                  onPress={() => this.showModal(true)}
-                  accessibilityRole={"button"}
-                >
-                  <View style={styles.shadow}>
-                    <FiscalCodeComponent
-                      type={"Full"}
-                      profile={this.props.profile}
-                      getBackSide={true}
-                      municipality={this.props.municipality.data}
-                    />
-                  </View>
-                </TouchableDefaultOpacity>
-
-                <View style={styles.largeSpacer} />
-              </ScrollView>
-              <Text white={true} style={styles.text}>
-                {I18n.t("profile.fiscalCode.content")}
-              </Text>
-            </React.Fragment>
-          )}
-        </DarkLayout>
-      </React.Fragment>
-    );
-  }
-}
-
-*/
-
 const mapStateToProps = (state: GlobalState) => ({
   profile: pot.toUndefined(profileSelector(state)),
-  municipality: municipalitySelector(state),
-  nav: navSelector(state)
+  municipality: municipalitySelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
