@@ -6,7 +6,6 @@ import { BonusAvailableContent } from "../../../../../definitions/content/BonusA
 import I18n from "../../../../i18n";
 import variables from "../../../../theme/variables";
 import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
-import { maybeNotNullyString } from "../../../../utils/strings";
 
 type Props = {
   bonusItem: BonusAvailable;
