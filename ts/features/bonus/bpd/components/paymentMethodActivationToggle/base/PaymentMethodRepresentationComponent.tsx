@@ -2,6 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Body } from "../../../../../../components/core/typography/Body";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 
 const styles = StyleSheet.create({
@@ -14,6 +15,10 @@ const styles = StyleSheet.create({
     height: 25,
     overflow: "hidden",
     resizeMode: "contain"
+  },
+  text: {
+    flex: 1,
+    paddingRight: 16
   }
 });
 
@@ -26,6 +31,12 @@ export const PaymentMethodRepresentationComponent: React.FunctionComponent<Payme
   <View style={styles.row}>
     <Image source={props.icon} style={styles.cardIcon} />
     <View hspacer={true} />
-    <Body testID={"paymentMethodCaptionId"}>{props.caption}</Body>
+    <Body
+      testID={"paymentMethodCaptionId"}
+      numberOfLines={1}
+      style={styles.text}
+    >
+      {props.caption}
+    </Body>
   </View>
 );
