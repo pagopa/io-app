@@ -95,7 +95,8 @@ import {
   payCreditCardVerificationSuccess,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
-  setWalletSessionEnabled
+  setWalletSessionEnabled,
+  walletSelector
 } from "../store/actions/wallet/wallets";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -178,7 +179,7 @@ const POLL_TRANSACTION_DELAY_MILLIS = 500;
  *
  */
 // eslint-disable-next-line
-function* startOrResumeAddCreditCardSaga(
+export function* startOrResumeAddCreditCardSaga(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof runStartOrResumeAddCreditCardSaga>
 ) {
@@ -195,7 +196,7 @@ function* startOrResumeAddCreditCardSaga(
     // before each step we select the updated payment state to know what has
     // been already done.
     const state: GlobalState["wallet"]["wallets"] = yield select(
-      _ => _.wallet.wallets
+      walletSelector
     );
 
     //
