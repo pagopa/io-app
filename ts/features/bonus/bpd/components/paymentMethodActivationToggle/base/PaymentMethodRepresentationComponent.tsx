@@ -2,7 +2,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Body } from "../../../../../../components/core/typography/Body";
-import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 
 const styles = StyleSheet.create({
