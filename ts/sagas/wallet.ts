@@ -96,7 +96,7 @@ import {
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
   setWalletSessionEnabled,
-  walletSelector
+  walletsSelector
 } from "../store/actions/wallet/wallets";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -195,10 +195,9 @@ export function* startOrResumeAddCreditCardSaga(
   while (true) {
     // before each step we select the updated payment state to know what has
     // been already done.
-    const state: GlobalState["wallet"]["wallets"] = yield select(
-      walletSelector
+    const state: ReturnType<typeof walletsSelector> = yield select(
+      walletsSelector
     );
-
     //
     // First step: add the credit card to the user wallets
     //
