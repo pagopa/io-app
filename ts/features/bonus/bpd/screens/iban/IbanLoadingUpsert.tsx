@@ -32,6 +32,10 @@ const IbanLoadingUpsert: React.FunctionComponent<Props> = props => {
     if (!props.isLoading) {
       props.onAbort();
     }
+    // REMOVE, codecov TEST
+    if (props.ibanValue) {
+      props.onAbort();
+    }
     return true;
   });
   return (
