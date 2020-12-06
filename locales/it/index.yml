@@ -1845,7 +1845,7 @@ bonus:
             normal: "che userai i metodi di pagamento su cui è attivo il Cashback solo per acquisti effettuati per finalità personali, "
             bold: "non legati ad attività di Impresa, Arte o Professione"
         disclaimer:
-          normal1: "Questa autodichirazione è resa ai sensi del "
+          normal1: "Questa autodichiarazione è resa ai sensi del "
           link: "dpr 28 dicembre 2000 n. 445 art 46 e 47"
           normal2: " e consapevole delle sanzioni penali e della perdita di diritto al rimborso in caso di falsa dichiarazione"
       loadingActivateBpd:
