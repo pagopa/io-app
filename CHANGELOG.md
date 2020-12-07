@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0-rc.1](https://github.com/pagopa/io-app/compare/1.12.0-rc.0...1.12.0-rc.1) (2020-12-07)
+
+
+### Features
+
+* [[#176015857](https://www.pivotaltracker.com/story/show/176015857)] Adds FAQ on AddCardScreen and AddMethodScreen ([#2507](https://github.com/pagopa/io-app/issues/2507)) ([a223a8b](https://github.com/pagopa/io-app/commit/a223a8b34c21cc1fe936499462f3a894fa8b6bb1))
+* [[#176032092](https://www.pivotaltracker.com/story/show/176032092)] Change codecov settings [#2506](https://github.com/pagopa/io-app/issues/2506) ([94fcd68](https://github.com/pagopa/io-app/commit/94fcd68d4942529e352967d2f1d457a2035a9c78))
+* **Bonus Pagamenti Digitali:** [[#175044623](https://www.pivotaltracker.com/story/show/175044623)] add contextual help onboarding bancomat ([#2518](https://github.com/pagopa/io-app/issues/2518)) ([a87c073](https://github.com/pagopa/io-app/commit/a87c073f29e2698f7f476d76160fde2cd8399f27))
+* **Bonus Pagamenti Digitali:** [[#176014374](https://www.pivotaltracker.com/story/show/176014374)] Show section banner status ([#2513](https://github.com/pagopa/io-app/issues/2513)) ([16c599d](https://github.com/pagopa/io-app/commit/16c599d4d4374296b7107988229c03607e1b9a12))
+* **Bonus Pagamenti Digitali:** [[#176027175](https://www.pivotaltracker.com/story/show/176027175)] Adds client for ABI list to static contents ([#2508](https://github.com/pagopa/io-app/issues/2508)) ([75bb74e](https://github.com/pagopa/io-app/commit/75bb74eaaf0f54d02d648ee998271612978cb932))
+* **Bonus Pagamenti Digitali:** [[#176031992](https://www.pivotaltracker.com/story/show/176031992)] Handle wallet failure in bpd detail screen  ([#2514](https://github.com/pagopa/io-app/issues/2514)) ([15db0a4](https://github.com/pagopa/io-app/commit/15db0a49cb10ec7574d11216be91fed799084088)), closes [#176033170](https://www.pivotaltracker.com/story/show/176033170) [#176033170](https://www.pivotaltracker.com/story/show/176033170) [#176033170](https://www.pivotaltracker.com/story/show/176033170)
+* **Bonus Pagamenti Digitali:** [[#176033170](https://www.pivotaltracker.com/story/show/176033170)] Show BPDCard if wallets has error ([#2512](https://github.com/pagopa/io-app/issues/2512)) ([6c4e594](https://github.com/pagopa/io-app/commit/6c4e5949c728e5eca94818885db85f41ba1ce797))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#175717738](https://www.pivotaltracker.com/story/show/175717738)] Fix android goback button on BPD Cashback ([#2489](https://github.com/pagopa/io-app/issues/2489)) ([3bf7b21](https://github.com/pagopa/io-app/commit/3bf7b21876430ebbc13205569c36ccec9177a241))
+* **Bonus Pagamenti Digitali:** [[#176007328](https://www.pivotaltracker.com/story/show/176007328)] Overflow of payment method representation component (used in bpd toggle) ([#2493](https://github.com/pagopa/io-app/issues/2493)) ([d4416fd](https://github.com/pagopa/io-app/commit/d4416fdc7eabdcc93995d28c9e83ca3f4dbffb0a))
+* **Bonus Pagamenti Digitali:** [[#176027161](https://www.pivotaltracker.com/story/show/176027161)] When a link inside a contextual help is pressed, the modal is not automatically closed  ([#2516](https://github.com/pagopa/io-app/issues/2516)) ([064ac0d](https://github.com/pagopa/io-app/commit/064ac0d20173aad4fcd0c3d2e0ef79a9a37a107f))
+* **Bonus Pagamenti Digitali:** [[#176027176](https://www.pivotaltracker.com/story/show/176027176)] Corrected bancomat string fallback ([#2517](https://github.com/pagopa/io-app/issues/2517)) ([1393b32](https://github.com/pagopa/io-app/commit/1393b322129e15f5d80bc57fc1d1de76a3922371))
+* **Bonus Pagamenti Digitali:** [[#176033245](https://www.pivotaltracker.com/story/show/176033245)] Android duplicate IBAN insertion ([#2511](https://github.com/pagopa/io-app/issues/2511)) ([2910846](https://github.com/pagopa/io-app/commit/29108464b23414b40e971d6c04ae422a6ddff274))
+
 ## [1.12.0-rc.0](https://github.com/pagopa/io-app/compare/1.11.0-rc.2...1.12.0-rc.0) (2020-12-07)
 
 
