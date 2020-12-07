@@ -75,6 +75,7 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -528,6 +529,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         faqCategories={["wallet", "wallet_methods"]}
         gradientHeader={true}
         headerPaddingMin={true}
+        sectionStatus={<SectionStatusComponent sectionKey={"wallets"} />}
       >
         {this.newMethodAdded ? (
           this.newMethodAddedContent

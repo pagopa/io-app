@@ -1,23 +1,24 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleProp, StyleSheet, TextStyle } from "react-native";
 import themeVariables from "../theme/variables";
 import IconFont from "./ui/IconFont";
+import { Link } from "./core/typography/Link";
 
 type Props = {
   text: string;
   iconName?: string;
+  iconSize?: number;
   iconColor?: string;
+  textStyle?: StyleProp<TextStyle>;
 };
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row"
   },
-  icon: {
-    marginTop: 4
-  },
+  icon: {},
   text: {
-    marginLeft: 8,
+    marginLeft: 16,
     paddingRight: 18,
     fontSize: themeVariables.fontSizeBase
   }
@@ -33,10 +34,21 @@ const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => (
     <IconFont
       style={styles.icon}
       name={props.iconName || "io-notice"}
-      size={iconSize}
+      size={props.iconSize ?? iconSize}
       color={props.iconColor || themeVariables.brandPrimary}
     />
-    <Text style={styles.text}>{props.text}</Text>
+    <Text style={[styles.text, props.textStyle]}>
+      {props.text}{" "}
+      <Text
+        style={{
+          color: "white",
+          textDecorationLine: "underline",
+          fontWeight: "bold"
+        }}
+      >
+        {"test"}
+      </Text>
+    </Text>
   </View>
 );
 

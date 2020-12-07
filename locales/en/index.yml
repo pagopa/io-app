@@ -56,6 +56,8 @@ global:
   username: Username
   unknown: unknown
   disclaimer_beta: This feature is in beta. If you're having trouble signing in, please let us know!
+  sectionStatus:
+    moreInfo: more info
   accessibility:
     date_format: MMMM Do YYYY
     expanded: Expanded paragraph

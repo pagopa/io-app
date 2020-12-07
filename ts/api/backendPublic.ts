@@ -26,17 +26,54 @@ type PostTestLoginT = IPostApiRequestType<
   BasicResponseType<AccessToken>
 >;
 
-const BackendStatusMessage = t.interface({
+const LocalizedMessage = t.interface({
   "it-IT": t.string,
   "en-EN": t.string
 });
 
 const BackendStatusR = t.interface({
   is_alive: t.boolean,
-  message: BackendStatusMessage
+  message: LocalizedMessage
 });
 
-export const BackendStatus = t.exact(BackendStatusR, "ServerInfo");
+// SectionStatus represents the status of a single section
+const SectionStatusR = t.interface({
+  is_visible: t.boolean,
+  message: LocalizedMessage,
+  level: t.union([
+    t.literal("normal"),
+    t.literal("warning"),
+    t.literal("critical")
+  ])
+});
+
+const SectionStatusO = t.partial({
+  web_url: LocalizedMessage
+});
+
+export const SectionStatus = t.intersection(
+  [SectionStatusR, SectionStatusO],
+  "SectionStatus"
+);
+export type SectionStatus = t.TypeOf<typeof SectionStatus>;
+
+const Sections = t.interface({
+  ingress: SectionStatus,
+  messages: SectionStatus,
+  wallets: SectionStatus,
+  login: SectionStatus,
+  services: SectionStatus
+});
+export type Sections = t.TypeOf<typeof Sections>;
+const BackendStatusO = t.partial({
+  sections: Sections
+});
+
+export const BackendStatus = t.intersection(
+  [BackendStatusR, BackendStatusO],
+  "BackendStatus"
+);
+export type SectionStatusKey = keyof Sections;
 export type BackendStatus = t.TypeOf<typeof BackendStatus>;
 
 type GetStatusT = IGetApiRequestType<
