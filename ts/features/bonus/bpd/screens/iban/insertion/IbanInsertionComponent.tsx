@@ -1,7 +1,7 @@
 import { Input, Item, View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
-import { SafeAreaView } from "react-native";
+import { Platform, SafeAreaView, ScrollView } from "react-native";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
@@ -10,7 +10,6 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
-import { withKeyboard } from "../../../../../../utils/keyboard";
 
 type OwnProps = {
   onBack: () => void;
@@ -48,35 +47,41 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
       contextualHelp={props.contextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-          <View spacer={true} large={true} />
-          <H1>{title}</H1>
-          <View spacer={true} large={true} />
-          <Body>{body1}</Body>
-          <View spacer={true} large={true} />
-          <H5>{ibanDescription}</H5>
-          <Item error={isInvalidIban}>
-            <Input
-              value={iban}
-              maxLength={IbanMaxLength}
-              onChangeText={text => setIban(text.toUpperCase().trim())}
-            />
-          </Item>
-          <View spacer={true} large={true} />
-          <View spacer={true} small={true} />
-          <Body>{body2}</Body>
-        </View>
-
-        {withKeyboard(
-          <FooterTwoButtons
-            rightDisabled={!userCanContinue}
-            onRight={() => Iban.decode(iban).map(props.onIbanConfirm)}
-            onCancel={props.onContinue}
-            rightText={I18n.t("global.buttons.continue")}
-            leftText={props.cancelText}
-          />,
-          true
-        )}
+        <ScrollView>
+          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+            <View spacer={true} large={true} />
+            <H1>{title}</H1>
+            <View spacer={true} large={true} />
+            <Body>{body1}</Body>
+            <View spacer={true} large={true} />
+            <H5>{ibanDescription}</H5>
+            <Item error={isInvalidIban}>
+              <Input
+                value={iban}
+                autoCapitalize={"characters"}
+                maxLength={IbanMaxLength}
+                onChangeText={text => {
+                  // On Android we cannot modify the input text, or the text is duplicated
+                  if (Platform.OS === "android") {
+                    setIban(text);
+                    return;
+                  }
+                  setIban(text.toUpperCase().trim());
+                }}
+              />
+            </Item>
+            <View spacer={true} large={true} />
+            <View spacer={true} small={true} />
+            <Body>{body2}</Body>
+          </View>
+        </ScrollView>
+        <FooterTwoButtons
+          rightDisabled={!userCanContinue}
+          onRight={() => Iban.decode(iban).map(props.onIbanConfirm)}
+          onCancel={props.onContinue}
+          rightText={I18n.t("global.buttons.continue")}
+          leftText={props.cancelText}
+        />
       </SafeAreaView>
     </BaseScreenComponent>
   );
