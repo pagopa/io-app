@@ -70,7 +70,8 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
     return null;
   }
   const sectionStatus = props.sectionStatus;
-  const locale = I18n.currentLocale() === "en" ? "en-EN" : "it-IT";
+  // if not italian, all other languages will be treated as english
+  const locale = I18n.currentLocale() === "it" ? "it-IT" : "en-EN";
   const iconName = statusIconMap[sectionStatus.level];
   const backgroundColor = statusColorMap[sectionStatus.level];
   const maybeWebUrl = maybeNotNullyString(
@@ -87,6 +88,7 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
         />
         <Label color={"white"} style={styles.text} weight={"Regular"}>
           {sectionStatus.message[locale]}
+          {/* ad an extra blank space if web url is present */}
           {maybeWebUrl.fold("", _ => " ")}
           {maybeWebUrl.fold(undefined, _ => (
             <Text

@@ -38,7 +38,7 @@ type Props = Readonly<{
   appLogo?: boolean;
   gradientHeader?: boolean;
   headerPaddingMin?: boolean;
-  sectionStatus?: React.ReactNode;
+  footerFullWidth?: React.ReactNode;
 }>;
 
 const styles = StyleSheet.create({
@@ -105,7 +105,7 @@ export default class WalletLayout extends React.Component<Props> {
       footerContent,
       contentStyle,
       appLogo,
-      sectionStatus
+      footerFullWidth
     } = this.props;
 
     return (
@@ -123,7 +123,7 @@ export default class WalletLayout extends React.Component<Props> {
         topContent={this.props.topContent}
         hideHeader={hideHeader}
         footerContent={footerContent}
-        sectionStatus={sectionStatus}
+        footerFullWidth={footerFullWidth}
         contextualHelp={this.props.contextualHelp}
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
         contentRefreshControl={this.props.refreshControl}

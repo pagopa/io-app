@@ -46,7 +46,7 @@ type Props = Readonly<{
   customGoBack?: React.ReactNode;
   gradientHeader?: boolean;
   headerPaddingMin?: boolean;
-  sectionStatus?: React.ReactNode;
+  footerFullWidth?: React.ReactNode;
 }>;
 
 const styles = StyleSheet.create({
@@ -151,7 +151,7 @@ export default class DarkLayout extends React.Component<Props> {
             {this.screenContent()}
           </ScreenContent>
         )}
-        {this.props.sectionStatus && <View>{this.props.sectionStatus}</View>}
+        {this.props.footerFullWidth}
         {this.props.footerContent && (
           <View footer={true}>{this.props.footerContent}</View>
         )}

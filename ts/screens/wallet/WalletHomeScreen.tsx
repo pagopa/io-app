@@ -529,7 +529,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         faqCategories={["wallet", "wallet_methods"]}
         gradientHeader={true}
         headerPaddingMin={true}
-        sectionStatus={<SectionStatusComponent sectionKey={"wallets"} />}
+        footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
         {this.newMethodAdded ? (
           this.newMethodAddedContent
