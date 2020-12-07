@@ -23,6 +23,7 @@ import {
 } from "../../store/actions";
 import { fetchPagoPaTimeout } from "../../../../../../config";
 import { SearchBankComponent } from "./SearchBankComponent";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
@@ -56,6 +57,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     <BaseScreenComponent
       goBack={props.onBack}
       headerTitle={I18n.t("wallet.searchAbi.title")}
+      contextualHelp={emptyContextualHelp}
     >
       <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
       <SearchBankComponent
