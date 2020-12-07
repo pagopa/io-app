@@ -29,7 +29,8 @@ type Props = {
   handleContinue: () => void;
   handleSkip: () => void;
   profile?: InitializedProfile;
-} & ReturnType<typeof mapStateToProps>;
+} & ReturnType<typeof mapStateToProps> &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const styles = StyleSheet.create({
   container: {
@@ -57,6 +58,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
         title: "wallet.walletCardTransaction.contextualHelpTitle",
         body: "wallet.walletCardTransaction.contextualHelpContent"
       }}
+      contextualHelp={props.contextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.flex}>

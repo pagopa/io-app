@@ -18,7 +18,9 @@ type OwnProps = {
   title: string;
 };
 
-export type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
+export type Props = ReturnType<typeof mapDispatchToProps> &
+  OwnProps &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const loadLocales = () => ({
   title: I18n.t("wallet.onboarding.bancomat.bpd.activateNew.title"),
@@ -31,7 +33,10 @@ const loadLocales = () => ({
 const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = props => {
   const { title, body1, body2, skip, continueStr } = loadLocales();
   return (
-    <BaseScreenComponent headerTitle={props.title}>
+    <BaseScreenComponent
+      headerTitle={props.title}
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>

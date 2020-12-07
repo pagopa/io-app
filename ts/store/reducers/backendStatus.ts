@@ -5,7 +5,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { BackendStatus } from "../../api/backendPublic";
+import { BackendStatus, SectionStatusKey } from "../../api/backendPublic";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -28,6 +28,13 @@ const initialBackendInfoState: BackendStatusState = {
 export const backendServicesStatusSelector = (
   state: GlobalState
 ): BackendStatusState => state.backendStatus;
+
+export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
+  createSelector(backendServicesStatusSelector, bss =>
+    bss.status
+      .mapNullable(bs => bs.sections)
+      .fold(undefined, s => s[sectionStatusKey])
+  );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;

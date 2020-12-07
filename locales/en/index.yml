@@ -56,6 +56,8 @@ global:
   username: Username
   unknown: unknown
   disclaimer_beta: This feature is in beta. If you're having trouble signing in, please let us know!
+  sectionStatus:
+    moreInfo: more info
   accessibility:
     date_format: MMMM Do YYYY
     expanded: Expanded paragraph
@@ -1016,7 +1018,7 @@ wallet:
     paypal:
       name: Paypal
     bancomat:
-      name: Bancomat
+      name: PagoBANCOMAT
     notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
@@ -1642,6 +1644,15 @@ faq:
   78:
     title: "Did you have problems adding a new payment method?"
     content: !include bonus/bpd/faq/faqBpd1.md
+  79:
+    title: "My PagoBANCOMAT card is a debit card too. What should I pick?"
+    content: !include bonus/bpd/faq/faqBpd2.md
+  80:
+    title: "Why is the saving unsuccessful?"
+    content: !include bonus/bpd/faq/faqBpd3.md
+  81:
+    title: "My card has no security code."
+    content: "Check well on the back (for Maestro, Mastercard, Visa) or on the front (for American Express cards). If you don't find any security code, most likely your card is not enabled for online payments. Contact your bank for more information."
 bonus:
   bonusVacanze:
     accessibility:
@@ -1826,14 +1837,18 @@ bonus:
       enrollPaymentMethod:
         title: "Choose which payment methods to activate"
         body1: "Enable Cashback on your saved methods and start collecting valid transactions."
-        body2: "You can add other payment methods to your wallet anytime and activate cashback."
+        body2: "You can later add other payment methods to your wallet and activate Cashback on them."
+      errorPaymentMethod:
+        title: "Thanks for signing up for Cashback!"
+        body1: "At this time it is not possible to activate Cashback on your payment methods. We are sorry for the inconvenience."
     iban:
       iban: "IBAN"
       edit: "Change IBAN"
       verify: "Check IBAN"
       insertion:
         title: "IBAN for transfer"
-        body1: "Please enter the IBAN of your account on which you want to receive the refund."
+        body1: "To receive any refunds, enter your "
+        body1Bold: "IBAN code without spaces"
         body2: "The IBAN will be checked to make sure it's registered to you. You can also add your IBAN later."
       koWrong:
         title: "Incorrect IBAN"
@@ -1912,6 +1927,7 @@ bonus:
           alertBody: "The payment method you are adding will be saved in the IO app wallet and, if compatible, can also be used for any payments within the app."
         noPaymentMethods: "You must add at least one payment method to start collecting valid transactions"
         noActiveMethod: "You must have activated at least one payment method to collect valid transactions"
+        error: "At this time it is not possible to view the payment methods on which you have activated Cashback or to add new ones. Please try again."
         activateOnOthersChannel:
           text1: "Activate on"
           text2: "other channels"

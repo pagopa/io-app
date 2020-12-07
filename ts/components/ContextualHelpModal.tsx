@@ -190,6 +190,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
         ) : (
           <ContextualHelpComponent
             onClose={onClose}
+            onLinkClicked={onClose}
             contextualHelpData={contextualHelpData}
             isContentLoaded={isContentLoaded}
             onRequestAssistance={handleOnRequestAssistance}

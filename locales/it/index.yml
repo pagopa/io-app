@@ -56,6 +56,8 @@ global:
   username: Username
   disclaimer_beta: Questa funzionalità è in beta. Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
+  sectionStatus:
+    moreInfo: più info
   accessibility:
     date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
@@ -484,7 +486,7 @@ authentication:
     pin:
       accessibility:
         placeholderLabel: PIN della Carta di identità elettronica
-        label: Campo di inserimento per pin della Carta di Itentità elettronica
+        label: Campo di inserimento per pin della Carta di Identità elettronica
         hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
       pinCardTitle: Inserisci il PIN della tua carta di identità
       pinCardHeader: Entra con CIE
@@ -751,7 +753,7 @@ wallet:
   creditCard:
     onboardingAttempts:
       title: Tentativi aggiunta metodo di pagamento
-      emptyTitle: Nessun tentitivo di aggiunta di un metodo di pagamento
+      emptyTitle: Nessun tentativo di aggiunta di un metodo di pagamento
       emptyBody: IO non ha memorizzato tentativi di aggiunta di un metodo di pagamento. Qui troverai i tentativi più recenti
       lastAttemptsTitle: Ultimi tentativi
       success: Aggiunto
@@ -880,7 +882,7 @@ wallet:
   detailsTransaction:
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
-    contextualHelpTitle: Salvare una carta su IO
+    contextualHelpTitle: Salva una carta su IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Salva la carta
     title: Vuoi salvare questa carta?
@@ -1042,7 +1044,7 @@ wallet:
     paypal:
       name: Paypal
     bancomat:
-      name: Bancomat
+      name: PagoBANCOMAT
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
@@ -1461,7 +1463,7 @@ faq:
     title: "Che cos'è un Identity Provider?"
     content: !include faq/faq6.md
   7:
-    title: "Come scelgiere un Identity Provider?"
+    title: "Come scegliere un Identity Provider?"
     content: !include faq/faq7.md
   8:
     title: "È possibile avere più di un'identità digitale?"
@@ -1674,6 +1676,15 @@ faq:
   78:
     title: "Hai avuto problemi nell’aggiunta di un nuovo metodo di pagamento?"
     content: !include bonus/bpd/faq/faqBpd1.md
+  79:
+    title: "La mia carta PagoBANCOMAT è anche una carta di debito. Cosa devo selezionare?"
+    content: !include bonus/bpd/faq/faqBpd2.md
+  80:
+    title: "Perché il salvataggio non va a buon fine?"
+    content: !include bonus/bpd/faq/faqBpd3.md
+  81:
+    title: "La mia carta non ha alcun codice di sicurezza."
+    content: "Controlla bene sul retro (per le carte Maestro, Mastercard, Visa) o sul fronte (per le carte American Express). Se non trovi alcun codice di sicurezza, molto probabilmente la tua carta non è abilitata ai pagamenti online. Contatta la tua banca per maggiori informazioni."
 bonus:
   bonusVacanze:
     accessibility:
@@ -1845,7 +1856,7 @@ bonus:
             normal: "che userai i metodi di pagamento su cui è attivo il Cashback solo per acquisti effettuati per finalità personali, "
             bold: "non legati ad attività di Impresa, Arte o Professione"
         disclaimer:
-          normal1: "Questa autodichirazione è resa ai sensi del "
+          normal1: "Questa autodichiarazione è resa ai sensi del "
           link: "dpr 28 dicembre 2000 n. 445 art 46 e 47"
           normal2: " e consapevole delle sanzioni penali e della perdita di diritto al rimborso in caso di falsa dichiarazione"
       loadingActivateBpd:
@@ -1853,19 +1864,23 @@ bonus:
         body: "Ti preghiamo di attendere..."
       noPaymentMethod:
         title: "Aggiungi almeno un metodo di pagamento"
-        body: "Per inziare a collezionare transazioni valide, aggiungi al tuo Portafoglio i tuoi metodi di pagamento preferiti: oggi sono supportate le principali carte di pagamento, app e altri strumenti digitali.\n\n
+        body: "Per iniziare a collezionare transazioni valide, aggiungi al tuo Portafoglio i tuoi metodi di pagamento preferiti: oggi sono supportate le principali carte di pagamento, app e altri strumenti digitali.\n\n
         In futuro verranno supportati altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno il Cashback!"
       enrollPaymentMethod:
         title: "Scegli quali metodi di pagamento attivare"
         body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
-        body2: "Potrai aggiungere in ogni momento altri metodi di pagamento su IO e attivare il Cashback."
+        body2: "Potrai aggiungere in un secondo momento altri metodi di pagamento al tuo portafoglio e attivare su questi il Cashback."
+      errorPaymentMethod:
+        title: "Grazie per esserti iscritto al Cashback!"
+        body1: "In questo momento non è possibile attivare il Cashback sui tuoi metodi di pagamento. Ci dispiace per il disagio."
     iban:
       iban: "IBAN"
       edit: "Modifica IBAN"
       verify: "Controlla IBAN"
       insertion:
         title: "IBAN per l’accredito"
-        body1: "Indica qui l’IBAN del tuo conto su cui ricevere l’accredito."
+        body1: "Per ricevere eventuali rimborsi, inserisci il tuo "
+        body1Bold: "codice IBAN senza spazi"
         body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
       koWrong:
         title: "IBAN non corretto"
@@ -1944,6 +1959,7 @@ bonus:
           alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare transazioni valide"
         noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per collezionare transazioni valide"
+        error: "In questo momento non è possibile visualizzare i metodi di pagamento su cui hai attivato il Cashback o aggiungerne di nuovi. Riprova per favore."
         activateOnOthersChannel:
           text1: "Attivati su "
           text2: "altri canali"
