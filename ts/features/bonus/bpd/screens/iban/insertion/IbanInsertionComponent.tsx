@@ -36,6 +36,9 @@ const loadLocales = () => ({
   ibanDescription: I18n.t("bonus.bpd.iban.iban")
 });
 
+const upperCaseAndNoBlanks = (text: string) =>
+  text.replace(/\s/g, "").toUpperCase();
+
 export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
   const [iban, setIban] = useState(props.startIban ?? "");
   const isInvalidIban = iban.length > 0 && Iban.decode(iban).isLeft();
@@ -74,11 +77,12 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
                 maxLength={IbanMaxLength}
                 onChangeText={text => {
                   // On Android we cannot modify the input text, or the text is duplicated
-                  if (Platform.OS === "android") {
-                    setIban(text);
-                    return;
-                  }
-                  setIban(text.toUpperCase().trim());
+                  setIban(
+                    Platform.select({
+                      android: text,
+                      default: upperCaseAndNoBlanks(text)
+                    })
+                  );
                 }}
               />
             </Item>
@@ -90,7 +94,7 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
         <FooterTwoButtons
           rightDisabled={!userCanContinue}
           onRight={() =>
-            Iban.decode(iban.toUpperCase()).map(props.onIbanConfirm)
+            Iban.decode(upperCaseAndNoBlanks(iban)).map(props.onIbanConfirm)
           }
           onCancel={props.onContinue}
           rightText={I18n.t("global.buttons.continue")}
