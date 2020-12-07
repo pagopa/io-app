@@ -2,16 +2,19 @@ import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { ActivityIndicator, Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import Placeholder from "rn-placeholder";
 import { InfoBox } from "../../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
 import { Label } from "../../../../../../../components/core/typography/Label";
 import { Link } from "../../../../../../../components/core/typography/Link";
+import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../../store/actions/navigation";
+import { fetchWalletsRequest } from "../../../../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { PaymentMethodGroupedList } from "../../../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
 import {
@@ -53,6 +56,49 @@ const NoPaymentMethodFound = (props: Props) => (
   </View>
 );
 
+const PaymentMethodError = (props: Props) => (
+  <>
+    <H4>{I18n.t("wallet.paymentMethods")}</H4>
+    <View spacer={true} />
+    <InfoBox iconColor={IOColors.red}>
+      <Body>{I18n.t("bonus.bpd.details.paymentMethods.error")}</Body>
+    </InfoBox>
+    <View spacer={true} />
+    <Button
+      style={styles.addButton}
+      onPress={props.loadWallets}
+      bordered={true}
+    >
+      <Label color={"blue"}>{I18n.t("global.buttons.retry")}</Label>
+    </Button>
+  </>
+);
+
+const PaymentMethodSome = (props: Props & { onAddPress: () => void }) =>
+  pot.isSome(props.potWallets) ? (
+    <View>
+      <View style={styles.row}>
+        <H4>{I18n.t("wallet.paymentMethods")}</H4>
+        {props.potWallets.value.length > 0 && (
+          <Link onPress={props.onAddPress}>
+            {I18n.t("global.buttons.add").toLowerCase()}
+          </Link>
+        )}
+      </View>
+      <View spacer={true} />
+      {!props.atLeastOnePaymentMethodActive &&
+        props.potWallets.value.length > 0 && (
+          <NoPaymentMethodAreActiveWarning />
+        )}
+
+      {props.potWallets.value.length > 0 ? (
+        <PaymentMethodGroupedList paymentList={props.potWallets.value} />
+      ) : (
+        <NoPaymentMethodFound {...props} />
+      )}
+    </View>
+  ) : null;
+
 /**
  * Render all the wallet v2 as bpd toggle
  * TODO: temp implementation, raw list without loading and error state
@@ -76,35 +122,35 @@ const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props => {
       ]
     );
 
-  return pot.isSome(props.potWallets) ? (
-    <View>
-      <View style={styles.row}>
-        <H4>{I18n.t("wallet.paymentMethods")}</H4>
-        {props.potWallets.value.length > 0 && (
-          <Link onPress={onAddPress}>
-            {I18n.t("global.buttons.add").toLowerCase()}
-          </Link>
-        )}
-      </View>
-      <View spacer={true} />
-      {!props.atLeastOnePaymentMethodActive &&
-        props.potWallets.value.length > 0 && (
-          <NoPaymentMethodAreActiveWarning />
-        )}
-
-      {props.potWallets.value.length > 0 ? (
-        <PaymentMethodGroupedList paymentList={props.potWallets.value} />
-      ) : (
-        <NoPaymentMethodFound {...props} />
-      )}
-    </View>
-  ) : null;
+  return pot.fold(
+    props.potWallets,
+    () => null,
+    () => (
+      <>
+        <View spacer={true} />
+        <ActivityIndicator
+          color={"black"}
+          accessible={false}
+          importantForAccessibility={"no-hide-descendants"}
+          accessibilityElementsHidden={true}
+        />
+        <View spacer={true} />
+      </>
+    ),
+    _ => null,
+    _ => <PaymentMethodError {...props} />,
+    _ => <PaymentMethodSome {...props} onAddPress={onAddPress} />,
+    _ => <PaymentMethodSome {...props} onAddPress={onAddPress} />,
+    _ => <PaymentMethodSome {...props} onAddPress={onAddPress} />,
+    _ => <PaymentMethodSome {...props} onAddPress={onAddPress} />
+  );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addPaymentMethod: () => {
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none }));
-  }
+  },
+  loadWallets: () => dispatch(fetchWalletsRequest())
 });
 
 const mapStateToProps = (state: GlobalState) => ({
