@@ -1865,7 +1865,8 @@ bonus:
       verify: "Controlla IBAN"
       insertion:
         title: "IBAN per l’accredito"
-        body1: "Indica qui l’IBAN del tuo conto su cui ricevere l’accredito."
+        body1: "Per ricevere eventuali rimborsi, inserisci il tuo "
+        body1Bold: "codice IBAN senza spazi"
         body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
       koWrong:
         title: "IBAN non corretto"

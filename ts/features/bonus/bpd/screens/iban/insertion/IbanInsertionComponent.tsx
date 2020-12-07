@@ -5,6 +5,7 @@ import { Platform, SafeAreaView, ScrollView } from "react-native";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
+import { H4 } from "../../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
@@ -30,6 +31,7 @@ const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.title"),
   title: I18n.t("bonus.bpd.iban.insertion.title"),
   body1: I18n.t("bonus.bpd.iban.insertion.body1"),
+  body1Bold: I18n.t("bonus.bpd.iban.insertion.body1Bold"),
   body2: I18n.t("bonus.bpd.iban.insertion.body2"),
   ibanDescription: I18n.t("bonus.bpd.iban.iban")
 });
@@ -38,7 +40,14 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
   const [iban, setIban] = useState(props.startIban ?? "");
   const isInvalidIban = iban.length > 0 && Iban.decode(iban).isLeft();
   const userCanContinue = !isInvalidIban && iban.length > 0;
-  const { headerTitle, title, body1, body2, ibanDescription } = loadLocales();
+  const {
+    headerTitle,
+    title,
+    body1,
+    body1Bold,
+    body2,
+    ibanDescription
+  } = loadLocales();
 
   return (
     <BaseScreenComponent
@@ -52,7 +61,10 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
             <View spacer={true} large={true} />
             <H1>{title}</H1>
             <View spacer={true} large={true} />
-            <Body>{body1}</Body>
+            <Body>
+              {body1}
+              <H4>{body1Bold}</H4>
+            </Body>
             <View spacer={true} large={true} />
             <H5>{ibanDescription}</H5>
             <Item error={isInvalidIban}>
@@ -77,7 +89,9 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
         </ScrollView>
         <FooterTwoButtons
           rightDisabled={!userCanContinue}
-          onRight={() => Iban.decode(iban).map(props.onIbanConfirm)}
+          onRight={() =>
+            Iban.decode(iban.toUpperCase()).map(props.onIbanConfirm)
+          }
           onCancel={props.onContinue}
           rightText={I18n.t("global.buttons.continue")}
           leftText={props.cancelText}
