@@ -11,12 +11,12 @@ import { onboardingBancomatAbiSelectedSelector } from "../../store/reducers/abiS
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import AddBancomatScreen from "../add-pans/AddBancomatScreen";
 import { isTimeoutError } from "../../../../../../utils/errors";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import BancomatKoNotFound from "./BancomatKoNotFound";
 import BancomatKoSingleBankNotFound from "./BancomatKoSingleBankNotFound";
 import BancomatKoTimeout from "./BancomatKoTimeout";
 import LoadBancomatSearch from "./LoadBancomatSearch";
 import BancomatKoServicesError from "./BancomatKoServicesError";
-import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

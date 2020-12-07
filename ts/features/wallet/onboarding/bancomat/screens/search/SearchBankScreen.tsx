@@ -22,8 +22,8 @@ import {
   walletAddBancomatCancel
 } from "../../store/actions";
 import { fetchPagoPaTimeout } from "../../../../../../config";
-import { SearchBankComponent } from "./SearchBankComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
+import { SearchBankComponent } from "./SearchBankComponent";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
