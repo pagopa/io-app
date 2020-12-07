@@ -9,6 +9,7 @@ import { sectionStatusSelector } from "../store/reducers/backendStatus";
 import I18n from "../i18n";
 import { maybeNotNullyString } from "../utils/strings";
 import { openWebUrl } from "../utils/url";
+import { getLocalePrimary } from "../utils/locale";
 import { IOColors } from "./core/variables/IOColors";
 import IconFont from "./ui/IconFont";
 import { Label } from "./core/typography/Label";
@@ -62,9 +63,12 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   if (props.sectionStatus.is_visible !== true) {
     return null;
   }
+
   const sectionStatus = props.sectionStatus;
-  // if not italian, all other languages will be treated as english
-  const locale = I18n.currentLocale() === "it" ? "it-IT" : "en-EN";
+  // if not italian, for all other languages english is the default
+  const locale = getLocalePrimary(I18n.currentLocale()).fold("en-EN", l =>
+    l === "it" ? "it-IT" : "en-EN"
+  );
   const iconName = statusIconMap[sectionStatus.level];
   const backgroundColor = statusColorMap[sectionStatus.level];
   const maybeWebUrl = maybeNotNullyString(
