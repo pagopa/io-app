@@ -16,16 +16,16 @@ import {
 } from "../../store/actions";
 import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
 import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
+import { ContentClient } from "../../../../../../api/content";
 
 // load all bancomat abi
 export function* handleLoadAbi(
-  getAbi: ReturnType<typeof PaymentManagerClient>["getAbi"],
-  sessionManager: SessionManager<PaymentManagerToken>
+  getAbi: ReturnType<typeof ContentClient>["getAbiList"]
 ) {
   try {
-    const getAbiWithRefresh = sessionManager.withRefresh(getAbi);
-    const getAbiWithRefreshResult: SagaCallReturnType<typeof getAbiWithRefresh> = yield call(
-      getAbiWithRefresh
+    const getAbiWithRefreshResult: SagaCallReturnType<typeof getAbi> = yield call(
+      getAbi,
+      {}
     );
     if (getAbiWithRefreshResult.isRight()) {
       if (getAbiWithRefreshResult.value.status === 200) {

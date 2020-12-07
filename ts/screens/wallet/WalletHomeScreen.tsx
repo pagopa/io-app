@@ -263,7 +263,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     const noMethod =
       validWallets.length === 0 &&
       this.props.allActiveBonus.length === 0 &&
-      !getValue(this.props.bpdActiveBonus);
+      getValue(this.props.bpdActiveBonus) === false;
     return (
       <View>
         <View spacer={true} />
@@ -317,9 +317,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   }
 
   private errorWalletsHeader() {
-    const noMethod =
+    const noActiveBonus =
       this.props.allActiveBonus.length === 0 &&
-      !getValue(this.props.bpdActiveBonus);
+      getValue(this.props.bpdActiveBonus) === false;
     return (
       <View>
         <Text style={[styles.white, styles.inLineSpace]}>
@@ -343,7 +343,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             activeBonuses={this.props.allActiveBonus}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
-            noMethod={noMethod}
+            noMethod={noActiveBonus}
           />
         )}
         {bpdEnabled && <BpdCardsInWalletContainer />}
