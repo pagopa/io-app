@@ -157,7 +157,9 @@ export function createRootReducer(
                 paymentByRptId: state.entities.paymentByRptId,
                 calendarEvents: state.entities.calendarEvents,
                 transactionsRead: state.entities.transactionsRead
-              }
+              },
+              // backend status must be kept
+              backendStatus: state.backendStatus
             } as GlobalState)
           : state;
     }
