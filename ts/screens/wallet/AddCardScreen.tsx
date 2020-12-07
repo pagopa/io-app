@@ -215,7 +215,7 @@ class AddCardScreen extends React.Component<Props, State> {
         goBack={true}
         headerTitle={I18n.t("wallet.addCardTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_methods"]}
+        faqCategories={["wallet_methods", "wallet_methods_security"]}
       >
         <ScrollView
           bounces={false}

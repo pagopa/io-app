@@ -1642,6 +1642,15 @@ faq:
   78:
     title: "Did you have problems adding a new payment method?"
     content: !include bonus/bpd/faq/faqBpd1.md
+  79:
+    title: "My PagoBANCOMAT card is a debit card too. What should I pick?"
+    content: !include bonus/bpd/faq/faqBpd2.md
+  80:
+    title: "Why is the saving unsuccessful?"
+    content: !include bonus/bpd/faq/faqBpd3.md
+  81:
+    title: "My card has no security code."
+    content: "Check well on the back (for Maestro, Mastercard, Visa) or on the front (for American Express cards). If you don't find any security code, most likely your card is not enabled for online payments. Contact your bank for more information."
 bonus:
   bonusVacanze:
     accessibility:
