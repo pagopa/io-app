@@ -77,6 +77,7 @@ import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import { getValue } from "../../features/bonus/bpd/model/RemoteValue";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -535,6 +536,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         faqCategories={["wallet", "wallet_methods"]}
         gradientHeader={true}
         headerPaddingMin={true}
+        footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
         {this.newMethodAdded ? (
           this.newMethodAddedContent
