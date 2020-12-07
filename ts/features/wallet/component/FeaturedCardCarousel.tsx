@@ -57,7 +57,8 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
     });
   }
 
-  const anyBonusNotActive = !props.bvActive || !getValue(props.bpdActiveBonus);
+  const anyBonusNotActive =
+    !props.bvActive || getValue(props.bpdActiveBonus) === false;
   return anyBonusNotActive ? (
     <View style={styles.container}>
       <View style={[IOStyles.horizontalContentPadding]}>
