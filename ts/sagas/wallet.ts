@@ -149,6 +149,7 @@ import {
   searchUserSatispay,
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
+import { ContentClient } from "../api/content";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -589,6 +590,8 @@ export function* watchWalletSaga(
     defaultRetryingFetch(fetchPaymentManagerLongTimeout, 0)
   );
 
+  const contentClient = ContentClient();
+
   // Helper function that requests a new session token from the PaymentManager.
   // When calling the PM APIs, we must use separate session, generated from the
   // walletToken.
@@ -798,12 +801,7 @@ export function* watchWalletSaga(
 
   if (bpdEnabled) {
     // watch for load abi request
-    yield takeLatest(
-      loadAbi.request,
-      handleLoadAbi,
-      paymentManagerClient.getAbi,
-      pmSessionManager
-    );
+    yield takeLatest(loadAbi.request, handleLoadAbi, contentClient.getAbiList);
 
     // watch for load pans request
     yield takeLatest(
