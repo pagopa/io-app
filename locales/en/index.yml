@@ -1016,7 +1016,7 @@ wallet:
     paypal:
       name: Paypal
     bancomat:
-      name: PagoB
+      name: PagoBANCOMAT
     notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
