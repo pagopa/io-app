@@ -1847,7 +1847,8 @@ bonus:
       verify: "Check IBAN"
       insertion:
         title: "IBAN for transfer"
-        body1: "Please enter the IBAN of your account on which you want to receive the refund."
+        body1: "To receive any refunds, enter your "
+        body1Bold: "IBAN code without spaces"
         body2: "The IBAN will be checked to make sure it's registered to you. You can also add your IBAN later."
       koWrong:
         title: "Incorrect IBAN"
