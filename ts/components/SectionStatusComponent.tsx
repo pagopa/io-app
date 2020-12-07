@@ -1,13 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
-import {
-  StyleProp,
-  StyleSheet,
-  TextStyle,
-  TouchableWithoutFeedback,
-  View
-} from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "native-base";
 import { SectionStatus, SectionStatusKey } from "../api/backendPublic";
 import { GlobalState } from "../store/reducers/types";
@@ -21,7 +15,6 @@ import { Label } from "./core/typography/Label";
 
 type OwnProps = {
   sectionKey: SectionStatusKey;
-  textStyle?: StyleProp<TextStyle>;
 };
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;

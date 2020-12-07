@@ -89,10 +89,7 @@ class IngressScreen extends React.PureComponent<Props> {
             ))}
           </List>
           <View style={{ marginTop: 48 }}>
-            <SectionStatusComponent
-              sectionKey={"ingress"}
-              textStyle={{ color: IOColors.white }}
-            />
+            <SectionStatusComponent sectionKey={"ingress"} />
           </View>
         </Container>
       </BaseScreenComponent>

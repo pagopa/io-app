@@ -10,7 +10,7 @@ import { backendServicesStatusSelector } from "../store/reducers/backendStatus";
 import { SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
 
-const BACKEND_SERVICES_STATUS_LOAD_INTERVAL = (3 * 1000) as Millisecond;
+const BACKEND_SERVICES_STATUS_LOAD_INTERVAL = (60 * 1000) as Millisecond;
 const BACKEND_SERVICES_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
 
 // Return true if it has information (200) false otherwise
