@@ -882,7 +882,7 @@ wallet:
   detailsTransaction:
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
-    contextualHelpTitle: Salvare una carta su IO
+    contextualHelpTitle: Salva una carta su IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Salva la carta
     title: Vuoi salvare questa carta?
@@ -1044,7 +1044,7 @@ wallet:
     paypal:
       name: Paypal
     bancomat:
-      name: Bancomat
+      name: PagoBANCOMAT
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
@@ -1676,6 +1676,15 @@ faq:
   78:
     title: "Hai avuto problemi nell’aggiunta di un nuovo metodo di pagamento?"
     content: !include bonus/bpd/faq/faqBpd1.md
+  79:
+    title: "La mia carta PagoBANCOMAT è anche una carta di debito. Cosa devo selezionare?"
+    content: !include bonus/bpd/faq/faqBpd2.md
+  80:
+    title: "Perché il salvataggio non va a buon fine?"
+    content: !include bonus/bpd/faq/faqBpd3.md
+  81:
+    title: "La mia carta non ha alcun codice di sicurezza."
+    content: "Controlla bene sul retro (per le carte Maestro, Mastercard, Visa) o sul fronte (per le carte American Express). Se non trovi alcun codice di sicurezza, molto probabilmente la tua carta non è abilitata ai pagamenti online. Contatta la tua banca per maggiori informazioni."
 bonus:
   bonusVacanze:
     accessibility:
@@ -1860,7 +1869,10 @@ bonus:
       enrollPaymentMethod:
         title: "Scegli quali metodi di pagamento attivare"
         body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
-        body2: "Potrai aggiungere in ogni momento altri metodi di pagamento su IO e attivare il Cashback."
+        body2: "Potrai aggiungere in un secondo momento altri metodi di pagamento al tuo portafoglio e attivare su questi il Cashback."
+      errorPaymentMethod:
+        title: "Grazie per esserti iscritto al Cashback!"
+        body1: "In questo momento non è possibile attivare il Cashback sui tuoi metodi di pagamento. Ci dispiace per il disagio."
     iban:
       iban: "IBAN"
       edit: "Modifica IBAN"
@@ -1946,6 +1958,7 @@ bonus:
           alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare transazioni valide"
         noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per collezionare transazioni valide"
+        error: "In questo momento non è possibile visualizzare i metodi di pagamento su cui hai attivato il Cashback o aggiungerne di nuovi. Riprova per favore."
         activateOnOthersChannel:
           text1: "Attivati su "
           text2: "altri canali"
