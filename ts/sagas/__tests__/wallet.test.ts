@@ -1,7 +1,9 @@
 import { pot } from "italia-ts-commons";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
+// import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import {
+  // addWalletCreditCardRequest,
   runStartOrResumeAddCreditCardSaga,
   walletsSelector
 } from "../../store/actions/wallet/wallets";
@@ -19,6 +21,19 @@ jest.mock("react-native-share", () => ({
 
 jest.mock("../../api/backend");
 
+const walletState = {
+  walletById: pot.none,
+  creditCardAddWallet: pot.none
+};
+
+// const creditCardWallet: NullableWallet = {
+//   idWallet: undefined,
+//   type: TypeEnum.CREDIT_CARD,
+//   favourite: true,
+//   creditCard: {},
+//   psp: undefined
+// };
+
 describe("startOrResumeAddCreditCardSaga", () => {
   it("should dispatch startApplicationInitialization if installation id response is 200 but session is none", () => {
     const fakePmSessionManager = {} as SessionManager<PaymentManagerToken>;
@@ -33,6 +48,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
     testSaga(startOrResumeAddCreditCardSaga, fakePmSessionManager, fakeAction)
       .next()
       .select(walletsSelector)
-      .next(pot.none);
+      .next(walletState);
+    // .put(addWalletCreditCardRequest({ creditcard: creditCardWallet }));
   });
 });
