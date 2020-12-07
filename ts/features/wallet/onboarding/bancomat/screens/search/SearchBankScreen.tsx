@@ -21,6 +21,7 @@ import {
   walletAddBancomatBack,
   walletAddBancomatCancel
 } from "../../store/actions";
+import { fetchPagoPaTimeout } from "../../../../../../config";
 import { SearchBankComponent } from "./SearchBankComponent";
 
 type Props = LightModalContextInterface &
@@ -38,7 +39,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     if (isUndefined(props.bankRemoveValue)) {
       props.loadAbis();
     } else if (isError(props.bankRemoveValue)) {
-      errorRetry = setTimeout(props.loadAbis, 2000);
+      errorRetry = setTimeout(props.loadAbis, fetchPagoPaTimeout);
     }
   }, [props.bankRemoveValue]);
 

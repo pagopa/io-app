@@ -880,7 +880,7 @@ wallet:
   detailsTransaction:
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
-    contextualHelpTitle: Salvare una carta su IO
+    contextualHelpTitle: Salva una carta su IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Salva la carta
     title: Vuoi salvare questa carta?
@@ -1042,7 +1042,7 @@ wallet:
     paypal:
       name: Paypal
     bancomat:
-      name: Bancomat
+      name: PagoBANCOMAT
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
@@ -1674,6 +1674,15 @@ faq:
   78:
     title: "Hai avuto problemi nell’aggiunta di un nuovo metodo di pagamento?"
     content: !include bonus/bpd/faq/faqBpd1.md
+  79:
+    title: "La mia carta PagoBANCOMAT è anche una carta di debito. Cosa devo selezionare?"
+    content: !include bonus/bpd/faq/faqBpd2.md
+  80:
+    title: "Perché il salvataggio non va a buon fine?"
+    content: !include bonus/bpd/faq/faqBpd3.md
+  81:
+    title: "La mia carta non ha alcun codice di sicurezza."
+    content: "Controlla bene sul retro (per le carte Maestro, Mastercard, Visa) o sul fronte (per le carte American Express). Se non trovi alcun codice di sicurezza, molto probabilmente la tua carta non è abilitata ai pagamenti online. Contatta la tua banca per maggiori informazioni."
 bonus:
   bonusVacanze:
     accessibility:
