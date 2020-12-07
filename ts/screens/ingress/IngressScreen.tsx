@@ -21,7 +21,6 @@ import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { IngressCheckBox } from "./CheckBox";
 
 type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
