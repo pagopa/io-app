@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     borderColor: IOColors.red,
     borderWidth: 1,
-    top: -10,
     height: 25
   },
   copyText: {
