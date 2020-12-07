@@ -1858,7 +1858,10 @@ bonus:
       enrollPaymentMethod:
         title: "Scegli quali metodi di pagamento attivare"
         body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
-        body2: "Potrai aggiungere in ogni momento altri metodi di pagamento su IO e attivare il Cashback."
+        body2: "Potrai aggiungere in un secondo momento altri metodi di pagamento al tuo portafoglio e attivare su questi il Cashback."
+      errorPaymentMethod:
+        title: "Grazie per esserti iscritto al Cashback!"
+        body1: "In questo momento non è possibile attivare il Cashback sui tuoi metodi di pagamento. Ci dispiace per il disagio."
     iban:
       iban: "IBAN"
       edit: "Modifica IBAN"

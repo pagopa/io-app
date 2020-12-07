@@ -6,6 +6,7 @@ import CtaLandingScreen from "../screens/onboarding/BpdCTAStartOnboardingScreen"
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
 import DeclarationScreen from "../screens/onboarding/declaration/DeclarationScreen";
 import EnrollPaymentMethodsScreen from "../screens/onboarding/EnrollPaymentMethodsScreen";
+import ErrorPaymentMethodsScreen from "../screens/onboarding/ErrorPaymentMethodsScreen";
 import LoadActivateBpdScreen from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
 import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
@@ -30,6 +31,9 @@ const BpdNavigator = createStackNavigator(
     },
     [BPD_ROUTES.ONBOARDING.NO_PAYMENT_METHODS]: {
       screen: NoPaymentMethodsAvailableScreen
+    },
+    [BPD_ROUTES.ONBOARDING.ERROR_PAYMENT_METHODS]: {
+      screen: ErrorPaymentMethodsScreen
     },
     [BPD_ROUTES.IBAN]: {
       screen: MainIbanScreen
