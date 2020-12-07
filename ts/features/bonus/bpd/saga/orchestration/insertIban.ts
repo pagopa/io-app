@@ -11,6 +11,7 @@ import { hasFunctionEnabled } from "../../../../../utils/walletv2";
 import {
   navigateToBpdIbanInsertion,
   navigateToBpdOnboardingEnrollPaymentMethod,
+  navigateToBpdOnboardingErrorPaymentMethods,
   navigateToBpdOnboardingNoPaymentMethods
 } from "../../navigation/actions";
 import BPD_ROUTES from "../../navigation/routes";
@@ -62,6 +63,15 @@ export function* bpdIbanInsertionWorker() {
       const paymentMethods: ReturnType<typeof paymentMethodsSelector> = yield select(
         paymentMethodsSelector
       );
+
+      // Error while loading the wallet, display a message that informs the user about the error
+      if (paymentMethods.kind === "PotNoneError") {
+        yield put(navigateToBpdOnboardingErrorPaymentMethods());
+        yield put(navigationHistoryPop(1));
+        yield put(bpdOnboardingCompleted());
+        return;
+      }
+
       const hasAtLeastOnePaymentMethodWithBpd = pot.getOrElse(
         pot.map(paymentMethods, pm =>
           pm.some(p => hasFunctionEnabled(p, EnableableFunctionsTypeEnum.BPD))
