@@ -486,7 +486,7 @@ authentication:
     pin:
       accessibility:
         placeholderLabel: PIN della Carta di identità elettronica
-        label: Campo di inserimento per pin della Carta di Itentità elettronica
+        label: Campo di inserimento per pin della Carta di Identità elettronica
         hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
       pinCardTitle: Inserisci il PIN della tua carta di identità
       pinCardHeader: Entra con CIE
@@ -753,7 +753,7 @@ wallet:
   creditCard:
     onboardingAttempts:
       title: Tentativi aggiunta metodo di pagamento
-      emptyTitle: Nessun tentitivo di aggiunta di un metodo di pagamento
+      emptyTitle: Nessun tentativo di aggiunta di un metodo di pagamento
       emptyBody: IO non ha memorizzato tentativi di aggiunta di un metodo di pagamento. Qui troverai i tentativi più recenti
       lastAttemptsTitle: Ultimi tentativi
       success: Aggiunto
@@ -1463,7 +1463,7 @@ faq:
     title: "Che cos'è un Identity Provider?"
     content: !include faq/faq6.md
   7:
-    title: "Come scelgiere un Identity Provider?"
+    title: "Come scegliere un Identity Provider?"
     content: !include faq/faq7.md
   8:
     title: "È possibile avere più di un'identità digitale?"
@@ -1864,7 +1864,7 @@ bonus:
         body: "Ti preghiamo di attendere..."
       noPaymentMethod:
         title: "Aggiungi almeno un metodo di pagamento"
-        body: "Per inziare a collezionare transazioni valide, aggiungi al tuo Portafoglio i tuoi metodi di pagamento preferiti: oggi sono supportate le principali carte di pagamento, app e altri strumenti digitali.\n\n
+        body: "Per iniziare a collezionare transazioni valide, aggiungi al tuo Portafoglio i tuoi metodi di pagamento preferiti: oggi sono supportate le principali carte di pagamento, app e altri strumenti digitali.\n\n
         In futuro verranno supportati altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno il Cashback!"
       enrollPaymentMethod:
         title: "Scegli quali metodi di pagamento attivare"
