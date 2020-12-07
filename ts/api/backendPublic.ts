@@ -36,15 +36,17 @@ const BackendStatusR = t.interface({
   message: LocalizedMessage
 });
 
+const Levels = t.keyof({
+  critical: null,
+  normal: null,
+  warning: null
+});
+
 // SectionStatus represents the status of a single section
 const SectionStatusR = t.interface({
   is_visible: t.boolean,
   message: LocalizedMessage,
-  level: t.union([
-    t.literal("normal"),
-    t.literal("warning"),
-    t.literal("critical")
-  ])
+  level: Levels
 });
 
 const SectionStatusO = t.partial({
