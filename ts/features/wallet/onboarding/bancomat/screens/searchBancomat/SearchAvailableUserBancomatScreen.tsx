@@ -16,6 +16,7 @@ import BancomatKoSingleBankNotFound from "./BancomatKoSingleBankNotFound";
 import BancomatKoTimeout from "./BancomatKoTimeout";
 import LoadBancomatSearch from "./LoadBancomatSearch";
 import BancomatKoServicesError from "./BancomatKoServicesError";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -40,7 +41,9 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
 
   // The user choose a specific bank to search and no results are found
   if (props.abiSelected && noBancomatFound) {
-    return <BancomatKoSingleBankNotFound />;
+    return (
+      <BancomatKoSingleBankNotFound contextualHelp={emptyContextualHelp} />
+    );
   }
   if (noBancomatFound) {
     // check if all services respond without error (success or not found)
@@ -51,20 +54,20 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
       )
     ) {
       // The user doesn't have a bancomat
-      return <BancomatKoNotFound />;
+      return <BancomatKoNotFound contextualHelp={emptyContextualHelp} />;
     }
     // One of the ca returned with error, the user could have a bancomat
     // and he should try to search for a single bank
-    return <BancomatKoServicesError />;
+    return <BancomatKoServicesError contextualHelp={emptyContextualHelp} />;
   }
   if (isError(pans) && isTimeoutError(pans.error)) {
-    return <BancomatKoTimeout />;
+    return <BancomatKoTimeout contextualHelp={emptyContextualHelp} />;
   }
   if (isLoading(pans) || isError(pans)) {
     return <LoadBancomatSearch />;
   }
   // success! The user can now optionally add found bancomat to the wallet
-  return <AddBancomatScreen />;
+  return <AddBancomatScreen contextualHelp={emptyContextualHelp} />;
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({});
