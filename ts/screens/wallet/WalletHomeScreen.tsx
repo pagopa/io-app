@@ -75,6 +75,8 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
+import { getValue } from "../../features/bonus/bpd/model/RemoteValue";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -259,7 +261,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     // we have to render only wallets of credit card type
     const validWallets = wallets.filter(w => w.type === TypeEnum.CREDIT_CARD);
     const noMethod =
-      validWallets.length === 0 && this.props.allActiveBonus.length === 0;
+      validWallets.length === 0 &&
+      this.props.allActiveBonus.length === 0 &&
+      !getValue(this.props.bpdActiveBonus);
     return (
       <View>
         <View spacer={true} />
@@ -313,7 +317,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
   }
 
   private errorWalletsHeader() {
-    const noMethod = this.props.allActiveBonus.length === 0;
+    const noMethod =
+      this.props.allActiveBonus.length === 0 &&
+      !getValue(this.props.bpdActiveBonus);
     return (
       <View>
         <Text style={[styles.white, styles.inLineSpace]}>
@@ -340,6 +346,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             noMethod={noMethod}
           />
         )}
+        {bpdEnabled && <BpdCardsInWalletContainer />}
       </View>
     );
   }
@@ -533,7 +540,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           this.newMethodAddedContent
         ) : (
           <>
-            {bpdEnabled && (
+            {bpdEnabled && !pot.isLoading(potTransactions) && (
               <FeaturedCardCarousel
                 bvActive={this.props.allActiveBonus.length > 0}
               />
@@ -580,7 +587,8 @@ const mapStateToProps = (state: GlobalState) => {
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     readTransactions: transactionsReadSelector(state),
     nav: navSelector(state),
-    isPagoPaVersionSupported
+    isPagoPaVersionSupported,
+    bpdActiveBonus: bpdEnabledSelector(state)
   };
 };
 
