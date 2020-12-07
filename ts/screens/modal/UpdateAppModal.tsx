@@ -3,9 +3,10 @@
  *
  */
 
+import React, { FC, useCallback, useEffect, useState } from "react";
+
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Container, H2, Text, View } from "native-base";
-import * as React from "react";
 import {
   BackHandler,
   Image,
@@ -14,14 +15,14 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import { connect } from "react-redux";
+
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { storeUrl, webStoreURL } from "../../utils/appVersion";
 
-const timeoutErrorMsg: Millisecond = 5000 as Millisecond;
+const ERROR_MESSAGE_TIMEOUT: Millisecond = 5000 as Millisecond;
 
 const styles = StyleSheet.create({
   text: {
@@ -45,139 +46,105 @@ const styles = StyleSheet.create({
   }
 });
 
-type State = { hasError: boolean };
+type FooterProps = { onOpenAppStore: () => void };
 
-class UpdateAppModal extends React.PureComponent<never, State> {
-  constructor(props: never) {
-    super(props);
-    this.state = {
-      hasError: false
-    };
-  }
-  // No Event on back button android
-  private handleBackPress = () => true;
+const AppleFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
+  <View footer>
+    <>
+      <Button block={true} primary={true} onPress={onOpenAppStore}>
+        <Text>{I18n.t("btnUpdateApp")}</Text>
+      </Button>
+      <View spacer />
+    </>
+  </View>
+);
 
-  public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
-  }
-
-  public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
-  }
-
-  private setError = () =>
-    new Promise(resolve => {
-      this.setState(
-        {
-          hasError: true
-        },
-        resolve
-      );
-    });
-
-  private openAppStore = () => {
-    if (this.state.hasError) {
-      return;
-    }
-
-    // Play/App store native URL
-    // eslint-disable-next-line
-    Linking.openURL(storeUrl)
-      // Try to fallback to the web URL
-      .catch(() => Linking.openURL(webStoreURL))
-      // No URL could be opened, show an error message
-      .catch(() => this.setError())
-      // Hide the error after 5 seconds
-      .then(() =>
-        setTimeout(
-          () =>
-            this.setState({
-              hasError: false
-            }),
-          timeoutErrorMsg
-        )
-      );
+const AndroidFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => {
+  const cancelButtonProps = {
+    cancel: true,
+    block: true,
+    onPress: () => BackHandler.exitApp(),
+    title: I18n.t("global.buttons.close")
   };
 
-  /**
-   * Footer iOS button
-   */
-  private renderIosFooter() {
-    return (
-      <View footer={true}>
-        <React.Fragment>
-          <Button block={true} primary={true} onPress={this.openAppStore}>
-            <Text>{I18n.t("btnUpdateApp")}</Text>
-          </Button>
-          <View spacer={true} />
-        </React.Fragment>
-      </View>
-    );
-  }
+  const updateButtonProps = {
+    block: true,
+    primary: true,
+    onPress: onOpenAppStore,
+    title: I18n.t("btnUpdateApp")
+  };
 
-  /**
-   * Footer Android buttons
-   */
-  private renderAndroidFooter() {
-    const cancelButtonProps = {
-      cancel: true,
-      block: true,
-      onPress: () => BackHandler.exitApp(),
-      title: I18n.t("global.buttons.close")
-    };
-    const updateButtonProps = {
-      block: true,
-      primary: true,
-      onPress: this.openAppStore,
-      title: I18n.t("btnUpdateApp")
-    };
+  return (
+    <FooterWithButtons
+      type="TwoButtonsInlineThird"
+      leftButton={cancelButtonProps}
+      rightButton={updateButtonProps}
+    />
+  );
+};
 
-    return (
-      <FooterWithButtons
-        type="TwoButtonsInlineThird"
-        leftButton={cancelButtonProps}
-        rightButton={updateButtonProps}
-      />
-    );
-  }
+const UpdateAppModal: React.FC = () => {
+  // Disable Android back button
+  const handleBackPress = () => true;
 
-  // Different footer according to OS
-  get footer() {
-    return Platform.select({
-      ios: this.renderIosFooter(),
-      android: this.renderAndroidFooter()
-    });
-  }
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
 
-  public render() {
-    // Current version not supported
-    return (
-      <Modal>
-        <BaseScreenComponent
-          appLogo={true}
-          goBack={false}
-          accessibilityEvents={{ avoidNavigationEventsUsage: true }}
-        >
-          <Container>
-            <View style={styles.container}>
-              <H2>{I18n.t("titleUpdateApp")}</H2>
-              <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
-              <Image
-                style={styles.img}
-                source={require("../../../img/icons/update-icon.png")}
-              />
-              {this.state.hasError && (
-                <Text style={styles.textDanger}>
-                  {I18n.t("msgErrorUpdateApp")}
-                </Text>
-              )}
-            </View>
-          </Container>
-        </BaseScreenComponent>
-        {this.footer}
-      </Modal>
-    );
-  }
-}
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+  }, []);
 
-export default connect()(UpdateAppModal);
+  // Reset the error state after a given timeout
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => setError(false), ERROR_MESSAGE_TIMEOUT);
+    }
+  }, [error]);
+
+  // Tries to open the native app store, falling to browser web store
+  const openAppStore = useCallback(async () => {
+    try {
+      await Linking.openURL(storeUrl);
+    } catch (e) {
+      try {
+        await Linking.openURL(webStoreURL);
+      } catch (e) {
+        setError(true);
+      }
+    }
+  }, [setError]);
+
+  return (
+    <Modal>
+      <BaseScreenComponent
+        appLogo={true}
+        goBack={false}
+        accessibilityEvents={{ avoidNavigationEventsUsage: true }}
+      >
+        <Container>
+          <View style={styles.container}>
+            <H2>{I18n.t("titleUpdateApp")}</H2>
+            <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
+            <Image
+              style={styles.img}
+              source={require("../../../img/icons/update-icon.png")}
+            />
+            {error && (
+              <Text style={styles.textDanger}>
+                {I18n.t("msgErrorUpdateApp")}
+              </Text>
+            )}
+          </View>
+        </Container>
+      </BaseScreenComponent>
+      {Platform.select({
+        ios: <AppleFooter onOpenAppStore={openAppStore} />,
+        android: <AndroidFooter onOpenAppStore={openAppStore} />
+      })}
+    </Modal>
+  );
+};
+
+export default UpdateAppModal;
