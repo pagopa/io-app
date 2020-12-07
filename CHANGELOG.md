@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0-rc.0](https://github.com/pagopa/io-app/compare/1.11.0-rc.2...1.12.0-rc.0) (2020-12-07)
+
+
+### Features
+
+* **Bonus pagamenti digitali:** Typo in self-declaration screen ([#2503](https://github.com/pagopa/io-app/issues/2503)) ([f4ce213](https://github.com/pagopa/io-app/commit/f4ce2138ed173523b4c60651cc5584bd680a0794))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176007673](https://www.pivotaltracker.com/story/show/176007673)] Update index.yml ([#2492](https://github.com/pagopa/io-app/issues/2492)) ([a43a3fb](https://github.com/pagopa/io-app/commit/a43a3fb5c37085ad1bd27d604da095493f88f608))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#176015967](https://www.pivotaltracker.com/story/show/176015967)] Wallet Contextual Help Text Update [#2496](https://github.com/pagopa/io-app/issues/2496) ([5fbb36b](https://github.com/pagopa/io-app/commit/5fbb36bd64af1998da2fb708b0a872c7cf6e1dfd))
+
 ## [1.11.0-rc.2](https://github.com/pagopa/io-app/compare/1.11.0-rc.1...1.11.0-rc.2) (2020-12-03)
 
 
