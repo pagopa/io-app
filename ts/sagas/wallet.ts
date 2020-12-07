@@ -149,6 +149,7 @@ import {
   searchUserSatispay,
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
+import { ContentClient } from "../api/content";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -797,13 +798,10 @@ export function* watchWalletSaga(
   );
 
   if (bpdEnabled) {
+    const contentClient = ContentClient();
+
     // watch for load abi request
-    yield takeLatest(
-      loadAbi.request,
-      handleLoadAbi,
-      paymentManagerClient.getAbi,
-      pmSessionManager
-    );
+    yield takeLatest(loadAbi.request, handleLoadAbi, contentClient.getAbiList);
 
     // watch for load pans request
     yield takeLatest(
