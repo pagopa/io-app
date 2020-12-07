@@ -343,7 +343,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             activeBonuses={this.props.allActiveBonus}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
-            noMethod={noMethod}
+            noMethod={noActiveBonus}
           />
         )}
         {bpdEnabled && <BpdCardsInWalletContainer />}
