@@ -5,7 +5,6 @@ import * as React from "react";
 import { ActivityIndicator, Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import Placeholder from "rn-placeholder";
 import { InfoBox } from "../../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
