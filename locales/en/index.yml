@@ -571,7 +571,7 @@ authentication:
       title: Access problem
       body: The selected identity provider is not available at this time, you can try again later.
             If you have another SPID, choose an alternative provider.
-            You can report the problem with the bug icon at the top right of the screen.
+            You can report the problem with the '?' icon at the top right of the screen.
     login:
       title: Login error
       body: There was an error with the login, please retry!
@@ -819,7 +819,7 @@ wallet:
   transactionsLoadFailure: Loading your transactions has failed, please retry.
   transactionHelpMessage:
     text1: Problems with a payment or adding a new method?
-    text2: Consult the help at the top right of this page.
+    text2: Check the help section at the top right of this page.
   transactionsLoadMore: Load previous
   transacionsLoadingMore: Loading previous...
   pickPaymentMethod:
@@ -955,7 +955,7 @@ wallet:
     contextualHelpTitle: Manually insert notice
     contextualHelpContent: !include wallet/insert_manual_notice.md
   errorTransaction:
-    submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
+    submitBugText: If you can't solve the problem, please let us know with the '?' icon at the top right. Thank you!
   transactionDetails: Transaction details
   transactionFullReason: Full reason
   detailsTransaction:
@@ -1238,7 +1238,7 @@ messageDetails:
   loadingText: Loading message details in progress...
   errorText: We were unable to load the details of your message
   retryText: It's probably a temporary error... please try again!
-  submitBugText: If the problem is not resolved, report it with the ladybug icon at the top right, thank you!
+  submitBugText: If the problem is not resolved, report it with the '?' icon at the top right, thank you!
   rawInfoLink:
     showLabel: Details of the message
     hideLabel: Close details
@@ -1928,7 +1928,7 @@ bonus:
           alertBody: "The payment method you are adding will be saved in the IO app wallet and, if compatible, can also be used for any payments within the app."
         noPaymentMethods: "You must add at least one payment method to start collecting valid transactions"
         noActiveMethod: "You must have activated at least one payment method to collect valid transactions"
-        error: "At this time it is not possible to view the payment methods on which you have activated Cashback or to add new ones. Please try again."
+        error: "We’re experiencing issues loading your methods, but we’ll collect all the valid transactions done with your methods already enrolled on Cashback."
         activateOnOthersChannel:
           text1: "Activate on"
           text2: "other channels"
