@@ -94,6 +94,10 @@ type NavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
+type State = {
+  hasFocus: boolean;
+};
+
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   NavigationInjectedProps<NavigationParams> &
@@ -171,7 +175,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * Wallet home screen, with a list of recent transactions and payment methods,
  * a "pay notice" button and payment methods info/button to add new ones
  */
-class WalletHomeScreen extends React.PureComponent<Props> {
+class WalletHomeScreen extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasFocus: false };
+  }
+
   get newMethodAdded() {
     return this.props.navigation.getParam("newMethodAdded");
   }
@@ -200,6 +209,15 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       }
     );
     return true;
+  };
+
+  private onFocus = () => {
+    this.loadBonusVacanze();
+    this.setState({ hasFocus: true });
+  };
+
+  private onLostFocus = () => {
+    this.setState({ hasFocus: false });
   };
 
   private loadBonusVacanze = () => {
@@ -252,14 +270,16 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       this.props.dispatchAllTransactionLoaded(this.props.potTransactions.value);
     }
     if (
+      this.state.hasFocus &&
       // error loading: bpd bonus
-      (!isRemoteValueError(prevProps.bpdActiveBonus) &&
+      ((!isRemoteValueError(prevProps.bpdActiveBonus) &&
         isRemoteValueError(this.props.bpdActiveBonus)) ||
-      // error loading: bonus vacanze
-      (prevProps.allActiveBonus.some(ab => !pot.isError(ab)) &&
-        this.props.allActiveBonus.some(ab => pot.isError(ab))) ||
-      // error loading: wallet
-      (!pot.isError(prevProps.potWallets) && pot.isError(this.props.potWallets))
+        // error loading: bonus vacanze
+        (prevProps.allActiveBonus.some(ab => !pot.isError(ab)) &&
+          this.props.allActiveBonus.some(ab => pot.isError(ab))) ||
+        // error loading: wallet
+        (!pot.isError(prevProps.potWallets) &&
+          pot.isError(this.props.potWallets)))
     ) {
       showToast(I18n.t("wallet.errors.loadingData"));
     }
@@ -568,7 +588,10 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           </>
         )}
         {bonusVacanzeEnabled && (
-          <NavigationEvents onWillFocus={this.loadBonusVacanze} />
+          <NavigationEvents
+            onWillFocus={this.onFocus}
+            onWillBlur={this.onLostFocus}
+          />
         )}
         {bpdEnabled && <NewPaymentMethodAddedNotifier />}
       </WalletLayout>
