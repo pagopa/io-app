@@ -9,7 +9,6 @@ import SectionCardComponent, {
   SectionCardStatus
 } from "../../../../components/wallet/card/SectionCardComponent";
 import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 import BonusCardComponent from "./BonusCardComponent";
 
