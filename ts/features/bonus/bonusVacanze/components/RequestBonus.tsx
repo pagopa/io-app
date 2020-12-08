@@ -5,14 +5,16 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
-import SectionCardComponent from "../../../../components/wallet/card/SectionCardComponent";
+import SectionCardComponent, {
+  SectionCardStatus
+} from "../../../../components/wallet/card/SectionCardComponent";
 import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 import BonusCardComponent from "./BonusCardComponent";
 
 type OwnProps = {
   onButtonPress: () => void;
+  status?: SectionCardStatus;
   onBonusPress: (
     bonus: BonusActivationWithQrCode,
     validFrom?: Date,
@@ -20,7 +22,6 @@ type OwnProps = {
   ) => void;
   activeBonuses: ReadonlyArray<pot.Pot<BonusActivationWithQrCode, Error>>;
   availableBonusesList: BonusesAvailable;
-  noMethod: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -48,8 +49,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
     onButtonPress,
     activeBonuses,
     onBonusPress,
-    availableBonusesList,
-    noMethod
+    availableBonusesList
   } = props;
   const maybeBonusVacanzeCategory = fromNullable(
     availableBonusesList.find(bi => bi.id_type === ID_BONUS_VACANZE_TYPE)
@@ -63,13 +63,9 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
   return (
     <React.Fragment>
       <SectionCardComponent
+        status={props.status}
         label={I18n.t("bonus.requestLabel")}
         onPress={onButtonPress}
-        cardStyle={
-          noMethod
-            ? { backgroundColor: customVariables.brandPrimary }
-            : undefined
-        }
       />
       {activeBonuses.length > 0 ? (
         activeBonuses.map(

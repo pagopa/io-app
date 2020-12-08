@@ -844,6 +844,7 @@ wallet:
     text2: Consulta l’help in alto a destra su questa pagina.
   transactionsLoadMore: Carica precedenti
   transacionsLoadingMore: Carico precedenti...
+  transactionsShow: Mostra operazioni
   pickPaymentMethod:
     unavailable:
       title: Questo metodo di pagamento non è ancora disponibile
@@ -861,6 +862,8 @@ wallet:
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
   newPaymentMethod:
     add: aggiungi
+    show: mostra
+    refresh: aggiorna
     addButton: Aggiungi un metodo
     addDescription: Aggiungi un metodo di pagamento per pagare da IO in pochi secondi, oppure richiedi l’attivazione di un bonus o di una carta sconto.
     walletAlert: "Nel tuo portafoglio sono registrati dei metodi di pagamento ma nessuno di questi è compatibile con IO"
@@ -1102,6 +1105,7 @@ wallet:
     PAYMENT_ONGOING_CANCELLED: È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
     sendReport: Invia segnalazione
+    loadingData: errore durante il caricamento, riprova.
   walletList:
     contextualHelpTitle: I tuoi metodi di pagamento
     contextualHelpContent: !include wallet/wallet_list.md

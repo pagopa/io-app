@@ -824,6 +824,7 @@ wallet:
     text2: Check the help section at the top right of this page.
   transactionsLoadMore: Load previous
   transacionsLoadingMore: Loading previous...
+  transactionsShow: Show transactions
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time
@@ -841,6 +842,8 @@ wallet:
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
   newPaymentMethod:
     add: add
+    show: show
+    refresh: refresh
     addButton: Add a new method
     addDescription: Add a payment method to pay from IO in seconds, or request activation of a bonus or discount card.
     walletAlert: "Your wallet includes payment methods but no one is supported by IO yet"
@@ -1076,6 +1079,7 @@ wallet:
     PAYMENT_ONGOING_CANCELLED: The previous attempt to pay this notice is being canceled, you can retry paying this notice after {{remainingMinutes}} minutes.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
     sendReport: Send report
+    loadingData: loading failure, try again.
   walletList:
     contextualHelpTitle: Your payment methods
     contextualHelpContent: !include wallet/wallet_list.md
