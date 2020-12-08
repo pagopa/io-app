@@ -280,7 +280,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       <SectionCardComponent
         status={sectionCardStatus}
         label={I18n.t("wallet.paymentMethods")}
-        onPress={this.props.loadWallets}
+        onPress={() => {
+          if (sectionCardStatus !== "loading") {
+            this.props.loadWallets();
+          }
+        }}
         isError={isError}
         cardStyle={
           isBlue ? { backgroundColor: customVariables.brandPrimary } : undefined
@@ -494,15 +498,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     );
   }
 
-  // triggered on pull to refresh
-  private handleOnRefresh = () => {
-    this.loadBonusVacanze();
-    this.loadBonusBpd();
-    // FIXME restore loadWallets and refreshTransactions see https://www.pivotaltracker.com/story/show/176051000
-    // this.props.refreshTransactions();
-    // this.props.loadWallets();
-  };
-
   public render(): React.ReactNode {
     const {
       potWallets,
@@ -530,7 +525,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
 
     const walletRefreshControl = (
       <RefreshControl
-        onRefresh={this.handleOnRefresh}
+        onRefresh={undefined}
         refreshing={false}
         tintColor={"transparent"} // iOS
       />
