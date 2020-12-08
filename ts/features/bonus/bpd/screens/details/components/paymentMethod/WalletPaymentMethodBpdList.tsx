@@ -34,6 +34,22 @@ const styles = StyleSheet.create({
   }
 });
 
+const Spinner = () => (
+  <ActivityIndicator
+    color={"black"}
+    accessible={false}
+    importantForAccessibility={"no-hide-descendants"}
+    accessibilityElementsHidden={true}
+  />
+);
+
+const UpdateLabel = (props: Props & { caption: string }) =>
+  pot.isLoading(props.potWallets) ? (
+    <Spinner />
+  ) : (
+    <Link onPress={props.loadWallets}>{props.caption}</Link>
+  );
+
 const AddPaymentMethodButton = (props: { onPress: () => void }) => (
   <Button style={styles.addButton} onPress={props.onPress} bordered={true}>
     <Label color={"blue"}>
@@ -51,13 +67,11 @@ const NoPaymentMethodAreActiveWarning = () => (
   </View>
 );
 
-const NoPaymentMethodFound = (props: Props) => (
+const NoPaymentMethodFound = () => (
   <View>
     <InfoBox>
       <Body>{I18n.t("bonus.bpd.details.paymentMethods.noPaymentMethods")}</Body>
     </InfoBox>
-    <View spacer={true} />
-    <AddPaymentMethodButton onPress={props.addPaymentMethod} />
   </View>
 );
 
@@ -65,9 +79,10 @@ const PaymentMethodNone = (props: Props) => (
   <>
     <View style={styles.row}>
       <H4>{I18n.t("wallet.paymentMethods")}</H4>
-      <Link onPress={props.loadWallets}>
-        {I18n.t("global.buttons.show").toLowerCase()}
-      </Link>
+      <UpdateLabel
+        {...props}
+        caption={I18n.t("global.buttons.show").toLowerCase()}
+      />
     </View>
 
     <View spacer={true} large={true} />
@@ -79,19 +94,19 @@ const PaymentMethodNone = (props: Props) => (
 
 const PaymentMethodError = (props: Props) => (
   <>
-    <H4>{I18n.t("wallet.paymentMethods")}</H4>
+    <View style={styles.row}>
+      <H4>{I18n.t("wallet.paymentMethods")}</H4>
+      <UpdateLabel
+        {...props}
+        caption={I18n.t("global.buttons.update").toLowerCase()}
+      />
+    </View>
     <View spacer={true} />
     <InfoBox iconColor={IOColors.red}>
       <Body>{I18n.t("bonus.bpd.details.paymentMethods.error")}</Body>
     </InfoBox>
-    <View spacer={true} />
-    <Button
-      style={styles.addButton}
-      onPress={props.loadWallets}
-      bordered={true}
-    >
-      <Label color={"blue"}>{I18n.t("global.buttons.retry")}</Label>
-    </Button>
+    <View spacer={true} large={true} />
+    <AddPaymentMethodButton onPress={props.addPaymentMethod} />
   </>
 );
 
@@ -100,11 +115,10 @@ const PaymentMethodSome = (props: Props) =>
     <View>
       <View style={styles.row}>
         <H4>{I18n.t("wallet.paymentMethods")}</H4>
-        {props.potWallets.value.length > 0 && (
-          <Link onPress={props.addPaymentMethod}>
-            {I18n.t("global.buttons.add").toLowerCase()}
-          </Link>
-        )}
+        <UpdateLabel
+          {...props}
+          caption={I18n.t("global.buttons.update").toLowerCase()}
+        />
       </View>
       <View spacer={true} />
       {!props.atLeastOnePaymentMethodActive &&
@@ -115,8 +129,10 @@ const PaymentMethodSome = (props: Props) =>
       {props.potWallets.value.length > 0 ? (
         <PaymentMethodGroupedList paymentList={props.potWallets.value} />
       ) : (
-        <NoPaymentMethodFound {...props} />
+        <NoPaymentMethodFound />
       )}
+      <View spacer={true} />
+      <AddPaymentMethodButton onPress={props.addPaymentMethod} />
     </View>
   ) : null;
 
@@ -146,18 +162,7 @@ const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props =>
   pot.fold(
     props.potWallets,
     () => <PaymentMethodNone {...props} />,
-    () => (
-      <>
-        <View spacer={true} />
-        <ActivityIndicator
-          color={"black"}
-          accessible={false}
-          importantForAccessibility={"no-hide-descendants"}
-          accessibilityElementsHidden={true}
-        />
-        <View spacer={true} />
-      </>
-    ),
+    () => <PaymentMethodNone {...props} />,
     _ => <PaymentMethodNone {...props} />,
     _ => <PaymentMethodError {...props} />,
     _ => <PaymentMethodSome {...props} />,
