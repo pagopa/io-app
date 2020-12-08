@@ -1116,7 +1116,7 @@ wallet:
         three: ", ma solo presso i punti fisici (POS)."
       debit:
         title: "La tua carta ha più di un logo?"
-        body: "Se su questa carta è presente anche il logo di un altro circuito (Maestro, Visa, Mastercard, etc.), aggiungila al portafoglio anche come **carta di debito (o credito)**. In questo modo potrai collezionare correttamente le transazioni ai fini del Cashback ed effettuare pagamenti su IO."
+        body: "Se oltre al logo PagoBANCOMAT è presente quello di un altro circuito (Maestro, MasterCard, Visa), puoi aggiungerla anche come **carta di debito o credito** digitando il numero stampato sul fronte. Le transazioni effettuate su questo circuito saranno valide per il Cashback e potrai usare la carta per pagare su IO."
         addCta: "Aggiungi Carta di Debito/Credito"
       removeCta: "Elimina questo metodo di pagamento"
   satispay:
