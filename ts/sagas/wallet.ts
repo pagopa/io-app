@@ -74,6 +74,7 @@ import {
   fetchTransactionRequest,
   fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
+  fetchTransactionsRequestWithExpBackoff,
   fetchTransactionSuccess,
   pollTransactionSagaCompleted,
   pollTransactionSagaTimeout,
@@ -96,7 +97,8 @@ import {
   payCreditCardVerificationSuccess,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
-  setWalletSessionEnabled
+  setWalletSessionEnabled,
+  fetchWalletsRequestWithExpBackoff
 } from "../store/actions/wallet/wallets";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -150,6 +152,7 @@ import {
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
 import { ContentClient } from "../api/content";
+import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -646,6 +649,23 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  yield takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
+    action: ActionType<typeof fetchTransactionsRequest>
+  ) {
+    const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
+      backOffWaitingTime
+    );
+    if (waiting > 0) {
+      yield delay(waiting);
+    }
+    yield call(
+      fetchTransactionsRequestHandler,
+      paymentManagerClient,
+      pmSessionManager,
+      action
+    );
+  });
+
   /**
    * watch when all transactions are been loaded
    * check if transaction read store section (entities.transactionsRead) is dirty:
@@ -674,6 +694,16 @@ export function* watchWalletSaga(
     paymentManagerClient,
     pmSessionManager
   );
+
+  yield takeLatest(getType(fetchWalletsRequestWithExpBackoff), function* () {
+    const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
+      backOffWaitingTime
+    );
+    if (waiting > 0) {
+      yield delay(waiting);
+    }
+    yield call(getWallets, paymentManagerClient, pmSessionManager);
+  });
 
   yield takeLatest(
     getType(fetchWalletsRequest),

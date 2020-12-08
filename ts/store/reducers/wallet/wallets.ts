@@ -44,6 +44,7 @@ import {
   deleteWalletSuccess,
   fetchWalletsFailure,
   fetchWalletsRequest,
+  fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
@@ -291,7 +292,7 @@ const reducer = (
     //
     // fetch wallets
     //
-
+    case getType(fetchWalletsRequestWithExpBackoff):
     case getType(fetchWalletsRequest):
     case getType(paymentUpdateWalletPsp.request):
     case getType(deleteWalletRequest):
