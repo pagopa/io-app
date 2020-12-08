@@ -507,7 +507,12 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       anyCreditCardAttempts
     } = this.props;
 
-    const headerContent = this.cardPreview();
+    const headerContent = (
+      <>
+        <WalletHomeHeader />
+        {this.cardPreview()}
+      </>
+    );
     const transactionContent =
       pot.isError(potTransactions) ||
       (pot.isNone(potTransactions) &&
@@ -518,29 +523,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             potTransactions,
             anyHistoryPayments || anyCreditCardAttempts
           );
-    const headerContent = (
-      <>
-        <WalletHomeHeader />
-        {pot.fold(
-          potWallets,
-          () => this.loadingWalletsHeader(),
-          () => this.loadingWalletsHeader(),
-          _ => this.loadingWalletsHeader(),
-          _ => this.errorWalletsHeader(),
-          _ => this.cardPreview(),
-          _ => this.loadingWalletsHeader(),
-          _ => this.cardPreview(),
-          _ => this.errorWalletsHeader()
-        )}
-      </>
-    );
-
-    const transactionContent = pot.isError(potTransactions)
-      ? this.transactionError()
-      : this.transactionList(
-          potTransactions,
-          anyHistoryPayments || anyCreditCardAttempts
-        );
 
     const footerContent =
       pot.isSome(potWallets) && !this.newMethodAdded
