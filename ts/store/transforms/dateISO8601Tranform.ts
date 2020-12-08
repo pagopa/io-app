@@ -1,6 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { createTransform, TransformIn, TransformOut } from "redux-persist";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 import { DateFromISOString } from "../../utils/dates";
 
 /**
