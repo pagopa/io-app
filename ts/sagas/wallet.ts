@@ -19,7 +19,7 @@ import {
   takeEvery,
   takeLatest
 } from "redux-saga/effects";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { action, ActionType, getType, isActionOf } from "typesafe-actions";
 
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
@@ -72,8 +72,10 @@ import {
   fetchPsp,
   fetchTransactionFailure,
   fetchTransactionRequest,
+  fetchTransactionsFailure,
   fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
+  fetchTransactionsRequestWithExpBackoff,
   fetchTransactionSuccess,
   pollTransactionSagaCompleted,
   pollTransactionSagaTimeout,
@@ -96,7 +98,8 @@ import {
   payCreditCardVerificationSuccess,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
-  setWalletSessionEnabled
+  setWalletSessionEnabled,
+  fetchWalletsRequestWithExpBackoff
 } from "../store/actions/wallet/wallets";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -150,6 +153,8 @@ import {
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
 import { ContentClient } from "../api/content";
+import { canRequestBeProcessed } from "../store/reducers/wallet/lastRequestError";
+import { RTron } from "../boot/configureStoreAndPersistor";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -646,6 +651,24 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  yield takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
+    action: ActionType<typeof fetchTransactionsRequest>
+  ) {
+    const canBeProcessed: ReturnType<typeof canRequestBeProcessed> = yield select(
+      canRequestBeProcessed
+    );
+    if (!canBeProcessed) {
+      yield put(fetchTransactionsFailure(new Error("backoff protection")));
+      return;
+    }
+    yield call(
+      fetchTransactionsRequestHandler,
+      paymentManagerClient,
+      pmSessionManager,
+      action
+    );
+  });
+
   /**
    * watch when all transactions are been loaded
    * check if transaction read store section (entities.transactionsRead) is dirty:
@@ -674,6 +697,17 @@ export function* watchWalletSaga(
     paymentManagerClient,
     pmSessionManager
   );
+
+  yield takeLatest(getType(fetchWalletsRequestWithExpBackoff), function* () {
+    const canBeProcessed: ReturnType<typeof canRequestBeProcessed> = yield select(
+      canRequestBeProcessed
+    );
+    if (!canBeProcessed) {
+      yield put(fetchWalletsFailure(new Error("backoff protection")));
+      return;
+    }
+    yield call(getWallets, paymentManagerClient, pmSessionManager);
+  });
 
   yield takeLatest(
     getType(fetchWalletsRequest),

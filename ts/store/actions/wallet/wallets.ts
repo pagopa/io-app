@@ -11,6 +11,11 @@ import {
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 
+// this action load wallet following a backoff retry strategy
+export const fetchWalletsRequestWithExpBackoff = createStandardAction(
+  "WALLETS_LOAD_BACKOFF_REQUEST"
+)();
+
 export const fetchWalletsRequest = createStandardAction(
   "WALLETS_LOAD_REQUEST"
 )();
@@ -165,4 +170,5 @@ export type WalletsActions =
   | ActionType<typeof creditCardCheckout3dsRequest>
   | ActionType<typeof creditCardCheckout3dsSuccess>
   | ActionType<typeof setWalletSessionEnabled>
-  | ActionType<typeof creditCardCheckout3dsRedirectionUrls>;
+  | ActionType<typeof creditCardCheckout3dsRedirectionUrls>
+  | ActionType<typeof fetchWalletsRequestWithExpBackoff>;
