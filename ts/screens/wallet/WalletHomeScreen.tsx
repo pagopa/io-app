@@ -251,13 +251,13 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       this.props.dispatchAllTransactionLoaded(this.props.potTransactions.value);
     }
     if (
-      // error on bpd bonus loading
+      // error loading: bpd bonus
       (!isRemoteValueError(prevProps.bpdActiveBonus) &&
         isRemoteValueError(this.props.bpdActiveBonus)) ||
-      // error on bonus vacanze loading
+      // error loading: bonus vacanze
       (prevProps.allActiveBonus.some(ab => !pot.isError(ab)) &&
         this.props.allActiveBonus.some(ab => pot.isError(ab))) ||
-      // error on load wallets loading
+      // error loading: wallet
       (!pot.isError(prevProps.potWallets) && pot.isError(this.props.potWallets))
     ) {
       showToast(I18n.t("wallet.errors.loadingData"));
