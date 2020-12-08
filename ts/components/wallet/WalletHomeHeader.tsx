@@ -13,11 +13,13 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { bottomSheetContent } from "../../utils/bottomSheet";
 import { getCurrentRouteKey } from "../../utils/navigation";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { H1 } from "../core/typography/H1";
 import { H3 } from "../core/typography/H3";
 import { H4 } from "../core/typography/H4";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
@@ -32,10 +34,12 @@ type NavigationListItem = {
 
 const styles = StyleSheet.create({
   container: {
-    paddingRight: 10,
+    paddingRight: 0,
     paddingLeft: 0,
+    marginVertical: 20,
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    backgroundColor: IOColors.white
   },
   flexColumn: {
     flexDirection: "column",
@@ -71,20 +75,18 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
 
   const openModalBox = async () => {
     const bottomSheetProps = await bottomSheetContent(
-      <>
-        <View spacer />
-        <FlatList
-          data={navigationListItems}
-          keyExtractor={item => item.title}
-          renderItem={({ item, index }) => (
-            <ListItem
+      <FlatList
+        data={navigationListItems}
+        keyExtractor={item => item.title}
+        renderItem={({ item, index }) => (
+          <>
+            <ButtonDefaultOpacity
               onPress={() => {
                 dismiss();
                 item.onPress();
               }}
               style={styles.container}
-              first={index === 0}
-              last={index === navigationListItems.length - 1}
+              onPressWithGestureHandler={true}
             >
               <View style={styles.flexColumn}>
                 <View style={styles.row}>
@@ -101,12 +103,16 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
                   {item.subtitle}
                 </H5>
               </View>
-            </ListItem>
-          )}
-        />
-      </>,
+            </ButtonDefaultOpacity>
+
+            {index !== navigationListItems.length - 1 && (
+              <ItemSeparatorComponent noPadded />
+            )}
+          </>
+        )}
+      />,
       I18n.t("global.buttons.add"),
-      325,
+      300,
       dismiss
     );
 
