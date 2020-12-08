@@ -1,15 +1,15 @@
-import { getType } from "typesafe-actions";
 import { fromNullable } from "fp-ts/lib/Option";
-import { Millisecond, Second } from "italia-ts-commons/lib/units";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { getType } from "typesafe-actions";
 import { Action } from "../../actions/types";
-import {
-  fetchWalletsFailure,
-  fetchWalletsSuccess
-} from "../../actions/wallet/wallets";
 import {
   fetchTransactionsFailure,
   fetchTransactionsSuccess
 } from "../../actions/wallet/transactions";
+import {
+  fetchWalletsFailure,
+  fetchWalletsSuccess
+} from "../../actions/wallet/wallets";
 import { GlobalState } from "../types";
 
 export type LastRequestErrorState = {
@@ -18,7 +18,7 @@ export type LastRequestErrorState = {
 };
 
 const defaultState: LastRequestErrorState = { attempts: 0 };
-const backOffExpLimit = 4 as Second;
+const backOffExpLimitAttempts = 4;
 
 const reducer = (
   state: LastRequestErrorState = defaultState,
@@ -29,7 +29,7 @@ const reducer = (
     case getType(fetchWalletsFailure):
       return {
         lastUpdate: new Date(),
-        attempts: Math.min(state.attempts + 1, backOffExpLimit)
+        attempts: Math.min(state.attempts + 1, backOffExpLimitAttempts)
       };
     // on success reset state
     case getType(fetchTransactionsSuccess):
