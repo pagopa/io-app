@@ -1840,8 +1840,9 @@ bonus:
         body1: "Enable Cashback on your saved methods and start collecting valid transactions."
         body2: "You can later add other payment methods to your wallet and activate Cashback on them."
       errorPaymentMethod:
-        title: "Thanks for signing up for Cashback!"
-        body1: "At this time it is not possible to activate Cashback on your payment methods. We are sorry for the inconvenience."
+        title: "Almost there, activate Cashback on your payment methods!"
+        body: "Enable Cashback on methods already in your wallet or add new ones."
+        cta: "Activate payment methods"
     iban:
       iban: "IBAN"
       edit: "Change IBAN"

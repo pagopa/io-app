@@ -1,41 +1,39 @@
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { InfoBox } from "../../../../../components/box/InfoBox";
+import { StyleSheet } from "react-native";
 import { Body } from "../../../../../components/core/typography/Body";
-import { H1 } from "../../../../../components/core/typography/H1";
+import { H2 } from "../../../../../components/core/typography/H2";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+const styles = StyleSheet.create({
+  center: { textAlign: "center" }
+});
+
 const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.title"),
-  skip: I18n.t("global.buttons.skip"),
-  continueText: I18n.t("global.buttons.continue"),
   title: I18n.t("bonus.bpd.onboarding.errorPaymentMethod.title"),
-  body1: I18n.t("bonus.bpd.onboarding.errorPaymentMethod.body1"),
-  body2: I18n.t("bonus.bpd.onboarding.enrollPaymentMethod.body2")
+  body: I18n.t("bonus.bpd.onboarding.errorPaymentMethod.body"),
+  cta: I18n.t("bonus.bpd.onboarding.errorPaymentMethod.cta")
 });
 
 const ErrorPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
-  const {
-    headerTitle,
-    skip,
-    continueText,
-    title,
-    body1,
-    body2
-  } = loadLocales();
+  const { headerTitle, title, body, cta } = loadLocales();
   return (
     <BaseScreenComponent
       goBack={false}
@@ -43,21 +41,26 @@ const ErrorPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-          <View spacer={true} large={true} />
-          <H1>{title}</H1>
-          <View spacer={true} large={true} />
-          <InfoBox>
-            <Body>{body1}</Body>
-          </InfoBox>
-          <View spacer={true} large={true} />
-          <Body>{body2}</Body>
-        </View>
-        <FooterTwoButtons
-          onRight={props.skip}
-          onCancel={props.skip}
-          rightText={continueText}
-          leftText={skip}
+        <ScrollView>
+          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+            <View spacer={true} extralarge={true} />
+            <View spacer={true} extralarge={true} />
+            <IconFont
+              name={"io-complete"}
+              size={120}
+              color={IOColors.aqua as string}
+              style={[styles.center, styles.lineHeight]}
+            />
+            <View spacer={true} large={true} />
+            <View spacer={true} large={true} />
+            <H2 style={styles.center}>{title}</H2>
+            <View spacer={true} extralarge={true} />
+            <Body style={styles.center}>{body}</Body>
+          </View>
+        </ScrollView>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={confirmButtonProps(props.skip, cta)}
         />
       </SafeAreaView>
     </BaseScreenComponent>
