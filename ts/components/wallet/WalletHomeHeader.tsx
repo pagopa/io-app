@@ -22,6 +22,7 @@ import { IOColors } from "../core/variables/IOColors";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
+import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -58,6 +59,24 @@ const styles = StyleSheet.create({
 
 const WalletHomeHeader: React.FC<Props> = (props: Props) => {
   const { present, dismiss } = useBottomSheetModal();
+  const [isBottomSheetOpen, setBottomSheetOpen] = React.useState(false);
+
+  useHardwareBackButton(() => {
+    const isOpen = isBottomSheetOpen;
+    closeBS();
+    // true only if we handle the back
+    return isOpen;
+  });
+
+  const closeBS = () => {
+    setBottomSheetOpen(false);
+    dismiss();
+  };
+
+  const openBS = async () => {
+    setBottomSheetOpen(true);
+    await openModalBox();
+  };
 
   const navigationListItems: ReadonlyArray<NavigationListItem> = [
     {
@@ -82,7 +101,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
           <>
             <ButtonDefaultOpacity
               onPress={() => {
-                dismiss();
+                closeBS();
                 item.onPress();
               }}
               style={styles.container}
@@ -113,7 +132,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
       />,
       I18n.t("global.buttons.add"),
       300,
-      dismiss
+      closeBS
     );
 
     present(bottomSheetProps.content, {
@@ -138,7 +157,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
           flexDirection: "row",
           alignItems: "center"
         }}
-        onPress={openModalBox}
+        onPress={openBS}
       >
         <IconFont
           name="io-plus"
