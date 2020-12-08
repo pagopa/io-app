@@ -34,6 +34,14 @@ const styles = StyleSheet.create({
   }
 });
 
+const AddPaymentMethodButton = (props: { onPress: () => void }) => (
+  <Button style={styles.addButton} onPress={props.onPress} bordered={true}>
+    <Label color={"blue"}>
+      {I18n.t("bonus.bpd.details.paymentMethods.add.cta")}
+    </Label>
+  </Button>
+);
+
 const NoPaymentMethodAreActiveWarning = () => (
   <View>
     <InfoBox>
@@ -49,10 +57,24 @@ const NoPaymentMethodFound = (props: Props) => (
       <Body>{I18n.t("bonus.bpd.details.paymentMethods.noPaymentMethods")}</Body>
     </InfoBox>
     <View spacer={true} />
-    <Button style={styles.addButton} onPress={props.addPaymentMethod}>
-      <Label color={"white"}>{I18n.t("wallet.addPaymentMethodTitle")}</Label>
-    </Button>
+    <AddPaymentMethodButton onPress={props.addPaymentMethod} />
   </View>
+);
+
+const PaymentMethodNone = (props: Props) => (
+  <>
+    <View style={styles.row}>
+      <H4>{I18n.t("wallet.paymentMethods")}</H4>
+      <Link onPress={props.loadWallets}>
+        {I18n.t("global.buttons.show").toLowerCase()}
+      </Link>
+    </View>
+
+    <View spacer={true} large={true} />
+    <View spacer={true} small={true} />
+    <AddPaymentMethodButton onPress={props.addPaymentMethod} />
+    <View spacer={true} small={true} />
+  </>
 );
 
 const PaymentMethodError = (props: Props) => (
@@ -73,13 +95,13 @@ const PaymentMethodError = (props: Props) => (
   </>
 );
 
-const PaymentMethodSome = (props: Props & { onAddPress: () => void }) =>
+const PaymentMethodSome = (props: Props) =>
   pot.isSome(props.potWallets) ? (
     <View>
       <View style={styles.row}>
         <H4>{I18n.t("wallet.paymentMethods")}</H4>
         {props.potWallets.value.length > 0 && (
-          <Link onPress={props.onAddPress}>
+          <Link onPress={props.addPaymentMethod}>
             {I18n.t("global.buttons.add").toLowerCase()}
           </Link>
         )}
@@ -98,32 +120,32 @@ const PaymentMethodSome = (props: Props & { onAddPress: () => void }) =>
     </View>
   ) : null;
 
+const addPaymentMethod = (action: () => void) =>
+  Alert.alert(
+    I18n.t("global.genericAlert"),
+    I18n.t("bonus.bpd.details.paymentMethods.add.alertBody"),
+    [
+      {
+        text: I18n.t("global.buttons.continue"),
+        onPress: action
+      },
+      {
+        text: I18n.t("global.buttons.cancel"),
+        style: "cancel"
+      }
+    ]
+  );
+
 /**
  * Render all the wallet v2 as bpd toggle
  * TODO: temp implementation, raw list without loading and error state
  * @param props
  * @constructor
  */
-const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props => {
-  const onAddPress = () =>
-    Alert.alert(
-      I18n.t("global.genericAlert"),
-      I18n.t("bonus.bpd.details.paymentMethods.add.alertBody"),
-      [
-        {
-          text: I18n.t("global.buttons.continue"),
-          onPress: props.addPaymentMethod
-        },
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        }
-      ]
-    );
-
-  return pot.fold(
+const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props =>
+  pot.fold(
     props.potWallets,
-    () => null,
+    () => <PaymentMethodNone {...props} />,
     () => (
       <>
         <View spacer={true} />
@@ -136,18 +158,19 @@ const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props => {
         <View spacer={true} />
       </>
     ),
-    _ => null,
+    _ => <PaymentMethodNone {...props} />,
     _ => <PaymentMethodError {...props} />,
-    _ => <PaymentMethodSome {...props} onAddPress={onAddPress} />,
-    _ => <PaymentMethodSome {...props} onAddPress={onAddPress} />,
-    _ => <PaymentMethodSome {...props} onAddPress={onAddPress} />,
-    _ => <PaymentMethodSome {...props} onAddPress={onAddPress} />
+    _ => <PaymentMethodSome {...props} />,
+    _ => <PaymentMethodSome {...props} />,
+    _ => <PaymentMethodSome {...props} />,
+    _ => <PaymentMethodSome {...props} />
   );
-};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addPaymentMethod: () => {
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none }));
+    addPaymentMethod(() =>
+      dispatch(navigateToWalletAddPaymentMethod({ inPayment: none }))
+    );
   },
   loadWallets: () => dispatch(fetchWalletsRequest())
 });
