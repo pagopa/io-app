@@ -549,14 +549,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         ? this.footerButton(potWallets)
         : undefined;
 
-    const walletRefreshControl = (
-      <RefreshControl
-        onRefresh={undefined}
-        refreshing={false}
-        tintColor={"transparent"} // iOS
-      />
-    );
-
     return (
       <WalletLayout
         accessibilityLabel={I18n.t("wallet.wallet")}
@@ -568,7 +560,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         hasDynamicSubHeader={true}
         topContent={headerContent}
         footerContent={footerContent}
-        refreshControl={walletRefreshControl}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet", "wallet_methods"]}
         gradientHeader={true}
