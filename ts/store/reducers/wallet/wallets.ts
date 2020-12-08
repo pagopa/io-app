@@ -28,6 +28,7 @@ import {
 import { PotFromActions } from "../../../types/utils";
 import { isDefined } from "../../../utils/guards";
 import { enhancePaymentMethod } from "../../../utils/paymentMethod";
+import { sessionExpired, sessionInvalid } from "../../actions/authentication";
 import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
 import { paymentUpdateWalletPsp } from "../../actions/wallet/payment";
@@ -439,6 +440,8 @@ const reducer = (
         creditCardCheckout3ds: pot.some("done")
       };
 
+    case getType(sessionExpired):
+    case getType(sessionInvalid):
     case getType(clearCache):
       return {
         ...state,
