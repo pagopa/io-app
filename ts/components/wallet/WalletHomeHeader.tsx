@@ -1,6 +1,6 @@
 import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { none } from "fp-ts/lib/Option";
-import { ListItem, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
