@@ -77,7 +77,6 @@ import { isUpdateNeeded } from "../../utils/appVersion";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import {
-  getValue,
   isLoading,
   isReady,
   isError as isRemoteValueError
@@ -285,7 +284,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
   }
 
-  private cardHeader(isError: boolean = false, isBlue: boolean = false) {
+  private cardHeader(isError: boolean = false) {
     const sectionCardStatus: SectionCardStatus = pot.fold(
       this.props.potWallets,
       () => "show",
@@ -307,9 +306,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           }
         }}
         isError={isError}
-        cardStyle={
-          isBlue ? { backgroundColor: customVariables.brandPrimary } : undefined
-        }
       />
     );
   }
@@ -346,26 +342,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     const wallets = this.getCreditCards();
     // we have to render only wallets of credit card type
     const validWallets = wallets.filter(w => w.type === TypeEnum.CREDIT_CARD);
-    const noMethod =
-      // say that there are no method if we have a valid data about wallets
-      pot.isSome(this.props.potWallets) &&
-      validWallets.length === 0 &&
-      this.props.allActiveBonus.length === 0 &&
-      getValue(this.props.bpdActiveBonus) === false;
     const bonusLoadingStatus = this.getBonusLoadingStatus();
     return (
       <View>
         <View spacer={true} />
-        {noMethod && (
-          <React.Fragment>
-            <Text white={true} style={styles.addDescription}>
-              {I18n.t("wallet.newPaymentMethod.addDescription")}
-            </Text>
-            <View spacer={true} large={true} />
-            <View spacer={true} small={true} />
-          </React.Fragment>
-        )}
-        {this.cardHeader(false, noMethod)}
+        {this.cardHeader(false)}
 
         {validWallets.length > 0 ? (
           <RotatedCards
@@ -387,7 +368,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
               }
             }}
             activeBonuses={this.props.allActiveBonus}
-            noMethod={noMethod}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
           />
