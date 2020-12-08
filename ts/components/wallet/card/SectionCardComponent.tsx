@@ -136,7 +136,15 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           </>
         );
       case "loading":
-        return <ActivityIndicator size={24} color={"white"} />;
+        return (
+          <ActivityIndicator
+            size={24}
+            color={"white"}
+            accessible={false}
+            importantForAccessibility={"no-hide-descendants"}
+            accessibilityElementsHidden={true}
+          />
+        );
       case "refresh":
         return (
           <View style={styles.row}>
