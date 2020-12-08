@@ -302,7 +302,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             </View>
           </Content>
         </View>
-        <SectionStatusComponent sectionKey={"emailValidation"} />
+        <SectionStatusComponent sectionKey={"email_validation"} />
         {withKeyboard(this.renderFooterButtons())}
       </BaseScreenComponent>
     );

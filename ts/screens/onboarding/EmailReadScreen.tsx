@@ -180,7 +180,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             </Text>
           </View>
         </ScreenContent>
-        <SectionStatusComponent sectionKey={"emailValidation"} />
+        <SectionStatusComponent sectionKey={"email_validation"} />
         <FooterWithButtons
           {...(isFromProfileSection ? footerProps1 : footerProps2)}
         />

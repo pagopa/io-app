@@ -291,7 +291,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     // to edit again the email
     return (
       <>
-        <SectionStatusComponent sectionKey={"emailValidation"} />
+        <SectionStatusComponent sectionKey={"email_validation"} />
         <View footer={true}>
           <BlockButtons
             type={"SingleButton"}

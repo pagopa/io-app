@@ -65,7 +65,7 @@ const Sections = t.interface({
   wallets: SectionStatus,
   login: SectionStatus,
   services: SectionStatus,
-  emailValidation: SectionStatus,
+  email_validation: SectionStatus,
   cashback: SectionStatus
 });
 export type Sections = t.TypeOf<typeof Sections>;
