@@ -54,10 +54,9 @@ import {
   clearTransactions,
   fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
-  fetchTransactionsRequestWithExpBackoff,
   readTransaction
 } from "../../store/actions/wallet/transactions";
-import { fetchWalletsRequestWithExpBackoff } from "../../store/actions/wallet/wallets";
+import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
 import { navSelector } from "../../store/reducers/navigationHistory";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
@@ -630,11 +629,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   refreshTransactions: () => {
     dispatch(clearTransactions());
-    dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 }));
+    dispatch(fetchTransactionsRequest({ start: 0 }));
   },
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),
-  loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
+  loadWallets: () => dispatch(fetchWalletsRequest()),
   dispatchAllTransactionLoaded: (transactions: ReadonlyArray<Transaction>) =>
     dispatch(fetchTransactionsLoadComplete(transactions))
 });
