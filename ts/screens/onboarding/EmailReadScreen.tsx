@@ -16,6 +16,7 @@ import { withValidatedEmail } from "../../components/helpers/withValidatedEmail"
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
 import {
   SingleButton,
   TwoButtonsInlineHalf
@@ -179,6 +180,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             </Text>
           </View>
         </ScreenContent>
+        <SectionStatusComponent sectionKey={"emailValidation"} />
         <FooterWithButtons
           {...(isFromProfileSection ? footerProps1 : footerProps2)}
         />

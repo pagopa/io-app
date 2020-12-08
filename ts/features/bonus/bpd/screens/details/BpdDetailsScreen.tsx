@@ -24,6 +24,7 @@ import { navigateBack } from "../../../../../store/actions/navigation";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
+import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -107,6 +108,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
             <GoToTransactions goToTransactions={props.goToTransactions} />
           )
         }
+        footerFullWidth={<SectionStatusComponent sectionKey={"cashback"} />}
       >
         <View style={styles.selector}>
           <BpdPeriodSelector />

@@ -37,6 +37,7 @@ import customVariables from "../../theme/variables";
 import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
 import { withKeyboard } from "../../utils/keyboard";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -301,6 +302,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             </View>
           </Content>
         </View>
+        <SectionStatusComponent sectionKey={"emailValidation"} />
         {withKeyboard(this.renderFooterButtons())}
       </BaseScreenComponent>
     );

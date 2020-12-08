@@ -64,7 +64,9 @@ const Sections = t.interface({
   messages: SectionStatus,
   wallets: SectionStatus,
   login: SectionStatus,
-  services: SectionStatus
+  services: SectionStatus,
+  emailValidation: SectionStatus,
+  cashback: SectionStatus
 });
 export type Sections = t.TypeOf<typeof Sections>;
 const BackendStatusO = t.partial({
