@@ -24,7 +24,7 @@ export function* prefetchBpdData() {
   const abiList: ReturnType<typeof abiSelector> = yield select(abiSelector);
 
   // The volatility of the bank list is extremely low.
-  // There is no need to refresher it every time.
+  // There is no need to refresh it every time.
   // A further refinement could be to insert an expiring cache
   if (!isReady(abiList)) {
     yield put(loadAbi.request());

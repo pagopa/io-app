@@ -1,14 +1,21 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet, ViewStyle } from "react-native";
+import {
+  ActivityIndicator,
+  Platform,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 
+export type SectionCardStatus = "add" | "refresh" | "loading" | "show";
 type Props = {
   onPress: () => void;
   label: string;
+  status?: SectionCardStatus;
   isError?: boolean;
   isNew?: boolean;
   cardStyle?: ViewStyle;
@@ -18,6 +25,9 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: "row",
     alignItems: "center"
+  },
+  row: {
+    flexDirection: "row"
   },
   topSpacing: {
     marginTop: 2
@@ -103,6 +113,77 @@ const styles = StyleSheet.create({
 
 const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const { label, onPress, isNew, isError, cardStyle } = props;
+  const rightLabel = () => {
+    switch (props.status) {
+      case undefined:
+      case "add":
+        return (
+          <>
+            <IconFont
+              name="io-plus"
+              color={customVariables.colorWhite}
+              size={customVariables.fontSize2}
+            />
+            <Text
+              bold={true}
+              style={[
+                styles.labelButton,
+                { fontSize: customVariables.fontSize1 + 1 }
+              ]}
+            >
+              {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
+            </Text>
+          </>
+        );
+      case "loading":
+        return <ActivityIndicator size={24} color={"white"} />;
+      case "refresh":
+        return (
+          <View style={styles.row}>
+            <Text
+              bold={true}
+              style={[
+                styles.labelButton,
+                { fontSize: customVariables.fontSize1 + 1 }
+              ]}
+            >
+              {I18n.t("wallet.newPaymentMethod.refresh").toUpperCase()}
+            </Text>
+            <Text
+              style={{
+                fontSize: customVariables.fontSize1 + 16,
+                height: 22,
+                paddingTop: 8,
+                color: "white"
+              }}
+            >
+              {" ⟳"}
+            </Text>
+          </View>
+        );
+      case "show":
+        return (
+          <View style={styles.row}>
+            <Text
+              bold={true}
+              style={[
+                styles.labelButton,
+                { fontSize: customVariables.fontSize1 + 1 }
+              ]}
+            >
+              {I18n.t("wallet.newPaymentMethod.show").toUpperCase()}
+            </Text>
+            <IconFont
+              style={{ marginTop: 1, marginLeft: 2 }}
+              name={"io-right"}
+              color={customVariables.colorWhite}
+              size={20}
+            />
+          </View>
+        );
+    }
+  };
+
   return (
     <>
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
@@ -141,22 +222,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                   )}
                 </View>
                 {!isError && (
-                  <View style={[styles.button]}>
-                    <IconFont
-                      name="io-plus"
-                      color={customVariables.colorWhite}
-                      size={customVariables.fontSize2}
-                    />
-                    <Text
-                      bold={true}
-                      style={[
-                        styles.labelButton,
-                        { fontSize: customVariables.fontSize1 + 1 }
-                      ]}
-                    >
-                      {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
-                    </Text>
-                  </View>
+                  <View style={[styles.button]}>{rightLabel()}</View>
                 )}
               </View>
             </View>

@@ -5,7 +5,9 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
-import SectionCardComponent from "../../../../components/wallet/card/SectionCardComponent";
+import SectionCardComponent, {
+  SectionCardStatus
+} from "../../../../components/wallet/card/SectionCardComponent";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
@@ -13,6 +15,7 @@ import BonusCardComponent from "./BonusCardComponent";
 
 type OwnProps = {
   onButtonPress: () => void;
+  status?: SectionCardStatus;
   onBonusPress: (
     bonus: BonusActivationWithQrCode,
     validFrom?: Date,
@@ -63,6 +66,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
   return (
     <React.Fragment>
       <SectionCardComponent
+        status={props.status}
         label={I18n.t("bonus.requestLabel")}
         onPress={onButtonPress}
         cardStyle={
