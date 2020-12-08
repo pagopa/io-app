@@ -19,6 +19,7 @@ import { H3 } from "../core/typography/H3";
 import { H4 } from "../core/typography/H4";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
@@ -123,11 +124,14 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
 
   return (
     <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between"
-      }}
+      style={[
+        {
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingHorizontal: 8
+        }
+      ]}
     >
       <H1 color={"white"}>{I18n.t("wallet.wallet")}</H1>
       <TouchableDefaultOpacity
