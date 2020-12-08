@@ -832,6 +832,7 @@ wallet:
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
+  paymentMethodDesc: Carte di credito, debito, prepagate, PagoBANCOMAT, app
   walletLoadMessage: Carico i metodi di pagamento...
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
