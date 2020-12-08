@@ -1,9 +1,8 @@
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StyleSheet } from "react-native";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -49,7 +48,7 @@ const ErrorPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
               name={"io-complete"}
               size={120}
               color={IOColors.aqua as string}
-              style={[styles.center, styles.lineHeight]}
+              style={styles.center}
             />
             <View spacer={true} large={true} />
             <View spacer={true} large={true} />
