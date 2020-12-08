@@ -1805,7 +1805,7 @@ bonus:
     earned: Collected Cashback
     onboarding:
       alert:
-        title: Cashback is aleady active
+        title: Cashback is already active
         body: You can find more details in your Wallet.
         cancel: Close
         confirm: Go back
