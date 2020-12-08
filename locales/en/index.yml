@@ -1927,7 +1927,7 @@ bonus:
           alertBody: "The payment method you are adding will be saved in the IO app wallet and, if compatible, can also be used for any payments within the app."
         noPaymentMethods: "You must add at least one payment method to start collecting valid transactions"
         noActiveMethod: "You must have activated at least one payment method to collect valid transactions"
-        error: "We're experiencing issues showing your payment methods. You’re still able to collect Cashback with any payment method you've already enrolled."
+        error: "We’re experiencing issues loading your methods, but we’ll collect all the valid transactions done with your methods already enrolled on Cashback."
         activateOnOthersChannel:
           text1: "Activate on"
           text2: "other channels"
