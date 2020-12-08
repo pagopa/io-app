@@ -136,6 +136,8 @@ global:
     info: "Info"
     activate: "Activate"
     deactivate: "Deactivate"
+    show: "Show"
+    update: "Update"
   navigator:
     messages: messages
     wallet: wallet
@@ -1092,7 +1094,7 @@ wallet:
         three: ", but they can only be used at physical stores (POS)."
       debit:
         title: "Does your card have other logos?"
-        body: "If this card has also the logo of another circuit (Maestro, Visa, Mastercard, etc.), don't forget to add it to your wallet as a ** debit (or credit) card ** as well. By doing so, you'll be able to collect all the valid transactions for the cashback initiative and make in-app payments. "
+        body: "If, in addition to the PagoBANCOMAT logo, there is one of another circuit (Maestro, MasterCard, Visa), you can also add the card as a **debit or credit** card by typing the number on its front. Transactions made on this circuit will be valid for the cashback initiative; also, you can use the card to pay on IO."
         addCta: "Add as Debit/Credit Card"
       removeCta: "Delete this payment method"
   satispay:
@@ -1844,8 +1846,9 @@ bonus:
         body1: "Enable Cashback on your saved methods and start collecting valid transactions."
         body2: "You can later add other payment methods to your wallet and activate Cashback on them."
       errorPaymentMethod:
-        title: "Thanks for signing up for Cashback!"
-        body1: "At this time it is not possible to activate Cashback on your payment methods. We are sorry for the inconvenience."
+        title: "Almost there, activate Cashback on your payment methods!"
+        body: "Enable Cashback on methods already in your wallet or add new ones."
+        cta: "Activate payment methods"
     iban:
       iban: "IBAN"
       edit: "Change IBAN"
@@ -1929,6 +1932,7 @@ bonus:
           canceled: "Refund"
       paymentMethods:
         add:
+          cta: "Add a method to cashback"
           alertBody: "The payment method you are adding will be saved in the IO app wallet and, if compatible, can also be used for any payments within the app."
         noPaymentMethods: "You must add at least one payment method to start collecting valid transactions"
         noActiveMethod: "You must have activated at least one payment method to collect valid transactions"
