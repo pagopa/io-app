@@ -288,7 +288,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       .getOrElse(this.props.potWallets, [])
       .filter(w => w.type === TypeEnum.CREDIT_CARD);
 
-  private getBonusPreviewStatus = (): SectionCardStatus => {
+  private getBonusLoadingStatus = (): SectionCardStatus => {
     // if any bonus is loading or updating
     // note: in the BPD case, we are watching for loading on one of several steps
     // so this loading state is very weak
@@ -321,7 +321,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       validWallets.length === 0 &&
       this.props.allActiveBonus.length === 0 &&
       getValue(this.props.bpdActiveBonus) === false;
-    const bonusPreviewStatus = this.getBonusPreviewStatus();
+    const bonusLoadingStatus = this.getBonusLoadingStatus();
     return (
       <View>
         <View spacer={true} />
@@ -348,9 +348,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {/* Display this item only if the flag is enabled */}
         {(bonusVacanzeEnabled || bpdEnabled) && (
           <RequestBonus
-            status={bonusPreviewStatus}
+            status={bonusLoadingStatus}
             onButtonPress={() => {
-              if (bonusPreviewStatus !== "loading") {
+              if (bonusLoadingStatus !== "loading") {
                 this.loadBonusVacanze();
                 this.loadBonusBpd();
               }
