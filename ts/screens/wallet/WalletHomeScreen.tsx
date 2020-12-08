@@ -552,7 +552,10 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       _ => this.errorWalletsHeader()
     );
     const transactionContent =
-      pot.isError(potTransactions) || pot.isNone(potTransactions)
+      pot.isError(potTransactions) ||
+      (pot.isNone(potTransactions) &&
+        !pot.isLoading(potTransactions) &&
+        !pot.isUpdating(potTransactions))
         ? this.transactionError(anyHistoryPayments || anyCreditCardAttempts)
         : this.transactionList(
             potTransactions,
@@ -593,7 +596,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           this.newMethodAddedContent
         ) : (
           <>
-            {bpdEnabled && !pot.isLoading(potTransactions) && (
+            {bpdEnabled && (
               <FeaturedCardCarousel
                 bvActive={this.props.allActiveBonus.length > 0}
               />
