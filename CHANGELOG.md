@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0-rc.0](https://github.com/pagopa/io-app/compare/1.12.0-rc.1...1.13.0-rc.0) (2020-12-08)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176050060](https://www.pivotaltracker.com/story/show/176050060)] Wallets home rework ([#2529](https://github.com/pagopa/io-app/issues/2529)) ([74df78d](https://github.com/pagopa/io-app/commit/74df78d1148e646463bd0835468530376e1b80ce))
+* **Bonus Pagamenti Digitali:** [[#176052891](https://www.pivotaltracker.com/story/show/176052891)] Adds logic to persist loaded wallets ([#2525](https://github.com/pagopa/io-app/issues/2525)) ([675c1ee](https://github.com/pagopa/io-app/commit/675c1ee6670aee58f0e3f8e1c58bb669f07fa6c3))
+* **Bonus Pagamenti Digitali:** [[#176053058](https://www.pivotaltracker.com/story/show/176053058)] Implements new Add button on wallet home screen ([#2528](https://github.com/pagopa/io-app/issues/2528)) ([c7d23b6](https://github.com/pagopa/io-app/commit/c7d23b6d8f03afae45b699588b54406a87e1a818))
+* **Bonus Pagamenti Digitali:** [[#176053275](https://www.pivotaltracker.com/story/show/176053275)] BPDDetailScreen ([#2527](https://github.com/pagopa/io-app/issues/2527)) ([e9eb0cb](https://github.com/pagopa/io-app/commit/e9eb0cb0666d1ee8c2b3b5c80e4dbd720fa36b61))
+* **Bonus Pagamenti Digitali:** [[#176058079](https://www.pivotaltracker.com/story/show/176058079)] support backoff retry ([#2530](https://github.com/pagopa/io-app/issues/2530)) ([9a16896](https://github.com/pagopa/io-app/commit/9a16896c28ba3f3a013bc5dcddf23de1371d856c))
+* **Bonus Pagamenti Digitali:** [[#176058971](https://www.pivotaltracker.com/story/show/176058971)] Update ErrorPaymentMethodsScreen ([#2532](https://github.com/pagopa/io-app/issues/2532)) ([e213fb4](https://github.com/pagopa/io-app/commit/e213fb4a951d57cd37cf7931ae73441df88956c3))
+* **Bonus Pagamenti Digitali:** [[#176059090](https://www.pivotaltracker.com/story/show/176059090)] Adds SectionStatusComponent to email and bpd details screen ([#2531](https://github.com/pagopa/io-app/issues/2531)) ([24ff8c2](https://github.com/pagopa/io-app/commit/24ff8c22edfc82486fca72c629a950a1c7532141))
+
 ## [1.12.0-rc.1](https://github.com/pagopa/io-app/compare/1.12.0-rc.0...1.12.0-rc.1) (2020-12-07)
 
 
