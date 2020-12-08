@@ -78,6 +78,7 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import { getValue } from "../../features/bonus/bpd/model/RemoteValue";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
+import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -489,16 +490,21 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       anyCreditCardAttempts
     } = this.props;
 
-    const headerContent = pot.fold(
-      potWallets,
-      () => this.loadingWalletsHeader(),
-      () => this.loadingWalletsHeader(),
-      _ => this.loadingWalletsHeader(),
-      _ => this.errorWalletsHeader(),
-      _ => this.cardPreview(),
-      _ => this.loadingWalletsHeader(),
-      _ => this.cardPreview(),
-      _ => this.errorWalletsHeader()
+    const headerContent = (
+      <>
+        <WalletHomeHeader />
+        {pot.fold(
+          potWallets,
+          () => this.loadingWalletsHeader(),
+          () => this.loadingWalletsHeader(),
+          _ => this.loadingWalletsHeader(),
+          _ => this.errorWalletsHeader(),
+          _ => this.cardPreview(),
+          _ => this.loadingWalletsHeader(),
+          _ => this.cardPreview(),
+          _ => this.errorWalletsHeader()
+        )}
+      </>
     );
 
     const transactionContent = pot.isError(potTransactions)
@@ -527,6 +533,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
         appLogo={true}
+        hideHeader={true}
         topContentHeight={this.getHeaderHeight()}
         hasDynamicSubHeader={true}
         topContent={headerContent}
