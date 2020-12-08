@@ -64,8 +64,6 @@ describe("Bpd Summary Component graphical test for different states", () => {
       </Provider>
     );
 
-    activePeriodNotEnoughTransaction(component, zeroAmount);
-
     // When the period is "Active" and transactionNumber<minTransactionNumber,
     // TextualSummary should be null if totalCashback == 0
     expect(component.queryByTestId("currentPeriodWarning")).toBeNull();
