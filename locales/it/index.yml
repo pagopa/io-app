@@ -464,9 +464,8 @@ authentication:
       L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità
       Digitale) per garantire la tua sicurezza online
     card5-title: Benvenuto nella prima versione pubblica di IO!
-    card5-content: In questa versione trovi in alto a destra
-      le icone per segnalare bug e aprire una chat con il team di IO.
-      Aspettiamo i tuoi feedback!
+    card5-content: In alto a destra trovi l'icona '?' per aprire
+      una chat con il team di IO se qualcosa non funziona come dovrebbe.
     expiredCardTitle: Carta scaduta o non più valida
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
@@ -521,7 +520,7 @@ authentication:
         readerCardLostHeaderiOS: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta. Riprova di nuovo.
         onTagLost: Hai rimosso la carta troppo presto. Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
         tryAgain: Si è verificato un errore durante la verifica della tua carta. Probabilmente è un errore momentaneo, riprova per piacere!
-        generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
+        generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
         unknownCardTitle: Carta sconosciuta
         unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
@@ -588,7 +587,7 @@ authentication:
       body:
         L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi.
         Se disponi di un altra identità SPID scegli un provider alternativo.
-        Puoi segnalarci il problema con l’icona della coccinella in alto a destra.
+        Puoi segnalarci il problema con l’icona '?' in alto a destra.
     login:
       title: Errore nel login
       body: Si è verificato un errore durante il login, si prega di riprovare!
@@ -833,6 +832,7 @@ wallet:
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
+  paymentMethodDesc: Carte di credito, debito, prepagate, PagoBANCOMAT, app
   walletLoadMessage: Carico i metodi di pagamento...
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
@@ -973,7 +973,7 @@ wallet:
     contextualHelpTitle: Riepilogo della transazione
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
   errorTransaction:
-    submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
+    submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
   insertManually:
     header: Inserisci dati avviso
     title: Inserisci i dati dell'avviso
@@ -1267,7 +1267,7 @@ messageDetails:
   loadingText: Caricamento dei dettagli del messaggio in corso...
   errorText: Non siamo riusciti a caricare i dettagli del tuo messaggio
   retryText: Probabilmente è un errore temporaneo... riprova per piacere!
-  submitBugText: Se il problema non si risolve segnalacelo con l'icona della coccinella in alto a destra, grazie!
+  submitBugText: Se il problema non si risolve segnalacelo con l'icona '?' in alto a destra, grazie!
   rawInfoLink:
     showLabel: Dettagli del messaggio
     hideLabel: Chiudi dettagli
@@ -1959,7 +1959,7 @@ bonus:
           alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare transazioni valide"
         noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per collezionare transazioni valide"
-        error: "In questo momento non è possibile visualizzare i metodi di pagamento su cui hai attivato il Cashback o aggiungerne di nuovi. Riprova per favore."
+        error: "Anche se in questo momento non è possibile visualizzare i tuoi metodi, registreremo le transazioni effettuate coi metodi già abilitati al Cashback."
         activateOnOthersChannel:
           text1: "Attivati su "
           text2: "altri canali"
