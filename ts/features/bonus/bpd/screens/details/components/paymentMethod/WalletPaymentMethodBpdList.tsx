@@ -50,6 +50,11 @@ const UpdateLabel = (props: Props & { caption: string }) =>
     <Link onPress={props.loadWallets}>{props.caption}</Link>
   );
 
+/**
+ * Start the onboarding of a new payment method
+ * @param props
+ * @constructor
+ */
 const AddPaymentMethodButton = (props: { onPress: () => void }) => (
   <Button style={styles.addButton} onPress={props.onPress} bordered={true}>
     <Label color={"blue"}>
@@ -58,6 +63,10 @@ const AddPaymentMethodButton = (props: { onPress: () => void }) => (
   </Button>
 );
 
+/**
+ * No payment methods are active
+ * @constructor
+ */
 const NoPaymentMethodAreActiveWarning = () => (
   <View>
     <InfoBox>
@@ -67,6 +76,10 @@ const NoPaymentMethodAreActiveWarning = () => (
   </View>
 );
 
+/**
+ * No payment methods are found
+ * @constructor
+ */
 const NoPaymentMethodFound = () => (
   <View>
     <InfoBox>
@@ -75,6 +88,11 @@ const NoPaymentMethodFound = () => (
   </View>
 );
 
+/**
+ * The wallet is none
+ * @param props
+ * @constructor
+ */
 const PaymentMethodNone = (props: Props) => (
   <>
     <View style={styles.row}>
@@ -92,6 +110,11 @@ const PaymentMethodNone = (props: Props) => (
   </>
 );
 
+/**
+ * The wallet is error
+ * @param props
+ * @constructor
+ */
 const PaymentMethodError = (props: Props) => (
   <>
     <View style={styles.row}>
@@ -110,6 +133,11 @@ const PaymentMethodError = (props: Props) => (
   </>
 );
 
+/**
+ * The wallet is some
+ * @param props
+ * @constructor
+ */
 const PaymentMethodSome = (props: Props) =>
   pot.isSome(props.potWallets) ? (
     <View>
@@ -154,7 +182,6 @@ const addPaymentMethod = (action: () => void) =>
 
 /**
  * Render all the wallet v2 as bpd toggle
- * TODO: temp implementation, raw list without loading and error state
  * @param props
  * @constructor
  */
