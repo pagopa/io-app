@@ -2,21 +2,24 @@
  * A reducer for the wallet, aggregating those for
  * transactions and for cards
  */
+import AsyncStorage from "@react-native-community/async-storage";
 import { Action, combineReducers } from "redux";
+import { PersistConfig, persistReducer } from "redux-persist";
 import onboardingReducer, {
   PaymentMethodOnboardingState
 } from "../../../features/wallet/onboarding/store";
 import abiReducer, {
   AbiState
 } from "../../../features/wallet/onboarding/store/abi";
+import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
 import paymentReducer, { PaymentState } from "./payment";
 import pspsByIdReducer, { PspStateById } from "./pspsById";
 import transactionsReducer, { TransactionsState } from "./transactions";
-import walletsReducer, { WalletsState } from "./wallets";
+import walletsReducer, { PersistedWalletsState, WalletsState } from "./wallets";
 
 export type WalletState = Readonly<{
   transactions: TransactionsState;
-  wallets: WalletsState;
+  wallets: PersistedWalletsState;
   payment: PaymentState;
   pspsById: PspStateById;
   // List of banks (abi) found. This data is used atm in the bancomat onboarding
@@ -25,9 +28,20 @@ export type WalletState = Readonly<{
   onboarding: PaymentMethodOnboardingState;
 }>;
 
+// A custom configuration to store list of wallets
+export const walletsPersistConfig: PersistConfig = {
+  key: "wallets",
+  storage: AsyncStorage,
+  whitelist: ["walletById"],
+  transforms: [DateISO8601Transform]
+};
+
 const reducer = combineReducers<WalletState, Action>({
   transactions: transactionsReducer,
-  wallets: walletsReducer,
+  wallets: persistReducer<WalletsState, Action>(
+    walletsPersistConfig,
+    walletsReducer
+  ),
   payment: paymentReducer,
   pspsById: pspsByIdReducer,
   abi: abiReducer,

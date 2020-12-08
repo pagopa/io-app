@@ -7,7 +7,11 @@ import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
-import { logoutFailure, logoutSuccess } from "../actions/authentication";
+import {
+  logoutFailure,
+  logoutSuccess,
+  sessionExpired
+} from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
@@ -129,6 +133,11 @@ export function createRootReducer(
   persistConfigs: ReadonlyArray<PersistConfig>
 ) {
   return (state: GlobalState | undefined, action: Action): GlobalState => {
+    if (isActionOf(sessionExpired, action)) {
+      persistConfigs.forEach(
+        pc => pc.key === "wallets" && purgeStoredState(pc)
+      );
+    }
     // despite logout fails the user must be logged out
     if (
       isActionOf(logoutFailure, action) ||
