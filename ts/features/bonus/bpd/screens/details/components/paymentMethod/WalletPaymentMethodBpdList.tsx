@@ -1,8 +1,8 @@
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
-import { useEffect, useState } from "react";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -14,7 +14,7 @@ import { Link } from "../../../../../../../components/core/typography/Link";
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../../store/actions/navigation";
-import { fetchWalletsRequest } from "../../../../../../../store/actions/wallet/wallets";
+import { fetchWalletsRequestWithExpBackoff } from "../../../../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { showToast } from "../../../../../../../utils/showToast";
 import { PaymentMethodGroupedList } from "../../../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
@@ -218,7 +218,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       dispatch(navigateToWalletAddPaymentMethod({ inPayment: none }))
     );
   },
-  loadWallets: () => dispatch(fetchWalletsRequest())
+  loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff())
 });
 
 const mapStateToProps = (state: GlobalState) => ({
