@@ -153,7 +153,6 @@ import {
 } from "../features/wallet/onboarding/satispay/store/actions";
 import { ContentClient } from "../api/content";
 import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
-import { RTron } from "../boot/configureStoreAndPersistor";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -700,11 +699,9 @@ export function* watchWalletSaga(
     const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
       backOffWaitingTime
     );
-    RTron.log(waiting);
     if (waiting > 0) {
       yield delay(waiting);
     }
-    RTron.log("getWallets");
     yield call(getWallets, paymentManagerClient, pmSessionManager);
   });
 
