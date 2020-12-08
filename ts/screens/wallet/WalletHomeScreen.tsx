@@ -251,8 +251,14 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       this.props.dispatchAllTransactionLoaded(this.props.potTransactions.value);
     }
     if (
-      isRemoteValueError(this.props.bpdActiveBonus) ||
-      this.props.allActiveBonus.some(ab => pot.isError(ab))
+      // error on bpd bonus loading
+      (!isRemoteValueError(prevProps.bpdActiveBonus) &&
+        isRemoteValueError(this.props.bpdActiveBonus)) ||
+      // error on bonus vacanze loading
+      (prevProps.allActiveBonus.some(ab => !pot.isError(ab)) &&
+        this.props.allActiveBonus.some(ab => pot.isError(ab))) ||
+      // error on load wallets loading
+      (!pot.isError(prevProps.potWallets) && pot.isError(this.props.potWallets))
     ) {
       showToast(I18n.t("wallet.errors.loadingData"));
     }
@@ -300,11 +306,11 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     ) {
       return "loading";
     }
-    // if all bonus are some
+    // if at least one bonus is some
     if (
       this.props.allActiveBonus.length === 0 ||
-      (this.props.allActiveBonus.every(ab => isStrictSome(ab)) &&
-        isReady(this.props.bpdActiveBonus))
+      this.props.allActiveBonus.every(ab => isStrictSome(ab)) ||
+      isReady(this.props.bpdActiveBonus)
     ) {
       return "refresh";
     }
@@ -359,41 +365,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             noMethod={noMethod}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
-          />
-        )}
-        {bpdEnabled && <BpdCardsInWalletContainer />}
-      </View>
-    );
-  }
-
-  private errorWalletsHeader() {
-    const noActiveBonus =
-      this.props.allActiveBonus.length === 0 &&
-      getValue(this.props.bpdActiveBonus) === false;
-    return (
-      <View>
-        <Text style={[styles.white, styles.inLineSpace]}>
-          {I18n.t("wallet.walletLoadFailure")}
-        </Text>
-        <View spacer={true} />
-        <ButtonDefaultOpacity
-          block={true}
-          light={true}
-          bordered={true}
-          small={true}
-          onPress={this.props.loadWallets}
-        >
-          <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
-        </ButtonDefaultOpacity>
-        <View spacer={true} />
-        {/* Display this item only if the flag is enabled */}
-        {bonusVacanzeEnabled && (
-          <RequestBonus
-            onButtonPress={this.props.navigateToBonusList}
-            activeBonuses={this.props.allActiveBonus}
-            availableBonusesList={this.props.availableBonusesList}
-            onBonusPress={this.props.navigateToBonusDetail}
-            noMethod={noActiveBonus}
           />
         )}
         {bpdEnabled && <BpdCardsInWalletContainer />}
@@ -540,17 +511,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       anyCreditCardAttempts
     } = this.props;
 
-    const headerContent = pot.fold(
-      potWallets,
-      () => this.cardPreview(),
-      () => this.cardPreview(),
-      _ => this.cardPreview(),
-      _ => this.errorWalletsHeader(),
-      _ => this.cardPreview(),
-      _ => this.cardPreview(),
-      _ => this.cardPreview(),
-      _ => this.errorWalletsHeader()
-    );
+    const headerContent = this.cardPreview();
     const transactionContent =
       pot.isError(potTransactions) ||
       (pot.isNone(potTransactions) &&
