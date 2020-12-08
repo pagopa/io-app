@@ -1,6 +1,7 @@
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
+import { useEffect, useState } from "react";
 import * as React from "react";
 import { ActivityIndicator, Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -15,6 +16,7 @@ import I18n from "../../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import { showToast } from "../../../../../../../utils/showToast";
 import { PaymentMethodGroupedList } from "../../../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
 import {
   atLeastOnePaymentMethodHasBpdEnabledSelector,
@@ -185,8 +187,19 @@ const addPaymentMethod = (action: () => void) =>
  * @param props
  * @constructor
  */
-const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props =>
-  pot.fold(
+const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props => {
+  const [potState, setPotCurrentState] = useState(props.potWallets.kind);
+
+  useEffect(() => {
+    if (props.potWallets.kind !== potState) {
+      setPotCurrentState(props.potWallets.kind);
+      if (pot.isError(props.potWallets)) {
+        showToast(I18n.t("global.genericError"), "danger");
+      }
+    }
+  }, [props.potWallets.kind]);
+
+  return pot.fold(
     props.potWallets,
     () => <PaymentMethodNone {...props} />,
     () => <PaymentMethodNone {...props} />,
@@ -197,6 +210,7 @@ const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props =>
     _ => <PaymentMethodSome {...props} />,
     _ => <PaymentMethodSome {...props} />
   );
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addPaymentMethod: () => {
