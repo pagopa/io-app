@@ -136,6 +136,8 @@ global:
     info: "Info"
     activate: "Attiva"
     deactivate: "Disattiva"
+    show: "Mostra"
+    update: "Aggiorna"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -1956,6 +1958,7 @@ bonus:
           canceled: "Storno"
       paymentMethods:
         add:
+          cta: "Aggiungi un metodo al cashback"
           alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare transazioni valide"
         noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per collezionare transazioni valide"

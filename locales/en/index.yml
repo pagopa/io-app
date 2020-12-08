@@ -136,6 +136,8 @@ global:
     info: "Info"
     activate: "Activate"
     deactivate: "Deactivate"
+    show: "Show"
+    update: "Update"
   navigator:
     messages: messages
     wallet: wallet
@@ -1925,6 +1927,7 @@ bonus:
           canceled: "Refund"
       paymentMethods:
         add:
+          cta: "Add a method to cashback"
           alertBody: "The payment method you are adding will be saved in the IO app wallet and, if compatible, can also be used for any payments within the app."
         noPaymentMethods: "You must add at least one payment method to start collecting valid transactions"
         noActiveMethod: "You must have activated at least one payment method to collect valid transactions"
