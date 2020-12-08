@@ -19,7 +19,7 @@ import {
   takeEvery,
   takeLatest
 } from "redux-saga/effects";
-import { action, ActionType, getType, isActionOf } from "typesafe-actions";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
