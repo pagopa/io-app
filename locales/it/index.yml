@@ -1958,7 +1958,7 @@ bonus:
           alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare transazioni valide"
         noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per collezionare transazioni valide"
-        error: "In questo momento non è possibile visualizzare i metodi di pagamento, ma le transazioni effettuate con i metodi attivati in precedenza saranno comunque valide ai fini del rimborso."
+        error: "Anche se in questo momento non è possibile visualizzare i tuoi metodi, registreremo le transazioni effettuate coi metodi già abilitati al Cashback."
         activateOnOthersChannel:
           text1: "Attivati su "
           text2: "altri canali"
