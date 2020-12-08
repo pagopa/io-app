@@ -22,15 +22,25 @@ type SummaryData = {
   name: string | undefined;
 };
 
+/**
+ * The graphical summary is visible only when the period is closed or when the period is Active
+ * and transactionNumber > 0
+ * @param period
+ * @param amount
+ */
+const isGraphicalSummaryVisible = (period: BpdPeriod, amount: BpdAmount) =>
+  period.status === "Closed" ||
+  (period.status === "Active" && amount.transactionNumber > 0);
+
 const Content = (sd: SummaryData) => (
   <View testID={"bpdSummaryComponent"}>
-    {sd.period.status === "Inactive" ? null : (
+    {isGraphicalSummaryVisible(sd.period, sd.amount) ? (
       <TransactionsGraphicalSummary
         transactions={sd.amount.transactionNumber}
         minTransactions={sd.period.minTransactionNumber}
         period={sd.period}
       />
-    )}
+    ) : null}
     <View spacer={true} />
     <TextualSummary {...sd} />
   </View>

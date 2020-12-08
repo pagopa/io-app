@@ -138,7 +138,9 @@ const chooseTextualInfoBox = (props: Props) => {
       // active period but still not enough transaction
       if (
         props.amount.transactionNumber < props.period.minTransactionNumber &&
-        props.amount.totalCashback > 0
+        props.amount.totalCashback > 0 &&
+        // hide with transactionNumber === 0
+        props.amount.transactionNumber > 0
       ) {
         return <CurrentPeriodWarning period={props.period} />;
       }
