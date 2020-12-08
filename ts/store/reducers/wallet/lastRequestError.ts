@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
 import { fromNullable } from "fp-ts/lib/Option";
-import { Second } from "italia-ts-commons/lib/units";
+import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import { Action } from "../../actions/types";
 import {
   fetchWalletsFailure,
@@ -39,12 +39,15 @@ const reducer = (
   return state;
 };
 
-export const canRequestBeProcessed = (state: GlobalState): boolean =>
+export const backOffWaitingTime = (state: GlobalState): Millisecond =>
   fromNullable(state.wallet.lastRequestError.lastUpdate).fold(
-    true,
-    lu =>
-      new Date().getTime() - lu.getTime() >
-      Math.pow(2, state.wallet.lastRequestError.attempts) * 1000
+    0 as Millisecond,
+    lu => {
+      const wait = Math.pow(2, state.wallet.lastRequestError.attempts) * 1000;
+      return (new Date().getTime() - lu.getTime() < wait
+        ? wait
+        : 0) as Millisecond;
+    }
   );
 
 export default reducer;

@@ -72,7 +72,6 @@ import {
   fetchPsp,
   fetchTransactionFailure,
   fetchTransactionRequest,
-  fetchTransactionsFailure,
   fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
   fetchTransactionsRequestWithExpBackoff,
@@ -153,7 +152,7 @@ import {
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
 import { ContentClient } from "../api/content";
-import { canRequestBeProcessed } from "../store/reducers/wallet/lastRequestError";
+import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
 import { RTron } from "../boot/configureStoreAndPersistor";
 
 /**
@@ -654,12 +653,11 @@ export function* watchWalletSaga(
   yield takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
     action: ActionType<typeof fetchTransactionsRequest>
   ) {
-    const canBeProcessed: ReturnType<typeof canRequestBeProcessed> = yield select(
-      canRequestBeProcessed
+    const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
+      backOffWaitingTime
     );
-    if (!canBeProcessed) {
-      yield put(fetchTransactionsFailure(new Error("backoff protection")));
-      return;
+    if (waiting > 0) {
+      yield delay(waiting);
     }
     yield call(
       fetchTransactionsRequestHandler,
@@ -699,13 +697,14 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(getType(fetchWalletsRequestWithExpBackoff), function* () {
-    const canBeProcessed: ReturnType<typeof canRequestBeProcessed> = yield select(
-      canRequestBeProcessed
+    const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
+      backOffWaitingTime
     );
-    if (!canBeProcessed) {
-      yield put(fetchWalletsFailure(new Error("backoff protection")));
-      return;
+    RTron.log(waiting);
+    if (waiting > 0) {
+      yield delay(waiting);
     }
+    RTron.log("getWallets");
     yield call(getWallets, paymentManagerClient, pmSessionManager);
   });
 
