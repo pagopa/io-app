@@ -87,6 +87,7 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import { isStrictSome } from "../../utils/pot";
 import { bpdDetailsLoadAll } from "../../features/bonus/bpd/store/actions/details";
 import { showToast } from "../../utils/showToast";
+import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -517,6 +518,29 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             potTransactions,
             anyHistoryPayments || anyCreditCardAttempts
           );
+    const headerContent = (
+      <>
+        <WalletHomeHeader />
+        {pot.fold(
+          potWallets,
+          () => this.loadingWalletsHeader(),
+          () => this.loadingWalletsHeader(),
+          _ => this.loadingWalletsHeader(),
+          _ => this.errorWalletsHeader(),
+          _ => this.cardPreview(),
+          _ => this.loadingWalletsHeader(),
+          _ => this.cardPreview(),
+          _ => this.errorWalletsHeader()
+        )}
+      </>
+    );
+
+    const transactionContent = pot.isError(potTransactions)
+      ? this.transactionError()
+      : this.transactionList(
+          potTransactions,
+          anyHistoryPayments || anyCreditCardAttempts
+        );
 
     const footerContent =
       pot.isSome(potWallets) && !this.newMethodAdded
@@ -537,6 +561,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
         appLogo={true}
+        hideHeader={true}
         topContentHeight={this.getHeaderHeight()}
         hasDynamicSubHeader={true}
         topContent={headerContent}
