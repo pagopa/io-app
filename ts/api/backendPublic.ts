@@ -50,7 +50,8 @@ const SectionStatusR = t.interface({
 });
 
 const SectionStatusO = t.partial({
-  web_url: LocalizedMessage
+  web_url: LocalizedMessage,
+  badge: LocalizedMessage
 });
 
 export const SectionStatus = t.intersection(
@@ -66,7 +67,12 @@ const Sections = t.interface({
   login: SectionStatus,
   services: SectionStatus,
   email_validation: SectionStatus,
-  cashback: SectionStatus
+  cashback: SectionStatus,
+  credit_card: SectionStatus,
+  bancomat: SectionStatus,
+  digital_payments: SectionStatus,
+  satispay: SectionStatus,
+  bancomatpay: SectionStatus
 });
 export type Sections = t.TypeOf<typeof Sections>;
 const BackendStatusO = t.partial({

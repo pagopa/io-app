@@ -25,6 +25,8 @@ import {
   navigateToWalletAddDigitalPaymentMethod
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { GlobalState } from "../../store/reducers/types";
+import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -50,13 +52,15 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
     name: I18n.t("wallet.methods.card.name"),
     description: I18n.t("wallet.methods.card.description"),
     onPress: props.navigateToAddCreditCard,
-    status: "implemented"
+    status: "implemented",
+    section: "credit_card"
   },
   {
     name: I18n.t("wallet.methods.postepay.name"),
     description: I18n.t("wallet.methods.postepay.description"),
     onPress: props.navigateToAddCreditCard,
-    status: "implemented"
+    status: "implemented",
+    section: "credit_card"
   },
   {
     name: I18n.t("wallet.methods.pagobancomat.name"),
@@ -65,7 +69,8 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
     status:
       bpdEnabled && props.navigation.getParam("inPayment").isNone()
         ? "implemented"
-        : "notImplemented"
+        : "notImplemented",
+    section: "bancomat"
   },
   {
     name: I18n.t("wallet.methods.digital.name"),
@@ -73,7 +78,8 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
     onPress: props.navigateToWalletAddDigitalPaymentMethod,
     status: props.navigation.getParam("inPayment").isNone()
       ? "incoming"
-      : "notImplemented"
+      : "notImplemented",
+    section: "digital_payments"
   },
   {
     name: I18n.t("wallet.methods.bonus.name"),
@@ -181,4 +187,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     )
 });
 
+const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
+  sectionStatus: sectionStatusSelector(props.se)(state)
+});
 export default connect(undefined, mapDispatchToProps)(AddPaymentMethodScreen);
