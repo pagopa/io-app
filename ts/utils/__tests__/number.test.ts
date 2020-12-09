@@ -24,4 +24,8 @@ describe("roundToThirdDecimal", () => {
   it("should return 0 if not a number is computed", () => {
     expect(roundToThirdDecimal(NaN)).toEqual(0);
   });
+
+  it("should return 0 if not a number is computed", () => {
+    expect(roundToThirdDecimal(parseInt("hello", 10))).toEqual(0);
+  });
 });
