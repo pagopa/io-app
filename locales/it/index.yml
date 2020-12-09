@@ -766,7 +766,7 @@ wallet:
     title: Aggiungi PagoBANCOMAT
     description:
       text1: Se vuoi, puoi indicare la banca
-      text2: " su cui hai un carta PagoBANCOMAT attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
+      text2: " su cui hai un carta PagoBANCOMAT attiva. Altrimenti cercheremo tutte le carte associate a te: proseguendo accetti l’"
       text3: informativa sul trattamento dei dati personali
     bankName: Denominazione della banca
     noName: Nome non disponibile
