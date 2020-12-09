@@ -27,7 +27,7 @@ const loadLocales = () => ({
   title: I18n.t("wallet.onboarding.bancomat.koNotFoundSingleBank.title"),
   body: I18n.t("wallet.onboarding.bancomat.koNotFoundSingleBank.body"),
   chooseAnother: I18n.t(
-    "wallet.onboarding.bancomat.koNotFoundSingleBank.chooseAnother"
+    "wallet.onboarding.bancomat.koNotFoundSingleBank.continue"
   )
 });
 

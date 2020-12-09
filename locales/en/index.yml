@@ -770,8 +770,8 @@ wallet:
         body: "There are no PagoBANCOMAT cards registered to you: please contact your bank for further information."
       koNotFoundSingleBank:
         title: "Sorry, we couldn't find any card on this bank"
-        body: "There are no PagoBANCOMAT cards registered to you: please contact your bank for further information."
-        chooseAnother: "Choose another bank"
+        body: "There are no PagoBANCOMAT cards registered to you.\nIf you wish, IO can search between all banks."
+        continue: "Continue"
       koServicesError:
         title: "Unable to retrieve your PagoBANCOMAT cards: please select your bank"
         body: "Choose the bank which issued your card to retrieve all the PagoBANCOMAT cards registered to you."
