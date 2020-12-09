@@ -1944,6 +1944,10 @@ bonus:
           body: "You have added these payment methods to the cashback directly from the channels made available by your bank or payments app. You can activate or deactivate the collection of transactions of these methods also from IO. \n
                  If you want to use some of these methods to pay via IO as well, add them to your wallet! "
           addWallet: "Add to wallet"
+          whyOtherCards:
+            title: "Why am I seeing cards that I don't recognize?"
+            body: "Don't worry, these are virtual versions of your cards that Apple, Google and Samsung use to protect your purchases made through their 'wallets'. We are working with those involved in the initiative to improve the display on the app IO of this type of cards. "
+            cta: "Find out more"
         notActivable:
           header: "Not available or incompatible"
           title: "Method not available"
