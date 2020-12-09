@@ -25,8 +25,6 @@ import {
   navigateToWalletAddDigitalPaymentMethod
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
-import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -187,7 +185,4 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     )
 });
 
-const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
-  sectionStatus: sectionStatusSelector(props.se)(state)
-});
 export default connect(undefined, mapDispatchToProps)(AddPaymentMethodScreen);
