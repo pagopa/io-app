@@ -1,4 +1,4 @@
-import { Badge, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
