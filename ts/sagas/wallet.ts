@@ -658,12 +658,7 @@ export function* watchWalletSaga(
     if (waiting > 0) {
       yield delay(waiting);
     }
-    yield call(
-      fetchTransactionsRequestHandler,
-      paymentManagerClient,
-      pmSessionManager,
-      action
-    );
+    yield put(action);
   });
 
   /**
@@ -702,7 +697,7 @@ export function* watchWalletSaga(
     if (waiting > 0) {
       yield delay(waiting);
     }
-    yield call(getWallets, paymentManagerClient, pmSessionManager);
+    yield put(fetchWalletsRequest());
   });
 
   yield takeLatest(
