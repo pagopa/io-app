@@ -54,7 +54,7 @@ date:
 global:
   password: Password
   username: Username
-  disclaimer_beta: Questa funzionalità è in beta. Se riscontri problemi di accesso, segnalacelo!
+  disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
   sectionStatus:
     moreInfo: più info
@@ -183,7 +183,7 @@ clipboard:
   copyText: copia
   copyFeedbackButton: copiato
 betaBanner:
-  title: "L’app IO è in versione beta."
+  title: "app IO"
   description: Le tue segnalazioni ci aiutano a migliorare giorno dopo giorno.
 connection:
   status:
@@ -324,7 +324,7 @@ profile:
         contextualHelpTitle: Le tue impostazioni di privacy
         contextualHelpContent: !include profile/profile_privacy_main.md
     appInfo:
-      title: Informazioni su IO beta
+      title: Informazioni su IO
       description: Per saperne di più sull'app IO
       contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Sviluppatori
