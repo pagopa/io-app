@@ -38,20 +38,18 @@ const styles = StyleSheet.create({
     paddingRight: 0,
     paddingLeft: 0,
     marginVertical: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    height: 60,
     backgroundColor: IOColors.white
   },
   flexColumn: {
     flexDirection: "column",
-    justifyContent: "space-between",
     flex: 1
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  descriptionPadding: { paddingRight: 24 },
+  descriptionPadding: { width: "80%" },
 
   badgeContainer: { height: 18, backgroundColor: IOColors.blue },
   badgeText: { fontSize: 12, lineHeight: 18 }
@@ -131,7 +129,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
         )}
       />,
       I18n.t("global.buttons.add"),
-      300,
+      315,
       closeBS
     );
 
