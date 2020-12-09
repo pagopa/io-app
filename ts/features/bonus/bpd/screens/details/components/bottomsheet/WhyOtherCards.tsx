@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 const findOutMore = "https://io.italia.it/cashback/faq/#n31";
 
 /**
- * Display information about the current period
+ * Explains why there are other cards
  * @constructor
  */
 export const WhyOtherCards = () => (
