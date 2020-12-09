@@ -13,6 +13,7 @@ import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosB
 import {
   isError,
   isLoading,
+  isReady,
   isUndefined
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiListSelector, abiSelector } from "../../../store/abi";
@@ -30,7 +31,7 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-
+import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import { SearchBankComponent } from "./SearchBankComponent";
 import { SearchBankInfo } from "./SearchBankInfo";
 
@@ -76,7 +77,12 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   }, [props.bankRemoveValue]);
 
-  const [isSearchStarted, setIsSearchStarted] = React.useState(false);
+  // After the press on "Continue", one of the ca returned with error, the user could have a bancomat
+  // and he should try to search for a single bank
+  const pans = props.pans;
+  const noBancomatFound = isReady(pans) && pans.value.cards.length === 0;
+
+  const [isSearchStarted, setIsSearchStarted] = React.useState(noBancomatFound);
 
   const openTosModal = () => {
     props.showModal(
@@ -114,10 +120,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
             <SearchBankComponent
               bankList={props.bankList}
               isLoading={props.isLoading || props.isError}
-              onCancel={props.onCancel}
-              onContinue={onContinueHandler}
               onItemPress={props.searchPans}
-              openTosModal={openTosModal}
             />
           )}
         </Content>
@@ -146,7 +149,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isLoading: isLoading(abiSelector(state)),
   isError: isError(abiSelector(state)),
   bankList: abiListSelector(state),
-  bankRemoveValue: abiSelector(state)
+  bankRemoveValue: abiSelector(state),
+  pans: onboardingBancomatFoundPansSelector(state)
 });
 
 export default withLightModalContext(
