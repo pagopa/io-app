@@ -68,7 +68,7 @@ const fakeCreditCardWallet: NullableWallet = {
 describe("startOrResumeAddCreditCardSaga", () => {
   it("should dispatch startApplicationInitialization if installation id response is 200 but session is none", () => {
     const fakePmSessionManager = {
-      getNewToken: () => async () =>
+      getNewToken: jest.fn() => jest.fn =>
         fromNullable(
           "c21z3oxqcme4zoput62tqky3ldh85efgkpgwbmvbf9o5hyp8te1gc9ovkfeku79f93uai6ihb2hlx5tsbdwq8j15mu0zfftn3a5ci40nxcycodh4ri94jdori1ar53nh" as PaymentManagerToken
         )
