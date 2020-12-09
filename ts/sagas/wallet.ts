@@ -650,7 +650,7 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
-    action: ActionType<typeof fetchTransactionsRequest>
+    action: ActionType<typeof fetchTransactionsRequestWithExpBackoff>
   ) {
     const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
       backOffWaitingTime
