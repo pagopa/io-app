@@ -85,13 +85,15 @@ const getBadgeStatus = (
   backendStatus: Option<BackendStatus>
 ): null | { badge: React.ReactNode; alert?: () => void } => {
   const itemSection = paymentMethod.section;
+  // no section
   if (itemSection === undefined) {
     return null;
   }
   return backendStatus
     .mapNullable(bs => bs.sections)
-    .mapNullable(sections => sections[itemSection])
-    .fold(null, section => {
+    .fold(null, sections => {
+      const section = sections[itemSection];
+      // no badge if section is not visible or badge is not defined
       if (section.is_visible === false || section.badge === undefined) {
         return null;
       }
