@@ -15,7 +15,10 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { walletAddBancomatCancel } from "../../store/actions";
+import {
+  walletAddBancomatCancel,
+  walletAddBancomatStart
+} from "../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -52,7 +55,7 @@ const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(props.cancel)}
-          rightButton={confirmButtonProps(props.back, cta)}
+          rightButton={confirmButtonProps(props.startAddBancomat, cta)}
         />
       </SafeAreaView>
     </BaseScreenComponent>
@@ -61,7 +64,8 @@ const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
-  back: () => dispatch(NavigationActions.back())
+  back: () => dispatch(NavigationActions.back()),
+  startAddBancomat: () => dispatch(walletAddBancomatStart())
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
