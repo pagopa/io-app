@@ -1435,6 +1435,8 @@ systemsOff:
   closeApp: chiudi l'applicazione e riprova
 contextualHelp:
   title: IO ti aiuto
+  sendScreenshot:
+    cta: Condividi un'istantanea del tuo schermo (screenshot), in modo da rendere più semplice la risoluzione del problema.
   sendPersonalInfo:
     title: Nuova segnalazione
     description: "Il Team di IO è a disposizione per risolvere eventuali **problemi** dell’app o per ascoltare i **suggerimenti** dei nostri utenti relativi a **migliorie o nuove funzionalità.**\n\nSe hai dubbi sul **contenuto di un messaggio** o su un servizio, ti consigliamo di **contattare l'ente relativo**: troverai i contatti in fondo al messaggio o nella scheda del servizio in questione."

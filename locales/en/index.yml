@@ -1405,6 +1405,8 @@ systemsOff:
   closeApp: close the application and try again
 contextualHelp:
   title: IO helps you
+  sendScreenshot:
+    cta: Share your screenshot, in order to make it easier to solve your problem.
   sendPersonalInfo:
     title: New report
     description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."

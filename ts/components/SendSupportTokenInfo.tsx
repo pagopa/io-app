@@ -19,7 +19,10 @@ import { IOStyles } from "./core/variables/IOStyles";
 type Props = {
   onClose: () => void;
   onGoBack: () => void;
-  onContinue: (sharingPersonalData: boolean) => void;
+  onContinue: (
+    sharingPersonalData: boolean,
+    sharingScreenshot: boolean
+  ) => void;
 };
 
 const styles = StyleSheet.create({
@@ -56,6 +59,8 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
   onContinue
 }) => {
   const [sendPersonalInfo, setSendPersonalInfo] = React.useState(false);
+
+  const [sendScreenshot, setSendScreenshot] = React.useState(false);
 
   return (
     <SafeAreaView style={IOStyles.flex}>
@@ -106,12 +111,28 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
             />
           </View>
         </View>
+        <View style={styles.checkBoxContainer}>
+          <RawCheckBox
+            checked={sendScreenshot}
+            onPress={() => setSendScreenshot(ov => !ov)}
+          />
+          <View hspacer={true} />
+          <View style={{ flex: 1 }}>
+            <Label
+              color={"bluegrey"}
+              weight={"Regular"}
+              onPress={() => setSendScreenshot(ov => !ov)}
+            >
+              {I18n.t("contextualHelp.sendScreenshot.cta")}
+            </Label>
+          </View>
+        </View>
         <EdgeBorderComponent />
       </Content>
       <FooterWithButtons
         type={"SingleButton"}
         leftButton={continueButtonProps(() => {
-          onContinue(sendPersonalInfo);
+          onContinue(sendPersonalInfo, sendScreenshot);
         })}
       />
     </SafeAreaView>
