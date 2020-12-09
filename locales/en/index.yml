@@ -1089,7 +1089,7 @@ wallet:
   bancomat:
     details:
       infobox:
-        one: "PagoBANCOMAT cards"
+        one: "PagoBANCOMAT cards "
         two: "can't be used to make in-app payments"
         three: ", but they can only be used at physical stores (POS)."
       debit:
@@ -1938,7 +1938,7 @@ bonus:
         noActiveMethod: "You must have activated at least one payment method to collect valid transactions"
         error: "We’re experiencing issues loading your methods, but we’ll collect all the valid transactions done with your methods already enrolled on Cashback."
         activateOnOthersChannel:
-          text1: "Activate on"
+          text1: "Enrolled on "
           text2: "other channels"
           title: "Methods added by other channels"
           body: "You have added these payment methods to the cashback directly from the channels made available by your bank or payments app. You can activate or deactivate the collection of transactions of these methods also from IO. \n
