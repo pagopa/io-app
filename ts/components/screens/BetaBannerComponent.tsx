@@ -38,14 +38,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const BetaBedge = () => (
-  <Badge style={styles.badgeContainer}>
-    <Text bold={true} style={styles.badgeText}>
-      BETA
-    </Text>
-  </Badge>
-);
-
 export default function BetaBannerComponent() {
   return (
     <View footer={true} style={styles.bordered}>
@@ -55,17 +47,12 @@ export default function BetaBannerComponent() {
           size={24}
           color={customVariables.contentPrimaryBackground}
         />
-        <View>
-          <BetaBedge />
-        </View>
         <View style={styles.separator} />
         <View style={styles.flex}>
-          <Text bold={true} primary={true}>
-            {I18n.t("betaBanner.title")}
-          </Text>
           <Text primary={true}>{I18n.t("betaBanner.description")}</Text>
         </View>
       </View>
+      <View spacer={true} />
     </View>
   );
 }
