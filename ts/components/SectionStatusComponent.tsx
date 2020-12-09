@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   text: { marginLeft: 16, flex: 1 }
 });
 
-const statusColorMap: Record<SectionStatus["level"], string> = {
+export const statusColorMap: Record<SectionStatus["level"], string> = {
   normal: IOColors.aqua,
   critical: IOColors.red,
   warning: IOColors.orange

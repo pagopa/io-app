@@ -17,7 +17,10 @@ import I18n from "../../i18n";
 import { BackendStatus, SectionStatusKey } from "../../api/backendPublic";
 import { GlobalState } from "../../store/reducers/types";
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
-import { getSectionMessageLocale } from "../SectionStatusComponent";
+import {
+  getSectionMessageLocale,
+  statusColorMap
+} from "../SectionStatusComponent";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;
@@ -69,6 +72,52 @@ export const showPaymentMethodIncomingAlert = () =>
     { cancelable: true }
   );
 
+/**
+ * return a status badge displaying the section.badge label
+ * the badge background color is according with the status (normal | warning | critical)
+ * if it is critical status, it returns also an alert function, undefined otherwise
+ * the alert display a title (section.badge) and a message (section.message) with default dismiss button
+ * @param paymentMethod
+ * @param backendStatus
+ */
+const getBadgeStatus = (
+  paymentMethod: IPaymentMethod,
+  backendStatus: Option<BackendStatus>
+): null | { badge: React.ReactNode; alert?: () => void } => {
+  const itemSection = paymentMethod.section;
+  if (itemSection === undefined) {
+    return null;
+  }
+  return backendStatus
+    .mapNullable(bs => bs.sections)
+    .mapNullable(sections => sections[itemSection])
+    .fold(null, section => {
+      if (section.is_visible === false || section.badge === undefined) {
+        return null;
+      }
+      const locale = getSectionMessageLocale();
+      const badgeLabel = section.badge[locale];
+      return {
+        badge: (
+          <Badge
+            style={[
+              styles.badgeContainer,
+              { backgroundColor: statusColorMap[section.level] }
+            ]}
+          >
+            <Text style={styles.badgeText} semibold={true}>
+              {badgeLabel}
+            </Text>
+          </Badge>
+        ),
+        alert:
+          section.level === "critical"
+            ? () => Alert.alert(badgeLabel, section.message[locale])
+            : undefined
+      };
+    });
+};
+
 const renderListItem = (
   itemInfo: ListRenderItemInfo<IPaymentMethod>,
   paymentMethodsLength: number,
@@ -76,24 +125,10 @@ const renderListItem = (
 ) => {
   switch (itemInfo.item.status) {
     case "implemented": {
-      const itemSection = itemInfo.item.section;
-      const bagdeStatus =
-        itemSection &&
-        backendStatus
-          .mapNullable(bs => bs.sections)
-          .fold(null, sections => {
-            const section = sections[itemSection];
-            return (
-              <Badge style={styles.badgeContainer}>
-                <Text style={styles.badgeText} semibold={true}>
-                  {section.message[getSectionMessageLocale()]}
-                </Text>
-              </Badge>
-            );
-          });
+      const badgeStatus = getBadgeStatus(itemInfo.item, backendStatus);
       return (
         <ListItem
-          onPress={itemInfo.item.onPress}
+          onPress={badgeStatus?.alert ?? itemInfo.item.onPress}
           style={styles.container}
           first={itemInfo.index === 0}
           last={itemInfo.index === paymentMethodsLength}
@@ -101,7 +136,7 @@ const renderListItem = (
           <View style={styles.flexColumn}>
             <View style={styles.row}>
               <View>
-                {bagdeStatus}
+                {badgeStatus?.badge}
                 <H3 color={"bluegreyDark"} weight={"SemiBold"}>
                   {itemInfo.item.name}
                 </H3>
