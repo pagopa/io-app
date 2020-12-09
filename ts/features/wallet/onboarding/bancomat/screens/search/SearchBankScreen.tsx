@@ -2,6 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { NavigationEvents } from "react-navigation";
+import { SafeAreaView } from "react-native";
+import { Content } from "native-base";
 import { withLightModalContext } from "../../../../../../components/helpers/withLightModalContext";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { LightModalContextInterface } from "../../../../../../components/ui/LightModal";
@@ -23,11 +25,41 @@ import {
 } from "../../store/actions";
 import { fetchPagoPaTimeout } from "../../../../../../config";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
+import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+
 import { SearchBankComponent } from "./SearchBankComponent";
+import { SearchBankInfo } from "./SearchBankInfo";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
+
+const renderFooterButtons = (
+  isSearchStarted: boolean,
+  onCancel: () => void,
+  onContinue: () => void,
+  onClose: () => void
+) =>
+  !isSearchStarted ? (
+    <FooterWithButtons
+      type={"TwoButtonsInlineThird"}
+      leftButton={cancelButtonProps(onCancel, I18n.t("global.buttons.cancel"))}
+      rightButton={confirmButtonProps(
+        onContinue,
+        I18n.t("global.buttons.continue")
+      )}
+    />
+  ) : (
+    <FooterWithButtons
+      type={"SingleButton"}
+      leftButton={cancelButtonProps(onClose, I18n.t("global.buttons.close"))}
+    />
+  );
+
 /**
  * This screen allows the user to choose a specific bank to search for their Bancomat.
  * the user can also choose not to specify any bank and search for all Bancomat in his name
@@ -44,6 +76,8 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   }, [props.bankRemoveValue]);
 
+  const [isSearchStarted, setIsSearchStarted] = React.useState(false);
+
   const openTosModal = () => {
     props.showModal(
       <TosBonusComponent
@@ -53,21 +87,47 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     );
   };
 
+  const onBackHandler = () =>
+    isSearchStarted ? setIsSearchStarted(false) : props.onBack();
+
+  const onContinueHandler = () => props.searchPans();
+  const onCloseHandler = () => {
+    setIsSearchStarted(false);
+  };
   return (
     <BaseScreenComponent
-      goBack={props.onBack}
+      goBack={onBackHandler}
       headerTitle={I18n.t("wallet.searchAbi.title")}
       contextualHelp={emptyContextualHelp}
     >
       <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
-      <SearchBankComponent
-        bankList={props.bankList}
-        isLoading={props.isLoading || props.isError}
-        onCancel={props.onCancel}
-        onContinue={() => props.searchPans()}
-        onItemPress={props.searchPans}
-        openTosModal={openTosModal}
-      />
+      <SafeAreaView style={{ flex: 1 }}>
+        <Content style={{ flex: 1 }}>
+          {!isSearchStarted ? (
+            <SearchBankInfo
+              openTosModal={openTosModal}
+              onSearch={() => {
+                setIsSearchStarted(true);
+              }}
+            />
+          ) : (
+            <SearchBankComponent
+              bankList={props.bankList}
+              isLoading={props.isLoading || props.isError}
+              onCancel={props.onCancel}
+              onContinue={onContinueHandler}
+              onItemPress={props.searchPans}
+              openTosModal={openTosModal}
+            />
+          )}
+        </Content>
+        {renderFooterButtons(
+          isSearchStarted,
+          props.onCancel,
+          onContinueHandler,
+          onCloseHandler
+        )}
+      </SafeAreaView>
     </BaseScreenComponent>
   );
 };
