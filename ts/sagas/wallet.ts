@@ -658,7 +658,7 @@ export function* watchWalletSaga(
     if (waiting > 0) {
       yield delay(waiting);
     }
-    yield put(action);
+    yield put(fetchTransactionsRequest(action.payload));
   });
 
   /**
