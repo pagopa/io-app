@@ -15,7 +15,8 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { walletAddBancomatCancel } from "../../store/actions";
+import { navigateToOnboardingBancomatSearchAvailableUserBancomat } from "../../navigation/action";
+import { searchUserPans, walletAddBancomatCancel } from "../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -38,6 +39,7 @@ const loadLocales = () => ({
 const BancomatKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body, chooseAnother } = loadLocales();
 
+  const onChooseAnother = () => props.searchPans();
   return (
     <BaseScreenComponent
       goBack={true}
@@ -53,7 +55,7 @@ const BancomatKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(props.cancel)}
-          rightButton={confirmButtonProps(props.back, chooseAnother)}
+          rightButton={confirmButtonProps(onChooseAnother, chooseAnother)}
         />
       </SafeAreaView>
     </BaseScreenComponent>
@@ -62,7 +64,11 @@ const BancomatKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
-  back: () => dispatch(NavigationActions.back())
+  back: () => dispatch(NavigationActions.back()),
+  searchPans: (abi?: string) => {
+    dispatch(searchUserPans.request(abi));
+    dispatch(navigateToOnboardingBancomatSearchAvailableUserBancomat());
+  }
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
