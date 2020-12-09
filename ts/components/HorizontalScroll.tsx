@@ -13,6 +13,7 @@ import {
 import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "../i18n";
 import variables from "../theme/variables";
+import { roundToThirdDecimal } from "../utils/number";
 
 type Props = {
   cards: ReadonlyArray<JSX.Element>;
@@ -118,9 +119,8 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
               event.nativeEvent.contentOffset.x / Dimensions.get("window").width
             ),
             default: Math.floor(
-              Math.round(event.nativeEvent.contentOffset.x * 100) /
-                100 /
-                (Math.round(Dimensions.get("window").width * 100) / 100)
+              roundToThirdDecimal(event.nativeEvent.contentOffset.x) /
+                roundToThirdDecimal(Dimensions.get("window").width)
             )
           });
           fromNullable(props.onCurrentElement).map(onCurrElement =>
