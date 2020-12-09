@@ -163,7 +163,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
    */
   const handleSendSupportTokenInfoContinue = (
     sendSupportToken: boolean,
-    sendScreenshot: boolean
+    sendScreenshot?: boolean
   ) => {
     setShowSendPersonalInfo(false);
     fromNullable(supportType).map(st => {
@@ -186,6 +186,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
       <Container>
         {showSendPersonalInfo ? (
           <SendSupportTokenInfo
+            initialScreenshotCheckboxValue={false}
             onClose={onClose}
             onGoBack={() => setShowSendPersonalInfo(false)}
             onContinue={handleSendSupportTokenInfoContinue}

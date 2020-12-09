@@ -23,6 +23,7 @@ type Props = {
     sharingPersonalData: boolean,
     sharingScreenshot: boolean
   ) => void;
+  initialScreenshotCheckboxValue: boolean | undefined;
 };
 
 const styles = StyleSheet.create({
@@ -56,11 +57,14 @@ const CustomGoBackButton: React.FunctionComponent<{
 const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
   onClose,
   onGoBack,
-  onContinue
+  onContinue,
+  initialScreenshotCheckboxValue
 }) => {
   const [sendPersonalInfo, setSendPersonalInfo] = React.useState(false);
 
-  const [sendScreenshot, setSendScreenshot] = React.useState(false);
+  const [sendScreenshot, setSendScreenshot] = React.useState(
+    initialScreenshotCheckboxValue
+  );
 
   return (
     <SafeAreaView style={IOStyles.flex}>
@@ -111,28 +115,30 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
             />
           </View>
         </View>
-        <View style={styles.checkBoxContainer}>
-          <RawCheckBox
-            checked={sendScreenshot}
-            onPress={() => setSendScreenshot(ov => !ov)}
-          />
-          <View hspacer={true} />
-          <View style={{ flex: 1 }}>
-            <Label
-              color={"bluegrey"}
-              weight={"Regular"}
+        {initialScreenshotCheckboxValue !== undefined && (
+          <View style={styles.checkBoxContainer}>
+            <RawCheckBox
+              checked={sendScreenshot}
               onPress={() => setSendScreenshot(ov => !ov)}
-            >
-              {I18n.t("contextualHelp.sendScreenshot.cta")}
-            </Label>
+            />
+            <View hspacer={true} />
+            <View style={{ flex: 1 }}>
+              <Label
+                color={"bluegrey"}
+                weight={"Regular"}
+                onPress={() => setSendScreenshot(ov => !ov)}
+              >
+                {I18n.t("contextualHelp.sendScreenshot.cta")}
+              </Label>
+            </View>
           </View>
-        </View>
+        )}
         <EdgeBorderComponent />
       </Content>
       <FooterWithButtons
         type={"SingleButton"}
         leftButton={continueButtonProps(() => {
-          onContinue(sendPersonalInfo, sendScreenshot);
+          onContinue(sendPersonalInfo, sendScreenshot as boolean);
         })}
       />
     </SafeAreaView>
