@@ -14,9 +14,6 @@ type Props = {
   bankList: ReadonlyArray<Abi>;
   isLoading: boolean;
   onItemPress: (abi: string) => void;
-  openTosModal: () => void;
-  onCancel: () => void;
-  onContinue: () => void;
 };
 
 export const SearchBankComponent: React.FunctionComponent<Props> = (
