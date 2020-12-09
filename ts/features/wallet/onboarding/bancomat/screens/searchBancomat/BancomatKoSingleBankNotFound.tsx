@@ -67,7 +67,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(NavigationActions.back()),
   searchPans: (abi?: string) => {
     dispatch(searchUserPans.request(abi));
-    dispatch(navigateToOnboardingBancomatSearchAvailableUserBancomat());
   }
 });
 
