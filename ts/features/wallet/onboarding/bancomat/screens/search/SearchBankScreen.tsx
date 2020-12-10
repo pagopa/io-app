@@ -35,7 +35,7 @@ const renderFooterButtons = (onClose: () => void) => (
 );
 
 /**
- * This screen allows the user to search for all Bancomat in his name.
+ * This screen allows the user to choose a specific bank to search for their Bancomat.
  * @constructor
  */
 const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
