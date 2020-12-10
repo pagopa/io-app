@@ -1,5 +1,5 @@
 import * as React from "react";
-import { isIphoneX } from "react-native-iphone-x-helper";
+import { getBottomSpace, isIphoneX } from "react-native-iphone-x-helper";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
 import IconFont from "../../../../../../components/ui/IconFont";
@@ -20,7 +20,7 @@ const GoToTransactions: React.FunctionComponent<Props> = props => (
     block={true}
     onPress={props.goToTransactions}
     activeOpacity={1}
-    style={isIphoneX() ? { marginBottom: 23 } : {}}
+    style={isIphoneX() ? { marginBottom: getBottomSpace() } : {}}
   >
     <IconFont name="io-transactions" size={24} color={"white"} />
     <Label color={"white"}>
