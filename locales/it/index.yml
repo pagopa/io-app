@@ -52,6 +52,8 @@ date:
     - "am"
     - "pm"
 global:
+  badges:
+    blocked: "Bloccato"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!

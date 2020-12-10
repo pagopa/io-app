@@ -46,10 +46,7 @@ const styles = StyleSheet.create({
 });
 
 const isBancomatBlocked = (pan: Card) =>
-  fromNullable(pan.validityState).fold(
-    false,
-    vs => vs === ValidityStateEnum.BR
-  );
+  pan.validityState === ValidityStateEnum.BR;
 
 const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiInfo, setAbiInfo] = React.useState<Abi>({});
