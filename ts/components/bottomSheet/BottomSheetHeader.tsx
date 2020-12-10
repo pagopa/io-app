@@ -39,7 +39,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
   onClose
 }: Props) => (
   <View style={styles.row}>
-    <View style={{ flex: 1 }}>
+    <View style={IOStyles.flex}>
       <H3>{title}</H3>
     </View>
     <ButtonDefaultOpacity
