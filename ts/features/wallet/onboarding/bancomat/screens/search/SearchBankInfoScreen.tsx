@@ -16,7 +16,10 @@ import {
   isUndefined
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiListSelector, abiSelector } from "../../../store/abi";
-import { navigateToOnboardingBancomatSearchAvailableUserBancomat } from "../../navigation/action";
+import {
+  navigateToOnboardingBancomatChooseBank,
+  navigateToOnboardingBancomatSearchAvailableUserBancomat
+} from "../../navigation/action";
 import {
   loadAbi,
   searchUserPans,
@@ -86,9 +89,7 @@ const SearchBankInfoScreen: React.FunctionComponent<Props> = (props: Props) => {
         <Content style={{ flex: 1 }}>
           <SearchBankInfoComponent
             openTosModal={openTosModal}
-            onSearch={() => {
-              setIsSearchStarted(true);
-            }}
+            onSearch={props.navigateToSearchBankScreen}
           />
         </Content>
         {renderFooterButtons(props.onCancel, onContinueHandler)}
@@ -104,6 +105,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   searchPans: (abi?: string) => {
     dispatch(searchUserPans.request(abi));
     dispatch(navigateToOnboardingBancomatSearchAvailableUserBancomat());
+  },
+  navigateToSearchBankScreen: () => {
+    dispatch(navigateToOnboardingBancomatChooseBank());
   }
 });
 
