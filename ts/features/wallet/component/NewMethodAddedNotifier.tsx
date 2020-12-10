@@ -20,7 +20,7 @@ const newBancomatBottomSheet = () => {
     const bottomSheetProps = await bottomSheetContent(
       <BancomatInformation onAddPaymentMethod={dismiss} />,
       I18n.t("wallet.methods.pagobancomat.name"),
-      500,
+      550,
       dismiss
     );
     present(bottomSheetProps.content, {
