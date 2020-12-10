@@ -763,7 +763,8 @@ wallet:
       detailTitle: Dettaglio
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
   searchAbi:
-    title: Aggiungi PagoBANCOMAT
+    header: Aggiungi PagoBANCOMAT
+    title: Ricerca delle tue carte PagoBANCOMAT
     description:
       text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
       text2: informativa sul trattamento dei dati personali.

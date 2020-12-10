@@ -15,7 +15,7 @@ export const SearchBankInfoComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => (
   <>
-    <H1>Ricerca delle tue carte PagoBANCOMAT</H1>
+    <H1>{I18n.t("wallet.searchAbi.title")}</H1>
     <View spacer={true} large={true} />
     <Body>
       <H4 weight={"Regular"} color={"bluegreyDark"}>

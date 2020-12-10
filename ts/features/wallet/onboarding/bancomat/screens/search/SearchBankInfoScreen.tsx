@@ -80,7 +80,7 @@ const SearchBankInfoScreen: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerTitle={I18n.t("wallet.searchAbi.title")}
+      headerTitle={I18n.t("wallet.searchAbi.header")}
       contextualHelp={emptyContextualHelp}
     >
       <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />

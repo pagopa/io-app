@@ -743,7 +743,8 @@ wallet:
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
   searchAbi:
-    title: Add PagoBANCOMAT
+    header: Add PagoBANCOMAT
+    title: Search for your PagoBANCOMAT cards
     description:
       text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the"
       text2: information on the processing of personal data.
