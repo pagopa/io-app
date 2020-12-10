@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { NavigationEvents } from "react-navigation";
 import { SafeAreaView } from "react-native";
 import { Content } from "native-base";
 import { withLightModalContext } from "../../../../../../components/helpers/withLightModalContext";
@@ -10,12 +9,8 @@ import { LightModalContextInterface } from "../../../../../../components/ui/Ligh
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
-import {
-  isError,
-  isLoading,
-  isUndefined
-} from "../../../../../bonus/bpd/model/RemoteValue";
-import { abiListSelector, abiSelector } from "../../../store/abi";
+import { isError, isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
+import { abiSelector } from "../../../store/abi";
 import {
   navigateToOnboardingBancomatChooseBank,
   navigateToOnboardingBancomatSearchAvailableUserBancomat
@@ -26,7 +21,6 @@ import {
   walletAddBancomatBack,
   walletAddBancomatCancel
 } from "../../store/actions";
-import { fetchPagoPaTimeout } from "../../../../../../config";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import {
