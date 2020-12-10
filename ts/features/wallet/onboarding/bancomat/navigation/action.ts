@@ -10,7 +10,7 @@ export const navigateToTestScreen = () =>
 
 export const navigateToOnboardingBancomatChooseBank = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK
+    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK_INFO
   });
 
 export const navigateToOnboardingBancomatSearchAvailableUserBancomat = () =>
