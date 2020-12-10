@@ -1,5 +1,6 @@
 import { createStackNavigator } from "react-navigation";
 import SuggestBpdActivationScreen from "../../common/screens/bpd/SuggestBpdActivationScreen";
+import BancomatSearchStartScreen from "../screens/search/BancomatSearchStartScreen";
 import SearchBankScreen from "../screens/search/SearchBankScreen";
 import SearchAvailableUserBancomatScreen from "../screens/searchBancomat/SearchAvailableUserBancomatScreen";
 import { ActivateBpdOnNewCreditCardScreen } from "../../common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
@@ -8,6 +9,9 @@ import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";
 
 const PaymentMethodOnboardingBancomatNavigator = createStackNavigator(
   {
+    [WALLET_ONBOARDING_BANCOMAT_ROUTES.BANCOMAT_START]: {
+      screen: BancomatSearchStartScreen
+    },
     [WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK]: {
       screen: SearchBankScreen
     },
