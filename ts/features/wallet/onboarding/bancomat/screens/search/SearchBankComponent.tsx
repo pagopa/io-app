@@ -55,7 +55,10 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
     <BankPreviewItem
       bank={info.item}
       inList={isList}
-      onPress={props.onItemPress}
+      onPress={(abi: string) => {
+        props.onItemPress(abi);
+        setSearchText("");
+      }}
     />
   );
 
