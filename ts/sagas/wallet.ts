@@ -395,7 +395,7 @@ const backOffBase = 2000 as Millisecond;
  * execute getWallet for maxRetries
  * if response is success it returns the response payload
  * if response is failure it tries for maxRetries waiting an exp backoff time
- * when maxRetries are been exceeded it return undefined
+ * when maxRetries are been exceeded it returns undefined
  */
 function* getWalletsRetriesWithBackoff() {
   let retries = 0;
