@@ -153,6 +153,8 @@ import {
 } from "../features/wallet/onboarding/satispay/store/actions";
 import { ContentClient } from "../api/content";
 import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
+import { calculateExponentialBackoffInterval } from "italia-ts-commons/lib/backoff";
+import { Millisecond } from "italia-ts-commons/lib/units";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -315,13 +317,12 @@ function* startOrResumeAddCreditCardSaga(
     //
     // FIXME: we may want to trigger a success here and leave the fetching of
     //        the wallets to the caller
-    yield put(fetchWalletsRequest());
-    const fetchWalletsResultAction = yield take([
-      getType(fetchWalletsSuccess),
-      getType(fetchWalletsFailure)
-    ]);
-    if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
-      const updatedWallets = fetchWalletsResultAction.payload;
+    const maybeWalletsSuccess = yield call(getWalletsRetriesWithBackoff);
+    if (
+      maybeWalletsSuccess !== undefined &&
+      isActionOf(fetchWalletsSuccess, maybeWalletsSuccess)
+    ) {
+      const updatedWallets = maybeWalletsSuccess.payload;
       const maybeAddedWallet = updatedWallets.find(
         _ => _.idWallet === idWallet
       );
@@ -386,6 +387,32 @@ function* startOrResumeAddCreditCardSaga(
     }
     break;
   }
+}
+
+const maxRetries = 3;
+const backOffBase = 2000 as Millisecond;
+/**
+ * execute getWallet for maxRetries
+ * if response is success it returns the response payload
+ * if response is failure it tries for maxRetries waiting an exp backoff time
+ * when maxRetries are been exceeded it return undefined
+ */
+function* getWalletsRetriesWithBackoff() {
+  let retries = 0;
+  const backOff = calculateExponentialBackoffInterval(backOffBase, retries);
+  while (retries < maxRetries) {
+    yield put(fetchWalletsRequest());
+    const fetchWalletsResultAction = yield take([
+      getType(fetchWalletsSuccess),
+      getType(fetchWalletsFailure)
+    ]);
+    if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
+      return fetchWalletsResultAction;
+    }
+    yield delay(backOff(retries));
+    retries++;
+  }
+  return undefined;
 }
 
 /**

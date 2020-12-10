@@ -438,8 +438,6 @@ const reducer = (
     case getType(creditCardCheckout3dsSuccess):
       return {
         ...state,
-        // clear wallet store since we are adding a credit card
-        walletById: WALLETS_INITIAL_STATE.walletById,
         creditCardCheckout3ds: pot.some("done")
       };
 
