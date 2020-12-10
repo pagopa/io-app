@@ -4,7 +4,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Body, Container, List, ListItem, Spinner, Text } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import ConnectionBar from "../../components/ConnectionBar";
 import BaseScreenComponent, {
@@ -20,6 +20,7 @@ import {
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
 import { IngressCheckBox } from "./CheckBox";
 
 type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
@@ -73,6 +74,7 @@ class IngressScreen extends React.PureComponent<Props> {
             {I18n.t("startup.title")}
           </Text>
           <Spinner color="white" />
+
           <List withContentLateralPadding={true}>
             {items.map((item, index) => (
               <ListItem key={`item-${index}`}>
@@ -85,6 +87,9 @@ class IngressScreen extends React.PureComponent<Props> {
               </ListItem>
             ))}
           </List>
+          <View style={{ marginTop: 48 }}>
+            <SectionStatusComponent sectionKey={"ingress"} />
+          </View>
         </Container>
       </BaseScreenComponent>
     );

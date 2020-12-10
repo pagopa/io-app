@@ -21,7 +21,8 @@ export const IOColors = asIOColors({
   aqua: "#00C5CA",
   red: "#C02927",
   greyGradientTop: "#5C6F82",
-  greyGradientBottom: "#42484F"
+  greyGradientBottom: "#42484F",
+  orange: "#EA7614"
 });
 
 export type IOColorType = keyof typeof IOColors;

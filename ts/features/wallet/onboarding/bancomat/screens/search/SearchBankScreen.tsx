@@ -21,6 +21,8 @@ import {
   walletAddBancomatBack,
   walletAddBancomatCancel
 } from "../../store/actions";
+import { fetchPagoPaTimeout } from "../../../../../../config";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { SearchBankComponent } from "./SearchBankComponent";
 
 type Props = LightModalContextInterface &
@@ -38,7 +40,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     if (isUndefined(props.bankRemoveValue)) {
       props.loadAbis();
     } else if (isError(props.bankRemoveValue)) {
-      errorRetry = setTimeout(props.loadAbis, 2000);
+      errorRetry = setTimeout(props.loadAbis, fetchPagoPaTimeout);
     }
   }, [props.bankRemoveValue]);
 
@@ -55,6 +57,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     <BaseScreenComponent
       goBack={props.onBack}
       headerTitle={I18n.t("wallet.searchAbi.title")}
+      contextualHelp={emptyContextualHelp}
     >
       <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
       <SearchBankComponent

@@ -54,8 +54,10 @@ date:
 global:
   password: Password
   username: Username
-  disclaimer_beta: Questa funzionalità è in beta. Se riscontri problemi di accesso, segnalacelo!
+  disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
   unknown: sconosciuto
+  sectionStatus:
+    moreInfo: più info
   accessibility:
     date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
@@ -134,6 +136,8 @@ global:
     info: "Info"
     activate: "Attiva"
     deactivate: "Disattiva"
+    show: "Mostra"
+    update: "Aggiorna"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -179,7 +183,7 @@ clipboard:
   copyText: copia
   copyFeedbackButton: copiato
 betaBanner:
-  title: "L’app IO è in versione beta."
+  title: "app IO"
   description: Le tue segnalazioni ci aiutano a migliorare giorno dopo giorno.
 connection:
   status:
@@ -320,7 +324,7 @@ profile:
         contextualHelpTitle: Le tue impostazioni di privacy
         contextualHelpContent: !include profile/profile_privacy_main.md
     appInfo:
-      title: Informazioni su IO beta
+      title: Informazioni su IO
       description: Per saperne di più sull'app IO
       contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Sviluppatori
@@ -462,9 +466,8 @@ authentication:
       L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità
       Digitale) per garantire la tua sicurezza online
     card5-title: Benvenuto nella prima versione pubblica di IO!
-    card5-content: In questa versione trovi in alto a destra
-      le icone per segnalare bug e aprire una chat con il team di IO.
-      Aspettiamo i tuoi feedback!
+    card5-content: In alto a destra trovi l'icona '?' per aprire
+      una chat con il team di IO se qualcosa non funziona come dovrebbe.
     expiredCardTitle: Carta scaduta o non più valida
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
@@ -484,7 +487,7 @@ authentication:
     pin:
       accessibility:
         placeholderLabel: PIN della Carta di identità elettronica
-        label: Campo di inserimento per pin della Carta di Itentità elettronica
+        label: Campo di inserimento per pin della Carta di Identità elettronica
         hint: Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica
       pinCardTitle: Inserisci il PIN della tua carta di identità
       pinCardHeader: Entra con CIE
@@ -519,7 +522,7 @@ authentication:
         readerCardLostHeaderiOS: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta. Riprova di nuovo.
         onTagLost: Hai rimosso la carta troppo presto. Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
         tryAgain: Si è verificato un errore durante la verifica della tua carta. Probabilmente è un errore momentaneo, riprova per piacere!
-        generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
+        generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
         unknownCardTitle: Carta sconosciuta
         unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
@@ -586,7 +589,7 @@ authentication:
       body:
         L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi.
         Se disponi di un altra identità SPID scegli un provider alternativo.
-        Puoi segnalarci il problema con l’icona della coccinella in alto a destra.
+        Puoi segnalarci il problema con l’icona '?' in alto a destra.
     login:
       title: Errore nel login
       body: Si è verificato un errore durante il login, si prega di riprovare!
@@ -751,7 +754,7 @@ wallet:
   creditCard:
     onboardingAttempts:
       title: Tentativi aggiunta metodo di pagamento
-      emptyTitle: Nessun tentitivo di aggiunta di un metodo di pagamento
+      emptyTitle: Nessun tentativo di aggiunta di un metodo di pagamento
       emptyBody: IO non ha memorizzato tentativi di aggiunta di un metodo di pagamento. Qui troverai i tentativi più recenti
       lastAttemptsTitle: Ultimi tentativi
       success: Aggiunto
@@ -763,7 +766,7 @@ wallet:
     title: Aggiungi PagoBANCOMAT
     description:
       text1: Se vuoi, puoi indicare la banca
-      text2: " su cui hai un carta PagoBANCOMAT attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
+      text2: " su cui hai un carta PagoBANCOMAT attiva. Altrimenti cercheremo tutte le carte associate a te: proseguendo accetti l’"
       text3: informativa sul trattamento dei dati personali
     bankName: Denominazione della banca
     noName: Nome non disponibile
@@ -831,6 +834,7 @@ wallet:
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
+  paymentMethodDesc: Carte di credito, debito, prepagate, PagoBANCOMAT, app
   walletLoadMessage: Carico i metodi di pagamento...
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
@@ -840,6 +844,7 @@ wallet:
     text2: Consulta l’help in alto a destra su questa pagina.
   transactionsLoadMore: Carica precedenti
   transacionsLoadingMore: Carico precedenti...
+  transactionsShow: Mostra operazioni
   pickPaymentMethod:
     unavailable:
       title: Questo metodo di pagamento non è ancora disponibile
@@ -857,6 +862,8 @@ wallet:
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
   newPaymentMethod:
     add: aggiungi
+    show: mostra
+    refresh: aggiorna
     addButton: Aggiungi un metodo
     addDescription: Aggiungi un metodo di pagamento per pagare da IO in pochi secondi, oppure richiedi l’attivazione di un bonus o di una carta sconto.
     walletAlert: "Nel tuo portafoglio sono registrati dei metodi di pagamento ma nessuno di questi è compatibile con IO"
@@ -880,7 +887,7 @@ wallet:
   detailsTransaction:
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
-    contextualHelpTitle: Salvare una carta su IO
+    contextualHelpTitle: Salva una carta su IO
     contextualHelpContent: !include wallet/wallet_card.md
     header: Salva la carta
     title: Vuoi salvare questa carta?
@@ -971,7 +978,7 @@ wallet:
     contextualHelpTitle: Riepilogo della transazione
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
   errorTransaction:
-    submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
+    submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
   insertManually:
     header: Inserisci dati avviso
     title: Inserisci i dati dell'avviso
@@ -1042,7 +1049,7 @@ wallet:
     paypal:
       name: Paypal
     bancomat:
-      name: Bancomat
+      name: PagoBANCOMAT
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
@@ -1098,6 +1105,7 @@ wallet:
     PAYMENT_ONGOING_CANCELLED: È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
     sendReport: Invia segnalazione
+    loadingData: errore durante il caricamento, riprova.
   walletList:
     contextualHelpTitle: I tuoi metodi di pagamento
     contextualHelpContent: !include wallet/wallet_list.md
@@ -1112,7 +1120,7 @@ wallet:
         three: ", ma solo presso i punti fisici (POS)."
       debit:
         title: "La tua carta ha più di un logo?"
-        body: "Se su questa carta è presente anche il logo di un altro circuito (Maestro, Visa, Mastercard, etc.), aggiungila al portafoglio anche come **carta di debito (o credito)**. In questo modo potrai collezionare correttamente le transazioni ai fini del Cashback ed effettuare pagamenti su IO."
+        body: "Se oltre al logo PagoBANCOMAT è presente quello di un altro circuito (Maestro, MasterCard, Visa), puoi aggiungerla anche come **carta di debito o credito** digitando il numero stampato sul fronte. Le transazioni effettuate su questo circuito saranno valide per il Cashback e potrai usare la carta per pagare su IO."
         addCta: "Aggiungi Carta di Debito/Credito"
       removeCta: "Elimina questo metodo di pagamento"
   satispay:
@@ -1265,7 +1273,7 @@ messageDetails:
   loadingText: Caricamento dei dettagli del messaggio in corso...
   errorText: Non siamo riusciti a caricare i dettagli del tuo messaggio
   retryText: Probabilmente è un errore temporaneo... riprova per piacere!
-  submitBugText: Se il problema non si risolve segnalacelo con l'icona della coccinella in alto a destra, grazie!
+  submitBugText: Se il problema non si risolve segnalacelo con l'icona '?' in alto a destra, grazie!
   rawInfoLink:
     showLabel: Dettagli del messaggio
     hideLabel: Chiudi dettagli
@@ -1461,7 +1469,7 @@ faq:
     title: "Che cos'è un Identity Provider?"
     content: !include faq/faq6.md
   7:
-    title: "Come scelgiere un Identity Provider?"
+    title: "Come scegliere un Identity Provider?"
     content: !include faq/faq7.md
   8:
     title: "È possibile avere più di un'identità digitale?"
@@ -1674,6 +1682,15 @@ faq:
   78:
     title: "Hai avuto problemi nell’aggiunta di un nuovo metodo di pagamento?"
     content: !include bonus/bpd/faq/faqBpd1.md
+  79:
+    title: "La mia carta PagoBANCOMAT è anche una carta di debito. Cosa devo selezionare?"
+    content: !include bonus/bpd/faq/faqBpd2.md
+  80:
+    title: "Perché il salvataggio non va a buon fine?"
+    content: !include bonus/bpd/faq/faqBpd3.md
+  81:
+    title: "La mia carta non ha alcun codice di sicurezza."
+    content: "Controlla bene sul retro (per le carte Maestro, Mastercard, Visa) o sul fronte (per le carte American Express). Se non trovi alcun codice di sicurezza, molto probabilmente la tua carta non è abilitata ai pagamenti online. Contatta la tua banca per maggiori informazioni."
 bonus:
   bonusVacanze:
     accessibility:
@@ -1845,7 +1862,7 @@ bonus:
             normal: "che userai i metodi di pagamento su cui è attivo il Cashback solo per acquisti effettuati per finalità personali, "
             bold: "non legati ad attività di Impresa, Arte o Professione"
         disclaimer:
-          normal1: "Questa autodichirazione è resa ai sensi del "
+          normal1: "Questa autodichiarazione è resa ai sensi del "
           link: "dpr 28 dicembre 2000 n. 445 art 46 e 47"
           normal2: " e consapevole delle sanzioni penali e della perdita di diritto al rimborso in caso di falsa dichiarazione"
       loadingActivateBpd:
@@ -1853,19 +1870,24 @@ bonus:
         body: "Ti preghiamo di attendere..."
       noPaymentMethod:
         title: "Aggiungi almeno un metodo di pagamento"
-        body: "Per inziare a collezionare transazioni valide, aggiungi al tuo Portafoglio i tuoi metodi di pagamento preferiti: oggi sono supportate le principali carte di pagamento, app e altri strumenti digitali.\n\n
+        body: "Per iniziare a collezionare transazioni valide, aggiungi al tuo Portafoglio i tuoi metodi di pagamento preferiti: oggi sono supportate le principali carte di pagamento, app e altri strumenti digitali.\n\n
         In futuro verranno supportati altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno il Cashback!"
       enrollPaymentMethod:
         title: "Scegli quali metodi di pagamento attivare"
         body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
-        body2: "Potrai aggiungere in ogni momento altri metodi di pagamento su IO e attivare il Cashback."
+        body2: "Potrai aggiungere in un secondo momento altri metodi di pagamento al tuo portafoglio e attivare su questi il Cashback."
+      errorPaymentMethod:
+        title: "Ci siamo quasi, attiva il Cashback sui tuoi metodi di pagamento!"
+        body: "Abilita il Cashback sui metodi già presenti nel tuo portafoglio o aggiungine di nuovi."
+        cta: "Attiva i metodi di pagamento"
     iban:
       iban: "IBAN"
       edit: "Modifica IBAN"
       verify: "Controlla IBAN"
       insertion:
         title: "IBAN per l’accredito"
-        body1: "Indica qui l’IBAN del tuo conto su cui ricevere l’accredito."
+        body1: "Per ricevere eventuali rimborsi, inserisci il tuo "
+        body1Bold: "codice IBAN senza spazi"
         body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
       koWrong:
         title: "IBAN non corretto"
@@ -1941,9 +1963,11 @@ bonus:
           canceled: "Storno"
       paymentMethods:
         add:
+          cta: "Aggiungi un metodo al cashback"
           alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare transazioni valide"
         noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per collezionare transazioni valide"
+        error: "Anche se in questo momento non è possibile visualizzare i tuoi metodi, registreremo le transazioni effettuate coi metodi già abilitati al Cashback."
         activateOnOthersChannel:
           text1: "Attivati su "
           text2: "altri canali"
@@ -1951,6 +1975,10 @@ bonus:
           body: "Hai aggiunto al Cashback questi metodi di pagamento direttamente dai canali messi a disposizione dalla tua banca o app di pagamenti. Puoi attivare o disattivare la registrazione delle transazioni di questi metodi anche da IO.\n
                  Se vuoi usare alcuni di questi metodi anche per pagare tramite IO, aggiungili al tuo portafoglio!"
           addWallet: "Aggiungi al portafoglio"
+          whyOtherCards:
+            title: "Perché vedo carte che non riconosco?"
+            body: "Non preoccuparti, si tratta delle versioni virtuali delle tue carte che Apple, Google e Samsung utilizzano per proteggere i tuoi acquisti effettuati tramite i loro ‘wallet’. Stiamo lavorando con i soggetti coinvolti nell’iniziativa per migliorare la visualizzazione sull’app IO di questo tipo di carte."
+            cta: "Scopri di più"
         notActivable:
           header: "Non attivabili o non compatibili"
           title: "Metodo non attivabile"

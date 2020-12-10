@@ -55,7 +55,9 @@ global:
   password: Password
   username: Username
   unknown: unknown
-  disclaimer_beta: This feature is in beta. If you're having trouble signing in, please let us know!
+  disclaimer_beta: If you're having trouble signing in, please let us know!
+  sectionStatus:
+    moreInfo: more info
   accessibility:
     date_format: MMMM Do YYYY
     expanded: Expanded paragraph
@@ -134,6 +136,8 @@ global:
     info: "Info"
     activate: "Activate"
     deactivate: "Deactivate"
+    show: "Show"
+    update: "Update"
   navigator:
     messages: messages
     wallet: wallet
@@ -179,7 +183,7 @@ clipboard:
   copyText: copy
   copyFeedbackButton: copied
 betaBanner:
-  title: 'The IO app is in beta version.'
+  title: 'IO app'
   description: Your reports help us to improve day after day.
 connection:
   status:
@@ -320,7 +324,7 @@ profile:
         contextualHelpTitle: Your privacy settings
         contextualHelpContent: !include profile/profile_privacy_main.md
     appInfo:
-      title: About IO beta
+      title: About IO
       description: Learn more about the IO app
       contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Developers
@@ -569,7 +573,7 @@ authentication:
       title: Access problem
       body: The selected identity provider is not available at this time, you can try again later.
             If you have another SPID, choose an alternative provider.
-            You can report the problem with the bug icon at the top right of the screen.
+            You can report the problem with the '?' icon at the top right of the screen.
     login:
       title: Login error
       body: There was an error with the login, please retry!
@@ -724,9 +728,9 @@ payment:
 wallet:
   wallet: Wallet
   incoming:
-    title: "Incoming"
-    message: "This payment method will be available in a future version"
-  featured: Higlighted 
+    title: "Upcoming"
+    message: "This payment method will be available in a future release"
+  featured: Highlighted 
   creditCard:
     onboardingAttempts:
       title: Attempts to onboard payment method
@@ -810,15 +814,17 @@ wallet:
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
+  paymentMethodDesc: Credit, debit, prepaid card, PagoBANCOMAT, app
   walletLoadMessage: Loading payment methods...
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
   transactionHelpMessage:
     text1: Problems with a payment or adding a new method?
-    text2: Consult the help at the top right of this page.
+    text2: Check the help section at the top right of this page.
   transactionsLoadMore: Load previous
   transacionsLoadingMore: Loading previous...
+  transactionsShow: Show transactions
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time
@@ -836,6 +842,8 @@ wallet:
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
   newPaymentMethod:
     add: add
+    show: show
+    refresh: refresh
     addButton: Add a new method
     addDescription: Add a payment method to pay from IO in seconds, or request activation of a bonus or discount card.
     walletAlert: "Your wallet includes payment methods but no one is supported by IO yet"
@@ -952,7 +960,7 @@ wallet:
     contextualHelpTitle: Manually insert notice
     contextualHelpContent: !include wallet/insert_manual_notice.md
   errorTransaction:
-    submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
+    submitBugText: If you can't solve the problem, please let us know with the '?' icon at the top right. Thank you!
   transactionDetails: Transaction details
   transactionFullReason: Full reason
   detailsTransaction:
@@ -983,7 +991,7 @@ wallet:
   continue: Pay this notice
   backToPayments: Back to payments
   methods:
-    comingSoon: incoming
+    comingSoon: upcoming
     newCome: New
     card:
       name: Credit, debit or prepaid card
@@ -1016,7 +1024,7 @@ wallet:
     paypal:
       name: Paypal
     bancomat:
-      name: Bancomat
+      name: PagoBANCOMAT
     notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
@@ -1071,6 +1079,7 @@ wallet:
     PAYMENT_ONGOING_CANCELLED: The previous attempt to pay this notice is being canceled, you can retry paying this notice after {{remainingMinutes}} minutes.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
     sendReport: Send report
+    loadingData: loading failure, try again.
   walletList:
     contextualHelpTitle: Your payment methods
     contextualHelpContent: !include wallet/wallet_list.md
@@ -1080,12 +1089,12 @@ wallet:
   bancomat:
     details:
       infobox:
-        one: "PagoBANCOMAT cards"
+        one: "PagoBANCOMAT cards "
         two: "can't be used to make in-app payments"
         three: ", but they can only be used at physical stores (POS)."
       debit:
         title: "Does your card have other logos?"
-        body: "If this card has also the logo of another circuit (Maestro, Visa, Mastercard, etc.), don't forget to add it to your wallet as a ** debit (or credit) card ** as well. By doing so, you'll be able to collect all the valid transactions for the cashback initiative and make in-app payments. "
+        body: "If, in addition to the PagoBANCOMAT logo, there is one of another circuit (Maestro, MasterCard, Visa), you can also add the card as a **debit or credit** card by typing the number on its front. Transactions made on this circuit will be valid for the cashback initiative; also, you can use the card to pay on IO."
         addCta: "Add as Debit/Credit Card"
       removeCta: "Delete this payment method"
   satispay:
@@ -1235,7 +1244,7 @@ messageDetails:
   loadingText: Loading message details in progress...
   errorText: We were unable to load the details of your message
   retryText: It's probably a temporary error... please try again!
-  submitBugText: If the problem is not resolved, report it with the ladybug icon at the top right, thank you!
+  submitBugText: If the problem is not resolved, report it with the '?' icon at the top right, thank you!
   rawInfoLink:
     showLabel: Details of the message
     hideLabel: Close details
@@ -1642,6 +1651,15 @@ faq:
   78:
     title: "Did you have problems adding a new payment method?"
     content: !include bonus/bpd/faq/faqBpd1.md
+  79:
+    title: "My PagoBANCOMAT card is a debit card too. What should I pick?"
+    content: !include bonus/bpd/faq/faqBpd2.md
+  80:
+    title: "Why is the saving unsuccessful?"
+    content: !include bonus/bpd/faq/faqBpd3.md
+  81:
+    title: "My card has no security code."
+    content: "Check well on the back (for Maestro, Mastercard, Visa) or on the front (for American Express cards). If you don't find any security code, most likely your card is not enabled for online payments. Contact your bank for more information."
 bonus:
   bonusVacanze:
     accessibility:
@@ -1794,7 +1812,7 @@ bonus:
     earned: Collected Cashback
     onboarding:
       alert:
-        title: Cashback is aleady active
+        title: Cashback is already active
         body: You can find more details in your Wallet.
         cancel: Close
         confirm: Go back
@@ -1826,14 +1844,19 @@ bonus:
       enrollPaymentMethod:
         title: "Choose which payment methods to activate"
         body1: "Enable Cashback on your saved methods and start collecting valid transactions."
-        body2: "You can add other payment methods to your wallet anytime and activate cashback."
+        body2: "You can later add other payment methods to your wallet and activate Cashback on them."
+      errorPaymentMethod:
+        title: "Almost there, activate Cashback on your payment methods!"
+        body: "Enable Cashback on methods already in your wallet or add new ones."
+        cta: "Activate payment methods"
     iban:
       iban: "IBAN"
       edit: "Change IBAN"
       verify: "Check IBAN"
       insertion:
         title: "IBAN for transfer"
-        body1: "Please enter the IBAN of your account on which you want to receive the refund."
+        body1: "To receive any refunds, enter your "
+        body1Bold: "IBAN code without spaces"
         body2: "The IBAN will be checked to make sure it's registered to you. You can also add your IBAN later."
       koWrong:
         title: "Incorrect IBAN"
@@ -1883,7 +1906,7 @@ bonus:
           summary:
             bottomSheet:
               title: "When will you find your transactions?"
-              body: "Transactions are collected the day after they are recorded by the banks.\n\n**It might take up to 72 hours before you see your transaction on IO**, although the process is usually faster.\n\n**It may take a little longer if the purchase has been performed duing the weekend or holidays**, or in other exceptional occasions.\n\nDon't worry: all valid transactions occurred throughout the phase will be collected and considered for refunds and ranking!"
+              body: "Transactions are collected the day after they are recorded by the banks.\n\n**It might take up to 72 hours before you see your transaction on IO**, although the process is usually faster.\n\n**It may take a little longer if the purchase has been performed during the weekend or holidays**, or in other exceptional occasions.\n\nDon't worry: all valid transactions occurred throughout the phase will be collected and considered for refunds and ranking!"
             lastUpdated: "Latest valid transaction: "
             link: Anything missing?
             body:
@@ -1909,16 +1932,22 @@ bonus:
           canceled: "Refund"
       paymentMethods:
         add:
+          cta: "Add a method to cashback"
           alertBody: "The payment method you are adding will be saved in the IO app wallet and, if compatible, can also be used for any payments within the app."
         noPaymentMethods: "You must add at least one payment method to start collecting valid transactions"
         noActiveMethod: "You must have activated at least one payment method to collect valid transactions"
+        error: "We’re experiencing issues loading your methods, but we’ll collect all the valid transactions done with your methods already enrolled on Cashback."
         activateOnOthersChannel:
-          text1: "Activate on"
+          text1: "Enrolled on "
           text2: "other channels"
           title: "Methods added by other channels"
           body: "You have added these payment methods to the cashback directly from the channels made available by your bank or payments app. You can activate or deactivate the collection of transactions of these methods also from IO. \n
                  If you want to use some of these methods to pay via IO as well, add them to your wallet! "
           addWallet: "Add to wallet"
+          whyOtherCards:
+            title: "Why am I seeing cards that I don't recognize?"
+            body: "Don't worry, these are virtual versions of your cards that Apple, Google and Samsung use to protect your purchases made through their 'wallets'. We are working with those involved in the initiative to improve the display on the app IO of this type of cards. "
+            cta: "Find out more"
         notActivable:
           header: "Not available or incompatible"
           title: "Method not available"
@@ -1938,7 +1967,7 @@ bonus:
         status:
           active: Active
           closed: Closed
-          inactive: Incoming
+          inactive: Upcoming
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

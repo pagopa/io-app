@@ -32,6 +32,11 @@ export const navigateToBpdOnboardingNoPaymentMethods = () =>
     routeName: BPD_ROUTES.ONBOARDING.NO_PAYMENT_METHODS
   });
 
+export const navigateToBpdOnboardingErrorPaymentMethods = () =>
+  NavigationActions.navigate({
+    routeName: BPD_ROUTES.ONBOARDING.ERROR_PAYMENT_METHODS
+  });
+
 // IBAN
 export const navigateToBpdIbanInsertion = () =>
   NavigationActions.navigate({
