@@ -13,7 +13,6 @@ import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosB
 import {
   isError,
   isLoading,
-  isReady,
   isUndefined
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiListSelector, abiSelector } from "../../../store/abi";
@@ -31,35 +30,22 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
-import { SearchBankComponent } from "./SearchBankComponent";
 import { SearchBankInfo } from "./SearchBankInfo";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const renderFooterButtons = (
-  isSearchStarted: boolean,
-  onCancel: () => void,
-  onContinue: () => void,
-  onClose: () => void
-) =>
-  !isSearchStarted ? (
-    <FooterWithButtons
-      type={"TwoButtonsInlineThird"}
-      leftButton={cancelButtonProps(onCancel, I18n.t("global.buttons.cancel"))}
-      rightButton={confirmButtonProps(
-        onContinue,
-        I18n.t("global.buttons.continue")
-      )}
-    />
-  ) : (
-    <FooterWithButtons
-      type={"SingleButton"}
-      leftButton={cancelButtonProps(onClose, I18n.t("global.buttons.close"))}
-    />
-  );
+const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
+  <FooterWithButtons
+    type={"TwoButtonsInlineThird"}
+    leftButton={cancelButtonProps(onCancel, I18n.t("global.buttons.cancel"))}
+    rightButton={confirmButtonProps(
+      onContinue,
+      I18n.t("global.buttons.continue")
+    )}
+  />
+);
 
 /**
  * This screen allows the user to choose a specific bank to search for their Bancomat.
@@ -77,18 +63,6 @@ const SearchBankInfoScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   }, [props.bankRemoveValue]);
 
-  // After the press on "Continue", one of the ca returned with error, the user could have a bancomat
-  // and he should try to search for a single bank
-  const pans = props.pans;
-  const noBancomatFound = isReady(pans) && pans.value.cards.length === 0;
-
-  const [isSearchStarted, setIsSearchStarted] = React.useState(noBancomatFound);
-
-  React.useEffect(() => {
-    reactotron.log("entra");
-    setIsSearchStarted(isReady(pans) && pans.value.cards.length === 0);
-  }, [props.pans]);
-
   const openTosModal = () => {
     props.showModal(
       <TosBonusComponent
@@ -98,45 +72,26 @@ const SearchBankInfoScreen: React.FunctionComponent<Props> = (props: Props) => {
     );
   };
 
-  const onBackHandler = () =>
-    isSearchStarted ? setIsSearchStarted(false) : props.onBack();
-
   const onContinueHandler = () => {
     props.searchPans();
   };
-  const onCloseHandler = () => {
-    setIsSearchStarted(false);
-  };
   return (
     <BaseScreenComponent
-      goBack={onBackHandler}
+      goBack={true}
       headerTitle={I18n.t("wallet.searchAbi.title")}
       contextualHelp={emptyContextualHelp}
     >
       <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
       <SafeAreaView style={{ flex: 1 }}>
         <Content style={{ flex: 1 }}>
-          {!isSearchStarted ? (
-            <SearchBankInfo
-              openTosModal={openTosModal}
-              onSearch={() => {
-                setIsSearchStarted(true);
-              }}
-            />
-          ) : (
-            <SearchBankComponent
-              bankList={props.bankList}
-              isLoading={props.isLoading || props.isError}
-              onItemPress={props.searchPans}
-            />
-          )}
+          <SearchBankInfo
+            openTosModal={openTosModal}
+            onSearch={() => {
+              setIsSearchStarted(true);
+            }}
+          />
         </Content>
-        {renderFooterButtons(
-          isSearchStarted,
-          props.onCancel,
-          onContinueHandler,
-          onCloseHandler
-        )}
+        {renderFooterButtons(props.onCancel, onContinueHandler)}
       </SafeAreaView>
     </BaseScreenComponent>
   );
@@ -156,8 +111,7 @@ const mapStateToProps = (state: GlobalState) => ({
   isLoading: isLoading(abiSelector(state)),
   isError: isError(abiSelector(state)),
   bankList: abiListSelector(state),
-  bankRemoveValue: abiSelector(state),
-  pans: onboardingBancomatFoundPansSelector(state)
+  bankRemoveValue: abiSelector(state)
 });
 
 export default withLightModalContext(
