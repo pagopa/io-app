@@ -3,14 +3,14 @@ import { InferNavigationParams } from "../../../../../types/react";
 import { ActivateBpdOnNewCreditCardScreen } from "../../common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";
 
-export const navigateToTestScreen = () =>
+export const navigateToOnboardingBancomatChooseBankInfo = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.TEST_SCREEN
+    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK_INFO
   });
 
 export const navigateToOnboardingBancomatChooseBank = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK_INFO
+    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.TEST_SCREEN
   });
 
 export const navigateToOnboardingBancomatSearchAvailableUserBancomat = () =>
