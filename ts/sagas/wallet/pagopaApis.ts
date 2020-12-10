@@ -49,8 +49,7 @@ import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import { getError, getNetworkError, isTimeoutError } from "../../utils/errors";
 import {
-  checkCurrentSession,
-  sessionExpired
+  checkCurrentSession
 } from "../../store/actions/authentication";
 
 //
