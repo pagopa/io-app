@@ -1,5 +1,5 @@
 import { Option } from "fp-ts/lib/Option";
-import { View } from "native-base";
+import { Badge, View } from "native-base";
 import * as React from "react";
 import {
   Image,
@@ -13,6 +13,7 @@ import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import pagoBancomatLogo from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H5 } from "../../../../../components/core/typography/H5";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { localeDateFormat } from "../../../../../utils/locale";
@@ -22,6 +23,7 @@ type Props = {
   abi: Abi;
   expiringDate?: Date;
   user: string;
+  blocked?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -64,6 +66,17 @@ const styles = StyleSheet.create({
     width: 60,
     height: 36,
     resizeMode: "contain"
+  },
+  badgeInfo: {
+    borderWidth: 1,
+    borderStyle: "solid",
+    width: 65,
+    height: 25,
+    flexDirection: "row"
+  },
+  badgeInfoExpired: {
+    backgroundColor: IOColors.white,
+    borderColor: IOColors.red
   }
 });
 
@@ -112,11 +125,24 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
       <View style={styles.cardBox}>
         <View>
-          {renderBankLogo(props.abi, imgDimensions)}
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between"
+            }}
+          >
+            {renderBankLogo(props.abi, imgDimensions)}
+            {props.blocked && (
+              <Badge style={[styles.badgeInfo, styles.badgeInfoExpired]}>
+                <H5 color="red">{I18n.t("messages.badge.expired")}</H5>
+              </Badge>
+            )}
+          </View>
           <View spacer={true} />
           {props.expiringDate && (
             <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
-              "cardComponent.validUntil"
+              "cardComponent.expiresOn"
             )} ${localeDateFormat(
               props.expiringDate,
               I18n.t("global.dateFormats.numericMonthYear")

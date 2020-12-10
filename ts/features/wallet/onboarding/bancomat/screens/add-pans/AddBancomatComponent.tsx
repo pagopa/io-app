@@ -4,7 +4,10 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
-import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
+import {
+  Card,
+  ValidityStateEnum
+} from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
@@ -21,6 +24,8 @@ import {
 import PreviewBancomatCard from "../../../../bancomat/component/bancomatCard/PreviewBancomatCard";
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
+import { fromNullable } from "fp-ts/lib/Option";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
 
 type Props = {
   pan: Card;
@@ -41,12 +46,19 @@ const styles = StyleSheet.create({
 });
 const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiInfo, setAbiInfo] = React.useState<Abi>({});
+  const [blockedPan, setBlockedPan] = React.useState(false);
 
   React.useEffect(() => {
     const abi: Abi | undefined = props.abiList.find(
       elem => elem.abi === props.pan.abi
     );
     setAbiInfo(abi ?? {});
+    setBlockedPan(
+      fromNullable(props.pan.validityState).fold(
+        false,
+        vs => vs === ValidityStateEnum.BR
+      )
+    );
   }, [props.currentIndex]);
 
   return (
@@ -83,23 +95,39 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
             <View spacer={true} large={true} />
             <PreviewBancomatCard bancomat={props.pan} abi={abiInfo} />
             <View spacer={true} large={true} />
-            <InfoBox>
-              <Body>{I18n.t("wallet.onboarding.bancomat.add.warning")}</Body>
-            </InfoBox>
+            {blockedPan ? (
+              <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
+                <Body>{I18n.t("wallet.onboarding.bancomat.add.blocked")}</Body>
+              </InfoBox>
+            ) : (
+              <InfoBox>
+                <Body>{I18n.t("wallet.onboarding.bancomat.add.warning")}</Body>
+              </InfoBox>
+            )}
           </View>
           <View spacer />
         </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps(
-            props.handleSkip,
-            I18n.t("global.buttons.skip")
-          )}
-          rightButton={confirmButtonProps(
-            props.handleContinue,
-            I18n.t("global.buttons.add")
-          )}
-        />
+        {blockedPan ? (
+          <FooterWithButtons
+            type={"SingleButton"}
+            leftButton={confirmButtonProps(
+              props.handleSkip,
+              I18n.t("global.buttons.continue")
+            )}
+          />
+        ) : (
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={cancelButtonProps(
+              props.handleSkip,
+              I18n.t("global.buttons.skip")
+            )}
+            rightButton={confirmButtonProps(
+              props.handleContinue,
+              I18n.t("global.buttons.add")
+            )}
+          />
+        )}
       </SafeAreaView>
     </BaseScreenComponent>
   );

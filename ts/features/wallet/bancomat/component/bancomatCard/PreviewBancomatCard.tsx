@@ -1,7 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Card } from "../../../../../../definitions/pagopa/walletv2/Card";
+import { fromNullable } from "fp-ts/lib/Option";
+import {
+  Card,
+  ValidityStateEnum
+} from "../../../../../../definitions/pagopa/walletv2/Card";
 import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
@@ -22,6 +26,10 @@ const PreviewBancomatCard: React.FunctionComponent<Props> = props => (
     abi={props.abi}
     expiringDate={props.bancomat.expiringDate}
     user={props.nameSurname ?? ""}
+    blocked={fromNullable(props.bancomat.validityState).fold(
+      false,
+      vs => vs === ValidityStateEnum.BR
+    )}
   />
 );
 
