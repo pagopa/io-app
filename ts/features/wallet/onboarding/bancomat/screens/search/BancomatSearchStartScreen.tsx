@@ -57,7 +57,9 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
  * This screen allows the user to choose a specific bank to search for their Bancomat.
  * @constructor
  */
-const SearchBankInfoScreen: React.FunctionComponent<Props> = (props: Props) => {
+const BancomatSearchStartScreen: React.FunctionComponent<Props> = (
+  props: Props
+) => {
   // eslint-disable-next-line functional/no-let
   let errorRetry: number | undefined;
   React.useEffect(() => {
@@ -118,5 +120,5 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 export default withLightModalContext(
-  connect(mapStateToProps, mapDispatchToProps)(SearchBankInfoScreen)
+  connect(mapStateToProps, mapDispatchToProps)(BancomatSearchStartScreen)
 );
