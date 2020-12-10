@@ -34,7 +34,7 @@ import {
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import { SearchBankInfoComponent } from "./SearchBankInfoComponent";
+import { BancomatSearchStartComponent } from "./BancomatSearchStartComponent";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
@@ -88,7 +88,7 @@ const BancomatSearchStartScreen: React.FunctionComponent<Props> = (
       <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
       <SafeAreaView style={IOStyles.flex}>
         <Content style={IOStyles.flex}>
-          <SearchBankInfoComponent
+          <BancomatSearchStartComponent
             openTosModal={openTosModal}
             onSearch={props.navigateToSearchBankScreen}
           />

@@ -11,7 +11,7 @@ type Props = {
   onSearch: () => void;
 };
 
-export const SearchBankInfoComponent: React.FunctionComponent<Props> = (
+export const BancomatSearchStartComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => (
   <>
