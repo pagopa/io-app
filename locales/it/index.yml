@@ -767,7 +767,7 @@ wallet:
     description:
       text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
       text2: informativa sul trattamento dei dati personali.
-      text3: "Se preferisci, puoi scegliere la banca su cui ha una carta PagoBANCOMAT attiva, "
+      text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
       text4: cercando fra quelle disponibili
     bankName: Denominazione della banca
     noName: Nome non disponibile
