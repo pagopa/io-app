@@ -3,7 +3,6 @@ import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import {
   Card,

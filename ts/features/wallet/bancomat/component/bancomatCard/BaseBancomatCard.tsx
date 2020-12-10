@@ -135,7 +135,7 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
             {renderBankLogo(props.abi, imgDimensions)}
             {props.blocked && (
               <Badge style={[styles.badgeInfo, styles.badgeInfoExpired]}>
-                <H5 color="red">{I18n.t("global.badge.blocked")}</H5>
+                <H5 color="red">{I18n.t("global.badges.blocked")}</H5>
               </Badge>
             )}
           </View>
