@@ -390,7 +390,6 @@ function* startOrResumeAddCreditCardSaga(
 }
 
 const maxRetries = 3;
-const backOffBase = 2000 as Millisecond;
 /**
  * execute getWallet for maxRetries
  * if response is success it returns the response payload
@@ -399,7 +398,7 @@ const backOffBase = 2000 as Millisecond;
  */
 function* getWalletsRetriesWithBackoff() {
   let retries = 0;
-  const backOff = calculateExponentialBackoffInterval(backOffBase, retries);
+  const backOff = calculateExponentialBackoffInterval();
   while (retries < maxRetries) {
     yield put(fetchWalletsRequest());
     const fetchWalletsResultAction = yield take([
