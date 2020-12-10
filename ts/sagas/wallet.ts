@@ -5,9 +5,11 @@
  */
 
 import { none, some } from "fp-ts/lib/Option";
+import { calculateExponentialBackoffInterval } from "italia-ts-commons/lib/backoff";
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
+import _ from "lodash";
 import {
   call,
   delay,
@@ -23,6 +25,7 @@ import { ActionType, getType, isActionOf } from "typesafe-actions";
 
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
+import { ContentClient } from "../api/content";
 import { PaymentManagerClient } from "../api/pagopa";
 import { getCardIconFromBrandLogo } from "../components/wallet/card/Logo";
 import {
@@ -31,6 +34,12 @@ import {
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
+import { isReady } from "../features/bonus/bpd/model/RemoteValue";
+import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
+import {
+  navigateToActivateBpdOnNewCreditCard,
+  navigateToSuggestBpdActivation
+} from "../features/wallet/onboarding/bancomat/navigation/action";
 import {
   handleAddPan,
   handleLoadAbi,
@@ -48,8 +57,14 @@ import {
   handleSearchUserSatispay
 } from "../features/wallet/onboarding/satispay/saga/networking";
 import { addSatispayToWalletAndActivateBpd } from "../features/wallet/onboarding/satispay/saga/orchestration/addSatispayToWallet";
+import {
+  addSatispayToWallet,
+  searchUserSatispay,
+  walletAddSatispayStart
+} from "../features/wallet/onboarding/satispay/store/actions";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
+import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import {
   backToEntrypointPayment,
@@ -84,24 +99,26 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
-  addWalletNewCreditCardSuccess,
   addWalletNewCreditCardFailure,
+  addWalletNewCreditCardSuccess,
   creditCardCheckout3dsRequest,
   creditCardCheckout3dsSuccess,
   deleteWalletRequest,
   fetchWalletsFailure,
   fetchWalletsRequest,
+  fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
-  setWalletSessionEnabled,
-  fetchWalletsRequestWithExpBackoff
+  setWalletSessionEnabled
 } from "../store/actions/wallet/wallets";
+import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
+import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
 
 import {
   EnableableFunctionsTypeEnum,
@@ -114,7 +131,9 @@ import { SessionToken } from "../types/SessionToken";
 
 import { defaultRetryingFetch } from "../utils/fetch";
 import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
+import { getTitleFromCard } from "../utils/paymentMethod";
 import { SessionManager } from "../utils/SessionManager";
+import { hasFunctionEnabled } from "../utils/walletv2";
 import { paymentsDeleteUncompletedSaga } from "./payments";
 import {
   addWalletCreditCardRequestHandler,
@@ -135,26 +154,6 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
-import _ from "lodash";
-import { hasFunctionEnabled } from "../utils/walletv2";
-import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
-import { isReady } from "../features/bonus/bpd/model/RemoteValue";
-import {
-  navigateToActivateBpdOnNewCreditCard,
-  navigateToSuggestBpdActivation
-} from "../features/wallet/onboarding/bancomat/navigation/action";
-import { navigationHistoryPop } from "../store/actions/navigationHistory";
-import { getTitleFromCard } from "../utils/paymentMethod";
-import {
-  addSatispayToWallet,
-  searchUserSatispay,
-  walletAddSatispayStart
-} from "../features/wallet/onboarding/satispay/store/actions";
-import { ContentClient } from "../api/content";
-import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
-import { calculateExponentialBackoffInterval } from "italia-ts-commons/lib/backoff";
-import { Millisecond } from "italia-ts-commons/lib/units";
 
 /**
  * Configure the max number of retries and delay between retries when polling
