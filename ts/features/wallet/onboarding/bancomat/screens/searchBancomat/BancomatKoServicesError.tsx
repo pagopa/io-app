@@ -1,6 +1,5 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../img/servicesStatus/error-detail-icon.png";
@@ -10,15 +9,14 @@ import { InfoScreenComponent } from "../../../../../../components/infoScreen/Inf
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
+import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import {
-  walletAddBancomatCancel,
-  walletAddBancomatStart
-} from "../../store/actions";
+import { navigateToOnboardingBancomatChooseBank } from "../../navigation/action";
+import { walletAddBancomatCancel } from "../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -55,7 +53,7 @@ const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(props.cancel)}
-          rightButton={confirmButtonProps(props.startAddBancomat, cta)}
+          rightButton={confirmButtonProps(props.navigateToTestScreen, cta)}
         />
       </SafeAreaView>
     </BaseScreenComponent>
@@ -64,8 +62,10 @@ const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
-  back: () => dispatch(NavigationActions.back()),
-  startAddBancomat: () => dispatch(walletAddBancomatStart())
+  navigateToTestScreen: () => {
+    dispatch(navigateToOnboardingBancomatChooseBank());
+    dispatch(navigationHistoryPop());
+  }
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
