@@ -128,7 +128,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
           </>
         )}
       />,
-      "Long LongLong LongLong LongLong LongLong LongLong LongLong Long Long Long",
+      I18n.t("global.buttons.add"),
       315,
       closeBS
     );
