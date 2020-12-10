@@ -52,7 +52,6 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
 
 /**
  * This screen allows the user to choose a specific bank to search for their Bancomat.
- * the user can also choose not to specify any bank and search for all Bancomat in his name
  * @constructor
  */
 const SearchBankInfoScreen: React.FunctionComponent<Props> = (props: Props) => {
