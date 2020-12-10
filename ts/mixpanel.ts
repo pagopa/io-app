@@ -33,3 +33,10 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   // Identify the user using the device uniqueId
   await mp.identify(DeviceInfo.getUniqueId());
 };
+
+export const setMixpanelPushNotificationToken = (token: string) => {
+  if (mixpanel) {
+    return mixpanel.setPushRegistrationId(token);
+  }
+  return Promise.resolve();
+};
