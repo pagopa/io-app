@@ -44,21 +44,21 @@ const styles = StyleSheet.create({
   title: { lineHeight: 33, alignSelf: "flex-start" },
   flexStart: { alignSelf: "flex-start" }
 });
+
+const isBancomatBlocked = (pan: Card) =>
+  fromNullable(pan.validityState).fold(
+    false,
+    vs => vs === ValidityStateEnum.BR
+  );
+
 const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiInfo, setAbiInfo] = React.useState<Abi>({});
-  const [blockedPan, setBlockedPan] = React.useState(false);
 
   React.useEffect(() => {
     const abi: Abi | undefined = props.abiList.find(
       elem => elem.abi === props.pan.abi
     );
     setAbiInfo(abi ?? {});
-    setBlockedPan(
-      fromNullable(props.pan.validityState).fold(
-        false,
-        vs => vs === ValidityStateEnum.BR
-      )
-    );
   }, [props.currentIndex]);
 
   return (
@@ -95,7 +95,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
             <View spacer={true} large={true} />
             <PreviewBancomatCard bancomat={props.pan} abi={abiInfo} />
             <View spacer={true} large={true} />
-            {blockedPan ? (
+            {isBancomatBlocked(props.pan) ? (
               <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
                 <Body>{I18n.t("wallet.onboarding.bancomat.add.blocked")}</Body>
               </InfoBox>
@@ -107,7 +107,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           <View spacer />
         </ScrollView>
-        {blockedPan ? (
+        {isBancomatBlocked(props.pan) ? (
           <FooterWithButtons
             type={"SingleButton"}
             leftButton={confirmButtonProps(
