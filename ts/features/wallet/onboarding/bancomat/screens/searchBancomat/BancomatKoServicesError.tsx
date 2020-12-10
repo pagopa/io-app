@@ -53,7 +53,10 @@ const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(props.cancel)}
-          rightButton={confirmButtonProps(props.navigateToTestScreen, cta)}
+          rightButton={confirmButtonProps(
+            props.navigateToBancomatChooseBankScreen,
+            cta
+          )}
         />
       </SafeAreaView>
     </BaseScreenComponent>
@@ -62,7 +65,7 @@ const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
-  navigateToTestScreen: () => {
+  navigateToBancomatChooseBankScreen: () => {
     dispatch(navigateToOnboardingBancomatChooseBank());
     dispatch(navigationHistoryPop());
   }
