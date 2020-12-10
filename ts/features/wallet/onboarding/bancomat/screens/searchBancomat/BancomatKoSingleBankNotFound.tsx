@@ -15,7 +15,6 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { navigateToOnboardingBancomatSearchAvailableUserBancomat } from "../../navigation/action";
 import { searchUserPans, walletAddBancomatCancel } from "../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &

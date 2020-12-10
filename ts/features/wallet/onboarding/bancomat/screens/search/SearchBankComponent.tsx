@@ -9,7 +9,6 @@ import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { sortAbiByName } from "../../utils/abi";
 import { BankPreviewItem } from "../../components/BankPreviewItem";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import SectionStatusComponent from "../../../../../../components/SectionStatusComponent";
 
 type Props = {
   bankList: ReadonlyArray<Abi>;
