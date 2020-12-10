@@ -3,6 +3,7 @@ import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import {
   Card,
@@ -24,7 +25,6 @@ import {
 import PreviewBancomatCard from "../../../../bancomat/component/bancomatCard/PreviewBancomatCard";
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
-import { fromNullable } from "fp-ts/lib/Option";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 
 type Props = {
