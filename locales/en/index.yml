@@ -743,11 +743,13 @@ wallet:
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
   searchAbi:
-    title: Add PagoBANCOMAT
+    header: Add PagoBANCOMAT
+    title: Search for your PagoBANCOMAT cards
     description:
-      text1: If you prefer, you can indicate the bank
-      text2: " on which you have an active PagoBANCOMAT card. Otherwise we will look for all the cards associated with you: by continuing you accept the "
-      text3: privacy policy
+      text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the"
+      text2: information on the processing of personal data.
+      text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
+      text4: by searching among those available
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
@@ -769,8 +771,8 @@ wallet:
         body: "There are no PagoBANCOMAT cards registered to you: please contact your bank for further information."
       koNotFoundSingleBank:
         title: "Sorry, we couldn't find any card on this bank"
-        body: "There are no PagoBANCOMAT cards registered to you: please contact your bank for further information."
-        chooseAnother: "Choose another bank"
+        body: "There are no PagoBANCOMAT cards registered to you.\nIf you wish, IO can search between all banks."
+        continue: "Continue"
       koServicesError:
         title: "Unable to retrieve your PagoBANCOMAT cards: please select your bank"
         body: "Choose the bank which issued your card to retrieve all the PagoBANCOMAT cards registered to you."
