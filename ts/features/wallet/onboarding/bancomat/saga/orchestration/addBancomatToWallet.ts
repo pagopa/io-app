@@ -31,7 +31,7 @@ import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedP
 function* bancomatWorkUnit() {
   return yield call(executeWorkUnit, {
     startScreenNavigation: navigateToOnboardingBancomatChooseBank(),
-    startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK,
+    startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK_INFO,
     complete: walletAddBancomatCompleted,
     back: walletAddBancomatBack,
     cancel: walletAddBancomatCancel
