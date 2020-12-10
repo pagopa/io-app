@@ -30,7 +30,7 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { SearchBankInfo } from "./SearchBankInfo";
+import { SearchBankInfoComponent } from "./SearchBankInfoComponent";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
@@ -84,7 +84,7 @@ const SearchBankInfoScreen: React.FunctionComponent<Props> = (props: Props) => {
       <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
       <SafeAreaView style={{ flex: 1 }}>
         <Content style={{ flex: 1 }}>
-          <SearchBankInfo
+          <SearchBankInfoComponent
             openTosModal={openTosModal}
             onSearch={() => {
               setIsSearchStarted(true);
