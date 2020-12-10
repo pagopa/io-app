@@ -60,16 +60,6 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
 const BancomatSearchStartScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  // eslint-disable-next-line functional/no-let
-  let errorRetry: number | undefined;
-  React.useEffect(() => {
-    if (isUndefined(props.bankRemoveValue)) {
-      props.loadAbis();
-    } else if (isError(props.bankRemoveValue)) {
-      errorRetry = setTimeout(props.loadAbis, fetchPagoPaTimeout);
-    }
-  }, [props.bankRemoveValue]);
-
   const openTosModal = () => {
     props.showModal(
       <TosBonusComponent tos_url={tos_url} onClose={props.hideModal} />
@@ -85,7 +75,6 @@ const BancomatSearchStartScreen: React.FunctionComponent<Props> = (
       headerTitle={I18n.t("wallet.searchAbi.header")}
       contextualHelp={emptyContextualHelp}
     >
-      <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
       <SafeAreaView style={IOStyles.flex}>
         <Content style={IOStyles.flex}>
           <BancomatSearchStartComponent
@@ -114,9 +103,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   isLoading: isLoading(abiSelector(state)),
-  isError: isError(abiSelector(state)),
-  bankList: abiListSelector(state),
-  bankRemoveValue: abiSelector(state)
+  isError: isError(abiSelector(state))
 });
 
 export default withLightModalContext(
