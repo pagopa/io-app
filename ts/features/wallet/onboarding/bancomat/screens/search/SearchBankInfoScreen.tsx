@@ -39,6 +39,8 @@ type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const tos_url = "https://io.italia.it/app-content/privacy_bancomat.html";
+
 const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
   <FooterWithButtons
     type={"TwoButtonsInlineThird"}
@@ -67,10 +69,7 @@ const SearchBankInfoScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   const openTosModal = () => {
     props.showModal(
-      <TosBonusComponent
-        tos_url={"https://io.italia.it/app-content/privacy_bancomat.html"}
-        onClose={props.hideModal}
-      />
+      <TosBonusComponent tos_url={tos_url} onClose={props.hideModal} />
     );
   };
 
