@@ -50,7 +50,7 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
     if (
       isReady(pans) &&
       pans.value.messages.every(
-        m => m.code && servicesSuccessCodes.includes(m.code)
+        m => m.code !== undefined && servicesSuccessCodes.includes(m.code)
       )
     ) {
       // The user doesn't have a bancomat
