@@ -19,10 +19,7 @@ import { IOStyles } from "./core/variables/IOStyles";
 type Props = {
   onClose: () => void;
   onGoBack: () => void;
-  onContinue: (
-    sharingPersonalData: boolean,
-    sharingScreenshot: boolean
-  ) => void;
+  onContinue: (options: SupportRequestOptions) => void;
   initialScreenshotCheckboxValue: boolean | undefined;
 };
 
@@ -42,6 +39,7 @@ const continueButtonProps = (onContinue: () => void) => ({
   onPress: onContinue,
   title: I18n.t("global.buttons.continue")
 });
+
 const CustomGoBackButton: React.FunctionComponent<{
   onPressHandler: () => void;
 }> = ({ onPressHandler }) => (
@@ -54,7 +52,12 @@ const CustomGoBackButton: React.FunctionComponent<{
   </ButtonDefaultOpacity>
 );
 
-const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
+export type SupportRequestOptions = {
+  sendPersonalInfo: boolean;
+  sendScreenshot?: boolean;
+};
+
+const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
   onClose,
   onGoBack,
   onContinue,
@@ -137,12 +140,15 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
       </Content>
       <FooterWithButtons
         type={"SingleButton"}
-        leftButton={continueButtonProps(() => {
-          onContinue(sendPersonalInfo, sendScreenshot as boolean);
-        })}
+        leftButton={continueButtonProps(() =>
+          onContinue({
+            sendPersonalInfo,
+            sendScreenshot: sendScreenshot as boolean
+          })
+        )}
       />
     </SafeAreaView>
   );
 };
 
-export default SendSupportTokenInfo;
+export default SendSupportRequestOptions;
