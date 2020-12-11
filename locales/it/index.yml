@@ -763,11 +763,13 @@ wallet:
       detailTitle: Dettaglio
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
   searchAbi:
-    title: Aggiungi PagoBANCOMAT
+    header: Aggiungi PagoBANCOMAT
+    title: Ricerca delle tue carte PagoBANCOMAT
     description:
-      text1: Se vuoi, puoi indicare la banca
-      text2: " su cui hai un carta PagoBANCOMAT attiva. Altrimenti cercheremo tutte le carte associate a te: proseguendo accetti l’"
-      text3: informativa sul trattamento dei dati personali
+      text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
+      text2: informativa sul trattamento dei dati personali.
+      text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
+      text4: cercando fra quelle disponibili
     bankName: Denominazione della banca
     noName: Nome non disponibile
     loading: Carico la lista delle banche...
@@ -789,8 +791,8 @@ wallet:
         body: "Non risultano carte PagoBANCOMAT a te intestate: contatta la tua banca per maggiori informazioni."
       koNotFoundSingleBank:
         title: "Spiacenti, non abbiamo trovato nessuna carta su questa banca"
-        body: "Non risultano carte PagoBANCOMAT a te intestate: contatta la tua banca per maggiori informazioni."
-        chooseAnother: "Scegli un'altra banca"
+        body: "Non risultano carte PagoBANCOMAT a te intestate.\nSe lo desideri, IO può effettuare una ricerca tra tutte le banche."
+        continue: "Continua"
       koServicesError:
         title: "Non è stato possibile recuperare le carte: seleziona la tua banca"
         body: "Indica la banca che ha emesso la tua carta per vedere le lista delle carte PagoBANCOMAT a te intestate."
@@ -1120,7 +1122,7 @@ wallet:
         three: ", ma solo presso i punti fisici (POS)."
       debit:
         title: "La tua carta ha più di un logo?"
-        body: "Se oltre al logo PagoBANCOMAT è presente quello di un altro circuito (Maestro, MasterCard, Visa), puoi aggiungerla anche come **carta di debito o credito** digitando il numero stampato sul fronte. Le transazioni effettuate su questo circuito saranno valide per il Cashback e potrai usare la carta per pagare su IO."
+        body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerla anche come **carta di debito o di credito**, inserendo il numero della carta sul fronte. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi Carta di Debito/Credito"
       removeCta: "Elimina questo metodo di pagamento"
   satispay:
@@ -1829,7 +1831,7 @@ bonus:
     title: Cashback
     description: "Ottieni un rimborso quando paghi nei negozi con questo metodo"
     name: Cashback
-    earned: Cashback accumulato
+    earned: Importo accumulato
     cta:
       activeBonus: Attiva il Cashback
     unsubscribe:

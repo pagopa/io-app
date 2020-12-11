@@ -743,11 +743,13 @@ wallet:
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
   searchAbi:
-    title: Add PagoBANCOMAT
+    header: Add PagoBANCOMAT
+    title: Search for your PagoBANCOMAT cards
     description:
-      text1: If you prefer, you can indicate the bank
-      text2: " on which you have an active PagoBANCOMAT card. Otherwise we will look for all the cards associated with you: by continuing you accept the "
-      text3: privacy policy
+      text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the"
+      text2: information on the processing of personal data.
+      text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
+      text4: by searching among those available
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
@@ -769,8 +771,8 @@ wallet:
         body: "There are no PagoBANCOMAT cards registered to you: please contact your bank for further information."
       koNotFoundSingleBank:
         title: "Sorry, we couldn't find any card on this bank"
-        body: "There are no PagoBANCOMAT cards registered to you: please contact your bank for further information."
-        chooseAnother: "Choose another bank"
+        body: "There are no PagoBANCOMAT cards registered to you.\nIf you wish, IO can search between all banks."
+        continue: "Continue"
       koServicesError:
         title: "Unable to retrieve your PagoBANCOMAT cards: please select your bank"
         body: "Choose the bank which issued your card to retrieve all the PagoBANCOMAT cards registered to you."
@@ -1094,7 +1096,7 @@ wallet:
         three: ", but they can only be used at physical stores (POS)."
       debit:
         title: "Does your card have other logos?"
-        body: "If, in addition to the PagoBANCOMAT logo, there is one of another circuit (Maestro, MasterCard, Visa), you can also add the card as a **debit or credit** card by typing the number on its front. Transactions made on this circuit will be valid for the cashback initiative; also, you can use the card to pay on IO."
+        body: "If your PagoBANCOMAT card has other international circuits, you can also add it as a **debit or credit card** by entering its number on the front. When you activate Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add as Debit/Credit Card"
       removeCta: "Delete this payment method"
   satispay:
@@ -1809,7 +1811,7 @@ bonus:
       loading: "We are processing your request"
       success: "Cashback has been removed"
       failure: "We were unable to remove, please try again"
-    earned: Collected Cashback
+    earned: Total Collected
     onboarding:
       alert:
         title: Cashback is already active
