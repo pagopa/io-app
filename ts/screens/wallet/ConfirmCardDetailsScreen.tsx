@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 import { constNull } from "fp-ts/lib/function";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import NoticeBox from "../../components/NoticeBox";
 import BaseScreenComponent, {
@@ -40,7 +39,6 @@ import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import Checkout3DsComponent from "../modal/Checkout3DsModal";
-import { CreditCardOnboardingError } from "../../components/wallet/CreditCardOnboardingError";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
