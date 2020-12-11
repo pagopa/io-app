@@ -712,6 +712,7 @@ lipsum:
 datetimes:
   yesterday: ieri
   todayAt: oggi, alle
+  notValid: Data non valida.
 payment:
   errorDetails: Dettagli
   currentPsp: Il PSP scelto è
