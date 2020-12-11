@@ -37,8 +37,6 @@ import { profileNameSurnameSelector } from "../../store/reducers/profile";
 import { attachmentTypeConfigurationNoScreenshot } from "../../boot/configureInstabug";
 import { Link } from "../../components/core/typography/Link";
 
-import { acceptedCardsPageURL } from "../../config";
-
 type NavigationParams = Readonly<{
   inPayment: Option<{
     rptId: RptId;
@@ -147,6 +145,9 @@ function getCardFromState(state: State): Option<CreditCard> {
 
   return some(card);
 }
+
+const acceptedCardsPageURL: string = "https://io.italia.it/metodi-pagamento";
+
 class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
