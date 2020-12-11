@@ -160,7 +160,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       </SafeAreaView>
     );
 
-    // this component is shown only in error case
     const creditCardErrorContent = (
       <LoadingErrorComponent
         isLoading={false}
@@ -171,9 +170,11 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         onAbort={this.goBack}
       />
     );
+    // this component is shown only in error case
     const errorContent = this.props.isWalletsInError
       ? walletsInErrorContent
       : creditCardErrorContent;
+
     const noErrorContent = (
       <>
         <Content noPadded={true} style={styles.paddedLR}>
@@ -242,6 +243,9 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_methods"]}
       >
+        {/* error could include credit card errors (add wallet or verification)
+            and load wallets error too
+        */}
         {this.props.error.isSome() ? errorContent : noErrorContent}
       </BaseScreenComponent>
     );
