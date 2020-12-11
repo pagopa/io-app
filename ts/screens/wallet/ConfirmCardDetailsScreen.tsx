@@ -143,6 +143,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         errorSubText={I18n.t("wallet.saveCard.temporarySubError")}
         errorText={this.props.error.getOrElse("")}
         onRetry={this.props.onRetry ?? constNull}
+        onAbort={this.goBack}
       />
     );
     const noErrorContent = (
