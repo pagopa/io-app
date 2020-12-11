@@ -28,6 +28,7 @@ import {
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import SectionStatusComponent from "../../../../../../components/SectionStatusComponent";
 import { BancomatSearchStartComponent } from "./BancomatSearchStartComponent";
 
 type Props = LightModalContextInterface &
@@ -76,6 +77,7 @@ const BancomatSearchStartScreen: React.FunctionComponent<Props> = (
             onSearch={props.navigateToSearchBankScreen}
           />
         </Content>
+        <SectionStatusComponent sectionKey={"bancomat"} />
         {renderFooterButtons(props.onCancel, onContinueHandler)}
       </SafeAreaView>
     </BaseScreenComponent>
