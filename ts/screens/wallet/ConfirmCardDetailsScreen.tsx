@@ -11,6 +11,7 @@ import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import { withErrorModal } from "../../components/helpers/withErrorModal";
@@ -39,6 +40,8 @@ import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import Checkout3DsComponent from "../modal/Checkout3DsModal";
+import { CreditCardOnboardingError } from "../../components/wallet/CreditCardOnboardingError";
+import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 type NavigationParams = Readonly<{
@@ -134,17 +137,18 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       title: I18n.t("global.buttons.back")
     };
 
-    return (
-      <BaseScreenComponent
-        goBack={true}
-        headerTitle={
-          isInPayment
-            ? I18n.t("wallet.saveCardInPayment.header")
-            : I18n.t("wallet.saveCard.header")
-        }
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_methods"]}
-      >
+    // this component is shown only in error case
+    const errorContent = (
+      <LoadingErrorComponent
+        isLoading={false}
+        loadingCaption={""}
+        errorSubText={I18n.t("wallet.saveCard.temporarySubError")}
+        errorText={this.props.error.getOrElse("")}
+        onRetry={this.props.onRetry ?? constNull}
+      />
+    );
+    const noErrorContent = (
+      <>
         <Content noPadded={true} style={styles.paddedLR}>
           <CardComponent
             wallet={wallet}
@@ -197,6 +201,21 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             onCheckout3dsSuccess={this.props.creditCardCheckout3dsSuccess}
           />
         )}
+      </>
+    );
+
+    return (
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={
+          isInPayment
+            ? I18n.t("wallet.saveCardInPayment.header")
+            : I18n.t("wallet.saveCard.header")
+        }
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet_methods"]}
+      >
+        {this.props.error.isSome() ? errorContent : noErrorContent}
       </BaseScreenComponent>
     );
   }
@@ -353,6 +372,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(
-  withErrorModal(withLoadingSpinner(ConfirmCardDetailsScreen), (_: string) => _)
-);
+)(withLoadingSpinner(ConfirmCardDetailsScreen));

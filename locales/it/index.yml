@@ -899,7 +899,8 @@ wallet:
       pagamento
     save: Salva
     notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
-    temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
+    temporaryError: Si è verificato un errore nel salvataggio di questa carta
+    temporarySubError: Non abbiamo ricevuto risposta dai sistemi di sicurezza. Ci scusiamo per il disagio.
     loadingAlert: Sto verificando le informazioni della tua carta...
   saveCardInPayment:
     header: Paga con questa carta
