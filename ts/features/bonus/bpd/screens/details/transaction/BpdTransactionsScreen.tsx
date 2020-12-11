@@ -259,15 +259,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
                 </>
               )}
           </View>
-          {transactions.length === 0 &&
-          !props.atLeastOnePaymentMethodActive &&
-          pot.isSome(props.potWallets) &&
-          props.potWallets.value.length > 0 ? (
-            <View style={IOStyles.horizontalContentPadding}>
-              <NoPaymentMethodAreActiveWarning />
-            </View>
-          ) : (
-            props.selectedPeriod &&
+          {props.selectedPeriod &&
             (transactions.length > 0 ? (
               <SectionList
                 renderSectionHeader={renderSectionHeader}
@@ -284,10 +276,17 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
                     : t.keyId
                 }
               />
+            ) : !props.atLeastOnePaymentMethodActive &&
+              pot.isSome(props.potWallets) &&
+              props.potWallets.value.length > 0 ? (
+              <View style={IOStyles.horizontalContentPadding}>
+                <NoPaymentMethodAreActiveWarning />
+              </View>
             ) : (
-              <BpdEmptyTransactionsList />
-            ))
-          )}
+              <View style={IOStyles.horizontalContentPadding}>
+                <BpdEmptyTransactionsList />
+              </View>
+            ))}
         </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>
