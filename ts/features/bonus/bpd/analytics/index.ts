@@ -24,15 +24,6 @@ import {
   bpdDetailsLoadAll,
   bpdLoadActivationStatus
 } from "../store/actions/details";
-import {
-  addBancomatToWallet,
-  loadAbi,
-  searchUserPans,
-  walletAddBancomatBack,
-  walletAddBancomatCancel,
-  walletAddBancomatCompleted,
-  walletAddBancomatStart
-} from "../../../wallet/onboarding/bancomat/store/actions";
 import { bpdAmountLoad } from "../store/actions/amount";
 import { bpdPeriodsLoad } from "../store/actions/periods";
 import { bpdSelectPeriod } from "../store/actions/selectedPeriod";
@@ -40,7 +31,6 @@ import {
   bpdPaymentMethodActivation,
   bpdUpdatePaymentMethodActivation
 } from "../store/actions/paymentMethods";
-import { isTimeoutError } from "../../../../utils/errors";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
