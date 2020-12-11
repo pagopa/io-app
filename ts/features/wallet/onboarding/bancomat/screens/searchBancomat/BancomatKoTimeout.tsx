@@ -14,7 +14,8 @@ import { searchUserPans, walletAddBancomatCancel } from "../../store/actions";
 import { onboardingBancomatAbiSelectedSelector } from "../../store/reducers/abiSelected";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.bancomat.headerTitle"),
@@ -31,7 +32,11 @@ const loadLocales = () => ({
 const BancomatKoTimeout: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body, cancel, retry } = loadLocales();
   return (
-    <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={headerTitle}
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}

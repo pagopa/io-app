@@ -20,7 +20,8 @@ export const FAQs: Record<
   messages_detail: [27, 28, 29, 30, 31, 32],
   wallet: [57, 78, 33, 34, 35, 36, 37],
   wallet_insert_notice_data: [33, 35],
-  wallet_methods: [37, 41, 42, 66],
+  wallet_methods: [37, 41, 42, 66, 79, 80],
+  wallet_methods_security: [81],
   wallet_transaction: [38, 39, 40],
   payment: [43, 44, 45, 46],
   services: [47, 48, 49],
@@ -48,6 +49,7 @@ export type FAQsCategoriesType =
   | "wallet"
   | "wallet_insert_notice_data"
   | "wallet_methods"
+  | "wallet_methods_security"
   | "wallet_transaction"
   | "payment"
   | "services"

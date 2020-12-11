@@ -22,7 +22,8 @@ import { DateFromISOString } from "../../utils/dates";
 const dateFieldsTransformable = new Set<string>([
   "created_at",
   "due_date",
-  "nextLegalAttempt"
+  "nextLegalAttempt",
+  "lastUsage"
 ]);
 
 /**
@@ -60,5 +61,5 @@ const decoder: TransformOut<string, any> = (value: any, _: string): any =>
  * date tasformer will be applied only to entities (whitelist)
  */
 export const DateISO8601Transform = createTransform(encoder, decoder, {
-  whitelist: ["entities", "fail"]
+  whitelist: ["entities", "fail", "walletById"]
 });

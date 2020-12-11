@@ -3,6 +3,7 @@
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import { values } from "lodash";
+import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
 import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
@@ -27,6 +28,8 @@ import {
 import { PotFromActions } from "../../../types/utils";
 import { isDefined } from "../../../utils/guards";
 import { enhancePaymentMethod } from "../../../utils/paymentMethod";
+import { sessionExpired, sessionInvalid } from "../../actions/authentication";
+import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
 import { paymentUpdateWalletPsp } from "../../actions/wallet/payment";
 import {
@@ -41,6 +44,7 @@ import {
   deleteWalletSuccess,
   fetchWalletsFailure,
   fetchWalletsRequest,
+  fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
@@ -68,6 +72,8 @@ export type WalletsState = Readonly<{
     never
   >;
 }>;
+
+export type PersistedWalletsState = WalletsState & PersistPartial;
 
 const WALLETS_INITIAL_STATE: WalletsState = {
   walletById: pot.none,
@@ -286,7 +292,7 @@ const reducer = (
     //
     // fetch wallets
     //
-
+    case getType(fetchWalletsRequestWithExpBackoff):
     case getType(fetchWalletsRequest):
     case getType(paymentUpdateWalletPsp.request):
     case getType(deleteWalletRequest):
@@ -433,6 +439,14 @@ const reducer = (
       return {
         ...state,
         creditCardCheckout3ds: pot.some("done")
+      };
+
+    case getType(sessionExpired):
+    case getType(sessionInvalid):
+    case getType(clearCache):
+      return {
+        ...state,
+        walletById: WALLETS_INITIAL_STATE.walletById
       };
 
     default:

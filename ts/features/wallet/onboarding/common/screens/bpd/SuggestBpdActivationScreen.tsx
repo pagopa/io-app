@@ -10,6 +10,7 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import { bpdOnboardingStart } from "../../../../../bonus/bpd/store/actions/onboarding";
 
@@ -32,7 +33,11 @@ const SuggestBpdActivationScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body, skip, confirm } = loadLocales();
 
   return (
-    <BaseScreenComponent goBack={false} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={false}
+      headerTitle={headerTitle}
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>

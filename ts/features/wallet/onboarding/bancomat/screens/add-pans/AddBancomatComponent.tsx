@@ -1,4 +1,3 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
@@ -21,6 +20,7 @@ import {
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import PreviewBancomatCard from "../../../../bancomat/component/bancomatCard/PreviewBancomatCard";
 import { abiListSelector } from "../../../store/abi";
+import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 
 type Props = {
   pan: Card;
@@ -29,7 +29,8 @@ type Props = {
   handleContinue: () => void;
   handleSkip: () => void;
   profile?: InitializedProfile;
-} & ReturnType<typeof mapStateToProps>;
+} & ReturnType<typeof mapStateToProps> &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const styles = StyleSheet.create({
   container: {
@@ -39,11 +40,13 @@ const styles = StyleSheet.create({
   flexStart: { alignSelf: "flex-start" }
 });
 const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const [abiLogo, setAbiLogo] = React.useState<string | undefined>();
+  const [abiInfo, setAbiInfo] = React.useState<Abi>({});
 
   React.useEffect(() => {
-    const abi = props.abiList.find(elem => elem.abi === props.pan.abi);
-    setAbiLogo(fromNullable(abi).fold(undefined, a => a.logoUrl));
+    const abi: Abi | undefined = props.abiList.find(
+      elem => elem.abi === props.pan.abi
+    );
+    setAbiInfo(abi ?? {});
   }, [props.currentIndex]);
 
   return (
@@ -55,6 +58,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
         title: "wallet.walletCardTransaction.contextualHelpTitle",
         body: "wallet.walletCardTransaction.contextualHelpContent"
       }}
+      contextualHelp={props.contextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.flex}>
@@ -77,7 +81,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
               })}
             </H4>
             <View spacer={true} large={true} />
-            <PreviewBancomatCard bancomat={props.pan} logoUrl={abiLogo} />
+            <PreviewBancomatCard bancomat={props.pan} abi={abiInfo} />
             <View spacer={true} large={true} />
             <InfoBox>
               <Body>{I18n.t("wallet.onboarding.bancomat.add.warning")}</Body>
