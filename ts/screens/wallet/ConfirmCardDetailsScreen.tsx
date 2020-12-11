@@ -171,7 +171,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       />
     );
     // this component is shown only in error case
-    const errorContent = this.props.isWalletsInError
+    const errorContent = this.props.areWalletsInError
       ? walletsInErrorContent
       : creditCardErrorContent;
 
@@ -268,7 +268,7 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isLoading(walletById) ||
     pot.isLoading(psps);
 
-  const isWalletsInError = pot.isError(walletById);
+  const areWalletsInError = pot.isError(walletById);
 
   const error =
     (pot.isError(creditCardAddWallet) &&
@@ -282,7 +282,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     isLoading,
     error,
-    isWalletsInError,
+    areWalletsInError,
     checkout3dsUrl: pot.isLoading(creditCardCheckout3ds)
       ? pot.toOption(creditCardCheckout3ds)
       : none,
