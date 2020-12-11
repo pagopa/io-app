@@ -5,5 +5,3 @@ The most frequent cases are:
 3. You have not yet activated the 3DS service: it is a security system related to online payments.
 
 You can see a detailed list of supported methods on the [Payment Methods](https://io.italia.it/metodi-pagamento) page.
-
-Translated with www.DeepL.com/Translator (free version)
