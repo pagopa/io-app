@@ -1122,7 +1122,7 @@ wallet:
         three: ", ma solo presso i punti fisici (POS)."
       debit:
         title: "La tua carta ha più di un logo?"
-        body: "Se oltre al logo PagoBANCOMAT è presente quello di un altro circuito (Maestro, MasterCard, Visa), puoi aggiungerla anche come **carta di debito o credito** digitando il numero stampato sul fronte. Le transazioni effettuate su questo circuito saranno valide per il Cashback e potrai usare la carta per pagare su IO."
+        body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerla anche come **carta di debito o di credito**, inserendo il numero della carta sul fronte. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi Carta di Debito/Credito"
       removeCta: "Elimina questo metodo di pagamento"
   satispay:
@@ -1831,7 +1831,7 @@ bonus:
     title: Cashback
     description: "Ottieni un rimborso quando paghi nei negozi con questo metodo"
     name: Cashback
-    earned: Cashback accumulato
+    earned: Importo accumulato
     cta:
       activeBonus: Attiva il Cashback
     unsubscribe:

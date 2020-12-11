@@ -1096,7 +1096,7 @@ wallet:
         three: ", but they can only be used at physical stores (POS)."
       debit:
         title: "Does your card have other logos?"
-        body: "If, in addition to the PagoBANCOMAT logo, there is one of another circuit (Maestro, MasterCard, Visa), you can also add the card as a **debit or credit** card by typing the number on its front. Transactions made on this circuit will be valid for the cashback initiative; also, you can use the card to pay on IO."
+        body: "If your PagoBANCOMAT card has other international circuits, you can also add it as a **debit or credit card** by entering its number on the front. When you activate Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add as Debit/Credit Card"
       removeCta: "Delete this payment method"
   satispay:
@@ -1811,7 +1811,7 @@ bonus:
       loading: "We are processing your request"
       success: "Cashback has been removed"
       failure: "We were unable to remove, please try again"
-    earned: Collected Cashback
+    earned: Total Collected
     onboarding:
       alert:
         title: Cashback is already active
