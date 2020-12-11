@@ -106,58 +106,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdLoadActivationStatus.failure):
       return mp.track(action.type, { reason: action.payload.message });
 
-    // Bancomat
-    case getType(walletAddBancomatStart):
-    case getType(walletAddBancomatCompleted):
-    case getType(walletAddBancomatCancel):
-    case getType(walletAddBancomatBack):
-    case getType(loadAbi.request):
-    case getType(addBancomatToWallet.request):
-    case getType(addBancomatToWallet.success):
-      return mp.track(action.type);
-
-    case getType(loadAbi.success):
-      return mp.track(action.type, {
-        count: action.payload.data?.length
-      });
-    case getType(searchUserPans.request):
-      return mp.track(action.type, { abi: action.payload ?? "all" });
-    case getType(searchUserPans.success):
-      const messages = action.payload.messages.reduce(
-        (acc, val) => {
-          if (
-            val.caName !== undefined &&
-            val.cardsNumber !== undefined &&
-            val.code !== undefined
-          ) {
-            return {
-              ...acc,
-              [`${val.caName}cardsNumber`]: val.cardsNumber,
-              [`${val.caName}code`]: val.code
-            };
-          }
-          return acc;
-        },
-        { caNames: action.payload.messages.map(m => m.caName?.toString()) } as {
-          [key: string]: string | number | ReadonlyArray<string>;
-        }
-      );
-      return mp.track(action.type, {
-        count: action.payload.cards.length,
-        ...messages
-      });
-
-    case getType(loadAbi.failure):
-    case getType(addBancomatToWallet.failure):
-      return mp.track(action.type, { reason: action.payload.message });
-
-    case getType(searchUserPans.failure):
-      return mp.track(action.type, {
-        reason: isTimeoutError(action.payload)
-          ? action.payload.kind
-          : action.payload.value.message
-      });
-
     // Amount
     case getType(bpdAmountLoad.request):
       return mp.track(action.type, { awardPeriodId: action.payload });
