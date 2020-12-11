@@ -7,8 +7,12 @@ import {
   fetchTransactionsSuccess
 } from "../../actions/wallet/transactions";
 import {
+  addWalletCreditCardFailure,
+  addWalletCreditCardSuccess,
   fetchWalletsFailure,
-  fetchWalletsSuccess
+  fetchWalletsSuccess,
+  payCreditCardVerificationFailure,
+  payCreditCardVerificationSuccess
 } from "../../actions/wallet/wallets";
 import { GlobalState } from "../types";
 
@@ -25,6 +29,13 @@ const reducer = (
   action: Action
 ): LastRequestErrorState => {
   switch (action.type) {
+    // failure:
+    // - credit card wallet creation
+    // - credit card verification
+    // - get wallets
+    // - get transactions
+    case getType(payCreditCardVerificationFailure):
+    case getType(addWalletCreditCardFailure):
     case getType(fetchTransactionsFailure):
     case getType(fetchWalletsFailure):
       return {
@@ -32,6 +43,12 @@ const reducer = (
         attempts: Math.min(state.attempts + 1, backOffExpLimitAttempts)
       };
     // on success reset state
+    // - credit card verification
+    // - credit card wallet creation
+    // - get wallets
+    // - get transactions
+    case getType(payCreditCardVerificationSuccess):
+    case getType(addWalletCreditCardSuccess):
     case getType(fetchTransactionsSuccess):
     case getType(fetchWalletsSuccess):
       return defaultState;

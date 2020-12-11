@@ -98,7 +98,9 @@ import {
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
   setWalletSessionEnabled,
-  fetchWalletsRequestWithExpBackoff
+  fetchWalletsRequestWithExpBackoff,
+  addWalletCreditCardWithBackoffRetryRequest,
+  payCreditCardVerificationWithBackoffRetryRequest
 } from "../store/actions/wallet/wallets";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -213,7 +215,11 @@ function* startOrResumeAddCreditCardSaga(
     //
 
     if (pot.isNone(state.creditCardAddWallet)) {
-      yield put(addWalletCreditCardRequest({ creditcard: creditCardWallet }));
+      yield put(
+        addWalletCreditCardWithBackoffRetryRequest({
+          creditcard: creditCardWallet
+        })
+      );
       const responseAction = yield take([
         getType(addWalletCreditCardSuccess),
         getType(addWalletCreditCardFailure)
@@ -255,7 +261,7 @@ function* startOrResumeAddCreditCardSaga(
         }
       };
       yield put(
-        payCreditCardVerificationRequest({
+        payCreditCardVerificationWithBackoffRetryRequest({
           payRequest,
           language: action.payload.language
         })
@@ -534,6 +540,15 @@ function* pollTransactionSaga(
   }
 }
 
+function* backoffWait() {
+  const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
+    backOffWaitingTime
+  );
+  if (waiting > 0) {
+    yield delay(waiting);
+  }
+}
+
 /**
  * This saga attempts to delete the active payment, if there's one.
  *
@@ -652,12 +667,7 @@ export function* watchWalletSaga(
   yield takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
     action: ActionType<typeof fetchTransactionsRequestWithExpBackoff>
   ) {
-    const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
-      backOffWaitingTime
-    );
-    if (waiting > 0) {
-      yield delay(waiting);
-    }
+    yield call(backoffWait);
     yield put(fetchTransactionsRequest(action.payload));
   });
 
@@ -691,12 +701,7 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(getType(fetchWalletsRequestWithExpBackoff), function* () {
-    const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
-      backOffWaitingTime
-    );
-    if (waiting > 0) {
-      yield delay(waiting);
-    }
+    yield call(backoffWait);
     yield put(fetchWalletsRequest());
   });
 
@@ -715,10 +720,32 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(
+    getType(addWalletCreditCardWithBackoffRetryRequest),
+    function* (
+      action: ActionType<typeof addWalletCreditCardWithBackoffRetryRequest>
+    ) {
+      yield call(backoffWait);
+      yield put(addWalletCreditCardRequest(action.payload));
+    }
+  );
+
+  yield takeLatest(
     getType(payCreditCardVerificationRequest),
     payCreditCardVerificationRequestHandler,
     paymentManagerClient,
     pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(payCreditCardVerificationWithBackoffRetryRequest),
+    function* (
+      action: ActionType<
+        typeof payCreditCardVerificationWithBackoffRetryRequest
+      >
+    ) {
+      yield call(backoffWait);
+      yield put(payCreditCardVerificationRequest(action.payload));
+    }
   );
 
   yield takeLatest(
