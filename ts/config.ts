@@ -58,6 +58,9 @@ export const bpdApiUatUrlPrefix: string = Config.BPD_API_UAT;
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
+export const acceptedCardsPageURL: string =
+  "https://io.italia.it/metodi-pagamento";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;
 
@@ -98,7 +101,3 @@ export const shufflePinPadOnPayment =
 export const privacyUrl: string = t.string
   .decode(Config.PRIVACY_URL)
   .getOrElse("https://io.italia.it/app-content/tos_privacy.html");
-
-export const acceptedCardsPageURL: string = t.string
-  .decode(Config.PAYMENT_METHODS_PAGE_URL)
-  .getOrElse("https://io.italia.it/metodi-pagamento");
