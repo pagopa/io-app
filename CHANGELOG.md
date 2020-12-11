@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0-rc.1](https://github.com/pagopa/io-app/compare/1.15.0-rc.0...1.15.0-rc.1) (2020-12-10)
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#175892077](https://www.pivotaltracker.com/story/show/175892077)] Fix safearea on trx button and scroll no transactions ([#2550](https://github.com/pagopa/io-app/issues/2550)) ([fa829f8](https://github.com/pagopa/io-app/commit/fa829f83697aa5b4bfbfc520827eb0f04d80ee68))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#176039881](https://www.pivotaltracker.com/story/show/176039881)] upgrade bancomat research screen ([#2551](https://github.com/pagopa/io-app/issues/2551)) ([82192ee](https://github.com/pagopa/io-app/commit/82192ee200144ee7987fa312e42fe938d8dfa2c6))
+
+## [1.15.0-rc.0](https://github.com/pagopa/io-app/compare/1.14.0-rc.1...1.15.0-rc.0) (2020-12-10)
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#175991400](https://www.pivotaltracker.com/story/show/175991400)] Fixes overflow text on bottomsheet title ([#2552](https://github.com/pagopa/io-app/issues/2552)) ([49a0c7d](https://github.com/pagopa/io-app/commit/49a0c7d5b0443dd6081f3f9ee83abc11f9c21dce))
+* **Bonus Pagamenti Digitali:** [[#176091299](https://www.pivotaltracker.com/story/show/176091299)] Resize bancomat confirmation bottomsheet ([#2553](https://github.com/pagopa/io-app/issues/2553)) ([51092a7](https://github.com/pagopa/io-app/commit/51092a7c17468c2fb64d71b57908c0615e271882))
+
 ## [1.14.0-rc.1](https://github.com/pagopa/io-app/compare/1.14.0-rc.0...1.14.0-rc.1) (2020-12-09)
 
 

@@ -36,6 +36,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../store/reducers/profile";
 import { attachmentTypeConfigurationNoScreenshot } from "../../boot/configureInstabug";
 import { Link } from "../../components/core/typography/Link";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -325,7 +326,7 @@ class AddCardScreen extends React.Component<Props, State> {
             </Link>
           </Content>
         </ScrollView>
-
+        <SectionStatusComponent sectionKey={"credit_card"} />
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
           leftButton={secondaryButtonProps}

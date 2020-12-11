@@ -20,19 +20,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 16,
     borderTopLeftRadius: 16
   },
-  title: {
-    fontSize: 18,
-    color: customVariables.lightGray,
-    alignSelf: "center",
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    lineHeight: customVariables.lineHeightBase
-  },
   modalClose: {
-    flex: 1,
     paddingRight: 0,
-    flexDirection: "row",
     justifyContent: "flex-end"
   },
   icon: {
@@ -50,7 +39,9 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
   onClose
 }: Props) => (
   <View style={styles.row}>
-    <H3>{title}</H3>
+    <View style={IOStyles.flex}>
+      <H3>{title}</H3>
+    </View>
     <ButtonDefaultOpacity
       onPressWithGestureHandler={true}
       style={styles.modalClose}
