@@ -540,12 +540,14 @@ function* pollTransactionSaga(
   }
 }
 
+// select the delay time from store
+// and if it is > 0, wait that time
 function* backoffWait() {
-  const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
+  const delayTime: ReturnType<typeof backOffWaitingTime> = yield select(
     backOffWaitingTime
   );
-  if (waiting > 0) {
-    yield delay(waiting);
+  if (delayTime > 0) {
+    yield delay(delayTime);
   }
 }
 
