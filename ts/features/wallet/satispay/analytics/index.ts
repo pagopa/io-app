@@ -9,7 +9,7 @@ import {
   walletAddSatispayCancel,
   walletAddSatispayCompleted,
   walletAddSatispayStart
-} from "../store/actions";
+} from "../../onboarding/satispay/store/actions";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
