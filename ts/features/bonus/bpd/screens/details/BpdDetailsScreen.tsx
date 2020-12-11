@@ -97,7 +97,6 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
       <DarkLayout
         bounces={false}
         title={I18n.t("bonus.bpd.name")}
-        faqCategories={["bonus_detail"]}
         allowGoBack={true}
         topContent={<View style={styles.headerSpacer} />}
         gradientHeader={true}
