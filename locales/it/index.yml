@@ -286,7 +286,7 @@ profile:
             return: Indietro
             cancel: Annulla l'eliminazione
         info:
-          body: "Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento\n\nTi informiamo che l'eliminazione del tuo acocunt è definitiva e avverrà entro 30 giorni dalla richiesta.\n\nSe decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.\nTi segnaliamo inoltre che eventuali bonus o sconti ottenuti tramite l'app IO non saranno più accessibili.\n\nPotrai iscriverti nuovamente all'App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE."
+          body: "Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento\n\nTi informiamo che l'eliminazione del tuo account è definitiva e avverrà entro 30 giorni dalla richiesta.\n\nSe decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.\nTi segnaliamo inoltre che eventuali bonus o sconti ottenuti tramite l'app IO non saranno più accessibili.\n\nPotrai iscriverti nuovamente all'App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE."
           cta: Continua
         details:
           body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
@@ -299,7 +299,7 @@ profile:
           cta: Elimina Account
         success:
           title: Stiamo processando la tua richiesta.
-          body: "La tua richiesta è stata presa in carico e  procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\nCliccando su Esci, la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
+          body: "La tua richiesta è stata presa in carico e procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\Premendo 'Esci', la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
           cta: Esci
       exportData:
         cta: Richiedi copia dei tuoi dati
@@ -408,7 +408,7 @@ cie:
 spid:
   login: ACCEDI
   loginButton: ENTRA CON
-  selectIdp: Per procedere all'accesso, seleziona il gestione della tua identità SPID
+  selectIdp: Per procedere all'accesso, seleziona il gestore della tua identità SPID
   selectDemoIdp:
     Se non possiedi ancora una tua identità SPID, naviga l'app in modalità
     demo
