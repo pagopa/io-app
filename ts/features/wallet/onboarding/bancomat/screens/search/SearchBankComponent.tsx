@@ -97,6 +97,7 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
           data={filteredList}
           renderItem={renderListItem(true)}
           keyExtractor={keyExtractor}
+          keyboardShouldPersistTaps={"always"}
         />
       )}
     </>
