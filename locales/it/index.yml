@@ -830,6 +830,7 @@ wallet:
       loadingAdd:
         title: "Stiamo aggiungendo il tuo account Satispay\n\nAttendi qualche secondo"
   alert:
+    supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
@@ -1072,6 +1073,7 @@ wallet:
       securityCode: "•••"
       securityCode4D: "••••"
   acceptedCards: Carte accettate
+  openAcceptedCardsPageCTA: Scopri le carte accettate
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
     chooser: Carica immagine dalla galleria
