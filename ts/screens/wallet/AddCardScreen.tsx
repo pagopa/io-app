@@ -6,7 +6,7 @@ import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, View } from "native-base";
 import * as React from "react";
-import { Alert, Linking, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -37,6 +37,8 @@ import { profileNameSurnameSelector } from "../../store/reducers/profile";
 import { attachmentTypeConfigurationNoScreenshot } from "../../boot/configureInstabug";
 import { Link } from "../../components/core/typography/Link";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
+import { openWebUrl } from "../../utils/url";
+import { showToast } from "../../utils/showToast";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -159,8 +161,8 @@ class AddCardScreen extends React.Component<Props, State> {
   }
 
   private openSupportedCardsPage = (): void => {
-    Linking.openURL(acceptedCardsPageURL).catch(() =>
-      Alert.alert("", I18n.t("wallet.alert.supportedCardPageLinkError"))
+    openWebUrl(acceptedCardsPageURL, () =>
+      showToast(I18n.t("wallet.alert.supportedCardPageLinkError"))
     );
   };
 
