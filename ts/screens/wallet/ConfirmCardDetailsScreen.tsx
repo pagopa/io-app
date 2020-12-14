@@ -234,7 +234,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         )}
       </>
     );
-
+    const error = this.props.error.isSome() || this.props.areWalletsInError;
     return (
       <BaseScreenComponent
         goBack={true}
@@ -249,7 +249,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         {/* error could include credit card errors (add wallet (step-1) or verification (step-2))
             and load wallets error too
         */}
-        {this.props.error.isSome() ? errorContent : noErrorContent}
+        {error ? errorContent : noErrorContent}
       </BaseScreenComponent>
     );
   }
@@ -271,13 +271,16 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isLoading(walletById) ||
     pot.isLoading(psps);
 
-  const areWalletsInError = pot.isError(walletById);
+  // considering wallet error only when the fisrt two steps are completed and not in error
+  const areWalletsInError =
+    pot.isError(walletById) &&
+    pot.isSome(creditCardAddWallet) &&
+    pot.isSome(creditCardVerification);
 
   const error =
     (pot.isError(creditCardAddWallet) &&
       creditCardAddWallet.error.kind !== "ALREADY_EXISTS") ||
     pot.isError(creditCardVerification) ||
-    pot.isError(walletById) ||
     pot.isError(psps)
       ? some(I18n.t("wallet.saveCard.temporaryError"))
       : none;
