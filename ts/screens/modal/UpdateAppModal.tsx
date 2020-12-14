@@ -136,8 +136,8 @@ const UpdateAppModal: React.FC = () => {
         </Container>
       </BaseScreenComponent>
       {Platform.select({
-        ios: <IOSFooter onOpenAppStore={openAppStore} />,
-        android: <AndroidFooter onOpenAppStore={openAppStore} />
+        default: <AndroidFooter onOpenAppStore={openAppStore} />,
+        ios: <IOSFooter onOpenAppStore={openAppStore} />
       })}
     </Modal>
   );
