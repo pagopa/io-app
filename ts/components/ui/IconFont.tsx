@@ -18,6 +18,7 @@ class IconFont extends React.Component<Props> {
     const fontSizeStyle = size ? { fontSize: size } : {};
     return (
       <Icon
+        testID={"IconFont"}
         {...this.props}
         style={[style, colorStyle, fontSizeStyle]}
         // in order to avoid the reading of the text associated to the icon on ios, we need to force the
