@@ -12,7 +12,7 @@ export type BpdAmount = WithAwardPeriodId & {
   transactionNumber: number;
 };
 
-type BpdAmountError = WithAwardPeriodId & {
+export type BpdAmountError = WithAwardPeriodId & {
   error: Error;
 };
 

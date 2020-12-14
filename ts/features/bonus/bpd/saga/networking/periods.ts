@@ -1,16 +1,16 @@
-import { call, put } from "redux-saga/effects";
 import { fromNullable } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { BackendBpdClient } from "../../api/backendBpdClient";
+import { call, Effect } from "redux-saga/effects";
+import { Either, left, right } from "fp-ts/lib/Either";
+import { AwardPeriodResource } from "../../../../../../definitions/bpd/award_periods/AwardPeriodResource";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { getError } from "../../../../../utils/errors";
+import { BackendBpdClient } from "../../api/backendBpdClient";
 import {
   AwardPeriodId,
   BpdPeriod,
-  bpdPeriodsLoad,
   BpdPeriodStatus
 } from "../../store/actions/periods";
-import { AwardPeriodResource } from "../../../../../../definitions/bpd/award_periods/AwardPeriodResource";
-import { getError } from "../../../../../utils/errors";
 
 // mapping between network payload status and app domain model status
 const periodStatusMap: Map<string, BpdPeriodStatus> = new Map<
@@ -41,7 +41,11 @@ const convertPeriod = (
  */
 export function* bpdLoadPeriodsSaga(
   awardPeriods: ReturnType<typeof BackendBpdClient>["awardPeriods"]
-) {
+): Generator<
+  Effect,
+  Either<Error, ReadonlyArray<BpdPeriod>>,
+  SagaCallReturnType<typeof awardPeriods>
+> {
   try {
     const awardPeriodsResult: SagaCallReturnType<typeof awardPeriods> = yield call(
       awardPeriods,
@@ -51,10 +55,9 @@ export function* bpdLoadPeriodsSaga(
       if (awardPeriodsResult.value.status === 200) {
         const periods = awardPeriodsResult.value.value;
         // convert data into app domain model
-        yield put(
-          bpdPeriodsLoad.success(
-            periods.map<BpdPeriod>(p => convertPeriod(p))
-          )
+
+        return right<Error, ReadonlyArray<BpdPeriod>>(
+          periods.map<BpdPeriod>(p => convertPeriod(p))
         );
       } else {
         throw new Error(`response status ${awardPeriodsResult.value.status}`);
@@ -63,6 +66,6 @@ export function* bpdLoadPeriodsSaga(
       throw new Error(readableReport(awardPeriodsResult.value));
     }
   } catch (e) {
-    yield put(bpdPeriodsLoad.failure(getError(e)));
+    return left<Error, ReadonlyArray<BpdPeriod>>(getError(e));
   }
 }

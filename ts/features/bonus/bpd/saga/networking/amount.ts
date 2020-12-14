@@ -1,12 +1,12 @@
-import { call, put } from "redux-saga/effects";
-import { ActionType } from "typesafe-actions";
+import { Either, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { BpdAmount, bpdAmountLoad } from "../../store/actions/amount";
-import { BackendBpdClient } from "../../api/backendBpdClient";
+import { call, Effect } from "redux-saga/effects";
+import { TotalCashbackResource } from "../../../../../../definitions/bpd/winning_transactions/TotalCashbackResource";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getError } from "../../../../../utils/errors";
+import { BackendBpdClient } from "../../api/backendBpdClient";
+import { BpdAmount, BpdAmountError } from "../../store/actions/amount";
 import { AwardPeriodId } from "../../store/actions/periods";
-import { TotalCashbackResource } from "../../../../../../definitions/bpd/winning_transactions/TotalCashbackResource";
 
 // convert a network payload amount into the relative app domain model
 const convertAmount = (
@@ -21,13 +21,16 @@ const convertAmount = (
 /**
  * Networking code to request the amount for a specified period.
  * @param totalCashback
- * @param action
+ * @param awardPeriodId
  */
 export function* bpdLoadAmountSaga(
   totalCashback: ReturnType<typeof BackendBpdClient>["totalCashback"],
-  action: ActionType<typeof bpdAmountLoad.request>
-) {
-  const awardPeriodId = action.payload;
+  awardPeriodId: AwardPeriodId
+): Generator<
+  Effect,
+  Either<BpdAmountError, BpdAmount>,
+  SagaCallReturnType<typeof totalCashback>
+> {
   try {
     const totalCashbackResult: SagaCallReturnType<typeof totalCashback> = yield call(
       totalCashback,
@@ -35,10 +38,8 @@ export function* bpdLoadAmountSaga(
     );
     if (totalCashbackResult.isRight()) {
       if (totalCashbackResult.value.status === 200) {
-        yield put(
-          bpdAmountLoad.success(
-            convertAmount(totalCashbackResult.value.value, action.payload)
-          )
+        return right<BpdAmountError, BpdAmount>(
+          convertAmount(totalCashbackResult.value.value, awardPeriodId)
         );
       } else {
         throw new Error(`response status ${totalCashbackResult.value.status}`);
@@ -47,6 +48,9 @@ export function* bpdLoadAmountSaga(
       throw new Error(readableReport(totalCashbackResult.value));
     }
   } catch (e) {
-    yield put(bpdAmountLoad.failure({ error: getError(e), awardPeriodId }));
+    return left<BpdAmountError, BpdAmount>({
+      error: getError(e),
+      awardPeriodId
+    });
   }
 }
