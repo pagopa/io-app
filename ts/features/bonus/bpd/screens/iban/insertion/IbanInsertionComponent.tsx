@@ -3,6 +3,7 @@ import * as React from "react";
 import { useState } from "react";
 import { Platform, SafeAreaView, ScrollView } from "react-native";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
+import { makeFontStyleObject } from "../../../../../../components/core/fonts";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../../components/core/typography/H4";
@@ -35,6 +36,8 @@ const loadLocales = () => ({
   body2: I18n.t("bonus.bpd.iban.insertion.body2"),
   ibanDescription: I18n.t("bonus.bpd.iban.iban")
 });
+
+const IBANInputStyle = makeFontStyleObject("Regular", false, "RobotoMono");
 
 const upperCaseAndNoBlanks = (text: string) =>
   text.replace(/\s/g, "").toUpperCase();
@@ -73,6 +76,7 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
             <Item error={isInvalidIban}>
               <Input
                 value={iban}
+                style={IBANInputStyle}
                 autoCapitalize={"characters"}
                 maxLength={IbanMaxLength}
                 onChangeText={text => {
