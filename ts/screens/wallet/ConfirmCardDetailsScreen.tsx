@@ -142,6 +142,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       title: I18n.t("global.buttons.back")
     };
 
+    // shown when wallets pot is in error state
     const walletsInErrorContent = (
       <SafeAreaView style={bonusVacanzeStyle.flex}>
         <InfoScreenComponent
@@ -152,6 +153,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         <FooterStackButton
           buttons={[
             confirmButtonProps(() => {
+              // load wallets and navigate to wallet home
               this.props.loadWallets();
               this.props.navigateToWalletHome();
             }, I18n.t("wallet.refreshWallet"))
@@ -160,6 +162,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       </SafeAreaView>
     );
 
+    // shown when any steps of credit card onboarding are in error state
     const creditCardErrorContent = (
       <LoadingErrorComponent
         isLoading={false}
@@ -170,7 +173,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         onAbort={this.goBack}
       />
     );
-    // this component is shown only in error case
+    // this component is shown only in error case (wallet || credit card onboarding)
     const errorContent = this.props.areWalletsInError
       ? walletsInErrorContent
       : creditCardErrorContent;
@@ -243,7 +246,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_methods"]}
       >
-        {/* error could include credit card errors (add wallet or verification)
+        {/* error could include credit card errors (add wallet (step-1) or verification (step-2))
             and load wallets error too
         */}
         {this.props.error.isSome() ? errorContent : noErrorContent}
