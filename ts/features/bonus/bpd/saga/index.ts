@@ -29,7 +29,7 @@ import {
 import {
   loadPeriodsAmount,
   prefetchBpdData
-} from "./networking/prefetctBpdDetails";
+} from "./networking/prefetchBpdDetails";
 import { bpdLoadTransactionsSaga } from "./networking/transactions";
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
@@ -92,6 +92,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     bpdBackendClient.winningTransactions
   );
 
+  // Load bpd periods with amount
   yield takeEvery(
     bpdPeriodsAmountLoad.request,
     loadPeriodsAmount,
