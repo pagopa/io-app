@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     alignContent: "center"
   },
   alignCenter: { alignSelf: "center" },
-  verticalFlipped: { transform: [{ rotateZ: "180deg" }] },
   text: { marginLeft: 16, flex: 1 }
 });
 
