@@ -47,6 +47,7 @@ import { renderInfoRasterImage } from "../../components/infoScreen/imageRenderin
 import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
 import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 type NavigationParams = Readonly<{
@@ -144,7 +145,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 
     // shown when wallets pot is in error state
     const walletsInErrorContent = (
-      <SafeAreaView style={bonusVacanzeStyle.flex}>
+      <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={I18n.t("wallet.saveCard.loadWalletsErrorTitle")}
