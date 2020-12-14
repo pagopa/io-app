@@ -15,8 +15,7 @@ import {
 /**
  * Combine the period & amount
  */
-export type BpdPeriodAmount = {
-  period: BpdPeriod;
+export type BpdPeriodAmount = BpdPeriod & {
   amount: BpdAmount;
 };
 
@@ -37,7 +36,7 @@ export const bpdPeriodsReducer = (
         action.payload.reduce(
           (acc: IndexedById<BpdPeriodAmount>, curr: BpdPeriodAmount) => ({
             ...acc,
-            [curr.period.awardPeriodId]: curr
+            [curr.awardPeriodId]: curr
           }),
           {}
         )

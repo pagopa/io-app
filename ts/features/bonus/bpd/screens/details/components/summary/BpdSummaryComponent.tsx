@@ -51,9 +51,9 @@ const Content = (sd: SummaryData) => (
 const BpdSummaryComponent: React.FunctionComponent<Props> = props =>
   props.currentPeriod ? (
     <Content
-      key={props.currentPeriod.period.awardPeriodId}
+      key={props.currentPeriod.awardPeriodId}
       amount={props.currentPeriod.amount}
-      period={props.currentPeriod.period}
+      period={props.currentPeriod}
       name={props.name}
     />
   ) : null;

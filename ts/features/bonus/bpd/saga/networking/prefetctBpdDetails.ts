@@ -91,7 +91,7 @@ export function* loadPeriodsAmount(
         ).fold(acc, period => [
           ...acc,
           {
-            period,
+            ...period,
             amount: curr.value
           }
         ]),

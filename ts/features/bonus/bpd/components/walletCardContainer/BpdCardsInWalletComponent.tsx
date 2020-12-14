@@ -29,8 +29,8 @@ const BpdCardsInWalletContainer: React.FunctionComponent<Props> = props => {
       {pot.isSome(props.periodsWithAmount) &&
         props.periodsWithAmount.value.map(pa => (
           <BpdCardComponent
-            key={pa.period.awardPeriodId}
-            period={pa.period}
+            key={pa.awardPeriodId}
+            period={pa}
             totalAmount={pa.amount}
             preview={true}
             onPress={() => {

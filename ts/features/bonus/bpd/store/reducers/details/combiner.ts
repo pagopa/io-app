@@ -30,14 +30,14 @@ const isPeriodAmountWalletVisible = (
   bpdEnabled: RemoteValue<boolean, Error>
 ) =>
   isReady(bpdEnabled) &&
-  ((periodAmount.period.status === "Active" && bpdEnabled.value) ||
-    (periodAmount.period.status === "Closed" &&
+  ((periodAmount.status === "Active" && bpdEnabled.value) ||
+    (periodAmount.status === "Closed" &&
       periodAmount.amount.transactionNumber > 0) ||
     // All the periods are inactive
-    (periodList.every(p => p.period.status === "Inactive") &&
+    (periodList.every(p => p.status === "Inactive") &&
       // This is the first inactive period
       periodList.indexOf(periodAmount) === 0 &&
-      periodAmount.period.status === "Inactive" &&
+      periodAmount.status === "Inactive" &&
       bpdEnabled.value));
 
 /**
@@ -51,9 +51,9 @@ export const bpdPeriodsAmountWalletVisibleSelector = createSelector(
         // create a sorted copy of the array
         .concat()
         .sort((pa1, pa2) =>
-          pa1.period.startDate < pa2.period.startDate
+          pa1.startDate < pa2.startDate
             ? -1
-            : pa1.period.startDate > pa2.period.startDate
+            : pa1.startDate > pa2.startDate
             ? 1
             : 0
         );
@@ -78,8 +78,7 @@ const isPeriodAmountSnappedVisible = (
   periodAmount: BpdPeriodAmount,
   bpdEnabled: RemoteValue<boolean, Error>
 ) =>
-  periodAmount.period.status === "Closed" ||
-  (isReady(bpdEnabled) && bpdEnabled.value);
+  periodAmount.status === "Closed" || (isReady(bpdEnabled) && bpdEnabled.value);
 
 /**
  * Return the {@link BpdPeriodAmount} that should be visible in the snapped List selector
@@ -142,8 +141,7 @@ export const bpdDisplayTransactionsSelector = createSelector(
               .map(pm => pm.caption)
               .getOrElse(FOUR_UNICODE_CIRCLES),
             keyId: getId(t),
-            maxCashbackForTransactionAmount:
-              period?.period.maxTransactionCashback
+            maxCashbackForTransactionAmount: period?.maxTransactionCashback
           } as EnhancedBpdTransaction)
       )
     )

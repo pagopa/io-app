@@ -205,7 +205,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
         <BpdCashbackMilestoneComponent
           cashbackValue={fromNullable(props.selectedPeriod).fold(
             0,
-            p => p.period.maxPeriodCashback
+            p => p.maxPeriodCashback
           )}
         />
       );
@@ -243,7 +243,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
                   maybeLastUpdateDate.value,
                   I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
                 )}
-                period={props.selectedPeriod.period}
+                period={props.selectedPeriod}
                 totalAmount={props.selectedPeriod.amount}
               />
             )}
@@ -256,7 +256,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
               stickySectionHeadersEnabled={true}
               sections={getTransactionsByDaySections(
                 trxSortByDate,
-                props.selectedPeriod.period.maxPeriodCashback
+                props.selectedPeriod.maxPeriodCashback
               )}
               renderItem={renderTransactionItem}
               keyExtractor={t =>

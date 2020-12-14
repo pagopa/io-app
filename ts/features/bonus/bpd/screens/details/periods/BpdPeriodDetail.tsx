@@ -14,7 +14,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const selectPeriodScreen = (period: BpdPeriodAmount) => {
-  switch (period.period.status) {
+  switch (period.status) {
     case "Active":
       return <BpdActivePeriod />;
     case "Closed":

@@ -152,7 +152,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(bpdSelectPeriod): // SelectedPeriod
       return mp.track(action.type, {
-        awardPeriodId: action.payload.period.awardPeriodId
+        awardPeriodId: action.payload.awardPeriodId
       });
 
     // PaymentMethod
