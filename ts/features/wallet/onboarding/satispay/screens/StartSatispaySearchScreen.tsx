@@ -8,6 +8,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -34,7 +35,11 @@ const loadLocales = () => ({
 const StartSatispaySearchScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle } = loadLocales();
   return (
-    <BaseScreenComponent goBack={props.goBack} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={props.goBack}
+      headerTitle={headerTitle}
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <View style={IOStyles.flex} />
         <FooterWithButtons
