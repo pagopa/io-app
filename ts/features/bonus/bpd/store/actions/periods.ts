@@ -41,15 +41,6 @@ export type WithAwardPeriodId = {
 };
 
 /**
- * Request the period list
- */
-export const bpdPeriodsLoad = createAsyncAction(
-  "BPD_PERIODS_REQUEST",
-  "BPD_PERIODS_SUCCESS",
-  "BPD_PERIODS_FAILURE"
-)<void, ReadonlyArray<BpdPeriod>, Error>();
-
-/**
  * Request the period list & amount
  */
 export const bpdPeriodsAmountLoad = createAsyncAction(
@@ -58,6 +49,4 @@ export const bpdPeriodsAmountLoad = createAsyncAction(
   "BPD_PERIODS_AMOUNT_FAILURE"
 )<void, ReadonlyArray<BpdPeriodAmount>, Error>();
 
-export type BpdPeriodsAction =
-  | ActionType<typeof bpdPeriodsLoad>
-  | ActionType<typeof bpdPeriodsAmountLoad>;
+export type BpdPeriodsAction = ActionType<typeof bpdPeriodsAmountLoad>;

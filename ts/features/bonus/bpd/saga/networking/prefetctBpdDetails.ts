@@ -8,10 +8,7 @@ import { abiSelector } from "../../../../wallet/onboarding/store/abi";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { isReady } from "../../model/RemoteValue";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
-import {
-  bpdPeriodsAmountLoad,
-  bpdPeriodsLoad
-} from "../../store/actions/periods";
+import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import { BpdPeriodAmount } from "../../store/reducers/details/combiner";
 import { bpdLoadAmountSaga } from "./amount";
 import { bpdLoadPeriodsSaga } from "./periods";
@@ -26,7 +23,6 @@ import { bpdLoadPeriodsSaga } from "./periods";
  */
 export function* prefetchBpdData() {
   yield put(bpdLoadActivationStatus.request());
-  yield put(bpdPeriodsLoad.request());
 
   const abiList: ReturnType<typeof abiSelector> = yield select(abiSelector);
 

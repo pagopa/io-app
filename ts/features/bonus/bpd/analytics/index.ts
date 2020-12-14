@@ -33,8 +33,6 @@ import {
   walletAddBancomatCompleted,
   walletAddBancomatStart
 } from "../../../wallet/onboarding/bancomat/store/actions";
-import { bpdAmountLoad } from "../store/actions/amount";
-import { bpdPeriodsLoad } from "../store/actions/periods";
 import { bpdSelectPeriod } from "../store/actions/selectedPeriod";
 import {
   bpdPaymentMethodActivation,
@@ -88,14 +86,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         trxDate: action.payload.results.map(r => r.trxDate.toString()),
         circuitType: action.payload.results.map(r => r.circuitType)
       });
-    case getType(bpdTransactionsLoad.failure):
-    case getType(bpdAmountLoad.failure):
-      return mp.track(action.type, {
-        awardPeriodId: action.payload.awardPeriodId,
-        reason: action.payload.error.message
-      });
-
     // CashBack details
+    case getType(bpdTransactionsLoad.failure):
     case getType(bpdDetailsLoadAll):
     case getType(bpdLoadActivationStatus.request):
       return mp.track(action.type);
@@ -158,27 +150,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
           : action.payload.value.message
       });
 
-    // Amount
-    case getType(bpdAmountLoad.request):
-      return mp.track(action.type, { awardPeriodId: action.payload });
-    case getType(bpdAmountLoad.success):
-      return mp.track(action.type, {
-        awardPeriodId: action.payload.awardPeriodId
-      });
     case getType(bpdSelectPeriod): // SelectedPeriod
       return mp.track(action.type, {
         awardPeriodId: action.payload.period.awardPeriodId
       });
-
-    // Period
-    case getType(bpdPeriodsLoad.request):
-      return mp.track(action.type);
-    case getType(bpdPeriodsLoad.success):
-      return mp.track(action.type, {
-        count: action.payload.length
-      });
-    case getType(bpdPeriodsLoad.failure):
-      return mp.track(action.type, { reason: action.payload.message });
 
     // PaymentMethod
     case getType(bpdPaymentMethodActivation.request):
