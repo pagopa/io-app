@@ -72,7 +72,7 @@ export const BaseBpdTransactionItem: React.FunctionComponent<Props> = props => (
           </View>
         </View>
         {/* The right side of the row */}
-        <H4 weight={"SemiBold"} color={"bluegreyDark"} style={styles.rightText}>
+        <H4 weight={"SemiBold"} color={"blue"} style={styles.rightText}>
           {props.rightText}
         </H4>
       </View>
