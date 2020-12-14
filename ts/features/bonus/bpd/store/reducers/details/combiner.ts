@@ -2,9 +2,9 @@ import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { cardIcons } from "../../../../../../components/wallet/card/Logo";
-import { readPot } from "../../../../../../store/reducers/IndexedByIdPot";
 import { paymentMethodsSelector } from "../../../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../../../types/pagopa";
+import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { FOUR_UNICODE_CIRCLES } from "../../../../../../utils/wallet";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
@@ -12,9 +12,7 @@ import { BpdAmount } from "../../actions/amount";
 import { BpdPaymentMethodActivation } from "../../actions/paymentMethods";
 import { BpdPeriod } from "../../actions/periods";
 import { BpdTransaction } from "../../actions/transactions";
-import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { bpdEnabledSelector } from "./activation";
-import { bpdAllAmountSelector } from "./amounts";
 import { bpdPaymentMethodActivationSelector } from "./paymentMethods";
 import { bpdPeriodsSelector } from "./periods";
 import { bpdSelectedPeriodSelector } from "./selectedPeriod";
@@ -27,26 +25,6 @@ export type BpdPeriodAmount = {
   period: BpdPeriod;
   amount: BpdAmount;
 };
-
-/**
- * Combine period with the related amount.
- * The pot state is periods driven and the entry BpdPeriodAmount is skipped if the amount
- * for a specific period is !== pot.Some
- * @return {pot.Pot<ReadonlyArray<BpdPeriodAmount>, Error>}
- */
-export const bpdAllPeriodsWithAmountSelector = createSelector(
-  [bpdPeriodsSelector, bpdAllAmountSelector],
-  (potPeriods, amountsIndex) =>
-    pot.map(potPeriods, periods =>
-      periods.reduce((acc, val) => {
-        const potAmount = readPot(val.awardPeriodId, amountsIndex);
-        if (pot.isSome(potAmount)) {
-          return [...acc, { period: val, amount: potAmount.value }];
-        }
-        return acc;
-      }, [] as ReadonlyArray<BpdPeriodAmount>)
-    )
-);
 
 /**
  * A period is visible in the wallet if the bpd is enabled AND the period is active OR
@@ -76,7 +54,7 @@ const isPeriodAmountWalletVisible = (
  * Return the {@link BpdPeriodAmount} that can be visible in the wallet
  */
 export const bpdPeriodsAmountWalletVisibleSelector = createSelector(
-  [bpdAllPeriodsWithAmountSelector, bpdEnabledSelector],
+  [bpdPeriodsSelector, bpdEnabledSelector],
   (potPeriodsAmount, bpdEnabled) =>
     pot.map(potPeriodsAmount, periodsAmountList => {
       const periodsOrderedByDate = periodsAmountList
@@ -117,7 +95,7 @@ const isPeriodAmountSnappedVisible = (
  * Return the {@link BpdPeriodAmount} that should be visible in the snapped List selector
  */
 export const bpdPeriodsAmountSnappedListSelector = createSelector(
-  [bpdAllPeriodsWithAmountSelector, bpdEnabledSelector],
+  [bpdPeriodsSelector, bpdEnabledSelector],
   (potPeriodsAmount, bpdEnabled) =>
     pot.map(potPeriodsAmount, periodsAmountList =>
       periodsAmountList.filter(periodAmount =>
@@ -174,7 +152,8 @@ export const bpdDisplayTransactionsSelector = createSelector(
               .map(pm => pm.caption)
               .getOrElse(FOUR_UNICODE_CIRCLES),
             keyId: getId(t),
-            maxCashbackForTransactionAmount: period?.maxTransactionCashback
+            maxCashbackForTransactionAmount:
+              period?.period.maxTransactionCashback
           } as EnhancedBpdTransaction)
       )
     )

@@ -6,7 +6,6 @@ import { BpdAmount, bpdAmountLoad } from "../../../actions/amount";
 import { bpdPeriodsLoad } from "../../../actions/periods";
 import { zeroAmount } from "../../__mock__/amount";
 import { closedPeriod } from "../../__mock__/periods";
-import { bpdAllPeriodsWithAmountSelector, BpdPeriodAmount } from "../combiner";
 
 jest.mock("@react-native-community/async-storage", () => ({
   AsyncStorage: jest.fn()

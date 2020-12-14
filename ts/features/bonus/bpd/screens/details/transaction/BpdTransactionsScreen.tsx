@@ -26,7 +26,6 @@ import {
   BpdTransactionItem,
   EnhancedBpdTransaction
 } from "../../../components/transactionItem/BpdTransactionItem";
-import { bpdAmountForSelectedPeriod } from "../../../store/reducers/details/amounts";
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
 import BpdCashbackMilestoneComponent from "./BpdCashbackMilestoneComponent";
@@ -206,7 +205,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
         <BpdCashbackMilestoneComponent
           cashbackValue={fromNullable(props.selectedPeriod).fold(
             0,
-            p => p.maxPeriodCashback
+            p => p.period.maxPeriodCashback
           )}
         />
       );
@@ -238,18 +237,16 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
             <View spacer={true} />
             <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
             <View spacer={true} />
-            {pot.isSome(props.selectedAmount) &&
-              props.selectedPeriod &&
-              maybeLastUpdateDate.isSome() && (
-                <BpdTransactionSummaryComponent
-                  lastUpdateDate={localeDateFormat(
-                    maybeLastUpdateDate.value,
-                    I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
-                  )}
-                  period={props.selectedPeriod}
-                  totalAmount={props.selectedAmount.value}
-                />
-              )}
+            {props.selectedPeriod && maybeLastUpdateDate.isSome() && (
+              <BpdTransactionSummaryComponent
+                lastUpdateDate={localeDateFormat(
+                  maybeLastUpdateDate.value,
+                  I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+                )}
+                period={props.selectedPeriod.period}
+                totalAmount={props.selectedPeriod.amount}
+              />
+            )}
             <View spacer={true} />
           </View>
           {props.selectedPeriod && (
@@ -259,7 +256,7 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
               stickySectionHeadersEnabled={true}
               sections={getTransactionsByDaySections(
                 trxSortByDate,
-                props.selectedPeriod.maxPeriodCashback
+                props.selectedPeriod.period.maxPeriodCashback
               )}
               renderItem={renderTransactionItem}
               keyExtractor={t =>
@@ -279,8 +276,7 @@ const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
   transactionForSelectedPeriod: bpdDisplayTransactionsSelector(state),
-  selectedPeriod: bpdSelectedPeriodSelector(state),
-  selectedAmount: bpdAmountForSelectedPeriod(state)
+  selectedPeriod: bpdSelectedPeriodSelector(state)
 });
 
 export default connect(

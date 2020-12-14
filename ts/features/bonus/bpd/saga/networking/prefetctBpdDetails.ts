@@ -1,5 +1,5 @@
 import { findFirst } from "fp-ts/lib/Array";
-import { isRight, left } from "fp-ts/lib/Either";
+import { isRight } from "fp-ts/lib/Either";
 import { select } from "redux-saga-test-plan/matchers";
 import { all, call, put } from "redux-saga/effects";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -82,7 +82,9 @@ export function* loadPeriodsAmount(
     );
 
     if (amounts.some(a => a.isLeft())) {
-      return left(new Error("Error while loading amounts"));
+      yield put(
+        bpdPeriodsAmountLoad.failure(new Error("Error while loading amounts"))
+      );
     }
 
     const periodsWithAmount = amounts.filter(isRight).reduce(
@@ -99,7 +101,7 @@ export function* loadPeriodsAmount(
         ]),
       [] as ReadonlyArray<BpdPeriodAmount>
     );
-
-    console.log(periodsWithAmount);
+    console.log("asdasdasd");
+    yield put(bpdPeriodsAmountLoad.success(periodsWithAmount));
   }
 }

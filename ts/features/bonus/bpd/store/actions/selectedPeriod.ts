@@ -1,11 +1,11 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { BpdPeriod } from "./periods";
+import { BpdPeriodAmount } from "../reducers/details/combiner";
 
 /**
  * Request the period list
  */
 export const bpdSelectPeriod = createStandardAction("BPD_SELECT_PERIOD")<
-  BpdPeriod
+  BpdPeriodAmount
 >();
 
 export type BpdSelectPeriodAction = ActionType<typeof bpdSelectPeriod>;

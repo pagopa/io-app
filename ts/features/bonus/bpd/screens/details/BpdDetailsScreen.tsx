@@ -75,7 +75,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
    * never displays for inactive/incoming period
    */
   const canRenderButton = fromNullable(props.selectedPeriod).fold(false, sp => {
-    switch (sp.status) {
+    switch (sp.period.status) {
       case "Closed":
         return pot.getOrElse(
           pot.map(props.transactions, val => val.length > 0),

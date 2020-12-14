@@ -74,6 +74,6 @@ export const bpdTransactionsForSelectedPeriod = createSelector(
   ],
   (transactions, period) =>
     fromNullable(period)
-      .chain(p => fromNullable(transactions[p.awardPeriodId]))
+      .chain(p => fromNullable(transactions[p.period.awardPeriodId]))
       .getOrElse(pot.none)
 );
