@@ -45,35 +45,35 @@ describe("localeDateFormat on locale", () => {
 
   const data: ReadonlyArray<[() => string, string, string]> = [
     [() => I18n.t("date.formats.default"), "17/05/1995", "17/05/1995"],
-    [() => I18n.t("date.formats.short"), "17 Maggio", "17 May"],
-    [() => I18n.t("date.formats.long"), "17 Maggio 1995", "17 May 1995"],
+    [() => I18n.t("date.formats.short"), "17 maggio", "17 May"],
+    [() => I18n.t("date.formats.long"), "17 maggio 1995", "17 May 1995"],
     [
       () => I18n.t("global.dateFormats.fullFormatShortMonthLiteral"),
-      "17 Mag 1995",
+      "17 mag 1995",
       "17 May 1995"
     ],
     [
       () => I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime"),
-      "17 Mag 1995, 03:24",
+      "17 mag 1995, 03:24",
       "17 May 1995, 03:24"
     ],
     [
       () => I18n.t("global.dateFormats.fullFormatFullMonthLiteral"),
-      "17 Maggio 1995",
+      "17 maggio 1995",
       "17 May 1995"
     ],
     [() => I18n.t("global.dateFormats.fullMonthLiteral"), "Maggio", "May"],
     [
       () => I18n.t("global.dateFormats.fullMonthLiteralWithYear"),
-      "Maggio 1995",
+      "maggio 1995",
       "May 1995"
     ],
     [
       () => I18n.t("global.dateFormats.dayMonthWithTime"),
-      "17 Mag, 03:24",
+      "17 mag, 03:24",
       "17 May, 03:24"
     ],
-    [() => I18n.t("global.dateFormats.dayFullMonth"), "17 Maggio", "17 May"],
+    [() => I18n.t("global.dateFormats.dayFullMonth"), "17 maggio", "17 May"],
     [() => I18n.t("global.dateFormats.numericMonthYear"), "05/1995", "05/1995"]
   ];
   data.forEach(elem => {

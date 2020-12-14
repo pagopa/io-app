@@ -1935,6 +1935,10 @@ bonus:
       transaction:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
+        noPaymentMethod:
+          text1: "Devi attivare "
+          text2: "almeno un metodo di pagamento "
+          text3: "al Cashback per iniziare a collezionare le transazioni necessarie"
         detail:
           empty: 
             text1: "Non ci sono ancora transazioni valide."

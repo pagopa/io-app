@@ -16,6 +16,7 @@ import { Dispatch } from "redux";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
+import { H4 } from "../../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
@@ -192,8 +193,14 @@ const renderSectionHeader = (info: {
 
 export const NoPaymentMethodAreActiveWarning = () => (
   <View>
-    <InfoBox>
-      <Body>{I18n.t("bonus.bpd.details.paymentMethods.noActiveMethod")}</Body>
+    <InfoBox iconName={"io-warning"}>
+      <H4 weight={"Regular"}>
+        {I18n.t("bonus.bpd.details.transaction.noPaymentMethod.text1")}
+        <H4 weight={"Bold"}>
+          {I18n.t("bonus.bpd.details.transaction.noPaymentMethod.text2")}
+        </H4>
+        {I18n.t("bonus.bpd.details.transaction.noPaymentMethod.text3")}
+      </H4>
     </InfoBox>
     <View spacer={true} small={true} />
   </View>
