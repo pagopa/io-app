@@ -1,8 +1,9 @@
+import { Either, left, right } from "fp-ts/lib/Either";
 import { fromNullable } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect } from "redux-saga/effects";
-import { Either, left, right } from "fp-ts/lib/Either";
 import { AwardPeriodResource } from "../../../../../../definitions/bpd/award_periods/AwardPeriodResource";
+import { mixpanelTrack } from "../../../../../mixpanel";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getError } from "../../../../../utils/errors";
 import { BackendBpdClient } from "../../api/backendBpdClient";
@@ -35,6 +36,10 @@ const convertPeriod = (
   )
 });
 
+const mixpanelActionRequest = "BPD_PERIODS_REQUEST";
+const mixpanelActionSuccess = "BPD_PERIODS_SUCCESS";
+const mixpanelActionFailure = "BPD_PERIODS_FAILURE";
+
 /**
  * Networking logic to request the periods list
  * @param awardPeriods
@@ -46,6 +51,7 @@ export function* bpdLoadPeriodsSaga(
   Either<Error, ReadonlyArray<BpdPeriod>>,
   SagaCallReturnType<typeof awardPeriods>
 > {
+  void mixpanelTrack(mixpanelActionRequest);
   try {
     const awardPeriodsResult: SagaCallReturnType<typeof awardPeriods> = yield call(
       awardPeriods,
@@ -54,8 +60,10 @@ export function* bpdLoadPeriodsSaga(
     if (awardPeriodsResult.isRight()) {
       if (awardPeriodsResult.value.status === 200) {
         const periods = awardPeriodsResult.value.value;
+        void mixpanelTrack(mixpanelActionSuccess, {
+          count: periods.length
+        });
         // convert data into app domain model
-
         return right<Error, ReadonlyArray<BpdPeriod>>(
           periods.map<BpdPeriod>(p => convertPeriod(p))
         );
@@ -66,6 +74,9 @@ export function* bpdLoadPeriodsSaga(
       throw new Error(readableReport(awardPeriodsResult.value));
     }
   } catch (e) {
+    void mixpanelTrack(mixpanelActionFailure, {
+      reason: e.message
+    });
     return left<Error, ReadonlyArray<BpdPeriod>>(getError(e));
   }
 }

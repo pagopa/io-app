@@ -33,3 +33,13 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   // Identify the user using the device uniqueId
   await mp.identify(DeviceInfo.getUniqueId());
 };
+
+/**
+ * Track an event with properties
+ * @param event
+ * @param properties
+ */
+export const mixpanelTrack = (
+  event: string,
+  properties?: Record<string, unknown>
+) => mixpanel?.track(event, properties);

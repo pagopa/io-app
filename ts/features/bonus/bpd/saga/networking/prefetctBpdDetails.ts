@@ -101,7 +101,6 @@ export function* loadPeriodsAmount(
         ]),
       [] as ReadonlyArray<BpdPeriodAmount>
     );
-    console.log("asdasdasd");
     yield put(bpdPeriodsAmountLoad.success(periodsWithAmount));
   }
 }
