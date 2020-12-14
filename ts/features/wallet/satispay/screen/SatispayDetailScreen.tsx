@@ -18,6 +18,7 @@ import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePayment
 import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
 import SatispayCard from "../SatispayCard";
 import SatispayInformation from "./SatispayInformation";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
 type NavigationParams = Readonly<{
   satispay: SatispayPaymentMethod;
@@ -66,6 +67,7 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
   return (
     <DarkLayout
       bounces={false}
+      contextualHelp={emptyContextualHelp}
       title={I18n.t("wallet.methods.card.shortName")}
       faqCategories={["wallet_methods"]}
       allowGoBack={true}
