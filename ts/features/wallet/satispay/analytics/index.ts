@@ -11,7 +11,6 @@ import {
   walletAddSatispayStart
 } from "../../onboarding/satispay/store/actions";
 
-// eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
