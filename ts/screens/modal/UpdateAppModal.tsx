@@ -21,6 +21,9 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { storeUrl, webStoreURL } from "../../utils/appVersion";
+import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import updateIcon from "../../../img/icons/update-icon.png";
+import { openWebUrl } from "../../utils/url";
 
 const ERROR_MESSAGE_TIMEOUT: Millisecond = 5000 as Millisecond;
 
@@ -85,22 +88,22 @@ const AndroidFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => {
 
 const UpdateAppModal: React.FC = () => {
   // Disable Android back button
-  const handleBackPress = () => true;
-
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
-
-    return () =>
-      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
-  }, []);
+  useHardwareBackButton(() => true);
 
   // Reset the error state after a given timeout
   const [error, setError] = useState(false);
 
   useEffect(() => {
     if (error) {
-      setTimeout(() => setError(false), ERROR_MESSAGE_TIMEOUT);
+      const timeoutHandle = setTimeout(
+        () => setError(false),
+        ERROR_MESSAGE_TIMEOUT
+      );
+
+      return () => clearTimeout(timeoutHandle);
     }
+
+    return undefined;
   }, [error]);
 
   // Tries to open the native app store, falling to browser web store
@@ -108,13 +111,9 @@ const UpdateAppModal: React.FC = () => {
     try {
       await Linking.openURL(storeUrl);
     } catch (e) {
-      try {
-        await Linking.openURL(webStoreURL);
-      } catch (e) {
-        setError(true);
-      }
+      openWebUrl(webStoreURL, () => setError(true));
     }
-  }, [setError]);
+  }, []);
 
   return (
     <Modal>
@@ -127,10 +126,7 @@ const UpdateAppModal: React.FC = () => {
           <View style={styles.container}>
             <H2>{I18n.t("titleUpdateApp")}</H2>
             <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
-            <Image
-              style={styles.img}
-              source={require("../../../img/icons/update-icon.png")}
-            />
+            <Image style={styles.img} source={updateIcon} />
             {error && (
               <Text style={styles.textDanger}>
                 {I18n.t("msgErrorUpdateApp")}
