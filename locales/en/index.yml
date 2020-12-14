@@ -807,6 +807,7 @@ wallet:
       loadingAdd:
         title: "We are adding your Satispay account\n\nPlease wait a few seconds"
   alert:
+    supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
@@ -1044,6 +1045,7 @@ wallet:
       securityCode: "•••"
       securityCode4D: "••••"
   acceptedCards: Accepted cards
+  openAcceptedCardsPageCTA: Learn more about accepted cards
   chooseMethod: Select the desired method
   QRtoPay:
     chooser: Pick image from gallery
