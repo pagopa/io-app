@@ -25,6 +25,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(addSatispayToWallet.success):
       return mp.track(action.type);
 
+    case getType(searchUserSatispay.success):
+      return mp.track(action.type, {
+        count: action.payload !== undefined ? 1 : 0
+      });
+
     case getType(searchUserSatispay.failure):
       return mp.track(action.type, {
         reason: isTimeoutError(action.payload)
