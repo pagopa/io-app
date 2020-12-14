@@ -1904,12 +1904,22 @@ bonus:
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
+        noPaymentMethod:
+          text1: "You must activate "
+          text2: "at least one payment method "
+          text3: "at Cashback to start collecting necessary transactions"
         detail:
-          empty: "In this page you will find all the transactions eligible for cashback: there are no valid transactions yet. Check this page again later!"
+          empty: 
+            text1: "There are no valid transactions yet."
+            text2: "Check back in the next few days!"
           summary:
             bottomSheet:
               title: "When will you find your transactions?"
-              body: "Transactions are collected the day after they are recorded by the banks.\n\n**It might take up to 72 hours before you see your transaction on IO**, although the process is usually faster.\n\n**It may take a little longer if the purchase has been performed during the weekend or holidays**, or in other exceptional occasions.\n\nDon't worry: all valid transactions occurred throughout the phase will be collected and considered for refunds and ranking!"
+              body: "**Have more than 5 business days gone by already?**\n\n- Check to see if your bank has already **accounted** for the transaction, our systems will add it the next day.\n\n- The transaction may have been handled with the POS of a party (acquirer) **not yet contracted.** [Read more](https://io.italia.it/cashback/acquirer/)"
+            calendarBlock:
+              text1: "Please note that before you see the transaction on IO, "
+              text2: "it can take up to 3 working days"
+              text3: ", in some cases even more."
             lastUpdated: "Latest valid transaction: "
             link: Anything missing?
             body:

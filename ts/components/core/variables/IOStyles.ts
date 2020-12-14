@@ -1,3 +1,4 @@
+import { StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
 
 /**
@@ -6,7 +7,7 @@ import themeVariables from "../../../theme/variables";
 
 // TODO: in a first iteration, to avoid overlaps,
 //  if a value already exists, will be used from themeVariables
-export const IOStyles = {
+export const IOStyles = StyleSheet.create({
   flex: {
     flex: 1
   },
@@ -18,4 +19,4 @@ export const IOStyles = {
     flex: 1,
     flexDirection: "row"
   }
-};
+});
