@@ -11,7 +11,7 @@ import { SagaCallReturnType } from "../../../../../../types/utils";
 import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
 import {
   navigateToActivateBpdOnNewBancomat,
-  navigateToOnboardingBancomatChooseBank
+  navigateToOnboardingBancomatSearchStartScreen
 } from "../../navigation/action";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
 import {
@@ -30,8 +30,8 @@ import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedP
  */
 function* bancomatWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToOnboardingBancomatChooseBank(),
-    startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK,
+    startScreenNavigation: navigateToOnboardingBancomatSearchStartScreen(),
+    startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.BANCOMAT_START,
     complete: walletAddBancomatCompleted,
     back: walletAddBancomatBack,
     cancel: walletAddBancomatCancel
