@@ -23,6 +23,7 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { IOStyles } from "../core/variables/IOStyles";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -108,7 +109,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
             >
               <View style={styles.flexColumn}>
                 <View style={styles.row}>
-                  <View style={{ flex: 1 }}>
+                  <View style={IOStyles.flex}>
                     <H3 color={"bluegreyDark"} weight={"SemiBold"}>
                       {item.title}
                     </H3>
