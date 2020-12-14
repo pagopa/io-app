@@ -21,6 +21,7 @@ import { fetchPagoPaTimeout } from "../../../../../../config";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import { cancelButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import SectionStatusComponent from "../../../../../../components/SectionStatusComponent";
 import { SearchBankComponent } from "./SearchBankComponent";
 
 type Props = LightModalContextInterface &
@@ -64,6 +65,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
             onItemPress={props.searchPans}
           />
         </Content>
+        <SectionStatusComponent sectionKey={"bancomat"} />
         {renderFooterButtons(props.onBack)}
       </SafeAreaView>
     </BaseScreenComponent>
