@@ -13,6 +13,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
@@ -27,7 +29,11 @@ import {
   EnhancedBpdTransaction
 } from "../../../components/transactionItem/BpdTransactionItem";
 import { bpdAmountForSelectedPeriod } from "../../../store/reducers/details/amounts";
-import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
+import {
+  atLeastOnePaymentMethodHasBpdEnabledSelector,
+  bpdDisplayTransactionsSelector,
+  paymentMethodsWithActivationStatusSelector
+} from "../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
 import BpdCashbackMilestoneComponent from "./BpdCashbackMilestoneComponent";
 import BpdEmptyTransactionsList from "./BpdEmptyTransactionsList";
@@ -184,6 +190,15 @@ const renderSectionHeader = (info: {
   />
 );
 
+export const NoPaymentMethodAreActiveWarning = () => (
+  <View>
+    <InfoBox>
+      <Body>{I18n.t("bonus.bpd.details.paymentMethods.noActiveMethod")}</Body>
+    </InfoBox>
+    <View spacer={true} small={true} />
+  </View>
+);
+
 /**
  * Display all the transactions for a specific period
  * TODO: scroll to refresh, display error, display loading
@@ -220,57 +235,60 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
       headerTitle={I18n.t("bonus.bpd.title")}
       contextualHelp={emptyContextualHelp}
     >
-      {transactions.length === 0 ? (
-        <SafeAreaView style={IOStyles.flex}>
-          <ScrollView
-            style={[IOStyles.horizontalContentPadding, IOStyles.flex]}
-          >
-            <View spacer={true} />
-            <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
-            <View spacer={true} />
-            <BpdEmptyTransactionsList />
-            <View spacer={true} />
-          </ScrollView>
-        </SafeAreaView>
-      ) : (
-        <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex}>
+        <View spacer={true} />
+        <View style={IOStyles.horizontalContentPadding}>
+          <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
+        </View>
+        <ScrollView style={[IOStyles.flex]}>
           <View style={IOStyles.horizontalContentPadding}>
-            <View spacer={true} />
-            <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
             <View spacer={true} />
             {pot.isSome(props.selectedAmount) &&
               props.selectedPeriod &&
               maybeLastUpdateDate.isSome() && (
-                <BpdTransactionSummaryComponent
-                  lastUpdateDate={localeDateFormat(
-                    maybeLastUpdateDate.value,
-                    I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
-                  )}
-                  period={props.selectedPeriod}
-                  totalAmount={props.selectedAmount.value}
-                />
+                <>
+                  <BpdTransactionSummaryComponent
+                    lastUpdateDate={localeDateFormat(
+                      maybeLastUpdateDate.value,
+                      I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+                    )}
+                    period={props.selectedPeriod}
+                    totalAmount={props.selectedAmount.value}
+                  />
+                  <View spacer={true} />
+                </>
               )}
-            <View spacer={true} />
           </View>
-          {props.selectedPeriod && (
-            <SectionList
-              renderSectionHeader={renderSectionHeader}
-              scrollEnabled={true}
-              stickySectionHeadersEnabled={true}
-              sections={getTransactionsByDaySections(
-                trxSortByDate,
-                props.selectedPeriod.maxPeriodCashback
-              )}
-              renderItem={renderTransactionItem}
-              keyExtractor={t =>
-                isTotalCashback(t)
-                  ? `awarded_cashback_item${t.totalCashBack}`
-                  : t.keyId
-              }
-            />
-          )}
-        </SafeAreaView>
-      )}
+          {props.selectedPeriod &&
+            (transactions.length > 0 ? (
+              <SectionList
+                renderSectionHeader={renderSectionHeader}
+                scrollEnabled={true}
+                stickySectionHeadersEnabled={true}
+                sections={getTransactionsByDaySections(
+                  trxSortByDate,
+                  props.selectedPeriod.maxPeriodCashback
+                )}
+                renderItem={renderTransactionItem}
+                keyExtractor={t =>
+                  isTotalCashback(t)
+                    ? `awarded_cashback_item${t.totalCashBack}`
+                    : t.keyId
+                }
+              />
+            ) : !props.atLeastOnePaymentMethodActive &&
+              pot.isSome(props.potWallets) &&
+              props.potWallets.value.length > 0 ? (
+              <View style={IOStyles.horizontalContentPadding}>
+                <NoPaymentMethodAreActiveWarning />
+              </View>
+            ) : (
+              <View style={IOStyles.horizontalContentPadding}>
+                <BpdEmptyTransactionsList />
+              </View>
+            ))}
+        </ScrollView>
+      </SafeAreaView>
     </BaseScreenComponent>
   );
 };
@@ -280,7 +298,11 @@ const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
   transactionForSelectedPeriod: bpdDisplayTransactionsSelector(state),
   selectedPeriod: bpdSelectedPeriodSelector(state),
-  selectedAmount: bpdAmountForSelectedPeriod(state)
+  selectedAmount: bpdAmountForSelectedPeriod(state),
+  potWallets: paymentMethodsWithActivationStatusSelector(state),
+  atLeastOnePaymentMethodActive: atLeastOnePaymentMethodHasBpdEnabledSelector(
+    state
+  )
 });
 
 export default connect(
