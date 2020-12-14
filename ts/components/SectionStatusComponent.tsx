@@ -44,8 +44,8 @@ export const statusColorMap: Record<SectionStatus["level"], string> = {
 
 const statusIconMap: Record<SectionStatus["level"], string> = {
   normal: "io-complete",
-  critical: "io-notice",
-  warning: "io-notice"
+  critical: "io-warning",
+  warning: "io-info"
 };
 const iconSize = 24;
 const color = IOColors.white;
@@ -78,8 +78,6 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   const maybeWebUrl = maybeNotNullyString(
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
-  // flip warning icon verticalli (! -> i)
-  const iconFlipped = sectionStatus.level === "warning";
   return (
     <TouchableWithoutFeedback onPress={() => maybeWebUrl.map(openWebUrl)}>
       <View style={[styles.container, { backgroundColor }]}>
@@ -87,10 +85,7 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
           name={iconName}
           size={iconSize}
           color={color}
-          style={[
-            styles.alignCenter,
-            iconFlipped ? styles.verticalFlipped : undefined
-          ]}
+          style={styles.alignCenter}
         />
         <Label color={"white"} style={styles.text} weight={"Regular"}>
           {sectionStatus.message[locale]}
