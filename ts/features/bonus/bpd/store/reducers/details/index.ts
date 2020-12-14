@@ -7,15 +7,15 @@ import {
   bpdPaymentMethodsReducer,
   BpdPotPaymentMethodActivation
 } from "./paymentMethods";
-import { BpdPeriodAmount, bpdPeriodsReducer } from "./periods";
+import { BpdPeriodWithAmount, bpdPeriodsReducer } from "./periods";
 import { bpdSelectedPeriodsReducer } from "./selectedPeriod";
 import { bpdTransactionsReducer } from "./transactions";
 
 export type BpdDetailsState = {
   activation: BpdActivation;
   paymentMethods: IndexedById<BpdPotPaymentMethodActivation>;
-  periods: pot.Pot<IndexedById<BpdPeriodAmount>, Error>;
-  selectedPeriod: BpdPeriodAmount | null;
+  periods: pot.Pot<IndexedById<BpdPeriodWithAmount>, Error>;
+  selectedPeriod: BpdPeriodWithAmount | null;
   transactions: IndexedById<pot.Pot<ReadonlyArray<BpdTransaction>, Error>>;
 };
 

@@ -9,7 +9,7 @@ import { BackendBpdClient } from "../../api/backendBpdClient";
 import { isReady } from "../../model/RemoteValue";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
-import { BpdPeriodAmount } from "../../store/reducers/details/periods";
+import { BpdPeriodWithAmount } from "../../store/reducers/details/periods";
 import { bpdLoadAmountSaga } from "./amount";
 import { bpdLoadPeriodsSaga } from "./periods";
 
@@ -95,7 +95,7 @@ export function* loadPeriodsAmount(
             amount: curr.value
           }
         ]),
-      [] as ReadonlyArray<BpdPeriodAmount>
+      [] as ReadonlyArray<BpdPeriodWithAmount>
     );
     yield put(bpdPeriodsAmountLoad.success(periodsWithAmount));
   }

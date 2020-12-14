@@ -15,7 +15,7 @@ import {
 /**
  * Combine the period & amount
  */
-export type BpdPeriodAmount = BpdPeriod & {
+export type BpdPeriodWithAmount = BpdPeriod & {
   amount: BpdAmount;
 };
 
@@ -25,16 +25,19 @@ export type BpdPeriodAmount = BpdPeriod & {
  * @param action
  */
 export const bpdPeriodsReducer = (
-  state: pot.Pot<IndexedById<BpdPeriodAmount>, Error> = pot.none,
+  state: pot.Pot<IndexedById<BpdPeriodWithAmount>, Error> = pot.none,
   action: Action
-): pot.Pot<IndexedById<BpdPeriodAmount>, Error> => {
+): pot.Pot<IndexedById<BpdPeriodWithAmount>, Error> => {
   switch (action.type) {
     case getType(bpdPeriodsAmountLoad.request):
       return pot.toLoading(state);
     case getType(bpdPeriodsAmountLoad.success):
       return pot.some(
         action.payload.reduce(
-          (acc: IndexedById<BpdPeriodAmount>, curr: BpdPeriodAmount) => ({
+          (
+            acc: IndexedById<BpdPeriodWithAmount>,
+            curr: BpdPeriodWithAmount
+          ) => ({
             ...acc,
             [curr.awardPeriodId]: curr
           }),
@@ -53,7 +56,7 @@ export const bpdPeriodsReducer = (
  */
 export const bpdPeriodsSelector = createSelector(
   [(state: GlobalState) => state.bonus.bpd.details.periods],
-  (potValue): pot.Pot<ReadonlyArray<BpdPeriodAmount>, Error> =>
+  (potValue): pot.Pot<ReadonlyArray<BpdPeriodWithAmount>, Error> =>
     pot.map(potValue, potValue => Object.values(potValue).filter(isDefined))
 );
 
@@ -65,7 +68,7 @@ export const bpdPeriodsSelector = createSelector(
 const bpdPeriodByIdRawSelector = (
   state: GlobalState,
   id: AwardPeriodId
-): pot.Pot<BpdPeriodAmount | undefined, Error> =>
+): pot.Pot<BpdPeriodWithAmount | undefined, Error> =>
   pot.map(state.bonus.bpd.details.periods, periodList => periodList[id]);
 
 /**

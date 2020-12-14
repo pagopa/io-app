@@ -8,9 +8,9 @@ import {
   inactivePeriod
 } from "../__mock__/periods";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../details/combiner";
-import { BpdPeriodAmount } from "../details/periods";
+import { BpdPeriodWithAmount } from "../details/periods";
 
-const inactivePeriodA: BpdPeriodAmount = {
+const inactivePeriodA: BpdPeriodWithAmount = {
   amount: zeroAmount,
   ...{
     ...inactivePeriod,
@@ -18,11 +18,11 @@ const inactivePeriodA: BpdPeriodAmount = {
     awardPeriodId: 55 as AwardPeriodId
   }
 };
-const inactivePeriodB: BpdPeriodAmount = {
+const inactivePeriodB: BpdPeriodWithAmount = {
   amount: zeroAmount,
   ...inactivePeriod
 };
-const inactivePeriodC: BpdPeriodAmount = {
+const inactivePeriodC: BpdPeriodWithAmount = {
   amount: zeroAmount,
   ...{
     ...inactivePeriod,
@@ -31,17 +31,17 @@ const inactivePeriodC: BpdPeriodAmount = {
   }
 };
 
-const activePeriodAmount: BpdPeriodAmount = {
+const activePeriodAmount: BpdPeriodWithAmount = {
   amount: zeroAmount,
   ...activePeriod
 };
 
-const closedPeriodZeroAmount: BpdPeriodAmount = {
+const closedPeriodZeroAmount: BpdPeriodWithAmount = {
   amount: zeroAmount,
   ...closedPeriod
 };
 
-const closedPeriodWithAmount: BpdPeriodAmount = {
+const closedPeriodWithAmount: BpdPeriodWithAmount = {
   amount: eligibleAmount,
   ...closedPeriod
 };

@@ -5,7 +5,7 @@ import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import BPD_ROUTES from "../../../navigation/routes";
 import { bpdSelectPeriod } from "../../actions/selectedPeriod";
-import { BpdPeriodAmount } from "./periods";
+import { BpdPeriodWithAmount } from "./periods";
 
 /**
  * Store the current period selected by the user (current displayed)
@@ -13,9 +13,9 @@ import { BpdPeriodAmount } from "./periods";
  * @param action
  */
 export const bpdSelectedPeriodsReducer = (
-  state: BpdPeriodAmount | null = null,
+  state: BpdPeriodWithAmount | null = null,
   action: Action
-): BpdPeriodAmount | null => {
+): BpdPeriodWithAmount | null => {
   switch (action.type) {
     // The user manually selected a specific period
     case getType(bpdSelectPeriod):
@@ -37,6 +37,6 @@ export const bpdSelectedPeriodsReducer = (
  */
 export const bpdSelectedPeriodSelector = createSelector(
   [(state: GlobalState) => state.bonus.bpd.details.selectedPeriod],
-  (period): BpdPeriodAmount | undefined =>
+  (period): BpdPeriodWithAmount | undefined =>
     period === null ? undefined : period
 );
