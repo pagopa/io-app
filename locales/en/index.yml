@@ -692,6 +692,7 @@ lipsum:
 datetimes:
   yesterday: yesterday
   todayAt: today, at
+  notValid: Invalid date.
 payment:
   errorDetails: Details
   currentPsp: Your current PSP is
