@@ -41,7 +41,6 @@ import { CreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import Checkout3DsComponent from "../modal/Checkout3DsModal";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { bonusVacanzeStyle } from "../../features/bonus/bonusVacanze/components/Styles";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
