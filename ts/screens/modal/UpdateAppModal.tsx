@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 
 type FooterProps = { onOpenAppStore: () => void };
 
-const AppleFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
+const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
   <View footer>
     <>
       <Button block={true} primary={true} onPress={onOpenAppStore}>
@@ -136,7 +136,7 @@ const UpdateAppModal: React.FC = () => {
         </Container>
       </BaseScreenComponent>
       {Platform.select({
-        ios: <AppleFooter onOpenAppStore={openAppStore} />,
+        ios: <IOSFooter onOpenAppStore={openAppStore} />,
         android: <AndroidFooter onOpenAppStore={openAppStore} />
       })}
     </Modal>
