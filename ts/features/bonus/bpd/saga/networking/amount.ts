@@ -6,8 +6,18 @@ import { mixpanelTrack } from "../../../../../mixpanel";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getError } from "../../../../../utils/errors";
 import { BackendBpdClient } from "../../api/backendBpdClient";
-import { BpdAmount, BpdAmountError } from "../../store/actions/amount";
-import { AwardPeriodId } from "../../store/actions/periods";
+import { AwardPeriodId, WithAwardPeriodId } from "../../store/actions/periods";
+
+export type BpdAmount = WithAwardPeriodId & {
+  // The total cashback amount gained by the user in the period (without super cashback)
+  totalCashback: number;
+  // The total transaction number in the period for the user
+  transactionNumber: number;
+};
+
+export type BpdAmountError = WithAwardPeriodId & {
+  error: Error;
+};
 
 // convert a network payload amount into the relative app domain model
 const convertAmount = (

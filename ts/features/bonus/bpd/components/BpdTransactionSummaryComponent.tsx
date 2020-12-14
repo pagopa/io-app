@@ -13,7 +13,7 @@ import I18n from "../../../../i18n";
 import { bottomSheetContent } from "../../../../utils/bottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
-import { BpdAmount } from "../store/actions/amount";
+import { BpdAmount } from "../saga/networking/amount";
 import { BpdPeriod } from "../store/actions/periods";
 
 type Props = {

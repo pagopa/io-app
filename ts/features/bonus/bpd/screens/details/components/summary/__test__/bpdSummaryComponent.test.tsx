@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../../utils/accessibility";
-import { BpdAmount } from "../../../../../store/actions/amount";
+import { BpdAmount } from "../../../../../saga/networking/amount";
 import { BpdPeriod } from "../../../../../store/actions/periods";
 import {
   eligibleAmount,

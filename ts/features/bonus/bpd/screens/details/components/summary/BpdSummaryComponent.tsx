@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { profileNameSelector } from "../../../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { BpdAmount } from "../../../../store/actions/amount";
+import { BpdAmount } from "../../../../saga/networking/amount";
 import { BpdPeriod } from "../../../../store/actions/periods";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import { TextualSummary } from "./TextualSummary";

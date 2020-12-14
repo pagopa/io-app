@@ -8,7 +8,7 @@ import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { FOUR_UNICODE_CIRCLES } from "../../../../../../utils/wallet";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
-import { BpdAmount } from "../../actions/amount";
+import { BpdAmount } from "../../../saga/networking/amount";
 import { BpdPaymentMethodActivation } from "../../actions/paymentMethods";
 import { BpdPeriod } from "../../actions/periods";
 import { BpdTransaction } from "../../actions/transactions";
