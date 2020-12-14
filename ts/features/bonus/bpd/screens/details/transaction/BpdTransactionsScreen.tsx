@@ -14,7 +14,6 @@ import {
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
-import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
