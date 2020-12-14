@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     alignContent: "center"
   },
+  alignCenter: { alignSelf: "center" },
   text: { marginLeft: 16, flex: 1 }
 });
 
@@ -42,8 +43,8 @@ export const statusColorMap: Record<SectionStatus["level"], string> = {
 
 const statusIconMap: Record<SectionStatus["level"], string> = {
   normal: "io-complete",
-  critical: "io-notice",
-  warning: "io-notice"
+  critical: "io-warning",
+  warning: "io-info"
 };
 const iconSize = 24;
 const color = IOColors.white;
@@ -70,7 +71,6 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   }
 
   const sectionStatus = props.sectionStatus;
-
   const iconName = statusIconMap[sectionStatus.level];
   const backgroundColor = statusColorMap[sectionStatus.level];
   const locale = getSectionMessageLocale();
@@ -84,7 +84,7 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
           name={iconName}
           size={iconSize}
           color={color}
-          style={{ alignSelf: "center" }}
+          style={styles.alignCenter}
         />
         <Label color={"white"} style={styles.text} weight={"Regular"}>
           {sectionStatus.message[locale]}
