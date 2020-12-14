@@ -73,35 +73,49 @@ export function* prefetchBpdData() {
   // }
 }
 
+/**
+ * Load the periods list with the amount information foreach period (active or closed)
+ * @param awardPeriods
+ * @param totalCashback
+ */
 export function* loadPeriodsAmount(
   awardPeriods: ReturnType<typeof BackendBpdClient>["awardPeriods"],
   totalCashback: ReturnType<typeof BackendBpdClient>["totalCashback"]
 ) {
+  // Request the period list
   const maybePeriods: SagaCallReturnType<typeof bpdLoadPeriodsSaga> = yield call(
     bpdLoadPeriodsSaga,
     awardPeriods
   );
 
   if (maybePeriods.isLeft()) {
+    // Error while receiving the period list
     yield put(bpdPeriodsAmountLoad.failure(maybePeriods.value));
   } else {
     const periods = maybePeriods.value;
+
+    // request the amounts for all the required periods
     const amounts: ReadonlyArray<SagaCallReturnType<
       typeof bpdLoadAmountSaga
     >> = yield all(
       periods
+        // no need to request the inactive period, the amount and transaction number is always 0
         .filter(p => p.status !== "Inactive")
         .map(period =>
           call(bpdLoadAmountSaga, totalCashback, period.awardPeriodId)
         )
     );
 
+    // Check if the required period amount are without error
+    // With a single error, we can't display the periods list
     if (amounts.some(a => a.isLeft())) {
       yield put(
         bpdPeriodsAmountLoad.failure(new Error("Error while loading amounts"))
       );
     }
 
+    // the transactionNumber and totalCashback for inactive (future) period is 0, no need to request
+    // creating the static response
     const amountWithInactivePeriod = [
       ...periods
         .filter(p => p.status === "Inactive")
@@ -115,6 +129,7 @@ export function* loadPeriodsAmount(
       ...amounts
     ];
 
+    // compose the period with the amount information
     const periodsWithAmount = amountWithInactivePeriod.filter(isRight).reduce(
       (acc, curr) =>
         findFirst(
@@ -129,7 +144,6 @@ export function* loadPeriodsAmount(
         ]),
       [] as ReadonlyArray<BpdPeriodWithAmount>
     );
-    console.log(periodsWithAmount);
     yield put(bpdPeriodsAmountLoad.success(periodsWithAmount));
   }
 }
