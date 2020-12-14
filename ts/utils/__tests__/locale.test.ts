@@ -62,7 +62,7 @@ describe("localeDateFormat on locale", () => {
       "17 maggio 1995",
       "17 May 1995"
     ],
-    [() => I18n.t("global.dateFormats.fullMonthLiteral"), "Maggio", "May"],
+    [() => I18n.t("global.dateFormats.fullMonthLiteral"), "maggio", "May"],
     [
       () => I18n.t("global.dateFormats.fullMonthLiteralWithYear"),
       "maggio 1995",
