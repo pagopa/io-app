@@ -1935,12 +1935,22 @@ bonus:
       transaction:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
+        noPaymentMethod:
+          text1: "Devi attivare "
+          text2: "almeno un metodo di pagamento "
+          text3: "al Cashback per iniziare a collezionare le transazioni necessarie"
         detail:
-          empty: "Qui visualizzerai le transazioni valide ai fini del Cashback: per ora non ci sono ancora transazioni valide. Controlla di nuovo nei prossimi giorni!"
+          empty: 
+            text1: "Non ci sono ancora transazioni valide."
+            text2: "Controlla di nuovo nei prossimi giorni!"
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
-              body: "Le transazioni vengono collezionate il giorno dopo che i circuiti bancari le hanno contabilizzate.\n\n**Possono passare fino a 72 ore prima che tu veda la transazione su IO**, anche se di solito il processo è più rapido.\n\n**Potrebbe volerci un po’ di più nel caso in cui l’acquisto sia a ridosso del weekend o di qualche festività**, oppure in qualche altra condizione particolare.\n\nNon ti preoccupare: tutte le transazioni valide fatte durante il periodo del Cashback verranno collezionate e considerate per rimborsi e classifica!"
+              body: "**Sono già passati più di 5 giorni lavorativi?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione, i nostri sistemi la aggiungeranno il giorno successivo.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
+            calendarBlock:
+              text1: "Ti informiamo che prima che tu veda la transazione su IO, "
+              text2: "possono passare fino a 3 giorni lavorativi"
+              text3: ", in alcuni casi anche di più."
             lastUpdated: "Ultima transazione valida: "
             link: "Manca qualcosa?"
             body:
