@@ -7,10 +7,8 @@ import {
   closedPeriod,
   inactivePeriod
 } from "../__mock__/periods";
-import {
-  BpdPeriodAmount,
-  bpdPeriodsAmountWalletVisibleSelector
-} from "../details/combiner";
+import { bpdPeriodsAmountWalletVisibleSelector } from "../details/combiner";
+import { BpdPeriodAmount } from "../details/periods";
 
 const inactivePeriodA: BpdPeriodAmount = {
   amount: zeroAmount,

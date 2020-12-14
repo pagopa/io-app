@@ -1,5 +1,5 @@
 import { NavigationActions } from "react-navigation";
-import { BpdPeriodAmount } from "../store/reducers/details/combiner";
+import { BpdPeriodAmount } from "../store/reducers/details/periods";
 import BPD_ROUTES from "./routes";
 
 export const navigateToBpdOnboardingLoadActivationStatus = () =>

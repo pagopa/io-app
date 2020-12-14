@@ -3,12 +3,11 @@ import { Action, combineReducers } from "redux";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { BpdTransaction } from "../../actions/transactions";
 import bpdActivationReducer, { BpdActivation } from "./activation";
-import { BpdPeriodAmount } from "./combiner";
 import {
   bpdPaymentMethodsReducer,
   BpdPotPaymentMethodActivation
 } from "./paymentMethods";
-import { bpdPeriodsReducer } from "./periods";
+import { BpdPeriodAmount, bpdPeriodsReducer } from "./periods";
 import { bpdSelectedPeriodsReducer } from "./selectedPeriod";
 import { bpdTransactionsReducer } from "./transactions";
 

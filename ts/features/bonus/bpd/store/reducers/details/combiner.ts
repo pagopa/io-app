@@ -8,23 +8,13 @@ import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { FOUR_UNICODE_CIRCLES } from "../../../../../../utils/wallet";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
-import { BpdAmount } from "../../../saga/networking/amount";
 import { BpdPaymentMethodActivation } from "../../actions/paymentMethods";
-import { BpdPeriod } from "../../actions/periods";
 import { BpdTransaction } from "../../actions/transactions";
 import { bpdEnabledSelector } from "./activation";
 import { bpdPaymentMethodActivationSelector } from "./paymentMethods";
-import { bpdPeriodsSelector } from "./periods";
+import { BpdPeriodAmount, bpdPeriodsSelector } from "./periods";
 import { bpdSelectedPeriodSelector } from "./selectedPeriod";
 import { bpdTransactionsForSelectedPeriod } from "./transactions";
-
-/**
- * Combine the period & amount
- */
-export type BpdPeriodAmount = {
-  period: BpdPeriod;
-  amount: BpdAmount;
-};
 
 /**
  * A period is visible in the wallet if the bpd is enabled AND the period is active OR

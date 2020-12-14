@@ -12,10 +12,8 @@ import { HorizontalScroll } from "../../../../../components/HorizontalScroll";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { BpdCardComponent } from "../../components/bpdCardComponent/BpdCardComponent";
 import { bpdSelectPeriod } from "../../store/actions/selectedPeriod";
-import {
-  BpdPeriodAmount,
-  bpdPeriodsAmountWalletVisibleSelector
-} from "../../store/reducers/details/combiner";
+import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
+import { BpdPeriodAmount } from "../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &

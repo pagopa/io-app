@@ -1,6 +1,6 @@
 import { IUnitTag } from "italia-ts-commons/lib/units";
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { BpdPeriodAmount } from "../reducers/details/combiner";
+import { BpdPeriodAmount } from "../reducers/details/periods";
 
 export type AwardPeriodId = number & IUnitTag<"AwardPeriodId">;
 

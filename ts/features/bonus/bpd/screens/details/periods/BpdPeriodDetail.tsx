@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { BpdPeriodAmount } from "../../../store/reducers/details/combiner";
+import { BpdPeriodAmount } from "../../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
 import BpdActivePeriod from "./BpdActivePeriod";
 import BpdClosedPeriod from "./BpdClosedPeriod";

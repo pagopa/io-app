@@ -5,7 +5,7 @@ import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import BPD_ROUTES from "../../../navigation/routes";
 import { bpdSelectPeriod } from "../../actions/selectedPeriod";
-import { BpdPeriodAmount } from "./combiner";
+import { BpdPeriodAmount } from "./periods";
 
 /**
  * Store the current period selected by the user (current displayed)

@@ -1,5 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { BpdPeriodAmount } from "../reducers/details/combiner";
+import { BpdPeriodAmount } from "../reducers/details/periods";
 
 /**
  * Request the period list

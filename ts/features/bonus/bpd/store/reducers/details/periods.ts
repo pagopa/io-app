@@ -5,8 +5,20 @@ import { Action } from "../../../../../../store/actions/types";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { isDefined } from "../../../../../../utils/guards";
-import { AwardPeriodId, bpdPeriodsAmountLoad } from "../../actions/periods";
-import { BpdPeriodAmount } from "./combiner";
+import { BpdAmount } from "../../../saga/networking/amount";
+import {
+  AwardPeriodId,
+  BpdPeriod,
+  bpdPeriodsAmountLoad
+} from "../../actions/periods";
+
+/**
+ * Combine the period & amount
+ */
+export type BpdPeriodAmount = {
+  period: BpdPeriod;
+  amount: BpdAmount;
+};
 
 /**
  * Store all the cashback periods with amounts

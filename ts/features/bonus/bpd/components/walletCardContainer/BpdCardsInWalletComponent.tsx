@@ -8,10 +8,8 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { navigateToBpdDetails } from "../../navigation/actions";
 import { bpdDetailsLoadAll } from "../../store/actions/details";
-import {
-  BpdPeriodAmount,
-  bpdPeriodsAmountWalletVisibleSelector
-} from "../../store/reducers/details/combiner";
+import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
+import { BpdPeriodAmount } from "../../store/reducers/details/periods";
 import { BpdCardComponent } from "../bpdCardComponent/BpdCardComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
