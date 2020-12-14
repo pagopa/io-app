@@ -162,9 +162,12 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdAmountLoad.request):
       return mp.track(action.type, { awardPeriodId: action.payload });
     case getType(bpdAmountLoad.success):
-    case getType(bpdSelectPeriod): // SelectedPeriod
       return mp.track(action.type, {
         awardPeriodId: action.payload.awardPeriodId
+      });
+    case getType(bpdSelectPeriod): // SelectedPeriod
+      return mp.track(action.type, {
+        awardPeriodId: action.payload.period.awardPeriodId
       });
 
     // Period
