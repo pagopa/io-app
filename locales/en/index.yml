@@ -1904,6 +1904,10 @@ bonus:
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
+        noPaymentMethod:
+          text1: "You must activate "
+          text2: "at least one payment method "
+          text3: "at Cashback to start collecting necessary transactions"
         detail:
           empty: 
             text1: "There are no valid transactions yet."
