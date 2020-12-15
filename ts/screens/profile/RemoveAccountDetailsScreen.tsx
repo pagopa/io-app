@@ -3,7 +3,7 @@ import { Content, Input, Item, Label, View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
@@ -23,6 +23,10 @@ import { shufflePinPadOnPayment } from "../../config";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { withKeyboard } from "../../utils/keyboard";
+import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
+import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
+import { getValue } from "../../features/bonus/bpd/model/RemoteValue";
+import { navigateToWalletHome } from "../../store/actions/navigation";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
@@ -68,22 +72,59 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
 
   const [otherMotivation, setOtherMotivation] = React.useState<string>("");
 
+  const handleContinuePress = () => {
+    const hasActiveBonus =
+      props.bvActiveBonus || getValue(props.bpdActiveBonus);
+
+    if (hasActiveBonus) {
+      Alert.alert(
+        I18n.t("profile.main.privacy.removeAccount.alert.activeBonusTitle"),
+        I18n.t(
+          "profile.main.privacy.removeAccount.alert.activeBonusDescription"
+        ),
+        [
+          {
+            text: I18n.t(
+              "profile.main.privacy.removeAccount.alert.cta.manageBonus"
+            ),
+            style: "default",
+            onPress: props.navigateToWalletHomeScreen
+          },
+          {
+            text: I18n.t(
+              "profile.main.privacy.removeAccount.alert.cta.continue"
+            ),
+            style: "cancel",
+            onPress: () => {
+              handleSendMotivaiton(selectedMotivation);
+            }
+          }
+        ]
+      );
+    } else {
+      handleSendMotivaiton(selectedMotivation);
+    }
+  };
+
+  const handleSendMotivaiton = (
+    selectedMotivation: RemoveAccountMotivationEnum
+  ) => {
+    switch (selectedMotivation) {
+      case RemoveAccountMotivationEnum.OTHERS:
+        // Only the "others" reason allow to insert a custom text
+        props.requestIdentification({
+          reason: selectedMotivation,
+          userText: otherMotivation
+        });
+        break;
+      default:
+        props.requestIdentification({ reason: selectedMotivation });
+    }
+  };
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => {
-      switch (selectedMotivation) {
-        case RemoveAccountMotivationEnum.OTHERS:
-          // Only the "others" reason allow to insert a custom text
-          props.requestIdentification({
-            reason: selectedMotivation,
-            userText: otherMotivation
-          });
-          break;
-        default:
-          props.requestIdentification({ reason: selectedMotivation });
-      }
-    },
+    onPress: handleContinuePress,
     title: I18n.t("profile.main.privacy.removeAccount.info.cta")
   };
 
@@ -180,17 +221,22 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
           },
           shufflePinPadOnPayment
         )
-      )
+      ),
+    navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome())
   };
 };
 
 const mapStateToProps = (state: GlobalState) => {
+  const bpdActiveBonus = bpdEnabledSelector(state);
+  const bvActiveBonus = allBonusActiveSelector(state).length > 0;
   const userDataProcessing = userDataProcessingSelector(state);
   const isLoading =
     pot.isLoading(userDataProcessing.DELETE) ||
     pot.isUpdating(userDataProcessing.DELETE);
   const isError = pot.isError(userDataProcessing.DELETE);
   return {
+    bvActiveBonus,
+    bpdActiveBonus,
     userDataProcessing,
     isLoading,
     isError
