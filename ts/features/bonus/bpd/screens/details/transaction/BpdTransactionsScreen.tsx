@@ -28,8 +28,6 @@ import {
   BpdTransactionItem,
   EnhancedBpdTransaction
 } from "../../../components/transactionItem/BpdTransactionItem";
-import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
-import { bpdAmountForSelectedPeriod } from "../../../store/reducers/details/amounts";
 import {
   atLeastOnePaymentMethodHasBpdEnabledSelector,
   bpdDisplayTransactionsSelector,
@@ -250,21 +248,19 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
         <ScrollView style={[IOStyles.flex]}>
           <View style={IOStyles.horizontalContentPadding}>
             <View spacer={true} />
-            {pot.isSome(props.selectedAmount) &&
-              props.selectedPeriod &&
-              maybeLastUpdateDate.isSome() && (
-                <>
-                  <BpdTransactionSummaryComponent
-                    lastUpdateDate={localeDateFormat(
-                      maybeLastUpdateDate.value,
-                      I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
-                    )}
-                    period={props.selectedPeriod}
-                    totalAmount={props.selectedAmount.value}
-                  />
-                  <View spacer={true} />
-                </>
-              )}
+            {props.selectedPeriod && maybeLastUpdateDate.isSome() && (
+              <>
+                <BpdTransactionSummaryComponent
+                  lastUpdateDate={localeDateFormat(
+                    maybeLastUpdateDate.value,
+                    I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+                  )}
+                  period={props.selectedPeriod}
+                  totalAmount={props.selectedPeriod.amount}
+                />
+                <View spacer={true} />
+              </>
+            )}
           </View>
           {props.selectedPeriod &&
             (transactions.length > 0 ? (
@@ -305,7 +301,6 @@ const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
   transactionForSelectedPeriod: bpdDisplayTransactionsSelector(state),
   selectedPeriod: bpdSelectedPeriodSelector(state),
-  selectedAmount: bpdAmountForSelectedPeriod(state),
   potWallets: paymentMethodsWithActivationStatusSelector(state),
   atLeastOnePaymentMethodActive: atLeastOnePaymentMethodHasBpdEnabledSelector(
     state
