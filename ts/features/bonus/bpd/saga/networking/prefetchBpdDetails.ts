@@ -20,8 +20,8 @@ import { bpdLoadPeriodsSaga } from "./periods";
  * - Activation Status
  * - Abi list
  * - Periods
- * - Amount foreach periods
- * - Transactions foreach period
+ * - Amount foreach period !== "Inactive"
+ * - Transactions foreach period !== "Inactive"
  */
 export function* prefetchBpdData() {
   yield put(bpdLoadActivationStatus.request());
