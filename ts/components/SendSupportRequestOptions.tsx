@@ -20,7 +20,7 @@ type Props = {
   onClose: () => void;
   onGoBack: () => void;
   onContinue: (options: SupportRequestOptions) => void;
-  initialScreenshotCheckboxValue: boolean | undefined;
+  initialScreenshotCheckboxValue?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -143,7 +143,7 @@ const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
         leftButton={continueButtonProps(() =>
           onContinue({
             sendPersonalInfo,
-            sendScreenshot: sendScreenshot as boolean
+            sendScreenshot
           })
         )}
       />

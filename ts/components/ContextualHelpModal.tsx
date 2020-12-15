@@ -185,7 +185,6 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
       <Container>
         {showSendPersonalInfo ? (
           <SendSupportRequestOptions
-            initialScreenshotCheckboxValue={false}
             onClose={onClose}
             onGoBack={() => setShowSendPersonalInfo(false)}
             onContinue={handleContinue}
