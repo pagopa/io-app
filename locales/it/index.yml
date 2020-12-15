@@ -1960,7 +1960,7 @@ bonus:
             calendarBlock:
               text1: "Ti informiamo che prima che tu veda la transazione su IO, "
               text2: "possono passare in media 3 giorni lavorativi"
-              text3: ", in alcuni casi anche di più."
+              text3: "."
             lastUpdated: "Ultima transazione valida: "
             link: "Manca qualcosa?"
             body:
