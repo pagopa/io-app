@@ -52,6 +52,8 @@ date:
     - "am"
     - "pm"
 global:
+  badges:
+    blocked: "Blocked"
   password: Password
   username: Username
   unknown: unknown
@@ -789,6 +791,7 @@ wallet:
         bodyPlural: "We found {{number}} cards registered to you. Continue to add this card skip to cancel the operation."
         loading: "We are adding your PagoBANCOMAT card\n\nPlease hold on..."
         warning: "If you don't find all the cards of your own, you can try to add the missing one at a later time by selecting the Bank where you have your personal account."
+        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
       bpd:
         suggestActivation:
           title: "Do you want to activate Cashback?"
@@ -1125,6 +1128,7 @@ saveCard:
   favoriteText: This payment method will be automatically prompt on the next payment
 cardComponent:
   validUntil: Valid until
+  expiresOn: Expires on
   expiredCard: CARD EXPIRED ON
   actions: Actions
   setFavourite: Set as favourite
