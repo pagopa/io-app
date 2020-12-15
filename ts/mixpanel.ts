@@ -1,5 +1,6 @@
 import DeviceInfo from "react-native-device-info";
 import { MixpanelInstance } from "react-native-mixpanel";
+import { Platform } from "react-native";
 import { mixpanelToken } from "./config";
 import { isScreenReaderEnabled } from "./utils/accessibility";
 import { getAppVersion } from "./utils/appVersion";
@@ -36,7 +37,12 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
 
 export const setMixpanelPushNotificationToken = (token: string) => {
   if (mixpanel) {
-    return mixpanel.setPushRegistrationId(token);
+    if (Platform.OS === "ios") {
+      return mixpanel.addPushDeviceToken(token);
+    }
+    if (Platform.OS === "android") {
+      return mixpanel.setPushRegistrationId(token);
+    }
   }
   return Promise.resolve();
 };
