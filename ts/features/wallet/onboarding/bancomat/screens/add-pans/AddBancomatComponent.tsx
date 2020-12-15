@@ -4,10 +4,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
-import {
-  Card,
-  ValidityStateEnum
-} from "../../../../../../../definitions/pagopa/walletv2/Card";
+import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
