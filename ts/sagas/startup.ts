@@ -43,6 +43,7 @@ import { clearNotificationPendingMessage } from "../store/actions/notifications"
 import { clearOnboarding } from "../store/actions/onboarding";
 import {
   clearCache,
+  loadBonusBeforeRemoveAccount,
   removeAccountMotivation,
   resetProfileState
 } from "../store/actions/profile";
@@ -73,6 +74,7 @@ import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import {
   handleRemoveAccount,
+  handleLoadBonusBeforeRemoveAccount,
   loadProfile,
   watchProfile,
   watchProfileRefreshRequestsSaga,
@@ -262,6 +264,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     backendClient.getSupportToken
   );
 
+  // Sart watching for request of remove profile
+  yield takeEvery(
+    loadBonusBeforeRemoveAccount,
+    handleLoadBonusBeforeRemoveAccount
+  );
   // Sart watching for request of remove profile
   yield takeEvery(removeAccountMotivation, handleRemoveAccount);
   // Start watching for requests of abort the onboarding

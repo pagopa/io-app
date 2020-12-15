@@ -38,7 +38,14 @@ import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferen
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
-import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
+import {
+  navigateToRemoveAccountDetailScreen,
+  navigateToRemoveAccountSuccess
+} from "../store/actions/navigation";
+import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { bpdLoadActivationStatus } from "../features/bonus/bpd/store/actions/details";
+import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
+import { getValue } from "../features/bonus/bpd/model/RemoteValue";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -267,6 +274,32 @@ export function* watchProfile(
   );
   // check the loaded profile
   yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
+}
+
+export function* handleLoadBonusBeforeRemoveAccount() {
+  const bpdActive: ReturnType<typeof bpdEnabledSelector> = yield select(
+    bpdEnabledSelector
+  );
+
+  // If the bpd status is undefined means that the user is not entered in the wallet yet.
+  if (getValue(bpdActive) === undefined) {
+    // Load the bonus data
+    yield put(loadAllBonusActivations.request());
+
+    yield take([
+      loadAllBonusActivations.success,
+      loadAllBonusActivations.failure
+    ]);
+
+    yield put(bpdLoadActivationStatus.request());
+
+    yield take([
+      bpdLoadActivationStatus.success,
+      bpdLoadActivationStatus.failure
+    ]);
+  }
+
+  yield put(navigateToRemoveAccountDetailScreen());
 }
 
 // watch for action of removing account
