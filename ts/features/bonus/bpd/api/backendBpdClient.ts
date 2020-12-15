@@ -233,7 +233,7 @@ const updatePaymentMethodT = (
   token: string,
   payload: CitizenPatchDTO,
   headers: Record<string, string>
-): (() => Promise<t.Validation<finalType>>) => () =>
+): (() => Promise<t.Validation<finalType> | undefined>) => () =>
   new Promise((res, rej) => {
     options
       .fetchApi(`${options.baseUrl}/bpd/io/citizen`, {
