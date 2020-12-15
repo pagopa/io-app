@@ -46,31 +46,11 @@ export function* prefetchBpdData() {
 
   if (periods.type === getType(bpdPeriodsAmountLoad.success)) {
     yield all(
-      periods.payload.map(period =>
-        put(bpdTransactionsLoad.request(period.awardPeriodId))
-      )
+      periods.payload
+        .filter(p => p.status !== "Inactive")
+        .map(period => put(bpdTransactionsLoad.request(period.awardPeriodId)))
     );
   }
-
-  // const result: ActionType<
-  //   typeof bpdPeriodsLoad.success | typeof bpdPeriodsLoad.failure
-  // > = yield take([
-  //   getType(bpdPeriodsLoad.success),
-  //   getType(bpdPeriodsLoad.failure)
-  // ]);
-  //
-  // if (result.type === getType(bpdPeriodsLoad.success)) {
-  //   yield all(
-  //     result.payload.map(period =>
-  //       put(bpdAmountLoad.request(period.awardPeriodId))
-  //     )
-  //   );
-  //   yield all(
-  //     result.payload.map(period =>
-  //       put(bpdTransactionsLoad.request(period.awardPeriodId))
-  //     )
-  //   );
-  // }
 }
 
 /**
@@ -78,7 +58,10 @@ export function* prefetchBpdData() {
  * @param bpdClient
  */
 export function* loadPeriodsAmount(
-  bpdClient: ReturnType<typeof BackendBpdClient>
+  bpdClient: Pick<
+    ReturnType<typeof BackendBpdClient>,
+    "awardPeriods" | "totalCashback"
+  >
 ) {
   // Request the period list
   const maybePeriods: SagaCallReturnType<typeof bpdLoadPeriodsSaga> = yield call(
@@ -110,6 +93,7 @@ export function* loadPeriodsAmount(
       yield put(
         bpdPeriodsAmountLoad.failure(new Error("Error while loading amounts"))
       );
+      return;
     }
 
     // the transactionNumber and totalCashback for inactive (future) period is 0, no need to request
