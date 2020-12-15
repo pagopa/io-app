@@ -1050,7 +1050,7 @@ wallet:
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
     digital:
       name: App e strumenti di pagamento digitali
-      description: Usa i tuoi strumenti digitali preferiti per pagare su IO
+      description: I tuoi strumenti digitali preferiti su IO
     pagobancomat:
       name: Carta PagoBANCOMAT
       description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
