@@ -1,17 +1,17 @@
 import { Content } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-
-import { NavigationScreenProps } from "react-navigation";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
-import ROUTES from "../../navigation/routes";
+import { loadBonusBeforeRemoveAccount } from "../../store/actions/profile";
 
-type Props = NavigationScreenProps;
+type Props = ReturnType<typeof mapDispatchToProps>;
 
 /**
  * A screen to explain how the account removal works.
@@ -21,8 +21,8 @@ const RemoveAccountInfo: React.FunctionComponent<Props> = props => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () =>
-      props.navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS),
+    onPress: props.loadBonusAndProceed,
+    // props.navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS),
     title: I18n.t("profile.main.privacy.removeAccount.info.cta")
   };
 
@@ -46,5 +46,7 @@ const RemoveAccountInfo: React.FunctionComponent<Props> = props => {
     </BaseScreenComponent>
   );
 };
-
-export default RemoveAccountInfo;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadBonusAndProceed: () => dispatch(loadBonusBeforeRemoveAccount())
+});
+export default connect(undefined, mapDispatchToProps)(RemoveAccountInfo);
