@@ -7,13 +7,13 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import NoticeBox from "../../components/NoticeBox";
 import BaseScreenComponent, {
@@ -32,6 +32,7 @@ import {
   addWalletCreditCardInit,
   creditCardCheckout3dsRedirectionUrls,
   creditCardCheckout3dsSuccess,
+  fetchWalletsRequestWithExpBackoff,
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
@@ -39,6 +40,13 @@ import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import Checkout3DsComponent from "../modal/Checkout3DsModal";
+import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
+import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
+import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
+import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 type NavigationParams = Readonly<{
@@ -134,17 +142,44 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       title: I18n.t("global.buttons.back")
     };
 
-    return (
-      <BaseScreenComponent
-        goBack={true}
-        headerTitle={
-          isInPayment
-            ? I18n.t("wallet.saveCardInPayment.header")
-            : I18n.t("wallet.saveCard.header")
-        }
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_methods"]}
-      >
+    // shown when wallets pot is in error state
+    const walletsInErrorContent = (
+      <SafeAreaView style={IOStyles.flex}>
+        <InfoScreenComponent
+          image={renderInfoRasterImage(image)}
+          title={I18n.t("wallet.saveCard.loadWalletsErrorTitle")}
+          body={I18n.t("wallet.saveCard.loadWalletsErrorBody")}
+        />
+        <FooterStackButton
+          buttons={[
+            confirmButtonProps(() => {
+              // load wallets and navigate to wallet home
+              this.props.loadWallets();
+              this.props.navigateToWalletHome();
+            }, I18n.t("wallet.refreshWallet"))
+          ]}
+        />
+      </SafeAreaView>
+    );
+
+    // shown when any steps of credit card onboarding are in error state
+    const creditCardErrorContent = (
+      <LoadingErrorComponent
+        isLoading={false}
+        loadingCaption={""}
+        errorSubText={I18n.t("wallet.saveCard.temporarySubError")}
+        errorText={this.props.error.getOrElse("")}
+        onRetry={this.props.onRetry ?? constNull}
+        onAbort={this.goBack}
+      />
+    );
+    // this component is shown only in error case (wallet || credit card onboarding)
+    const errorContent = this.props.areWalletsInError
+      ? walletsInErrorContent
+      : creditCardErrorContent;
+
+    const noErrorContent = (
+      <>
         <Content noPadded={true} style={styles.paddedLR}>
           <CardComponent
             wallet={wallet}
@@ -197,6 +232,24 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             onCheckout3dsSuccess={this.props.creditCardCheckout3dsSuccess}
           />
         )}
+      </>
+    );
+    const error = this.props.error.isSome() || this.props.areWalletsInError;
+    return (
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={
+          isInPayment
+            ? I18n.t("wallet.saveCardInPayment.header")
+            : I18n.t("wallet.saveCard.header")
+        }
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet_methods"]}
+      >
+        {/* error could include credit card errors (add wallet (step-1) or verification (step-2))
+            and load wallets error too
+        */}
+        {error ? errorContent : noErrorContent}
       </BaseScreenComponent>
     );
   }
@@ -218,11 +271,16 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isLoading(walletById) ||
     pot.isLoading(psps);
 
+  // considering wallet error only when the fisrt two steps are completed and not in error
+  const areWalletsInError =
+    pot.isError(walletById) &&
+    pot.isSome(creditCardAddWallet) &&
+    pot.isSome(creditCardVerification);
+
   const error =
     (pot.isError(creditCardAddWallet) &&
       creditCardAddWallet.error.kind !== "ALREADY_EXISTS") ||
     pot.isError(creditCardVerification) ||
-    pot.isError(walletById) ||
     pot.isError(psps)
       ? some(I18n.t("wallet.saveCard.temporaryError"))
       : none;
@@ -230,6 +288,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     isLoading,
     error,
+    areWalletsInError,
     checkout3dsUrl: pot.isLoading(creditCardCheckout3ds)
       ? pot.toOption(creditCardCheckout3ds)
       : none,
@@ -285,6 +344,8 @@ const mapDispatchToProps = (
     }
   };
   return {
+    navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+    loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
     creditCardCheckout3dsSuccess: (redirectionUrl: ReadonlyArray<string>) => {
       dispatch(creditCardCheckout3dsRedirectionUrls(redirectionUrl));
@@ -353,6 +414,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(
-  withErrorModal(withLoadingSpinner(ConfirmCardDetailsScreen), (_: string) => _)
-);
+)(withLoadingSpinner(ConfirmCardDetailsScreen));
