@@ -4,11 +4,10 @@ import { Provider } from "react-redux";
 import * as React from "react";
 import { some } from "fp-ts/lib/Option";
 import { SectionStatus, SectionStatusKey } from "../../api/backendPublic";
-import SectionStatusComponent, {
-  statusColorMap
-} from "../SectionStatusComponent";
+import SectionStatusComponent from "../SectionStatusComponent";
 import I18n, { setLocale } from "../../i18n";
 import { openWebUrl } from "../../utils/url";
+import { IOColors } from "../core/variables/IOColors";
 
 jest.mock("../../utils/url");
 
@@ -61,6 +60,24 @@ describe("Section Status Component test different rendering states", () => {
     expect(moreInfo).toHaveTextContent(I18n.t("global.sectionStatus.moreInfo"));
   });
 
+  it("should be not tappable since web url is not defined", () => {
+    const noUrlStore = mockStore(
+      mockSectionStatusState("messages", {
+        ...sectionStatus,
+        web_url: undefined
+      })
+    );
+    const component = getComponent("messages", noUrlStore);
+    const wholeComponent = component.queryByTestId(
+      "SectionStatusComponentTouchable"
+    );
+    expect(wholeComponent).not.toBeNull();
+    if (wholeComponent) {
+      fireEvent.press(wholeComponent);
+      expect(openWebUrl).not.toHaveBeenCalled();
+    }
+  });
+
   it("should be tappable since web url is defined", () => {
     const component = getComponent("messages", store);
     const wholeComponent = component.queryByTestId(
@@ -73,11 +90,34 @@ describe("Section Status Component test different rendering states", () => {
     }
   });
 
-  it("should render the right color", () => {
+  it("should render the right color (normal)", () => {
     const component = getComponent("messages", store);
     const view = component.queryByTestId("SectionStatusComponentTouchable");
     expect(view).not.toBeNull();
-    expect(view).toHaveStyle({ backgroundColor: statusColorMap.normal });
+    expect(view).toHaveStyle({ backgroundColor: IOColors.aqua });
+  });
+
+  it("should render the right color (warning)", () => {
+    const warningStore = mockStore(
+      mockSectionStatusState("messages", { ...sectionStatus, level: "warning" })
+    );
+    const component = getComponent("messages", warningStore);
+    const view = component.queryByTestId("SectionStatusComponentTouchable");
+    expect(view).not.toBeNull();
+    expect(view).toHaveStyle({ backgroundColor: IOColors.orange });
+  });
+
+  it("should render the right color (critical)", () => {
+    const criticalStore = mockStore(
+      mockSectionStatusState("messages", {
+        ...sectionStatus,
+        level: "critical"
+      })
+    );
+    const component = getComponent("messages", criticalStore);
+    const view = component.queryByTestId("SectionStatusComponentTouchable");
+    expect(view).not.toBeNull();
+    expect(view).toHaveStyle({ backgroundColor: IOColors.red });
   });
 
   it("should be null", () => {
