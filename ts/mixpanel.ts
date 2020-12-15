@@ -46,3 +46,13 @@ export const setMixpanelPushNotificationToken = (token: string) => {
   }
   return Promise.resolve();
 };
+
+/**
+ * Track an event with properties
+ * @param event
+ * @param properties
+ */
+export const mixpanelTrack = (
+  event: string,
+  properties?: Record<string, unknown>
+) => mixpanel?.track(event, properties);
