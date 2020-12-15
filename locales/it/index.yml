@@ -52,6 +52,8 @@ date:
     - "am"
     - "pm"
 global:
+  badges:
+    blocked: "Bloccato"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
@@ -809,6 +811,7 @@ wallet:
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
         warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente."
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
       bpd:
         suggestActivation:
           title: "Vuoi attivare il Cashback?"
@@ -1153,6 +1156,7 @@ saveCard:
     di pagamento
 cardComponent:
   validUntil: Valida fino al
+  expiresOn: Scade il
   expiredCard: CARTA SCADUTA IL
   actions: Azioni
   setFavourite: Imposta come preferita
