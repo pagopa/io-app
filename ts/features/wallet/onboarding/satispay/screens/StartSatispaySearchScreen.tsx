@@ -1,6 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -18,12 +18,14 @@ import {
   walletAddSatispayBack,
   walletAddSatispayCancel
 } from "../store/actions";
+import { H1 } from "../../../../../components/core/typography/H1";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const loadLocales = () => ({
-  headerTitle: I18n.t("wallet.onboarding.satispay.headerTitle")
+  headerTitle: I18n.t("wallet.onboarding.satispay.headerTitle"),
+  title: I18n.t("wallet.onboarding.satispay.add.title")
 });
 
 /**
@@ -32,11 +34,13 @@ const loadLocales = () => ({
  * @constructor
  */
 const StartSatispaySearchScreen: React.FunctionComponent<Props> = props => {
-  const { headerTitle } = loadLocales();
+  const { headerTitle, title } = loadLocales();
   return (
     <BaseScreenComponent goBack={props.goBack} headerTitle={headerTitle}>
       <SafeAreaView style={IOStyles.flex}>
-        <View style={IOStyles.flex} />
+        <ScrollView>
+          <H1>{title}</H1>
+        </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(
