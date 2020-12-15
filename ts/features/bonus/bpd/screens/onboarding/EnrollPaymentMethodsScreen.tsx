@@ -49,8 +49,8 @@ const renderPaymentMethod = (
 
 /**
  * return a two button footer
- * left button is enabled when no payment methods are active
- * right button button is enabled when at least one payment method is active
+ * left button is enabled when no payment methods are BPD active
+ * right button button is enabled when at least one payment method is BPD active
  * @param props
  */
 const getFooter = (props: Props) => {
