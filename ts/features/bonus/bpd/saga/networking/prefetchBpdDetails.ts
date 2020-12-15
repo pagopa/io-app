@@ -112,20 +112,22 @@ export function* loadPeriodsAmount(
     ];
 
     // compose the period with the amount information
-    const periodsWithAmount = amountWithInactivePeriod.filter(isRight).reduce(
-      (acc, curr) =>
-        findFirst(
-          [...periods],
-          p => p.awardPeriodId === curr.value.awardPeriodId
-        ).fold(acc, period => [
-          ...acc,
-          {
-            ...period,
-            amount: curr.value
-          }
-        ]),
-      [] as ReadonlyArray<BpdPeriodWithAmount>
-    );
+    const periodsWithAmount = amountWithInactivePeriod
+      .filter(isRight)
+      .reduce<ReadonlyArray<BpdPeriodWithAmount>>(
+        (acc, curr) =>
+          findFirst(
+            [...periods],
+            p => p.awardPeriodId === curr.value.awardPeriodId
+          ).fold(acc, period => [
+            ...acc,
+            {
+              ...period,
+              amount: curr.value
+            }
+          ]),
+        []
+      );
     yield put(bpdPeriodsAmountLoad.success(periodsWithAmount));
   }
 }
