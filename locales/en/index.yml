@@ -1925,10 +1925,10 @@ bonus:
           summary:
             bottomSheet:
               title: "When will you find your transactions?"
-              body: "**Have more than 5 business days gone by already?**\n\n- Check to see if your bank has already **accounted** for the transaction, our systems will add it the next day.\n\n- The transaction may have been handled with the POS of a party (acquirer) **not yet contracted.** [Read more](https://io.italia.it/cashback/acquirer/)"
+              body: "**Still not seeing your transaction?**\n\n- Check if your bank has already **recorded** the transaction: data are sent to IO app within 5 working days from the recording.\n\n- The transaction may have been handled with the POS of a company (acquirer) **not affiliated yet.** [Read more](https://io.italia.it/cashback/acquirer/)"
             calendarBlock:
-              text1: "Please note that before you see the transaction on IO, "
-              text2: "it can take up to 3 working days"
+              text1: "Please note that before you'll see the transaction on IO, "
+              text2: "it usually takes up 3 working days"
               text3: ", in some cases even more."
             lastUpdated: "Latest valid transaction: "
             link: Anything missing?
