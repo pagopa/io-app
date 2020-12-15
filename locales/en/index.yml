@@ -730,6 +730,7 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Wallet
+  refreshWallet: Refresh the Wallet
   incoming:
     title: "Upcoming"
     message: "This payment method will be available in a future release"
@@ -878,7 +879,10 @@ wallet:
     info: This payment method will be automatically proposed for the next payment
     save: Save
     notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
-    temporaryError: There was a temporary problem while saving this card, please retry.
+    temporaryError: There was a problem while saving this card.
+    temporarySubError: We have not received a response from the security systems. We apologize for the inconvenience.
+    loadWalletsErrorTitle: Systems are taking longer than expected
+    loadWalletsErrorBody: We have not received a response from the security systems, but your card may have been added. Update your wallet before trying again.
     loadingAlert: I am checking your card data..
   saveCardInPayment:
     header: Pay with this card
