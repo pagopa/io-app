@@ -5,35 +5,46 @@ import { Action } from "../../../../../../store/actions/types";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { isDefined } from "../../../../../../utils/guards";
+import { BpdAmount } from "../../../saga/networking/amount";
 import {
   AwardPeriodId,
   BpdPeriod,
-  bpdPeriodsLoad
+  bpdPeriodsAmountLoad
 } from "../../actions/periods";
 
 /**
- * Store all the cashback periods
+ * Combine the period & amount
+ */
+export type BpdPeriodWithAmount = BpdPeriod & {
+  amount: BpdAmount;
+};
+
+/**
+ * Store all the cashback periods with amounts
  * @param state
  * @param action
  */
 export const bpdPeriodsReducer = (
-  state: pot.Pot<IndexedById<BpdPeriod>, Error> = pot.none,
+  state: pot.Pot<IndexedById<BpdPeriodWithAmount>, Error> = pot.none,
   action: Action
-): pot.Pot<IndexedById<BpdPeriod>, Error> => {
+): pot.Pot<IndexedById<BpdPeriodWithAmount>, Error> => {
   switch (action.type) {
-    case getType(bpdPeriodsLoad.request):
+    case getType(bpdPeriodsAmountLoad.request):
       return pot.toLoading(state);
-    case getType(bpdPeriodsLoad.success):
+    case getType(bpdPeriodsAmountLoad.success):
       return pot.some(
         action.payload.reduce(
-          (acc: IndexedById<BpdPeriod>, curr: BpdPeriod) => ({
+          (
+            acc: IndexedById<BpdPeriodWithAmount>,
+            curr: BpdPeriodWithAmount
+          ) => ({
             ...acc,
             [curr.awardPeriodId]: curr
           }),
           {}
         )
       );
-    case getType(bpdPeriodsLoad.failure):
+    case getType(bpdPeriodsAmountLoad.failure):
       return pot.toError(state, action.payload);
   }
 
@@ -45,7 +56,7 @@ export const bpdPeriodsReducer = (
  */
 export const bpdPeriodsSelector = createSelector(
   [(state: GlobalState) => state.bonus.bpd.details.periods],
-  potValue =>
+  (potValue): pot.Pot<ReadonlyArray<BpdPeriodWithAmount>, Error> =>
     pot.map(potValue, potValue => Object.values(potValue).filter(isDefined))
 );
 
@@ -57,7 +68,7 @@ export const bpdPeriodsSelector = createSelector(
 const bpdPeriodByIdRawSelector = (
   state: GlobalState,
   id: AwardPeriodId
-): pot.Pot<BpdPeriod | undefined, Error> =>
+): pot.Pot<BpdPeriodWithAmount | undefined, Error> =>
   pot.map(state.bonus.bpd.details.periods, periodList => periodList[id]);
 
 /**
