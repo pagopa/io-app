@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
   badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",
-    width: 65,
     height: 25,
     flexDirection: "row"
   },
