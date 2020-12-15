@@ -78,20 +78,30 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
   return (
-    <TouchableWithoutFeedback onPress={() => maybeWebUrl.map(openWebUrl)}>
+    <TouchableWithoutFeedback
+      onPress={() => maybeWebUrl.map(openWebUrl)}
+      testID={"SectionStatusComponentTouchable"}
+    >
       <View style={[styles.container, { backgroundColor }]}>
         <IconFont
+          testID={"SectionStatusComponentIcon"}
           name={iconName}
           size={iconSize}
           color={color}
           style={styles.alignCenter}
         />
-        <Label color={"white"} style={styles.text} weight={"Regular"}>
+        <Label
+          color={"white"}
+          style={styles.text}
+          weight={"Regular"}
+          testID={"SectionStatusComponentLabel"}
+        >
           {sectionStatus.message[locale]}
           {/* ad an extra blank space if web url is present */}
           {maybeWebUrl.fold("", _ => " ")}
           {maybeWebUrl.fold(undefined, _ => (
             <Text
+              testID={"SectionStatusComponentMoreInfo"}
               style={{
                 color,
                 textDecorationLine: "underline",
