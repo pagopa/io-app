@@ -4,8 +4,6 @@ import { SafeAreaView, ScrollView } from "react-native";
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
-import { fromNullable } from "fp-ts/lib/Option";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
@@ -14,8 +12,7 @@ import I18n from "../../../../../../i18n";
 import { PaymentMethod } from "../../../../../../types/pagopa";
 import { PaymentMethodRawList } from "../../../../../bonus/bpd/components/paymentMethodActivationToggle/list/PaymentMethodRawList";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { bpdPaymentMethodActivationSelector } from "../../../../../bonus/bpd/store/reducers/details/paymentMethods";
-import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
+import { areAnyPaymentMethodsActiveSelector } from "../../../../../bonus/bpd/store/reducers/details/paymentMethods";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 
 type OwnProps = {
@@ -44,30 +41,17 @@ const loadLocales = () => ({
  */
 const getFooter = (props: Props) => {
   const { continueStr, skip } = loadLocales();
-  const { paymentMethods, bpdPaymentMethodsActivation } = props;
-  const paymentMethodsHash = paymentMethods.map(getPaymentMethodHash);
-  const atLeastOneActive = paymentMethodsHash.some(pmh =>
-    fromNullable(pmh)
-      .mapNullable(h => bpdPaymentMethodsActivation[h])
-      .map(potActivation =>
-        pot.getOrElse(
-          pot.map(potActivation, p => p.activationStatus === "active"),
-          false
-        )
-      )
-      .getOrElse(false)
-  );
   const notNowButtonProps = {
     primary: false,
     bordered: true,
-    disabled: atLeastOneActive,
+    disabled: props.areAnyPaymentMethodsActive,
     onPress: props.skip,
     title: skip
   };
   const continueButtonProps = {
     block: true,
     primary: true,
-    disabled: !atLeastOneActive,
+    disabled: !props.areAnyPaymentMethodsActive,
     onPress: props.skip,
     title: continueStr
   };
@@ -111,8 +95,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   skip: () => dispatch(NavigationActions.back())
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  bpdPaymentMethodsActivation: bpdPaymentMethodActivationSelector(state)
+const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
+  areAnyPaymentMethodsActive: areAnyPaymentMethodsActiveSelector(
+    props.paymentMethods
+  )(state)
 });
 
 export default connect(
