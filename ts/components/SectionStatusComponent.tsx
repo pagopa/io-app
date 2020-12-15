@@ -31,10 +31,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     alignContent: "center"
   },
+  alignCenter: { alignSelf: "center" },
   text: { marginLeft: 16, flex: 1 }
 });
 
-const statusColorMap: Record<SectionStatus["level"], string> = {
+export const statusColorMap: Record<SectionStatus["level"], string> = {
   normal: IOColors.aqua,
   critical: IOColors.red,
   warning: IOColors.orange
@@ -42,11 +43,17 @@ const statusColorMap: Record<SectionStatus["level"], string> = {
 
 const statusIconMap: Record<SectionStatus["level"], string> = {
   normal: "io-complete",
-  critical: "io-notice",
-  warning: "io-notice"
+  critical: "io-warning",
+  warning: "io-info"
 };
 const iconSize = 24;
 const color = IOColors.white;
+
+// if not italian, for all other languages english is the default
+export const getSectionMessageLocale = (): "it-IT" | "en-EN" =>
+  getLocalePrimary(I18n.currentLocale()).fold("en-EN", l =>
+    l === "it" ? "it-IT" : "en-EN"
+  );
 
 /**
  * this component shows a full width banner with an icon and text
@@ -55,7 +62,6 @@ const color = IOColors.white;
  * @param props
  * @constructor
  */
-
 const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   if (props.sectionStatus === undefined) {
     return null;
@@ -65,30 +71,37 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   }
 
   const sectionStatus = props.sectionStatus;
-  // if not italian, for all other languages english is the default
-  const locale = getLocalePrimary(I18n.currentLocale()).fold("en-EN", l =>
-    l === "it" ? "it-IT" : "en-EN"
-  );
   const iconName = statusIconMap[sectionStatus.level];
   const backgroundColor = statusColorMap[sectionStatus.level];
+  const locale = getSectionMessageLocale();
   const maybeWebUrl = maybeNotNullyString(
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
   return (
-    <TouchableWithoutFeedback onPress={() => maybeWebUrl.map(openWebUrl)}>
+    <TouchableWithoutFeedback
+      onPress={() => maybeWebUrl.map(openWebUrl)}
+      testID={"SectionStatusComponentTouchable"}
+    >
       <View style={[styles.container, { backgroundColor }]}>
         <IconFont
+          testID={"SectionStatusComponentIcon"}
           name={iconName}
           size={iconSize}
           color={color}
-          style={{ alignSelf: "center" }}
+          style={styles.alignCenter}
         />
-        <Label color={"white"} style={styles.text} weight={"Regular"}>
+        <Label
+          color={"white"}
+          style={styles.text}
+          weight={"Regular"}
+          testID={"SectionStatusComponentLabel"}
+        >
           {sectionStatus.message[locale]}
           {/* ad an extra blank space if web url is present */}
           {maybeWebUrl.fold("", _ => " ")}
           {maybeWebUrl.fold(undefined, _ => (
             <Text
+              testID={"SectionStatusComponentMoreInfo"}
               style={{
                 color,
                 textDecorationLine: "underline",

@@ -4,10 +4,9 @@
  */
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
-import { entries, range, size } from "lodash";
-import { Content, Item, Text, View } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
-import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -17,7 +16,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { cardIcons } from "../../components/wallet/card/Logo";
 import I18n from "../../i18n";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -36,6 +34,11 @@ import {
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { GlobalState } from "../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../store/reducers/profile";
+import { attachmentTypeConfigurationNoScreenshot } from "../../boot/configureInstabug";
+import { Link } from "../../components/core/typography/Link";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
+import { openWebUrl } from "../../utils/url";
+import { showToast } from "../../utils/showToast";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -92,7 +95,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.saveCard.contextualHelpContent"
 };
 
-const CARD_LOGOS_COLUMNS = 4;
 const EMPTY_CARD_HOLDER = "";
 const EMPTY_CARD_PAN = "";
 const EMPTY_CARD_EXPIRATION_DATE = "";
@@ -147,14 +149,7 @@ function getCardFromState(state: State): Option<CreditCard> {
   return some(card);
 }
 
-// list of cards to be displayed
-const displayedCards: { [key: string]: any } = {
-  MASTERCARD: cardIcons.MASTERCARD,
-  VISA: cardIcons.VISA,
-  VISAELECTRON: cardIcons.VISAELECTRON,
-  POSTEPAY: cardIcons.POSTEPAY,
-  AMEX: cardIcons.AMEX
-};
+const acceptedCardsPageURL: string = "https://io.italia.it/metodi-pagamento";
 
 class AddCardScreen extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -164,6 +159,12 @@ class AddCardScreen extends React.Component<Props, State> {
       holder: fromNullable(props.profileNameSurname)
     };
   }
+
+  private openSupportedCardsPage = (): void => {
+    openWebUrl(acceptedCardsPageURL, () =>
+      showToast(I18n.t("wallet.alert.supportedCardPageLinkError"))
+    );
+  };
 
   public render(): React.ReactNode {
     const primaryButtonPropsFromState = (
@@ -198,20 +199,13 @@ class AddCardScreen extends React.Component<Props, State> {
       title: I18n.t("global.buttons.back")
     };
 
-    const paddedDisplayedCards = entries(displayedCards).concat(
-      // padding with empty items so as to have a # of cols
-      // divisible by CARD_LOGOS_COLUMNS (to line them up properly)
-      range(
-        CARD_LOGOS_COLUMNS - (size(displayedCards) % CARD_LOGOS_COLUMNS)
-      ).map(_ => ["", undefined])
-    );
-
     const detectedBrand: SupportedBrand = CreditCardDetector.validate(
       this.state.pan
     );
 
     return (
       <BaseScreenComponent
+        reportAttachmentTypes={attachmentTypeConfigurationNoScreenshot}
         goBack={true}
         headerTitle={I18n.t("wallet.addCardTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
@@ -328,26 +322,13 @@ class AddCardScreen extends React.Component<Props, State> {
             </Grid>
 
             <View spacer={true} />
-            <Item style={styles.noBottomLine}>
-              <Text>{I18n.t("wallet.acceptedCards")}</Text>
-            </Item>
-            <Item last={true} style={styles.noBottomLine}>
-              <FlatList
-                numColumns={CARD_LOGOS_COLUMNS}
-                data={paddedDisplayedCards}
-                renderItem={({ item }) => (
-                  <View style={{ flex: 1, flexDirection: "row" }}>
-                    {item[1] && (
-                      <Image style={styles.addCardImage} source={item[1]} />
-                    )}
-                  </View>
-                )}
-                keyExtractor={item => item[0]}
-              />
-            </Item>
+
+            <Link onPress={this.openSupportedCardsPage}>
+              {I18n.t("wallet.openAcceptedCardsPageCTA")}
+            </Link>
           </Content>
         </ScrollView>
-
+        <SectionStatusComponent sectionKey={"credit_card"} />
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
           leftButton={secondaryButtonProps}

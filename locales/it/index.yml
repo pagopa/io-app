@@ -5,53 +5,55 @@ date:
     short: "%d %B"
     long: "%d %B %Y"
   day_names:
-    - "Domenica"
-    - "Lunedì"
-    - "Martedì"
-    - "Mercoledì"
-    - "Giovedì"
-    - "Venerdì"
-    - "Sabato"
+    - "domenica"
+    - "lunedì"
+    - "martedì"
+    - "mercoledì"
+    - "giovedì"
+    - "venerdì"
+    - "sabato"
   abbr_day_names:
-    - "Dom"
-    - "Lun"
-    - "Mar"
-    - "Mer"
-    - "Gio"
-    - "Ven"
-    - "Sab"
+    - "dom"
+    - "lun"
+    - "mar"
+    - "mer"
+    - "gio"
+    - "ven"
+    - "sab"
   month_names:
     - ""
-    - "Gennaio"
-    - "Febbraio"
-    - "Marzo"
-    - "Aprile"
-    - "Maggio"
-    - "Giugno"
-    - "Luglio"
-    - "Agosto"
-    - "Settembre"
-    - "Ottobre"
-    - "Novembre"
-    - "Dicembre"
+    - "gennaio"
+    - "febbraio"
+    - "marzo"
+    - "aprile"
+    - "maggio"
+    - "giugno"
+    - "luglio"
+    - "agosto"
+    - "settembre"
+    - "ottobre"
+    - "novembre"
+    - "dicembre"
   abbr_month_names:
     - ""
-    - "Gen"
-    - "Feb"
-    - "Mar"
-    - "Apr"
-    - "Mag"
-    - "Giu"
-    - "Lug"
-    - "Ago"
-    - "Set"
-    - "Ott"
-    - "Nov"
-    - "Dic"
+    - "gen"
+    - "feb"
+    - "mar"
+    - "apr"
+    - "mag"
+    - "giu"
+    - "lug"
+    - "ago"
+    - "set"
+    - "ott"
+    - "nov"
+    - "dic"
   meridian:
     - "am"
     - "pm"
 global:
+  badges:
+    blocked: "Bloccato"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
@@ -286,7 +288,7 @@ profile:
             return: Indietro
             cancel: Annulla l'eliminazione
         info:
-          body: "Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento\n\nTi informiamo che l'eliminazione del tuo acocunt è definitiva e avverrà entro 30 giorni dalla richiesta.\n\nSe decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.\nTi segnaliamo inoltre che eventuali bonus o sconti ottenuti tramite l'app IO non saranno più accessibili.\n\nPotrai iscriverti nuovamente all'App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE."
+          body: "Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento\n\nTi informiamo che l'eliminazione del tuo account è definitiva e avverrà entro 30 giorni dalla richiesta.\n\nSe decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.\nTi segnaliamo inoltre che eventuali bonus o sconti ottenuti tramite l'app IO non saranno più accessibili.\n\nPotrai iscriverti nuovamente all'App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE."
           cta: Continua
         details:
           body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
@@ -299,7 +301,7 @@ profile:
           cta: Elimina Account
         success:
           title: Stiamo processando la tua richiesta.
-          body: "La tua richiesta è stata presa in carico e  procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\nCliccando su Esci, la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
+          body: "La tua richiesta è stata presa in carico e procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\nPremendo 'Esci', la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
           cta: Esci
       exportData:
         cta: Richiedi copia dei tuoi dati
@@ -408,7 +410,7 @@ cie:
 spid:
   login: ACCEDI
   loginButton: ENTRA CON
-  selectIdp: Per procedere all'accesso, seleziona il gestione della tua identità SPID
+  selectIdp: Per procedere all'accesso, seleziona il gestore della tua identità SPID
   selectDemoIdp:
     Se non possiedi ancora una tua identità SPID, naviga l'app in modalità
     demo
@@ -712,6 +714,7 @@ lipsum:
 datetimes:
   yesterday: ieri
   todayAt: oggi, alle
+  notValid: Data non valida.
 payment:
   errorDetails: Dettagli
   currentPsp: Il PSP scelto è
@@ -747,6 +750,7 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Portafoglio
+  refreshWallet: Aggiorna il Portafoglio
   incoming:
     title: "In arrivo"
     message: "Una prossima versione di IO renderà disponibile anche questo metodo di pagamento"
@@ -763,11 +767,13 @@ wallet:
       detailTitle: Dettaglio
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
   searchAbi:
-    title: Aggiungi PagoBANCOMAT
+    header: Aggiungi PagoBANCOMAT
+    title: Ricerca delle tue carte PagoBANCOMAT
     description:
-      text1: Se vuoi, puoi indicare la banca
-      text2: " su cui hai un carta PagoBANCOMAT attiva. Altrimenti cercheremo tutte le carta associate a te: proseguendo accetti l’"
-      text3: informativa sul trattamento dei dati personali
+      text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
+      text2: informativa sul trattamento dei dati personali.
+      text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
+      text4: cercando fra quelle disponibili
     bankName: Denominazione della banca
     noName: Nome non disponibile
     loading: Carico la lista delle banche...
@@ -789,8 +795,8 @@ wallet:
         body: "Non risultano carte PagoBANCOMAT a te intestate: contatta la tua banca per maggiori informazioni."
       koNotFoundSingleBank:
         title: "Spiacenti, non abbiamo trovato nessuna carta su questa banca"
-        body: "Non risultano carte PagoBANCOMAT a te intestate: contatta la tua banca per maggiori informazioni."
-        chooseAnother: "Scegli un'altra banca"
+        body: "Non risultano carte PagoBANCOMAT a te intestate.\nSe lo desideri, IO può effettuare una ricerca tra tutte le banche."
+        continue: "Continua"
       koServicesError:
         title: "Non è stato possibile recuperare le carte: seleziona la tua banca"
         body: "Indica la banca che ha emesso la tua carta per vedere le lista delle carte PagoBANCOMAT a te intestate."
@@ -805,6 +811,7 @@ wallet:
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
         warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente."
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
       bpd:
         suggestActivation:
           title: "Vuoi attivare il Cashback?"
@@ -824,6 +831,7 @@ wallet:
       loadingAdd:
         title: "Stiamo aggiungendo il tuo account Satispay\n\nAttendi qualche secondo"
   alert:
+    supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
@@ -897,7 +905,10 @@ wallet:
       pagamento
     save: Salva
     notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
-    temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
+    temporaryError: Si è verificato un errore nel salvataggio di questa carta
+    temporarySubError: Non abbiamo ricevuto risposta dai sistemi di sicurezza. Ci scusiamo per il disagio.
+    loadWalletsErrorTitle: I sistemi stanno impiegando più tempo del previsto
+    loadWalletsErrorBody: Non abbiamo ricevuto risposta dai sistemi di sicurezza, ma la tua carta potrebbe essere stata aggiunta. Aggiorna il tuo portafoglio prima di riprovare.
     loadingAlert: Sto verificando le informazioni della tua carta...
   saveCardInPayment:
     header: Paga con questa carta
@@ -1066,6 +1077,7 @@ wallet:
       securityCode: "•••"
       securityCode4D: "••••"
   acceptedCards: Carte accettate
+  openAcceptedCardsPageCTA: Scopri le carte accettate
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
     chooser: Carica immagine dalla galleria
@@ -1120,7 +1132,7 @@ wallet:
         three: ", ma solo presso i punti fisici (POS)."
       debit:
         title: "La tua carta ha più di un logo?"
-        body: "Se oltre al logo PagoBANCOMAT è presente quello di un altro circuito (Maestro, MasterCard, Visa), puoi aggiungerla anche come **carta di debito o credito** digitando il numero stampato sul fronte. Le transazioni effettuate su questo circuito saranno valide per il Cashback e potrai usare la carta per pagare su IO."
+        body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerla anche come **carta di debito o di credito**, inserendo il numero della carta sul fronte. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi Carta di Debito/Credito"
       removeCta: "Elimina questo metodo di pagamento"
   satispay:
@@ -1144,6 +1156,7 @@ saveCard:
     di pagamento
 cardComponent:
   validUntil: Valida fino al
+  expiresOn: Scade il
   expiredCard: CARTA SCADUTA IL
   actions: Azioni
   setFavourite: Imposta come preferita
@@ -1831,7 +1844,7 @@ bonus:
     title: Cashback
     description: "Ottieni un rimborso quando paghi nei negozi con questo metodo"
     name: Cashback
-    earned: Cashback accumulato
+    earned: Importo accumulato
     cta:
       activeBonus: Attiva il Cashback
     unsubscribe:
@@ -1934,12 +1947,22 @@ bonus:
       transaction:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
+        noPaymentMethod:
+          text1: "Devi attivare "
+          text2: "almeno un metodo di pagamento "
+          text3: "al Cashback per iniziare a collezionare le transazioni necessarie"
         detail:
-          empty: "Qui visualizzerai le transazioni valide ai fini del Cashback: per ora non ci sono ancora transazioni valide. Controlla di nuovo nei prossimi giorni!"
+          empty: 
+            text1: "Non ci sono ancora transazioni valide."
+            text2: "Controlla di nuovo nei prossimi giorni!"
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
-              body: "Le transazioni vengono collezionate il giorno dopo che i circuiti bancari le hanno contabilizzate.\n\n**Possono passare fino a 72 ore prima che tu veda la transazione su IO**, anche se di solito il processo è più rapido.\n\n**Potrebbe volerci un po’ di più nel caso in cui l’acquisto sia a ridosso del weekend o di qualche festività**, oppure in qualche altra condizione particolare.\n\nNon ti preoccupare: tutte le transazioni valide fatte durante il periodo del Cashback verranno collezionate e considerate per rimborsi e classifica!"
+              body: "**Sono già passati più di 5 giorni lavorativi?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione, i nostri sistemi la aggiungeranno il giorno successivo.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
+            calendarBlock:
+              text1: "Ti informiamo che prima che tu veda la transazione su IO, "
+              text2: "possono passare fino a 3 giorni lavorativi"
+              text3: ", in alcuni casi anche di più."
             lastUpdated: "Ultima transazione valida: "
             link: "Manca qualcosa?"
             body:
@@ -1977,6 +2000,10 @@ bonus:
           body: "Hai aggiunto al Cashback questi metodi di pagamento direttamente dai canali messi a disposizione dalla tua banca o app di pagamenti. Puoi attivare o disattivare la registrazione delle transazioni di questi metodi anche da IO.\n
                  Se vuoi usare alcuni di questi metodi anche per pagare tramite IO, aggiungili al tuo portafoglio!"
           addWallet: "Aggiungi al portafoglio"
+          whyOtherCards:
+            title: "Perché vedo carte che non riconosco?"
+            body: "Non preoccuparti, si tratta delle versioni virtuali delle tue carte che Apple, Google e Samsung utilizzano per proteggere i tuoi acquisti effettuati tramite i loro ‘wallet’. Stiamo lavorando con i soggetti coinvolti nell’iniziativa per migliorare la visualizzazione sull’app IO di questo tipo di carte."
+            cta: "Scopri di più"
         notActivable:
           header: "Non attivabili o non compatibili"
           title: "Metodo non attivabile"
