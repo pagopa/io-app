@@ -24,7 +24,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
-import { isPlaygroundsEnabled } from "../../config";
+import { isPlaygroundsEnabled, shufflePinPadOnPayment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -32,6 +32,7 @@ import {
   sessionExpired
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
+import { identificationRequest } from "../../store/actions/identification";
 import {
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled
@@ -365,11 +366,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             sectionHeader={I18n.t("profile.main.accountSectionHeader")}
           />
 
-          {/* Reset unlock code */}
+          {/* Ask for verification and reset unlock code */}
           <ListItemComponent
             title={I18n.t("identification.unlockCode.reset.button_short")}
             subTitle={I18n.t("identification.unlockCode.reset.subtitle")}
-            onPress={this.props.resetPin}
+            onPress={this.props.requestIdentificationAndResetPin}
             hideIcon={true}
           />
 
@@ -545,7 +546,27 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // hard-logout
   logout: () => dispatch(logoutRequest({ keepUserData: false })),
-  resetPin: () => dispatch(updatePin()),
+  requestIdentificationAndResetPin: () => {
+    const onSuccess = () => dispatch(updatePin());
+
+    return dispatch(
+      identificationRequest(
+        true,
+        false,
+        {
+          message: ""
+        },
+        {
+          label: "",
+          onCancel: () => undefined
+        },
+        {
+          onSuccess
+        },
+        shufflePinPadOnPayment
+      )
+    );
+  },
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
