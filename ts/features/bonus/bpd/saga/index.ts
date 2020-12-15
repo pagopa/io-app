@@ -96,8 +96,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   yield takeEvery(
     bpdPeriodsAmountLoad.request,
     loadPeriodsAmount,
-    bpdBackendClient.awardPeriods,
-    bpdBackendClient.totalCashback
+    bpdBackendClient
   );
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program

@@ -75,17 +75,15 @@ export function* prefetchBpdData() {
 
 /**
  * Load the periods list with the amount information foreach period (active or closed)
- * @param awardPeriods
- * @param totalCashback
+ * @param bpdClient
  */
 export function* loadPeriodsAmount(
-  awardPeriods: ReturnType<typeof BackendBpdClient>["awardPeriods"],
-  totalCashback: ReturnType<typeof BackendBpdClient>["totalCashback"]
+  bpdClient: ReturnType<typeof BackendBpdClient>
 ) {
   // Request the period list
   const maybePeriods: SagaCallReturnType<typeof bpdLoadPeriodsSaga> = yield call(
     bpdLoadPeriodsSaga,
-    awardPeriods
+    bpdClient.awardPeriods
   );
 
   if (maybePeriods.isLeft()) {
@@ -102,7 +100,7 @@ export function* loadPeriodsAmount(
         // no need to request the inactive period, the amount and transaction number is always 0
         .filter(p => p.status !== "Inactive")
         .map(period =>
-          call(bpdLoadAmountSaga, totalCashback, period.awardPeriodId)
+          call(bpdLoadAmountSaga, bpdClient.totalCashback, period.awardPeriodId)
         )
     );
 
