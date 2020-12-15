@@ -1,6 +1,11 @@
 import { Input, Item, View } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItemInfo, ActivityIndicator } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  ActivityIndicator,
+  Keyboard
+} from "react-native";
 import { debounce } from "lodash";
 import I18n from "../../../../../../i18n";
 import { Label } from "../../../../../../components/core/typography/Label";
@@ -58,6 +63,7 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
       onPress={(abi: string) => {
         props.onItemPress(abi);
         setSearchText("");
+        Keyboard.dismiss();
       }}
     />
   );
@@ -97,7 +103,7 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
           data={filteredList}
           renderItem={renderListItem(true)}
           keyExtractor={keyExtractor}
-          keyboardShouldPersistTaps={"always"}
+          keyboardShouldPersistTaps={"handled"}
         />
       )}
     </>
