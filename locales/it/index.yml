@@ -52,6 +52,8 @@ date:
     - "am"
     - "pm"
 global:
+  badges:
+    blocked: "Bloccato"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
@@ -748,6 +750,7 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Portafoglio
+  refreshWallet: Aggiorna il Portafoglio
   incoming:
     title: "In arrivo"
     message: "Una prossima versione di IO renderà disponibile anche questo metodo di pagamento"
@@ -808,6 +811,7 @@ wallet:
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
         warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente."
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
       bpd:
         suggestActivation:
           title: "Vuoi attivare il Cashback?"
@@ -901,7 +905,10 @@ wallet:
       pagamento
     save: Salva
     notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
-    temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
+    temporaryError: Si è verificato un errore nel salvataggio di questa carta
+    temporarySubError: Non abbiamo ricevuto risposta dai sistemi di sicurezza. Ci scusiamo per il disagio.
+    loadWalletsErrorTitle: I sistemi stanno impiegando più tempo del previsto
+    loadWalletsErrorBody: Non abbiamo ricevuto risposta dai sistemi di sicurezza, ma la tua carta potrebbe essere stata aggiunta. Aggiorna il tuo portafoglio prima di riprovare.
     loadingAlert: Sto verificando le informazioni della tua carta...
   saveCardInPayment:
     header: Paga con questa carta
@@ -1149,6 +1156,7 @@ saveCard:
     di pagamento
 cardComponent:
   validUntil: Valida fino al
+  expiresOn: Scade il
   expiredCard: CARTA SCADUTA IL
   actions: Azioni
   setFavourite: Imposta come preferita
