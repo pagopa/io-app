@@ -5,6 +5,7 @@ import { Card } from "../../../../../../definitions/pagopa/walletv2/Card";
 import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
+import { isBancomatBlocked } from "../../../../../utils/paymentMethod";
 import BaseBancomatCard from "./BaseBancomatCard";
 
 type OnboardingData = { bancomat: Card; abi: Abi };
@@ -22,6 +23,7 @@ const PreviewBancomatCard: React.FunctionComponent<Props> = props => (
     abi={props.abi}
     expiringDate={props.bancomat.expiringDate}
     user={props.nameSurname ?? ""}
+    blocked={isBancomatBlocked(props.bancomat)}
   />
 );
 
