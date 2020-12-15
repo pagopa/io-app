@@ -25,6 +25,7 @@ import PreviewBancomatCard from "../../../../bancomat/component/bancomatCard/Pre
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { isBancomatBlocked } from "../../../../../../utils/paymentMethod";
 
 type Props = {
   pan: Card;
@@ -43,9 +44,6 @@ const styles = StyleSheet.create({
   title: { lineHeight: 33, alignSelf: "flex-start" },
   flexStart: { alignSelf: "flex-start" }
 });
-
-const isBancomatBlocked = (pan: Card) =>
-  pan.validityState === ValidityStateEnum.BR;
 
 const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiInfo, setAbiInfo] = React.useState<Abi>({});
