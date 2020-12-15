@@ -1,13 +1,14 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { NavigationEvents } from "react-navigation";
+import { NavigationActions, NavigationEvents } from "react-navigation";
+import { SafeAreaView } from "react-native";
+import { Content } from "native-base";
 import { withLightModalContext } from "../../../../../../components/helpers/withLightModalContext";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { LightModalContextInterface } from "../../../../../../components/ui/LightModal";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import {
   isError,
   isLoading,
@@ -15,20 +16,27 @@ import {
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiListSelector, abiSelector } from "../../../store/abi";
 import { navigateToOnboardingBancomatSearchAvailableUserBancomat } from "../../navigation/action";
-import {
-  loadAbi,
-  searchUserPans,
-  walletAddBancomatBack,
-  walletAddBancomatCancel
-} from "../../store/actions";
+import { loadAbi, searchUserPans } from "../../store/actions";
+import { fetchPagoPaTimeout } from "../../../../../../config";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
+import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import { cancelButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import SectionStatusComponent from "../../../../../../components/SectionStatusComponent";
 import { SearchBankComponent } from "./SearchBankComponent";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
+
+const renderFooterButtons = (onClose: () => void) => (
+  <FooterWithButtons
+    type={"SingleButton"}
+    leftButton={cancelButtonProps(onClose, I18n.t("global.buttons.close"))}
+  />
+);
+
 /**
  * This screen allows the user to choose a specific bank to search for their Bancomat.
- * the user can also choose not to specify any bank and search for all Bancomat in his name
  * @constructor
  */
 const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
@@ -38,41 +46,35 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     if (isUndefined(props.bankRemoveValue)) {
       props.loadAbis();
     } else if (isError(props.bankRemoveValue)) {
-      errorRetry = setTimeout(props.loadAbis, 2000);
+      errorRetry = setTimeout(props.loadAbis, fetchPagoPaTimeout);
     }
   }, [props.bankRemoveValue]);
 
-  const openTosModal = () => {
-    props.showModal(
-      <TosBonusComponent
-        tos_url={"https://io.italia.it/app-content/privacy_bancomat.html"}
-        onClose={props.hideModal}
-      />
-    );
-  };
-
   return (
     <BaseScreenComponent
-      goBack={props.onBack}
-      headerTitle={I18n.t("wallet.searchAbi.title")}
+      goBack={true}
+      headerTitle={I18n.t("wallet.searchAbi.header")}
+      contextualHelp={emptyContextualHelp}
     >
       <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
-      <SearchBankComponent
-        bankList={props.bankList}
-        isLoading={props.isLoading || props.isError}
-        onCancel={props.onCancel}
-        onContinue={() => props.searchPans()}
-        onItemPress={props.searchPans}
-        openTosModal={openTosModal}
-      />
+      <SafeAreaView style={{ flex: 1 }}>
+        <Content style={{ flex: 1 }}>
+          <SearchBankComponent
+            bankList={props.bankList}
+            isLoading={props.isLoading || props.isError}
+            onItemPress={props.searchPans}
+          />
+        </Content>
+        <SectionStatusComponent sectionKey={"bancomat"} />
+        {renderFooterButtons(props.onBack)}
+      </SafeAreaView>
     </BaseScreenComponent>
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAbis: () => dispatch(loadAbi.request()),
-  onCancel: () => dispatch(walletAddBancomatCancel()),
-  onBack: () => dispatch(walletAddBancomatBack()),
+  onBack: () => dispatch(NavigationActions.back()),
   searchPans: (abi?: string) => {
     dispatch(searchUserPans.request(abi));
     dispatch(navigateToOnboardingBancomatSearchAvailableUserBancomat());

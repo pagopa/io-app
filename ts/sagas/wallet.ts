@@ -74,6 +74,7 @@ import {
   fetchTransactionRequest,
   fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
+  fetchTransactionsRequestWithExpBackoff,
   fetchTransactionSuccess,
   pollTransactionSagaCompleted,
   pollTransactionSagaTimeout,
@@ -96,7 +97,8 @@ import {
   payCreditCardVerificationSuccess,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
-  setWalletSessionEnabled
+  setWalletSessionEnabled,
+  fetchWalletsRequestWithExpBackoff
 } from "../store/actions/wallet/wallets";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -149,6 +151,8 @@ import {
   searchUserSatispay,
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
+import { ContentClient } from "../api/content";
+import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -584,7 +588,8 @@ export function* watchWalletSaga(
   const paymentManagerClient: PaymentManagerClient = PaymentManagerClient(
     paymentManagerUrlPrefix,
     walletToken,
-    defaultRetryingFetch(),
+    // despite both fetch have same configuration, keeping both ensures possible modding
+    defaultRetryingFetch(fetchPaymentManagerLongTimeout, 0),
     defaultRetryingFetch(fetchPaymentManagerLongTimeout, 0)
   );
 
@@ -644,6 +649,18 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  yield takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
+    action: ActionType<typeof fetchTransactionsRequestWithExpBackoff>
+  ) {
+    const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
+      backOffWaitingTime
+    );
+    if (waiting > 0) {
+      yield delay(waiting);
+    }
+    yield put(fetchTransactionsRequest(action.payload));
+  });
+
   /**
    * watch when all transactions are been loaded
    * check if transaction read store section (entities.transactionsRead) is dirty:
@@ -672,6 +689,16 @@ export function* watchWalletSaga(
     paymentManagerClient,
     pmSessionManager
   );
+
+  yield takeLatest(getType(fetchWalletsRequestWithExpBackoff), function* () {
+    const waiting: ReturnType<typeof backOffWaitingTime> = yield select(
+      backOffWaitingTime
+    );
+    if (waiting > 0) {
+      yield delay(waiting);
+    }
+    yield put(fetchWalletsRequest());
+  });
 
   yield takeLatest(
     getType(fetchWalletsRequest),
@@ -796,13 +823,10 @@ export function* watchWalletSaga(
   );
 
   if (bpdEnabled) {
+    const contentClient = ContentClient();
+
     // watch for load abi request
-    yield takeLatest(
-      loadAbi.request,
-      handleLoadAbi,
-      paymentManagerClient.getAbi,
-      pmSessionManager
-    );
+    yield takeLatest(loadAbi.request, handleLoadAbi, contentClient.getAbiList);
 
     // watch for load pans request
     yield takeLatest(

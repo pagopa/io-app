@@ -11,13 +11,14 @@ import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import { ModalBaseProps, Platform } from "react-native";
+import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
   instabugLog,
   TypeLogs,
   openInstabugQuestionReport,
-  openInstabugReplies
+  openInstabugReplies,
+  DefaultReportAttachmentTypeConfiguration
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -51,9 +52,11 @@ interface OwnProps {
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
+  headerBackgroundColor?: ColorValue;
   appLogo?: boolean;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
+  reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
 }
 
 type Props = OwnProps &
@@ -136,7 +139,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
         switch (type) {
           case BugReporting.reportType.bug:
-            openInstabugQuestionReport();
+            openInstabugQuestionReport(this.props.reportAttachmentTypes);
             break;
           case BugReporting.reportType.question:
             openInstabugReplies();
@@ -193,6 +196,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       goBack,
       headerBody,
       headerTitle,
+      headerBackgroundColor,
       primary,
       isSearchAvailable,
       searchType,
@@ -241,6 +245,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           dark={dark}
           goBack={goBack}
           headerTitle={headerTitle}
+          backgroundColor={headerBackgroundColor}
           onShowHelp={
             contextualHelp || contextualHelpMarkdown ? this.showHelp : undefined
           }

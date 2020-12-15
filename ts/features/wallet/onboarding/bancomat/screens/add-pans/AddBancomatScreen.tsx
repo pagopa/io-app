@@ -23,11 +23,13 @@ import {
   onboardingBancomatChosenPanSelector
 } from "../../store/reducers/addingPans";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import AddBancomatComponent from "./AddBancomatComponent";
 import LoadAddBancomatComponent from "./LoadAddBancomatComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 type NextAction = {
   index: number;
@@ -85,6 +87,7 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
       currentIndex={currentIndex}
       handleContinue={handleOnContinue}
       handleSkip={() => nextPan(true)}
+      contextualHelp={props.contextualHelp}
     />
   ) : null; // this should not happen
 };

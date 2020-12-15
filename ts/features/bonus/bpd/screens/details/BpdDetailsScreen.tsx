@@ -18,6 +18,10 @@ import { bpdUnsubscriptionSelector } from "../../store/reducers/details/activati
 import { bpdTransactionsForSelectedPeriod } from "../../store/reducers/details/transactions";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import { navigateToBpdTransactions } from "../../navigation/actions";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { navigateBack } from "../../../../../store/actions/navigation";
+import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
@@ -59,6 +63,11 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
     }
   }, [props.unsubscription]);
 
+  useHardwareBackButton(() => {
+    props.goBack();
+    return true;
+  });
+
   /**
    * Display the transactions button when:
    * - Period is closed and transactions number is > 0
@@ -88,16 +97,17 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
       <DarkLayout
         bounces={false}
         title={I18n.t("bonus.bpd.name")}
-        faqCategories={["bonus_detail"]}
         allowGoBack={true}
         topContent={<View style={styles.headerSpacer} />}
         gradientHeader={true}
         hideHeader={true}
+        contextualHelp={emptyContextualHelp}
         footerContent={
           canRenderButton && (
             <GoToTransactions goToTransactions={props.goToTransactions} />
           )
         }
+        footerFullWidth={<SectionStatusComponent sectionKey={"cashback"} />}
       >
         <View style={styles.selector}>
           <BpdPeriodSelector />
@@ -112,10 +122,12 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   load: () => dispatch(bpdDetailsLoadAll()),
   completeUnsubscription: () => {
+    dispatch(bpdDetailsLoadAll());
     dispatch(bpdUnsubscribeCompleted());
     dispatch(NavigationActions.back());
   },
-  goToTransactions: () => dispatch(navigateToBpdTransactions())
+  goToTransactions: () => dispatch(navigateToBpdTransactions()),
+  goBack: () => dispatch(navigateBack())
 });
 
 const mapStateToProps = (state: GlobalState) => ({

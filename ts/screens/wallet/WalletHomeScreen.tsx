@@ -2,7 +2,7 @@ import { fromNullable, fromPredicate, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, RefreshControl, StyleSheet } from "react-native";
+import { BackHandler, Image, StyleSheet } from "react-native";
 import {
   NavigationEvents,
   NavigationEventSubscription,
@@ -16,11 +16,12 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
-import SectionCardComponent from "../../components/wallet/card/SectionCardComponent";
+import SectionCardComponent, {
+  SectionCardStatus
+} from "../../components/wallet/card/SectionCardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
@@ -36,6 +37,7 @@ import {
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
+import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
 import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
@@ -50,12 +52,11 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
-  clearTransactions,
   fetchTransactionsLoadComplete,
-  fetchTransactionsRequest,
+  fetchTransactionsRequestWithExpBackoff,
   readTransaction
 } from "../../store/actions/wallet/transactions";
-import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
+import { fetchWalletsRequestWithExpBackoff } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
 import { navSelector } from "../../store/reducers/navigationHistory";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
@@ -72,13 +73,28 @@ import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
-import { getCurrentRouteKey } from "../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
+import {
+  isLoading,
+  isReady,
+  isError as isRemoteValueError
+} from "../../features/bonus/bpd/model/RemoteValue";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import { isStrictSome } from "../../utils/pot";
+import { bpdDetailsLoadAll } from "../../features/bonus/bpd/store/actions/details";
+import { showToast } from "../../utils/showToast";
+import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
   keyFrom?: string;
 }>;
+
+type State = {
+  hasFocus: boolean;
+};
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -157,7 +173,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * Wallet home screen, with a list of recent transactions and payment methods,
  * a "pay notice" button and payment methods info/button to add new ones
  */
-class WalletHomeScreen extends React.PureComponent<Props> {
+class WalletHomeScreen extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasFocus: false };
+  }
+
   get newMethodAdded() {
     return this.props.navigation.getParam("newMethodAdded");
   }
@@ -188,10 +209,25 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     return true;
   };
 
+  private onFocus = () => {
+    this.loadBonusVacanze();
+    this.setState({ hasFocus: true });
+  };
+
+  private onLostFocus = () => {
+    this.setState({ hasFocus: false });
+  };
+
   private loadBonusVacanze = () => {
     if (bonusVacanzeEnabled) {
       this.props.loadAvailableBonuses();
       this.props.loadAllBonusActivations();
+    }
+  };
+
+  private loadBonusBpd = () => {
+    if (bpdEnabled) {
+      this.props.loadBpdDetails();
     }
   };
 
@@ -200,8 +236,10 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
 
-    this.props.loadWallets();
-    this.props.loadTransactions(this.props.transactionsLoadedLength);
+    // FIXME restore loadWallets and loadTransactions see https://www.pivotaltracker.com/story/show/176051000
+    // this.props.loadWallets();
+    // this.props.loadTransactions(this.props.transactionsLoadedLength);
+
     // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
@@ -229,21 +267,44 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     ) {
       this.props.dispatchAllTransactionLoaded(this.props.potTransactions.value);
     }
+    if (
+      this.state.hasFocus &&
+      // error loading: bpd bonus
+      ((!isRemoteValueError(prevProps.bpdActiveBonus) &&
+        isRemoteValueError(this.props.bpdActiveBonus)) ||
+        // error loading: bonus vacanze
+        (prevProps.allActiveBonus.some(ab => !pot.isError(ab)) &&
+          this.props.allActiveBonus.some(ab => pot.isError(ab))) ||
+        // error loading: wallet
+        (!pot.isError(prevProps.potWallets) &&
+          pot.isError(this.props.potWallets)))
+    ) {
+      showToast(I18n.t("wallet.errors.loadingData"));
+    }
   }
 
-  private cardHeader(isError: boolean = false, isBlue: boolean = false) {
+  private cardHeader(isError: boolean = false) {
+    const sectionCardStatus: SectionCardStatus = pot.fold(
+      this.props.potWallets,
+      () => "show",
+      () => "loading",
+      _ => "loading",
+      _ => "show",
+      _ => "refresh",
+      _ => "loading",
+      _ => "loading",
+      _ => "refresh"
+    );
     return (
       <SectionCardComponent
+        status={sectionCardStatus}
         label={I18n.t("wallet.paymentMethods")}
-        onPress={() =>
-          this.props.navigateToWalletAddPaymentMethod(
-            getCurrentRouteKey(this.props.nav)
-          )
-        }
+        onPress={() => {
+          if (sectionCardStatus !== "loading") {
+            this.props.loadWallets();
+          }
+        }}
         isError={isError}
-        cardStyle={
-          isBlue ? { backgroundColor: customVariables.brandPrimary } : undefined
-        }
       />
     );
   }
@@ -253,25 +314,38 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       .getOrElse(this.props.potWallets, [])
       .filter(w => w.type === TypeEnum.CREDIT_CARD);
 
+  private getBonusLoadingStatus = (): SectionCardStatus => {
+    // if any bonus is loading or updating
+    // note: in the BPD case, we are watching for loading on one of several steps
+    // so this loading state is very weak
+    if (
+      isLoading(this.props.bpdActiveBonus) ||
+      this.props.allActiveBonus.find(
+        ab => pot.isLoading(ab) || (pot.isNone(ab) && !pot.isError(ab))
+      )
+    ) {
+      return "loading";
+    }
+    // if at least one bonus is some
+    if (
+      this.props.allActiveBonus.length === 0 ||
+      this.props.allActiveBonus.every(ab => isStrictSome(ab)) ||
+      isReady(this.props.bpdActiveBonus)
+    ) {
+      return "refresh";
+    }
+    return "show";
+  };
+
   private cardPreview() {
     const wallets = this.getCreditCards();
     // we have to render only wallets of credit card type
     const validWallets = wallets.filter(w => w.type === TypeEnum.CREDIT_CARD);
-    const noMethod =
-      validWallets.length === 0 && this.props.allActiveBonus.length === 0;
+    const bonusLoadingStatus = this.getBonusLoadingStatus();
     return (
       <View>
         <View spacer={true} />
-        {noMethod && (
-          <React.Fragment>
-            <Text white={true} style={styles.addDescription}>
-              {I18n.t("wallet.newPaymentMethod.addDescription")}
-            </Text>
-            <View spacer={true} large={true} />
-            <View spacer={true} small={true} />
-          </React.Fragment>
-        )}
-        {this.cardHeader(false, noMethod)}
+        {this.cardHeader(false)}
 
         {validWallets.length > 0 ? (
           <RotatedCards
@@ -283,62 +357,21 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         {bpdEnabled && <WalletV2PreviewCards />}
 
         {/* Display this item only if the flag is enabled */}
-        {bonusVacanzeEnabled && (
+        {(bonusVacanzeEnabled || bpdEnabled) && (
           <RequestBonus
-            onButtonPress={this.props.navigateToBonusList}
+            status={bonusLoadingStatus}
+            onButtonPress={() => {
+              if (bonusLoadingStatus !== "loading") {
+                this.loadBonusVacanze();
+                this.loadBonusBpd();
+              }
+            }}
             activeBonuses={this.props.allActiveBonus}
-            noMethod={noMethod}
             availableBonusesList={this.props.availableBonusesList}
             onBonusPress={this.props.navigateToBonusDetail}
           />
         )}
         {bpdEnabled && <BpdCardsInWalletContainer />}
-      </View>
-    );
-  }
-
-  private loadingWalletsHeader() {
-    return (
-      <View>
-        <BoxedRefreshIndicator
-          caption={
-            <Text white={true} style={styles.inLineSpace}>
-              {I18n.t("wallet.walletLoadMessage")}
-            </Text>
-          }
-        />
-      </View>
-    );
-  }
-
-  private errorWalletsHeader() {
-    const noMethod = this.props.allActiveBonus.length === 0;
-    return (
-      <View>
-        <Text style={[styles.white, styles.inLineSpace]}>
-          {I18n.t("wallet.walletLoadFailure")}
-        </Text>
-        <View spacer={true} />
-        <ButtonDefaultOpacity
-          block={true}
-          light={true}
-          bordered={true}
-          small={true}
-          onPress={this.props.loadWallets}
-        >
-          <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
-        </ButtonDefaultOpacity>
-        <View spacer={true} />
-        {/* Display this item only if the flag is enabled */}
-        {bonusVacanzeEnabled && (
-          <RequestBonus
-            onButtonPress={this.props.navigateToBonusList}
-            activeBonuses={this.props.allActiveBonus}
-            availableBonusesList={this.props.availableBonusesList}
-            onBonusPress={this.props.navigateToBonusDetail}
-            noMethod={noMethod}
-          />
-        )}
       </View>
     );
   }
@@ -357,16 +390,16 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     </React.Fragment>
   );
 
-  private transactionError() {
+  private transactionError(renderHelp: boolean) {
     return (
       <Content
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
       >
-        {this.renderHelpMessage()}
+        {renderHelp && this.renderHelpMessage()}
         <View spacer={true} large={true} />
         <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
-          {I18n.t("wallet.transactionsLoadFailure")}
+          {I18n.t("wallet.latestTransactions")}
         </Text>
         <View spacer={true} />
         <ButtonDefaultOpacity
@@ -378,9 +411,9 @@ class WalletHomeScreen extends React.PureComponent<Props> {
             this.props.loadTransactions(this.props.transactionsLoadedLength)
           }
         >
-          <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
+          <Text primary={true}>{I18n.t("wallet.transactionsShow")}</Text>
         </ButtonDefaultOpacity>
-        <View spacer={true} large={true} />
+        <EdgeBorderComponent />
       </Content>
     );
   }
@@ -465,13 +498,6 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     );
   }
 
-  // triggered on pull to refresh
-  private handleOnRefresh = () => {
-    this.loadBonusVacanze();
-    this.props.refreshTransactions();
-    this.props.loadWallets();
-  };
-
   public render(): React.ReactNode {
     const {
       potWallets,
@@ -480,31 +506,27 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       anyCreditCardAttempts
     } = this.props;
 
-    const headerContent = pot.isLoading(potWallets)
-      ? this.loadingWalletsHeader()
-      : pot.isError(potWallets)
-      ? this.errorWalletsHeader()
-      : this.cardPreview();
-
-    const transactionContent = pot.isError(potTransactions)
-      ? this.transactionError()
-      : this.transactionList(
-          potTransactions,
-          anyHistoryPayments || anyCreditCardAttempts
-        );
+    const headerContent = (
+      <>
+        <WalletHomeHeader />
+        {this.cardPreview()}
+      </>
+    );
+    const transactionContent =
+      pot.isError(potTransactions) ||
+      (pot.isNone(potTransactions) &&
+        !pot.isLoading(potTransactions) &&
+        !pot.isUpdating(potTransactions))
+        ? this.transactionError(anyHistoryPayments || anyCreditCardAttempts)
+        : this.transactionList(
+            potTransactions,
+            anyHistoryPayments || anyCreditCardAttempts
+          );
 
     const footerContent =
       pot.isSome(potWallets) && !this.newMethodAdded
         ? this.footerButton(potWallets)
         : undefined;
-
-    const walletRefreshControl = (
-      <RefreshControl
-        onRefresh={this.handleOnRefresh}
-        refreshing={false}
-        tintColor={"transparent"} // iOS
-      />
-    );
 
     return (
       <WalletLayout
@@ -512,15 +534,16 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
         appLogo={true}
+        hideHeader={true}
         topContentHeight={this.getHeaderHeight()}
         hasDynamicSubHeader={true}
         topContent={headerContent}
         footerContent={footerContent}
-        refreshControl={walletRefreshControl}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet", "wallet_methods"]}
         gradientHeader={true}
         headerPaddingMin={true}
+        footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
         {this.newMethodAdded ? (
           this.newMethodAddedContent
@@ -535,8 +558,12 @@ class WalletHomeScreen extends React.PureComponent<Props> {
           </>
         )}
         {bonusVacanzeEnabled && (
-          <NavigationEvents onWillFocus={this.loadBonusVacanze} />
+          <NavigationEvents
+            onWillFocus={this.onFocus}
+            onWillBlur={this.onLostFocus}
+          />
         )}
+        {bpdEnabled && <NewPaymentMethodAddedNotifier />}
       </WalletLayout>
     );
   }
@@ -572,11 +599,13 @@ const mapStateToProps = (state: GlobalState) => {
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     readTransactions: transactionsReadSelector(state),
     nav: navSelector(state),
-    isPagoPaVersionSupported
+    isPagoPaVersionSupported,
+    bpdActiveBonus: bpdEnabledSelector(state)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadBpdDetails: () => dispatch(bpdDetailsLoadAll()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
@@ -602,13 +631,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo })),
   navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
   navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
-  refreshTransactions: () => {
-    dispatch(clearTransactions());
-    dispatch(fetchTransactionsRequest({ start: 0 }));
-  },
   loadTransactions: (start: number) =>
-    dispatch(fetchTransactionsRequest({ start })),
-  loadWallets: () => dispatch(fetchWalletsRequest()),
+    dispatch(fetchTransactionsRequestWithExpBackoff({ start })),
+  loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
   dispatchAllTransactionLoaded: (transactions: ReadonlyArray<Transaction>) =>
     dispatch(fetchTransactionsLoadComplete(transactions))
 });

@@ -1,19 +1,21 @@
+import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
-import I18n from "../../../../i18n";
+import { InfoBox } from "../../../../components/box/InfoBox";
 import { Body } from "../../../../components/core/typography/Body";
+import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
+import Markdown from "../../../../components/ui/Markdown";
+import I18n from "../../../../i18n";
+import { bottomSheetContent } from "../../../../utils/bottomSheet";
+import { localeDateFormat } from "../../../../utils/locale";
+import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { BpdAmount } from "../store/actions/amount";
 import { BpdPeriod } from "../store/actions/periods";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
-import { format } from "../../../../utils/dates";
-import { H4 } from "../../../../components/core/typography/H4";
-import { bottomSheetContent } from "../../../../utils/bottomSheet";
 
 type Props = {
   lastUpdateDate: string;
@@ -28,6 +30,13 @@ const styles = StyleSheet.create({
   }
 });
 
+const CSS_STYLE = `
+body {
+  font-size: 16;
+  color: ${IOColors.black}
+}
+`;
+
 const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
@@ -36,12 +45,29 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   const openModalBox = async () => {
     const bottomSheetProps = await bottomSheetContent(
       <>
-        <View spacer />
-        <Body>
+        <View spacer={true} large={true} />
+        <InfoBox iconName={"io-calendar"} iconSize={32}>
+          <H4 weight={"Regular"}>
+            {I18n.t(
+              "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
+            )}
+            <H4>
+              {" "}
+              {I18n.t(
+                "bonus.bpd.details.transaction.detail.summary.calendarBlock.text2"
+              )}
+            </H4>
+            {I18n.t(
+              "bonus.bpd.details.transaction.detail.summary.calendarBlock.text3"
+            )}
+          </H4>
+        </InfoBox>
+        <View spacer={true} large={true} />
+        <Markdown cssStyle={CSS_STYLE}>
           {I18n.t(
             "bonus.bpd.details.transaction.detail.summary.bottomSheet.body"
           )}
-        </Body>
+        </Markdown>
       </>,
       I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.title"),
       522,
@@ -73,10 +99,13 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
       <View spacer={true} />
       <Body>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text1")}
-        <H4 weight={"Bold"}>{`${format(
+        <H4 weight={"Bold"}>{`${localeDateFormat(
           props.period.startDate,
-          "DD MMM YYYY"
-        )} - ${format(props.period.endDate, "DD MMM YYYY")} `}</H4>
+          I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+        )} - ${localeDateFormat(
+          props.period.endDate,
+          I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+        )} `}</H4>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text2")}
         <H4 weight={"Bold"}>
           {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text3", {

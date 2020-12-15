@@ -13,9 +13,10 @@ import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../../types/pagopa";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 import { PaymentMethodGroupedList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
-import { walletV2WithActivationStatusSelector } from "../../store/reducers/details/combiner";
+import { paymentMethodsWithActivationStatusSelector } from "../../store/reducers/details/combiner";
 
 const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.title"),
@@ -51,7 +52,11 @@ const renderPaymentMethod = (
 const EnrollPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle, continueStr, skip, title, body1, body2 } = loadLocales();
   return (
-    <BaseScreenComponent goBack={false} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={false}
+      headerTitle={headerTitle}
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
@@ -84,7 +89,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  potWallets: walletV2WithActivationStatusSelector(state)
+  potWallets: paymentMethodsWithActivationStatusSelector(state)
 });
 
 export default connect(

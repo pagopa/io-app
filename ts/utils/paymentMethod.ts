@@ -24,6 +24,10 @@ import {
   SatispayPaymentMethod
 } from "../types/pagopa";
 import { contentRepoUrl } from "../config";
+import {
+  Card,
+  ValidityStateEnum
+} from "../../definitions/pagopa/walletv2/Card";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
 
 export const getPaymentMethodHash = (
@@ -149,3 +153,6 @@ export const enhancePaymentMethod = (
       };
   }
 };
+
+export const isBancomatBlocked = (pan: Card) =>
+  pan.validityState === ValidityStateEnum.BR;

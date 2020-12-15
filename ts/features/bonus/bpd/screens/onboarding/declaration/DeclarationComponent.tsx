@@ -1,6 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
-import { useContext, useReducer } from "react";
+import { useReducer } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -9,10 +9,9 @@ import { Label } from "../../../../../../components/core/typography/Label";
 import { Link } from "../../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import { LightModalContext } from "../../../../../../components/ui/LightModal";
 import I18n from "../../../../../../i18n";
+import { openWebUrl } from "../../../../../../utils/url";
 import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
-import TosBonusComponent from "../../../../bonusVacanze/components/TosBonusComponent";
 import { DeclarationEntry } from "./DeclarationEntry";
 
 type OwnProps = {
@@ -20,6 +19,8 @@ type OwnProps = {
   onConfirm: () => void;
 };
 
+type Props = OwnProps &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 type NormalBold = {
   normal: string;
   bold: string;
@@ -89,18 +90,11 @@ function reducer(state: number, action: InnerAction) {
 const disclaimerLink =
   "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:2000-12-28;445";
 
-const Disclaimer = () => {
-  const modal = useContext(LightModalContext);
-  return (
-    <TosBonusComponent tos_url={disclaimerLink} onClose={modal.hideModal} />
-  );
-};
-
 /**
  * This screen allows the user to declare the required conditions.
  * When all the condition are accepted, the continue button will be enabled
  */
-export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => {
+export const DeclarationComponent: React.FunctionComponent<Props> = props => {
   const {
     title,
     header,
@@ -123,10 +117,12 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
     normalBoldText(personal_use)
   ];
 
-  const modal = useContext(LightModalContext);
-
   return (
-    <BaseScreenComponent goBack={props.onCancel} headerTitle={title}>
+    <BaseScreenComponent
+      goBack={props.onCancel}
+      headerTitle={title}
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
@@ -138,7 +134,7 @@ export const DeclarationComponent: React.FunctionComponent<OwnProps> = props => 
             <InfoBox>
               <Body>
                 {disclaimer.normal1}
-                <Link onPress={() => modal.showModal(<Disclaimer />)}>
+                <Link onPress={() => openWebUrl(disclaimerLink)}>
                   {disclaimer.link}
                 </Link>
                 {disclaimer.normal2}
