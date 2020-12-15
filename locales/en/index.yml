@@ -754,7 +754,7 @@ wallet:
     header: Add PagoBANCOMAT
     title: Search for your PagoBANCOMAT cards
     description:
-      text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the"
+      text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
       text2: information on the processing of personal data.
       text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
       text4: by searching among those available
