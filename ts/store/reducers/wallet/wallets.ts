@@ -37,6 +37,7 @@ import {
   addWalletCreditCardInit,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
+  addWalletCreditCardWithBackoffRetryRequest,
   creditCardCheckout3dsRequest,
   creditCardCheckout3dsSuccess,
   deleteWalletFailure,
@@ -49,6 +50,7 @@ import {
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
+  payCreditCardVerificationWithBackoffRetryRequest,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
@@ -381,6 +383,7 @@ const reducer = (
         creditCardCheckout3ds: pot.none
       };
 
+    case getType(addWalletCreditCardWithBackoffRetryRequest):
     case getType(addWalletCreditCardRequest):
       return {
         ...state,
@@ -402,7 +405,7 @@ const reducer = (
     //
     // pay credit card verification
     //
-
+    case getType(payCreditCardVerificationWithBackoffRetryRequest):
     case getType(payCreditCardVerificationRequest):
       return {
         ...state,
