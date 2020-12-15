@@ -7,6 +7,7 @@ import { Satispay } from "../../../../../../../definitions/pagopa/walletv2/Satis
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   cancelButtonProps,
@@ -29,6 +30,12 @@ import LoadAddSatispayComponent from "./LoadAddSatispayComponent";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+const loadLocales = () => ({
+  headerTitle: I18n.t("wallet.onboarding.satispay.headerTitle"),
+  title: I18n.t("wallet.onboarding.satispay.koNotFound.title"),
+  body: I18n.t("wallet.onboarding.satispay.koNotFound.body")
+});
+
 const DisplayFoundSatispay = (props: Props) => (
   <SafeAreaView style={IOStyles.flex}>
     <View style={IOStyles.flex}>
@@ -38,7 +45,8 @@ const DisplayFoundSatispay = (props: Props) => (
       type={"TwoButtonsInlineThird"}
       leftButton={cancelButtonProps(props.cancel)}
       rightButton={confirmButtonProps(
-        () => props.satispay && props.confirm(props.satispay)
+        () => props.satispay && props.confirm(props.satispay),
+        I18n.t("global.buttons.continue")
       )}
     />
   </SafeAreaView>
