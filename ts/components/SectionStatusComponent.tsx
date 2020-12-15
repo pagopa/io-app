@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     alignContent: "center"
   },
+  alignCenter: { alignSelf: "center" },
   text: { marginLeft: 16, flex: 1 }
 });
 
@@ -42,8 +43,8 @@ export const statusColorMap: Record<SectionStatus["level"], string> = {
 
 const statusIconMap: Record<SectionStatus["level"], string> = {
   normal: "io-complete",
-  critical: "io-notice",
-  warning: "io-notice"
+  critical: "io-warning",
+  warning: "io-info"
 };
 const iconSize = 24;
 const color = IOColors.white;
@@ -70,7 +71,6 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   }
 
   const sectionStatus = props.sectionStatus;
-
   const iconName = statusIconMap[sectionStatus.level];
   const backgroundColor = statusColorMap[sectionStatus.level];
   const locale = getSectionMessageLocale();
@@ -78,20 +78,30 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
   return (
-    <TouchableWithoutFeedback onPress={() => maybeWebUrl.map(openWebUrl)}>
+    <TouchableWithoutFeedback
+      onPress={() => maybeWebUrl.map(openWebUrl)}
+      testID={"SectionStatusComponentTouchable"}
+    >
       <View style={[styles.container, { backgroundColor }]}>
         <IconFont
+          testID={"SectionStatusComponentIcon"}
           name={iconName}
           size={iconSize}
           color={color}
-          style={{ alignSelf: "center" }}
+          style={styles.alignCenter}
         />
-        <Label color={"white"} style={styles.text} weight={"Regular"}>
+        <Label
+          color={"white"}
+          style={styles.text}
+          weight={"Regular"}
+          testID={"SectionStatusComponentLabel"}
+        >
           {sectionStatus.message[locale]}
           {/* ad an extra blank space if web url is present */}
           {maybeWebUrl.fold("", _ => " ")}
           {maybeWebUrl.fold(undefined, _ => (
             <Text
+              testID={"SectionStatusComponentMoreInfo"}
               style={{
                 color,
                 textDecorationLine: "underline",
