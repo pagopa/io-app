@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0-rc.3](https://github.com/pagopa/io-app/compare/1.15.0-rc.2...1.15.0-rc.3) (2020-12-15)
+
+
+### Bug Fixes
+
+* [[#176038688](https://www.pivotaltracker.com/story/show/176038688)] Fixed en locale typo [#2595](https://github.com/pagopa/io-app/issues/2595) ([a6bb953](https://github.com/pagopa/io-app/commit/a6bb9535f09362cd1106a9e6f7c1caf4e466f0c6))
+* [[#176173361](https://www.pivotaltracker.com/story/show/176173361)] Wallets store doesn't use persist transform ([#2598](https://github.com/pagopa/io-app/issues/2598)) ([898feca](https://github.com/pagopa/io-app/commit/898fecac71d026de7b9125ffd3b665ecdc2addd4))
+
 ## [1.15.0-rc.2](https://github.com/pagopa/io-app/compare/1.15.0-rc.1...1.15.0-rc.2) (2020-12-15)
 
 
