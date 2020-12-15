@@ -38,10 +38,10 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
 export const setMixpanelPushNotificationToken = (token: string) => {
   if (mixpanel) {
     return Platform.select({
-      android: mixpanel.setPushRegistrationId(token),
-      ios: mixpanel.addPushDeviceToken(token),
-      default: Promise.resolve()
-    });
+      android: () => mixpanel?.setPushRegistrationId(token),
+      ios: () => mixpanel?.addPushDeviceToken(token),
+      default: () => Promise.resolve()
+    })();
   }
   return Promise.resolve();
 };
