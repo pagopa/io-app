@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0-rc.4](https://github.com/pagopa/io-app/compare/1.15.0-rc.3...1.15.0-rc.4) (2020-12-15)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#175973060](https://www.pivotaltracker.com/story/show/175973060)] Change networking logic for bpd periods & amounts retrieval ([#2590](https://github.com/pagopa/io-app/issues/2590)) ([ebe4a02](https://github.com/pagopa/io-app/commit/ebe4a023750d3b1c3bfb0996a27e711c7ce54da8))
+
 ## [1.15.0-rc.3](https://github.com/pagopa/io-app/compare/1.15.0-rc.2...1.15.0-rc.3) (2020-12-15)
 
 
