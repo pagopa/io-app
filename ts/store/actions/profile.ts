@@ -48,6 +48,10 @@ export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")();
 
 export const clearCache = createStandardAction("CLEAR_CACHE")();
 
+export const loadBonusBeforeRemoveAccount = createStandardAction(
+  "LOAD_BONUS_BEFORE_REMOVE_ACCOUNT"
+)<void>();
+
 export enum RemoveAccountMotivationEnum {
   "UNDEFINED" = "undefined",
   "NOT_UTILS" = "notUtils",
