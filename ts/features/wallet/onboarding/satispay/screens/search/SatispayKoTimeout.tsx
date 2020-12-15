@@ -26,7 +26,6 @@ const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.satispay.headerTitle"),
   title: I18n.t("wallet.onboarding.satispay.koTimeout.title"),
   body: I18n.t("wallet.onboarding.satispay.koTimeout.body"),
-  cancel: I18n.t("global.buttons.cancel"),
   retry: I18n.t("global.buttons.retry")
 });
 
