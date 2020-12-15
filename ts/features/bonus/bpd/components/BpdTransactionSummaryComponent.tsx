@@ -2,6 +2,7 @@ import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { InfoBox } from "../../../../components/box/InfoBox";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
@@ -29,6 +30,13 @@ const styles = StyleSheet.create({
   }
 });
 
+const CSS_STYLE = `
+body {
+  font-size: 16;
+  color: ${IOColors.black}
+}
+`;
+
 const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
@@ -37,8 +45,25 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   const openModalBox = async () => {
     const bottomSheetProps = await bottomSheetContent(
       <>
-        <View spacer />
-        <Markdown>
+        <View spacer={true} large={true} />
+        <InfoBox iconName={"io-calendar"} iconSize={32}>
+          <H4 weight={"Regular"}>
+            {I18n.t(
+              "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
+            )}
+            <H4>
+              {" "}
+              {I18n.t(
+                "bonus.bpd.details.transaction.detail.summary.calendarBlock.text2"
+              )}
+            </H4>
+            {I18n.t(
+              "bonus.bpd.details.transaction.detail.summary.calendarBlock.text3"
+            )}
+          </H4>
+        </InfoBox>
+        <View spacer={true} large={true} />
+        <Markdown cssStyle={CSS_STYLE}>
           {I18n.t(
             "bonus.bpd.details.transaction.detail.summary.bottomSheet.body"
           )}
