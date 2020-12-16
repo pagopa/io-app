@@ -1,11 +1,12 @@
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Satispay } from "../../../../../../../definitions/pagopa/walletv2/Satispay";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -18,6 +19,7 @@ import {
   isLoading,
   isUndefined
 } from "../../../../../bonus/bpd/model/RemoteValue";
+import SatispayCard from "../../../../satispay/SatispayCard";
 import {
   addSatispayToWallet,
   walletAddSatispayCancel,
@@ -32,25 +34,34 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.satispay.headerTitle"),
-  title: I18n.t("wallet.onboarding.satispay.koNotFound.title"),
-  body: I18n.t("wallet.onboarding.satispay.koNotFound.body")
+  title: I18n.t("wallet.onboarding.satispay.add.title")
 });
 
-const DisplayFoundSatispay = (props: Props) => (
-  <SafeAreaView style={IOStyles.flex}>
-    <View style={IOStyles.flex}>
-      <H1>Satispay Account found</H1>
-    </View>
-    <FooterWithButtons
-      type={"TwoButtonsInlineThird"}
-      leftButton={cancelButtonProps(props.cancel)}
-      rightButton={confirmButtonProps(
-        () => props.satispay && props.confirm(props.satispay),
-        I18n.t("global.buttons.continue")
-      )}
-    />
-  </SafeAreaView>
-);
+const DisplayFoundSatispay = (props: Props) => {
+  const { headerTitle, title } = loadLocales();
+  return (
+    <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
+      <SafeAreaView style={IOStyles.flex}>
+        <ScrollView>
+          <View style={IOStyles.horizontalContentPadding}>
+            <View spacer={true} />
+            <H1>{title}</H1>
+            <View spacer={true} extralarge={true} />
+            <SatispayCard />
+          </View>
+        </ScrollView>
+        <FooterWithButtons
+          type={"TwoButtonsInlineThird"}
+          leftButton={cancelButtonProps(props.cancel)}
+          rightButton={confirmButtonProps(
+            () => props.satispay && props.confirm(props.satispay),
+            I18n.t("global.buttons.continue")
+          )}
+        />
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
 /**
  * The user can choose to add the found Satispay account to the wallet
