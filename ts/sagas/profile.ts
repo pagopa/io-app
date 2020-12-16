@@ -40,10 +40,7 @@ import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferen
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
-import {
-  navigateToRemoveAccountDetailScreen,
-  navigateToRemoveAccountSuccess
-} from "../store/actions/navigation";
+import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
 import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { bpdLoadActivationStatus } from "../features/bonus/bpd/store/actions/details";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";

@@ -41,12 +41,7 @@ import {
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
-import {
-  clearCache,
-  loadBonusBeforeRemoveAccount,
-  removeAccountMotivation,
-  resetProfileState
-} from "../store/actions/profile";
+import { clearCache, resetProfileState } from "../store/actions/profile";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   idpSelector,
@@ -73,8 +68,6 @@ import {
 import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import {
-  handleRemoveAccount,
-  handleLoadBonusBeforeRemoveAccount,
   loadProfile,
   watchProfile,
   watchProfileRefreshRequestsSaga,
