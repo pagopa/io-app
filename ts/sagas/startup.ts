@@ -264,12 +264,12 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     backendClient.getSupportToken
   );
 
-  // Sart watching for request of remove profile
+  // Start watching for request bonus before remove profile
   yield takeEvery(
     loadBonusBeforeRemoveAccount,
     handleLoadBonusBeforeRemoveAccount
   );
-  // Sart watching for request of remove profile
+  // Start watching for request of remove profile
   yield takeEvery(removeAccountMotivation, handleRemoveAccount);
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
