@@ -62,6 +62,7 @@ const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
  */
 const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
   const capabilityItems = generateCapabilityItems(props.paymentMethod);
+
   return (
     <>
       <View style={styles.row}>
@@ -75,7 +76,7 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
         <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
       </View>
       <View spacer={true} />
-      {capabilityItems.map(c => c)})
+      {capabilityItems.map(c => c)}
       {capabilityItems.length === 0 && (
         <>
           <View spacer={true} />
