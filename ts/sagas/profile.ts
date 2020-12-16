@@ -48,6 +48,7 @@ import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/ac
 import { bpdLoadActivationStatus } from "../features/bonus/bpd/store/actions/details";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import { getValue } from "../features/bonus/bpd/model/RemoteValue";
+import { allBonusActiveSelector } from "../features/bonus/bonusVacanze/store/reducers/allActive";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -267,22 +268,26 @@ export function* handleLoadBonusBeforeRemoveAccount() {
     bpdEnabledSelector
   );
 
-  // If the bpd status is undefined means that the user is not entered in the wallet yet.
+  // check if there are some bpd
   if (getValue(bpdActive) === undefined) {
-    // Load the bonus data
-    yield put(loadAllBonusActivations.request());
-
-    yield take([
-      loadAllBonusActivations.success,
-      loadAllBonusActivations.failure
-    ]);
-
+    // Load the bpd data and wait for a response
     yield put(bpdLoadActivationStatus.request());
 
     yield take([
       bpdLoadActivationStatus.success,
       bpdLoadActivationStatus.failure
     ]);
+  }
+
+  const bonusVacanzeBonus: ReturnType<typeof allBonusActiveSelector> = yield select(
+    allBonusActiveSelector
+  );
+
+  // check if there are some bonus vacanze
+  if (bonusVacanzeBonus.length === 0) {
+    // Load the bonus data and no wait because if there are some bonus
+    // they will be loaded individually
+    yield put(loadAllBonusActivations.request());
   }
 
   yield put(navigateToRemoveAccountDetailScreen());
