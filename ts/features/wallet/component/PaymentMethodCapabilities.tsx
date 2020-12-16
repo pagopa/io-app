@@ -2,7 +2,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import reactotron from "reactotron-react-native";
 import { Dispatch } from "redux";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColors } from "../../../components/core/variables/IOColors";
@@ -13,7 +12,6 @@ import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   EnableableFunctionsTypeEnum,
-  isCreditCard,
   PaymentMethod
 } from "../../../types/pagopa";
 import BpdPaymentMethodCapability from "../../bonus/bpd/components/BpdPaymentMethodCapability";
@@ -67,10 +65,6 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
   // The capability section is not rendered if there is not at least one capacity
   if (capabilityItems.length === 0) {
     return null;
-  }
-
-  if (isCreditCard(props.paymentMethod)) {
-    reactotron.log(props.paymentMethod.info.brand);
   }
 
   return (
