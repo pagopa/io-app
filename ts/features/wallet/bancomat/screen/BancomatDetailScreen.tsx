@@ -86,8 +86,6 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
-        <BancomatInformation />
-        <View spacer={true} />
         <UnsubscribeButton
           onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
         />
