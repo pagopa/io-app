@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0-rc.5](https://github.com/pagopa/io-app/compare/1.15.0-rc.4...1.15.0-rc.5) (2020-12-15)
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176129361](https://www.pivotaltracker.com/story/show/176129361)] Cashback payment method. Change footer buttons logic ([#2592](https://github.com/pagopa/io-app/issues/2592)) ([187fa70](https://github.com/pagopa/io-app/commit/187fa704f691b1f7d51f8a018e7f51c35e95848c))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#176175954](https://www.pivotaltracker.com/story/show/176175954)] Missing transaction copy update ([#2600](https://github.com/pagopa/io-app/issues/2600)) ([cd57293](https://github.com/pagopa/io-app/commit/cd5729386405659cf84691a7ebf42272c1f4323a))
+
 ## [1.15.0-rc.4](https://github.com/pagopa/io-app/compare/1.15.0-rc.3...1.15.0-rc.4) (2020-12-15)
 
 
