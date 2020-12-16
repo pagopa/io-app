@@ -62,11 +62,6 @@ const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
  */
 const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
   const capabilityItems = generateCapabilityItems(props.paymentMethod);
-  // The capability section is not rendered if there is not at least one capacity
-  if (capabilityItems.length === 0) {
-    return null;
-  }
-
   return (
     <>
       <View style={styles.row}>
@@ -80,9 +75,13 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
         <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
       </View>
       <View spacer={true} />
-      {capabilityItems.map(c => c)}
-      <View spacer={true} />
-      <ItemSeparatorComponent noPadded={true} />
+      {capabilityItems.map(c => c)})
+      {capabilityItems.length === 0 && (
+        <>
+          <View spacer={true} />
+          <ItemSeparatorComponent noPadded={true} />
+        </>
+      )}
       <View spacer={true} />
       <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     </>
