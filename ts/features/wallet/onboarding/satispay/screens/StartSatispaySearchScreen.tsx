@@ -12,6 +12,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../../utils/url";
 import {
   cancelButtonProps,
@@ -51,7 +52,11 @@ const disclaimerLink = "https://io.italia.it/app-content/privacy_satispay.html";
 const StartSatispaySearchScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body, cta } = loadLocales();
   return (
-    <BaseScreenComponent goBack={props.goBack} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={props.goBack}
+      headerTitle={headerTitle}
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
