@@ -15,6 +15,7 @@ import {
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { searchUserSatispay } from "../actions";
+import { onboardingSatispayAddingResultSelector } from "./addingSatispay";
 
 export type RemoteSatispay = RemoteValue<Satispay | null, NetworkError>;
 
@@ -52,12 +53,12 @@ export const onboardingSatispayFoundSelector = createSelector(
       remoteSatispay,
       () => undefined,
       () => undefined,
-      val => (val ?? undefined),
+      val => val ?? undefined,
       _ => undefined
     )
 );
 
 export const onboardingSatispayIsErrorSelector = createSelector(
-  [onboardingSatispayFoundRemoteSelector],
+  [onboardingSatispayAddingResultSelector],
   remoteSatispay => isError(remoteSatispay)
 );
