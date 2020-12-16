@@ -10,6 +10,7 @@ import I18n from "../../i18n";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import { loadBonusBeforeRemoveAccount } from "../../store/actions/profile";
+import { navigateToRemoveAccountDetailScreen } from "../../store/actions/navigation";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -21,8 +22,10 @@ const RemoveAccountInfo: React.FunctionComponent<Props> = props => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: props.loadBonusAndProceed,
-    // props.navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS),
+    onPress: () => {
+      props.loadBonus();
+      props.navigateToRemoveAccountDetail();
+    },
     title: I18n.t("profile.main.privacy.removeAccount.info.cta")
   };
 
@@ -47,6 +50,8 @@ const RemoveAccountInfo: React.FunctionComponent<Props> = props => {
   );
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadBonusAndProceed: () => dispatch(loadBonusBeforeRemoveAccount())
+  loadBonus: () => dispatch(loadBonusBeforeRemoveAccount()),
+  navigateToRemoveAccountDetail: () =>
+    dispatch(navigateToRemoveAccountDetailScreen())
 });
 export default connect(undefined, mapDispatchToProps)(RemoveAccountInfo);

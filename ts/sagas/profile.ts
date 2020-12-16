@@ -289,8 +289,6 @@ export function* handleLoadBonusBeforeRemoveAccount() {
     // they will be loaded individually
     yield put(loadAllBonusActivations.request());
   }
-
-  yield put(navigateToRemoveAccountDetailScreen());
 }
 
 // watch for action of removing account
