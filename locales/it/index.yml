@@ -823,7 +823,7 @@ wallet:
           title: "Vuoi attivare il Cashback?"
           body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
           body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
-          skip: "Non ora, grazie"
+          skip: "Non ora"
     satispay:
       headerTitle: "Aggiungi Satispay"
       loadingSearch:
@@ -1956,11 +1956,11 @@ bonus:
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
-              body: "**Sono già passati più di 5 giorni lavorativi?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione, i nostri sistemi la aggiungeranno il giorno successivo.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
+              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
             calendarBlock:
               text1: "Ti informiamo che prima che tu veda la transazione su IO, "
-              text2: "possono passare fino a 3 giorni lavorativi"
-              text3: ", in alcuni casi anche di più."
+              text2: "possono passare in media 3 giorni lavorativi"
+              text3: "."
             lastUpdated: "Ultima transazione valida: "
             link: "Manca qualcosa?"
             body:

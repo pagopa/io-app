@@ -1,4 +1,4 @@
-import { BpdAmount } from "../../actions/amount";
+import { BpdAmount } from "../../../saga/networking/amount";
 import { AwardPeriodId } from "../../actions/periods";
 
 export const zeroAmount: BpdAmount = {
