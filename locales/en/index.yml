@@ -818,7 +818,7 @@ wallet:
         title: "Do you want to add this Satispay account?"
       koTimeout:
         title: "We were unable to contact Satispay"
-        body: "Ripova please"
+        body: "Retry please"
       koNotFound:
         title: "Sorry, we do not know that you have activated Satispay yet"
         body: "Contact Satispay for activation"

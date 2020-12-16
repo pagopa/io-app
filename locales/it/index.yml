@@ -838,7 +838,7 @@ wallet:
         title: "Vuoi aggiungere questo account Satispay?"
       koTimeout:
         title: "Non siamo riusciti a contattare Satispay"
-        body: "Ripova per favore"
+        body: "Riprova per favore"
       koNotFound:
         title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
         body: "Contatta Satispay per l’attivazione"
