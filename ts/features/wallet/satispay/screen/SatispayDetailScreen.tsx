@@ -17,7 +17,6 @@ import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
 import SatispayCard from "../SatispayCard";
-import SatispayInformation from "./SatispayInformation";
 
 type NavigationParams = Readonly<{
   satispay: SatispayPaymentMethod;
@@ -85,7 +84,6 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
       <View style={IOStyles.horizontalContentPadding}>
         <PaymentMethodCapabilities paymentMethod={satispay} />
         <View spacer={true} />
-        <SatispayInformation />
       </View>
       <View spacer={true} extralarge={true} />
     </DarkLayout>
