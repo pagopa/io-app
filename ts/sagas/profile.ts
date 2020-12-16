@@ -20,10 +20,12 @@ import { tosVersion } from "../config";
 import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
 import {
+  loadBonusBeforeRemoveAccount,
   profileLoadFailure,
   profileLoadRequest,
   profileLoadSuccess,
   profileUpsert,
+  removeAccountMotivation,
   startEmailValidation
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
@@ -260,22 +262,6 @@ function* checkLoadedProfile(
   }
 }
 
-// watch for some actions about profile
-export function* watchProfile(
-  startEmailValidationProcess: ReturnType<
-    typeof BackendClient
-  >["startEmailValidationProcess"]
-): Iterator<Effect> {
-  // user requests to send again the email validation to profile email
-  yield takeLatest(
-    getType(startEmailValidation.request),
-    startEmailValidationProcessSaga,
-    startEmailValidationProcess
-  );
-  // check the loaded profile
-  yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
-}
-
 export function* handleLoadBonusBeforeRemoveAccount() {
   const bpdActive: ReturnType<typeof bpdEnabledSelector> = yield select(
     bpdEnabledSelector
@@ -323,4 +309,28 @@ export function* handleRemoveAccount() {
   ) {
     yield put(navigateToRemoveAccountSuccess());
   }
+}
+
+// watch for some actions about profile
+export function* watchProfile(
+  startEmailValidationProcess: ReturnType<
+    typeof BackendClient
+  >["startEmailValidationProcess"]
+): Iterator<Effect> {
+  // user requests to send again the email validation to profile email
+  yield takeLatest(
+    getType(startEmailValidation.request),
+    startEmailValidationProcessSaga,
+    startEmailValidationProcess
+  );
+  // check the loaded profile
+  yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
+
+  // Start watching for request bonus before remove profile
+  yield takeLatest(
+    loadBonusBeforeRemoveAccount,
+    handleLoadBonusBeforeRemoveAccount
+  );
+  // Start watching for request of remove profile
+  yield takeLatest(removeAccountMotivation, handleRemoveAccount);
 }
