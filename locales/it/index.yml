@@ -841,7 +841,7 @@ wallet:
         body: "Ripova per favore"
       koNotFound:
         title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
-        body: "Contatta Satipay per l’attivazione"
+        body: "Contatta Satispay per l’attivazione"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
