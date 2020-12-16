@@ -810,10 +810,22 @@ wallet:
           skip: "Maybe later"
     satispay:
       headerTitle: "Add Satispay"
+      start:
+        title: "Do you want to add your Satispay account to IO?"
+        body: "We will check if there is a satispay account associated with your tax code"
+        cta: "Information on the processing of personal data"
       loadingSearch:
         title: "We are verifying your Satispay account\n\nPlease wait a few seconds"
       loadingAdd:
         title: "We are adding your Satispay account\n\nPlease wait a few seconds"
+      add:
+        title: "Do you want to add this Satispay account?"
+      koTimeout:
+        title: "We were unable to contact Satispay"
+        body: "Retry please"
+      koNotFound:
+        title: "Sorry, we do not know that you have activated Satispay yet"
+        body: "Contact Satispay for activation"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
