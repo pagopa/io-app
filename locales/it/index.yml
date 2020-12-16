@@ -1047,10 +1047,10 @@ wallet:
       maxFee: Commissione massima 0.50€
     satispay:
       name: Satispay
-      description: Paga con Satispay
+      description: Abbina il tuo account Satispay
     bancomatPay:
       name: BANCOMAT Pay
-      description: Paga con BANCOMAT Pay
+      description: Abbina il tuo account BANCOMAT Pay
     postepayApp: 
       name: Postepay
       description: la tua app Postepay
