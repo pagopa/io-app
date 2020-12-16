@@ -11,6 +11,7 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../../../utils/url";
 import { cancelButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { walletAddSatispayCancel } from "../../store/actions";
@@ -34,7 +35,11 @@ const SatispayKoNotFound: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body } = loadLocales();
 
   return (
-    <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={headerTitle}
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}

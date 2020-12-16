@@ -10,6 +10,7 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -37,7 +38,11 @@ const SatispayKoTimeout: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body, retry } = loadLocales();
 
   return (
-    <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={headerTitle}
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
