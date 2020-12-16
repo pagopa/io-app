@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   text3SubContainer: { width: `95%` },
   badgeInfo: {
-    borderWidth: 1,
+    borderWidth: 1, 
     borderStyle: "solid",
     width: 65,
     height: 25,
@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
     borderColor: IOColors.red
   },
   badgeInfoPaid: {
-    backgroundColor: IOColors.aqua
+    borderColor: IOColors.aqua, 
+    backgroundColor: IOColors.aqua,
   }
 });
 

@@ -1,5 +1,5 @@
 import { NavigationActions } from "react-navigation";
-import { BpdPeriod } from "../store/actions/periods";
+import { BpdPeriodWithAmount } from "../store/reducers/details/periods";
 import BPD_ROUTES from "./routes";
 
 export const navigateToBpdOnboardingLoadActivationStatus = () =>
@@ -45,7 +45,7 @@ export const navigateToBpdIbanInsertion = () =>
 
 // Details
 
-export const navigateToBpdDetails = (specificPeriod?: BpdPeriod) =>
+export const navigateToBpdDetails = (specificPeriod?: BpdPeriodWithAmount) =>
   NavigationActions.navigate({
     routeName: BPD_ROUTES.DETAILS,
     params: { specificPeriod }
