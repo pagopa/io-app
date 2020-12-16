@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0-rc.5](https://github.com/pagopa/io-app/compare/1.15.0-rc.4...1.15.0-rc.5) (2020-12-15)
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176129361](https://www.pivotaltracker.com/story/show/176129361)] Cashback payment method. Change footer buttons logic ([#2592](https://github.com/pagopa/io-app/issues/2592)) ([187fa70](https://github.com/pagopa/io-app/commit/187fa704f691b1f7d51f8a018e7f51c35e95848c))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#176175954](https://www.pivotaltracker.com/story/show/176175954)] Missing transaction copy update ([#2600](https://github.com/pagopa/io-app/issues/2600)) ([cd57293](https://github.com/pagopa/io-app/commit/cd5729386405659cf84691a7ebf42272c1f4323a))
+
+## [1.15.0-rc.4](https://github.com/pagopa/io-app/compare/1.15.0-rc.3...1.15.0-rc.4) (2020-12-15)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#175973060](https://www.pivotaltracker.com/story/show/175973060)] Change networking logic for bpd periods & amounts retrieval ([#2590](https://github.com/pagopa/io-app/issues/2590)) ([ebe4a02](https://github.com/pagopa/io-app/commit/ebe4a023750d3b1c3bfb0996a27e711c7ce54da8))
+
+## [1.15.0-rc.3](https://github.com/pagopa/io-app/compare/1.15.0-rc.2...1.15.0-rc.3) (2020-12-15)
+
+
+### Bug Fixes
+
+* [[#176038688](https://www.pivotaltracker.com/story/show/176038688)] Fixed en locale typo [#2595](https://github.com/pagopa/io-app/issues/2595) ([a6bb953](https://github.com/pagopa/io-app/commit/a6bb9535f09362cd1106a9e6f7c1caf4e466f0c6))
+* [[#176173361](https://www.pivotaltracker.com/story/show/176173361)] Wallets store doesn't use persist transform ([#2598](https://github.com/pagopa/io-app/issues/2598)) ([898feca](https://github.com/pagopa/io-app/commit/898fecac71d026de7b9125ffd3b665ecdc2addd4))
+
 ## [1.15.0-rc.2](https://github.com/pagopa/io-app/compare/1.15.0-rc.1...1.15.0-rc.2) (2020-12-15)
 
 

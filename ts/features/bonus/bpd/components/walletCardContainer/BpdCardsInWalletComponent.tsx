@@ -8,8 +8,8 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { navigateToBpdDetails } from "../../navigation/actions";
 import { bpdDetailsLoadAll } from "../../store/actions/details";
-import { BpdPeriod } from "../../store/actions/periods";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
+import { BpdPeriodWithAmount } from "../../store/reducers/details/periods";
 import { BpdCardComponent } from "../bpdCardComponent/BpdCardComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -29,12 +29,12 @@ const BpdCardsInWalletContainer: React.FunctionComponent<Props> = props => {
       {pot.isSome(props.periodsWithAmount) &&
         props.periodsWithAmount.value.map(pa => (
           <BpdCardComponent
-            key={pa.period.awardPeriodId}
-            period={pa.period}
+            key={pa.awardPeriodId}
+            period={pa}
             totalAmount={pa.amount}
             preview={true}
             onPress={() => {
-              props.navigateToCashbackDetails(pa.period);
+              props.navigateToCashbackDetails(pa);
             }}
           />
         ))}
@@ -44,7 +44,7 @@ const BpdCardsInWalletContainer: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   load: () => dispatch(bpdDetailsLoadAll()),
-  navigateToCashbackDetails: (period: BpdPeriod) =>
+  navigateToCashbackDetails: (period: BpdPeriodWithAmount) =>
     dispatch(navigateToBpdDetails(period))
 });
 

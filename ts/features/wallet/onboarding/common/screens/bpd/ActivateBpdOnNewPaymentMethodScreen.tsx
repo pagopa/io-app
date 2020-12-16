@@ -10,8 +10,10 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { PaymentMethod } from "../../../../../../types/pagopa";
-import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import { PaymentMethodRawList } from "../../../../../bonus/bpd/components/paymentMethodActivationToggle/list/PaymentMethodRawList";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { areAnyPaymentMethodsActiveSelector } from "../../../../../bonus/bpd/store/reducers/details/paymentMethods";
+import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 
 type OwnProps = {
   paymentMethods: ReadonlyArray<PaymentMethod>;
@@ -19,6 +21,7 @@ type OwnProps = {
 };
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
   OwnProps &
   Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
@@ -30,8 +33,40 @@ const loadLocales = () => ({
   continueStr: I18n.t("global.buttons.continue")
 });
 
+/**
+ * return a two button footer
+ * left button is enabled when no payment methods are BPD active
+ * right button button is enabled when at least one payment method is BPD active
+ * @param props
+ */
+const getFooter = (props: Props) => {
+  const { continueStr, skip } = loadLocales();
+  const notNowButtonProps = {
+    primary: false,
+    bordered: true,
+    disabled: props.areAnyPaymentMethodsActive,
+    onPress: props.skip,
+    title: skip
+  };
+  const continueButtonProps = {
+    block: true,
+    primary: true,
+    disabled: !props.areAnyPaymentMethodsActive,
+    onPress: props.skip,
+    title: continueStr
+  };
+  return (
+    <FooterWithButtons
+      type={"TwoButtonsInlineHalf"}
+      leftButton={notNowButtonProps}
+      rightButton={continueButtonProps}
+    />
+  );
+};
+
 const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = props => {
-  const { title, body1, body2, skip, continueStr } = loadLocales();
+  const { title, body1, body2 } = loadLocales();
+
   return (
     <BaseScreenComponent
       headerTitle={props.title}
@@ -50,14 +85,7 @@ const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = prop
             <Body>{body2}</Body>
           </View>
         </ScrollView>
-
-        <FooterTwoButtons
-          type={"TwoButtonsInlineHalf"}
-          onCancel={props.skip}
-          onRight={props.skip}
-          rightText={continueStr}
-          leftText={skip}
-        />
+        {getFooter(props)}
       </SafeAreaView>
     </BaseScreenComponent>
   );
@@ -67,7 +95,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   skip: () => dispatch(NavigationActions.back())
 });
 
+const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
+  areAnyPaymentMethodsActive: areAnyPaymentMethodsActiveSelector(
+    props.paymentMethods
+  )(state)
+});
+
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(ActivateBpdOnNewPaymentMethodScreen);
