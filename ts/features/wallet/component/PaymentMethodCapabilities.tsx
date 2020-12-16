@@ -2,18 +2,22 @@ import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import reactotron from "reactotron-react-native";
 import { Dispatch } from "redux";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import IconFont from "../../../components/ui/IconFont";
 import { bpdEnabled } from "../../../config";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   EnableableFunctionsTypeEnum,
+  isCreditCard,
   PaymentMethod
 } from "../../../types/pagopa";
 import BpdPaymentMethodCapability from "../../bonus/bpd/components/BpdPaymentMethodCapability";
+import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 
 type OwnProps = { paymentMethod: PaymentMethod };
 
@@ -65,6 +69,10 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
     return null;
   }
 
+  if (isCreditCard(props.paymentMethod)) {
+    reactotron.log(props.paymentMethod.info.brand);
+  }
+
   return (
     <>
       <View style={styles.row}>
@@ -79,6 +87,10 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
       </View>
       <View spacer={true} />
       {capabilityItems.map(c => c)}
+      <View spacer={true} />
+      <ItemSeparatorComponent noPadded={true} />
+      <View spacer={true} />
+      <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     </>
   );
 };
