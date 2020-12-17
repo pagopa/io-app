@@ -21,6 +21,8 @@ import {
 import PreviewBancomatCard from "../../../../bancomat/component/bancomatCard/PreviewBancomatCard";
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { isBancomatBlocked } from "../../../../../../utils/paymentMethod";
 
 type Props = {
   pan: Card;
@@ -39,6 +41,7 @@ const styles = StyleSheet.create({
   title: { lineHeight: 33, alignSelf: "flex-start" },
   flexStart: { alignSelf: "flex-start" }
 });
+
 const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiInfo, setAbiInfo] = React.useState<Abi>({});
 
@@ -83,23 +86,39 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
             <View spacer={true} large={true} />
             <PreviewBancomatCard bancomat={props.pan} abi={abiInfo} />
             <View spacer={true} large={true} />
-            <InfoBox>
-              <Body>{I18n.t("wallet.onboarding.bancomat.add.warning")}</Body>
-            </InfoBox>
+            {isBancomatBlocked(props.pan) ? (
+              <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
+                <Body>{I18n.t("wallet.onboarding.bancomat.add.blocked")}</Body>
+              </InfoBox>
+            ) : (
+              <InfoBox>
+                <Body>{I18n.t("wallet.onboarding.bancomat.add.warning")}</Body>
+              </InfoBox>
+            )}
           </View>
           <View spacer />
         </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps(
-            props.handleSkip,
-            I18n.t("global.buttons.skip")
-          )}
-          rightButton={confirmButtonProps(
-            props.handleContinue,
-            I18n.t("global.buttons.add")
-          )}
-        />
+        {isBancomatBlocked(props.pan) ? (
+          <FooterWithButtons
+            type={"SingleButton"}
+            leftButton={confirmButtonProps(
+              props.handleSkip,
+              I18n.t("global.buttons.continue")
+            )}
+          />
+        ) : (
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={cancelButtonProps(
+              props.handleSkip,
+              I18n.t("global.buttons.skip")
+            )}
+            rightButton={confirmButtonProps(
+              props.handleContinue,
+              I18n.t("global.buttons.add")
+            )}
+          />
+        )}
       </SafeAreaView>
     </BaseScreenComponent>
   );

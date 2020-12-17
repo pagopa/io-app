@@ -5,7 +5,11 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { BackendStatus, SectionStatusKey } from "../../api/backendPublic";
+import {
+  BackendStatus,
+  SectionStatus,
+  SectionStatusKey
+} from "../../api/backendPublic";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -34,7 +38,9 @@ export const backendStatusSelector = (
 ): Option<BackendStatus> => state.backendStatus.status;
 
 export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
-  createSelector(backendStatusSelector, backendStatus =>
+  createSelector(backendStatusSelector, (backendStatus):
+    | SectionStatus
+    | undefined =>
     backendStatus
       .mapNullable(bs => bs.sections)
       .fold(undefined, s => s[sectionStatusKey])

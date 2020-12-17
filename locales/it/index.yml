@@ -52,6 +52,8 @@ date:
     - "am"
     - "pm"
 global:
+  badges:
+    blocked: "Bloccato"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
@@ -748,6 +750,7 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Portafoglio
+  refreshWallet: Aggiorna il Portafoglio
   incoming:
     title: "In arrivo"
     message: "Una prossima versione di IO renderà disponibile anche questo metodo di pagamento"
@@ -808,6 +811,7 @@ wallet:
         bodyPlural: "Abbiamo trovato {{number}} carte a te intestate. Procedi con l'aggiunta di questa carta cliccando Aggiungi o clicca Salta per passare alla carta successiva."
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
         warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente."
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
       bpd:
         suggestActivation:
           title: "Vuoi attivare il Cashback?"
@@ -819,13 +823,25 @@ wallet:
           title: "Vuoi attivare il Cashback?"
           body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
           body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
-          skip: "Non ora, grazie"
+          skip: "Non ora"
     satispay:
       headerTitle: "Aggiungi Satispay"
+      start:
+        title: "Vuoi aggiungere su IO il tuo account Satispay?"
+        body: "Verificheremo se esiste un account satispay associato al tuo codice fiscale"
+        cta: "Informativa sul trattamento dei dati personali"
       loadingSearch:
         title: "Stiamo verificando il tuo account Satispay\n\nAttendi qualche secondo"
       loadingAdd:
         title: "Stiamo aggiungendo il tuo account Satispay\n\nAttendi qualche secondo"
+      add:
+        title: "Vuoi aggiungere questo account Satispay?"
+      koTimeout:
+        title: "Non siamo riusciti a contattare Satispay"
+        body: "Riprova per favore"
+      koNotFound:
+        title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
+        body: "Contatta Satispay per l’attivazione"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -901,7 +917,10 @@ wallet:
       pagamento
     save: Salva
     notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
-    temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
+    temporaryError: Si è verificato un errore nel salvataggio di questa carta
+    temporarySubError: Non abbiamo ricevuto risposta dai sistemi di sicurezza. Ci scusiamo per il disagio.
+    loadWalletsErrorTitle: I sistemi stanno impiegando più tempo del previsto
+    loadWalletsErrorBody: Non abbiamo ricevuto risposta dai sistemi di sicurezza, ma la tua carta potrebbe essere stata aggiunta. Aggiorna il tuo portafoglio prima di riprovare.
     loadingAlert: Sto verificando le informazioni della tua carta...
   saveCardInPayment:
     header: Paga con questa carta
@@ -1031,7 +1050,7 @@ wallet:
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
     digital:
       name: App e strumenti di pagamento digitali
-      description: Usa i tuoi strumenti digitali preferiti per pagare su IO
+      description: I tuoi strumenti digitali preferiti su IO
     pagobancomat:
       name: Carta PagoBANCOMAT
       description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
@@ -1040,10 +1059,10 @@ wallet:
       maxFee: Commissione massima 0.50€
     satispay:
       name: Satispay
-      description: Paga con Satispay
+      description: Abbina il tuo account Satispay
     bancomatPay:
       name: BANCOMAT Pay
-      description: Paga con BANCOMAT Pay
+      description: Abbina il tuo account BANCOMAT Pay
     postepayApp: 
       name: Postepay
       description: la tua app Postepay
@@ -1149,6 +1168,7 @@ saveCard:
     di pagamento
 cardComponent:
   validUntil: Valida fino al
+  expiresOn: Scade il
   expiredCard: CARTA SCADUTA IL
   actions: Azioni
   setFavourite: Imposta come preferita
@@ -1948,11 +1968,11 @@ bonus:
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
-              body: "**Sono già passati più di 5 giorni lavorativi?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione, i nostri sistemi la aggiungeranno il giorno successivo.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
+              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
             calendarBlock:
               text1: "Ti informiamo che prima che tu veda la transazione su IO, "
-              text2: "possono passare fino a 3 giorni lavorativi"
-              text3: ", in alcuni casi anche di più."
+              text2: "possono passare in media 3 giorni lavorativi"
+              text3: "."
             lastUpdated: "Ultima transazione valida: "
             link: "Manca qualcosa?"
             body:
