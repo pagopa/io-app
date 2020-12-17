@@ -18,7 +18,10 @@ const newBancomatBottomSheet = () => {
 
   const openModalBox = async () => {
     const bottomSheetProps = await bottomSheetContent(
-      <BancomatInformation onAddPaymentMethod={dismiss} hideInfobox={true} />,
+      <BancomatInformation
+        onAddPaymentMethod={dismiss}
+        hideCobrandTitle={true}
+      />,
       I18n.t("wallet.methods.pagobancomat.name"),
       385,
       dismiss

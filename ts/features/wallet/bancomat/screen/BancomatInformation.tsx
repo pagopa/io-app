@@ -19,7 +19,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 
 type OwnProps = {
   onAddPaymentMethod?: () => void;
-  hideInfobox?: boolean;
+  hideCobrandTitle?: boolean;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -67,7 +67,7 @@ const BrandIconsBar = () => (
 
 const BancomatInformation: React.FunctionComponent<Props> = props => (
   <View>
-    {!props.hideInfobox && (
+    {!props.hideCobrandTitle && (
       <H4>{I18n.t("wallet.bancomat.details.debit.title")}</H4>
     )}
     <View spacer={true} />
