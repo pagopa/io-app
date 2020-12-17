@@ -77,7 +77,7 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
       </View>
       <View spacer={true} />
       {capabilityItems.map(c => c)}
-      {capabilityItems.length === 0 && (
+      {capabilityItems.length !== 0 && (
         <>
           <View spacer={true} />
           <ItemSeparatorComponent noPadded={true} />
