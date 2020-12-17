@@ -425,8 +425,8 @@ class PinScreen extends React.PureComponent<Props, State> {
           this.props.createPinSuccess(pin);
           // user is updating his/her pin inside the app, go back
           if (this.props.isOnboardingCompleted) {
+            // We need to ask the user to restart the app
             this.showModal();
-
             this.props.navigation.goBack();
           }
         },
