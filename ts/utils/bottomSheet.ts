@@ -1,6 +1,7 @@
 import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { BottomSheetModalConfigs } from "@gorhom/bottom-sheet/lib/typescript/types";
 import * as React from "react";
+import { Dimensions } from "react-native";
 import { AccessibilityContent } from "../components/bottomSheet/AccessibilityContent";
 import { BlurredBackgroundComponent } from "../components/bottomSheet/BlurredBackgroundComponent";
 import { BottomSheetContent } from "../components/bottomSheet/BottomSheetContent";
@@ -38,7 +39,7 @@ export const bottomSheetContent = async (
   return {
     content: bottomSheetBody,
     config: {
-      snapPoints: [snapPoint],
+      snapPoints: [Math.min(snapPoint, Dimensions.get("window").height)],
       allowTouchThroughOverlay: false,
       dismissOnOverlayPress: true,
       dismissOnScrollDown: true,

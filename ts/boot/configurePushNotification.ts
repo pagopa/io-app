@@ -7,7 +7,6 @@ import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Alert } from "react-native";
 import PushNotification from "react-native-push-notification";
-
 import { store } from "../App";
 import { debugRemotePushNotification, gcmSenderId } from "../config";
 import { loadMessages } from "../store/actions/messages";

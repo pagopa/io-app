@@ -21,6 +21,7 @@ import { navigateToBpdTransactions } from "../../navigation/actions";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
 import { navigateBack } from "../../../../../store/actions/navigation";
+import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
@@ -96,7 +97,6 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
       <DarkLayout
         bounces={false}
         title={I18n.t("bonus.bpd.name")}
-        faqCategories={["bonus_detail"]}
         allowGoBack={true}
         topContent={<View style={styles.headerSpacer} />}
         gradientHeader={true}
@@ -107,6 +107,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
             <GoToTransactions goToTransactions={props.goToTransactions} />
           )
         }
+        footerFullWidth={<SectionStatusComponent sectionKey={"cashback"} />}
       >
         <View style={styles.selector}>
           <BpdPeriodSelector />

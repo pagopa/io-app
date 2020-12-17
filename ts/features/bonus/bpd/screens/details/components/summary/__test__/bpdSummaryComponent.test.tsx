@@ -7,8 +7,7 @@ import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../../utils/accessibility";
-import { BpdAmount } from "../../../../../store/actions/amount";
-import { BpdPeriod } from "../../../../../store/actions/periods";
+import { BpdAmount } from "../../../../../saga/networking/amount";
 import {
   eligibleAmount,
   eligibleMaxAmount,
@@ -20,6 +19,7 @@ import {
   closedPeriod,
   inactivePeriod
 } from "../../../../../store/reducers/__mock__/periods";
+import { BpdPeriodWithAmount } from "../../../../../store/reducers/details/periods";
 import BpdSummaryComponent from "../BpdSummaryComponent";
 
 jest.mock("@gorhom/bottom-sheet", () => ({
@@ -33,7 +33,9 @@ describe("Bpd Summary Component graphical test for different states", () => {
   MockDate.set("2020-11-04");
 
   it("Render Inactive period", () => {
-    const store = mockStore(mockBpdState(inactivePeriod, zeroAmount));
+    const store = mockStore(
+      mockBpdState({ ...inactivePeriod, amount: zeroAmount })
+    );
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
@@ -57,14 +59,14 @@ describe("Bpd Summary Component graphical test for different states", () => {
   });
 
   it("Render Active period, transactionNumber<minTransactionNumber, totalCashback = 0", () => {
-    const store = mockStore(mockBpdState(activePeriod, zeroAmount));
+    const store = mockStore(
+      mockBpdState({ ...activePeriod, amount: zeroAmount })
+    );
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
       </Provider>
     );
-
-    activePeriodNotEnoughTransaction(component, zeroAmount);
 
     // When the period is "Active" and transactionNumber<minTransactionNumber,
     // TextualSummary should be null if totalCashback == 0
@@ -72,7 +74,9 @@ describe("Bpd Summary Component graphical test for different states", () => {
   });
 
   it("Render Active period, transactionNumber < minTransactionNumber, totalCashback > 0", () => {
-    const store = mockStore(mockBpdState(activePeriod, notEligibleAmount));
+    const store = mockStore(
+      mockBpdState({ ...activePeriod, amount: notEligibleAmount })
+    );
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
@@ -92,7 +96,9 @@ describe("Bpd Summary Component graphical test for different states", () => {
   });
 
   it("Render Active period, transactionNumber >= minTransactionNumber", () => {
-    const store = mockStore(mockBpdState(activePeriod, eligibleAmount));
+    const store = mockStore(
+      mockBpdState({ ...activePeriod, amount: eligibleAmount })
+    );
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
@@ -119,7 +125,9 @@ describe("Bpd Summary Component graphical test for different states", () => {
 
   it("Render Closed period, grace period", () => {
     MockDate.set("2020-11-04");
-    const store = mockStore(mockBpdState(closedPeriod, zeroAmount));
+    const store = mockStore(
+      mockBpdState({ ...closedPeriod, amount: zeroAmount })
+    );
     const componentGrace = render(
       <Provider store={store}>
         <BpdSummaryComponent />
@@ -147,7 +155,9 @@ describe("Bpd Summary Component graphical test for different states", () => {
 
   it("Render Closed period, not enough transactions", () => {
     MockDate.set("2020-11-09");
-    const store = mockStore(mockBpdState(closedPeriod, zeroAmount));
+    const store = mockStore(
+      mockBpdState({ ...closedPeriod, amount: zeroAmount })
+    );
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
@@ -158,7 +168,9 @@ describe("Bpd Summary Component graphical test for different states", () => {
 
   it("Render Closed period, cashback earned", () => {
     MockDate.set("2020-11-09");
-    const store = mockStore(mockBpdState(closedPeriod, eligibleAmount));
+    const store = mockStore(
+      mockBpdState({ ...closedPeriod, amount: eligibleAmount })
+    );
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
@@ -173,7 +185,9 @@ describe("Bpd Summary Component graphical test for different states", () => {
 
   it("Render Closed period, max cashback earned", () => {
     MockDate.set("2020-11-09");
-    const store = mockStore(mockBpdState(closedPeriod, eligibleMaxAmount));
+    const store = mockStore(
+      mockBpdState({ ...closedPeriod, amount: eligibleMaxAmount })
+    );
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
@@ -198,12 +212,11 @@ describe("Bpd Summary Component graphical test for different states", () => {
  * @param period
  * @param amount
  */
-const mockBpdState = (period: BpdPeriod, amount: BpdAmount) => ({
+const mockBpdState = (period: BpdPeriodWithAmount) => ({
   bonus: {
     bpd: {
       details: {
-        selectedPeriod: period,
-        amounts: { [period.awardPeriodId]: pot.some(amount) }
+        selectedPeriod: period
       }
     }
   },

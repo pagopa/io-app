@@ -74,6 +74,7 @@ import {
   fetchTransactionRequest,
   fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
+  fetchTransactionsRequestWithExpBackoff,
   fetchTransactionSuccess,
   pollTransactionSagaCompleted,
   pollTransactionSagaTimeout,
@@ -96,7 +97,10 @@ import {
   payCreditCardVerificationSuccess,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
-  setWalletSessionEnabled
+  setWalletSessionEnabled,
+  fetchWalletsRequestWithExpBackoff,
+  addWalletCreditCardWithBackoffRetryRequest,
+  payCreditCardVerificationWithBackoffRetryRequest
 } from "../store/actions/wallet/wallets";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -150,6 +154,7 @@ import {
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
 import { ContentClient } from "../api/content";
+import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -210,7 +215,11 @@ function* startOrResumeAddCreditCardSaga(
     //
 
     if (pot.isNone(state.creditCardAddWallet)) {
-      yield put(addWalletCreditCardRequest({ creditcard: creditCardWallet }));
+      yield put(
+        addWalletCreditCardWithBackoffRetryRequest({
+          creditcard: creditCardWallet
+        })
+      );
       const responseAction = yield take([
         getType(addWalletCreditCardSuccess),
         getType(addWalletCreditCardFailure)
@@ -252,7 +261,7 @@ function* startOrResumeAddCreditCardSaga(
         }
       };
       yield put(
-        payCreditCardVerificationRequest({
+        payCreditCardVerificationWithBackoffRetryRequest({
           payRequest,
           language: action.payload.language
         })
@@ -531,6 +540,17 @@ function* pollTransactionSaga(
   }
 }
 
+// select the delay time from store
+// and if it is > 0, wait that time
+function* backoffWait() {
+  const delayTime: ReturnType<typeof backOffWaitingTime> = yield select(
+    backOffWaitingTime
+  );
+  if (delayTime > 0) {
+    yield delay(delayTime);
+  }
+}
+
 /**
  * This saga attempts to delete the active payment, if there's one.
  *
@@ -646,6 +666,13 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  yield takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
+    action: ActionType<typeof fetchTransactionsRequestWithExpBackoff>
+  ) {
+    yield call(backoffWait);
+    yield put(fetchTransactionsRequest(action.payload));
+  });
+
   /**
    * watch when all transactions are been loaded
    * check if transaction read store section (entities.transactionsRead) is dirty:
@@ -675,6 +702,11 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  yield takeLatest(getType(fetchWalletsRequestWithExpBackoff), function* () {
+    yield call(backoffWait);
+    yield put(fetchWalletsRequest());
+  });
+
   yield takeLatest(
     getType(fetchWalletsRequest),
     getWallets,
@@ -690,10 +722,32 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(
+    getType(addWalletCreditCardWithBackoffRetryRequest),
+    function* (
+      action: ActionType<typeof addWalletCreditCardWithBackoffRetryRequest>
+    ) {
+      yield call(backoffWait);
+      yield put(addWalletCreditCardRequest(action.payload));
+    }
+  );
+
+  yield takeLatest(
     getType(payCreditCardVerificationRequest),
     payCreditCardVerificationRequestHandler,
     paymentManagerClient,
     pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(payCreditCardVerificationWithBackoffRetryRequest),
+    function* (
+      action: ActionType<
+        typeof payCreditCardVerificationWithBackoffRetryRequest
+      >
+    ) {
+      yield call(backoffWait);
+      yield put(payCreditCardVerificationRequest(action.payload));
+    }
   );
 
   yield takeLatest(

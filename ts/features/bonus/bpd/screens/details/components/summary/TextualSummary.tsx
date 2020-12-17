@@ -3,7 +3,7 @@ import { InfoBox } from "../../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import I18n from "../../../../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../utils/accessibility";
-import { BpdAmount } from "../../../../store/actions/amount";
+import { BpdAmount } from "../../../../saga/networking/amount";
 import { BpdPeriod } from "../../../../store/actions/periods";
 
 type Props = {
@@ -138,7 +138,9 @@ const chooseTextualInfoBox = (props: Props) => {
       // active period but still not enough transaction
       if (
         props.amount.transactionNumber < props.period.minTransactionNumber &&
-        props.amount.totalCashback > 0
+        props.amount.totalCashback > 0 &&
+        // hide with transactionNumber === 0
+        props.amount.transactionNumber > 0
       ) {
         return <CurrentPeriodWarning period={props.period} />;
       }
