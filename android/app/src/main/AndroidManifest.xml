@@ -70,6 +70,23 @@
 
     <!-- END Required by react-native-push-notification -->
 
+    <!-- START Required by mixpanel push notification -->
+    <service
+      android:name="com.mixpanel.android.mpmetrics.MixpanelFCMMessagingService"
+      android:enabled="true"
+      android:exported="false">
+      <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+      </intent-filter>
+    </service>
+
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_icon"
+      android:resource="@drawable/ic_notification" />
+
+    <!-- END Required by mixpanel push notification  -->
+
+
     <activity android:name=".MainActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode" android:windowSoftInputMode="adjustResize">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

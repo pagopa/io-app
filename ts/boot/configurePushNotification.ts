@@ -15,6 +15,7 @@ import {
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
 import { isDevEnv } from "../utils/environment";
+import { setMixpanelPushNotificationToken } from "../mixpanel";
 
 /**
  * Helper type used to validate the notification payload.
@@ -35,6 +36,8 @@ function configurePushNotifications() {
   PushNotification.configure({
     // Called when token is generated
     onRegister: token => {
+      // send token to enable PN through Mixpanel
+      void setMixpanelPushNotificationToken(token.token);
       // Dispatch an action to save the token in the store
       store.dispatch(updateNotificationsInstallationToken(token.token));
     },
