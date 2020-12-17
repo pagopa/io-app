@@ -106,7 +106,7 @@ const PagoPaPaymentCapability: React.FunctionComponent<Props> = props => (
       <H4 weight={"SemiBold"} color={"bluegreyDark"}>
         {I18n.t("wallet.methods.card.pagoPaCapability.title")}
       </H4>
-      <H5 color={"bluegrey"}>
+      <H5 weight={"Regular"} color={"bluegrey"}>
         {I18n.t("wallet.methods.card.pagoPaCapability.description")}
       </H5>
     </View>
