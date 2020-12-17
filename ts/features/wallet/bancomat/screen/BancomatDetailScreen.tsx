@@ -19,6 +19,7 @@ import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePayment
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
@@ -84,6 +85,8 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
         <PaymentMethodCapabilities paymentMethod={bancomat} />
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
+        <View spacer={true} />
+        <BancomatInformation />
         <View spacer={true} />
         <UnsubscribeButton
           onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
