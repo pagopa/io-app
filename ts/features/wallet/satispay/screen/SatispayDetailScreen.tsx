@@ -71,11 +71,6 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
       allowGoBack={true}
       topContent={<View style={styles.headerSpacer} />}
       gradientHeader={true}
-      footerContent={
-        <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(satispay.idWallet))}
-        />
-      }
       hideHeader={true}
     >
       <View style={styles.cardContainer}>
@@ -86,6 +81,10 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
         <PaymentMethodCapabilities paymentMethod={satispay} />
         <View spacer={true} />
         <SatispayInformation />
+        <View spacer={true} large={true} />
+        <UnsubscribeButton
+          onPress={() => present(() => props.deleteWallet(satispay.idWallet))}
+        />
       </View>
       <View spacer={true} extralarge={true} />
     </DarkLayout>
