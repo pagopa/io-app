@@ -1,6 +1,6 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
-import * as React from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -8,18 +8,17 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationContext, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import AdviceComponent from "../../../components/AdviceComponent";
 import CieRequestAuthenticationOverlay from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
-import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import {
   BottomTopAnimation,
-  LightModalContextInterface
+  LightModalContext
 } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
@@ -27,18 +26,17 @@ import { nfcIsEnabled } from "../../../store/actions/cie";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import Markdown from "../../../components/ui/Markdown";
+
 import { isIos } from "../../../utils/platform";
+import { useIOBottomSheet } from "../../../utils/bottomSheet";
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
+});
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationInjectedProps &
-  LightModalContextInterface;
-
-type State = Readonly<{
-  pin: string;
-  url?: string;
-}>;
+  NavigationInjectedProps;
 
 const styles = StyleSheet.create({
   container: {
@@ -49,139 +47,132 @@ const styles = StyleSheet.create({
 
 const CIE_PIN_LENGTH = 8;
 
-/**
- * A screen that allow the user to insert the Cie PIN.
- */
-class CiePinScreen extends React.PureComponent<Props, State> {
-  private continueButtonRef = React.createRef<FooterWithButtons>();
-  private pinPadViewRef = React.createRef<View>();
-  constructor(props: Props) {
-    super(props);
-    this.state = { pin: "" };
-  }
+const CiePinScreen: React.FC<Props> = props => {
+  const { showAnimatedModal, hideModal } = useContext(LightModalContext);
+  const { navigate } = useContext(NavigationContext);
+  const { present, dismiss } = useIOBottomSheet();
+  const [pin, setPin] = useState("");
+  const [url, setUrl] = useState<string | undefined>(undefined);
 
-  private getContextualHelp = () => ({
-    title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
-    body: () => (
-      <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
-    )
-  });
+  const continueButtonRef = useRef<FooterWithButtons>();
+  const PINPadViewRef = useRef<View>();
 
-  private onProceedToCardReaderScreen = (url: string) => {
-    const ciePin = this.state.pin;
-    this.setState({ url, pin: "" }, () => {
-      this.props.navigation.navigate({
-        routeName: ROUTES.CIE_CARD_READER_SCREEN,
-        params: { ciePin, authorizationUri: url }
-      });
-      this.props.hideModal();
-    });
+  const onProceedToCardReaderScreen = async (url: string) => {
+    setPin("");
+    setUrl(url);
   };
 
-  private handleAuthenticationOverlayOnClose = () => {
-    // reset the pin if user abort process during loading
-    this.setState({ pin: "" }, this.props.hideModal);
-  };
+  // Handles URL receival.
+  useEffect(() => {
+    if (url === undefined) {
+      return;
+    }
 
-  private showModal = () => {
-    this.props.requestNfcEnabledCheck();
-    Keyboard.dismiss();
-    const component = (
-      <CieRequestAuthenticationOverlay
-        onClose={this.handleAuthenticationOverlayOnClose}
-        onSuccess={this.onProceedToCardReaderScreen}
-      />
-    );
-    this.props.showAnimatedModal(component, BottomTopAnimation);
-  };
-
-  // Method called when the PIN changes
-  public handelOnPinChanged = (pin: string) => {
-    this.setState(
-      {
-        pin
-      },
-      () => {
-        // set focus on continue button when the pin input is full filled
-        if (this.state.pin.length === CIE_PIN_LENGTH) {
-          setAccessibilityFocus(this.continueButtonRef, 100 as Millisecond);
-        }
+    navigate({
+      routeName: ROUTES.CIE_CARD_READER_SCREEN,
+      params: {
+        ciePin: pin,
+        authorizationUri: url
       }
+    });
+
+    hideModal();
+  }, [url]);
+
+  const handleAuthenticationOverlayOnClose = () => {
+    setPin("");
+    hideModal();
+  };
+
+  const showModal = () => {
+    props.requestNfcEnabledCheck();
+
+    Keyboard.dismiss();
+
+    showAnimatedModal(
+      <CieRequestAuthenticationOverlay
+        onClose={handleAuthenticationOverlayOnClose}
+        onSuccess={onProceedToCardReaderScreen}
+      />,
+      BottomTopAnimation
     );
   };
 
-  public render() {
-    return (
-      <TopScreenComponent
-        onAccessibilityNavigationHeaderFocus={() => {
-          setAccessibilityFocus(this.pinPadViewRef, 100 as Millisecond);
-        }}
-        goBack={true}
-        contextualHelp={this.getContextualHelp()}
-        headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
-      >
-        <ScrollView>
-          <ScreenContentHeader
-            title={I18n.t("authentication.cie.pin.pinCardTitle")}
-            icon={require("../../../../img/icons/icon_insert_cie_pin.png")}
+  const onPinChanged = (pin: string) => setPin(pin);
+
+  useEffect(() => {
+    if (pin === "") {
+      return;
+    }
+
+    if (pin.length === CIE_PIN_LENGTH) {
+      setAccessibilityFocus(continueButtonRef.current, 100 as Millisecond);
+    }
+  }, [pin]);
+
+  const doSetAccessibilityFocus = useCallback(() => {
+    if (!PINPadViewRef.current) {
+      return;
+    }
+
+    setAccessibilityFocus(PINPadViewRef, 100 as Millisecond);
+  }, [PINPadViewRef]);
+
+  return (
+    <TopScreenComponent
+      onAccessibilityNavigationHeaderFocus={doSetAccessibilityFocus}
+      goBack={true}
+      headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
+    >
+      <ScrollView>
+        <ScreenContentHeader
+          title={I18n.t("authentication.cie.pin.pinCardTitle")}
+          icon={require("../../../../img/icons/icon_insert_cie_pin.png")}
+        />
+        <View spacer={true} />
+        <View style={styles.container} accessible={true} ref={PINPadViewRef}>
+          <CiePinpad
+            pin={pin}
+            pinLength={CIE_PIN_LENGTH}
+            onPinChanged={onPinChanged}
+            onSubmit={showModal}
           />
           <View spacer={true} />
-          <View
-            style={styles.container}
-            accessible={true}
-            ref={this.pinPadViewRef}
-          >
-            <CiePinpad
-              pin={this.state.pin}
-              pinLength={CIE_PIN_LENGTH}
-              onPinChanged={this.handelOnPinChanged}
-              onSubmit={this.showModal}
-            />
-            <View spacer={true} />
-            {isIos && (
-              <AdviceComponent
-                iconName={"io-bug"}
-                text={I18n.t("global.disclaimer_beta")}
-                iconColor={"black"}
-              />
-            )}
-            <View spacer={true} />
+          {isIos && (
             <AdviceComponent
-              text={I18n.t("login.expiration_info")}
+              iconName={"io-bug"}
+              text={I18n.t("global.disclaimer_beta")}
               iconColor={"black"}
             />
-          </View>
-        </ScrollView>
-        {this.state.pin.length === CIE_PIN_LENGTH && (
-          <FooterWithButtons
-            accessible={true}
-            ref={this.continueButtonRef}
-            type={"SingleButton"}
-            leftButton={{
-              primary: true,
-              onPress: this.showModal,
-              title: I18n.t("global.buttons.continue")
-            }}
+          )}
+          <View spacer={true} />
+          <AdviceComponent
+            text={I18n.t("login.expiration_info")}
+            iconColor={"black"}
           />
-        )}
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "android" ? "height" : "padding"}
-          keyboardVerticalOffset={Platform.select({
-            ios: 0,
-            android: variables.contentPadding
-          })}
+        </View>
+      </ScrollView>
+      {pin.length === CIE_PIN_LENGTH && (
+        <FooterWithButtons
+          accessible={true}
+          ref={continueButtonRef}
+          type={"SingleButton"}
+          leftButton={{
+            primary: true,
+            onPress: showModal,
+            title: I18n.t("global.buttons.continue")
+          }}
         />
-      </TopScreenComponent>
-    );
-  }
-}
+      )}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "android" ? "height" : "padding"}
+        keyboardVerticalOffset={Platform.select({
+          ios: 0,
+          android: variables.contentPadding
+        })}
+      />
+    </TopScreenComponent>
+  );
+};
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
-});
-
-// TODO: solve bug: for a while the pinpad is displayed again when it succeeded - it occurs also during payments after a loading
-export default connect(
-  null,
-  mapDispatchToProps
-)(withLightModalContext(CiePinScreen));
+export default connect(null, mapDispatchToProps)(CiePinScreen);
