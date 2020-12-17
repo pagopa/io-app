@@ -25,6 +25,8 @@ import SectionStatusComponent from "../../../../../components/SectionStatusCompo
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
+import reactotron from "reactotron-react-native";
+import BpdLastUpdateComponent from "../../components/BpdLastUpdateComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -87,7 +89,6 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
         return true;
     }
   });
-
   return (
     <LoadingSpinnerOverlay
       isLoading={loading}
@@ -113,6 +114,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
           <BpdPeriodSelector />
         </View>
         <View style={styles.selectorSpacer} />
+        <BpdLastUpdateComponent />
         <BpdPeriodDetail />
       </DarkLayout>
     </LoadingSpinnerOverlay>
