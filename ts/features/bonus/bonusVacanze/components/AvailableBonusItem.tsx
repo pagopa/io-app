@@ -91,7 +91,7 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
           </Row>
           <Row>
             <Text style={[styles.servicesName, disabledStyle]}>
-              {bonusTypeLocalizedContent.description}
+              {bonusTypeLocalizedContent.description ?? ""}
             </Text>
           </Row>
         </Grid>
