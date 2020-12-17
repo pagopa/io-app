@@ -1,4 +1,3 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -8,7 +7,7 @@ import { Label } from "../../../../../../../components/core/typography/Label";
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { bottomSheetRawConfig } from "../../../../../../../utils/bottomSheet";
+import { useIOBottomSheetRaw } from "../../../../../../../utils/bottomSheet";
 import { bpdDeleteUserFromProgram } from "../../../../store/actions/onboarding";
 import { UnsubscribeComponent } from "./UnsubscribeComponent";
 
@@ -29,25 +28,21 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
-  const { present, dismiss } = useBottomSheetModal();
+  const { present, dismiss } = useIOBottomSheetRaw(
+    I18n.t("bonus.bpd.unsubscribe.title"),
+    582
+  );
 
-  const openModalBox = () => {
-    const bottomSheetProps = bottomSheetRawConfig(
+  const openModalBox = () =>
+    present(
       <UnsubscribeComponent
         onCancel={dismiss}
         onConfirm={() => {
           dismiss();
           props.cancelBpd();
         }}
-      />,
-      I18n.t("bonus.bpd.unsubscribe.title"),
-      582,
-      dismiss
+      />
     );
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
 
   return (
     <ButtonDefaultOpacity style={styles.button} onPress={openModalBox}>

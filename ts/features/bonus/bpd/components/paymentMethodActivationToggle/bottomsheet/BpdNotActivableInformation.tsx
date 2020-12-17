@@ -1,10 +1,9 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
-import { bottomSheetContent } from "../../../../../../utils/bottomSheet";
+import { useIOBottomSheetRaw2 } from "../../../../../../utils/bottomSheet";
 import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
 
 // NotActivable: already activated by someone else
@@ -46,21 +45,16 @@ export const BpdNotActivableInformation: React.FunctionComponent<Props> = props 
 export const useNotActivableInformationBottomSheet = (
   representation: PaymentMethodRepresentation
 ) => {
-  const { present, dismiss } = useBottomSheetModal();
+  const { present, dismiss } = useIOBottomSheetRaw2(310);
 
-  const openModalBox = async (type: NotActivableType) => {
-    const bottomSheetProps = await bottomSheetContent(
+  const openModalBox = async (type: NotActivableType) =>
+    present(
       <BpdNotActivableInformation
         type={type}
         representation={representation}
       />,
-      getTitle(type),
-      310,
-      dismiss
+      getTitle(type)
     );
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
+
   return { present: openModalBox, dismiss };
 };

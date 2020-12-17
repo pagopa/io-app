@@ -1,11 +1,13 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import * as React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
-import { bottomSheetContent } from "../../../utils/bottomSheet";
+import {
+  bottomSheetContent,
+  useIOBottomSheetRaw
+} from "../../../utils/bottomSheet";
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
 import BancomatInformation from "../bancomat/screen/BancomatInformation";
 import { onboardingBancomatAddedPansSelector } from "../onboarding/bancomat/store/reducers/addedPans";
@@ -14,20 +16,18 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const newBancomatBottomSheet = () => {
-  const { present, dismiss } = useBottomSheetModal();
-
-  const openModalBox = async () => {
-    const bottomSheetProps = await bottomSheetContent(
-      <BancomatInformation onAddPaymentMethod={dismiss} hideInfobox={true} />,
-      I18n.t("wallet.methods.pagobancomat.name"),
-      385,
-      dismiss
-    );
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
+  const { present, dismiss } = useIOBottomSheetRaw(
+    I18n.t("wallet.methods.pagobancomat.name"),
+    385,
+    bottomSheetContent
+  );
+  return {
+    present: () =>
+      present(
+        <BancomatInformation onAddPaymentMethod={dismiss} hideInfobox={true} />
+      ),
+    dismiss
   };
-  return { present: openModalBox, dismiss };
 };
 
 /**

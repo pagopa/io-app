@@ -1,4 +1,3 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import { BottomSheetContent } from "../../../components/bottomSheet/BottomSheetContent";
@@ -6,7 +5,7 @@ import { Body } from "../../../components/core/typography/Body";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { PaymentMethodRepresentation } from "../../../types/pagopa";
-import { bottomSheetRawConfig } from "../../../utils/bottomSheet";
+import { useIOBottomSheetRaw } from "../../../utils/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -55,10 +54,13 @@ export const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
 export const useRemovePaymentMethodBottomSheet = (
   representation: PaymentMethodRepresentation
 ) => {
-  const { present, dismiss } = useBottomSheetModal();
+  const { present, dismiss } = useIOBottomSheetRaw(
+    I18n.t("wallet.newRemove.title"),
+    350
+  );
 
-  const openModalBox = (onConfirm: () => void) => {
-    const bottomSheetProps = bottomSheetRawConfig(
+  const openModalBox = (onConfirm: () => void) =>
+    present(
       <RemovePaymentMethod
         onCancel={dismiss}
         onConfirm={() => {
@@ -69,14 +71,7 @@ export const useRemovePaymentMethodBottomSheet = (
           caption: representation.caption,
           icon: representation.icon
         }}
-      />,
-      I18n.t("wallet.newRemove.title"),
-      350,
-      dismiss
+      />
     );
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
   return { present: openModalBox, dismiss };
 };
