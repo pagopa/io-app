@@ -17,6 +17,8 @@ import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
 import SatispayCard from "../SatispayCard";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import SatispayInformation from "./SatispayInformation";
 
 type NavigationParams = Readonly<{
   satispay: SatispayPaymentMethod;
@@ -65,16 +67,12 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
   return (
     <DarkLayout
       bounces={false}
+      contextualHelp={emptyContextualHelp}
       title={I18n.t("wallet.methods.card.shortName")}
       faqCategories={["wallet_methods"]}
       allowGoBack={true}
       topContent={<View style={styles.headerSpacer} />}
       gradientHeader={true}
-      footerContent={
-        <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(satispay.idWallet))}
-        />
-      }
       hideHeader={true}
     >
       <View style={styles.cardContainer}>
@@ -84,6 +82,11 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
       <View style={IOStyles.horizontalContentPadding}>
         <PaymentMethodCapabilities paymentMethod={satispay} />
         <View spacer={true} />
+        <SatispayInformation />
+        <View spacer={true} large={true} />
+        <UnsubscribeButton
+          onPress={() => present(() => props.deleteWallet(satispay.idWallet))}
+        />
       </View>
       <View spacer={true} extralarge={true} />
     </DarkLayout>
