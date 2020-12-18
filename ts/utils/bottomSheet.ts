@@ -102,6 +102,12 @@ export const useIOBottomSheet = (
   return { present: openModalBox, dismiss };
 };
 
+/**
+ * custom hook to handle the hardware back button on Android devices
+ * - when the BS is opened, back button closes the BS
+ * - when the BS is closed, back button event is forwarded to the next handler
+ * @param onDismiss
+ */
 export const useHardwareBackButtonHandler = (onDismiss: () => void) => {
   const [isBottomSheetOpened, setBottomSheetOpened] = React.useState(false);
   useHardwareBackButton(() => {
