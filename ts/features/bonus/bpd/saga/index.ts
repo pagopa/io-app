@@ -21,15 +21,13 @@ import {
 import { bpdPeriodsAmountLoad } from "../store/actions/periods";
 import { bpdTransactionsLoad } from "../store/actions/transactions";
 import { deleteCitizen, getCitizen, putEnrollCitizen } from "./networking";
+import { loadBpdData } from "./networking/loadBpdData";
+import { loadPeriodsWithInfo } from "./networking/loadPeriodsWithInfo";
 import { patchCitizenIban } from "./networking/patchCitizenIban";
 import {
   bpdLoadPaymentMethodActivationSaga,
   bpdUpdatePaymentMethodActivationSaga
 } from "./networking/paymentMethod";
-import {
-  loadPeriodsWithInfo,
-  loadBpdData
-} from "./networking/prefetchBpdDetails";
 import { bpdLoadTransactionsSaga } from "./networking/transactions";
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
