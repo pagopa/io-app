@@ -828,7 +828,7 @@ wallet:
       headerTitle: "Aggiungi Satispay"
       start:
         title: "Vuoi aggiungere su IO il tuo account Satispay?"
-        body: "Verificheremo se esiste un account satispay associato al tuo codice fiscale"
+        body: "Verificheremo se esiste un account Satispay associato al tuo codice fiscale."
         cta: "Informativa sul trattamento dei dati personali"
       loadingSearch:
         title: "Stiamo verificando il tuo account Satispay\n\nAttendi qualche secondo"

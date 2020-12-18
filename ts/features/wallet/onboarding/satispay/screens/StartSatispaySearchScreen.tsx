@@ -1,9 +1,8 @@
 import { View } from "native-base";
 import * as React from "react";
-import { Image, SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StyleSheet } from "react-native";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { Link } from "../../../../../components/core/typography/Link";
@@ -24,13 +23,12 @@ import {
   walletAddSatispayBack,
   walletAddSatispayCancel
 } from "../store/actions";
-import satispayLogo from "../../../../../../img/wallet/payment-methods/satispay-logo.png";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
-  title: { flex: 1, paddingRight: 16, marginTop: -8 },
+  title: { flex: 1, paddingRight: 16 },
   image: { width: 100, height: 25 },
   row: { flexDirection: "row", flex: 1 }
 });
@@ -63,11 +61,6 @@ const StartSatispaySearchScreen: React.FunctionComponent<Props> = props => {
             <View spacer={true} large={true} />
             <View style={styles.row}>
               <H1 style={styles.title}>{title}</H1>
-              <Image
-                source={satispayLogo}
-                style={styles.image}
-                resizeMode={"contain"}
-              />
             </View>
             <View spacer={true} large={true} />
             <Body>{body}</Body>
