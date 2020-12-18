@@ -38,6 +38,7 @@ import { useIOBottomSheet } from "../../../utils/bottomSheet";
 import { Body } from "../../../components/core/typography/Body";
 import { openWebUrl } from "../../../utils/url";
 import { Link } from "../../../components/core/typography/Link";
+import Markdown from "../../../components/ui/Markdown";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
@@ -66,14 +67,21 @@ const CiePinScreen: React.FC<Props> = props => {
 
   const { present } = useIOBottomSheet(
     <View>
-      <Body>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Body>
+      <Body>{I18n.t("authentication.cie.pin.bottomSheetText")}</Body>
       <Link onPress={onOpenForgotPINPage}>
-        {I18n.t("authentication.cie.pin.contextualHelpCTA")}
+        {I18n.t("authentication.cie.pin.bottomSheetCTA")}
       </Link>
     </View>,
-    I18n.t("authentication.cie.pin.contextualHelpTitle"),
-    500
+    I18n.t("authentication.cie.pin.bottomSheetTitle"),
+    300
   );
+
+  const getContextualHelp = () => ({
+    title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
+    body: () => (
+      <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
+    )
+  });
 
   const [pin, setPin] = useState("");
   const [url, setUrl] = useState<string | undefined>(undefined);
@@ -145,10 +153,7 @@ const CiePinScreen: React.FC<Props> = props => {
   return (
     <TopScreenComponent
       onAccessibilityNavigationHeaderFocus={doSetAccessibilityFocus}
-      customRightIcon={{
-        iconName: "help",
-        onPress: present
-      }}
+      contextualHelp={getContextualHelp()}
       goBack={true}
       headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
     >
@@ -156,7 +161,14 @@ const CiePinScreen: React.FC<Props> = props => {
         <ScreenContentHeader
           title={I18n.t("authentication.cie.pin.pinCardTitle")}
           icon={require("../../../../img/icons/icon_insert_cie_pin.png")}
+          subtitle={I18n.t("authentication.cie.pin.subtitleHelp")}
+          subtitleLink={
+            <Link onPress={present}>
+              {I18n.t("authentication.cie.pin.subtitleCTA")}
+            </Link>
+          }
         />
+
         <View spacer={true} />
         <View style={styles.container} accessible={true} ref={PINPadViewRef}>
           <CiePinpad
