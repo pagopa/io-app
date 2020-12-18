@@ -14,7 +14,8 @@ import { bpdLoadPeriodsSaga } from "./periods";
 import { bpdLoadRaking } from "./ranking";
 
 /**
- * Load the periods list with the amount and ranking information foreach period (active or closed)
+ * Load the periods information list and adds the amount and ranking information
+ * foreach period (active or closed)
  * @param bpdClient
  */
 export function* loadPeriodsWithInfo(

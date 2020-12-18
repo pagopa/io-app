@@ -17,8 +17,8 @@ import {
 } from "../../../store/reducers/__mock__/periods";
 import { readyRanking } from "../../../store/reducers/__mock__/ranking";
 import { BpdAmount, bpdLoadAmountSaga } from "../amount";
+import { loadPeriodsWithInfo } from "../loadPeriodsWithInfo";
 import { bpdLoadPeriodsSaga } from "../periods";
-import { loadPeriodsWithInfo } from "../prefetchBpdDetails";
 
 describe("loadPeriodsAmount, mock networking saga", () => {
   it("Dispatch failure if awardsPeriods fails", async () => {
