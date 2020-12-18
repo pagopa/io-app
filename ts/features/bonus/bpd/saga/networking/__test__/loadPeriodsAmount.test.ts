@@ -13,9 +13,13 @@ import {
 import {
   activePeriod,
   closedPeriod,
-  inactivePeriod
+  inactivePeriod,
+  withAwardPeriodId
 } from "../../../store/reducers/__mock__/periods";
-import { readyRanking } from "../../../store/reducers/__mock__/ranking";
+import {
+  notReadyRanking,
+  readyRanking
+} from "../../../store/reducers/__mock__/ranking";
 import { BpdAmount, bpdLoadAmountSaga } from "../amount";
 import { loadPeriodsWithInfo } from "../loadPeriodsWithInfo";
 import { bpdLoadPeriodsSaga } from "../periods";
@@ -109,7 +113,11 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       .put(
         bpdPeriodsAmountLoad.success([
           { ...activePeriod, amount: amountForPeriod1, ranking: readyRanking },
-          { ...closedPeriod, amount: amountForPeriod0, ranking: readyRanking }
+          {
+            ...closedPeriod,
+            amount: amountForPeriod0,
+            ranking: notReadyRanking
+          }
         ])
       )
       .run();
@@ -156,10 +164,14 @@ describe("loadPeriodsAmount, mock networking saga", () => {
           {
             ...inactivePeriod,
             amount: { ...zeroAmount, awardPeriodId: 2 as AwardPeriodId },
-            ranking: readyRanking
+            ranking: withAwardPeriodId(notReadyRanking, 2 as AwardPeriodId)
           },
           { ...activePeriod, amount: amountForPeriod1, ranking: readyRanking },
-          { ...closedPeriod, amount: amountForPeriod0, ranking: readyRanking }
+          {
+            ...closedPeriod,
+            amount: amountForPeriod0,
+            ranking: notReadyRanking
+          }
         ])
       )
       .run();
