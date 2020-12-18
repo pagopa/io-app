@@ -6,7 +6,7 @@ import { AccessibilityContent } from "../components/bottomSheet/AccessibilityCon
 import { BlurredBackgroundComponent } from "../components/bottomSheet/BlurredBackgroundComponent";
 import { BottomSheetContent } from "../components/bottomSheet/BottomSheetContent";
 import { BottomSheetHeader } from "../components/bottomSheet/BottomSheetHeader";
-import { useHardwareBackButton } from "../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButtonToDismiss } from "../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { isScreenReaderEnabled } from "./accessibility";
 
 export type BottomSheetProps = {
@@ -86,7 +86,7 @@ export const useIOBottomSheet = (
   snapPoint: number
 ) => {
   const { present, dismiss } = useBottomSheetModal();
-  const setBSOpened = useHardwareBackButtonHandler(dismiss);
+  const setBSOpened = useHardwareBackButtonToDismiss(dismiss);
   const openModalBox = async () => {
     const bottomSheetProps = await bottomSheetContent(
       component,
@@ -103,24 +103,6 @@ export const useIOBottomSheet = (
 };
 
 /**
- * custom hook to handle the hardware back button on Android devices
- * - when the BS is opened, back button closes the BS
- * - when the BS is closed, back button event is forwarded to the next handler
- * @param onDismiss
- */
-export const useHardwareBackButtonHandler = (onDismiss: () => void) => {
-  const [isBottomSheetOpened, setBottomSheetOpened] = React.useState(false);
-  useHardwareBackButton(() => {
-    const isOpen = isBottomSheetOpened;
-    onDismiss();
-    setBottomSheetOpened(false);
-    // true only if we handle the back
-    return isOpen;
-  });
-  return () => setBottomSheetOpened(true);
-};
-
-/**
  * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
  * Use this when the inner component has to handle the BS dismiss (ex a button that when pressed close the BS) and when
  * the BS title has to change on specific conditions
@@ -132,7 +114,7 @@ export const useIOBottomSheetRaw = (
   bsContent?: typeof bottomSheetContent
 ) => {
   const { present, dismiss } = useBottomSheetModal();
-  const setBSOpened = useHardwareBackButtonHandler(dismiss);
+  const setBSOpened = useHardwareBackButtonToDismiss(dismiss);
   const openModalBox = async (component: React.ReactNode, title: string) => {
     const bottomSheetProps = bsContent
       ? await bsContent(component, title, snapPoint, dismiss)
