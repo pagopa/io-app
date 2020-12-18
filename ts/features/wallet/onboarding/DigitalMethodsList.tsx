@@ -9,6 +9,9 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { H3 } from "../../../components/core/typography/H3";
 import { H5 } from "../../../components/core/typography/H5";
@@ -33,7 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  logo: { width: 80, height: 40, resizeMode: "cover" }
+  logo: { width: 80, height: 40, resizeMode: "cover", marginRight: 16 }
 });
 
 const getMethods = (props: Props): ReadonlyArray<DigitalPaymentItem> => [
@@ -68,11 +71,12 @@ const DigitalMethodsList = (props: Props) => (
     renderItem={({ item }: ListRenderItemInfo<DigitalPaymentItem>) =>
       item.implemented && (
         <ListItem style={styles.listItem} onPress={item.onPress}>
-          <View>
+          <View style={IOStyles.flex}>
             <H3>{item.name}</H3>
             {item.subtitle && <H5 weight={"Regular"}>{item.subtitle}</H5>}
           </View>
           {item.logo && <Image source={item.logo} style={styles.logo} />}
+          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
         </ListItem>
       )
     }

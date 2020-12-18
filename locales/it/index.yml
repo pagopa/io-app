@@ -826,10 +826,22 @@ wallet:
           skip: "Non ora"
     satispay:
       headerTitle: "Aggiungi Satispay"
+      start:
+        title: "Vuoi aggiungere su IO il tuo account Satispay?"
+        body: "Verificheremo se esiste un account Satispay associato al tuo codice fiscale."
+        cta: "Informativa sul trattamento dei dati personali"
       loadingSearch:
         title: "Stiamo verificando il tuo account Satispay\n\nAttendi qualche secondo"
       loadingAdd:
         title: "Stiamo aggiungendo il tuo account Satispay\n\nAttendi qualche secondo"
+      add:
+        title: "Vuoi aggiungere questo account Satispay?"
+      koTimeout:
+        title: "Non siamo riusciti a contattare Satispay"
+        body: "Riprova per favore"
+      koNotFound:
+        title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
+        body: "Contatta Satispay per l’attivazione"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1038,7 +1050,7 @@ wallet:
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
     digital:
       name: App e strumenti di pagamento digitali
-      description: Usa i tuoi strumenti digitali preferiti per pagare su IO
+      description: I tuoi strumenti digitali preferiti su IO
     pagobancomat:
       name: Carta PagoBANCOMAT
       description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
@@ -1047,10 +1059,10 @@ wallet:
       maxFee: Commissione massima 0.50€
     satispay:
       name: Satispay
-      description: Paga con Satispay
+      description: Abbina il tuo account Satispay
     bancomatPay:
       name: BANCOMAT Pay
-      description: Paga con BANCOMAT Pay
+      description: Abbina il tuo account BANCOMAT Pay
     postepayApp: 
       name: Postepay
       description: la tua app Postepay

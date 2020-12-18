@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0-rc.6](https://github.com/pagopa/io-app/compare/1.15.0-rc.5...1.15.0-rc.6) (2020-12-16)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#175883850](https://www.pivotaltracker.com/story/show/175883850),[#176166431](https://www.pivotaltracker.com/story/show/176166431),[#175883914](https://www.pivotaltracker.com/story/show/175883914),[#175883928](https://www.pivotaltracker.com/story/show/175883928)] Activate digital payments & add satispay screens ([#2601](https://github.com/pagopa/io-app/issues/2601)) ([5b66a1b](https://github.com/pagopa/io-app/commit/5b66a1bcff5aa7a8b250c1cc5849451fa9c7337a))
+
+
+### Bug Fixes
+
+* [[#176166635](https://www.pivotaltracker.com/story/show/176166635)] removes border from the paid badge [#2604](https://github.com/pagopa/io-app/issues/2604) ([fc3078d](https://github.com/pagopa/io-app/commit/fc3078daff88aee46c1bafff90e6b6a3528bfbe6))
+
 ## [1.15.0-rc.5](https://github.com/pagopa/io-app/compare/1.15.0-rc.4...1.15.0-rc.5) (2020-12-15)
 
 
