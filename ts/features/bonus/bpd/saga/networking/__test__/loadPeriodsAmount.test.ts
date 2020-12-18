@@ -15,15 +15,16 @@ import {
   closedPeriod,
   inactivePeriod
 } from "../../../store/reducers/__mock__/periods";
+import { readyRanking } from "../../../store/reducers/__mock__/ranking";
 import { BpdAmount, bpdLoadAmountSaga } from "../amount";
 import { bpdLoadPeriodsSaga } from "../periods";
-import { loadPeriodsAmount } from "../prefetchBpdDetails";
+import { loadPeriodsWithInfo } from "../prefetchBpdDetails";
 
 describe("loadPeriodsAmount, mock networking saga", () => {
   it("Dispatch failure if awardsPeriods fails", async () => {
     const awardPeriodFailure = new Error("Error while loading periods");
     const backendClient = { totalCashback: jest.fn(), awardPeriods: jest.fn() };
-    await expectSaga(loadPeriodsAmount, backendClient)
+    await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
         [
           call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
@@ -37,7 +38,7 @@ describe("loadPeriodsAmount, mock networking saga", () => {
   it("Dispatch failure if a single totalCashback is left", async () => {
     const totalCashbackFailure = new Error("Error for a single amount");
     const backendClient = { totalCashback: jest.fn(), awardPeriods: jest.fn() };
-    await expectSaga(loadPeriodsAmount, backendClient)
+    await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
         [
           call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
@@ -60,7 +61,7 @@ describe("loadPeriodsAmount, mock networking saga", () => {
   it("Dispatch failure if all the totalCashback are left", async () => {
     const totalCashbackFailure = new Error("Error for a single amount");
     const backendClient = { totalCashback: jest.fn(), awardPeriods: jest.fn() };
-    await expectSaga(loadPeriodsAmount, backendClient)
+    await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
         [
           call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
@@ -90,7 +91,7 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       awardPeriodId: 1 as AwardPeriodId
     };
     const backendClient = { totalCashback: jest.fn(), awardPeriods: jest.fn() };
-    await expectSaga(loadPeriodsAmount, backendClient)
+    await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
         [
           call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
@@ -107,8 +108,8 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       ])
       .put(
         bpdPeriodsAmountLoad.success([
-          { ...activePeriod, amount: amountForPeriod1 },
-          { ...closedPeriod, amount: amountForPeriod0 }
+          { ...activePeriod, amount: amountForPeriod1, ranking: readyRanking },
+          { ...closedPeriod, amount: amountForPeriod0, ranking: readyRanking }
         ])
       )
       .run();
@@ -127,7 +128,7 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       awardPeriodId: 2 as AwardPeriodId
     };
     const backendClient = { totalCashback: jest.fn(), awardPeriods: jest.fn() };
-    await expectSaga(loadPeriodsAmount, backendClient)
+    await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
         [
           call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
@@ -154,10 +155,11 @@ describe("loadPeriodsAmount, mock networking saga", () => {
         bpdPeriodsAmountLoad.success([
           {
             ...inactivePeriod,
-            amount: { ...zeroAmount, awardPeriodId: 2 as AwardPeriodId }
+            amount: { ...zeroAmount, awardPeriodId: 2 as AwardPeriodId },
+            ranking: readyRanking
           },
-          { ...activePeriod, amount: amountForPeriod1 },
-          { ...closedPeriod, amount: amountForPeriod0 }
+          { ...activePeriod, amount: amountForPeriod1, ranking: readyRanking },
+          { ...closedPeriod, amount: amountForPeriod0, ranking: readyRanking }
         ])
       )
       .run();

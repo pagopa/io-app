@@ -11,9 +11,14 @@ import { isReady } from "../../model/RemoteValue";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import { bpdTransactionsLoad } from "../../store/actions/transactions";
-import { BpdPeriodWithAmount } from "../../store/reducers/details/periods";
+import {
+  BpdPeriodWithInfo,
+  BpdRanking,
+  bpdRankingNotReady
+} from "../../store/reducers/details/periods";
 import { BpdAmount, BpdAmountError, bpdLoadAmountSaga } from "./amount";
 import { bpdLoadPeriodsSaga } from "./periods";
+import { bpdLoadRaking } from "./ranking";
 
 /**
  * Prefetch all the BPD details data:
@@ -23,7 +28,7 @@ import { bpdLoadPeriodsSaga } from "./periods";
  * - Amount foreach period !== "Inactive"
  * - Transactions foreach period !== "Inactive"
  */
-export function* prefetchBpdData() {
+export function* loadBpdData() {
   yield put(bpdLoadActivationStatus.request());
 
   const abiList: ReturnType<typeof abiSelector> = yield select(abiSelector);
@@ -54,10 +59,10 @@ export function* prefetchBpdData() {
 }
 
 /**
- * Load the periods list with the amount information foreach period (active or closed)
+ * Load the periods list with the amount and ranking information foreach period (active or closed)
  * @param bpdClient
  */
-export function* loadPeriodsAmount(
+export function* loadPeriodsWithInfo(
   bpdClient: Pick<
     ReturnType<typeof BackendBpdClient>,
     "awardPeriods" | "totalCashback"
@@ -74,6 +79,17 @@ export function* loadPeriodsAmount(
     yield put(bpdPeriodsAmountLoad.failure(maybePeriods.value));
   } else {
     const periods = maybePeriods.value;
+
+    const rankings: SagaCallReturnType<typeof bpdLoadRaking> = yield call(
+      bpdLoadRaking
+    );
+
+    if (rankings.isLeft()) {
+      yield put(
+        bpdPeriodsAmountLoad.failure(new Error("Error while loading rankings"))
+      );
+      return;
+    }
 
     // request the amounts for all the required periods
     const amounts: ReadonlyArray<SagaCallReturnType<
@@ -114,7 +130,7 @@ export function* loadPeriodsAmount(
     // compose the period with the amount information
     const periodsWithAmount = amountWithInactivePeriod
       .filter(isRight)
-      .reduce<ReadonlyArray<BpdPeriodWithAmount>>(
+      .reduce<ReadonlyArray<BpdPeriodWithInfo>>(
         (acc, curr) =>
           findFirst(
             [...periods],
@@ -123,7 +139,11 @@ export function* loadPeriodsAmount(
             ...acc,
             {
               ...period,
-              amount: curr.value
+              amount: curr.value,
+              ranking: findFirst<BpdRanking>(
+                [...rankings.value],
+                r => r.awardPeriodId === curr.value.awardPeriodId
+              ).getOrElse(bpdRankingNotReady(curr.value.awardPeriodId))
             }
           ]),
         []
