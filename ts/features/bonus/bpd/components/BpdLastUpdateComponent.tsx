@@ -1,16 +1,18 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator, Alert, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import { GlobalState } from "../../../../store/reducers/types";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { Dispatch } from "redux";
 import { bpdDetailsLoadAll } from "../store/actions/details";
 import { format, formatDateAsLocal } from "../../../../utils/dates";
+import { showToast } from "../../../../utils/showToast";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -43,20 +45,32 @@ const UpdateLabel = (props: Props & { caption: string }) =>
 
 const BpdLastUpdateComponent: React.FunctionComponent<Props> = (
   props: Props
-) => (
-  <View style={[styles.row, IOStyles.horizontalContentPadding]}>
-    {pot.isSome(props.potLastUpdate) && (
-      <H4 weight={"Regular"}>
-        Aggiornato alle {format(props.potLastUpdate.value, "HH:mm")} del{" "}
-        {formatDateAsLocal(props.potLastUpdate.value, true, true)}
-      </H4>
-    )}
-    <UpdateLabel
-      {...props}
-      caption={I18n.t("global.buttons.update").toLowerCase()}
-    />
-  </View>
-);
+) => {
+  const [potState, setPotCurrentState] = useState(props.potLastUpdate.kind);
+  useEffect(() => {
+    if (props.potLastUpdate.kind !== potState) {
+      setPotCurrentState(props.potLastUpdate.kind);
+      if (pot.isError(props.potLastUpdate)) {
+        showToast(I18n.t("global.genericError"), "danger");
+      }
+    }
+  }, [props.potLastUpdate.kind]);
+
+  return (
+    <View style={[styles.row, IOStyles.horizontalContentPadding]}>
+      {!pot.isNone(props.potLastUpdate) && (
+        <H4 weight={"Regular"}>
+          Aggiornato alle {format(props.potLastUpdate.value, "HH:mm")} del{" "}
+          {formatDateAsLocal(props.potLastUpdate.value, true, true)}
+        </H4>
+      )}
+      <UpdateLabel
+        {...props}
+        caption={I18n.t("global.buttons.update").toLowerCase()}
+      />
+    </View>
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => ({
   potLastUpdate: state.bonus.bpd.details.lastUpdate
