@@ -1,6 +1,12 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useCallback
+} from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -29,6 +35,9 @@ import { setAccessibilityFocus } from "../../../utils/accessibility";
 
 import { isIos } from "../../../utils/platform";
 import { useIOBottomSheet } from "../../../utils/bottomSheet";
+import { Body } from "../../../components/core/typography/Body";
+import { openWebUrl } from "../../../utils/url";
+import { Link } from "../../../components/core/typography/Link";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
@@ -46,16 +55,31 @@ const styles = StyleSheet.create({
 });
 
 const CIE_PIN_LENGTH = 8;
+const FORGOT_PIN_PAGE_URL =
+  "https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/";
 
 const CiePinScreen: React.FC<Props> = props => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
   const { navigate } = useContext(NavigationContext);
-  const { present, dismiss } = useIOBottomSheet();
+
+  const onOpenForgotPINPage = () => openWebUrl(FORGOT_PIN_PAGE_URL);
+
+  const { present } = useIOBottomSheet(
+    <View>
+      <Body>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Body>
+      <Link onPress={onOpenForgotPINPage}>
+        {I18n.t("authentication.cie.pin.contextualHelpCTA")}
+      </Link>
+    </View>,
+    I18n.t("authentication.cie.pin.contextualHelpTitle"),
+    500
+  );
+
   const [pin, setPin] = useState("");
   const [url, setUrl] = useState<string | undefined>(undefined);
 
-  const continueButtonRef = useRef<FooterWithButtons>();
-  const PINPadViewRef = useRef<View>();
+  const continueButtonRef = useRef<FooterWithButtons>(null);
+  const PINPadViewRef = useRef<View>(null);
 
   const onProceedToCardReaderScreen = async (url: string) => {
     setPin("");
@@ -106,7 +130,7 @@ const CiePinScreen: React.FC<Props> = props => {
     }
 
     if (pin.length === CIE_PIN_LENGTH) {
-      setAccessibilityFocus(continueButtonRef.current, 100 as Millisecond);
+      setAccessibilityFocus(continueButtonRef, 100 as Millisecond);
     }
   }, [pin]);
 
@@ -121,6 +145,10 @@ const CiePinScreen: React.FC<Props> = props => {
   return (
     <TopScreenComponent
       onAccessibilityNavigationHeaderFocus={doSetAccessibilityFocus}
+      customRightIcon={{
+        iconName: "help",
+        onPress: present
+      }}
       goBack={true}
       headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
     >
