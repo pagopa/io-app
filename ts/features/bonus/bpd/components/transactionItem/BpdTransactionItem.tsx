@@ -31,7 +31,7 @@ const getSubtitle = (transaction: BpdTransaction) =>
   )} · € ${formatNumberAmount(transaction.amount)} `;
 
 export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
-  const { present } = useIOBottomSheet(
+  const { present: openBottomSheet } = useIOBottomSheet(
     <BpdTransactionDetailComponent transaction={props.transaction} />,
     I18n.t("bonus.bpd.details.transaction.detail.title"),
     522
@@ -43,7 +43,7 @@ export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
       image={props.transaction.image}
       subtitle={getSubtitle(props.transaction)}
       rightText={formatNumberAmount(props.transaction.cashback)}
-      onPress={present}
+      onPress={openBottomSheet}
     />
   );
 };

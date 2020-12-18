@@ -6,6 +6,7 @@ import { AccessibilityContent } from "../components/bottomSheet/AccessibilityCon
 import { BlurredBackgroundComponent } from "../components/bottomSheet/BlurredBackgroundComponent";
 import { BottomSheetContent } from "../components/bottomSheet/BottomSheetContent";
 import { BottomSheetHeader } from "../components/bottomSheet/BottomSheetHeader";
+import { useHardwareBackButton } from "../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { isScreenReaderEnabled } from "./accessibility";
 
 export type BottomSheetProps = {
@@ -85,7 +86,7 @@ export const useIOBottomSheet = (
   snapPoint: number
 ) => {
   const { present, dismiss } = useBottomSheetModal();
-
+  const setBSOpened = useHardwareBackButtonHandler(dismiss);
   const openModalBox = async () => {
     const bottomSheetProps = await bottomSheetContent(
       component,
@@ -96,8 +97,21 @@ export const useIOBottomSheet = (
     present(bottomSheetProps.content, {
       ...bottomSheetProps.config
     });
+    setBSOpened();
   };
   return { present: openModalBox, dismiss };
+};
+
+export const useHardwareBackButtonHandler = (onDismiss: () => void) => {
+  const [isBottomSheetOpened, setBottomSheetOpened] = React.useState(false);
+  useHardwareBackButton(() => {
+    const isOpen = isBottomSheetOpened;
+    onDismiss();
+    setBottomSheetOpened(false);
+    // true only if we handle the back
+    return isOpen;
+  });
+  return () => setBottomSheetOpened(true);
 };
 
 /**
@@ -112,7 +126,7 @@ export const useIOBottomSheetRaw = (
   bsContent?: typeof bottomSheetContent
 ) => {
   const { present, dismiss } = useBottomSheetModal();
-
+  const setBSOpened = useHardwareBackButtonHandler(dismiss);
   const openModalBox = async (component: React.ReactNode, title: string) => {
     const bottomSheetProps = bsContent
       ? await bsContent(component, title, snapPoint, dismiss)
@@ -120,6 +134,7 @@ export const useIOBottomSheetRaw = (
     present(bottomSheetProps.content, {
       ...bottomSheetProps.config
     });
+    setBSOpened();
   };
   return { present: openModalBox, dismiss };
 };

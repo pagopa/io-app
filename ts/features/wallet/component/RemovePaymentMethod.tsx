@@ -56,7 +56,7 @@ export const useRemovePaymentMethodBottomSheet = (
 ) => {
   const { present, dismiss } = useIOBottomSheetRaw(350);
 
-  const openModalBox = (onConfirm: () => void) =>
+  const openBottomSheet = (onConfirm: () => void) =>
     present(
       <RemovePaymentMethod
         onCancel={dismiss}
@@ -71,5 +71,5 @@ export const useRemovePaymentMethodBottomSheet = (
       />,
       I18n.t("wallet.newRemove.title")
     );
-  return { present: openModalBox, dismiss };
+  return { present: openBottomSheet, dismiss };
 };
