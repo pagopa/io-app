@@ -553,13 +553,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       identificationRequest(
         true,
         false,
-        {
-          message: ""
-        },
-        {
-          label: "",
-          onCancel: () => undefined
-        },
+        undefined,
+        undefined,
         {
           onSuccess
         },
