@@ -3,7 +3,7 @@ import * as React from "react";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
-import { useIOBottomSheetRaw2 } from "../../../../../../utils/bottomSheet";
+import { useIOBottomSheetRaw } from "../../../../../../utils/bottomSheet";
 import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
 
 // NotActivable: already activated by someone else
@@ -45,7 +45,7 @@ export const BpdNotActivableInformation: React.FunctionComponent<Props> = props 
 export const useNotActivableInformationBottomSheet = (
   representation: PaymentMethodRepresentation
 ) => {
-  const { present, dismiss } = useIOBottomSheetRaw2(310);
+  const { present, dismiss } = useIOBottomSheetRaw(310);
 
   const openModalBox = async (type: NotActivableType) =>
     present(

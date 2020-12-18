@@ -7,7 +7,7 @@ import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
-import { useIOBottomSheetRaw2 } from "../../../../../../utils/bottomSheet";
+import { useIOBottomSheetRaw } from "../../../../../../utils/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -84,7 +84,7 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
 export const useChangeActivationConfirmationBottomSheet = (
   representation: PaymentMethodRepresentation
 ) => {
-  const { present, dismiss } = useIOBottomSheetRaw2(466);
+  const { present, dismiss } = useIOBottomSheetRaw(466);
 
   const openModalBox = (newVal: boolean, onConfirm: () => void) =>
     present(

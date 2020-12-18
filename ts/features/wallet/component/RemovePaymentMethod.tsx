@@ -54,10 +54,7 @@ export const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
 export const useRemovePaymentMethodBottomSheet = (
   representation: PaymentMethodRepresentation
 ) => {
-  const { present, dismiss } = useIOBottomSheetRaw(
-    I18n.t("wallet.newRemove.title"),
-    350
-  );
+  const { present, dismiss } = useIOBottomSheetRaw(350);
 
   const openModalBox = (onConfirm: () => void) =>
     present(
@@ -71,7 +68,8 @@ export const useRemovePaymentMethodBottomSheet = (
           caption: representation.caption,
           icon: representation.icon
         }}
-      />
+      />,
+      I18n.t("wallet.newRemove.title")
     );
   return { present: openModalBox, dismiss };
 };

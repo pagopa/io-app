@@ -16,15 +16,12 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const newBancomatBottomSheet = () => {
-  const { present, dismiss } = useIOBottomSheetRaw(
-    I18n.t("wallet.methods.pagobancomat.name"),
-    385,
-    bottomSheetContent
-  );
+  const { present, dismiss } = useIOBottomSheetRaw(385, bottomSheetContent);
   return {
     present: () =>
       present(
-        <BancomatInformation onAddPaymentMethod={dismiss} hideInfobox={true} />
+        <BancomatInformation onAddPaymentMethod={dismiss} hideInfobox={true} />,
+        I18n.t("wallet.methods.pagobancomat.name")
       ),
     dismiss
   };

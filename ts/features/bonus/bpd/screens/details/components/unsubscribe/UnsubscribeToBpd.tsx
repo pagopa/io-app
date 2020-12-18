@@ -28,10 +28,7 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
-  const { present, dismiss } = useIOBottomSheetRaw(
-    I18n.t("bonus.bpd.unsubscribe.title"),
-    582
-  );
+  const { present, dismiss } = useIOBottomSheetRaw(582);
 
   const openModalBox = () =>
     present(
@@ -41,7 +38,8 @@ const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
           dismiss();
           props.cancelBpd();
         }}
-      />
+      />,
+      I18n.t("bonus.bpd.unsubscribe.title")
     );
 
   return (

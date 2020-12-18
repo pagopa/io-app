@@ -102,30 +102,12 @@ export const useIOBottomSheet = (
 
 /**
  * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
- * component has to be provided as result of a function that takes dimiss function as parameter
- * @param component
- * @param title
+ * Use this when the inner component has to handle the BS dismiss (ex a button that when pressed close the BS) and when
+ * the BS title has to change on specific conditions
  * @param snapPoint
+ * @param bsContent
  */
 export const useIOBottomSheetRaw = (
-  title: string,
-  snapPoint: number,
-  bsContent?: typeof bottomSheetContent
-) => {
-  const { present, dismiss } = useBottomSheetModal();
-
-  const openModalBox = async (component: React.ReactNode) => {
-    const bottomSheetProps = bsContent
-      ? await bsContent(component, title, snapPoint, dismiss)
-      : bottomSheetRawConfig(component, title, snapPoint, dismiss);
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
-  return { present: openModalBox, dismiss };
-};
-
-export const useIOBottomSheetRaw2 = (
   snapPoint: number,
   bsContent?: typeof bottomSheetContent
 ) => {
