@@ -717,9 +717,9 @@ datetimes:
   notValid: Data non valida.
 payment:
   errorDetails: Dettagli
-  currentPsp: Il PSP scelto è
+  currentPsp: Il pagamento sarà gestito da
   noPsp: Non hai ancora selezionato un PSP
-  changePsp: Cambia PSP
+  changePsp: Modifica gestore
   IUV: IUV
   IUV_extended: Identificativo Univoco di Versamento
   notice: Avviso
