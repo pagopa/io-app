@@ -3,6 +3,7 @@ import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { StyleSheet } from "react-native";
 import { Satispay } from "../../../../../../../definitions/pagopa/walletv2/Satispay";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
@@ -33,6 +34,12 @@ import LoadAddSatispayComponent from "./LoadAddSatispayComponent";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+const styles = StyleSheet.create({
+  center: {
+    alignSelf: "center"
+  }
+});
+
 const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.satispay.headerTitle"),
   title: I18n.t("wallet.onboarding.satispay.add.title")
@@ -52,7 +59,9 @@ const DisplayFoundSatispay = (props: Props) => {
             <View spacer={true} />
             <H1>{title}</H1>
             <View spacer={true} extralarge={true} />
-            <SatispayCard />
+            <View style={styles.center}>
+              <SatispayCard />
+            </View>
           </View>
         </ScrollView>
         <FooterWithButtons
