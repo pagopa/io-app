@@ -8,7 +8,7 @@ import { BpdAmount } from "../../../../saga/networking/amount";
 import { BpdPeriod } from "../../../../store/actions/periods";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import { TextualSummary } from "./TextualSummary";
-import { TransactionsGraphicalSummary } from "./TransactionsGraphicalSummary";
+import TransactionsGraphicalSummary from "./TransactionsGraphicalSummary";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
