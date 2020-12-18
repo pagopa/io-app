@@ -10,9 +10,9 @@ import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import { GlobalState } from "../../../../store/reducers/types";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { bpdDetailsLoadAll } from "../store/actions/details";
 import { format, formatDateAsLocal } from "../../../../utils/dates";
 import { showToast } from "../../../../utils/showToast";
+import { bpdPeriodsAmountLoad } from "../store/actions/periods";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -43,6 +43,11 @@ const UpdateLabel = (props: Props & { caption: string }) =>
     <Link onPress={props.loadBonus}>{props.caption}</Link>
   );
 
+/**
+ * This component show the last time in wich the bpd periods are loaded correctly
+ * and allow to request a refresh of the bpd periods data.
+ * @param props
+ */
 const BpdLastUpdateComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
@@ -60,8 +65,10 @@ const BpdLastUpdateComponent: React.FunctionComponent<Props> = (
     <View style={[styles.row, IOStyles.horizontalContentPadding]}>
       {!pot.isNone(props.potLastUpdate) && (
         <H4 weight={"Regular"}>
-          Aggiornato alle {format(props.potLastUpdate.value, "HH:mm")} del{" "}
-          {formatDateAsLocal(props.potLastUpdate.value, true, true)}
+          {I18n.t("bonus.bpd.details.lastUpdate", {
+            hour: format(props.potLastUpdate.value, "HH:mm"),
+            date: formatDateAsLocal(props.potLastUpdate.value, true, true)
+          })}
         </H4>
       )}
       <UpdateLabel
@@ -77,7 +84,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadBonus: () => dispatch(bpdDetailsLoadAll())
+  loadBonus: () => dispatch(bpdPeriodsAmountLoad.request())
 });
 
 export default connect(
