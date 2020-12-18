@@ -22,11 +22,10 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
+import BpdLastUpdateComponent from "../../components/BpdLastUpdateComponent";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
-import reactotron from "reactotron-react-native";
-import BpdLastUpdateComponent from "../../components/BpdLastUpdateComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
