@@ -7,6 +7,7 @@ import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Alert } from "react-native";
 import PushNotification from "react-native-push-notification";
+import { constNull } from "fp-ts/lib/function";
 import { store } from "../App";
 import { debugRemotePushNotification, gcmSenderId } from "../config";
 import { loadMessages } from "../store/actions/messages";
@@ -37,7 +38,7 @@ function configurePushNotifications() {
     // Called when token is generated
     onRegister: token => {
       // send token to enable PN through Mixpanel
-      void setMixpanelPushNotificationToken(token.token);
+      setMixpanelPushNotificationToken(token.token).then(constNull, constNull);
       // Dispatch an action to save the token in the store
       store.dispatch(updateNotificationsInstallationToken(token.token));
     },
