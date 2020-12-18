@@ -75,7 +75,7 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
     description: I18n.t("wallet.methods.digital.description"),
     onPress: props.navigateToWalletAddDigitalPaymentMethod,
     status: props.navigation.getParam("inPayment").isNone()
-      ? "implemented"
+      ? "incoming"
       : "notImplemented",
     section: "digital_payments"
   },

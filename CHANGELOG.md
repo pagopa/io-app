@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0-rc.7](https://github.com/pagopa/io-app/compare/1.15.0-rc.6...1.15.0-rc.7) (2020-12-18)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#175883186](https://www.pivotaltracker.com/story/show/175883186)] Add remote contextual help to satispay screen ([#2609](https://github.com/pagopa/io-app/issues/2609)) ([37121aa](https://github.com/pagopa/io-app/commit/37121aaf2e51319d496e5009b5fdcd11c53254f2))
+* [[#175953265](https://www.pivotaltracker.com/story/show/175953265)] Add bonus description ([#2497](https://github.com/pagopa/io-app/issues/2497)) ([f3bd818](https://github.com/pagopa/io-app/commit/f3bd818d6b08553fb06c7e05417ca4c17e6614d1))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#176203167](https://www.pivotaltracker.com/story/show/176203167)] Satispay screens graphical refinements ([#2611](https://github.com/pagopa/io-app/issues/2611)) ([ebd0735](https://github.com/pagopa/io-app/commit/ebd0735fd326ec261b9cc390b662b6248e79f513))
+* [[#176190732](https://www.pivotaltracker.com/story/show/176190732)] Allow Mixpanel to send push notification ([#2615](https://github.com/pagopa/io-app/issues/2615)) ([5aa4c3a](https://github.com/pagopa/io-app/commit/5aa4c3a82526d7e1d10a87fef014f4cdc61889d2))
+
 ## [1.15.0-rc.6](https://github.com/pagopa/io-app/compare/1.15.0-rc.5...1.15.0-rc.6) (2020-12-16)
 
 
