@@ -12,7 +12,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { format, formatDateAsLocal } from "../../../../utils/dates";
 import { showToast } from "../../../../utils/showToast";
-import { bpdPeriodsAmountLoad } from "../store/actions/periods";
 import { bpdDetailsLoadAll } from "../store/actions/details";
 
 type Props = ReturnType<typeof mapStateToProps> &
