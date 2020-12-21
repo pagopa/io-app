@@ -134,6 +134,8 @@ type BadgeDefinition = {
   label: string;
 };
 
+type IconType = "closedLock" | "openLock" | "fireworks";
+
 type GraphicalState = {
   amount: ReadonlyArray<string>;
   isInGracePeriod: boolean;
@@ -222,7 +224,9 @@ const statusHandlersMap = new Map<
  * if the period is Closed we must check if minimum number of transactions has been reached
  * Unless we'll show a Zero amount value
  *
- * Lock must be shown only if period is Inactive or the transactionNumber didn't reach the minimum target
+ * Close lock must be shown if period is Inactive or the transactionNumber didn't reach the minimum target
+ * Open lock must be shown if period is Closed or Active and the transactionNumber reach the minimum target
+ * Fireworks must be shown if period is Closed or Active and the totalCashback reach the maxAmount
  *
  * GracePeriod: check if we are in the grace period to show an alert instead of the value
  * grace period is given adding the gracePeriod value of days to period.endDate
@@ -326,14 +330,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             <IconFont name="io-tick-big" size={20} color={IOColors.white} />
           )}
         </View>
-        <View
-          style={[
-            styles.row,
-            styles.spaced,
-            styles.alignItemsCenter
-            // styles.justifyContentCenter
-          ]}
-        >
+        <View style={[styles.row, styles.spaced, styles.alignItemsCenter]}>
           <H2 weight={"Bold"} color={"white"}>
             {I18n.t("bonus.bpd.name")}
           </H2>
