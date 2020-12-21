@@ -134,21 +134,72 @@ type BadgeDefinition = {
   label: string;
 };
 
-type IconType = "closedLock" | "openLock" | "fireworks";
+type IconType = "closedLock" | "openLock" | "fireworks" | undefined;
 
 type GraphicalState = {
   amount: ReadonlyArray<string>;
   isInGracePeriod: boolean;
-  showLock: boolean;
   statusBadge: BadgeDefinition;
 };
 
 const initialGraphicalState: GraphicalState = {
   amount: ["0", "00"],
   isInGracePeriod: false,
-  showLock: false,
   statusBadge: {
     label: "-"
+  }
+};
+
+const iconMap = new Map<IconType, React.ReactNode>([
+  [
+    "closedLock",
+    <IconFont
+      name="io-locker-closed"
+      size={16}
+      color={IOColors.white}
+      key={"openLocker"}
+    />
+  ],
+  [
+    "openLock",
+    <IconFont
+      name="io-locker-closed"
+      size={16}
+      color={IOColors.white}
+      key={"closedLocker"}
+    />
+  ],
+  [
+    "fireworks",
+    <IconFont
+      name="io-lucchetto"
+      size={16}
+      color={IOColors.white}
+      key={"fireworks"}
+    />
+  ],
+  [undefined, {}]
+]);
+
+const iconHandler = (
+  period: BpdPeriod,
+  totalAmount: BpdAmount
+): React.ReactNode => {
+  const reachMinTransaction =
+    totalAmount.transactionNumber < period.minTransactionNumber;
+
+  const reachMaxAmount = totalAmount.totalCashback >= period.maxPeriodCashback;
+
+  switch (period.status) {
+    case "Active":
+    case "Closed":
+      return reachMinTransaction && reachMaxAmount
+        ? iconMap.get("fireworks")
+        : reachMinTransaction
+        ? iconMap.get("openLock")
+        : iconMap.get("closedLock");
+    case "Inactive":
+      return iconMap.get("closedLock");
   }
 };
 
@@ -193,7 +244,7 @@ const statusActiveHandler = (props: Props): GraphicalState => {
     statusBadge: {
       label: I18n.t("bonus.bpd.details.card.status.active")
     },
-    showLock: totalAmount.transactionNumber < period.minTransactionNumber,
+    icon: totalAmount.transactionNumber < period.minTransactionNumber,
     amount: formatNumberAmount(props.totalAmount.totalCashback).split(
       I18n.t("global.localization.decimalSeparator")
     )
