@@ -1943,7 +1943,7 @@ bonus:
           noIbanBody: "Imposta il tuo IBAN per poter ricevere il Cashback accumulato"
           button: "Imposta IBAN"
         transactionsCountOverview:
-          title: "Transazioni valide"
+          title: "Le tue transazioni"
           of: "su"
           closedPeriodKOBody: "Non hai raggiunto le {{transactions}} transazioni necessarie per ottenere un rimborso: avresti ricevuto € {{amount}}. Provaci nel prossimo periodo!"
           currentPeriodKOBody: "Devi aver fatto almeno {{transactions}} transazioni per sbloccare il Cashback che hai accumulato!"

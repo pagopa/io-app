@@ -1912,7 +1912,7 @@ bonus:
           noIbanBody: "Set your IBAN in order to receive the collected cashback"
           button: "Set IBAN"
         transactionsCountOverview:
-          title: "Valid transactions"
+          title: "Your transactions"
           of: "out of"
           closedPeriodKOBody: "You have not reached the {{transactions}} transactions necessary to get a refund: you would have received € {{amount}}. Try again during the next phase!"
           currentPeriodKOBody: "You must have reached at least {{transactions}} transactions to unlock the cashback collected so far!"
