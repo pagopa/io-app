@@ -16,7 +16,7 @@ type Props = {
  * Display a warning for the current period if transactions < minTransaction and status === "Active"
  */
 const CurrentPeriodWarning = (props: { period: BpdPeriod }) => (
-  <InfoBox>
+  <InfoBox iconName={"io-lucchetto"}>
     <Body testID={"currentPeriodWarning"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.currentPeriodKOBody",
@@ -29,12 +29,45 @@ const CurrentPeriodWarning = (props: { period: BpdPeriod }) => (
 );
 
 /**
+ * Display a warning for the current period if transactions < minTransaction and status === "Active"
+ */
+const CurrentPeriodUnlock = (props: Props) => (
+  <InfoBox iconName={"io-locker-open"}>
+    <Body testID={"currentPeriodUnlock"}>
+      {I18n.t(
+        "bonus.bpd.details.components.transactionsCountOverview.currentPeriodUnlockBody",
+        {
+          transactions: props.period.minTransactionNumber,
+          name: props.name
+        }
+      )}
+    </Body>
+  </InfoBox>
+);
+
+/**
+ * Display a warning for the current period if transactions < minTransaction and status === "Active"
+ */
+const CurrentPeriodMaxAmount = (props: { name: string | undefined }) => (
+  <InfoBox iconName={"io-happy"}>
+    <Body testID={"currentPeriodMaxAmount"}>
+      {I18n.t(
+        "bonus.bpd.details.components.transactionsCountOverview.currentPeriodMaxAmount",
+        {
+          name: props.name
+        }
+      )}
+    </Body>
+  </InfoBox>
+);
+
+/**
  * The user doesn't receive the amount (not enough transactions for the closed period)
  * @param props
  * @constructor
  */
 const ClosedPeriodKO = (props: Props) => (
-  <InfoBox>
+  <InfoBox iconName={"io-sad"}>
     <Body testID={"closedPeriodKO"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodKOBody",
@@ -53,7 +86,7 @@ const ClosedPeriodKO = (props: Props) => (
  * @constructor
  */
 const ClosedPeriodOK = (props: Props) => (
-  <InfoBox iconName={"io-complete"}>
+  <InfoBox iconName={"io-happy"}>
     <Body testID={"closedPeriodOK"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodOKBody",
@@ -79,7 +112,7 @@ const ClosedPeriodOK = (props: Props) => (
  * @constructor
  */
 const GracePeriod = (props: { period: BpdPeriod }) => (
-  <InfoBox iconName={"io-timer"}>
+  <InfoBox iconName={"io-hourglass"}>
     <Body testID={"gracePeriod"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.gracePeriodBody",
@@ -143,6 +176,21 @@ const chooseTextualInfoBox = (props: Props) => {
         props.amount.transactionNumber > 0
       ) {
         return <CurrentPeriodWarning period={props.period} />;
+      }
+
+      // The max cashback amount is reached
+      if (
+        props.amount.transactionNumber >= props.period.minTransactionNumber &&
+        props.amount.totalCashback >= props.period.maxPeriodCashback
+      ) {
+        return <CurrentPeriodMaxAmount name={props.name} />;
+      }
+      // Cashback unlocked! visible for the next 10 transaction only
+      if (
+        props.amount.transactionNumber >= props.period.minTransactionNumber &&
+        props.amount.transactionNumber <= props.period.minTransactionNumber + 10
+      ) {
+        return <CurrentPeriodUnlock {...props} />;
       }
   }
   return null;
