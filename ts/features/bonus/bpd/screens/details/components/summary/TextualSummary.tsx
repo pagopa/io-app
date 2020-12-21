@@ -3,7 +3,7 @@ import { InfoBox } from "../../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import I18n from "../../../../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../utils/accessibility";
-import { BpdAmount } from "../../../../store/actions/amount";
+import { BpdAmount } from "../../../../saga/networking/amount";
 import { BpdPeriod } from "../../../../store/actions/periods";
 
 type Props = {
