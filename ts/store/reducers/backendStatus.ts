@@ -5,13 +5,13 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { backendStatusLoadSuccess } from "../actions/backendStatus";
+import { Action } from "../actions/types";
 import {
   BackendStatus,
   SectionStatus,
   SectionStatusKey
-} from "../../api/backendPublic";
-import { backendStatusLoadSuccess } from "../actions/backendStatus";
-import { Action } from "../actions/types";
+} from "../../types/backendStatus";
 import { GlobalState } from "./types";
 
 /** note that this state is not persisted so Option type is accepted

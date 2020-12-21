@@ -1,6 +1,6 @@
 import { none } from "fp-ts/lib/Option";
-import { BackendStatus } from "../../../api/backendPublic";
 import { areSystemsDeadReducer, BackendStatusState } from "../backendStatus";
+import { BackendStatus } from "../../../types/backendStatus";
 
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid
