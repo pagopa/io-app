@@ -4,6 +4,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { H2 } from "../../../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../../../components/core/typography/H5";
+import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
 import { Dispatch } from "../../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../../store/reducers/types";
@@ -33,8 +34,9 @@ const loadLocales = () => ({
 /**
  * When transactions < minTransactions, display a progress bar with the related information
  * @param props
+ * @deprecated not used anymore, it is kept for some time in case of second thoughts
  */
-const PercentageTransactionsSummary = (props: Props) => {
+export const PercentageTransactionsSummary = (props: Props) => {
   const { title, of } = loadLocales();
   return (
     <BpdBaseShadowBoxLayout
@@ -101,14 +103,11 @@ const TextualTransactionsSummary = (props: Props) => {
  * @param props
  * @constructor
  */
-const TransactionsGraphicalSummary: React.FunctionComponent<Props> = props =>
-  props.transactions < props.minTransactions ? (
-    <TouchableOpacity onPress={props.goToTransactions}>
-      <PercentageTransactionsSummary {...props} />
-    </TouchableOpacity>
-  ) : (
+const TransactionsGraphicalSummary: React.FunctionComponent<Props> = props => (
+  <TouchableOpacity onPress={props.goToTransactions} style={IOStyles.flex}>
     <TextualTransactionsSummary {...props} />
-  );
+  </TouchableOpacity>
+);
 
 const mapStateToProps = (_: GlobalState) => ({});
 

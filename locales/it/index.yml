@@ -1954,6 +1954,8 @@ bonus:
           label:
             one: "1 transazione valida"
             other: "{{count}} transazioni valide"
+        ranking:
+          title: "La tua posizione"
       transaction:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"

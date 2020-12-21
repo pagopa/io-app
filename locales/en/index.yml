@@ -1923,6 +1923,8 @@ bonus:
           label:
             one: "1 valid transaction" 
             other: "{{count}} valid transactions"
+        ranking:
+          title: "Your position"
       transaction:
         title: "Your transactions"
         goToButton: "Transactions detail"
