@@ -27,7 +27,11 @@ import { bpdLoadPeriodsSaga } from "../periods";
 describe("loadPeriodsAmount, mock networking saga", () => {
   it("Dispatch failure if awardsPeriods fails", async () => {
     const awardPeriodFailure = new Error("Error while loading periods");
-    const backendClient = { totalCashback: jest.fn(), awardPeriods: jest.fn() };
+    const backendClient = {
+      totalCashback: jest.fn(),
+      awardPeriods: jest.fn(),
+      getRanking: jest.fn()
+    };
     await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
         [
@@ -41,7 +45,11 @@ describe("loadPeriodsAmount, mock networking saga", () => {
 
   it("Dispatch failure if a single totalCashback is left", async () => {
     const totalCashbackFailure = new Error("Error for a single amount");
-    const backendClient = { totalCashback: jest.fn(), awardPeriods: jest.fn() };
+    const backendClient = {
+      totalCashback: jest.fn(),
+      awardPeriods: jest.fn(),
+      getRanking: jest.fn()
+    };
     await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
         [
@@ -64,7 +72,11 @@ describe("loadPeriodsAmount, mock networking saga", () => {
   });
   it("Dispatch failure if all the totalCashback are left", async () => {
     const totalCashbackFailure = new Error("Error for a single amount");
-    const backendClient = { totalCashback: jest.fn(), awardPeriods: jest.fn() };
+    const backendClient = {
+      totalCashback: jest.fn(),
+      awardPeriods: jest.fn(),
+      getRanking: jest.fn()
+    };
     await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
         [
@@ -94,7 +106,11 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       ...notEligibleAmount,
       awardPeriodId: 1 as AwardPeriodId
     };
-    const backendClient = { totalCashback: jest.fn(), awardPeriods: jest.fn() };
+    const backendClient = {
+      totalCashback: jest.fn(),
+      awardPeriods: jest.fn(),
+      getRanking: jest.fn()
+    };
     await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
         [
@@ -135,7 +151,11 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       ...notEligibleAmount,
       awardPeriodId: 2 as AwardPeriodId
     };
-    const backendClient = { totalCashback: jest.fn(), awardPeriods: jest.fn() };
+    const backendClient = {
+      totalCashback: jest.fn(),
+      awardPeriods: jest.fn(),
+      getRanking: jest.fn()
+    };
     await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
         [
