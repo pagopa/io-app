@@ -1955,6 +1955,9 @@ bonus:
             one: "1 transazione valida"
             other: "{{count}} transazioni valide"
       transaction:
+        label:
+          one: "1 transazione"
+          other: "{{count}} transazioni"
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
         noPaymentMethod:
@@ -2034,6 +2037,11 @@ bonus:
           active: Attivo
           closed: Concluso
           inactive: In arrivo
+      superCashback:
+        rankLabel: "{{position}}º utente in classifica"
+        howItWorks:
+          title: "Come funziona?"
+          body: "I **100mila cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a €1.500.**\n\n**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

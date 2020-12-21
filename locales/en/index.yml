@@ -1924,6 +1924,9 @@ bonus:
             one: "1 valid transaction" 
             other: "{{count}} valid transactions"
       transaction:
+        label:
+          one: "1 transaction"
+          other: "{{counter}} transactions"
         title: "Your transactions"
         goToButton: "Transactions detail"
         noPaymentMethod:
@@ -2003,6 +2006,11 @@ bonus:
           active: Active
           closed: Closed
           inactive: Upcoming
+      superCashback:
+        rankLabel: "{{position}}º user in rank"
+        howItWorks:
+          title: "How does it work?"
+          body: "The **100 thousand citizens** with the highest number of transactions **receive the Super Cashback, a prize of €1,500.**\n\n**The ranking changes every day.** The final one will be displayed on {{endDate}}."
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
