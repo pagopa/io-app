@@ -1,5 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import { some } from "fp-ts/lib/Option";
+import { right } from "fp-ts/lib/Either";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import {
   bpdStartOnboardingWorker,
@@ -11,7 +12,6 @@ import {
   navigateToBpdOnboardingLoadActivationStatus
 } from "../../../navigation/actions";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
-import { right } from "fp-ts/lib/Either";
 import {
   bpdOnboardingAcceptDeclaration,
   bpdUserActivate
