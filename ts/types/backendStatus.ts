@@ -34,6 +34,7 @@ export const SectionStatus = t.intersection(
 );
 export type SectionStatus = t.TypeOf<typeof SectionStatus>;
 
+// it represents a remote advice about a specific app section
 const Sections = t.interface({
   bancomat: SectionStatus,
   bancomatpay: SectionStatus,
@@ -49,8 +50,17 @@ const Sections = t.interface({
   wallets: SectionStatus
 });
 export type Sections = t.TypeOf<typeof Sections>;
+
+// it represents a remote config to switch on/off a specific section,feature,module,etc
+const Config = t.interface({
+  bpd_ranking: t.boolean
+});
+
+export type Config = t.TypeOf<typeof Config>;
+
 const BackendStatusO = t.partial({
-  sections: Sections
+  sections: Sections,
+  config: Config
 });
 
 export const BackendStatus = t.intersection(
@@ -58,4 +68,5 @@ export const BackendStatus = t.intersection(
   "BackendStatus"
 );
 export type SectionStatusKey = keyof Sections;
+export type ConfigStatusKey = keyof Config;
 export type BackendStatus = t.TypeOf<typeof BackendStatus>;
