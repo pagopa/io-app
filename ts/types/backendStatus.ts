@@ -59,8 +59,8 @@ const Config = t.interface({
 export type Config = t.TypeOf<typeof Config>;
 
 const BackendStatusO = t.partial({
-  sections: Sections,
-  config: Config
+  config: Config,
+  sections: Sections
 });
 
 export const BackendStatus = t.intersection(
