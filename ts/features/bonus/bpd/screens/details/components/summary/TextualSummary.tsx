@@ -3,12 +3,15 @@ import { InfoBox } from "../../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import I18n from "../../../../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../utils/accessibility";
-import { BpdAmount } from "../../../../saga/networking/amount";
+import { formatNumberAmount } from "../../../../../../../utils/stringBuilder";
 import { BpdPeriod } from "../../../../store/actions/periods";
+import {
+  BpdPeriodWithInfo,
+  isBpdRankingReady
+} from "../../../../store/reducers/details/periods";
 
 type Props = {
-  period: BpdPeriod;
-  amount: BpdAmount;
+  period: BpdPeriodWithInfo;
   name: string | undefined;
 };
 
@@ -29,7 +32,7 @@ const CurrentPeriodWarning = (props: { period: BpdPeriod }) => (
 );
 
 /**
- * Display a warning for the current period if transactions < minTransaction and status === "Active"
+ * Display a message informing the user that the cashback is unlocked for the current period
  */
 const CurrentPeriodUnlock = (props: Props) => (
   <InfoBox iconName={"io-locker-open"}>
@@ -46,7 +49,7 @@ const CurrentPeriodUnlock = (props: Props) => (
 );
 
 /**
- * Display a warning for the current period if transactions < minTransaction and status === "Active"
+ * Display a message informing the user that he reached the max cashback amount for the current period
  */
 const CurrentPeriodMaxAmount = (props: { name: string | undefined }) => (
   <InfoBox iconName={"io-happy"}>
@@ -56,6 +59,20 @@ const CurrentPeriodMaxAmount = (props: { name: string | undefined }) => (
         {
           name: props.name
         }
+      )}
+    </Body>
+  </InfoBox>
+);
+
+/**
+ * Display a message informing the user that at the moment he may be eligible for supercashback
+ */
+const CurrentPeriodSuperCashback = (props: { superCashbackAmount: number }) => (
+  <InfoBox iconName={"io-abacus"}>
+    <Body testID={"currentPeriodMaxAmount"}>
+      {I18n.t(
+        "bonus.bpd.details.components.transactionsCountOverview.currentPeriodSuperCashback",
+        { superCashbackAmount: formatNumberAmount(props.superCashbackAmount) }
       )}
     </Body>
   </InfoBox>
@@ -73,7 +90,7 @@ const ClosedPeriodKO = (props: Props) => (
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodKOBody",
         {
           transactions: props.period.minTransactionNumber,
-          amount: props.amount.totalCashback
+          amount: props.period.amount.totalCashback
         }
       )}
     </Body>
@@ -92,11 +109,11 @@ const ClosedPeriodOK = (props: Props) => (
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodOKBody",
         {
           name: props.name,
-          amount: props.amount.totalCashback
+          amount: props.period.amount.totalCashback
         }
       )}
       {/* If the max amount is reached, inform the user */}
-      {props.amount.totalCashback >= props.period.maxPeriodCashback
+      {props.period.amount.totalCashback >= props.period.maxPeriodCashback
         ? ": " +
           I18n.t(
             "bonus.bpd.details.components.transactionsCountOverview.closedPeriodMaxAmount"
@@ -162,7 +179,10 @@ const chooseTextualInfoBox = (props: Props) => {
         return <GracePeriod {...props} />;
       }
       // not enough transaction to receive the cashback
-      if (props.amount.transactionNumber < props.period.minTransactionNumber) {
+      if (
+        props.period.amount.transactionNumber <
+        props.period.minTransactionNumber
+      ) {
         return <ClosedPeriodKO {...props} />;
       }
       // Congratulation! cashback received
@@ -170,27 +190,45 @@ const chooseTextualInfoBox = (props: Props) => {
     case "Active":
       // active period but still not enough transaction
       if (
-        props.amount.transactionNumber < props.period.minTransactionNumber &&
-        props.amount.totalCashback > 0 &&
+        props.period.amount.transactionNumber <
+          props.period.minTransactionNumber &&
+        props.period.amount.totalCashback > 0 &&
         // hide with transactionNumber === 0
-        props.amount.transactionNumber > 0
+        props.period.amount.transactionNumber > 0
       ) {
         return <CurrentPeriodWarning period={props.period} />;
       }
-
-      // The max cashback amount is reached
       if (
-        props.amount.transactionNumber >= props.period.minTransactionNumber &&
-        props.amount.totalCashback >= props.period.maxPeriodCashback
+        props.period.amount.transactionNumber >=
+        props.period.minTransactionNumber
       ) {
-        return <CurrentPeriodMaxAmount name={props.name} />;
-      }
-      // Cashback unlocked! visible for the next 10 transaction only
-      if (
-        props.amount.transactionNumber >= props.period.minTransactionNumber &&
-        props.amount.transactionNumber <= props.period.minTransactionNumber + 10
-      ) {
-        return <CurrentPeriodUnlock {...props} />;
+        // The user is in the supercashback ranking atm
+        if (
+          isBpdRankingReady(props.period.ranking) &&
+          props.period.ranking.ranking <= props.period.minPosition
+        ) {
+          console.log(props.period.superCashbackAmount);
+          return (
+            <CurrentPeriodSuperCashback
+              superCashbackAmount={props.period.superCashbackAmount}
+            />
+          );
+        }
+        // The max cashback amount is reached
+        {
+          if (
+            props.period.amount.totalCashback >= props.period.maxPeriodCashback
+          ) {
+            return <CurrentPeriodMaxAmount name={props.name} />;
+          }
+        }
+        // Cashback unlocked! visible for the next 10 transaction only
+        if (
+          props.period.amount.transactionNumber <=
+          props.period.minTransactionNumber + 10
+        ) {
+          return <CurrentPeriodUnlock {...props} />;
+        }
       }
   }
   return null;

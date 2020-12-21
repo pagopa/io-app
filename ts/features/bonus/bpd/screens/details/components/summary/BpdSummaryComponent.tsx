@@ -60,11 +60,7 @@ const Content = (sd: SummaryData) => (
       </View>
     ) : null}
     <View spacer={true} />
-    <TextualSummary
-      period={sd.period}
-      amount={sd.period.amount}
-      name={sd.name}
-    />
+    <TextualSummary period={sd.period} name={sd.name} />
   </View>
 );
 
