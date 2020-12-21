@@ -6,6 +6,17 @@ import { BackendBpdClient } from "../../api/backendBpdClient";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { AwardPeriodId } from "../../store/actions/periods";
 import { getError } from "../../../../../utils/errors";
+import { CitizenRankingResourceArray } from "../../../../../../definitions/bpd/citizen/CitizenRankingResourceArray";
+
+// convert the network payload ranking into the relative app domain model
+const convertRankingArray = (
+  rankings: CitizenRankingResourceArray
+): ReadonlyArray<BpdRankingReady> =>
+  rankings.map<BpdRankingReady>(rr => ({
+    ...rr,
+    awardPeriodId: rr.awardPeriodId as AwardPeriodId,
+    kind: "ready"
+  }));
 
 // Load the ranking for all the periods
 export function* bpdLoadRaking(
@@ -19,11 +30,7 @@ export function* bpdLoadRaking(
     if (getRankingResult.isRight()) {
       if (getRankingResult.value.status === 200) {
         return right<Error, ReadonlyArray<BpdRankingReady>>(
-          getRankingResult.value.value.map<BpdRankingReady>(rr => ({
-            ...rr,
-            awardPeriodId: rr.awardPeriodId as AwardPeriodId,
-            kind: "ready"
-          }))
+          convertRankingArray(getRankingResult.value.value)
         );
       } else {
         return left<Error, ReadonlyArray<BpdRankingReady>>(
