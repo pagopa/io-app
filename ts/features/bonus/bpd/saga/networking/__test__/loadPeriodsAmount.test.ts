@@ -23,6 +23,7 @@ import {
 import { BpdAmount, bpdLoadAmountSaga } from "../amount";
 import { loadPeriodsWithInfo } from "../loadPeriodsWithInfo";
 import { bpdLoadPeriodsSaga } from "../periods";
+import { bpdLoadRaking } from "../ranking";
 
 describe("loadPeriodsAmount, mock networking saga", () => {
   it("Dispatch failure if awardsPeriods fails", async () => {
@@ -63,7 +64,8 @@ describe("loadPeriodsAmount, mock networking saga", () => {
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
           left(totalCashbackFailure)
-        ]
+        ],
+        [call(bpdLoadRaking, backendClient.getRanking), right([readyRanking])]
       ])
       .put(
         bpdPeriodsAmountLoad.failure(new Error("Error while loading amounts"))
@@ -90,13 +92,47 @@ describe("loadPeriodsAmount, mock networking saga", () => {
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
           left(totalCashbackFailure)
-        ]
+        ],
+        [call(bpdLoadRaking, backendClient.getRanking), right([readyRanking])]
       ])
       .put(
         bpdPeriodsAmountLoad.failure(new Error("Error while loading amounts"))
       )
       .run();
   });
+
+  it("Dispatch failure if load ranking is left", async () => {
+    const totalCashbackFailure = new Error("Error for a single amount");
+    const backendClient = {
+      totalCashback: jest.fn(),
+      awardPeriods: jest.fn(),
+      getRanking: jest.fn()
+    };
+    await expectSaga(loadPeriodsWithInfo, backendClient)
+      .provide([
+        [
+          call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
+          right<Error, ReadonlyArray<BpdPeriod>>([activePeriod, closedPeriod])
+        ],
+        [
+          call(bpdLoadAmountSaga, backendClient.totalCashback, 0),
+          left(totalCashbackFailure)
+        ],
+        [
+          call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
+          left(totalCashbackFailure)
+        ],
+        [
+          call(bpdLoadRaking, backendClient.getRanking),
+          left(new Error("error"))
+        ]
+      ])
+      .put(
+        bpdPeriodsAmountLoad.failure(new Error("Error while loading rankings"))
+      )
+      .run();
+  });
+
   it("Dispatch success if all the totalCashback are right", async () => {
     const amountForPeriod0: BpdAmount = {
       ...zeroAmount,
@@ -124,7 +160,8 @@ describe("loadPeriodsAmount, mock networking saga", () => {
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
           right(amountForPeriod1)
-        ]
+        ],
+        [call(bpdLoadRaking, backendClient.getRanking), right([readyRanking])]
       ])
       .put(
         bpdPeriodsAmountLoad.success([
@@ -177,7 +214,8 @@ describe("loadPeriodsAmount, mock networking saga", () => {
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 2),
           right(amountForPeriod2)
-        ]
+        ],
+        [call(bpdLoadRaking, backendClient.getRanking), right([readyRanking])]
       ])
       .put(
         bpdPeriodsAmountLoad.success([
