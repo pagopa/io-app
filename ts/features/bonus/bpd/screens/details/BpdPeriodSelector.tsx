@@ -13,7 +13,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { BpdCardComponent } from "../../components/bpdCardComponent/BpdCardComponent";
 import { bpdSelectPeriod } from "../../store/actions/selectedPeriod";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
-import { BpdPeriodWithAmount } from "../../store/reducers/details/periods";
+import { BpdPeriodWithInfo } from "../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -78,7 +78,7 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  changeSelectPeriod: (period: BpdPeriodWithAmount) =>
+  changeSelectPeriod: (period: BpdPeriodWithInfo) =>
     dispatch(bpdSelectPeriod(period))
 });
 

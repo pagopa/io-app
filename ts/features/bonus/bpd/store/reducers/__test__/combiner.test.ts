@@ -7,43 +7,50 @@ import {
   closedPeriod,
   inactivePeriod
 } from "../__mock__/periods";
+import { readyRanking } from "../__mock__/ranking";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../details/combiner";
-import { BpdPeriodWithAmount } from "../details/periods";
+import { BpdPeriodWithInfo } from "../details/periods";
 
-const inactivePeriodA: BpdPeriodWithAmount = {
+const inactivePeriodA: BpdPeriodWithInfo = {
   amount: zeroAmount,
   ...{
     ...inactivePeriod,
     startDate: new Date("2025-01-01"),
     awardPeriodId: 55 as AwardPeriodId
-  }
+  },
+  ranking: readyRanking
 };
-const inactivePeriodB: BpdPeriodWithAmount = {
+const inactivePeriodB: BpdPeriodWithInfo = {
   amount: zeroAmount,
-  ...inactivePeriod
+  ...inactivePeriod,
+  ranking: readyRanking
 };
-const inactivePeriodC: BpdPeriodWithAmount = {
+const inactivePeriodC: BpdPeriodWithInfo = {
   amount: zeroAmount,
   ...{
     ...inactivePeriod,
     startDate: new Date("2022-01-01"),
     awardPeriodId: 56 as AwardPeriodId
-  }
+  },
+  ranking: readyRanking
 };
 
-const activePeriodAmount: BpdPeriodWithAmount = {
+const activePeriodAmount: BpdPeriodWithInfo = {
   amount: zeroAmount,
-  ...activePeriod
+  ...activePeriod,
+  ranking: readyRanking
 };
 
-const closedPeriodZeroAmount: BpdPeriodWithAmount = {
+const closedPeriodZeroAmount: BpdPeriodWithInfo = {
   amount: zeroAmount,
-  ...closedPeriod
+  ...closedPeriod,
+  ranking: readyRanking
 };
 
-const closedPeriodWithAmount: BpdPeriodWithAmount = {
+const closedPeriodWithAmount: BpdPeriodWithInfo = {
   amount: eligibleAmount,
-  ...closedPeriod
+  ...closedPeriod,
+  ranking: readyRanking
 };
 
 describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is enabled", () => {
