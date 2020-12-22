@@ -717,9 +717,9 @@ datetimes:
   notValid: Data non valida.
 payment:
   errorDetails: Dettagli
-  currentPsp: Il PSP scelto è
+  currentPsp: Il pagamento sarà gestito da
   noPsp: Non hai ancora selezionato un PSP
-  changePsp: Cambia PSP
+  changePsp: Modifica gestore
   IUV: IUV
   IUV_extended: Identificativo Univoco di Versamento
   notice: Avviso
@@ -828,7 +828,7 @@ wallet:
       headerTitle: "Aggiungi Satispay"
       start:
         title: "Vuoi aggiungere su IO il tuo account Satispay?"
-        body: "Verificheremo se esiste un account satispay associato al tuo codice fiscale"
+        body: "Verificheremo se esiste un account Satispay associato al tuo codice fiscale."
         cta: "Informativa sul trattamento dei dati personali"
       loadingSearch:
         title: "Stiamo verificando il tuo account Satispay\n\nAttendi qualche secondo"
@@ -1968,9 +1968,9 @@ bonus:
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
-              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
+              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- I pagamenti effettuati con Google Pay, Apple Pay e Samsung Pay non sono ancora supportati. Stiamo lavorando con la tua banca per ricevere anche questo tipo di transazioni.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
             calendarBlock:
-              text1: "Ti informiamo che prima che tu veda la transazione su IO, "
+              text1: "Ti informiamo che prima che tu veda la transazione su IO,"
               text2: "possono passare in media 3 giorni lavorativi"
               text3: "."
             lastUpdated: "Ultima transazione valida: "
