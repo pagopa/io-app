@@ -207,7 +207,6 @@ const chooseTextualInfoBox = (props: Props) => {
           isBpdRankingReady(props.period.ranking) &&
           props.period.ranking.ranking <= props.period.minPosition
         ) {
-          console.log(props.period.superCashbackAmount);
           return (
             <CurrentPeriodSuperCashback
               superCashbackAmount={props.period.superCashbackAmount}
