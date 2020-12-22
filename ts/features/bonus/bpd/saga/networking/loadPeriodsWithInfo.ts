@@ -1,63 +1,24 @@
 import { findFirst } from "fp-ts/lib/Array";
 import { Either, isRight, right } from "fp-ts/lib/Either";
-import { select, take } from "redux-saga-test-plan/matchers";
 import { all, call, put } from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../../types/utils";
-import { loadAbi } from "../../../../wallet/onboarding/bancomat/store/actions";
-import { abiSelector } from "../../../../wallet/onboarding/store/abi";
 import { BackendBpdClient } from "../../api/backendBpdClient";
-import { isReady } from "../../model/RemoteValue";
-import { bpdLoadActivationStatus } from "../../store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
-import { bpdTransactionsLoad } from "../../store/actions/transactions";
-import { BpdPeriodWithAmount } from "../../store/reducers/details/periods";
+import {
+  BpdPeriodWithInfo,
+  BpdRanking,
+  bpdRankingNotReady
+} from "../../store/reducers/details/periods";
 import { BpdAmount, BpdAmountError, bpdLoadAmountSaga } from "./amount";
 import { bpdLoadPeriodsSaga } from "./periods";
+import { bpdLoadRaking } from "./ranking";
 
 /**
- * Prefetch all the BPD details data:
- * - Activation Status
- * - Abi list
- * - Periods
- * - Amount foreach period !== "Inactive"
- * - Transactions foreach period !== "Inactive"
- */
-export function* prefetchBpdData() {
-  yield put(bpdLoadActivationStatus.request());
-
-  const abiList: ReturnType<typeof abiSelector> = yield select(abiSelector);
-
-  // The volatility of the bank list is extremely low.
-  // There is no need to refresh it every time.
-  // A further refinement could be to insert an expiring cache
-  if (!isReady(abiList)) {
-    yield put(loadAbi.request());
-  }
-
-  yield put(bpdPeriodsAmountLoad.request());
-
-  const periods: ActionType<
-    typeof bpdPeriodsAmountLoad.success | typeof bpdPeriodsAmountLoad.failure
-  > = yield take([
-    getType(bpdPeriodsAmountLoad.success),
-    getType(bpdPeriodsAmountLoad.failure)
-  ]);
-
-  if (periods.type === getType(bpdPeriodsAmountLoad.success)) {
-    yield all(
-      periods.payload
-        .filter(p => p.status !== "Inactive")
-        .map(period => put(bpdTransactionsLoad.request(period.awardPeriodId)))
-    );
-  }
-}
-
-/**
- * Load the periods list with the amount information foreach period (active or closed)
+ * Load the periods information list and adds the amount and ranking information
+ * foreach period (active or closed)
  * @param bpdClient
  */
-export function* loadPeriodsAmount(
+export function* loadPeriodsWithInfo(
   bpdClient: Pick<
     ReturnType<typeof BackendBpdClient>,
     "awardPeriods" | "totalCashback"
@@ -74,6 +35,17 @@ export function* loadPeriodsAmount(
     yield put(bpdPeriodsAmountLoad.failure(maybePeriods.value));
   } else {
     const periods = maybePeriods.value;
+
+    const rankings: SagaCallReturnType<typeof bpdLoadRaking> = yield call(
+      bpdLoadRaking
+    );
+
+    if (rankings.isLeft()) {
+      yield put(
+        bpdPeriodsAmountLoad.failure(new Error("Error while loading rankings"))
+      );
+      return;
+    }
 
     // request the amounts for all the required periods
     const amounts: ReadonlyArray<SagaCallReturnType<
@@ -114,7 +86,7 @@ export function* loadPeriodsAmount(
     // compose the period with the amount information
     const periodsWithAmount = amountWithInactivePeriod
       .filter(isRight)
-      .reduce<ReadonlyArray<BpdPeriodWithAmount>>(
+      .reduce<ReadonlyArray<BpdPeriodWithInfo>>(
         (acc, curr) =>
           findFirst(
             [...periods],
@@ -123,7 +95,11 @@ export function* loadPeriodsAmount(
             ...acc,
             {
               ...period,
-              amount: curr.value
+              amount: curr.value,
+              ranking: findFirst<BpdRanking>(
+                [...rankings.value],
+                r => r.awardPeriodId === curr.value.awardPeriodId
+              ).getOrElse(bpdRankingNotReady(curr.value.awardPeriodId))
             }
           ]),
         []
