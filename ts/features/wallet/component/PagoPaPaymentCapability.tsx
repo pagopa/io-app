@@ -1,4 +1,3 @@
-import { fromNullable, isNone } from "fp-ts/lib/Option";
 import { Badge, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -7,7 +6,9 @@ import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
-import { CreditCardType, PaymentMethod } from "../../../types/pagopa";
+import { PaymentMethod } from "../../../types/pagopa";
+import { badgeType } from "../../../types/paymentMethodCapabilities";
+import { extractBadgeType } from "../../../utils/paymentMethodCapabilities";
 
 const styles = StyleSheet.create({
   row: {
@@ -43,8 +44,6 @@ const styles = StyleSheet.create({
 
 type Props = { paymentMethod: PaymentMethod };
 
-type badgeType = "available" | "arriving" | "not_available";
-
 const getLocales = () => ({
   available: I18n.t("wallet.methods.card.pagoPaCapability.active"),
   arriving: I18n.t("wallet.methods.card.pagoPaCapability.arriving"),
@@ -75,22 +74,6 @@ const availabilityBadge = (badgeType: badgeType) => {
   }
 };
 
-const extractBadgeType = (paymentMethod: PaymentMethod): badgeType => {
-  const badgeType = fromNullable(paymentMethod).map<badgeType>(pM => {
-    switch (pM.kind) {
-      case "CreditCard":
-        return CreditCardType.decode(pM.info.brand).fold(
-          () => "not_available",
-          b => (b === "MAESTRO" ? "arriving" : "available")
-        );
-      case "Satispay":
-        return "arriving";
-      default:
-        return "not_available";
-    }
-  });
-  return isNone(badgeType) ? "not_available" : badgeType.value;
-};
 /**
  * Represent the capability to pay in PagoPa of a payment method.
  *
