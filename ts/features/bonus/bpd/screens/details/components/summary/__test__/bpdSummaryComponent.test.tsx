@@ -1,5 +1,5 @@
 import "@testing-library/jest-native/extend-expect";
-import { render, RenderAPI } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import MockDate from "mockdate";
 import * as React from "react";
@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../../utils/accessibility";
-import { BpdAmount } from "../../../../../saga/networking/amount";
 import {
   eligibleAmount,
   eligibleMaxAmount,
@@ -95,8 +94,6 @@ describe("Bpd Summary Component graphical test for different states", () => {
         <BpdSummaryComponent />
       </Provider>
     );
-
-    activePeriodNotEnoughTransaction(component, notEligibleAmount);
 
     // When the period is "Active" and transactionNumber<minTransactionNumber,
     // TextualSummary should be null if totalCashback > 0
@@ -255,18 +252,3 @@ const mockBpdState = (period: BpdPeriodWithInfo) => ({
   },
   profile: pot.none
 });
-
-const activePeriodNotEnoughTransaction = (
-  component: RenderAPI,
-  amount: BpdAmount
-) => {
-  expect(component).not.toBeNull();
-
-  // When the period is "Active" and transactionNumber<minTransactionNumber,
-  // GraphicalSummary should be enabled
-  expect(component.queryByTestId("progressBar")).toBeEnabled();
-  expect(component.queryByTestId("percentageTransactions.title")).toBeEnabled();
-  expect(
-    component.queryByTestId("percentageTransactions.transactions")
-  ).toHaveTextContent(amount.transactionNumber.toString());
-};
