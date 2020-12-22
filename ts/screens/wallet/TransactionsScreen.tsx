@@ -5,7 +5,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { RefreshControl, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -126,19 +126,6 @@ class TransactionsScreen extends React.Component<Props> {
       undefined
     );
 
-    const transactionsRefreshControl = (
-      <RefreshControl
-        onRefresh={() => {
-          this.props.loadTransactions(this.props.transactionsLoadedLength);
-        }}
-        // The refresh control spinner is displayed only at pull-to-refresh
-        // while, during the transactions reload, it is displayed the custom transaction
-        // list spinner
-        refreshing={false}
-        tintColor={"transparent"}
-      />
-    );
-
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
@@ -147,7 +134,6 @@ class TransactionsScreen extends React.Component<Props> {
         hideHeader={true}
         hasDynamicSubHeader={true}
         topContentHeight={HEADER_HEIGHT}
-        refreshControl={transactionsRefreshControl}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_transaction"]}
       >
