@@ -5,10 +5,13 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, View } from "native-base";
-import * as React from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { NavigationInjectedProps } from "react-navigation";
+import {
+  NavigationInjectedProps,
+  NavigationNavigateAction
+} from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -23,12 +26,14 @@ import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
 import variables from "../../theme/variables";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
-import { isExpired } from "../../utils/dates";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
-  CreditCardPan
+  CreditCardPan,
+  isValidPan,
+  isValidExpirationDate,
+  isValidSecurityCode
 } from "../../utils/input";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
@@ -39,6 +44,8 @@ import { Link } from "../../components/core/typography/Link";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import { openWebUrl } from "../../utils/url";
 import { showToast } from "../../utils/showToast";
+import { useIOBottomSheet } from "../../utils/bottomSheet";
+import { Body } from "../../components/core/typography/Body";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -62,6 +69,8 @@ type State = Readonly<{
   securityCode: Option<string>;
   holder: Option<string>;
 }>;
+
+type StateKeys = "pan" | "expirationDate" | "securityCode" | "holder";
 
 const styles = StyleSheet.create({
   noBottomLine: {
@@ -94,11 +103,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.saveCard.contextualHelpTitle",
   body: "wallet.saveCard.contextualHelpContent"
 };
-
-const EMPTY_CARD_HOLDER = "";
-const EMPTY_CARD_PAN = "";
-const EMPTY_CARD_EXPIRATION_DATE = "";
-const EMPTY_CARD_SECURITY_CODE = "";
 
 const INITIAL_STATE: State = {
   pan: none,
@@ -151,245 +155,197 @@ function getCardFromState(state: State): Option<CreditCard> {
 
 const acceptedCardsPageURL: string = "https://io.italia.it/metodi-pagamento";
 
-class AddCardScreen extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      ...INITIAL_STATE,
-      holder: fromNullable(props.profileNameSurname)
+const primaryButtonPropsFromState = (
+  state: State,
+  onNavigate: (card: CreditCard) => NavigationNavigateAction
+): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
+  const baseButtonProps = {
+    block: true,
+    primary: true,
+    title: I18n.t("global.buttons.continue")
+  };
+  const maybeCard = getCardFromState(state);
+  if (maybeCard.isSome()) {
+    return {
+      ...baseButtonProps,
+      disabled: false,
+      onPress: () => onNavigate(maybeCard.value)
+    };
+  } else {
+    return {
+      ...baseButtonProps,
+      disabled: true,
+      onPress: () => undefined
     };
   }
+};
 
-  private openSupportedCardsPage = (): void => {
+const AddCardScreen: React.FC<Props> = props => {
+  const [state, setState] = useState<State>({
+    ...INITIAL_STATE,
+    holder: fromNullable(props.profileNameSurname)
+  });
+
+  const { present } = useIOBottomSheet(
+    <Body>{I18n.t("wallet.missingDataText")}</Body>,
+    I18n.t("wallet.missingDataCTA"),
+    260
+  );
+
+  const openSupportedCardsPage = (): void => {
     openWebUrl(acceptedCardsPageURL, () =>
       showToast(I18n.t("wallet.alert.supportedCardPageLinkError"))
     );
   };
 
-  public render(): React.ReactNode {
-    const primaryButtonPropsFromState = (
-      state: State
-    ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
-      const baseButtonProps = {
-        block: true,
-        primary: true,
-        title: I18n.t("global.buttons.continue")
-      };
-      const maybeCard = getCardFromState(state);
-      if (maybeCard.isSome()) {
-        return {
-          ...baseButtonProps,
-          disabled: false,
-          onPress: () =>
-            this.props.navigateToConfirmCardDetailsScreen(maybeCard.value)
-        };
-      } else {
-        return {
-          ...baseButtonProps,
-          disabled: true,
-          onPress: () => undefined
-        };
-      }
-    };
+  const detectedBrand: SupportedBrand = CreditCardDetector.validate(state.pan);
 
-    const secondaryButtonProps = {
-      block: true,
-      bordered: true,
-      onPress: () => this.props.navigation.goBack(),
-      title: I18n.t("global.buttons.back")
-    };
+  const updateState = (key: StateKeys, value: string) =>
+    setState({
+      ...state,
+      [key]: fromNullable(value)
+    });
 
-    const detectedBrand: SupportedBrand = CreditCardDetector.validate(
-      this.state.pan
-    );
-
-    return (
-      <BaseScreenComponent
-        reportAttachmentTypes={attachmentTypeConfigurationNoScreenshot}
-        goBack={true}
-        headerTitle={I18n.t("wallet.addCardTitle")}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_methods", "wallet_methods_security"]}
+  return (
+    <BaseScreenComponent
+      reportAttachmentTypes={attachmentTypeConfigurationNoScreenshot}
+      goBack={true}
+      headerTitle={I18n.t("wallet.addCardTitle")}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["wallet_methods", "wallet_methods_security"]}
+    >
+      <ScrollView
+        bounces={false}
+        style={styles.whiteBg}
+        keyboardShouldPersistTaps="handled"
       >
-        <ScrollView
-          bounces={false}
-          style={styles.whiteBg}
-          keyboardShouldPersistTaps="handled"
-        >
-          <Content scrollEnabled={false}>
-            <LabelledItem
-              type={"text"}
-              label={I18n.t("wallet.dummyCard.labels.holder")}
-              icon="io-titolare"
-              isValid={
-                this.state.holder.getOrElse(EMPTY_CARD_HOLDER) === ""
-                  ? undefined
-                  : true
-              }
-              inputProps={{
-                value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
-                placeholder: I18n.t("wallet.dummyCard.values.holder"),
-                autoCapitalize: "words",
-                keyboardType: "default",
-                returnKeyType: "done",
-                onChangeText: (value: string) => this.updateHolderState(value)
-              }}
-            />
+        <Content scrollEnabled={false}>
+          <LabelledItem
+            type={"text"}
+            label={I18n.t("wallet.dummyCard.labels.holder")}
+            icon="io-titolare"
+            isValid={state.holder.getOrElse("") === "" ? undefined : true}
+            inputProps={{
+              value: state.holder.getOrElse(""),
+              placeholder: I18n.t("wallet.dummyCard.values.holder"),
+              autoCapitalize: "words",
+              keyboardType: "default",
+              returnKeyType: "done",
+              onChangeText: (value: string) => updateState("holder", value)
+            }}
+          />
 
-            <View spacer={true} />
+          <View spacer={true} />
 
-            <LabelledItem
-              type={"masked"}
-              label={I18n.t("wallet.dummyCard.labels.pan")}
-              icon={detectedBrand.iconForm}
-              iconStyle={styles.creditCardForm}
-              isValid={this.isValidPan()}
-              inputMaskProps={{
-                value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
-                placeholder: I18n.t("wallet.dummyCard.values.pan"),
-                keyboardType: "numeric",
-                returnKeyType: "done",
-                maxLength: 23,
-                type: "custom",
-                options: {
-                  mask: "9999 9999 9999 9999 999",
-                  getRawValue: value1 => value1.replace(/ /g, "")
-                },
-                includeRawValueInChangeText: true,
-                onChangeText: (_, value) => {
-                  if (value !== undefined) {
-                    this.updatePanState(value);
-                  }
+          <LabelledItem
+            type={"masked"}
+            label={I18n.t("wallet.dummyCard.labels.pan")}
+            icon={detectedBrand.iconForm}
+            iconStyle={styles.creditCardForm}
+            isValid={isValidPan(state.pan)}
+            inputMaskProps={{
+              value: state.pan.getOrElse(""),
+              placeholder: I18n.t("wallet.dummyCard.values.pan"),
+              keyboardType: "numeric",
+              returnKeyType: "done",
+              maxLength: 23,
+              type: "custom",
+              options: {
+                mask: "9999 9999 9999 9999 999",
+                getRawValue: value1 => value1.replace(/ /g, "")
+              },
+              includeRawValueInChangeText: true,
+              onChangeText: (_, value) => {
+                if (value !== undefined) {
+                  updateState("pan", value);
                 }
-              }}
-            />
+              }
+            }}
+          />
 
-            <View spacer={true} />
-            <Grid>
-              <Col>
-                <LabelledItem
-                  type={"masked"}
-                  label={I18n.t("wallet.dummyCard.labels.expirationDate")}
-                  icon="io-calendario"
-                  isValid={this.isValidExpirationDate()}
-                  inputMaskProps={{
-                    value: this.state.expirationDate.getOrElse(
-                      EMPTY_CARD_EXPIRATION_DATE
-                    ),
-                    placeholder: I18n.t(
-                      "wallet.dummyCard.values.expirationDate"
-                    ),
-                    keyboardType: "numeric",
-                    returnKeyType: "done",
-                    type: "custom",
-                    options: { mask: "99/99" },
-                    includeRawValueInChangeText: true,
-                    onChangeText: value => this.updateExpirationDateState(value)
-                  }}
-                />
-              </Col>
-              <Col style={styles.verticalSpacing} />
-              <Col>
-                <LabelledItem
-                  type={"masked"}
-                  label={I18n.t(
+          <View spacer={true} />
+          <Grid>
+            <Col>
+              <LabelledItem
+                type={"masked"}
+                label={I18n.t("wallet.dummyCard.labels.expirationDate")}
+                icon="io-calendario"
+                isValid={isValidExpirationDate(state.expirationDate)}
+                inputMaskProps={{
+                  value: state.expirationDate.getOrElse(""),
+                  placeholder: I18n.t("wallet.dummyCard.values.expirationDate"),
+                  keyboardType: "numeric",
+                  returnKeyType: "done",
+                  type: "custom",
+                  options: { mask: "99/99" },
+                  includeRawValueInChangeText: true,
+                  onChangeText: value => updateState("expirationDate", value)
+                }}
+              />
+            </Col>
+            <Col style={styles.verticalSpacing} />
+            <Col>
+              <LabelledItem
+                type={"masked"}
+                label={I18n.t(
+                  detectedBrand.cvvLength === 4
+                    ? "wallet.dummyCard.labels.securityCode4D"
+                    : "wallet.dummyCard.labels.securityCode"
+                )}
+                icon="io-lucchetto"
+                isValid={isValidSecurityCode(state.securityCode)}
+                inputMaskProps={{
+                  value: state.securityCode.getOrElse(""),
+                  placeholder: I18n.t(
                     detectedBrand.cvvLength === 4
-                      ? "wallet.dummyCard.labels.securityCode4D"
-                      : "wallet.dummyCard.labels.securityCode"
-                  )}
-                  icon="io-lucchetto"
-                  isValid={this.isValidSecurityCode()}
-                  inputMaskProps={{
-                    value: this.state.securityCode.getOrElse(
-                      EMPTY_CARD_SECURITY_CODE
-                    ),
-                    placeholder: I18n.t(
-                      detectedBrand.cvvLength === 4
-                        ? "wallet.dummyCard.values.securityCode4D"
-                        : "wallet.dummyCard.values.securityCode"
-                    ),
-                    returnKeyType: "done",
-                    maxLength: 4,
-                    type: "custom",
-                    options: { mask: "9999" },
-                    keyboardType: "numeric",
-                    secureTextEntry: true,
-                    includeRawValueInChangeText: true,
-                    onChangeText: value => this.updateSecurityCodeState(value)
-                  }}
-                />
-              </Col>
-            </Grid>
+                      ? "wallet.dummyCard.values.securityCode4D"
+                      : "wallet.dummyCard.values.securityCode"
+                  ),
+                  returnKeyType: "done",
+                  maxLength: 4,
+                  type: "custom",
+                  options: { mask: "9999" },
+                  keyboardType: "numeric",
+                  secureTextEntry: true,
+                  includeRawValueInChangeText: true,
+                  onChangeText: value => updateState("securityCode", value)
+                }}
+              />
+            </Col>
+          </Grid>
 
-            <View spacer={true} />
+          <View spacer={true} />
 
-            <Link onPress={this.openSupportedCardsPage}>
-              {I18n.t("wallet.openAcceptedCardsPageCTA")}
-            </Link>
-          </Content>
-        </ScrollView>
-        <SectionStatusComponent sectionKey={"credit_card"} />
-        <FooterWithButtons
-          type="TwoButtonsInlineHalf"
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonPropsFromState(this.state)}
-        />
-      </BaseScreenComponent>
-    );
+          <Link onPress={present}>{I18n.t("wallet.missingDataCTA")}</Link>
+
+          <View spacer />
+
+          <Link onPress={openSupportedCardsPage}>
+            {I18n.t("wallet.openAcceptedCardsPageCTA")}
+          </Link>
+        </Content>
+      </ScrollView>
+      <SectionStatusComponent sectionKey={"credit_card"} />
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        leftButton={props.secondaryButtonProps}
+        rightButton={primaryButtonPropsFromState(
+          state,
+          props.navigateToConfirmCardDetailsScreen
+        )}
+      />
+    </BaseScreenComponent>
+  );
+};
+
+const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
+  profileNameSurname: profileNameSurnameSelector(state),
+  secondaryButtonProps: {
+    block: true,
+    bordered: true,
+    onPress: () => props.navigation.goBack(),
+    title: I18n.t("global.buttons.back")
   }
-
-  private isValidPan() {
-    return this.state.pan.map(pan => CreditCardPan.is(pan)).toUndefined();
-  }
-
-  private isValidExpirationDate() {
-    return this.state.expirationDate
-      .map(expirationDate => {
-        const [expirationMonth, expirationYear] = expirationDate.split("/");
-        return (
-          CreditCardExpirationMonth.is(expirationMonth) &&
-          CreditCardExpirationYear.is(expirationYear) &&
-          !isExpired(Number(expirationMonth), Number(expirationYear))
-        );
-      })
-      .toUndefined();
-  }
-
-  private isValidSecurityCode() {
-    return this.state.securityCode
-      .map(securityCode => CreditCardCVC.is(securityCode))
-      .toUndefined();
-  }
-
-  private updateHolderState(value: string) {
-    this.setState({
-      holder: value !== EMPTY_CARD_HOLDER ? some(value) : none
-    });
-  }
-
-  private updatePanState(value: string) {
-    this.setState({
-      pan: value && value !== EMPTY_CARD_PAN ? some(value) : none
-    });
-  }
-
-  private updateExpirationDateState(value: string) {
-    this.setState({
-      expirationDate:
-        value && value !== EMPTY_CARD_EXPIRATION_DATE ? some(value) : none
-    });
-  }
-
-  private updateSecurityCodeState(value: string) {
-    this.setState({
-      securityCode:
-        value && value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
-    });
-  }
-}
-
-const mapStateToProps = (state: GlobalState) => ({
-  profileNameSurname: profileNameSurnameSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({

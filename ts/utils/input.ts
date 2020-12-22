@@ -1,5 +1,7 @@
+import { Option } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { PatternString } from "italia-ts-commons/lib/strings";
+import { isExpired } from "./dates";
 
 const MIN_PAN_DIGITS = 15;
 const MAX_PAN_DIGITS = 19;
@@ -37,3 +39,23 @@ export type CreditCardExpirationYear = t.TypeOf<
  */
 export const CreditCardCVC = PatternString("^[0-9]{3,4}$");
 export type CreditCardCVC = t.TypeOf<typeof CreditCardCVC>;
+
+export const isValidPan = (pan: Option<string>) =>
+  pan.map(pan => CreditCardPan.is(pan)).toUndefined();
+
+export const isValidExpirationDate = (expirationDate: Option<string>) =>
+  expirationDate
+    .map(expirationDate => {
+      const [expirationMonth, expirationYear] = expirationDate.split("/");
+      return (
+        CreditCardExpirationMonth.is(expirationMonth) &&
+        CreditCardExpirationYear.is(expirationYear) &&
+        !isExpired(Number(expirationMonth), Number(expirationYear))
+      );
+    })
+    .toUndefined();
+
+export const isValidSecurityCode = (securityCode: Option<string>) =>
+  securityCode
+    .map(securityCode => CreditCardCVC.is(securityCode))
+    .toUndefined();
