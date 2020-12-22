@@ -1144,7 +1144,7 @@ wallet:
         two: "non consentono di pagare tramite IO"
         three: ", ma solo presso i punti fisici (POS)."
       debit:
-        title: "La tua carta ha più di un logo?"
+        title: "La tua carta ha uno di questi loghi?"
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerla anche come **carta di debito o di credito**, inserendo il numero della carta sul fronte. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi Carta di Debito/Credito"
       removeCta: "Elimina questo metodo di pagamento"

@@ -1,4 +1,3 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { none } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
@@ -11,7 +10,7 @@ import { Dispatch } from "../../store/actions/types";
 import { navSelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { bottomSheetContent } from "../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../utils/bottomSheet";
 import { getCurrentRouteKey } from "../../utils/navigation";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { H1 } from "../core/typography/H1";
@@ -22,7 +21,6 @@ import { IOColors } from "../core/variables/IOColors";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
-import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { IOStyles } from "../core/variables/IOStyles";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -58,26 +56,6 @@ const styles = StyleSheet.create({
 });
 
 const WalletHomeHeader: React.FC<Props> = (props: Props) => {
-  const { present, dismiss } = useBottomSheetModal();
-  const [isBottomSheetOpen, setBottomSheetOpen] = React.useState(false);
-
-  useHardwareBackButton(() => {
-    const isOpen = isBottomSheetOpen;
-    closeBS();
-    // true only if we handle the back
-    return isOpen;
-  });
-
-  const closeBS = () => {
-    setBottomSheetOpen(false);
-    dismiss();
-  };
-
-  const openBS = async () => {
-    setBottomSheetOpen(true);
-    await openModalBox();
-  };
-
   const navigationListItems: ReadonlyArray<NavigationListItem> = [
     {
       title: I18n.t("wallet.paymentMethod"),
@@ -92,50 +70,47 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
     }
   ];
 
-  const openModalBox = async () => {
-    const bottomSheetProps = await bottomSheetContent(
-      <FlatList
-        data={navigationListItems}
-        keyExtractor={item => item.title}
-        renderItem={({ item, index }) => (
-          <>
-            <ButtonDefaultOpacity
-              onPress={() => {
-                closeBS();
-                item.onPress();
-              }}
-              style={styles.container}
-              onPressWithGestureHandler={true}
-            >
-              <View style={styles.flexColumn}>
-                <View style={styles.row}>
-                  <View style={IOStyles.flex}>
-                    <H3 color={"bluegreyDark"} weight={"SemiBold"}>
-                      {item.title}
-                    </H3>
-                    <H5 color={"bluegrey"} weight={"Regular"}>
-                      {item.subtitle}
-                    </H5>
-                  </View>
-                  <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+  const { present, dismiss } = useIOBottomSheet(
+    <FlatList
+      data={navigationListItems}
+      keyExtractor={item => item.title}
+      renderItem={({ item, index }) => (
+        <>
+          <ButtonDefaultOpacity
+            onPress={() => {
+              dismiss();
+              item.onPress();
+            }}
+            style={styles.container}
+            onPressWithGestureHandler={true}
+          >
+            <View style={styles.flexColumn}>
+              <View style={styles.row}>
+                <View style={IOStyles.flex}>
+                  <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+                    {item.title}
+                  </H3>
+                  <H5 color={"bluegrey"} weight={"Regular"}>
+                    {item.subtitle}
+                  </H5>
                 </View>
+                <IconFont name={"io-right"} color={IOColors.blue} size={24} />
               </View>
-            </ButtonDefaultOpacity>
+            </View>
+          </ButtonDefaultOpacity>
 
-            {index !== navigationListItems.length - 1 && (
-              <ItemSeparatorComponent noPadded />
-            )}
-          </>
-        )}
-      />,
-      I18n.t("global.buttons.add"),
-      315,
-      closeBS
-    );
+          {index !== navigationListItems.length - 1 && (
+            <ItemSeparatorComponent noPadded />
+          )}
+        </>
+      )}
+    />,
+    I18n.t("global.buttons.add"),
+    315
+  );
 
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
+  const openBS = async () => {
+    await present();
   };
 
   return (
