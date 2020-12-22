@@ -19,7 +19,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 
 type OwnProps = {
   onAddPaymentMethod?: () => void;
-  hideCobrandTitle?: boolean;
+  hideCobrandTitle?: true;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
