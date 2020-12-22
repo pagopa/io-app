@@ -10,10 +10,12 @@ type Props = {
 };
 
 /**
+ * Render additional text information for the user, related to the transactions and cashback amount
  * Choose the textual infobox based on period and amount values
  * @param props
+ * @constructor
  */
-const chooseTextualInfoBox = (props: Props) => {
+export const TextualSummary: React.FunctionComponent<Props> = props => {
   switch (props.period.status) {
     case "Inactive":
       return <InactiveTextualSummary period={props.period} />;
@@ -23,11 +25,3 @@ const chooseTextualInfoBox = (props: Props) => {
       return <ActiveTextualSummary period={props.period} name={props.name} />;
   }
 };
-
-/**
- * Render additional text information for the user, related to the transactions and cashback amount
- * @param props
- * @constructor
- */
-export const TextualSummary: React.FunctionComponent<Props> = props =>
-  chooseTextualInfoBox(props);
