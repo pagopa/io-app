@@ -9,13 +9,20 @@ type Props = {
   lastAvailablePosition: number;
 };
 
+const THOUSAND_UNIT = 1000;
+
+const retrieveBoxedLabel = (lastAvailablePosition: number) =>
+  lastAvailablePosition >= THOUSAND_UNIT
+    ? `${Math.floor(lastAvailablePosition / THOUSAND_UNIT)}K`
+    : `${lastAvailablePosition}`;
+
 export const LastPositionItem: React.FunctionComponent<Props> = (
   props: Props
 ) => (
   <RankPositionItem
     transactionsNumber={props.transactionsNumber}
     superCashbackAmount={props.superCashbackAmount}
-    boxedLabel={"100k"}
+    boxedLabel={retrieveBoxedLabel(props.lastAvailablePosition)}
     rankingLabel={I18n.t("bonus.bpd.details.superCashback.rankLabel", {
       position: formatNumberWithNoDigits(props.lastAvailablePosition)
     })}
