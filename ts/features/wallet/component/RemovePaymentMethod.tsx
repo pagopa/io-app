@@ -23,7 +23,7 @@ type Props = {
  * @param props
  * @constructor
  */
-export const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
+const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
   <BottomSheetContent
     footer={
       <FooterWithButtons
