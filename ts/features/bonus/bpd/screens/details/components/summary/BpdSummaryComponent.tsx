@@ -9,7 +9,7 @@ import { BpdPeriod } from "../../../../store/actions/periods";
 import { BpdPeriodWithInfo } from "../../../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import SuperCashbackRankingSummary from "./SuperCashbackRankingSummary";
-import { TextualSummary } from "./TextualSummary";
+import { TextualSummary } from "./textualSummary/TextualSummary";
 import TransactionsGraphicalSummary from "./TransactionsGraphicalSummary";
 
 type Props = ReturnType<typeof mapDispatchToProps> &

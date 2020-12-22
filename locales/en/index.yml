@@ -1915,7 +1915,10 @@ bonus:
           title: "Your transactions"
           of: "out of"
           closedPeriodKOBody: "You have not reached the {{transactions}} transactions necessary to get a refund: you would have received € {{amount}}. Try again during the next phase!"
-          currentPeriodKOBody: "You must have reached at least {{transactions}} transactions to unlock the cashback collected so far!"
+          currentPeriodKOBody:
+            one: "You must have reached at least"
+            two: " {{transactions}} transactions"
+            three: " to unlock the cashback collected so far!"
           currentPeriodUnlockBody: "Congratulations {{name}}! You have exceeded the threshold of {{transactions}} transactions and unlocked the Cashback !!"
           currentPeriodMaxAmount: "Congratulations {{name}}! You have reached the maximum amount expected!"
           currentPeriodSuperCashback: "Right now you would be eligible for {{superCashbackAmount}} € Super Cashback! Keep up the good work to stay on the leaderboard."
