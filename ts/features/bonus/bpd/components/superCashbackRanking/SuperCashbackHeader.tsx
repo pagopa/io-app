@@ -7,7 +7,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { BpdPeriodWithAmount } from "../../store/reducers/details/periods";
+import { BpdPeriodWithInfo } from "../../store/reducers/details/periods";
 import I18n from "../../../../../i18n";
 import { H3 } from "../../../../../components/core/typography/H3";
 
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const isPeriodOnGoing = (period: BpdPeriodWithAmount | undefined) =>
+const isPeriodOnGoing = (period: BpdPeriodWithInfo | undefined) =>
   fromNullable(period).fold(false, p => {
     const actualDate = new Date();
     const endDate = new Date(p.endDate.getTime());

@@ -9,7 +9,7 @@ import { H3 } from "../../../../../components/core/typography/H3";
 import I18n from "../../../../../i18n";
 import Markdown from "../../../../../components/ui/Markdown";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { BpdPeriodWithAmount } from "../../store/reducers/details/periods";
+import { BpdPeriodWithInfo } from "../../store/reducers/details/periods";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { FirstPositionItem } from "./FirstPositionItem";
 import { LastPositionItem } from "./LastPositionItem";
@@ -115,7 +115,7 @@ body {
 }
 `;
 
-const calculateEndDate = (selectedPeriod: BpdPeriodWithAmount | undefined) =>
+const calculateEndDate = (selectedPeriod: BpdPeriodWithInfo | undefined) =>
   fromNullable(selectedPeriod).fold("", p => {
     const endDate = new Date(p.endDate.getTime());
     endDate.setDate(endDate.getDate() + p.gracePeriod);
