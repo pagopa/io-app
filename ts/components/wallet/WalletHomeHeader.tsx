@@ -78,7 +78,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
         <>
           <ButtonDefaultOpacity
             onPress={() => {
-              closeBS();
+              dismiss();
               item.onPress();
             }}
             style={styles.container}
@@ -108,10 +108,6 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
     I18n.t("global.buttons.add"),
     315
   );
-
-  const closeBS = () => {
-    dismiss();
-  };
 
   const openBS = async () => {
     await present();
