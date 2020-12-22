@@ -118,7 +118,7 @@ describe("Bpd Summary Component graphical test for different states", () => {
     );
   });
 
-  it("Render Active period, transactionNumber >= minTransactionNumber", () => {
+  it("Render Active period, transactionNumber >= minTransactionNumber, ranking <= minPosition, no max amount", () => {
     const period = {
       ...activePeriod,
       amount: eligibleAmount,
@@ -130,10 +130,6 @@ describe("Bpd Summary Component graphical test for different states", () => {
         <BpdSummaryComponent />
       </Provider>
     );
-
-    // When the period is "Active" and transactionNumber >= minTransactionNumber,
-    // the TransactionsGraphicalSummary should be null
-    expect(component.queryByTestId("progressBar")).toBeNull();
 
     testSuperCashback(component, period);
 
@@ -150,6 +146,147 @@ describe("Bpd Summary Component graphical test for different states", () => {
     // When the period is "Active" and transactionNumber>=minTransactionNumber,
     // no TextualSummary should be rendered.
     expect(component.queryByTestId("currentPeriodWarning")).toBeNull();
+
+    // When ranking <= minPosition
+    expect(component.queryByTestId("currentPeriodSuperCashback")).toBeEnabled();
+  });
+
+  it("Render Active period, transactionNumber >= minTransactionNumber, ranking <= minPosition, max amount", () => {
+    const period: BpdPeriodWithInfo = {
+      ...activePeriod,
+      amount: {
+        ...eligibleAmount,
+        totalCashback: activePeriod.maxPeriodCashback
+      },
+      ranking: readyRanking
+    };
+    const store = mockStore(mockBpdState(period));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+
+    testSuperCashback(component, period);
+
+    // TextualTransaction should be enabled
+    const textualTransactionTransactions = component.queryByTestId(
+      "textualTransaction.transactions"
+    );
+    expect(textualTransactionTransactions).toBeEnabled();
+
+    expect(textualTransactionTransactions).toHaveTextContent(
+      eligibleAmount.transactionNumber.toString()
+    );
+
+    // When the period is "Active" and transactionNumber>=minTransactionNumber,
+    // no TextualSummary should be rendered.
+    expect(component.queryByTestId("currentPeriodWarning")).toBeNull();
+
+    // When ranking <= minPosition
+    expect(component.queryByTestId("currentPeriodSuperCashback")).toBeEnabled();
+  });
+
+  it("Render Active period, transactionNumber >= minTransactionNumber, ranking > minPosition, no max amount", () => {
+    const period: BpdPeriodWithInfo = {
+      ...activePeriod,
+      amount: eligibleAmount,
+      ranking: { ...readyRanking, ranking: 1000000 }
+    };
+    const store = mockStore(mockBpdState(period));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+
+    testSuperCashback(component, period);
+
+    // TextualTransaction should be enabled
+    const textualTransactionTransactions = component.queryByTestId(
+      "textualTransaction.transactions"
+    );
+    expect(textualTransactionTransactions).toBeEnabled();
+
+    expect(textualTransactionTransactions).toHaveTextContent(
+      eligibleAmount.transactionNumber.toString()
+    );
+
+    // When the period is "Active" and transactionNumber>=minTransactionNumber,
+    // no TextualSummary should be rendered.
+    expect(component.queryByTestId("currentPeriodWarning")).toBeNull();
+
+    expect(component.queryByTestId("currentPeriodUnlock")).toBeEnabled();
+  });
+
+  it("Render Active period, transactionNumber > minTransactionNumber+10, ranking > minPosition, no max amount", () => {
+    const period: BpdPeriodWithInfo = {
+      ...activePeriod,
+      amount: {
+        ...eligibleAmount,
+        transactionNumber: activePeriod.minTransactionNumber + 11
+      },
+      ranking: { ...readyRanking, ranking: 1000000 }
+    };
+    const store = mockStore(mockBpdState(period));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+
+    testSuperCashback(component, period);
+
+    // TextualTransaction should be enabled
+    const textualTransactionTransactions = component.queryByTestId(
+      "textualTransaction.transactions"
+    );
+    expect(textualTransactionTransactions).toBeEnabled();
+
+    expect(textualTransactionTransactions).toHaveTextContent(
+      period.amount.transactionNumber.toString()
+    );
+
+    // When the period is "Active" and transactionNumber>=minTransactionNumber,
+    // no TextualSummary should be rendered.
+    expect(component.queryByTestId("currentPeriodWarning")).toBeNull();
+
+    expect(component.queryByTestId("currentPeriodUnlock")).toBeNull();
+  });
+
+  it("Render Active period, transactionNumber >= minTransactionNumber, ranking > minPosition, max amount", () => {
+    const period: BpdPeriodWithInfo = {
+      ...activePeriod,
+      amount: {
+        ...eligibleAmount,
+        totalCashback: activePeriod.maxPeriodCashback
+      },
+      ranking: { ...readyRanking, ranking: 1000000 }
+    };
+    const store = mockStore(mockBpdState(period));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+
+    testSuperCashback(component, period);
+
+    // TextualTransaction should be enabled
+    const textualTransactionTransactions = component.queryByTestId(
+      "textualTransaction.transactions"
+    );
+    expect(textualTransactionTransactions).toBeEnabled();
+
+    expect(textualTransactionTransactions).toHaveTextContent(
+      eligibleAmount.transactionNumber.toString()
+    );
+
+    // When the period is "Active" and transactionNumber>=minTransactionNumber,
+    // no TextualSummary should be rendered.
+    expect(component.queryByTestId("currentPeriodWarning")).toBeNull();
+
+    expect(component.queryByTestId("currentPeriodMaxAmount")).toBeEnabled();
   });
 
   it("Render Closed period, grace period", () => {
@@ -261,7 +398,6 @@ describe("Bpd Summary Component graphical test for different states", () => {
 /**
  * Generate a mocked state with the fields required for these tests
  * @param period
- * @param amount
  */
 const mockBpdState = (period: BpdPeriodWithInfo) => ({
   bonus: {

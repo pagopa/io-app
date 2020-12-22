@@ -22,7 +22,6 @@ const chooseTextualInfoBox = (props: Props) => {
     case "Active":
       return <ActiveTextualSummary period={props.period} name={props.name} />;
   }
-  return null;
 };
 
 /**
