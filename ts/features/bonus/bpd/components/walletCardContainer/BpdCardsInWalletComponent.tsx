@@ -9,7 +9,7 @@ import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { navigateToBpdDetails } from "../../navigation/actions";
 import { bpdDetailsLoadAll } from "../../store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
-import { BpdPeriodWithAmount } from "../../store/reducers/details/periods";
+import { BpdPeriodWithInfo } from "../../store/reducers/details/periods";
 import { BpdCardComponent } from "../bpdCardComponent/BpdCardComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -44,7 +44,7 @@ const BpdCardsInWalletContainer: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   load: () => dispatch(bpdDetailsLoadAll()),
-  navigateToCashbackDetails: (period: BpdPeriodWithAmount) =>
+  navigateToCashbackDetails: (period: BpdPeriodWithInfo) =>
     dispatch(navigateToBpdDetails(period))
 });
 
