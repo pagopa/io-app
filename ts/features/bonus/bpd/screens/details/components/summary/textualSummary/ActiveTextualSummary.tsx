@@ -72,7 +72,7 @@ const MaxAmount = (props: { name: string | undefined }) => (
  */
 const SuperCashback = (props: { superCashbackAmount: number }) => (
   <InfoBox iconName={"io-abacus"}>
-    <Body testID={"currentPeriodMaxAmount"}>
+    <Body testID={"currentPeriodSuperCashback"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.currentPeriodSuperCashback",
         { superCashbackAmount: formatNumberAmount(props.superCashbackAmount) }
@@ -85,9 +85,7 @@ export const ActiveTextualSummary: React.FunctionComponent<Props> = props => {
   // active period but still not enough transaction
   if (
     props.period.amount.transactionNumber < props.period.minTransactionNumber &&
-    props.period.amount.totalCashback > 0 &&
-    // hide with transactionNumber === 0
-    props.period.amount.transactionNumber > 0
+    props.period.amount.totalCashback > 0
   ) {
     return <Warning period={props.period} />;
   }

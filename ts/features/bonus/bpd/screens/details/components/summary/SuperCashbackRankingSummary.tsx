@@ -47,12 +47,20 @@ const SuperCashbackRankingReady = (props: {
         </H5>
       }
       row2={
-        <H2 color={"blue"} style={styles.title}>
+        <H2
+          testID={"supercashbackSummary.ranking"}
+          color={"blue"}
+          style={styles.title}
+        >
           {formatIntegerNumber(props.ranking)}°
         </H2>
       }
       row3={
-        <H5 color={"bluegrey"} style={styles.title}>
+        <H5
+          testID={"supercashbackSummary.minRanking"}
+          color={"bluegrey"}
+          style={styles.title}
+        >
           {of} {formatIntegerNumber(props.minRanking)}
         </H5>
       }
