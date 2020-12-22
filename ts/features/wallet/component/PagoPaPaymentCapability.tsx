@@ -83,18 +83,28 @@ const availabilityBadge = (badgeType: badgeType) => {
  *   - The card is not abilitated to pay on IO
  * @param props
  */
-const PagoPaPaymentCapability: React.FunctionComponent<Props> = props => (
-  <View style={styles.row}>
-    <View style={styles.left}>
-      <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {I18n.t("wallet.methods.card.pagoPaCapability.title")}
-      </H4>
-      <H5 weight={"Regular"} color={"bluegrey"}>
-        {I18n.t("wallet.methods.card.pagoPaCapability.description")}
-      </H5>
+function PagoPaPaymentCapability(props: Props): React.ReactElement {
+  return (
+    <View style={styles.row}>
+      <View style={styles.left}>
+        <H4
+          weight={"SemiBold"}
+          color={"bluegreyDark"}
+          testID={"PagoPaPaymentCapabilityTitle"}
+        >
+          {I18n.t("wallet.methods.card.pagoPaCapability.title")}
+        </H4>
+        <H5
+          weight={"Regular"}
+          color={"bluegrey"}
+          testID={"PagoPaPaymentCapabilityDescription"}
+        >
+          {I18n.t("wallet.methods.card.pagoPaCapability.description")}
+        </H5>
+      </View>
+      {availabilityBadge(extractBadgeType(props.paymentMethod))}
     </View>
-    {availabilityBadge(extractBadgeType(props.paymentMethod))}
-  </View>
-);
+  );
+}
 
 export default PagoPaPaymentCapability;
