@@ -115,7 +115,7 @@ body {
 }
 `;
 
-const calculateEndDate = (selectedPeriod: BpdPeriodWithInfo | undefined) =>
+const calculateEndDate = (selectedPeriod: BpdPeriodWithInfo | undefined) : string =>
   fromNullable(selectedPeriod).fold("", p => {
     const endDate = new Date(p.endDate.getTime());
     endDate.setDate(endDate.getDate() + p.gracePeriod);
