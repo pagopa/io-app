@@ -1049,6 +1049,12 @@ wallet:
       name: Carta di credito, debito o prepagata
       shortName: "Carta"
       description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
+      pagoPaCapability:
+        title: Pagamenti in app
+        description: Effettua pagamenti verso la Pubblica Amministrazione tramite pagoPA
+        active: Attivo
+        arriving: In arrivo
+        incompatible: Non compatibile
     bonus:
       name: Sconto, bonus e altri servizi
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
