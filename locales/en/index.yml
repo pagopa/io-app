@@ -52,6 +52,7 @@ date:
     - "am"
     - "pm"
 global:
+  you: "YOU"
   badges:
     blocked: "Blocked"
     onGoing: "Ongoing"

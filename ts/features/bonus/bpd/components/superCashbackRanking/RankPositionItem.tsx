@@ -59,11 +59,13 @@ const RankPositionItem: React.FunctionComponent<Props> = (props: Props) => (
       <View style={IOStyles.flex}>
         <View style={[IOStyles.row, { justifyContent: "space-between" }]}>
           <H4>{props.rankingLabel}</H4>
-          <Badge style={style.badgeBlue}>
-            <Text style={style.badgeText} semibold={true}>
-              {formatNumberWithNoDigits(props.superCashbackAmount, true)}
-            </Text>
-          </Badge>
+          {!props.hideBadge && (
+            <Badge style={style.badgeBlue}>
+              <Text style={style.badgeText} semibold={true}>
+                {formatNumberWithNoDigits(props.superCashbackAmount, true)}
+              </Text>
+            </Badge>
+          )}
         </View>
         <H5>
           {I18n.t("bonus.bpd.details.transaction.label", {

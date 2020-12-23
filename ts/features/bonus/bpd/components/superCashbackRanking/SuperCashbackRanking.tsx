@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { View } from "native-base";
-import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
@@ -9,7 +8,10 @@ import { H3 } from "../../../../../components/core/typography/H3";
 import I18n from "../../../../../i18n";
 import Markdown from "../../../../../components/ui/Markdown";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { BpdPeriodWithInfo } from "../../store/reducers/details/periods";
+import {
+  BpdPeriodWithInfo,
+  isBpdRankingReady
+} from "../../store/reducers/details/periods";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { FirstPositionItem } from "./FirstPositionItem";
 import { LastPositionItem } from "./LastPositionItem";
@@ -17,96 +19,50 @@ import UserPositionItem from "./UserPositionItem";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
-type tmpCitizenRankingResource = {
-  totalParticipants: number;
-  ranking: number;
-  // Numero massimo di transazioni effettuate dagli utenti che rientrano nel 'rimborso speciale'
-  maxTransactionNumber: number;
-  // Numero minimo di transazioni effettuate dagli utenti che rientrano nel 'rimborso speciale'
-  minTransactionNumber: number;
-  transactionNumber: number;
-  awardPeriodId: number;
-};
-
 const RankingItems: React.FunctionComponent<Props> = (props: Props) => {
-  if (props.selectedPeriod) {
-    if (props.selectedPeriod.minPosition < props.rankingInformation.ranking) {
-      return (
-        <>
-          <FirstPositionItem
-            superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-            transactionsNumber={props.rankingInformation.maxTransactionNumber}
-          />
-          <LastPositionItem
-            superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-            transactionsNumber={props.rankingInformation.minTransactionNumber}
-            lastAvailablePosition={props.selectedPeriod.minPosition}
-          />
-          <UserPositionItem
-            superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-            transactionsNumber={props.rankingInformation.transactionNumber}
-            hideBadge={true}
-            userPosition={props.rankingInformation.ranking}
-          />
-        </>
-      );
-    } else if (
-      props.rankingInformation.ranking === props.selectedPeriod.minPosition
-    ) {
-      return (
-        <>
-          <FirstPositionItem
-            superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-            transactionsNumber={props.rankingInformation.maxTransactionNumber}
-          />
-          <UserPositionItem
-            superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-            transactionsNumber={props.rankingInformation.transactionNumber}
-            userPosition={props.rankingInformation.ranking}
-          />
-        </>
-      );
-    } else if (
-      props.rankingInformation.ranking < props.selectedPeriod.minPosition &&
-      props.rankingInformation.ranking > 1
-    ) {
-      return (
-        <>
-          <FirstPositionItem
-            superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-            transactionsNumber={props.rankingInformation.maxTransactionNumber}
-          />
-          <UserPositionItem
-            superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-            transactionsNumber={props.rankingInformation.transactionNumber}
-            userPosition={props.rankingInformation.ranking}
-          />
-          <LastPositionItem
-            superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-            transactionsNumber={props.rankingInformation.minTransactionNumber}
-            lastAvailablePosition={props.selectedPeriod.minPosition}
-          />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <UserPositionItem
-            superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-            transactionsNumber={props.rankingInformation.transactionNumber}
-            userPosition={props.rankingInformation.ranking}
-          />
-          <LastPositionItem
-            superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-            transactionsNumber={props.rankingInformation.minTransactionNumber}
-            lastAvailablePosition={props.selectedPeriod.minPosition}
-          />
-        </>
-      );
-    }
+  if (props.selectedPeriod && isBpdRankingReady(props.selectedPeriod.ranking)) {
+    const mapRankingItems: Map<number, React.ReactNode> = new Map<
+      number,
+      React.ReactNode
+    >([
+      [
+        1,
+        <FirstPositionItem
+          key={"item-1"}
+          superCashbackAmount={props.selectedPeriod.superCashbackAmount}
+          transactionsNumber={props.selectedPeriod.ranking.maxTransactionNumber}
+        />
+      ],
+      [
+        props.selectedPeriod.minPosition,
+        <LastPositionItem
+          key={`item-${props.selectedPeriod.minPosition}`}
+          superCashbackAmount={props.selectedPeriod.superCashbackAmount}
+          transactionsNumber={props.selectedPeriod.ranking.minTransactionNumber}
+          lastAvailablePosition={props.selectedPeriod.minPosition}
+        />
+      ],
+      [
+        props.selectedPeriod.ranking.ranking,
+        <UserPositionItem
+          key={`item-${props.selectedPeriod.ranking.ranking}`}
+          superCashbackAmount={props.selectedPeriod.superCashbackAmount}
+          transactionsNumber={props.selectedPeriod.ranking.transactionNumber}
+          hideBadge={
+            props.selectedPeriod.ranking.ranking >
+            props.selectedPeriod.minPosition
+          }
+          userPosition={props.selectedPeriod.ranking.ranking}
+        />
+      ]
+    ]);
+
+    const key = [...mapRankingItems.keys()].sort((a, b) => a - b);
+
+    return <>{key.map(k => mapRankingItems.get(k))}</>;
   }
 
-  return <View />;
+  return null;
 };
 
 const CSS_STYLE = `
@@ -115,13 +71,12 @@ body {
 }
 `;
 
-const calculateEndDate = (selectedPeriod: BpdPeriodWithInfo | undefined) : string =>
-  fromNullable(selectedPeriod).fold("", p => {
-    const endDate = new Date(p.endDate.getTime());
-    endDate.setDate(endDate.getDate() + p.gracePeriod);
+const calculateEndDate = (selectedPeriod: BpdPeriodWithInfo): string => {
+  const endDate = new Date(selectedPeriod.endDate.getTime());
+  endDate.setDate(endDate.getDate() + selectedPeriod.gracePeriod);
 
-    return localeDateFormat(endDate, I18n.t("global.dateFormats.shortFormat"));
-  });
+  return localeDateFormat(endDate, I18n.t("global.dateFormats.shortFormat"));
+};
 
 const SuperCashbackRanking: React.FunctionComponent<Props> = (props: Props) => (
   <>
@@ -132,28 +87,18 @@ const SuperCashbackRanking: React.FunctionComponent<Props> = (props: Props) => (
     <View spacer={true} />
     <H3>{I18n.t("bonus.bpd.details.superCashback.howItWorks.title")}</H3>
     <View spacer={true} />
-    <Markdown cssStyle={CSS_STYLE}>
-      {I18n.t("bonus.bpd.details.superCashback.howItWorks.body", {
-        endDate: calculateEndDate(props.selectedPeriod)
-      })}
-    </Markdown>
+    {props.selectedPeriod && (
+      <Markdown cssStyle={CSS_STYLE}>
+        {I18n.t("bonus.bpd.details.superCashback.howItWorks.body", {
+          endDate: calculateEndDate(props.selectedPeriod)
+        })}
+      </Markdown>
+    )}
   </>
 );
 
-const mapStateToProps = (state: GlobalState) => {
-  const rankingInformation: tmpCitizenRankingResource = {
-    totalParticipants: 1000000,
-    ranking: 21,
-    maxTransactionNumber: 80,
-    minTransactionNumber: 50,
-    transactionNumber: 30,
-    awardPeriodId: 1
-  };
-
-  return {
-    rankingInformation,
-    selectedPeriod: bpdSelectedPeriodSelector(state)
-  };
-};
+const mapStateToProps = (state: GlobalState) => ({
+  selectedPeriod: bpdSelectedPeriodSelector(state)
+});
 
 export default connect(mapStateToProps)(SuperCashbackRanking);

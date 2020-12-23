@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { profileNameSelector } from "../../../../../store/reducers/profile";
 import { formatNumberWithNoDigits } from "../../../../../utils/stringBuilder";
+import I18n from "../../../../../i18n";
 import RankPositionItem from "./RankPositionItem";
 
 type Props = {
@@ -17,7 +18,7 @@ const UserPositionItem: React.FunctionComponent<Props> = (props: Props) => (
     transactionsNumber={props.transactionsNumber}
     superCashbackAmount={props.superCashbackAmount}
     currentUserPosition={true}
-    boxedLabel={"TU"}
+    boxedLabel={I18n.t("global.you")}
     rankingLabel={`${formatNumberWithNoDigits(props.userPosition)}º: ${
       props.currentUser
     }`}

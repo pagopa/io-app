@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Badge, Text, View } from "native-base";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
@@ -17,26 +17,30 @@ const styles = StyleSheet.create({
   badgeAqua: {
     backgroundColor: IOColors.aqua,
     height: 18,
-    marginTop: 4
+    marginTop: 5
   },
   badgeText: {
     fontSize: 12,
     lineHeight: 18,
+    marginBottom: Platform.select({ android: 2, default: 0 }),
     color: IOColors.bluegreyDark
   }
 });
 
 const isPeriodOnGoing = (period: BpdPeriodWithInfo | undefined) =>
   fromNullable(period).fold(false, p => {
+    if (p.status !== "Closed") {
+      return true;
+    }
+
     const actualDate = new Date();
     const endDate = new Date(p.endDate.getTime());
     endDate.setDate(endDate.getDate() + p.gracePeriod);
 
-    const isInGracePeriod =
+    return (
       actualDate.getTime() >= p.endDate.getTime() &&
-      actualDate.getTime() <= endDate.getTime();
-
-    return p.status !== "Closed" || isInGracePeriod;
+      actualDate.getTime() <= endDate.getTime()
+    );
   });
 
 const SuperCashbackHeader: React.FunctionComponent<Props> = (props: Props) => (

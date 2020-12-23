@@ -24,6 +24,11 @@ export const formatNumberAmount = (
     format: displayCurrency ? "€ %n" : "%n"
   });
 
+/**
+ * Converts in a localized value/amount removing the decimal part after the decimal separator
+ * @param amount
+ * @param displayCurrency
+ */
 export const formatNumberWithNoDigits = (
   amount: number,
   displayCurrency: boolean = false

@@ -52,6 +52,7 @@ date:
     - "am"
     - "pm"
 global:
+  you: "TU"
   badges:
     blocked: "Bloccato"
     onGoing: "In corso"
