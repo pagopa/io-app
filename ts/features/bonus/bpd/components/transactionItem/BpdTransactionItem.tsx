@@ -1,8 +1,7 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import I18n from "../../../../../i18n";
-import { bottomSheetContent } from "../../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { BpdTransactionDetailComponent } from "../../screens/details/transaction/detail/BpdTransactionDetailComponent";
@@ -32,20 +31,11 @@ const getSubtitle = (transaction: BpdTransaction) =>
   )} · € ${formatNumberAmount(transaction.amount)} `;
 
 export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
-  const { present, dismiss } = useBottomSheetModal();
-
-  const openModalBox = async () => {
-    const bottomSheetProps = await bottomSheetContent(
-      <BpdTransactionDetailComponent transaction={props.transaction} />,
-      I18n.t("bonus.bpd.details.transaction.detail.title"),
-      522,
-      dismiss
-    );
-
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
+  const { present: openBottomSheet } = useIOBottomSheet(
+    <BpdTransactionDetailComponent transaction={props.transaction} />,
+    I18n.t("bonus.bpd.details.transaction.detail.title"),
+    522
+  );
 
   return (
     <BaseBpdTransactionItem
@@ -53,7 +43,7 @@ export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
       image={props.transaction.image}
       subtitle={getSubtitle(props.transaction)}
       rightText={formatNumberAmount(props.transaction.cashback)}
-      onPress={openModalBox}
+      onPress={openBottomSheet}
     />
   );
 };

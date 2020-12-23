@@ -12,6 +12,7 @@ import abiReducer, {
   AbiState
 } from "../../../features/wallet/onboarding/store/abi";
 import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
+import { PotTransform } from "../../transforms/potTransform";
 import paymentReducer, { PaymentState } from "./payment";
 import pspsByIdReducer, { PspStateById } from "./pspsById";
 import transactionsReducer, { TransactionsState } from "./transactions";
@@ -37,7 +38,7 @@ export const walletsPersistConfig: PersistConfig = {
   key: "wallets",
   storage: AsyncStorage,
   whitelist: ["walletById"],
-  transforms: [DateISO8601Transform]
+  transforms: [DateISO8601Transform, PotTransform]
 };
 
 const reducer = combineReducers<WalletState, Action>({
