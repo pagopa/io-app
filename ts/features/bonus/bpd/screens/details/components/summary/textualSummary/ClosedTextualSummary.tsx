@@ -68,6 +68,13 @@ const OK = (props: Props) => (
             "bonus.bpd.details.components.transactionsCountOverview.closedPeriodMaxAmount"
           )
         : "!"}
+      {"\n"}
+      {I18n.t(
+        "bonus.bpd.details.components.transactionsCountOverview.moneyTransfer",
+        {
+          date: "asd"
+        }
+      )}
     </Body>
   </InfoBox>
 );
