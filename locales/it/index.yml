@@ -282,9 +282,13 @@ profile:
         description: Cancella in modo permanente il tuo account e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
+          activeBonusTitle: Bonus attivi
+          activeBonusDescription: Sembra che tu abbia dei Bonus attivi. Vogliamo informarti che la cancellazione del tuo profilo non equivale alla cancellazione dei bonus o alla disiscrizione da eventuali iniziative. Per gestire i tuoi bonus vai alla sezione Portafoglio, altrimenti scegli Continua
           oldRequest: Hai già richiesto la cancellazione del tuo account.
           oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su “Annulla eliminazione” qui sotto."
           cta:
+            manageBonus: Gestisci bonus
+            continue: Continua
             return: Indietro
             cancel: Annulla l'eliminazione
         info:
@@ -1045,6 +1049,12 @@ wallet:
       name: Carta di credito, debito o prepagata
       shortName: "Carta"
       description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
+      pagoPaCapability:
+        title: Pagamenti in app
+        description: Effettua pagamenti verso la Pubblica Amministrazione tramite pagoPA
+        active: Attivo
+        arriving: In arrivo
+        incompatible: Non compatibile
     bonus:
       name: Sconto, bonus e altri servizi
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
