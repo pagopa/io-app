@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const findOutMore = "https://io.italia.it/cashback/faq/#n31";
+const findOutMore = "https://io.italia.it/cashback/faq/#n32";
 
 /**
  * Explains why there are other cards

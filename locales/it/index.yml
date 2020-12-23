@@ -282,9 +282,13 @@ profile:
         description: Cancella in modo permanente il tuo account e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
+          activeBonusTitle: Bonus attivi
+          activeBonusDescription: Sembra che tu abbia dei Bonus attivi. Vogliamo informarti che la cancellazione del tuo profilo non equivale alla cancellazione dei bonus o alla disiscrizione da eventuali iniziative. Per gestire i tuoi bonus vai alla sezione Portafoglio, altrimenti scegli Continua
           oldRequest: Hai già richiesto la cancellazione del tuo account.
           oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su “Annulla eliminazione” qui sotto."
           cta:
+            manageBonus: Gestisci bonus
+            continue: Continua
             return: Indietro
             cancel: Annulla l'eliminazione
         info:
@@ -717,9 +721,9 @@ datetimes:
   notValid: Data non valida.
 payment:
   errorDetails: Dettagli
-  currentPsp: Il PSP scelto è
+  currentPsp: Il pagamento sarà gestito da
   noPsp: Non hai ancora selezionato un PSP
-  changePsp: Cambia PSP
+  changePsp: Modifica gestore
   IUV: IUV
   IUV_extended: Identificativo Univoco di Versamento
   notice: Avviso
@@ -1045,6 +1049,12 @@ wallet:
       name: Carta di credito, debito o prepagata
       shortName: "Carta"
       description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
+      pagoPaCapability:
+        title: Pagamenti in app
+        description: Effettua pagamenti verso la Pubblica Amministrazione tramite pagoPA
+        active: Attivo
+        arriving: In arrivo
+        incompatible: Non compatibile
     bonus:
       name: Sconto, bonus e altri servizi
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
@@ -1143,7 +1153,7 @@ wallet:
         two: "non consentono di pagare tramite IO"
         three: ", ma solo presso i punti fisici (POS)."
       debit:
-        title: "La tua carta ha più di un logo?"
+        title: "La tua carta ha uno di questi loghi?"
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerla anche come **carta di debito o di credito**, inserendo il numero della carta sul fronte. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi Carta di Debito/Credito"
       removeCta: "Elimina questo metodo di pagamento"
@@ -1968,9 +1978,9 @@ bonus:
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
-              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
+              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- I pagamenti effettuati con Google Pay, Apple Pay e Samsung Pay non sono ancora supportati. Stiamo lavorando con la tua banca per ricevere anche questo tipo di transazioni.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
             calendarBlock:
-              text1: "Ti informiamo che prima che tu veda la transazione su IO, "
+              text1: "Ti informiamo che prima che tu veda la transazione su IO,"
               text2: "possono passare in media 3 giorni lavorativi"
               text3: "."
             lastUpdated: "Ultima transazione valida: "
