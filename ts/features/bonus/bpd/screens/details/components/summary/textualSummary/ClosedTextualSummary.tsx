@@ -50,6 +50,7 @@ const KO = (props: Props) => (
 const transferDate = (period: BpdPeriod) => {
   const endDate = new Date(period.endDate);
 
+  // 60: max days to receive the money transfer
   endDate.setDate(period.endDate.getDate() + 60);
   return endDate;
 };
