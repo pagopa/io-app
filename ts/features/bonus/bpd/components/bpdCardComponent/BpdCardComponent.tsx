@@ -177,10 +177,11 @@ const iconMap = new Map<IconType, React.ReactNode>([
   ],
   [
     "fireworks",
-    <Image
-      source={fireworksIcon}
-      style={styles.fireworksIcon}
-      key={"fireworks"}
+    <IconFont
+      name="io-fireworks"
+      size={16}
+      color={IOColors.white}
+      key={"openLocker"}
     />
   ],
   [undefined, null]
