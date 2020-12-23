@@ -15,7 +15,7 @@ type Props = {
  * @param props
  * @constructor
  */
-export const TextualSummary: React.FunctionComponent<Props> = props => {
+export const TextualSummary = (props: Props) => {
   switch (props.period.status) {
     case "Inactive":
       return <InactiveTextualSummary period={props.period} />;

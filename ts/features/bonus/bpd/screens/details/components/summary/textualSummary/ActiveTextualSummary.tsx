@@ -81,7 +81,7 @@ const SuperCashback = (props: { superCashbackAmount: number }) => (
   </InfoBox>
 );
 
-export const ActiveTextualSummary: React.FunctionComponent<Props> = props => {
+export const ActiveTextualSummary = (props: Props) => {
   // active period but still not enough transaction
   if (
     props.period.amount.transactionNumber < props.period.minTransactionNumber &&

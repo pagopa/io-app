@@ -76,7 +76,7 @@ const OK = (props: Props) => (
  * @param props
  * @constructor
  */
-export const ClosedTextualSummary: React.FunctionComponent<Props> = props => {
+export const ClosedTextualSummary = (props: Props) => {
   const today = new Date();
   const endGracePeriod = new Date(props.period.endDate);
   endGracePeriod.setDate(
