@@ -282,9 +282,13 @@ profile:
         description: Permanently delete your account and your personal data
         error: An error occurred while submit your deletion request, please retry!
         alert:
+          activeBonusTitle: Active bonus
+          activeBonusDescription: You have active Bonuses. Please be aware that deleting your profile will not delete bonuses or unsubscribe you from any initiative. To manage your bonuses go to your Wallet, otherwise choose Continue
           oldRequest: We are already proceeding to delete your account.
           oldRequestSubtitle: To use IO you will need to register again. The cancellation does not concern the data processed by public administrations.
           cta:
+            manageBonus: Manage bonuses
+            continue: Continue
             return: Return
             cancel: Cancel the deletion
         info:
@@ -1123,7 +1127,7 @@ wallet:
         two: "can't be used to make in-app payments"
         three: ", but they can only be used at physical stores (POS)."
       debit:
-        title: "Does your card have other logos?"
+        title: "Does your card have one of these logos?"
         body: "If your PagoBANCOMAT card has other international circuits, you can also add it as a **debit or credit card** by entering its number on the front. When you activate Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add as Debit/Credit Card"
       removeCta: "Delete this payment method"
@@ -1943,9 +1947,9 @@ bonus:
           summary:
             bottomSheet:
               title: "When will you find your transactions?"
-              body: "**Still not seeing your transaction?**\n\n- Check if your bank has already **recorded** the transaction: data are sent to IO app within 5 working days from the recording.\n\n- The transaction may have been handled with the POS of a company (acquirer) **not affiliated yet.** [Read more](https://io.italia.it/cashback/acquirer/)"
+              body: "**Still not seeing your transaction?**\n\n- Check if your bank has already **recorded** the transaction: data are sent to IO app within 5 working days from the recording.\n\n- Payments made using Google Pay, Apple Pay, and Samsung Pay are not supported yet. We are working with your bank to support these transactions as well.\n\n- The transaction may have been handled with the POS of a company (acquirer) **not affiliated yet.** [Read more](https://io.italia.it/cashback/acquirer/)"
             calendarBlock:
-              text1: "Please note that before you'll see the transaction on IO, "
+              text1: "Please note that before you'll see the transaction on IO,"
               text2: "it usually takes up 3 working days"
               text3: "."
             lastUpdated: "Latest valid transaction: "
