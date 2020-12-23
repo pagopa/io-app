@@ -30,6 +30,7 @@ export type BpdRankingReady = WithAwardPeriodId & {
 
 // The ranking is still not ready for a period (eg. a period is just started
 // and no transaction has been recorded)
+// TODO: we should move all the types definition in the /types/* instead that in the state /action
 export type BpdRankingNotReady = WithAwardPeriodId & { kind: "notReady" };
 
 export const bpdRankingNotReady = (
@@ -61,7 +62,7 @@ export type BpdPeriodWithInfo = BpdPeriod & {
  * @param period
  */
 export const isGracePeriod = (period: BpdPeriod) => {
-  if (period.status === "Active" || period.status == "Inactive") {
+  if (period.status === "Active" || period.status === "Inactive") {
     return false;
   }
   const today = new Date();
