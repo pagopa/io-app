@@ -30,7 +30,10 @@ const BpdClosedPeriod = (props: Props): React.ReactElement => (
     <BpdSummaryComponent />
     <View spacer={true} extralarge={true} />
     {props.currentPeriod && shouldRenderIbanComponent(props.currentPeriod) && (
-      <IbanInformationComponent />
+      <>
+        <IbanInformationComponent />
+        <View spacer={true} extralarge={true} />
+      </>
     )}
   </View>
 );
