@@ -1,23 +1,25 @@
 import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { H2 } from "../../../../../../../components/core/typography/H2";
-import { H5 } from "../../../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../../../components/core/variables/IOColors";
-import IconFont from "../../../../../../../components/ui/IconFont";
-import I18n from "../../../../../../../i18n";
-import { configSelector } from "../../../../../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../../../../../store/reducers/types";
-import { formatIntegerNumber } from "../../../../../../../utils/stringBuilder";
+import { H2 } from "../../../../../../../../components/core/typography/H2";
+import { H5 } from "../../../../../../../../components/core/typography/H5";
+import { IOColors } from "../../../../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../../../../components/core/variables/IOStyles";
+import IconFont from "../../../../../../../../components/ui/IconFont";
+import I18n from "../../../../../../../../i18n";
+import { configSelector } from "../../../../../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../../../../../store/reducers/types";
+import { formatIntegerNumber } from "../../../../../../../../utils/stringBuilder";
 import {
   BpdPeriodWithInfo,
   BpdRanking,
   BpdRankingReady,
   isBpdRankingReady
-} from "../../../../store/reducers/details/periods";
-import { BpdBaseShadowBoxLayout } from "./base/BpdBaseShadowBoxLayout";
+} from "../../../../../store/reducers/details/periods";
+import { BpdBaseShadowBoxLayout } from "../base/BpdBaseShadowBoxLayout";
+import { useRankingNotReadyBottomSheet } from "./RankingNotReadyBottomSheet";
 
 const loadLocales = () => ({
   title: I18n.t("bonus.bpd.details.components.ranking.title"),
@@ -76,35 +78,38 @@ const SuperCashbackRankingReady = (props: {
 
 const SuperCashbackRankingNotReady = (): React.ReactElement => {
   const { title, wip } = loadLocales();
+  const { present } = useRankingNotReadyBottomSheet();
   return (
-    <BpdBaseShadowBoxLayout
-      row1={
-        <H5 testID={"supercashbackSummary.title"} style={styles.title}>
-          {title}
-        </H5>
-      }
-      row2={
-        <>
-          <View spacer={true} xsmall={true} />
-          <IconFont
-            name={"io-hourglass"}
-            size={24}
-            color={IOColors.blue as string}
-            style={styles.center}
-          />
-          <View spacer={true} xsmall={true} />
-        </>
-      }
-      row3={
-        <H5
-          testID={"supercashbackSummary.minRanking"}
-          color={"bluegrey"}
-          style={styles.title}
-        >
-          {wip}
-        </H5>
-      }
-    />
+    <TouchableOpacity onPress={present} style={IOStyles.flex}>
+      <BpdBaseShadowBoxLayout
+        row1={
+          <H5 testID={"supercashbackSummary.title"} style={styles.title}>
+            {title}
+          </H5>
+        }
+        row2={
+          <>
+            <View spacer={true} xsmall={true} />
+            <IconFont
+              name={"io-hourglass"}
+              size={24}
+              color={IOColors.blue as string}
+              style={styles.center}
+            />
+            <View spacer={true} xsmall={true} />
+          </>
+        }
+        row3={
+          <H5
+            testID={"supercashbackSummary.minRanking"}
+            color={"bluegrey"}
+            style={styles.title}
+          >
+            {wip}
+          </H5>
+        }
+      />
+    </TouchableOpacity>
   );
 };
 

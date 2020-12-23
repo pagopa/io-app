@@ -1972,6 +1972,11 @@ bonus:
             other: "{{count}} transazioni valide"
         ranking:
           title: "La tua posizione"
+          notReady:
+            title: "Quando vedrai la classifica Super Cashback?"
+            body: "La classifica si basa sul **numero di transazioni** eseguite con i metodi di pagamento su cui hai attivato il Cashback.\n\n
+                   In questo momento **tutti i partecipanti sono nella stessa posizione**. Non appena riceveremo le transazioni effettuate i primi giorni di quest’anno, verrà mostrata la tua posizione in classifica.\n\n
+                   Una volta pubblicata, la classifica **continuerà a cambiare** a seconda del numero di transazioni di tutti i partecipanti, fino alla fine dei 6 mesi."
       transaction:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
