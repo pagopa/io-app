@@ -103,7 +103,7 @@ const TextualTransactionsSummary = (props: Props) => {
  * @param props
  * @constructor
  */
-const TransactionsGraphicalSummary: React.FunctionComponent<Props> = props => (
+const TransactionsGraphicalSummary = (props: Props) => (
   <TouchableOpacity onPress={props.goToTransactions} style={IOStyles.flex}>
     <TextualTransactionsSummary {...props} />
   </TouchableOpacity>

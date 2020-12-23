@@ -76,7 +76,7 @@ const SuperCashbackRankingReady = (props: {
  * @param props
  * @constructor
  */
-const SuperCashbackRankingSummary: React.FunctionComponent<Props> = props =>
+const SuperCashbackRankingSummary = (props: Props) =>
   isBpdRankingReady(props.period.ranking) ? (
     <SuperCashbackRankingReady
       ranking={props.period.ranking.ranking}
