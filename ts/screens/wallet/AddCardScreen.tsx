@@ -2,17 +2,23 @@
  * Screen for entering the credit card details
  * (holder, pan, cvc, expiration date)
  */
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
-import { Content, View } from "native-base";
+
 import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { Col, Grid } from "react-native-easy-grid";
+import { connect } from "react-redux";
 import {
   NavigationInjectedProps,
   NavigationNavigateAction
 } from "react-navigation";
-import { connect } from "react-redux";
+import { Content, View } from "native-base";
+import { Col, Grid } from "react-native-easy-grid";
+
+import { fromNullable, Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+
+import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+
+import { fold } from "fp-ts/lib/OptionT";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent, {
@@ -27,13 +33,13 @@ import variables from "../../theme/variables";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import {
-  CreditCardCVC,
-  CreditCardExpirationMonth,
-  CreditCardExpirationYear,
-  CreditCardPan,
   isValidPan,
   isValidExpirationDate,
-  isValidSecurityCode
+  isValidSecurityCode,
+  CreditCardState,
+  mergeCardValues,
+  INITIAL_CARD_FORM_STATE,
+  CreditCardStateKeys
 } from "../../utils/input";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
@@ -62,15 +68,6 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
-
-type State = Readonly<{
-  pan: Option<string>;
-  expirationDate: Option<string>;
-  securityCode: Option<string>;
-  holder: Option<string>;
-}>;
-
-type StateKeys = "pan" | "expirationDate" | "securityCode" | "holder";
 
 const styles = StyleSheet.create({
   noBottomLine: {
@@ -104,68 +101,35 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.saveCard.contextualHelpContent"
 };
 
-const INITIAL_STATE: State = {
-  pan: none,
-  expirationDate: none,
-  securityCode: none,
-  holder: none
-};
-
-function getCardFromState(state: State): Option<CreditCard> {
-  const { pan, expirationDate, securityCode, holder } = state;
-  if (
-    pan.isNone() ||
-    expirationDate.isNone() ||
-    securityCode.isNone() ||
-    holder.isNone()
-  ) {
-    return none;
-  }
-
-  const [expirationMonth, expirationYear] = expirationDate.value.split("/");
-
-  if (!CreditCardPan.is(pan.value)) {
-    // invalid pan
-    return none;
-  }
-
-  if (
-    !CreditCardExpirationMonth.is(expirationMonth) ||
-    !CreditCardExpirationYear.is(expirationYear)
-  ) {
-    // invalid date
-    return none;
-  }
-
-  if (!CreditCardCVC.is(securityCode.value)) {
-    // invalid cvc
-    return none;
-  }
-
-  const card: CreditCard = {
-    pan: pan.value,
-    holder: holder.value,
-    expireMonth: expirationMonth,
-    expireYear: expirationYear,
-    securityCode: securityCode.value
-  };
-
-  return some(card);
-}
-
 const acceptedCardsPageURL: string = "https://io.italia.it/metodi-pagamento";
 
 const primaryButtonPropsFromState = (
-  state: State,
+  state: CreditCardState,
   onNavigate: (card: CreditCard) => NavigationNavigateAction
 ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
-  const baseButtonProps = {
+  const outcome = pipe(
+    mergeCardValues(state),
+    fold(
+      () => ({
+        disabled: true,
+        onPress: () => undefined
+      }),
+      (card: CreditCard) => ({
+        disabled: false,
+        onPress: () => onNavigate(card)
+      })
+    )
+  );
+
+  return {
+    ...outcome,
+    // baseButtonProps:
     block: true,
     primary: true,
     title: I18n.t("global.buttons.continue")
   };
-  const maybeCard = getCardFromState(state);
-  if (maybeCard.isSome()) {
+
+  /* if (maybeCard.isSome()) {
     return {
       ...baseButtonProps,
       disabled: false,
@@ -177,12 +141,12 @@ const primaryButtonPropsFromState = (
       disabled: true,
       onPress: () => undefined
     };
-  }
+  } */
 };
 
 const AddCardScreen: React.FC<Props> = props => {
-  const [state, setState] = useState<State>({
-    ...INITIAL_STATE,
+  const [state, setState] = useState<CreditCardState>({
+    ...INITIAL_CARD_FORM_STATE,
     holder: fromNullable(props.profileNameSurname)
   });
 
@@ -200,7 +164,7 @@ const AddCardScreen: React.FC<Props> = props => {
 
   const detectedBrand: SupportedBrand = CreditCardDetector.validate(state.pan);
 
-  const updateState = (key: StateKeys, value: string) =>
+  const updateState = (key: CreditCardStateKeys, value: string) =>
     setState({
       ...state,
       [key]: fromNullable(value)
