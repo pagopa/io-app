@@ -117,7 +117,7 @@ const SuperCashbackRankingNotReady = (): React.ReactElement => {
  * @param ranking
  * @param remoteEnabled
  */
-const shouldDisplayRanking = (
+const shouldDisplayRankingReady = (
   ranking: BpdRanking,
   remoteEnabled: boolean | undefined
 ): ranking is BpdRankingReady =>
@@ -132,7 +132,10 @@ const shouldDisplayRanking = (
  * @constructor
  */
 const SuperCashbackRankingSummary = (props: Props): React.ReactElement =>
-  shouldDisplayRanking(props.period.ranking, props.rankingRemoteEnabled) ? (
+  shouldDisplayRankingReady(
+    props.period.ranking,
+    props.rankingRemoteEnabled
+  ) ? (
     <SuperCashbackRankingReady
       ranking={props.period.ranking.ranking}
       minRanking={props.period.minPosition}
