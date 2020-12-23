@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
 import IbanInformationComponent from "../components/iban/IbanInformationComponent";
 import BpdSummaryComponent from "../components/summary/BpdSummaryComponent";
 
@@ -25,6 +26,8 @@ const BpdClosedPeriod: React.FunctionComponent<Props> = () => (
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  currentPeriod: bpdSelectedPeriodSelector(state)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(BpdClosedPeriod);

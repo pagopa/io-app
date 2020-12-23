@@ -56,6 +56,23 @@ export type BpdPeriodWithInfo = BpdPeriod & {
 };
 
 /**
+ * A temporary implementation, based on the actual date
+ * TODO: remove this method when the new state "Waiting" will be ready
+ * @param period
+ */
+export const isGracePeriod = (period: BpdPeriod) => {
+  if (period.status === "Active" || period.status == "Inactive") {
+    return false;
+  }
+  const today = new Date();
+  const endGracePeriod = new Date(period.endDate);
+  endGracePeriod.setDate(period.endDate.getDate() + period.gracePeriod);
+  // we are still in the grace period and warns the user that some transactions
+  // may still be pending
+  return today <= endGracePeriod && today >= period.endDate;
+};
+
+/**
  * Store all the cashback periods with amounts
  * @param state
  * @param action
