@@ -1,4 +1,4 @@
 /**
- * Union of all possible types of badges associated with the ability of a payment method to be used on IO
+ * Union of all possible status of a supporting payment method
  */
-export type badgeType = "available" | "arriving" | "not_available";
+export type PaymentSupportStatus = "available" | "arriving" | "not_available";

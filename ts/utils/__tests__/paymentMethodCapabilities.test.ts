@@ -1,51 +1,69 @@
 import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod,
-  CreditCardType,
   PaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import {
-  extractBadgeType,
-  isSupportedBrand
+  isPaymentMethodSupported,
+  canMethodPay
 } from "../paymentMethodCapabilities";
 
-describe("isSupportedBrand", () => {
+describe("canMethodPay", () => {
   it("should return true if the Credit card is of type CrediCardType and the brand is different from MAESTRO", () => {
     const aKnownCreditCard = {
+      kind: "CreditCard",
       info: {
-        brand: CreditCardType.decode("VISA").value
-      }
+        brand: "VISA"
+      },
+      pagoPA: true
     } as CreditCardPaymentMethod;
 
-    expect(isSupportedBrand(aKnownCreditCard)).toBeTruthy();
+    expect(canMethodPay(aKnownCreditCard)).toBeTruthy();
+  });
+
+  it("should return false if the Credit card is of type CrediCardType and the brand is different from MAESTRO but pagoPA is false", () => {
+    const aKnownCreditCard = {
+      kind: "CreditCard",
+      info: {
+        brand: "VISA"
+      },
+      pagoPA: false
+    } as CreditCardPaymentMethod;
+    expect(canMethodPay(aKnownCreditCard)).toBeFalsy();
   });
   it("should return false if the Credit card is of type CrediCardType and the brand is MAESTRO", () => {
     const aMaestroCreditCard = {
+      kind: "CreditCard",
       info: {
-        brand: CreditCardType.decode("MAESTRO").value
-      }
+        brand: "MAESTRO"
+      },
+      pagoPA: true
     } as CreditCardPaymentMethod;
 
-    expect(isSupportedBrand(aMaestroCreditCard)).toBeFalsy();
+    expect(canMethodPay(aMaestroCreditCard)).toBeFalsy();
   });
   it("should return true if the Credit card is not of type CrediCardType", () => {
     const anUnKnownCreditCard = {
+      kind: "CreditCard",
       info: {
-        brand: CreditCardType.decode("UNKNOwN").value
-      }
+        brand: "UNKNOwN"
+      },
+      pagoPA: true
     } as CreditCardPaymentMethod;
 
-    expect(isSupportedBrand(anUnKnownCreditCard)).toBeTruthy();
+    expect(canMethodPay(anUnKnownCreditCard)).toBeTruthy();
   });
 });
 
-describe("extractBadgeType", () => {
+describe("isPaymentMethodSupported", () => {
   it("should return available if the payment method is of kind CreditCard, pagoPa is true and the brand is not MAESTRO", () => {
     const aNonMaestroCreditCard = {
+      kind: "CreditCard",
       info: {
-        brand: CreditCardType.decode("VISA").value
-      }
+        brand: "VISA"
+      },
+      pagoPA: true
     } as CreditCardPaymentMethod;
     const aPaymentMethod = {
       ...aNonMaestroCreditCard,
@@ -53,13 +71,15 @@ describe("extractBadgeType", () => {
       pagoPA: true
     } as PaymentMethod;
 
-    expect(extractBadgeType(aPaymentMethod)).toEqual("available");
+    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("available");
   });
   it("should return arriving if the payment method is of kind CreditCard, pagoPa is true and the brand is MAESTRO", () => {
     const aMaestroCreditCard = {
+      kind: "CreditCard",
       info: {
-        brand: CreditCardType.decode("MAESTRO").value
-      }
+        brand: "MAESTRO"
+      },
+      pagoPA: true
     } as CreditCardPaymentMethod;
     const aPaymentMethod = {
       ...aMaestroCreditCard,
@@ -67,12 +87,13 @@ describe("extractBadgeType", () => {
       pagoPA: true
     } as PaymentMethod;
 
-    expect(extractBadgeType(aPaymentMethod)).toEqual("arriving");
+    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("arriving");
   });
   it("should return not_available if pagoPa is false", () => {
     const aMaestroCreditCard = {
+      kind: "CreditCard",
       info: {
-        brand: CreditCardType.decode("MAESTRO").value
+        brand: "MAESTRO"
       }
     } as CreditCardPaymentMethod;
     const aPaymentMethod = {
@@ -81,7 +102,7 @@ describe("extractBadgeType", () => {
       pagoPA: false
     } as PaymentMethod;
 
-    expect(extractBadgeType(aPaymentMethod)).toEqual("not_available");
+    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("not_available");
   });
 
   it("should return arriving if the payment method is of kind Satispay", () => {
@@ -91,7 +112,7 @@ describe("extractBadgeType", () => {
       kind: "Satispay"
     } as PaymentMethod;
 
-    expect(extractBadgeType(aPaymentMethod)).toEqual("arriving");
+    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("arriving");
   });
 
   it("should return not_available if the payment method is of kind Bancomat", () => {
@@ -101,6 +122,6 @@ describe("extractBadgeType", () => {
       kind: "Bancomat"
     } as PaymentMethod;
 
-    expect(extractBadgeType(aPaymentMethod)).toEqual("not_available");
+    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("not_available");
   });
 });

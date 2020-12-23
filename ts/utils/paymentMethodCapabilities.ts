@@ -1,42 +1,51 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import {
-  CreditCardPaymentMethod,
-  CreditCardType,
-  PaymentMethod
-} from "../types/pagopa";
-import { badgeType } from "../types/paymentMethodCapabilities";
+import { CreditCardType, isCreditCard, PaymentMethod } from "../types/pagopa";
+import { PaymentSupportStatus } from "../types/paymentMethodCapabilities";
 
 export const brandsBlackList = new Set<CreditCardType>(["MAESTRO"]);
 
 /**
- * Check if a CreditCard is enabled to pay on IO.
- *
- * A CreditCard is enabled if it isn't included in the brandsBlacklist or if the brand is not recognized.
- *
- * @param creditCard
+ * check if a payment method is supported to make payment via pagaPA platform.
+ * a credit card is supported if it isn't included in the brandsBlacklist or if its brand is not recognized.
+ * @param paymentMethod
  */
-export const isSupportedBrand = (
-  creditCard: CreditCardPaymentMethod
-): boolean =>
-  CreditCardType.decode(creditCard.info.brand).fold(
-    () => true,
-    pm => !brandsBlackList.has(pm)
-  );
+export const canMethodPay = (paymentMethod: PaymentMethod): boolean => {
+  if (paymentMethod.pagoPA === false) {
+    return false;
+  }
+  if (isCreditCard(paymentMethod)) {
+    return CreditCardType.decode(paymentMethod.info.brand).fold(
+      () => true,
+      pm => !brandsBlackList.has(pm)
+    );
+  }
+  return paymentMethod.pagoPA;
+};
 
-export const extractBadgeType = (paymentMethod: PaymentMethod): badgeType => {
-  const badgeType = fromNullable(paymentMethod).map<badgeType>(pM => {
-    switch (pM.kind) {
-      case "CreditCard":
-        return pM.pagoPA
-          ? isSupportedBrand(pM)
-            ? "available"
-            : "arriving"
-          : "not_available";
-      case "Satispay":
-        return "arriving";
-      default:
-        return "not_available";
+/**
+ * check if a payment method is supported or not
+ * "available" -> can pay
+ * "arriving" -> will pay
+ * "not_available" -> can't pay
+ */
+export const isPaymentMethodSupported = (
+  paymentMethod: PaymentMethod
+): PaymentSupportStatus => {
+  const badgeType = fromNullable(paymentMethod).map<PaymentSupportStatus>(
+    pM => {
+      switch (pM.kind) {
+        case "CreditCard":
+          return pM.pagoPA
+            ? canMethodPay(pM)
+              ? "available"
+              : "arriving"
+            : "not_available";
+        case "Satispay":
+          return "arriving";
+        default:
+          return "not_available";
+      }
     }
-  });
+  );
   return badgeType.getOrElse("not_available");
 };

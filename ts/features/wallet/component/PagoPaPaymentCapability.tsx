@@ -7,8 +7,8 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import { PaymentMethod } from "../../../types/pagopa";
-import { badgeType } from "../../../types/paymentMethodCapabilities";
-import { extractBadgeType } from "../../../utils/paymentMethodCapabilities";
+import { PaymentSupportStatus } from "../../../types/paymentMethodCapabilities";
+import { isPaymentMethodSupported } from "../../../utils/paymentMethodCapabilities";
 
 const styles = StyleSheet.create({
   row: {
@@ -50,7 +50,7 @@ const getLocales = () => ({
   incompatible: I18n.t("wallet.methods.card.pagoPaCapability.incompatible")
 });
 
-const availabilityBadge = (badgeType: badgeType) => {
+const availabilityBadge = (badgeType: PaymentSupportStatus) => {
   const { available, arriving, incompatible } = getLocales();
   switch (badgeType) {
     case "available":
@@ -102,7 +102,7 @@ function PagoPaPaymentCapability(props: Props): React.ReactElement {
           {I18n.t("wallet.methods.card.pagoPaCapability.description")}
         </H5>
       </View>
-      {availabilityBadge(extractBadgeType(props.paymentMethod))}
+      {availabilityBadge(isPaymentMethodSupported(props.paymentMethod))}
     </View>
   );
 }
