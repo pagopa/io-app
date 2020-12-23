@@ -1953,10 +1953,16 @@ bonus:
           noIbanBody: "Imposta il tuo IBAN per poter ricevere il Cashback accumulato"
           button: "Imposta IBAN"
         transactionsCountOverview:
-          title: "Transazioni valide"
+          title: "Le tue transazioni"
           of: "su"
           closedPeriodKOBody: "Non hai raggiunto le {{transactions}} transazioni necessarie per ottenere un rimborso: avresti ricevuto € {{amount}}. Provaci nel prossimo periodo!"
-          currentPeriodKOBody: "Devi aver fatto almeno {{transactions}} transazioni per sbloccare il Cashback che hai accumulato!"
+          currentPeriodKOBody:
+            one: "Devi aver fatto almeno"
+            two: " {{transactions}} transazioni"
+            three: " per sbloccare il Cashback che hai accumulato!"
+          currentPeriodUnlockBody: "Complimenti {{name}}! Hai superato la soglia di {{transactions}} transazioni e sbloccato il Cashback!!"
+          currentPeriodMaxAmount: "Complimenti {{name}}! Hai raggiunto l’importo massimo previsto!"
+          currentPeriodSuperCashback: "In questo momento avresti diritto al Super Cashback di {{superCashbackAmount}} €! Continua così per rimanere in classifica."
           gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere dalle banche le ultime transazioni. Ancora un po’ di pazienza. Ti avviseremo qui!"
           closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
           closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
@@ -1964,6 +1970,13 @@ bonus:
           label:
             one: "1 transazione valida"
             other: "{{count}} transazioni valide"
+        ranking:
+          title: "La tua posizione"
+          notReady:
+            title: "Quando vedrai la classifica Super Cashback?"
+            body: "La classifica si basa sul **numero di transazioni** eseguite con i metodi di pagamento su cui hai attivato il Cashback.\n\n
+                   In questo momento **tutti i partecipanti sono nella stessa posizione**. Non appena riceveremo le transazioni effettuate i primi giorni di quest’anno, verrà mostrata la tua posizione in classifica.\n\n
+                   Una volta pubblicata, la classifica **continuerà a cambiare** a seconda del numero di transazioni di tutti i partecipanti, fino alla fine dei 6 mesi."
       transaction:
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
