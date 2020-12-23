@@ -17,7 +17,7 @@ import { GlobalState } from "./types";
 
 /** note that this state is not persisted so Option type is accepted
  * if you want to persist an option take care of persinsting/rehydrating
- * see https://www.pivotaltracker.com/story/show/170998374
+ * see  https://www.pivotaltracker.com/story/show/170998374
  */
 export type BackendStatusState = {
   status: Option<BackendStatus>;
