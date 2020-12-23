@@ -3,6 +3,7 @@ import { InfoBox } from "../../../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../../../components/core/typography/Body";
 import I18n from "../../../../../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../../utils/accessibility";
+import { localeDateFormat } from "../../../../../../../../utils/locale";
 import { BpdPeriod } from "../../../../../store/actions/periods";
 import { isGracePeriod } from "../../../../../store/reducers/details/periods";
 import { TextualSummary } from "./TextualSummary";
@@ -46,6 +47,13 @@ const KO = (props: Props) => (
   </InfoBox>
 );
 
+const transferDate = (period: BpdPeriod) => {
+  const endDate = new Date(period.endDate);
+
+  endDate.setDate(period.endDate.getDate() + 60);
+  return endDate;
+};
+
 /**
  * The user will receive the refund!
  * @param props
@@ -72,7 +80,10 @@ const OK = (props: Props) => (
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.moneyTransfer",
         {
-          date: "asd"
+          date: localeDateFormat(
+            transferDate(props.period),
+            I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+          )
         }
       )}
     </Body>
