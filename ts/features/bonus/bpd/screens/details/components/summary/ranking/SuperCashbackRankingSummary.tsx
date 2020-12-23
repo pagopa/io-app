@@ -83,7 +83,10 @@ const SuperCashbackRankingNotReady = (): React.ReactElement => {
     <TouchableOpacity onPress={present} style={IOStyles.flex}>
       <BpdBaseShadowBoxLayout
         row1={
-          <H5 testID={"supercashbackSummary.title"} style={styles.title}>
+          <H5
+            testID={"superCashbackRankingNotReady.title"}
+            style={styles.title}
+          >
             {title}
           </H5>
         }
@@ -100,11 +103,7 @@ const SuperCashbackRankingNotReady = (): React.ReactElement => {
           </>
         }
         row3={
-          <H5
-            testID={"supercashbackSummary.minRanking"}
-            color={"bluegrey"}
-            style={styles.title}
-          >
+          <H5 color={"bluegrey"} style={styles.title}>
             {wip}
           </H5>
         }

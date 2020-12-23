@@ -23,7 +23,10 @@ import {
   closedPeriod,
   inactivePeriod
 } from "../../../../../store/reducers/__mock__/periods";
-import { readyRanking } from "../../../../../store/reducers/__mock__/ranking";
+import {
+  notReadyRanking,
+  readyRanking
+} from "../../../../../store/reducers/__mock__/ranking";
 import {
   BpdPeriodWithInfo,
   isBpdRankingReady
@@ -101,6 +104,32 @@ describe("Bpd Summary Component graphical test for different states", () => {
       ...activePeriod,
       amount: notEligibleAmount,
       ranking: readyRanking
+    };
+    const store = mockStore(mockBpdState(period, true));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+
+    // When the period is "Active" and transactionNumber<minTransactionNumber,
+    // TextualSummary should be null if totalCashback > 0
+    const textualSummary = component.queryByTestId("currentPeriodWarning");
+
+    expectSuperCashback(component, period);
+
+    expect(textualSummary).toBeEnabled();
+    // The text description should indicate the minimum transaction required to acquire the cashback
+    expect(textualSummary).toHaveTextContent(
+      activePeriod.minTransactionNumber.toString()
+    );
+  });
+
+  it("Render Active period, transactionNumber < minTransactionNumber, totalCashback > 0, supercashback not ready", () => {
+    const period = {
+      ...activePeriod,
+      amount: notEligibleAmount,
+      ranking: notReadyRanking
     };
     const store = mockStore(mockBpdState(period, true));
     const component = render(
@@ -404,7 +433,7 @@ describe("Bpd Summary Component graphical test for different states", () => {
  * @param period
  * @param bpdRankingRemoteConfig
  */
-const mockBpdState = (
+export const mockBpdState = (
   period: BpdPeriodWithInfo,
   bpdRankingRemoteConfig?: boolean
 ) => ({
@@ -432,6 +461,17 @@ const expectSuperCashback = (
   period: BpdPeriodWithInfo
 ) => {
   if (isBpdRankingReady(period.ranking)) {
+    expectSuperCashbackReady(component, period);
+  } else {
+    expectSuperCashbackNotReady(component);
+  }
+};
+
+export const expectSuperCashbackReady = (
+  component: RenderAPI,
+  period: BpdPeriodWithInfo
+) => {
+  if (isBpdRankingReady(period.ranking)) {
     // The SuperCashbackRankingSummary should be visible
     expect(component.queryByTestId("supercashbackSummary.title")).toBeEnabled();
     expect(
@@ -440,6 +480,14 @@ const expectSuperCashback = (
     expect(
       component.queryByTestId("supercashbackSummary.minRanking")
     ).toHaveTextContent(formatIntegerNumber(period.minPosition));
+  } else {
+    fail("Expected BpdRankingReady");
   }
-  // TODO: test  BpdRankingNotReady
+};
+
+export const expectSuperCashbackNotReady = (component: RenderAPI) => {
+  expect(component.queryByTestId("supercashbackSummary.title")).toBeNull();
+  expect(
+    component.queryByTestId("superCashbackRankingNotReady.title")
+  ).toBeEnabled();
 };
