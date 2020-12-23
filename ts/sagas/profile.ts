@@ -20,10 +20,12 @@ import { tosVersion } from "../config";
 import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
 import {
+  loadBonusBeforeRemoveAccount,
   profileLoadFailure,
   profileLoadRequest,
   profileLoadSuccess,
   profileUpsert,
+  removeAccountMotivation,
   startEmailValidation
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
@@ -39,6 +41,11 @@ import { preferredLanguageSelector } from "../store/reducers/persistedPreference
 import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
+import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { bpdLoadActivationStatus } from "../features/bonus/bpd/store/actions/details";
+import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
+import { getValue } from "../features/bonus/bpd/model/RemoteValue";
+import { allBonusActiveSelector } from "../features/bonus/bonusVacanze/store/reducers/allActive";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -253,20 +260,32 @@ function* checkLoadedProfile(
   }
 }
 
-// watch for some actions about profile
-export function* watchProfile(
-  startEmailValidationProcess: ReturnType<
-    typeof BackendClient
-  >["startEmailValidationProcess"]
-): Iterator<Effect> {
-  // user requests to send again the email validation to profile email
-  yield takeLatest(
-    getType(startEmailValidation.request),
-    startEmailValidationProcessSaga,
-    startEmailValidationProcess
+export function* handleLoadBonusBeforeRemoveAccount() {
+  const bpdActive: ReturnType<typeof bpdEnabledSelector> = yield select(
+    bpdEnabledSelector
   );
-  // check the loaded profile
-  yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
+
+  // check if there are some bpd
+  if (getValue(bpdActive) === undefined) {
+    // Load the bpd data and wait for a response
+    yield put(bpdLoadActivationStatus.request());
+
+    yield take([
+      bpdLoadActivationStatus.success,
+      bpdLoadActivationStatus.failure
+    ]);
+  }
+
+  const bonusVacanzeBonus: ReturnType<typeof allBonusActiveSelector> = yield select(
+    allBonusActiveSelector
+  );
+
+  // check if there are some bonus vacanze
+  if (bonusVacanzeBonus.length === 0) {
+    // Load the bonus data and no wait because if there are some bonus
+    // they will be loaded individually
+    yield put(loadAllBonusActivations.request());
+  }
 }
 
 // watch for action of removing account
@@ -290,4 +309,28 @@ export function* handleRemoveAccount() {
   ) {
     yield put(navigateToRemoveAccountSuccess());
   }
+}
+
+// watch for some actions about profile
+export function* watchProfile(
+  startEmailValidationProcess: ReturnType<
+    typeof BackendClient
+  >["startEmailValidationProcess"]
+): Iterator<Effect> {
+  // user requests to send again the email validation to profile email
+  yield takeLatest(
+    getType(startEmailValidation.request),
+    startEmailValidationProcessSaga,
+    startEmailValidationProcess
+  );
+  // check the loaded profile
+  yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
+
+  // Start watching for request bonus before remove profile
+  yield takeLatest(
+    loadBonusBeforeRemoveAccount,
+    handleLoadBonusBeforeRemoveAccount
+  );
+  // Start watching for request of remove profile
+  yield takeLatest(removeAccountMotivation, handleRemoveAccount);
 }

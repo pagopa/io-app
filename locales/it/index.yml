@@ -282,9 +282,13 @@ profile:
         description: Cancella in modo permanente il tuo account e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
+          activeBonusTitle: Bonus attivi
+          activeBonusDescription: Sembra che tu abbia dei Bonus attivi. Vogliamo informarti che la cancellazione del tuo profilo non equivale alla cancellazione dei bonus o alla disiscrizione da eventuali iniziative. Per gestire i tuoi bonus vai alla sezione Portafoglio, altrimenti scegli Continua
           oldRequest: Hai già richiesto la cancellazione del tuo account.
           oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su “Annulla eliminazione” qui sotto."
           cta:
+            manageBonus: Gestisci bonus
+            continue: Continua
             return: Indietro
             cancel: Annulla l'eliminazione
         info:
@@ -1143,7 +1147,7 @@ wallet:
         two: "non consentono di pagare tramite IO"
         three: ", ma solo presso i punti fisici (POS)."
       debit:
-        title: "La tua carta ha più di un logo?"
+        title: "La tua carta ha uno di questi loghi?"
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerla anche come **carta di debito o di credito**, inserendo il numero della carta sul fronte. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi Carta di Debito/Credito"
       removeCta: "Elimina questo metodo di pagamento"
