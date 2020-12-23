@@ -96,17 +96,17 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
             ),
             style: "cancel",
             onPress: () => {
-              handleSendMotivaiton(selectedMotivation);
+              handleSendMotivation(selectedMotivation);
             }
           }
         ]
       );
     } else {
-      handleSendMotivaiton(selectedMotivation);
+      handleSendMotivation(selectedMotivation);
     }
   };
 
-  const handleSendMotivaiton = (
+  const handleSendMotivation = (
     selectedMotivation: RemoveAccountMotivationEnum
   ) => {
     switch (selectedMotivation) {
