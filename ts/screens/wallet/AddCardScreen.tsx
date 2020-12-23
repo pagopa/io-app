@@ -105,34 +105,19 @@ const primaryButtonPropsFromState = (
   state: CreditCardState,
   onNavigate: (card: CreditCard) => NavigationNavigateAction
 ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
-  const outcome = pipe(mergeCardValues, mcv =>
-    mcv.fold<{ disabled: boolean; onPress?: () => void }>(
-      {
-        disabled: true,
-        onPress: undefined
-      },
-      (card: CreditCard) => ({
-        disabled: false,
-        onPress: () => {
-          onNavigate(card);
-        }
-      })
-    )
-  )(state);
-
-  return {
-    ...outcome,
-    // baseButtonProps:
+  const baseButtonProps = {
     block: true,
     primary: true,
     title: I18n.t("global.buttons.continue")
   };
 
-  /* if (maybeCard.isSome()) {
+  const card = mergeCardValues(state);
+
+  if (card.isSome()) {
     return {
       ...baseButtonProps,
       disabled: false,
-      onPress: () => onNavigate(maybeCard.value)
+      onPress: () => onNavigate(card.value)
     };
   } else {
     return {
@@ -140,7 +125,7 @@ const primaryButtonPropsFromState = (
       disabled: true,
       onPress: () => undefined
     };
-  } */
+  }
 };
 
 const AddCardScreen: React.FC<Props> = props => {
