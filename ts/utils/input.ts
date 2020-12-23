@@ -1,7 +1,7 @@
 import { Option, none, some } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { PatternString } from "italia-ts-commons/lib/strings";
-import { CreditCard } from "../../definitions/pagopa/CreditCard";
+import { CreditCard } from "../types/pagopa";
 import { isExpired } from "./dates";
 
 const MIN_PAN_DIGITS = 15;

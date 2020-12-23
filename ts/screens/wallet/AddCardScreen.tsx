@@ -17,8 +17,6 @@ import { fromNullable, Option } from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
-
-import { fold } from "fp-ts/lib/OptionT";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent, {
@@ -30,7 +28,6 @@ import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigati
 import { Dispatch } from "../../store/actions/types";
 import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
 import variables from "../../theme/variables";
-import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import {
   isValidPan,
@@ -52,6 +49,7 @@ import { openWebUrl } from "../../utils/url";
 import { showToast } from "../../utils/showToast";
 import { useIOBottomSheet } from "../../utils/bottomSheet";
 import { Body } from "../../components/core/typography/Body";
+import { CreditCard } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -107,19 +105,20 @@ const primaryButtonPropsFromState = (
   state: CreditCardState,
   onNavigate: (card: CreditCard) => NavigationNavigateAction
 ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
-  const outcome = pipe(
-    mergeCardValues(state),
-    fold(
-      () => ({
+  const outcome = pipe(mergeCardValues, mcv =>
+    mcv.fold<{ disabled: boolean; onPress?: () => void }>(
+      {
         disabled: true,
-        onPress: () => undefined
-      }),
+        onPress: undefined
+      },
       (card: CreditCard) => ({
         disabled: false,
-        onPress: () => onNavigate(card)
+        onPress: () => {
+          onNavigate(card);
+        }
       })
     )
-  );
+  )(state);
 
   return {
     ...outcome,
