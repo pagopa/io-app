@@ -51,9 +51,14 @@ const UpdateLabel = (props: Props & { caption: string }) =>
 const BpdLastUpdateComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
+  const [isFirstRender, setIsFirstRender] = useState(true);
   useEffect(() => {
-    if (pot.isError(props.potLastUpdate)) {
-      showToast(I18n.t("global.genericError"), "danger");
+    if (!isFirstRender) {
+      if (pot.isError(props.potLastUpdate)) {
+        showToast(I18n.t("global.genericError"), "danger");
+      }
+    } else {
+      setIsFirstRender(false);
     }
   }, [props.potLastUpdate.kind]);
 
