@@ -14,7 +14,6 @@ import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
