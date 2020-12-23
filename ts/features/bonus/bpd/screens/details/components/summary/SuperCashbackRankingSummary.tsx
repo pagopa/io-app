@@ -4,19 +4,20 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H2 } from "../../../../../../../components/core/typography/H2";
-import { H4 } from "../../../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import IconFont from "../../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../../i18n";
+import { configSelector } from "../../../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { formatIntegerNumber } from "../../../../../../../utils/stringBuilder";
 import {
   BpdPeriodWithInfo,
+  BpdRanking,
+  BpdRankingReady,
   isBpdRankingReady
 } from "../../../../store/reducers/details/periods";
 import { BpdBaseShadowBoxLayout } from "./base/BpdBaseShadowBoxLayout";
-import { ShadowBox } from "./base/ShadowBox";
 
 const loadLocales = () => ({
   title: I18n.t("bonus.bpd.details.components.ranking.title"),
@@ -27,7 +28,8 @@ const loadLocales = () => ({
 const styles = StyleSheet.create({
   title: {
     textAlign: "center"
-  }
+  },
+  center: { alignSelf: "center" }
 });
 
 type OwnProps = {
@@ -88,7 +90,7 @@ const SuperCashbackRankingNotReady = (): React.ReactElement => {
             name={"io-hourglass"}
             size={24}
             color={IOColors.blue as string}
-            style={{ alignSelf: "center" }}
+            style={styles.center}
           />
           <View spacer={true} xsmall={true} />
         </>
@@ -107,6 +109,17 @@ const SuperCashbackRankingNotReady = (): React.ReactElement => {
 };
 
 /**
+ * The ranking should be visible only when the remoteRanking is enabled && isBpdRankingReady
+ * @param ranking
+ * @param remoteEnabled
+ */
+const shouldDisplayRanking = (
+  ranking: BpdRanking,
+  remoteEnabled: boolean | undefined
+): ranking is BpdRankingReady =>
+  remoteEnabled ? isBpdRankingReady(ranking) : false;
+
+/**
  * Choose the right super cashback ranking representation:
  * 1) The ranking is ready: SuperCashbackRankingReady
  * 2) The ranking is not ready: TBD
@@ -115,7 +128,7 @@ const SuperCashbackRankingNotReady = (): React.ReactElement => {
  * @constructor
  */
 const SuperCashbackRankingSummary = (props: Props): React.ReactElement =>
-  isBpdRankingReady(props.period.ranking) ? (
+  shouldDisplayRanking(props.period.ranking, props.rankingRemoteEnabled) ? (
     <SuperCashbackRankingReady
       ranking={props.period.ranking.ranking}
       minRanking={props.period.minPosition}
@@ -126,7 +139,9 @@ const SuperCashbackRankingSummary = (props: Props): React.ReactElement =>
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  rankingRemoteEnabled: configSelector("bpd_ranking")(state)
+});
 
 export default connect(
   mapStateToProps,
