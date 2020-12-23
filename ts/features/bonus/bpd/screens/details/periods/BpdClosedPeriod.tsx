@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import IbanInformationComponent from "../components/iban/IbanInformationComponent";
 import BpdSummaryComponent from "../components/summary/BpdSummaryComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -18,6 +19,7 @@ const BpdClosedPeriod: React.FunctionComponent<Props> = () => (
     <View spacer={true} />
     <BpdSummaryComponent />
     <View spacer={true} extralarge={true} />
+    <IbanInformationComponent />
   </View>
 );
 
