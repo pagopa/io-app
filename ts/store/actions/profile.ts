@@ -49,7 +49,7 @@ export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")();
 export const clearCache = createStandardAction("CLEAR_CACHE")();
 
 // This action is needed because we want to show an alert if a user has some active bonus
-// and want to delete his account.
+// and he wants to delete his account.
 // In this case ,if the bonuses data are not loaded yet, we use this action to
 // start a saga and request the bonus information.
 export const loadBonusBeforeRemoveAccount = createStandardAction(
