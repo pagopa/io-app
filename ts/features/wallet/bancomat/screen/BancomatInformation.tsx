@@ -8,9 +8,7 @@ import maestro from "../../../../../img/wallet/cards-icons/maestro.png";
 import mastercard from "../../../../../img/wallet/cards-icons/mastercard.png";
 import visaElectron from "../../../../../img/wallet/cards-icons/visa-electron.png";
 import visa from "../../../../../img/wallet/cards-icons/visa.png";
-import { InfoBox } from "../../../../components/box/InfoBox";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
@@ -21,7 +19,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 
 type OwnProps = {
   onAddPaymentMethod?: () => void;
-  hideInfobox?: boolean;
+  hideCobrandTitle?: true;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -69,19 +67,8 @@ const BrandIconsBar = () => (
 
 const BancomatInformation: React.FunctionComponent<Props> = props => (
   <View>
-    {!props.hideInfobox && (
-      <>
-        <InfoBox iconColor={IOColors.black}>
-          <Body>
-            {I18n.t("wallet.bancomat.details.infobox.one")}
-            <H4>{I18n.t("wallet.bancomat.details.infobox.two")}</H4>
-            {I18n.t("wallet.bancomat.details.infobox.three")}
-          </Body>
-        </InfoBox>
-        <View spacer={true} large={true} />
-        <View spacer={true} small={true} />
-        <H4>{I18n.t("wallet.bancomat.details.debit.title")}</H4>
-      </>
+    {!props.hideCobrandTitle && (
+      <H4>{I18n.t("wallet.bancomat.details.debit.title")}</H4>
     )}
     <View spacer={true} />
     <BrandIconsBar />
