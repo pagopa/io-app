@@ -139,52 +139,23 @@ type BadgeDefinition = {
   label: string;
 };
 
-type IconType = "closedLock" | "openLock" | "fireworks" | undefined;
+type IconType = "io-locker-closed" | "io-locker-open" | "io-fireworks";
 
 type GraphicalState = {
   amount: ReadonlyArray<string>;
   isInGracePeriod: boolean;
+  iconName: IconType;
   statusBadge: BadgeDefinition;
 };
 
 const initialGraphicalState: GraphicalState = {
   amount: ["0", "00"],
   isInGracePeriod: false,
+  iconName: "io-locker-closed",
   statusBadge: {
     label: "-"
   }
 };
-
-const iconMap = new Map<IconType, React.ReactNode>([
-  [
-    "closedLock",
-    <IconFont
-      name="io-locker-closed"
-      size={16}
-      color={IOColors.white}
-      key={"closedLocker"}
-    />
-  ],
-  [
-    "openLock",
-    <IconFont
-      name="io-locker-open"
-      size={16}
-      color={IOColors.white}
-      key={"openLocker"}
-    />
-  ],
-  [
-    "fireworks",
-    <IconFont
-      name="io-fireworks"
-      size={16}
-      color={IOColors.white}
-      key={"openLocker"}
-    />
-  ],
-  [undefined, null]
-]);
 
 /**
  * Closed lock must be shown if period is Inactive or the transactionNumber didn't reach the minimum target
@@ -194,10 +165,7 @@ const iconMap = new Map<IconType, React.ReactNode>([
  * @param period
  * @param totalAmount
  */
-const iconHandler = (
-  period: BpdPeriod,
-  totalAmount: BpdAmount
-): React.ReactNode => {
+const iconHandler = (period: BpdPeriod, totalAmount: BpdAmount): IconType => {
   const reachMinTransaction =
     totalAmount.transactionNumber >= period.minTransactionNumber;
   const reachMaxAmount = totalAmount.totalCashback >= period.maxPeriodCashback;
@@ -205,14 +173,12 @@ const iconHandler = (
     case "Active":
     case "Closed":
       return reachMinTransaction && reachMaxAmount
-        ? iconMap.get("fireworks")
+        ? "io-fireworks"
         : reachMinTransaction
-        ? iconMap.get("openLock")
-        : iconMap.get("closedLock");
-    case "Inactive":
-      return iconMap.get("closedLock");
+        ? "io-locker-open"
+        : "io-locker-closed";
     default:
-      return iconMap.get(undefined);
+      return "io-locker-closed";
   }
 };
 
@@ -237,6 +203,7 @@ const statusClosedHandler = (props: Props): GraphicalState => {
             I18n.t("global.localization.decimalSeparator")
           ),
     isInGracePeriod,
+    iconName: iconHandler(props.period, props.totalAmount),
     // TODO: Add supercashback business logic
     statusBadge: isInGracePeriod
       ? {
@@ -255,7 +222,8 @@ const statusActiveHandler = (props: Props): GraphicalState => ({
   },
   amount: formatNumberAmount(props.totalAmount.totalCashback).split(
     I18n.t("global.localization.decimalSeparator")
-  )
+  ),
+  iconName: iconHandler(props.period, props.totalAmount)
 });
 
 const statusInactiveHandler = (props: Props): GraphicalState => ({
@@ -292,11 +260,12 @@ const calculateGraphicalState = (props: Props) =>
 export const BpdCardComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const { amount, isInGracePeriod, statusBadge } = calculateGraphicalState(
-    props
-  );
-
-  const icon = iconHandler(props.period, props.totalAmount);
+  const {
+    amount,
+    isInGracePeriod,
+    iconName,
+    statusBadge
+  } = calculateGraphicalState(props);
 
   const isPeriodClosed = props.period.status === "Closed" && !isInGracePeriod;
   const isPeriodInactive = props.period.status === "Inactive";
@@ -337,7 +306,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               {amount[1]}
             </Text>
             <View hspacer={true} small={true} />
-            {icon}
+            <IconFont name={iconName} size={16} color={IOColors.white} />
           </View>
           <H5 color={"white"} weight={"Regular"}>
             {I18n.t("bonus.bpd.earned")}
@@ -392,7 +361,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               styles.justifyContentCenter
             ]}
           >
-            {icon}
+            <IconFont name={iconName} size={16} color={IOColors.white} />
             <View hspacer={true} small={true} />
             {isInGracePeriod || isPeriodInactive ? (
               <Badge style={styles.badgePreview}>
