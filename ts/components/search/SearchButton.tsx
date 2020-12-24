@@ -15,7 +15,7 @@ import {
 } from "../../store/actions/search";
 import { Dispatch } from "../../store/actions/types";
 import variables from "../../theme/variables";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import ButtonDefaultOpacity, { ButtonSizes } from "../ButtonDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
@@ -69,6 +69,7 @@ class SearchButton extends React.Component<Props, State> {
           </Item>
         ) : (
           <ButtonDefaultOpacity
+            style={ButtonSizes.minTouchableSquare}
             onPress={this.handleSearchPress}
             transparent={true}
             accessibilityLabel={I18n.t("global.buttons.search")}

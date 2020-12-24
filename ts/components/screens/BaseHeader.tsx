@@ -7,7 +7,6 @@ import { AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
-import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
@@ -21,11 +20,9 @@ import GoBackButton from "../GoBackButton";
 import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
+import HelpButton from "./help/HelpButton";
 
 const styles = StyleSheet.create({
-  helpButton: {
-    padding: 8
-  },
   noLeft: {
     marginLeft: variables.contentPadding - variables.appHeaderPaddingHorizontal
   },
@@ -205,25 +202,12 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           <InstabugChatsComponent />
         )}
         {onShowHelp && !isSearchEnabled && (
-          <ButtonDefaultOpacity
-            onPress={onShowHelp}
-            style={styles.helpButton}
-            transparent={true}
-            accessibilityLabel={I18n.t(
-              "global.accessibility.contextualHelp.open.label"
-            )}
-            accessibilityHint={I18n.t(
-              "global.accessibility.contextualHelp.open.hint"
-            )}
-          >
-            <IconFont name={"io-question"} />
-          </ButtonDefaultOpacity>
+          <HelpButton onShowHelp={onShowHelp} />
         )}
 
         {customRightIcon && !isSearchEnabled && (
           <ButtonDefaultOpacity
             onPress={customRightIcon.onPress}
-            style={styles.helpButton}
             transparent={true}
             accessible={customRightIcon.accessibilityLabel !== undefined}
             accessibilityLabel={customRightIcon.accessibilityLabel}

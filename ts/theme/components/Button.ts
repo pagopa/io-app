@@ -178,8 +178,7 @@ export default (): Theme => ({
   },
 
   "UIComponent.IconFont": {
-    fontSize: variables.btnWidgetHeight,
-    paddingRight: 8
+    fontSize: variables.btnWidgetHeight
   },
 
   justifyContent: "center",
