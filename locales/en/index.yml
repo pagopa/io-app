@@ -1064,9 +1064,9 @@ wallet:
       securityCode: "•••"
       securityCode4D: "••••"
   acceptedCards: Accepted cards
-  missingDataCTA: Are you missing some piece of data?
+  missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
-  missingDataText: If you can't find the security code, your card might not be enabled to perform online payments. We're working with your bank to let you add this kind of cards and use them for the Cashback.
+  missingDataText: If you can't find the security code, it's likely your card doesn't support online payments. We're working with your bank to let you add these cards and enroll them for Cashback.
   chooseMethod: Select the desired method
   QRtoPay:
     chooser: Pick image from gallery
