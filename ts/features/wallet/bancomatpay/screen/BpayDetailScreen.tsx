@@ -18,13 +18,14 @@ import {
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
-import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
+import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 // import SatispayCard from "../SatispayCard";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import BPayCard from "../BPayCard";
+import BPayCard from "../component/BPayCard";
+import reactotron from "reactotron-react-native";
 
 type NavigationParams = Readonly<{
-  bpay: BPayPaymentMethod;
+  bPay: BPayPaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -61,17 +62,17 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  * @constructor
  */
 const BPayDetailScreen: React.FunctionComponent<Props> = props => {
-  const bPay: BPayPaymentMethod = props.navigation.getParam("bpay");
+  const bPay: BPayPaymentMethod = props.navigation.getParam("bPay");
 
   const { present } = useRemovePaymentMethodBottomSheet({
-    icon: satispayImage,
-    caption: I18n.t("wallet.methods.satispay.name")
+    icon: bPayImage,
+    caption: I18n.t("wallet.methods.bancomatPay.name")
   });
   return (
     <DarkLayout
       bounces={false}
       contextualHelp={emptyContextualHelp}
-      title={I18n.t("wallet.methods.card.shortName")}
+      title={I18n.t("wallet.methods.bancomatPay.name")}
       faqCategories={["wallet_methods"]}
       allowGoBack={true}
       topContent={<View style={styles.headerSpacer} />}
@@ -79,11 +80,14 @@ const BPayDetailScreen: React.FunctionComponent<Props> = props => {
       hideHeader={true}
     >
       <View style={styles.cardContainer}>
-        <BPayCard />
+        <BPayCard
+          phone={bPay.info.numberObfuscated}
+          bankName={bPay.info.bankName}
+        />
       </View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
-        {/* <PaymentMethodCapabilities paymentMethod={bPay} /> */}
+        <PaymentMethodCapabilities paymentMethod={bPay} />
         <View spacer={true} />
         <View spacer={true} large={true} />
         <UnsubscribeButton
