@@ -1,7 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
+import { Image, ImageStyle, StyleProp } from "react-native";
+import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
@@ -12,6 +13,7 @@ import {
   BPayPaymentMethod,
   SatispayPaymentMethod
 } from "../../../../types/pagopa";
+import reactotron from "reactotron-react-native";
 
 type OwnProps = {
   bPay: BPayPaymentMethod;
@@ -28,13 +30,9 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const BPayWalletPreview: React.FunctionComponent<Props> = props => (
   <CardPreview
-    left={
-      <Body style={IOStyles.flex} numberOfLines={1}>
-        {I18n.t("wallet.methods.satispay.name")} Bpay
-      </Body>
-    }
-    image={satispayImage}
-    onPress={() => true}
+    left={<Image source={{ uri: props.bPay.info.instituteCode }} />}
+    image={bPayImage}
+    onPress={() => reactotron.log(props.bPay)}
   />
 );
 
