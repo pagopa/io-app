@@ -11,17 +11,20 @@ import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
-import { SatispayPaymentMethod } from "../../../../types/pagopa";
+import {
+  BPayPaymentMethod,
+  SatispayPaymentMethod
+} from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
-import SatispayCard from "../SatispayCard";
+// import SatispayCard from "../SatispayCard";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import SatispayInformation from "./SatispayInformation";
+import BPayCard from "../BPayCard";
 
 type NavigationParams = Readonly<{
-  satispay: SatispayPaymentMethod;
+  bpay: BPayPaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -58,7 +61,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  * @constructor
  */
 const BPayDetailScreen: React.FunctionComponent<Props> = props => {
-  const satispay: SatispayPaymentMethod = props.navigation.getParam("satispay");
+  const bPay: BPayPaymentMethod = props.navigation.getParam("bpay");
 
   const { present } = useRemovePaymentMethodBottomSheet({
     icon: satispayImage,
@@ -76,16 +79,15 @@ const BPayDetailScreen: React.FunctionComponent<Props> = props => {
       hideHeader={true}
     >
       <View style={styles.cardContainer}>
-        <SatispayCard />
+        <BPayCard />
       </View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={satispay} />
+        {/* <PaymentMethodCapabilities paymentMethod={bPay} /> */}
         <View spacer={true} />
-        <SatispayInformation />
         <View spacer={true} large={true} />
         <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(satispay.idWallet))}
+          onPress={() => present(() => props.deleteWallet(bPay.idWallet))}
         />
       </View>
       <View spacer={true} extralarge={true} />
