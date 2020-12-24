@@ -7,7 +7,10 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CardPreview } from "../../component/CardPreview";
-import { navigateToSatispayDetailScreen } from "../../../../store/actions/navigation";
+import {
+  navigateToBPayDetailScreen,
+  navigateToSatispayDetailScreen
+} from "../../../../store/actions/navigation";
 import {
   BPayPaymentMethod,
   SatispayPaymentMethod
@@ -35,13 +38,13 @@ const BPayWalletPreview: React.FunctionComponent<Props> = props => (
       </Body>
     }
     image={bPayImage}
-    onPress={() => reactotron.log(props.bPay)}
+    onPress={() => props.navigateToBPayDetails(props.bPay)}
   />
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToSatispayDetails: (satispay: SatispayPaymentMethod) =>
-    dispatch(navigateToSatispayDetailScreen(satispay))
+  navigateToBPayDetails: (bPay: BPayPaymentMethod) =>
+    dispatch(navigateToBPayDetailScreen(bPay))
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
