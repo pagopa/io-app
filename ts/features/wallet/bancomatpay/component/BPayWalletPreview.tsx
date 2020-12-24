@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Image, ImageStyle, StyleProp } from "react-native";
 import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -30,7 +29,11 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const BPayWalletPreview: React.FunctionComponent<Props> = props => (
   <CardPreview
-    left={<Image source={{ uri: props.bPay.info.instituteCode }} />}
+    left={
+      <Body style={IOStyles.flex} numberOfLines={1}>
+        {props.bPay.info.bankName ?? I18n.t("wallet.methods.bancomatPay.name")}
+      </Body>
+    }
     image={bPayImage}
     onPress={() => reactotron.log(props.bPay)}
   />
