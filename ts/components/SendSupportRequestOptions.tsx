@@ -102,7 +102,7 @@ const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
             onPress={() => setSendPersonalInfo(ov => !ov)}
           />
           <View hspacer={true} />
-          <View style={{ flex: 1 }}>
+          <View style={IOStyles.flex}>
             <Label
               color={"bluegrey"}
               weight={"Regular"}
