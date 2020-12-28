@@ -19,7 +19,8 @@ import { IOStyles } from "./core/variables/IOStyles";
 type Props = {
   onClose: () => void;
   onGoBack: () => void;
-  onContinue: (sharingPersonalData: boolean) => void;
+  onContinue: (options: SupportRequestOptions) => void;
+  initialScreenshotCheckboxValue?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -38,6 +39,7 @@ const continueButtonProps = (onContinue: () => void) => ({
   onPress: onContinue,
   title: I18n.t("global.buttons.continue")
 });
+
 const CustomGoBackButton: React.FunctionComponent<{
   onPressHandler: () => void;
 }> = ({ onPressHandler }) => (
@@ -50,12 +52,22 @@ const CustomGoBackButton: React.FunctionComponent<{
   </ButtonDefaultOpacity>
 );
 
-const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
+export type SupportRequestOptions = {
+  sendPersonalInfo: boolean;
+  sendScreenshot?: boolean;
+};
+
+const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
   onClose,
   onGoBack,
-  onContinue
+  onContinue,
+  initialScreenshotCheckboxValue
 }) => {
   const [sendPersonalInfo, setSendPersonalInfo] = React.useState(false);
+
+  const [sendScreenshot, setSendScreenshot] = React.useState(
+    initialScreenshotCheckboxValue
+  );
 
   return (
     <SafeAreaView style={IOStyles.flex}>
@@ -90,7 +102,7 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
             onPress={() => setSendPersonalInfo(ov => !ov)}
           />
           <View hspacer={true} />
-          <View style={{ flex: 1 }}>
+          <View style={IOStyles.flex}>
             <Label
               color={"bluegrey"}
               weight={"Regular"}
@@ -106,16 +118,37 @@ const SendSupportTokenInfo: React.FunctionComponent<Props> = ({
             />
           </View>
         </View>
+        {initialScreenshotCheckboxValue !== undefined && (
+          <View style={styles.checkBoxContainer}>
+            <RawCheckBox
+              checked={sendScreenshot}
+              onPress={() => setSendScreenshot(ov => !ov)}
+            />
+            <View hspacer={true} />
+            <View style={IOStyles.flex}>
+              <Label
+                color={"bluegrey"}
+                weight={"Regular"}
+                onPress={() => setSendScreenshot(ov => !ov)}
+              >
+                {I18n.t("contextualHelp.sendScreenshot.cta")}
+              </Label>
+            </View>
+          </View>
+        )}
         <EdgeBorderComponent />
       </Content>
       <FooterWithButtons
         type={"SingleButton"}
-        leftButton={continueButtonProps(() => {
-          onContinue(sendPersonalInfo);
-        })}
+        leftButton={continueButtonProps(() =>
+          onContinue({
+            sendPersonalInfo,
+            sendScreenshot
+          })
+        )}
       />
     </SafeAreaView>
   );
 };
 
-export default SendSupportTokenInfo;
+export default SendSupportRequestOptions;
