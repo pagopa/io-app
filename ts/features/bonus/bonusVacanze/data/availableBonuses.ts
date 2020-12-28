@@ -90,7 +90,8 @@ export const availableBonuses: BonusesAvailable = [
       tos_url: "https://io.italia.it/app-content/bonus_vacanze_tos.html"
     },
     service_id: "01EB8AXKNV6NMSP2R25KSGF743",
-    is_active: true,
+    is_active: false,
+    hidden: true,
     valid_from: new Date("2020-07-01T00:00:00.000Z"),
     valid_to: new Date("2020-12-31T00:00:00.000Z"),
     cover:
