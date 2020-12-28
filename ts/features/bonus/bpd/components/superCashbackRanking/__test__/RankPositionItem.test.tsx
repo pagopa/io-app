@@ -5,15 +5,6 @@ import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../i18n";
 import { formatNumberWithNoDigits } from "../../../../../../utils/stringBuilder";
 
-// type Props = {
-//   transactionsNumber: number;
-//   superCashbackAmount: number;
-//   boxedLabel: string;
-//   rankingLabel: string;
-//   currentUserPosition?: boolean;
-//   hideBadge?: boolean;
-// };
-
 describe("RankingPositionItem", () => {
   it("Expect an item representing user position with Super Cashback amount badge", () => {
     const userLabel = I18n.t("global.you");
