@@ -2024,6 +2024,7 @@ bonus:
         howItWorks:
           title: "How does it work?"
           body: "The **100 thousand citizens** with the highest number of transactions **receive the Super Cashback, a prize of €1,500.**\n\n**The ranking changes every day.** The final one will be displayed on {{endDate}}."
+      lastUpdate: Updated at {{hour}} on {{date}}
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

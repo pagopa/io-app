@@ -2055,6 +2055,7 @@ bonus:
         howItWorks:
           title: "Come funziona?"
           body: "I **100mila cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a €1.500.**\n\n**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
+      lastUpdate: Aggiornato alle {{hour}} del {{date}}
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
