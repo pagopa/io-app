@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
 });
 
 const NoTabBarRoutes: ReadonlyArray<string> = [
+  ROUTES.WALLET_CARD_TRANSACTIONS,
   ROUTES.WALLET_ADD_PAYMENT_METHOD,
   ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD,
   ROUTES.PAYMENT_SCAN_QR_CODE,
@@ -105,6 +106,7 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.WEB_PLAYGROUND,
   ROUTES.SHOWROOM,
   ROUTES.SERVICE_WEBVIEW
+
 ];
 
 const getTabBarVisibility = (

@@ -92,7 +92,9 @@ const BpdPaymentMethodCapability: React.FunctionComponent<Props> = props => {
         <H4 weight={"SemiBold"} color={"bluegreyDark"}>
           {I18n.t("bonus.bpd.title")}
         </H4>
-        <H5 color={"bluegrey"}>{I18n.t("bonus.bpd.description")}</H5>
+        <H5 weight={"Regular"} color={"bluegrey"}>
+          {I18n.t("bonus.bpd.description")}
+        </H5>
       </View>
       <BpdToggle
         graphicalValue={graphicalState}
