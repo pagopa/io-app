@@ -52,8 +52,10 @@ date:
     - "am"
     - "pm"
 global:
+  you: "YOU"
   badges:
     blocked: "Blocked"
+    onGoing: "Ongoing"
   password: Password
   username: Username
   unknown: unknown
@@ -1440,6 +1442,8 @@ systemsOff:
   closeApp: close the application and try again
 contextualHelp:
   title: IO helps you
+  sendScreenshot:
+    cta: Share your screenshot, in order to make it easier to solve your problem.
   sendPersonalInfo:
     title: New report
     description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."
@@ -1949,6 +1953,9 @@ bonus:
                    Once published, the ranking will **continue to change** depending on the number of transactions among all participants, until the end of the 6 months."
 
       transaction:
+        label:
+          one: "1 transaction"
+          other: "{{counter}} transactions"
         title: "Your transactions"
         goToButton: "Transactions detail"
         noPaymentMethod:
@@ -2028,6 +2035,13 @@ bonus:
           active: Active
           closed: Closed
           inactive: Upcoming
+      superCashback:
+        rankLabel: "{{position}}º user in rank"
+        rankTitle: "Super Cashback ranking"
+        howItWorks:
+          title: "How does it work?"
+          body: "The **{{citizens}} citizens** with the highest number of transactions **receive the Super Cashback, a prize of {{amount}}.**\n\n**The ranking changes every day.** The final one will be displayed on {{endDate}}."
+      lastUpdate: Updated at {{hour}} on {{date}}
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

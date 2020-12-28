@@ -22,7 +22,9 @@ import {
   getFAQsFromCategories
 } from "../utils/faq";
 import Markdown from "./ui/Markdown";
-import SendSupportTokenInfo from "./SendSupportTokenInfo";
+import SendSupportRequestOptions, {
+  SupportRequestOptions
+} from "./SendSupportRequestOptions";
 import ContextualHelpComponent from "./ContextualHelpComponent";
 
 type OwnProps = Readonly<{
@@ -158,15 +160,15 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   /**
    * If an authenticated user choice to send the personal token we send it to the assistance.
    * Otherwise we allow the user to open a new assistance request without sending the personal token.
-   * @param type
-   * @param sendSupportToken
+   *
+   * @param options Contains the checkboxes' values, @todo handle screenshot attachment request.
    */
-  const handleSendSupportTokenInfoContinue = (sendSupportToken: boolean) => {
+  const handleContinue = (options: SupportRequestOptions) => {
     setShowSendPersonalInfo(false);
     fromNullable(supportType).map(st => {
       props.onRequestAssistance(
         st,
-        sendSupportToken ? props.supportToken : remoteUndefined
+        options.sendPersonalInfo ? props.supportToken : remoteUndefined
       );
     });
   };
@@ -182,10 +184,10 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     >
       <Container>
         {showSendPersonalInfo ? (
-          <SendSupportTokenInfo
+          <SendSupportRequestOptions
             onClose={onClose}
             onGoBack={() => setShowSendPersonalInfo(false)}
-            onContinue={handleSendSupportTokenInfoContinue}
+            onContinue={handleContinue}
           />
         ) : (
           <ContextualHelpComponent

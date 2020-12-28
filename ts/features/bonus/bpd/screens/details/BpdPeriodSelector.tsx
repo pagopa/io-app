@@ -54,9 +54,12 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
     ));
 
   const selectPeriod = (index: number) =>
-    fromNullable(periodWithAmountList[index]).map(currentItem =>
-      props.changeSelectPeriod(currentItem)
-    );
+    fromNullable(periodWithAmountList[index]).map(currentItem => {
+      if (currentItem.awardPeriodId === props.selectedPeriod?.awardPeriodId) {
+        return;
+      }
+      props.changeSelectPeriod(currentItem);
+    });
 
   const indexOfSelectedPeriod = findIndex(
     periodWithAmountList,
