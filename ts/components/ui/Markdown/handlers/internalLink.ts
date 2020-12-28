@@ -4,12 +4,7 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import URLParse from "url-parse";
-import {
-  bonusVacanzeEnabled,
-  bpdEnabled,
-  myPortalEnabled
-} from "../../../../config";
-import BONUSVACANZE_ROUTES from "../../../../features/bonus/bonusVacanze/navigation/routes";
+import { bpdEnabled, myPortalEnabled } from "../../../../config";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
 import { isTestEnv } from "../../../../utils/environment";
