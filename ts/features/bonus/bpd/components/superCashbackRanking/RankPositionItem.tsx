@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Badge, View, Text } from "native-base";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -31,7 +31,8 @@ const style = StyleSheet.create({
   badgeText: {
     fontSize: 12,
     lineHeight: 18,
-    color: IOColors.white
+    color: IOColors.white,
+    marginBottom: Platform.select({ android: 2, default: 0 })
   }
 });
 
