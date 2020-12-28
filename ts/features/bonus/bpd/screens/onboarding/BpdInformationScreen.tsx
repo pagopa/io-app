@@ -24,7 +24,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 
 const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
   const onConfirm = () =>
-    getValue(props.bpdLoadState) === true
+    getValue(props.bpdActiveBonus) === true
       ? actionWithAlert({
           title: I18n.t("bonus.bpd.onboarding.alert.title"),
           body: I18n.t("bonus.bpd.onboarding.alert.body"),
@@ -52,7 +52,7 @@ const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   // display the error with the retry only in case of networking errors
   bonus: availableBonusTypesSelectorFromId(ID_BPD_TYPE)(state),
-  bpdLoadState: bpdEnabledSelector(state)
+  bpdActiveBonus: bpdEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
