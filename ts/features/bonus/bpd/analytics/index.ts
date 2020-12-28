@@ -47,6 +47,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, { bpdEnroll: action.payload.enabled });
     case getType(bpdDeleteUserFromProgram.failure):
     case getType(bpdEnrollUserToProgram.failure):
+    case getType(bpdAllData.failure):
       return mp.track(action.type, { reason: action.payload.message });
 
     // iban
@@ -76,6 +77,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // CashBack details
     case getType(bpdTransactionsLoad.failure):
     case getType(bpdAllData.request):
+    case getType(bpdAllData.success):
     case getType(bpdLoadActivationStatus.request):
       return mp.track(action.type);
     case getType(bpdLoadActivationStatus.success):
