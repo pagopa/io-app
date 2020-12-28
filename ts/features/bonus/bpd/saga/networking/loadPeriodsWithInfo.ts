@@ -21,7 +21,7 @@ import { bpdLoadRaking } from "./ranking";
 export function* loadPeriodsWithInfo(
   bpdClient: Pick<
     ReturnType<typeof BackendBpdClient>,
-    "awardPeriods" | "totalCashback"
+    "awardPeriods" | "totalCashback" | "getRanking"
   >
 ) {
   // Request the period list
@@ -37,7 +37,8 @@ export function* loadPeriodsWithInfo(
     const periods = maybePeriods.value;
 
     const rankings: SagaCallReturnType<typeof bpdLoadRaking> = yield call(
-      bpdLoadRaking
+      bpdLoadRaking,
+      bpdClient.getRanking
     );
 
     if (rankings.isLeft()) {
