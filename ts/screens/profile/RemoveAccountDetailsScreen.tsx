@@ -73,8 +73,7 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   const [otherMotivation, setOtherMotivation] = React.useState<string>("");
 
   const handleContinuePress = () => {
-    const hasActiveBonus =
-      props.bvActiveBonus || getValue(props.bpdActiveBonus);
+    const hasActiveBonus = props.bvActiveBonus || getValue(props.bpdLoadState);
 
     if (hasActiveBonus) {
       Alert.alert(
@@ -236,7 +235,7 @@ const mapStateToProps = (state: GlobalState) => {
   const isError = pot.isError(userDataProcessing.DELETE);
   return {
     bvActiveBonus,
-    bpdActiveBonus,
+    bpdActiveBonus: bpdLoadState,
     userDataProcessing,
     isLoading,
     isError

@@ -20,10 +20,7 @@ import {
   bpdUpsertIban
 } from "../store/actions/iban";
 import { bpdTransactionsLoad } from "../store/actions/transactions";
-import {
-  bpdDetailsLoadAll,
-  bpdLoadActivationStatus
-} from "../store/actions/details";
+import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdSelectPeriod } from "../store/actions/selectedPeriod";
 import {
   bpdPaymentMethodActivation,
@@ -78,7 +75,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       });
     // CashBack details
     case getType(bpdTransactionsLoad.failure):
-    case getType(bpdDetailsLoadAll):
+    case getType(bpdAllData.request):
     case getType(bpdLoadActivationStatus.request):
       return mp.track(action.type);
     case getType(bpdLoadActivationStatus.success):

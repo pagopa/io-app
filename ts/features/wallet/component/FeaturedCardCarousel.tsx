@@ -58,7 +58,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   }
 
   const anyBonusNotActive =
-    !props.bvActive || getValue(props.bpdActiveBonus) === false;
+    !props.bvActive || getValue(props.bpdLoadState) === false;
   return anyBonusNotActive ? (
     <View style={styles.container}>
       <View style={[IOStyles.horizontalContentPadding]}>
@@ -96,7 +96,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
               );
             case ID_BPD_TYPE:
               return (
-                getValue(props.bpdActiveBonus) === false && (
+                getValue(props.bpdLoadState) === false && (
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={I18n.t("bonus.bpd.name")}
@@ -116,7 +116,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  bpdActiveBonus: bpdEnabledSelector(state),
+  bpdLoadState: bpdEnabledSelector(state),
   availableBonusesList: pot.getOrElse(availableBonusTypesSelector(state), [])
 });
 
