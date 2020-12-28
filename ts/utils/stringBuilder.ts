@@ -24,6 +24,22 @@ export const formatNumberAmount = (
     format: displayCurrency ? "€ %n" : "%n"
   });
 
+/**
+ * Converts in a localized value/amount removing the decimal part after the decimal separator
+ * @param amount
+ * @param displayCurrency
+ */
+export const formatNumberWithNoDigits = (
+  amount: number,
+  displayCurrency: boolean = false
+): string =>
+  I18n.toCurrency(amount, {
+    precision: 0,
+    delimiter: I18n.t("global.localization.delimiterSeparator"),
+    separator: I18n.t("global.localization.decimalSeparator"),
+    format: displayCurrency ? "€ %n" : "%n"
+  });
+
 export const formatNumberCentsToAmount = (
   cents: number,
   displayCurrency: boolean = false

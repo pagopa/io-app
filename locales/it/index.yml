@@ -52,8 +52,10 @@ date:
     - "am"
     - "pm"
 global:
+  you: "TU"
   badges:
     blocked: "Bloccato"
+    onGoing: "In corso"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
@@ -1975,6 +1977,9 @@ bonus:
         ranking:
           title: "La tua posizione"
       transaction:
+        label:
+          one: "1 transazione"
+          other: "{{count}} transazioni"
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
         noPaymentMethod:
@@ -2054,6 +2059,12 @@ bonus:
           active: Attivo
           closed: Concluso
           inactive: In arrivo
+      superCashback:
+        rankLabel: "{{position}}º utente in classifica"
+        rankTitle: "Classifica Super Cashback"
+        howItWorks:
+          title: "Come funziona?"
+          body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a {{amount}}.**\n\n**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
 webView:
   error:
