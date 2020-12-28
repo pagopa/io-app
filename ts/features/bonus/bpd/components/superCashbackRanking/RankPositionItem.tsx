@@ -35,7 +35,7 @@ const style = StyleSheet.create({
   }
 });
 
-const RankPositionItem: React.FunctionComponent<Props> = (props: Props) => (
+const RankPositionItem = (props: Props): React.ReactElement => (
   <>
     <View style={[IOStyles.row, IOStyles.flex]}>
       <View
@@ -47,10 +47,12 @@ const RankPositionItem: React.FunctionComponent<Props> = (props: Props) => (
               : IOColors.greyLight
           }
         ]}
+        testID={"PositionBoxContainer"}
       >
         <H4
           color={props.currentUserPosition ? "white" : "bluegreyDark"}
           style={{ textAlign: "center", lineHeight: 30 }}
+          testID={"PositionBoxedLabel"}
         >
           {props.boxedLabel}
         </H4>
@@ -58,16 +60,16 @@ const RankPositionItem: React.FunctionComponent<Props> = (props: Props) => (
       <View hspacer={true} />
       <View style={IOStyles.flex}>
         <View style={[IOStyles.row, { justifyContent: "space-between" }]}>
-          <H4>{props.rankingLabel}</H4>
+          <H4 testID={"RankingLabel"}>{props.rankingLabel}</H4>
           {!props.hideBadge && (
-            <Badge style={style.badgeBlue}>
+            <Badge style={style.badgeBlue} testID={"SuperCashbackAmountBadge"}>
               <Text style={style.badgeText} semibold={true}>
                 {formatNumberWithNoDigits(props.superCashbackAmount, true)}
               </Text>
             </Badge>
           )}
         </View>
-        <H5>
+        <H5 testID={"RankingTransactions"}>
           {I18n.t("bonus.bpd.details.transaction.label", {
             defaultValue: I18n.t("bonus.bpd.details.transaction.label.other", {
               count: props.transactionsNumber

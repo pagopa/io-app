@@ -13,9 +13,12 @@ import {
   isBpdRankingReady
 } from "../../store/reducers/details/periods";
 import { localeDateFormat } from "../../../../../utils/locale";
+import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
+import { formatNumberWithNoDigits } from "../../../../../utils/stringBuilder";
 import { FirstPositionItem } from "./FirstPositionItem";
 import { LastPositionItem } from "./LastPositionItem";
 import UserPositionItem from "./UserPositionItem";
+import SuperCashbackHeader from "./SuperCashbackHeader";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
@@ -78,7 +81,9 @@ const calculateEndDate = (selectedPeriod: BpdPeriodWithInfo): string => {
   return localeDateFormat(endDate, I18n.t("global.dateFormats.shortFormat"));
 };
 
-const SuperCashbackRanking: React.FunctionComponent<Props> = (props: Props) => (
+const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
+  props: Props
+) => (
   <>
     <View spacer={true} />
     <RankingItems {...props} />
@@ -90,6 +95,10 @@ const SuperCashbackRanking: React.FunctionComponent<Props> = (props: Props) => (
     {props.selectedPeriod && (
       <Markdown cssStyle={CSS_STYLE}>
         {I18n.t("bonus.bpd.details.superCashback.howItWorks.body", {
+          citizens: props.selectedPeriod.minPosition,
+          amount: formatNumberWithNoDigits(
+            props.selectedPeriod.superCashbackAmount
+          ),
           endDate: calculateEndDate(props.selectedPeriod)
         })}
       </Markdown>
@@ -101,4 +110,9 @@ const mapStateToProps = (state: GlobalState) => ({
   selectedPeriod: bpdSelectedPeriodSelector(state)
 });
 
-export default connect(mapStateToProps)(SuperCashbackRanking);
+const SuperCashbackRanking = connect(mapStateToProps)(SuperCashbackBottomSheet);
+
+export default SuperCashbackRanking;
+
+export const useSuperCashbackRankingBottomSheet = () =>
+  useIOBottomSheet(<SuperCashbackRanking />, <SuperCashbackHeader />, 520);
