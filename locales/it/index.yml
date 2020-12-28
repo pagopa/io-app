@@ -2044,6 +2044,7 @@ bonus:
           active: Attivo
           closed: Concluso
           inactive: In arrivo
+      lastUpdate: Aggiornato alle {{hour}} del {{date}}
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

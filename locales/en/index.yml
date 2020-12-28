@@ -2013,6 +2013,7 @@ bonus:
           active: Active
           closed: Closed
           inactive: Upcoming
+      lastUpdate: Updated at {{hour}} on {{date}}
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
