@@ -3,7 +3,7 @@ import { ComponentProps } from "react";
 import * as React from "react";
 import { Image, StyleSheet, SafeAreaView } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { index } from "fp-ts/lib/Array";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
@@ -90,6 +90,59 @@ const styles = StyleSheet.create({
 const loadingOpacity = 0.9;
 // for long content markdown computed height should be not enough
 const extraMarkdownBodyHeight = 20;
+
+// TODO get the tos footer from props
+const getTosFooter = (
+  maybeBonusTos: Option<string>,
+  maybeRegulationUrl: Option<{ url: string; name: string }>,
+  handleModalPress: (tos: string) => void
+) => {
+  // if tos and regulation url is defined return a markdown footer including both links reference (BPD)
+  if (maybeBonusTos.isSome() && maybeRegulationUrl.isSome()) {
+    return (
+      <>
+        <View spacer={true} extralarge={true} />
+        <ItemSeparatorComponent noPadded={true} />
+        <View spacer={true} extralarge={true} />
+        <Markdown
+          cssStyle={CSS_STYLE}
+          extraBodyHeight={extraMarkdownBodyHeight}
+        >
+          {I18n.t("bonus.termsAndConditionFooter", {
+            regulationLink: maybeRegulationUrl.value.url,
+            tosUrl: maybeBonusTos.value
+          })}
+        </Markdown>
+      </>
+    );
+  }
+  // if tos is defined return the link (BONUS VACANZE)
+  if (maybeBonusTos.isSome()) {
+    return (
+      <>
+        <View spacer={true} extralarge={true} />
+        <ItemSeparatorComponent noPadded={true} />
+        <View spacer={true} extralarge={true} />
+        <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
+        <TouchableDefaultOpacity
+          onPress={() => handleModalPress(maybeBonusTos.value)}
+          accessibilityRole={"link"}
+        >
+          <Text
+            link={true}
+            semibold={true}
+            ellipsizeMode={"tail"}
+            numberOfLines={1}
+          >
+            {I18n.t("bonus.tos.title")}
+          </Text>
+        </TouchableDefaultOpacity>
+      </>
+    );
+  }
+  return null;
+};
+
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
  */
@@ -151,54 +204,6 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
   };
   const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
 
-  // TODO get the tos footer from props
-  const getTosFooter = () => {
-    // if tos and regulation url is defined return a markdown footer including both links reference (BPD)
-    if (maybeBonusTos.isSome() && maybeRegulationUrl.isSome()) {
-      return (
-        <>
-          <View spacer={true} extralarge={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} extralarge={true} />
-          <Markdown
-            cssStyle={CSS_STYLE}
-            extraBodyHeight={extraMarkdownBodyHeight}
-          >
-            {I18n.t("bonus.termsAndConditionFooter", {
-              regulationLink: maybeRegulationUrl.value.url,
-              tosUrl: maybeBonusTos.value
-            })}
-          </Markdown>
-        </>
-      );
-    }
-    // if tos is defined return the link (BONUS VACANZE)
-    if (maybeBonusTos.isSome()) {
-      return (
-        <>
-          <View spacer={true} extralarge={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} extralarge={true} />
-          <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
-          <TouchableDefaultOpacity
-            onPress={() => handleModalPress(maybeBonusTos.value)}
-            accessibilityRole={"link"}
-          >
-            <Text
-              link={true}
-              semibold={true}
-              ellipsizeMode={"tail"}
-              numberOfLines={1}
-            >
-              {I18n.t("bonus.tos.title")}
-            </Text>
-          </TouchableDefaultOpacity>
-        </>
-      );
-    }
-    return null;
-  };
-
   const maybeCover = maybeNotNullyString(bonusType.cover);
   const maybeSponsorshipDescription = maybeNotNullyString(
     bonusType.sponsorship_description
@@ -258,7 +263,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           </Markdown>
           <View spacer={true} extralarge={true} />
           {isMarkdownLoaded && renderUrls()}
-          {getTosFooter()}
+          {getTosFooter(maybeBonusTos, maybeRegulationUrl, handleModalPress)}
           {isMarkdownLoaded && <EdgeBorderComponent />}
         </Content>
         {!isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
