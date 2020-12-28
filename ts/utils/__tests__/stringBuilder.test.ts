@@ -1,7 +1,11 @@
 import { entries } from "lodash";
 import { Locales } from "../../../locales/locales";
 import { setLocale } from "../../i18n";
-import { formatNumberAmount, formatNumberWithNoDigits } from "../stringBuilder";
+import {
+  formatIntegerNumber,
+  formatNumberAmount,
+  formatNumberWithNoDigits
+} from "../stringBuilder";
 
 const valuesEN = {
   "10.00": 10,
@@ -63,5 +67,30 @@ describe("amountBuilder", () => {
     entries(valuesIT2).forEach(([k, v]) =>
       expect(formatNumberWithNoDigits(v)).toEqual(k)
     );
+  });
+});
+
+describe("formatIntegerNumber", () => {
+  it("should render integer number correctly for IT language", async () => {
+    setLocale("it" as Locales);
+    expect(formatIntegerNumber(1000000)).toEqual("1.000.000");
+    expect(formatIntegerNumber(100000)).toEqual("100.000");
+    expect(formatIntegerNumber(10000)).toEqual("10.000");
+    expect(formatIntegerNumber(1000)).toEqual("1.000");
+    expect(formatIntegerNumber(100)).toEqual("100");
+    expect(formatIntegerNumber(10)).toEqual("10");
+    expect(formatIntegerNumber(1)).toEqual("1");
+    expect(formatIntegerNumber(1000000.1)).toEqual("1.000.000");
+  });
+  it("should render integer number correctly for EN language", async () => {
+    setLocale("en" as Locales);
+    expect(formatIntegerNumber(1000000)).toEqual("1,000,000");
+    expect(formatIntegerNumber(100000)).toEqual("100,000");
+    expect(formatIntegerNumber(10000)).toEqual("10,000");
+    expect(formatIntegerNumber(1000)).toEqual("1,000");
+    expect(formatIntegerNumber(100)).toEqual("100");
+    expect(formatIntegerNumber(10)).toEqual("10");
+    expect(formatIntegerNumber(1)).toEqual("1");
+    expect(formatIntegerNumber(1000000.1)).toEqual("1,000,000");
   });
 });
