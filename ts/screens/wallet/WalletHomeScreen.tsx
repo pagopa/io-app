@@ -325,7 +325,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     if (
       this.props.allActiveBonus.length === 0 ||
       this.props.allActiveBonus.every(ab => isStrictSome(ab)) ||
-      pot.isLoading(this.props.bpdActiveBonus)
+      pot.isSome(this.props.bpdActiveBonus)
     ) {
       return "refresh";
     }
