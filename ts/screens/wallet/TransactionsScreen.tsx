@@ -19,6 +19,7 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
 import I18n from "../../i18n";
+
 import {
   navigateToTransactionDetailsScreen,
   navigateToWalletHome,
@@ -76,8 +77,26 @@ const styles = StyleSheet.create({
 
   brandDarkGray: {
     color: variables.brandDarkGray
-  }
+  },
+  cardBox: {
+    height: 152,
+    paddingTop: 20,
+    paddingBottom: 22,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 4.65,
+    zIndex: 7,
+    elevation: 7
+  },
 });
+ 
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.walletCardTransaction.contextualHelpTitle",
@@ -106,19 +125,21 @@ class TransactionsScreen extends React.Component<Props> {
   ) {
     return (
       <React.Fragment>
-        <CardComponent
-          type={"Header"}
-          wallet={selectedWallet}
-          hideFavoriteIcon={false}
-          hideMenu={false}
-          isFavorite={isFavorite}
-          onSetFavorite={(willBeFavorite: boolean) =>
-            handleSetFavourite(willBeFavorite, () =>
-              this.props.setFavoriteWallet(selectedWallet.idWallet)
-            )
-          }
-          onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
-        />
+        <View style={styles.cardBox}>
+          <CardComponent
+            type={"Header"}
+            wallet={selectedWallet}
+            hideFavoriteIcon={false}
+            hideMenu={false}
+            isFavorite={isFavorite}
+            onSetFavorite={(willBeFavorite: boolean) =>
+              handleSetFavourite(willBeFavorite, () =>
+                this.props.setFavoriteWallet(selectedWallet.idWallet)
+              )
+            }
+            onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
+          />
+        </View>
       </React.Fragment>
     );
   }
