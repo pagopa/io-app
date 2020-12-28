@@ -697,9 +697,9 @@ datetimes:
   notValid: Invalid date.
 payment:
   errorDetails: Details
-  currentPsp: Your current PSP is
+  currentPsp: Payment will be handled by
   noPsp: You have yet to select a PSP
-  changePsp: Change PSP
+  changePsp: Edit
   IUV: IUV
   IUV_extended: Identificativo Univoco di Versamento
   notice: Notice
@@ -750,7 +750,7 @@ wallet:
     header: Add PagoBANCOMAT
     title: Search for your PagoBANCOMAT cards
     description:
-      text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the"
+      text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
       text2: information on the processing of personal data.
       text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
       text4: by searching among those available
@@ -806,10 +806,22 @@ wallet:
           skip: "Maybe later"
     satispay:
       headerTitle: "Add Satispay"
+      start:
+        title: "Do you want to add your Satispay account to IO?"
+        body: "We will check if there is a Satispay account associated with your tax code."
+        cta: "Information on the processing of personal data"
       loadingSearch:
         title: "We are verifying your Satispay account\n\nPlease wait a few seconds"
       loadingAdd:
         title: "We are adding your Satispay account\n\nPlease wait a few seconds"
+      add:
+        title: "Do you want to add this Satispay account?"
+      koTimeout:
+        title: "We were unable to contact Satispay"
+        body: "Retry please"
+      koNotFound:
+        title: "Sorry, we do not know that you have activated Satispay yet"
+        body: "Contact Satispay for activation"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1105,7 +1117,7 @@ wallet:
         two: "can't be used to make in-app payments"
         three: ", but they can only be used at physical stores (POS)."
       debit:
-        title: "Does your card have other logos?"
+        title: "Does your card have one of these logos?"
         body: "If your PagoBANCOMAT card has other international circuits, you can also add it as a **debit or credit card** by entering its number on the front. When you activate Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add as Debit/Credit Card"
       removeCta: "Delete this payment method"
@@ -1927,11 +1939,11 @@ bonus:
           summary:
             bottomSheet:
               title: "When will you find your transactions?"
-              body: "**Have more than 5 business days gone by already?**\n\n- Check to see if your bank has already **accounted** for the transaction, our systems will add it the next day.\n\n- The transaction may have been handled with the POS of a party (acquirer) **not yet contracted.** [Read more](https://io.italia.it/cashback/acquirer/)"
+              body: "**Still not seeing your transaction?**\n\n- Check if your bank has already **recorded** the transaction: data are sent to IO app within 5 working days from the recording.\n\n- Payments made using Google Pay, Apple Pay, and Samsung Pay are not supported yet. We are working with your bank to support these transactions as well.\n\n- The transaction may have been handled with the POS of a company (acquirer) **not affiliated yet.** [Read more](https://io.italia.it/cashback/acquirer/)"
             calendarBlock:
-              text1: "Please note that before you see the transaction on IO, "
-              text2: "it can take up to 3 working days"
-              text3: ", in some cases even more."
+              text1: "Please note that before you'll see the transaction on IO,"
+              text2: "it usually takes up 3 working days"
+              text3: "."
             lastUpdated: "Latest valid transaction: "
             link: Anything missing?
             body:

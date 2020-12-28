@@ -1,25 +1,23 @@
-import { select } from "redux-saga-test-plan/matchers";
-import { all, put, take } from "redux-saga/effects";
+import { select, take } from "redux-saga-test-plan/matchers";
+import { all, put } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { loadAbi } from "../../../../wallet/onboarding/bancomat/store/actions";
 import { abiSelector } from "../../../../wallet/onboarding/store/abi";
 import { isReady } from "../../model/RemoteValue";
-import { bpdAmountLoad } from "../../store/actions/amount";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
-import { bpdPeriodsLoad } from "../../store/actions/periods";
+import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import { bpdTransactionsLoad } from "../../store/actions/transactions";
 
 /**
- * Prefetch all the BPD details data:
+ * Load all the BPD details data:
  * - Activation Status
  * - Abi list
  * - Periods
- * - Amount foreach periods
- * - Transactions foreach period
+ * - Amount foreach period !== "Inactive"
+ * - Transactions foreach period !== "Inactive"
  */
-export function* prefetchBpdData() {
+export function* loadBpdData() {
   yield put(bpdLoadActivationStatus.request());
-  yield put(bpdPeriodsLoad.request());
 
   const abiList: ReturnType<typeof abiSelector> = yield select(abiSelector);
 
@@ -30,23 +28,20 @@ export function* prefetchBpdData() {
     yield put(loadAbi.request());
   }
 
-  const result: ActionType<
-    typeof bpdPeriodsLoad.success | typeof bpdPeriodsLoad.failure
+  yield put(bpdPeriodsAmountLoad.request());
+
+  const periods: ActionType<
+    typeof bpdPeriodsAmountLoad.success | typeof bpdPeriodsAmountLoad.failure
   > = yield take([
-    getType(bpdPeriodsLoad.success),
-    getType(bpdPeriodsLoad.failure)
+    getType(bpdPeriodsAmountLoad.success),
+    getType(bpdPeriodsAmountLoad.failure)
   ]);
 
-  if (result.type === getType(bpdPeriodsLoad.success)) {
+  if (periods.type === getType(bpdPeriodsAmountLoad.success)) {
     yield all(
-      result.payload.map(period =>
-        put(bpdAmountLoad.request(period.awardPeriodId))
-      )
-    );
-    yield all(
-      result.payload.map(period =>
-        put(bpdTransactionsLoad.request(period.awardPeriodId))
-      )
+      periods.payload
+        .filter(p => p.status !== "Inactive")
+        .map(period => put(bpdTransactionsLoad.request(period.awardPeriodId)))
     );
   }
 }

@@ -119,6 +119,7 @@ import {
 } from "../actions/wallet/wallets";
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
+import trackBancomatAction from "../../features/wallet/bancomat/analytics/index";
 import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
 
 // eslint-disable-next-line complexity
@@ -432,6 +433,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     // API token
     trackAction(mixpanel)(action).then(constNull, constNull);
     trackBpdAction(mixpanel)(action).then(constNull, constNull);
+    trackBancomatAction(mixpanel)(action).then(constNull, constNull);
     trackSatispayAction(mixpanel)(action).then(constNull, constNull);
   }
   return next(action);

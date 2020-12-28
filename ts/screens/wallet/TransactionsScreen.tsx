@@ -106,13 +106,6 @@ class TransactionsScreen extends React.Component<Props> {
   ) {
     return (
       <React.Fragment>
-        <View>
-          <View spacer={true} large={true} />
-          <View style={styles.walletBannerText}>
-            <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
-          </View>
-        </View>
-
         <CardComponent
           type={"Header"}
           wallet={selectedWallet}

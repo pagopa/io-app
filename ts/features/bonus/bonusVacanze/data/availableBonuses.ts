@@ -72,6 +72,8 @@ export const availableBonuses: BonusesAvailable = [
     id_type: ID_BONUS_VACANZE_TYPE,
     it: {
       name: "Bonus Vacanze",
+      description:
+        "Fino a 500€ a nucleo familiare per andare in vacanza in Italia",
       subtitle:
         "L'incentivo per supportare il settore del turismo dopo il lockdown richiesto dal COVID-19",
       title: "Richiesta Bonus Vacanze",
@@ -80,6 +82,7 @@ export const availableBonuses: BonusesAvailable = [
     },
     en: {
       name: "Bonus Vacanze",
+      description: "Up to € 500 per family to go on holiday in Italy",
       subtitle:
         "The incentive established to support tourism after the lockdown due to the Coronavirus emergency.",
       title: "Bonus Vacanze Request",

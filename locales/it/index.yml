@@ -717,9 +717,9 @@ datetimes:
   notValid: Data non valida.
 payment:
   errorDetails: Dettagli
-  currentPsp: Il PSP scelto è
+  currentPsp: Il pagamento sarà gestito da
   noPsp: Non hai ancora selezionato un PSP
-  changePsp: Cambia PSP
+  changePsp: Modifica gestore
   IUV: IUV
   IUV_extended: Identificativo Univoco di Versamento
   notice: Avviso
@@ -823,13 +823,25 @@ wallet:
           title: "Vuoi attivare il Cashback?"
           body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
           body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
-          skip: "Non ora, grazie"
+          skip: "Non ora"
     satispay:
       headerTitle: "Aggiungi Satispay"
+      start:
+        title: "Vuoi aggiungere su IO il tuo account Satispay?"
+        body: "Verificheremo se esiste un account Satispay associato al tuo codice fiscale."
+        cta: "Informativa sul trattamento dei dati personali"
       loadingSearch:
         title: "Stiamo verificando il tuo account Satispay\n\nAttendi qualche secondo"
       loadingAdd:
         title: "Stiamo aggiungendo il tuo account Satispay\n\nAttendi qualche secondo"
+      add:
+        title: "Vuoi aggiungere questo account Satispay?"
+      koTimeout:
+        title: "Non siamo riusciti a contattare Satispay"
+        body: "Riprova per favore"
+      koNotFound:
+        title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
+        body: "Contatta Satispay per l’attivazione"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1038,7 +1050,7 @@ wallet:
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
     digital:
       name: App e strumenti di pagamento digitali
-      description: Usa i tuoi strumenti digitali preferiti per pagare su IO
+      description: I tuoi strumenti digitali preferiti su IO
     pagobancomat:
       name: Carta PagoBANCOMAT
       description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
@@ -1047,10 +1059,10 @@ wallet:
       maxFee: Commissione massima 0.50€
     satispay:
       name: Satispay
-      description: Paga con Satispay
+      description: Abbina il tuo account Satispay
     bancomatPay:
       name: BANCOMAT Pay
-      description: Paga con BANCOMAT Pay
+      description: Abbina il tuo account BANCOMAT Pay
     postepayApp: 
       name: Postepay
       description: la tua app Postepay
@@ -1131,7 +1143,7 @@ wallet:
         two: "non consentono di pagare tramite IO"
         three: ", ma solo presso i punti fisici (POS)."
       debit:
-        title: "La tua carta ha più di un logo?"
+        title: "La tua carta ha uno di questi loghi?"
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerla anche come **carta di debito o di credito**, inserendo il numero della carta sul fronte. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi Carta di Debito/Credito"
       removeCta: "Elimina questo metodo di pagamento"
@@ -1958,11 +1970,11 @@ bonus:
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
-              body: "**Sono già passati più di 5 giorni lavorativi?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione, i nostri sistemi la aggiungeranno il giorno successivo.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
+              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- I pagamenti effettuati con Google Pay, Apple Pay e Samsung Pay non sono ancora supportati. Stiamo lavorando con la tua banca per ricevere anche questo tipo di transazioni.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
             calendarBlock:
-              text1: "Ti informiamo che prima che tu veda la transazione su IO, "
-              text2: "possono passare fino a 3 giorni lavorativi"
-              text3: ", in alcuni casi anche di più."
+              text1: "Ti informiamo che prima che tu veda la transazione su IO,"
+              text2: "possono passare in media 3 giorni lavorativi"
+              text3: "."
             lastUpdated: "Ultima transazione valida: "
             link: "Manca qualcosa?"
             body:
