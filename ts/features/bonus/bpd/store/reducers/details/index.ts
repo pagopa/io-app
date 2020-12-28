@@ -3,6 +3,7 @@ import { Action, combineReducers } from "redux";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { BpdTransaction } from "../../actions/transactions";
 import bpdActivationReducer, { BpdActivation } from "./activation";
+import { bpdLastUpdateReducer, lastUpdate } from "./lastUpdate";
 import {
   bpdPaymentMethodsReducer,
   BpdPotPaymentMethodActivation
@@ -17,6 +18,7 @@ export type BpdDetailsState = {
   periods: pot.Pot<IndexedById<BpdPeriodWithInfo>, Error>;
   selectedPeriod: BpdPeriodWithInfo | null;
   transactions: IndexedById<pot.Pot<ReadonlyArray<BpdTransaction>, Error>>;
+  lastUpdate: lastUpdate;
 };
 
 const bpdDetailsReducer = combineReducers<BpdDetailsState, Action>({
@@ -28,7 +30,9 @@ const bpdDetailsReducer = combineReducers<BpdDetailsState, Action>({
   periods: bpdPeriodsReducer,
   // the current period displayed, selected by the user
   selectedPeriod: bpdSelectedPeriodsReducer,
-  transactions: bpdTransactionsReducer
+  transactions: bpdTransactionsReducer,
+  // the last time we received updated data
+  lastUpdate: bpdLastUpdateReducer
 });
 
 export default bpdDetailsReducer;

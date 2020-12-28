@@ -13,6 +13,7 @@ import {
 import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
 import ROUTES from "../../../../../../navigation/routes";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
+import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getAsyncResult } from "../../../../../../utils/saga";
@@ -82,6 +83,9 @@ export function* bpdStartOnboardingWorker() {
   );
 
   if (isBpdActive.isRight()) {
+    // Refresh the wallets to prevent that added cards are not visible
+    yield put(fetchWalletsRequest());
+
     yield put(navigateToBpdOnboardingInformationTos());
     yield put(navigationHistoryPop(1));
 
