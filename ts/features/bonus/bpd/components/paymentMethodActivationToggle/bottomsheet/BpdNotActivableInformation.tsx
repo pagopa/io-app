@@ -1,5 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
@@ -14,6 +16,13 @@ type Props = {
   type: NotActivableType;
   representation: PaymentMethodRepresentation;
 };
+
+const styles = StyleSheet.create({
+  body: {
+    flex: 1,
+    backgroundColor: "white"
+  }
+});
 
 const getBody = (type: NotActivableType) => {
   switch (type) {
@@ -34,7 +43,7 @@ const getTitle = (type: NotActivableType) => {
 };
 
 export const BpdNotActivableInformation: React.FunctionComponent<Props> = props => (
-  <View>
+  <View style={[styles.body, IOStyles.horizontalContentPadding]}>
     <View spacer={true} />
     <PaymentMethodRepresentationComponent {...props.representation} />
     <View spacer={true} />

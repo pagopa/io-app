@@ -12,6 +12,8 @@ import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   enrollmentDecoder,
   EnrollmentT,
+  findRankingUsingGETDefaultDecoder,
+  FindRankingUsingGETT,
   findUsingGETDecoder,
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
@@ -119,6 +121,15 @@ const findPayment: FindPaymentUsingGETT = {
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: findUsingGETDefaultDecoder()
+};
+
+/* citizen ranking (super cashback) */
+const getRanking: FindRankingUsingGETT = {
+  method: "get",
+  url: () => `/bpd/io/citizen/ranking`,
+  query: (_: { awardPeriodId?: string }) => ({}),
+  headers: headersProducers(),
+  response_decoder: findRankingUsingGETDefaultDecoder()
 };
 
 const enrollPayment: EnrollmentPaymentInstrumentIOUsingPUTT = {
@@ -320,6 +331,7 @@ export function BackendBpdClient(
     ),
     winningTransactions: withBearerToken(
       createFetchRequestForApi(winningTransactions, options)
-    )
+    ),
+    getRanking: withBearerToken(createFetchRequestForApi(getRanking, options))
   };
 }
