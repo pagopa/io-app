@@ -22,8 +22,12 @@ import { maybeNotNullyString } from "../../utils/strings";
 import { GlobalState } from "../../store/reducers/types";
 import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
+import { AlertModal } from "../../components/ui/AlertModal";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 
 type Props = NavigationScreenProps &
+  LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -374,6 +378,14 @@ class PinScreen extends React.PureComponent<Props, State> {
     );
   };
 
+  private showModal() {
+    this.props.showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+      />
+    );
+  }
+
   public render() {
     const { pinState } = this.state;
 
@@ -413,6 +425,8 @@ class PinScreen extends React.PureComponent<Props, State> {
           this.props.createPinSuccess(pin);
           // user is updating his/her pin inside the app, go back
           if (this.props.isOnboardingCompleted) {
+            // We need to ask the user to restart the app
+            this.showModal();
             this.props.navigation.goBack();
           }
         },
@@ -447,4 +461,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   abortOnboarding: () => dispatch(abortOnboarding())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PinScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLightModalContext(PinScreen));

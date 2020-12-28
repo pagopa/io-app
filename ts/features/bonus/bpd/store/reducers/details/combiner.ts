@@ -12,7 +12,7 @@ import { BpdPaymentMethodActivation } from "../../actions/paymentMethods";
 import { BpdTransaction } from "../../actions/transactions";
 import { bpdEnabledSelector } from "./activation";
 import { bpdPaymentMethodActivationSelector } from "./paymentMethods";
-import { BpdPeriodWithAmount, bpdPeriodsSelector } from "./periods";
+import { BpdPeriodWithInfo, bpdPeriodsSelector } from "./periods";
 import { bpdSelectedPeriodSelector } from "./selectedPeriod";
 import { bpdTransactionsForSelectedPeriod } from "./transactions";
 
@@ -25,8 +25,8 @@ import { bpdTransactionsForSelectedPeriod } from "./transactions";
  * @param bpdEnabled
  */
 const isPeriodAmountWalletVisible = (
-  periodList: ReadonlyArray<BpdPeriodWithAmount>,
-  periodAmount: BpdPeriodWithAmount,
+  periodList: ReadonlyArray<BpdPeriodWithInfo>,
+  periodAmount: BpdPeriodWithInfo,
   bpdEnabled: RemoteValue<boolean, Error>
 ) =>
   isReady(bpdEnabled) &&
@@ -41,7 +41,7 @@ const isPeriodAmountWalletVisible = (
       bpdEnabled.value));
 
 /**
- * Return the {@link BpdPeriodWithAmount} that can be visible in the wallet
+ * Return the {@link BpdPeriodWithInfo} that can be visible in the wallet
  */
 export const bpdPeriodsAmountWalletVisibleSelector = createSelector(
   [bpdPeriodsSelector, bpdEnabledSelector],
@@ -75,13 +75,13 @@ export const bpdPeriodsAmountWalletVisibleSelector = createSelector(
  * @param bpdEnabled
  */
 const isPeriodAmountSnappedVisible = (
-  periodAmount: BpdPeriodWithAmount,
+  periodAmount: BpdPeriodWithInfo,
   bpdEnabled: RemoteValue<boolean, Error>
 ) =>
   periodAmount.status === "Closed" || (isReady(bpdEnabled) && bpdEnabled.value);
 
 /**
- * Return the {@link BpdPeriodWithAmount} that should be visible in the snapped List selector
+ * Return the {@link BpdPeriodWithInfo} that should be visible in the snapped List selector
  */
 export const bpdPeriodsAmountSnappedListSelector = createSelector(
   [bpdPeriodsSelector, bpdEnabledSelector],
