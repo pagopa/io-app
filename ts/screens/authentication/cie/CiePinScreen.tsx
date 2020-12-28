@@ -39,6 +39,8 @@ import { Body } from "../../../components/core/typography/Body";
 import { openWebUrl } from "../../../utils/url";
 import { Link } from "../../../components/core/typography/Link";
 import Markdown from "../../../components/ui/Markdown";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
@@ -52,6 +54,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: variables.contentPadding
+  },
+  bsLinkButton: {
+    paddingRight: 0,
+    paddingLeft: 0,
+    marginVertical: 20,
+    height: 60,
+    backgroundColor: IOColors.white
   }
 });
 
@@ -68,9 +77,13 @@ const CiePinScreen: React.FC<Props> = props => {
   const { present } = useIOBottomSheet(
     <View>
       <Body>{I18n.t("authentication.cie.pin.bottomSheetText")}</Body>
-      <Link onPress={onOpenForgotPINPage}>
-        {I18n.t("authentication.cie.pin.bottomSheetCTA")}
-      </Link>
+      <ButtonDefaultOpacity
+        onPress={onOpenForgotPINPage}
+        style={styles.bsLinkButton}
+        onPressWithGestureHandler={true}
+      >
+        <Link>{I18n.t("authentication.cie.pin.bottomSheetCTA")}</Link>
+      </ButtonDefaultOpacity>
     </View>,
     I18n.t("authentication.cie.pin.bottomSheetTitle"),
     300
@@ -84,21 +97,12 @@ const CiePinScreen: React.FC<Props> = props => {
   });
 
   const [pin, setPin] = useState("");
-  const [url, setUrl] = useState<string | undefined>(undefined);
 
   const continueButtonRef = useRef<FooterWithButtons>(null);
   const PINPadViewRef = useRef<View>(null);
 
   const onProceedToCardReaderScreen = async (url: string) => {
     setPin("");
-    setUrl(url);
-  };
-
-  // Handles URL receival.
-  useEffect(() => {
-    if (url === undefined) {
-      return;
-    }
 
     navigate({
       routeName: ROUTES.CIE_CARD_READER_SCREEN,
@@ -109,7 +113,7 @@ const CiePinScreen: React.FC<Props> = props => {
     });
 
     hideModal();
-  }, [url]);
+  };
 
   const handleAuthenticationOverlayOnClose = () => {
     setPin("");
@@ -133,20 +137,12 @@ const CiePinScreen: React.FC<Props> = props => {
   const onPinChanged = (pin: string) => setPin(pin);
 
   useEffect(() => {
-    if (pin === "") {
-      return;
-    }
-
     if (pin.length === CIE_PIN_LENGTH) {
       setAccessibilityFocus(continueButtonRef, 100 as Millisecond);
     }
   }, [pin]);
 
   const doSetAccessibilityFocus = useCallback(() => {
-    if (!PINPadViewRef.current) {
-      return;
-    }
-
     setAccessibilityFocus(PINPadViewRef, 100 as Millisecond);
   }, [PINPadViewRef]);
 
