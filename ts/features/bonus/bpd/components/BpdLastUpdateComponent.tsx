@@ -44,7 +44,7 @@ const UpdateLabel = (props: Props & { caption: string }) =>
   );
 
 /**
- * This component show the last time in wich the bpd periods are loaded correctly
+ * This component show the last time in which the bpd periods are loaded correctly
  * and allow to request a refresh of the bpd periods data.
  * @param props
  */
