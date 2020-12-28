@@ -12,6 +12,7 @@ import I18n from "../../../../../../../../i18n";
 import { configSelector } from "../../../../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../../../../store/reducers/types";
 import { formatIntegerNumber } from "../../../../../../../../utils/stringBuilder";
+import { useSuperCashbackRankingBottomSheet } from "../../../../../components/superCashbackRanking/SuperCashbackRanking";
 import {
   BpdPeriodWithInfo,
   BpdRanking,
@@ -47,32 +48,35 @@ const SuperCashbackRankingReady = (props: {
   minRanking: number;
 }): React.ReactElement => {
   const { title, of } = loadLocales();
+  const { present } = useSuperCashbackRankingBottomSheet();
   return (
-    <BpdBaseShadowBoxLayout
-      row1={
-        <H5 testID={"supercashbackSummary.title"} style={styles.title}>
-          {title}
-        </H5>
-      }
-      row2={
-        <H2
-          testID={"supercashbackSummary.ranking"}
-          color={"blue"}
-          style={styles.title}
-        >
-          {formatIntegerNumber(props.ranking)}°
-        </H2>
-      }
-      row3={
-        <H5
-          testID={"supercashbackSummary.minRanking"}
-          color={"bluegrey"}
-          style={styles.title}
-        >
-          {of} {formatIntegerNumber(props.minRanking)}
-        </H5>
-      }
-    />
+    <TouchableOpacity onPress={present} style={IOStyles.flex}>
+      <BpdBaseShadowBoxLayout
+        row1={
+          <H5 testID={"supercashbackSummary.title"} style={styles.title}>
+            {title}
+          </H5>
+        }
+        row2={
+          <H2
+            testID={"supercashbackSummary.ranking"}
+            color={"blue"}
+            style={styles.title}
+          >
+            {formatIntegerNumber(props.ranking)}°
+          </H2>
+        }
+        row3={
+          <H5
+            testID={"supercashbackSummary.minRanking"}
+            color={"bluegrey"}
+            style={styles.title}
+          >
+            {of} {formatIntegerNumber(props.minRanking)}
+          </H5>
+        }
+      />
+    </TouchableOpacity>
   );
 };
 
