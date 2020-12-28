@@ -10,7 +10,9 @@ import { BpdPeriod } from "../../../../../store/actions/periods";
  * @param props
  * @constructor
  */
-export const InactiveTextualSummary = (props: { period: BpdPeriod }) => (
+export const InactiveTextualSummary = (props: {
+  period: BpdPeriod;
+}): React.ReactElement => (
   <InfoBox>
     <Body testID={"inactivePeriod"}>
       {I18n.t(
