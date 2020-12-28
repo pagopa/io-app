@@ -14,7 +14,6 @@ import {
 } from "../../../../model/RemoteValue";
 import {
   bpdDetailsLoadAll,
-  bpdDetailsLoadAllWithBackoff,
   bpdLoadActivationStatus
 } from "../../../actions/details";
 import {
