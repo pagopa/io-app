@@ -1,5 +1,5 @@
 import { select, take } from "redux-saga-test-plan/matchers";
-import { all, put } from "redux-saga/effects";
+import { all, call, put } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { loadAbi } from "../../../../wallet/onboarding/bancomat/store/actions";
 import { abiSelector } from "../../../../wallet/onboarding/store/abi";
@@ -7,6 +7,7 @@ import { isReady } from "../../model/RemoteValue";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import { bpdTransactionsLoad } from "../../store/actions/transactions";
+import { backoffWait } from "../../../../../utils/saga";
 
 /**
  * Load all the BPD details data:
@@ -17,6 +18,8 @@ import { bpdTransactionsLoad } from "../../store/actions/transactions";
  * - Transactions foreach period !== "Inactive"
  */
 export function* loadBpdData() {
+  // wait if some previous errors occurred
+  yield call(backoffWait, getType(bpdLoadActivationStatus.failure));
   yield put(bpdLoadActivationStatus.request());
 
   const abiList: ReturnType<typeof abiSelector> = yield select(abiSelector);

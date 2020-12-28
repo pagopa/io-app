@@ -12,7 +12,11 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../model/RemoteValue";
-import { bpdLoadActivationStatus } from "../../../actions/details";
+import {
+  bpdDetailsLoadAll,
+  bpdDetailsLoadAllWithBackoff,
+  bpdLoadActivationStatus
+} from "../../../actions/details";
 import {
   bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
@@ -44,6 +48,7 @@ const enabledReducer = (
   action: Action
 ): RemoteValue<boolean, Error> => {
   switch (action.type) {
+    case getType(bpdDetailsLoadAll):
     case getType(bpdLoadActivationStatus.request):
     case getType(bpdEnrollUserToProgram.request):
       return remoteLoading;
@@ -128,7 +133,7 @@ export const bpdUnsubscriptionSelector = createSelector(
  */
 export const bpdIbanPrefillSelector = createSelector(
   [bpdIbanSelector, bpdUpsertIbanSelector],
-  (iban, upsertIban): string  =>
+  (iban, upsertIban): string =>
     fromNullable(upsertIban.value as string).getOrElse(
       fromNullable(getValue(iban)).getOrElse("")
     )

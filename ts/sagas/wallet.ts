@@ -154,7 +154,7 @@ import {
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
 import { ContentClient } from "../api/content";
-import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
+import { backoffWait } from "../utils/saga";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -537,17 +537,6 @@ function* pollTransactionSaga(
   yield put(pollTransactionSagaTimeout());
   if (onTimeout) {
     onTimeout();
-  }
-}
-
-// select the delay time from store
-// and if it is > 0, wait that time
-function* backoffWait() {
-  const delayTime: ReturnType<typeof backOffWaitingTime> = yield select(
-    backOffWaitingTime
-  );
-  if (delayTime > 0) {
-    yield delay(delayTime);
   }
 }
 

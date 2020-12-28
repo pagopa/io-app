@@ -1,6 +1,14 @@
-import { put, PutEffect, take, TakeEffect } from "redux-saga/effects";
+import {
+  delay,
+  put,
+  PutEffect,
+  select,
+  take,
+  TakeEffect
+} from "redux-saga/effects";
 import { AsyncActionCreator, getType, PayloadAction } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
+import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
 
 /**
  * execute an async action dispatching request and wait for the result.
@@ -28,4 +36,16 @@ export function* getAsyncResult<T, I>(
     return right<Error, T>(result.payload as T);
   }
   return left<Error, T>(result.payload as Error);
+}
+
+// select the delay time from store
+// and if it is > 0, wait that time
+export function* backoffWait(key: string) {
+  const computeDelay: ReturnType<typeof backOffWaitingTime> = yield select(
+    backOffWaitingTime
+  );
+  const delayTime = computeDelay(key);
+  if (delayTime > 0) {
+    yield delay(delayTime);
+  }
 }
