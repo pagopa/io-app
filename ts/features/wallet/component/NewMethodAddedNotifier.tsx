@@ -23,8 +23,11 @@ const newBancomatBottomSheet = () => {
   return {
     present: () =>
       openBottomSheet(
-        <BancomatInformation onAddPaymentMethod={dismiss} hideInfobox={true} />,
-        I18n.t("wallet.bancomat.details.debit.title"),
+        <BancomatInformation
+          onAddPaymentMethod={dismiss}
+          hideCobrandTitle={true}
+        />,
+        I18n.t("wallet.bancomat.details.debit.title")
       ),
     dismiss
   };
