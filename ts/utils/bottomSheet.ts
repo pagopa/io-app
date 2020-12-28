@@ -25,7 +25,7 @@ export type BottomSheetProps = {
  */
 export const bottomSheetContent = async (
   content: React.ReactNode,
-  title: string,
+  title: string | React.ReactNode,
   snapPoint: number,
   onClose: () => void
 ): Promise<BottomSheetProps> => {
@@ -82,7 +82,7 @@ export const bottomSheetRawConfig = (
  */
 export const useIOBottomSheet = (
   component: React.ReactNode,
-  title: string,
+  title: string | React.ReactNode,
   snapPoint: number
 ) => {
   const { present, dismiss } = useBottomSheetModal();

@@ -102,10 +102,8 @@ export const ActiveTextualSummary = (props: Props) => {
       );
     }
     // The max cashback amount is reached
-    {
-      if (props.period.amount.totalCashback >= props.period.maxPeriodCashback) {
-        return <MaxAmount name={props.name} />;
-      }
+    if (props.period.amount.totalCashback >= props.period.maxPeriodCashback) {
+      return <MaxAmount name={props.name} />;
     }
     // Cashback unlocked! visible for the next 10 transaction only
     if (
