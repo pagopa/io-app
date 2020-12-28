@@ -27,7 +27,6 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 
 type OwnProps = {
   bonus: BonusAvailable;
-  onConfirm?: () => void;
   onCancel?: () => void;
   primaryCtaText: string;
 };
@@ -107,12 +106,6 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     bordered: true,
     onPress: props.onCancel,
     title: I18n.t("global.buttons.cancel")
-  };
-  const requestButtonProps = {
-    block: true,
-    primary: true,
-    onPress: props.onConfirm,
-    title: props.primaryCtaText
   };
 
   const onMarkdownLoaded = () => {
@@ -204,11 +197,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     bonusType.sponsorship_description
   );
   const footerComponent = (
-    <FooterWithButtons
-      type="TwoButtonsInlineThird"
-      leftButton={cancelButtonProps}
-      rightButton={requestButtonProps}
-    />
+    <FooterWithButtons type="SingleButton" leftButton={cancelButtonProps} />
   );
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent
