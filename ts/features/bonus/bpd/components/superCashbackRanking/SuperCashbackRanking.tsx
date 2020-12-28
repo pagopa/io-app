@@ -14,7 +14,11 @@ import {
 } from "../../store/reducers/details/periods";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
-import { formatNumberWithNoDigits } from "../../../../../utils/stringBuilder";
+import {
+  formatIntegerNumber,
+  formatNumberAmount,
+  formatNumberWithNoDigits
+} from "../../../../../utils/stringBuilder";
 import { FirstPositionItem } from "./FirstPositionItem";
 import { LastPositionItem } from "./LastPositionItem";
 import UserPositionItem from "./UserPositionItem";
@@ -95,10 +99,8 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
     {props.selectedPeriod && (
       <Markdown cssStyle={CSS_STYLE}>
         {I18n.t("bonus.bpd.details.superCashback.howItWorks.body", {
-          citizens: props.selectedPeriod.minPosition,
-          amount: formatNumberWithNoDigits(
-            props.selectedPeriod.superCashbackAmount
-          ),
+          citizens: formatIntegerNumber(props.selectedPeriod.minPosition),
+          amount: formatNumberAmount(props.selectedPeriod.superCashbackAmount),
           endDate: calculateEndDate(props.selectedPeriod)
         })}
       </Markdown>
