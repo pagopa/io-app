@@ -1026,6 +1026,12 @@ wallet:
       name: Credit, debit or prepaid card
       shortName: "Card"
       description: The card issued by your bank that you normally use to pay in stores and online
+      pagoPaCapability:
+        title: In app payments 
+        description: Make payments to the public administration through pagoPA
+        active: Active
+        arriving: Arriving
+        incompatible: Incompatible
     bonus:
       name: Discount, bonus and other services
       description: Public initiatives to support Economy, or services related to payments
