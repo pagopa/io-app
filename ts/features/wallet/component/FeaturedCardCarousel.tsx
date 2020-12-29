@@ -13,6 +13,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { bpdEnabled } from "../../../config";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
+import { GlobalState } from "../../../store/reducers/types";
 import { availableBonusTypesSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_BPD_TYPE } from "../../bonus/bonusVacanze/utils/bonus";
 import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
