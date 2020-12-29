@@ -8,7 +8,7 @@ import { useIOBottomSheet } from "../../../../../../../../utils/bottomSheet";
  * Display information about the current period
  * @constructor
  */
-export const RankingNotReady = (): React.ReactElement => (
+const RankingNotReady = (): React.ReactElement => (
   <View>
     <View spacer={true} />
     <View style={{ flex: 1 }}>
