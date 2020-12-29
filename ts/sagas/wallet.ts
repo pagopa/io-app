@@ -119,7 +119,6 @@ import {
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
-import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
 
 import {
   EnableableFunctionsTypeEnum,
@@ -155,23 +154,6 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
-import _ from "lodash";
-import { hasFunctionEnabled } from "../utils/walletv2";
-import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
-import { isReady } from "../features/bonus/bpd/model/RemoteValue";
-import {
-  navigateToActivateBpdOnNewCreditCard,
-  navigateToSuggestBpdActivation
-} from "../features/wallet/onboarding/bancomat/navigation/action";
-import { navigationHistoryPop } from "../store/actions/navigationHistory";
-import { getTitleFromCard } from "../utils/paymentMethod";
-import {
-  addSatispayToWallet,
-  searchUserSatispay,
-  walletAddSatispayStart
-} from "../features/wallet/onboarding/satispay/store/actions";
-import { ContentClient } from "../api/content";
 import { backoffWait } from "../utils/saga";
 
 /**

@@ -13,10 +13,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../model/RemoteValue";
-import {
-  bpdDetailsLoadAll,
-  bpdLoadActivationStatus
-} from "../../../actions/details";
+import { bpdLoadActivationStatus } from "../../../actions/details";
 import {
   bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
@@ -48,7 +45,6 @@ const enabledReducer = (
   action: Action
 ): pot.Pot<boolean, Error> => {
   switch (action.type) {
-    case getType(bpdDetailsLoadAll):
     case getType(bpdLoadActivationStatus.request):
     case getType(bpdEnrollUserToProgram.request):
       return pot.toLoading(state);

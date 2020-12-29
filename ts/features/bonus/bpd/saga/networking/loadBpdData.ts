@@ -50,7 +50,7 @@ export function* loadBpdData() {
   if (!isReady(abiList)) {
     yield put(loadAbi.request());
   }
-
+  yield call(checkPreviousFailures);
   // First request the bpd activation status
   yield put(bpdLoadActivationStatus.request());
 
