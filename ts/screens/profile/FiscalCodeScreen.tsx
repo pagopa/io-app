@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useLayoutEffect, useState } from "react";
 import { BackHandler, ScrollView, StyleSheet } from "react-native";
 import { NavigationContext, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -77,18 +77,25 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
   // Store the device brightness value before navigating to this screen
   const [initialBrightness, storeInitialBrightness] = useState(0.0);
 
-  const setHighDeviceBrightnessTask = getBrightness()
+  const getAndStoreDeviceBrightnessTask = getBrightness()
     .map((myBrightness: number) => storeInitialBrightness(myBrightness))
-    .chain(() => setBrightness(HIGH_BRIGHTNESS))
     .fold(
-      () => alert("Failed to set screen Brightness"),
+      () => alert("Failed to get screen Brightness"),
       () => undefined
     );
+
+  const setHighDeviceBrightnessTask = setBrightness(HIGH_BRIGHTNESS).fold(
+    () => alert("Failed to set High Screen Brightness"),
+    () => undefined
+  );
 
   const restoreDeviceBrightnessTask = setBrightness(initialBrightness).fold(
     () => alert("Failed to restore screen brightness."),
     () => undefined
   );
+
+  const getAndStoreDeviceBrightness = async () =>
+    await getAndStoreDeviceBrightnessTask.run();
 
   const restoreDeviceBrightness = async () =>
     await restoreDeviceBrightnessTask.run();
@@ -105,37 +112,38 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   // Set and unset brightness effect manager
 
-  useEffect(() => {
-    // Using willFocus listener would be less responsive
-    if (navigation.isFocused()) {
-      void setHighDeviceBrightness();
-    }
+  useLayoutEffect(() => {
+    void getAndStoreDeviceBrightness();
 
-    const didBlurSubscription = navigation.addListener(
-      "didBlur",
-      () => void restoreDeviceBrightness()
-    );
+    const didBlurSubscription = navigation.addListener("willBlur", () => {
+      void restoreDeviceBrightness();
+      alert("INSIDE BLUooR");
+    });
+
+    // Now can restore brightness, let's rise it
+    void setHighDeviceBrightness();
 
     return () => {
+      // didFocusSubscription.remove();
       didBlurSubscription.remove();
+      void restoreDeviceBrightness();
+      alert("INSIDE CLEANUP");
     };
-  }, [navigation.isFocused()]);
+  }, [navigation]);
 
   // Add and remove EventListener effect manager
   useEffect(() => {
     // Using willFocus listener would be less responsive
-    if (navigation.isFocused()) {
-      BackHandler.addEventListener("hardwareBackPress", handleBackPress);
-    }
-
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
     const didBlurSubscription = navigation.addListener("didBlur", () =>
       BackHandler.removeEventListener("hardwareBackPress", handleBackPress)
     );
 
     return () => {
       didBlurSubscription.remove();
+      alert("BACK PRESS CLEANUP");
     };
-  }, [navigation.isFocused()]);
+  }, [navigation]);
 
   // Decode codice catastale effect manager
   useEffect(() => {
