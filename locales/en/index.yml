@@ -1945,12 +1945,19 @@ bonus:
           gracePeriodBody: "This cashback phase ended on {{date}}. We are still waiting for the latest transactions from the banks. Just bear with us: we'll keep you posted here!"
           closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
           closedPeriodMaxAmount: "it's the highest refund possible!"
+          moneyTransfer: "By {{date}} you will receive the transfer on the IBAN you entered."
           inactivePeriodBody: "You will be able to start collecting valid transactions starting from {{date}}"
           label:
             one: "1 valid transaction" 
             other: "{{count}} valid transactions"
         ranking:
           title: "Your position"
+          notReady:
+            title: "When will you see the Super Cashback ranking?"
+            body: "The ranking is based on the **number of transactions** made with the payment methods on which you have Cashback enabled.\n\n
+                   Currently, **all participants are in the same position**. As soon as we'll receive the transactions collected so far, your ranking will be displayed.\n\n
+                   Once published, the ranking will **continue to change** depending on the number of transactions among all participants, until the end of the 6 months."
+
       transaction:
         label:
           one: "1 transaction"
@@ -2039,7 +2046,7 @@ bonus:
         rankTitle: "Super Cashback ranking"
         howItWorks:
           title: "How does it work?"
-          body: "The **{{citizens}} citizens** with the highest number of transactions **receive the Super Cashback, a prize of {{amount}}.**\n\n**The ranking changes every day.** The final one will be displayed on {{endDate}}."
+          body: "The **{{citizens}} citizens** with the highest number of transactions **receive the Super Cashback, a prize of €{{amount}}.**\n\n**The ranking changes every day.** The final one will be displayed on {{endDate}}."
       lastUpdate: Updated at {{hour}} on {{date}}
 webView:
   error:

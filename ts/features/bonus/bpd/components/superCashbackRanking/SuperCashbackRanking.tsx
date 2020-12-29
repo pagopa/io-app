@@ -1,24 +1,27 @@
+import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
-import { View } from "native-base";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
-import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { H3 } from "../../../../../components/core/typography/H3";
-import I18n from "../../../../../i18n";
-import Markdown from "../../../../../components/ui/Markdown";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
+import Markdown from "../../../../../components/ui/Markdown";
+import I18n from "../../../../../i18n";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
+import { localeDateFormat } from "../../../../../utils/locale";
+import {
+  formatIntegerNumber,
+  formatNumberAmount
+} from "../../../../../utils/stringBuilder";
 import {
   BpdPeriodWithInfo,
   isBpdRankingReady
 } from "../../store/reducers/details/periods";
-import { localeDateFormat } from "../../../../../utils/locale";
-import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
-import { formatNumberWithNoDigits } from "../../../../../utils/stringBuilder";
+import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import { FirstPositionItem } from "./FirstPositionItem";
 import { LastPositionItem } from "./LastPositionItem";
-import UserPositionItem from "./UserPositionItem";
 import SuperCashbackHeader from "./SuperCashbackHeader";
+import UserPositionItem from "./UserPositionItem";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
@@ -95,10 +98,8 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
     {props.selectedPeriod && (
       <Markdown cssStyle={CSS_STYLE}>
         {I18n.t("bonus.bpd.details.superCashback.howItWorks.body", {
-          citizens: props.selectedPeriod.minPosition,
-          amount: formatNumberWithNoDigits(
-            props.selectedPeriod.superCashbackAmount
-          ),
+          citizens: formatIntegerNumber(props.selectedPeriod.minPosition),
+          amount: formatNumberAmount(props.selectedPeriod.superCashbackAmount),
           endDate: calculateEndDate(props.selectedPeriod)
         })}
       </Markdown>
