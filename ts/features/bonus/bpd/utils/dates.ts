@@ -1,10 +1,14 @@
-export const isInGracePeriod = (limitDate: Date, gracePeriod: number) => {
+export const isInGracePeriod = (endDate: Date, gracePeriod: number) => {
+  if (isNaN(endDate.getTime()) || isNaN(gracePeriod)) {
+    return false;
+  }
+
   const actualDate = new Date();
-  const endDate = new Date(limitDate.getTime());
-  endDate.setDate(limitDate.getDate() + gracePeriod);
+  const gracePeriodDate = new Date(endDate.getTime());
+  gracePeriodDate.setDate(endDate.getDate() + gracePeriod);
 
   return (
-    actualDate.getTime() >= limitDate.getTime() &&
-    actualDate.getTime() <= endDate.getTime()
+    actualDate.getTime() >= endDate.getTime() &&
+    actualDate.getTime() <= gracePeriodDate.getTime()
   );
 };
