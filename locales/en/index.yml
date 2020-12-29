@@ -52,8 +52,10 @@ date:
     - "am"
     - "pm"
 global:
+  you: "YOU"
   badges:
     blocked: "Blocked"
+    onGoing: "Ongoing"
   password: Password
   username: Username
   unknown: unknown
@@ -1926,10 +1928,16 @@ bonus:
           noIbanBody: "Set your IBAN in order to receive the collected cashback"
           button: "Set IBAN"
         transactionsCountOverview:
-          title: "Valid transactions"
+          title: "Your transactions"
           of: "out of"
           closedPeriodKOBody: "You have not reached the {{transactions}} transactions necessary to get a refund: you would have received € {{amount}}. Try again during the next phase!"
-          currentPeriodKOBody: "You must have reached at least {{transactions}} transactions to unlock the cashback collected so far!"
+          currentPeriodKOBody:
+            one: "You must have reached at least"
+            two: " {{transactions}} transactions"
+            three: " to unlock the cashback collected so far!"
+          currentPeriodUnlockBody: "Congratulations {{name}}! You have exceeded the threshold of {{transactions}} transactions and unlocked the Cashback !!"
+          currentPeriodMaxAmount: "Congratulations {{name}}! You have reached the maximum amount expected!"
+          currentPeriodSuperCashback: "Right now you would be eligible for {{superCashbackAmount}} € Super Cashback! Keep up the good work to stay on the leaderboard."
           gracePeriodBody: "This cashback phase ended on {{date}}. We are still waiting for the latest transactions from the banks. Just bear with us: we'll keep you posted here!"
           closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
           closedPeriodMaxAmount: "it's the highest refund possible!"
@@ -1937,7 +1945,12 @@ bonus:
           label:
             one: "1 valid transaction" 
             other: "{{count}} valid transactions"
+        ranking:
+          title: "Your position"
       transaction:
+        label:
+          one: "1 transaction"
+          other: "{{counter}} transactions"
         title: "Your transactions"
         goToButton: "Transactions detail"
         noPaymentMethod:
@@ -2017,6 +2030,12 @@ bonus:
           active: Active
           closed: Closed
           inactive: Upcoming
+      superCashback:
+        rankLabel: "{{position}}º user in rank"
+        rankTitle: "Super Cashback ranking"
+        howItWorks:
+          title: "How does it work?"
+          body: "The **{{citizens}} citizens** with the highest number of transactions **receive the Super Cashback, a prize of {{amount}}.**\n\n**The ranking changes every day.** The final one will be displayed on {{endDate}}."
       lastUpdate: Updated at {{hour}} on {{date}}
 webView:
   error:
