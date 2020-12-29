@@ -33,13 +33,6 @@ const getSlopForCurrentButton = (props: Props) => {
   return defaultSlop;
 };
 
-export const ButtonSizes = {
-  minTouchableSquare: {
-    width: customVariables.minTouchableAreaSize,
-    height: customVariables.minTouchableAreaSize
-  }
-};
-
 /**
  * return Button component where the activeOpacity is 1.0 by default
  * instead of 0.2 https://github.com/facebook/react-native/blob/3042407f43b69994abc00350681f1f0a79683bfd/Libraries/Components/Touchable/TouchableOpacity.js#L149
@@ -52,6 +45,7 @@ const ButtonDefaultOpacity = (props: Props) => {
   const slop = getSlopForCurrentButton(props);
   // use the alternative handling only if is request by props AND is android
   const tapGestureRequired = props.onPressWithGestureHandler && !isIos;
+
   const button = (
     <Button
       {...{
@@ -61,7 +55,7 @@ const ButtonDefaultOpacity = (props: Props) => {
       onPress={tapGestureRequired ? undefined : props.onPress}
       accessible={true} // allows with TalkBack the feedback request to touch for button activation
       accessibilityRole={"button"}
-      hitSlop={{ top: slop, bottom: slop }}
+      hitSlop={{ top: slop, bottom: slop, right: slop, left: slop }}
     >
       {props.children}
     </Button>

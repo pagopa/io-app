@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import I18n from "../../../i18n";
-import ButtonDefaultOpacity, { ButtonSizes } from "../../ButtonDefaultOpacity";
+import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import IconFont from "../../ui/IconFont";
 
 type Props = {
@@ -10,7 +10,6 @@ type Props = {
 const HelpButton: FC<Props> = ({ onShowHelp }) => (
   <ButtonDefaultOpacity
     onPress={onShowHelp}
-    style={ButtonSizes.minTouchableSquare}
     transparent={true}
     accessibilityLabel={I18n.t(
       "global.accessibility.contextualHelp.open.label"
