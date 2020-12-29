@@ -15,10 +15,18 @@ import {
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
+import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
+import { Locales } from "../../locales/locales";
 import { BackendClient } from "../api/backend";
 import { tosVersion } from "../config";
+import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { allBonusActiveSelector } from "../features/bonus/bonusVacanze/store/reducers/allActive";
+import { bpdLoadActivationStatus } from "../features/bonus/bpd/store/actions/details";
+import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
+import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
+import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
 import {
   loadBonusBeforeRemoveAccount,
   profileLoadFailure,
@@ -28,6 +36,8 @@ import {
   removeAccountMotivation,
   startEmailValidation
 } from "../store/actions/profile";
+import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
+import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { profileSelector } from "../store/reducers/profile";
 import { SagaCallReturnType } from "../types/utils";
 import {
@@ -35,17 +45,6 @@ import {
   fromPreferredLanguageToLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
-import { Locales } from "../../locales/locales";
-import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
-import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
-import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
-import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
-import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
-import { bpdLoadActivationStatus } from "../features/bonus/bpd/store/actions/details";
-import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
-import { getValue } from "../features/bonus/bpd/model/RemoteValue";
-import { allBonusActiveSelector } from "../features/bonus/bonusVacanze/store/reducers/allActive";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -266,7 +265,7 @@ export function* handleLoadBonusBeforeRemoveAccount() {
   );
 
   // check if there are some bpd
-  if (getValue(bpdActive) === undefined) {
+  if (pot.isNone(bpdActive)) {
     // Load the bpd data and wait for a response
     yield put(bpdLoadActivationStatus.request());
 
