@@ -1,14 +1,20 @@
 import {
+  call,
   delay,
   put,
   PutEffect,
   select,
+  SelectEffect,
   take,
   TakeEffect
 } from "redux-saga/effects";
 import { AsyncActionCreator, getType, PayloadAction } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
-import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import {
+  backOffWaitingTime,
+  FailureActions
+} from "../store/reducers/wallet/lastRequestError";
 
 /**
  * execute an async action dispatching request and wait for the result.
@@ -38,13 +44,29 @@ export function* getAsyncResult<T, I>(
   return left<Error, T>(result.payload as Error);
 }
 
-// select the delay time from store
-// and if it is > 0, wait that time
-export function* backoffWait(key: string) {
+/**
+ * return the backoff waiting time from the given failure action
+ * @param failure
+ */
+export function* getBackoffTime(
+  failure: FailureActions
+): Generator<
+  SelectEffect,
+  Millisecond,
+  (failure: FailureActions) => Millisecond
+> {
   const computeDelay: ReturnType<typeof backOffWaitingTime> = yield select(
     backOffWaitingTime
   );
-  const delayTime = computeDelay(key);
+  return computeDelay(failure);
+}
+
+/**
+ * select and wait the backoff time from a given failure action
+ * @param failure
+ */
+export function* backoffWait(failure: FailureActions) {
+  const delayTime: Millisecond = yield call(getBackoffTime, failure);
   if (delayTime > 0) {
     yield delay(delayTime);
   }

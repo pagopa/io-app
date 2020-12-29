@@ -1,5 +1,5 @@
 import { select, take } from "redux-saga-test-plan/matchers";
-import { all, call, put } from "redux-saga/effects";
+import { all, call, delay, put } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { loadAbi } from "../../../../wallet/onboarding/bancomat/store/actions";
 import { abiSelector } from "../../../../wallet/onboarding/store/abi";
@@ -7,7 +7,27 @@ import { isReady } from "../../model/RemoteValue";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import { bpdTransactionsLoad } from "../../store/actions/transactions";
-import { backoffWait } from "../../../../../utils/saga";
+import { getBackoffTime } from "../../../../../utils/saga";
+import { SagaCallReturnType } from "../../../../../types/utils";
+
+/**
+ * retrieve possible backoff waiting time and if there are, wait that time
+ */
+function* checkPreviousFailures() {
+  // wait if some previous errors occurred
+  const loadActivationBackOff: SagaCallReturnType<typeof getBackoffTime> = yield call(
+    getBackoffTime,
+    bpdLoadActivationStatus.failure
+  );
+  const loadPeriodsBackOff: SagaCallReturnType<typeof getBackoffTime> = yield call(
+    getBackoffTime,
+    bpdPeriodsAmountLoad.failure
+  );
+  const waitingTime = Math.max(loadActivationBackOff, loadPeriodsBackOff);
+  if (waitingTime > 0) {
+    yield delay(waitingTime);
+  }
+}
 
 /**
  * Load all the BPD details data:
@@ -18,8 +38,7 @@ import { backoffWait } from "../../../../../utils/saga";
  * - Transactions foreach period !== "Inactive"
  */
 export function* loadBpdData() {
-  // wait if some previous errors occurred
-  yield call(backoffWait, getType(bpdLoadActivationStatus.failure));
+  yield call(checkPreviousFailures);
   yield put(bpdLoadActivationStatus.request());
 
   const abiList: ReturnType<typeof abiSelector> = yield select(abiSelector);

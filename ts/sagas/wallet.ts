@@ -659,7 +659,7 @@ export function* watchWalletSaga(
   yield takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
     action: ActionType<typeof fetchTransactionsRequestWithExpBackoff>
   ) {
-    yield call(backoffWait, getType(fetchTransactionsFailure));
+    yield call(backoffWait, fetchTransactionsFailure);
     yield put(fetchTransactionsRequest(action.payload));
   });
 
@@ -693,7 +693,7 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(getType(fetchWalletsRequestWithExpBackoff), function* () {
-    yield call(backoffWait, getType(fetchWalletsFailure));
+    yield call(backoffWait, fetchWalletsFailure);
     yield put(fetchWalletsRequest());
   });
 
@@ -716,7 +716,7 @@ export function* watchWalletSaga(
     function* (
       action: ActionType<typeof addWalletCreditCardWithBackoffRetryRequest>
     ) {
-      yield call(backoffWait, getType(addWalletCreditCardFailure));
+      yield call(backoffWait, addWalletCreditCardFailure);
       yield put(addWalletCreditCardRequest(action.payload));
     }
   );
@@ -735,7 +735,7 @@ export function* watchWalletSaga(
         typeof payCreditCardVerificationWithBackoffRetryRequest
       >
     ) {
-      yield call(backoffWait, getType(payCreditCardVerificationFailure));
+      yield call(backoffWait, payCreditCardVerificationFailure);
       yield put(payCreditCardVerificationRequest(action.payload));
     }
   );

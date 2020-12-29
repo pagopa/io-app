@@ -26,15 +26,24 @@ export type LastRequestErrorState = {
   };
 };
 
-const failureActionTypes = [
+/**
+ * list of failure actions
+ * if any of these is dispatched, a backoff record will be created
+ * and it will be used to calculate the backoff waiting time
+ */
+const failureActions = [
   payCreditCardVerificationFailure,
   addWalletCreditCardFailure,
   fetchTransactionsFailure,
   fetchWalletsFailure,
   bpdLoadActivationStatus.failure,
   bpdPeriodsAmountLoad.failure
-].map(getType);
-export type LastRequestErrorFailure = typeof failureActionTypes[0];
+];
+
+/**
+ * list of success actions
+ * if any of these is dispatched, the existing backoff record into the store will be deleted
+ */
 const successActionTypes = [
   payCreditCardVerificationSuccess,
   addWalletCreditCardSuccess,
@@ -43,6 +52,9 @@ const successActionTypes = [
   bpdLoadActivationStatus.success,
   bpdPeriodsAmountLoad.success
 ].map(getType);
+
+const failureActionTypes = failureActions.map(getType);
+export type FailureActions = typeof failureActions[0];
 
 const defaultState: LastRequestErrorState = {};
 const backOffExpLimitAttempts = 4;
@@ -70,10 +82,11 @@ const reducer = (
   return state;
 };
 
+// return the waiting time from a given failure action
 export const backOffWaitingTime = (state: GlobalState) => (
-  key: string
+  failure: FailureActions
 ): Millisecond =>
-  fromNullable(state.wallet.lastRequestError[key]).fold(
+  fromNullable(state.wallet.lastRequestError[getType(failure)]).fold(
     0 as Millisecond,
     lastError => {
       const wait = Math.pow(backOffBase, lastError.attempts) * 1000;
