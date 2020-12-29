@@ -127,6 +127,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 15,
     borderBottomColor: "rgba(0,0,0,0.1)",
     width: "100%"
+  },
+  fireworksIcon: {
+    width: 16,
+    height: 16,
+    resizeMode: "cover"
   }
 });
 
@@ -134,19 +139,46 @@ type BadgeDefinition = {
   label: string;
 };
 
+type IconType = "io-locker-closed" | "io-locker-open" | "io-fireworks";
+
 type GraphicalState = {
   amount: ReadonlyArray<string>;
   isInGracePeriod: boolean;
-  showLock: boolean;
+  iconName: IconType;
   statusBadge: BadgeDefinition;
 };
 
 const initialGraphicalState: GraphicalState = {
   amount: ["0", "00"],
   isInGracePeriod: false,
-  showLock: false,
+  iconName: "io-locker-closed",
   statusBadge: {
     label: "-"
+  }
+};
+
+/**
+ * Closed lock must be shown if period is Inactive or the transactionNumber didn't reach the minimum target
+ * Open lock must be shown if period is Closed or Active and the transactionNumber reach the minimum target
+ * Fireworks must be shown if period is Closed or Active and the totalCashback reach the maxAmount
+ *
+ * @param period
+ * @param totalAmount
+ */
+const iconHandler = (period: BpdPeriod, totalAmount: BpdAmount): IconType => {
+  const reachMinTransaction =
+    totalAmount.transactionNumber >= period.minTransactionNumber;
+  const reachMaxAmount = totalAmount.totalCashback >= period.maxPeriodCashback;
+  switch (period.status) {
+    case "Active":
+    case "Closed":
+      return reachMinTransaction && reachMaxAmount
+        ? "io-fireworks"
+        : reachMinTransaction
+        ? "io-locker-open"
+        : "io-locker-closed";
+    default:
+      return "io-locker-closed";
   }
 };
 
@@ -163,7 +195,6 @@ const statusClosedHandler = (props: Props): GraphicalState => {
 
   return {
     ...initialGraphicalState,
-    showLock: totalAmount.transactionNumber < period.minTransactionNumber,
     amount:
       totalAmount.transactionNumber < period.minTransactionNumber &&
       !isInGracePeriod
@@ -172,6 +203,7 @@ const statusClosedHandler = (props: Props): GraphicalState => {
             I18n.t("global.localization.decimalSeparator")
           ),
     isInGracePeriod,
+    iconName: iconHandler(props.period, props.totalAmount),
     // TODO: Add supercashback business logic
     statusBadge: isInGracePeriod
       ? {
@@ -183,27 +215,22 @@ const statusClosedHandler = (props: Props): GraphicalState => {
   };
 };
 
-const statusActiveHandler = (props: Props): GraphicalState => {
-  const { period, totalAmount } = props;
-
-  return {
-    ...initialGraphicalState,
-    statusBadge: {
-      label: I18n.t("bonus.bpd.details.card.status.active")
-    },
-    showLock: totalAmount.transactionNumber < period.minTransactionNumber,
-    amount: formatNumberAmount(props.totalAmount.totalCashback).split(
-      I18n.t("global.localization.decimalSeparator")
-    )
-  };
-};
+const statusActiveHandler = (props: Props): GraphicalState => ({
+  ...initialGraphicalState,
+  statusBadge: {
+    label: I18n.t("bonus.bpd.details.card.status.active")
+  },
+  amount: formatNumberAmount(props.totalAmount.totalCashback).split(
+    I18n.t("global.localization.decimalSeparator")
+  ),
+  iconName: iconHandler(props.period, props.totalAmount)
+});
 
 const statusInactiveHandler = (props: Props): GraphicalState => ({
   ...initialGraphicalState,
   statusBadge: {
     label: I18n.t("bonus.bpd.details.card.status.inactive")
   },
-  showLock: true,
   amount: formatNumberAmount(props.totalAmount.totalCashback).split(
     I18n.t("global.localization.decimalSeparator")
   )
@@ -222,8 +249,6 @@ const statusHandlersMap = new Map<
  * if the period is Closed we must check if minimum number of transactions has been reached
  * Unless we'll show a Zero amount value
  *
- * Lock must be shown only if period is Inactive or the transactionNumber didn't reach the minimum target
- *
  * GracePeriod: check if we are in the grace period to show an alert instead of the value
  * grace period is given adding the gracePeriod value of days to period.endDate
  */
@@ -238,7 +263,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
   const {
     amount,
     isInGracePeriod,
-    showLock,
+    iconName,
     statusBadge
   } = calculateGraphicalState(props);
 
@@ -281,9 +306,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               {amount[1]}
             </Text>
             <View hspacer={true} small={true} />
-            {showLock && (
-              <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
-            )}
+            <IconFont name={iconName} size={16} color={IOColors.white} />
           </View>
           <H5 color={"white"} weight={"Regular"}>
             {I18n.t("bonus.bpd.earned")}
@@ -326,14 +349,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             <IconFont name="io-tick-big" size={20} color={IOColors.white} />
           )}
         </View>
-        <View
-          style={[
-            styles.row,
-            styles.spaced,
-            styles.alignItemsCenter
-            // styles.justifyContentCenter
-          ]}
-        >
+        <View style={[styles.row, styles.spaced, styles.alignItemsCenter]}>
           <H2 weight={"Bold"} color={"white"}>
             {I18n.t("bonus.bpd.name")}
           </H2>
@@ -345,9 +361,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               styles.justifyContentCenter
             ]}
           >
-            {showLock && (
-              <IconFont name="io-lucchetto" size={16} color={IOColors.white} />
-            )}
+            <IconFont name={iconName} size={16} color={IOColors.white} />
             <View hspacer={true} small={true} />
             {isInGracePeriod || isPeriodInactive ? (
               <Badge style={styles.badgePreview}>
