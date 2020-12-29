@@ -28,7 +28,10 @@ const ROUTE_NAMES: ReadonlyArray<string> = [
   ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN
 ];
 
-const BPD_ROUTE_NAMES: ReadonlyArray<string> = [BPD_ROUTES.CTA_START_BPD];
+const BPD_ROUTE_NAMES: ReadonlyArray<string> = [
+  BPD_ROUTES.CTA_START_BPD,
+  BPD_ROUTES.CTA_BPD_IBAN_EDIT
+];
 
 const MY_PORTAL_ROUTES: ReadonlyArray<string> = [ROUTES.SERVICE_WEBVIEW];
 

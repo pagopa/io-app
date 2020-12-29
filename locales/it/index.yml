@@ -1920,6 +1920,11 @@ bonus:
         body: "Abilita il Cashback sui metodi già presenti nel tuo portafoglio o aggiungine di nuovi."
         cta: "Attiva i metodi di pagamento"
     iban:
+      cta:
+        bpdNotActiveTitle: "attenzione"
+        bpdNotActiveMessage: "non sei iscritto al cashback, iscriviti e riprova."
+        noActivePeriodTitle: "attenzione"
+        noActivePeriodMessage: "non c'è alcun cashback attivo in questo momento."
       iban: "IBAN"
       edit: "Modifica IBAN"
       verify: "Controlla IBAN"

@@ -1889,6 +1889,11 @@ bonus:
         body: "Enable Cashback on methods already in your wallet or add new ones."
         cta: "Activate payment methods"
     iban:
+      cta:
+        bpdNotActiveTitle: "attention"
+        bpdNotActiveMessage: "you are not registered for cashback, sign up and try again."
+        noActivePeriodTitle: "attention"
+        noActivePeriodMessage: "there is no active cashback at this time."
       iban: "IBAN"
       edit: "Change IBAN"
       verify: "Check IBAN"
