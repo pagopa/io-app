@@ -188,7 +188,7 @@ const mapStateToProps = (state: GlobalState) => {
     // fallback to hardcode data if pot is none
     availableBonusesList: pot
       .getOrElse(potAvailableBonuses, availableBonuses)
-      .filter(aB => aB.is_active === true),
+      .filter(aB => aB.hidden !== true),
     isLoading: pot.isLoading(potAvailableBonuses),
     // show error only when we have an error and no data to show
     isError: pot.isNone(potAvailableBonuses) && pot.isError(potAvailableBonuses)
