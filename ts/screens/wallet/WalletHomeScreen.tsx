@@ -75,11 +75,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
-import {
-  isLoading,
-  isReady,
-  isError as isRemoteValueError
-} from "../../features/bonus/bpd/model/RemoteValue";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import { isStrictSome } from "../../utils/pot";
@@ -270,8 +265,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     if (
       this.state.hasFocus &&
       // error loading: bpd bonus
-      ((!isRemoteValueError(prevProps.bpdActiveBonus) &&
-        isRemoteValueError(this.props.bpdActiveBonus)) ||
+      ((!pot.isError(prevProps.bpdActiveBonus) &&
+        pot.isError(this.props.bpdActiveBonus)) ||
         // error loading: bonus vacanze
         (prevProps.allActiveBonus.some(ab => !pot.isError(ab)) &&
           this.props.allActiveBonus.some(ab => pot.isError(ab))) ||
@@ -319,7 +314,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     // note: in the BPD case, we are watching for loading on one of several steps
     // so this loading state is very weak
     if (
-      isLoading(this.props.bpdActiveBonus) ||
+      pot.isLoading(this.props.bpdActiveBonus) ||
       this.props.allActiveBonus.find(
         ab => pot.isLoading(ab) || (pot.isNone(ab) && !pot.isError(ab))
       )
@@ -330,7 +325,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     if (
       this.props.allActiveBonus.length === 0 ||
       this.props.allActiveBonus.every(ab => isStrictSome(ab)) ||
-      isReady(this.props.bpdActiveBonus)
+      pot.isSome(this.props.bpdActiveBonus)
     ) {
       return "refresh";
     }

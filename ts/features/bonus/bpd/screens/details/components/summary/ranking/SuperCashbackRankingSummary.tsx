@@ -125,7 +125,7 @@ const shouldDisplayRankingReady = (
   ranking: BpdRanking,
   remoteEnabled: boolean | undefined
 ): ranking is BpdRankingReady =>
-  remoteEnabled ? isBpdRankingReady(ranking) : false;
+  remoteEnabled === true && isBpdRankingReady(ranking);
 
 /**
  * Choose the right super cashback ranking representation:
