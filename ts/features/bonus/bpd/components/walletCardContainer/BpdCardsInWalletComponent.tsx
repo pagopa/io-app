@@ -8,7 +8,7 @@ import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { navigateToBpdDetails } from "../../navigation/actions";
-import { bpdDetailsLoadAll } from "../../store/actions/details";
+import { bpdAllData } from "../../store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
 import { BpdPeriodWithInfo } from "../../store/reducers/details/periods";
 import { BpdCardComponent } from "../bpdCardComponent/BpdCardComponent";
@@ -56,7 +56,7 @@ const BpdCardsInWalletContainer = (props: Props) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  load: () => dispatch(bpdDetailsLoadAll()),
+  load: () => dispatch(bpdAllData.request()),
   navigateToCashbackDetails: (period: BpdPeriodWithInfo) =>
     dispatch(navigateToBpdDetails(period))
 });
