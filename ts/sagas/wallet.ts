@@ -85,6 +85,7 @@ import {
   fetchPsp,
   fetchTransactionFailure,
   fetchTransactionRequest,
+  fetchTransactionsFailure,
   fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
   fetchTransactionsRequestWithExpBackoff,
@@ -118,7 +119,6 @@ import {
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
-import { backOffWaitingTime } from "../store/reducers/wallet/lastRequestError";
 
 import {
   EnableableFunctionsTypeEnum,
@@ -154,6 +154,7 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
+import { backoffWait } from "../utils/saga";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -539,17 +540,6 @@ function* pollTransactionSaga(
   }
 }
 
-// select the delay time from store
-// and if it is > 0, wait that time
-function* backoffWait() {
-  const delayTime: ReturnType<typeof backOffWaitingTime> = yield select(
-    backOffWaitingTime
-  );
-  if (delayTime > 0) {
-    yield delay(delayTime);
-  }
-}
-
 /**
  * This saga attempts to delete the active payment, if there's one.
  *
@@ -668,7 +658,7 @@ export function* watchWalletSaga(
   yield takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
     action: ActionType<typeof fetchTransactionsRequestWithExpBackoff>
   ) {
-    yield call(backoffWait);
+    yield call(backoffWait, fetchTransactionsFailure);
     yield put(fetchTransactionsRequest(action.payload));
   });
 
@@ -702,7 +692,7 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(getType(fetchWalletsRequestWithExpBackoff), function* () {
-    yield call(backoffWait);
+    yield call(backoffWait, fetchWalletsFailure);
     yield put(fetchWalletsRequest());
   });
 
@@ -725,7 +715,7 @@ export function* watchWalletSaga(
     function* (
       action: ActionType<typeof addWalletCreditCardWithBackoffRetryRequest>
     ) {
-      yield call(backoffWait);
+      yield call(backoffWait, addWalletCreditCardFailure);
       yield put(addWalletCreditCardRequest(action.payload));
     }
   );
@@ -744,7 +734,7 @@ export function* watchWalletSaga(
         typeof payCreditCardVerificationWithBackoffRetryRequest
       >
     ) {
-      yield call(backoffWait);
+      yield call(backoffWait, payCreditCardVerificationFailure);
       yield put(payCreditCardVerificationRequest(action.payload));
     }
   );
