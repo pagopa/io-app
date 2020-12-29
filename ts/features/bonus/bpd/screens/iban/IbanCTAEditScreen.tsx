@@ -74,7 +74,7 @@ const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
         .getOrElse(props.bpdPeriods, [])
         .find(p => p.status === "Active");
       if (activePeriod) {
-        props.navigateToIbanInsertionStart(activePeriod);
+        props.navigateToBPDPeriodDetails(activePeriod);
       }
       // no active period
       else {
@@ -106,7 +106,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(bpdAllData.request());
   },
   goBack: () => dispatch(navigateBack()),
-  navigateToIbanInsertionStart: (bpdPeriod: BpdPeriodWithInfo) => {
+  navigateToBPDPeriodDetails: (bpdPeriod: BpdPeriodWithInfo) => {
     dispatch(navigateToBpdDetails(bpdPeriod));
     dispatch(navigationHistoryPop(1));
   }
