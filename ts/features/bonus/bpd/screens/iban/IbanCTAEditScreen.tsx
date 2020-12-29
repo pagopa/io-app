@@ -23,9 +23,9 @@ import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-const loadingCaption = () => I18n.t("global.remoteStates.loading");
 
 const loadLocales = () => ({
+  loadingCaption: I18n.t("global.remoteStates.loading");
   title: I18n.t("bonus.bpd.iban.verify"),
   alertNotActiveTitle: I18n.t("bonus.bpd.iban.cta.bpdNotActiveTitle"),
   alertNotActiveMessage: I18n.t("bonus.bpd.iban.cta.bpdNotActiveMessage"),
@@ -39,19 +39,20 @@ const loadLocales = () => ({
  * Landing screen from the CTA message that asks to review user's IBAN insertion
  */
 const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
-  const {
-    title,
-    alertNotActiveTitle,
-    alertNotActiveMessage,
-    alertNotPeriodActiveTitle,
-    alertNotPeriodActiveMessage
-  } = loadLocales();
   useActionOnFocus(props.load);
   // keep track if loading has been completed or not
   // to avoid to handle not update data coming from the store
   const [isLoadingComplete, setLoadingComplete] = React.useState<boolean>(
     false
   );
+  const {
+    title,
+    alertNotActiveTitle,
+    alertNotActiveMessage,
+    alertNotPeriodActiveTitle,
+    alertNotPeriodActiveMessage,
+    loadingCaption
+  } = loadLocales();
   React.useEffect(() => {
     if (!pot.isNone(props.bpdLoadState) && !pot.isNone(props.bpdEnabled)) {
       setLoadingComplete(true);
@@ -94,7 +95,7 @@ const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
     <BaseScreenComponent goBack={true} headerTitle={title}>
       <LoadingErrorComponent
         isLoading={!hasErrors}
-        loadingCaption={loadingCaption()}
+        loadingCaption={loadingCaption}
         onRetry={props.load}
       />
     </BaseScreenComponent>
