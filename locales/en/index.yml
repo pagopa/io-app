@@ -1941,7 +1941,7 @@ bonus:
           currentPeriodUnlockBody: "Congratulations {{name}}! You have exceeded the threshold of {{transactions}} transactions and unlocked the Cashback !!"
           currentPeriodMaxAmount: "Congratulations {{name}}! You have reached the maximum amount expected!"
           currentPeriodSuperCashback: "Right now you would be eligible for {{superCashbackAmount}} € Super Cashback! Keep up the good work to stay on the leaderboard."
-          gracePeriodBody: "This cashback phase ended on {{date}}. We are still waiting for the latest transactions from the banks. Just bear with us: we'll keep you posted here!"
+          gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. By {{endGracePeriodDate}} you will be able to see the final calculation."
           closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
           closedPeriodMaxAmount: "it's the highest refund possible!"
           moneyTransfer: "By {{date}} you will receive the transfer on the IBAN you entered."
