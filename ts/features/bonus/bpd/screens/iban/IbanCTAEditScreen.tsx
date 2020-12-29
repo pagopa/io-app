@@ -10,7 +10,6 @@ import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingE
 import { bpdLastUpdateSelector } from "../../store/reducers/details/lastUpdate";
 import { bpdAllData } from "../../store/actions/details";
 import { isStrictSome } from "../../../../../utils/pot";
-import { availableBonusTypesSelector } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { bpdEnabledSelector } from "../../store/reducers/details/activation";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { navigateToBpdDetails } from "../../navigation/actions";
@@ -114,7 +113,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   bpdLoadState: bpdLastUpdateSelector(state),
-  availableBonus: availableBonusTypesSelector(state),
   bpdPeriods: bpdPeriodsSelector(state),
   bpdEnabled: bpdEnabledSelector(state)
 });
