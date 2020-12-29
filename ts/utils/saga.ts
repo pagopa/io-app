@@ -11,6 +11,7 @@ import {
 import { AsyncActionCreator, getType, PayloadAction } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import { mixpanelTrack } from "../mixpanel";
 import {
   backOffWaitingTime,
   FailureActions
@@ -58,7 +59,12 @@ export function* getBackoffTime(
   const computeDelay: ReturnType<typeof backOffWaitingTime> = yield select(
     backOffWaitingTime
   );
-  return computeDelay(failure);
+  const delay = computeDelay(failure);
+  void mixpanelTrack("GET_BACKOFF_TIME", {
+    action: failure.toString(),
+    delay
+  });
+  return delay;
 }
 
 /**

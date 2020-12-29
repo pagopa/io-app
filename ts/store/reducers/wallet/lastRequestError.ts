@@ -47,7 +47,7 @@ const successActionTypes = [
 ].map(getType);
 
 const failureActionTypes = failureActions.map(getType);
-export type FailureActions = typeof failureActions[0];
+export type FailureActions = typeof failureActions[number];
 
 export type LastRequestErrorState = {
   [key: string]: {
