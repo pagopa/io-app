@@ -24,7 +24,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const loadLocales = () => ({
-  loadingCaption: I18n.t("global.remoteStates.loading");
+  loadingCaption: I18n.t("global.remoteStates.loading"),
   title: I18n.t("bonus.bpd.iban.verify"),
   alertNotActiveTitle: I18n.t("bonus.bpd.iban.cta.bpdNotActiveTitle"),
   alertNotActiveMessage: I18n.t("bonus.bpd.iban.cta.bpdNotActiveMessage"),
@@ -84,7 +84,6 @@ const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
           }
         ]);
       }
-
     }
   }, [props.bpdLoadState, props.bpdEnabled, isLoadingComplete]);
 
