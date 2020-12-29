@@ -1970,6 +1970,7 @@ bonus:
           gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere dalle banche le ultime transazioni. Ancora un po’ di pazienza. Ti avviseremo qui!"
           closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
           closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
+          moneyTransfer: "Entro il {{date}} riceverai il bonifico sull’IBAN che ci hai indicato."
           inactivePeriodBody: "Potrai iniziare a collezionare transazioni valide a partire dal {{date}}"
           label:
             one: "1 transazione valida"
@@ -2069,7 +2070,7 @@ bonus:
         rankTitle: "Classifica Super Cashback"
         howItWorks:
           title: "Come funziona?"
-          body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a {{amount}}.**\n\n**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
+          body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a €{{amount}}.**\n\n**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
 webView:
   error:
