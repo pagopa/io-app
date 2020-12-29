@@ -19,13 +19,6 @@ import { GlobalState } from "../types";
 import { bpdLoadActivationStatus } from "../../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../../features/bonus/bpd/store/actions/periods";
 
-export type LastRequestErrorState = {
-  [key: string]: {
-    lastUpdate: Date;
-    attempts: number;
-  };
-};
-
 /**
  * list of failure actions
  * if any of these is dispatched, a backoff record will be created
@@ -56,6 +49,13 @@ const successActionTypes = [
 const failureActionTypes = failureActions.map(getType);
 export type FailureActions = typeof failureActions[0];
 
+export type LastRequestErrorState = {
+  [key: string]: {
+    lastUpdate: Date;
+    attempts: number;
+  };
+};
+
 const defaultState: LastRequestErrorState = {};
 const backOffExpLimitAttempts = 4;
 const backOffBase = 2;
@@ -64,7 +64,7 @@ const reducer = (
   action: Action
 ): LastRequestErrorState => {
   const failure = failureActionTypes.find(a => a === action.type);
-  const success = successActionTypes.find(a => a === action.type);
+
   if (failure) {
     return {
       ...state,
@@ -76,7 +76,10 @@ const reducer = (
         )
       }
     };
-  } else if (success) {
+  }
+  const success = successActionTypes.find(a => a === action.type);
+  if (success) {
+    // remove the previous record
     return _.omit(state, success);
   }
   return state;

@@ -11,7 +11,7 @@ import { getBackoffTime } from "../../../../../utils/saga";
 import { SagaCallReturnType } from "../../../../../types/utils";
 
 /**
- * retrieve possible backoff waiting time and if there are, wait that time
+ * retrieve possible backoff waiting time and if there is, wait that time
  */
 function* checkPreviousFailures() {
   // wait if some previous errors occurred
