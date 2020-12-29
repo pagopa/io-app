@@ -1,4 +1,4 @@
-import { fromNullable, some } from "fp-ts/lib/Option";
+import { fromNullable, none, some } from "fp-ts/lib/Option";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
@@ -40,6 +40,10 @@ describe("CreditCardPan", () => {
 
   it("should reject invalid PANs, round 2", () => {
     invalidPANs.forEach(d => expect(isValidPan(some(d))).toBeFalsy());
+  });
+
+  it("should be undefined", () => {
+    expect(isValidPan(none)).not.toBeDefined();
   });
 });
 
@@ -97,6 +101,10 @@ describe("CreditCardExpirationDate", () => {
 
   it("should reject an invalid expiration date", () => {
     expect(isValidExpirationDate(some("3/27"))).toBeFalsy();
+  });
+
+  it("should be undefined", () => {
+    expect(isValidExpirationDate(none)).not.toBeDefined();
   });
 });
 

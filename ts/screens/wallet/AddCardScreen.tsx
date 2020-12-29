@@ -33,7 +33,7 @@ import {
   isValidExpirationDate,
   isValidSecurityCode,
   CreditCardState,
-  mergeCardValues,
+  getCreditCardFromState,
   INITIAL_CARD_FORM_STATE,
   CreditCardStateKeys
 } from "../../utils/input";
@@ -49,6 +49,7 @@ import { showToast } from "../../utils/showToast";
 import { useIOBottomSheet } from "../../utils/bottomSheet";
 import { Body } from "../../components/core/typography/Body";
 import { CreditCard } from "../../types/pagopa";
+import { BlockButtonProps } from "../../components/ui/BlockButtons";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -100,6 +101,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const acceptedCardsPageURL: string = "https://io.italia.it/metodi-pagamento";
 
+const openSupportedCardsPage = (): void => {
+  openWebUrl(acceptedCardsPageURL, () =>
+    showToast(I18n.t("wallet.alert.supportedCardPageLinkError"))
+  );
+};
+
 const primaryButtonPropsFromState = (
   state: CreditCardState,
   onNavigate: (card: CreditCard) => NavigationNavigateAction
@@ -110,8 +117,9 @@ const primaryButtonPropsFromState = (
     title: I18n.t("global.buttons.continue")
   };
 
-  const card = mergeCardValues(state);
+  const card = getCreditCardFromState(state);
 
+  /*
   if (card.isSome()) {
     return {
       ...baseButtonProps,
@@ -124,11 +132,25 @@ const primaryButtonPropsFromState = (
       disabled: true,
       onPress: () => undefined
     };
-  }
+  } */
+
+  return card.fold<BlockButtonProps>(
+    {
+      ...baseButtonProps,
+      disabled: true
+    },
+    c => ({
+      ...baseButtonProps,
+      disabled: false,
+      onPress: () => {
+        onNavigate(c);
+      }
+    })
+  );
 };
 
 const AddCardScreen: React.FC<Props> = props => {
-  const [state, setState] = useState<CreditCardState>({
+  const [creditCard, setCreditCard] = useState<CreditCardState>({
     ...INITIAL_CARD_FORM_STATE,
     holder: fromNullable(props.profileNameSurname)
   });
@@ -139,17 +161,13 @@ const AddCardScreen: React.FC<Props> = props => {
     260
   );
 
-  const openSupportedCardsPage = (): void => {
-    openWebUrl(acceptedCardsPageURL, () =>
-      showToast(I18n.t("wallet.alert.supportedCardPageLinkError"))
-    );
-  };
-
-  const detectedBrand: SupportedBrand = CreditCardDetector.validate(state.pan);
+  const detectedBrand: SupportedBrand = CreditCardDetector.validate(
+    creditCard.pan
+  );
 
   const updateState = (key: CreditCardStateKeys, value: string) =>
-    setState({
-      ...state,
+    setCreditCard({
+      ...creditCard,
       [key]: fromNullable(value)
     });
 
@@ -171,9 +189,9 @@ const AddCardScreen: React.FC<Props> = props => {
             type={"text"}
             label={I18n.t("wallet.dummyCard.labels.holder")}
             icon="io-titolare"
-            isValid={state.holder.getOrElse("") === "" ? undefined : true}
+            isValid={creditCard.holder.getOrElse("") === "" ? undefined : true}
             inputProps={{
-              value: state.holder.getOrElse(""),
+              value: creditCard.holder.getOrElse(""),
               placeholder: I18n.t("wallet.dummyCard.values.holder"),
               autoCapitalize: "words",
               keyboardType: "default",
@@ -189,9 +207,9 @@ const AddCardScreen: React.FC<Props> = props => {
             label={I18n.t("wallet.dummyCard.labels.pan")}
             icon={detectedBrand.iconForm}
             iconStyle={styles.creditCardForm}
-            isValid={isValidPan(state.pan)}
+            isValid={isValidPan(creditCard.pan)}
             inputMaskProps={{
-              value: state.pan.getOrElse(""),
+              value: creditCard.pan.getOrElse(""),
               placeholder: I18n.t("wallet.dummyCard.values.pan"),
               keyboardType: "numeric",
               returnKeyType: "done",
@@ -217,9 +235,9 @@ const AddCardScreen: React.FC<Props> = props => {
                 type={"masked"}
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
-                isValid={isValidExpirationDate(state.expirationDate)}
+                isValid={isValidExpirationDate(creditCard.expirationDate)}
                 inputMaskProps={{
-                  value: state.expirationDate.getOrElse(""),
+                  value: creditCard.expirationDate.getOrElse(""),
                   placeholder: I18n.t("wallet.dummyCard.values.expirationDate"),
                   keyboardType: "numeric",
                   returnKeyType: "done",
@@ -240,9 +258,9 @@ const AddCardScreen: React.FC<Props> = props => {
                     : "wallet.dummyCard.labels.securityCode"
                 )}
                 icon="io-lucchetto"
-                isValid={isValidSecurityCode(state.securityCode)}
+                isValid={isValidSecurityCode(creditCard.securityCode)}
                 inputMaskProps={{
-                  value: state.securityCode.getOrElse(""),
+                  value: creditCard.securityCode.getOrElse(""),
                   placeholder: I18n.t(
                     detectedBrand.cvvLength === 4
                       ? "wallet.dummyCard.values.securityCode4D"
@@ -277,7 +295,7 @@ const AddCardScreen: React.FC<Props> = props => {
         type="TwoButtonsInlineHalf"
         leftButton={props.secondaryButtonProps}
         rightButton={primaryButtonPropsFromState(
-          state,
+          creditCard,
           props.navigateToConfirmCardDetailsScreen
         )}
       />

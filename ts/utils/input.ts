@@ -51,7 +51,9 @@ export const INITIAL_CARD_FORM_STATE: CreditCardState = {
 export const isValidPan = (pan: Option<string>) =>
   pan.map(pan => CreditCardPan.is(pan)).toUndefined();
 
-export const isValidExpirationDate = (expirationDate: Option<string>) =>
+export const isValidExpirationDate = (
+  expirationDate: Option<string>
+): boolean | undefined =>
   expirationDate
     .map(expirationDate => {
       const [expirationMonth, expirationYear] = expirationDate.split("/");
@@ -63,7 +65,9 @@ export const isValidExpirationDate = (expirationDate: Option<string>) =>
     })
     .toUndefined();
 
-export const isValidSecurityCode = (securityCode: Option<string>) =>
+export const isValidSecurityCode = (
+  securityCode: Option<string>
+): boolean | undefined =>
   securityCode
     .map(securityCode => CreditCardCVC.is(securityCode))
     .toUndefined();
@@ -75,13 +79,15 @@ export type CreditCardState = Readonly<{
   holder: Option<string>;
 }>;
 
-export type CreditCardStateKeys =
-  | "pan"
-  | "expirationDate"
-  | "securityCode"
-  | "holder";
+export type CreditCardStateKeys = keyof CreditCardState;
 
-export function mergeCardValues(state: CreditCardState): Option<CreditCard> {
+/**
+ * @param state A pending credit card state objects, containing the card's components.
+ * @returns A fp-ts Option containing a valid CreditCard object, if possible
+ */
+export function getCreditCardFromState(
+  state: CreditCardState
+): Option<CreditCard> {
   const { pan, expirationDate, securityCode, holder } = state;
   if (
     pan.isNone() ||
@@ -92,12 +98,12 @@ export function mergeCardValues(state: CreditCardState): Option<CreditCard> {
     return none;
   }
 
-  const [expirationMonth, expirationYear] = expirationDate.value.split("/");
-
   if (!CreditCardPan.is(pan.value)) {
     // invalid pan
     return none;
   }
+
+  const [expirationMonth, expirationYear] = expirationDate.value.split("/");
 
   if (
     !CreditCardExpirationMonth.is(expirationMonth) ||
