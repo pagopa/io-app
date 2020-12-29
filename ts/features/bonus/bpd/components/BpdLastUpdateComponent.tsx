@@ -2,14 +2,13 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import I18n from "../../../../i18n";
 import { H4 } from "../../../../components/core/typography/H4";
-import { Link } from "../../../../components/core/typography/Link";
-import { GlobalState } from "../../../../store/reducers/types";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import I18n from "../../../../i18n";
+import { GlobalState } from "../../../../store/reducers/types";
 import { format, formatDateAsLocal } from "../../../../utils/dates";
 import { showToast } from "../../../../utils/showToast";
 import { bpdAllData } from "../store/actions/details";
@@ -21,28 +20,12 @@ type Props = ReturnType<typeof mapStateToProps> &
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "center"
   },
   addButton: {
     width: "100%"
   }
 });
-
-const Spinner = () => (
-  <ActivityIndicator
-    color={"black"}
-    accessible={false}
-    importantForAccessibility={"no-hide-descendants"}
-    accessibilityElementsHidden={true}
-  />
-);
-
-const UpdateLabel = (props: Props & { caption: string }) =>
-  pot.isLoading(props.potLastUpdate) ? (
-    <Spinner />
-  ) : (
-    <Link onPress={props.loadBonus}>{props.caption}</Link>
-  );
 
 /**
  * This component show the last time in which the bpd periods are loaded correctly
@@ -73,10 +56,6 @@ const BpdLastUpdateComponent: React.FunctionComponent<Props> = (
           })}
         </H4>
       )}
-      <UpdateLabel
-        {...props}
-        caption={I18n.t("global.buttons.update").toLowerCase()}
-      />
     </View>
   );
 };
