@@ -76,9 +76,7 @@ export const bpdPeriodsAmountWalletVisibleSelector = createSelector(
 const isPeriodAmountSnappedVisible = (
   periodAmount: BpdPeriodWithInfo,
   bpdEnabled: pot.Pot<boolean, Error>
-) =>
-  periodAmount.status === "Closed" ||
-  (pot.isSome(bpdEnabled) && bpdEnabled.value);
+) => periodAmount.status === "Closed" || pot.getOrElse(bpdEnabled, false);
 
 /**
  * Return the {@link BpdPeriodWithInfo} that should be visible in the snapped List selector
