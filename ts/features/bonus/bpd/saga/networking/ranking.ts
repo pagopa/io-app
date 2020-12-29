@@ -53,7 +53,7 @@ export function* bpdLoadRaking(
     }
   } catch (e) {
     void mixpanelTrack(mixpanelActionFailure, {
-      reason: e.message
+      reason: getError(e).message
     });
     return left<Error, ReadonlyArray<BpdRankingReady>>(getError(e));
   }
