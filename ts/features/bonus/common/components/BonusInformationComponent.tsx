@@ -96,36 +96,18 @@ const getTosFooter = (
   maybeBonusTos: Option<string>,
   maybeRegulationUrl: Option<{ url: string; name: string }>,
   handleModalPress: (tos: string) => void
-) => {
-  // if tos and regulation url is defined return a markdown footer including both links reference (BPD)
-  if (maybeBonusTos.isSome() && maybeRegulationUrl.isSome()) {
-    return (
-      <>
-        <View spacer={true} extralarge={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} extralarge={true} />
-        <Markdown
-          cssStyle={CSS_STYLE}
-          extraBodyHeight={extraMarkdownBodyHeight}
-        >
-          {I18n.t("bonus.termsAndConditionFooter", {
-            regulationLink: maybeRegulationUrl.value.url,
-            tosUrl: maybeBonusTos.value
-          })}
-        </Markdown>
-      </>
-    );
-  }
-  // if tos is defined return the link (BONUS VACANZE)
-  if (maybeBonusTos.isSome()) {
-    return (
+) =>
+  maybeBonusTos.fold(null, bT =>
+    maybeRegulationUrl.fold(
+      // if tos is defined and the regolation url is not defined
+      // return the link (BONUS VACANZE)
       <>
         <View spacer={true} extralarge={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} extralarge={true} />
         <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
         <TouchableDefaultOpacity
-          onPress={() => handleModalPress(maybeBonusTos.value)}
+          onPress={() => handleModalPress(bT)}
           accessibilityRole={"link"}
         >
           <Text
@@ -137,11 +119,27 @@ const getTosFooter = (
             {I18n.t("bonus.tos.title")}
           </Text>
         </TouchableDefaultOpacity>
-      </>
-    );
-  }
-  return null;
-};
+      </>,
+      // if tos and regulation url is defined
+      // return a markdown footer including both links reference (BPD)
+      rU => (
+        <>
+          <View spacer={true} extralarge={true} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} extralarge={true} />
+          <Markdown
+            cssStyle={CSS_STYLE}
+            extraBodyHeight={extraMarkdownBodyHeight}
+          >
+            {I18n.t("bonus.termsAndConditionFooter", {
+              regulationLink: rU.url,
+              tosUrl: bT
+            })}
+          </Markdown>
+        </>
+      )
+    )
+  );
 
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
