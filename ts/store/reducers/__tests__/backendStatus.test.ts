@@ -64,6 +64,7 @@ describe("backend service status reducer", () => {
   });
 });
 
+// TODO: refactor using  baseBackendState
 describe("test selectors", () => {
   // smoke tests: valid / invalid
   const status = {

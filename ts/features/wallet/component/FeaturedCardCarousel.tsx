@@ -1,4 +1,6 @@
 import { reverse } from "fp-ts/lib/Array";
+import { constUndefined } from "fp-ts/lib/function";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
@@ -10,8 +12,9 @@ import { getValue } from "../../bonus/bpd/model/RemoteValue";
 import { ID_BPD_TYPE } from "../../bonus/bonusVacanze/utils/bonus";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H3 } from "../../../components/core/typography/H3";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { bonusVacanzeEnabled, bpdEnabled } from "../../../config";
 import I18n from "../../../i18n";
-import { GlobalState } from "../../../store/reducers/types";
 import { Dispatch } from "../../../store/actions/types";
 import { bpdEnabled } from "../../../config";
 import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
@@ -43,7 +46,8 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
     });
   }
 
-  const anyBonusNotActive = getValue(props.bpdActiveBonus) === false;
+  const anyBonusNotActive =
+    !props.bvActive || !pot.getOrElse(props.bpdActiveBonus, false);
   return anyBonusNotActive ? (
     <View style={styles.container}>
       <View style={[IOStyles.horizontalContentPadding]}>
@@ -69,7 +73,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
           switch (b.id_type) {
             case ID_BPD_TYPE:
               return (
-                getValue(props.bpdActiveBonus) === false && (
+                !pot.getOrElse(props.bpdActiveBonus, false) && (
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={I18n.t("bonus.bpd.name")}
