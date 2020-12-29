@@ -30,6 +30,7 @@ export type BpdRankingReady = WithAwardPeriodId & {
 
 // The ranking is still not ready for a period (eg. a period is just started
 // and no transaction has been recorded)
+// TODO: we should move all the types definition in the /types/* instead that in the state /action
 export type BpdRankingNotReady = WithAwardPeriodId & { kind: "notReady" };
 
 export const bpdRankingNotReady = (
@@ -53,6 +54,23 @@ export const isBpdRankingNotReady = (r: BpdRanking): r is BpdRankingNotReady =>
 export type BpdPeriodWithInfo = BpdPeriod & {
   amount: BpdAmount;
   ranking: BpdRanking;
+};
+
+/**
+ * A temporary implementation, based on the actual date
+ * TODO: remove this method when the new state "Waiting" will be ready
+ * @param period
+ */
+export const isGracePeriod = (period: BpdPeriod) => {
+  if (period.status === "Active" || period.status === "Inactive") {
+    return false;
+  }
+  const today = new Date();
+  const endGracePeriod = new Date(period.endDate);
+  endGracePeriod.setDate(period.endDate.getDate() + period.gracePeriod);
+  // we are still in the grace period and warns the user that some transactions
+  // may still be pending
+  return today <= endGracePeriod && today >= period.endDate;
 };
 
 /**

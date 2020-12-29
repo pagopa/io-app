@@ -3,7 +3,9 @@ import { InfoBox } from "../../../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../../../components/core/typography/Body";
 import I18n from "../../../../../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../../utils/accessibility";
+import { localeDateFormat } from "../../../../../../../../utils/locale";
 import { BpdPeriod } from "../../../../../store/actions/periods";
+import { isGracePeriod } from "../../../../../store/reducers/details/periods";
 import { TextualSummary } from "./TextualSummary";
 
 type Props = React.ComponentProps<typeof TextualSummary>;
@@ -45,6 +47,14 @@ const KO = (props: Props) => (
   </InfoBox>
 );
 
+const transferDate = (period: BpdPeriod) => {
+  const endDate = new Date(period.endDate);
+
+  // 60: max days to receive the money transfer
+  endDate.setDate(period.endDate.getDate() + 60);
+  return endDate;
+};
+
 /**
  * The user will receive the refund!
  * @param props
@@ -67,6 +77,16 @@ const OK = (props: Props) => (
             "bonus.bpd.details.components.transactionsCountOverview.closedPeriodMaxAmount"
           )
         : "!"}
+      {"\n"}
+      {I18n.t(
+        "bonus.bpd.details.components.transactionsCountOverview.moneyTransfer",
+        {
+          date: localeDateFormat(
+            transferDate(props.period),
+            I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+          )
+        }
+      )}
     </Body>
   </InfoBox>
 );
@@ -77,14 +97,9 @@ const OK = (props: Props) => (
  * @constructor
  */
 export const ClosedTextualSummary = (props: Props) => {
-  const today = new Date();
-  const endGracePeriod = new Date(props.period.endDate);
-  endGracePeriod.setDate(
-    props.period.endDate.getDate() + props.period.gracePeriod
-  );
   // we are still in the grace period and warns the user that some transactions
   // may still be pending
-  if (today <= endGracePeriod && today >= props.period.endDate) {
+  if (isGracePeriod(props.period)) {
     return <GracePeriod {...props} />;
   }
   // not enough transaction to receive the cashback
