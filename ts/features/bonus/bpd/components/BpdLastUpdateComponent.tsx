@@ -12,7 +12,8 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { format, formatDateAsLocal } from "../../../../utils/dates";
 import { showToast } from "../../../../utils/showToast";
-import { bpdDetailsLoadAll } from "../store/actions/details";
+import { bpdAllData } from "../store/actions/details";
+import { bpdLastUpdateSelector } from "../store/reducers/details/lastUpdate";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -81,11 +82,11 @@ const BpdLastUpdateComponent: React.FunctionComponent<Props> = (
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  potLastUpdate: state.bonus.bpd.details.lastUpdate
+  potLastUpdate: bpdLastUpdateSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadBonus: () => dispatch(bpdDetailsLoadAll())
+  loadBonus: () => dispatch(bpdAllData.request())
 });
 
 export default connect(
