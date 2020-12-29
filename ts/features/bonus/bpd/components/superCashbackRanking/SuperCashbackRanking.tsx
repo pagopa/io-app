@@ -15,6 +15,8 @@ import {
 import { localeDateFormat } from "../../../../../utils/locale";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import { formatNumberWithNoDigits } from "../../../../../utils/stringBuilder";
+import { H4 } from "../../../../../components/core/typography/H4";
+import { isInGracePeriod } from "../../utils/dates";
 import { FirstPositionItem } from "./FirstPositionItem";
 import { LastPositionItem } from "./LastPositionItem";
 import UserPositionItem from "./UserPositionItem";
@@ -93,15 +95,35 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
     <H3>{I18n.t("bonus.bpd.details.superCashback.howItWorks.title")}</H3>
     <View spacer={true} />
     {props.selectedPeriod && (
-      <Markdown cssStyle={CSS_STYLE}>
-        {I18n.t("bonus.bpd.details.superCashback.howItWorks.body", {
-          citizens: props.selectedPeriod.minPosition,
-          amount: formatNumberWithNoDigits(
-            props.selectedPeriod.superCashbackAmount
-          ),
-          endDate: calculateEndDate(props.selectedPeriod)
-        })}
-      </Markdown>
+      <>
+        <Markdown cssStyle={CSS_STYLE}>
+          {I18n.t("bonus.bpd.details.superCashback.howItWorks.body", {
+            citizens: props.selectedPeriod.minPosition,
+            amount: formatNumberWithNoDigits(
+              props.selectedPeriod.superCashbackAmount
+            )
+          })}
+        </Markdown>
+        <View spacer />
+        {props.selectedPeriod.status === "Active" ||
+        isInGracePeriod(
+          props.selectedPeriod.endDate,
+          props.selectedPeriod.gracePeriod
+        ) ? (
+          <Markdown cssStyle={CSS_STYLE}>
+            {I18n.t(
+              "bonus.bpd.details.superCashback.howItWorks.status.active",
+              {
+                endDate: calculateEndDate(props.selectedPeriod)
+              }
+            )}
+          </Markdown>
+        ) : (
+          <H4 weight={"Bold"}>
+            {I18n.t("bonus.bpd.details.superCashback.howItWorks.status.closed")}
+          </H4>
+        )}
+      </>
     )}
   </>
 );
