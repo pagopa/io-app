@@ -1,32 +1,31 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Input, Item, Label, View } from "native-base";
 import * as React from "react";
+import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Alert, SafeAreaView, StyleSheet } from "react-native";
-import I18n from "../../i18n";
-import { ReduxProps } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
-import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { shufflePinPadOnPayment } from "../../config";
+import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
+import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
+import I18n from "../../i18n";
+import { identificationRequest } from "../../store/actions/identification";
+import { navigateToWalletHome } from "../../store/actions/navigation";
 import {
   removeAccountMotivation,
   RemoveAccountMotivationEnum,
   RemoveAccountMotivationPayload
 } from "../../store/actions/profile";
-import { identificationRequest } from "../../store/actions/identification";
-import { shufflePinPadOnPayment } from "../../config";
+import { ReduxProps } from "../../store/actions/types";
+import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
-import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { withKeyboard } from "../../utils/keyboard";
-import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
-import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
-import { getValue } from "../../features/bonus/bpd/model/RemoteValue";
-import { navigateToWalletHome } from "../../store/actions/navigation";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
@@ -59,7 +58,6 @@ const getMotivationItems = (): ReadonlyArray<{
     id: RemoveAccountMotivationEnum.OTHERS
   }
 ];
-
 /**
  * A screen that ask user the motivation of the account removal
  * Here user can ask to delete his account
@@ -74,7 +72,7 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
 
   const handleContinuePress = () => {
     const hasActiveBonus =
-      props.bvActiveBonus || getValue(props.bpdActiveBonus);
+      props.bvActiveBonus || pot.getOrElse(props.bpdActiveBonus, false);
 
     if (hasActiveBonus) {
       Alert.alert(
