@@ -78,8 +78,6 @@ import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
