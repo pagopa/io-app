@@ -298,7 +298,7 @@ const AddCardScreen: React.FC<Props> = props => {
   );
 };
 
-const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
+const mapStateToProps = (state: GlobalState) => ({
   profileNameSurname: profileNameSurnameSelector(state)
 });
 
