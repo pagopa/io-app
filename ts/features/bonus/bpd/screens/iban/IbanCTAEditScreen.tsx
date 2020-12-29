@@ -25,11 +25,30 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 const loadingCaption = () => I18n.t("global.remoteStates.loading");
 
+const loadLocales = () => ({
+  title: I18n.t("bonus.bpd.iban.verify"),
+  alertNotActiveTitle: I18n.t("bonus.bpd.iban.cta.bpdNotActiveTitle"),
+  alertNotActiveMessage: I18n.t("bonus.bpd.iban.cta.bpdNotActiveMessage"),
+  alertNotPeriodActiveTitle: I18n.t("bonus.bpd.iban.cta.noActivePeriodTitle"),
+  alertNotPeriodActiveMessage: I18n.t(
+    "bonus.bpd.iban.cta.noActivePeriodMessage"
+  )
+});
+
 /**
  * Landing screen from the CTA message that asks to review user's IBAN insertion
  */
 const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
+  const {
+    title,
+    alertNotActiveTitle,
+    alertNotActiveMessage,
+    alertNotPeriodActiveTitle,
+    alertNotPeriodActiveMessage
+  } = loadLocales();
   useActionOnFocus(props.load);
+  // keep track if loading has been completed or not
+  // to avoid to handle not update data coming from the store
   const [isLoadingComplete, setLoadingComplete] = React.useState<boolean>(
     false
   );
@@ -42,9 +61,9 @@ const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
       isStrictSome(props.bpdLoadState) &&
       pot.isSome(props.bpdEnabled)
     ) {
-      // citizen not enrolled to BPD
+      // citizen not active to BPD
       if (!props.bpdEnabled.value) {
-        Alert.alert("title", "not enrolled", [
+        Alert.alert(alertNotActiveTitle, alertNotActiveMessage, [
           {
             onPress: props.goBack
           }
@@ -59,7 +78,7 @@ const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
       }
       // no active period
       else {
-        Alert.alert("title", "not enrolled", [
+        Alert.alert(alertNotPeriodActiveTitle, alertNotPeriodActiveMessage, [
           {
             onPress: props.goBack
           }
@@ -72,7 +91,7 @@ const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
 
   const hasErrors = pot.isError(props.bpdLoadState);
   return (
-    <BaseScreenComponent goBack={true} headerTitle={"TODO TITLE"}>
+    <BaseScreenComponent goBack={true} headerTitle={title}>
       <LoadingErrorComponent
         isLoading={!hasErrors}
         loadingCaption={loadingCaption()}
