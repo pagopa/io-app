@@ -61,7 +61,6 @@ const transferDate = (period: BpdPeriod) => {
 const endGracePeriod = (period: BpdPeriod) => {
   const endDate = new Date(period.endDate);
 
-  // 60: max days to receive the money transfer
   endDate.setDate(period.endDate.getDate() + period.gracePeriod);
   return endDate;
 };
