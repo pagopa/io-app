@@ -21,7 +21,10 @@ const GracePeriod = (props: { period: BpdPeriod }) => (
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.gracePeriodBody",
         {
-          date: dateToAccessibilityReadableFormat(props.period.endDate)
+          date: dateToAccessibilityReadableFormat(props.period.endDate),
+          endGracePeriodDate: dateToAccessibilityReadableFormat(
+            endGracePeriod(props.period)
+          )
         }
       )}
     </Body>
@@ -52,6 +55,14 @@ const transferDate = (period: BpdPeriod) => {
 
   // 60: max days to receive the money transfer
   endDate.setDate(period.endDate.getDate() + 60);
+  return endDate;
+};
+
+const endGracePeriod = (period: BpdPeriod) => {
+  const endDate = new Date(period.endDate);
+
+  // 60: max days to receive the money transfer
+  endDate.setDate(period.endDate.getDate() + period.gracePeriod);
   return endDate;
 };
 
