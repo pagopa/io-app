@@ -3,10 +3,7 @@ import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { bpdApiUrlPrefix } from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
-import {
-  bpdDetailsLoadAll,
-  bpdLoadActivationStatus
-} from "../store/actions/details";
+import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
 import {
   bpdDeleteUserFromProgram,
@@ -81,7 +78,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   );
 
   // prefetch all the bpd data
-  yield takeEvery(bpdDetailsLoadAll, loadBpdData);
+  yield takeEvery(bpdAllData.request, loadBpdData);
 
   // load bpd transactions for a period
   yield takeEvery(

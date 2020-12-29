@@ -2,6 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import {
@@ -27,7 +28,7 @@ import paymentInstrumentReducer, {
 } from "./payoffInstrument";
 
 export type BpdActivation = {
-  enabled: RemoteValue<boolean, Error>;
+  enabled: pot.Pot<boolean, Error>;
   payoffInstr: PayoffInstrumentType;
   unsubscription: RemoteValue<true, Error>;
 };
@@ -43,22 +44,22 @@ export type BpdActivation = {
  */
 // TODO: check if the logic is ok
 const enabledReducer = (
-  state: RemoteValue<boolean, Error> = remoteUndefined,
+  state: pot.Pot<boolean, Error> = pot.none,
   action: Action
-): RemoteValue<boolean, Error> => {
+): pot.Pot<boolean, Error> => {
   switch (action.type) {
     case getType(bpdDetailsLoadAll):
     case getType(bpdLoadActivationStatus.request):
     case getType(bpdEnrollUserToProgram.request):
-      return remoteLoading;
+      return pot.toLoading(state);
     case getType(bpdLoadActivationStatus.success):
     case getType(bpdEnrollUserToProgram.success):
-      return remoteReady(action.payload.enabled);
+      return pot.some(action.payload.enabled);
     case getType(bpdDeleteUserFromProgram.success):
-      return remoteUndefined;
+      return pot.none;
     case getType(bpdLoadActivationStatus.failure):
     case getType(bpdEnrollUserToProgram.failure):
-      return remoteError(action.payload);
+      return pot.toError(state, action.payload);
   }
   return state;
 };
@@ -98,7 +99,7 @@ const bpdActivationReducer = combineReducers<BpdActivation, Action>({
  */
 export const bpdEnabledSelector = (
   state: GlobalState
-): RemoteValue<boolean, Error> => state.bonus.bpd.details.activation.enabled;
+): pot.Pot<boolean, Error> => state.bonus.bpd.details.activation.enabled;
 
 /**
  * Return the Iban that the user has entered to receive the cashback amount

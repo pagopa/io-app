@@ -1,4 +1,5 @@
 import { Either, right } from "fp-ts/lib/Either";
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import {
@@ -17,7 +18,6 @@ import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wall
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getAsyncResult } from "../../../../../../utils/saga";
-import { isReady } from "../../../model/RemoteValue";
 import {
   navigateToBpdOnboardingDeclaration,
   navigateToBpdOnboardingInformationTos,
@@ -53,7 +53,7 @@ export function* isBpdEnabled(): Generator<
   const remoteActive: ReturnType<typeof bpdEnabledSelector> = yield select(
     bpdEnabledSelector
   );
-  if (isReady(remoteActive)) {
+  if (pot.isSome(remoteActive)) {
     return right<Error, boolean>(remoteActive.value);
   } else {
     const activationStatus: SagaCallReturnType<typeof getActivationStatus> = yield call(

@@ -12,7 +12,7 @@ import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { showToast } from "../../../../../utils/showToast";
 import { isError, isLoading, isReady } from "../../model/RemoteValue";
-import { bpdDetailsLoadAll } from "../../store/actions/details";
+import { bpdAllData } from "../../store/actions/details";
 import { bpdUnsubscribeCompleted } from "../../store/actions/onboarding";
 import { bpdUnsubscriptionSelector } from "../../store/reducers/details/activation";
 import { bpdTransactionsForSelectedPeriod } from "../../store/reducers/details/transactions";
@@ -121,9 +121,9 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  load: () => dispatch(bpdDetailsLoadAll()),
+  load: () => dispatch(bpdAllData.request()),
   completeUnsubscription: () => {
-    dispatch(bpdDetailsLoadAll());
+    dispatch(bpdAllData.request());
     dispatch(bpdUnsubscribeCompleted());
     dispatch(NavigationActions.back());
   },

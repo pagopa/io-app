@@ -16,6 +16,8 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
@@ -23,6 +25,7 @@ import SectionCardComponent, {
   SectionCardStatus
 } from "../../components/wallet/card/SectionCardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
+import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
@@ -37,9 +40,11 @@ import {
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
-import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
+import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
+import { bpdLastUpdateSelector } from "../../features/bonus/bpd/store/reducers/details/lastUpdate";
 import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
+import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
 import I18n from "../../i18n";
 import {
@@ -73,19 +78,9 @@ import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
-import {
-  isLoading,
-  isReady,
-  isError as isRemoteValueError
-} from "../../features/bonus/bpd/model/RemoteValue";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import { isStrictSome } from "../../utils/pot";
-import { bpdDetailsLoadAll } from "../../features/bonus/bpd/store/actions/details";
 import { showToast } from "../../utils/showToast";
-import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -227,7 +222,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private loadBonusBpd = () => {
     if (bpdEnabled) {
-      this.props.loadBpdDetails();
+      this.props.loadBpdData();
     }
   };
 
@@ -270,8 +265,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     if (
       this.state.hasFocus &&
       // error loading: bpd bonus
-      ((!isRemoteValueError(prevProps.bpdActiveBonus) &&
-        isRemoteValueError(this.props.bpdActiveBonus)) ||
+      ((!pot.isError(prevProps.bpdLoadState) &&
+        pot.isError(this.props.bpdLoadState)) ||
         // error loading: bonus vacanze
         (prevProps.allActiveBonus.some(ab => !pot.isError(ab)) &&
           this.props.allActiveBonus.some(ab => pot.isError(ab))) ||
@@ -319,7 +314,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     // note: in the BPD case, we are watching for loading on one of several steps
     // so this loading state is very weak
     if (
-      isLoading(this.props.bpdActiveBonus) ||
+      pot.isLoading(this.props.bpdLoadState) ||
       this.props.allActiveBonus.find(
         ab => pot.isLoading(ab) || (pot.isNone(ab) && !pot.isError(ab))
       )
@@ -330,7 +325,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     if (
       this.props.allActiveBonus.length === 0 ||
       this.props.allActiveBonus.every(ab => isStrictSome(ab)) ||
-      isReady(this.props.bpdActiveBonus)
+      pot.isSome(this.props.bpdLoadState)
     ) {
       return "refresh";
     }
@@ -600,12 +595,12 @@ const mapStateToProps = (state: GlobalState) => {
     readTransactions: transactionsReadSelector(state),
     nav: navSelector(state),
     isPagoPaVersionSupported,
-    bpdActiveBonus: bpdEnabledSelector(state)
+    bpdLoadState: bpdLastUpdateSelector(state)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadBpdDetails: () => dispatch(bpdDetailsLoadAll()),
+  loadBpdData: () => dispatch(bpdAllData.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
