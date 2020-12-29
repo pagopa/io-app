@@ -23,7 +23,10 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
-import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
+import {
+  navigateBack,
+  navigateToWalletConfirmCardDetails
+} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
 import variables from "../../theme/variables";
@@ -119,21 +122,6 @@ const primaryButtonPropsFromState = (
 
   const card = getCreditCardFromState(state);
 
-  /*
-  if (card.isSome()) {
-    return {
-      ...baseButtonProps,
-      disabled: false,
-      onPress: () => onNavigate(card.value)
-    };
-  } else {
-    return {
-      ...baseButtonProps,
-      disabled: true,
-      onPress: () => undefined
-    };
-  } */
-
   return card.fold<BlockButtonProps>(
     {
       ...baseButtonProps,
@@ -170,6 +158,13 @@ const AddCardScreen: React.FC<Props> = props => {
       ...creditCard,
       [key]: fromNullable(value)
     });
+
+  const secondaryButtonProps = {
+    block: true,
+    bordered: true,
+    onPress: props.navigateBack,
+    title: I18n.t("global.buttons.back")
+  };
 
   return (
     <BaseScreenComponent
@@ -293,7 +288,7 @@ const AddCardScreen: React.FC<Props> = props => {
       <SectionStatusComponent sectionKey={"credit_card"} />
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
-        leftButton={props.secondaryButtonProps}
+        leftButton={secondaryButtonProps}
         rightButton={primaryButtonPropsFromState(
           creditCard,
           props.navigateToConfirmCardDetailsScreen
@@ -304,17 +299,12 @@ const AddCardScreen: React.FC<Props> = props => {
 };
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
-  profileNameSurname: profileNameSurnameSelector(state),
-  secondaryButtonProps: {
-    block: true,
-    bordered: true,
-    onPress: () => props.navigation.goBack(),
-    title: I18n.t("global.buttons.back")
-  }
+  profileNameSurname: profileNameSurnameSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
+  navigateBack: () => dispatch(navigateBack()),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     dispatch(
       navigateToWalletConfirmCardDetails({
