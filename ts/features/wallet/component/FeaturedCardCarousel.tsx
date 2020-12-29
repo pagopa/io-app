@@ -6,22 +6,17 @@ import { View } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
-import { constUndefined } from "fp-ts/lib/function";
-import { getValue } from "../../bonus/bpd/model/RemoteValue";
-import { ID_BPD_TYPE } from "../../bonus/bonusVacanze/utils/bonus";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
+import cashbackLogo from "../../../../img/bonus/bpd/logo_cashback_blue.png";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../../config";
+import { bpdEnabled } from "../../../config";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
-import { bpdEnabled } from "../../../config";
-import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
-import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
-import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import { availableBonusTypesSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
-import cashbackLogo from "../../../../img/bonus/bpd/logo_cashback_blue.png";
+import { ID_BPD_TYPE } from "../../bonus/bonusVacanze/utils/bonus";
+import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
+import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -46,8 +41,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
     });
   }
 
-  const anyBonusNotActive =
-    !props.bvActive || !pot.getOrElse(props.bpdActiveBonus, false);
+  const anyBonusNotActive = !pot.getOrElse(props.bpdActiveBonus, false);
   return anyBonusNotActive ? (
     <View style={styles.container}>
       <View style={[IOStyles.horizontalContentPadding]}>
