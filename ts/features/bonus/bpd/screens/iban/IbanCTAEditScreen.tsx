@@ -86,7 +86,6 @@ const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
         ]);
       }
 
-      // navigate to IBAN insertion screen
     }
   }, [props.bpdLoadState, props.bpdEnabled, isLoadingComplete]);
 
