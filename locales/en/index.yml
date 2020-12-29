@@ -497,8 +497,6 @@ authentication:
       alert: Are you sure you want to go back?
       subtitleHelp: The PIN code consists of 8 digits.
       subtitleCTA: Where can I find it?
-      bottomSheetTitle: Where can I find my PIN?
-      bottomSheetText: "The PIN code consists of 8 digits:\n• the first 4 digits you received at the registry office;\n• the last 4 digits you received at home, along with your electronic ID card.\n**Please enter them following this order.**"
       bottomSheetCTA: Did you forget your PIN?
       contextualHelpTitle: Where can I find my PIN and PUK?
       contextualHelpBody: "The **PIN** code consists of 8 digits: \n\n• the first 4 digits you received at the registry office;\n• the last 4 digits you received at home, along with your electronic ID card.\n\nPlease enter them following this order.\n\n The PUK code is needed to unlock your **PIN**, in case of 3 wrong attempts. **PUK** consists of 8 digits and it's issued along with the **PIN**.\n\n"
@@ -1464,6 +1462,10 @@ instabug:
     descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
     buttonChat: Reopen a report
     assistanceWorkHours: IO assistance is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun and holidays from 8.00 to 13.00
+bottomSheets:
+  ciePin:
+      title: "Where can I find my PIN?"
+      content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "What is SPID?"

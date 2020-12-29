@@ -184,7 +184,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
 
   private navigateToCiePinScreen = () => {
-    if (this.isCieSupported()) {
+    if (this.isCieSupported() || true) {
       this.props.dispatchIdpCieSelected();
       this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
     } else {

@@ -35,7 +35,6 @@ import { setAccessibilityFocus } from "../../../utils/accessibility";
 
 import { isIos } from "../../../utils/platform";
 import { useIOBottomSheet } from "../../../utils/bottomSheet";
-import { Body } from "../../../components/core/typography/Body";
 import { openWebUrl } from "../../../utils/url";
 import { Link } from "../../../components/core/typography/Link";
 import Markdown from "../../../components/ui/Markdown";
@@ -76,16 +75,16 @@ const CiePinScreen: React.FC<Props> = props => {
 
   const { present } = useIOBottomSheet(
     <View>
-      <Body>{I18n.t("authentication.cie.pin.bottomSheetText")}</Body>
+      <Markdown>{I18n.t("bottomSheets.ciePin.content")}</Markdown>
       <ButtonDefaultOpacity
         onPress={onOpenForgotPINPage}
         style={styles.bsLinkButton}
         onPressWithGestureHandler={true}
       >
-        <Link>{I18n.t("authentication.cie.pin.bottomSheetCTA")}</Link>
+        <Link>{I18n.t("bottomSheets.ciePin.title")}</Link>
       </ButtonDefaultOpacity>
     </View>,
-    I18n.t("authentication.cie.pin.bottomSheetTitle"),
+    I18n.t("bottomSheets.ciePin.title"),
     300
   );
 
