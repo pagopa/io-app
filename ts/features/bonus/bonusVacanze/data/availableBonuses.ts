@@ -66,7 +66,7 @@ This is the process in app:
 - if you confirm the request, IO generates your Bonus Vacanze;
 - once activated, your bonus will be visible in the Payments section of the app.
 `;
-
+// TODO: remove this fallback https://www.pivotaltracker.com/story/show/175878735
 export const availableBonuses: BonusesAvailable = [
   {
     id_type: ID_BONUS_VACANZE_TYPE,
