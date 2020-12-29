@@ -127,11 +127,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 15,
     borderBottomColor: "rgba(0,0,0,0.1)",
     width: "100%"
-  },
-  fireworksIcon: {
-    width: 16,
-    height: 16,
-    resizeMode: "cover"
   }
 });
 
@@ -329,8 +324,14 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
       style={[styles.row, styles.spaced, styles.paddedContentPreview]}
       onPress={props.onPress}
     >
-      <View style={styles.column}>
-        <View style={[styles.row, styles.alignItemsCenter]}>
+      <View style={[styles.column, { flex: 0.8 }]}>
+        <View
+          style={[
+            styles.row,
+            styles.alignItemsCenter,
+            { justifyContent: "space-between" }
+          ]}
+        >
           <H5
             color={"white"}
             weight={"Regular"}
