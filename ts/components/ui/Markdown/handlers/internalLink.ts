@@ -38,7 +38,10 @@ const BONUS_VACANZE_ROUTE_NAMES: ReadonlyArray<string> = [
   BONUSVACANZE_ROUTES.BONUS_CTA_ELIGILITY_START
 ];
 
-const BPD_ROUTE_NAMES: ReadonlyArray<string> = [BPD_ROUTES.CTA_START_BPD];
+const BPD_ROUTE_NAMES: ReadonlyArray<string> = [
+  BPD_ROUTES.CTA_START_BPD,
+  BPD_ROUTES.CTA_BPD_IBAN_EDIT
+];
 
 const MY_PORTAL_ROUTES: ReadonlyArray<string> = [ROUTES.SERVICE_WEBVIEW];
 
