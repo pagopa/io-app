@@ -73,7 +73,7 @@ const getContextualHelp = () => ({
     <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
   )
 });
-const onOpenForgotPINPage = () => openWebUrl(FORGOT_PIN_PAGE_URL);
+const onOpenForgotPinPage = () => openWebUrl(FORGOT_PIN_PAGE_URL);
 
 const CiePinScreen: React.FC<Props> = props => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
@@ -92,7 +92,7 @@ const CiePinScreen: React.FC<Props> = props => {
     <View>
       <Markdown>{I18n.t("bottomSheets.ciePin.content")}</Markdown>
       <ButtonDefaultOpacity
-        onPress={onOpenForgotPINPage}
+        onPress={onOpenForgotPinPage}
         style={styles.bsLinkButton}
         onPressWithGestureHandler={true}
       >
