@@ -11,10 +11,7 @@ import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  BPayPaymentMethod,
-  SatispayPaymentMethod
-} from "../../../../types/pagopa";
+import { BPayPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
@@ -22,7 +19,6 @@ import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 // import SatispayCard from "../SatispayCard";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import BPayCard from "../component/BPayCard";
-import reactotron from "reactotron-react-native";
 
 type NavigationParams = Readonly<{
   bPay: BPayPaymentMethod;

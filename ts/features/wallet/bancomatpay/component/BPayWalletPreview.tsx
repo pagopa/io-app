@@ -7,15 +7,8 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CardPreview } from "../../component/CardPreview";
-import {
-  navigateToBPayDetailScreen,
-  navigateToSatispayDetailScreen
-} from "../../../../store/actions/navigation";
-import {
-  BPayPaymentMethod,
-  SatispayPaymentMethod
-} from "../../../../types/pagopa";
-import reactotron from "reactotron-react-native";
+import { navigateToBPayDetailScreen } from "../../../../store/actions/navigation";
+import { BPayPaymentMethod } from "../../../../types/pagopa";
 
 type OwnProps = {
   bPay: BPayPaymentMethod;
