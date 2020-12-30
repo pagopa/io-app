@@ -1,3 +1,8 @@
+/**
+ * Utility function to determine if we are currently in the grace time of a cashback period
+ * @param endDate
+ * @param gracePeriod
+ */
 export const isInGracePeriod = (endDate: Date, gracePeriod: number) => {
   if (isNaN(endDate.getTime()) || isNaN(gracePeriod)) {
     return false;

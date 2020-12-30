@@ -100,7 +100,8 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
           {I18n.t("bonus.bpd.details.superCashback.howItWorks.body", {
             citizens: props.selectedPeriod.minPosition,
             amount: formatNumberWithNoDigits(
-              props.selectedPeriod.superCashbackAmount
+              props.selectedPeriod.superCashbackAmount,
+              true
             )
           })}
         </Markdown>
