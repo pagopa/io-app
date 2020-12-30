@@ -9,6 +9,7 @@ type Props = {
 
 const HelpButton: FC<Props> = ({ onShowHelp }) => (
   <ButtonDefaultOpacity
+    hasFullHitSlop
     onPress={onShowHelp}
     transparent={true}
     accessibilityLabel={I18n.t(
