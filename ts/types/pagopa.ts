@@ -220,7 +220,9 @@ export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
   PaymentMethodRepresentation;
 
 export type BPayPaymentMethod = RawBPayPaymentMethod &
-  PaymentMethodRepresentation;
+  PaymentMethodRepresentation & {
+    abiInfo?: Abi;
+  };
 export type SatispayPaymentMethod = RawSatispayPaymentMethod &
   PaymentMethodRepresentation;
 

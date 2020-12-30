@@ -12,12 +12,14 @@ import I18n from "../i18n";
 import { IndexedById } from "../store/helpers/indexer";
 import {
   BancomatPaymentMethod,
+  BPayPaymentMethod,
   isRawBancomat,
   isRawBPay,
   isRawCreditCard,
   isRawSatispay,
   PaymentMethod,
   RawBancomatPaymentMethod,
+  RawBPayPaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
   RawSatispayPaymentMethod,
@@ -135,6 +137,18 @@ export const enhanceSatispay = (
   icon: getImageFromPaymentMethod(raw)
 });
 
+export const enhanceBPay = (
+  rawBPay: RawBPayPaymentMethod,
+  abiList: IndexedById<Abi>
+): BPayPaymentMethod => ({
+  ...rawBPay,
+  abiInfo: rawBPay.info.instituteCode
+    ? abiList[rawBPay.info.instituteCode]
+    : undefined,
+  caption: getTitleFromPaymentMethod(rawBPay, abiList),
+  icon: getImageFromPaymentMethod(rawBPay)
+});
+
 export const enhancePaymentMethod = (
   pm: RawPaymentMethod,
   abiList: IndexedById<Abi>
@@ -143,8 +157,9 @@ export const enhancePaymentMethod = (
     // bancomat need a special handling, we need to include the abi
     case "Bancomat":
       return enhanceBancomat(pm, abiList);
-    case "CreditCard":
     case "BPay":
+      return enhanceBPay(pm, abiList);
+    case "CreditCard":
     case "Satispay":
       return {
         ...pm,
