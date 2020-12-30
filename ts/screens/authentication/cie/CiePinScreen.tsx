@@ -67,11 +67,26 @@ const CIE_PIN_LENGTH = 8;
 const FORGOT_PIN_PAGE_URL =
   "https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/";
 
+const getContextualHelp = () => ({
+  title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
+  body: () => (
+    <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
+  )
+});
+const onOpenForgotPINPage = () => openWebUrl(FORGOT_PIN_PAGE_URL);
+
 const CiePinScreen: React.FC<Props> = props => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
   const { navigate } = useContext(NavigationContext);
+  const [pin, setPin] = useState("");
+  const continueButtonRef = useRef<FooterWithButtons>(null);
+  const pinPadViewRef = useRef<View>(null);
 
-  const onOpenForgotPINPage = () => openWebUrl(FORGOT_PIN_PAGE_URL);
+  useEffect(() => {
+    if (pin.length === CIE_PIN_LENGTH) {
+      setAccessibilityFocus(continueButtonRef, 100 as Millisecond);
+    }
+  }, [pin]);
 
   const { present } = useIOBottomSheet(
     <View>
@@ -88,21 +103,8 @@ const CiePinScreen: React.FC<Props> = props => {
     300
   );
 
-  const getContextualHelp = () => ({
-    title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
-    body: () => (
-      <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
-    )
-  });
-
-  const [pin, setPin] = useState("");
-
-  const continueButtonRef = useRef<FooterWithButtons>(null);
-  const PINPadViewRef = useRef<View>(null);
-
   const onProceedToCardReaderScreen = async (url: string) => {
     setPin("");
-
     navigate({
       routeName: ROUTES.CIE_CARD_READER_SCREEN,
       params: {
@@ -110,7 +112,6 @@ const CiePinScreen: React.FC<Props> = props => {
         authorizationUri: url
       }
     });
-
     hideModal();
   };
 
@@ -121,9 +122,7 @@ const CiePinScreen: React.FC<Props> = props => {
 
   const showModal = () => {
     props.requestNfcEnabledCheck();
-
     Keyboard.dismiss();
-
     showAnimatedModal(
       <CieRequestAuthenticationOverlay
         onClose={handleAuthenticationOverlayOnClose}
@@ -133,17 +132,9 @@ const CiePinScreen: React.FC<Props> = props => {
     );
   };
 
-  const onPinChanged = (pin: string) => setPin(pin);
-
-  useEffect(() => {
-    if (pin.length === CIE_PIN_LENGTH) {
-      setAccessibilityFocus(continueButtonRef, 100 as Millisecond);
-    }
-  }, [pin]);
-
   const doSetAccessibilityFocus = useCallback(() => {
-    setAccessibilityFocus(PINPadViewRef, 100 as Millisecond);
-  }, [PINPadViewRef]);
+    setAccessibilityFocus(pinPadViewRef, 100 as Millisecond);
+  }, [pinPadViewRef]);
 
   return (
     <TopScreenComponent
@@ -165,11 +156,11 @@ const CiePinScreen: React.FC<Props> = props => {
         />
 
         <View spacer={true} />
-        <View style={styles.container} accessible={true} ref={PINPadViewRef}>
+        <View style={styles.container} accessible={true} ref={pinPadViewRef}>
           <CiePinpad
             pin={pin}
             pinLength={CIE_PIN_LENGTH}
-            onPinChanged={onPinChanged}
+            onPinChanged={setPin}
             onSubmit={showModal}
           />
           <View spacer={true} />
