@@ -45,13 +45,14 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
           onConfirmAction: props.requestBonusActivation
         })
       : props.requestBonusActivation();
+
   return (
     <BonusInformationComponent
       primaryCtaText={I18n.t("bonus.bonusVacanze.cta.requestBonus")}
       bonus={bonusType}
       onCancel={props.navigateBack}
-      onConfirm={handleBonusRequestOnPress}
       contextualHelpMarkdown={contextualHelpMarkdown}
+      onConfirm={handleBonusRequestOnPress}
       faqCategories={["bonus_information"]}
     />
   );
@@ -62,10 +63,10 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateBack: () => dispatch(navigateBack()),
   requestBonusActivation: () => {
     dispatch(checkBonusVacanzeEligibility.request());
-  },
-  navigateBack: () => dispatch(navigateBack())
+  }
 });
 
 export default connect(

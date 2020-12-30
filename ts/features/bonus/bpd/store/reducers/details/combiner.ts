@@ -7,12 +7,11 @@ import { PaymentMethod } from "../../../../../../types/pagopa";
 import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { FOUR_UNICODE_CIRCLES } from "../../../../../../utils/wallet";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
-import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { BpdPaymentMethodActivation } from "../../actions/paymentMethods";
 import { BpdTransaction } from "../../actions/transactions";
 import { bpdEnabledSelector } from "./activation";
 import { bpdPaymentMethodActivationSelector } from "./paymentMethods";
-import { BpdPeriodWithInfo, bpdPeriodsSelector } from "./periods";
+import { bpdPeriodsSelector, BpdPeriodWithInfo } from "./periods";
 import { bpdSelectedPeriodSelector } from "./selectedPeriod";
 import { bpdTransactionsForSelectedPeriod } from "./transactions";
 
@@ -27,9 +26,9 @@ import { bpdTransactionsForSelectedPeriod } from "./transactions";
 const isPeriodAmountWalletVisible = (
   periodList: ReadonlyArray<BpdPeriodWithInfo>,
   periodAmount: BpdPeriodWithInfo,
-  bpdEnabled: RemoteValue<boolean, Error>
+  bpdEnabled: pot.Pot<boolean, Error>
 ) =>
-  isReady(bpdEnabled) &&
+  pot.isSome(bpdEnabled) &&
   ((periodAmount.status === "Active" && bpdEnabled.value) ||
     (periodAmount.status === "Closed" &&
       periodAmount.amount.transactionNumber > 0) ||
@@ -76,9 +75,8 @@ export const bpdPeriodsAmountWalletVisibleSelector = createSelector(
  */
 const isPeriodAmountSnappedVisible = (
   periodAmount: BpdPeriodWithInfo,
-  bpdEnabled: RemoteValue<boolean, Error>
-) =>
-  periodAmount.status === "Closed" || (isReady(bpdEnabled) && bpdEnabled.value);
+  bpdEnabled: pot.Pot<boolean, Error>
+) => periodAmount.status === "Closed" || pot.getOrElse(bpdEnabled, false);
 
 /**
  * Return the {@link BpdPeriodWithInfo} that should be visible in the snapped List selector

@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  title: string;
+  title: string | React.ReactNode;
   onClose: () => void;
 };
 
@@ -39,9 +39,13 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
   onClose
 }: Props) => (
   <View style={styles.row}>
-    <View style={IOStyles.flex}>
-      <H3>{title}</H3>
-    </View>
+    {React.isValidElement(title) ? (
+      title
+    ) : (
+      <View style={IOStyles.flex}>
+        <H3>{title}</H3>
+      </View>
+    )}
     <ButtonDefaultOpacity
       onPressWithGestureHandler={true}
       style={styles.modalClose}
