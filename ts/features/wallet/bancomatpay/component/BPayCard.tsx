@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { View } from "native-base";
 import BaseCardComponent from "../../component/BaseCardComponent";
 import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
-import { Body } from "../../../../components/core/typography/Body";
 import { GlobalState } from "../../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
@@ -14,7 +13,7 @@ import { H4 } from "../../../../components/core/typography/H4";
 
 type Props = {
   phone?: string;
-  bankName?: string;
+  bankName: string;
   abiLogo?: string;
 } & ReturnType<typeof mapStateToProps>;
 
@@ -58,16 +57,20 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
               <View style={{ flexDirection: "row" }}>
                 <IconFont name={"io-phone"} size={22} />
                 <View hspacer small />
-                <H4 weight={"Bold"}>{props.phone.replace(/\*/g, "●")}</H4>
+                <H4 weight={"Regular"}>{props.phone}</H4>
               </View>
               <View spacer small />
             </>
           )}
-          <Body>{(props.nameSurname ?? "").toLocaleUpperCase()}</Body>
+          <H4 weight={"Regular"}>
+            {(props.nameSurname ?? "").toLocaleUpperCase()}
+          </H4>
         </View>
       }
       bottomRightCorner={
-        <Image style={styles.bpayLogo} source={bancomatLogoMin} />
+        <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
+          <Image style={styles.bpayLogo} source={bancomatLogoMin} />
+        </View>
       }
     />
   );
