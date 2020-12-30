@@ -28,6 +28,8 @@ import {
   addWalletsBancomatCardUsingPOSTDecoder,
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
+  getBpayListUsingGETDefaultDecoder,
+  GetBpayListUsingGETT,
   GetConsumerUsingGETT,
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT,
@@ -461,6 +463,14 @@ const addSatispayToWallet: AddWalletSatispayUsingPOSTT = {
   response_decoder: addWalletSatispayUsingPOSTDecoder(PatchedWalletV2Response)
 };
 
+const searchBPay: GetBpayListUsingGETT = {
+  method: "get",
+  url: () => `/v1/bpay/list`,
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getBpayListUsingGETDefaultDecoder()
+};
+
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
@@ -631,6 +641,9 @@ export function PaymentManagerClient(
       withPaymentManagerToken(
         createFetchRequestForApi(searchSatispay, altOptions)
       )
+    ),
+    searchBPay: flip(
+      withPaymentManagerToken(createFetchRequestForApi(searchBPay, altOptions))
     ),
     addSatispayToWallet: (satispayRequest: SatispayRequest) =>
       flip(

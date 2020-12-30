@@ -155,6 +155,8 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { backoffWait } from "../utils/saga";
+import { handleSearchUserBPay } from "../features/wallet/onboarding/bancomatpay/saga/networking";
+import { searchUserBPay } from "../features/wallet/onboarding/bancomatpay/store/actions";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -881,6 +883,15 @@ export function* watchWalletSaga(
       addSatispayToWallet.request,
       handleAddUserSatispayToWallet,
       paymentManagerClient.addSatispayToWallet,
+      pmSessionManager
+    );
+
+    // watch for load bpay search request
+
+    yield takeLatest(
+      searchUserBPay.request,
+      handleSearchUserBPay,
+      paymentManagerClient.searchBPay,
       pmSessionManager
     );
   }
