@@ -2,6 +2,7 @@ import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -127,11 +128,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 15,
     borderBottomColor: "rgba(0,0,0,0.1)",
     width: "100%"
-  },
-  fireworksIcon: {
-    width: 16,
-    height: 16,
-    resizeMode: "cover"
   }
 });
 
@@ -329,8 +325,8 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
       style={[styles.row, styles.spaced, styles.paddedContentPreview]}
       onPress={props.onPress}
     >
-      <View style={styles.column}>
-        <View style={[styles.row, styles.alignItemsCenter]}>
+      <View style={[styles.column, { width: widthPercentageToDP("60%") }]}>
+        <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>
           <H5
             color={"white"}
             weight={"Regular"}
@@ -349,11 +345,10 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             <IconFont name="io-tick-big" size={20} color={IOColors.white} />
           )}
         </View>
-        <View style={[styles.row, styles.spaced, styles.alignItemsCenter]}>
+        <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>
           <H2 weight={"Bold"} color={"white"}>
             {I18n.t("bonus.bpd.name")}
           </H2>
-          <View hspacer={true} extralarge={true} />
           <View
             style={[
               styles.row,
@@ -373,7 +368,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               <Text
                 bold={true}
                 white={true}
-                style={styles.amountTextBasePreview}
+                style={[styles.amountTextBasePreview, { textAlign: "right" }]}
               >
                 {"€ "}
                 <Text white={true} style={styles.amountTextUpperPreview}>
