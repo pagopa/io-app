@@ -16,7 +16,6 @@ import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
-// import SatispayCard from "../SatispayCard";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import BPayCard from "../component/BPayCard";
 
