@@ -887,7 +887,6 @@ export function* watchWalletSaga(
     );
 
     // watch for load bpay search request
-
     yield takeLatest(
       searchUserBPay.request,
       handleSearchUserBPay,
