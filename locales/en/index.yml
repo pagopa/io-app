@@ -499,7 +499,7 @@ authentication:
       subtitleCTA: Where can I find it?
       bottomSheetCTA: Did you forget your PIN?
       contextualHelpTitle: Where can I find my PIN and PUK?
-      contextualHelpBody: "The **PIN** code consists of 8 digits: \n\n• the first 4 digits you received at the registry office;\n• the last 4 digits you received at home, along with your electronic ID card.\n\nPlease enter them following this order.\n\n The PUK code is needed to unlock your **PIN**, in case of 3 wrong attempts. **PUK** consists of 8 digits and it's issued along with the **PIN**.\n\n"
+      contextualHelpBody: !include help/ciePinHelpBody.md
       contextualHelpCTA: Did you forget your PIN/PUK?
     pinTempLocked:
       header: Login with CIE

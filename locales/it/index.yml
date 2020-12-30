@@ -509,7 +509,7 @@ authentication:
       subtitleCTA: Dove lo trovo?
       bottomSheetCTA: Hai dimenticato il PIN?
       contextualHelpTitle: Dove trovo i codici PIN e PUK?
-      contextualHelpBody: "Il codice **PIN** è composto da 8 cifre: \n\n• le prime 4 cifre ti sono state consegnate all'anagrafe;\n• le ultime 4 cifre ti sono state spedite a casa, insieme alla carta d'identità elettronica. \n\nMettile insieme e inseriscile in quest'ordine.\n\n Il codice PUK è necessario invece per sbloccare il **PIN** a seguito di tre tentativi errati. È composto da 8 cifre, e viene rilasciato insieme al **PIN**. \n\n"
+      contextualHelpBody: !include help/ciePinHelpBody.md
       contextualHelpCTA: Hai dimenticato il PIN/PUK?
     pinTempLocked:
       header: Entra con CIE
