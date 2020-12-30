@@ -16,7 +16,7 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 /**
  * retrieve possible backoff waiting time and if there is, wait that time
  */
-function* checkPreviousFailures() {
+export function* checkPreviousFailures() {
   // wait if some previous errors occurred
   const loadActivationBackOff: SagaCallReturnType<typeof getBackoffTime> = yield call(
     getBackoffTime,
