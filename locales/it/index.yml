@@ -1101,7 +1101,9 @@ wallet:
       securityCode: "•••"
       securityCode4D: "••••"
   acceptedCards: Carte accettate
+  missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
+  missingDataText: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online. Stiamo lavorando con la tua banca per permetterti di aggiungere questo tipo di carte e abilitarle al Cashback.
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
     chooser: Carica immagine dalla galleria

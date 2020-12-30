@@ -1,31 +1,49 @@
+import { fromNullable, none, some } from "fp-ts/lib/Option";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
-  CreditCardPan
+  CreditCardPan,
+  isValidExpirationDate,
+  isValidPan,
+  isValidSecurityCode
 } from "../input";
 
 describe("CreditCardPan", () => {
+  const validPANs: ReadonlyArray<string> = [
+    "123412341234123",
+    "1234123412341234",
+    "************1234",
+    "12341234123412341",
+    "123412341234123412",
+    "1234123412341234123"
+  ];
+
   it("should accept valid PANs", () => {
-    const data: ReadonlyArray<any> = [
-      "123412341234123",
-      "1234123412341234",
-      "************1234",
-      "12341234123412341",
-      "123412341234123412",
-      "1234123412341234123"
-    ];
-    data.forEach(d => expect(CreditCardPan.is(d)).toBeTruthy());
+    validPANs.forEach(d => expect(CreditCardPan.is(d)).toBeTruthy());
   });
 
+  it("should accept valid PANs, round 2", () => {
+    validPANs.forEach(d => expect(isValidPan(some(d))).toBeTruthy());
+  });
+
+  const invalidPANs: ReadonlyArray<string> = [
+    "1234 1234 1234 1234",
+    "123412341234123_123",
+    "12341234123412",
+    "12341234123412341234"
+  ];
+
   it("should reject invalid PANs", () => {
-    const data: ReadonlyArray<any> = [
-      "1234 1234 1234 1234",
-      "123412341234123_123",
-      "12341234123412",
-      "12341234123412341234"
-    ];
-    data.forEach(d => expect(CreditCardPan.is(d)).toBeFalsy());
+    invalidPANs.forEach(d => expect(CreditCardPan.is(d)).toBeFalsy());
+  });
+
+  it("should reject invalid PANs, round 2", () => {
+    invalidPANs.forEach(d => expect(isValidPan(some(d))).toBeFalsy());
+  });
+
+  it("should be undefined", () => {
+    expect(isValidPan(none)).not.toBeDefined();
   });
 });
 
@@ -76,14 +94,40 @@ describe("CreditCardExpirationYear", () => {
   });
 });
 
-describe("CreditCardCVC", () => {
-  it("should accept valid CVCs", () => {
-    const data: ReadonlyArray<any> = ["000", "1234"];
-    data.forEach(d => expect(CreditCardCVC.is(d)).toBeTruthy());
+describe("CreditCardExpirationDate", () => {
+  it("should accept a valid expiration date", () => {
+    expect(isValidExpirationDate(some("03/27"))).toBeTruthy();
   });
 
+  it("should reject an invalid expiration date", () => {
+    expect(isValidExpirationDate(some("3/27"))).toBeFalsy();
+  });
+
+  it("should be undefined", () => {
+    expect(isValidExpirationDate(none)).not.toBeDefined();
+  });
+});
+
+describe("CreditCardCVC", () => {
+  const validCVCs: ReadonlyArray<string> = ["000", "1234"];
+
+  it("should accept valid CVCs", () => {
+    validCVCs.forEach(d => expect(CreditCardCVC.is(d)).toBeTruthy());
+  });
+
+  it("should accept valid CVCs, round 2", () => {
+    validCVCs.forEach(d =>
+      expect(isValidSecurityCode(fromNullable(d))).toBeTruthy()
+    );
+  });
+
+  const invalidCVCs: ReadonlyArray<string> = ["00", "12345", "01*", "123*"];
+
   it("should reject invalid CVCs", () => {
-    const data: ReadonlyArray<any> = ["00", "12345", "01*", "123*"];
-    data.forEach(d => expect(CreditCardCVC.is(d)).toBeFalsy());
+    invalidCVCs.forEach(d => expect(CreditCardCVC.is(d)).toBeFalsy());
+  });
+
+  it("should reject invalid CVCs, round 2", () => {
+    invalidCVCs.forEach(d => expect(isValidSecurityCode(some(d))).toBeFalsy());
   });
 });
