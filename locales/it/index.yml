@@ -1920,6 +1920,11 @@ bonus:
         body: "Abilita il Cashback sui metodi già presenti nel tuo portafoglio o aggiungine di nuovi."
         cta: "Attiva i metodi di pagamento"
     iban:
+      cta:
+        bpdNotActiveTitle: "attenzione"
+        bpdNotActiveMessage: "non sei iscritto al cashback, iscriviti e riprova."
+        noActivePeriodTitle: "attenzione"
+        noActivePeriodMessage: "non c'è alcun cashback attivo in questo momento."
       iban: "IBAN"
       edit: "Modifica IBAN"
       verify: "Controlla IBAN"
@@ -1967,9 +1972,10 @@ bonus:
           currentPeriodUnlockBody: "Complimenti {{name}}! Hai superato la soglia di {{transactions}} transazioni e sbloccato il Cashback!!"
           currentPeriodMaxAmount: "Complimenti {{name}}! Hai raggiunto l’importo massimo previsto!"
           currentPeriodSuperCashback: "In questo momento avresti diritto al Super Cashback di {{superCashbackAmount}} €! Continua così per rimanere in classifica."
-          gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere dalle banche le ultime transazioni. Ancora un po’ di pazienza. Ti avviseremo qui!"
+          gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere le ultime transazioni, per calcolare i rimborsi. Entro il {{endGracePeriodDate}} potrai vedere il calcolo definitivo."
           closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
           closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
+          moneyTransfer: "Entro il {{date}} riceverai il bonifico sull’IBAN che ci hai indicato."
           inactivePeriodBody: "Potrai iniziare a collezionare transazioni valide a partire dal {{date}}"
           label:
             one: "1 transazione valida"
@@ -2069,7 +2075,7 @@ bonus:
         rankTitle: "Classifica Super Cashback"
         howItWorks:
           title: "Come funziona?"
-          body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a {{amount}}.**\n\n**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
+          body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a €{{amount}}.**\n\n**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
 webView:
   error:
