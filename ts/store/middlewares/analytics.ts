@@ -421,7 +421,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       break;
     case getType(removeAccountMotivation):
     case getType(deleteUserDataProcessing.request):
+    case getType(deleteUserDataProcessing.success):
       return mp.track(action.type, action.payload);
+    case getType(deleteUserDataProcessing.failure):
+      return mp.track(action.type, {
+        choice: action.payload.choice,
+        reason: action.payload.error.message
+      });
   }
   return Promise.resolve();
 };
