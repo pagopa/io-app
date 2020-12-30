@@ -1080,7 +1080,9 @@ wallet:
       securityCode: "•••"
       securityCode4D: "••••"
   acceptedCards: Accepted cards
+  missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
+  missingDataText: If you can't find the security code, it's likely your card doesn't support online payments. We're working with your bank to let you add these cards and enroll them for Cashback.
   chooseMethod: Select the desired method
   QRtoPay:
     chooser: Pick image from gallery
@@ -2053,7 +2055,10 @@ bonus:
         rankTitle: "Super Cashback ranking"
         howItWorks:
           title: "How does it work?"
-          body: "The **{{citizens}} citizens** with the highest number of transactions **receive the Super Cashback, a prize of €{{amount}}.**\n\n**The ranking changes every day.** The final one will be displayed on {{endDate}}."
+          body: "The **{{citizens}} citizens** with the highest number of transactions **receive the Super Cashback, a prize of €{{amount}}.**"
+          status:
+            active: "**The ranking changes every day.** The final one will be displayed on {{endDate}}."
+            closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
 webView:
   error:

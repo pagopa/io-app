@@ -1105,7 +1105,9 @@ wallet:
       securityCode: "•••"
       securityCode4D: "••••"
   acceptedCards: Carte accettate
+  missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
+  missingDataText: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online. Stiamo lavorando con la tua banca per permetterti di aggiungere questo tipo di carte e abilitarle al Cashback.
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
     chooser: Carica immagine dalla galleria
@@ -2083,7 +2085,10 @@ bonus:
         rankTitle: "Classifica Super Cashback"
         howItWorks:
           title: "Come funziona?"
-          body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a €{{amount}}.**\n\n**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
+          body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a €{{amount}}.**"
+          status:
+            active: "**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
+            closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
 webView:
   error:
