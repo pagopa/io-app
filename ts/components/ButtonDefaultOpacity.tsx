@@ -1,5 +1,6 @@
 import { Button, NativeBase } from "native-base";
 import * as React from "react";
+import { Insets } from "react-native";
 import {
   State,
   TapGestureHandler,
@@ -27,7 +28,7 @@ const SlopsBySize = {
  * This is a temporary solution to extend the touchable area using the existing theme system.
  * @param props
  */
-const getSlopForCurrentButton = (props: Props) => {
+const getSlopForCurrentButton = (props: Props): Insets => {
   const slop =
     SlopsBySize[props.small ? "small" : props.xsmall ? "xsmall" : "default"];
 
