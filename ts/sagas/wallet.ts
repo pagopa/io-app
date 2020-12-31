@@ -870,7 +870,7 @@ export function* watchWalletSaga(
     // watch for add Satispay to Wallet workflow
     yield takeLatest(walletAddSatispayStart, addSatispayToWalletAndActivateBpd);
 
-    // watch for load satispay request
+    // watch for load Satispay request
     yield takeLatest(
       searchUserSatispay.request,
       handleSearchUserSatispay,
@@ -878,7 +878,7 @@ export function* watchWalletSaga(
       pmSessionManager
     );
 
-    // watch for add satispay to the user's wallet
+    // watch for add Satispay to the user's wallet
     yield takeLatest(
       addSatispayToWallet.request,
       handleAddUserSatispayToWallet,
@@ -886,7 +886,7 @@ export function* watchWalletSaga(
       pmSessionManager
     );
 
-    // watch for load bpay search request
+    // watch for BancomatPay search request
     yield takeLatest(
       searchUserBPay.request,
       handleSearchUserBPay,
