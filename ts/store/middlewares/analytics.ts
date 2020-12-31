@@ -76,7 +76,10 @@ import {
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
 import { loadServiceDetail, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
-import { upsertUserDataProcessing } from "../actions/userDataProcessing";
+import {
+  deleteUserDataProcessing,
+  upsertUserDataProcessing
+} from "../actions/userDataProcessing";
 import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
 import {
   paymentAttiva,
@@ -417,7 +420,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       }
       break;
     case getType(removeAccountMotivation):
+    case getType(deleteUserDataProcessing.request):
+    case getType(deleteUserDataProcessing.success):
       return mp.track(action.type, action.payload);
+    case getType(deleteUserDataProcessing.failure):
+      return mp.track(action.type, {
+        choice: action.payload.choice,
+        reason: action.payload.error.message
+      });
   }
   return Promise.resolve();
 };
