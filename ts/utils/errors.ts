@@ -23,3 +23,6 @@ export const getNetworkError = (error: unknown): NetworkError => {
 
 export const isTimeoutError = (error: NetworkError): error is TimeoutError =>
   error.kind === "timeout";
+
+export const getNetworkErrorMessage = (error: NetworkError): string =>
+  isTimeoutError(error) ? error.kind : error.value.message;
