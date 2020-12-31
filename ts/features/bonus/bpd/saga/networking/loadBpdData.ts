@@ -12,6 +12,7 @@ import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import { bpdTransactionsLoad } from "../../store/actions/transactions";
 import { getBackoffTime } from "../../../../../utils/saga";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { isTestEnv } from "../../../../../utils/environment";
 
 /**
  * retrieve possible backoff waiting time and if there is, wait that time
@@ -101,4 +102,6 @@ export function* loadBpdData() {
 }
 
 // to keep solid code encapsulation
-export const testableFunctions = { checkPreviousFailures };
+export const testableFunctions = {
+  checkPreviousFailures: isTestEnv ? checkPreviousFailures : undefined
+};
