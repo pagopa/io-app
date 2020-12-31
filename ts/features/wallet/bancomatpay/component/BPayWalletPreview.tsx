@@ -31,7 +31,7 @@ const BASE_IMG_H = 20;
  */
 const renderLeft = (props: Props, size: Option<[number, number]>) =>
   size.fold(
-    <Body style={IOStyles.flex} numberOfLines={1}>
+    <Body style={IOStyles.flex} numberOfLines={1} testID={"bankLogoFallback"}>
       {props.bPay.abiInfo?.name ??
         props.bPay.info.bankName ??
         I18n.t("wallet.methods.bancomatPay.name")}
@@ -44,7 +44,11 @@ const renderLeft = (props: Props, size: Option<[number, number]>) =>
         resizeMode: "contain"
       };
       return imageUrl ? (
-        <Image source={{ uri: imageUrl }} style={imageStyle} />
+        <Image
+          source={{ uri: imageUrl }}
+          style={imageStyle}
+          testID={"bankLogo"}
+        />
       ) : null;
     }
   );
