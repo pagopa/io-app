@@ -6,7 +6,7 @@ import { searchUserBPay } from "../../onboarding/bancomatpay/store/actions";
 
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void> => {
   switch (action.type) {
     case getType(searchUserBPay.request):
       return mp.track(action.type);
