@@ -78,6 +78,20 @@ export const defaultAttachmentTypeConfiguration = {
   screenRecording: true
 };
 
+export const noAttachmentTypeConfiguration = {
+  screenshot: false,
+  extraScreenshot: false,
+  galleryImage: false,
+  screenRecording: false
+};
+
+export const attachmentTypeConfigurationWithScreenshot = {
+  extraScreenshot: false,
+  galleryImage: false,
+  screenRecording: false,
+  screenshot: true
+};
+
 export const attachmentTypeConfigurationNoScreenshot = {
   ...defaultAttachmentTypeConfiguration,
   screenshot: false,

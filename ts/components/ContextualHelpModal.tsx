@@ -21,6 +21,7 @@ import {
   FAQType,
   getFAQsFromCategories
 } from "../utils/faq";
+import { DefaultReportAttachmentTypeConfiguration } from "../boot/configureInstabug";
 import Markdown from "./ui/Markdown";
 import SendSupportRequestOptions, {
   SupportRequestOptions
@@ -39,6 +40,7 @@ type OwnProps = Readonly<{
     type: BugReporting.reportType,
     supportToken: SupportTokenState
   ) => void;
+  reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
@@ -188,6 +190,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
             onClose={onClose}
             onGoBack={() => setShowSendPersonalInfo(false)}
             onContinue={handleContinue}
+            reportAttachmentTypes={props.reportAttachmentTypes}
           />
         ) : (
           <ContextualHelpComponent

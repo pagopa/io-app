@@ -205,7 +205,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       onAccessibilityNavigationHeaderFocus,
       showInstabugChat,
       children,
-      faqCategories
+      faqCategories,
+      reportAttachmentTypes
     } = this.props;
 
     const {
@@ -263,6 +264,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             onLinkClicked={this.handleOnLinkClicked}
             body={ch.body}
             isVisible={isHelpVisible}
+            reportAttachmentTypes={reportAttachmentTypes}
             modalAnimation={contextualHelpModalAnimation}
             onRequestAssistance={this.handleOnRequestAssistance}
             close={this.hideHelp}

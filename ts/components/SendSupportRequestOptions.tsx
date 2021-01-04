@@ -4,33 +4,32 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import I18n from "../i18n";
 import themeVariables from "../theme/variables";
+import {
+  DefaultReportAttachmentTypeConfiguration,
+  noAttachmentTypeConfiguration
+} from "../boot/configureInstabug";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { H1 } from "./core/typography/H1";
 import { BaseHeader } from "./screens/BaseHeader";
-import Accordion from "./ui/Accordion";
 import Markdown from "./ui/Markdown";
 import IconFont from "./ui/IconFont";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import { Label } from "./core/typography/Label";
-import { RawCheckBox } from "./core/selection/RawCheckBox";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import { IOStyles } from "./core/variables/IOStyles";
+import CheckBoxFormItem, {
+  CheckboxIDs
+} from "./core/selection/CheckBoxFormItem";
 
 type Props = {
   onClose: () => void;
   onGoBack: () => void;
   onContinue: (options: SupportRequestOptions) => void;
-  initialScreenshotCheckboxValue?: boolean;
+  reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
 };
 
 const styles = StyleSheet.create({
   contentContainer: {
     padding: themeVariables.contentPadding
-  },
-  checkBoxContainer: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-evenly"
   }
 });
 const continueButtonProps = (onContinue: () => void) => ({
@@ -61,13 +60,18 @@ const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
   onClose,
   onGoBack,
   onContinue,
-  initialScreenshotCheckboxValue
+  reportAttachmentTypes
 }) => {
-  const [sendPersonalInfo, setSendPersonalInfo] = React.useState(false);
+  const { screenshot: shouldShowScreenshotCheckbox } =
+    reportAttachmentTypes || noAttachmentTypeConfiguration;
 
+  const [sendPersonalInfo, setSendPersonalInfo] = React.useState(false);
   const [sendScreenshot, setSendScreenshot] = React.useState(
-    initialScreenshotCheckboxValue
+    shouldShowScreenshotCheckbox as boolean
   );
+  const toggleSendScreenshot = () => setSendScreenshot(oldValue => !oldValue);
+  const toggleSendPersonalInfo = () =>
+    setSendPersonalInfo(oldValue => !oldValue);
 
   return (
     <SafeAreaView style={IOStyles.flex}>
@@ -96,45 +100,17 @@ const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
             {I18n.t("contextualHelp.sendPersonalInfo.description")}
           </Markdown>
         </View>
-        <View style={styles.checkBoxContainer}>
-          <RawCheckBox
-            checked={sendPersonalInfo}
-            onPress={() => setSendPersonalInfo(ov => !ov)}
+        <CheckBoxFormItem
+          target={CheckboxIDs.sendPersonalInfo}
+          isChecked={sendPersonalInfo}
+          onToggle={toggleSendPersonalInfo}
+        />
+        {shouldShowScreenshotCheckbox && (
+          <CheckBoxFormItem
+            target={CheckboxIDs.sendScreenshot}
+            isChecked={sendScreenshot}
+            onToggle={toggleSendScreenshot}
           />
-          <View hspacer={true} />
-          <View style={IOStyles.flex}>
-            <Label
-              color={"bluegrey"}
-              weight={"Regular"}
-              onPress={() => setSendPersonalInfo(ov => !ov)}
-            >
-              {I18n.t("contextualHelp.sendPersonalInfo.cta")}
-            </Label>
-            <Accordion
-              title={I18n.t("contextualHelp.sendPersonalInfo.informativeTitle")}
-              content={I18n.t(
-                "contextualHelp.sendPersonalInfo.informativeDescription"
-              )}
-            />
-          </View>
-        </View>
-        {initialScreenshotCheckboxValue !== undefined && (
-          <View style={styles.checkBoxContainer}>
-            <RawCheckBox
-              checked={sendScreenshot}
-              onPress={() => setSendScreenshot(ov => !ov)}
-            />
-            <View hspacer={true} />
-            <View style={IOStyles.flex}>
-              <Label
-                color={"bluegrey"}
-                weight={"Regular"}
-                onPress={() => setSendScreenshot(ov => !ov)}
-              >
-                {I18n.t("contextualHelp.sendScreenshot.cta")}
-              </Label>
-            </View>
-          </View>
         )}
         <EdgeBorderComponent />
       </Content>
