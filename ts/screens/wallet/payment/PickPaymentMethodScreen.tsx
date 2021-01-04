@@ -127,7 +127,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
                 backgroundColor: IOColors.orange
               }}
             >
-              {I18n.t("bonus.bpd.details.components.iban.noIbanBody")}
+              {I18n.t("wallet.alert.amex")}
             </Text>
           </InfoBox>
         </View>
