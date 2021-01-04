@@ -6,6 +6,7 @@ import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { isDefined } from "../../../../../../utils/guards";
 import { BpdAmount } from "../../../saga/networking/amount";
+import { bpdUnsubscribeCompleted } from "../../actions/onboarding";
 import {
   AwardPeriodId,
   BpdPeriod,
@@ -97,6 +98,8 @@ export const bpdPeriodsReducer = (
       );
     case getType(bpdPeriodsAmountLoad.failure):
       return pot.toError(state, action.payload);
+    case getType(bpdUnsubscribeCompleted):
+      return pot.none;
   }
 
   return state;
