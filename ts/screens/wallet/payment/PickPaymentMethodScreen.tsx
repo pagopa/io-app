@@ -18,6 +18,9 @@ import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderCompo
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
+import { InfoBox } from "../../../components/box/InfoBox";
+import { IOColors } from "../../../components/core/variables/IOColors";
+
 import I18n from "../../../i18n";
 import {
   navigateToPaymentTransactionSummaryScreen,
@@ -115,6 +118,19 @@ class PickPaymentMethodScreen extends React.Component<Props> {
         </Content>
 
         <View spacer={true} />
+
+        <View style={{ padding: 20, backgroundColor: IOColors.orange }}>
+          <InfoBox alignedCentral={true} iconColor={IOColors.white}>
+            <Text
+              style={{
+                color: IOColors.white,
+                backgroundColor: IOColors.orange
+              }}
+            >
+              {I18n.t("bonus.bpd.details.components.iban.noIbanBody")}
+            </Text>
+          </InfoBox>
+        </View>
 
         <FooterWithButtons
           type="TwoButtonsInlineThird"
