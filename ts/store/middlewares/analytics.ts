@@ -124,6 +124,7 @@ import {
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackBancomatAction from "../../features/wallet/bancomat/analytics/index";
 import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
+import { getCodiceAvviso, getIuv } from "../../utils/payment";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -214,15 +215,23 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       // Only in the former case we have a transaction and an amount.
       if (action.payload.kind === "COMPLETED") {
         const amount = action.payload.transaction.amount.amount;
+        const iuv = getIuv(action.payload.rptId);
+        const codiceAvviso = getCodiceAvviso(action.payload.rptId);
         return mp
           .track(action.type, {
             amount,
+            codiceAvviso,
+            iuv,
             kind: action.payload.kind
           })
           .then(_ => mp.trackCharge(amount));
       } else {
+        const iuv = getIuv(action.payload.rptId);
+        const codiceAvviso = getCodiceAvviso(action.payload.rptId);
         return mp.track(action.type, {
-          kind: action.payload.kind
+          kind: action.payload.kind,
+          iuv,
+          codiceAvviso
         });
       }
     //
@@ -384,7 +393,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
-    case getType(paymentExecutePayment.request):
     case getType(paymentExecutePayment.success):
     case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
@@ -403,6 +411,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(cancelBonusVacanzeRequest):
     case getType(storeEligibilityRequestId):
       return mp.track(action.type);
+
+    case getType(paymentExecutePayment.request):
+      return mp.track(action.type, { idPayment: action.payload.idPayment });
 
     // bonus vacanze
     case getType(checkBonusVacanzeEligibility.success):
