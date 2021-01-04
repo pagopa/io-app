@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0-rc.0](https://github.com/pagopa/io-app/compare/1.16.0-rc.1...1.17.0-rc.0) (2021-01-01)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176177351](https://www.pivotaltracker.com/story/show/176177351)] Refactored AddCardScreen component and added bottom sheet ([#2635](https://github.com/pagopa/io-app/issues/2635)) ([72e8d3c](https://github.com/pagopa/io-app/commit/72e8d3cd9d975e034c8e77db93661d804afc5a6a))
+* **Bonus Pagamenti Digitali:** [[#176300242](https://www.pivotaltracker.com/story/show/176300242)] Handles the status message on ranking bottom sheet ([#2657](https://github.com/pagopa/io-app/issues/2657)) ([221744c](https://github.com/pagopa/io-app/commit/221744c0813a8445dfd99baa545bc311e6d0c9ff))
+* [[#175900141](https://www.pivotaltracker.com/story/show/175900141)] Added profile deletion abort tracking ([#2649](https://github.com/pagopa/io-app/issues/2649)) ([c9ecf62](https://github.com/pagopa/io-app/commit/c9ecf62d0ae5920ff5d3166e8493b9bb0db798cf))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176248270](https://www.pivotaltracker.com/story/show/176248270)] Fixes the bad alignment on cashback value ([#2659](https://github.com/pagopa/io-app/issues/2659)) ([305df5f](https://github.com/pagopa/io-app/commit/305df5fdcd0340a5c2ef436eb0990d3c6218d2ee))
+
 ## [1.16.0-rc.1](https://github.com/pagopa/io-app/compare/1.16.0-rc.0...1.16.0-rc.1) (2020-12-29)
 
 
