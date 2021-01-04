@@ -12,11 +12,12 @@ import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import { bpdTransactionsLoad } from "../../store/actions/transactions";
 import { getBackoffTime } from "../../../../../utils/saga";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { isTestEnv } from "../../../../../utils/environment";
 
 /**
  * retrieve possible backoff waiting time and if there is, wait that time
  */
-export function* checkPreviousFailures() {
+function* checkPreviousFailures() {
   // wait if some previous errors occurred
   const loadActivationBackOff: SagaCallReturnType<typeof getBackoffTime> = yield call(
     getBackoffTime,
@@ -99,3 +100,8 @@ export function* loadBpdData() {
     yield put(bpdAllData.failure(activationStatus.payload));
   }
 }
+
+// to keep solid code encapsulation
+export const testableFunctions = {
+  checkPreviousFailures: isTestEnv ? checkPreviousFailures : undefined
+};

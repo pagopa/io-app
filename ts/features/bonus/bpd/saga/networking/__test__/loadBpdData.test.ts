@@ -7,7 +7,7 @@ import {
   bpdLoadActivationStatus
 } from "../../../store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../../store/actions/periods";
-import { checkPreviousFailures, loadBpdData } from "../loadBpdData";
+import { testableFunctions, loadBpdData } from "../loadBpdData";
 
 // TODO: tested only two base case, add more if needed
 describe("loadBpdData", () => {
@@ -16,7 +16,7 @@ describe("loadBpdData", () => {
       .next()
       .select(abiSelector)
       .next(remoteReady({}))
-      .call(checkPreviousFailures)
+      .call(testableFunctions.checkPreviousFailures!)
       .next()
       .put(bpdLoadActivationStatus.request())
       .next()
@@ -39,7 +39,7 @@ describe("loadBpdData", () => {
       .next()
       .select(abiSelector)
       .next(remoteReady({}))
-      .call(checkPreviousFailures)
+      .call(testableFunctions.checkPreviousFailures!)
       .next()
       .put(bpdLoadActivationStatus.request())
       .next()
