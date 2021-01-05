@@ -79,7 +79,7 @@ export function* addBPayToWalletAndActivateBpd() {
   if (res === "completed") {
     // refresh wallets list
     yield put(fetchWalletsRequest());
-    // read the new added bancomat
+    // read the new added BPay
     const bPayAdded: ReturnType<typeof onboardingBPayAddedAccountSelector> = yield select(
       onboardingBPayAddedAccountSelector
     );

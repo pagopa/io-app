@@ -3,6 +3,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
+import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
@@ -25,6 +26,7 @@ import {
   onboardingBPayChosenPanSelector
 } from "../../store/reducers/addingBPay";
 import { onboardingBPayFoundAccountsSelector } from "../../store/reducers/foundBpay";
+import { Label } from "../../../../../../components/core/typography/Label";
 import LoadAddBPayComponent from "./LoadAddBPayComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -80,9 +82,11 @@ const AddBPayScreen: React.FunctionComponent<Props> = (props: Props) => {
       onRetry={() => fromNullable(props.selectedBPay).map(props.onRetry)}
     />
   ) : currentPan.isSome() ? (
-    <View>
-      <Button onPress={handleOnContinue} />
-    </View>
+    <SafeAreaView>
+      <Button onPress={handleOnContinue}>
+        <Label>ContinueTMP</Label>
+      </Button>
+    </SafeAreaView>
   ) : null; // this should not happen
 };
 

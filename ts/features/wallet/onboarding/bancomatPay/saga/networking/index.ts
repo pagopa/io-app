@@ -4,7 +4,7 @@ import { rawBPay } from "../../../../../../store/reducers/wallet/__mocks__/walle
 import { addBPayToWallet, searchUserBPay } from "../../store/actions";
 
 /**
- * Load all the user BancomatPay accounts
+ * Load all the user BPay accounts
  * TODO: replace with real implementation
  */
 export function* loadBPaySaga(_: ActionType<typeof searchUserBPay.request>) {

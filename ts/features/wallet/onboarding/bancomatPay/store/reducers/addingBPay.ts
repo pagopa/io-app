@@ -1,6 +1,5 @@
 import { getType } from "typesafe-actions";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
-import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { RawBPayPaymentMethod } from "../../../../../../types/pagopa";
@@ -15,7 +14,7 @@ import { addBPayToWallet } from "../actions";
 
 export type AddingBPayState = {
   addingResult: RemoteValue<RawBPayPaymentMethod, Error>;
-  selectedPan?: BPay;
+  selectedBPay?: BPay;
 };
 
 const initialState: AddingBPayState = {
@@ -29,7 +28,7 @@ const addingBPayReducer = (
   switch (action.type) {
     case getType(addBPayToWallet.request):
       return {
-        selectedPan: action.payload,
+        selectedBPay: action.payload,
         addingResult: remoteLoading
       };
     case getType(addBPayToWallet.success):
@@ -48,7 +47,7 @@ const addingBPayReducer = (
 
 export const onboardingBPayChosenPanSelector = (
   state: GlobalState
-): Card | undefined => state.wallet.onboarding.bancomat.addingPans.selectedPan;
+): BPay | undefined => state.wallet.onboarding.bPay.addingBPay.selectedBPay;
 
 export const onboardingBPayAddingResultSelector = (
   state: GlobalState

@@ -24,7 +24,8 @@ const LoadAddBPayComponent: React.FunctionComponent<Props> = props => {
   return (
     <LoadingErrorComponent
       {...props}
-      loadingCaption={I18n.t("wallet.onboarding.bancomat.add.loading")}
+      // TODO: add text
+      loadingCaption={I18n.t("wallet.onboarding.bPay.placeholderTMP")}
       onAbort={props.onCancel}
       onRetry={props.onRetry}
     />

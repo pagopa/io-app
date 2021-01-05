@@ -13,7 +13,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * This screen is displayed when searching for Bancomat
+ * This screen is displayed when searching for BPay accounts
  * @constructor
  */
 const LoadBPaySearch: React.FunctionComponent<Props> = props => {

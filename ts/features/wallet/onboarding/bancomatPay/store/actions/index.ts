@@ -8,7 +8,7 @@ import { RawBPayPaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
 
 /**
- * Search for user's BancomatPay accounts
+ * Search for user's BPay accounts
  */
 export const searchUserBPay = createAsyncAction(
   "WALLET_ONBOARDING_BPAY_SEARCH_REQUEST",
@@ -26,22 +26,22 @@ export const addBPayToWallet = createAsyncAction(
 )<BPay, RawBPayPaymentMethod, Error>();
 
 /**
- * The user choose to start the workflow to add a new BancomatPay to the wallet
+ * The user choose to start the workflow to add a new BPay to the wallet
  */
 export const walletAddBPayStart = createStandardAction(
   "WALLET_ONBOARDING_BPAY_START"
 )<void>();
 
 /**
- * The user complete the workflow to add a new BancomatPay to the wallet
- * (at least one BancomatPay has been added)
+ * The user complete the workflow to add a new BPay to the wallet
+ * (at least one BPay has been added)
  */
 export const walletAddBPayCompleted = createStandardAction(
   "WALLET_ONBOARDING_BPAY_COMPLETED"
 )<void>();
 
 /**
- * The user choose to cancel the addition of a new BancomatPay to the wallet (no BancomatPay has been added)
+ * The user choose to cancel the addition of a new BPay to the wallet (no BPay has been added)
  */
 export const walletAddBPayCancel = createStandardAction(
   "WALLET_ONBOARDING_BPAY_CANCEL"
