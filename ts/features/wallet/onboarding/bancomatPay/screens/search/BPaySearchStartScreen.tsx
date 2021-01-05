@@ -45,7 +45,7 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
 );
 
 /**
- * This screen allows the user to choose a specific bank to search for their Bancomat.
+ * This screen allows the user to choose a specific bank to search for their BPay accounts.
  * @constructor
  */
 const BPaySearchStartScreen = (props: Props): React.ReactElement => (

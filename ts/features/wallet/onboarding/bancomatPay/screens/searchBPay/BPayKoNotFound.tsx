@@ -28,7 +28,7 @@ const loadLocales = () => ({
  * No abi selected, all the services returned 0
  * @constructor
  */
-const BancomatKoNotFound: React.FunctionComponent<Props> = props => {
+const BPayKoNotFound: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body } = loadLocales();
 
   return (
@@ -58,4 +58,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(BancomatKoNotFound);
+export default connect(mapStateToProps, mapDispatchToProps)(BPayKoNotFound);
