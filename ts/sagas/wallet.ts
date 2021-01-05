@@ -50,6 +50,8 @@ import {
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
+import { addBPayToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
+import { walletAddBPayStart } from "../features/wallet/onboarding/bancomatPay/store/actions";
 import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
@@ -864,6 +866,9 @@ export function* watchWalletSaga(
 
     // watch for add Bancomat to Wallet workflow
     yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
+
+    // watch for add BPay to Wallet workflow
+    yield takeLatest(walletAddBPayStart, addBPayToWalletAndActivateBpd);
 
     // watch for add Satispay to Wallet workflow
     yield takeLatest(walletAddSatispayStart, addSatispayToWalletAndActivateBpd);
