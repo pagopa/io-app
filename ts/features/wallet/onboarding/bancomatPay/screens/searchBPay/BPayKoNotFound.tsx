@@ -18,14 +18,14 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const loadLocales = () => ({
-  headerTitle: I18n.t("wallet.onboarding.bancomat.headerTitle"),
-  title: I18n.t("wallet.onboarding.bancomat.koNotFound.title"),
-  body: I18n.t("wallet.onboarding.bancomat.koNotFound.body")
+  headerTitle: I18n.t("wallet.onboarding.bPay.headerTitle"),
+  // TODO: add text
+  title: I18n.t("wallet.onboarding.bPay.placeholderTMP"),
+  body: I18n.t("wallet.onboarding.bPay.placeholderTMP")
 });
 
 /**
- * This screen informs the user that no Bancomat in his name were found.
- * No abi selected, all the services returned 0
+ * This screen informs the user that no BPay accounts in his name were found.
  * @constructor
  */
 const BPayKoNotFound: React.FunctionComponent<Props> = props => {

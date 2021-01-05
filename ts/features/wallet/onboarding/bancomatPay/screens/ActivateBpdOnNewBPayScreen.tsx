@@ -16,7 +16,7 @@ type Props = ReturnType<typeof mapStateToProps>;
 const ActivateBpdOnNewBPayScreen = (props: Props) => (
   <ActivateBpdOnNewPaymentMethodScreen
     paymentMethods={props.newBPay}
-    title={I18n.t("wallet.onboarding.bancomat.headerTitle")}
+    title={I18n.t("wallet.onboarding.bPay.headerTitle")}
     contextualHelp={emptyContextualHelp}
   />
 );

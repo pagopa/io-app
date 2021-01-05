@@ -19,7 +19,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * This screen handle the errors and loading for the user bancomat.
+ * This screen handle the errors and loading for the user BPay.
  * @constructor
  */
 const SearchAvailableUserBPayScreen = (props: Props): React.ReactElement => {
@@ -27,7 +27,7 @@ const SearchAvailableUserBPayScreen = (props: Props): React.ReactElement => {
   const noBPayFound = isReady(bPayAccounts) && bPayAccounts.value.length === 0;
 
   if (noBPayFound) {
-    // The user doesn't have a bancomat
+    // The user doesn't have a BPay account
     return <BPayKoNotFound contextualHelp={emptyContextualHelp} />;
   }
 

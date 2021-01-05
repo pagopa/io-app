@@ -26,7 +26,8 @@ const LoadBPaySearch: React.FunctionComponent<Props> = props => {
   return (
     <LoadingErrorComponent
       {...props}
-      loadingCaption={I18n.t("wallet.onboarding.bancomat.loadingSearch.title")}
+      // TODO: Update text
+      loadingCaption={I18n.t("wallet.onboarding.bPay.placeholderTMP")}
       onAbort={props.cancel}
       onRetry={() => props.retry(props.abiSelected)}
     />

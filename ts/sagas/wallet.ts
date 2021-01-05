@@ -50,8 +50,17 @@ import {
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
+import {
+  addBPayToWalletSaga,
+  loadBPay,
+  loadBPaySaga
+} from "../features/wallet/onboarding/bancomatPay/saga/networking";
 import { addBPayToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
-import { walletAddBPayStart } from "../features/wallet/onboarding/bancomatPay/store/actions";
+import {
+  addBPayToWallet,
+  searchUserBPay,
+  walletAddBPayStart
+} from "../features/wallet/onboarding/bancomatPay/store/actions";
 import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
@@ -848,6 +857,9 @@ export function* watchWalletSaga(
     // watch for load abi request
     yield takeLatest(loadAbi.request, handleLoadAbi, contentClient.getAbiList);
 
+    // watch for add Bancomat to Wallet workflow
+    yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
+
     // watch for load pans request
     yield takeLatest(
       searchUserPans.request,
@@ -864,11 +876,14 @@ export function* watchWalletSaga(
       pmSessionManager
     );
 
-    // watch for add Bancomat to Wallet workflow
-    yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
-
     // watch for add BPay to Wallet workflow
     yield takeLatest(walletAddBPayStart, addBPayToWalletAndActivateBpd);
+
+    // watch for load pans request
+    yield takeLatest(searchUserBPay.request, loadBPaySaga);
+
+    // watch for add pan request
+    yield takeLatest(addBPayToWallet.request, addBPayToWalletSaga);
 
     // watch for add Satispay to Wallet workflow
     yield takeLatest(walletAddSatispayStart, addSatispayToWalletAndActivateBpd);

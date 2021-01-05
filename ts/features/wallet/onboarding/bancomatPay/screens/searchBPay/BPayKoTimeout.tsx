@@ -18,9 +18,10 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const loadLocales = () => ({
-  headerTitle: I18n.t("wallet.onboarding.bancomat.headerTitle"),
-  title: I18n.t("wallet.onboarding.bancomat.koTimeout.title"),
-  body: I18n.t("wallet.onboarding.bancomat.koTimeout.body"),
+  headerTitle: I18n.t("wallet.onboarding.bPay.headerTitle"),
+  // TODO: Add text
+  title: I18n.t("wallet.onboarding.bPay.placeholderTMP"),
+  body: I18n.t("wallet.onboarding.bPay.placeholderTMP"),
   cancel: I18n.t("global.buttons.cancel"),
   retry: I18n.t("global.buttons.retry")
 });
