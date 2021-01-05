@@ -20,6 +20,7 @@ import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { Label } from "../../../components/core/typography/Label";
 
 import I18n from "../../../i18n";
 import {
@@ -54,8 +55,7 @@ const styles = StyleSheet.create({
   },
   infoBoxContainer: { padding: 20, backgroundColor: IOColors.orange },
   infoBoxMessage: {
-    color: IOColors.white,
-    backgroundColor: IOColors.orange
+    color: IOColors.white
   }
 });
 
@@ -63,6 +63,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.payWith.contextualHelpTitle",
   body: "wallet.payWith.contextualHelpContent"
 };
+
+const amexPaymentWarningTreshold = 100000; // Eurocents
 
 class PickPaymentMethodScreen extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -125,12 +127,12 @@ class PickPaymentMethodScreen extends React.Component<Props> {
         <View spacer={true} />
 
         {wallets.some(myWallet => myWallet.creditCard?.brand === "AMEX") &&
-          verifica.importoSingoloVersamento >= 100000 && (
+          verifica.importoSingoloVersamento >= amexPaymentWarningTreshold && (
             <View style={styles.infoBoxContainer}>
               <InfoBox alignedCentral={true} iconColor={IOColors.white}>
-                <Text style={styles.infoBoxMessage}>
+                <Label weight={"Regular"} color="white">
                   {I18n.t("wallet.alert.amex")}
-                </Text>
+                </Label>
               </InfoBox>
             </View>
           )}
