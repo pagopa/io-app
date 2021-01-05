@@ -51,6 +51,11 @@ const styles = StyleSheet.create({
   paddedLR: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
+  },
+  infoBoxContainer: { padding: 20, backgroundColor: IOColors.orange },
+  infoBoxMessage: {
+    color: IOColors.white,
+    backgroundColor: IOColors.orange
   }
 });
 
@@ -120,15 +125,10 @@ class PickPaymentMethodScreen extends React.Component<Props> {
         <View spacer={true} />
 
         {wallets.some(myWallet => myWallet.creditCard?.brand === "AMEX") &&
-          verifica.importoSingoloVersamento >= 1000 && (
-            <View style={{ padding: 20, backgroundColor: IOColors.orange }}>
+          verifica.importoSingoloVersamento >= 100000 && (
+            <View style={styles.infoBoxContainer}>
               <InfoBox alignedCentral={true} iconColor={IOColors.white}>
-                <Text
-                  style={{
-                    color: IOColors.white,
-                    backgroundColor: IOColors.orange
-                  }}
-                >
+                <Text style={styles.infoBoxMessage}>
                   {I18n.t("wallet.alert.amex")}
                 </Text>
               </InfoBox>
