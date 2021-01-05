@@ -26,6 +26,8 @@ import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/Bancomat
 import {
   AddWalletSatispayUsingPOSTT,
   addWalletsBancomatCardUsingPOSTDecoder,
+  addWalletsBPayUsingPOSTDefaultDecoder,
+  AddWalletsBPayUsingPOSTT,
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
   getBpayListUsingGETDefaultDecoder,
@@ -81,6 +83,7 @@ import {
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
 import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayRequest";
+import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -471,6 +474,15 @@ const searchBPay: GetBpayListUsingGETT = {
   response_decoder: getBpayListUsingGETDefaultDecoder()
 };
 
+const addBPayToWallet: AddWalletsBPayUsingPOSTT = {
+  method: "post",
+  url: () => `/v1/bpay/add-wallets`,
+  query: () => ({}),
+  body: ({ bPayRequest }) => JSON.stringify(bPayRequest),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: addWalletsBPayUsingPOSTDefaultDecoder()
+};
+
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
@@ -642,15 +654,21 @@ export function PaymentManagerClient(
         createFetchRequestForApi(searchSatispay, altOptions)
       )
     ),
-    searchBPay: flip(
-      withPaymentManagerToken(createFetchRequestForApi(searchBPay, altOptions))
-    ),
     addSatispayToWallet: (satispayRequest: SatispayRequest) =>
       flip(
         withPaymentManagerToken(
           createFetchRequestForApi(addSatispayToWallet, altOptions)
         )
-      )({ satispayRequest })
+      )({ satispayRequest }),
+    searchBPay: flip(
+      withPaymentManagerToken(createFetchRequestForApi(searchBPay, altOptions))
+    ),
+    addBPayToWallet: (bPayRequest: BPayRequest) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(addBPayToWallet, altOptions)
+        )
+      )({ bPayRequest })
   };
 }
 
