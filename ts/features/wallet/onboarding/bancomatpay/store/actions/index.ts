@@ -9,6 +9,6 @@ export const searchUserBPay = createAsyncAction(
   "WALLET_ONBOARDING_BPAY_LOAD_REQUEST",
   "WALLET_ONBOARDING_BPAY_LOAD_SUCCESS",
   "WALLET_ONBOARDING_BPAY_LOAD_FAILURE"
-)<void, ReadonlyArray<BPay>, NetworkError>();
+)<string | undefined, ReadonlyArray<BPay>, NetworkError>();
 
 export type BPayActions = ActionType<typeof searchUserBPay>;

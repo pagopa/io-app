@@ -1,5 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import { ActionType } from "typesafe-actions";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
@@ -13,10 +14,13 @@ import { searchUserBPay } from "../../store/actions";
  */
 export function* handleSearchUserBPay(
   searchBPay: ReturnType<typeof PaymentManagerClient>["searchBPay"],
-  sessionManager: SessionManager<PaymentManagerToken>
+  sessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof searchUserBPay.request>
 ) {
   try {
-    const searchBPayWithRefresh = sessionManager.withRefresh(searchBPay({}));
+    const searchBPayWithRefresh = sessionManager.withRefresh(
+      searchBPay(action.payload)
+    );
 
     const searchBPayWithRefreshResult: SagaCallReturnType<typeof searchBPayWithRefresh> = yield call(
       searchBPayWithRefresh

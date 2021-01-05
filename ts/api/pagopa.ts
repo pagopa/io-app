@@ -468,7 +468,12 @@ const addSatispayToWallet: AddWalletSatispayUsingPOSTT = {
 
 const searchBPay: GetBpayListUsingGETT = {
   method: "get",
-  url: () => `/v1/bpay/list`,
+  url: ({ abi }) => {
+    const abiParameter = fromNullable(abi)
+      .map(a => `?abi=${a}`)
+      .getOrElse("");
+    return `/v1/bpay/list${abiParameter}`;
+  },
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getBpayListUsingGETDefaultDecoder()
@@ -660,9 +665,12 @@ export function PaymentManagerClient(
           createFetchRequestForApi(addSatispayToWallet, altOptions)
         )
       )({ satispayRequest }),
-    searchBPay: flip(
-      withPaymentManagerToken(createFetchRequestForApi(searchBPay, altOptions))
-    ),
+    searchBPay: (abi?: string) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(searchBPay, altOptions)
+        )
+      )({ abi }),
     addBPayToWallet: (bPayRequest: BPayRequest) =>
       flip(
         withPaymentManagerToken(
