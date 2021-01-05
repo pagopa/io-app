@@ -119,19 +119,21 @@ class PickPaymentMethodScreen extends React.Component<Props> {
 
         <View spacer={true} />
 
-        <View style={{ padding: 20, backgroundColor: IOColors.orange }}>
-          <InfoBox alignedCentral={true} iconColor={IOColors.white}>
-            <Text
-              style={{
-                color: IOColors.white,
-                backgroundColor: IOColors.orange
-              }}
-            >
-              {I18n.t("wallet.alert.amex")}
-            </Text>
-          </InfoBox>
-        </View>
-
+        {wallets.some(myWallet => myWallet.creditCard?.brand === "AMEX") &&
+          verifica.importoSingoloVersamento >= 1000 && (
+            <View style={{ padding: 20, backgroundColor: IOColors.orange }}>
+              <InfoBox alignedCentral={true} iconColor={IOColors.white}>
+                <Text
+                  style={{
+                    color: IOColors.white,
+                    backgroundColor: IOColors.orange
+                  }}
+                >
+                  {I18n.t("wallet.alert.amex")}
+                </Text>
+              </InfoBox>
+            </View>
+          )}
         <FooterWithButtons
           type="TwoButtonsInlineThird"
           leftButton={secondaryButtonProps}
