@@ -52,7 +52,6 @@ import {
 } from "../features/wallet/onboarding/bancomat/store/actions";
 import {
   addBPayToWalletSaga,
-  loadBPay,
   loadBPaySaga
 } from "../features/wallet/onboarding/bancomatPay/saga/networking";
 import { addBPayToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
