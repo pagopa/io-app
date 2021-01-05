@@ -6,7 +6,6 @@ import { Dispatch } from "redux";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../../../../../components/helpers/withLightModalContext";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import SectionStatusComponent from "../../../../../../components/SectionStatusComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../../../../components/ui/LightModal";
 import I18n from "../../../../../../i18n";
