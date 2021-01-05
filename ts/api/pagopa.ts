@@ -273,13 +273,14 @@ const getPspList: GetPspListUsingGETTExtra = {
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
 };
 
+type PspParams = {
+  readonly Bearer: string;
+  readonly idWallet: string;
+  readonly idPayment: string;
+  readonly language: string;
+};
 export type GetSelectedPspUsingGETTExtra = r.IGetApiRequestType<
-  {
-    readonly Bearer: string;
-    readonly idWallet: string;
-    readonly idPayment: string;
-    readonly language: string;
-  },
+  PspParams,
   "Authorization",
   never,
   | r.IResponseType<200, PspListResponse>
@@ -287,15 +288,18 @@ export type GetSelectedPspUsingGETTExtra = r.IGetApiRequestType<
   | r.IResponseType<403, undefined>
   | r.IResponseType<404, undefined>
 >;
-
-const getPspSelected: GetSelectedPspUsingGETTExtra = {
-  method: "get",
-  url: () => "/v1/psps/selected",
-  query: ({ idPayment, idWallet, language }) => ({
+const getPspQuery = (params: PspParams) => {
+  const { idPayment, idWallet, language } = params;
+  return {
     idPayment,
     idWallet,
     language
-  }),
+  };
+};
+const getPspSelected: GetSelectedPspUsingGETTExtra = {
+  method: "get",
+  url: () => "/v1/psps/selected",
+  query: getPspQuery,
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getSelectedPspUsingGETDecoder(PspListResponse)
 };
@@ -309,11 +313,7 @@ type GetAllPspListUsingGETTExtra = MapResponseType<
 const getAllPspList: GetAllPspListUsingGETTExtra = {
   method: "get",
   url: () => "/v1/psps/all",
-  query: ({ idPayment, idWallet, language }) => ({
-    idPayment,
-    idWallet,
-    language
-  }),
+  query: getPspQuery,
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
 };
