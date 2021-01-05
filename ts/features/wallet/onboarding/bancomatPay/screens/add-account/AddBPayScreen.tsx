@@ -1,12 +1,13 @@
 import { index } from "fp-ts/lib/Array";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, View } from "native-base";
+import { Button } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
+import { Label } from "../../../../../../components/core/typography/Label";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { profileSelector } from "../../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -26,7 +27,6 @@ import {
   onboardingBPayChosenPanSelector
 } from "../../store/reducers/addingBPay";
 import { onboardingBPayFoundAccountsSelector } from "../../store/reducers/foundBpay";
-import { Label } from "../../../../../../components/core/typography/Label";
 import LoadAddBPayComponent from "./LoadAddBPayComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -82,6 +82,7 @@ const AddBPayScreen: React.FunctionComponent<Props> = (props: Props) => {
       onRetry={() => fromNullable(props.selectedBPay).map(props.onRetry)}
     />
   ) : currentPan.isSome() ? (
+    // TODO: Replace with Iterative add component
     <SafeAreaView>
       <Button onPress={handleOnContinue}>
         <Label>ContinueTMP</Label>
@@ -89,16 +90,6 @@ const AddBPayScreen: React.FunctionComponent<Props> = (props: Props) => {
     </SafeAreaView>
   ) : null; // this should not happen
 };
-
-// <AddBancomatComponent
-//   pan={currentPan.value}
-//   profile={props.profile}
-//   pansNumber={props.cards.length}
-//   currentIndex={currentIndex}
-//   handleContinue={handleOnContinue}
-//   handleSkip={() => nextPan(true)}
-//   contextualHelp={props.contextualHelp}
-// />
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addBPay: (bPay: BPay) => dispatch(addBPayToWallet.request(bPay)),
