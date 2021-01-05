@@ -53,10 +53,7 @@ const styles = StyleSheet.create({
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
   },
-  infoBoxContainer: { padding: 20, backgroundColor: IOColors.orange },
-  infoBoxMessage: {
-    color: IOColors.white
-  }
+  infoBoxContainer: { padding: 20, backgroundColor: IOColors.orange }
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
