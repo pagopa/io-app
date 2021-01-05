@@ -1,31 +1,27 @@
 import { createStackNavigator } from "react-navigation";
-import SuggestBpdActivationScreen from "../../common/screens/bpd/SuggestBpdActivationScreen";
-import BancomatSearchStartScreen from "../screens/search/BancomatSearchStartScreen";
-import SearchBankScreen from "../screens/search/SearchBankScreen";
-import SearchAvailableUserBancomatScreen from "../screens/searchBancomat/SearchAvailableUserBancomatScreen";
-import { ActivateBpdOnNewCreditCardScreen } from "../../common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
-import ActivateBpdOnNewBancomatScreen from "../screens/ActivateBpdOnNewBancomatScreen";
-import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";
+import SearchBankScreen from "../../bancomat/screens/search/SearchBankScreen";
+import ActivateBpdOnNewBPayScreen from "../screens/ActivateBpdOnNewBancomatScreen";
+import AddBPayScreen from "../screens/add-account/AddBPayScreen";
+import BPaySearchStartScreen from "../screens/search/BPaySearchStartScreen";
+import SearchAvailableUserBPayScreen from "../screens/searchBPay/SearchAvailableUserBPayScreen";
+import WALLET_ONBOARDING_BPAY_ROUTES from "./routes";
 
-const PaymentMethodOnboardingBancomatNavigator = createStackNavigator(
+const PaymentMethodOnboardingBPayNavigator = createStackNavigator(
   {
-    [WALLET_ONBOARDING_BANCOMAT_ROUTES.BANCOMAT_START]: {
-      screen: BancomatSearchStartScreen
+    [WALLET_ONBOARDING_BPAY_ROUTES.START]: {
+      screen: BPaySearchStartScreen
     },
-    [WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK]: {
+    [WALLET_ONBOARDING_BPAY_ROUTES.CHOOSE_BANK]: {
       screen: SearchBankScreen
     },
-    [WALLET_ONBOARDING_BANCOMAT_ROUTES.SEARCH_AVAILABLE_USER_BANCOMAT]: {
-      screen: SearchAvailableUserBancomatScreen
+    [WALLET_ONBOARDING_BPAY_ROUTES.SEARCH_AVAILABLE_USER_ACCOUNT]: {
+      screen: SearchAvailableUserBPayScreen
     },
-    [WALLET_ONBOARDING_BANCOMAT_ROUTES.SUGGEST_BPD_ACTIVATION]: {
-      screen: SuggestBpdActivationScreen
+    [WALLET_ONBOARDING_BPAY_ROUTES.ADD_BPAY]: {
+      screen: AddBPayScreen
     },
-    [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_BANCOMAT]: {
-      screen: ActivateBpdOnNewBancomatScreen
-    },
-    [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_CREDIT_CARD]: {
-      screen: ActivateBpdOnNewCreditCardScreen
+    [WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW]: {
+      screen: ActivateBpdOnNewBPayScreen
     }
   },
   {
@@ -37,4 +33,4 @@ const PaymentMethodOnboardingBancomatNavigator = createStackNavigator(
   }
 );
 
-export default PaymentMethodOnboardingBancomatNavigator;
+export default PaymentMethodOnboardingBPayNavigator;

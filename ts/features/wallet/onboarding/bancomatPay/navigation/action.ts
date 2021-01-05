@@ -1,28 +1,27 @@
 import { NavigationActions } from "react-navigation";
-import WALLET_ONBOARDING_BANCOMATPAY_ROUTES from "./routes";
+import WALLET_ONBOARDING_BPAY_ROUTES from "./routes";
 
-export const navigateToOnboardingBancomatPaySearchStartScreen = () =>
+export const navigateToOnboardingBPaySearchStartScreen = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BANCOMATPAY_ROUTES.START
+    routeName: WALLET_ONBOARDING_BPAY_ROUTES.START
   });
 
-export const navigateToOnboardingBancomatPayChooseBank = () =>
+export const navigateToOnboardingBPayChooseBank = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BANCOMATPAY_ROUTES.CHOOSE_BANK
+    routeName: WALLET_ONBOARDING_BPAY_ROUTES.CHOOSE_BANK
   });
 
-export const navigateToOnboardingBancomatPaySearchAvailableUserBancomat = () =>
+export const navigateToOnboardingBPaySearchAvailableUserAccount = () =>
   NavigationActions.navigate({
-    routeName:
-      WALLET_ONBOARDING_BANCOMATPAY_ROUTES.SEARCH_AVAILABLE_USER_ACCOUNT
+    routeName: WALLET_ONBOARDING_BPAY_ROUTES.SEARCH_AVAILABLE_USER_ACCOUNT
   });
 
-export const navigateToOnboardingBancomatPayAdd = () =>
+export const navigateToOnboardingBPayAdd = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BANCOMATPAY_ROUTES.ADD_BANCOMATPAY
+    routeName: WALLET_ONBOARDING_BPAY_ROUTES.ADD_BPAY
   });
 
-export const navigateToActivateBpdOnNewBancomat = () =>
+export const navigateToActivateBpdOnNewBPay = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_BANCOMATPAY_ROUTES.ACTIVATE_BPD_NEW
+    routeName: WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW
   });

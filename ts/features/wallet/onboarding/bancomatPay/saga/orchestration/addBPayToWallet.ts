@@ -10,45 +10,42 @@ import { navigationCurrentRouteSelector } from "../../../../../../store/reducers
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
 import {
-  navigateToActivateBpdOnNewBancomat,
-  navigateToOnboardingBancomatPayChooseBank,
-  navigateToOnboardingBancomatPaySearchStartScreen,
-  navigateToOnboardingBancomatSearchStartScreen
+  navigateToActivateBpdOnNewBPay,
+  navigateToOnboardingBPaySearchStartScreen
 } from "../../navigation/action";
-import WALLET_ONBOARDING_BANCOMATPAY_ROUTES from "../../navigation/routes";
-import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
+import WALLET_ONBOARDING_BPAY_ROUTES from "../../navigation/routes";
 import {
-  walletAddBancomatBack,
-  walletAddBancomatCancel,
-  walletAddBancomatCompleted
+  walletAddBPayBack,
+  walletAddBPayCancel,
+  walletAddBPayCompleted
 } from "../../store/actions";
-import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
+import { onboardingBPayAddedAccountSelector } from "../../store/reducers/addedBPay";
 
 /**
- * Define the workflow that allows the user to add BancomatPay accounts to the wallet.
+ * Define the workflow that allows the user to add BPay accounts to the wallet.
  * The workflow ends when:
- * - The user add at least one owned BancomatPay to the wallet {@link walletAddBancomatCompleted}
- * - The user abort the insertion of a BancomatPay {@link walletAddBancomatCancel}
- * - The user choose back from the first screen {@link walletAddBancomatBack}
+ * - The user add at least one owned BPay to the wallet {@link walletAddBPayCompleted}
+ * - The user abort the insertion of a BPay {@link walletAddBPayCancel}
+ * - The user choose back from the first screen {@link walletAddBPayBack}
  */
-function* bancomatPayWorkUnit() {
+function* bPayWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToOnboardingBancomatPaySearchStartScreen(),
-    startScreenName: WALLET_ONBOARDING_BANCOMATPAY_ROUTES.START,
-    complete: walletAddBancomatCompleted,
-    back: walletAddBancomatBack,
-    cancel: walletAddBancomatCancel
+    startScreenNavigation: navigateToOnboardingBPaySearchStartScreen(),
+    startScreenName: WALLET_ONBOARDING_BPAY_ROUTES.START,
+    complete: walletAddBPayCompleted,
+    back: walletAddBPayBack,
+    cancel: walletAddBPayCancel
   });
 }
 
 /**
- * A saga that invokes the addition of a bancomat workflow {@link bancomatWorkUnit} and return
+ * A saga that invokes the addition of a BPay workflow {@link bPayWorkUnit} and return
  * to the wallet after the insertion.
  */
-export function* addBancomatToWalletGeneric() {
+export function* addBPayToWalletGeneric() {
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
     withResetNavigationStack,
-    bancomatWorkUnit
+    bPayWorkUnit
   );
   if (res !== "back") {
     yield put(navigateToWalletHome());
@@ -56,12 +53,12 @@ export function* addBancomatToWalletGeneric() {
 }
 
 /**
- * Chain the add bancomat to wallet with "activate bpd on the new bancomat"
+ * Chain the add BPay to wallet with "activate bpd on the new BPay accounts"
  */
-export function* addBancomatToWalletAndActivateBpd() {
+export function* addBPayToWalletAndActivateBpd() {
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
     withResetNavigationStack,
-    bancomatWorkUnit
+    bPayWorkUnit
   );
   if (res !== "back") {
     // integration with the legacy "Add a payment"
@@ -83,14 +80,14 @@ export function* addBancomatToWalletAndActivateBpd() {
     // refresh wallets list
     yield put(fetchWalletsRequest());
     // read the new added bancomat
-    const bancomatAdded: ReturnType<typeof onboardingBancomatAddedPansSelector> = yield select(
-      onboardingBancomatAddedPansSelector
+    const bPayAdded: ReturnType<typeof onboardingBPayAddedAccountSelector> = yield select(
+      onboardingBPayAddedAccountSelector
     );
 
     yield call(
       activateBpdOnNewPaymentMethods,
-      bancomatAdded,
-      navigateToActivateBpdOnNewBancomat()
+      bPayAdded,
+      navigateToActivateBpdOnNewBPay()
     );
   }
 }
