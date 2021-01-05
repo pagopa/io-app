@@ -11,7 +11,7 @@ import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { cancelButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { walletAddBancomatCancel } from "../../store/actions";
+import { walletAddBPayCancel } from "../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -53,7 +53,7 @@ const BancomatKoNotFound: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  cancel: () => dispatch(walletAddBancomatCancel())
+  cancel: () => dispatch(walletAddBPayCancel())
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

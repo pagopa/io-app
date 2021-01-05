@@ -10,8 +10,8 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
-import { searchUserPans, walletAddBancomatCancel } from "../../store/actions";
-import { onboardingBancomatAbiSelectedSelector } from "../../store/reducers/abiSelected";
+import { searchUserBPay, walletAddBPayCancel } from "../../store/actions";
+import { onboardingBPayAbiSelectedSelector } from "../../store/reducers/abiSelected";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -56,13 +56,13 @@ const BPayKoTimeout: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  cancel: () => dispatch(walletAddBancomatCancel()),
+  cancel: () => dispatch(walletAddBPayCancel()),
   retry: (abiSelected: string | undefined) =>
-    dispatch(searchUserPans.request(abiSelected))
+    dispatch(searchUserBPay.request(abiSelected))
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  abiSelected: onboardingBancomatAbiSelectedSelector(state)
+  abiSelected: onboardingBPayAbiSelectedSelector(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BPayKoTimeout);

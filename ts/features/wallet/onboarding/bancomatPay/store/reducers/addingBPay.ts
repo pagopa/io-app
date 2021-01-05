@@ -3,10 +3,7 @@ import { BPay } from "../../../../../../../definitions/pagopa/BPay";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import {
-  RawBancomatPaymentMethod,
-  RawBPayPaymentMethod
-} from "../../../../../../types/pagopa";
+import { RawBPayPaymentMethod } from "../../../../../../types/pagopa";
 import {
   remoteError,
   remoteLoading,

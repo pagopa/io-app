@@ -1,7 +1,7 @@
 import { index } from "fp-ts/lib/Array";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { View } from "native-base";
+import { Button, View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -24,7 +24,7 @@ import {
   onboardingBPayAddingResultSelector,
   onboardingBPayChosenPanSelector
 } from "../../store/reducers/addingBPay";
-import { onboardingBPayFoundAccountsSelector } from "../../store/reducers/pans";
+import { onboardingBPayFoundAccountsSelector } from "../../store/reducers/foundBpay";
 import LoadAddBPayComponent from "./LoadAddBPayComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -80,7 +80,9 @@ const AddBPayScreen: React.FunctionComponent<Props> = (props: Props) => {
       onRetry={() => fromNullable(props.selectedBPay).map(props.onRetry)}
     />
   ) : currentPan.isSome() ? (
-    <View />
+    <View>
+      <Button onPress={handleOnContinue} />
+    </View>
   ) : null; // this should not happen
 };
 

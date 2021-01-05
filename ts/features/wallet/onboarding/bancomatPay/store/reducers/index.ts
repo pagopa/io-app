@@ -3,7 +3,7 @@ import { RawBPayPaymentMethod } from "../../../../../../types/pagopa";
 import abiSelectedReducer, { AbiSelected } from "./abiSelected";
 import addedBPayReducer from "./addedBPay";
 import addingBPayReducer, { AddingBPayState } from "./addingBPay";
-import foundBpayReducer, { RemoteBPay } from "./pans";
+import foundBpayReducer, { RemoteBPay } from "./foundBpay";
 
 export type OnboardingBPayState = {
   foundBPay: RemoteBPay;

@@ -9,7 +9,7 @@ import {
   isLoading,
   isReady
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { onboardingBPayFoundAccountsSelector } from "../../store/reducers/pans";
+import { onboardingBPayFoundAccountsSelector } from "../../store/reducers/foundBpay";
 import AddBPayScreen from "../add-account/AddBPayScreen";
 import BPayKoNotFound from "./BPayKoNotFound";
 import BPayKoTimeout from "./BPayKoTimeout";
