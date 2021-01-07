@@ -25,9 +25,6 @@ const abiSelectedReducer = (
  */
 export const onboardingBPayAbiSelectedSelector = (
   state: GlobalState
-): string | undefined =>
-  state.wallet.onboarding.bPay.abiSelected === null
-    ? undefined
-    : state.wallet.onboarding.bPay.abiSelected;
+): string | undefined => state.wallet.onboarding.bPay.abiSelected ?? undefined;
 
 export default abiSelectedReducer;
