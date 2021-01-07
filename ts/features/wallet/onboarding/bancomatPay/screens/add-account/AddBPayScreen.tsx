@@ -51,7 +51,7 @@ const AddBPayScreen: React.FunctionComponent<Props> = (props: Props) => {
   const currentIndex = currentAction.index;
 
   React.useEffect(() => {
-    // call onCompleted when the end of pans has been reached
+    // call onCompleted when the end of bpay pans has been reached
     // and the adding phase has been completed (or it was skipped step)
     if (
       currentIndex >= props.bPayAccounts.length &&
