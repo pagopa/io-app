@@ -129,18 +129,6 @@ export const enhanceBancomat = (
   icon: getImageFromPaymentMethod(bancomat)
 });
 
-export const enhanceBPay = (
-  bPay: RawBPayPaymentMethod,
-  abiList: IndexedById<Abi>
-): BPayPaymentMethod => ({
-  ...bPay,
-  abiInfo: bPay.info.instituteCode
-    ? abiList[bPay.info.instituteCode]
-    : undefined,
-  caption: getTitleFromPaymentMethod(bPay, abiList),
-  icon: getImageFromPaymentMethod(bPay)
-});
-
 export const enhanceSatispay = (
   raw: RawSatispayPaymentMethod
 ): SatispayPaymentMethod => ({
