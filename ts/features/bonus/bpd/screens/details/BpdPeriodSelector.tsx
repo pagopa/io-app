@@ -63,7 +63,7 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
 
   const indexOfSelectedPeriod = findIndex(
     periodWithAmountList,
-    elem => elem === props.selectedPeriod
+    elem => elem.awardPeriodId === props.selectedPeriod?.awardPeriodId
   ).getOrElse(0);
 
   return (

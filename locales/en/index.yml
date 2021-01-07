@@ -835,6 +835,7 @@ wallet:
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
     btnUpdateApp: Update the IO app
     favourite: This method is already set as favourite. To change this, please set another method as favourite.
+    amex: Payments with American Express cards, for amounts above €1000, are currently not possible.
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
