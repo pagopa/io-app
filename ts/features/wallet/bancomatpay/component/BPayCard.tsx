@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import BaseCardComponent from "../../component/BaseCardComponent";
 import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
@@ -10,7 +11,6 @@ import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImage
 import { H3 } from "../../../../components/core/typography/H3";
 import IconFont from "../../../../components/ui/IconFont";
 import { H4 } from "../../../../components/core/typography/H4";
-import { fromNullable } from "fp-ts/lib/Option";
 
 type Props = {
   phone?: string;
