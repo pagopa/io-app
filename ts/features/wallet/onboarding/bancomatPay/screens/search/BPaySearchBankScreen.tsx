@@ -4,8 +4,8 @@ import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import SearchBankScreen from "../../../common/searchBank/SearchBankScreen";
 import I18n from "../../../../../../i18n";
-import { searchUserPans } from "../../../bancomat/store/actions";
-import { navigateToOnboardingBancomatSearchAvailableUserBancomat } from "../../../bancomat/navigation/action";
+import { searchUserBPay } from "../../store/actions";
+import { navigateToOnboardingBPaySearchAvailableUserAccount } from "../../navigation/action";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -14,7 +14,7 @@ type Props = ReturnType<typeof mapStateToProps> &
  * This screen allows the user to choose a specific bank to search for their Bancomat.
  * @constructor
  */
-const BpaySearchBankScreen: React.FunctionComponent<Props> = (props: Props) => (
+const BPaySearchBankScreen: React.FunctionComponent<Props> = (props: Props) => (
   <SearchBankScreen
     onItemPress={props.searchAccounts}
     methodName={I18n.t("wallet.methods.bancomatPay.name")}
@@ -22,10 +22,9 @@ const BpaySearchBankScreen: React.FunctionComponent<Props> = (props: Props) => (
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO Replace with bpay specific
   searchAccounts: (abi?: string) => {
-    dispatch(searchUserPans.request(abi));
-    dispatch(navigateToOnboardingBancomatSearchAvailableUserBancomat());
+    dispatch(searchUserBPay.request(abi));
+    dispatch(navigateToOnboardingBPaySearchAvailableUserAccount());
   }
 });
 
@@ -34,4 +33,4 @@ const mapStateToProps = (_: GlobalState) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BpaySearchBankScreen);
+)(BPaySearchBankScreen);
