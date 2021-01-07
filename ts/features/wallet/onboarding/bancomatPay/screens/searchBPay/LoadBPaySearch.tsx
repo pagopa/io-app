@@ -26,7 +26,6 @@ const LoadBPaySearch = (props: Props): React.ReactElement => {
   return (
     <LoadingErrorComponent
       {...props}
-      // TODO: Update text
       loadingCaption={I18n.t("wallet.onboarding.bPay.loadingSearch")}
       onAbort={props.cancel}
       onRetry={() => props.retry(props.abiSelected)}

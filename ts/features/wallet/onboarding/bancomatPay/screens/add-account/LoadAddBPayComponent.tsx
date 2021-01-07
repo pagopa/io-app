@@ -24,7 +24,6 @@ const LoadAddBPayComponent = (props: Props): React.ReactElement => {
   return (
     <LoadingErrorComponent
       {...props}
-      // TODO: add text
       loadingCaption={I18n.t("wallet.onboarding.bPay.loadingAdd")}
       onAbort={props.onCancel}
       onRetry={props.onRetry}
