@@ -1138,6 +1138,9 @@ wallet:
         title: "Does your card have one of these logos?"
         body: "If your PagoBANCOMAT card has other international circuits, you can also add it as a **debit or credit card** by entering its number on the front. When you activate Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add as Debit/Credit Card"
+      bPay:
+        body: "If you have **BANCOMAT Pay**, remember to add also this method to the IO wallet in order to pay from the app."
+        addCta: "Add BANCOMAT Pay"
       removeCta: "Delete this payment method"
   satispay:
     details:

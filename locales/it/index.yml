@@ -1164,6 +1164,9 @@ wallet:
         title: "La tua carta ha uno di questi loghi?"
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerla anche come **carta di debito o di credito**, inserendo il numero della carta sul fronte. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi Carta di Debito/Credito"
+      bPay:
+        body: "Se hai **BANCOMAT Pay**, ricordati di aggiungere anche questo metodo al portafoglio di IO per pagare dall’app."
+        addCta: "Aggiungi BANCOMAT Pay"
       removeCta: "Elimina questo metodo di pagamento"
   satispay:
     details:
