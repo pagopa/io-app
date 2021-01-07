@@ -124,7 +124,7 @@ import {
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
 import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
-import trackBPayAction from "../../features/wallet/bancomatpay/analytics/index";
+import trackBPayAction from "../../features/wallet/onboarding/bancomatpay/analytics";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (

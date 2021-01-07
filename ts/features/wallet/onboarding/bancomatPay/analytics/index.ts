@@ -1,8 +1,8 @@
 import { getType } from "typesafe-actions";
-import { mixpanel } from "../../../../mixpanel";
-import { Action } from "../../../../store/actions/types";
-import { getNetworkErrorMessage } from "../../../../utils/errors";
-import { searchUserBPay } from "../../onboarding/bancomatpay/store/actions";
+import { mixpanel } from "../../../../../mixpanel";
+import { Action } from "../../../../../store/actions/types";
+import { getNetworkErrorMessage } from "../../../../../utils/errors";
+import { searchUserBPay } from "../store/actions";
 
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
