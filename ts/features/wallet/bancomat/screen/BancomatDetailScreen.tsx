@@ -19,8 +19,8 @@ import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePayment
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import BancomatInformation from "./BancomatInformation";
 import AddBPayComponent from "../component/AddBPayComponent";
+import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
