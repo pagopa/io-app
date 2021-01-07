@@ -96,6 +96,7 @@ const getWallets = createSelector(getWalletsById, potWx =>
   )
 );
 
+// return a pot with the id of the favorite wallet. none otherwise
 export const getFavoriteWalletId = createSelector(
   getWallets,
   (potWx: ReturnType<typeof getWallets>): pot.Pot<number, Error> =>
