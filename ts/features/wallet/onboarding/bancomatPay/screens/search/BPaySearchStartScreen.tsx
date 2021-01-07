@@ -27,6 +27,7 @@ import {
   walletAddBPayBack,
   walletAddBPayCancel
 } from "../../store/actions";
+import SectionStatusComponent from "../../../../../../components/SectionStatusComponent";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
@@ -55,6 +56,7 @@ const BPaySearchStartScreen = (props: Props): React.ReactElement => (
   >
     <SafeAreaView style={IOStyles.flex}>
       <Content style={IOStyles.flex} />
+      <SectionStatusComponent sectionKey={"bancomatpay"} />
       {renderFooterButtons(props.onCancel, props.searchBPay)}
     </SafeAreaView>
   </BaseScreenComponent>
