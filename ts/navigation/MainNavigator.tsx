@@ -23,6 +23,7 @@ import WalletTabIcon from "../components/WalletTabIcon";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
+import WALLET_ONBOARDING_BPAY_ROUTES from "../features/wallet/onboarding/bancomatPay/navigation/routes";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
@@ -101,12 +102,12 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   BONUSVACANZE_ROUTES.MAIN,
   BPD_ROUTES.MAIN,
   WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN,
+  WALLET_ONBOARDING_BPAY_ROUTES.MAIN,
   WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN,
   ROUTES.MARKDOWN_PLAYGROUND,
   ROUTES.WEB_PLAYGROUND,
   ROUTES.SHOWROOM,
   ROUTES.SERVICE_WEBVIEW
-
 ];
 
 const getTabBarVisibility = (

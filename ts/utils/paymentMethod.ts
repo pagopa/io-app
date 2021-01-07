@@ -12,12 +12,14 @@ import I18n from "../i18n";
 import { IndexedById } from "../store/helpers/indexer";
 import {
   BancomatPaymentMethod,
+  BPayPaymentMethod,
   isRawBancomat,
   isRawBPay,
   isRawCreditCard,
   isRawSatispay,
   PaymentMethod,
   RawBancomatPaymentMethod,
+  RawBPayPaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
   RawSatispayPaymentMethod,
@@ -107,8 +109,8 @@ export const getTitleFromPaymentMethod = (
   }
   if (isRawBPay(paymentMethod)) {
     return (
-      paymentMethod.info.numberObfuscated?.replace(/\*/g, "●") ??
       paymentMethod.info.bankName ??
+      paymentMethod.info.numberObfuscated?.replace(/\*/g, "●") ??
       FOUR_UNICODE_CIRCLES
     );
   }
@@ -127,6 +129,18 @@ export const enhanceBancomat = (
   icon: getImageFromPaymentMethod(bancomat)
 });
 
+export const enhanceBPay = (
+  bPay: RawBPayPaymentMethod,
+  abiList: IndexedById<Abi>
+): BPayPaymentMethod => ({
+  ...bPay,
+  abiInfo: bPay.info.instituteCode
+    ? abiList[bPay.info.instituteCode]
+    : undefined,
+  caption: getTitleFromPaymentMethod(bPay, abiList),
+  icon: getImageFromPaymentMethod(bPay)
+});
+
 export const enhanceSatispay = (
   raw: RawSatispayPaymentMethod
 ): SatispayPaymentMethod => ({
@@ -143,8 +157,9 @@ export const enhancePaymentMethod = (
     // bancomat need a special handling, we need to include the abi
     case "Bancomat":
       return enhanceBancomat(pm, abiList);
-    case "CreditCard":
     case "BPay":
+      return enhanceBPay(pm, abiList);
+    case "CreditCard":
     case "Satispay":
       return {
         ...pm,
