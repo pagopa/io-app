@@ -30,7 +30,7 @@ const loadLocales = () => ({
  * This screen informs the user that the search operation could not be completed
  * @constructor
  */
-const BPayKoTimeout: React.FunctionComponent<Props> = props => {
+const BPayKoTimeout = (props: Props): React.ReactElement => {
   const { headerTitle, title, body, cancel, retry } = loadLocales();
   return (
     <BaseScreenComponent

@@ -28,7 +28,7 @@ const loadLocales = () => ({
  * This screen informs the user that no BPay accounts in his name were found.
  * @constructor
  */
-const BPayKoNotFound: React.FunctionComponent<Props> = props => {
+const BPayKoNotFound = (props: Props): React.ReactElement => {
   const { headerTitle, title, body } = loadLocales();
 
   return (

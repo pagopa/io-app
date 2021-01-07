@@ -16,7 +16,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  * This screen is displayed when searching for BPay accounts
  * @constructor
  */
-const LoadBPaySearch: React.FunctionComponent<Props> = props => {
+const LoadBPaySearch = (props: Props): React.ReactElement => {
   useHardwareBackButton(() => {
     if (!props.isLoading) {
       props.cancel();
@@ -27,7 +27,7 @@ const LoadBPaySearch: React.FunctionComponent<Props> = props => {
     <LoadingErrorComponent
       {...props}
       // TODO: Update text
-      loadingCaption={I18n.t("wallet.onboarding.bPay.placeholderTMP")}
+      loadingCaption={I18n.t("wallet.onboarding.bPay.loadingSearch")}
       onAbort={props.cancel}
       onRetry={() => props.retry(props.abiSelected)}
     />

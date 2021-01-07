@@ -832,7 +832,8 @@ wallet:
           skip: "Non ora"
     bPay:
       headerTitle: "Aggiungi BANCOMAT Pay"
-      placeholderTMP: "placeholder TMP"
+      loadingSearch: "Stiamo recuperando i tuoi dati BANCOMAT Pay\n\nAttendi qualche secondo"
+      loadingAdd: "Stiamo aggiungendo il tuo account BANCOMAT Pay\n\nAttendi qualche secondo"
     satispay:
       headerTitle: "Aggiungi Satispay"
       start:
