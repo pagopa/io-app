@@ -33,6 +33,7 @@ const AddBPay: React.FunctionComponent<Props> = props => (
       bordered={true}
       onPress={props.startAddBPay}
       onPressWithGestureHandler={true}
+      testID={"startAddBPayButton"}
     >
       <Label>{I18n.t("wallet.bancomat.details.bPay.addCta")}</Label>
     </ButtonDefaultOpacity>
