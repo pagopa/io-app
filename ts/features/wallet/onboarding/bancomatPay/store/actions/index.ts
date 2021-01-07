@@ -23,7 +23,7 @@ export const addBPayToWallet = createAsyncAction(
   "WALLET_ONBOARDING_BPAY_ADD_REQUEST",
   "WALLET_ONBOARDING_BPAY_ADD_SUCCESS",
   "WALLET_ONBOARDING_BPAY_ADD_FAILURE"
-)<BPay, RawBPayPaymentMethod, Error>();
+)<BPay, RawBPayPaymentMethod, NetworkError>();
 
 /**
  * The user choose to start the workflow to add a new BPay to the wallet
