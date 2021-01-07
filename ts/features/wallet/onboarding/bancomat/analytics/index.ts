@@ -10,8 +10,7 @@ import {
   walletAddBancomatCompleted,
   walletAddBancomatStart
 } from "../store/actions";
-} from "../../../wallet/onboarding/bancomat/store/actions";
-import { getNetworkErrorMessage } from "../../../../utils/errors";
+import { getNetworkErrorMessage } from "../../../../../utils/errors";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (

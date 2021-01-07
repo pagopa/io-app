@@ -26,8 +26,7 @@ import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/Bancomat
 import {
   AddWalletSatispayUsingPOSTT,
   addWalletsBancomatCardUsingPOSTDecoder,
-  addWalletsBPayUsingPOSTDefaultDecoder,
-  AddWalletsBPayUsingPOSTT,
+  addWalletsBPayUsingPOSTDecoder,
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
   getBpayListUsingGETDefaultDecoder,
@@ -507,13 +506,24 @@ const searchBPay: GetBpayListUsingGETT = {
   response_decoder: getBpayListUsingGETDefaultDecoder()
 };
 
-const addBPayToWallet: AddWalletsBPayUsingPOSTT = {
+export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
+  { readonly Bearer: string; readonly bPayRequest: BPayRequest },
+  "Content-Type" | "Authorization",
+  never,
+  | r.IResponseType<200, PatchedWalletV2ListResponse>
+  | r.IResponseType<201, undefined>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
+>;
+
+const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
   method: "post",
   url: () => `/v1/bpay/add-wallets`,
   query: () => ({}),
   body: ({ bPayRequest }) => JSON.stringify(bPayRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: addWalletsBPayUsingPOSTDefaultDecoder()
+  response_decoder: addWalletsBPayUsingPOSTDecoder(PatchedWalletV2ListResponse)
 };
 
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(

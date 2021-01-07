@@ -10,6 +10,7 @@ import {
   EnableableFunctionsTypeEnum,
   PatchedPaymentMethodInfo,
   PatchedWalletV2,
+  RawBPayPaymentMethod,
   RawPaymentMethod,
   RawSatispayPaymentMethod,
   Wallet
@@ -85,6 +86,15 @@ export const fromPatchedWalletV2ToRawSatispay = (
 ): RawSatispayPaymentMethod | undefined => {
   if (isWalletV2Satispay(wallet, wallet.info)) {
     return { ...wallet, kind: "Satispay", info: wallet.info };
+  }
+  return undefined;
+};
+
+export const fromPatchedWalletV2ToRawBPay = (
+  wallet: PatchedWalletV2
+): RawBPayPaymentMethod | undefined => {
+  if (isWalletV2BPay(wallet, wallet.info)) {
+    return { ...wallet, kind: "BPay", info: wallet.info };
   }
   return undefined;
 };

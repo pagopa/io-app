@@ -50,10 +50,6 @@ import {
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
-import {
-  addBPayToWalletSaga,
-  loadBPaySaga
-} from "../features/wallet/onboarding/bancomatPay/saga/networking";
 import { addBPayToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
 import {
   addBPayToWallet,
@@ -165,8 +161,10 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { backoffWait } from "../utils/saga";
-import { handleSearchUserBPay } from "../features/wallet/onboarding/bancomatpay/saga/networking";
-import { searchUserBPay } from "../features/wallet/onboarding/bancomatpay/store/actions";
+import {
+  handleSearchUserBPay,
+  handleAddpayToWallet
+} from "../features/wallet/onboarding/bancomatpay/saga/networking";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -880,12 +878,6 @@ export function* watchWalletSaga(
     // watch for add BPay to Wallet workflow
     yield takeLatest(walletAddBPayStart, addBPayToWalletAndActivateBpd);
 
-    // watch for load pans request
-    yield takeLatest(searchUserBPay.request, loadBPaySaga);
-
-    // watch for add pan request
-    yield takeLatest(addBPayToWallet.request, addBPayToWalletSaga);
-
     // watch for add Satispay to Wallet workflow
     yield takeLatest(walletAddSatispayStart, addSatispayToWalletAndActivateBpd);
 
@@ -910,6 +902,13 @@ export function* watchWalletSaga(
       searchUserBPay.request,
       handleSearchUserBPay,
       paymentManagerClient.searchBPay,
+      pmSessionManager
+    );
+    // watch for add BancomatPay to the user's wallet
+    yield takeLatest(
+      addBPayToWallet.request,
+      handleAddpayToWallet,
+      paymentManagerClient.addBPayToWallet,
       pmSessionManager
     );
   }
