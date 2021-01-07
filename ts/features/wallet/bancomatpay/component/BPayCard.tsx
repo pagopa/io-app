@@ -10,6 +10,7 @@ import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImage
 import { H3 } from "../../../../components/core/typography/H3";
 import IconFont from "../../../../components/ui/IconFont";
 import { H4 } from "../../../../components/core/typography/H4";
+import { fromNullable } from "fp-ts/lib/Option";
 
 type Props = {
   phone?: string;
@@ -40,14 +41,19 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
       resizeMode: "contain"
     })
   );
-
   return (
     <BaseCardComponent
       topLeftCorner={
         props.abiLogo && imageStyle ? (
-          <Image source={{ uri: props.abiLogo }} style={imageStyle} />
+          <Image
+            source={{ uri: props.abiLogo }}
+            style={imageStyle}
+            testID={"abiLogo"}
+          />
         ) : (
-          <H3 style={styles.bankName}>{props.bankName}</H3>
+          <H3 style={styles.bankName} testID={"bankName"}>
+            {props.bankName}
+          </H3>
         )
       }
       bottomLeftCorner={
@@ -57,14 +63,18 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
               <View style={{ flexDirection: "row" }}>
                 <IconFont name={"io-phone"} size={22} />
                 <View hspacer small />
-                <H4 weight={"Regular"}>{props.phone}</H4>
+                <H4 weight={"Regular"} testID="phone">
+                  {props.phone}
+                </H4>
               </View>
               <View spacer small />
             </>
           )}
-          <H4 weight={"Regular"}>
-            {(props.nameSurname ?? "").toLocaleUpperCase()}
-          </H4>
+          {fromNullable(props.nameSurname).fold(undefined, nameSurname => (
+            <H4 weight={"Regular"} testID={"nameSurname"}>
+              {nameSurname.toLocaleUpperCase()}
+            </H4>
+          ))}
         </View>
       }
       bottomRightCorner={
