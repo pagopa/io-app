@@ -106,12 +106,16 @@ export const getFavoriteWalletId = createSelector(
     )
 );
 
-export const getFavoriteWallet = (state: GlobalState) =>
-  pot.mapNullable(state.wallet.wallets.favoriteWalletId, walletId =>
-    pot.toUndefined(
-      pot.map(state.wallet.wallets.walletById, wx => wx[walletId])
+export const getFavoriteWallet = createSelector(
+  [getFavoriteWalletId, getWalletsById],
+  (
+    favoriteWalletID: pot.Pot<number, Error>,
+    walletsById: WalletsState["walletById"]
+  ): pot.Pot<Wallet, Error> =>
+    pot.mapNullable(favoriteWalletID, walletId =>
+      pot.toUndefined(pot.map(walletsById, wx => wx[walletId]))
     )
-  );
+);
 
 /**
  * @deprecated Using API v2 this selector is deprecated
