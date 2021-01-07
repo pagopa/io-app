@@ -96,8 +96,14 @@ const getWallets = createSelector(getWalletsById, potWx =>
   )
 );
 
-export const getFavoriteWalletId = (state: GlobalState) =>
-  state.wallet.wallets.favoriteWalletId;
+export const getFavoriteWalletId = createSelector(
+  getWallets,
+  (potWx: ReturnType<typeof getWallets>): pot.Pot<number, Error> =>
+    pot.mapNullable(
+      potWx,
+      wx => values(wx).find(w => w.favourite === true)?.idWallet
+    )
+);
 
 export const getFavoriteWallet = (state: GlobalState) =>
   pot.mapNullable(state.wallet.wallets.favoriteWalletId, walletId =>
