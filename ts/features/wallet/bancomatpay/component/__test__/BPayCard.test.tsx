@@ -59,7 +59,7 @@ describe("BPayWalletPreview component", () => {
 
     expect(nameSurname).not.toBeNull();
     expect(nameSurname).toHaveTextContent(
-      profile.name.toUpperCase() + " " + profile.family_name.toLocaleUpperCase()
+      `${profile.name.toUpperCase()} ${profile.family_name.toLocaleUpperCase()}`
     );
   });
 });
