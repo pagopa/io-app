@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0-rc.1](https://github.com/pagopa/io-app/compare/1.17.0-rc.0...1.17.0-rc.1) (2021-01-05)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176318970](https://www.pivotaltracker.com/story/show/176318970)] Avoid call bpd API if the user is not enrolled ([#2663](https://github.com/pagopa/io-app/issues/2663)) ([d0582ef](https://github.com/pagopa/io-app/commit/d0582ef1e203619e557baf4cdc8135b1b760142f))
+* [[#176222893](https://www.pivotaltracker.com/story/show/176222893)] increased delay between user profile activation retries [#2664](https://github.com/pagopa/io-app/issues/2664) ([5c0c90f](https://github.com/pagopa/io-app/commit/5c0c90f201ceea2bcd8a527873ff1afc2ad236f8))
+* [[#176299898](https://www.pivotaltracker.com/story/show/176299898)] Amex warning (transaction >1000 EUR) ([#2671](https://github.com/pagopa/io-app/issues/2671)) ([8e171d3](https://github.com/pagopa/io-app/commit/8e171d36c13a6ed220b27278da9972acf6d2d5fc))
+* **Payments:** [[#176364017](https://www.pivotaltracker.com/story/show/176364017)] Use /v1/psps/selected instead of deprecated /v1/psps ([#2675](https://github.com/pagopa/io-app/issues/2675)) ([a8bd66a](https://github.com/pagopa/io-app/commit/a8bd66a34cd9edccef274e1335e321fa4c137ce9))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176338423](https://www.pivotaltracker.com/story/show/176338423)] Wrong cashback detail by selecting card preview ([#2669](https://github.com/pagopa/io-app/issues/2669)) ([2257488](https://github.com/pagopa/io-app/commit/225748826ec36dd79f76dd48c20200858e6d86dd))
+
 ## [1.17.0-rc.0](https://github.com/pagopa/io-app/compare/1.16.0-rc.1...1.17.0-rc.0) (2021-01-01)
 
 
