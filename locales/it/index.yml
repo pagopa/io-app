@@ -830,6 +830,9 @@ wallet:
           body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
           body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
           skip: "Non ora"
+    bPay:
+      headerTitle: "Aggiungi BANCOMAT Pay"
+      placeholderTMP: "placeholder TMP"
     satispay:
       headerTitle: "Aggiungi Satispay"
       start:
