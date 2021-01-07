@@ -109,8 +109,8 @@ export const getTitleFromPaymentMethod = (
   }
   if (isRawBPay(paymentMethod)) {
     return (
-      paymentMethod.info.numberObfuscated?.replace(/\*/g, "●") ??
       paymentMethod.info.bankName ??
+      paymentMethod.info.numberObfuscated?.replace(/\*/g, "●") ??
       FOUR_UNICODE_CIRCLES
     );
   }
@@ -127,6 +127,18 @@ export const enhanceBancomat = (
     : undefined,
   caption: getTitleFromBancomat(bancomat, abiList),
   icon: getImageFromPaymentMethod(bancomat)
+});
+
+export const enhanceBPay = (
+  bPay: RawBPayPaymentMethod,
+  abiList: IndexedById<Abi>
+): BPayPaymentMethod => ({
+  ...bPay,
+  abiInfo: bPay.info.instituteCode
+    ? abiList[bPay.info.instituteCode]
+    : undefined,
+  caption: getTitleFromPaymentMethod(bPay, abiList),
+  icon: getImageFromPaymentMethod(bPay)
 });
 
 export const enhanceSatispay = (

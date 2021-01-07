@@ -9,6 +9,8 @@ import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailSc
 import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
+import PaymentMethodOnboardingBPayNavigator from "../features/wallet/onboarding/bancomatPay/navigation/navigator";
+import WALLET_ONBOARDING_BPAY_ROUTES from "../features/wallet/onboarding/bancomatPay/navigation/routes";
 import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
 import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
@@ -123,6 +125,9 @@ const bpdConfigMap = bpdEnabled
       },
       [WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN]: {
         screen: PaymentMethodOnboardingSatispayNavigator
+      },
+      [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: {
+        screen: PaymentMethodOnboardingBPayNavigator
       }
     }
   : {};
