@@ -77,7 +77,7 @@ export function* handleAddpayToWallet(
 ) {
   try {
     const addBPayToWalletWithRefresh = sessionManager.withRefresh(
-      addBPayToWallet(action.payload)
+      addBPayToWallet({ data: [action.payload] })
     );
 
     const addBPayToWalletWithRefreshResult: SagaCallReturnType<typeof addBPayToWalletWithRefresh> = yield call(
