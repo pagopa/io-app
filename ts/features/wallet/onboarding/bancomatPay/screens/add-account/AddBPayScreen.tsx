@@ -101,9 +101,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => {
   const remoteBPay = onboardingBPayFoundAccountsSelector(state);
   const addingResult = onboardingBPayAddingResultSelector(state);
-  const bPayAccounts = fromNullable(
-    getValueOrElse(remoteBPay, undefined)
-  ).getOrElse([]);
+  const bPayAccounts = getValueOrElse(remoteBPay, []);
   return {
     isAddingReady: isReady(addingResult),
     loading: isLoading(addingResult),
