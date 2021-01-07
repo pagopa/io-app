@@ -215,7 +215,7 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
-  expiration_info: For security reasons, after 30 days from your last login you'll need to sign in again to continue using IO.
+  expiration_info: For security reasons, after 30 days from your last login with SPID or CIE, you'll need to sign in again to use IO.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -431,7 +431,7 @@ authentication:
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     session_expired:
       title: Your session is expired
-      body: For security reasons, after 30 days from the last access, we ask you to log in again with SPID or CIE to use IO.
+      body: For security reasons, after 30 days from the last login with SPID or CIE, we ask you to sign in again to use IO.
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
@@ -839,6 +839,7 @@ wallet:
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
     btnUpdateApp: Update the IO app
     favourite: This method is already set as favourite. To change this, please set another method as favourite.
+    amex: Payments with American Express cards, for amounts above €1000, are currently not possible.
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
