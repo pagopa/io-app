@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
-import { mixpanel } from "../../../../mixpanel";
-import { Action } from "../../../../store/actions/types";
+import { mixpanel } from "../../../../../mixpanel";
+import { Action } from "../../../../../store/actions/types";
 import {
   addBancomatToWallet,
   loadAbi,
@@ -9,6 +9,7 @@ import {
   walletAddBancomatCancel,
   walletAddBancomatCompleted,
   walletAddBancomatStart
+} from "../store/actions";
 } from "../../../wallet/onboarding/bancomat/store/actions";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
 

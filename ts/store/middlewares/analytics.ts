@@ -122,7 +122,7 @@ import {
 } from "../actions/wallet/wallets";
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
-import trackBancomatAction from "../../features/wallet/bancomat/analytics/index";
+import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
 import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
 import trackBPayAction from "../../features/wallet/bancomatpay/analytics/index";
 

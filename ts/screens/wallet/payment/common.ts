@@ -85,9 +85,7 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
     dispatch(
       paymentFetchPspsForPaymentId.request({
         idPayment,
-        // provide the idWallet to the getPsps request only if the wallet has
-        // a preferred PSP
-        idWallet: selectedWallet.psp ? selectedWallet.idWallet : undefined,
+        idWallet: selectedWallet.idWallet,
         onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
         onSuccess: successAction => {
           // filter PSPs for the current locale only (the list will contain

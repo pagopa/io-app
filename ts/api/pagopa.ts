@@ -53,6 +53,7 @@ import {
   GetPspListUsingGETT,
   getPspUsingGETDecoder,
   GetPspUsingGETT,
+  getSelectedPspUsingGETDecoder,
   getTransactionsUsingGETDecoder,
   getTransactionUsingGETDecoder,
   GetTransactionUsingGETT,
@@ -277,6 +278,37 @@ const getPspList: GetPspListUsingGETTExtra = {
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
 };
 
+type PspParams = {
+  readonly Bearer: string;
+  readonly idWallet: string;
+  readonly idPayment: string;
+  readonly language: string;
+};
+export type GetSelectedPspUsingGETTExtra = r.IGetApiRequestType<
+  PspParams,
+  "Authorization",
+  never,
+  | r.IResponseType<200, PspListResponse>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
+>;
+const getPspQuery = (params: PspParams) => {
+  const { idPayment, idWallet, language } = params;
+  return {
+    idPayment,
+    idWallet,
+    language
+  };
+};
+const getPspSelected: GetSelectedPspUsingGETTExtra = {
+  method: "get",
+  url: () => "/v1/psps/selected",
+  query: getPspQuery,
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getSelectedPspUsingGETDecoder(PspListResponse)
+};
+
 type GetAllPspListUsingGETTExtra = MapResponseType<
   GetAllPspsUsingGETT,
   200,
@@ -286,11 +318,7 @@ type GetAllPspListUsingGETTExtra = MapResponseType<
 const getAllPspList: GetAllPspListUsingGETTExtra = {
   method: "get",
   url: () => "/v1/psps/all",
-  query: ({ idPayment, idWallet, language }) => ({
-    idPayment,
-    idWallet,
-    language
-  }),
+  query: getPspQuery,
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
 };
@@ -561,6 +589,19 @@ export function PaymentManagerClient(
       flip(
         withPaymentManagerToken(
           createFetchRequestForApi(getAllPspList, options)
+        )
+      )({
+        idPayment,
+        idWallet,
+        language: getLocalePrimaryWithFallback()
+      }),
+    getPspSelected: (
+      idPayment: TypeofApiParams<GetAllPspsUsingGETT>["idPayment"],
+      idWallet: TypeofApiParams<GetAllPspsUsingGETT>["idWallet"]
+    ) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(getPspSelected, options)
         )
       )({
         idPayment,

@@ -11,9 +11,9 @@ import {
 import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { BpdActions } from "../../features/bonus/bpd/store/actions";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
+import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
-import { BPayActions } from "../../features/wallet/onboarding/bancomatpay/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -81,8 +81,8 @@ export type Action =
   | BonusActions
   | BpdActions
   | AbiActions
-  | SatispayActions
-  | BPayActions;
+  | BPayActions
+  | SatispayActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
