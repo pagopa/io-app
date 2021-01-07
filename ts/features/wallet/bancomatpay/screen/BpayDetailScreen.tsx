@@ -53,7 +53,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
 );
 
 /**
- * Detail screen for a satispay
+ * Detail screen for a Bancomat Pay
  * @constructor
  */
 const BPayDetailScreen: React.FunctionComponent<Props> = props => {
@@ -100,8 +100,6 @@ const BPayDetailScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // using the legacy action with callback instead of using the redux state to read the results
-  // for time reasons...
   deleteWallet: (walletId: number) =>
     dispatch(
       deleteWalletRequest({
