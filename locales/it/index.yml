@@ -834,6 +834,12 @@ wallet:
       headerTitle: "Aggiungi BANCOMAT Pay"
       loadingSearch: "Stiamo recuperando i tuoi dati BANCOMAT Pay\n\nAttendi qualche secondo"
       loadingAdd: "Stiamo aggiungendo il tuo account BANCOMAT Pay\n\nAttendi qualche secondo"
+      koTimeout:
+        title: "Impossibile recuperare i tuoi dati"
+        body: "Riprova per favore"
+      koNotFound:
+        title: "Spiacenti, non abbiamo trovato nessuna servizio BANCOMAT Pay attivo"
+        body: "Contatta la tua Banca per attivare BANCOMAT Pay!"
     satispay:
       headerTitle: "Aggiungi Satispay"
       start:

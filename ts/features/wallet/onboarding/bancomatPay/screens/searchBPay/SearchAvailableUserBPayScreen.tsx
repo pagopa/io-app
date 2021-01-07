@@ -26,6 +26,7 @@ const SearchAvailableUserBPayScreen = (props: Props): React.ReactElement => {
   const bPayAccounts = props.bPayAccounts;
   const noBPayFound = isReady(bPayAccounts) && bPayAccounts.value.length === 0;
 
+  return <BPayKoTimeout contextualHelp={emptyContextualHelp} />;
   if (noBPayFound) {
     // The user doesn't have a BPay account
     return <BPayKoNotFound contextualHelp={emptyContextualHelp} />;
