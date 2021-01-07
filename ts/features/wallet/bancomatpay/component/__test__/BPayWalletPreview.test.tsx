@@ -1,10 +1,15 @@
-import { render } from "@testing-library/react-native";
+import { render, fireEvent } from "@testing-library/react-native";
 import * as React from "react";
 import { Provider } from "react-redux";
+import { NavigationActions } from "react-navigation";
 import configureMockStore from "redux-mock-store";
+import { none, some } from "fp-ts/lib/Option";
 import { BPayPaymentMethod } from "../../../../../types/pagopa";
 import BPayWalletPreview from "../BPayWalletPreview";
+import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import ROUTES from "../../../../../navigation/routes";
 
+jest.mock("../../../onboarding/bancomat/screens/hooks/useImageResize");
 describe("BPayWalletPreview component", () => {
   const mockStore = configureMockStore();
   // eslint-disable-next-line functional/no-let
@@ -34,13 +39,16 @@ describe("BPayWalletPreview component", () => {
     store = mockStore();
   });
   it("should show the generic bancomatPay string if there isn't the abiInfo and the bankName", () => {
+    const myspy = jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
     const component = getComponent(aBPay, store);
     const bankLogo = component.queryByTestId("bankLogoFallback");
 
     expect(bankLogo).not.toBeNull();
     expect(bankLogo).toHaveTextContent("BANCOMAT Pay");
+    expect(myspy).toHaveBeenCalledTimes(1);
   });
   it("should show the generic bankName string if there isn't the abiInfo", () => {
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
     const bankName = "INTESA SANPAOLO - S.P.A.";
     const component = getComponent(
       {
@@ -56,6 +64,7 @@ describe("BPayWalletPreview component", () => {
   });
 
   it("should show the bankName from the abiInfo if there isn't the logoUrl", () => {
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
     const infobankName = "a different bank name";
     const abiInfoBankName = "INTESA SANPAOLO - S.P.A.";
     const component = getComponent(
@@ -76,8 +85,11 @@ describe("BPayWalletPreview component", () => {
   });
 
   it("should show the logo image if there is the abiInfo logoUrl", () => {
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+
     const infobankName = "a different bank name";
     const abiInfoBankName = "INTESA SANPAOLO - S.P.A.";
+    const logoUrl = "http://127.0.0.1:3000/static_contents/logos/abi/03069.png";
     const component = getComponent(
       {
         ...aBPay,
@@ -85,15 +97,30 @@ describe("BPayWalletPreview component", () => {
         abiInfo: {
           abi: "03069",
           name: abiInfoBankName,
-          logoUrl: "http://127.0.0.1:3000/static_contents/logos/abi/03069.png"
+          logoUrl
         }
       },
       store
     );
-    const bankLogo = component.queryByTestId("bankLogoFallback");
+    const bankLogo = component.queryByTestId("bankLogo");
 
     expect(bankLogo).not.toBeNull();
-    expect(bankLogo).toHaveTextContent(abiInfoBankName);
+    expect(bankLogo).toHaveProp("source", { uri: logoUrl });
+  });
+
+  it("should call navigateToBPayDetails when press on it", () => {
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    const component = getComponent(aBPay, store);
+    const cardComponent = component.queryByTestId("cardPreview");
+    const expectedPayload = {
+      type: NavigationActions.NAVIGATE,
+      routeName: ROUTES.WALLET_BPAY_DETAIL,
+      params: { bPay: aBPay }
+    };
+    if (cardComponent) {
+      fireEvent.press(cardComponent);
+      expect(store.getActions()).toEqual([expectedPayload]);
+    }
   });
 });
 
