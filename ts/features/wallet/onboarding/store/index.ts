@@ -4,7 +4,7 @@ import onboardingBancomatReducer, {
 } from "../bancomat/store/reducers";
 import onboardingBPayReducer, {
   OnboardingBPayState
-} from "../bancomatPay/store/reducers";
+} from "../bancomatpay/store/reducers";
 import onboardingSatispayReducer, {
   OnboardSatispayState
 } from "../satispay/store/reducers";

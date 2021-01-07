@@ -50,12 +50,12 @@ import {
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
-import { addBPayToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
+import { addBPayToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomatpay/saga/orchestration/addBPayToWallet";
 import {
   addBPayToWallet,
   searchUserBPay,
   walletAddBPayStart
-} from "../features/wallet/onboarding/bancomatPay/store/actions";
+} from "../features/wallet/onboarding/bancomatpay/store/actions";
 import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
