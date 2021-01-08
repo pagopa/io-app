@@ -60,7 +60,7 @@ export function* handleSearchUserBPay(
       return yield put(
         searchUserBPay.failure(
           getGenericError(
-            Error(readableReport(searchBPayWithRefreshResult.value))
+            new Error(readableReport(searchBPayWithRefreshResult.value))
           )
         )
       );
