@@ -363,8 +363,6 @@ const reducer = (
     case getType(setFavouriteWalletSuccess):
       // On success, we update both the favourite wallet ID and the
       // corresponding Wallet in walletById.
-      // Note that we don't update the Wallet that was previously the
-      // favourite one.
       return {
         ...state,
         favoriteWalletId: pot.some(action.payload.idWallet),
