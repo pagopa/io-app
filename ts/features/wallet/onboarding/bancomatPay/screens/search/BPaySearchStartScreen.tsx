@@ -39,7 +39,7 @@ const BPaySearchStartScreen: React.FunctionComponent<Props> = (
 
   return (
     <SearchStartScreen
-      methodType={"bancomatpay"}
+      methodType={"bancomatPay"}
       onCancel={props.onCancel}
       onSearch={props.searchAccounts}
       handleTosModal={openTosModal}
