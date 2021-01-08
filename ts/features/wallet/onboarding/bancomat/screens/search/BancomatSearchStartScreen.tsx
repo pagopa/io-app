@@ -18,12 +18,10 @@ type Props = ReturnType<typeof mapStateToProps> &
 const tos_url = "https://io.italia.it/app-content/privacy_bancomat.html";
 
 /**
- * This screen allows the user to choose a specific bank to search for their Bancomat.
+ * This screen allows the user to choose a specific bank to search for their BPay Accounts.
  * @constructor
  */
-const BancomatSearchStartScreen: React.FunctionComponent<Props> = (
-  props: Props
-) => {
+const BancomatSearchStartScreen = (props: Props): React.ReactElement => {
   const { showModal, hideModal } = useContext(LightModalContext);
 
   const openTosModal = () => {
