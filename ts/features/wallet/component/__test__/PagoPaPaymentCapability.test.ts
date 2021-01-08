@@ -58,6 +58,19 @@ describe("PagoPaPaymentCapability", () => {
 
     expect(component.getByText("Arriving")).toBeTruthy();
   });
+  it("should render a badge with the text Arriving if passed a payment method of kind BPay", () => {
+    const aBPay = {} as SatispayPaymentMethod;
+    const aPaymentMethod = {
+      ...aBPay,
+      kind: "BPay"
+    } as PaymentMethod;
+
+    const component = render(
+      PagoPaPaymentCapability({ paymentMethod: aPaymentMethod })
+    );
+
+    expect(component.getByText("Arriving")).toBeTruthy();
+  });
   it("should render a badge with the text Incompatible if passed a payment method of kind Bancomat", () => {
     const aBancomat = {} as BancomatPaymentMethod;
     const aPaymentMethod = {
