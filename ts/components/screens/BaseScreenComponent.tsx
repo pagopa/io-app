@@ -17,7 +17,9 @@ import {
   openInstabugQuestionReport,
   openInstabugReplies,
   DefaultReportAttachmentTypeConfiguration,
-  setInstabugSupportTokenAttribute
+  setInstabugSupportTokenAttribute,
+  TypeLogs,
+  instabugLog
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -136,6 +138,15 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             getValueOrElse(rsp, undefined)
           )
           .getOrElse(undefined);
+        // log on instabug the support token
+        if (supportToken) {
+          instabugLog(
+            JSON.stringify(supportToken),
+            TypeLogs.INFO,
+            "support-token"
+          );
+        }
+        // set or remove the support token as instabug user attribute
         setInstabugSupportTokenAttribute(supportToken);
 
         switch (type) {
