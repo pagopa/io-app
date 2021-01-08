@@ -76,12 +76,8 @@ const BPayDetailScreen: React.FunctionComponent<Props> = props => {
     >
       <View style={styles.cardContainer}>
         <BPayCard
-          phone={bPay.caption}
-          bankName={
-            bPay.abiInfo?.name ??
-            bPay.info.bankName ??
-            I18n.t("wallet.methods.bancomatPay.name")
-          }
+          phone={bPay.info.numberObfuscated}
+          bankName={bPay.caption}
           abiLogo={bPay.abiInfo?.logoUrl}
         />
       </View>

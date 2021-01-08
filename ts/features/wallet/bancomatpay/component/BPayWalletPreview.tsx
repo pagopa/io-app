@@ -6,7 +6,6 @@ import { Dispatch } from "redux";
 import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CardPreview } from "../../component/CardPreview";
 import { navigateToBPayDetailScreen } from "../../../../store/actions/navigation";
@@ -32,9 +31,7 @@ const BASE_IMG_H = 20;
 const renderLeft = (props: Props, size: Option<[number, number]>) =>
   size.fold(
     <Body style={IOStyles.flex} numberOfLines={1} testID={"bankLogoFallback"}>
-      {props.bPay.abiInfo?.name ??
-        props.bPay.info.bankName ??
-        I18n.t("wallet.methods.bancomatPay.name")}
+      {props.bPay.caption}
     </Body>,
     imgDim => {
       const imageUrl = props.bPay.abiInfo?.logoUrl;
