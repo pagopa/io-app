@@ -1,10 +1,12 @@
 import { Either } from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
 import * as pot from "italia-ts-commons/lib/pot";
+import _ from "lodash";
 import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
 import {
   isRawCreditCard,
-  PatchedWalletV2ListResponse
+  PatchedWalletV2ListResponse,
+  Wallet
 } from "../../../../types/pagopa";
 import { walletsV2_2, walletsV2_1, walletsV2_3 } from "../__mocks__/wallets";
 import { toIndexed } from "../../../helpers/indexer";
@@ -13,6 +15,8 @@ import {
   bPayListSelector,
   creditCardListSelector,
   creditCardWalletV1Selector,
+  getFavoriteWallet,
+  getFavoriteWalletId,
   pagoPaCreditCardWalletV1Selector,
   satispayListSelector
 } from "../wallets";
@@ -133,6 +137,67 @@ describe("walletV2 selectors", () => {
     if (pot.isSome(potSatispay)) {
       expect(potSatispay.value.length).toEqual(1);
     }
+  });
+});
+
+describe("walletV2 favoriteId Selector", () => {
+  const maybeWalletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1);
+  // set all method to not favourite
+  const indexedWallets = toIndexed(
+    (maybeWalletsV2.value as PatchedWalletV2ListResponse)
+      .data!.map(convertWalletV2toWalletV1)
+      .map(w => ({ ...w, favourite: false })),
+    w => w.idWallet
+  );
+
+  it("should return pot none - no wallets", () => {
+    const noWallets = ({
+      wallet: {
+        wallets: {
+          walletById: pot.none
+        }
+      }
+    } as any) as GlobalState;
+    expect(getFavoriteWalletId(noWallets)).toEqual(pot.none);
+    expect(getFavoriteWallet(noWallets)).toEqual(pot.none);
+  });
+
+  it("should return pot none - no favourite method", () => {
+    const noFavouriteState = ({
+      wallet: {
+        wallets: {
+          walletById: pot.some(indexedWallets)
+        }
+      }
+    } as any) as GlobalState;
+    expect(getFavoriteWalletId(noFavouriteState)).toEqual(pot.none);
+    expect(getFavoriteWallet(noFavouriteState)).toEqual(pot.none);
+  });
+
+  it("should return the favourite wallet id", () => {
+    const firstKey = _.keys(indexedWallets)[0];
+    const favouriteWallet: Wallet = {
+      ...(indexedWallets[firstKey] as Wallet),
+      favourite: true
+    };
+    const aFavourite = _.update(
+      indexedWallets,
+      firstKey,
+      () => favouriteWallet
+    );
+    const aFavoriteState = ({
+      wallet: {
+        wallets: {
+          walletById: pot.some(aFavourite)
+        }
+      }
+    } as any) as GlobalState;
+    expect(getFavoriteWalletId(aFavoriteState)).toEqual(
+      pot.some(favouriteWallet.idWallet)
+    );
+    expect(getFavoriteWallet(aFavoriteState)).toEqual(
+      pot.some(favouriteWallet)
+    );
   });
 });
 
