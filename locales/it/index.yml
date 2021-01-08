@@ -902,6 +902,9 @@ wallet:
     satispay:
       successful: Satispay rimosso correttamente
       failed: Impossibile rimuovere Satispay
+    bPay:
+      successful: BancomatPay rimosso correttamente
+      failed: Impossibile rimuovere BancomatPay
     successful: Carta rimossa correttamente
     failed: Impossibile rimuovere la carta
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
