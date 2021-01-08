@@ -5,7 +5,6 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { navigateToOnboardingBancomatSearchAvailableUserBancomat } from "../../navigation/action";
 import { searchUserPans } from "../../store/actions";
 import SearchBankScreen from "../../../common/searchBank/SearchBankScreen";
-import I18n from "../../../../../../i18n";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -17,10 +16,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 const BancomatSearchBankScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => (
-  <SearchBankScreen
-    onItemPress={props.searchPans}
-    methodName={I18n.t("wallet.methods.pagobancomat.name")}
-  />
+  <SearchBankScreen onItemPress={props.searchPans} methodType={"bancomat"} />
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

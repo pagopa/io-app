@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import SearchBankScreen from "../../../common/searchBank/SearchBankScreen";
-import I18n from "../../../../../../i18n";
 import { searchUserBPay } from "../../store/actions";
 import { navigateToOnboardingBPaySearchAvailableUserAccount } from "../../navigation/action";
 
@@ -17,7 +16,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 const BPaySearchBankScreen: React.FunctionComponent<Props> = (props: Props) => (
   <SearchBankScreen
     onItemPress={props.searchAccounts}
-    methodName={I18n.t("wallet.methods.bancomatPay.name")}
+    methodType={"bancomatPay"}
   />
 );
 
