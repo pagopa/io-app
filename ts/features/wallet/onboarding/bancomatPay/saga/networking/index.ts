@@ -1,7 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ActionType } from "typesafe-actions";
-import { fromNullable } from "fp-ts/lib/Option";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import {
@@ -16,7 +15,6 @@ import {
   addBPayToWallet as addBpayToWalletAction
 } from "../../store/actions";
 import { fromPatchedWalletV2ToRawBPay } from "../../../../../../utils/walletv2";
-import { isDefined } from "../../../../../../utils/guards";
 
 /**
  * Load all the user BPay accounts
@@ -89,13 +87,14 @@ export function* handleAddpayToWallet(
         const payload: PatchedWalletV2ListResponse =
           addBPayToWalletWithRefreshResult.value.value;
         // search for the added bpay
-        const maybeAddedBPay = fromNullable(
-          (payload.data ?? [])
-            .map(w => fromPatchedWalletV2ToRawBPay(w))
-            .filter(isDefined)
-            .find(bp => bp.info.uidHash === action.payload.uidHash)
-        );
-        if (maybeAddedBPay.isSome()) {
+        const maybeAddedBPay = (payload.data ?? [])
+          .map(fromPatchedWalletV2ToRawBPay)
+          .find(w =>
+            w
+              .map(bp => bp.info.uidHash === action.payload.uidHash)
+              .getOrElse(false)
+          );
+        if (maybeAddedBPay && maybeAddedBPay.isSome()) {
           return yield put(addBpayToWalletAction.success(maybeAddedBPay.value));
         } else {
           throw new Error(`cannot find added bpay in wallets list response`);
