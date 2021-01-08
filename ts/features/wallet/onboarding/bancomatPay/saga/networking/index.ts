@@ -1,7 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ActionType } from "typesafe-actions";
-import { fromNullable } from "fp-ts/lib/Option";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import {
@@ -9,14 +8,16 @@ import {
   PaymentManagerToken
 } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getNetworkError } from "../../../../../../utils/errors";
+import {
+  getGenericError,
+  getNetworkError
+} from "../../../../../../utils/errors";
 import { RestBPayResponse } from "../../../../../../../definitions/pagopa/walletv2/RestBPayResponse";
 import {
   searchUserBPay,
   addBPayToWallet as addBpayToWalletAction
 } from "../../store/actions";
 import { fromPatchedWalletV2ToRawBPay } from "../../../../../../utils/walletv2";
-import { isDefined } from "../../../../../../utils/guards";
 
 /**
  * Load all the user BPay accounts
@@ -46,20 +47,22 @@ export function* handleSearchUserBPay(
         return yield put(searchUserBPay.success([]));
       } else {
         return yield put(
-          searchUserBPay.failure({
-            kind: "generic",
-            value: new Error(
-              `response status ${searchBPayWithRefreshResult.value.status}`
+          searchUserBPay.failure(
+            getGenericError(
+              new Error(
+                `response status ${searchBPayWithRefreshResult.value.status}`
+              )
             )
-          })
+          )
         );
       }
     } else {
       return yield put(
-        searchUserBPay.failure({
-          kind: "generic",
-          value: new Error(readableReport(searchBPayWithRefreshResult.value))
-        })
+        searchUserBPay.failure(
+          getGenericError(
+            new Error(readableReport(searchBPayWithRefreshResult.value))
+          )
+        )
       );
     }
   } catch (e) {
@@ -89,35 +92,42 @@ export function* handleAddpayToWallet(
         const payload: PatchedWalletV2ListResponse =
           addBPayToWalletWithRefreshResult.value.value;
         // search for the added bpay
-        const maybeAddedBPay = fromNullable(
-          (payload.data ?? [])
-            .map(w => fromPatchedWalletV2ToRawBPay(w))
-            .filter(isDefined)
-            .find(bp => bp.info.uidHash === action.payload.uidHash)
-        );
-        if (maybeAddedBPay.isSome()) {
+        const maybeAddedBPay = (payload.data ?? [])
+          .map(fromPatchedWalletV2ToRawBPay)
+          .find(w =>
+            w
+              .map(bp => bp.info.uidHash === action.payload.uidHash)
+              .getOrElse(false)
+          );
+        if (maybeAddedBPay && maybeAddedBPay.isSome()) {
           return yield put(addBpayToWalletAction.success(maybeAddedBPay.value));
         } else {
-          throw new Error(`cannot find added bpay in wallets list response`);
+          return yield put(
+            addBpayToWalletAction.failure(
+              getGenericError(
+                new Error(`cannot find added bpay in wallets list response`)
+              )
+            )
+          );
         }
       } else {
         return yield put(
-          addBpayToWalletAction.failure({
-            kind: "generic",
-            value: new Error(
-              `response status ${addBPayToWalletWithRefreshResult.value.status}`
+          addBpayToWalletAction.failure(
+            getGenericError(
+              new Error(
+                `response status ${addBPayToWalletWithRefreshResult.value.status}`
+              )
             )
-          })
+          )
         );
       }
     } else {
       return yield put(
-        addBpayToWalletAction.failure({
-          kind: "generic",
-          value: new Error(
-            readableReport(addBPayToWalletWithRefreshResult.value)
+        addBpayToWalletAction.failure(
+          getGenericError(
+            new Error(readableReport(addBPayToWalletWithRefreshResult.value))
           )
-        })
+        )
       );
     }
   } catch (e) {
