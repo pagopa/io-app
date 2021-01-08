@@ -50,7 +50,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdAllData.failure):
       return mp.track(action.type, { reason: action.payload.message });
 
-    // iban
+    // IBAN
     case getType(bpdIbanInsertionStart):
     case getType(bpdIbanInsertionContinue):
     case getType(bpdIbanInsertionCancel):

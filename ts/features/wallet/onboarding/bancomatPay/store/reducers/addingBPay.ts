@@ -11,9 +11,10 @@ import {
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { addBPayToWallet } from "../actions";
+import { NetworkError } from "../../../../../../utils/errors";
 
 export type AddingBPayState = {
-  addingResult: RemoteValue<RawBPayPaymentMethod, Error>;
+  addingResult: RemoteValue<RawBPayPaymentMethod, NetworkError>;
   selectedBPay?: BPay;
 };
 
@@ -51,7 +52,7 @@ export const onboardingBPayChosenPanSelector = (
 
 export const onboardingBPayAddingResultSelector = (
   state: GlobalState
-): RemoteValue<RawBPayPaymentMethod, Error> =>
+): RemoteValue<RawBPayPaymentMethod, NetworkError> =>
   state.wallet.onboarding.bPay.addingBPay.addingResult;
 
 export default addingBPayReducer;
