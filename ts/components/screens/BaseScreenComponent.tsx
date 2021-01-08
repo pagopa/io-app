@@ -33,6 +33,7 @@ import {
 } from "../ui/Markdown/handlers/link";
 import { SupportTokenState } from "../../store/reducers/authentication";
 import { getValueOrElse } from "../../features/bonus/bpd/model/RemoteValue";
+import { SupportRequestOptions } from "../SendSupportRequestOptions";
 import { AccessibilityEvents, BaseHeader } from "./BaseHeader";
 
 export interface ContextualHelpProps {
@@ -57,6 +58,7 @@ interface OwnProps {
   isSearchAvailable?: boolean;
   searchType?: SearchType;
   reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
+  supportRequestOptions?: SupportRequestOptions;
 }
 
 type Props = OwnProps &
@@ -206,7 +208,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       showInstabugChat,
       children,
       faqCategories,
-      reportAttachmentTypes
+      supportRequestOptions
     } = this.props;
 
     const {
@@ -264,7 +266,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             onLinkClicked={this.handleOnLinkClicked}
             body={ch.body}
             isVisible={isHelpVisible}
-            reportAttachmentTypes={reportAttachmentTypes}
+            supportRequestOptions={supportRequestOptions}
             modalAnimation={contextualHelpModalAnimation}
             onRequestAssistance={this.handleOnRequestAssistance}
             close={this.hideHelp}

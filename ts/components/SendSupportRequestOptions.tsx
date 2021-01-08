@@ -8,6 +8,7 @@ import {
   DefaultReportAttachmentTypeConfiguration,
   noAttachmentTypeConfiguration
 } from "../boot/configureInstabug";
+import { findAllUsingGETDefaultDecoder } from "../../definitions/bpd/award_periods/requestTypes";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { H1 } from "./core/typography/H1";
 import { BaseHeader } from "./screens/BaseHeader";
@@ -16,15 +17,97 @@ import IconFont from "./ui/IconFont";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import { IOStyles } from "./core/variables/IOStyles";
-import CheckBoxFormItem, {
-  CheckboxIDs
-} from "./core/selection/CheckBoxFormItem";
+import { RawCheckBox } from "./core/selection/RawCheckBox";
+import { Label } from "./core/typography/Label";
+import Accordion from "./ui/Accordion";
+
+const checkboxStyle = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-evenly"
+  }
+});
+
+/**
+ * Checkboxes we need as of now
+ */
+
+export enum CheckboxIDs {
+  sendScreenshot = "sendScreenshot",
+  sendPersonalInfo = "sendPersonalInfo"
+}
+
+/**
+ * Checkbox+Label+Optional Accordion component
+ */
+
+type CheckboxFormItemProps = {
+  target: CheckboxIDs;
+  isChecked?: boolean;
+  onToggle: () => void;
+};
+
+type CheckboxLabelMap = {
+  [key in CheckboxIDs]: {
+    cta: string;
+    accordion?: {
+      title: string;
+      content: string;
+    };
+  };
+};
+
+const CheckboxLabelKeys: CheckboxLabelMap = {
+  sendScreenshot: {
+    cta: I18n.t("contextualHelp.sendScreenshot.cta")
+  },
+  sendPersonalInfo: {
+    cta: I18n.t("contextualHelp.sendPersonalInfo.cta"),
+    accordion: {
+      title: I18n.t("contextualHelp.sendPersonalInfo.informativeTitle"),
+      content: I18n.t("contextualHelp.sendPersonalInfo.informativeDescription")
+    }
+  }
+};
+
+export const CheckBoxFormItem: React.FC<CheckboxFormItemProps> = ({
+  target,
+  isChecked,
+  onToggle
+}: CheckboxFormItemProps) => (
+  <View style={checkboxStyle.container}>
+    <RawCheckBox checked={isChecked} onPress={onToggle} />
+    <View hspacer />
+    <View style={IOStyles.flex}>
+      <Label
+        testID="CheckboxFormItemLabel"
+        color={"bluegrey"}
+        weight={"Regular"}
+        onPress={onToggle}
+      >
+        {CheckboxLabelKeys[target].cta}
+      </Label>
+      {"accordion" in CheckboxLabelKeys[target] && (
+        <Accordion
+          title={CheckboxLabelKeys[target].accordion?.title || ""}
+          content={CheckboxLabelKeys[target].accordion?.content || ""}
+        />
+      )}
+    </View>
+  </View>
+);
+
+export type SupportRequestOptions = {
+  sendPersonalInfo: boolean;
+  sendScreenshot?: boolean;
+};
 
 type Props = {
   onClose: () => void;
   onGoBack: () => void;
   onContinue: (options: SupportRequestOptions) => void;
-  reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
+  supportRequestOptions?: SupportRequestOptions;
 };
 
 const styles = StyleSheet.create({
@@ -51,23 +134,23 @@ const CustomGoBackButton: React.FunctionComponent<{
   </ButtonDefaultOpacity>
 );
 
-export type SupportRequestOptions = {
-  sendPersonalInfo: boolean;
-  sendScreenshot?: boolean;
+const DefaultSupportRequestOptions = {
+  sendPersonalInfo: true,
+  sendScreenshot: false
 };
 
 const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
   onClose,
   onGoBack,
   onContinue,
-  reportAttachmentTypes
+  supportRequestOptions
 }) => {
-  const { screenshot: shouldShowScreenshotCheckbox } =
-    reportAttachmentTypes || noAttachmentTypeConfiguration;
+  const { sendScreenshot: shouldAskSendScreenshot } =
+    supportRequestOptions || DefaultSupportRequestOptions;
 
   const [sendPersonalInfo, setSendPersonalInfo] = React.useState(false);
   const [sendScreenshot, setSendScreenshot] = React.useState(
-    shouldShowScreenshotCheckbox as boolean
+    shouldAskSendScreenshot as boolean
   );
   const toggleSendScreenshot = () => setSendScreenshot(oldValue => !oldValue);
   const toggleSendPersonalInfo = () =>
@@ -105,7 +188,7 @@ const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
           isChecked={sendPersonalInfo}
           onToggle={toggleSendPersonalInfo}
         />
-        {shouldShowScreenshotCheckbox && (
+        {shouldAskSendScreenshot && (
           <CheckBoxFormItem
             target={CheckboxIDs.sendScreenshot}
             isChecked={sendScreenshot}
