@@ -874,6 +874,9 @@ wallet:
     satispay:
       successful: Satispay successfully removed
       failed: Satispay could not be removed
+    bPay:
+      successful: BancomatPay successfully removed
+      failed: BancomatPay could not be removed
     successful: Card successfully removed
     failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
