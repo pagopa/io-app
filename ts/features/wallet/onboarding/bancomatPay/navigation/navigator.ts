@@ -1,9 +1,9 @@
 import { createStackNavigator } from "react-navigation";
-import SearchBankScreen from "../../bancomat/screens/search/SearchBankScreen";
+import BPaySearchStartScreen from "../screens/search/BPaySearchStartScreen";
+import BPaySearchBankScreen from "../screens/search/BPaySearchBankScreen";
+import SearchAvailableUserBPayScreen from "../screens/searchBPay/SearchAvailableUserBPayScreen";
 import ActivateBpdOnNewBPayScreen from "../screens/ActivateBpdOnNewBPayScreen";
 import AddBPayScreen from "../screens/add-account/AddBPayScreen";
-import BPaySearchStartScreen from "../screens/search/BPaySearchStartScreen";
-import SearchAvailableUserBPayScreen from "../screens/searchBPay/SearchAvailableUserBPayScreen";
 import WALLET_ONBOARDING_BPAY_ROUTES from "./routes";
 
 const PaymentMethodOnboardingBPayNavigator = createStackNavigator(
@@ -12,7 +12,7 @@ const PaymentMethodOnboardingBPayNavigator = createStackNavigator(
       screen: BPaySearchStartScreen
     },
     [WALLET_ONBOARDING_BPAY_ROUTES.CHOOSE_BANK]: {
-      screen: SearchBankScreen
+      screen: BPaySearchBankScreen
     },
     [WALLET_ONBOARDING_BPAY_ROUTES.SEARCH_AVAILABLE_USER_ACCOUNT]: {
       screen: SearchAvailableUserBPayScreen
