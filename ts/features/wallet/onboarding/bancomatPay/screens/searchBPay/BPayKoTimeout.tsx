@@ -19,9 +19,8 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 
 const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.bPay.headerTitle"),
-  // TODO: Add text
-  title: I18n.t("wallet.onboarding.bPay.placeholderTMP"),
-  body: I18n.t("wallet.onboarding.bPay.placeholderTMP"),
+  title: I18n.t("wallet.onboarding.bPay.koTimeout.title"),
+  body: I18n.t("wallet.onboarding.bPay.koTimeout.body"),
   cancel: I18n.t("global.buttons.cancel"),
   retry: I18n.t("global.buttons.retry")
 });
@@ -30,7 +29,7 @@ const loadLocales = () => ({
  * This screen informs the user that the search operation could not be completed
  * @constructor
  */
-const BPayKoTimeout: React.FunctionComponent<Props> = props => {
+const BPayKoTimeout = (props: Props): React.ReactElement => {
   const { headerTitle, title, body, cancel, retry } = loadLocales();
   return (
     <BaseScreenComponent

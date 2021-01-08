@@ -1,0 +1,46 @@
+import { getType } from "typesafe-actions";
+import { mixpanel } from "../../../../../mixpanel";
+import { Action } from "../../../../../store/actions/types";
+import { isTimeoutError } from "../../../../../utils/errors";
+import {
+  addBPayToWallet,
+  searchUserBPay,
+  walletAddBPayBack,
+  walletAddBPayCancel,
+  walletAddBPayCompleted,
+  walletAddBPayStart
+} from "../store/actions";
+
+export const trackBPayAction = (mp: NonNullable<typeof mixpanel>) => (
+  action: Action
+): Promise<any> => {
+  switch (action.type) {
+    case getType(walletAddBPayStart):
+    case getType(walletAddBPayCompleted):
+    case getType(walletAddBPayCancel):
+    case getType(walletAddBPayBack):
+    case getType(addBPayToWallet.request):
+    case getType(addBPayToWallet.success):
+      return mp.track(action.type);
+    case getType(searchUserBPay.request):
+      return mp.track(action.type, { abi: action.payload ?? "all" });
+    case getType(searchUserBPay.success):
+      return mp.track(action.type, {
+        count: action.payload.length,
+        serviceStateList: action.payload.map(bPay =>
+          bPay.serviceState?.toString()
+        )
+      });
+
+    case getType(addBPayToWallet.failure):
+      return mp.track(action.type, { reason: action.payload.message });
+
+    case getType(searchUserBPay.failure):
+      return mp.track(action.type, {
+        reason: isTimeoutError(action.payload)
+          ? action.payload.kind
+          : action.payload.value.message
+      });
+  }
+  return Promise.resolve();
+};

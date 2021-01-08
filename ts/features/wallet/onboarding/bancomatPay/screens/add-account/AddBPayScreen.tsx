@@ -41,7 +41,7 @@ type NextAction = {
  * This screen is displayed when BPay are found and ready to be added in wallet
  * @constructor
  */
-const AddBPayScreen: React.FunctionComponent<Props> = (props: Props) => {
+const AddBPayScreen = (props: Props): React.ReactElement | null => {
   // next could be skip or not (a pan should be added)
   const [currentAction, setNextAction] = React.useState<NextAction>({
     index: 0,
