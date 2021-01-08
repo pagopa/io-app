@@ -163,13 +163,13 @@ describe("walletV2 favoriteId Selector", () => {
   });
 
   it("should return pot none - no favourite method", () => {
-    const noFavouriteState = ({
+    const noFavouriteState = {
       wallet: {
         wallets: {
           walletById: pot.some(indexedWallets)
         }
       }
-    } as any) as GlobalState;
+    } as GlobalState;
     expect(getFavoriteWalletId(noFavouriteState)).toEqual(pot.none);
     expect(getFavoriteWallet(noFavouriteState)).toEqual(pot.none);
   });
@@ -185,13 +185,13 @@ describe("walletV2 favoriteId Selector", () => {
       firstKey,
       () => favouriteWallet
     );
-    const aFavoriteState = ({
+    const aFavoriteState = {
       wallet: {
         wallets: {
           walletById: pot.some(aFavourite)
         }
       }
-    } as any) as GlobalState;
+    } as GlobalState;
     expect(getFavoriteWalletId(aFavoriteState)).toEqual(
       pot.some(favouriteWallet.idWallet)
     );
