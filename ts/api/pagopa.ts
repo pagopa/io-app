@@ -26,8 +26,11 @@ import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/Bancomat
 import {
   AddWalletSatispayUsingPOSTT,
   addWalletsBancomatCardUsingPOSTDecoder,
+  addWalletsBPayUsingPOSTDecoder,
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
+  getBpayListUsingGETDefaultDecoder,
+  GetBpayListUsingGETT,
   GetConsumerUsingGETT,
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT,
@@ -80,6 +83,7 @@ import {
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
 import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayRequest";
+import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -489,6 +493,39 @@ const addSatispayToWallet: AddWalletSatispayUsingPOSTT = {
   response_decoder: addWalletSatispayUsingPOSTDecoder(PatchedWalletV2Response)
 };
 
+const searchBPay: GetBpayListUsingGETT = {
+  method: "get",
+  url: ({ abi }) => {
+    const abiParameter = fromNullable(abi)
+      .map(a => `?abi=${a}`)
+      .getOrElse("");
+    return `/v1/bpay/list${abiParameter}`;
+  },
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getBpayListUsingGETDefaultDecoder()
+};
+
+export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
+  { readonly Bearer: string; readonly bPayRequest: BPayRequest },
+  "Content-Type" | "Authorization",
+  never,
+  | r.IResponseType<200, PatchedWalletV2ListResponse>
+  | r.IResponseType<201, undefined>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
+>;
+
+const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
+  method: "post",
+  url: () => `/v1/bpay/add-wallets`,
+  query: () => ({}),
+  body: ({ bPayRequest }) => JSON.stringify(bPayRequest),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: addWalletsBPayUsingPOSTDecoder(PatchedWalletV2ListResponse)
+};
+
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
@@ -678,7 +715,19 @@ export function PaymentManagerClient(
         withPaymentManagerToken(
           createFetchRequestForApi(addSatispayToWallet, altOptions)
         )
-      )({ satispayRequest })
+      )({ satispayRequest }),
+    searchBPay: (abi?: string) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(searchBPay, altOptions)
+        )
+      )({ abi }),
+    addBPayToWallet: (bPayRequest: BPayRequest) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(addBPayToWallet, altOptions)
+        )
+      )({ bPayRequest })
   };
 }
 
