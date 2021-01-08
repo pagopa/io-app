@@ -1,5 +1,6 @@
 import { render, fireEvent } from "@testing-library/react-native";
 import * as React from "react";
+import { Store } from "redux";
 import { Provider } from "react-redux";
 import { NavigationActions } from "react-navigation";
 import configureMockStore from "redux-mock-store";
@@ -31,14 +32,14 @@ describe("BPayWalletPreview component", () => {
     pagoPA: true,
     updateDate: "2020-11-20",
     kind: "BPay",
-    caption: "●●●●●●●0000",
+    caption: "BANCOMAT Pay",
     icon: 37
   } as BPayPaymentMethod;
 
   beforeEach(() => {
     store = mockStore();
   });
-  it("should show the generic bancomatPay string if there isn't the abiInfo and the bankName", () => {
+  it("should show the caption if useImageResize return none", () => {
     const myspy = jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
     const component = getComponent(aBPay, store);
     const bankLogo = component.queryByTestId("bankLogoFallback");
@@ -47,41 +48,15 @@ describe("BPayWalletPreview component", () => {
     expect(bankLogo).toHaveTextContent("BANCOMAT Pay");
     expect(myspy).toHaveBeenCalledTimes(1);
   });
-  it("should show the generic bankName string if there isn't the abiInfo", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
-    const bankName = "INTESA SANPAOLO - S.P.A.";
-    const component = getComponent(
-      {
-        ...aBPay,
-        info: { ...aBPay.info, bankName }
-      },
-      store
-    );
-    const bankLogo = component.queryByTestId("bankLogoFallback");
 
-    expect(bankLogo).not.toBeNull();
-    expect(bankLogo).toHaveTextContent(bankName);
-  });
+  it("should show nothing if useImageResize return a size but there isn't the logoUrl", () => {
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    const component = getComponent(aBPay, store);
+    const bankLogo = component.queryByTestId("bankLogo");
+    const bankLogoFallback = component.queryByTestId("bankLogoFallback");
 
-  it("should show the bankName from the abiInfo if there isn't the logoUrl", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
-    const infobankName = "a different bank name";
-    const abiInfoBankName = "INTESA SANPAOLO - S.P.A.";
-    const component = getComponent(
-      {
-        ...aBPay,
-        info: { ...aBPay.info, bankName: infobankName },
-        abiInfo: {
-          abi: "03069",
-          name: abiInfoBankName
-        }
-      },
-      store
-    );
-    const bankLogo = component.queryByTestId("bankLogoFallback");
-
-    expect(bankLogo).not.toBeNull();
-    expect(bankLogo).toHaveTextContent(abiInfoBankName);
+    expect(bankLogo).toBeNull();
+    expect(bankLogoFallback).toBeNull();
   });
 
   it("should show the logo image if there is the abiInfo logoUrl", () => {
@@ -124,7 +99,7 @@ describe("BPayWalletPreview component", () => {
   });
 });
 
-const getComponent = (bPay: BPayPaymentMethod, store: any) =>
+const getComponent = (bPay: BPayPaymentMethod, store: Store<unknown>) =>
   render(
     <Provider store={store}>
       <BPayWalletPreview bPay={bPay} />

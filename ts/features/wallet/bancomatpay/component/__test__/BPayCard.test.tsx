@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react-native";
 import * as React from "react";
+import { Store } from "redux";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { pot } from "italia-ts-commons";
@@ -69,7 +70,7 @@ const mockProfileNameSurnameState = (profile: InitializedProfile) => ({
 });
 
 const getComponent = (
-  store: any,
+  store: Store<unknown>,
   bankName: string,
   abiLogo?: string,
   phone?: string
