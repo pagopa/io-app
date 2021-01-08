@@ -109,9 +109,12 @@ export const getTitleFromPaymentMethod = (
   }
   if (isRawBPay(paymentMethod)) {
     return (
+      fromNullable(paymentMethod.info.instituteCode)
+        .chain(abiCode => fromNullable(abiList[abiCode]))
+        .chain(abi => fromNullable(abi.name))
+        .toUndefined() ??
       paymentMethod.info.bankName ??
-      paymentMethod.info.numberObfuscated?.replace(/\*/g, "●") ??
-      FOUR_UNICODE_CIRCLES
+      I18n.t("wallet.methods.bancomatPay.name")
     );
   }
   return FOUR_UNICODE_CIRCLES;
@@ -129,24 +132,28 @@ export const enhanceBancomat = (
   icon: getImageFromPaymentMethod(bancomat)
 });
 
-export const enhanceBPay = (
-  bPay: RawBPayPaymentMethod,
-  abiList: IndexedById<Abi>
-): BPayPaymentMethod => ({
-  ...bPay,
-  abiInfo: bPay.info.instituteCode
-    ? abiList[bPay.info.instituteCode]
-    : undefined,
-  caption: getTitleFromPaymentMethod(bPay, abiList),
-  icon: getImageFromPaymentMethod(bPay)
-});
-
 export const enhanceSatispay = (
   raw: RawSatispayPaymentMethod
 ): SatispayPaymentMethod => ({
   ...raw,
   caption: getTitleForSatispay(),
   icon: getImageFromPaymentMethod(raw)
+});
+
+export const enhanceBPay = (
+  rawBPay: RawBPayPaymentMethod,
+  abiList: IndexedById<Abi>
+): BPayPaymentMethod => ({
+  ...rawBPay,
+  info: {
+    ...rawBPay.info,
+    numberObfuscated: rawBPay.info.numberObfuscated?.replace(/\*/g, "●")
+  },
+  abiInfo: rawBPay.info.instituteCode
+    ? abiList[rawBPay.info.instituteCode]
+    : undefined,
+  caption: getTitleFromPaymentMethod(rawBPay, abiList),
+  icon: getImageFromPaymentMethod(rawBPay)
 });
 
 export const enhancePaymentMethod = (

@@ -19,16 +19,15 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 
 const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.bPay.headerTitle"),
-  // TODO: add text
-  title: I18n.t("wallet.onboarding.bPay.placeholderTMP"),
-  body: I18n.t("wallet.onboarding.bPay.placeholderTMP")
+  title: I18n.t("wallet.onboarding.bPay.koNotFound.title"),
+  body: I18n.t("wallet.onboarding.bPay.koNotFound.body")
 });
 
 /**
  * This screen informs the user that no BPay accounts in his name were found.
  * @constructor
  */
-const BPayKoNotFound: React.FunctionComponent<Props> = props => {
+const BPayKoNotFound = (props: Props): React.ReactElement => {
   const { headerTitle, title, body } = loadLocales();
 
   return (

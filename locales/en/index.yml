@@ -820,7 +820,14 @@ wallet:
           skip: "Maybe later"
     bPay:
       headerTitle: "Add BANCOMAT Pay"
-      placeholderTMP: "placeholder TMP"
+      loadingSearch: "We are recovering your BANCOMAT Pay data\n\nPlease wait"
+      loadingAdd: "We are adding your BANCOMAT Pay\n\nPlease wait"
+      koTimeout:
+        title: "Unable to recover your data"
+        body: "Please retry"
+      koNotFound:
+        title: "Sorry, we haven't found any active BANCOMAT Pay service"
+        body: "Contact your bank to activate BANCOMAT Pay!"
     satispay:
       headerTitle: "Add Satispay"
       start:

@@ -1,25 +1,136 @@
-import { delay, put } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ActionType } from "typesafe-actions";
-import { rawBPay } from "../../../../../../store/reducers/wallet/__mocks__/wallets";
-import { addBPayToWallet, searchUserBPay } from "../../store/actions";
+import { PaymentManagerClient } from "../../../../../../api/pagopa";
+import { SessionManager } from "../../../../../../utils/SessionManager";
+import {
+  PatchedWalletV2ListResponse,
+  PaymentManagerToken
+} from "../../../../../../types/pagopa";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import {
+  getGenericError,
+  getNetworkError
+} from "../../../../../../utils/errors";
+import { RestBPayResponse } from "../../../../../../../definitions/pagopa/walletv2/RestBPayResponse";
+import {
+  searchUserBPay,
+  addBPayToWallet as addBpayToWalletAction
+} from "../../store/actions";
+import { fromPatchedWalletV2ToRawBPay } from "../../../../../../utils/walletv2";
 
 /**
  * Load all the user BPay accounts
- * TODO: replace with real implementation
  */
-export function* loadBPaySaga(_: ActionType<typeof searchUserBPay.request>) {
-  yield delay(100);
-  yield put(searchUserBPay.success([{}]));
+export function* handleSearchUserBPay(
+  searchBPay: ReturnType<typeof PaymentManagerClient>["searchBPay"],
+  sessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof searchUserBPay.request>
+) {
+  try {
+    const searchBPayWithRefresh = sessionManager.withRefresh(
+      searchBPay(action.payload)
+    );
+
+    const searchBPayWithRefreshResult: SagaCallReturnType<typeof searchBPayWithRefresh> = yield call(
+      searchBPayWithRefresh
+    );
+    if (searchBPayWithRefreshResult.isRight()) {
+      const statusCode = searchBPayWithRefreshResult.value.status;
+      if (statusCode === 200) {
+        const payload: RestBPayResponse =
+          searchBPayWithRefreshResult.value.value;
+        const bPayList = payload.data ?? [];
+        return yield put(searchUserBPay.success(bPayList));
+      } else if (statusCode === 404) {
+        // the user doesn't own any bpay
+        return yield put(searchUserBPay.success([]));
+      } else {
+        return yield put(
+          searchUserBPay.failure(
+            getGenericError(
+              new Error(
+                `response status ${searchBPayWithRefreshResult.value.status}`
+              )
+            )
+          )
+        );
+      }
+    } else {
+      return yield put(
+        searchUserBPay.failure(
+          getGenericError(
+            new Error(readableReport(searchBPayWithRefreshResult.value))
+          )
+        )
+      );
+    }
+  } catch (e) {
+    return yield put(searchUserBPay.failure(getNetworkError(e)));
+  }
 }
 
 /**
- * Add bpay account to the wallet
- * TODO: replace with real implementation
+ * Add user BPay account to wallet
  */
-export function* addBPayToWalletSaga(
-  _: ActionType<typeof addBPayToWallet.request>
+export function* handleAddpayToWallet(
+  addBPayToWallet: ReturnType<typeof PaymentManagerClient>["addBPayToWallet"],
+  sessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof addBpayToWalletAction.request>
 ) {
-  yield delay(100);
+  try {
+    const addBPayToWalletWithRefresh = sessionManager.withRefresh(
+      addBPayToWallet({ data: [action.payload] })
+    );
 
-  yield put(addBPayToWallet.success(rawBPay));
+    const addBPayToWalletWithRefreshResult: SagaCallReturnType<typeof addBPayToWalletWithRefresh> = yield call(
+      addBPayToWalletWithRefresh
+    );
+    if (addBPayToWalletWithRefreshResult.isRight()) {
+      const statusCode = addBPayToWalletWithRefreshResult.value.status;
+      if (statusCode === 200) {
+        const payload: PatchedWalletV2ListResponse =
+          addBPayToWalletWithRefreshResult.value.value;
+        // search for the added bpay
+        const maybeAddedBPay = (payload.data ?? [])
+          .map(fromPatchedWalletV2ToRawBPay)
+          .find(w =>
+            w
+              .map(bp => bp.info.uidHash === action.payload.uidHash)
+              .getOrElse(false)
+          );
+        if (maybeAddedBPay && maybeAddedBPay.isSome()) {
+          return yield put(addBpayToWalletAction.success(maybeAddedBPay.value));
+        } else {
+          return yield put(
+            addBpayToWalletAction.failure(
+              getGenericError(
+                new Error(`cannot find added bpay in wallets list response`)
+              )
+            )
+          );
+        }
+      } else {
+        return yield put(
+          addBpayToWalletAction.failure(
+            getGenericError(
+              new Error(
+                `response status ${addBPayToWalletWithRefreshResult.value.status}`
+              )
+            )
+          )
+        );
+      }
+    } else {
+      return yield put(
+        addBpayToWalletAction.failure(
+          getGenericError(
+            new Error(readableReport(addBPayToWalletWithRefreshResult.value))
+          )
+        )
+      );
+    }
+  } catch (e) {
+    return yield put(addBpayToWalletAction.failure(getNetworkError(e)));
+  }
 }
