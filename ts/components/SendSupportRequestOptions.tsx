@@ -4,11 +4,6 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import I18n from "../i18n";
 import themeVariables from "../theme/variables";
-import {
-  DefaultReportAttachmentTypeConfiguration,
-  noAttachmentTypeConfiguration
-} from "../boot/configureInstabug";
-import { findAllUsingGETDefaultDecoder } from "../../definitions/bpd/award_periods/requestTypes";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { H1 } from "./core/typography/H1";
 import { BaseHeader } from "./screens/BaseHeader";
