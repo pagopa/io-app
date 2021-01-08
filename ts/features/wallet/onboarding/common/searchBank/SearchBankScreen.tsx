@@ -23,7 +23,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { SearchBankComponent } from "./SearchBankComponent";
 
 type Props = {
-  methodName: string;
+  methodType: "bancomatPay" | "bancomat";
   onItemPress: (abi?: string) => void;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -55,7 +55,10 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t("wallet.searchAbi.header", {
-        methodName: props.methodName
+        methodName:
+          props.methodType === "bancomat"
+            ? I18n.t("wallet.methods.pagobancomat.name")
+            : I18n.t("wallet.methods.bancomatPay.name")
       })}
       contextualHelp={emptyContextualHelp}
     >

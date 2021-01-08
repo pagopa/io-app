@@ -28,6 +28,7 @@ import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import {
   BancomatPaymentMethod,
+  BPayPaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
@@ -235,6 +236,12 @@ export const navigateToSatispayDetailScreen = (
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_SATISPAY_DETAIL,
     params: { satispay }
+  });
+
+export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_BPAY_DETAIL,
+    params: { bPay }
   });
 
 export const navigateToPaymentPickPspScreen = (

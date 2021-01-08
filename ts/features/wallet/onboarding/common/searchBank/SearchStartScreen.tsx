@@ -20,7 +20,7 @@ import SectionStatusComponent from "../../../../../components/SectionStatusCompo
 import { SearchStartComponent } from "./SearchStartComponent";
 
 type Props = {
-  methodType: "bancomatpay" | "pagobancomat";
+  methodType: "bancomatPay" | "bancomat";
   onSearch: (abi?: string) => void;
   navigateToSearchBank: () => void;
   onCancel: () => void;
@@ -39,11 +39,11 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
   />
 );
 
-const handleMethodName = (methodType: "bancomatpay" | "pagobancomat") => {
+const handleMethodName = (methodType: "bancomatPay" | "bancomat") => {
   switch (methodType) {
-    case "bancomatpay":
+    case "bancomatPay":
       return I18n.t("wallet.methods.bancomatPay.name");
-    case "pagobancomat":
+    case "bancomat":
     default:
       return I18n.t("wallet.methods.pagobancomat.name");
   }

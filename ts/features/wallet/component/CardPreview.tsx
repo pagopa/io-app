@@ -76,6 +76,7 @@ export const CardPreview: React.FunctionComponent<Props> = props => (
       accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
       accessibilityRole={"button"}
       style={styles.rotatedCard}
+      testID={"cardPreview"}
     >
       <View style={[styles.card]}>
         <View style={[styles.cardInner]}>
