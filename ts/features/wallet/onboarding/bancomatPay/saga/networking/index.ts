@@ -8,7 +8,10 @@ import {
   PaymentManagerToken
 } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getNetworkError } from "../../../../../../utils/errors";
+import {
+  getGenericError,
+  getNetworkError
+} from "../../../../../../utils/errors";
 import { RestBPayResponse } from "../../../../../../../definitions/pagopa/walletv2/RestBPayResponse";
 import {
   searchUserBPay,
@@ -44,20 +47,22 @@ export function* handleSearchUserBPay(
         return yield put(searchUserBPay.success([]));
       } else {
         return yield put(
-          searchUserBPay.failure({
-            kind: "generic",
-            value: new Error(
-              `response status ${searchBPayWithRefreshResult.value.status}`
+          searchUserBPay.failure(
+            getGenericError(
+              new Error(
+                `response status ${searchBPayWithRefreshResult.value.status}`
+              )
             )
-          })
+          )
         );
       }
     } else {
       return yield put(
-        searchUserBPay.failure({
-          kind: "generic",
-          value: new Error(readableReport(searchBPayWithRefreshResult.value))
-        })
+        searchUserBPay.failure(
+          getGenericError(
+            Error(readableReport(searchBPayWithRefreshResult.value))
+          )
+        )
       );
     }
   } catch (e) {
@@ -97,26 +102,32 @@ export function* handleAddpayToWallet(
         if (maybeAddedBPay && maybeAddedBPay.isSome()) {
           return yield put(addBpayToWalletAction.success(maybeAddedBPay.value));
         } else {
-          throw new Error(`cannot find added bpay in wallets list response`);
+          return yield put(
+            addBpayToWalletAction.failure(
+              getGenericError(
+                new Error(`cannot find added bpay in wallets list response`)
+              )
+            )
+          );
         }
       } else {
         return yield put(
-          addBpayToWalletAction.failure({
-            kind: "generic",
-            value: new Error(
-              `response status ${addBPayToWalletWithRefreshResult.value.status}`
+          addBpayToWalletAction.failure(
+            getGenericError(
+              new Error(
+                `response status ${addBPayToWalletWithRefreshResult.value.status}`
+              )
             )
-          })
+          )
         );
       }
     } else {
       return yield put(
-        addBpayToWalletAction.failure({
-          kind: "generic",
-          value: new Error(
-            readableReport(addBPayToWalletWithRefreshResult.value)
+        addBpayToWalletAction.failure(
+          getGenericError(
+            new Error(readableReport(addBPayToWalletWithRefreshResult.value))
           )
-        })
+        )
       );
     }
   } catch (e) {
