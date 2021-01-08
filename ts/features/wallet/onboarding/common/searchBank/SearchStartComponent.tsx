@@ -47,7 +47,7 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const locales = fromNullable(
-    mapLoacalesFromMethod.get(props.methodType)
+    mapLocalesFromMethod.get(props.methodType)
   ).getOrElse(bancomatLocales);
 
   return (
