@@ -35,7 +35,6 @@ interface FullCommonProps extends BaseProps {
   extraSpace?: boolean;
   hideFavoriteIcon?: boolean;
   onDelete?: () => void;
-  showPsp?: boolean;
 }
 
 interface FullProps extends FullCommonProps {
@@ -108,7 +107,7 @@ export default class CardComponent extends React.Component<Props> {
     if (
       this.props.type === "Preview" ||
       this.props.type === "Picking" ||
-      (this.props.type === "Full" && this.props.showPsp)
+      this.props.type === "Full"
     ) {
       const { wallet } = this.props;
       return (
@@ -118,7 +117,7 @@ export default class CardComponent extends React.Component<Props> {
       );
     }
 
-    if (this.props.type === "Full" || this.props.type === "Header") {
+    if (this.props.type === "Header") {
       const {
         hideFavoriteIcon,
         isFavorite,
@@ -186,27 +185,13 @@ export default class CardComponent extends React.Component<Props> {
   }
 
   private renderBody(creditCard: CreditCard) {
-    const { type, wallet } = this.props;
+    const { type } = this.props;
 
     const getBodyIcon = () => {
-      if (
-        this.props.type === "Picking" ||
-        (this.props.type === "Full" && this.props.showPsp)
-      ) {
-        return wallet.psp ? (
-          <View style={[styles.cardPsp]}>
-            <Logo
-              item={creditCard}
-              pspLogo={wallet.psp.logoPSP}
-              imageStyle={styles.pspLogo}
-            />
-          </View>
-        ) : (
-          <View style={[styles.cardPsp]}>
-            <Logo />
-          </View>
-        );
+      if (type === "Picking" || type === "Full") {
+        return null;
       }
+
       return (
         <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
           <Logo item={creditCard} />
