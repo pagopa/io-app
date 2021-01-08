@@ -91,7 +91,7 @@ export const fromPatchedWalletV2ToRawSatispay = (
   return undefined;
 };
 
-// type guard. if some, the value will be a RawBPayPaymentMethod
+// if some, the value will be a RawBPayPaymentMethod
 export const fromPatchedWalletV2ToRawBPay = (
   wallet: PatchedWalletV2
 ): Option<RawBPayPaymentMethod> =>
