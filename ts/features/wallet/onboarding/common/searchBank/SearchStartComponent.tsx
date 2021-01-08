@@ -29,7 +29,7 @@ const bancomatLocales = {
   text4: I18n.t("wallet.searchAbi.bancomat.description.text4")
 };
 
-const mapLoacalesFromMethod = new Map<string, LocalesText>([
+const mapLocalesFromMethod = new Map<string, LocalesText>([
   [
     "bancomatpay",
     {
