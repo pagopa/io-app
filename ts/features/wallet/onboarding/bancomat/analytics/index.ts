@@ -10,9 +10,8 @@ import {
   walletAddBancomatCompleted,
   walletAddBancomatStart
 } from "../store/actions";
-import { isTimeoutError } from "../../../../../utils/errors";
+import { getNetworkErrorMessage } from "../../../../../utils/errors";
 
-// eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
@@ -63,9 +62,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(searchUserPans.failure):
       return mp.track(action.type, {
-        reason: isTimeoutError(action.payload)
-          ? action.payload.kind
-          : action.payload.value.message
+        reason: getNetworkErrorMessage(action.payload)
       });
   }
   return Promise.resolve();
