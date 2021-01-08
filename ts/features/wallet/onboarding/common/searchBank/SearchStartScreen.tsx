@@ -20,7 +20,7 @@ import SectionStatusComponent from "../../../../../components/SectionStatusCompo
 import { SearchStartComponent } from "./SearchStartComponent";
 
 type Props = {
-  methodName: string;
+  methodType: "bancomatpay" | "pagobancomat";
   onSearch: (abi?: string) => void;
   navigateToSearchBank: () => void;
   onCancel: () => void;
@@ -39,6 +39,16 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
   />
 );
 
+const handleMethodName = (methodType: "bancomatpay" | "pagobancomat") => {
+  switch (methodType) {
+    case "bancomatpay":
+      return I18n.t("wallet.methods.bancomatPay.name");
+    case "pagobancomat":
+    default:
+      return I18n.t("wallet.methods.pagobancomat.name");
+  }
+};
+
 /**
  * This screen allows the user to choose a specific bank to search for their Bancomat.
  * @constructor
@@ -51,7 +61,7 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t("wallet.searchAbi.header", {
-        methodName: props.methodName
+        methodName: handleMethodName(props.methodType)
       })}
       contextualHelp={emptyContextualHelp}
     >
@@ -60,7 +70,7 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
           <SearchStartComponent
             openTosModal={props.handleTosModal}
             onSearch={props.navigateToSearchBank}
-            methodName={props.methodName}
+            methodType={props.methodType}
           />
         </Content>
         <SectionStatusComponent sectionKey={"bancomat"} />

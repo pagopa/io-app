@@ -32,7 +32,7 @@ const BancomatSearchStartScreen: React.FunctionComponent<Props> = (
 
   return (
     <SearchStartScreen
-      methodName={"PagoBANCOMAT"}
+      methodType={"pagobancomat"}
       onCancel={props.onCancel}
       onSearch={props.searchPans}
       handleTosModal={openTosModal}

@@ -754,12 +754,20 @@ wallet:
       help: If you have encountered a problem entering this payment method, write for more information and details
   searchAbi:
     header: "Add {{methodName}}"
-    title: "Search for your {{methodName}} cards"
-    description:
-      text1: "IO will search for all {{methodName}} cards associated with you.\nBy continuing you accept the "
-      text2: information on the processing of personal data.
-      text3: "If you prefer, you can choose the bank on which you have an active {{methodName}} card "
-      text4: by searching among those available
+    bancomat:
+      title: "Search for your PagoBANCOMAT cards"
+      description:
+        text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
+        text2: information on the processing of personal data.
+        text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
+        text4: by searching among those available
+    bpay:
+      title: "Search for your BANCOMAT Pay accounts"
+      description:
+        text1: "IO will search for all BANCOMAT Pay accounts associated with you.\nBy continuing you accept the "
+        text2: information on the processing of personal data.
+        text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
+        text4: by searching among those available
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
