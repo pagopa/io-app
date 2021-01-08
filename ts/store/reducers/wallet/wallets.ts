@@ -6,6 +6,7 @@ import { values } from "lodash";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
+import _ from "lodash";
 import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
 import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
@@ -367,10 +368,20 @@ const reducer = (
       return {
         ...state,
         favoriteWalletId: pot.some(action.payload.idWallet),
-        walletById: {
-          ...state.walletById,
-          [action.payload.idWallet]: action.payload
-        }
+        walletById: pot.map(state.walletById, walletsById =>
+          _.keys(walletsById).reduce<IndexedById<Wallet>>(
+            (acc, val) =>
+              ({
+                ...acc,
+                [val]: {
+                  ...walletsById[val],
+                  favourite:
+                    action.payload.idWallet === walletsById[val]?.idWallet
+                }
+              } as IndexedById<Wallet>),
+            {}
+          )
+        )
       };
 
     case getType(setFavouriteWalletFailure):
