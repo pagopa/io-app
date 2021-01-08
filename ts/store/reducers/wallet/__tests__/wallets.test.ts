@@ -15,6 +15,7 @@ import {
   bPayListSelector,
   creditCardListSelector,
   creditCardWalletV1Selector,
+  getFavoriteWallet,
   getFavoriteWalletId,
   pagoPaCreditCardWalletV1Selector,
   satispayListSelector
@@ -158,6 +159,7 @@ describe("walletV2 favoriteId Selector", () => {
       }
     } as any) as GlobalState;
     expect(getFavoriteWalletId(noWallets)).toEqual(pot.none);
+    expect(getFavoriteWallet(noWallets)).toEqual(pot.none);
   });
 
   it("should return pot none - no favourite method", () => {
@@ -169,6 +171,7 @@ describe("walletV2 favoriteId Selector", () => {
       }
     } as any) as GlobalState;
     expect(getFavoriteWalletId(noFavouriteState)).toEqual(pot.none);
+    expect(getFavoriteWallet(noFavouriteState)).toEqual(pot.none);
   });
 
   it("should return the favourite wallet id", () => {
@@ -191,6 +194,9 @@ describe("walletV2 favoriteId Selector", () => {
     } as any) as GlobalState;
     expect(getFavoriteWalletId(aFavoriteState)).toEqual(
       pot.some(favouriteWallet.idWallet)
+    );
+    expect(getFavoriteWallet(aFavoriteState)).toEqual(
+      pot.some(favouriteWallet)
     );
   });
 });
