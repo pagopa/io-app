@@ -19,7 +19,7 @@ import { fromPatchedWalletV2ToRawBPay } from "../../../../../../utils/walletv2";
 import { isDefined } from "../../../../../../utils/guards";
 
 /**
- * search for user's bpay
+ * Load all the user BPay accounts
  */
 export function* handleSearchUserBPay(
   searchBPay: ReturnType<typeof PaymentManagerClient>["searchBPay"],
@@ -68,7 +68,7 @@ export function* handleSearchUserBPay(
 }
 
 /**
- * search for user's bpay
+ * Add user BPay account to wallet
  */
 export function* handleAddpayToWallet(
   addBPayToWallet: ReturnType<typeof PaymentManagerClient>["addBPayToWallet"],
