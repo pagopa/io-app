@@ -123,7 +123,7 @@ export const setInstabugProfileAttributes = (
 };
 
 // if support token is defined set it as user property
-// otherwise remove the attribute
+// otherwise remove that attribute
 export const setInstabugSupportTokenAttribute = (
   supportToken: SupportToken | undefined
 ) =>
