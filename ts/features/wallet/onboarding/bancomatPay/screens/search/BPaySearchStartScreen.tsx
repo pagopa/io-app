@@ -57,7 +57,7 @@ const BPaySearchStartScreen = (props: Props): React.ReactElement => (
     <SafeAreaView style={IOStyles.flex}>
       <Content style={IOStyles.flex} />
       <SectionStatusComponent sectionKey={"bancomatpay"} />
-      {renderFooterButtons(props.onCancel, props.searchBPay)}
+      {renderFooterButtons(props.onCancel, () => props.searchBPay())}
     </SafeAreaView>
   </BaseScreenComponent>
 );

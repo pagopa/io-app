@@ -14,7 +14,7 @@ export type Props = {
  * In error case a retry button will be shown
  * @constructor
  */
-const LoadAddBPayComponent: React.FunctionComponent<Props> = props => {
+const LoadAddBPayComponent = (props: Props): React.ReactElement => {
   useHardwareBackButton(() => {
     if (!props.isLoading) {
       props.onCancel();
@@ -24,8 +24,7 @@ const LoadAddBPayComponent: React.FunctionComponent<Props> = props => {
   return (
     <LoadingErrorComponent
       {...props}
-      // TODO: add text
-      loadingCaption={I18n.t("wallet.onboarding.bPay.placeholderTMP")}
+      loadingCaption={I18n.t("wallet.onboarding.bPay.loadingAdd")}
       onAbort={props.onCancel}
       onRetry={props.onRetry}
     />

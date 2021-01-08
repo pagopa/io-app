@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   bottomRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "flex-end"
   },
   bancomatLogo: {
     width: 60,

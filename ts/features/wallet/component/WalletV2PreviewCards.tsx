@@ -5,9 +5,11 @@ import { Dispatch } from "redux";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   bancomatListVisibleInWalletSelector,
+  bPayListVisibleInWalletSelector,
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
 import BancomatWalletPreview from "../bancomat/component/BancomatWalletPreview";
+import BPayWalletPreview from "../bancomatpay/component/BPayWalletPreview";
 import SatispayWalletPreview from "../satispay/SatispayWalletPreview";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -35,6 +37,15 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
       null
     )}
     {pot.toUndefined(
+      pot.mapNullable(props.bPayList, bP => (
+        <>
+          {bP.map(bPayMethod => (
+            <BPayWalletPreview key={bPayMethod.idWallet} bPay={bPayMethod} />
+          ))}
+        </>
+      ))
+    )}
+    {pot.toUndefined(
       pot.mapNullable(props.satispayList, s => (
         <>
           {s.map(satispayMethod => (
@@ -53,6 +64,7 @@ const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
   bancomatList: bancomatListVisibleInWalletSelector(state),
+  bPayList: bPayListVisibleInWalletSelector(state),
   satispayList: satispayListVisibleInWalletSelector(state)
 });
 
