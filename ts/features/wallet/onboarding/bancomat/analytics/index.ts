@@ -12,7 +12,6 @@ import {
 } from "../store/actions";
 import { getNetworkErrorMessage } from "../../../../../utils/errors";
 
-// eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
