@@ -11,7 +11,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 /**
- * This screen allows the user to choose a specific bank to search for their Bancomat.
+ * This screen allows the user to choose a specific bank to search for their BPay Account.
  * @constructor
  */
 const BPaySearchBankScreen: React.FunctionComponent<Props> = (props: Props) => (

@@ -50,7 +50,8 @@ const handleMethodName = (methodType: "bancomatpay" | "pagobancomat") => {
 };
 
 /**
- * This screen allows the user to choose a specific bank to search for their Bancomat.
+ * This is the component that defines the base screen for the main screen to start the funnel
+ * to search for a user PagoBANCOMAT / BPay account.
  * @constructor
  */
 const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {

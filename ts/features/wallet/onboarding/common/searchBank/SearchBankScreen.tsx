@@ -36,7 +36,8 @@ const renderFooterButtons = (onClose: () => void) => (
 );
 
 /**
- * This screen allows the user to choose a specific bank to search for their Bancomat.
+ * This is the component that defines the base screen where users can find and choose a specific bank
+ * to search for a user PagoBANCOMAT / BPay account.
  * @constructor
  */
 const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
