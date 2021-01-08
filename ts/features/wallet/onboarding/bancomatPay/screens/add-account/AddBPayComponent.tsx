@@ -18,7 +18,7 @@ import {
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
-import BPayCard from "../../../../bancomatpay/BPayCard";
+import BPayCard from "../../../../bancomatpay/component/BPayCard";
 
 type Props = {
   account: BPay;
@@ -78,7 +78,7 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => {
             <BPayCard
               phone={props.account.numberObfuscated}
               abiLogo={abiInfo.logoUrl}
-              bankName={abiInfo.name}
+              bankName={props.account.bankName ?? ""} // This should never be undefined
             />
           </View>
         </ScrollView>
