@@ -1,12 +1,13 @@
+/**
+ * Display the bpd capability for a payment method
+ * @constructor
+ */
+import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-/**
- * Display the bpd capability for a payment method
- * @constructor
- */
 import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -14,7 +15,7 @@ import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { useLoadPotValue } from "../../../../utils/hooks/useLoadPotValue";
-import { getValueOrElse } from "../model/RemoteValue";
+import { getPaymentMethodHash } from "../../../../utils/paymentMethod";
 import { bpdOnboardingStart } from "../store/actions/onboarding";
 import {
   bpdPaymentMethodActivation,
@@ -23,7 +24,6 @@ import {
 } from "../store/actions/paymentMethods";
 import { bpdEnabledSelector } from "../store/reducers/details/activation";
 import { bpdPaymentMethodValueSelector } from "../store/reducers/details/paymentMethods";
-import { getPaymentMethodHash } from "../../../../utils/paymentMethod";
 import { BpdToggle } from "./paymentMethodActivationToggle/base/BpdToggle";
 import {
   calculateBpdToggleGraphicalState,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 });
 
 const handleValueChanged = (props: Props, changeActivation: () => void) => {
-  if (getValueOrElse(props.bpdEnabled, false)) {
+  if (pot.getOrElse(props.bpdEnabled, false)) {
     changeActivation();
   } else {
     props.onboardToBpd();
@@ -92,7 +92,9 @@ const BpdPaymentMethodCapability: React.FunctionComponent<Props> = props => {
         <H4 weight={"SemiBold"} color={"bluegreyDark"}>
           {I18n.t("bonus.bpd.title")}
         </H4>
-        <H5 color={"bluegrey"}>{I18n.t("bonus.bpd.description")}</H5>
+        <H5 weight={"Regular"} color={"bluegrey"}>
+          {I18n.t("bonus.bpd.description")}
+        </H5>
       </View>
       <BpdToggle
         graphicalValue={graphicalState}

@@ -6,6 +6,7 @@ import { AccessibilityContent } from "../components/bottomSheet/AccessibilityCon
 import { BlurredBackgroundComponent } from "../components/bottomSheet/BlurredBackgroundComponent";
 import { BottomSheetContent } from "../components/bottomSheet/BottomSheetContent";
 import { BottomSheetHeader } from "../components/bottomSheet/BottomSheetHeader";
+import { useHardwareBackButtonToDismiss } from "../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { isScreenReaderEnabled } from "./accessibility";
 
 export type BottomSheetProps = {
@@ -24,7 +25,7 @@ export type BottomSheetProps = {
  */
 export const bottomSheetContent = async (
   content: React.ReactNode,
-  title: string,
+  title: string | React.ReactNode,
   snapPoint: number,
   onClose: () => void
 ): Promise<BottomSheetProps> => {
@@ -81,11 +82,11 @@ export const bottomSheetRawConfig = (
  */
 export const useIOBottomSheet = (
   component: React.ReactNode,
-  title: string,
+  title: string | React.ReactNode,
   snapPoint: number
 ) => {
   const { present, dismiss } = useBottomSheetModal();
-
+  const setBSOpened = useHardwareBackButtonToDismiss(dismiss);
   const openModalBox = async () => {
     const bottomSheetProps = await bottomSheetContent(
       component,
@@ -96,6 +97,32 @@ export const useIOBottomSheet = (
     present(bottomSheetProps.content, {
       ...bottomSheetProps.config
     });
+    setBSOpened();
+  };
+  return { present: openModalBox, dismiss };
+};
+
+/**
+ * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
+ * Use this when the inner component has to handle the BS dismiss (ex a button that when pressed close the BS) and when
+ * the BS title has to change on specific conditions
+ * @param snapPoint
+ * @param bsContent
+ */
+export const useIOBottomSheetRaw = (
+  snapPoint: number,
+  bsContent?: typeof bottomSheetContent
+) => {
+  const { present, dismiss } = useBottomSheetModal();
+  const setBSOpened = useHardwareBackButtonToDismiss(dismiss);
+  const openModalBox = async (component: React.ReactNode, title: string) => {
+    const bottomSheetProps = bsContent
+      ? await bsContent(component, title, snapPoint, dismiss)
+      : bottomSheetRawConfig(component, title, snapPoint, dismiss);
+    present(bottomSheetProps.content, {
+      ...bottomSheetProps.config
+    });
+    setBSOpened();
   };
   return { present: openModalBox, dismiss };
 };

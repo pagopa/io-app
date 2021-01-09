@@ -20,12 +20,7 @@ import {
   bpdUpsertIban
 } from "../store/actions/iban";
 import { bpdTransactionsLoad } from "../store/actions/transactions";
-import {
-  bpdDetailsLoadAll,
-  bpdLoadActivationStatus
-} from "../store/actions/details";
-import { bpdAmountLoad } from "../store/actions/amount";
-import { bpdPeriodsLoad } from "../store/actions/periods";
+import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdSelectPeriod } from "../store/actions/selectedPeriod";
 import {
   bpdPaymentMethodActivation,
@@ -52,9 +47,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, { bpdEnroll: action.payload.enabled });
     case getType(bpdDeleteUserFromProgram.failure):
     case getType(bpdEnrollUserToProgram.failure):
+    case getType(bpdAllData.failure):
       return mp.track(action.type, { reason: action.payload.message });
 
-    // iban
+    // IBAN
     case getType(bpdIbanInsertionStart):
     case getType(bpdIbanInsertionContinue):
     case getType(bpdIbanInsertionCancel):
@@ -78,15 +74,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         trxDate: action.payload.results.map(r => r.trxDate.toString()),
         circuitType: action.payload.results.map(r => r.circuitType)
       });
-    case getType(bpdTransactionsLoad.failure):
-    case getType(bpdAmountLoad.failure):
-      return mp.track(action.type, {
-        awardPeriodId: action.payload.awardPeriodId,
-        reason: action.payload.error.message
-      });
-
     // CashBack details
-    case getType(bpdDetailsLoadAll):
+    case getType(bpdTransactionsLoad.failure):
+    case getType(bpdAllData.request):
+    case getType(bpdAllData.success):
     case getType(bpdLoadActivationStatus.request):
       return mp.track(action.type);
     case getType(bpdLoadActivationStatus.success):
@@ -97,23 +88,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, { reason: action.payload.message });
 
     // Amount
-    case getType(bpdAmountLoad.request):
-      return mp.track(action.type, { awardPeriodId: action.payload });
-    case getType(bpdAmountLoad.success):
     case getType(bpdSelectPeriod): // SelectedPeriod
       return mp.track(action.type, {
         awardPeriodId: action.payload.awardPeriodId
       });
-
-    // Period
-    case getType(bpdPeriodsLoad.request):
-      return mp.track(action.type);
-    case getType(bpdPeriodsLoad.success):
-      return mp.track(action.type, {
-        count: action.payload.length
-      });
-    case getType(bpdPeriodsLoad.failure):
-      return mp.track(action.type, { reason: action.payload.message });
 
     // PaymentMethod
     case getType(bpdPaymentMethodActivation.request):

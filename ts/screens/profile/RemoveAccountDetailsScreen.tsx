@@ -1,27 +1,30 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Input, Item, Label, View } from "native-base";
 import * as React from "react";
+import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, StyleSheet } from "react-native";
-import I18n from "../../i18n";
-import { ReduxProps } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
-import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { shufflePinPadOnPayment } from "../../config";
+import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
+import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
+import I18n from "../../i18n";
+import { identificationRequest } from "../../store/actions/identification";
+import { navigateToWalletHome } from "../../store/actions/navigation";
 import {
   removeAccountMotivation,
   RemoveAccountMotivationEnum,
   RemoveAccountMotivationPayload
 } from "../../store/actions/profile";
-import { identificationRequest } from "../../store/actions/identification";
-import { shufflePinPadOnPayment } from "../../config";
+import { ReduxProps } from "../../store/actions/types";
+import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
-import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { withKeyboard } from "../../utils/keyboard";
 
 type Props = ReduxProps &
@@ -55,7 +58,6 @@ const getMotivationItems = (): ReadonlyArray<{
     id: RemoveAccountMotivationEnum.OTHERS
   }
 ];
-
 /**
  * A screen that ask user the motivation of the account removal
  * Here user can ask to delete his account
@@ -68,22 +70,59 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
 
   const [otherMotivation, setOtherMotivation] = React.useState<string>("");
 
+  const handleContinuePress = () => {
+    const hasActiveBonus =
+      props.bvActiveBonus || pot.getOrElse(props.bpdActiveBonus, false);
+
+    if (hasActiveBonus) {
+      Alert.alert(
+        I18n.t("profile.main.privacy.removeAccount.alert.activeBonusTitle"),
+        I18n.t(
+          "profile.main.privacy.removeAccount.alert.activeBonusDescription"
+        ),
+        [
+          {
+            text: I18n.t(
+              "profile.main.privacy.removeAccount.alert.cta.manageBonus"
+            ),
+            style: "default",
+            onPress: props.navigateToWalletHomeScreen
+          },
+          {
+            text: I18n.t(
+              "profile.main.privacy.removeAccount.alert.cta.continue"
+            ),
+            style: "cancel",
+            onPress: () => {
+              handleSendMotivation(selectedMotivation);
+            }
+          }
+        ]
+      );
+    } else {
+      handleSendMotivation(selectedMotivation);
+    }
+  };
+
+  const handleSendMotivation = (
+    selectedMotivation: RemoveAccountMotivationEnum
+  ) => {
+    switch (selectedMotivation) {
+      case RemoveAccountMotivationEnum.OTHERS:
+        // Only the "others" reason allow to insert a custom text
+        props.requestIdentification({
+          reason: selectedMotivation,
+          userText: otherMotivation
+        });
+        break;
+      default:
+        props.requestIdentification({ reason: selectedMotivation });
+    }
+  };
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => {
-      switch (selectedMotivation) {
-        case RemoveAccountMotivationEnum.OTHERS:
-          // Only the "others" reason allow to insert a custom text
-          props.requestIdentification({
-            reason: selectedMotivation,
-            userText: otherMotivation
-          });
-          break;
-        default:
-          props.requestIdentification({ reason: selectedMotivation });
-      }
-    },
+    onPress: handleContinuePress,
     title: I18n.t("profile.main.privacy.removeAccount.info.cta")
   };
 
@@ -180,17 +219,22 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
           },
           shufflePinPadOnPayment
         )
-      )
+      ),
+    navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome())
   };
 };
 
 const mapStateToProps = (state: GlobalState) => {
+  const bpdActiveBonus = bpdEnabledSelector(state);
+  const bvActiveBonus = allBonusActiveSelector(state).length > 0;
   const userDataProcessing = userDataProcessingSelector(state);
   const isLoading =
     pot.isLoading(userDataProcessing.DELETE) ||
     pot.isUpdating(userDataProcessing.DELETE);
   const isError = pot.isError(userDataProcessing.DELETE);
   return {
+    bvActiveBonus,
+    bpdActiveBonus,
     userDataProcessing,
     isLoading,
     isError
