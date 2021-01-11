@@ -1,14 +1,20 @@
 import { Badge, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
+import { Link } from "../../../components/core/typography/Link";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { PaymentMethod } from "../../../types/pagopa";
 import { PaymentSupportStatus } from "../../../types/paymentMethodCapabilities";
+import { useIOBottomSheet } from "../../../utils/bottomSheet";
 import { isPaymentMethodSupported } from "../../../utils/paymentMethodCapabilities";
+import { openWebUrl } from "../../../utils/url";
 
 const styles = StyleSheet.create({
   row: {
@@ -35,6 +41,11 @@ const styles = StyleSheet.create({
     borderColor: IOColors.blue,
     width: 65
   },
+  bottomSheetCTA: {
+    backgroundColor: IOColors.white,
+    paddingRight: 0,
+    paddingLeft: 0
+  },
   badgeNotAvailable: {
     backgroundColor: IOColors.white,
     borderColor: IOColors.blue,
@@ -43,6 +54,9 @@ const styles = StyleSheet.create({
 });
 
 type Props = { paymentMethod: PaymentMethod };
+
+const IN_APP_PAYMENTS_LEARN_MORE_VIDEO_URL =
+  "https://www.youtube.com/watch?v=2URN1LNLpbU";
 
 const getLocales = () => ({
   available: I18n.t("wallet.methods.card.pagoPaCapability.active"),
@@ -84,26 +98,49 @@ const availabilityBadge = (badgeType: PaymentSupportStatus) => {
  * @param props
  */
 function PagoPaPaymentCapability(props: Props): React.ReactElement {
+  const onOpenLearnMoreAboutInAppPayments = () =>
+    openWebUrl(IN_APP_PAYMENTS_LEARN_MORE_VIDEO_URL);
+
+  const { present } = useIOBottomSheet(
+    <View>
+      <Markdown>
+        {I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetBody")}
+      </Markdown>
+      <ButtonDefaultOpacity
+        onPress={onOpenLearnMoreAboutInAppPayments}
+        style={styles.bottomSheetCTA}
+        onPressWithGestureHandler={true}
+      >
+        <Link>
+          {I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetCTA")}
+        </Link>
+      </ButtonDefaultOpacity>
+    </View>,
+    I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetTitle"),
+    300
+  );
   return (
-    <View style={styles.row}>
-      <View style={styles.left}>
-        <H4
-          weight={"SemiBold"}
-          color={"bluegreyDark"}
-          testID={"PagoPaPaymentCapabilityTitle"}
-        >
-          {I18n.t("wallet.methods.card.pagoPaCapability.title")}
-        </H4>
-        <H5
-          weight={"Regular"}
-          color={"bluegrey"}
-          testID={"PagoPaPaymentCapabilityDescription"}
-        >
-          {I18n.t("wallet.methods.card.pagoPaCapability.description")}
-        </H5>
+    <TouchableOpacity onPress={present}>
+      <View style={styles.row}>
+        <View style={styles.left}>
+          <H4
+            weight={"SemiBold"}
+            color={"bluegreyDark"}
+            testID={"PagoPaPaymentCapabilityTitle"}
+          >
+            {I18n.t("wallet.methods.card.pagoPaCapability.title")}
+          </H4>
+          <H5
+            weight={"Regular"}
+            color={"bluegrey"}
+            testID={"PagoPaPaymentCapabilityDescription"}
+          >
+            {I18n.t("wallet.methods.card.pagoPaCapability.description")}
+          </H5>
+        </View>
+        {availabilityBadge(isPaymentMethodSupported(props.paymentMethod))}
       </View>
-      {availabilityBadge(isPaymentMethodSupported(props.paymentMethod))}
-    </View>
+    </TouchableOpacity>
   );
 }
 

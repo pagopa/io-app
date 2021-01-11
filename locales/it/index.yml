@@ -1086,6 +1086,9 @@ wallet:
         active: Attivo
         arriving: In arrivo
         incompatible: Non compatibile
+        bottomSheetTitle: Cosa sono i pagamenti in app?
+        bottomSheetBody: IO ti permette di pagare tutti gli avvisi pagoPA, anche quelli cartacei. Se lo desideri, puoi usare questo metodo di pagamento. In ogni caso, nessun pagamento in app verrà effettuato senza il tuo esplicito consenso.
+        bottomSheetCTA: Scopri di più
     bonus:
       name: Sconto, bonus e altri servizi
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
