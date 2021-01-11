@@ -50,6 +50,12 @@ import {
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
+import { addBPayToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
+import {
+  addBPayToWallet,
+  searchUserBPay,
+  walletAddBPayStart
+} from "../features/wallet/onboarding/bancomatPay/store/actions";
 import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
@@ -155,6 +161,10 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { backoffWait } from "../utils/saga";
+import {
+  handleSearchUserBPay,
+  handleAddpayToWallet
+} from "../features/wallet/onboarding/bancomatPay/saga/networking";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -846,6 +856,9 @@ export function* watchWalletSaga(
     // watch for load abi request
     yield takeLatest(loadAbi.request, handleLoadAbi, contentClient.getAbiList);
 
+    // watch for add Bancomat to Wallet workflow
+    yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
+
     // watch for load pans request
     yield takeLatest(
       searchUserPans.request,
@@ -862,13 +875,13 @@ export function* watchWalletSaga(
       pmSessionManager
     );
 
-    // watch for add Bancomat to Wallet workflow
-    yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
+    // watch for add BPay to Wallet workflow
+    yield takeLatest(walletAddBPayStart, addBPayToWalletAndActivateBpd);
 
     // watch for add Satispay to Wallet workflow
     yield takeLatest(walletAddSatispayStart, addSatispayToWalletAndActivateBpd);
 
-    // watch for load satispay request
+    // watch for load Satispay request
     yield takeLatest(
       searchUserSatispay.request,
       handleSearchUserSatispay,
@@ -876,11 +889,26 @@ export function* watchWalletSaga(
       pmSessionManager
     );
 
-    // watch for add satispay to the user's wallet
+    // watch for add Satispay to the user's wallet
     yield takeLatest(
       addSatispayToWallet.request,
       handleAddUserSatispayToWallet,
       paymentManagerClient.addSatispayToWallet,
+      pmSessionManager
+    );
+
+    // watch for BancomatPay search request
+    yield takeLatest(
+      searchUserBPay.request,
+      handleSearchUserBPay,
+      paymentManagerClient.searchBPay,
+      pmSessionManager
+    );
+    // watch for add BancomatPay to the user's wallet
+    yield takeLatest(
+      addBPayToWallet.request,
+      handleAddpayToWallet,
+      paymentManagerClient.addBPayToWallet,
       pmSessionManager
     );
   }

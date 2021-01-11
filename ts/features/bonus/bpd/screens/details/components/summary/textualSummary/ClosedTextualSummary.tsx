@@ -4,6 +4,7 @@ import { Body } from "../../../../../../../../components/core/typography/Body";
 import I18n from "../../../../../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../../utils/accessibility";
 import { localeDateFormat } from "../../../../../../../../utils/locale";
+import { formatNumberAmount } from "../../../../../../../../utils/stringBuilder";
 import { BpdPeriod } from "../../../../../store/actions/periods";
 import { isGracePeriod } from "../../../../../store/reducers/details/periods";
 import { TextualSummary } from "./TextualSummary";
@@ -43,7 +44,7 @@ const KO = (props: Props) => (
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodKOBody",
         {
           transactions: props.period.minTransactionNumber,
-          amount: props.period.amount.totalCashback
+          amount: formatNumberAmount(props.period.amount.totalCashback)
         }
       )}
     </Body>
@@ -77,7 +78,7 @@ const OK = (props: Props) => (
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodOKBody",
         {
           name: props.name,
-          amount: props.period.amount.totalCashback
+          amount: formatNumberAmount(props.period.amount.totalCashback)
         }
       )}
       {/* If the max amount is reached, inform the user */}

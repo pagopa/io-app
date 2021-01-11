@@ -210,17 +210,21 @@ export type PaymentMethodRepresentation = {
   icon: ImageSourcePropType;
 };
 
+type WithAbi = {
+  abiInfo?: Abi;
+};
+
 // In addition to the representation, a bancomat have also the abiInfo
 export type BancomatPaymentMethod = RawBancomatPaymentMethod &
-  PaymentMethodRepresentation & {
-    abiInfo?: Abi;
-  };
+  PaymentMethodRepresentation &
+  WithAbi;
 
 export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
   PaymentMethodRepresentation;
 
 export type BPayPaymentMethod = RawBPayPaymentMethod &
-  PaymentMethodRepresentation;
+  PaymentMethodRepresentation &
+  WithAbi;
 export type SatispayPaymentMethod = RawSatispayPaymentMethod &
   PaymentMethodRepresentation;
 

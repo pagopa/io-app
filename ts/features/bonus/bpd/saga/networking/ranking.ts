@@ -41,6 +41,11 @@ export function* bpdLoadRaking(
         return right<Error, ReadonlyArray<BpdRankingReady>>(
           convertRankingArray(getRankingResult.value.value)
         );
+      } else if (getRankingResult.value.status === 404) {
+        void mixpanelTrack(mixpanelActionSuccess, {
+          count: 0
+        });
+        return right<Error, ReadonlyArray<BpdRankingReady>>([]);
       } else {
         return left<Error, ReadonlyArray<BpdRankingReady>>(
           new Error(`response status ${getRankingResult.value.status}`)

@@ -1,20 +1,20 @@
 import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
-import BaseCardComponent from "../component/BaseCardComponent";
-import bancomatLogoMin from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
-import { Body } from "../../../components/core/typography/Body";
-import { GlobalState } from "../../../store/reducers/types";
-import { profileNameSurnameSelector } from "../../../store/reducers/profile";
-import { useImageResize } from "../onboarding/bancomat/screens/hooks/useImageResize";
-import { H3 } from "../../../components/core/typography/H3";
-import IconFont from "../../../components/ui/IconFont";
-import { H4 } from "../../../components/core/typography/H4";
+import BaseCardComponent from "../../component/BaseCardComponent";
+import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
+import { GlobalState } from "../../../../store/reducers/types";
+import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
+import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
+import { H3 } from "../../../../components/core/typography/H3";
+import IconFont from "../../../../components/ui/IconFont";
+import { H4 } from "../../../../components/core/typography/H4";
 
 type Props = {
   phone?: string;
-  bankName?: string;
+  bankName: string;
   abiLogo?: string;
 } & ReturnType<typeof mapStateToProps>;
 
@@ -41,14 +41,19 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
       resizeMode: "contain"
     })
   );
-
   return (
     <BaseCardComponent
       topLeftCorner={
         props.abiLogo && imageStyle ? (
-          <Image source={{ uri: props.abiLogo }} style={imageStyle} />
+          <Image
+            source={{ uri: props.abiLogo }}
+            style={imageStyle}
+            testID={"abiLogo"}
+          />
         ) : (
-          <H3 style={styles.bankName}>{props.bankName}</H3>
+          <H3 style={styles.bankName} testID={"bankName"}>
+            {props.bankName}
+          </H3>
         )
       }
       bottomLeftCorner={
@@ -58,16 +63,24 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
               <View style={{ flexDirection: "row" }}>
                 <IconFont name={"io-phone"} size={22} />
                 <View hspacer small />
-                <H4 weight={"Bold"}>{props.phone.replace(/\*/g, "●")}</H4>
+                <H4 weight={"Regular"} testID="phone">
+                  {props.phone}
+                </H4>
               </View>
               <View spacer small />
             </>
           )}
-          <Body>{(props.nameSurname ?? "").toLocaleUpperCase()}</Body>
+          {fromNullable(props.nameSurname).fold(undefined, nameSurname => (
+            <H4 weight={"Regular"} testID={"nameSurname"}>
+              {nameSurname.toLocaleUpperCase()}
+            </H4>
+          ))}
         </View>
       }
       bottomRightCorner={
-        <Image style={styles.bpayLogo} source={bancomatLogoMin} />
+        <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
+          <Image style={styles.bpayLogo} source={bancomatLogoMin} />
+        </View>
       }
     />
   );

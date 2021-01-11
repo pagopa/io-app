@@ -1,7 +1,7 @@
 import { getType } from "typesafe-actions";
 import { mixpanel } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
-import { isTimeoutError } from "../../../../utils/errors";
+import { getNetworkErrorMessage } from "../../../../utils/errors";
 import {
   addSatispayToWallet,
   searchUserSatispay,
@@ -31,9 +31,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(searchUserSatispay.failure):
       return mp.track(action.type, {
-        reason: isTimeoutError(action.payload)
-          ? action.payload.kind
-          : action.payload.value.message
+        reason: getNetworkErrorMessage(action.payload)
       });
 
     case getType(addSatispayToWallet.failure):

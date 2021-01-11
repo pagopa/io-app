@@ -215,7 +215,7 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
-  expiration_info: For security reasons, after 30 days from your last login you'll need to sign in again to continue using IO.
+  expiration_info: For security reasons, after 30 days from your last login with SPID or CIE, you'll need to sign in again to use IO.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -431,7 +431,7 @@ authentication:
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     session_expired:
       title: Your session is expired
-      body: For security reasons, after 30 days from the last access, we ask you to log in again with SPID or CIE to use IO.
+      body: For security reasons, after 30 days from the last login with SPID or CIE, we ask you to sign in again to use IO.
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
@@ -495,8 +495,12 @@ authentication:
       incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
       incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
       alert: Are you sure you want to go back?
+      subtitleHelp: The PIN code consists of 8 digits.
+      subtitleCTA: Where can I find it?
+      bottomSheetCTA: Did you forget your PIN?
       contextualHelpTitle: Where can I find my PIN and PUK?
-      contextualHelpBody: "The **PIN** code consists of 8 digits: \n\n- the first 4 digits you received at the registry office;\n- the last 4 digits you received at home, along with your electronic ID card.\n\nPlease enter them following this order.\n\n The **PUK** code is needed to unlock your PIN, in case of 3 wrong attempts. PUK consists of 8 digits and it's issued along with the PIN.\n\n[Did you forget your PIN/PUK?](https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/)"
+      contextualHelpBody: !include help/ciePinHelpBody.md
+      contextualHelpCTA: Did you forget your PIN/PUK?
     pinTempLocked:
       header: Login with CIE
       title: Card temporarily locked
@@ -753,13 +757,21 @@ wallet:
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
   searchAbi:
-    header: Add PagoBANCOMAT
-    title: Search for your PagoBANCOMAT cards
-    description:
-      text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
-      text2: information on the processing of personal data.
-      text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
-      text4: by searching among those available
+    header: "Add {{methodName}}"
+    bancomat:
+      title: "Search for your PagoBANCOMAT cards"
+      description:
+        text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
+        text2: information on the processing of personal data.
+        text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
+        text4: by searching among those available
+    bpay:
+      title: "Search for your BANCOMAT Pay accounts"
+      description:
+        text1: "IO will search for all BANCOMAT Pay accounts associated with you.\nBy continuing you accept the "
+        text2: information on the processing of personal data.
+        text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
+        text4: by searching among those available
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
@@ -810,6 +822,19 @@ wallet:
           body1: "Turn on your methods saved into your wallet and start collecting cashback on your valid transactions."
           body2: "If you prefer, you can activate cashback on these methods later as well."
           skip: "Maybe later"
+    bPay:
+      headerTitle: "Add BANCOMAT Pay"
+      loadingSearch: "We are recovering your BANCOMAT Pay data\n\nPlease wait"
+      add:
+        label: "BANCOMAT Pay account {{current}} of {{length}}"
+        screenTitle: "Do you want to add this account?"
+      loadingAdd: "We are adding your BANCOMAT Pay\n\nPlease wait"
+      koTimeout:
+        title: "Unable to recover your data"
+        body: "Please retry"
+      koNotFound:
+        title: "Sorry, we haven't found any active BANCOMAT Pay service"
+        body: "Contact your bank to activate BANCOMAT Pay!"
     satispay:
       headerTitle: "Add Satispay"
       start:
@@ -835,6 +860,7 @@ wallet:
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
     btnUpdateApp: Update the IO app
     favourite: This method is already set as favourite. To change this, please set another method as favourite.
+    amex: Payments with American Express cards, for amounts above €1000, are currently not possible.
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
@@ -863,6 +889,9 @@ wallet:
     satispay:
       successful: Satispay successfully removed
       failed: Satispay could not be removed
+    bPay:
+      successful: BancomatPay successfully removed
+      failed: BancomatPay could not be removed
     successful: Card successfully removed
     failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
@@ -1205,15 +1234,15 @@ messages:
           block1: Add a reminder for the 
           block2: at
       expiringAlert:
-        block1: This notice will expire on
+        block1: This payment notice will expire on
         block2: at
       expiredAlert:
         expirable:
-          block1: The notice expired at 
+          block1: The payment notice expired at 
           block2: "on"
         unexpirable:
-          block: The payment is overdue. You can still pay; IO app will update the amount if needed.
-    presctiption:  
+          block: Your payment notice is overdue. You can still pay; IO app will update the amount if needed.
+    prescription:  
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
       expiredAlert:
@@ -1460,6 +1489,10 @@ instabug:
     descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
     buttonChat: Reopen a report
     assistanceWorkHours: IO assistance is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun and holidays from 8.00 to 13.00
+bottomSheets:
+  ciePin:
+      title: "Where can I find my PIN?"
+      content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "What is SPID?"
@@ -1956,7 +1989,7 @@ bonus:
           notReady:
             title: "When will you see the Super Cashback ranking?"
             body: "The ranking is based on the **number of transactions** made with the payment methods on which you have Cashback enabled.\n\n
-                   Currently, **all participants are in the same position**. As soon as we'll receive the transactions collected so far, your ranking will be displayed.\n\n
+                   We will show your ranking **when the distribution of participants will be more meaningful**. Currently, many users collected the same number of transactions.\n\n
                    Once published, the ranking will **continue to change** depending on the number of transactions among all participants, until the end of the 6 months."
 
       transaction:
@@ -1993,7 +2026,7 @@ bonus:
               text5: "a cashback of "
             milestone:
               title: "Congratulation, you earned {{cashbackValue}}"
-              body: "You have reached the maximum refund foreseen in this period."
+              body: "You have reached the maximum refund for this phase. Keep collecting valid transactions to climb the ranking!"
           title: "Transaction details"
           paymentCircuit: "Payment circuit"
           transactionAmount: "Transaction amount"

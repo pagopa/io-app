@@ -71,7 +71,7 @@ describe("convert and recognize 1 bancomat, 1 satispay, 1 bancomat pay, 1 credit
     );
   });
 
-  it("should recognize bancomatpay", () => {
+  it("should recognize bancomatPay", () => {
     expect(wallets.filter(w => isRawBPay(w.paymentMethod)).length).toEqual(1);
   });
 
