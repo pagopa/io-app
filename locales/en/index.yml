@@ -495,8 +495,12 @@ authentication:
       incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
       incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
       alert: Are you sure you want to go back?
+      subtitleHelp: The PIN code consists of 8 digits.
+      subtitleCTA: Where can I find it?
+      bottomSheetCTA: Did you forget your PIN?
       contextualHelpTitle: Where can I find my PIN and PUK?
-      contextualHelpBody: "The **PIN** code consists of 8 digits: \n\n- the first 4 digits you received at the registry office;\n- the last 4 digits you received at home, along with your electronic ID card.\n\nPlease enter them following this order.\n\n The **PUK** code is needed to unlock your PIN, in case of 3 wrong attempts. PUK consists of 8 digits and it's issued along with the PIN.\n\n[Did you forget your PIN/PUK?](https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/)"
+      contextualHelpBody: !include help/ciePinHelpBody.md
+      contextualHelpCTA: Did you forget your PIN/PUK?
     pinTempLocked:
       header: Login with CIE
       title: Card temporarily locked
@@ -1485,6 +1489,10 @@ instabug:
     descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
     buttonChat: Reopen a report
     assistanceWorkHours: IO assistance is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun and holidays from 8.00 to 13.00
+bottomSheets:
+  ciePin:
+      title: "Where can I find my PIN?"
+      content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "What is SPID?"
