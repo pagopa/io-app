@@ -1259,11 +1259,11 @@ messages:
         block2: alle ore
       expiredAlert:
         expirable:
-          block1: Il pagamento è scaduto alle ore
+          block1: L'avviso è scaduto alle ore
           block2: del
         unexpirable:
-          block: Il pagamento è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad attualizzare l'importo.
-    presctiption:
+          block: L'avviso è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad aggiornare l'importo.
+    prescription:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
       expiredAlert:
