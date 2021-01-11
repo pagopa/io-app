@@ -24,8 +24,8 @@ import { bpdPeriodsAmountLoad } from "../../../features/bonus/bpd/store/actions/
 /**
  * list of monitored actions
  * each entry is a tuple of 2
- * 0 - the failure action that is considered to increment the backoff delay
- * 0 - the success action that is considered to delete the backoff delay
+ * 0 - the failure action that is considered to create/increment the backoff delay
+ * 1 - the success action that is considered to delete the previous backoff delay
  */
 const monitoredActions: ReadonlyArray<[
   PayloadAC<any, any>,
