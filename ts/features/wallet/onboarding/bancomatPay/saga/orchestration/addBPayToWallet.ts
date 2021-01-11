@@ -70,8 +70,9 @@ export function* addBPayToWalletAndActivateBpd() {
 
     if (
       currentRoute.isSome() &&
-      currentRoute.value === "WALLET_ADD_PAYMENT_METHOD"
+      currentRoute.value === "WALLET_ADD_DIGITAL_PAYMENT_METHOD"
     ) {
+      yield put(NavigationActions.back());
       yield put(NavigationActions.back());
     }
   }
