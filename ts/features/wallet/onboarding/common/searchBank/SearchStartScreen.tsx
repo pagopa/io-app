@@ -6,6 +6,7 @@ import { Content } from "native-base";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { SectionStatusKey } from "../../../../../types/backendStatus";
 import { isError, isLoading } from "../../../../bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../store/abi";
 import { loadAbi } from "../../bancomat/store/actions";
@@ -19,8 +20,10 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
 import { SearchStartComponent } from "./SearchStartComponent";
 
+type MethodType = "bancomatPay" | "bancomat";
+
 type Props = {
-  methodType: "bancomatPay" | "bancomat";
+  methodType: MethodType;
   onSearch: (abi?: string) => void;
   navigateToSearchBank: () => void;
   onCancel: () => void;
@@ -39,13 +42,22 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
   />
 );
 
-const handleMethodName = (methodType: "bancomatPay" | "bancomat") => {
+const handleMethodName = (methodType: MethodType) => {
   switch (methodType) {
     case "bancomatPay":
       return I18n.t("wallet.methods.bancomatPay.name");
     case "bancomat":
     default:
       return I18n.t("wallet.methods.pagobancomat.name");
+  }
+};
+
+const getSectionName = (methodType: MethodType): SectionStatusKey => {
+  switch (methodType) {
+    case "bancomat":
+      return "bancomat";
+    case "bancomatPay":
+      return "bancomatpay";
   }
 };
 
@@ -74,7 +86,7 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
             methodType={props.methodType}
           />
         </Content>
-        <SectionStatusComponent sectionKey={"bancomat"} />
+        <SectionStatusComponent sectionKey={getSectionName(props.methodType)} />
         {renderFooterButtons(props.onCancel, onContinueHandler)}
       </SafeAreaView>
     </BaseScreenComponent>
