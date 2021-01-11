@@ -75,6 +75,7 @@ const reducer = (
     };
   }
   const successIndex = successActionTypes.indexOf(action.type);
+  // the failure type is that one at the same index of success type
   const keyToRemove = index(successIndex, failureActionTypes);
   if (keyToRemove.isSome() && keyToRemove.value in state) {
     // remove the previous record
