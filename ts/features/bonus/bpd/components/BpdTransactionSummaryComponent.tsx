@@ -40,7 +40,7 @@ body {
 `;
 
 const readMoreLink = "https://io.italia.it/cashback/acquirer/";
-export const bottomSheetBpdTransactionsBody = (
+export const bottomSheetBpdTransactionsBody = () => (
   <>
     <Markdown cssStyle={CSS_STYLE} avoidTextSelection={true}>
       {I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.body")}
