@@ -102,7 +102,7 @@ const HEADER_HEIGHT = 250;
 class TransactionsScreen extends React.Component<Props> {
   private headerContent(
     selectedWallet: Wallet,
-    isFavorite: pot.Pot<boolean, string>
+    isFavorite: pot.Pot<boolean, Error>
   ) {
     return (
       <React.Fragment>
