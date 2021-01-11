@@ -298,7 +298,7 @@ profile:
           cta: Continua
         details:
           body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
-          question: Qual'è il motivo della cancellazione?
+          question: Qual è il motivo della cancellazione?
           answer_1: Non ritengo più utile IO
           answer_2: Non mi sento al sicuro su IO
           answer_3: Non ho mai usato l'app
@@ -505,8 +505,12 @@ authentication:
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
       alert: Vuoi davvero tornare indietro?
+      subtitleHelp: Il PIN è un codice di 8 cifre.
+      subtitleCTA: Dove lo trovo?
+      bottomSheetCTA: Hai dimenticato il PIN?
       contextualHelpTitle: Dove trovo i codici PIN e PUK?
-      contextualHelpBody: "Il codice **PIN** è composto da 8 cifre: \n\n- le prime 4 cifre ti sono state consegnate all'anagrafe;\n- le ultime 4 cifre ti sono state spedite a casa, insieme alla carta d'identità elettronica. \n\nMettile insieme e inseriscile in quest'ordine.\n\n Il codice **PUK** è necessario invece per sbloccare il PIN a seguito di tre tentativi errati. È composto da 8 cifre, e viene rilasciato insieme al PIN. \n\n[Hai dimenticato il PIN/PUK?](https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/)"
+      contextualHelpBody: !include help/ciePinHelpBody.md
+      contextualHelpCTA: Hai dimenticato il PIN/PUK?
     pinTempLocked:
       header: Entra con CIE
       title: Carta temporaneamente bloccata
@@ -841,6 +845,9 @@ wallet:
     bPay:
       headerTitle: "Aggiungi BANCOMAT Pay"
       loadingSearch: "Stiamo recuperando i tuoi dati BANCOMAT Pay\n\nAttendi qualche secondo"
+      add:
+        label: "Account BANCOMAT Pay {{current}} di {{length}}"
+        screenTitle: "Vuoi aggiungere questo account?"
       loadingAdd: "Stiamo aggiungendo il tuo account BANCOMAT Pay\n\nAttendi qualche secondo"
       koTimeout:
         title: "Impossibile recuperare i tuoi dati"
@@ -1259,11 +1266,11 @@ messages:
         block2: alle ore
       expiredAlert:
         expirable:
-          block1: Il pagamento è scaduto alle ore
+          block1: L'avviso è scaduto alle ore
           block2: del
         unexpirable:
-          block: Il pagamento è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad attualizzare l'importo.
-    presctiption:
+          block: L'avviso è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad aggiornare l'importo.
+    prescription:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
       expiredAlert:
@@ -1512,6 +1519,10 @@ instabug:
     descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
     buttonChat: Riapri una segnalazione
     assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8.00 alle 20.00; sabato, domenica e giorni festivi dalle ore 8.00 alle 13.00
+bottomSheets:
+  ciePin:
+      title: Dove trovo il mio PIN?
+      content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "Cos'è SPID?"
@@ -2009,7 +2020,7 @@ bonus:
           notReady:
             title: "Quando vedrai la classifica Super Cashback?"
             body: "La classifica si basa sul **numero di transazioni** eseguite con i metodi di pagamento su cui hai attivato il Cashback.\n\n
-                   In questo momento **tutti i partecipanti sono nella stessa posizione**. Non appena riceveremo le transazioni effettuate i primi giorni di quest’anno, verrà mostrata la tua posizione in classifica.\n\n
+                   Mostreremo la tua posizione in classifica **quando la distribuzione dei partecipanti sarà più significativa**: in questo momento ci sono moltissimi utenti con lo stesso numero di transazioni.\n\n
                    Una volta pubblicata, la classifica **continuerà a cambiare** a seconda del numero di transazioni di tutti i partecipanti, fino alla fine dei 6 mesi."
       transaction:
         label:
@@ -2045,7 +2056,7 @@ bonus:
               text5: "un Cashback di "
             milestone:
               title: "Complimenti, hai ottenuto {{cashbackValue}}"
-              body: "Hai raggiunto il rimborso massimo previsto in questo periodo."
+              body: "Hai raggiunto il rimborso massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
           title: "Dettaglio della transazione"
           paymentCircuit: "Circuito di pagamento"
           transactionAmount: "Importo transazione"
