@@ -825,6 +825,9 @@ wallet:
     bPay:
       headerTitle: "Add BANCOMAT Pay"
       loadingSearch: "We are recovering your BANCOMAT Pay data\n\nPlease wait"
+      add:
+        label: "BANCOMAT Pay account {{current}} of {{length}}"
+        screenTitle: "Do you want to add this account?"
       loadingAdd: "We are adding your BANCOMAT Pay\n\nPlease wait"
       koTimeout:
         title: "Unable to recover your data"
