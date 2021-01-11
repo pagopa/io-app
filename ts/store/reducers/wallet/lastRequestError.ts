@@ -2,6 +2,8 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { getType } from "typesafe-actions";
 import _ from "lodash";
+import { PayloadAC } from "typesafe-actions/dist/type-helpers";
+import { index } from "fp-ts/lib/Array";
 import { Action } from "../../actions/types";
 import {
   fetchTransactionsFailure,
@@ -20,33 +22,28 @@ import { bpdLoadActivationStatus } from "../../../features/bonus/bpd/store/actio
 import { bpdPeriodsAmountLoad } from "../../../features/bonus/bpd/store/actions/periods";
 
 /**
- * list of failure actions
- * if any of these is dispatched, a backoff record will be created
- * and it will be used to calculate the backoff waiting time
+ * list of monitored actions
+ * each entry is a tuple of 2
+ * 0 - the failure action that is considered to increment the backoff delay
+ * 0 - the success action that is considered to delete the backoff delay
  */
-const failureActions = [
-  payCreditCardVerificationFailure,
-  addWalletCreditCardFailure,
-  fetchTransactionsFailure,
-  fetchWalletsFailure,
-  bpdLoadActivationStatus.failure,
-  bpdPeriodsAmountLoad.failure
+const monitoredActions: ReadonlyArray<[
+  PayloadAC<any, any>,
+  PayloadAC<any, any>
+]> = [
+  [payCreditCardVerificationFailure, payCreditCardVerificationSuccess],
+  [addWalletCreditCardFailure, addWalletCreditCardSuccess],
+  [fetchTransactionsFailure, fetchTransactionsSuccess],
+  [fetchWalletsFailure, fetchWalletsSuccess],
+  [bpdLoadActivationStatus.failure, bpdLoadActivationStatus.success],
+  [bpdPeriodsAmountLoad.failure, bpdPeriodsAmountLoad.success]
 ];
 
-/**
- * list of success actions
- * if any of these is dispatched, the existing backoff record into the store will be deleted
- */
-const successActionTypes = [
-  payCreditCardVerificationSuccess,
-  addWalletCreditCardSuccess,
-  fetchTransactionsSuccess,
-  fetchWalletsSuccess,
-  bpdLoadActivationStatus.success,
-  bpdPeriodsAmountLoad.success
-].map(getType);
+const failureActions = monitoredActions.map(ma => ma[0]);
+const successActions = monitoredActions.map(ma => ma[1]);
 
 const failureActionTypes = failureActions.map(getType);
+const successActionTypes = successActions.map(getType);
 export type FailureActions = typeof failureActions[number];
 
 export type LastRequestErrorState = {
@@ -77,10 +74,11 @@ const reducer = (
       }
     };
   }
-  const success = successActionTypes.find(a => a === action.type);
-  if (success) {
+  const successIndex = successActionTypes.indexOf(action.type);
+  const keyToRemove = index(successIndex, failureActionTypes);
+  if (keyToRemove.isSome() && keyToRemove.value in state) {
     // remove the previous record
-    return _.omit(state, success);
+    return _.omit(state, keyToRemove.value);
   }
   return state;
 };
