@@ -757,13 +757,21 @@ wallet:
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
   searchAbi:
-    header: Add PagoBANCOMAT
-    title: Search for your PagoBANCOMAT cards
-    description:
-      text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
-      text2: information on the processing of personal data.
-      text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
-      text4: by searching among those available
+    header: "Add {{methodName}}"
+    bancomat:
+      title: "Search for your PagoBANCOMAT cards"
+      description:
+        text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
+        text2: information on the processing of personal data.
+        text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
+        text4: by searching among those available
+    bpay:
+      title: "Search for your BANCOMAT Pay accounts"
+      description:
+        text1: "IO will search for all BANCOMAT Pay accounts associated with you.\nBy continuing you accept the "
+        text2: information on the processing of personal data.
+        text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
+        text4: by searching among those available
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
@@ -814,6 +822,16 @@ wallet:
           body1: "Turn on your methods saved into your wallet and start collecting cashback on your valid transactions."
           body2: "If you prefer, you can activate cashback on these methods later as well."
           skip: "Maybe later"
+    bPay:
+      headerTitle: "Add BANCOMAT Pay"
+      loadingSearch: "We are recovering your BANCOMAT Pay data\n\nPlease wait"
+      loadingAdd: "We are adding your BANCOMAT Pay\n\nPlease wait"
+      koTimeout:
+        title: "Unable to recover your data"
+        body: "Please retry"
+      koNotFound:
+        title: "Sorry, we haven't found any active BANCOMAT Pay service"
+        body: "Contact your bank to activate BANCOMAT Pay!"
     satispay:
       headerTitle: "Add Satispay"
       start:
@@ -868,6 +886,9 @@ wallet:
     satispay:
       successful: Satispay successfully removed
       failed: Satispay could not be removed
+    bPay:
+      successful: BancomatPay successfully removed
+      failed: BancomatPay could not be removed
     successful: Card successfully removed
     failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'

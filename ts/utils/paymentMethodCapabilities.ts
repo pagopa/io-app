@@ -41,6 +41,7 @@ export const isPaymentMethodSupported = (
               : "arriving"
             : "not_available";
         case "Satispay":
+        case "BPay":
           return "arriving";
         default:
           return "not_available";

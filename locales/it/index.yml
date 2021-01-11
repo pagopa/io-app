@@ -298,7 +298,7 @@ profile:
           cta: Continua
         details:
           body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
-          question: Qual'è il motivo della cancellazione?
+          question: Qual è il motivo della cancellazione?
           answer_1: Non ritengo più utile IO
           answer_2: Non mi sento al sicuro su IO
           answer_3: Non ho mai usato l'app
@@ -777,13 +777,21 @@ wallet:
       detailTitle: Dettaglio
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
   searchAbi:
-    header: Aggiungi PagoBANCOMAT
-    title: Ricerca delle tue carte PagoBANCOMAT
-    description:
-      text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
-      text2: informativa sul trattamento dei dati personali.
-      text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
-      text4: cercando fra quelle disponibili
+    header: Aggiungi {{methodName}}
+    bancomat:
+      title: Ricerca delle tue carte PagoBANCOMAT
+      description:
+        text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
+        text2: informativa sul trattamento dei dati personali.
+        text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
+        text4: cercando fra quelle disponibili
+    bpay:
+      title: Ricerca dei tuoi account BANCOMAT Pay
+      description:
+        text1: "IO cercherà tutti gli account BANCOMAT Pay associati a te.\nProseguendo accetti l'"
+        text2: informativa sul trattamento dei dati personali.
+        text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
+        text4: cercando fra quelle disponibili
     bankName: Denominazione della banca
     noName: Nome non disponibile
     loading: Carico la lista delle banche...
@@ -834,6 +842,16 @@ wallet:
           body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
           body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
           skip: "Non ora"
+    bPay:
+      headerTitle: "Aggiungi BANCOMAT Pay"
+      loadingSearch: "Stiamo recuperando i tuoi dati BANCOMAT Pay\n\nAttendi qualche secondo"
+      loadingAdd: "Stiamo aggiungendo il tuo account BANCOMAT Pay\n\nAttendi qualche secondo"
+      koTimeout:
+        title: "Impossibile recuperare i tuoi dati"
+        body: "Riprova per favore"
+      koNotFound:
+        title: "Spiacenti, non abbiamo trovato nessuna servizio BANCOMAT Pay attivo"
+        body: "Contatta la tua Banca per attivare BANCOMAT Pay!"
     satispay:
       headerTitle: "Aggiungi Satispay"
       start:
@@ -888,6 +906,9 @@ wallet:
     satispay:
       successful: Satispay rimosso correttamente
       failed: Impossibile rimuovere Satispay
+    bPay:
+      successful: BancomatPay rimosso correttamente
+      failed: Impossibile rimuovere BancomatPay
     successful: Carta rimossa correttamente
     failed: Impossibile rimuovere la carta
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
