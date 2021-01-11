@@ -14,11 +14,12 @@ import * as React from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
-  instabugLog,
-  TypeLogs,
   openInstabugQuestionReport,
   openInstabugReplies,
-  DefaultReportAttachmentTypeConfiguration
+  DefaultReportAttachmentTypeConfiguration,
+  setInstabugSupportTokenAttribute,
+  TypeLogs,
+  instabugLog
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -33,6 +34,7 @@ import {
 } from "../ui/Markdown/handlers/link";
 import { SupportTokenState } from "../../store/reducers/authentication";
 import { getValueOrElse } from "../../features/bonus/bpd/model/RemoteValue";
+import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { AccessibilityEvents, BaseHeader } from "./BaseHeader";
 
 export interface ContextualHelpProps {
@@ -131,11 +133,21 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     const maybeReport = this.state.requestReport;
     this.setState({ requestReport: none }, () => {
       maybeReport.map(type => {
-        fromNullable(this.state.supportToken)
-          .mapNullable(rsp => getValueOrElse(rsp, undefined))
-          .map(st => {
-            instabugLog(JSON.stringify(st), TypeLogs.INFO, "support-token");
-          });
+        const supportToken = fromNullable(this.state.supportToken)
+          .mapNullable<SupportToken | undefined>(rsp =>
+            getValueOrElse(rsp, undefined)
+          )
+          .getOrElse(undefined);
+        // log on instabug the support token
+        if (supportToken) {
+          instabugLog(
+            JSON.stringify(supportToken),
+            TypeLogs.INFO,
+            "support-token"
+          );
+        }
+        // set or remove the support token as instabug user attribute
+        setInstabugSupportTokenAttribute(supportToken);
 
         switch (type) {
           case BugReporting.reportType.bug:
