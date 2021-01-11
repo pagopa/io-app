@@ -62,7 +62,7 @@ export function* addBPayToWalletAndActivateBpd() {
   );
   if (res !== "back") {
     // integration with the legacy "Add a payment"
-    // If the payment starts from "WALLET_ADD_PAYMENT_METHOD", remove from stack
+    // If the payment starts from "WALLET_ADD_DIGITAL_PAYMENT_METHOD", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
     const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
       navigationCurrentRouteSelector
