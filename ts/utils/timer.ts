@@ -1,7 +1,7 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import BackgroundTimer from "react-native-background-timer";
 
-export function startTimer(t: number): Promise<never> {
+export function startTimer(t: number): Promise<void> {
   // eslint-disable-next-line
   return new Promise(resolve => {
     BackgroundTimer.setTimeout(resolve.bind(null), t);
