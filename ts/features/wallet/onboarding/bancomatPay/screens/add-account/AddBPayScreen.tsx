@@ -1,15 +1,10 @@
 import { index } from "fp-ts/lib/Array";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, View } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
-import { Body } from "../../../../../../components/core/typography/Body";
-import { Label } from "../../../../../../components/core/typography/Label";
-import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { profileSelector } from "../../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -29,8 +24,8 @@ import {
   onboardingBPayChosenPanSelector
 } from "../../store/reducers/addingBPay";
 import { onboardingBPayFoundAccountsSelector } from "../../store/reducers/foundBpay";
-import { H1 } from "../../../../../../components/core/typography/H1";
 import LoadAddBPayComponent from "./LoadAddBPayComponent";
+import AddBPayComponent from "./AddBPayComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -85,20 +80,14 @@ const AddBPayScreen = (props: Props): React.ReactElement | null => {
       onRetry={() => fromNullable(props.selectedBPay).map(props.onRetry)}
     />
   ) : currentPan.isSome() ? (
-    // TODO: Replace with Iterative add component
-    <SafeAreaView>
-      <View style={IOStyles.horizontalContentPadding}>
-        <View spacer />
-        <H1>TMP schermata di aggiunta BPay al wallet</H1>
-        <View spacer />
-        <Label>Dati account trovato:</Label>
-        <Body>Nome banca: {currentPan.value.bankName}</Body>
-        <Body>Numero: {currentPan.value.numberObfuscated}</Body>
-        <Button onPress={handleOnContinue}>
-          <Label color={"white"}>Aggiungi al wallet</Label>
-        </Button>
-      </View>
-    </SafeAreaView>
+    <AddBPayComponent
+      account={currentPan.value}
+      accountsNumber={props.bPayAccounts.length}
+      currentIndex={currentIndex}
+      handleContinue={handleOnContinue}
+      handleSkip={() => nextPan(true)}
+      contextualHelp={props.contextualHelp}
+    />
   ) : null; // this should not happen
 };
 
