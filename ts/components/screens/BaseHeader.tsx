@@ -1,7 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Body, Left, Right, Text, View } from "native-base";
-import { Ref } from "react";
+import { Ref, FC } from "react";
 import * as React from "react";
 import { AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
 import { NavigationEvents } from "react-navigation";
@@ -20,7 +20,25 @@ import GoBackButton from "../GoBackButton";
 import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
-import HelpButton from "./help/HelpButton";
+import I18n from "../../i18n";
+
+type HelpButtonProps = {
+  onShowHelp: () => void;
+};
+
+const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
+  <ButtonDefaultOpacity
+    hasFullHitSlop
+    onPress={onShowHelp}
+    transparent={true}
+    accessibilityLabel={I18n.t(
+      "global.accessibility.contextualHelp.open.label"
+    )}
+    accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")}
+  >
+    <IconFont name={"io-question"} />
+  </ButtonDefaultOpacity>
+);
 
 const styles = StyleSheet.create({
   noLeft: {
