@@ -841,6 +841,9 @@ wallet:
     bPay:
       headerTitle: "Aggiungi BANCOMAT Pay"
       loadingSearch: "Stiamo recuperando i tuoi dati BANCOMAT Pay\n\nAttendi qualche secondo"
+      add:
+        label: "Account BANCOMAT Pay {{current}} di {{length}}"
+        screenTitle: "Vuoi aggiungere questo account?"
       loadingAdd: "Stiamo aggiungendo il tuo account BANCOMAT Pay\n\nAttendi qualche secondo"
       koTimeout:
         title: "Impossibile recuperare i tuoi dati"

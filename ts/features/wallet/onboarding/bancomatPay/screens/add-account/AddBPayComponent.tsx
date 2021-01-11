@@ -46,12 +46,12 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => {
       elem => elem.abi === props.account.instituteCode
     );
     setAbiInfo(abi ?? {});
-  }, [props.currentIndex]);
+  }, [props.account.instituteCode]);
 
   return (
     <BaseScreenComponent
       customGoBack={<View hspacer={true} spacer={true} />}
-      headerTitle={I18n.t("wallet.onboarding.bancomat.add.title")}
+      headerTitle={I18n.t("wallet.onboarding.bPay.headerTitle")}
       contextualHelp={props.contextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
@@ -65,11 +65,11 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => {
             ]}
           >
             <H1 style={styles.title}>
-              {I18n.t("wallet.onboarding.bancomat.add.screenTitle")}
+              {I18n.t("wallet.onboarding.bPay.add.screenTitle")}
             </H1>
             <View spacer small />
             <H4 weight={"Regular"} style={styles.flexStart}>
-              {I18n.t("wallet.onboarding.bancomat.add.label", {
+              {I18n.t("wallet.onboarding.bPay.add.label", {
                 current: props.currentIndex + 1,
                 length: props.accountsNumber
               })}
