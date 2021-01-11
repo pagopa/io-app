@@ -147,13 +147,12 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
    */
   const handleOnRequestAssistance = (reportType: BugReporting.reportType) => {
     if (props.isAuthenticated) {
-      // refresh / load support token
-      props.loadSupportToken();
-
       setSupportType(reportType);
 
       // ask to send the personal information to the assistance only for a new bug.
       if (reportType === BugReporting.reportType.bug) {
+        // refresh / load support token
+        props.loadSupportToken();
         setShowSendPersonalInfo(true);
         return;
       }
