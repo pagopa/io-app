@@ -77,7 +77,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
         </H4>
       </InfoBox>
       <View spacer={true} large={true} />
-      {bottomSheetBpdTransactionsBody}
+      {bottomSheetBpdTransactionsBody()}
     </>,
     I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.title"),
     600
