@@ -6,6 +6,7 @@ import { NavigationActions, NavigationState } from "react-navigation";
 import {
   call,
   cancel,
+  delay,
   Effect,
   fork,
   put,
@@ -58,7 +59,6 @@ import { profileSelector } from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
-import { startTimer } from "../utils/timer";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import I18n from "../i18n";
 import {
@@ -99,7 +99,7 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
-const WAIT_INITIALIZE_SAGA = 3000 as Millisecond;
+const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
  * Handles the application startup and the main application logic loop
  */
@@ -214,7 +214,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   if (isNone(maybeUserProfile)) {
     // Start again if we can't load the profile but wait a while
-    yield call(startTimer, WAIT_INITIALIZE_SAGA);
+    yield delay(WAIT_INITIALIZE_SAGA);
     yield put(startApplicationInitialization());
     return;
   }

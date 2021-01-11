@@ -52,8 +52,10 @@ date:
     - "am"
     - "pm"
 global:
+  you: "TU"
   badges:
     blocked: "Bloccato"
+    onGoing: "In corso"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
@@ -213,7 +215,7 @@ login:
   welcome:
     line1: benvenuto nella tua
     line2: Cittadinanza Digitale
-  expiration_info: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso dovrai effettuare un nuovo login per continuare a utilizzare IO.
+  expiration_info: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso con SPID o CIE, dovrai inserire nuovamente le credenziali per utilizzare IO.
 inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
@@ -296,7 +298,7 @@ profile:
           cta: Continua
         details:
           body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
-          question: Qual'è il motivo della cancellazione?
+          question: Qual è il motivo della cancellazione?
           answer_1: Non ritengo più utile IO
           answer_2: Non mi sento al sicuro su IO
           answer_3: Non ho mai usato l'app
@@ -434,7 +436,7 @@ authentication:
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     session_expired:
       title: La tua sessione è scaduta
-      body: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso, ti chiediamo di effettuare una nuova login con SPID o CIE per utilizzare IO.
+      body: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso con SPID o CIE, ti chiediamo di inserire nuovamente le credenziali per utilizzare IO.
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
@@ -503,8 +505,12 @@ authentication:
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
       alert: Vuoi davvero tornare indietro?
+      subtitleHelp: Il PIN è un codice di 8 cifre.
+      subtitleCTA: Dove lo trovo?
+      bottomSheetCTA: Hai dimenticato il PIN?
       contextualHelpTitle: Dove trovo i codici PIN e PUK?
-      contextualHelpBody: "Il codice **PIN** è composto da 8 cifre: \n\n- le prime 4 cifre ti sono state consegnate all'anagrafe;\n- le ultime 4 cifre ti sono state spedite a casa, insieme alla carta d'identità elettronica. \n\nMettile insieme e inseriscile in quest'ordine.\n\n Il codice **PUK** è necessario invece per sbloccare il PIN a seguito di tre tentativi errati. È composto da 8 cifre, e viene rilasciato insieme al PIN. \n\n[Hai dimenticato il PIN/PUK?](https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/)"
+      contextualHelpBody: !include help/ciePinHelpBody.md
+      contextualHelpCTA: Hai dimenticato il PIN/PUK?
     pinTempLocked:
       header: Entra con CIE
       title: Carta temporaneamente bloccata
@@ -771,13 +777,21 @@ wallet:
       detailTitle: Dettaglio
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
   searchAbi:
-    header: Aggiungi PagoBANCOMAT
-    title: Ricerca delle tue carte PagoBANCOMAT
-    description:
-      text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
-      text2: informativa sul trattamento dei dati personali.
-      text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
-      text4: cercando fra quelle disponibili
+    header: Aggiungi {{methodName}}
+    bancomat:
+      title: Ricerca delle tue carte PagoBANCOMAT
+      description:
+        text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
+        text2: informativa sul trattamento dei dati personali.
+        text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
+        text4: cercando fra quelle disponibili
+    bpay:
+      title: Ricerca dei tuoi account BANCOMAT Pay
+      description:
+        text1: "IO cercherà tutti gli account BANCOMAT Pay associati a te.\nProseguendo accetti l'"
+        text2: informativa sul trattamento dei dati personali.
+        text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
+        text4: cercando fra quelle disponibili
     bankName: Denominazione della banca
     noName: Nome non disponibile
     loading: Carico la lista delle banche...
@@ -828,6 +842,19 @@ wallet:
           body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
           body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
           skip: "Non ora"
+    bPay:
+      headerTitle: "Aggiungi BANCOMAT Pay"
+      loadingSearch: "Stiamo recuperando i tuoi dati BANCOMAT Pay\n\nAttendi qualche secondo"
+      add:
+        label: "Account BANCOMAT Pay {{current}} di {{length}}"
+        screenTitle: "Vuoi aggiungere questo account?"
+      loadingAdd: "Stiamo aggiungendo il tuo account BANCOMAT Pay\n\nAttendi qualche secondo"
+      koTimeout:
+        title: "Impossibile recuperare i tuoi dati"
+        body: "Riprova per favore"
+      koNotFound:
+        title: "Spiacenti, non abbiamo trovato nessuna servizio BANCOMAT Pay attivo"
+        body: "Contatta la tua Banca per attivare BANCOMAT Pay!"
     satispay:
       headerTitle: "Aggiungi Satispay"
       start:
@@ -853,6 +880,7 @@ wallet:
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
     btnUpdateApp: Aggiorna l'app IO
     favourite: Questo metodo di pagamento è già contrassegnato come il tuo preferito, se vuoi cambiarlo devi selezionarne un altro
+    amex: I pagamenti con carte American Express, per importi superiori a €1000, non sono al momento possibili
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Carte di Credito
@@ -881,6 +909,9 @@ wallet:
     satispay:
       successful: Satispay rimosso correttamente
       failed: Impossibile rimuovere Satispay
+    bPay:
+      successful: BancomatPay rimosso correttamente
+      failed: Impossibile rimuovere BancomatPay
     successful: Carta rimossa correttamente
     failed: Impossibile rimuovere la carta
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
@@ -1099,7 +1130,9 @@ wallet:
       securityCode: "•••"
       securityCode4D: "••••"
   acceptedCards: Carte accettate
+  missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
+  missingDataText: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online. Stiamo lavorando con la tua banca per permetterti di aggiungere questo tipo di carte e abilitarle al Cashback.
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
     chooser: Carica immagine dalla galleria
@@ -1233,11 +1266,11 @@ messages:
         block2: alle ore
       expiredAlert:
         expirable:
-          block1: Il pagamento è scaduto alle ore
+          block1: L'avviso è scaduto alle ore
           block2: del
         unexpirable:
-          block: Il pagamento è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad attualizzare l'importo.
-    presctiption:
+          block: L'avviso è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad aggiornare l'importo.
+    prescription:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
       expiredAlert:
@@ -1470,6 +1503,8 @@ systemsOff:
   closeApp: chiudi l'applicazione e riprova
 contextualHelp:
   title: IO ti aiuto
+  sendScreenshot:
+    cta: Condividi un'istantanea del tuo schermo (screenshot), in modo da rendere più semplice la risoluzione del problema.
   sendPersonalInfo:
     title: Nuova segnalazione
     description: "Il Team di IO è a disposizione per risolvere eventuali **problemi** dell’app o per ascoltare i **suggerimenti** dei nostri utenti relativi a **migliorie o nuove funzionalità.**\n\nSe hai dubbi sul **contenuto di un messaggio** o su un servizio, ti consigliamo di **contattare l'ente relativo**: troverai i contatti in fondo al messaggio o nella scheda del servizio in questione."
@@ -1484,6 +1519,10 @@ instabug:
     descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
     buttonChat: Riapri una segnalazione
     assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8.00 alle 20.00; sabato, domenica e giorni festivi dalle ore 8.00 alle 13.00
+bottomSheets:
+  ciePin:
+      title: Dove trovo il mio PIN?
+      content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "Cos'è SPID?"
@@ -1916,6 +1955,11 @@ bonus:
         body: "Abilita il Cashback sui metodi già presenti nel tuo portafoglio o aggiungine di nuovi."
         cta: "Attiva i metodi di pagamento"
     iban:
+      cta:
+        bpdNotActiveTitle: "attenzione"
+        bpdNotActiveMessage: "non sei iscritto al cashback, iscriviti e riprova."
+        noActivePeriodTitle: "attenzione"
+        noActivePeriodMessage: "non c'è alcun cashback attivo in questo momento."
       iban: "IBAN"
       edit: "Modifica IBAN"
       verify: "Controlla IBAN"
@@ -1953,18 +1997,35 @@ bonus:
           noIbanBody: "Imposta il tuo IBAN per poter ricevere il Cashback accumulato"
           button: "Imposta IBAN"
         transactionsCountOverview:
-          title: "Transazioni valide"
+          title: "Le tue transazioni"
           of: "su"
           closedPeriodKOBody: "Non hai raggiunto le {{transactions}} transazioni necessarie per ottenere un rimborso: avresti ricevuto € {{amount}}. Provaci nel prossimo periodo!"
-          currentPeriodKOBody: "Devi aver fatto almeno {{transactions}} transazioni per sbloccare il Cashback che hai accumulato!"
-          gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere dalle banche le ultime transazioni. Ancora un po’ di pazienza. Ti avviseremo qui!"
+          currentPeriodKOBody:
+            one: "Devi aver fatto almeno"
+            two: " {{transactions}} transazioni"
+            three: " per sbloccare il Cashback che hai accumulato!"
+          currentPeriodUnlockBody: "Complimenti {{name}}! Hai superato la soglia di {{transactions}} transazioni e sbloccato il Cashback!!"
+          currentPeriodMaxAmount: "Complimenti {{name}}! Hai raggiunto l’importo massimo previsto!"
+          currentPeriodSuperCashback: "In questo momento avresti diritto al Super Cashback di {{superCashbackAmount}} €! Continua così per rimanere in classifica."
+          gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere le ultime transazioni, per calcolare i rimborsi. Entro il {{endGracePeriodDate}} potrai vedere il calcolo definitivo."
           closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
           closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
+          moneyTransfer: "Entro il {{date}} riceverai il bonifico sull’IBAN che ci hai indicato."
           inactivePeriodBody: "Potrai iniziare a collezionare transazioni valide a partire dal {{date}}"
           label:
             one: "1 transazione valida"
             other: "{{count}} transazioni valide"
+        ranking:
+          title: "La tua posizione"
+          notReady:
+            title: "Quando vedrai la classifica Super Cashback?"
+            body: "La classifica si basa sul **numero di transazioni** eseguite con i metodi di pagamento su cui hai attivato il Cashback.\n\n
+                   Mostreremo la tua posizione in classifica **quando la distribuzione dei partecipanti sarà più significativa**: in questo momento ci sono moltissimi utenti con lo stesso numero di transazioni.\n\n
+                   Una volta pubblicata, la classifica **continuerà a cambiare** a seconda del numero di transazioni di tutti i partecipanti, fino alla fine dei 6 mesi."
       transaction:
+        label:
+          one: "1 transazione"
+          other: "{{count}} transazioni"
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
         noPaymentMethod:
@@ -1978,7 +2039,8 @@ bonus:
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
-              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- I pagamenti effettuati con Google Pay, Apple Pay e Samsung Pay non sono ancora supportati. Stiamo lavorando con la tua banca per ricevere anche questo tipo di transazioni.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
+              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- I pagamenti effettuati con Google Pay, Apple Pay e Samsung Pay non sono ancora supportati. Stiamo lavorando con la tua banca per ricevere anche questo tipo di transazioni.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.**"
+              readMore: "Leggi di più"
             calendarBlock:
               text1: "Ti informiamo che prima che tu veda la transazione su IO,"
               text2: "possono passare in media 3 giorni lavorativi"
@@ -1995,7 +2057,7 @@ bonus:
               text5: "un Cashback di "
             milestone:
               title: "Complimenti, hai ottenuto {{cashbackValue}}"
-              body: "Hai raggiunto il rimborso massimo previsto in questo periodo."
+              body: "Hai raggiunto il rimborso massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
           title: "Dettaglio della transazione"
           paymentCircuit: "Circuito di pagamento"
           transactionAmount: "Importo transazione"
@@ -2044,6 +2106,16 @@ bonus:
           active: Attivo
           closed: Concluso
           inactive: In arrivo
+      superCashback:
+        rankLabel: "{{position}}º utente in classifica"
+        rankTitle: "Classifica Super Cashback"
+        howItWorks:
+          title: "Come funziona?"
+          body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a €{{amount}}.**"
+          status:
+            active: "**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
+            closed: "La classifica per questo periodo è chiusa."
+      lastUpdate: Aggiornato alle {{hour}} del {{date}}
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
