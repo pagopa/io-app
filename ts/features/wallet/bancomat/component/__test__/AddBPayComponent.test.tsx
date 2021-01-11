@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Provider } from "react-redux";
+import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { getType } from "typesafe-actions";
 import { render, fireEvent } from "@testing-library/react-native";
@@ -30,7 +31,7 @@ describe("AddBPayComponent component", () => {
   });
 });
 
-const getComponent = (store: any) =>
+const getComponent = (store: Store<unknown>) =>
   render(
     <Provider store={store}>
       <AddBPayComponent />
