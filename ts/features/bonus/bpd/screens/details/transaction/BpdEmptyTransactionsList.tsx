@@ -30,7 +30,7 @@ const BpdEmptyTransactionsList: React.FunctionComponent = () => (
       </H4>
     </InfoBox>
     <View spacer={true} large={true} />
-    {bottomSheetBpdTransactionsBody}
+    {bottomSheetBpdTransactionsBody()}
   </>
 );
 
