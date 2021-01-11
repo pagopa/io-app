@@ -1227,15 +1227,15 @@ messages:
           block1: Add a reminder for the 
           block2: at
       expiringAlert:
-        block1: This notice will expire on
+        block1: This payment notice will expire on
         block2: at
       expiredAlert:
         expirable:
-          block1: The notice expired at 
+          block1: The payment notice expired at 
           block2: "on"
         unexpirable:
-          block: The payment is overdue. You can still pay; IO app will update the amount if needed.
-    presctiption:  
+          block: Your payment notice is overdue. You can still pay; IO app will update the amount if needed.
+    prescription:  
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
       expiredAlert:
@@ -2015,7 +2015,7 @@ bonus:
               text5: "a cashback of "
             milestone:
               title: "Congratulation, you earned {{cashbackValue}}"
-              body: "You have reached the maximum refund foreseen in this period."
+              body: "You have reached the maximum refund for this phase. Keep collecting valid transactions to climb the ranking!"
           title: "Transaction details"
           paymentCircuit: "Payment circuit"
           transactionAmount: "Transaction amount"
