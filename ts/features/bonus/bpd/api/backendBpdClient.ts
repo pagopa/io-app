@@ -62,12 +62,13 @@ type FindUsingGETTExtra = MapResponseType<
   PatchedCitizenResource
 >;
 
+const findUsingGETDecoderUtils = findUsingGETDecoder(PatchedCitizenResource);
 const findT: FindUsingGETTExtra = {
   method: "get",
   url: () => `/bpd/io/citizen`,
   query: _ => ({}),
   headers: headersProducers(),
-  response_decoder: findUsingGETDecoder(PatchedCitizenResource)
+  response_decoder: findUsingGETDecoderUtils
 };
 
 type EnrollmentTTExtra = MapResponseType<
