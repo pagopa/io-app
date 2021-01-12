@@ -9,14 +9,10 @@ import { Omit } from "italia-ts-commons/lib/types";
 import {
   getAllBonusActivationsDefaultDecoder,
   GetAllBonusActivationsT,
-  getBonusEligibilityCheckDefaultDecoder,
-  GetBonusEligibilityCheckT,
   getLatestBonusActivationByIdDefaultDecoder,
   GetLatestBonusActivationByIdT,
   startBonusActivationProcedureDefaultDecoder,
-  StartBonusActivationProcedureT,
-  startBonusEligibilityCheckDefaultDecoder,
-  StartBonusEligibilityCheckT
+  StartBonusActivationProcedureT
 } from "../../../../../definitions/bonus_vacanze/requestTypes";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
@@ -45,23 +41,6 @@ const startBonusActivationProcedure: StartBonusActivationProcedureT = {
   body: _ => "",
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: startBonusActivationProcedureDefaultDecoder()
-};
-
-const startBonusEligibilityCheckT: StartBonusEligibilityCheckT = {
-  method: "post",
-  url: () => `/api/v1/bonus/vacanze/eligibility`,
-  query: _ => ({}),
-  body: _ => "",
-  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: startBonusEligibilityCheckDefaultDecoder()
-};
-
-const getBonusEligibilityCheckT: GetBonusEligibilityCheckT = {
-  method: "get",
-  url: () => `/api/v1/bonus/vacanze/eligibility`,
-  query: _ => ({}),
-  headers: tokenHeaderProducer,
-  response_decoder: getBonusEligibilityCheckDefaultDecoder()
 };
 
 function ParamAuthorizationBearerHeaderProducer<
@@ -95,12 +74,6 @@ export function BackendBonusVacanze(
   };
 
   return {
-    startBonusEligibilityCheck: withBearerToken(
-      createFetchRequestForApi(startBonusEligibilityCheckT, options)
-    ),
-    getBonusEligibilityCheck: withBearerToken(
-      createFetchRequestForApi(getBonusEligibilityCheckT, options)
-    ),
     getLatestBonusVacanzeFromId: withBearerToken(
       createFetchRequestForApi(getLatestBonusFromIdT, options)
     ),
