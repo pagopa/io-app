@@ -97,7 +97,7 @@ const availabilityBadge = (badgeType: PaymentSupportStatus) => {
  *   - The card is not abilitated to pay on IO
  * @param props
  */
-function PagoPaPaymentCapability(props: Props): React.ReactElement {
+const PagoPaPaymentCapability: React.FC<Props> = props => {
   const onOpenLearnMoreAboutInAppPayments = () =>
     openWebUrl(IN_APP_PAYMENTS_LEARN_MORE_VIDEO_URL);
 
@@ -119,6 +119,7 @@ function PagoPaPaymentCapability(props: Props): React.ReactElement {
     I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetTitle"),
     300
   );
+
   return (
     <TouchableOpacity onPress={present}>
       <View style={styles.row}>
@@ -142,6 +143,6 @@ function PagoPaPaymentCapability(props: Props): React.ReactElement {
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 export default PagoPaPaymentCapability;

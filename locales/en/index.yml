@@ -1061,8 +1061,8 @@ wallet:
         active: Active
         arriving: Arriving
         incompatible: Incompatible
-        bottomSheetTitle: What are in app payments?
-        bottomSheetBody: IO lets you pay all pagoPA notices, even those on paper. If you wish, you can use this payment method. Anyhow, no in app payment will be triggered without your explicit consent.
+        bottomSheetTitle: What does in-app payment mean?
+        bottomSheetBody: With IO you can pay all pagoPA notices, even those on paper. When you perform in-app payments, you'll need to authorize the transaction using your biometrics or the unlock code.
         bottomSheetCTA: Learn more.
     bonus:
       name: Discount, bonus and other services
