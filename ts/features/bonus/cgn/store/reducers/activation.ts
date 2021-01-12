@@ -33,7 +33,7 @@ const reducer = (
     case getType(cgnActivationStatus.success):
       return {
         ...state,
-        status: CgnActivationProgressEnum.PROGRESS // To replace with action payload when types are defined
+        status: CgnActivationProgressEnum.SUCCESS // To replace with action payload when types are defined
       };
     case getType(cgnActivationStatus.failure):
       return {
