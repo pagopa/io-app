@@ -176,7 +176,7 @@ describe("deleteUserDataProcessingSaga", () => {
     )
       .next()
       .call(deleteUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: requestAction.payload
+        choice: requestAction.payload
       })
       .next(post202Response)
       .put(deleteUserDataProcessing.success({ choice: requestAction.payload }))
@@ -200,7 +200,7 @@ describe("deleteUserDataProcessingSaga", () => {
     )
       .next()
       .call(deleteUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: choice
+        choice
       })
       .next(get409Response)
       .put(
