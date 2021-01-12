@@ -7,19 +7,22 @@ import { Dispatch } from "redux";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
-import { EnhancedBancomat } from "../../../../store/reducers/wallet/wallets";
+import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
+import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
-  bancomat: EnhancedBancomat;
+  bancomat: BancomatPaymentMethod;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -56,7 +59,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  * @constructor
  */
 const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
-  const bancomat = props.navigation.getParam("bancomat");
+  const bancomat: BancomatPaymentMethod = props.navigation.getParam("bancomat");
   const { present } = useRemovePaymentMethodBottomSheet({
     icon: pagoBancomatImage,
     caption: bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")
@@ -70,20 +73,26 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       topContent={<View style={styles.headerSpacer} />}
       gradientHeader={true}
       hideHeader={true}
-      footerContent={
-        <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
-        />
-      }
+      contextualHelp={emptyContextualHelp}
     >
       <View style={styles.cardContainer}>
-        <BancomatCard bancomat={bancomat} />
+        <BancomatCard enhancedBancomat={bancomat} />
       </View>
       <View spacer={true} extralarge={true} />
       <View spacer={true} />
+
       <View style={IOStyles.horizontalContentPadding}>
+        <PaymentMethodCapabilities paymentMethod={bancomat} />
+        <View spacer={true} />
+        <ItemSeparatorComponent noPadded={true} />
+        <View spacer={true} />
         <BancomatInformation />
+        <View spacer={true} />
+        <UnsubscribeButton
+          onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
+        />
       </View>
+      <View spacer={true} extralarge={true} />
     </DarkLayout>
   );
 };

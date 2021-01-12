@@ -1,24 +1,21 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import { BottomSheetContent } from "../../../components/bottomSheet/BottomSheetContent";
 import { Body } from "../../../components/core/typography/Body";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { bottomSheetRawConfig } from "../../../utils/bottomSheet";
+import { PaymentMethodRepresentation } from "../../../types/pagopa";
+import { useIOBottomSheetRaw } from "../../../utils/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { PaymentMethodRepresentation } from "../../bonus/bpd/components/paymentMethodActivationToggle/base/PaymentMethodRepresentation";
+import { PaymentMethodRepresentationComponent } from "../../bonus/bpd/components/paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
 
 type Props = {
   onCancel: () => void;
   onConfirm: () => void;
-  representation: Omit<
-    React.ComponentProps<typeof PaymentMethodRepresentation>,
-    "children"
-  >;
+  representation: PaymentMethodRepresentation;
 };
 
 /**
@@ -26,7 +23,7 @@ type Props = {
  * @param props
  * @constructor
  */
-export const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
+const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
   <BottomSheetContent
     footer={
       <FooterWithButtons
@@ -47,7 +44,7 @@ export const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
   >
     <View>
       <View spacer={true} />
-      <PaymentMethodRepresentation {...props.representation} />
+      <PaymentMethodRepresentationComponent {...props.representation} />
       <View spacer={true} />
       <Body>{I18n.t("wallet.newRemove.body")}</Body>
     </View>
@@ -55,15 +52,12 @@ export const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
 );
 
 export const useRemovePaymentMethodBottomSheet = (
-  representation: Omit<
-    React.ComponentProps<typeof PaymentMethodRepresentation>,
-    "children"
-  >
+  representation: PaymentMethodRepresentation
 ) => {
-  const { present, dismiss } = useBottomSheetModal();
+  const { present, dismiss } = useIOBottomSheetRaw(350);
 
-  const openModalBox = (onConfirm: () => void) => {
-    const bottomSheetProps = bottomSheetRawConfig(
+  const openBottomSheet = (onConfirm: () => void) =>
+    present(
       <RemovePaymentMethod
         onCancel={dismiss}
         onConfirm={() => {
@@ -75,13 +69,7 @@ export const useRemovePaymentMethodBottomSheet = (
           icon: representation.icon
         }}
       />,
-      I18n.t("wallet.newRemove.title"),
-      350,
-      dismiss
+      I18n.t("wallet.newRemove.title")
     );
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
-  return { present: openModalBox, dismiss };
+  return { present: openBottomSheet, dismiss };
 };

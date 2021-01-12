@@ -5,11 +5,20 @@ import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/route
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
+import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
+import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
+import PaymentMethodOnboardingBPayNavigator from "../features/wallet/onboarding/bancomatPay/navigation/navigator";
+import WALLET_ONBOARDING_BPAY_ROUTES from "../features/wallet/onboarding/bancomatPay/navigation/routes";
+import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
+import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
+import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
+import CreditCardOnboardingAttemptDetailScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
+import CreditCardOnboardingAttemptsScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptsScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
@@ -24,8 +33,6 @@ import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
-import CreditCardOnboardingAttemptsScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptsScreen";
-import CreditCardOnboardingAttemptDetailScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -47,8 +54,17 @@ const baseRouteConfigMap = {
   [ROUTES.WALLET_BANCOMAT_DETAIL]: {
     screen: BancomatDetailScreen
   },
+  [ROUTES.WALLET_SATISPAY_DETAIL]: {
+    screen: SatispayDetailScreen
+  },
+  [ROUTES.WALLET_BPAY_DETAIL]: {
+    screen: BPayDetailScreen
+  },
   [ROUTES.WALLET_ADD_CARD]: {
     screen: AddCardScreen
+  },
+  [ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD]: {
+    screen: AddDigitalMethodScreen
   },
   [ROUTES.WALLET_CONFIRM_CARD_DETAILS]: {
     screen: ConfirmCardDetailsScreen
@@ -106,6 +122,12 @@ const bpdConfigMap = bpdEnabled
       },
       [WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN]: {
         screen: WalletAddBancomatNavigator
+      },
+      [WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN]: {
+        screen: PaymentMethodOnboardingSatispayNavigator
+      },
+      [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: {
+        screen: PaymentMethodOnboardingBPayNavigator
       }
     }
   : {};

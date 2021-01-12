@@ -1,19 +1,23 @@
 import { fromNullable, isNone, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import { Alert } from "react-native";
 import { NavigationActions, NavigationState } from "react-navigation";
 import {
   call,
   cancel,
+  delay,
   Effect,
   fork,
   put,
   select,
   spawn,
+  take,
   takeEvery,
   takeLatest
 } from "redux-saga/effects";
-import { getType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
+import { channel } from "redux-saga";
 import { BackendClient } from "../api/backend";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
@@ -23,7 +27,6 @@ import {
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
-
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
@@ -33,17 +36,21 @@ import { previousInstallationDataDeleteSuccess } from "../store/actions/installa
 import { loadMessageWithRelations } from "../store/actions/messages";
 import {
   navigateToMainNavigatorAction,
-  navigateToMessageDetailScreenAction
+  navigateToMessageDetailScreenAction,
+  navigateToPrivacyScreen
 } from "../store/actions/navigation";
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
+import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
+import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -52,8 +59,8 @@ import { profileSelector } from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
-import { startTimer } from "../utils/timer";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
+import I18n from "../i18n";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -92,7 +99,7 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
-const WAIT_INITIALIZE_SAGA = 3000 as Millisecond;
+const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
  * Handles the application startup and the main application logic loop
  */
@@ -207,7 +214,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   if (isNone(maybeUserProfile)) {
     // Start again if we can't load the profile but wait a while
-    yield call(startTimer, WAIT_INITIALIZE_SAGA);
+    yield delay(WAIT_INITIALIZE_SAGA);
     yield put(startApplicationInitialization());
     return;
   }
@@ -243,8 +250,12 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Start watching for requests of refresh the profile
   yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
 
-  // Start watching for requests of checkSession
-  yield fork(watchCheckSessionSaga, backendClient.getSession);
+  // Start watching for requests about session and support token
+  yield fork(
+    watchCheckSessionSaga,
+    backendClient.getSession,
+    backendClient.getSupportToken
+  );
 
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
@@ -334,9 +345,64 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield fork(
     watchUserDataProcessingSaga,
     backendClient.getUserDataProcessingRequest,
-    backendClient.postUserDataProcessingRequest
+    backendClient.postUserDataProcessingRequest,
+    backendClient.deleteUserDataProcessingRequest
   );
 
+  if (isSessionRefreshed) {
+    // Only if the user are logging in check the account removal status and,
+    // if is PENDING show an alert to notify him.
+    const checkUserDeletePendingTask: any = yield takeLatest(
+      loadUserDataProcessing.success,
+      function* (
+        loadUserDataProcessingSuccess: ActionType<
+          typeof loadUserDataProcessing.success
+        >
+      ) {
+        const maybeDeletePending = fromNullable(
+          loadUserDataProcessingSuccess.payload.value
+        ).filter(
+          uc =>
+            uc.choice === UserDataProcessingChoiceEnum.DELETE &&
+            uc.status === UserDataProcessingStatusEnum.PENDING
+        );
+        type leftOrRight = "left" | "right";
+        const alertChoiceChannel = channel<leftOrRight>();
+        if (maybeDeletePending.isSome()) {
+          Alert.alert(
+            I18n.t("startup.userDeletePendingAlert.title"),
+            I18n.t("startup.userDeletePendingAlert.message"),
+            [
+              {
+                text: I18n.t("startup.userDeletePendingAlert.cta_1"),
+                style: "cancel",
+                onPress: () => {
+                  alertChoiceChannel.put("left");
+                }
+              },
+              {
+                text: I18n.t("startup.userDeletePendingAlert.cta_2"),
+                style: "default",
+                onPress: () => {
+                  alertChoiceChannel.put("right");
+                }
+              }
+            ],
+            { cancelable: false }
+          );
+          const action: leftOrRight = yield take(alertChoiceChannel);
+          if (action === "left") {
+            yield put(navigateToPrivacyScreen);
+          }
+          yield cancel(checkUserDeletePendingTask);
+        }
+      }
+    );
+
+    yield put(
+      loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
+    );
+  }
   // Load visible services and service details from backend when requested
   yield fork(watchLoadServicesSaga, backendClient);
 

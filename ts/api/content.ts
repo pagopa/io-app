@@ -17,6 +17,7 @@ import { bpdEnabled, contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
+import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
 
 type GetServiceT = IGetApiRequestType<
   {
@@ -94,11 +95,26 @@ const getAvailableBonusesT: GetBonusListT = {
   method: "get",
   url: () =>
     bpdEnabled
-      ? "/bonus/bonus_available.json"
-      : "/bonus/vacanze/bonuses_available.json",
+      ? "/bonus/bonus_available_v2.json"
+      : "/bonus/bonus_available_v1.json",
   query: _ => ({}),
   headers: () => ({}),
   response_decoder: basicResponseDecoder(BonusesAvailable)
+};
+
+type GetAbisListT = IGetApiRequestType<
+  Record<string, unknown>,
+  never,
+  never,
+  BasicResponseType<AbiListResponse>
+>;
+
+const getAbisListT: GetAbisListT = {
+  method: "get",
+  url: () => "/status/abi.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(AbiListResponse)
 };
 
 /**
@@ -115,6 +131,7 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
     getService: createFetchRequestForApi(getServiceT, options),
     getMunicipality: createFetchRequestForApi(getMunicipalityT, options),
     getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options),
-    getContextualHelp: createFetchRequestForApi(getContextualHelpT, options)
+    getContextualHelp: createFetchRequestForApi(getContextualHelpT, options),
+    getAbiList: createFetchRequestForApi(getAbisListT, options)
   };
 }

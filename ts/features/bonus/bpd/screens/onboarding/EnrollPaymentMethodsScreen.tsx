@@ -12,10 +12,12 @@ import I18n from "../../../../../i18n";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { PatchedWalletV2 } from "../../../../../types/pagopa";
-import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import { PaymentMethod } from "../../../../../types/pagopa";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { PaymentMethodGroupedList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
-import { walletV2WithActivationStatusSelector } from "../../store/reducers/details/combiner";
+import { paymentMethodsWithActivationStatusSelector } from "../../store/reducers/details/combiner";
+import { areAnyPaymentMethodsActiveSelector } from "../../store/reducers/details/paymentMethods";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 
 const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.title"),
@@ -30,7 +32,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const renderPaymentMethod = (
-  potWallets: pot.Pot<ReadonlyArray<PatchedWalletV2>, Error>
+  potWallets: pot.Pot<ReadonlyArray<PaymentMethod>, Error>
 ) =>
   pot.fold(
     potWallets,
@@ -46,12 +48,47 @@ const renderPaymentMethod = (
   );
 
 /**
+ * return a two button footer
+ * left button is enabled when no payment methods are BPD active
+ * right button button is enabled when at least one payment method is BPD active
+ * @param props
+ */
+const getFooter = (props: Props) => {
+  const { continueStr, skip } = loadLocales();
+  const notNowButtonProps = {
+    primary: false,
+    bordered: true,
+    disabled: props.areAnyPaymentMethodsActive,
+    onPress: props.skip,
+    title: skip
+  };
+  const continueButtonProps = {
+    block: true,
+    primary: true,
+    disabled: !props.areAnyPaymentMethodsActive,
+    onPress: props.skip,
+    title: continueStr
+  };
+  return (
+    <FooterWithButtons
+      type={"TwoButtonsInlineHalf"}
+      leftButton={notNowButtonProps}
+      rightButton={continueButtonProps}
+    />
+  );
+};
+
+/**
  * This screen allows the user to activate bpd on the payment methods already in the wallet
  */
 const EnrollPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
-  const { headerTitle, continueStr, skip, title, body1, body2 } = loadLocales();
+  const { headerTitle, title, body1, body2 } = loadLocales();
   return (
-    <BaseScreenComponent goBack={false} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={false}
+      headerTitle={headerTitle}
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
@@ -65,12 +102,7 @@ const EnrollPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
             <Body>{body2}</Body>
           </View>
         </ScrollView>
-        <FooterTwoButtons
-          onRight={props.skip}
-          onCancel={props.skip}
-          rightText={continueStr}
-          leftText={skip}
-        />
+        {getFooter(props)}
       </SafeAreaView>
     </BaseScreenComponent>
   );
@@ -83,9 +115,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  potWallets: walletV2WithActivationStatusSelector(state)
-});
+const mapStateToProps = (state: GlobalState) => {
+  const potWallets = paymentMethodsWithActivationStatusSelector(state);
+  return {
+    potWallets,
+    areAnyPaymentMethodsActive: areAnyPaymentMethodsActiveSelector(
+      pot.getOrElse(potWallets, [])
+    )(state)
+  };
+};
 
 export default connect(
   mapStateToProps,

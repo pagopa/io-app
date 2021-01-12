@@ -24,9 +24,14 @@ import {
 import { Omit } from "italia-ts-commons/lib/types";
 import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
 import {
+  AddWalletSatispayUsingPOSTT,
   addWalletsBancomatCardUsingPOSTDecoder,
+  addWalletsBPayUsingPOSTDecoder,
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
+  getBpayListUsingGETDefaultDecoder,
+  GetBpayListUsingGETT,
+  GetConsumerUsingGETT,
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT,
   getWalletsV2UsingGETDecoder
@@ -34,6 +39,7 @@ import {
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
+  addWalletSatispayUsingPOSTDecoder,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
   DeleteBySessionCookieExpiredUsingDELETET,
@@ -41,10 +47,12 @@ import {
   favouriteWalletUsingPOSTDecoder,
   FavouriteWalletUsingPOSTT,
   GetAllPspsUsingGETT,
+  getConsumerUsingGETDefaultDecoder,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
   getPspUsingGETDecoder,
   GetPspUsingGETT,
+  getSelectedPspUsingGETDecoder,
   getTransactionsUsingGETDecoder,
   getTransactionUsingGETDecoder,
   GetTransactionUsingGETT,
@@ -62,6 +70,7 @@ import {
   NullableWallet,
   PagoPAErrorResponse,
   PatchedWalletV2ListResponse,
+  PatchedWalletV2Response,
   PaymentManagerToken,
   PspListResponse,
   PspResponse,
@@ -73,6 +82,8 @@ import {
 } from "../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
+import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayRequest";
+import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -282,6 +293,37 @@ const getPspList: GetPspListUsingGETTExtra = {
   response_decoder: getPspListUsingGETDecoderUtils
 };
 
+type PspParams = {
+  readonly Bearer: string;
+  readonly idWallet: string;
+  readonly idPayment: string;
+  readonly language: string;
+};
+export type GetSelectedPspUsingGETTExtra = r.IGetApiRequestType<
+  PspParams,
+  "Authorization",
+  never,
+  | r.IResponseType<200, PspListResponse>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
+>;
+const getPspQuery = (params: PspParams) => {
+  const { idPayment, idWallet, language } = params;
+  return {
+    idPayment,
+    idWallet,
+    language
+  };
+};
+const getPspSelected: GetSelectedPspUsingGETTExtra = {
+  method: "get",
+  url: () => "/v1/psps/selected",
+  query: getPspQuery,
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getSelectedPspUsingGETDecoder(PspListResponse)
+};
+
 type GetAllPspListUsingGETTExtra = MapResponseType<
   GetAllPspsUsingGETT,
   200,
@@ -291,11 +333,7 @@ type GetAllPspListUsingGETTExtra = MapResponseType<
 const getAllPspList: GetAllPspListUsingGETTExtra = {
   method: "get",
   url: () => "/v1/psps/all",
-  query: ({ idPayment, idWallet, language }) => ({
-    idPayment,
-    idWallet,
-    language
-  }),
+  query: getPspQuery,
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPspListUsingGETDecoderUtils
 };
@@ -465,6 +503,56 @@ const addPans: AddWalletsBancomatCardUsingPOSTTExtra = {
   response_decoder: addWalletsBancomatCardUsingPOSTDecoderUtils
 };
 
+const searchSatispay: GetConsumerUsingGETT = {
+  method: "get",
+  url: () => `/v1/satispay/consumers`,
+  query: () => ({}),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: getConsumerUsingGETDefaultDecoder()
+};
+
+const addSatispayToWallet: AddWalletSatispayUsingPOSTT = {
+  method: "post",
+  url: () => `/v1/satispay/add-wallet`,
+  query: () => ({}),
+  body: ({ satispayRequest }) => JSON.stringify(satispayRequest),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: addWalletSatispayUsingPOSTDecoder(PatchedWalletV2Response)
+};
+
+const searchBPay: GetBpayListUsingGETT = {
+  method: "get",
+  url: ({ abi }) => {
+    const abiParameter = fromNullable(abi)
+      .map(a => `?abi=${a}`)
+      .getOrElse("");
+    return `/v1/bpay/list${abiParameter}`;
+  },
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getBpayListUsingGETDefaultDecoder()
+};
+
+export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
+  { readonly Bearer: string; readonly bPayRequest: BPayRequest },
+  "Content-Type" | "Authorization",
+  never,
+  | r.IResponseType<200, PatchedWalletV2ListResponse>
+  | r.IResponseType<201, undefined>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
+>;
+
+const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
+  method: "post",
+  url: () => `/v1/bpay/add-wallets`,
+  query: () => ({}),
+  body: ({ bPayRequest }) => JSON.stringify(bPayRequest),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: addWalletsBPayUsingPOSTDecoder(PatchedWalletV2ListResponse)
+};
+
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
@@ -538,6 +626,19 @@ export function PaymentManagerClient(
       flip(
         withPaymentManagerToken(
           createFetchRequestForApi(getAllPspList, options)
+        )
+      )({
+        idPayment,
+        idWallet,
+        language: getLocalePrimaryWithFallback()
+      }),
+    getPspSelected: (
+      idPayment: TypeofApiParams<GetAllPspsUsingGETT>["idPayment"],
+      idWallet: TypeofApiParams<GetAllPspsUsingGETT>["idWallet"]
+    ) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(getPspSelected, options)
         )
       )({
         idPayment,
@@ -630,7 +731,30 @@ export function PaymentManagerClient(
     addPans: (cards: BancomatCardsRequest) =>
       flip(
         withPaymentManagerToken(createFetchRequestForApi(addPans, altOptions))
-      )({ bancomatCardsRequest: cards })
+      )({ bancomatCardsRequest: cards }),
+    searchSatispay: flip(
+      withPaymentManagerToken(
+        createFetchRequestForApi(searchSatispay, altOptions)
+      )
+    ),
+    addSatispayToWallet: (satispayRequest: SatispayRequest) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(addSatispayToWallet, altOptions)
+        )
+      )({ satispayRequest }),
+    searchBPay: (abi?: string) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(searchBPay, altOptions)
+        )
+      )({ abi }),
+    addBPayToWallet: (bPayRequest: BPayRequest) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(addBPayToWallet, altOptions)
+        )
+      )({ bPayRequest })
   };
 }
 

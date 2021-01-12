@@ -1,11 +1,15 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
 import { H2 } from "../../../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../../../components/core/typography/H5";
+import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
+import { Dispatch } from "../../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../../store/reducers/types";
+import { navigateToBpdTransactions } from "../../../../navigation/actions";
 import { BpdPeriod } from "../../../../store/actions/periods";
-import { useHowItWorksBottomSheet } from "../bottomsheet/HowItWorks";
 import { BpdBaseShadowBoxLayout } from "./base/BpdBaseShadowBoxLayout";
 import { ProgressBar } from "./base/ProgressBar";
 
@@ -13,7 +17,8 @@ type Props = {
   transactions: number;
   minTransactions: number;
   period: BpdPeriod;
-};
+} & ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   title: {
@@ -29,8 +34,9 @@ const loadLocales = () => ({
 /**
  * When transactions < minTransactions, display a progress bar with the related information
  * @param props
+ * @deprecated not used anymore, it is kept for some time in case of second thoughts
  */
-const PercentageTransactionsSummary = (props: Props) => {
+export const PercentageTransactionsSummary = (props: Props) => {
   const { title, of } = loadLocales();
   return (
     <BpdBaseShadowBoxLayout
@@ -97,15 +103,19 @@ const TextualTransactionsSummary = (props: Props) => {
  * @param props
  * @constructor
  */
-export const TransactionsGraphicalSummary: React.FunctionComponent<Props> = props => {
-  const { present } = useHowItWorksBottomSheet(props.period);
-  const onPress = props.period.status === "Active" ? present : undefined;
-
-  return props.transactions < props.minTransactions ? (
-    <TouchableOpacity onPress={onPress}>
-      <PercentageTransactionsSummary {...props} />
-    </TouchableOpacity>
-  ) : (
+const TransactionsGraphicalSummary = (props: Props) => (
+  <TouchableOpacity onPress={props.goToTransactions} style={IOStyles.flex}>
     <TextualTransactionsSummary {...props} />
-  );
-};
+  </TouchableOpacity>
+);
+
+const mapStateToProps = (_: GlobalState) => ({});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  goToTransactions: () => dispatch(navigateToBpdTransactions())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TransactionsGraphicalSummary);

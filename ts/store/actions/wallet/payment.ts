@@ -109,7 +109,7 @@ export const paymentCheck = createAsyncAction(
 
 type PaymentFetchPspsForPaymentIdRequestPayload = Readonly<{
   idPayment: string;
-  idWallet?: number;
+  idWallet: number;
   onSuccess?: (
     action: ActionType<typeof paymentFetchPspsForPaymentId["success"]>
   ) => void;

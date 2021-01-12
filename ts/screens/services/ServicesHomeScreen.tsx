@@ -42,7 +42,7 @@ import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import {
   instabugLog,
-  openInstabugBugReport,
+  openInstabugQuestionReport,
   TypeLogs
 } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -107,6 +107,8 @@ import {
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -336,7 +338,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
   private instabugLogAndOpenReport = () => {
     this.sendDataToInstabug();
-    openInstabugBugReport();
+    openInstabugQuestionReport();
   };
   /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
   private instabugReportTag = "services-loading-error";
@@ -694,77 +696,80 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       pot.isLoading(potUserMetadata) ||
       pot.isUpdating(potUserMetadata);
     return (
-      <AnimatedTabs
-        tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
-        tabBarUnderlineStyle={styles.tabBarUnderlineActive}
-        onScroll={this.handleOnScroll}
-        onChangeTab={this.handleOnChangeTab}
-        initialPage={0}
-      >
-        <Tab
-          activeTextStyle={styles.activeTextStyle}
-          textStyle={styles.textStyle}
-          heading={I18n.t("services.tab.locals")}
+      <View style={IOStyles.flex}>
+        <AnimatedTabs
+          tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
+          tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+          onScroll={this.handleOnScroll}
+          onChangeTab={this.handleOnChangeTab}
+          initialPage={0}
         >
-          <ServicesTab
-            isLocal={true}
-            isAll={false}
-            sections={localTabSections}
-            isRefreshing={isRefreshing}
-            onRefresh={this.refreshScreenContent}
-            onServiceSelect={this.onServiceSelect}
-            handleOnLongPressItem={this.handleOnLongPressItem}
-            isLongPressEnabled={this.state.isLongPressEnabled}
-            updateOrganizationsOfInterestMetadata={
-              this.props.updateOrganizationsOfInterestMetadata
-            }
-            updateToast={() =>
-              this.setState({
-                toastErrorMessage: I18n.t(
-                  "serviceDetail.onUpdateEnabledChannelsFailure"
-                )
-              })
-            }
-            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            tabScrollOffset={this.animatedTabScrollPositions[0]}
-          />
-        </Tab>
-        <Tab
-          activeTextStyle={styles.activeTextStyle}
-          textStyle={styles.textStyle}
-          heading={I18n.t("services.tab.national")}
-        >
-          <ServicesTab
-            isAll={false}
-            sections={nationalTabSections}
-            isRefreshing={isRefreshing}
-            onRefresh={this.refreshScreenContent}
-            onServiceSelect={this.onServiceSelect}
-            handleOnLongPressItem={this.handleOnLongPressItem}
-            isLongPressEnabled={this.state.isLongPressEnabled}
-            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            tabScrollOffset={this.animatedTabScrollPositions[1]}
-          />
-        </Tab>
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("services.tab.locals")}
+          >
+            <ServicesTab
+              isLocal={true}
+              isAll={false}
+              sections={localTabSections}
+              isRefreshing={isRefreshing}
+              onRefresh={this.refreshScreenContent}
+              onServiceSelect={this.onServiceSelect}
+              handleOnLongPressItem={this.handleOnLongPressItem}
+              isLongPressEnabled={this.state.isLongPressEnabled}
+              updateOrganizationsOfInterestMetadata={
+                this.props.updateOrganizationsOfInterestMetadata
+              }
+              updateToast={() =>
+                this.setState({
+                  toastErrorMessage: I18n.t(
+                    "serviceDetail.onUpdateEnabledChannelsFailure"
+                  )
+                })
+              }
+              onItemSwitchValueChanged={this.onItemSwitchValueChanged}
+              tabScrollOffset={this.animatedTabScrollPositions[0]}
+            />
+          </Tab>
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("services.tab.national")}
+          >
+            <ServicesTab
+              isAll={false}
+              sections={nationalTabSections}
+              isRefreshing={isRefreshing}
+              onRefresh={this.refreshScreenContent}
+              onServiceSelect={this.onServiceSelect}
+              handleOnLongPressItem={this.handleOnLongPressItem}
+              isLongPressEnabled={this.state.isLongPressEnabled}
+              onItemSwitchValueChanged={this.onItemSwitchValueChanged}
+              tabScrollOffset={this.animatedTabScrollPositions[1]}
+            />
+          </Tab>
 
-        <Tab
-          activeTextStyle={styles.activeTextStyle}
-          textStyle={styles.textStyle}
-          heading={I18n.t("services.tab.all")}
-        >
-          <ServicesTab
-            isAll={true}
-            sections={allTabSections}
-            isRefreshing={isRefreshing}
-            onRefresh={this.refreshScreenContent}
-            onServiceSelect={this.onServiceSelect}
-            handleOnLongPressItem={this.handleOnLongPressItem}
-            isLongPressEnabled={this.state.isLongPressEnabled}
-            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            tabScrollOffset={this.animatedTabScrollPositions[2]}
-          />
-        </Tab>
-      </AnimatedTabs>
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("services.tab.all")}
+          >
+            <ServicesTab
+              isAll={true}
+              sections={allTabSections}
+              isRefreshing={isRefreshing}
+              onRefresh={this.refreshScreenContent}
+              onServiceSelect={this.onServiceSelect}
+              handleOnLongPressItem={this.handleOnLongPressItem}
+              isLongPressEnabled={this.state.isLongPressEnabled}
+              onItemSwitchValueChanged={this.onItemSwitchValueChanged}
+              tabScrollOffset={this.animatedTabScrollPositions[2]}
+            />
+          </Tab>
+        </AnimatedTabs>
+        <SectionStatusComponent sectionKey={"services"} />
+      </View>
     );
   };
 }

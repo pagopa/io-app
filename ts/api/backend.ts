@@ -21,6 +21,7 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
+  AbortUserDataProcessingT,
   activatePaymentDefaultDecoder,
   ActivatePaymentT,
   createOrUpdateInstallationDefaultDecoder,
@@ -33,6 +34,8 @@ import {
   GetServiceT,
   getSessionStateDefaultDecoder,
   GetSessionStateT,
+  getSupportTokenDefaultDecoder,
+  GetSupportTokenT,
   getUserDataProcessingDefaultDecoder,
   GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
@@ -276,6 +279,51 @@ export function BackendClient(
     response_decoder: upsertUserDataProcessingDefaultDecoder()
   };
 
+  // Custom decoder until we fix the problem in the io-utils generator
+  // https://www.pivotaltracker.com/story/show/169915207
+  function abortUserDataProcessingDecoderTest() {
+    return r.composeResponseDecoders(
+      r.composeResponseDecoders(
+        r.composeResponseDecoders(
+          r.composeResponseDecoders(
+            r.composeResponseDecoders(
+              r.composeResponseDecoders(
+                r.constantResponseDecoder<undefined, 202>(202, undefined),
+                r.ioResponseDecoder<
+                  400,
+                  typeof ProblemJson["_A"],
+                  typeof ProblemJson["_O"]
+                >(400, ProblemJson)
+              ),
+              r.constantResponseDecoder<undefined, 401>(401, undefined)
+            ),
+            r.constantResponseDecoder<undefined, 404>(404, undefined)
+          ),
+          r.ioResponseDecoder<
+            409,
+            typeof ProblemJson["_A"],
+            typeof ProblemJson["_O"]
+          >(409, ProblemJson)
+        ),
+        r.constantResponseDecoder<undefined, 429>(429, undefined)
+      ),
+      r.ioResponseDecoder<
+        500,
+        typeof ProblemJson["_A"],
+        typeof ProblemJson["_O"]
+      >(500, ProblemJson)
+    );
+  }
+
+  const deleteUserDataProcessingT: AbortUserDataProcessingT = {
+    method: "delete",
+    url: ({ userDataProcessingChoiceParam }) =>
+      `/api/v1/user-data-processing/${userDataProcessingChoiceParam}`,
+    query: _ => ({}),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    response_decoder: abortUserDataProcessingDecoderTest()
+  };
+
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
     method: "put",
     url: params => `/api/v1/installations/${params.installationID}`,
@@ -318,6 +366,14 @@ export function BackendClient(
     headers: tokenHeaderProducer,
     query: () => ({}),
     response_decoder: getActivationStatusDefaultDecoder()
+  };
+
+  const getSupportToken: GetSupportTokenT = {
+    method: "get",
+    url: () => `/api/v1/token/support`,
+    headers: tokenHeaderProducer,
+    query: () => ({}),
+    response_decoder: getSupportTokenDefaultDecoder()
   };
 
   // withBearerToken injects the field 'Baerer' with value token into the parameter P
@@ -384,6 +440,12 @@ export function BackendClient(
     ),
     postUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(postUserDataProcessingT, options)
+    ),
+    getSupportToken: withBearerToken(
+      createFetchRequestForApi(getSupportToken, options)
+    ),
+    deleteUserDataProcessingRequest: withBearerToken(
+      createFetchRequestForApi(deleteUserDataProcessingT, options)
     )
   };
 }

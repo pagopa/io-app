@@ -20,19 +20,12 @@ import {
   bpdUpsertIban
 } from "../store/actions/iban";
 import { bpdTransactionsLoad } from "../store/actions/transactions";
+import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
+import { bpdSelectPeriod } from "../store/actions/selectedPeriod";
 import {
-  bpdDetailsLoadAll,
-  bpdLoadActivationStatus
-} from "../store/actions/details";
-import {
-  addBancomatToWallet,
-  loadAbi,
-  searchUserPans,
-  walletAddBancomatBack,
-  walletAddBancomatCancel,
-  walletAddBancomatCompleted,
-  walletAddBancomatStart
-} from "../../../wallet/onboarding/bancomat/store/actions";
+  bpdPaymentMethodActivation,
+  bpdUpdatePaymentMethodActivation
+} from "../store/actions/paymentMethods";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -54,9 +47,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, { bpdEnroll: action.payload.enabled });
     case getType(bpdDeleteUserFromProgram.failure):
     case getType(bpdEnrollUserToProgram.failure):
+    case getType(bpdAllData.failure):
       return mp.track(action.type, { reason: action.payload.message });
 
-    // iban
+    // IBAN
     case getType(bpdIbanInsertionStart):
     case getType(bpdIbanInsertionContinue):
     case getType(bpdIbanInsertionCancel):
@@ -74,24 +68,16 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdTransactionsLoad.success):
       return mp.track(action.type, {
         awardPeriodId: action.payload.awardPeriodId,
-        hashPan: action.payload.results.map(r => r.hashPan).join(","),
-        idTrxAcquirer: action.payload.results
-          .map(r => r.idTrxAcquirer)
-          .join(","),
-        idTrxIssuer: action.payload.results.map(r => r.idTrxIssuer).join(","),
-        trxDate: action.payload.results
-          .map(r => r.trxDate.toString())
-          .join(","),
-        circuitType: action.payload.results.map(r => r.circuitType).join(",")
+        hashPan: action.payload.results.map(r => r.hashPan),
+        idTrxAcquirer: action.payload.results.map(r => r.idTrxAcquirer),
+        idTrxIssuer: action.payload.results.map(r => r.idTrxIssuer),
+        trxDate: action.payload.results.map(r => r.trxDate.toString()),
+        circuitType: action.payload.results.map(r => r.circuitType)
       });
-    case getType(bpdTransactionsLoad.failure):
-      return mp.track(action.type, {
-        awardPeriodId: action.payload.awardPeriodId,
-        reason: action.payload.error.message
-      });
-
     // CashBack details
-    case getType(bpdDetailsLoadAll):
+    case getType(bpdTransactionsLoad.failure):
+    case getType(bpdAllData.request):
+    case getType(bpdAllData.success):
     case getType(bpdLoadActivationStatus.request):
       return mp.track(action.type);
     case getType(bpdLoadActivationStatus.success):
@@ -101,37 +87,33 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdLoadActivationStatus.failure):
       return mp.track(action.type, { reason: action.payload.message });
 
-    // Bancomat
-    case getType(walletAddBancomatStart):
-    case getType(walletAddBancomatCompleted):
-    case getType(walletAddBancomatCancel):
-    case getType(walletAddBancomatBack):
-    case getType(loadAbi.request):
-    case getType(searchUserPans.request):
-    case getType(addBancomatToWallet.request):
-    case getType(addBancomatToWallet.success):
-      return mp.track(action.type);
-
-    case getType(loadAbi.success):
+    // Amount
+    case getType(bpdSelectPeriod): // SelectedPeriod
       return mp.track(action.type, {
-        count: action.payload.data?.length
-      });
-    case getType(searchUserPans.success):
-      return mp.track(action.type, {
-        count: action.payload.cards.length,
-        messages: action.payload.messages
+        awardPeriodId: action.payload.awardPeriodId
       });
 
-    case getType(loadAbi.failure):
-    case getType(addBancomatToWallet.failure):
-      return mp.track(action.type, { reason: action.payload.message });
-
-    case getType(searchUserPans.failure):
+    // PaymentMethod
+    case getType(bpdPaymentMethodActivation.request):
+      return mp.track(action.type, { hashPan: action.payload });
+    case getType(bpdUpdatePaymentMethodActivation.request):
       return mp.track(action.type, {
-        reason:
-          action.payload.kind === "timeout"
-            ? action.payload.kind
-            : action.payload.value.message
+        hashPan: action.payload.hPan,
+        value: action.payload.value
+      });
+    case getType(bpdPaymentMethodActivation.success):
+    case getType(bpdUpdatePaymentMethodActivation.success):
+      return mp.track(action.type, {
+        hashPan: action.payload.hPan,
+        activationStatus: action.payload.activationStatus,
+        activationDate: action.payload.activationDate,
+        deactivationDate: action.payload.deactivationDate
+      });
+    case getType(bpdPaymentMethodActivation.failure):
+    case getType(bpdUpdatePaymentMethodActivation.failure):
+      return mp.track(action.type, {
+        hashPan: action.payload.hPan,
+        reason: action.payload.error.message
       });
   }
   return Promise.resolve();

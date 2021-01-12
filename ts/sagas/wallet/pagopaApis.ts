@@ -435,14 +435,16 @@ export function* paymentFetchPspsForWalletRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentFetchPspsForPaymentId["request"]>
 ) {
-  const apiGetPspList = pagoPaClient.getPspList(
+  const apiGetPspSelected = pagoPaClient.getPspSelected(
     action.payload.idPayment,
-    action.payload.idWallet
+    action.payload.idWallet.toString()
   );
-  const getPspListWithRefresh = pmSessionManager.withRefresh(apiGetPspList);
+  const apiGetPspSelectedWithRefresh = pmSessionManager.withRefresh(
+    apiGetPspSelected
+  );
   try {
-    const response: SagaCallReturnType<typeof getPspListWithRefresh> = yield call(
-      getPspListWithRefresh
+    const response: SagaCallReturnType<typeof apiGetPspSelectedWithRefresh> = yield call(
+      apiGetPspSelectedWithRefresh
     );
     if (response.isRight()) {
       if (response.value.status === 200) {

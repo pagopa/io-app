@@ -4,21 +4,40 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
+import {
+  call,
+  Effect,
+  put,
+  select,
+  take,
+  takeLatest
+} from "redux-saga/effects";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
+import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
+import { Locales } from "../../locales/locales";
 import { BackendClient } from "../api/backend";
 import { tosVersion } from "../config";
+import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { allBonusActiveSelector } from "../features/bonus/bonusVacanze/store/reducers/allActive";
+import { bpdLoadActivationStatus } from "../features/bonus/bpd/store/actions/details";
+import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
+import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
+import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
 import {
+  loadBonusBeforeRemoveAccount,
   profileLoadFailure,
   profileLoadRequest,
   profileLoadSuccess,
   profileUpsert,
+  removeAccountMotivation,
   startEmailValidation
 } from "../store/actions/profile";
+import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
+import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { profileSelector } from "../store/reducers/profile";
 import { SagaCallReturnType } from "../types/utils";
 import {
@@ -26,9 +45,6 @@ import {
   fromPreferredLanguageToLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
-import { Locales } from "../../locales/locales";
-import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
-import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -243,6 +259,57 @@ function* checkLoadedProfile(
   }
 }
 
+export function* handleLoadBonusBeforeRemoveAccount() {
+  const bpdActive: ReturnType<typeof bpdEnabledSelector> = yield select(
+    bpdEnabledSelector
+  );
+
+  // check if there are some bpd
+  if (pot.isNone(bpdActive)) {
+    // Load the bpd data and wait for a response
+    yield put(bpdLoadActivationStatus.request());
+
+    yield take([
+      bpdLoadActivationStatus.success,
+      bpdLoadActivationStatus.failure
+    ]);
+  }
+
+  const bonusVacanzeBonus: ReturnType<typeof allBonusActiveSelector> = yield select(
+    allBonusActiveSelector
+  );
+
+  // check if there are some bonus vacanze
+  if (bonusVacanzeBonus.length === 0) {
+    // Load the bonus data and no wait because if there are some bonus
+    // they will be loaded individually
+    yield put(loadAllBonusActivations.request());
+  }
+}
+
+// watch for action of removing account
+export function* handleRemoveAccount() {
+  // dispatch an action to request account deletion
+  yield put(
+    upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
+  );
+  // wait for response (success/failure)
+  const upsertUserDataProcessingResponse = yield take([
+    upsertUserDataProcessing.success,
+    upsertUserDataProcessing.failure
+  ]);
+
+  // if success go to remove account success screen
+  if (
+    isActionOf(
+      upsertUserDataProcessing.success,
+      upsertUserDataProcessingResponse
+    )
+  ) {
+    yield put(navigateToRemoveAccountSuccess());
+  }
+}
+
 // watch for some actions about profile
 export function* watchProfile(
   startEmailValidationProcess: ReturnType<
@@ -257,4 +324,12 @@ export function* watchProfile(
   );
   // check the loaded profile
   yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
+
+  // Start watching for request bonus before remove profile
+  yield takeLatest(
+    loadBonusBeforeRemoveAccount,
+    handleLoadBonusBeforeRemoveAccount
+  );
+  // Start watching for request of remove profile
+  yield takeLatest(removeAccountMotivation, handleRemoveAccount);
 }

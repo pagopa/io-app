@@ -38,7 +38,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
-  pagoPaCreditCardSelector
+  pagoPaCreditCardWalletV1Selector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
@@ -373,7 +373,7 @@ const mapStateToProps = (state: GlobalState) => {
     : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
   const hasWallets =
-    pot.getOrElse(pagoPaCreditCardSelector(state), []).length !== 0;
+    pot.getOrElse(pagoPaCreditCardWalletV1Selector(state), []).length !== 0;
 
   return {
     error,

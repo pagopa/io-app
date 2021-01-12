@@ -1,4 +1,3 @@
-import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -7,7 +6,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import {
   instabugLog,
-  openInstabugBugReport,
+  openInstabugQuestionReport,
   TypeLogs
 } from "../../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -72,13 +71,12 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
 ) => {
   const attempt = props.navigation.getParam("attempt");
   const instabugLogAndOpenReport = () => {
-    Instabug.appendTags(["credit-card-support"]);
     pot.map(props.profile, p => {
       const profileDetails = getProfileDetailsLog(p);
       instabugLog(profileDetails, TypeLogs.INFO, instabugTag);
       instabugLog(JSON.stringify(attempt), TypeLogs.INFO, instabugTag);
     });
-    openInstabugBugReport();
+    openInstabugQuestionReport();
   };
 
   const renderSeparator = () => (

@@ -1,4 +1,11 @@
-export const walletV2List2Bancomat1PagoPACC = {
+// 2 bancomat, 1 credit card. All compliant with pagoPa
+import { WalletTypeEnum } from "../../../../../definitions/pagopa/WalletV2";
+import {
+  EnableableFunctionsTypeEnum,
+  RawBPayPaymentMethod
+} from "../../../../types/pagopa";
+
+export const walletsV2_1 = {
   data: [
     {
       walletType: "Bancomat",
@@ -74,8 +81,8 @@ export const walletV2List2Bancomat1PagoPACC = {
     }
   ]
 };
-
-export const walletV2List1Bancomat1CCNotPagoPA = {
+// 1 bancomat, 1 credit card. No compliant with pagoPa
+export const walletsV2_2 = {
   data: [
     {
       walletType: "Bancomat",
@@ -98,7 +105,7 @@ export const walletV2List1Bancomat1CCNotPagoPA = {
         type: "PP"
       },
       onboardingChannel: "I",
-      pagoPA: true,
+      pagoPA: false,
       updateDate: "2020-11-16"
     },
     {
@@ -126,4 +133,115 @@ export const walletV2List1Bancomat1CCNotPagoPA = {
       updateDate: "2020-11-16"
     }
   ]
+};
+
+// 1 bancomat, 1 bancomatPay, 1 satispay, 1 creditCard
+export const walletsV2_3 = {
+  data: [
+    {
+      walletType: "Bancomat",
+      createDate: "2021-10-22",
+      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      favourite: false,
+      idWallet: 20341,
+      info: {
+        blurredNumber: "0003",
+        brand: "MASTERCARD",
+        brandLogo:
+          "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_mc.png",
+        expireMonth: "10",
+        expireYear: "2021",
+        hashPan:
+          "e105a87731025d54181d8e4c4c04ff344ce82e57d6a3d6c6911e8eadb0348d7b",
+        holder: "Maria Rossi",
+        htokenList: ["token1", "token2"],
+        issuerAbiCode: "00095",
+        type: "PP"
+      },
+      onboardingChannel: "I",
+      pagoPA: true,
+      updateDate: "2020-11-20"
+    },
+    {
+      walletType: "Card",
+      createDate: "2021-04-15",
+      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      favourite: false,
+      idWallet: 21750,
+      info: {
+        blurredNumber: "0000",
+        brand: "DINERS",
+        brandLogo:
+          "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_diners.png",
+        expireMonth: "4",
+        expireYear: "2021",
+        hashPan:
+          "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871",
+        holder: "Maria Rossi",
+        htokenList: ["token1", "token2"],
+        issuerAbiCode: "00352",
+        type: "PP"
+      },
+      onboardingChannel: "I",
+      pagoPA: true,
+      updateDate: "2020-11-20"
+    },
+    {
+      walletType: "Satispay",
+      createDate: "2021-11-16",
+      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      favourite: false,
+      idWallet: 25924,
+      info: {
+        brandLogo: "http://placeimg.com/640/480/technics",
+        uuid:
+          "2f969cf41246000a4f5a3b6e100e1826bd58205a0feba80f64c2a853fb8f4fa50000"
+      },
+      onboardingChannel: "I",
+      pagoPA: true,
+      updateDate: "2020-11-20"
+    },
+    {
+      walletType: "BPay",
+      createDate: "2021-07-08",
+      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      favourite: false,
+      idWallet: 25572,
+      info: {
+        bankName: "Denti, Visintin and Galati",
+        instituteCode: "4",
+        numberObfuscated: "****0004",
+        paymentInstruments: [],
+        uidHash:
+          "d48a59cdfbe3da7e4fe25e28cbb47d5747720ecc6fc392c87f1636fe95db22f90004"
+      },
+      onboardingChannel: "I",
+      pagoPA: true,
+      updateDate: "2020-11-20"
+    }
+  ]
+};
+
+export const rawBPay: RawBPayPaymentMethod = {
+  walletType: WalletTypeEnum.BPay,
+  createDate: "2021-07-08",
+  enableableFunctions: [
+    EnableableFunctionsTypeEnum.FA,
+    EnableableFunctionsTypeEnum.pagoPA,
+    EnableableFunctionsTypeEnum.BPD
+  ],
+  favourite: false,
+  idWallet: 1,
+  info: {
+    bankName: "Denti, Visintin and Galati",
+    instituteCode: "4",
+    numberObfuscated: "+3934****0004",
+    paymentInstruments: [],
+    uidHash:
+      "d48a59cdfbe3da7e4fe25e28cbb47d5747720ecc6fc392c87f1636fe95db22f90004"
+  },
+  onboardingChannel: "I",
+  pagoPA: true,
+  updateDate: "2020-11-20",
+  kind: "BPay"
 };

@@ -5,12 +5,13 @@ import { call, put, select, take } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
-import { walletV2Selector } from "../../../../../store/reducers/wallet/wallets";
+import { paymentMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
 import { EnableableFunctionsTypeEnum } from "../../../../../types/pagopa";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
 import {
   navigateToBpdIbanInsertion,
   navigateToBpdOnboardingEnrollPaymentMethod,
+  navigateToBpdOnboardingErrorPaymentMethods,
   navigateToBpdOnboardingNoPaymentMethods
 } from "../../navigation/actions";
 import BPD_ROUTES from "../../navigation/routes";
@@ -59,9 +60,18 @@ export function* bpdIbanInsertionWorker() {
     yield put(NavigationActions.back());
   } else {
     if (onboardingOngoing) {
-      const paymentMethods: ReturnType<typeof walletV2Selector> = yield select(
-        walletV2Selector
+      const paymentMethods: ReturnType<typeof paymentMethodsSelector> = yield select(
+        paymentMethodsSelector
       );
+
+      // Error while loading the wallet, display a message that informs the user about the error
+      if (paymentMethods.kind === "PotNoneError") {
+        yield put(navigateToBpdOnboardingErrorPaymentMethods());
+        yield put(navigationHistoryPop(1));
+        yield put(bpdOnboardingCompleted());
+        return;
+      }
+
       const hasAtLeastOnePaymentMethodWithBpd = pot.getOrElse(
         pot.map(paymentMethods, pm =>
           pm.some(p => hasFunctionEnabled(p, EnableableFunctionsTypeEnum.BPD))

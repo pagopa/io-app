@@ -5,22 +5,27 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
-import { PaymentManagerToken } from "../../../../../../types/pagopa";
+import {
+  isRawBancomat,
+  PaymentManagerToken
+} from "../../../../../../types/pagopa";
 import {
   addBancomatToWallet,
   loadAbi,
   searchUserPans
 } from "../../store/actions";
+import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
+import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
+import { ContentClient } from "../../../../../../api/content";
 
 // load all bancomat abi
 export function* handleLoadAbi(
-  getAbi: ReturnType<typeof PaymentManagerClient>["getAbi"],
-  sessionManager: SessionManager<PaymentManagerToken>
+  getAbi: ReturnType<typeof ContentClient>["getAbiList"]
 ) {
   try {
-    const getAbiWithRefresh = sessionManager.withRefresh(getAbi);
-    const getAbiWithRefreshResult: SagaCallReturnType<typeof getAbiWithRefresh> = yield call(
-      getAbiWithRefresh
+    const getAbiWithRefreshResult: SagaCallReturnType<typeof getAbi> = yield call(
+      getAbi,
+      {}
     );
     if (getAbiWithRefreshResult.isRight()) {
       if (getAbiWithRefreshResult.value.status === 200) {
@@ -37,12 +42,6 @@ export function* handleLoadAbi(
     yield put(loadAbi.failure(e));
   }
 }
-
-export type LoadPansError = TimeoutError | GenericError;
-
-type TimeoutError = { readonly kind: "timeout" };
-
-type GenericError = { kind: "generic"; value: Error };
 
 // get user's pans
 export function* handleLoadPans(
@@ -116,15 +115,24 @@ export function* handleAddPan(
     );
     if (addPansWithRefreshResult.isRight()) {
       if (addPansWithRefreshResult.value.status === 200) {
-        const wallets = addPansWithRefreshResult.value.value.data ?? [];
+        const wallets = (addPansWithRefreshResult.value.value.data ?? []).map(
+          convertWalletV2toWalletV1
+        );
         // search for the added bancomat.
         const maybeWallet = fromNullable(
-          wallets.find(w => w.info.hashPan === action.payload.hpan)
+          wallets.find(
+            w =>
+              w.paymentMethod &&
+              getPaymentMethodHash(w.paymentMethod) === action.payload.hpan
+          )
         );
-        if (maybeWallet.isSome()) {
+        if (
+          maybeWallet.isSome() &&
+          isRawBancomat(maybeWallet.value.paymentMethod)
+        ) {
           yield put(
             // success
-            addBancomatToWallet.success(maybeWallet.value)
+            addBancomatToWallet.success(maybeWallet.value.paymentMethod)
           );
         } else {
           throw new Error(

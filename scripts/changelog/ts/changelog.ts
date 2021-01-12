@@ -36,7 +36,8 @@ const allowedScope = new Map<string, string>([
 // a list of project ids associated with a specific scope
 const projectToScope = new Map<number, string>([
   [2449547, "Bonus Vacanze"],
-  [2463683, "My Portal"]
+  [2463683, "My Portal"],
+  [2477137, "Bonus Pagamenti Digitali"]
 ]);
 
 const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
@@ -115,7 +116,8 @@ export const getStoryChangelogScope = (
   // search for scope labels associated with the story
   const maybeChangelogScopeTag = story.labels
     .filter(l => l.name.match(regex))
-    .map(l => l.name.match(regex)!.pop());
+    .map(l => l.name.match(regex)!.pop())
+    .filter(tag => tag && allowedScope.has(tag));
 
   // multiple scope labels found on the story
   if (maybeChangelogScopeTag.length > 1) {

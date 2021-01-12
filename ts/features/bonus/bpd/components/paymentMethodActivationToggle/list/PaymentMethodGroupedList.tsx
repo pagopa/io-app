@@ -3,24 +3,25 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../components/core/typography/H4";
+import { Link } from "../../../../../../components/core/typography/Link";
 import I18n from "../../../../../../i18n";
 import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
-import { WalletV2WithActivation } from "../../../store/reducers/details/combiner";
-import { Link } from "../../../../../../components/core/typography/Link";
 import { hasFunctionEnabled } from "../../../../../../utils/walletv2";
+import { useWhyOtherCardsBottomSheet } from "../../../screens/details/components/bottomsheet/WhyOtherCards";
+import { PaymentMethodWithActivation } from "../../../store/reducers/details/combiner";
 import { useOtherChannelInformationBottomSheet } from "../bottomsheet/OtherChannelInformation";
 import { PaymentMethodRawList } from "./PaymentMethodRawList";
 
-type Props = { paymentList: ReadonlyArray<WalletV2WithActivation> };
+type Props = { paymentList: ReadonlyArray<PaymentMethodWithActivation> };
 
 const styles = StyleSheet.create({
   row: { flexDirection: "row", justifyContent: "space-between" }
 });
 
-const isOtherChannel = (w: WalletV2WithActivation) =>
+const isOtherChannel = (w: PaymentMethodWithActivation) =>
   w.onboardingChannel === "EXT";
 
-const isNotActivable = (w: WalletV2WithActivation) =>
+const isNotActivable = (w: PaymentMethodWithActivation) =>
   w.activationStatus === "notActivable" ||
   !hasFunctionEnabled(w, EnableableFunctionsTypeEnum.BPD);
 
@@ -30,7 +31,7 @@ const isNotActivable = (w: WalletV2WithActivation) =>
  * @param paymentList
  */
 const clusterizePaymentMethods = (
-  paymentList: ReadonlyArray<WalletV2WithActivation>
+  paymentList: ReadonlyArray<PaymentMethodWithActivation>
 ) => ({
   otherChannels: paymentList.filter(isOtherChannel),
   notActivable: paymentList.filter(isNotActivable),
@@ -38,9 +39,10 @@ const clusterizePaymentMethods = (
 });
 
 const OtherChannelsSection = (props: {
-  paymentMethods: ReadonlyArray<WalletV2WithActivation>;
+  paymentMethods: ReadonlyArray<PaymentMethodWithActivation>;
 }) => {
-  const { present } = useOtherChannelInformationBottomSheet();
+  const presentOtherChannel = useOtherChannelInformationBottomSheet().present;
+  const presentWhyOthersCard = useWhyOtherCardsBottomSheet().present;
 
   return (
     <View>
@@ -56,18 +58,24 @@ const OtherChannelsSection = (props: {
             )}
           </H4>
         </Body>
-        <Link onPress={present}>
+        <Link onPress={presentOtherChannel}>
           {I18n.t("global.buttons.info").toLowerCase()}
         </Link>
       </View>
       <View spacer={true} />
       <PaymentMethodRawList paymentList={props.paymentMethods} />
+      <View spacer={true} />
+      <Link onPress={presentWhyOthersCard}>
+        {I18n.t(
+          "bonus.bpd.details.paymentMethods.activateOnOthersChannel.whyOtherCards.title"
+        )}
+      </Link>
     </View>
   );
 };
 
 const NotActivablesSection = (props: {
-  paymentMethods: ReadonlyArray<WalletV2WithActivation>;
+  paymentMethods: ReadonlyArray<PaymentMethodWithActivation>;
 }) => (
   <View>
     <View spacer={true} />

@@ -23,6 +23,8 @@ import WalletTabIcon from "../components/WalletTabIcon";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
+import WALLET_ONBOARDING_BPAY_ROUTES from "../features/wallet/onboarding/bancomatPay/navigation/routes";
+import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -73,7 +75,9 @@ const styles = StyleSheet.create({
 });
 
 const NoTabBarRoutes: ReadonlyArray<string> = [
+  ROUTES.WALLET_CARD_TRANSACTIONS,
   ROUTES.WALLET_ADD_PAYMENT_METHOD,
+  ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD,
   ROUTES.PAYMENT_SCAN_QR_CODE,
   ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
   ROUTES.WALLET_ADD_CARD,
@@ -89,10 +93,18 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.PAYMENTS_HISTORY_SCREEN,
   ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
   ROUTES.WALLET_TRANSACTION_DETAILS,
+  ROUTES.WALLET_BPAY_DETAIL,
   ROUTES.WALLET_BANCOMAT_DETAIL,
+  ROUTES.WALLET_SATISPAY_DETAIL,
+  ROUTES.PROFILE_PRIVACY_MAIN,
+  ROUTES.PROFILE_REMOVE_ACCOUNT_INFO,
+  ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS,
+  ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS,
   BONUSVACANZE_ROUTES.MAIN,
   BPD_ROUTES.MAIN,
   WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN,
+  WALLET_ONBOARDING_BPAY_ROUTES.MAIN,
+  WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN,
   ROUTES.MARKDOWN_PLAYGROUND,
   ROUTES.WEB_PLAYGROUND,
   ROUTES.SHOWROOM,

@@ -18,6 +18,10 @@ import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderCompo
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
+import { InfoBox } from "../../../components/box/InfoBox";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { Label } from "../../../components/core/typography/Label";
+
 import I18n from "../../../i18n";
 import {
   navigateToPaymentTransactionSummaryScreen,
@@ -25,7 +29,7 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
-import { pagoPaCreditCardSelector } from "../../../store/reducers/wallet/wallets";
+import { pagoPaCreditCardWalletV1Selector } from "../../../store/reducers/wallet/wallets";
 import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
@@ -48,13 +52,16 @@ const styles = StyleSheet.create({
   paddedLR: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
-  }
+  },
+  infoBoxContainer: { padding: 20, backgroundColor: IOColors.orange }
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.payWith.contextualHelpTitle",
   body: "wallet.payWith.contextualHelpContent"
 };
+
+const amexPaymentWarningTreshold = 100000; // Eurocents
 
 class PickPaymentMethodScreen extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -116,6 +123,16 @@ class PickPaymentMethodScreen extends React.Component<Props> {
 
         <View spacer={true} />
 
+        {wallets.some(myWallet => myWallet.creditCard?.brand === "AMEX") &&
+          verifica.importoSingoloVersamento >= amexPaymentWarningTreshold && (
+            <View style={styles.infoBoxContainer}>
+              <InfoBox alignedCentral={true} iconColor={IOColors.white}>
+                <Label weight={"Regular"} color="white">
+                  {I18n.t("wallet.alert.amex")}
+                </Label>
+              </InfoBox>
+            </View>
+          )}
         <FooterWithButtons
           type="TwoButtonsInlineThird"
           leftButton={secondaryButtonProps}
@@ -127,7 +144,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potWallets = pagoPaCreditCardSelector(state);
+  const potWallets = pagoPaCreditCardWalletV1Selector(state);
   const potPsps = state.wallet.payment.psps;
   const isLoading = pot.isLoading(potWallets) || pot.isLoading(potPsps);
   return {

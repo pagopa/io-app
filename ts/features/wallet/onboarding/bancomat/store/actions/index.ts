@@ -5,9 +5,9 @@ import {
 } from "typesafe-actions";
 import { AbiListResponse } from "../../../../../../../definitions/pagopa/walletv2/AbiListResponse";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
-import { PatchedWalletV2 } from "../../../../../../types/pagopa";
-import { LoadPansError } from "../../saga/networking";
+import { RawBancomatPaymentMethod } from "../../../../../../types/pagopa";
 import { Message } from "../../../../../../../definitions/pagopa/walletv2/Message";
+import { NetworkError } from "../../../../../../utils/errors";
 
 /**
  * Request the list of all abi
@@ -30,7 +30,7 @@ export const searchUserPans = createAsyncAction(
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_REQUEST",
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_SUCCESS",
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_FAILURE"
-)<string | undefined, PansResponse, LoadPansError>();
+)<string | undefined, PansResponse, NetworkError>();
 
 /**
  * The user select the current bancomat to add to the wallet
@@ -39,7 +39,7 @@ export const addBancomatToWallet = createAsyncAction(
   "WALLET_ONBOARDING_BANCOMAT_ADD_REQUEST",
   "WALLET_ONBOARDING_BANCOMAT_ADD_SUCCESS",
   "WALLET_ONBOARDING_BANCOMAT_ADD_FAILURE"
-)<Card, PatchedWalletV2, Error>();
+)<Card, RawBancomatPaymentMethod, Error>();
 
 /**
  * The user choose to start the workflow to add a new bancomat to the wallet

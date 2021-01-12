@@ -2,9 +2,9 @@ import { right } from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 
-import { BackendStatus } from "../../api/backendPublic";
 import { backendStatusLoadSuccess } from "../../store/actions/backendStatus";
 import { backendStatusSaga } from "../backendStatus";
+import { BackendStatus } from "../../types/backendStatus";
 
 jest.mock("react-native-background-timer", () => ({
   BackgroundTimer: { setTimeout: jest.fn }

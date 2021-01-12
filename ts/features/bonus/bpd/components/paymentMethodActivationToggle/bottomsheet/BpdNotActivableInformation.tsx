@@ -1,10 +1,12 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
-import { bottomSheetContent } from "../../../../../../utils/bottomSheet";
-import { PaymentMethodRepresentation } from "../base/PaymentMethodRepresentation";
+import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
+import { useIOBottomSheetRaw } from "../../../../../../utils/bottomSheet";
+import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
@@ -12,11 +14,15 @@ export type NotActivableType = "NotActivable" | "NotCompatible";
 
 type Props = {
   type: NotActivableType;
-  representation: Omit<
-    React.ComponentProps<typeof PaymentMethodRepresentation>,
-    "children"
-  >;
+  representation: PaymentMethodRepresentation;
 };
+
+const styles = StyleSheet.create({
+  body: {
+    flex: 1,
+    backgroundColor: "white"
+  }
+});
 
 const getBody = (type: NotActivableType) => {
   switch (type) {
@@ -37,35 +43,27 @@ const getTitle = (type: NotActivableType) => {
 };
 
 export const BpdNotActivableInformation: React.FunctionComponent<Props> = props => (
-  <View>
+  <View style={[styles.body, IOStyles.horizontalContentPadding]}>
     <View spacer={true} />
-    <PaymentMethodRepresentation {...props.representation} />
+    <PaymentMethodRepresentationComponent {...props.representation} />
     <View spacer={true} />
     <Markdown>{getBody(props.type)}</Markdown>
   </View>
 );
 
 export const useNotActivableInformationBottomSheet = (
-  representation: Omit<
-    React.ComponentProps<typeof PaymentMethodRepresentation>,
-    "children"
-  >
+  representation: PaymentMethodRepresentation
 ) => {
-  const { present, dismiss } = useBottomSheetModal();
+  const { present, dismiss } = useIOBottomSheetRaw(310);
 
-  const openModalBox = async (type: NotActivableType) => {
-    const bottomSheetProps = await bottomSheetContent(
+  const openModalBox = async (type: NotActivableType) =>
+    present(
       <BpdNotActivableInformation
         type={type}
         representation={representation}
       />,
-      getTitle(type),
-      310,
-      dismiss
+      getTitle(type)
     );
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
+
   return { present: openModalBox, dismiss };
 };

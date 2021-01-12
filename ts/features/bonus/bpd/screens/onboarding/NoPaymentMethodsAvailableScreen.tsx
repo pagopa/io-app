@@ -15,6 +15,7 @@ import {
 } from "../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -31,7 +32,11 @@ const loadLocales = () => ({
 const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle, skip, addMethod, title, body } = loadLocales();
   return (
-    <BaseScreenComponent goBack={false} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={false}
+      headerTitle={headerTitle}
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
           <View spacer={true} large={true} />

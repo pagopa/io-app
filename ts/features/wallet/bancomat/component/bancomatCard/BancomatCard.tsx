@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { EnhancedBancomat } from "../../../../../store/reducers/wallet/wallets";
+import { BancomatPaymentMethod } from "../../../../../types/pagopa";
 import BaseBancomatCard from "./BaseBancomatCard";
 
-type OwnProps = { bancomat: EnhancedBancomat };
+type OwnProps = { enhancedBancomat: BancomatPaymentMethod };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -31,10 +31,10 @@ const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
  */
 const BancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
-    abiLogo={props.bancomat.abiInfo?.logoUrl}
+    abi={props.enhancedBancomat.abiInfo ?? {}}
     expiringDate={getExpireDate(
-      props.bancomat.info.expireYear,
-      props.bancomat.info.expireMonth
+      props.enhancedBancomat.info.expireYear,
+      props.enhancedBancomat.info.expireMonth
     )}
     user={props.nameSurname ?? ""}
   />

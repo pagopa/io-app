@@ -14,9 +14,20 @@ import {
 import { Action } from "../../../../store/actions/types";
 import { loadAbi } from "../bancomat/store/actions";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getBancomatAbiIconUrl } from "../../../../utils/paymentMethod";
 
 // plain object where the key is the abi and the value is the abi object
 export type AbiState = RemoteValue<IndexedById<Abi>, Error>;
+
+const getIndexedAbi = (abis: ReadonlyArray<Abi>): IndexedById<Abi> =>
+  abis.reduce(
+    (acc: IndexedById<Abi>, curr: Abi) =>
+      fromNullable(curr.abi).fold(acc, abi => ({
+        ...acc,
+        [abi]: curr
+      })),
+    {}
+  );
 
 const abiReducer = (
   state: AbiState = remoteUndefined,
@@ -29,16 +40,7 @@ const abiReducer = (
       // since all fields are optional we ensure to index only entries those have abi defined
       const indexedAbi: IndexedById<Abi> = fromNullable(
         action.payload.data
-      ).fold({}, abis =>
-        abis.reduce(
-          (acc: IndexedById<Abi>, curr: Abi) =>
-            fromNullable(curr.abi).fold(acc, abi => ({
-              ...acc,
-              [abi]: curr
-            })),
-          {}
-        )
-      );
+      ).fold({}, getIndexedAbi);
       return remoteReady(indexedAbi);
     case getType(loadAbi.failure):
       return remoteError(action.payload);
@@ -48,12 +50,24 @@ const abiReducer = (
 
 export default abiReducer;
 
+const getAbiEnhanced = (indexedAbis: IndexedById<Abi>): IndexedById<Abi> => {
+  const abis: ReadonlyArray<Abi | undefined> = Object.keys(indexedAbis).map<
+    Abi | undefined
+  >(k => indexedAbis[k]);
+  return getIndexedAbi(
+    abis.map(a => ({
+      ...a,
+      logoUrl: a?.abi && getBancomatAbiIconUrl(a.abi)
+    }))
+  );
+};
 /**
  * AbiState, memoized
  */
 export const abiSelector = createSelector(
   [(state: GlobalState) => state.wallet.abi],
-  abi => abi
+  (abis: AbiState): AbiState =>
+    isReady(abis) ? remoteReady(getAbiEnhanced(abis.value)) : abis
 );
 
 // return the abi list as array

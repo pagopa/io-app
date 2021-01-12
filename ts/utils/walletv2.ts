@@ -2,13 +2,20 @@
  * Return true if function is enabled for the wallet (aka payment method)
  * @param wallet
  */
+import { fromPredicate, Option } from "fp-ts/lib/Option";
+import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
+import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
+import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
+import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import {
   EnableableFunctionsTypeEnum,
+  PatchedPaymentMethodInfo,
   PatchedWalletV2,
+  RawBPayPaymentMethod,
+  RawPaymentMethod,
+  RawSatispayPaymentMethod,
   Wallet
 } from "../types/pagopa";
-import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
-import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
@@ -21,9 +28,76 @@ import {
  * @param walletFunction
  */
 export const hasFunctionEnabled = (
-  wallet: PatchedWalletV2,
+  paymentMethod: RawPaymentMethod | undefined,
   walletFunction: EnableableFunctionsTypeEnum
-) => wallet.enableableFunctions.includes(walletFunction);
+): boolean =>
+  paymentMethod !== undefined &&
+  paymentMethod.enableableFunctions.includes(walletFunction);
+
+// check if a PatchedWalletV2 has BPay as paymentInfo
+const isWalletV2BPay = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PatchedPaymentMethodInfo
+): paymentMethodInfo is CardInfo =>
+  (paymentMethodInfo && wallet.walletType === WalletTypeEnum.BPay) ||
+  wallet.walletType === WalletTypeEnum.BPay;
+
+// check if a PatchedWalletV2 has Satispay as paymentInfo
+const isWalletV2Satispay = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PatchedPaymentMethodInfo
+): paymentMethodInfo is SatispayInfo =>
+  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Satispay;
+
+// check if a PatchedWalletV2 has Bancomat as paymentInfo
+const isWalletV2Bancomat = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PatchedPaymentMethodInfo
+): paymentMethodInfo is CardInfo =>
+  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Bancomat;
+
+// check if a PatchedWalletV2 has CreditCard  as paymentInfo
+const isWalletV2CreditCard = (
+  wallet: PatchedWalletV2,
+  paymentMethodInfo: PatchedPaymentMethodInfo
+): paymentMethodInfo is CardInfo =>
+  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Card;
+
+export const fromPatchedWalletV2ToRawPaymentMethod = (
+  wallet: PatchedWalletV2
+): RawPaymentMethod | undefined => {
+  if (isWalletV2CreditCard(wallet, wallet.info)) {
+    return { ...wallet, kind: "CreditCard", info: wallet.info };
+  }
+  if (isWalletV2Bancomat(wallet, wallet.info)) {
+    return { ...wallet, kind: "Bancomat", info: wallet.info };
+  }
+  if (isWalletV2Satispay(wallet, wallet.info)) {
+    return { ...wallet, kind: "Satispay", info: wallet.info };
+  }
+  if (isWalletV2BPay(wallet, wallet.info)) {
+    return { ...wallet, kind: "BPay", info: wallet.info };
+  }
+  return undefined;
+};
+
+// TODO: should be Either instead of return undefined
+export const fromPatchedWalletV2ToRawSatispay = (
+  wallet: PatchedWalletV2
+): RawSatispayPaymentMethod | undefined => {
+  if (isWalletV2Satispay(wallet, wallet.info)) {
+    return { ...wallet, kind: "Satispay", info: wallet.info };
+  }
+  return undefined;
+};
+
+// if some, the value will be a RawBPayPaymentMethod
+export const fromPatchedWalletV2ToRawBPay = (
+  wallet: PatchedWalletV2
+): Option<RawBPayPaymentMethod> =>
+  fromPredicate((wallet: PatchedWalletV2) =>
+    isWalletV2BPay(wallet, wallet.info)
+  )(wallet).map(w => ({ ...w, kind: "BPay", info: wallet.info }));
 
 /**
  * inject walletV2 into walletV1 structure
@@ -32,7 +106,28 @@ export const hasFunctionEnabled = (
 export const convertWalletV2toWalletV1 = (
   walletV2: PatchedWalletV2
 ): Wallet => {
-  const info = walletV2.info;
+  const paymentMethodInfo = fromPatchedWalletV2ToRawPaymentMethod(walletV2);
+  const card =
+    paymentMethodInfo?.kind === "CreditCard"
+      ? paymentMethodInfo.info
+      : undefined;
+  // if the payment method is a credit card
+  // fill the creditCard field of Wallet
+  const cc = card
+    ? {
+        id: undefined,
+        holder: card.holder ?? "",
+        pan: card.blurredNumber as CreditCardPan,
+        expireMonth: card.expireMonth as CreditCardExpirationMonth,
+        expireYear: card.expireYear as CreditCardExpirationYear,
+        brandLogo: card.brandLogo,
+        flag3dsVerified: true,
+        brand: card.brand,
+        onUs: true,
+        securityCode: undefined
+      }
+    : undefined;
+
   return {
     idWallet: walletV2.idWallet,
     type:
@@ -40,18 +135,7 @@ export const convertWalletV2toWalletV1 = (
         ? WalletTypeEnumV1.CREDIT_CARD
         : WalletTypeEnumV1.EXTERNAL_PS,
     favourite: walletV2.favourite,
-    creditCard: {
-      id: undefined,
-      holder: info.holder ?? "",
-      pan: info.blurredNumber as CreditCardPan,
-      expireMonth: info.expireMonth as CreditCardExpirationMonth,
-      expireYear: info.expireYear as CreditCardExpirationYear,
-      brandLogo: info.brandLogo,
-      flag3dsVerified: true,
-      brand: info.brand,
-      onUs: true,
-      securityCode: undefined
-    },
+    creditCard: cc,
     psp: undefined,
     idPsp: undefined,
     pspEditable: false,
@@ -59,6 +143,6 @@ export const convertWalletV2toWalletV1 = (
     isPspToIgnore: false,
     registeredNexi: false,
     saved: true,
-    v2: walletV2
+    paymentMethod: fromPatchedWalletV2ToRawPaymentMethod(walletV2)
   };
 };

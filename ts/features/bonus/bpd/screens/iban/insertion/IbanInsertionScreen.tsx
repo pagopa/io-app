@@ -2,13 +2,16 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
+import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import {
   bpdIbanInsertionCancel,
   bpdIbanInsertionContinue,
   bpdUpsertIban
 } from "../../../store/actions/iban";
 import { bpdIbanPrefillSelector } from "../../../store/reducers/details/activation";
+import { isBpdOnboardingOngoing } from "../../../store/reducers/onboarding/ongoing";
 import { IbanInsertionComponent } from "./IbanInsertionComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -24,6 +27,12 @@ const IbanInsertionScreen: React.FunctionComponent<Props> = props => (
     onContinue={props.continue}
     onIbanConfirm={props.submitIban}
     startIban={props.prefillIban}
+    cancelText={
+      props.onboardingOngoing
+        ? I18n.t("global.buttons.skip")
+        : I18n.t("global.buttons.cancel")
+    }
+    contextualHelp={emptyContextualHelp}
   />
 );
 
@@ -34,7 +43,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  prefillIban: bpdIbanPrefillSelector(state)
+  prefillIban: bpdIbanPrefillSelector(state),
+  onboardingOngoing: isBpdOnboardingOngoing(state)
 });
 
 export default connect(

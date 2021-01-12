@@ -1,21 +1,29 @@
 import * as React from "react";
-import { WalletTypeEnum } from "../../../../../../definitions/pagopa/walletv2/WalletV2";
-import { PatchedWalletV2 } from "../../../../../types/pagopa";
-import BancomatBpdToggle from "./BancomatBpdToggle";
-import { CardBpdToggle } from "./CardBpdToggle";
+import {
+  EnableableFunctionsTypeEnum,
+  PaymentMethod
+} from "../../../../../types/pagopa";
+import { hasFunctionEnabled } from "../../../../../utils/walletv2";
+import { HPan } from "../../store/actions/paymentMethods";
+import { getPaymentMethodHash } from "../../../../../utils/paymentMethod";
+import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
 
 /**
  * Return a specific toggle based on the WalletTypeEnum
- * @param wallet
+ * @param paymentMethod
  */
-export const bpdToggleFactory = (wallet: PatchedWalletV2) => {
-  switch (wallet.walletType) {
-    case WalletTypeEnum.Bancomat:
-      return <BancomatBpdToggle key={wallet.info.hashPan} card={wallet} />;
-    case WalletTypeEnum.Card:
-      return <CardBpdToggle key={wallet.info.hashPan} card={wallet} />;
-    default:
-      // TODO: temp, default view with default icon
-      return <CardBpdToggle key={wallet.info.hashPan} card={wallet} />;
-  }
+export const bpdToggleFactory = (paymentMethod: PaymentMethod) => {
+  const hash = getPaymentMethodHash(paymentMethod);
+  return hash ? (
+    <PaymentMethodBpdToggle
+      key={hash}
+      hPan={hash as HPan}
+      icon={paymentMethod.icon}
+      hasBpdCapability={hasFunctionEnabled(
+        paymentMethod,
+        EnableableFunctionsTypeEnum.BPD
+      )}
+      caption={paymentMethod.caption}
+    />
+  ) : null;
 };

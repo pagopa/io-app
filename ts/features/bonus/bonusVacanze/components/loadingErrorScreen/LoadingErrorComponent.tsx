@@ -12,6 +12,7 @@ export type LoadingErrorProps = {
   isLoading: boolean;
   loadingCaption: string;
   errorText?: string;
+  errorSubText?: string;
   onRetry: () => void;
   onAbort?: () => void;
 };
@@ -24,7 +25,7 @@ const renderError = (props: LoadingErrorProps) => (
     onRetry={props.onRetry}
     onCancel={props.onAbort}
     text={props.errorText}
-    subText={""}
+    subText={props.errorSubText ?? ""}
     ref={errorRef}
   />
 );

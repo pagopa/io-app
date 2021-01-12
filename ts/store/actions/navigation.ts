@@ -26,8 +26,12 @@ import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDeta
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
+import {
+  BancomatPaymentMethod,
+  BPayPaymentMethod,
+  SatispayPaymentMethod
+} from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
-import { EnhancedBancomat } from "../reducers/wallet/wallets";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -152,6 +156,20 @@ export const navigateToLanguagePreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_LANGUAGE
   });
 
+export const navigateToRemoveAccountSuccess = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
+  });
+
+export const navigateToRemoveAccountDetailScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
+  });
+
+export const navigateToPrivacyScreen = NavigationActions.navigate({
+  routeName: ROUTES.PROFILE_PRIVACY_MAIN,
+  action: NavigationActions.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
+});
 /**
  * Wallet & Payments
  */
@@ -204,10 +222,26 @@ export const navigateToWalletTransactionsScreen = (
     params
   });
 
-export const navigateToBancomatDetailScreen = (bancomat: EnhancedBancomat) =>
+export const navigateToBancomatDetailScreen = (
+  bancomat: BancomatPaymentMethod
+) =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_BANCOMAT_DETAIL,
     params: { bancomat }
+  });
+
+export const navigateToSatispayDetailScreen = (
+  satispay: SatispayPaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_SATISPAY_DETAIL,
+    params: { satispay }
+  });
+
+export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_BPAY_DETAIL,
+    params: { bPay }
   });
 
 export const navigateToPaymentPickPspScreen = (
@@ -261,6 +295,11 @@ export const navigateToWalletAddPaymentMethod = (
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_ADD_PAYMENT_METHOD,
     params
+  });
+
+export const navigateToWalletAddDigitalPaymentMethod = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD
   });
 
 export const navigateToWalletAddCreditCard = (

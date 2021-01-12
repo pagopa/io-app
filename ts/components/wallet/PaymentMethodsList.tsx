@@ -2,235 +2,228 @@
  * This component will display the payment methods that can be registered
  * on the app
  */
-
-import color from "color";
 import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, Image, Platform, StyleSheet } from "react-native";
-import { Grid, Row } from "react-native-easy-grid";
-import I18n from "../../i18n";
-import { makeFontStyleObject } from "../../theme/fonts";
-import customVariables from "../../theme/variables";
-import variables from "../../theme/variables";
-import { ContextualHelp } from "../ContextualHelp";
+import {
+  Alert,
+  FlatList,
+  ListRenderItemInfo,
+  Platform,
+  StyleSheet
+} from "react-native";
+import { connect } from "react-redux";
+import { Option } from "fp-ts/lib/Option";
+import { H3 } from "../core/typography/H3";
+import { H5 } from "../core/typography/H5";
+import { IOColors } from "../core/variables/IOColors";
 import { withLightModalContext } from "../helpers/withLightModalContext";
-import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
-import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
-import Markdown from "../ui/Markdown";
+import I18n from "../../i18n";
+import { GlobalState } from "../../store/reducers/types";
+import { backendStatusSelector } from "../../store/reducers/backendStatus";
+import {
+  getSectionMessageLocale,
+  statusColorMap
+} from "../SectionStatusComponent";
+import { BackendStatus, SectionStatusKey } from "../../types/backendStatus";
 
 type OwnProps = Readonly<{
-  // In order to maintain backwards compatibility, is added
-  // the possibility of receiving additional payment methods via props
-  paymentMethods?: ReadonlyArray<IPaymentMethod>;
+  paymentMethods: ReadonlyArray<IPaymentMethod>;
   navigateToAddCreditCard: () => void;
 }>;
 
-type Props = OwnProps & LightModalContextInterface;
+type Props = OwnProps &
+  LightModalContextInterface &
+  ReturnType<typeof mapStateToProps>;
 
 export type IPaymentMethod = Readonly<{
   name: string;
+  description: string;
   maxFee?: string;
   icon?: any;
   image?: any;
-  implemented: boolean;
-  isNew?: boolean;
+  status: "implemented" | "incoming" | "notImplemented";
+  section?: SectionStatusKey;
   onPress?: () => void;
 }>;
 
-const underlayColor = "transparent";
 const styles = StyleSheet.create({
-  listItem: {
-    marginLeft: 0,
-    paddingRight: 0,
-    flexDirection: "row"
+  container: {
+    paddingRight: 10,
+    paddingLeft: 0,
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
-  disabled: {
-    opacity: 0.75
-  },
-  methodItem: {
+  flexColumn: {
     flexDirection: "column",
-    justifyContent: "center"
+    justifyContent: "space-between",
+    flex: 1
   },
-  methodTitle: {
-    ...makeFontStyleObject(Platform.select, "600"),
-    fontSize: 18
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
-  methodImage: {
-    width: 70
-  },
-  columnLeft: {
-    flex: 0.7
-  },
-  columnRight: {
-    flex: 0.3,
-    alignItems: "center",
-    alignContent: "center"
+  descriptionPadding: { paddingRight: 24 },
+
+  badgeContainer: { height: 18, backgroundColor: IOColors.blue },
+  badgeText: {
+    fontSize: 12,
+    lineHeight: 18,
+    marginBottom: Platform.select({ android: 2, default: 0 })
   }
 });
 
-const creditCard: IPaymentMethod = {
-  name: I18n.t("wallet.methods.card.name"),
-  icon: "io-48-card",
-  implemented: true
+export const showPaymentMethodIncomingAlert = () =>
+  Alert.alert(
+    I18n.t("wallet.incoming.title"),
+    I18n.t("wallet.incoming.message"),
+    undefined,
+    { cancelable: true }
+  );
+
+/**
+ * return a status badge displaying the section.badge label
+ * the badge background color is according with the status (normal | warning | critical)
+ * if it is critical status, it returns also an alert function, undefined otherwise
+ * the alert display a title (section.badge) and a message (section.message) with default dismiss button
+ * @param paymentMethod
+ * @param backendStatus
+ */
+const getBadgeStatus = (
+  paymentMethod: IPaymentMethod,
+  backendStatus: Option<BackendStatus>
+): null | { badge: React.ReactNode; alert?: () => void } => {
+  const itemSection = paymentMethod.section;
+  // no section
+  if (itemSection === undefined) {
+    return null;
+  }
+  return backendStatus
+    .mapNullable(bs => bs.sections)
+    .fold(null, sections => {
+      const section = sections[itemSection];
+      // no badge if section is not visible or badge is not defined
+      if (section.is_visible === false || section.badge === undefined) {
+        return null;
+      }
+      const locale = getSectionMessageLocale();
+      const badgeLabel = section.badge[locale];
+      return {
+        badge: (
+          <Badge
+            style={[
+              styles.badgeContainer,
+              { backgroundColor: statusColorMap[section.level] }
+            ]}
+          >
+            <Text style={styles.badgeText} semibold={true}>
+              {badgeLabel}
+            </Text>
+          </Badge>
+        ),
+        alert:
+          section.level === "critical"
+            ? () => Alert.alert(badgeLabel, section.message[locale])
+            : undefined
+      };
+    });
 };
 
-const paymentMethods: ReadonlyArray<IPaymentMethod> = [
-  {
-    name: I18n.t("wallet.methods.satispay.name"),
-    image: require("../../../img/wallet/payment-methods/satispay-logoi.png"),
-    implemented: false
-  },
-  {
-    name: I18n.t("wallet.methods.postepay.name"),
-    image: require("../../../img/wallet/payment-methods/postepay-logo.png"),
-    implemented: false
-  },
-  {
-    name: I18n.t("wallet.methods.paypal.name"),
-    image: require("../../../img/wallet/payment-methods/paypal-logo.png"),
-    implemented: false
-  },
-  {
-    name: I18n.t("wallet.methods.bank.name"),
-    image: require("../../../img/wallet/payment-methods/bancomatpay-logo.png"),
-    implemented: false
+const renderListItem = (
+  itemInfo: ListRenderItemInfo<IPaymentMethod>,
+  paymentMethodsLength: number,
+  backendStatus: Option<BackendStatus>
+) => {
+  switch (itemInfo.item.status) {
+    case "implemented": {
+      const badgeStatus = getBadgeStatus(itemInfo.item, backendStatus);
+      return (
+        <ListItem
+          onPress={badgeStatus?.alert ?? itemInfo.item.onPress}
+          style={styles.container}
+          first={itemInfo.index === 0}
+          last={itemInfo.index === paymentMethodsLength}
+        >
+          <View style={styles.flexColumn}>
+            <View style={styles.row}>
+              <View>
+                {badgeStatus?.badge}
+                <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+                  {itemInfo.item.name}
+                </H3>
+              </View>
+              <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+            </View>
+            <H5
+              color={"bluegrey"}
+              weight={"Regular"}
+              style={styles.descriptionPadding}
+            >
+              {itemInfo.item.description}
+            </H5>
+          </View>
+        </ListItem>
+      );
+    }
+    case "incoming":
+      return (
+        <ListItem
+          onPress={showPaymentMethodIncomingAlert}
+          style={styles.container}
+          first={itemInfo.index === 0}
+          last={itemInfo.index === paymentMethodsLength}
+        >
+          <View style={styles.flexColumn}>
+            <View>
+              <Badge style={styles.badgeContainer}>
+                <Text style={styles.badgeText} semibold={true}>
+                  {I18n.t("wallet.methods.comingSoon")}
+                </Text>
+              </Badge>
+              <H3 color={"bluegrey"} weight={"SemiBold"}>
+                {itemInfo.item.name}
+              </H3>
+            </View>
+            <H5
+              color={"bluegrey"}
+              weight={"Regular"}
+              style={styles.descriptionPadding}
+            >
+              {itemInfo.item.description}
+            </H5>
+          </View>
+        </ListItem>
+      );
+      break;
+    case "notImplemented":
+      return null;
+      break;
   }
-].sort((a, b) =>
-  a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase())
+};
+
+const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
+  <>
+    <View spacer={true} large={true} />
+    <FlatList
+      removeClippedSubviews={false}
+      data={props.paymentMethods}
+      keyExtractor={item => item.name}
+      ListFooterComponent={<View spacer />}
+      renderItem={i =>
+        renderListItem(
+          i,
+          props.paymentMethods.filter(pm => pm.status !== "notImplemented")
+            .length - 1,
+          props.sectionStatus
+        )
+      }
+    />
+  </>
 );
-
-const AddMethodStyle = StyleSheet.create({
-  transactionText: {
-    color: color(variables.colorWhite).darken(0.35).string()
-  },
-  notImplementedBadge: {
-    height: 18,
-    marginTop: 2,
-    backgroundColor: variables.lightGray
-  },
-  newImplementedBadge: {
-    height: 18,
-    marginTop: 2,
-    backgroundColor: variables.brandHighLighter
-  },
-  notImplementedText: {
-    fontSize: 10,
-    lineHeight: Platform.OS === "ios" ? 14 : 16,
-    color: customVariables.colorWhite
-  },
-  centeredContents: {
-    alignItems: "center"
-  }
+const mapStateToProps = (state: GlobalState) => ({
+  sectionStatus: backendStatusSelector(state)
 });
-
-class PaymentMethodsList extends React.Component<Props, never> {
-  private showHelp = () => {
-    this.props.showModal(
-      <ContextualHelp
-        onClose={this.props.hideModal}
-        title={I18n.t("wallet.whyAFee.title")}
-        body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
-      />
-    );
-  };
-
-  public render(): React.ReactNode {
-    const methods: ReadonlyArray<IPaymentMethod> = [
-      {
-        ...creditCard,
-        onPress: this.props.navigateToAddCreditCard
-      },
-      ...(this.props.paymentMethods ?? []),
-      ...paymentMethods
-    ];
-    return (
-      <View>
-        <View spacer={true} large={true} />
-        <FlatList
-          removeClippedSubviews={false}
-          data={methods}
-          keyExtractor={item => item.name}
-          renderItem={itemInfo => {
-            const isItemDisabled = !itemInfo.item.implemented;
-            const disabledStyle = isItemDisabled ? styles.disabled : {};
-            const isItemNew = itemInfo.item.implemented && itemInfo.item.isNew;
-            return (
-              <ListItem
-                style={styles.listItem}
-                onPress={itemInfo.item.onPress}
-                underlayColor={underlayColor}
-              >
-                <View style={styles.columnLeft}>
-                  <Grid>
-                    <Row>
-                      <View style={styles.methodItem}>
-                        <Text style={[disabledStyle, styles.methodTitle]}>
-                          {itemInfo.item.name}
-                        </Text>
-                        {isItemDisabled && (
-                          <Badge style={AddMethodStyle.notImplementedBadge}>
-                            <Text style={AddMethodStyle.notImplementedText}>
-                              {I18n.t("wallet.methods.comingSoon")}
-                            </Text>
-                          </Badge>
-                        )}
-                        {isItemNew && (
-                          <Badge style={AddMethodStyle.newImplementedBadge}>
-                            <Text style={AddMethodStyle.notImplementedText}>
-                              {I18n.t("wallet.methods.newCome")}
-                            </Text>
-                          </Badge>
-                        )}
-                      </View>
-                    </Row>
-                    {itemInfo.item.maxFee && (
-                      <Row>
-                        <Text
-                          style={[
-                            AddMethodStyle.transactionText,
-                            disabledStyle
-                          ]}
-                        >
-                          {itemInfo.item.maxFee}
-                        </Text>
-                      </Row>
-                    )}
-                  </Grid>
-                </View>
-                <View style={styles.columnRight}>
-                  {itemInfo.item.icon && (
-                    <IconFont
-                      name={itemInfo.item.icon}
-                      color={
-                        isItemDisabled
-                          ? variables.brandLightGray
-                          : variables.brandPrimary
-                      }
-                      size={variables.iconSize6}
-                    />
-                  )}
-                  {itemInfo.item.image && (
-                    <Image
-                      source={itemInfo.item.image}
-                      style={styles.methodImage}
-                      resizeMode={"contain"}
-                    />
-                  )}
-                </View>
-              </ListItem>
-            );
-          }}
-        />
-        <View spacer={true} large={true} />
-        <TouchableDefaultOpacity onPress={this.showHelp}>
-          <Text link={true}>{I18n.t("wallet.whyAFee.title")}</Text>
-        </TouchableDefaultOpacity>
-        {methods.length > 0 && <EdgeBorderComponent />}
-      </View>
-    );
-  }
-}
-
-export default withLightModalContext(PaymentMethodsList);
+export default connect(mapStateToProps)(
+  withLightModalContext(PaymentMethodsList)
+);

@@ -9,11 +9,11 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { navigateToBancomatDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
-import { EnhancedBancomat } from "../../../../store/reducers/wallet/wallets";
+import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { CardPreview } from "../../component/CardPreview";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
-type OwnProps = { bancomat: EnhancedBancomat };
+type OwnProps = { bancomat: BancomatPaymentMethod };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -68,7 +68,7 @@ const BancomatWalletPreview: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToBancomatDetails: (bancomat: EnhancedBancomat) =>
+  navigateToBancomatDetails: (bancomat: BancomatPaymentMethod) =>
     dispatch(navigateToBancomatDetailScreen(bancomat))
 });
 

@@ -6,10 +6,8 @@ import { SvgXml } from "react-native-svg";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
-import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 
 type Props = {
-  onClose: () => void;
   qrCode: string;
   logo?: string;
   codeToCopy: string;
@@ -57,12 +55,7 @@ const renderQRCode = (base64: string) =>
   ));
 
 const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
-  const { onClose, qrCode, codeToDisplay, codeToCopy } = props;
-
-  useHardwareBackButton(() => {
-    onClose();
-    return true;
-  });
+  const { qrCode, codeToDisplay, codeToCopy } = props;
 
   return (
     <View style={styles.modalBox}>
@@ -76,7 +69,10 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
               {codeToDisplay}
             </Text>
             <View hspacer={true} />
-            <CopyButtonComponent textToCopy={codeToCopy} />
+            <CopyButtonComponent
+              textToCopy={codeToCopy}
+              onPressWithGestureHandler={true}
+            />
           </View>
         </View>
         {props.logo && (
