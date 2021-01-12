@@ -81,6 +81,7 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => {
               bankName={props.account.bankName ?? ""} // This should never be undefined
             />
           </View>
+          <View spacer={true} />
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
