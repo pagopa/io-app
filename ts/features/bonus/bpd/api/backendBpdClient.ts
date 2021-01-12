@@ -195,6 +195,10 @@ export type FindWinningTransactionsUsingGETTExtra = r.IGetApiRequestType<
   | r.IResponseType<401, undefined>
   | r.IResponseType<500, undefined>
 >;
+
+const findWinningTransactionsUsingGETDecoderUtils = findWinningTransactionsUsingGETDecoder(
+  PatchedBpdWinningTransactions
+);
 // winning transactions
 const winningTransactions: FindWinningTransactionsUsingGETTExtra = {
   method: "get",
@@ -206,9 +210,7 @@ const winningTransactions: FindWinningTransactionsUsingGETTExtra = {
       .getOrElse("")}`,
   query: _ => ({}),
   headers: headersProducers(),
-  response_decoder: findWinningTransactionsUsingGETDecoder(
-    PatchedBpdWinningTransactions
-  )
+  response_decoder: findWinningTransactionsUsingGETDecoderUtils
 };
 
 // decoders composition to handle updatePaymentMethod response
