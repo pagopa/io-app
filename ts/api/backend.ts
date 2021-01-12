@@ -317,8 +317,7 @@ export function BackendClient(
 
   const deleteUserDataProcessingT: AbortUserDataProcessingT = {
     method: "delete",
-    url: ({ userDataProcessingChoiceParam }) =>
-      `/api/v1/user-data-processing/${userDataProcessingChoiceParam}`,
+    url: ({ choice }) => `/api/v1/user-data-processing/${choice}`,
     query: _ => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     response_decoder: abortUserDataProcessingDecoderTest()
