@@ -138,16 +138,20 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             getValueOrElse(rsp, undefined)
           )
           .getOrElse(undefined);
-        // log on instabug the support token
-        if (supportToken) {
-          instabugLog(
-            JSON.stringify(supportToken),
-            TypeLogs.INFO,
-            "support-token"
-          );
+
+        // Store/remove and log the support token only if is a new assistance request.
+        if (type === BugReporting.reportType.bug) {
+          // log on instabug the support token
+          if (supportToken) {
+            instabugLog(
+              JSON.stringify(supportToken),
+              TypeLogs.INFO,
+              "support-token"
+            );
+          }
+          // set or remove the support token as instabug user attribute
+          setInstabugSupportTokenAttribute(supportToken);
         }
-        // set or remove the support token as instabug user attribute
-        setInstabugSupportTokenAttribute(supportToken);
 
         switch (type) {
           case BugReporting.reportType.bug:

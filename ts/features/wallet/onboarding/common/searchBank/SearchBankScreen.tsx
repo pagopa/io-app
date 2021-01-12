@@ -7,6 +7,7 @@ import { Content } from "native-base";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { SectionStatusKey } from "../../../../../types/backendStatus";
 import {
   isError,
   isLoading,
@@ -22,8 +23,10 @@ import SectionStatusComponent from "../../../../../components/SectionStatusCompo
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { SearchBankComponent } from "./SearchBankComponent";
 
+type MethodType = "bancomatPay" | "bancomat";
+
 type Props = {
-  methodType: "bancomatPay" | "bancomat";
+  methodType: MethodType;
   onItemPress: (abi?: string) => void;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -34,6 +37,15 @@ const renderFooterButtons = (onClose: () => void) => (
     leftButton={cancelButtonProps(onClose, I18n.t("global.buttons.close"))}
   />
 );
+
+const getSectionName = (methodType: MethodType): SectionStatusKey => {
+  switch (methodType) {
+    case "bancomat":
+      return "bancomat";
+    case "bancomatPay":
+      return "bancomatpay";
+  }
+};
 
 /**
  * This is the component that defines the base screen where users can find and choose a specific bank
@@ -71,7 +83,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
             onItemPress={props.onItemPress}
           />
         </Content>
-        <SectionStatusComponent sectionKey={"bancomat"} />
+        <SectionStatusComponent sectionKey={getSectionName(props.methodType)} />
         {renderFooterButtons(props.onBack)}
       </SafeAreaView>
     </BaseScreenComponent>
