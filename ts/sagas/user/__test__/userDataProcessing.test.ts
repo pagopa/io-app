@@ -31,7 +31,7 @@ describe("loadUserDataProcessingSaga", () => {
     )
       .next()
       .call(getUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: loadAction.payload
+        choice: loadAction.payload
       })
       .next(get404Response)
       .put(
@@ -59,7 +59,7 @@ describe("loadUserDataProcessingSaga", () => {
     )
       .next()
       .call(getUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: loadAction.payload
+        choice: loadAction.payload
       })
       .next(get200Response)
       .put(
@@ -84,7 +84,7 @@ describe("loadUserDataProcessingSaga", () => {
     )
       .next()
       .call(getUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: loadAction.payload
+        choice: loadAction.payload
       })
       .next(get500Response)
       .put(
