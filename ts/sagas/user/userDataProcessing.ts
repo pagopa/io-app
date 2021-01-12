@@ -102,7 +102,7 @@ export function* deleteUserDataProcessingSaga(
     const response: SagaCallReturnType<typeof deleteUserDataProcessingRequest> = yield call(
       deleteUserDataProcessingRequest,
       {
-        userDataProcessingChoiceParam: choice
+        choice
       }
     );
     if (response.isRight()) {
