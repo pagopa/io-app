@@ -551,13 +551,16 @@ export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
   | r.IResponseType<404, undefined>
 >;
 
+const addWalletsBPayUsingPOSTDecoderUtils = addWalletsBPayUsingPOSTDecoder(
+  PatchedWalletV2ListResponse
+);
 const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
   method: "post",
   url: () => `/v1/bpay/add-wallets`,
   query: () => ({}),
   body: ({ bPayRequest }) => JSON.stringify(bPayRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: addWalletsBPayUsingPOSTDecoder(PatchedWalletV2ListResponse)
+  response_decoder: addWalletsBPayUsingPOSTDecoderUtils
 };
 
 const withPaymentManagerToken = <P extends { Bearer: string }, R>(
