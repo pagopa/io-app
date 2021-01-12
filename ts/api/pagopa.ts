@@ -316,12 +316,16 @@ const getPspQuery = (params: PspParams) => {
     language
   };
 };
+
+const getSelectedPspUsingGETDecoderUtils = getSelectedPspUsingGETDecoder(
+  PspListResponse
+);
 const getPspSelected: GetSelectedPspUsingGETTExtra = {
   method: "get",
   url: () => "/v1/psps/selected",
   query: getPspQuery,
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getSelectedPspUsingGETDecoder(PspListResponse)
+  response_decoder: getSelectedPspUsingGETDecoderUtils
 };
 
 type GetAllPspListUsingGETTExtra = MapResponseType<
