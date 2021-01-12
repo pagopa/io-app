@@ -76,13 +76,15 @@ type EnrollmentTTExtra = MapResponseType<
   200,
   PatchedCitizenResource
 >;
+
+const enrollmentDecoderUtils = enrollmentDecoder(PatchedCitizenResource);
 const enrollCitizenIOT: EnrollmentTTExtra = {
   method: "put",
   url: () => `/bpd/io/citizen`,
   query: _ => ({}),
   body: _ => "",
   headers: composeHeaderProducers(headersProducers(), ApiHeaderJson),
-  response_decoder: enrollmentDecoder(PatchedCitizenResource)
+  response_decoder: enrollmentDecoderUtils
 };
 
 const deleteResponseDecoders = r.composeResponseDecoders(
