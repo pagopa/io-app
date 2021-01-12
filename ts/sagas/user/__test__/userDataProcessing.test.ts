@@ -120,7 +120,7 @@ describe("upsertUserDataProcessingSaga", () => {
     )
       .next()
       .call(postUserDataProcessingRequest, {
-        userDataProcessingChoiceRequest: { choice: requestAction.payload }
+        body: { choice: requestAction.payload }
       })
       .next(post200Response)
       .put(upsertUserDataProcessing.success(mokedNewStatus))
@@ -142,7 +142,7 @@ describe("upsertUserDataProcessingSaga", () => {
     )
       .next()
       .call(postUserDataProcessingRequest, {
-        userDataProcessingChoiceRequest: { choice: requestAction.payload }
+        body: { choice: requestAction.payload }
       })
       .next(get500Response)
       .put(
