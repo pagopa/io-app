@@ -515,13 +515,16 @@ const searchSatispay: GetConsumerUsingGETT = {
   response_decoder: getConsumerUsingGETDefaultDecoder()
 };
 
+const addWalletSatispayUsingPOSTDecoderUtils = addWalletSatispayUsingPOSTDecoder(
+  PatchedWalletV2Response
+);
 const addSatispayToWallet: AddWalletSatispayUsingPOSTT = {
   method: "post",
   url: () => `/v1/satispay/add-wallet`,
   query: () => ({}),
   body: ({ satispayRequest }) => JSON.stringify(satispayRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: addWalletSatispayUsingPOSTDecoder(PatchedWalletV2Response)
+  response_decoder: addWalletSatispayUsingPOSTDecoderUtils
 };
 
 const searchBPay: GetBpayListUsingGETT = {
