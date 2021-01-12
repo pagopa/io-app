@@ -12,12 +12,17 @@ import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { showToast } from "../../../../../utils/showToast";
 import { isError, isLoading, isReady } from "../../model/RemoteValue";
-import { bpdDetailsLoadAll } from "../../store/actions/details";
+import { bpdAllData } from "../../store/actions/details";
 import { bpdUnsubscribeCompleted } from "../../store/actions/onboarding";
 import { bpdUnsubscriptionSelector } from "../../store/reducers/details/activation";
 import { bpdTransactionsForSelectedPeriod } from "../../store/reducers/details/transactions";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import { navigateToBpdTransactions } from "../../navigation/actions";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { navigateBack } from "../../../../../store/actions/navigation";
+import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
+import BpdLastUpdateComponent from "../../components/BpdLastUpdateComponent";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
@@ -59,6 +64,11 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
     }
   }, [props.unsubscription]);
 
+  useHardwareBackButton(() => {
+    props.goBack();
+    return true;
+  });
+
   /**
    * Display the transactions button when:
    * - Period is closed and transactions number is > 0
@@ -78,7 +88,6 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
         return true;
     }
   });
-
   return (
     <LoadingSpinnerOverlay
       isLoading={loading}
@@ -88,21 +97,23 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
       <DarkLayout
         bounces={false}
         title={I18n.t("bonus.bpd.name")}
-        faqCategories={["bonus_detail"]}
         allowGoBack={true}
         topContent={<View style={styles.headerSpacer} />}
         gradientHeader={true}
         hideHeader={true}
+        contextualHelp={emptyContextualHelp}
         footerContent={
           canRenderButton && (
             <GoToTransactions goToTransactions={props.goToTransactions} />
           )
         }
+        footerFullWidth={<SectionStatusComponent sectionKey={"cashback"} />}
       >
         <View style={styles.selector}>
           <BpdPeriodSelector />
         </View>
         <View style={styles.selectorSpacer} />
+        <BpdLastUpdateComponent />
         <BpdPeriodDetail />
       </DarkLayout>
     </LoadingSpinnerOverlay>
@@ -110,12 +121,14 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  load: () => dispatch(bpdDetailsLoadAll()),
+  load: () => dispatch(bpdAllData.request()),
   completeUnsubscription: () => {
+    dispatch(bpdAllData.request());
     dispatch(bpdUnsubscribeCompleted());
     dispatch(NavigationActions.back());
   },
-  goToTransactions: () => dispatch(navigateToBpdTransactions())
+  goToTransactions: () => dispatch(navigateToBpdTransactions()),
+  goBack: () => dispatch(navigateBack())
 });
 
 const mapStateToProps = (state: GlobalState) => ({

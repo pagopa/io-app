@@ -301,6 +301,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             </View>
           </Content>
         </View>
+
         {withKeyboard(this.renderFooterButtons())}
       </BaseScreenComponent>
     );

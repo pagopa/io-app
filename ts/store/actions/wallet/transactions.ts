@@ -17,6 +17,11 @@ export const fetchTransactionsRequest = createStandardAction(
   "FETCH_TRANSACTIONS_REQUEST"
 )<{ start: number }>();
 
+// this action load transaction following a backoff retry strategy
+export const fetchTransactionsRequestWithExpBackoff = createStandardAction(
+  "FETCH_TRANSACTIONS_BACKOFF_REQUEST"
+)<{ start: number }>();
+
 // transactions is a pagination API. Success payload includes 'total' to know how many
 // transactions are available
 export const fetchTransactionsSuccess = createStandardAction(
@@ -124,4 +129,5 @@ export type TransactionsActions =
   | ActionType<typeof pollTransactionSagaCompleted>
   | ActionType<typeof pollTransactionSagaTimeout>
   | ActionType<typeof deleteReadTransaction>
-  | ActionType<typeof fetchTransactionsLoadComplete>;
+  | ActionType<typeof fetchTransactionsLoadComplete>
+  | ActionType<typeof fetchTransactionsRequestWithExpBackoff>;

@@ -1,13 +1,14 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { connect } from "react-redux";
 import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { actionWithAlert } from "../../../bonusVacanze/components/alert/ActionWithAlert";
 import { availableBonusTypesSelectorFromId } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_BPD_TYPE } from "../../../bonusVacanze/utils/bonus";
 import BonusInformationComponent from "../../../common/components/BonusInformationComponent";
-import { getValue } from "../../model/RemoteValue";
 import {
   bpdOnboardingCancel,
   bpdUserActivate
@@ -20,10 +21,9 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 /**
  * This Screen shows all the information about the bpd program, with the rules and t&c.
  */
-
 const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
   const onConfirm = () =>
-    getValue(props.bpdActiveBonus) === true
+    pot.getOrElse(props.bpdActiveBonus, false)
       ? actionWithAlert({
           title: I18n.t("bonus.bpd.onboarding.alert.title"),
           body: I18n.t("bonus.bpd.onboarding.alert.body"),
@@ -41,6 +41,7 @@ const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
           bonus={props.bonus}
           onConfirm={onConfirm}
           onCancel={props.onCancel}
+          contextualHelp={emptyContextualHelp}
         />
       ) : null}
     </>

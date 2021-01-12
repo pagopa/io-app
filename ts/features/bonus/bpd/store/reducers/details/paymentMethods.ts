@@ -3,6 +3,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
+import { deleteWalletSuccess } from "../../../../../../store/actions/wallet/wallets";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { bpdDeleteUserFromProgram } from "../../actions/onboarding";
@@ -13,6 +14,8 @@ import {
   bpdUpdatePaymentMethodActivation,
   HPan
 } from "../../actions/paymentMethods";
+import { PaymentMethod } from "../../../../../../types/pagopa";
+import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 
 export type BpdPotPaymentMethodActivation = pot.Pot<
   BpdPaymentMethodActivation,
@@ -77,6 +80,9 @@ export const bpdPaymentMethodsReducer = (
         [action.payload.hPan]: pot.toError(updateFailure, action.payload.error)
       };
     case getType(bpdDeleteUserFromProgram.success):
+    case getType(deleteWalletSuccess):
+      // if the user remove a payment method, we need to invalidate all the store
+      // because deleteWalletSuccess have Walletv1 as payload (without hash)
       return {};
   }
   return state;
@@ -114,3 +120,28 @@ export const bpdPaymentMethodValueSelector = createSelector(
   [bpdPaymentMethodActivationByHPanValue],
   potValue => potValue ?? pot.none
 );
+
+/**
+ * Return true if at least one method from the given ones is BPD active
+ * @param paymentMethods
+ */
+export const areAnyPaymentMethodsActiveSelector = (
+  paymentMethods: ReadonlyArray<PaymentMethod>
+) =>
+  createSelector(
+    [bpdPaymentMethodActivationSelector],
+    (bpdPaymentMethodsActivation): boolean => {
+      const paymentMethodsHash = paymentMethods.map(getPaymentMethodHash);
+      return paymentMethodsHash.some(pmh =>
+        fromNullable(pmh)
+          .mapNullable(h => bpdPaymentMethodsActivation[h])
+          .map(potActivation =>
+            pot.getOrElse(
+              pot.map(potActivation, p => p.activationStatus === "active"),
+              false
+            )
+          )
+          .getOrElse(false)
+      );
+    }
+  );
