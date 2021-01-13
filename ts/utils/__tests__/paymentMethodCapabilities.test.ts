@@ -54,6 +54,13 @@ describe("canMethodPay", () => {
 
     expect(canMethodPay(anUnKnownCreditCard)).toBeTruthy();
   });
+  it("should return true if pagoPa is true but is not of type CrediCardType", () => {
+    const anNonCreditCardPaymentMethod = {
+      pagoPA: true
+    } as SatispayPaymentMethod;
+
+    expect(canMethodPay(anNonCreditCardPaymentMethod)).toBeTruthy();
+  });
 });
 
 describe("isPaymentMethodSupported", () => {
@@ -110,6 +117,15 @@ describe("isPaymentMethodSupported", () => {
     const aPaymentMethod = {
       ...aSatispay,
       kind: "Satispay"
+    } as PaymentMethod;
+
+    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("arriving");
+  });
+  it("should return arriving if the payment method is of kind BPay", () => {
+    const aBPay = {} as SatispayPaymentMethod;
+    const aPaymentMethod = {
+      ...aBPay,
+      kind: "BPay"
     } as PaymentMethod;
 
     expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("arriving");

@@ -3,16 +3,8 @@ import * as React from "react";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
-
-const CSS_STYLE = `
-body {
-  font-size: 16;
-  color: ${IOColors.black}
-}
-`;
+import { bottomSheetBpdTransactionsBody } from "../../../components/BpdTransactionSummaryComponent";
 
 const BpdEmptyTransactionsList: React.FunctionComponent = () => (
   <>
@@ -38,9 +30,7 @@ const BpdEmptyTransactionsList: React.FunctionComponent = () => (
       </H4>
     </InfoBox>
     <View spacer={true} large={true} />
-    <Markdown cssStyle={CSS_STYLE}>
-      {I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.body")}
-    </Markdown>
+    {bottomSheetBpdTransactionsBody()}
   </>
 );
 

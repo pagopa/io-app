@@ -5,6 +5,7 @@ import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/route
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
+import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
@@ -55,6 +56,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_SATISPAY_DETAIL]: {
     screen: SatispayDetailScreen
+  },
+  [ROUTES.WALLET_BPAY_DETAIL]: {
+    screen: BPayDetailScreen
   },
   [ROUTES.WALLET_ADD_CARD]: {
     screen: AddCardScreen

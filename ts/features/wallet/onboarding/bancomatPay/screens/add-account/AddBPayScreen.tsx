@@ -1,13 +1,10 @@
 import { index } from "fp-ts/lib/Array";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
-import { Label } from "../../../../../../components/core/typography/Label";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { profileSelector } from "../../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -28,6 +25,7 @@ import {
 } from "../../store/reducers/addingBPay";
 import { onboardingBPayFoundAccountsSelector } from "../../store/reducers/foundBpay";
 import LoadAddBPayComponent from "./LoadAddBPayComponent";
+import AddBPayComponent from "./AddBPayComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -41,7 +39,7 @@ type NextAction = {
  * This screen is displayed when BPay are found and ready to be added in wallet
  * @constructor
  */
-const AddBPayScreen: React.FunctionComponent<Props> = (props: Props) => {
+const AddBPayScreen = (props: Props): React.ReactElement | null => {
   // next could be skip or not (a pan should be added)
   const [currentAction, setNextAction] = React.useState<NextAction>({
     index: 0,
@@ -82,12 +80,14 @@ const AddBPayScreen: React.FunctionComponent<Props> = (props: Props) => {
       onRetry={() => fromNullable(props.selectedBPay).map(props.onRetry)}
     />
   ) : currentPan.isSome() ? (
-    // TODO: Replace with Iterative add component
-    <SafeAreaView>
-      <Button onPress={handleOnContinue}>
-        <Label>ContinueTMP</Label>
-      </Button>
-    </SafeAreaView>
+    <AddBPayComponent
+      account={currentPan.value}
+      accountsNumber={props.bPayAccounts.length}
+      currentIndex={currentIndex}
+      handleContinue={handleOnContinue}
+      handleSkip={() => nextPan(true)}
+      contextualHelp={props.contextualHelp}
+    />
   ) : null; // this should not happen
 };
 

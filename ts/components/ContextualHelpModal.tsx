@@ -141,19 +141,22 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   /**
-   * If the user is authenticated we show the screen that allows to choice or not to send the personal token
+   * If the user is authenticated and is a new request we show the screen that allows to choice or not to send the personal token
    * to the assistance.
-   * Otherwise we allow the user to open directly a new assistance request without sending the personal token.
+   * Otherwise we allow the user to open directly a the assistance request (new or not) without sending the personal token.
    * @param reportType
    */
   const handleOnRequestAssistance = (reportType: BugReporting.reportType) => {
     if (props.isAuthenticated) {
-      // refresh / load support token
-      props.loadSupportToken();
-
-      setShowSendPersonalInfo(true);
       setSupportType(reportType);
-      return;
+
+      // ask to send the personal information to the assistance only for a new bug.
+      if (reportType === BugReporting.reportType.bug) {
+        // refresh / load support token
+        props.loadSupportToken();
+        setShowSendPersonalInfo(true);
+        return;
+      }
     }
     props.onRequestAssistance(reportType, props.supportToken);
   };

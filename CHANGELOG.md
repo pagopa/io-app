@@ -2,6 +2,51 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0-rc.1](https://github.com/pagopa/io-app/compare/1.18.0-rc.0...1.18.0-rc.1) (2021-01-11)
+
+
+### Features
+
+* [[#175272158](https://www.pivotaltracker.com/story/show/175272158)] Refactored CIE PIN screen to functional, added informative bottom sheet ([#2612](https://github.com/pagopa/io-app/issues/2612)) ([f05a443](https://github.com/pagopa/io-app/commit/f05a4437af1f6588dafcea2f3aa871fd0e42e2e7))
+* [[#176424621](https://www.pivotaltracker.com/story/show/176424621)] Upgrades TypeScript to 4.1 ([#2596](https://github.com/pagopa/io-app/issues/2596)) ([4a40558](https://github.com/pagopa/io-app/commit/4a405589d8c8ad01b2cd02cbcec4bab3ab462efb))
+* **Bonus Pagamenti Digitali:** [[#175890963](https://www.pivotaltracker.com/story/show/175890963)] Adds the screen to see all BPay accounts to add ([#2697](https://github.com/pagopa/io-app/issues/2697)) ([8d8d6cf](https://github.com/pagopa/io-app/commit/8d8d6cffbee489af79f7c2c0b2c2542f7460a1a4)), closes [#175890863](https://www.pivotaltracker.com/story/show/175890863) [#175890863](https://www.pivotaltracker.com/story/show/175890863) [#175890863](https://www.pivotaltracker.com/story/show/175890863) [#175890863](https://www.pivotaltracker.com/story/show/175890863) [#175890863](https://www.pivotaltracker.com/story/show/175890863)
+* **Bonus Pagamenti Digitali:** [[#176417281](https://www.pivotaltracker.com/story/show/176417281)] Return to wallet after add BPay ([#2703](https://github.com/pagopa/io-app/issues/2703)) ([08c036e](https://github.com/pagopa/io-app/commit/08c036e34d37eb70873ef9fd34a9f719179affea))
+* **Bonus Pagamenti Digitali:** [[#176432457](https://www.pivotaltracker.com/story/show/176432457)] Remove navigation bar from the BPay detail screen ([#2699](https://github.com/pagopa/io-app/issues/2699)) ([53a6b21](https://github.com/pagopa/io-app/commit/53a6b215239fdb9076920f2c315423acfb1cc14e))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176193377](https://www.pivotaltracker.com/story/show/176193377)] Ask to send cf only on new assistance request ([#2710](https://github.com/pagopa/io-app/issues/2710)) ([fe7ba13](https://github.com/pagopa/io-app/commit/fe7ba13adbebdbf9dc2f0818446e69520ceb523b))
+* **Bonus Pagamenti Digitali:** [[#176350129](https://www.pivotaltracker.com/story/show/176350129)] Link inside bottom sheet is not tappable ([#2701](https://github.com/pagopa/io-app/issues/2701)) ([726af95](https://github.com/pagopa/io-app/commit/726af951ca64b29738849bcd6872ce1f01e6eda8))
+* **Bonus Pagamenti Digitali:** [[#176365811](https://www.pivotaltracker.com/story/show/176365811)] Set support token as instabug user attribute ([#2688](https://github.com/pagopa/io-app/issues/2688)) ([3b88170](https://github.com/pagopa/io-app/commit/3b881705ea5692cdb4144a4e41692b2dbd25d82b))
+* **Bonus Pagamenti Digitali:** [[#176437020](https://www.pivotaltracker.com/story/show/176437020)] BPay card in onboarding screen had shadow cut on Android [#2705](https://github.com/pagopa/io-app/issues/2705) ([4f6a802](https://github.com/pagopa/io-app/commit/4f6a802d01399ff5bdadd1d8e4d4f0d3441bbf5b))
+* **Bonus Pagamenti Digitali:** [[#176437454](https://www.pivotaltracker.com/story/show/176437454)] Bpay logo had low quality [#2707](https://github.com/pagopa/io-app/issues/2707) ([f27079c](https://github.com/pagopa/io-app/commit/f27079c2fd8d5a8a99673f0ddcdc15cd83048a27))
+
+## [1.18.0-rc.0](https://github.com/pagopa/io-app/compare/1.17.0-rc.2...1.18.0-rc.0) (2021-01-11)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176426698](https://www.pivotaltracker.com/story/show/176426698)] Fix format amount [#2692](https://github.com/pagopa/io-app/issues/2692) ([543d63c](https://github.com/pagopa/io-app/commit/543d63c6086e9100b8507f3c47b3ab5083eb559f))
+
+## [1.17.0-rc.2](https://github.com/pagopa/io-app/compare/1.17.0-rc.1...1.17.0-rc.2) (2021-01-08)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#175883232](https://www.pivotaltracker.com/story/show/175883232)] Send BPay actions to mixpanel ([#2678](https://github.com/pagopa/io-app/issues/2678)) ([44f2978](https://github.com/pagopa/io-app/commit/44f2978bd943d9f535c9d16352da54d1184dc7df)), closes [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351)
+* **Bonus Pagamenti Digitali:** [[#175883367](https://www.pivotaltracker.com/story/show/175883367),[#175883472](https://www.pivotaltracker.com/story/show/175883472)] Wallet BPay visualization ([#2682](https://github.com/pagopa/io-app/issues/2682)) ([e39332f](https://github.com/pagopa/io-app/commit/e39332fc43e05b2776fd55f187943e07fd5c229e)), closes [#2685](https://github.com/pagopa/io-app/issues/2685)
+* **Bonus Pagamenti Digitali:** [[#175889262](https://www.pivotaltracker.com/story/show/175889262),[#175889280](https://www.pivotaltracker.com/story/show/175889280)] Add bpay/list API ([#2662](https://github.com/pagopa/io-app/issues/2662)) ([fbd4b67](https://github.com/pagopa/io-app/commit/fbd4b67bddb296a44dfc2b1d097ab3133871ffaa))
+* **Bonus Pagamenti Digitali:** [[#175889351](https://www.pivotaltracker.com/story/show/175889351),[#175889362](https://www.pivotaltracker.com/story/show/175889362),[#175889493](https://www.pivotaltracker.com/story/show/175889493),[#175890975](https://www.pivotaltracker.com/story/show/175890975)] Action, store & reducer Bpay ([#2673](https://github.com/pagopa/io-app/issues/2673)) ([3f9bb70](https://github.com/pagopa/io-app/commit/3f9bb700cf7ed2f7d5263a9ab74aa2ee2cda22db))
+* **Bonus Pagamenti Digitali:** [[#175890863](https://www.pivotaltracker.com/story/show/175890863),[#175883224](https://www.pivotaltracker.com/story/show/175883224)] Creates base component for bpay search funnel ([#2681](https://github.com/pagopa/io-app/issues/2681)) ([f44d049](https://github.com/pagopa/io-app/commit/f44d0494817c84bcd06c163985198ba16cf2fb73))
+* **Bonus Pagamenti Digitali:** [[#175890882](https://www.pivotaltracker.com/story/show/175890882)] Update caption for BPay ko & loading screens ([#2680](https://github.com/pagopa/io-app/issues/2680)) ([9dc52bd](https://github.com/pagopa/io-app/commit/9dc52bd400662999749b94efc5974ef9aa9ea94a)), closes [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175883232](https://www.pivotaltracker.com/story/show/175883232) [#175883232](https://www.pivotaltracker.com/story/show/175883232) [#175883232](https://www.pivotaltracker.com/story/show/175883232)
+* **Bonus Pagamenti Digitali:** [[#176401375](https://www.pivotaltracker.com/story/show/176401375)] Update BPay description and numberObfuscated [#2685](https://github.com/pagopa/io-app/issues/2685) ([cc67d74](https://github.com/pagopa/io-app/commit/cc67d7485366af1214eb58656fed57e240478073))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176397291](https://www.pivotaltracker.com/story/show/176397291)] Favorite wallet info is lost ([#2683](https://github.com/pagopa/io-app/issues/2683)) ([3cd4584](https://github.com/pagopa/io-app/commit/3cd4584b97aecd8a4bc09b4925cec48ee8882d8e))
+
 ## [1.17.0-rc.1](https://github.com/pagopa/io-app/compare/1.17.0-rc.0...1.17.0-rc.1) (2021-01-05)
 
 

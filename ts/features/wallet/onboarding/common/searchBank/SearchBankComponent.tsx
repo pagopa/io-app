@@ -7,13 +7,13 @@ import {
   Keyboard
 } from "react-native";
 import { debounce } from "lodash";
-import I18n from "../../../../../../i18n";
-import { Label } from "../../../../../../components/core/typography/Label";
-import IconFont from "../../../../../../components/ui/IconFont";
-import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
-import { sortAbiByName } from "../../utils/abi";
-import { BankPreviewItem } from "../../components/BankPreviewItem";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import I18n from "../../../../../i18n";
+import { Label } from "../../../../../components/core/typography/Label";
+import IconFont from "../../../../../components/ui/IconFont";
+import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
+import { BankPreviewItem } from "../../bancomat/components/BankPreviewItem";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { sortAbiByName } from "../../bancomat/utils/abi";
 
 type Props = {
   bankList: ReadonlyArray<Abi>;

@@ -2,6 +2,7 @@
  * Return true if function is enabled for the wallet (aka payment method)
  * @param wallet
  */
+import { fromPredicate, Option } from "fp-ts/lib/Option";
 import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
 import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
@@ -10,6 +11,7 @@ import {
   EnableableFunctionsTypeEnum,
   PatchedPaymentMethodInfo,
   PatchedWalletV2,
+  RawBPayPaymentMethod,
   RawPaymentMethod,
   RawSatispayPaymentMethod,
   Wallet
@@ -88,6 +90,14 @@ export const fromPatchedWalletV2ToRawSatispay = (
   }
   return undefined;
 };
+
+// if some, the value will be a RawBPayPaymentMethod
+export const fromPatchedWalletV2ToRawBPay = (
+  wallet: PatchedWalletV2
+): Option<RawBPayPaymentMethod> =>
+  fromPredicate((wallet: PatchedWalletV2) =>
+    isWalletV2BPay(wallet, wallet.info)
+  )(wallet).map(w => ({ ...w, kind: "BPay", info: wallet.info }));
 
 /**
  * inject walletV2 into walletV1 structure
