@@ -53,7 +53,7 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
   // handle bonus vacanze activation
   yield takeEvery(getType(activateBonusVacanze.request), function* () {
     yield put(
-      checkBonusVacanzeEligibility.failure(
+      activateBonusVacanze.failure(
         new Error("bonus vacanze activation has been dismissed")
       )
     );
