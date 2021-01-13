@@ -2,10 +2,10 @@ import { getType } from "typesafe-actions";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { NetworkError } from "../../../../../../utils/errors";
 import {
   isError,
   isReady,
-  map,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -13,7 +13,6 @@ import {
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { searchUserBPay } from "../actions";
-import { NetworkError } from "../../../../../../utils/errors";
 
 export type RemoteBPay = RemoteValue<ReadonlyArray<BPay>, NetworkError>;
 
