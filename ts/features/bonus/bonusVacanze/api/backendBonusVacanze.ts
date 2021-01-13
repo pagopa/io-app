@@ -1,6 +1,4 @@
 import {
-  ApiHeaderJson,
-  composeHeaderProducers,
   createFetchRequestForApi,
   RequestHeaderProducer,
   RequestHeaders
@@ -10,9 +8,7 @@ import {
   getAllBonusActivationsDefaultDecoder,
   GetAllBonusActivationsT,
   getLatestBonusActivationByIdDefaultDecoder,
-  GetLatestBonusActivationByIdT,
-  startBonusActivationProcedureDefaultDecoder,
-  StartBonusActivationProcedureT
+  GetLatestBonusActivationByIdT
 } from "../../../../../definitions/bonus_vacanze/requestTypes";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
@@ -32,15 +28,6 @@ const getLatestBonusFromIdT: GetLatestBonusActivationByIdT = {
   query: _ => ({}),
   headers: tokenHeaderProducer,
   response_decoder: getLatestBonusActivationByIdDefaultDecoder()
-};
-
-const startBonusActivationProcedure: StartBonusActivationProcedureT = {
-  method: "post",
-  url: () => `/api/v1/bonus/vacanze/activations`,
-  query: _ => ({}),
-  body: _ => "",
-  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: startBonusActivationProcedureDefaultDecoder()
 };
 
 function ParamAuthorizationBearerHeaderProducer<
@@ -76,9 +63,6 @@ export function BackendBonusVacanze(
   return {
     getLatestBonusVacanzeFromId: withBearerToken(
       createFetchRequestForApi(getLatestBonusFromIdT, options)
-    ),
-    startBonusActivationProcedure: withBearerToken(
-      createFetchRequestForApi(startBonusActivationProcedure, options)
     ),
     getAllBonusActivations: withBearerToken(
       createFetchRequestForApi(getAllBonusActivations, options)
