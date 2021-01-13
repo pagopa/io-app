@@ -34,7 +34,7 @@ export class SessionManager<T> {
    *    again (depending on the state of their retry policy) and the flow starts
    *    again from (1)
    */
-  private exclusiveTokenUpdate = async () => {
+  private exclusiveTokenUpdate = async (forceUpdate = false) => {
     this.isRefreshing = this.token === undefined;
     await this.mutex.runExclusive(async () => {
       if (this.token === undefined || forceUpdate) {
