@@ -12,6 +12,7 @@ import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import { bpdTransactionsLoad } from "../../store/actions/transactions";
 import { getBackoffTime } from "../../../../../utils/saga";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { isTestEnv } from "../../../../../utils/environment";
 
 /**
  * retrieve possible backoff waiting time and if there is, wait that time
@@ -63,6 +64,13 @@ export function* loadBpdData() {
   ]);
 
   if (activationStatus.type === getType(bpdLoadActivationStatus.success)) {
+    // if the user is not registered with bpd,
+    // there is no need to request other data as it is never allowed to view closed periods
+    if (!activationStatus.payload.enabled) {
+      yield put(bpdAllData.success());
+      return;
+    }
+
     // In case of success, request the periods, amounts and ranking foreach required period
     yield put(bpdPeriodsAmountLoad.request());
 
@@ -92,3 +100,8 @@ export function* loadBpdData() {
     yield put(bpdAllData.failure(activationStatus.payload));
   }
 }
+
+// to keep solid code encapsulation
+export const testableFunctions = {
+  checkPreviousFailures: isTestEnv ? checkPreviousFailures : undefined
+};

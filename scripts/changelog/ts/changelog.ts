@@ -37,7 +37,8 @@ const allowedScope = new Map<string, string>([
 const projectToScope = new Map<number, string>([
   [2449547, "Bonus Vacanze"],
   [2463683, "My Portal"],
-  [2477137, "Bonus Pagamenti Digitali"]
+  [2477137, "Bonus Pagamenti Digitali"],
+  [2476636, "Carta Giovani Nazionale"]
 ]);
 
 const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
