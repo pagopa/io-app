@@ -40,7 +40,7 @@ type OwnProps = Readonly<{
     supportToken: SupportTokenState
   ) => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
-  supportRequestOptions?: SupportRequestOptions;
+  shouldAskForScreenshotWithInitialValue?: boolean;
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -192,7 +192,9 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
             onClose={onClose}
             onGoBack={() => setShowSendPersonalInfo(false)}
             onContinue={handleContinue}
-            supportRequestOptions={props.supportRequestOptions}
+            shouldAskForScreenshotWithInitialValue={
+              props.shouldAskForScreenshotWithInitialValue
+            }
           />
         ) : (
           <ContextualHelpComponent

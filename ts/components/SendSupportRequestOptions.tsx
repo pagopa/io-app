@@ -102,7 +102,7 @@ type Props = {
   onClose: () => void;
   onGoBack: () => void;
   onContinue: (options: SupportRequestOptions) => void;
-  supportRequestOptions?: SupportRequestOptions;
+  shouldAskForScreenshotWithInitialValue?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -129,23 +129,15 @@ const CustomGoBackButton: React.FunctionComponent<{
   </ButtonDefaultOpacity>
 );
 
-const DefaultSupportRequestOptions = {
-  sendPersonalInfo: true,
-  sendScreenshot: false
-};
-
 const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
   onClose,
   onGoBack,
   onContinue,
-  supportRequestOptions
+  shouldAskForScreenshotWithInitialValue
 }) => {
-  const { sendScreenshot: shouldAskSendScreenshot } =
-    supportRequestOptions || DefaultSupportRequestOptions;
-
   const [sendPersonalInfo, setSendPersonalInfo] = React.useState(false);
   const [sendScreenshot, setSendScreenshot] = React.useState(
-    shouldAskSendScreenshot as boolean
+    shouldAskForScreenshotWithInitialValue as boolean
   );
   const toggleSendScreenshot = () => setSendScreenshot(oldValue => !oldValue);
   const toggleSendPersonalInfo = () =>
@@ -183,7 +175,7 @@ const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
           isChecked={sendPersonalInfo}
           onToggle={toggleSendPersonalInfo}
         />
-        {shouldAskSendScreenshot && (
+        {shouldAskForScreenshotWithInitialValue !== undefined && (
           <CheckBoxFormItem
             target={CheckboxIDs.sendScreenshot}
             isChecked={sendScreenshot}

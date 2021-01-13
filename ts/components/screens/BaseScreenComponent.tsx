@@ -34,7 +34,6 @@ import {
 } from "../ui/Markdown/handlers/link";
 import { SupportTokenState } from "../../store/reducers/authentication";
 import { getValueOrElse } from "../../features/bonus/bpd/model/RemoteValue";
-import { SupportRequestOptions } from "../SendSupportRequestOptions";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { AccessibilityEvents, BaseHeader } from "./BaseHeader";
 
@@ -60,7 +59,10 @@ interface OwnProps {
   isSearchAvailable?: boolean;
   searchType?: SearchType;
   reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
-  supportRequestOptions?: SupportRequestOptions;
+
+  // As of now, the following prop is propagated through 4 levels
+  // to finally display a checkbox in SendSupportRequestOptions
+  shouldAskForScreenshotWithInitialValue?: boolean;
 }
 
 type Props = OwnProps &
@@ -224,7 +226,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       showInstabugChat,
       children,
       faqCategories,
-      supportRequestOptions
+      shouldAskForScreenshotWithInitialValue
     } = this.props;
 
     const {
@@ -278,11 +280,13 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         {children}
         {ch && (
           <ContextualHelpModal
+            shouldAskForScreenshotWithInitialValue={
+              shouldAskForScreenshotWithInitialValue
+            }
             title={ch.title}
             onLinkClicked={this.handleOnLinkClicked}
             body={ch.body}
             isVisible={isHelpVisible}
-            supportRequestOptions={supportRequestOptions}
             modalAnimation={contextualHelpModalAnimation}
             onRequestAssistance={this.handleOnRequestAssistance}
             close={this.hideHelp}
