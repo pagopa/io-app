@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { takeEvery, takeLatest } from "redux-saga/effects";
+import { put, takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { apiUrlPrefix } from "../../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
@@ -11,10 +11,6 @@ import {
   loadBonusVacanzeFromId,
   startLoadBonusFromIdPolling
 } from "../actions/bonusVacanze";
-import { bonusActivationSaga } from "./activation/getBonusActivationSaga";
-import { handleBonusActivationSaga } from "./activation/handleBonusActivationSaga";
-import { bonusEligibilitySaga } from "./eligibility/getBonusEligibilitySaga";
-import { handleBonusEligibilitySaga } from "./eligibility/handleBonusEligibilitySaga";
 import { handleBonusFromIdPollingSaga } from "./handleBonusFromIdPolling";
 import { handleForceBonusServiceActivation } from "./handleForceBonusServiceActivation";
 import { handleLoadAllBonusActivations } from "./handleLoadAllBonusActivationSaga";
@@ -32,14 +28,13 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
   yield takeLatest(startLoadBonusFromIdPolling, handleBonusFromIdPollingSaga);
 
   // handle bonus vacanze eligibility
-  yield takeLatest(
-    getType(checkBonusVacanzeEligibility.request),
-    handleBonusEligibilitySaga,
-    bonusEligibilitySaga(
-      backendBonusVacanzeClient.startBonusEligibilityCheck,
-      backendBonusVacanzeClient.getBonusEligibilityCheck
-    )
-  );
+  yield takeLatest(getType(checkBonusVacanzeEligibility.request), function* () {
+    yield put(
+      checkBonusVacanzeEligibility.failure(
+        new Error("bonus vacanze activation has been dismissed")
+      )
+    );
+  });
 
   // handle bonus vacanze from id loading
   yield takeEvery(
@@ -56,14 +51,13 @@ export function* watchBonusSaga(bearerToken: string): SagaIterator {
   );
 
   // handle bonus vacanze activation
-  yield takeEvery(
-    getType(activateBonusVacanze.request),
-    handleBonusActivationSaga,
-    bonusActivationSaga(
-      backendBonusVacanzeClient.startBonusActivationProcedure,
-      backendBonusVacanzeClient.getLatestBonusVacanzeFromId
-    )
-  );
+  yield takeEvery(getType(activateBonusVacanze.request), function* () {
+    yield put(
+      activateBonusVacanze.failure(
+        new Error("bonus vacanze activation has been dismissed")
+      )
+    );
+  });
 
   // force bonus vacanze service activation when eligibility or activation starts
   yield takeLatest(
