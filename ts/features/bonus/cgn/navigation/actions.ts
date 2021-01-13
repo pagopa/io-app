@@ -17,7 +17,7 @@ export const navigateToBpdOnboardingLoadActivate = () =>
   });
 
 // Details
-export const navigateToBpdDetails = () =>
+export const navigateToCgnDetails = () =>
   NavigationActions.navigate({
     routeName: CGN_ROUTES.DETAILS
   });
