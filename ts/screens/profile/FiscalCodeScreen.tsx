@@ -1,9 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { ReactElement, useEffect, useLayoutEffect, useState } from "react";
-import { BackHandler, ScrollView, StyleSheet } from "react-native";
-import { NavigationContext, NavigationInjectedProps } from "react-navigation";
+import { ReactElement, useEffect } from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
@@ -25,7 +25,6 @@ import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { getBrightness, setBrightness } from "../../utils/brightness";
 
 type Props = ReturnType<typeof mapStateToProps> &
   NavigationInjectedProps &
@@ -69,81 +68,13 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.fiscalCode.help"
 };
 
-const HIGH_BRIGHTNESS = 1.0; // Target screen brightness for a very bright screen
 
 const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
-  const navigation = React.useContext(NavigationContext);
-
-  // Store the device brightness value before navigating to this screen
-  const [initialBrightness, storeInitialBrightness] = useState(0.0);
-
-  const getAndStoreDeviceBrightnessTask = getBrightness()
-    .map((myBrightness: number) => storeInitialBrightness(myBrightness))
-    .fold(
-      () => alert("Failed to get screen Brightness"),
-      () => undefined
-    );
-
-  const setHighDeviceBrightnessTask = setBrightness(HIGH_BRIGHTNESS).fold(
-    () => alert("Failed to set High Screen Brightness"),
-    () => undefined
-  );
-
-  const restoreDeviceBrightnessTask = setBrightness(initialBrightness).fold(
-    () => alert("Failed to restore screen brightness."),
-    () => undefined
-  );
-
-  const getAndStoreDeviceBrightness = async () =>
-    await getAndStoreDeviceBrightnessTask.run();
-
-  const restoreDeviceBrightness = async () =>
-    await restoreDeviceBrightnessTask.run();
-
-  const setHighDeviceBrightness = async () =>
-    await setHighDeviceBrightnessTask.run();
 
   const handleBackPress = () => {
-    // TODO: add log or silent exception
-    void restoreDeviceBrightness();
     props.navigation.goBack();
     return true;
   };
-
-  // Set and unset brightness effect manager
-
-  useLayoutEffect(() => {
-    void getAndStoreDeviceBrightness();
-
-    const didBlurSubscription = navigation.addListener("willBlur", () => {
-      void restoreDeviceBrightness();
-      alert("INSIDE BLUooR");
-    });
-
-    // Now can restore brightness, let's rise it
-    void setHighDeviceBrightness();
-
-    return () => {
-      // didFocusSubscription.remove();
-      didBlurSubscription.remove();
-      void restoreDeviceBrightness();
-      alert("INSIDE CLEANUP");
-    };
-  }, [navigation]);
-
-  // Add and remove EventListener effect manager
-  useEffect(() => {
-    // Using willFocus listener would be less responsive
-    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
-    const didBlurSubscription = navigation.addListener("didBlur", () =>
-      BackHandler.removeEventListener("hardwareBackPress", handleBackPress)
-    );
-
-    return () => {
-      didBlurSubscription.remove();
-      alert("BACK PRESS CLEANUP");
-    };
-  }, [navigation]);
 
   // Decode codice catastale effect manager
   useEffect(() => {
@@ -153,7 +84,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
       );
       maybeCodiceCatastale.map(code => props.loadMunicipality(code));
     }
-  }, []);
+  }, [props.profile]);
 
   const showModal = (showBackSide: boolean = false) => {
     if (props.profile) {
