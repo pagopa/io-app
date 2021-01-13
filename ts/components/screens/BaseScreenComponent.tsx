@@ -11,13 +11,15 @@ import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import { ModalBaseProps, Platform } from "react-native";
+import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
-  instabugLog,
-  TypeLogs,
   openInstabugQuestionReport,
-  openInstabugReplies
+  openInstabugReplies,
+  DefaultReportAttachmentTypeConfiguration,
+  setInstabugSupportTokenAttribute,
+  TypeLogs,
+  instabugLog
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -32,6 +34,7 @@ import {
 } from "../ui/Markdown/handlers/link";
 import { SupportTokenState } from "../../store/reducers/authentication";
 import { getValueOrElse } from "../../features/bonus/bpd/model/RemoteValue";
+import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { AccessibilityEvents, BaseHeader } from "./BaseHeader";
 
 export interface ContextualHelpProps {
@@ -51,9 +54,11 @@ interface OwnProps {
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
+  headerBackgroundColor?: ColorValue;
   appLogo?: boolean;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
+  reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
 }
 
 type Props = OwnProps &
@@ -128,15 +133,29 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     const maybeReport = this.state.requestReport;
     this.setState({ requestReport: none }, () => {
       maybeReport.map(type => {
-        fromNullable(this.state.supportToken)
-          .mapNullable(rsp => getValueOrElse(rsp, undefined))
-          .map(st => {
-            instabugLog(JSON.stringify(st), TypeLogs.INFO, "support-token");
-          });
+        const supportToken = fromNullable(this.state.supportToken)
+          .mapNullable<SupportToken | undefined>(rsp =>
+            getValueOrElse(rsp, undefined)
+          )
+          .getOrElse(undefined);
+
+        // Store/remove and log the support token only if is a new assistance request.
+        if (type === BugReporting.reportType.bug) {
+          // log on instabug the support token
+          if (supportToken) {
+            instabugLog(
+              JSON.stringify(supportToken),
+              TypeLogs.INFO,
+              "support-token"
+            );
+          }
+          // set or remove the support token as instabug user attribute
+          setInstabugSupportTokenAttribute(supportToken);
+        }
 
         switch (type) {
           case BugReporting.reportType.bug:
-            openInstabugQuestionReport();
+            openInstabugQuestionReport(this.props.reportAttachmentTypes);
             break;
           case BugReporting.reportType.question:
             openInstabugReplies();
@@ -193,6 +212,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       goBack,
       headerBody,
       headerTitle,
+      headerBackgroundColor,
       primary,
       isSearchAvailable,
       searchType,
@@ -241,6 +261,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           dark={dark}
           goBack={goBack}
           headerTitle={headerTitle}
+          backgroundColor={headerBackgroundColor}
           onShowHelp={
             contextualHelp || contextualHelpMarkdown ? this.showHelp : undefined
           }

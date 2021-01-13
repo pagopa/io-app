@@ -11,6 +11,7 @@ import { IOColors } from "./core/variables/IOColors";
 
 type Props = Readonly<{
   textToCopy: string;
+  onPressWithGestureHandler?: true;
 }>;
 
 const styles = StyleSheet.create({
@@ -61,6 +62,7 @@ const CopyButtonComponent: React.FunctionComponent<Props> = (props: Props) => {
       style={styles.button}
       bordered={!isTap}
       primary={isTap}
+      onPressWithGestureHandler={props.onPressWithGestureHandler}
     >
       <Text
         style={[styles.text, isTap ? styles.colorWhite : styles.colorBlue]}

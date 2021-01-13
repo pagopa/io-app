@@ -4,9 +4,11 @@ import { Dispatch } from "redux";
 import { Card } from "../../../../../../definitions/pagopa/walletv2/Card";
 import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
+import { isBancomatBlocked } from "../../../../../utils/paymentMethod";
 import BaseBancomatCard from "./BaseBancomatCard";
 
-type OnboardingData = { bancomat: Card; logoUrl?: string };
+type OnboardingData = { bancomat: Card; abi: Abi };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -18,9 +20,10 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const PreviewBancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
-    abiLogo={props.logoUrl}
+    abi={props.abi}
     expiringDate={props.bancomat.expiringDate}
     user={props.nameSurname ?? ""}
+    blocked={isBancomatBlocked(props.bancomat)}
   />
 );
 

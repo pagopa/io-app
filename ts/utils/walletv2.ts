@@ -2,6 +2,7 @@
  * Return true if function is enabled for the wallet (aka payment method)
  * @param wallet
  */
+import { fromPredicate, Option } from "fp-ts/lib/Option";
 import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
 import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
@@ -10,7 +11,9 @@ import {
   EnableableFunctionsTypeEnum,
   PatchedPaymentMethodInfo,
   PatchedWalletV2,
+  RawBPayPaymentMethod,
   RawPaymentMethod,
+  RawSatispayPaymentMethod,
   Wallet
 } from "../types/pagopa";
 import {
@@ -60,7 +63,7 @@ const isWalletV2CreditCard = (
 ): paymentMethodInfo is CardInfo =>
   paymentMethodInfo && wallet.walletType === WalletTypeEnum.Card;
 
-const getPaymentMethod = (
+export const fromPatchedWalletV2ToRawPaymentMethod = (
   wallet: PatchedWalletV2
 ): RawPaymentMethod | undefined => {
   if (isWalletV2CreditCard(wallet, wallet.info)) {
@@ -78,6 +81,24 @@ const getPaymentMethod = (
   return undefined;
 };
 
+// TODO: should be Either instead of return undefined
+export const fromPatchedWalletV2ToRawSatispay = (
+  wallet: PatchedWalletV2
+): RawSatispayPaymentMethod | undefined => {
+  if (isWalletV2Satispay(wallet, wallet.info)) {
+    return { ...wallet, kind: "Satispay", info: wallet.info };
+  }
+  return undefined;
+};
+
+// if some, the value will be a RawBPayPaymentMethod
+export const fromPatchedWalletV2ToRawBPay = (
+  wallet: PatchedWalletV2
+): Option<RawBPayPaymentMethod> =>
+  fromPredicate((wallet: PatchedWalletV2) =>
+    isWalletV2BPay(wallet, wallet.info)
+  )(wallet).map(w => ({ ...w, kind: "BPay", info: wallet.info }));
+
 /**
  * inject walletV2 into walletV1 structure
  * @param walletV2
@@ -85,7 +106,7 @@ const getPaymentMethod = (
 export const convertWalletV2toWalletV1 = (
   walletV2: PatchedWalletV2
 ): Wallet => {
-  const paymentMethodInfo = getPaymentMethod(walletV2);
+  const paymentMethodInfo = fromPatchedWalletV2ToRawPaymentMethod(walletV2);
   const card =
     paymentMethodInfo?.kind === "CreditCard"
       ? paymentMethodInfo.info
@@ -122,6 +143,6 @@ export const convertWalletV2toWalletV1 = (
     isPspToIgnore: false,
     registeredNexi: false,
     saved: true,
-    paymentMethod: getPaymentMethod(walletV2)
+    paymentMethod: fromPatchedWalletV2ToRawPaymentMethod(walletV2)
   };
 };

@@ -26,6 +26,7 @@ import {
 import { ContentState } from "../store/reducers/content";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
+import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
@@ -255,7 +256,11 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
   Action
 >(
   rootPersistConfig,
-  createRootReducer([rootPersistConfig, authenticationPersistConfig])
+  createRootReducer([
+    rootPersistConfig,
+    authenticationPersistConfig,
+    walletsPersistConfig
+  ])
 );
 
 const logger = createLogger({

@@ -48,6 +48,7 @@ import RootedDeviceModal from "../modal/RootedDeviceModal";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
 
 type Props = NavigationInjectedProps &
   LightModalContextInterface &
@@ -216,6 +217,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
       : styles.noCie;
     return (
       <BaseScreenComponent
+        appLogo
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={
           isCieSupported ? ["landing_SPID", "landing_CIE"] : ["landing_SPID"]
@@ -235,6 +237,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
           </Content>
         )}
 
+        <SectionStatusComponent sectionKey={"login"} />
         <View footer={true}>
           <ButtonDefaultOpacity
             block={true}
@@ -289,6 +292,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
             </Text>
           </ButtonDefaultOpacity>
           <View spacer={true} />
+
           <ButtonDefaultOpacity
             block={true}
             small={true}

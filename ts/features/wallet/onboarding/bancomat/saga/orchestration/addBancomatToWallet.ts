@@ -5,13 +5,13 @@ import {
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
+import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { isBpdEnabled } from "../../../../../bonus/bpd/saga/orchestration/onboarding/startOnboarding";
+import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
 import {
   navigateToActivateBpdOnNewBancomat,
-  navigateToOnboardingBancomatChooseBank,
-  navigateToSuggestBpdActivation
+  navigateToOnboardingBancomatSearchStartScreen
 } from "../../navigation/action";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
 import {
@@ -20,9 +20,6 @@ import {
   walletAddBancomatCompleted
 } from "../../store/actions";
 import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
-import { hasFunctionEnabled } from "../../../../../../utils/walletv2";
-import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
-import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 
 /**
  * Define the workflow that allows the user to add a bancomat to the wallet.
@@ -33,8 +30,8 @@ import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wall
  */
 function* bancomatWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToOnboardingBancomatChooseBank(),
-    startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK,
+    startScreenNavigation: navigateToOnboardingBancomatSearchStartScreen(),
+    startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.BANCOMAT_START,
     complete: walletAddBancomatCompleted,
     back: walletAddBancomatBack,
     cancel: walletAddBancomatCancel
@@ -82,41 +79,15 @@ export function* addBancomatToWalletAndActivateBpd() {
   if (res === "completed") {
     // refresh wallets list
     yield put(fetchWalletsRequest());
-    yield call(activateBpdOnNewBancomat);
-  }
-}
+    // read the new added bancomat
+    const bancomatAdded: ReturnType<typeof onboardingBancomatAddedPansSelector> = yield select(
+      onboardingBancomatAddedPansSelector
+    );
 
-/**
- * Allows the user to activate bpd on the new added bancomat
- */
-function* activateBpdOnNewBancomat() {
-  // read the new added bancomat
-  const bancomatAdded: ReturnType<typeof onboardingBancomatAddedPansSelector> = yield select(
-    onboardingBancomatAddedPansSelector
-  );
-  // TODO: change enableableFunction with types representing the possibles functionalities
-  const atLeastOneBancomatWithBpdCapability = bancomatAdded.some(b =>
-    hasFunctionEnabled(b, EnableableFunctionsTypeEnum.BPD)
-  );
-
-  // No bancomat with bpd capability added in the current workflow, return to wallet home
-  if (!atLeastOneBancomatWithBpdCapability) {
-    return yield put(navigateToWalletHome());
-  }
-  const isBpdEnabledResponse: SagaCallReturnType<typeof isBpdEnabled> = yield call(
-    isBpdEnabled
-  );
-
-  // Error while reading the bpdEnabled, return to wallet
-  if (isBpdEnabledResponse.isLeft()) {
-    yield put(navigateToWalletHome());
-  } else {
-    if (isBpdEnabledResponse.value) {
-      // navigate to onboarding new bancomat
-      yield put(navigateToActivateBpdOnNewBancomat());
-    } else {
-      // navigate to "ask if u want to start bpd onboarding"
-      yield put(navigateToSuggestBpdActivation());
-    }
+    yield call(
+      activateBpdOnNewPaymentMethods,
+      bancomatAdded,
+      navigateToActivateBpdOnNewBancomat()
+    );
   }
 }

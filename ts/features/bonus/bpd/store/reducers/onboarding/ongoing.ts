@@ -1,7 +1,6 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { bpdLoadActivationStatus } from "../../actions/details";
 import { bpdIbanInsertionCancel } from "../../actions/iban";
 import {
   bpdOnboardingCancel,
@@ -25,8 +24,6 @@ const ongoingOnboardingReducer = (
     case getType(bpdOnboardingCompleted):
     case getType(bpdIbanInsertionCancel):
       return false;
-    case getType(bpdLoadActivationStatus.success):
-      return action.payload.enabled ? false : state;
   }
   return state;
 };

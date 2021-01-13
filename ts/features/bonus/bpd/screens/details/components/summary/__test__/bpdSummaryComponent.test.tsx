@@ -6,9 +6,12 @@ import * as React from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../../../../i18n";
+import {
+  baseBackendState,
+  withBpdRankingConfig
+} from "../../../../../../../../store/reducers/__mock__/backendStatus";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../../utils/accessibility";
-import { BpdAmount } from "../../../../../store/actions/amount";
-import { BpdPeriod } from "../../../../../store/actions/periods";
+import { formatIntegerNumber } from "../../../../../../../../utils/stringBuilder";
 import {
   eligibleAmount,
   eligibleMaxAmount,
@@ -20,6 +23,14 @@ import {
   closedPeriod,
   inactivePeriod
 } from "../../../../../store/reducers/__mock__/periods";
+import {
+  notReadyRanking,
+  readyRanking
+} from "../../../../../store/reducers/__mock__/ranking";
+import {
+  BpdPeriodWithInfo,
+  isBpdRankingReady
+} from "../../../../../store/reducers/details/periods";
 import BpdSummaryComponent from "../BpdSummaryComponent";
 
 jest.mock("@gorhom/bottom-sheet", () => ({
@@ -33,7 +44,13 @@ describe("Bpd Summary Component graphical test for different states", () => {
   MockDate.set("2020-11-04");
 
   it("Render Inactive period", () => {
-    const store = mockStore(mockBpdState(inactivePeriod, zeroAmount));
+    const store = mockStore(
+      mockBpdState({
+        ...inactivePeriod,
+        amount: zeroAmount,
+        ranking: readyRanking
+      })
+    );
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
@@ -44,6 +61,10 @@ describe("Bpd Summary Component graphical test for different states", () => {
 
     // When the period is "Inactive", the TransactionsGraphicalSummary should be null
     expect(component.queryByTestId("progressBar")).toBeNull();
+
+    // When the period is "Inactive", the SuperCashbackRankingSummary should be null
+    expect(component.queryByTestId("supercashbackSummary.title")).toBeNull();
+
     expect(
       component.queryByTestId("textualTransaction.transactions")
     ).toBeNull();
@@ -57,14 +78,21 @@ describe("Bpd Summary Component graphical test for different states", () => {
   });
 
   it("Render Active period, transactionNumber<minTransactionNumber, totalCashback = 0", () => {
-    const store = mockStore(mockBpdState(activePeriod, zeroAmount));
+    const store = mockStore(
+      mockBpdState({
+        ...activePeriod,
+        amount: zeroAmount,
+        ranking: readyRanking
+      })
+    );
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
       </Provider>
     );
 
-    activePeriodNotEnoughTransaction(component, zeroAmount);
+    // When the period is "Active" and totalCashback = 0 the SuperCashbackRankingSummary should be null
+    expect(component.queryByTestId("supercashbackSummary.title")).toBeNull();
 
     // When the period is "Active" and transactionNumber<minTransactionNumber,
     // TextualSummary should be null if totalCashback == 0
@@ -72,18 +100,24 @@ describe("Bpd Summary Component graphical test for different states", () => {
   });
 
   it("Render Active period, transactionNumber < minTransactionNumber, totalCashback > 0", () => {
-    const store = mockStore(mockBpdState(activePeriod, notEligibleAmount));
+    const period = {
+      ...activePeriod,
+      amount: notEligibleAmount,
+      ranking: readyRanking
+    };
+    const store = mockStore(mockBpdState(period, true));
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
       </Provider>
     );
 
-    activePeriodNotEnoughTransaction(component, notEligibleAmount);
-
     // When the period is "Active" and transactionNumber<minTransactionNumber,
     // TextualSummary should be null if totalCashback > 0
     const textualSummary = component.queryByTestId("currentPeriodWarning");
+
+    expectSuperCashback(component, period);
+
     expect(textualSummary).toBeEnabled();
     // The text description should indicate the minimum transaction required to acquire the cashback
     expect(textualSummary).toHaveTextContent(
@@ -91,17 +125,47 @@ describe("Bpd Summary Component graphical test for different states", () => {
     );
   });
 
-  it("Render Active period, transactionNumber >= minTransactionNumber", () => {
-    const store = mockStore(mockBpdState(activePeriod, eligibleAmount));
+  it("Render Active period, transactionNumber < minTransactionNumber, totalCashback > 0, supercashback not ready", () => {
+    const period = {
+      ...activePeriod,
+      amount: notEligibleAmount,
+      ranking: notReadyRanking
+    };
+    const store = mockStore(mockBpdState(period, true));
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
       </Provider>
     );
 
-    // When the period is "Active" and transactionNumber >= minTransactionNumber,
-    // the TransactionsGraphicalSummary should be null
-    expect(component.queryByTestId("progressBar")).toBeNull();
+    // When the period is "Active" and transactionNumber<minTransactionNumber,
+    // TextualSummary should be null if totalCashback > 0
+    const textualSummary = component.queryByTestId("currentPeriodWarning");
+
+    expectSuperCashback(component, period);
+
+    expect(textualSummary).toBeEnabled();
+    // The text description should indicate the minimum transaction required to acquire the cashback
+    expect(textualSummary).toHaveTextContent(
+      activePeriod.minTransactionNumber.toString()
+    );
+  });
+
+  it("Render Active period, transactionNumber >= minTransactionNumber, ranking <= minPosition, no max amount", () => {
+    const period = {
+      ...activePeriod,
+      amount: eligibleAmount,
+      ranking: readyRanking
+    };
+    const store = mockStore(mockBpdState(period, true));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+
+    expectSuperCashback(component, period);
+
     // TextualTransaction should be enabled
     const textualTransactionTransactions = component.queryByTestId(
       "textualTransaction.transactions"
@@ -115,16 +179,164 @@ describe("Bpd Summary Component graphical test for different states", () => {
     // When the period is "Active" and transactionNumber>=minTransactionNumber,
     // no TextualSummary should be rendered.
     expect(component.queryByTestId("currentPeriodWarning")).toBeNull();
+
+    // When ranking <= minPosition
+    expect(component.queryByTestId("currentPeriodSuperCashback")).toBeEnabled();
+  });
+
+  it("Render Active period, transactionNumber >= minTransactionNumber, ranking <= minPosition, max amount", () => {
+    const period: BpdPeriodWithInfo = {
+      ...activePeriod,
+      amount: {
+        ...eligibleAmount,
+        totalCashback: activePeriod.maxPeriodCashback
+      },
+      ranking: readyRanking
+    };
+    const store = mockStore(mockBpdState(period, true));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+
+    expectSuperCashback(component, period);
+
+    // TextualTransaction should be enabled
+    const textualTransactionTransactions = component.queryByTestId(
+      "textualTransaction.transactions"
+    );
+    expect(textualTransactionTransactions).toBeEnabled();
+
+    expect(textualTransactionTransactions).toHaveTextContent(
+      eligibleAmount.transactionNumber.toString()
+    );
+
+    // When the period is "Active" and transactionNumber>=minTransactionNumber,
+    // no TextualSummary should be rendered.
+    expect(component.queryByTestId("currentPeriodWarning")).toBeNull();
+
+    // When ranking <= minPosition
+    expect(component.queryByTestId("currentPeriodSuperCashback")).toBeEnabled();
+  });
+
+  it("Render Active period, transactionNumber >= minTransactionNumber, ranking > minPosition, no max amount", () => {
+    const period: BpdPeriodWithInfo = {
+      ...activePeriod,
+      amount: eligibleAmount,
+      ranking: { ...readyRanking, ranking: 1000000 }
+    };
+    const store = mockStore(mockBpdState(period, true));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+
+    expectSuperCashback(component, period);
+
+    // TextualTransaction should be enabled
+    const textualTransactionTransactions = component.queryByTestId(
+      "textualTransaction.transactions"
+    );
+    expect(textualTransactionTransactions).toBeEnabled();
+
+    expect(textualTransactionTransactions).toHaveTextContent(
+      eligibleAmount.transactionNumber.toString()
+    );
+
+    // When the period is "Active" and transactionNumber>=minTransactionNumber,
+    // no TextualSummary should be rendered.
+    expect(component.queryByTestId("currentPeriodWarning")).toBeNull();
+
+    expect(component.queryByTestId("currentPeriodUnlock")).toBeEnabled();
+  });
+
+  it("Render Active period, transactionNumber > minTransactionNumber+10, ranking > minPosition, no max amount", () => {
+    const period: BpdPeriodWithInfo = {
+      ...activePeriod,
+      amount: {
+        ...eligibleAmount,
+        transactionNumber: activePeriod.minTransactionNumber + 11
+      },
+      ranking: { ...readyRanking, ranking: 1000000 }
+    };
+    const store = mockStore(mockBpdState(period, true));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+
+    expectSuperCashback(component, period);
+
+    // TextualTransaction should be enabled
+    const textualTransactionTransactions = component.queryByTestId(
+      "textualTransaction.transactions"
+    );
+    expect(textualTransactionTransactions).toBeEnabled();
+
+    expect(textualTransactionTransactions).toHaveTextContent(
+      period.amount.transactionNumber.toString()
+    );
+
+    // When the period is "Active" and transactionNumber>=minTransactionNumber,
+    // no TextualSummary should be rendered.
+    expect(component.queryByTestId("currentPeriodWarning")).toBeNull();
+
+    expect(component.queryByTestId("currentPeriodUnlock")).toBeNull();
+  });
+
+  it("Render Active period, transactionNumber >= minTransactionNumber, ranking > minPosition, max amount", () => {
+    const period: BpdPeriodWithInfo = {
+      ...activePeriod,
+      amount: {
+        ...eligibleAmount,
+        totalCashback: activePeriod.maxPeriodCashback
+      },
+      ranking: { ...readyRanking, ranking: 1000000 }
+    };
+    const store = mockStore(mockBpdState(period, true));
+    const component = render(
+      <Provider store={store}>
+        <BpdSummaryComponent />
+      </Provider>
+    );
+
+    expectSuperCashback(component, period);
+
+    // TextualTransaction should be enabled
+    const textualTransactionTransactions = component.queryByTestId(
+      "textualTransaction.transactions"
+    );
+    expect(textualTransactionTransactions).toBeEnabled();
+
+    expect(textualTransactionTransactions).toHaveTextContent(
+      eligibleAmount.transactionNumber.toString()
+    );
+
+    // When the period is "Active" and transactionNumber>=minTransactionNumber,
+    // no TextualSummary should be rendered.
+    expect(component.queryByTestId("currentPeriodWarning")).toBeNull();
+
+    expect(component.queryByTestId("currentPeriodMaxAmount")).toBeEnabled();
   });
 
   it("Render Closed period, grace period", () => {
     MockDate.set("2020-11-04");
-    const store = mockStore(mockBpdState(closedPeriod, zeroAmount));
+    const period = {
+      ...closedPeriod,
+      amount: zeroAmount,
+      ranking: readyRanking
+    };
+    const store = mockStore(mockBpdState(period, true));
     const componentGrace = render(
       <Provider store={store}>
         <BpdSummaryComponent />
       </Provider>
     );
+
+    expectSuperCashback(componentGrace, period);
 
     // When the period is "Active" and transactionNumber>=minTransactionNumber,
     // no TextualSummary should be rendered.
@@ -147,23 +359,38 @@ describe("Bpd Summary Component graphical test for different states", () => {
 
   it("Render Closed period, not enough transactions", () => {
     MockDate.set("2020-11-09");
-    const store = mockStore(mockBpdState(closedPeriod, zeroAmount));
+    const period = {
+      ...closedPeriod,
+      amount: zeroAmount,
+      ranking: readyRanking
+    };
+    const store = mockStore(mockBpdState(period, true));
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
       </Provider>
     );
     expect(component.queryByTestId("closedPeriodKO")).toBeEnabled();
+
+    expectSuperCashback(component, period);
   });
 
   it("Render Closed period, cashback earned", () => {
     MockDate.set("2020-11-09");
-    const store = mockStore(mockBpdState(closedPeriod, eligibleAmount));
+    const period = {
+      ...closedPeriod,
+      amount: eligibleAmount,
+      ranking: readyRanking
+    };
+    const store = mockStore(mockBpdState(period, true));
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
       </Provider>
     );
+
+    expectSuperCashback(component, period);
+
     const textualSummary = component.queryByTestId("closedPeriodOK");
     expect(textualSummary).toBeEnabled();
     expect(textualSummary).toHaveTextContent(
@@ -173,12 +400,20 @@ describe("Bpd Summary Component graphical test for different states", () => {
 
   it("Render Closed period, max cashback earned", () => {
     MockDate.set("2020-11-09");
-    const store = mockStore(mockBpdState(closedPeriod, eligibleMaxAmount));
+    const period = {
+      ...closedPeriod,
+      amount: eligibleMaxAmount,
+      ranking: readyRanking
+    };
+    const store = mockStore(mockBpdState(period, true));
     const component = render(
       <Provider store={store}>
         <BpdSummaryComponent />
       </Provider>
     );
+
+    expectSuperCashback(component, period);
+
     const textualSummary = component.queryByTestId("closedPeriodOK");
     expect(textualSummary).toBeEnabled();
     expect(textualSummary).toHaveTextContent(
@@ -196,31 +431,63 @@ describe("Bpd Summary Component graphical test for different states", () => {
 /**
  * Generate a mocked state with the fields required for these tests
  * @param period
- * @param amount
+ * @param bpdRankingRemoteConfig
  */
-const mockBpdState = (period: BpdPeriod, amount: BpdAmount) => ({
+export const mockBpdState = (
+  period: BpdPeriodWithInfo,
+  bpdRankingRemoteConfig?: boolean
+) => ({
   bonus: {
     bpd: {
       details: {
-        selectedPeriod: period,
-        amounts: { [period.awardPeriodId]: pot.some(amount) }
+        selectedPeriod: period
       }
     }
   },
+  backendStatus:
+    bpdRankingRemoteConfig === undefined
+      ? baseBackendState
+      : withBpdRankingConfig(baseBackendState, bpdRankingRemoteConfig),
   profile: pot.none
 });
 
-const activePeriodNotEnoughTransaction = (
+/**
+ * Test the graphical states for SuperCashbackRankingSummary
+ * @param component
+ * @param period
+ */
+const expectSuperCashback = (
   component: RenderAPI,
-  amount: BpdAmount
+  period: BpdPeriodWithInfo
 ) => {
-  expect(component).not.toBeNull();
+  if (isBpdRankingReady(period.ranking)) {
+    expectSuperCashbackReady(component, period);
+  } else {
+    expectSuperCashbackNotReady(component);
+  }
+};
 
-  // When the period is "Active" and transactionNumber<minTransactionNumber,
-  // GraphicalSummary should be enabled
-  expect(component.queryByTestId("progressBar")).toBeEnabled();
-  expect(component.queryByTestId("percentageTransactions.title")).toBeEnabled();
+export const expectSuperCashbackReady = (
+  component: RenderAPI,
+  period: BpdPeriodWithInfo
+) => {
+  if (isBpdRankingReady(period.ranking)) {
+    // The SuperCashbackRankingSummary should be visible
+    expect(component.queryByTestId("supercashbackSummary.title")).toBeEnabled();
+    expect(
+      component.queryByTestId("supercashbackSummary.ranking")
+    ).toHaveTextContent(formatIntegerNumber(period.ranking.ranking));
+    expect(
+      component.queryByTestId("supercashbackSummary.minRanking")
+    ).toHaveTextContent(formatIntegerNumber(period.minPosition));
+  } else {
+    fail("Expected BpdRankingReady");
+  }
+};
+
+export const expectSuperCashbackNotReady = (component: RenderAPI) => {
+  expect(component.queryByTestId("supercashbackSummary.title")).toBeNull();
   expect(
-    component.queryByTestId("percentageTransactions.transactions")
-  ).toHaveTextContent(amount.transactionNumber.toString());
+    component.queryByTestId("superCashbackRankingNotReady.title")
+  ).toBeEnabled();
 };

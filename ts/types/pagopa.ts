@@ -210,17 +210,21 @@ export type PaymentMethodRepresentation = {
   icon: ImageSourcePropType;
 };
 
+type WithAbi = {
+  abiInfo?: Abi;
+};
+
 // In addition to the representation, a bancomat have also the abiInfo
 export type BancomatPaymentMethod = RawBancomatPaymentMethod &
-  PaymentMethodRepresentation & {
-    abiInfo?: Abi;
-  };
+  PaymentMethodRepresentation &
+  WithAbi;
 
 export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
   PaymentMethodRepresentation;
 
 export type BPayPaymentMethod = RawBPayPaymentMethod &
-  PaymentMethodRepresentation;
+  PaymentMethodRepresentation &
+  WithAbi;
 export type SatispayPaymentMethod = RawSatispayPaymentMethod &
   PaymentMethodRepresentation;
 
@@ -466,3 +470,18 @@ export const PatchedWalletV2ListResponse = t.intersection(
 export type PatchedWalletV2ListResponse = t.TypeOf<
   typeof PatchedWalletV2ListResponse
 >;
+
+// required attributes
+const PatchedWalletV2ResponseR = t.interface({});
+
+// optional attributes
+const PatchedWalletV2ResponseO = t.partial({
+  data: PatchedWalletV2
+});
+
+export const PatchedWalletV2Response = t.intersection(
+  [PatchedWalletV2ResponseR, PatchedWalletV2ResponseO],
+  "PatchedWalletV2Response"
+);
+
+export type PatchedWalletV2Response = t.TypeOf<typeof PatchedWalletV2Response>;

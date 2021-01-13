@@ -8,6 +8,7 @@ import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
+import _ from "lodash";
 import {
   call,
   delay,
@@ -23,6 +24,7 @@ import { ActionType, getType, isActionOf } from "typesafe-actions";
 
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
+import { ContentClient } from "../api/content";
 import { PaymentManagerClient } from "../api/pagopa";
 import { getCardIconFromBrandLogo } from "../components/wallet/card/Logo";
 import {
@@ -31,6 +33,11 @@ import {
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
+import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
+import {
+  navigateToActivateBpdOnNewCreditCard,
+  navigateToSuggestBpdActivation
+} from "../features/wallet/onboarding/bancomat/navigation/action";
 import {
   handleAddPan,
   handleLoadAbi,
@@ -43,12 +50,25 @@ import {
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
+import { addBPayToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
+import {
+  addBPayToWallet,
+  searchUserBPay,
+  walletAddBPayStart
+} from "../features/wallet/onboarding/bancomatPay/store/actions";
 import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
 } from "../features/wallet/onboarding/satispay/saga/networking";
+import { addSatispayToWalletAndActivateBpd } from "../features/wallet/onboarding/satispay/saga/orchestration/addSatispayToWallet";
+import {
+  addSatispayToWallet,
+  searchUserSatispay,
+  walletAddSatispayStart
+} from "../features/wallet/onboarding/satispay/store/actions";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
+import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import {
   backToEntrypointPayment,
@@ -71,8 +91,10 @@ import {
   fetchPsp,
   fetchTransactionFailure,
   fetchTransactionRequest,
+  fetchTransactionsFailure,
   fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
+  fetchTransactionsRequestWithExpBackoff,
   fetchTransactionSuccess,
   pollTransactionSagaCompleted,
   pollTransactionSagaTimeout,
@@ -82,22 +104,26 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
-  addWalletNewCreditCardSuccess,
+  addWalletCreditCardWithBackoffRetryRequest,
   addWalletNewCreditCardFailure,
+  addWalletNewCreditCardSuccess,
   creditCardCheckout3dsRequest,
   creditCardCheckout3dsSuccess,
   deleteWalletRequest,
   fetchWalletsFailure,
   fetchWalletsRequest,
+  fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
+  payCreditCardVerificationWithBackoffRetryRequest,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
   setWalletSessionEnabled,
   walletsSelector
 } from "../store/actions/wallet/wallets";
+import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 
@@ -112,7 +138,9 @@ import { SessionToken } from "../types/SessionToken";
 
 import { defaultRetryingFetch } from "../utils/fetch";
 import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
+import { getTitleFromCard } from "../utils/paymentMethod";
 import { SessionManager } from "../utils/SessionManager";
+import { hasFunctionEnabled } from "../utils/walletv2";
 import { paymentsDeleteUncompletedSaga } from "./payments";
 import {
   addWalletCreditCardRequestHandler,
@@ -133,21 +161,11 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
-import _ from "lodash";
-import { hasFunctionEnabled } from "../utils/walletv2";
-import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
-import { isReady } from "../features/bonus/bpd/model/RemoteValue";
+import { backoffWait } from "../utils/saga";
 import {
-  navigateToActivateBpdOnNewCreditCard,
-  navigateToSuggestBpdActivation
-} from "../features/wallet/onboarding/bancomat/navigation/action";
-import { navigationHistoryPop } from "../store/actions/navigationHistory";
-import { getTitleFromCard } from "../utils/paymentMethod";
-import {
-  addSatispayToWallet,
-  searchUserSatispay
-} from "../features/wallet/onboarding/satispay/store/actions";
+  handleSearchUserBPay,
+  handleAddpayToWallet
+} from "../features/wallet/onboarding/bancomatPay/saga/networking";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -205,7 +223,11 @@ export function* startOrResumeAddCreditCardSaga(
     // card onboarding steps have been completed.
     //
     if (pot.isNone(state.creditCardAddWallet)) {
-      yield put(addWalletCreditCardRequest({ creditcard: creditCardWallet }));
+      yield put(
+        addWalletCreditCardWithBackoffRetryRequest({
+          creditcard: creditCardWallet
+        })
+      );
       const responseAction = yield take([
         getType(addWalletCreditCardSuccess),
         getType(addWalletCreditCardFailure)
@@ -246,7 +268,7 @@ export function* startOrResumeAddCreditCardSaga(
         }
       };
       yield put(
-        payCreditCardVerificationRequest({
+        payCreditCardVerificationWithBackoffRetryRequest({
           payRequest,
           language: action.payload.language
         })
@@ -328,6 +350,8 @@ export function* startOrResumeAddCreditCardSaga(
         const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
           bpdEnabledSelector
         );
+        // dispatch the action: a new card has been added
+        yield put(addWalletNewCreditCardSuccess());
         // check if the new method is compliant with bpd
         if (bpdEnabled) {
           const hasBpdFeature = hasFunctionEnabled(
@@ -335,7 +359,7 @@ export function* startOrResumeAddCreditCardSaga(
             EnableableFunctionsTypeEnum.BPD
           );
           // if the method is bpd compliant check if we have info about bpd activation
-          if (hasBpdFeature && isReady(bpdEnroll)) {
+          if (hasBpdFeature && pot.isSome(bpdEnroll)) {
             // if bdp is active navigate to a screen where it asked to enroll that method in bpd
             // otherwise navigate to a screen where is asked to join bpd
             if (
@@ -365,9 +389,6 @@ export function* startOrResumeAddCreditCardSaga(
             return;
           }
         }
-
-        // dispatch the action: a new card has been added
-        yield put(addWalletNewCreditCardSuccess());
         if (action.payload.setAsFavorite === true) {
           yield put(setFavouriteWalletRequest(maybeAddedWallet.idWallet));
         }
@@ -587,7 +608,8 @@ export function* watchWalletSaga(
   const paymentManagerClient: PaymentManagerClient = PaymentManagerClient(
     paymentManagerUrlPrefix,
     walletToken,
-    defaultRetryingFetch(),
+    // despite both fetch have same configuration, keeping both ensures possible modding
+    defaultRetryingFetch(fetchPaymentManagerLongTimeout, 0),
     defaultRetryingFetch(fetchPaymentManagerLongTimeout, 0)
   );
 
@@ -647,6 +669,13 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  yield takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
+    action: ActionType<typeof fetchTransactionsRequestWithExpBackoff>
+  ) {
+    yield call(backoffWait, fetchTransactionsFailure);
+    yield put(fetchTransactionsRequest(action.payload));
+  });
+
   /**
    * watch when all transactions are been loaded
    * check if transaction read store section (entities.transactionsRead) is dirty:
@@ -676,6 +705,11 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  yield takeLatest(getType(fetchWalletsRequestWithExpBackoff), function* () {
+    yield call(backoffWait, fetchWalletsFailure);
+    yield put(fetchWalletsRequest());
+  });
+
   yield takeLatest(
     getType(fetchWalletsRequest),
     getWallets,
@@ -691,10 +725,32 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(
+    getType(addWalletCreditCardWithBackoffRetryRequest),
+    function* (
+      action: ActionType<typeof addWalletCreditCardWithBackoffRetryRequest>
+    ) {
+      yield call(backoffWait, addWalletCreditCardFailure);
+      yield put(addWalletCreditCardRequest(action.payload));
+    }
+  );
+
+  yield takeLatest(
     getType(payCreditCardVerificationRequest),
     payCreditCardVerificationRequestHandler,
     paymentManagerClient,
     pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(payCreditCardVerificationWithBackoffRetryRequest),
+    function* (
+      action: ActionType<
+        typeof payCreditCardVerificationWithBackoffRetryRequest
+      >
+    ) {
+      yield call(backoffWait, payCreditCardVerificationFailure);
+      yield put(payCreditCardVerificationRequest(action.payload));
+    }
   );
 
   yield takeLatest(
@@ -799,13 +855,13 @@ export function* watchWalletSaga(
   );
 
   if (bpdEnabled) {
+    const contentClient = ContentClient();
+
     // watch for load abi request
-    yield takeLatest(
-      loadAbi.request,
-      handleLoadAbi,
-      paymentManagerClient.getAbi,
-      pmSessionManager
-    );
+    yield takeLatest(loadAbi.request, handleLoadAbi, contentClient.getAbiList);
+
+    // watch for add Bancomat to Wallet workflow
+    yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
 
     // watch for load pans request
     yield takeLatest(
@@ -823,10 +879,13 @@ export function* watchWalletSaga(
       pmSessionManager
     );
 
-    // watch for add Bancomat to Wallet workflow
-    yield takeLatest(walletAddBancomatStart, addBancomatToWalletAndActivateBpd);
+    // watch for add BPay to Wallet workflow
+    yield takeLatest(walletAddBPayStart, addBPayToWalletAndActivateBpd);
 
-    // watch for load satispay request
+    // watch for add Satispay to Wallet workflow
+    yield takeLatest(walletAddSatispayStart, addSatispayToWalletAndActivateBpd);
+
+    // watch for load Satispay request
     yield takeLatest(
       searchUserSatispay.request,
       handleSearchUserSatispay,
@@ -834,11 +893,26 @@ export function* watchWalletSaga(
       pmSessionManager
     );
 
-    // watch for add satispay to the user's wallet
+    // watch for add Satispay to the user's wallet
     yield takeLatest(
       addSatispayToWallet.request,
       handleAddUserSatispayToWallet,
       paymentManagerClient.addSatispayToWallet,
+      pmSessionManager
+    );
+
+    // watch for BancomatPay search request
+    yield takeLatest(
+      searchUserBPay.request,
+      handleSearchUserBPay,
+      paymentManagerClient.searchBPay,
+      pmSessionManager
+    );
+    // watch for add BancomatPay to the user's wallet
+    yield takeLatest(
+      addBPayToWallet.request,
+      handleAddpayToWallet,
+      paymentManagerClient.addBPayToWallet,
       pmSessionManager
     );
   }

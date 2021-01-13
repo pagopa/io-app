@@ -9,7 +9,7 @@ import { Monospace } from "../../../../../../../components/core/typography/Monos
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
-import { format } from "../../../../../../../utils/dates";
+import { localeDateFormat } from "../../../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../../../utils/stringBuilder";
 import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
 import { BpdTransactionWarning } from "./BpdTransactionWarning";
@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     borderColor: IOColors.red,
     borderWidth: 1,
-    top: -10,
     height: 25
   },
   copyText: {
@@ -65,7 +64,10 @@ const Table = (props: Props) => (
         {I18n.t("payment.details.info.dateAndTime")}
       </H5>
       <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {format(props.transaction.trxDate, "DD MMM YYYY, HH:mm")}
+        {localeDateFormat(
+          props.transaction.trxDate,
+          I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
+        )}
       </H4>
     </View>
     <View spacer={true} small={true} />
@@ -115,7 +117,10 @@ const IdBlock = (props: IdBlockProps) => (
       <Monospace weight={"SemiBold"} style={styles.copyText}>
         {props.value}
       </Monospace>
-      <CopyButtonComponent textToCopy={props.value} />
+      <CopyButtonComponent
+        textToCopy={props.value}
+        onPressWithGestureHandler={true}
+      />
     </View>
   </View>
 );

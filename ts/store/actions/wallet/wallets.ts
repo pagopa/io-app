@@ -17,6 +17,11 @@ import { WalletsState } from "../../reducers/wallet/wallets";
 export const walletsSelector = (state: GlobalState): WalletsState =>
   state.wallet.wallets;
 
+// this action load wallets following a backoff retry strategy
+export const fetchWalletsRequestWithExpBackoff = createStandardAction(
+  "WALLETS_LOAD_BACKOFF_REQUEST"
+)();
+
 export const fetchWalletsRequest = createStandardAction(
   "WALLETS_LOAD_REQUEST"
 )();
@@ -39,6 +44,11 @@ type AddWalletCreditCardRequestPayload = Readonly<{
 
 export const addWalletCreditCardRequest = createStandardAction(
   "WALLET_ADD_CREDITCARD_REQUEST"
+)<AddWalletCreditCardRequestPayload>();
+
+// this action follows a backoff retry strategy
+export const addWalletCreditCardWithBackoffRetryRequest = createStandardAction(
+  "WALLET_ADD_CREDITCARD_WITH_BACKOFF_REQUEST"
 )<AddWalletCreditCardRequestPayload>();
 
 export const addWalletCreditCardSuccess = createStandardAction(
@@ -75,6 +85,11 @@ type PayCreditCardVerificationRequestPayload = Readonly<{
 
 export const payCreditCardVerificationRequest = createStandardAction(
   "WALLET_ADD_CREDITCARD_VERIFICATION_REQUEST"
+)<PayCreditCardVerificationRequestPayload>();
+
+// this action follows a backoff retry strategy
+export const payCreditCardVerificationWithBackoffRetryRequest = createStandardAction(
+  "WALLET_ADD_CREDITCARD_VERIFICATION_WITH_BACKOFF_REQUEST"
 )<PayCreditCardVerificationRequestPayload>();
 
 export const payCreditCardVerificationSuccess = createStandardAction(
@@ -161,14 +176,17 @@ export type WalletsActions =
   | ActionType<typeof runStartOrResumeAddCreditCardSaga>
   | ActionType<typeof addWalletCreditCardInit>
   | ActionType<typeof addWalletCreditCardRequest>
+  | ActionType<typeof addWalletCreditCardWithBackoffRetryRequest>
   | ActionType<typeof addWalletCreditCardSuccess>
   | ActionType<typeof addWalletCreditCardFailure>
   | ActionType<typeof addWalletNewCreditCardSuccess>
   | ActionType<typeof addWalletNewCreditCardFailure>
   | ActionType<typeof payCreditCardVerificationRequest>
+  | ActionType<typeof payCreditCardVerificationWithBackoffRetryRequest>
   | ActionType<typeof payCreditCardVerificationSuccess>
   | ActionType<typeof payCreditCardVerificationFailure>
   | ActionType<typeof creditCardCheckout3dsRequest>
   | ActionType<typeof creditCardCheckout3dsSuccess>
   | ActionType<typeof setWalletSessionEnabled>
-  | ActionType<typeof creditCardCheckout3dsRedirectionUrls>;
+  | ActionType<typeof creditCardCheckout3dsRedirectionUrls>
+  | ActionType<typeof fetchWalletsRequestWithExpBackoff>;

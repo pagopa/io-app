@@ -1,6 +1,8 @@
 import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
+import I18n from "../../../../../../i18n";
 import { PaymentMethod } from "../../../../../../types/pagopa";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import ActivateBpdOnNewPaymentMethodScreen from "./ActivateBpdOnNewPaymentMethodScreen";
 
 type ActivateBpdOnNewCreditCardScreenNavigationParams = {
@@ -15,5 +17,7 @@ export const ActivateBpdOnNewCreditCardScreen: React.FC<Props> = (
 ) => (
   <ActivateBpdOnNewPaymentMethodScreen
     paymentMethods={props.navigation.getParam("creditCards")}
+    title={I18n.t("bonus.bpd.title")}
+    contextualHelp={emptyContextualHelp}
   />
 );
