@@ -1,15 +1,19 @@
 import { BugReporting, dismissType, Replies } from "instabug-reactnative";
 import { EventChannel, eventChannel } from "redux-saga";
-import { call, Effect, fork, put, takeLatest } from "redux-saga/effects";
 import {
-  InstabugDismiss,
-  InstabugReport,
-  instabugReportClosed
-} from "../store/actions/debug";
+  call,
+  Effect,
+  fork,
+  put,
+  select,
+  takeLatest
+} from "redux-saga/effects";
+import { InstabugDismiss, instabugReportClosed } from "../store/actions/debug";
 import {
   instabugUnreadMessagesLoaded,
   updateInstabugUnreadMessages
 } from "../store/actions/instabug";
+import { instabugReportingTypeSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 
 const loadInstabugUnreadMessages = () =>
   new Promise<number>(resolve => {
@@ -32,19 +36,17 @@ function initializeInstabugSDKDismissalListener(): EventChannel<unknown> {
   // This event is fired when chat or bug screen is dismissed
 
   return eventChannel(emitter => {
-    BugReporting.onSDKDismissedHandler(
-      (dismiss: dismissType, reportType: BugReporting.reportType): void =>
-        emitter({ dismiss, reportType })
+    BugReporting.onSDKDismissedHandler((dismiss: dismissType): void =>
+      emitter({ dismiss })
     );
 
     return () => null;
   });
 }
 
-function* instabugSDKDismissalWorker({
-  how,
-  type
-}: InstabugDismiss & InstabugReport) {
+function* instabugSDKDismissalWorker({ how }: InstabugDismiss) {
+  const type = yield select(instabugReportingTypeSelector);
+
   yield put(instabugReportClosed({ type, how }));
   // when user dismisses instabug report (chat or bug) we update the unread messages counter.
   // This is because user could have read or reply to some messages
