@@ -58,6 +58,9 @@ export const bpdApiUatUrlPrefix: string = Config.BPD_API_UAT;
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
+// CGN Feature Flag
+export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;
 
