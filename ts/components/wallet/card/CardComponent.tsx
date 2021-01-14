@@ -193,14 +193,15 @@ export default class CardComponent extends React.Component<Props> {
     // Right icon, basically needed for the sole "Header" variant
     const getBodyIcon = () => {
       switch (type) {
+        case "Picking":
+        case "Full":
+          return null;
         case "Header":
           return (
             <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
               <Logo item={creditCard} />
             </View>
           );
-        default:
-          return null;
       }
     };
 
