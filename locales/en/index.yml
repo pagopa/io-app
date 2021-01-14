@@ -810,18 +810,6 @@ wallet:
         loading: "We are adding your PagoBANCOMAT card\n\nPlease hold on..."
         warning: "If you don't find all the cards of your own, you can try to add the missing one at a later time by selecting the Bank where you have your personal account."
         blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
-      bpd:
-        suggestActivation:
-          title: "Do you want to activate Cashback?"
-          body: "You have added payment methods compatible with Cashback, the initiative promoted by the Presidency of the Council of Ministers and the Ministry of Economy and Finance, to promote the use of electronic money in Italy.\n\n
-                 You can get a money refund when you shop using your cards and apps."
-          skip: "No, thanks"
-          confirm: "Info and activation"
-        activateNew:
-          title: "Do you want to activate Cashback?"
-          body1: "Turn on your methods saved into your wallet and start collecting cashback on your valid transactions."
-          body2: "If you prefer, you can activate cashback on these methods later as well."
-          skip: "Maybe later"
     bPay:
       headerTitle: "Add BANCOMAT Pay"
       loadingSearch: "We are recovering your BANCOMAT Pay data\n\nPlease wait"
@@ -1926,6 +1914,17 @@ bonus:
         title: "Almost there, activate Cashback on your payment methods!"
         body: "Enable Cashback on methods already in your wallet or add new ones."
         cta: "Activate payment methods"
+    suggestActivation:
+      title: "Do you want to activate Cashback?"
+      body: "You have added payment methods compatible with Cashback, the initiative promoted by the Presidency of the Council of Ministers and the Ministry of Economy and Finance, to promote the use of electronic money in Italy.\n\n
+             You can get a money refund when you shop using your cards and apps."
+      skip: "No, thanks"
+      confirm: "Info and activation"
+    activateOnNewMethods:
+      title: "Do you want to activate Cashback?"
+      body1: "Turn on your methods saved into your wallet and start collecting cashback on your valid transactions."
+      body2: "If you prefer, you can activate cashback on these methods later as well."
+      skip: "Maybe later"
     iban:
       cta:
         bpdNotActiveTitle: "attention"
