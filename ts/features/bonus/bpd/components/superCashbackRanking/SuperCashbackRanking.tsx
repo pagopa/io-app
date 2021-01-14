@@ -31,14 +31,6 @@ const RankingItems: React.FunctionComponent<Props> = (props: Props) => {
       React.ReactNode
     >([
       [
-        1,
-        <FirstPositionItem
-          key={"item-1"}
-          superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-          transactionsNumber={props.selectedPeriod.ranking.maxTransactionNumber}
-        />
-      ],
-      [
         props.selectedPeriod.minPosition,
         <LastPositionItem
           key={`item-${props.selectedPeriod.minPosition}`}
