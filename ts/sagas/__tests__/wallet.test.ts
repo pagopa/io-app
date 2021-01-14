@@ -1,18 +1,28 @@
 // import { fromNullable } from "fp-ts/lib/Option";
+import { some } from "fp-ts/lib/Option";
 import { pot } from "italia-ts-commons";
+import { none } from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType, getType } from "typesafe-actions";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
+import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import {
   addWalletCreditCardFailure,
   // addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
   addWalletCreditCardWithBackoffRetryRequest,
+  addWalletNewCreditCardSuccess,
+  creditCardCheckout3dsRequest,
+  creditCardCheckout3dsSuccess,
+  fetchWalletsFailure,
+  fetchWalletsRequest,
+  fetchWalletsSuccess,
   payCreditCardVerificationFailure,
   // payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
   payCreditCardVerificationWithBackoffRetryRequest,
   runStartOrResumeAddCreditCardSaga,
+  setFavouriteWalletRequest,
   walletsSelector
 } from "../../store/actions/wallet/wallets";
 import {
@@ -56,7 +66,8 @@ const aCreditCard = {
 const anAction = {
   payload: {
     creditCard: aCreditCard,
-    setAsFavorite: true
+    setAsFavorite: true,
+    onSuccess: undefined
   }
 } as ActionType<typeof runStartOrResumeAddCreditCardSaga>;
 
@@ -68,15 +79,15 @@ const aCreditCardWallet: NullableWallet = {
   psp: undefined
 };
 describe("startOrResumeAddCreditCardSaga", () => {
-  it("should dispatch startApplicationInitialization if installation id response is 200 but session is none", () => {
-    // const fakePmSessionManager = {
-    //   getNewToken: jest.fn() => jest.fn =>
-    //     fromNullable(
-    //       "c21z3oxqcme4zoput62tqky3ldh85efgkpgwbmvbf9o5hyp8te1gc9ovkfeku79f93uai6ihb2hlx5tsbdwq8j15mu0zfftn3a5ci40nxcycodh4ri94jdori1ar53nh" as PaymentManagerToken
-    //     )
-    // } as SessionManager<PaymentManagerToken>;
-    const aPmSessionManager = {} as SessionManager<PaymentManagerToken>;
-    jest.spyOn(aPmSessionManager, "getNewToken");
+  it("should add a card if all the 4 steps run sucessfully", () => {
+    const aPMToken = "1234" as PaymentManagerToken;
+    const aPmSessionManager: SessionManager<PaymentManagerToken> = new SessionManager(
+      jest.fn(() => Promise.resolve(some(aPMToken)))
+    );
+    const aNewPMToken = "5678" as PaymentManagerToken;
+    jest
+      .spyOn(aPmSessionManager, "getNewToken")
+      .mockReturnValue(() => Promise.resolve(some(aNewPMToken)));
     const anIdWallet = 123456;
 
     const aPayRequest: PayRequest = {
@@ -92,13 +103,19 @@ describe("startOrResumeAddCreditCardSaga", () => {
       creditCardAddWallet: pot.some({ data: { idWallet: anIdWallet } })
     };
 
-    const aUrlCheckout3ds = "http://192.168.1.7:3000/wallet/loginMethod";
+    const anUrlCheckout3ds = "http://192.168.1.7:3000/wallet/loginMethod";
 
     const walletStateCardVerified = {
       ...walletStateCardAdded,
       creditCardVerification: pot.some({
-        data: { urlCheckout3ds: aUrlCheckout3ds }
-      })
+        data: { urlCheckout3ds: anUrlCheckout3ds }
+      }),
+      creditCardCheckout3ds: none
+    };
+
+    const walletStateCardCheckout3ds = {
+      ...walletStateCardVerified,
+      creditCardCheckout3ds: pot.some("1234")
     };
 
     // eslint-disable-next-line
@@ -136,6 +153,34 @@ describe("startOrResumeAddCreditCardSaga", () => {
       // Step 3
       .select(walletsSelector)
       .next(walletStateCardVerified)
-      .call(aPmSessionManager.getNewToken());
+      .call(aPmSessionManager.getNewToken())
+      .next(some(aNewPMToken))
+      .put(
+        creditCardCheckout3dsRequest({
+          urlCheckout3ds: anUrlCheckout3ds,
+          paymentManagerToken: aNewPMToken
+        })
+      )
+      .next()
+      .take(getType(creditCardCheckout3dsSuccess))
+      .next(getType(creditCardCheckout3dsSuccess))
+      // Step 4
+      .select(walletsSelector)
+      .next(walletStateCardCheckout3ds)
+      .call(aPmSessionManager.getNewToken())
+      .next()
+      .put(fetchWalletsRequest())
+      .next()
+      .take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)])
+      .next({
+        type: getType(fetchWalletsSuccess),
+        payload: [{ idWallet: anIdWallet }]
+      })
+      .select(bpdEnabledSelector)
+      .next(pot.some(true))
+      .put(addWalletNewCreditCardSuccess())
+      .next()
+      .put(setFavouriteWalletRequest(anIdWallet))
+      .next();
   });
 });
