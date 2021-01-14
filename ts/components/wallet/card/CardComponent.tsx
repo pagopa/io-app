@@ -187,21 +187,22 @@ export default class CardComponent extends React.Component<Props> {
   private renderBody(creditCard: CreditCard) {
     const { type } = this.props;
 
-    const getBodyIcon = () => {
-      if (type === "Picking" || type === "Full") {
-        return null;
-      }
-
-      return (
-        <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
-          <Logo item={creditCard} />
-        </View>
-      );
-    };
-
     if (type === "Preview") {
       return null;
     }
+    // Right icon, basically needed for the sole "Header" variant
+    const getBodyIcon = () => {
+      switch (type) {
+        case "Header":
+          return (
+            <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
+              <Logo item={creditCard} />
+            </View>
+          );
+        default:
+          return null;
+      }
+    };
 
     const expirationDate = buildExpirationDate(creditCard);
     const isExpired = isExpiredCard(creditCard);
