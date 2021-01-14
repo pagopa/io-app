@@ -26,10 +26,10 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const loadLocales = () => ({
-  title: I18n.t("wallet.onboarding.bancomat.bpd.activateNew.title"),
-  body1: I18n.t("wallet.onboarding.bancomat.bpd.activateNew.body1"),
-  body2: I18n.t("wallet.onboarding.bancomat.bpd.activateNew.body2"),
-  skip: I18n.t("wallet.onboarding.bancomat.bpd.activateNew.skip"),
+  title: I18n.t("bonus.bpd.activateOnNewMethods.title"),
+  body1: I18n.t("bonus.bpd.activateOnNewMethods.body1"),
+  body2: I18n.t("bonus.bpd.activateOnNewMethods.body2"),
+  skip: I18n.t("bonus.bpd.activateOnNewMethods.skip"),
   continueStr: I18n.t("global.buttons.continue")
 });
 
