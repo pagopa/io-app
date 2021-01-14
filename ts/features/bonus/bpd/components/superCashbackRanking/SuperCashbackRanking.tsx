@@ -128,4 +128,4 @@ const SuperCashbackRanking = connect(mapStateToProps)(SuperCashbackBottomSheet);
 export default SuperCashbackRanking;
 
 export const useSuperCashbackRankingBottomSheet = () =>
-  useIOBottomSheet(<SuperCashbackRanking />, <SuperCashbackHeader />, 520);
+  useIOBottomSheet(<SuperCashbackRanking />, <SuperCashbackHeader />, 470);
