@@ -6,7 +6,7 @@ export const navigateToCgnOnboardingLoadActivationStatus = () =>
     routeName: CGN_ROUTES.ACTIVATION.LOAD_CHECK_ACTIVATION_STATUS
   });
 
-export const navigateToBpdOnboardingInformationTos = () =>
+export const navigateToCgnOnboardingInformationTos = () =>
   NavigationActions.navigate({
     routeName: CGN_ROUTES.ACTIVATION.INFORMATION_TOS
   });
