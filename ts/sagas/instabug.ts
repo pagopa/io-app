@@ -1,5 +1,11 @@
-import { Replies } from "instabug-reactnative";
+import { BugReporting, dismissType, Replies } from "instabug-reactnative";
+import { EventChannel, eventChannel } from "redux-saga";
 import { call, Effect, fork, put, takeLatest } from "redux-saga/effects";
+import {
+  InstabugDismiss,
+  InstabugReport,
+  instabugReportClosed
+} from "../store/actions/debug";
 import {
   instabugUnreadMessagesLoaded,
   updateInstabugUnreadMessages
@@ -20,8 +26,40 @@ const onNewReplyReceived = () =>
     });
   });
 
-function* watchInstabugSaga(): IterableIterator<Effect> {
+function initializeInstabugSDKDismissalListener(): EventChannel<unknown> {
+  // Register to the instabug dismiss event.
+  // (https://docs.instabug.com/docs/react-native-bug-reporting-event-handlers#section-after-dismissing-instabug)
+  // This event is fired when chat or bug screen is dismissed
+
+  return eventChannel(emitter => {
+    BugReporting.onSDKDismissedHandler(
+      (dismiss: dismissType, reportType: BugReporting.reportType): void =>
+        emitter({ dismiss, reportType })
+    );
+
+    return () => null;
+  });
+}
+
+function* instabugSDKDismissalWorker({
+  how,
+  type
+}: InstabugDismiss & InstabugReport) {
+  yield put(instabugReportClosed({ type, how }));
+  // when user dismisses instabug report (chat or bug) we update the unread messages counter.
+  // This is because user could have read or reply to some messages
+  yield put(updateInstabugUnreadMessages());
+}
+
+function* watchInstabugSaga() {
+  const instabugSDKDismissalChannel = yield call(
+    initializeInstabugSDKDismissalListener
+  );
+
+  yield takeLatest(instabugSDKDismissalChannel, instabugSDKDismissalWorker);
+
   yield call(updateInstabugBadgeSaga);
+
   while (true) {
     yield call(onNewReplyReceived);
     yield call(updateInstabugBadgeSaga);

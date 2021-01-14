@@ -1,15 +1,11 @@
-import { none, Option, some } from "fp-ts/lib/Option";
-import { BugReporting, dismissType, Replies } from "instabug-reactnative";
+import { none, Option } from "fp-ts/lib/Option";
+import { BugReporting, Replies } from "instabug-reactnative";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { openInstabugReplies } from "../boot/configureInstabug";
 import I18n from "../i18n";
-import {
-  instabugReportClosed,
-  instabugReportOpened
-} from "../store/actions/debug";
-import { updateInstabugUnreadMessages } from "../store/actions/instabug";
+import { instabugReportOpened } from "../store/actions/debug";
 import { Dispatch } from "../store/actions/types";
 import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
@@ -59,14 +55,6 @@ type State = {
  * The icon has a badge if there are unread messages from the assistance
  */
 class InstabugChatsComponent extends React.PureComponent<Props, State> {
-  private handleIBChatPress = () => {
-    this.setState({
-      instabugReportType: some(BugReporting.reportType.question)
-    });
-    this.props.dispatchIBReportOpen(BugReporting.reportType.question);
-    openInstabugReplies();
-  };
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -74,31 +62,21 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
       hasChats: false
     };
   }
-  public componentDidMount() {
-    // Register to the instabug dismiss event. (https://docs.instabug.com/docs/react-native-bug-reporting-event-handlers#section-after-dismissing-instabug)
-    // This event is fired when chat or bug screen is dismissed
-    BugReporting.onSDKDismissedHandler(
-      (dismiss: dismissType, _: BugReporting.reportType): void => {
-        // Due an Instabug library bug, we can't use the report parameter because it always has "bug" as value.
-        // We need to differentiate the type of report then use instabugReportType
-        if (this.state.instabugReportType.isSome()) {
-          this.props.dispatchIBReportClosed(
-            this.state.instabugReportType.value,
-            dismiss
-          );
-          // when user dismisses instabug report (chat or bug) we update the unread messages counter.
-          // This is because user could have read or reply to some messages
-          this.props.dispatchUpdateInstabugUnreadMessagesCounter();
-        }
-      }
-    );
-    this.checkInstabugChats();
-  }
 
   private checkInstabugChats = () => {
     Replies.hasChats(hasChats => {
       this.setState({ hasChats });
     });
+  };
+
+  public componentDidMount() {
+    this.checkInstabugChats();
+  }
+
+  private handleIBChatPress = () => {
+    this.props.dispatchIBReportOpen(BugReporting.reportType.question);
+
+    openInstabugReplies();
   };
 
   private getUnreadMessagesDescription = () => {
@@ -150,11 +128,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIBReportOpen: (type: BugReporting.reportType) =>
-    dispatch(instabugReportOpened({ type })),
-  dispatchIBReportClosed: (type: BugReporting.reportType, how: dismissType) =>
-    dispatch(instabugReportClosed({ type, how })),
-  dispatchUpdateInstabugUnreadMessagesCounter: () =>
-    dispatch(updateInstabugUnreadMessages())
+    dispatch(instabugReportOpened({ type }))
 });
 
 export default connect(
