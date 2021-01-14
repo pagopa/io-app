@@ -5,6 +5,7 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import {
+  all,
   call,
   Effect,
   put,
@@ -45,6 +46,7 @@ import {
   fromPreferredLanguageToLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
+import { setProfileHashedFiscalCode } from "../store/actions/crossSessions";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -259,6 +261,7 @@ function* checkLoadedProfile(
   }
 }
 
+// store the profile fiscal code as sha256 hashed string
 export function* handleLoadBonusBeforeRemoveAccount() {
   const bpdActive: ReturnType<typeof bpdEnabledSelector> = yield select(
     bpdEnabledSelector
@@ -310,6 +313,14 @@ export function* handleRemoveAccount() {
   }
 }
 
+function* storeHashedFiscalCode(
+  profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
+) {
+  yield put(
+    setProfileHashedFiscalCode(profileLoadSuccessAction.payload.fiscal_code)
+  );
+}
+
 // watch for some actions about profile
 export function* watchProfile(
   startEmailValidationProcess: ReturnType<
@@ -323,7 +334,14 @@ export function* watchProfile(
     startEmailValidationProcess
   );
   // check the loaded profile
-  yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
+  yield takeLatest(getType(profileLoadSuccess), function* (
+    profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
+  ) {
+    yield all([
+      call(checkLoadedProfile, profileLoadSuccessAction),
+      call(storeHashedFiscalCode, profileLoadSuccessAction)
+    ]);
+  });
 
   // Start watching for request bonus before remove profile
   yield takeLatest(
