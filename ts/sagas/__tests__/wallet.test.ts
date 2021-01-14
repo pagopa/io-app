@@ -1,23 +1,24 @@
 // import { fromNullable } from "fp-ts/lib/Option";
 import { pot } from "italia-ts-commons";
 import { testSaga } from "redux-saga-test-plan";
-// import { ActionType, getType } from "typesafe-actions";
-import { ActionType } from "typesafe-actions";
-// import { TypeEnum } from "../../../definitions/pagopa/Wallet";
+import { ActionType, getType } from "typesafe-actions";
+import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import {
-  //   addWalletCreditCardFailure,
+  addWalletCreditCardFailure,
   // addWalletCreditCardRequest,
-  //   addWalletCreditCardSuccess,
-  //   payCreditCardVerificationFailure,
-  //   payCreditCardVerificationRequest,
-  //   payCreditCardVerificationSuccess,
+  addWalletCreditCardSuccess,
+  addWalletCreditCardWithBackoffRetryRequest,
+  payCreditCardVerificationFailure,
+  // payCreditCardVerificationRequest,
+  payCreditCardVerificationSuccess,
+  payCreditCardVerificationWithBackoffRetryRequest,
   runStartOrResumeAddCreditCardSaga,
   walletsSelector
 } from "../../store/actions/wallet/wallets";
 import {
-  //   NullableWallet,
-  PaymentManagerToken
-  //   PayRequest
+  NullableWallet,
+  PaymentManagerToken,
+  PayRequest
 } from "../../types/pagopa";
 import {
   CreditCardCVC,
@@ -59,13 +60,13 @@ const anAction = {
   }
 } as ActionType<typeof runStartOrResumeAddCreditCardSaga>;
 
-// const aCreditCardWallet: NullableWallet = {
-//   idWallet: undefined,
-//   type: TypeEnum.CREDIT_CARD,
-//   favourite: anAction.payload.setAsFavorite,
-//   creditCard: anAction.payload.creditCard,
-//   psp: undefined
-// };
+const aCreditCardWallet: NullableWallet = {
+  idWallet: undefined,
+  type: TypeEnum.CREDIT_CARD,
+  favourite: anAction.payload.setAsFavorite,
+  creditCard: anAction.payload.creditCard,
+  psp: undefined
+};
 describe("startOrResumeAddCreditCardSaga", () => {
   it("should dispatch startApplicationInitialization if installation id response is 200 but session is none", () => {
     // const fakePmSessionManager = {
@@ -75,62 +76,66 @@ describe("startOrResumeAddCreditCardSaga", () => {
     //     )
     // } as SessionManager<PaymentManagerToken>;
     const aPmSessionManager = {} as SessionManager<PaymentManagerToken>;
-    // jest.spyOn(aPmSessionManager, "getNewToken");
-    // const anIdWallet = 123456;
+    jest.spyOn(aPmSessionManager, "getNewToken");
+    const anIdWallet = 123456;
 
-    // const aPayRequest: PayRequest = {
-    //   data: {
-    //     idWallet: anIdWallet,
-    //     tipo: "web",
-    //     cvv: anAction.payload.creditCard.securityCode
-    //   }
-    // };
+    const aPayRequest: PayRequest = {
+      data: {
+        idWallet: anIdWallet,
+        tipo: "web",
+        cvv: anAction.payload.creditCard.securityCode
+      }
+    };
 
-    // const walletStateCardAdded = {
-    //   ...walletState,
-    //   creditCardAddWallet: pot.some({ data: { idWallet: anIdWallet } })
-    // };
+    const walletStateCardAdded = {
+      ...walletState,
+      creditCardAddWallet: pot.some({ data: { idWallet: anIdWallet } })
+    };
 
-    // const aUrlCheckout3ds = "http://192.168.1.7:3000/wallet/loginMethod";
+    const aUrlCheckout3ds = "http://192.168.1.7:3000/wallet/loginMethod";
 
-    // const walletStateCardVerified = {
-    //   ...walletStateCardAdded,
-    //   creditCardVerification: pot.some({
-    //     data: { urlCheckout3ds: aUrlCheckout3ds }
-    //   })
-    // };
+    const walletStateCardVerified = {
+      ...walletStateCardAdded,
+      creditCardVerification: pot.some({
+        data: { urlCheckout3ds: aUrlCheckout3ds }
+      })
+    };
 
     // eslint-disable-next-line
     testSaga(startOrResumeAddCreditCardSaga, aPmSessionManager, anAction)
       // Step 1
       .next()
       .select(walletsSelector)
-      .next(walletState);
-    // .put(addWalletCreditCardRequest({ creditcard: aCreditCardWallet }))
-    // .next()
-    // .take([
-    //   getType(addWalletCreditCardSuccess),
-    //   getType(addWalletCreditCardFailure)
-    // ]);
-    //   .next(getType(addWalletCreditCardSuccess))
-    //   // Step 2
-    //   .select(walletsSelector)
-    //   .next(walletStateCardAdded)
-    //   .put(
-    //     payCreditCardVerificationRequest({
-    //       payRequest: aPayRequest,
-    //       language: undefined
-    //     })
-    //   )
-    //   .next()
-    //   .take([
-    //     getType(payCreditCardVerificationSuccess),
-    //     getType(payCreditCardVerificationFailure)
-    //   ])
-    //   .next(getType(payCreditCardVerificationSuccess));
-    // Step 3
-    // .select(walletsSelector)
-    // .next(walletStateCardVerified)
-    // .call(aPmSessionManager.getNewToken());
+      .next(walletState)
+      .put(
+        addWalletCreditCardWithBackoffRetryRequest({
+          creditcard: aCreditCardWallet
+        })
+      )
+      .next()
+      .take([
+        getType(addWalletCreditCardSuccess),
+        getType(addWalletCreditCardFailure)
+      ])
+      .next(getType(addWalletCreditCardSuccess))
+      // Step 2
+      .select(walletsSelector)
+      .next(walletStateCardAdded)
+      .put(
+        payCreditCardVerificationWithBackoffRetryRequest({
+          payRequest: aPayRequest,
+          language: undefined
+        })
+      )
+      .next()
+      .take([
+        getType(payCreditCardVerificationSuccess),
+        getType(payCreditCardVerificationFailure)
+      ])
+      .next(getType(payCreditCardVerificationSuccess))
+      // Step 3
+      .select(walletsSelector)
+      .next(walletStateCardVerified)
+      .call(aPmSessionManager.getNewToken());
   });
 });
