@@ -234,27 +234,27 @@ describe("test selectors", () => {
   });
 
   it("should return undefined - configSelector", () => {
-    const config = configSelector("bpd_ranking")(noneStore);
+    const config = configSelector("bpd_ranking_v2")(noneStore);
     expect(config).toBeUndefined();
   });
 
   it("should return true - someStoreConfig", () => {
     const someStoreConfig = ({
       backendStatus: {
-        status: some({ ...status, config: { bpd_ranking: true } })
+        status: some({ ...status, config: { bpd_ranking_v2: true } })
       }
     } as any) as GlobalState;
-    const bpd_ranking = configSelector("bpd_ranking")(someStoreConfig);
+    const bpd_ranking = configSelector("bpd_ranking_v2")(someStoreConfig);
     expect(bpd_ranking).toBeTruthy();
   });
 
   it("should return false - someStoreConfig", () => {
     const someStoreConfig = ({
       backendStatus: {
-        status: some({ ...status, config: { bpd_ranking: false } })
+        status: some({ ...status, config: { bpd_ranking_v2: false } })
       }
     } as any) as GlobalState;
-    const bpd_ranking = configSelector("bpd_ranking")(someStoreConfig);
+    const bpd_ranking = configSelector("bpd_ranking_v2")(someStoreConfig);
     expect(bpd_ranking).toBeFalsy();
   });
 });
