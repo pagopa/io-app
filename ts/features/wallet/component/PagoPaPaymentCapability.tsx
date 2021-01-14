@@ -1,13 +1,13 @@
 import { Badge, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 import { Link } from "../../../components/core/typography/Link";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { PaymentMethod } from "../../../types/pagopa";
@@ -121,7 +121,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
   );
 
   return (
-    <TouchableOpacity onPress={present}>
+    <TouchableDefaultOpacity onPress={present}>
       <View style={styles.row}>
         <View style={styles.left}>
           <H4
@@ -141,7 +141,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
         </View>
         {availabilityBadge(isPaymentMethodSupported(props.paymentMethod))}
       </View>
-    </TouchableOpacity>
+    </TouchableDefaultOpacity>
   );
 };
 
