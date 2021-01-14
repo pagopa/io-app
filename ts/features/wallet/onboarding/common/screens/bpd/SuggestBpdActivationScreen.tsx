@@ -18,11 +18,11 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const loadLocales = () => ({
-  headerTitle: I18n.t("wallet.onboarding.bancomat.headerTitle"),
-  title: I18n.t("wallet.onboarding.bancomat.bpd.suggestActivation.title"),
-  body: I18n.t("wallet.onboarding.bancomat.bpd.suggestActivation.body"),
-  skip: I18n.t("wallet.onboarding.bancomat.bpd.suggestActivation.skip"),
-  confirm: I18n.t("wallet.onboarding.bancomat.bpd.suggestActivation.confirm")
+  headerTitle: I18n.t("bonus.bpd.title"),
+  title: I18n.t("bonus.bpd.suggestActivation.title"),
+  body: I18n.t("bonus.bpd.suggestActivation.body"),
+  skip: I18n.t("bonus.bpd.suggestActivation.skip"),
+  confirm: I18n.t("bonus.bpd.suggestActivation.confirm")
 });
 
 /**
