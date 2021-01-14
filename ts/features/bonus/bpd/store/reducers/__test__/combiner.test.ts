@@ -1,5 +1,4 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { remoteReady } from "../../../model/RemoteValue";
 import { AwardPeriodId } from "../../actions/periods";
 import { eligibleAmount, zeroAmount } from "../__mock__/amount";
 import {
@@ -7,58 +6,63 @@ import {
   closedPeriod,
   inactivePeriod
 } from "../__mock__/periods";
-import {
-  BpdPeriodAmount,
-  bpdPeriodsAmountWalletVisibleSelector
-} from "../details/combiner";
+import { readyRanking } from "../__mock__/ranking";
+import { bpdPeriodsAmountWalletVisibleSelector } from "../details/combiner";
+import { BpdPeriodWithInfo } from "../details/periods";
 
-const inactivePeriodA: BpdPeriodAmount = {
+const inactivePeriodA: BpdPeriodWithInfo = {
   amount: zeroAmount,
-  period: {
+  ...{
     ...inactivePeriod,
     startDate: new Date("2025-01-01"),
     awardPeriodId: 55 as AwardPeriodId
-  }
+  },
+  ranking: readyRanking
 };
-const inactivePeriodB: BpdPeriodAmount = {
+const inactivePeriodB: BpdPeriodWithInfo = {
   amount: zeroAmount,
-  period: inactivePeriod
+  ...inactivePeriod,
+  ranking: readyRanking
 };
-const inactivePeriodC: BpdPeriodAmount = {
+const inactivePeriodC: BpdPeriodWithInfo = {
   amount: zeroAmount,
-  period: {
+  ...{
     ...inactivePeriod,
     startDate: new Date("2022-01-01"),
     awardPeriodId: 56 as AwardPeriodId
-  }
+  },
+  ranking: readyRanking
 };
 
-const activePeriodAmount: BpdPeriodAmount = {
+const activePeriodAmount: BpdPeriodWithInfo = {
   amount: zeroAmount,
-  period: activePeriod
+  ...activePeriod,
+  ranking: readyRanking
 };
 
-const closedPeriodZeroAmount: BpdPeriodAmount = {
+const closedPeriodZeroAmount: BpdPeriodWithInfo = {
   amount: zeroAmount,
-  period: closedPeriod
+  ...closedPeriod,
+  ranking: readyRanking
 };
 
-const closedPeriodWithAmount: BpdPeriodAmount = {
+const closedPeriodWithAmount: BpdPeriodWithInfo = {
   amount: eligibleAmount,
-  period: closedPeriod
+  ...closedPeriod,
+  ranking: readyRanking
 };
 
 describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is enabled", () => {
   it("one inactive period should return one inactive period", () => {
     const visiblePeriods = bpdPeriodsAmountWalletVisibleSelector.resultFunc(
       pot.some([inactivePeriodB]),
-      remoteReady(true)
+      pot.some(true)
     );
 
     expect(pot.isSome(visiblePeriods)).toBeTruthy();
     if (pot.isSome(visiblePeriods)) {
       expect(visiblePeriods.value.length).toBe(1);
-      expect(visiblePeriods.value[0].period.awardPeriodId).toBe(
+      expect(visiblePeriods.value[0].awardPeriodId).toBe(
         inactivePeriod.awardPeriodId
       );
     }
@@ -66,14 +70,14 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is enabled", () =>
   it("with multiple inactive period should return the most recent inactive period", () => {
     const visiblePeriods = bpdPeriodsAmountWalletVisibleSelector.resultFunc(
       pot.some([inactivePeriodA, inactivePeriodB, inactivePeriodC]),
-      remoteReady(true)
+      pot.some(true)
     );
 
     expect(pot.isSome(visiblePeriods)).toBeTruthy();
     if (pot.isSome(visiblePeriods)) {
       expect(visiblePeriods.value.length).toBe(1);
-      expect(visiblePeriods.value[0].period.awardPeriodId).toBe(
-        inactivePeriodB.period.awardPeriodId
+      expect(visiblePeriods.value[0].awardPeriodId).toBe(
+        inactivePeriodB.awardPeriodId
       );
     }
   });
@@ -89,14 +93,14 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is enabled", () =>
           inactivePeriodB,
           inactivePeriodC
         ]),
-        remoteReady(true)
+        pot.some(true)
       );
 
       expect(pot.isSome(visiblePeriods)).toBeTruthy();
       if (pot.isSome(visiblePeriods)) {
         expect(visiblePeriods.value.length).toBe(1);
-        expect(visiblePeriods.value[0].period.awardPeriodId).toBe(
-          activePeriodAmount.period.awardPeriodId
+        expect(visiblePeriods.value[0].awardPeriodId).toBe(
+          activePeriodAmount.awardPeriodId
         );
       }
     }
@@ -114,14 +118,14 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is enabled", () =>
           inactivePeriodB,
           inactivePeriodC
         ]),
-        remoteReady(true)
+        pot.some(true)
       );
 
       expect(pot.isSome(visiblePeriods)).toBeTruthy();
       if (pot.isSome(visiblePeriods)) {
         expect(visiblePeriods.value.length).toBe(1);
-        expect(visiblePeriods.value[0].period.awardPeriodId).toBe(
-          activePeriodAmount.period.awardPeriodId
+        expect(visiblePeriods.value[0].awardPeriodId).toBe(
+          activePeriodAmount.awardPeriodId
         );
       }
     }
@@ -139,17 +143,17 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is enabled", () =>
           inactivePeriodB,
           inactivePeriodC
         ]),
-        remoteReady(true)
+        pot.some(true)
       );
 
       expect(pot.isSome(visiblePeriods)).toBeTruthy();
       if (pot.isSome(visiblePeriods)) {
         expect(visiblePeriods.value.length).toBe(2);
-        expect(visiblePeriods.value[0].period.awardPeriodId).toBe(
-          closedPeriodWithAmount.period.awardPeriodId
+        expect(visiblePeriods.value[0].awardPeriodId).toBe(
+          closedPeriodWithAmount.awardPeriodId
         );
-        expect(visiblePeriods.value[1].period.awardPeriodId).toBe(
-          activePeriodAmount.period.awardPeriodId
+        expect(visiblePeriods.value[1].awardPeriodId).toBe(
+          activePeriodAmount.awardPeriodId
         );
       }
     }
@@ -166,14 +170,14 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is enabled", () =>
           inactivePeriodB,
           inactivePeriodC
         ]),
-        remoteReady(true)
+        pot.some(true)
       );
 
       expect(pot.isSome(visiblePeriods)).toBeTruthy();
       if (pot.isSome(visiblePeriods)) {
         expect(visiblePeriods.value.length).toBe(1);
-        expect(visiblePeriods.value[0].period.awardPeriodId).toBe(
-          closedPeriodWithAmount.period.awardPeriodId
+        expect(visiblePeriods.value[0].awardPeriodId).toBe(
+          closedPeriodWithAmount.awardPeriodId
         );
       }
     }
@@ -189,7 +193,7 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is enabled", () =>
           inactivePeriodB,
           inactivePeriodC
         ]),
-        remoteReady(true)
+        pot.some(true)
       );
 
       expect(pot.isSome(visiblePeriods)).toBeTruthy();
@@ -204,7 +208,7 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is disabled", () =
   it("one inactive period should return no periods", () => {
     const visiblePeriods = bpdPeriodsAmountWalletVisibleSelector.resultFunc(
       pot.some([inactivePeriodB]),
-      remoteReady(false)
+      pot.some(false)
     );
 
     expect(pot.isSome(visiblePeriods)).toBeTruthy();
@@ -215,7 +219,7 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is disabled", () =
   it("with multiple inactive period should return no periods", () => {
     const visiblePeriods = bpdPeriodsAmountWalletVisibleSelector.resultFunc(
       pot.some([inactivePeriodA, inactivePeriodB, inactivePeriodC]),
-      remoteReady(false)
+      pot.some(false)
     );
 
     expect(pot.isSome(visiblePeriods)).toBeTruthy();
@@ -235,7 +239,7 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is disabled", () =
           inactivePeriodB,
           inactivePeriodC
         ]),
-        remoteReady(false)
+        pot.some(false)
       );
 
       expect(pot.isSome(visiblePeriods)).toBeTruthy();
@@ -257,7 +261,7 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is disabled", () =
           inactivePeriodB,
           inactivePeriodC
         ]),
-        remoteReady(false)
+        pot.some(false)
       );
 
       expect(pot.isSome(visiblePeriods)).toBeTruthy();
@@ -279,14 +283,14 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is disabled", () =
           inactivePeriodB,
           inactivePeriodC
         ]),
-        remoteReady(false)
+        pot.some(false)
       );
 
       expect(pot.isSome(visiblePeriods)).toBeTruthy();
       if (pot.isSome(visiblePeriods)) {
         expect(visiblePeriods.value.length).toBe(1);
-        expect(visiblePeriods.value[0].period.awardPeriodId).toBe(
-          closedPeriodWithAmount.period.awardPeriodId
+        expect(visiblePeriods.value[0].awardPeriodId).toBe(
+          closedPeriodWithAmount.awardPeriodId
         );
       }
     }
@@ -303,14 +307,14 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is disabled", () =
           inactivePeriodB,
           inactivePeriodC
         ]),
-        remoteReady(false)
+        pot.some(false)
       );
 
       expect(pot.isSome(visiblePeriods)).toBeTruthy();
       if (pot.isSome(visiblePeriods)) {
         expect(visiblePeriods.value.length).toBe(1);
-        expect(visiblePeriods.value[0].period.awardPeriodId).toBe(
-          closedPeriodWithAmount.period.awardPeriodId
+        expect(visiblePeriods.value[0].awardPeriodId).toBe(
+          closedPeriodWithAmount.awardPeriodId
         );
       }
     }
@@ -326,7 +330,7 @@ describe("test bpdPeriodsAmountWalletVisibleSelector when bpd is disabled", () =
           inactivePeriodB,
           inactivePeriodC
         ]),
-        remoteReady(false)
+        pot.some(false)
       );
 
       expect(pot.isSome(visiblePeriods)).toBeTruthy();

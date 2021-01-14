@@ -52,6 +52,10 @@ date:
     - "am"
     - "pm"
 global:
+  you: "YOU"
+  badges:
+    blocked: "Blocked"
+    onGoing: "Ongoing"
   password: Password
   username: Username
   unknown: unknown
@@ -211,7 +215,7 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
-  expiration_info: For security reasons, after 30 days from your last login you'll need to sign in again to continue using IO.
+  expiration_info: For security reasons, after 30 days from your last login with SPID or CIE, you'll need to sign in again to use IO.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -280,9 +284,13 @@ profile:
         description: Permanently delete your account and your personal data
         error: An error occurred while submit your deletion request, please retry!
         alert:
+          activeBonusTitle: Active bonus
+          activeBonusDescription: You have active Bonuses. Please be aware that deleting your profile will not delete bonuses or unsubscribe you from any initiative. To manage your bonuses go to your Wallet, otherwise choose Continue
           oldRequest: We are already proceeding to delete your account.
           oldRequestSubtitle: To use IO you will need to register again. The cancellation does not concern the data processed by public administrations.
           cta:
+            manageBonus: Manage bonuses
+            continue: Continue
             return: Return
             cancel: Cancel the deletion
         info:
@@ -423,7 +431,7 @@ authentication:
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     session_expired:
       title: Your session is expired
-      body: For security reasons, after 30 days from the last access, we ask you to log in again with SPID or CIE to use IO.
+      body: For security reasons, after 30 days from the last login with SPID or CIE, we ask you to sign in again to use IO.
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
@@ -487,8 +495,12 @@ authentication:
       incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
       incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
       alert: Are you sure you want to go back?
+      subtitleHelp: The PIN code consists of 8 digits.
+      subtitleCTA: Where can I find it?
+      bottomSheetCTA: Did you forget your PIN?
       contextualHelpTitle: Where can I find my PIN and PUK?
-      contextualHelpBody: "The **PIN** code consists of 8 digits: \n\n- the first 4 digits you received at the registry office;\n- the last 4 digits you received at home, along with your electronic ID card.\n\nPlease enter them following this order.\n\n The **PUK** code is needed to unlock your PIN, in case of 3 wrong attempts. PUK consists of 8 digits and it's issued along with the PIN.\n\n[Did you forget your PIN/PUK?](https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/)"
+      contextualHelpBody: !include help/ciePinHelpBody.md
+      contextualHelpCTA: Did you forget your PIN/PUK?
     pinTempLocked:
       header: Login with CIE
       title: Card temporarily locked
@@ -692,11 +704,12 @@ lipsum:
 datetimes:
   yesterday: yesterday
   todayAt: today, at
+  notValid: Invalid date.
 payment:
   errorDetails: Details
-  currentPsp: Your current PSP is
+  currentPsp: Payment will be handled by
   noPsp: You have yet to select a PSP
-  changePsp: Change PSP
+  changePsp: Edit
   IUV: IUV
   IUV_extended: Identificativo Univoco di Versamento
   notice: Notice
@@ -727,6 +740,7 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Wallet
+  refreshWallet: Refresh the Wallet
   incoming:
     title: "Upcoming"
     message: "This payment method will be available in a future release"
@@ -743,11 +757,21 @@ wallet:
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
   searchAbi:
-    title: Add PagoBANCOMAT
-    description:
-      text1: If you prefer, you can indicate the bank
-      text2: " on which you have an active PagoBANCOMAT card. Otherwise we will look for all the cards associated with you: by continuing you accept the "
-      text3: privacy policy
+    header: "Add {{methodName}}"
+    bancomat:
+      title: "Search for your PagoBANCOMAT cards"
+      description:
+        text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
+        text2: information on the processing of personal data.
+        text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
+        text4: by searching among those available
+    bpay:
+      title: "Search for your BANCOMAT Pay accounts"
+      description:
+        text1: "IO will search for all BANCOMAT Pay accounts associated with you.\nBy continuing you accept the "
+        text2: information on the processing of personal data.
+        text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
+        text4: by searching among those available
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
@@ -769,8 +793,8 @@ wallet:
         body: "There are no PagoBANCOMAT cards registered to you: please contact your bank for further information."
       koNotFoundSingleBank:
         title: "Sorry, we couldn't find any card on this bank"
-        body: "There are no PagoBANCOMAT cards registered to you: please contact your bank for further information."
-        chooseAnother: "Choose another bank"
+        body: "There are no PagoBANCOMAT cards registered to you.\nIf you wish, IO can search between all banks."
+        continue: "Continue"
       koServicesError:
         title: "Unable to retrieve your PagoBANCOMAT cards: please select your bank"
         body: "Choose the bank which issued your card to retrieve all the PagoBANCOMAT cards registered to you."
@@ -785,6 +809,7 @@ wallet:
         bodyPlural: "We found {{number}} cards registered to you. Continue to add this card skip to cancel the operation."
         loading: "We are adding your PagoBANCOMAT card\n\nPlease hold on..."
         warning: "If you don't find all the cards of your own, you can try to add the missing one at a later time by selecting the Bank where you have your personal account."
+        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
       bpd:
         suggestActivation:
           title: "Do you want to activate Cashback?"
@@ -797,18 +822,45 @@ wallet:
           body1: "Turn on your methods saved into your wallet and start collecting cashback on your valid transactions."
           body2: "If you prefer, you can activate cashback on these methods later as well."
           skip: "Maybe later"
+    bPay:
+      headerTitle: "Add BANCOMAT Pay"
+      loadingSearch: "We are recovering your BANCOMAT Pay data\n\nPlease wait"
+      add:
+        label: "BANCOMAT Pay account {{current}} of {{length}}"
+        screenTitle: "Do you want to add this account?"
+      loadingAdd: "We are adding your BANCOMAT Pay\n\nPlease wait"
+      koTimeout:
+        title: "Unable to recover your data"
+        body: "Please retry"
+      koNotFound:
+        title: "Sorry, we haven't found any active BANCOMAT Pay service"
+        body: "Contact your bank to activate BANCOMAT Pay!"
     satispay:
       headerTitle: "Add Satispay"
+      start:
+        title: "Do you want to add your Satispay account to IO?"
+        body: "We will check if there is a Satispay account associated with your tax code."
+        cta: "Information on the processing of personal data"
       loadingSearch:
         title: "We are verifying your Satispay account\n\nPlease wait a few seconds"
       loadingAdd:
         title: "We are adding your Satispay account\n\nPlease wait a few seconds"
+      add:
+        title: "Do you want to add this Satispay account?"
+      koTimeout:
+        title: "We were unable to contact Satispay"
+        body: "Retry please"
+      koNotFound:
+        title: "Sorry, we do not know that you have activated Satispay yet"
+        body: "Contact Satispay for activation"
   alert:
+    supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
     btnUpdateApp: Update the IO app
     favourite: This method is already set as favourite. To change this, please set another method as favourite.
+    amex: Payments with American Express cards, for amounts above €1000, are currently not possible.
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
@@ -837,6 +889,9 @@ wallet:
     satispay:
       successful: Satispay successfully removed
       failed: Satispay could not be removed
+    bPay:
+      successful: BancomatPay successfully removed
+      failed: BancomatPay could not be removed
     successful: Card successfully removed
     failed: The card could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
@@ -871,7 +926,10 @@ wallet:
     info: This payment method will be automatically proposed for the next payment
     save: Save
     notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
-    temporaryError: There was a temporary problem while saving this card, please retry.
+    temporaryError: There was a problem while saving this card.
+    temporarySubError: We have not received a response from the security systems. We apologize for the inconvenience.
+    loadWalletsErrorTitle: Systems are taking longer than expected
+    loadWalletsErrorBody: We have not received a response from the security systems, but your card may have been added. Update your wallet before trying again.
     loadingAlert: I am checking your card data..
   saveCardInPayment:
     header: Pay with this card
@@ -997,6 +1055,12 @@ wallet:
       name: Credit, debit or prepaid card
       shortName: "Card"
       description: The card issued by your bank that you normally use to pay in stores and online
+      pagoPaCapability:
+        title: In app payments 
+        description: Make payments to the public administration through pagoPA
+        active: Active
+        arriving: Arriving
+        incompatible: Incompatible
     bonus:
       name: Discount, bonus and other services
       description: Public initiatives to support Economy, or services related to payments
@@ -1041,6 +1105,9 @@ wallet:
       securityCode: "•••"
       securityCode4D: "••••"
   acceptedCards: Accepted cards
+  missingDataCTA: Are you missing some data?
+  openAcceptedCardsPageCTA: Learn more about accepted cards
+  missingDataText: If you can't find the security code, it's likely your card doesn't support online payments. We're working with your bank to let you add these cards and enroll them for Cashback.
   chooseMethod: Select the desired method
   QRtoPay:
     chooser: Pick image from gallery
@@ -1093,8 +1160,8 @@ wallet:
         two: "can't be used to make in-app payments"
         three: ", but they can only be used at physical stores (POS)."
       debit:
-        title: "Does your card have other logos?"
-        body: "If, in addition to the PagoBANCOMAT logo, there is one of another circuit (Maestro, MasterCard, Visa), you can also add the card as a **debit or credit** card by typing the number on its front. Transactions made on this circuit will be valid for the cashback initiative; also, you can use the card to pay on IO."
+        title: "Does your card have one of these logos?"
+        body: "If your PagoBANCOMAT card has other international circuits, you can also add it as a **debit or credit card** by entering its number on the front. When you activate Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add as Debit/Credit Card"
       removeCta: "Delete this payment method"
   satispay:
@@ -1116,6 +1183,7 @@ saveCard:
   favoriteText: This payment method will be automatically prompt on the next payment
 cardComponent:
   validUntil: Valid until
+  expiresOn: Expires on
   expiredCard: CARD EXPIRED ON
   actions: Actions
   setFavourite: Set as favourite
@@ -1166,15 +1234,15 @@ messages:
           block1: Add a reminder for the 
           block2: at
       expiringAlert:
-        block1: This notice will expire on
+        block1: This payment notice will expire on
         block2: at
       expiredAlert:
         expirable:
-          block1: The notice expired at 
+          block1: The payment notice expired at 
           block2: "on"
         unexpirable:
-          block: The payment is overdue. You can still pay; IO app will update the amount if needed.
-    presctiption:  
+          block: Your payment notice is overdue. You can still pay; IO app will update the amount if needed.
+    prescription:  
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
       expiredAlert:
@@ -1405,6 +1473,8 @@ systemsOff:
   closeApp: close the application and try again
 contextualHelp:
   title: IO helps you
+  sendScreenshot:
+    cta: Share your screenshot, in order to make it easier to solve your problem.
   sendPersonalInfo:
     title: New report
     description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."
@@ -1419,6 +1489,10 @@ instabug:
     descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
     buttonChat: Reopen a report
     assistanceWorkHours: IO assistance is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun and holidays from 8.00 to 13.00
+bottomSheets:
+  ciePin:
+      title: "Where can I find my PIN?"
+      content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "What is SPID?"
@@ -1809,7 +1883,7 @@ bonus:
       loading: "We are processing your request"
       success: "Cashback has been removed"
       failure: "We were unable to remove, please try again"
-    earned: Collected Cashback
+    earned: Total Collected
     onboarding:
       alert:
         title: Cashback is already active
@@ -1850,6 +1924,11 @@ bonus:
         body: "Enable Cashback on methods already in your wallet or add new ones."
         cta: "Activate payment methods"
     iban:
+      cta:
+        bpdNotActiveTitle: "attention"
+        bpdNotActiveMessage: "you are not registered for cashback, sign up and try again."
+        noActivePeriodTitle: "attention"
+        noActivePeriodMessage: "there is no active cashback at this time."
       iban: "IBAN"
       edit: "Change IBAN"
       verify: "Check IBAN"
@@ -1887,26 +1966,55 @@ bonus:
           noIbanBody: "Set your IBAN in order to receive the collected cashback"
           button: "Set IBAN"
         transactionsCountOverview:
-          title: "Valid transactions"
+          title: "Your transactions"
           of: "out of"
           closedPeriodKOBody: "You have not reached the {{transactions}} transactions necessary to get a refund: you would have received € {{amount}}. Try again during the next phase!"
-          currentPeriodKOBody: "You must have reached at least {{transactions}} transactions to unlock the cashback collected so far!"
-          gracePeriodBody: "This cashback phase ended on {{date}}. We are still waiting for the latest transactions from the banks. Just bear with us: we'll keep you posted here!"
+          currentPeriodKOBody:
+            one: "You must have reached at least"
+            two: " {{transactions}} transactions"
+            three: " to unlock the cashback collected so far!"
+          currentPeriodUnlockBody: "Congratulations {{name}}! You have exceeded the threshold of {{transactions}} transactions and unlocked the Cashback !!"
+          currentPeriodMaxAmount: "Congratulations {{name}}! You have reached the maximum amount expected!"
+          currentPeriodSuperCashback: "Right now you would be eligible for {{superCashbackAmount}} € Super Cashback! Keep up the good work to stay on the leaderboard."
+          gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. By {{endGracePeriodDate}} you will be able to see the final calculation."
           closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
           closedPeriodMaxAmount: "it's the highest refund possible!"
+          moneyTransfer: "By {{date}} you will receive the transfer on the IBAN you entered."
           inactivePeriodBody: "You will be able to start collecting valid transactions starting from {{date}}"
           label:
             one: "1 valid transaction" 
             other: "{{count}} valid transactions"
+        ranking:
+          title: "Your position"
+          notReady:
+            title: "When will you see the Super Cashback ranking?"
+            body: "The ranking is based on the **number of transactions** made with the payment methods on which you have Cashback enabled.\n\n
+                   We will show your ranking **when the distribution of participants will be more meaningful**. Currently, many users collected the same number of transactions.\n\n
+                   Once published, the ranking will **continue to change** depending on the number of transactions among all participants, until the end of the 6 months."
+
       transaction:
+        label:
+          one: "1 transaction"
+          other: "{{counter}} transactions"
         title: "Your transactions"
         goToButton: "Transactions detail"
+        noPaymentMethod:
+          text1: "You must activate "
+          text2: "at least one payment method "
+          text3: "at Cashback to start collecting necessary transactions"
         detail:
-          empty: "In this page you will find all the transactions eligible for cashback: there are no valid transactions yet. Check this page again later!"
+          empty: 
+            text1: "There are no valid transactions yet."
+            text2: "Check back in the next few days!"
           summary:
             bottomSheet:
               title: "When will you find your transactions?"
-              body: "Transactions are collected the day after they are recorded by the banks.\n\n**It might take up to 72 hours before you see your transaction on IO**, although the process is usually faster.\n\n**It may take a little longer if the purchase has been performed during the weekend or holidays**, or in other exceptional occasions.\n\nDon't worry: all valid transactions occurred throughout the phase will be collected and considered for refunds and ranking!"
+              body: "**Still not seeing your transaction?**\n\n- Check if your bank has already **recorded** the transaction: data are sent to IO app within 5 working days from the recording.\n\n- Payments made using Google Pay, Apple Pay, and Samsung Pay are not supported yet. We are working with your bank to support these transactions as well.\n\n- The transaction may have been handled with the POS of a company (acquirer) **not affiliated yet.**"
+              readMore: "Read more"
+            calendarBlock:
+              text1: "Please note that before you'll see the transaction on IO,"
+              text2: "it usually takes up 3 working days"
+              text3: "."
             lastUpdated: "Latest valid transaction: "
             link: Anything missing?
             body:
@@ -1919,7 +2027,7 @@ bonus:
               text5: "a cashback of "
             milestone:
               title: "Congratulation, you earned {{cashbackValue}}"
-              body: "You have reached the maximum refund foreseen in this period."
+              body: "You have reached the maximum refund for this phase. Keep collecting valid transactions to climb the ranking!"
           title: "Transaction details"
           paymentCircuit: "Payment circuit"
           transactionAmount: "Transaction amount"
@@ -1968,6 +2076,16 @@ bonus:
           active: Active
           closed: Closed
           inactive: Upcoming
+      superCashback:
+        rankLabel: "{{position}}º user in rank"
+        rankTitle: "Super Cashback ranking"
+        howItWorks:
+          title: "How does it work?"
+          body: "The **{{citizens}} citizens** with the highest number of transactions **receive the Super Cashback, a prize of €{{amount}}.**"
+          status:
+            active: "**The ranking changes every day.** The final one will be displayed on {{endDate}}."
+            closed: "Ranking for this period is closed."
+      lastUpdate: Updated at {{hour}} on {{date}}
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

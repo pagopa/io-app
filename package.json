@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "1.15.0-rc.0",
+  "version": "1.18.0-rc.1",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.9.0/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.9.0/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
@@ -212,7 +212,7 @@
     "standard-version": "^8.0.2",
     "ts-jest": "^25.1.0",
     "ts-node": "^7.0.1",
-    "typescript": "^3.9.7"
+    "typescript": "^4.1.0"
   },
   "resolutions": {
     "@types/react": "16.7.18",

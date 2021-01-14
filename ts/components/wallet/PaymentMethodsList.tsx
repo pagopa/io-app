@@ -4,7 +4,13 @@
  */
 import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import {
+  Alert,
+  FlatList,
+  ListRenderItemInfo,
+  Platform,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import { Option } from "fp-ts/lib/Option";
 import { H3 } from "../core/typography/H3";
@@ -14,13 +20,13 @@ import { withLightModalContext } from "../helpers/withLightModalContext";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 import I18n from "../../i18n";
-import { BackendStatus, SectionStatusKey } from "../../api/backendPublic";
 import { GlobalState } from "../../store/reducers/types";
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
 import {
   getSectionMessageLocale,
   statusColorMap
 } from "../SectionStatusComponent";
+import { BackendStatus, SectionStatusKey } from "../../types/backendStatus";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;
@@ -61,7 +67,11 @@ const styles = StyleSheet.create({
   descriptionPadding: { paddingRight: 24 },
 
   badgeContainer: { height: 18, backgroundColor: IOColors.blue },
-  badgeText: { fontSize: 12, lineHeight: 18 }
+  badgeText: {
+    fontSize: 12,
+    lineHeight: 18,
+    marginBottom: Platform.select({ android: 2, default: 0 })
+  }
 });
 
 export const showPaymentMethodIncomingAlert = () =>

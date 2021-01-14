@@ -1,7 +1,8 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
+import { InfoBox } from "../../../../components/box/InfoBox";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
@@ -10,11 +11,13 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import IconFont from "../../../../components/ui/IconFont";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
-import { bottomSheetContent } from "../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
-import { BpdAmount } from "../store/actions/amount";
+import { BpdAmount } from "../saga/networking/amount";
 import { BpdPeriod } from "../store/actions/periods";
+import { Link } from "../../../../components/core/typography/Link";
+import { openWebUrl } from "../../../../utils/url";
 
 type Props = {
   lastUpdateDate: string;
@@ -26,37 +29,63 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center"
-  }
+  },
+  readMore: { marginLeft: 31, marginBottom: 24 }
 });
+const CSS_STYLE = `
+body {
+  font-size: 16;
+  color: ${IOColors.black}
+}
+`;
 
+const readMoreLink = "https://io.italia.it/cashback/acquirer/";
+export const bottomSheetBpdTransactionsBody = () => (
+  <>
+    <Markdown cssStyle={CSS_STYLE} avoidTextSelection={true}>
+      {I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.body")}
+    </Markdown>
+    <TouchableWithoutFeedback onPress={() => openWebUrl(readMoreLink)}>
+      <Link style={styles.readMore} weight={"SemiBold"}>
+        {I18n.t(
+          "bonus.bpd.details.transaction.detail.summary.bottomSheet.readMore"
+        )}
+      </Link>
+    </TouchableWithoutFeedback>
+  </>
+);
 const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const { present, dismiss } = useBottomSheetModal();
-
-  const openModalBox = async () => {
-    const bottomSheetProps = await bottomSheetContent(
-      <>
-        <View spacer />
-        <Markdown>
+  const { present } = useIOBottomSheet(
+    <>
+      <View spacer={true} large={true} />
+      <InfoBox iconName={"io-calendar"} iconSize={32}>
+        <H4 weight={"Regular"}>
           {I18n.t(
-            "bonus.bpd.details.transaction.detail.summary.bottomSheet.body"
+            "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
           )}
-        </Markdown>
-      </>,
-      I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.title"),
-      522,
-      dismiss
-    );
-
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
+          <H4>
+            {" "}
+            {I18n.t(
+              "bonus.bpd.details.transaction.detail.summary.calendarBlock.text2"
+            )}
+          </H4>
+          {I18n.t(
+            "bonus.bpd.details.transaction.detail.summary.calendarBlock.text3"
+          )}
+        </H4>
+      </InfoBox>
+      <View spacer={true} large={true} />
+      {bottomSheetBpdTransactionsBody()}
+    </>,
+    I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.title"),
+    600
+  );
 
   return (
     <>
-      <TouchableDefaultOpacity style={styles.row} onPress={openModalBox}>
+      <TouchableDefaultOpacity style={styles.row} onPress={present}>
         <IconFont name={"io-notice"} size={24} color={IOColors.blue} />
         <View hspacer={true} small={true} />
         <View>

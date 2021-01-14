@@ -28,6 +28,7 @@ import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import {
   BancomatPaymentMethod,
+  BPayPaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
@@ -160,6 +161,11 @@ export const navigateToRemoveAccountSuccess = () =>
     routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
   });
 
+export const navigateToRemoveAccountDetailScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
+  });
+
 export const navigateToPrivacyScreen = NavigationActions.navigate({
   routeName: ROUTES.PROFILE_PRIVACY_MAIN,
   action: NavigationActions.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
@@ -230,6 +236,12 @@ export const navigateToSatispayDetailScreen = (
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_SATISPAY_DETAIL,
     params: { satispay }
+  });
+
+export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_BPAY_DETAIL,
+    params: { bPay }
   });
 
 export const navigateToPaymentPickPspScreen = (

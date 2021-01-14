@@ -1,4 +1,3 @@
-import { BpdAmountAction } from "./amount";
 import { BpdDetailsActions } from "./details";
 import { BpdIbanActions } from "./iban";
 import { BpdOnboardingActions } from "./onboarding";
@@ -13,6 +12,5 @@ export type BpdActions =
   | BpdIbanActions
   | BpdPaymentMethodActions
   | BpdPeriodsAction
-  | BpdAmountAction
   | BpdTransactionsAction
   | BpdSelectPeriodAction;

@@ -18,6 +18,7 @@ import {
   isActivationResponseTrackable,
   isEligibilityResponseTrackable
 } from "../../features/bonus/bonusVacanze/utils/bonus";
+import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
@@ -76,7 +77,10 @@ import {
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
 import { loadServiceDetail, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
-import { upsertUserDataProcessing } from "../actions/userDataProcessing";
+import {
+  deleteUserDataProcessing,
+  upsertUserDataProcessing
+} from "../actions/userDataProcessing";
 import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
 import {
   paymentAttiva,
@@ -119,6 +123,8 @@ import {
 } from "../actions/wallet/wallets";
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
+import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
+import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -415,7 +421,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       }
       break;
     case getType(removeAccountMotivation):
+    case getType(deleteUserDataProcessing.request):
+    case getType(deleteUserDataProcessing.success):
       return mp.track(action.type, action.payload);
+    case getType(deleteUserDataProcessing.failure):
+      return mp.track(action.type, {
+        choice: action.payload.choice,
+        reason: action.payload.error.message
+      });
   }
   return Promise.resolve();
 };
@@ -429,8 +442,11 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
   if (mixpanel !== undefined) {
     // call mixpanel tracking only after we have initialized mixpanel with the
     // API token
-    trackAction(mixpanel)(action).then(constNull, constNull);
-    trackBpdAction(mixpanel)(action).then(constNull, constNull);
+    void trackAction(mixpanel)(action);
+    void trackBpdAction(mixpanel)(action);
+    void trackBancomatAction(mixpanel)(action);
+    void trackSatispayAction(mixpanel)(action);
+    void trackBPayAction(mixpanel)(action);
   }
   return next(action);
 };

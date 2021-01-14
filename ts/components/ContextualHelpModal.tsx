@@ -22,7 +22,9 @@ import {
   getFAQsFromCategories
 } from "../utils/faq";
 import Markdown from "./ui/Markdown";
-import SendSupportTokenInfo from "./SendSupportTokenInfo";
+import SendSupportRequestOptions, {
+  SupportRequestOptions
+} from "./SendSupportRequestOptions";
 import ContextualHelpComponent from "./ContextualHelpComponent";
 
 type OwnProps = Readonly<{
@@ -138,19 +140,22 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   /**
-   * If the user is authenticated we show the screen that allows to choice or not to send the personal token
+   * If the user is authenticated and is a new request we show the screen that allows to choice or not to send the personal token
    * to the assistance.
-   * Otherwise we allow the user to open directly a new assistance request without sending the personal token.
+   * Otherwise we allow the user to open directly a the assistance request (new or not) without sending the personal token.
    * @param reportType
    */
   const handleOnRequestAssistance = (reportType: BugReporting.reportType) => {
     if (props.isAuthenticated) {
-      // refresh / load support token
-      props.loadSupportToken();
-
-      setShowSendPersonalInfo(true);
       setSupportType(reportType);
-      return;
+
+      // ask to send the personal information to the assistance only for a new bug.
+      if (reportType === BugReporting.reportType.bug) {
+        // refresh / load support token
+        props.loadSupportToken();
+        setShowSendPersonalInfo(true);
+        return;
+      }
     }
     props.onRequestAssistance(reportType, props.supportToken);
   };
@@ -158,15 +163,15 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   /**
    * If an authenticated user choice to send the personal token we send it to the assistance.
    * Otherwise we allow the user to open a new assistance request without sending the personal token.
-   * @param type
-   * @param sendSupportToken
+   *
+   * @param options Contains the checkboxes' values, @todo handle screenshot attachment request.
    */
-  const handleSendSupportTokenInfoContinue = (sendSupportToken: boolean) => {
+  const handleContinue = (options: SupportRequestOptions) => {
     setShowSendPersonalInfo(false);
     fromNullable(supportType).map(st => {
       props.onRequestAssistance(
         st,
-        sendSupportToken ? props.supportToken : remoteUndefined
+        options.sendPersonalInfo ? props.supportToken : remoteUndefined
       );
     });
   };
@@ -182,10 +187,10 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     >
       <Container>
         {showSendPersonalInfo ? (
-          <SendSupportTokenInfo
+          <SendSupportRequestOptions
             onClose={onClose}
             onGoBack={() => setShowSendPersonalInfo(false)}
-            onContinue={handleSendSupportTokenInfoContinue}
+            onContinue={handleContinue}
           />
         ) : (
           <ContextualHelpComponent

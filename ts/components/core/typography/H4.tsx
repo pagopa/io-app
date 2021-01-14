@@ -11,7 +11,10 @@ type AllowedBoldColors = Extract<
 >;
 
 // these colors are allowed only when the weight is SemiBold
-type AllowedSemiBoldColors = Extract<IOColorType, "white" | "bluegreyDark">;
+type AllowedSemiBoldColors = Extract<
+  IOColorType,
+  "white" | "bluegreyDark" | "blue"
+>;
 
 // these colors are allowed only when the weight is Regular
 type AllowedRegularColors = Extract<

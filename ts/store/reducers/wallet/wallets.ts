@@ -6,6 +6,7 @@ import { values } from "lodash";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
+import _ from "lodash";
 import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
 import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
@@ -37,6 +38,7 @@ import {
   addWalletCreditCardInit,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
+  addWalletCreditCardWithBackoffRetryRequest,
   creditCardCheckout3dsRequest,
   creditCardCheckout3dsSuccess,
   deleteWalletFailure,
@@ -49,6 +51,7 @@ import {
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
+  payCreditCardVerificationWithBackoffRetryRequest,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
@@ -94,15 +97,26 @@ const getWallets = createSelector(getWalletsById, potWx =>
   )
 );
 
-export const getFavoriteWalletId = (state: GlobalState) =>
-  state.wallet.wallets.favoriteWalletId;
-
-export const getFavoriteWallet = (state: GlobalState) =>
-  pot.mapNullable(state.wallet.wallets.favoriteWalletId, walletId =>
-    pot.toUndefined(
-      pot.map(state.wallet.wallets.walletById, wx => wx[walletId])
+// return a pot with the id of the favorite wallet. none otherwise
+export const getFavoriteWalletId = createSelector(
+  getWallets,
+  (potWx: ReturnType<typeof getWallets>): pot.Pot<number, Error> =>
+    pot.mapNullable(
+      potWx,
+      wx => values(wx).find(w => w.favourite === true)?.idWallet
     )
-  );
+);
+
+export const getFavoriteWallet = createSelector(
+  [getFavoriteWalletId, getWalletsById],
+  (
+    favoriteWalletID: pot.Pot<number, Error>,
+    walletsById: WalletsState["walletById"]
+  ): pot.Pot<Wallet, Error> =>
+    pot.mapNullable(favoriteWalletID, walletId =>
+      pot.toUndefined(pot.map(walletsById, wx => wx[walletId]))
+    )
+);
 
 /**
  * @deprecated Using API v2 this selector is deprecated
@@ -349,15 +363,23 @@ const reducer = (
     case getType(setFavouriteWalletSuccess):
       // On success, we update both the favourite wallet ID and the
       // corresponding Wallet in walletById.
-      // Note that we don't update the Wallet that was previously the
-      // favourite one.
       return {
         ...state,
         favoriteWalletId: pot.some(action.payload.idWallet),
-        walletById: {
-          ...state.walletById,
-          [action.payload.idWallet]: action.payload
-        }
+        walletById: pot.map(state.walletById, walletsById =>
+          _.keys(walletsById).reduce<IndexedById<Wallet>>(
+            (acc, val) =>
+              ({
+                ...acc,
+                [val]: {
+                  ...walletsById[val],
+                  favourite:
+                    action.payload.idWallet === walletsById[val]?.idWallet
+                }
+              } as IndexedById<Wallet>),
+            {}
+          )
+        )
       };
 
     case getType(setFavouriteWalletFailure):
@@ -381,6 +403,7 @@ const reducer = (
         creditCardCheckout3ds: pot.none
       };
 
+    case getType(addWalletCreditCardWithBackoffRetryRequest):
     case getType(addWalletCreditCardRequest):
       return {
         ...state,
@@ -402,7 +425,7 @@ const reducer = (
     //
     // pay credit card verification
     //
-
+    case getType(payCreditCardVerificationWithBackoffRetryRequest):
     case getType(payCreditCardVerificationRequest):
       return {
         ...state,
