@@ -26,6 +26,7 @@ import customVariables from "../theme/variables";
 import { dateToAccessibilityReadableFormat } from "../utils/accessibility";
 import { extractFiscalCodeData } from "../utils/profile";
 import { maybeNotNullyString } from "../utils/strings";
+import { IOColors } from "./core/variables/IOColors";
 
 interface BaseProps {
   profile: InitializedProfile;
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     fontSize: textFontSizeF,
     marginLeft: textLeftMarginF,
-    color: customVariables.brandDarkestGray
+    color: IOColors.black
   },
 
   landscapeText: {
@@ -169,7 +170,8 @@ const styles = StyleSheet.create({
 
   fullFiscalCodeText: {
     lineHeight: cardLineHeightF * 2,
-    marginTop: fiscalCodeHeightF
+    marginTop: fiscalCodeHeightF,
+    color: IOColors.black
   },
 
   landscapeFiscalCodeText: {
@@ -186,7 +188,8 @@ const styles = StyleSheet.create({
 
   fullLastNameText: {
     lineHeight: textdLineHeightF,
-    marginTop: lastNameHeightF
+    marginTop: lastNameHeightF,
+    color: IOColors.black
   },
 
   landscapeLastNameText: {
@@ -201,7 +204,8 @@ const styles = StyleSheet.create({
 
   fullNameText: {
     lineHeight: textdLineHeightF,
-    marginTop: nameHeightF
+    marginTop: nameHeightF,
+    color: IOColors.black
   },
 
   landscapeNameText: {
@@ -217,7 +221,8 @@ const styles = StyleSheet.create({
   fullGenderText: {
     lineHeight: textdLineHeightF,
     marginTop: nameHeightF,
-    marginLeft: textGenderLeftMarginF
+    marginLeft: textGenderLeftMarginF,
+    color: IOColors.black
   },
 
   landscapeGender: {
@@ -238,7 +243,8 @@ const styles = StyleSheet.create({
 
   fullBirthPlaceText: {
     lineHeight: cardLineHeightF * 2,
-    marginTop: birdPlaceHeightF
+    marginTop: birdPlaceHeightF,
+    color: IOColors.black
   },
 
   landscapeBirthPlaceText: {
@@ -263,12 +269,14 @@ const styles = StyleSheet.create({
 
   fullBirthCityText: {
     lineHeight: textdLineHeightF,
-    marginTop: birthCityHeightF
+    marginTop: birthCityHeightF,
+    color: IOColors.black
   },
 
   fullDateText: {
     lineHeight: cardLineHeightF * 2,
-    marginTop: dateHeightF
+    marginTop: dateHeightF,
+    color: IOColors.black
   },
 
   landscapeDateText: {
