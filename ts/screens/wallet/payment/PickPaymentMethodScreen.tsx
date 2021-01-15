@@ -111,7 +111,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
               dataArray={wallets as any[]} // eslint-disable-line
               renderRow={(item): React.ReactElement<any> => (
                 <CardComponent
-                  type={"Picking"}
+                  type="Picking"
                   wallet={item}
                   mainAction={this.props.navigateToConfirmOrPickPsp}
                 />
