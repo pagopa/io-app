@@ -30,7 +30,13 @@ type TranslateT = {
   // allow unsafe translations only when a defaultValue gets passed
   // allows the use of implicit pluralization of translations, use count as numeral variable
   // how-to use pluralization explained here https://github.com/pagopa/io-app/pull/2366
-  (scope: string, options: { defaultValue: string; count?: number }): string;
+  (
+    scope: string,
+    options: { defaultValue: string; count?: number } & Omit<
+      I18n.TranslateOptions,
+      "defaultValue"
+    >
+  ): string;
   // or else, the lookup must be safe
   (scope: locales.TranslationKeys, options?: I18n.TranslateOptions): string;
 };

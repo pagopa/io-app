@@ -5,7 +5,10 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { H4 } from "../../../../../components/core/typography/H4";
-import { formatNumberWithNoDigits } from "../../../../../utils/stringBuilder";
+import {
+  formatIntegerNumber,
+  formatNumberWithNoDigits
+} from "../../../../../utils/stringBuilder";
 import I18n from "../../../../../i18n";
 
 type Props = {
@@ -72,10 +75,9 @@ const RankPositionItem = (props: Props): React.ReactElement => (
         </View>
         <H5 testID={"RankingTransactions"}>
           {I18n.t("bonus.bpd.details.transaction.label", {
-            defaultValue: I18n.t("bonus.bpd.details.transaction.label.other", {
-              count: props.transactionsNumber
-            }),
-            count: props.transactionsNumber
+            defaultValue: I18n.t("bonus.bpd.details.transaction.label.other"),
+            count: props.transactionsNumber,
+            transactions: formatIntegerNumber(props.transactionsNumber)
           })}
         </H5>
       </View>
