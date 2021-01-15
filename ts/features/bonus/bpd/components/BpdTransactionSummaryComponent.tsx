@@ -40,20 +40,34 @@ body {
 `;
 
 const readMoreLink = "https://io.italia.it/cashback/acquirer/";
-export const bottomSheetBpdTransactionsBody = () => (
-  <>
-    <Markdown cssStyle={CSS_STYLE} avoidTextSelection={true}>
-      {I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.body")}
-    </Markdown>
-    <TouchableWithoutFeedback onPress={() => openWebUrl(readMoreLink)}>
-      <Link style={styles.readMore} weight={"SemiBold"}>
+export const bottomSheetBpdTransactionsBody = () => {
+  const [CTAVisibility, setCTAVisibility] = React.useState(false);
+
+  const setCTAVisible = () => setCTAVisibility(true);
+
+  return (
+    <>
+      <Markdown
+        cssStyle={CSS_STYLE}
+        avoidTextSelection={true}
+        onLoadEnd={setCTAVisible}
+      >
         {I18n.t(
-          "bonus.bpd.details.transaction.detail.summary.bottomSheet.readMore"
+          "bonus.bpd.details.transaction.detail.summary.bottomSheet.body"
         )}
-      </Link>
-    </TouchableWithoutFeedback>
-  </>
-);
+      </Markdown>
+      {CTAVisibility && (
+        <TouchableWithoutFeedback onPress={() => openWebUrl(readMoreLink)}>
+          <Link style={styles.readMore} weight={"SemiBold"}>
+            {I18n.t(
+              "bonus.bpd.details.transaction.detail.summary.bottomSheet.readMore"
+            )}
+          </Link>
+        </TouchableWithoutFeedback>
+      )}
+    </>
+  );
+};
 const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
