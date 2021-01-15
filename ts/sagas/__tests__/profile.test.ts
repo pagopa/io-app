@@ -113,7 +113,7 @@ describe("watchProfile", () => {
       .withState({
         ...globalState,
         crossSessions: {
-          hashedFiscalCode: hash(mockedProfile.fiscal_code + "x")
+          hashedFiscalCode: hash(`${mockedProfile.fiscal_code}xxx`)
         }
       })
       .select(isDifferentFiscalCodeSelector, mockedProfile.fiscal_code)
