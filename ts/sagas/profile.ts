@@ -319,8 +319,7 @@ function* handleRemoveAccount() {
 }
 
 /**
- * - check if the current logged profile is the same of the previous store one
- * - store the hashed fiscal code of the loaded profile
+ * check if the current logged profile fiscal code is the same of the previous stored one
  * @param profileLoadSuccessAction
  */
 function* checkStoreHashedFiscalCode(
