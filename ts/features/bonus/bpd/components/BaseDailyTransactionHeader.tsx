@@ -45,7 +45,10 @@ const BaseDailyTransactionHeader: React.FunctionComponent<Props> = (
             "bonus.bpd.details.components.transactionsCountOverview.label",
             {
               defaultValue: I18n.t(
-                "bonus.bpd.details.components.transactionsCountOverview.label.other"
+                "bonus.bpd.details.components.transactionsCountOverview.label.other",
+                {
+                  transactions: formatIntegerNumber(props.transactionsNumber)
+                }
               ),
               count: props.transactionsNumber,
               transactions: formatIntegerNumber(props.transactionsNumber)

@@ -131,7 +131,12 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
         <H4 weight={"Bold"}>
           {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text3", {
             defaultValue: I18n.t(
-              "bonus.bpd.details.transaction.detail.summary.body.text3.other"
+              "bonus.bpd.details.transaction.detail.summary.body.text3.other",
+              {
+                transactions: formatIntegerNumber(
+                  props.totalAmount.transactionNumber
+                )
+              }
             ),
             count: props.totalAmount.transactionNumber,
             transactions: formatIntegerNumber(

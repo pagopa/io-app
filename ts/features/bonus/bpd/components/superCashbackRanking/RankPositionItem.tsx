@@ -75,7 +75,9 @@ const RankPositionItem = (props: Props): React.ReactElement => (
         </View>
         <H5 testID={"RankingTransactions"}>
           {I18n.t("bonus.bpd.details.transaction.label", {
-            defaultValue: I18n.t("bonus.bpd.details.transaction.label.other"),
+            defaultValue: I18n.t("bonus.bpd.details.transaction.label.other", {
+              transactions: formatIntegerNumber(props.transactionsNumber)
+            }),
             count: props.transactionsNumber,
             transactions: formatIntegerNumber(props.transactionsNumber)
           })}
