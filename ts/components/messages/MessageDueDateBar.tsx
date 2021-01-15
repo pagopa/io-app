@@ -18,7 +18,6 @@ import {
   formatDateAsMonth
 } from "../../utils/dates";
 import {
-  isExpirable,
   isExpired,
   isExpiring,
   paymentExpirationInfo
@@ -33,12 +32,7 @@ type OwnProps = {
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
-type PaymentStatus =
-  | "paid"
-  | "expiring"
-  | "expiredNotExpirable"
-  | "expiredAndExpirable"
-  | "valid";
+type PaymentStatus = "paid" | "expiring" | "expired" | "valid";
 
 const CALENDAR_ICON_HEIGHT = 40;
 
@@ -85,20 +79,16 @@ const ValidOrExpiringTextContent: React.FunctionComponent<{
   </>
 );
 
-const ExpiredAndExpirableTextContent: React.FunctionComponent<{
+const Expired: React.FunctionComponent<{
   time: string;
   date: string;
 }> = ({ time, date }) => (
   <>
-    {I18n.t("messages.cta.payment.expiredAlert.expirable.block1")}
+    {I18n.t("messages.cta.payment.expiredAlert.block1")}
     <Text bold={true} white={true}>{` ${time} `}</Text>
-    {I18n.t("messages.cta.payment.expiredAlert.expirable.block2")}
+    {I18n.t("messages.cta.payment.expiredAlert.block2")}
     <Text bold={true} white={true}>{` ${date}`}</Text>
   </>
-);
-
-const ExpiredNotExpirableTextContent: React.FunctionComponent = () => (
-  <>{I18n.t("messages.cta.payment.expiredAlert.unexpirable.block")}</>
 );
 
 const TextContent: React.FunctionComponent<{
@@ -111,10 +101,8 @@ const TextContent: React.FunctionComponent<{
   switch (status) {
     case "paid":
       return <PaidTextContent onPress={onPaidPress} />;
-    case "expiredNotExpirable":
-      return <ExpiredNotExpirableTextContent />;
-    case "expiredAndExpirable":
-      return <ExpiredAndExpirableTextContent time={time} date={date} />;
+    case "expired":
+      return <Expired time={time} date={date} />;
     case "valid":
     case "expiring":
       return <ValidOrExpiringTextContent date={date} />;
@@ -125,8 +113,7 @@ const getCalendarIconBackgoundColor = (status: PaymentStatus) => {
   switch (status) {
     case "paid":
       return customVariables.lighterGray;
-    case "expiredNotExpirable":
-    case "expiredAndExpirable":
+    case "expired":
       return customVariables.colorWhite;
     case "expiring":
     case "valid":
@@ -140,16 +127,10 @@ const getCalendarTextColor = (status: PaymentStatus) => {
     case "expiring":
     case "valid":
       return customVariables.colorWhite;
-    case "expiredNotExpirable":
-      return customVariables.calendarExpirableColor;
-    case "expiredAndExpirable":
+    case "expired":
       return customVariables.brandDarkGray;
   }
 };
-
-const isPaymentStatusExpired = (paymentStatus: PaymentStatus): boolean =>
-  paymentStatus === "expiredAndExpirable" ||
-  paymentStatus === "expiredNotExpirable";
 
 // The calendar icon is shown if:
 // - the payment related to the message is not yet paid
@@ -178,15 +159,10 @@ const bannerStyle = (status: PaymentStatus): ViewStyle => {
     case "expiring":
     case "valid":
       return { backgroundColor: customVariables.brandGray };
-    case "expiredNotExpirable":
-      return { backgroundColor: customVariables.calendarExpirableColor };
-    case "expiredAndExpirable":
+    case "expired":
       return { backgroundColor: customVariables.brandDarkGray };
   }
 };
-
-const isPaymentExpirable = (message: CreatedMessageWithContent): boolean =>
-  paymentExpirationInfo(message).fold(false, isExpirable);
 
 const isPaymentExpired = (message: CreatedMessageWithContent): boolean =>
   paymentExpirationInfo(message).fold(false, isExpired);
@@ -201,10 +177,8 @@ const calculatePaymentStatus = (
   payment: PaidReason | undefined,
   message: CreatedMessageWithContent
 ): PaymentStatus => {
-  if (isPaymentExpired(message) && isPaymentExpirable(message)) {
-    return "expiredAndExpirable";
-  } else if (isPaymentExpired(message) && !isPaymentExpirable(message)) {
-    return "expiredNotExpirable";
+  if (isPaymentExpired(message)) {
+    return "expired";
   } else if (isPaymentExpiring(message)) {
     return "expiring";
   } else if (paid(payment)) {
@@ -240,10 +214,7 @@ const MessageDueDateBar: React.FunctionComponent<Props> = ({
           <CalendarIcon status={paymentStatus} dueDate={dueDate} />
           <View hspacer={true} small={true} />
 
-          <Text
-            style={styles.text}
-            white={isPaymentStatusExpired(paymentStatus)}
-          >
+          <Text style={styles.text} white={paymentStatus === "expired"}>
             <TextContent
               status={paymentStatus}
               dueDate={dueDate}

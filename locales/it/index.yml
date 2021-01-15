@@ -1255,11 +1255,8 @@ messages:
       expiringOrValidAlert:
         block1: Puoi pagare questo avviso entro il
       expiredAlert:
-        expirable:
-          block1: L'avviso è scaduto alle ore
-          block2: del
-        unexpirable:
-          block: L'avviso è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad aggiornare l'importo.
+        block1: L'avviso di pagamento è scaduto alle
+        block2: del
     prescription:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
