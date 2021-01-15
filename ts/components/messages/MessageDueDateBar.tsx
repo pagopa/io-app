@@ -81,7 +81,7 @@ const ValidOrExpiringTextContent: React.FunctionComponent<{
 }> = ({ date }) => (
   <>
     {I18n.t("messages.cta.payment.expiringOrValidAlert.block1")}
-    <Text bold={true} white={true}>{` ${date} `}</Text>
+    <Text bold={true}>{` ${date} `}</Text>
   </>
 );
 
@@ -125,10 +125,10 @@ const getCalendarIconBackgoundColor = (status: PaymentStatus) => {
   switch (status) {
     case "paid":
       return customVariables.lighterGray;
-    case "expiring":
     case "expiredNotExpirable":
     case "expiredAndExpirable":
       return customVariables.colorWhite;
+    case "expiring":
     case "valid":
       return customVariables.brandDarkGray;
   }
@@ -137,9 +137,9 @@ const getCalendarIconBackgoundColor = (status: PaymentStatus) => {
 const getCalendarTextColor = (status: PaymentStatus) => {
   switch (status) {
     case "paid":
+    case "expiring":
     case "valid":
       return customVariables.colorWhite;
-    case "expiring":
     case "expiredNotExpirable":
       return customVariables.calendarExpirableColor;
     case "expiredAndExpirable":
@@ -147,8 +147,7 @@ const getCalendarTextColor = (status: PaymentStatus) => {
   }
 };
 
-const isExpiringOrExpired = (paymentStatus: PaymentStatus): boolean =>
-  paymentStatus === "expiring" ||
+const isPaymentStatusExpired = (paymentStatus: PaymentStatus): boolean =>
   paymentStatus === "expiredAndExpirable" ||
   paymentStatus === "expiredNotExpirable";
 
@@ -176,9 +175,9 @@ const CalendarIcon: React.FunctionComponent<{
 const bannerStyle = (status: PaymentStatus): ViewStyle => {
   switch (status) {
     case "paid":
+    case "expiring":
     case "valid":
       return { backgroundColor: customVariables.brandGray };
-    case "expiring":
     case "expiredNotExpirable":
       return { backgroundColor: customVariables.calendarExpirableColor };
     case "expiredAndExpirable":
@@ -241,7 +240,10 @@ const MessageDueDateBar: React.FunctionComponent<Props> = ({
           <CalendarIcon status={paymentStatus} dueDate={dueDate} />
           <View hspacer={true} small={true} />
 
-          <Text style={styles.text} white={isExpiringOrExpired(paymentStatus)}>
+          <Text
+            style={styles.text}
+            white={isPaymentStatusExpired(paymentStatus)}
+          >
             <TextContent
               status={paymentStatus}
               dueDate={dueDate}
