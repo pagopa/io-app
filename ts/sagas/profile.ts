@@ -226,8 +226,7 @@ function* startEmailValidationProcessSaga(
   }
 }
 
-// check if the current device languages matches that one saved in the profile
-// it sets the current app language from the profile one
+// check if the current device language matches the one saved in the profile
 function* checkPreferredLanguage(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ): Generator<Effect, any, Option<Locales>> {
