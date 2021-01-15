@@ -2,15 +2,12 @@
  * this state / reducer represents and handles all those data should be kept across multiple users sessions
  */
 import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
-import { getType } from "typesafe-actions";
+import { isActionOf } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { fromNullable } from "fp-ts/lib/Option";
 import sha from "sha.js";
 import { Action } from "../actions/types";
-import {
-  removeProfileHashedFiscalCode,
-  setProfileHashedFiscalCode
-} from "../actions/crossSessions";
+import { setProfileHashedFiscalCode } from "../actions/crossSessions";
 import { GlobalState } from "./types";
 
 type HashedFiscalCode = NonEmptyString | undefined;
@@ -29,17 +26,11 @@ const reducer = (
   state: CrossSessionsState = INITIAL_STATE,
   action: Action
 ): CrossSessionsState => {
-  switch (action.type) {
-    case getType(setProfileHashedFiscalCode):
-      return {
-        ...state,
-        hashedFiscalCode: hash(action.payload) as NonEmptyString
-      };
-    case getType(removeProfileHashedFiscalCode):
-      return {
-        ...state,
-        hashedFiscalCode: undefined
-      };
+  if (isActionOf(setProfileHashedFiscalCode, action)) {
+    return {
+      ...state,
+      hashedFiscalCode: hash(action.payload) as NonEmptyString
+    };
   }
   return state;
 };
