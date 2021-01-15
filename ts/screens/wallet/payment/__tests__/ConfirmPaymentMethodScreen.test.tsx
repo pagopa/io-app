@@ -1,24 +1,25 @@
+import { debug as cdebug } from "console";
 import React from "react";
-
 import { createStore, Store } from "redux";
-
 import { fireEvent } from "@testing-library/react-native";
+
 import ConfirmPaymentMethodScreen, {
   NavigationParams
 } from "../ConfirmPaymentMethodScreen";
 import {
-  getGlobalState,
   myRptId,
   myInitialAmount,
   myVerifiedData,
   myWallet,
-  myPsp
+  myPsp,
+  AuthSeq
 } from "../../../../utils/testFaker";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { appReducer } from "../../../../store/reducers/";
 import ROUTES from "../../../../navigation/routes";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { GlobalState } from "../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../utils/tests";
 
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
@@ -29,8 +30,7 @@ jest.unmock("react-navigation");
 describe("Integration Tests With Actual Store and Simplified Navigation", () => {
   afterAll(() => jest.resetAllMocks());
   beforeEach(() => jest.useFakeTimers());
-  const initState = getGlobalState();
-
+  const initState = reproduceSequence({} as GlobalState, appReducer, AuthSeq);
   const params: NavigationParams = {
     rptId: myRptId,
     initialAmount: myInitialAmount,
@@ -42,9 +42,12 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
 
   it("Should fire showModal by pressing the Why-A-Fee Touchable", async () => {
     // Store with the true appReducer
-    const myStore: Store<GlobalState> = createStore(appReducer, initState);
+    const myStore: Store<GlobalState> = createStore(
+      appReducer,
+      initState as any
+    );
 
-    // Spy on showModal. Need a Functional Component
+    // Spy on showModa
     const mySpy = jest.fn();
 
     const ToBeTested: React.FunctionComponent<React.ComponentProps<

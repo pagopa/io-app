@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect } from "react";
 import { Provider } from "react-redux";
-// import { Button } from "react-native";
 import { render, RenderOptions } from "@testing-library/react-native";
 import {
   createAppContainer,
