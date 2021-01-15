@@ -50,7 +50,8 @@ import {
   newProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
-import { isDifferentFiscalCode } from "../store/reducers/crossSessions";
+import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
+import { isTestEnv } from "../utils/environment";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -225,8 +226,9 @@ function* startEmailValidationProcessSaga(
   }
 }
 
-// make some checks about loaded profile
-function* checkLoadedProfile(
+// check if the current device languages matches that one saved in the profile
+// it sets the current app language from the profile one
+function* checkPreferredLanguage(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ): Generator<Effect, any, Option<Locales>> {
   // check if the preferred_languages is up to date
@@ -266,7 +268,7 @@ function* checkLoadedProfile(
 }
 
 // store the profile fiscal code as sha256 hashed string
-export function* handleLoadBonusBeforeRemoveAccount() {
+function* handleLoadBonusBeforeRemoveAccount() {
   const bpdActive: ReturnType<typeof bpdEnabledSelector> = yield select(
     bpdEnabledSelector
   );
@@ -295,7 +297,7 @@ export function* handleLoadBonusBeforeRemoveAccount() {
 }
 
 // watch for action of removing account
-export function* handleRemoveAccount() {
+function* handleRemoveAccount() {
   // dispatch an action to request account deletion
   yield put(
     upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
@@ -325,10 +327,9 @@ export function* handleRemoveAccount() {
 function* checkStoreHashedFiscalCode(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ) {
-  const checkIsDifferentFiscalCode: ReturnType<ReturnType<
-    typeof isDifferentFiscalCode
-  >> = yield select(
-    isDifferentFiscalCode(profileLoadSuccessAction.payload.fiscal_code)
+  const checkIsDifferentFiscalCode: boolean = yield select(
+    isDifferentFiscalCodeSelector,
+    profileLoadSuccessAction.payload.fiscal_code
   );
   // the current logged user has a different fiscal code from the stored hashed one
   if (checkIsDifferentFiscalCode) {
@@ -337,6 +338,16 @@ function* checkStoreHashedFiscalCode(
   yield put(
     setProfileHashedFiscalCode(profileLoadSuccessAction.payload.fiscal_code)
   );
+}
+
+// make some check after the profile is loaded successfully
+function* checkLoadedProfile(
+  profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
+) {
+  yield all([
+    call(checkPreferredLanguage, profileLoadSuccessAction),
+    call(checkStoreHashedFiscalCode, profileLoadSuccessAction)
+  ]);
 }
 
 // watch for some actions about profile
@@ -352,14 +363,7 @@ export function* watchProfile(
     startEmailValidationProcess
   );
   // check the loaded profile
-  yield takeLatest(getType(profileLoadSuccess), function* (
-    profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
-  ) {
-    yield all([
-      call(checkLoadedProfile, profileLoadSuccessAction),
-      call(checkStoreHashedFiscalCode, profileLoadSuccessAction)
-    ]);
-  });
+  yield takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
 
   // Start watching for request bonus before remove profile
   yield takeLatest(
@@ -369,3 +373,13 @@ export function* watchProfile(
   // Start watching for request of remove profile
   yield takeLatest(removeAccountMotivation, handleRemoveAccount);
 }
+
+export const profileSagaTestable = isTestEnv
+  ? {
+      startEmailValidationProcessSaga,
+      checkLoadedProfile,
+      handleLoadBonusBeforeRemoveAccount,
+      handleRemoveAccount,
+      checkStoreHashedFiscalCode
+    }
+  : undefined;

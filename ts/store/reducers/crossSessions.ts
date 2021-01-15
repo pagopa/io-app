@@ -44,13 +44,16 @@ export const hashedProfileFiscalCodeSelector = (
  * return true if the given fiscal code is different from the hashed stored one
  * if there is no stored hashed fiscal code it returns false (cant say if they are different)
  */
-export const isDifferentFiscalCode = (fiscalCode: FiscalCode) =>
+export const isDifferentFiscalCodeSelector = (
+  state: GlobalState,
+  fiscalCode: FiscalCode
+) =>
   createSelector(
     hashedProfileFiscalCodeSelector,
     (hashedProfile: HashedFiscalCode): boolean =>
       fromNullable(hashedProfile)
         .map(hp => hp !== hash(fiscalCode))
         .getOrElse(false)
-  );
+  )(state);
 
 export default reducer;

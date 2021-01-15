@@ -5,7 +5,7 @@ import { GlobalState } from "../types";
 import { setProfileHashedFiscalCode } from "../../actions/crossSessions";
 import {
   hashedProfileFiscalCodeSelector,
-  isDifferentFiscalCode
+  isDifferentFiscalCodeSelector
 } from "../crossSessions";
 
 jest.mock("@react-native-community/async-storage", () => ({
@@ -47,13 +47,16 @@ describe("cross sessions status reducer/selectors", () => {
       undefined,
       setProfileHashedFiscalCode(fiscalCode)
     );
-    expect(isDifferentFiscalCode(fiscalCode)(globalState)).toBeFalsy();
+    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode)).toBeFalsy();
     // empty state
     expect(
-      isDifferentFiscalCode(fiscalCode)({
-        ...globalState,
-        crossSessions: { hashedFiscalCode: undefined }
-      })
+      isDifferentFiscalCodeSelector(
+        {
+          ...globalState,
+          crossSessions: { hashedFiscalCode: undefined }
+        },
+        fiscalCode
+      )
     ).toBeFalsy();
   });
 });
