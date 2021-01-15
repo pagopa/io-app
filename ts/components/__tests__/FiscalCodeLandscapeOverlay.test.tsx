@@ -1,8 +1,10 @@
 import configureMockStore from "redux-mock-store";
-import { /* fireEvent, */ render } from "@testing-library/react-native";
+import { render, waitFor } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import * as React from "react";
+import { tryCatch } from "fp-ts/lib/TaskEither";
 
+// import { toBeInTheDocument } from "@testing-library/jest-native/extend-expect";
 import FiscalCodeLandscapeOverlay, {
   Props as FiscalCodeProps
 } from "../FiscalCodeLandscapeOverlay";
@@ -16,7 +18,7 @@ import { PreferredLanguageEnum } from ".../../../definitions/backend/PreferredLa
 
 jest.mock("react-native-share", () => jest.fn());
 
-describe("Test Fiscal Code Overly Lifetime methods", () => {
+describe("Test How Fiscal Code Overlay gets rendered on lifetime methods", () => {
   afterAll(() => jest.resetAllMocks());
 
   const myProps: FiscalCodeProps = {
@@ -46,10 +48,19 @@ describe("Test Fiscal Code Overly Lifetime methods", () => {
     showBackSide: false
   };
 
-  it("It should render", () => {
-    jest.useFakeTimers();
-    const getSpy = jest.spyOn(myBrightness, "getBrightness");
-    const setSpy = jest.spyOn(myBrightness, "setBrightness");
+  it("Should call getBrightness and setBrightness", async () => {
+    const getSpy = jest.spyOn(myBrightness, "getBrightness").mockReturnValue(
+      tryCatch(
+        () => new Promise(() => 0),
+        reason => new Error(String(reason))
+      )
+    );
+    const setSpy = jest.spyOn(myBrightness, "setBrightness").mockReturnValue(
+      tryCatch(
+        () => new Promise(() => 0),
+        reason => new Error(String(reason))
+      )
+    );
 
     const mockStoreFactory = configureMockStore<GlobalState>();
 
@@ -61,22 +72,24 @@ describe("Test Fiscal Code Overly Lifetime methods", () => {
     const myStore = mockStoreFactory({
       ...globalState,
       // While the component under test is disconnected from the store, some
-      // inner components import ConnectionBar which is ocnnected
+      // inner components import ConnectionBar which is connected
       network: { isConnected: true, actionQueue: [] }
     } as GlobalState);
 
-    render(
+    const component = render(
       <Provider store={myStore}>
         <FiscalCodeLandscapeOverlay {...myProps} />
       </Provider>
     );
 
-    // Device brightness is read only once when the component get rendered
-    // for the first time
-    expect(getSpy).toHaveBeenCalledTimes(1);
-    // Device brightness is set twice: once when the brightness is raised
-    // and once when the brightness is restored. Please note that the render method
-    // executes also the cleanup functions of the effects
-    expect(setSpy).toHaveBeenCalledTimes(2);
+    const myButton = component.queryByA11yLabel("Chiudi");
+
+    component.unmount();
+    await waitFor(() => expect(myButton).toBeNull(), { timeout: 10000 });
+
+    // Read the brightness
+    expect(getSpy).toHaveBeenCalled();
+    // Set high brightness
+    expect(setSpy).toHaveBeenCalled();
   });
 });

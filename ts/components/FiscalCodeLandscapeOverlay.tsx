@@ -55,61 +55,17 @@ const styles = StyleSheet.create({
 
 const HIGH_BRIGHTNESS = 1.0; // Target screen brightness for a very bright screen
 
-/*
-  // Set and unset brightness effect manager
-
-/*
-  // Add and remove EventListener effect manager
-  useEffect(() => {
-    // Using willFocus listener would be less responsive
-    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
-    const didBlurSubscription = navigation.addListener("didBlur", () =>
-      BackHandler.removeEventListener("hardwareBackPress", handleBackPress)
-    );
-
-    return () => {
-      didBlurSubscription.remove();
-      alert("BACK PRESS CLEANUP");
-    };
-  }, [navigation]);
-*/
-
 const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const [initialBrightness, storeInitialBrightness] = React.useState(0.0);
-
-  // Store the device brightness value before navigating to this screen
-  const getAndStoreDeviceBrightnessTask = getBrightness().fold(
-    () => alert("Failed to get Device Brightness"),
-    brightness => storeInitialBrightness(brightness)
-  );
-
-  const setHighDeviceBrightnessTask = setBrightness(HIGH_BRIGHTNESS).fold(
-    () => alert("Failed to set High Screen Brightness"),
-    () => undefined
-  );
-
-  const restoreDeviceBrightnessTask = setBrightness(initialBrightness).fold(
-    () => alert("Failed to restore screen brightness."),
-    () => undefined
-  );
-
-  const getAndStoreDeviceBrightness = async () =>
-    await getAndStoreDeviceBrightnessTask.run();
-
-  const restoreDeviceBrightness = async () =>
-    await restoreDeviceBrightnessTask.run();
-
-  const setHighDeviceBrightness = async () =>
-    await setHighDeviceBrightnessTask.run();
-
   // eslint-disable-next-line functional/no-let
   let scrollTimeout: number | undefined;
 
   const ScrollViewRef = React.createRef<ScrollView>();
 
   const handleBackPress = () => {
+    // On backpress the component gets unmounted, so the brightness is restored by the
+    // cleanup function
     props.onCancel();
     return true;
   };
@@ -139,12 +95,38 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
     };
   }, []);
 
+  // Brightness effect manager
   React.useEffect(() => {
-    void getAndStoreDeviceBrightness();
-    // Now we can restore brightness, let's rise it
-    void setHighDeviceBrightness();
+    const myBrightF = async () =>
+      await getBrightness()
+        .fold(
+          () => 0.5, // If fails, resort to a default value
+          _ => _
+        )
+        .run();
 
-    return void restoreDeviceBrightness();
+    const myBright = myBrightF();
+
+    const mySetBrightF = async () =>
+      await setBrightness(HIGH_BRIGHTNESS)
+        .fold(
+          () => alert("Can't set High Brightness"),
+          _ => _
+        )
+        .run();
+
+    void mySetBrightF();
+
+    return () => {
+      const restoreDeviceBrightnessF = async () =>
+        await setBrightness(await myBright)
+          .fold(
+            () => alert("Can't restore brightness"),
+            _ => _
+          )
+          .run();
+      void restoreDeviceBrightnessF();
+    };
   }, []);
 
   return (
