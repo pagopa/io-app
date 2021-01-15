@@ -22,7 +22,7 @@ const fiscalCode = "TAMMRA80A41H501Y" as FiscalCode;
 const hashedFiscalCode = hash(fiscalCode);
 
 describe("cross sessions status reducer/selectors", () => {
-  it("should be the hash value of fiscal code", () => {
+  it("should be the hashed value of the fiscal code", () => {
     const globalState: GlobalState = appReducer(
       undefined,
       setProfileHashedFiscalCode(fiscalCode)
@@ -32,7 +32,7 @@ describe("cross sessions status reducer/selectors", () => {
     );
   });
 
-  it("should be different from hash value of fiscal code", () => {
+  it("should be different from the hashed value of the fiscal code", () => {
     const globalState: GlobalState = appReducer(
       undefined,
       setProfileHashedFiscalCode("TAMMRA80A41H501X" as FiscalCode)

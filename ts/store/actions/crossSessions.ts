@@ -13,7 +13,7 @@ export const setProfileHashedFiscalCode = createStandardAction(
 )<FiscalCode>();
 
 /**
- * remove the profile hashed fiscal code
+ * inform that the current profile fiscal code is different from the previous one
  */
 export const newProfileLoggedIn = createStandardAction(
   "CROSS_SESSION_NEW_PROFILE_LOGGED_ID"
