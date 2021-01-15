@@ -48,9 +48,7 @@ import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import { getError, getNetworkError, isTimeoutError } from "../../utils/errors";
-import {
-  checkCurrentSession
-} from "../../store/actions/authentication";
+import { checkCurrentSession } from "../../store/actions/authentication";
 
 //
 // Payment Manager APIs
@@ -84,6 +82,10 @@ export function* getWalletsV2(
         yield put(fetchWalletsSuccess(wallets));
         return right<Error, ReadonlyArray<Wallet>>(wallets);
       } else {
+        // if we got unauthorized from PM, check if the current session app (with IO) is still valid
+        if (getResponse.value.status === 401) {
+          yield put(checkCurrentSession.request());
+        }
         throw Error(`response status ${getResponse.value.status}`);
       }
     } else {
