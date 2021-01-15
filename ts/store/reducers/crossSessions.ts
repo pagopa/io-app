@@ -49,11 +49,14 @@ export const hashedProfileFiscalCodeSelector = (
   state: GlobalState
 ): HashedFiscalCode => state.crossSessions.hashedFiscalCode;
 
-// return true if the given fiscal code is the same of the hashed stored one
-export const isSameFiscalCode = (fiscalCode: FiscalCode) =>
+/**
+ * return true if the given fiscal code is different from the hashed stored one
+ * if there is no stored hashed fiscal code it returns false (cant say if they are different)
+ */
+export const isDifferentFiscalCode = (fiscalCode: FiscalCode) =>
   createSelector(hashedProfileFiscalCodeSelector, hashedProfile =>
     fromNullable(hashedProfile)
-      .map(hp => hp === hash(fiscalCode))
+      .map(hp => hp !== hash(fiscalCode))
       .getOrElse(false)
   );
 
