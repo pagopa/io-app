@@ -17,7 +17,7 @@ I18n.translations = {
 
 export const translations = Object.keys(I18n.translations);
 
-export const availableTransations: ReadonlyArray<locales.Locales> = translations
+export const availableTranslations: ReadonlyArray<locales.Locales> = translations
   .map(k => k as locales.Locales)
   .sort();
 
