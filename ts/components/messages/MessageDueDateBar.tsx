@@ -96,7 +96,7 @@ const TextContent: React.FunctionComponent<{
   dueDate: Date;
   onPaidPress: () => void;
 }> = ({ status, dueDate, onPaidPress }) => {
-  const time = format(dueDate, "HH.mm");
+  const time = format(dueDate, "HH:mm");
   const date = formatDateAsLocal(dueDate, true, true);
   switch (status) {
     case "paid":
