@@ -1252,9 +1252,8 @@ messages:
       addMemo:
         block1: Aggiungi un promemoria per il
         block2: alle
-      expiringAlert:
-        block1: Questo avviso scade il giorno
-        block2: alle ore
+      expiringOrValidAlert:
+        block1: Puoi pagare questo avviso entro il
       expiredAlert:
         expirable:
           block1: L'avviso è scaduto alle ore

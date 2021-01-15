@@ -1224,9 +1224,8 @@ messages:
       addMemo: 
           block1: Add a reminder for the 
           block2: at
-      expiringAlert:
-        block1: This payment notice will expire on
-        block2: at
+      expiringOrValidAlert:
+        block1: You can pay this notice by
       expiredAlert:
         expirable:
           block1: The payment notice expired at 

@@ -76,15 +76,12 @@ const PaidTextContent: React.FunctionComponent<{
   </>
 );
 
-const ExpiringTextContent: React.FunctionComponent<{
-  time: string;
+const ValidOrExpiringTextContent: React.FunctionComponent<{
   date: string;
-}> = ({ time, date }) => (
+}> = ({ date }) => (
   <>
-    {I18n.t("messages.cta.payment.expiringAlert.block1")}
+    {I18n.t("messages.cta.payment.expiringOrValidAlert.block1")}
     <Text bold={true} white={true}>{` ${date} `}</Text>
-    {I18n.t("messages.cta.payment.expiringAlert.block2")}
-    <Text bold={true} white={true}>{` ${time} `}</Text>
   </>
 );
 
@@ -97,20 +94,6 @@ const ExpiredAndExpirableTextContent: React.FunctionComponent<{
     <Text bold={true} white={true}>{` ${time} `}</Text>
     {I18n.t("messages.cta.payment.expiredAlert.expirable.block2")}
     <Text bold={true} white={true}>{` ${date}`}</Text>
-  </>
-);
-
-const ValidTextContent: React.FunctionComponent<{
-  time: string;
-  date: string;
-}> = ({ time, date }) => (
-  <>
-    {I18n.t("messages.cta.payment.addMemo.block1")}
-    <Text bold={true}>{` ${date} `}</Text>
-    {"["}
-    {I18n.t("messages.cta.payment.addMemo.block2")}
-    <Text bold={true}>{` ${time}`}</Text>
-    {"]"}
   </>
 );
 
@@ -128,14 +111,13 @@ const TextContent: React.FunctionComponent<{
   switch (status) {
     case "paid":
       return <PaidTextContent onPress={onPaidPress} />;
-    case "expiring":
-      return <ExpiringTextContent time={time} date={date} />;
     case "expiredNotExpirable":
       return <ExpiredNotExpirableTextContent />;
     case "expiredAndExpirable":
       return <ExpiredAndExpirableTextContent time={time} date={date} />;
     case "valid":
-      return <ValidTextContent time={time} date={date} />;
+    case "expiring":
+      return <ValidOrExpiringTextContent date={date} />;
   }
 };
 
