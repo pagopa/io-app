@@ -47,8 +47,7 @@ import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
-import { getError, getNetworkError, isTimeoutError } from "../../utils/errors";
-import { checkCurrentSession } from "../../store/actions/authentication";
+import { getError } from "../../utils/errors";
 
 //
 // Payment Manager APIs
@@ -88,13 +87,6 @@ export function* getWalletsV2(
       throw Error(readablePrivacyReport(getResponse.value));
     }
   } catch (error) {
-    // this is required to handle 401 response from PM
-    // On 401 response sessionManager retries for X attempts to get a valid session
-    // If it exceeds a fixed threshold of attempts a max retries error will be dispatched
-    if (isTimeoutError(getNetworkError(error))) {
-      // check if also the IO session is expired
-      yield put(checkCurrentSession.request());
-    }
     yield put(fetchWalletsFailure(error));
     return left<Error, ReadonlyArray<Wallet>>(error);
   }
