@@ -82,16 +82,19 @@ export function* getWalletsV2(
         yield put(fetchWalletsSuccess(wallets));
         return right<Error, ReadonlyArray<Wallet>>(wallets);
       } else {
-        // if we got unauthorized from PM, check if the current session app (with IO) is still valid
-        if (getResponse.value.status === 401) {
-          yield put(checkCurrentSession.request());
-        }
         throw Error(`response status ${getResponse.value.status}`);
       }
     } else {
       throw Error(readablePrivacyReport(getResponse.value));
     }
   } catch (error) {
+    // this is required to handle 401 response from PM
+    // On 401 response sessionManager retries for X attempts to get a valid session
+    // If it exceeds a fixed threshold of attempts a max retries error will be dispatched
+    if (isTimeoutError(getNetworkError(error))) {
+      // check if also the IO session is expired
+      yield put(checkCurrentSession.request());
+    }
     yield put(fetchWalletsFailure(error));
     return left<Error, ReadonlyArray<Wallet>>(error);
   }
@@ -673,9 +676,9 @@ export function* paymentAttivaRequestHandler(
         paymentActivationsPostRequest: {
           rptId: RptIdFromString.encode(action.payload.rptId),
           codiceContestoPagamento:
-            action.payload.verifica.codiceContestoPagamento,
+          action.payload.verifica.codiceContestoPagamento,
           importoSingoloVersamento:
-            action.payload.verifica.importoSingoloVersamento
+          action.payload.verifica.importoSingoloVersamento
         },
         test: isPagoPATestEnabled
       }
