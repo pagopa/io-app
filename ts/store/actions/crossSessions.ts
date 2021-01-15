@@ -15,10 +15,10 @@ export const setProfileHashedFiscalCode = createStandardAction(
 /**
  * remove the profile hashed fiscal code
  */
-export const removeProfileHashedFiscalCode = createStandardAction(
-  "CROSS_SESSION_REMOVE_HASHED_CF"
+export const newProfileLoggedIn = createStandardAction(
+  "CROSS_SESSION_NEW_PROFILE_LOGGED_ID"
 )<void>();
 
 export type CrossSessionsActions =
   | ActionType<typeof setProfileHashedFiscalCode>
-  | ActionType<typeof removeProfileHashedFiscalCode>;
+  | ActionType<typeof newProfileLoggedIn>;

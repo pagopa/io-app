@@ -54,10 +54,12 @@ export const hashedProfileFiscalCodeSelector = (
  * if there is no stored hashed fiscal code it returns false (cant say if they are different)
  */
 export const isDifferentFiscalCode = (fiscalCode: FiscalCode) =>
-  createSelector(hashedProfileFiscalCodeSelector, hashedProfile =>
-    fromNullable(hashedProfile)
-      .map(hp => hp !== hash(fiscalCode))
-      .getOrElse(false)
+  createSelector(
+    hashedProfileFiscalCodeSelector,
+    (hashedProfile: HashedFiscalCode): boolean =>
+      fromNullable(hashedProfile)
+        .map(hp => hp !== hash(fiscalCode))
+        .getOrElse(false)
   );
 
 export default reducer;

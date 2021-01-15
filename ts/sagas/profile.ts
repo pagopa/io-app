@@ -46,7 +46,11 @@ import {
   fromPreferredLanguageToLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
-import { setProfileHashedFiscalCode } from "../store/actions/crossSessions";
+import {
+  newProfileLoggedIn,
+  setProfileHashedFiscalCode
+} from "../store/actions/crossSessions";
+import { isDifferentFiscalCode } from "../store/reducers/crossSessions";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -313,9 +317,23 @@ export function* handleRemoveAccount() {
   }
 }
 
-function* storeHashedFiscalCode(
+/**
+ * - check if the current logged profile is the same of the previous store one
+ * - store the hashed fiscal code of the loaded profile
+ * @param profileLoadSuccessAction
+ */
+function* checkStoreHashedFiscalCode(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ) {
+  const checkIsDifferentFiscalCode: ReturnType<ReturnType<
+    typeof isDifferentFiscalCode
+  >> = yield select(
+    isDifferentFiscalCode(profileLoadSuccessAction.payload.fiscal_code)
+  );
+  // the current logged user has a different fiscal code from the stored hashed one
+  if (checkIsDifferentFiscalCode) {
+    yield put(newProfileLoggedIn());
+  }
   yield put(
     setProfileHashedFiscalCode(profileLoadSuccessAction.payload.fiscal_code)
   );
@@ -339,7 +357,7 @@ export function* watchProfile(
   ) {
     yield all([
       call(checkLoadedProfile, profileLoadSuccessAction),
-      call(storeHashedFiscalCode, profileLoadSuccessAction)
+      call(checkStoreHashedFiscalCode, profileLoadSuccessAction)
     ]);
   });
 
