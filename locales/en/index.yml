@@ -1238,6 +1238,7 @@ messages:
     pay: Pay € {{amount}}
     onlyPay: Pay
     paid: Paid
+    seeNotice: See Notice
     reminder: Reminder
     reminderShort: Memo
     reminderCalendarSelect: In which calendar you want to add the reminder?

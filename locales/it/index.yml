@@ -1267,6 +1267,7 @@ messages:
     pay: Paga € {{amount}}
     onlyPay: Paga
     paid: Pagato
+    seeNotice: Vedi Avviso
     reminder: Promemoria
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
