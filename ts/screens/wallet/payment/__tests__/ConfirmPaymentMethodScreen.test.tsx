@@ -1,4 +1,3 @@
-import { debug as cdebug } from "console";
 import React from "react";
 import { createStore, Store } from "redux";
 import { fireEvent } from "@testing-library/react-native";
