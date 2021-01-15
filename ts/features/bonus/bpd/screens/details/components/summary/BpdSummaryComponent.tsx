@@ -1,38 +1,66 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { StyleSheet } from "react-native";
 import { profileNameSelector } from "../../../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { BpdAmount } from "../../../../store/actions/amount";
 import { BpdPeriod } from "../../../../store/actions/periods";
-import { bpdAmountForSelectedPeriod } from "../../../../store/reducers/details/amounts";
+import { BpdPeriodWithInfo } from "../../../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
-import { TextualSummary } from "./TextualSummary";
-import { TransactionsGraphicalSummary } from "./TransactionsGraphicalSummary";
+import SuperCashbackRankingSummary from "./ranking/SuperCashbackRankingSummary";
+import { TextualSummary } from "./textualSummary/TextualSummary";
+import TransactionsGraphicalSummary from "./TransactionsGraphicalSummary";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 type SummaryData = {
-  period: BpdPeriod;
-  amount: BpdAmount;
+  period: BpdPeriodWithInfo;
   name: string | undefined;
 };
 
+const styles = StyleSheet.create({
+  row: {
+    flex: 1,
+    flexDirection: "row"
+  }
+});
+
+/**
+ * The graphical summary is visible only when the period is closed or when the period is Active
+ * and transactionNumber > 0
+ * @param period
+ */
+const isGraphicalSummaryVisible = (period: BpdPeriodWithInfo) =>
+  period.status === "Closed" ||
+  (period.status === "Active" && period.amount.transactionNumber > 0);
+
+/**
+ * Return true if the SuperCashback is visible for the specified period
+ * @param period
+ */
+const isSuperCashbackVisible = (period: BpdPeriod) => period.minPosition > 0;
+
 const Content = (sd: SummaryData) => (
   <View testID={"bpdSummaryComponent"}>
-    {sd.period.status === "Inactive" ? null : (
-      <TransactionsGraphicalSummary
-        transactions={sd.amount.transactionNumber}
-        minTransactions={sd.period.minTransactionNumber}
-        period={sd.period}
-      />
-    )}
+    {isGraphicalSummaryVisible(sd.period) ? (
+      <View style={styles.row}>
+        <TransactionsGraphicalSummary
+          transactions={sd.period.amount.transactionNumber}
+          minTransactions={sd.period.minTransactionNumber}
+          period={sd.period}
+        />
+        {isSuperCashbackVisible(sd.period) ? (
+          <>
+            <View hspacer={true} />
+            <SuperCashbackRankingSummary period={sd.period} />
+          </>
+        ) : null}
+      </View>
+    ) : null}
     <View spacer={true} />
-    <TextualSummary {...sd} />
+    <TextualSummary period={sd.period} name={sd.name} />
   </View>
 );
 
@@ -42,29 +70,18 @@ const Content = (sd: SummaryData) => (
  * @constructor
  */
 const BpdSummaryComponent: React.FunctionComponent<Props> = props =>
-  fromNullable(props.currentPeriod)
-    .map(period =>
-      pot.fold(
-        props.amount,
-        () => null,
-        () => null,
-        _ => null,
-        _ => null,
-        amount => <Content amount={amount} period={period} name={props.name} />,
-        amount => <Content amount={amount} period={period} name={props.name} />,
-        (amount, _) => (
-          <Content amount={amount} period={period} name={props.name} />
-        ),
-        _ => null
-      )
-    )
-    .getOrElse(null);
+  props.currentPeriod ? (
+    <Content
+      key={props.currentPeriod.awardPeriodId}
+      period={props.currentPeriod}
+      name={props.name}
+    />
+  ) : null;
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
   currentPeriod: bpdSelectedPeriodSelector(state),
-  amount: bpdAmountForSelectedPeriod(state),
   name: profileNameSelector(state)
 });
 

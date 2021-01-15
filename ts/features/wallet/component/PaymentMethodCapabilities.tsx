@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import IconFont from "../../../components/ui/IconFont";
 import { bpdEnabled } from "../../../config";
 import I18n from "../../../i18n";
@@ -14,6 +15,7 @@ import {
   PaymentMethod
 } from "../../../types/pagopa";
 import BpdPaymentMethodCapability from "../../bonus/bpd/components/BpdPaymentMethodCapability";
+import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 
 type OwnProps = { paymentMethod: PaymentMethod };
 
@@ -28,7 +30,8 @@ const styles = StyleSheet.create({
 
 const capabilityFactory = (
   paymentMethod: PaymentMethod,
-  capability: EnableableFunctionsTypeEnum
+  capability: EnableableFunctionsTypeEnum,
+  index: number
 ) => {
   switch (capability) {
     case EnableableFunctionsTypeEnum.FA:
@@ -36,16 +39,19 @@ const capabilityFactory = (
       return null;
     case EnableableFunctionsTypeEnum.BPD:
       return bpdEnabled ? (
-        <BpdPaymentMethodCapability paymentMethod={paymentMethod} />
+        <BpdPaymentMethodCapability
+          paymentMethod={paymentMethod}
+          key={`capability_item_${index}`}
+        />
       ) : null;
   }
 };
 
 const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
-  paymentMethod.enableableFunctions.reduce((acc, val): ReadonlyArray<
+  paymentMethod.enableableFunctions.reduce((acc, val, i): ReadonlyArray<
     React.ReactNode
   > => {
-    const handlerForCapability = capabilityFactory(paymentMethod, val);
+    const handlerForCapability = capabilityFactory(paymentMethod, val, i);
     return handlerForCapability === null ? acc : [...acc, handlerForCapability];
   }, [] as ReadonlyArray<React.ReactNode>);
 
@@ -56,10 +62,6 @@ const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
  */
 const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
   const capabilityItems = generateCapabilityItems(props.paymentMethod);
-  // The capability section is not rendered if there is not at least one capacity
-  if (capabilityItems.length === 0) {
-    return null;
-  }
 
   return (
     <>
@@ -75,6 +77,14 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
       </View>
       <View spacer={true} />
       {capabilityItems.map(c => c)}
+      {capabilityItems.length > 0 && (
+        <>
+          <View spacer={true} />
+          <ItemSeparatorComponent noPadded={true} />
+        </>
+      )}
+      <View spacer={true} />
+      <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     </>
   );
 };

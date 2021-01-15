@@ -1,12 +1,13 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import { BottomSheetContent } from "../../../../../../components/bottomSheet/BottomSheetContent";
+import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { Body } from "../../../../../../components/core/typography/Body";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
-import { bottomSheetRawConfig } from "../../../../../../utils/bottomSheet";
+import { useIOBottomSheetRaw } from "../../../../../../utils/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -62,6 +63,19 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
         <PaymentMethodRepresentationComponent {...props.representation} />
         <View spacer={true} />
         <Markdown>{body}</Markdown>
+        {props.type === "Activation" && (
+          <>
+            <View spacer={true} large={true} />
+            <InfoBox>
+              <Body>
+                {I18n.t(
+                  "bonus.bpd.details.paymentMethods.activate.disclaimer",
+                  { activate: I18n.t("global.buttons.activate") }
+                )}
+              </Body>
+            </InfoBox>
+          </>
+        )}
       </View>
     </BottomSheetContent>
   );
@@ -70,10 +84,10 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
 export const useChangeActivationConfirmationBottomSheet = (
   representation: PaymentMethodRepresentation
 ) => {
-  const { present, dismiss } = useBottomSheetModal();
+  const { present, dismiss } = useIOBottomSheetRaw(466);
 
-  const openModalBox = (newVal: boolean, onConfirm: () => void) => {
-    const bottomSheetProps = bottomSheetRawConfig(
+  const openModalBox = (newVal: boolean, onConfirm: () => void) =>
+    present(
       <BpdChangeActivationConfirmationScreen
         onCancel={dismiss}
         onConfirm={() => {
@@ -88,13 +102,8 @@ export const useChangeActivationConfirmationBottomSheet = (
       />,
       newVal
         ? I18n.t("bonus.bpd.details.paymentMethods.activate.title")
-        : I18n.t("bonus.bpd.details.paymentMethods.deactivate.title"),
-      466,
-      dismiss
+        : I18n.t("bonus.bpd.details.paymentMethods.deactivate.title")
     );
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
+
   return { present: openModalBox, dismiss };
 };

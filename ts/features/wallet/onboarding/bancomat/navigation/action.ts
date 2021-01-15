@@ -1,7 +1,12 @@
 import { NavigationActions } from "react-navigation";
 import { InferNavigationParams } from "../../../../../types/react";
-import { ActivateBpdOnNewCreditCardScreen } from "../screens/bpd/ActivateBpdOnNewCreditCardScreen";
+import { ActivateBpdOnNewCreditCardScreen } from "../../common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";
+
+export const navigateToOnboardingBancomatSearchStartScreen = () =>
+  NavigationActions.navigate({
+    routeName: WALLET_ONBOARDING_BANCOMAT_ROUTES.BANCOMAT_START
+  });
 
 export const navigateToOnboardingBancomatChooseBank = () =>
   NavigationActions.navigate({

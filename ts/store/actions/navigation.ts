@@ -26,7 +26,11 @@ import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDeta
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
-import { BancomatPaymentMethod } from "../../types/pagopa";
+import {
+  BancomatPaymentMethod,
+  BPayPaymentMethod,
+  SatispayPaymentMethod
+} from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
@@ -157,6 +161,11 @@ export const navigateToRemoveAccountSuccess = () =>
     routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
   });
 
+export const navigateToRemoveAccountDetailScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
+  });
+
 export const navigateToPrivacyScreen = NavigationActions.navigate({
   routeName: ROUTES.PROFILE_PRIVACY_MAIN,
   action: NavigationActions.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
@@ -221,6 +230,20 @@ export const navigateToBancomatDetailScreen = (
     params: { bancomat }
   });
 
+export const navigateToSatispayDetailScreen = (
+  satispay: SatispayPaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_SATISPAY_DETAIL,
+    params: { satispay }
+  });
+
+export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_BPAY_DETAIL,
+    params: { bPay }
+  });
+
 export const navigateToPaymentPickPspScreen = (
   params: InferNavigationParams<typeof PickPspScreen>
 ) =>
@@ -272,6 +295,11 @@ export const navigateToWalletAddPaymentMethod = (
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_ADD_PAYMENT_METHOD,
     params
+  });
+
+export const navigateToWalletAddDigitalPaymentMethod = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD
   });
 
 export const navigateToWalletAddCreditCard = (

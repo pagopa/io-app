@@ -1,15 +1,19 @@
 import { createStackNavigator } from "react-navigation";
-import SuggestBpdActivationScreen from "../screens/bpd/SuggestBpdActivationScreen";
-import SearchBankScreen from "../screens/search/SearchBankScreen";
+import SuggestBpdActivationScreen from "../../common/screens/bpd/SuggestBpdActivationScreen";
+import BancomatSearchStartScreen from "../screens/search/BancomatSearchStartScreen";
 import SearchAvailableUserBancomatScreen from "../screens/searchBancomat/SearchAvailableUserBancomatScreen";
-import { ActivateBpdOnNewCreditCardScreen } from "../screens/bpd/ActivateBpdOnNewCreditCardScreen";
-import ActivateBpdOnNewBancomatScreen from "../screens/bpd/ActivateBpdOnNewBancomatScreen";
+import { ActivateBpdOnNewCreditCardScreen } from "../../common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
+import ActivateBpdOnNewBancomatScreen from "../screens/ActivateBpdOnNewBancomatScreen";
+import BancomatSearchBankScreen from "../screens/search/BancomatSearchBankScreen";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "./routes";
 
 const PaymentMethodOnboardingBancomatNavigator = createStackNavigator(
   {
+    [WALLET_ONBOARDING_BANCOMAT_ROUTES.BANCOMAT_START]: {
+      screen: BancomatSearchStartScreen
+    },
     [WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK]: {
-      screen: SearchBankScreen
+      screen: BancomatSearchBankScreen
     },
     [WALLET_ONBOARDING_BANCOMAT_ROUTES.SEARCH_AVAILABLE_USER_BANCOMAT]: {
       screen: SearchAvailableUserBancomatScreen

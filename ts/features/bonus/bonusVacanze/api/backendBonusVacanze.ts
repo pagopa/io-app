@@ -1,6 +1,4 @@
 import {
-  ApiHeaderJson,
-  composeHeaderProducers,
   createFetchRequestForApi,
   RequestHeaderProducer,
   RequestHeaders
@@ -9,14 +7,8 @@ import { Omit } from "italia-ts-commons/lib/types";
 import {
   getAllBonusActivationsDefaultDecoder,
   GetAllBonusActivationsT,
-  getBonusEligibilityCheckDefaultDecoder,
-  GetBonusEligibilityCheckT,
   getLatestBonusActivationByIdDefaultDecoder,
-  GetLatestBonusActivationByIdT,
-  startBonusActivationProcedureDefaultDecoder,
-  StartBonusActivationProcedureT,
-  startBonusEligibilityCheckDefaultDecoder,
-  StartBonusEligibilityCheckT
+  GetLatestBonusActivationByIdT
 } from "../../../../../definitions/bonus_vacanze/requestTypes";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
@@ -36,32 +28,6 @@ const getLatestBonusFromIdT: GetLatestBonusActivationByIdT = {
   query: _ => ({}),
   headers: tokenHeaderProducer,
   response_decoder: getLatestBonusActivationByIdDefaultDecoder()
-};
-
-const startBonusActivationProcedure: StartBonusActivationProcedureT = {
-  method: "post",
-  url: () => `/api/v1/bonus/vacanze/activations`,
-  query: _ => ({}),
-  body: _ => "",
-  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: startBonusActivationProcedureDefaultDecoder()
-};
-
-const startBonusEligibilityCheckT: StartBonusEligibilityCheckT = {
-  method: "post",
-  url: () => `/api/v1/bonus/vacanze/eligibility`,
-  query: _ => ({}),
-  body: _ => "",
-  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: startBonusEligibilityCheckDefaultDecoder()
-};
-
-const getBonusEligibilityCheckT: GetBonusEligibilityCheckT = {
-  method: "get",
-  url: () => `/api/v1/bonus/vacanze/eligibility`,
-  query: _ => ({}),
-  headers: tokenHeaderProducer,
-  response_decoder: getBonusEligibilityCheckDefaultDecoder()
 };
 
 function ParamAuthorizationBearerHeaderProducer<
@@ -95,17 +61,8 @@ export function BackendBonusVacanze(
   };
 
   return {
-    startBonusEligibilityCheck: withBearerToken(
-      createFetchRequestForApi(startBonusEligibilityCheckT, options)
-    ),
-    getBonusEligibilityCheck: withBearerToken(
-      createFetchRequestForApi(getBonusEligibilityCheckT, options)
-    ),
     getLatestBonusVacanzeFromId: withBearerToken(
       createFetchRequestForApi(getLatestBonusFromIdT, options)
-    ),
-    startBonusActivationProcedure: withBearerToken(
-      createFetchRequestForApi(startBonusActivationProcedure, options)
     ),
     getAllBonusActivations: withBearerToken(
       createFetchRequestForApi(getAllBonusActivations, options)

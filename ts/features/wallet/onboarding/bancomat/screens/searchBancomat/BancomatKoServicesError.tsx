@@ -1,6 +1,5 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../img/servicesStatus/error-detail-icon.png";
@@ -10,15 +9,18 @@ import { InfoScreenComponent } from "../../../../../../components/infoScreen/Inf
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
+import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { navigateToOnboardingBancomatChooseBank } from "../../navigation/action";
 import { walletAddBancomatCancel } from "../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.bancomat.headerTitle"),
@@ -37,7 +39,11 @@ const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body, cta } = loadLocales();
 
   return (
-    <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={headerTitle}
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
@@ -47,7 +53,10 @@ const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(props.cancel)}
-          rightButton={confirmButtonProps(props.back, cta)}
+          rightButton={confirmButtonProps(
+            props.navigateToBancomatChooseBankScreen,
+            cta
+          )}
         />
       </SafeAreaView>
     </BaseScreenComponent>
@@ -56,7 +65,10 @@ const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
-  back: () => dispatch(NavigationActions.back())
+  navigateToBancomatChooseBankScreen: () => {
+    dispatch(navigateToOnboardingBancomatChooseBank());
+    dispatch(navigationHistoryPop());
+  }
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

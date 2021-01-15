@@ -161,7 +161,6 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               wallet={wallet}
               hideMenu={true}
               hideFavoriteIcon={true}
-              showPsp={true}
             />
             <View spacer={true} />
             {wallet.psp === undefined ? (

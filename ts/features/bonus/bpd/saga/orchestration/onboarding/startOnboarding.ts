@@ -1,4 +1,5 @@
 import { Either, right } from "fp-ts/lib/Either";
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import {
@@ -12,12 +13,11 @@ import {
 } from "redux-saga/effects";
 import { CitizenResource } from "../../../../../../../definitions/bpd/citizen/CitizenResource";
 import ROUTES from "../../../../../../navigation/routes";
-import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
+import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getAsyncResult } from "../../../../../../utils/saga";
-import { isReady } from "../../../model/RemoteValue";
 import {
   navigateToBpdOnboardingDeclaration,
   navigateToBpdOnboardingInformationTos,
@@ -53,7 +53,7 @@ export function* isBpdEnabled(): Generator<
   const remoteActive: ReturnType<typeof bpdEnabledSelector> = yield select(
     bpdEnabledSelector
   );
-  if (isReady(remoteActive)) {
+  if (pot.isSome(remoteActive)) {
     return right<Error, boolean>(remoteActive.value);
   } else {
     const activationStatus: SagaCallReturnType<typeof getActivationStatus> = yield call(
@@ -83,24 +83,20 @@ export function* bpdStartOnboardingWorker() {
   );
 
   if (isBpdActive.isRight()) {
-    if (isBpdActive.value) {
-      // The bpd is already active, go directly to the bpd details screen
-      // TODO: navigate to bpd details
-      yield put(navigateToWalletHome());
-      yield put(navigationHistoryPop(1));
-    } else {
-      // The bpd is not active, continue with the onboarding
-      yield put(navigateToBpdOnboardingInformationTos());
-      yield put(navigationHistoryPop(1));
+    // Refresh the wallets to prevent that added cards are not visible
+    yield put(fetchWalletsRequest());
 
-      // wait for the user that choose to continue
-      yield take(bpdUserActivate);
+    yield put(navigateToBpdOnboardingInformationTos());
+    yield put(navigationHistoryPop(1));
 
-      // Navigate to the Onboarding Declaration and wait for the action that complete the saga
-      yield put(navigateToBpdOnboardingDeclaration());
-      yield put(navigationHistoryPop(1));
-    }
+    // wait for the user that choose to continue
+    yield take(bpdUserActivate);
+
+    // Navigate to the Onboarding Declaration and wait for the action that complete the saga
+    yield put(navigateToBpdOnboardingDeclaration());
+    yield put(navigationHistoryPop(1));
   }
+
   // The saga ends when the user accepts the declaration
   yield take(bpdOnboardingAcceptDeclaration);
 }

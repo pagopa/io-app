@@ -21,7 +21,8 @@ import I18n from "../../i18n";
 import {
   navigateBack,
   navigateToPaymentTransactionSummaryScreen,
-  navigateToWalletAddCreditCard
+  navigateToWalletAddCreditCard,
+  navigateToWalletAddDigitalPaymentMethod
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 
@@ -49,29 +50,39 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
     name: I18n.t("wallet.methods.card.name"),
     description: I18n.t("wallet.methods.card.description"),
     onPress: props.navigateToAddCreditCard,
-    implemented: true
-  },
-  {
-    name: I18n.t("wallet.methods.pagobancomat.name"),
-    description: I18n.t("wallet.methods.pagobancomat.description"),
-    onPress: props.startAddBancomat,
-    implemented: bpdEnabled && props.navigation.getParam("inPayment").isNone()
+    status: "implemented",
+    section: "credit_card"
   },
   {
     name: I18n.t("wallet.methods.postepay.name"),
     description: I18n.t("wallet.methods.postepay.description"),
     onPress: props.navigateToAddCreditCard,
-    implemented: true
+    status: "implemented",
+    section: "credit_card"
+  },
+  {
+    name: I18n.t("wallet.methods.pagobancomat.name"),
+    description: I18n.t("wallet.methods.pagobancomat.description"),
+    onPress: props.startAddBancomat,
+    status:
+      bpdEnabled && props.navigation.getParam("inPayment").isNone()
+        ? "implemented"
+        : "notImplemented",
+    section: "bancomat"
   },
   {
     name: I18n.t("wallet.methods.digital.name"),
     description: I18n.t("wallet.methods.digital.description"),
-    implemented: false
+    onPress: props.navigateToWalletAddDigitalPaymentMethod,
+    status: props.navigation.getParam("inPayment").isNone()
+      ? "implemented"
+      : "notImplemented",
+    section: "digital_payments"
   },
   {
     name: I18n.t("wallet.methods.bonus.name"),
     description: I18n.t("wallet.methods.bonus.description"),
-    implemented: false
+    status: "notImplemented"
   }
 ];
 
@@ -152,6 +163,8 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateBack: () => dispatch(navigateBack()),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
+  navigateToWalletAddDigitalPaymentMethod: () =>
+    dispatch(navigateToWalletAddDigitalPaymentMethod()),
   navigateToTransactionSummary: () => {
     const maybeInPayment = props.navigation.getParam("inPayment");
     maybeInPayment.map(inPayment =>

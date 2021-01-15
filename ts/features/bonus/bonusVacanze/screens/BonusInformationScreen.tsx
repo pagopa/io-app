@@ -8,8 +8,6 @@ import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 import BonusInformationComponent from "../../common/components/BonusInformationComponent";
-import { actionWithAlert } from "../components/alert/ActionWithAlert";
-import { checkBonusVacanzeEligibility } from "../store/actions/bonusVacanze";
 import { ownedActiveOrRedeemedBonus } from "../store/reducers/allActive";
 
 type NavigationParams = Readonly<{
@@ -34,22 +32,11 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   const getBonusItem = () => props.navigation.getParam("bonusItem");
   const bonusType = getBonusItem();
 
-  // if the current profile owns other active bonus, show an alert informing about that
-  const handleBonusRequestOnPress = () =>
-    props.hasOwnedActiveBonus
-      ? actionWithAlert({
-          title: I18n.t("bonus.bonusInformation.requestAlert.title"),
-          body: I18n.t("bonus.bonusInformation.requestAlert.content"),
-          confirmText: I18n.t("bonus.bonusVacanze.abort.cancel"),
-          cancelText: I18n.t("bonus.bonusVacanze.abort.confirm"),
-          onConfirmAction: props.requestBonusActivation
-        })
-      : props.requestBonusActivation();
   return (
     <BonusInformationComponent
+      primaryCtaText={I18n.t("bonus.bonusVacanze.cta.requestBonus")}
       bonus={bonusType}
       onCancel={props.navigateBack}
-      onConfirm={handleBonusRequestOnPress}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["bonus_information"]}
     />
@@ -61,9 +48,6 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  requestBonusActivation: () => {
-    dispatch(checkBonusVacanzeEligibility.request());
-  },
   navigateBack: () => dispatch(navigateBack())
 });
 

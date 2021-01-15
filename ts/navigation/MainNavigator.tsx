@@ -20,9 +20,6 @@ import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
 import WalletTabIcon from "../components/WalletTabIcon";
-import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
-import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
-import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -72,35 +69,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const NoTabBarRoutes: ReadonlyArray<string> = [
-  ROUTES.WALLET_ADD_PAYMENT_METHOD,
-  ROUTES.PAYMENT_SCAN_QR_CODE,
-  ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
-  ROUTES.WALLET_ADD_CARD,
-  ROUTES.WALLET_CONFIRM_CARD_DETAILS,
-  ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-  ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
-  ROUTES.PAYMENT_PICK_PSP,
-  ROUTES.PAYMENT_PICK_PAYMENT_METHOD,
-  ROUTES.PAYMENT_TRANSACTION_ERROR,
-  ROUTES.PAYMENT_TRANSACTION_SUCCESS,
-  ROUTES.READ_EMAIL_SCREEN,
-  ROUTES.INSERT_EMAIL_SCREEN,
-  ROUTES.PAYMENTS_HISTORY_SCREEN,
-  ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
-  ROUTES.WALLET_TRANSACTION_DETAILS,
-  ROUTES.WALLET_BANCOMAT_DETAIL,
-  ROUTES.PROFILE_PRIVACY_MAIN,
-  ROUTES.PROFILE_REMOVE_ACCOUNT_INFO,
-  ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS,
-  ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS,
-  BONUSVACANZE_ROUTES.MAIN,
-  BPD_ROUTES.MAIN,
-  WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN,
-  ROUTES.MARKDOWN_PLAYGROUND,
-  ROUTES.WEB_PLAYGROUND,
-  ROUTES.SHOWROOM,
-  ROUTES.SERVICE_WEBVIEW
+const TabFirstLevelRoutes: Array<string> = [
+  ROUTES.WALLET_HOME,
+  ROUTES.MESSAGES_HOME,
+  ROUTES.SERVICES_HOME,
+  ROUTES.PROFILE_MAIN
 ];
 
 const getTabBarVisibility = (
@@ -110,10 +83,7 @@ const getTabBarVisibility = (
 
   const { routeName } = state.routes[state.index];
 
-  if (NoTabBarRoutes.indexOf(routeName) !== -1) {
-    return false;
-  }
-  return true;
+  return TabFirstLevelRoutes.indexOf(routeName) !== -1;
 };
 
 /**

@@ -11,11 +11,15 @@ import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import { ModalBaseProps, Platform } from "react-native";
+import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
   openInstabugQuestionReport,
-  openInstabugReplies
+  openInstabugReplies,
+  DefaultReportAttachmentTypeConfiguration,
+  setInstabugSupportTokenAttribute,
+  TypeLogs,
+  instabugLog
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -28,6 +32,9 @@ import {
   deriveCustomHandledLink,
   isIoInternalLink
 } from "../ui/Markdown/handlers/link";
+import { SupportTokenState } from "../../store/reducers/authentication";
+import { getValueOrElse } from "../../features/bonus/bpd/model/RemoteValue";
+import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { AccessibilityEvents, BaseHeader } from "./BaseHeader";
 
 export interface ContextualHelpProps {
@@ -47,9 +54,11 @@ interface OwnProps {
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
+  headerBackgroundColor?: ColorValue;
   appLogo?: boolean;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
+  reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
 }
 
 type Props = OwnProps &
@@ -59,6 +68,7 @@ type Props = OwnProps &
 interface State {
   isHelpVisible: boolean;
   requestReport: Option<BugReporting.reportType>;
+  supportToken?: SupportTokenState;
   markdownContentLoaded: Option<boolean>;
   contextualHelpModalAnimation: ModalBaseProps["animationType"];
 }
@@ -84,11 +94,14 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     };
   }
 
-  private handleOnRequestAssistance = (type: BugReporting.reportType) => {
+  private handleOnRequestAssistance = (
+    type: BugReporting.reportType,
+    supportToken: SupportTokenState
+  ) => {
     // don't close modal if the report isn't a bug (bug brings a screenshot)
     if (type !== BugReporting.reportType.bug) {
       this.setState(
-        { requestReport: some(type) },
+        { requestReport: some(type), supportToken },
         this.handleOnContextualHelpDismissed
       );
       return;
@@ -101,7 +114,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     });
     this.setState({ contextualHelpModalAnimation }, () => {
       this.setState({ isHelpVisible: false }, () => {
-        this.setState({ requestReport: some(type) }, () => {
+        this.setState({ requestReport: some(type), supportToken }, () => {
           // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
           // we force handling here. The timeout is due to wait until the modal is completely hidden
           // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
@@ -120,9 +133,29 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     const maybeReport = this.state.requestReport;
     this.setState({ requestReport: none }, () => {
       maybeReport.map(type => {
+        const supportToken = fromNullable(this.state.supportToken)
+          .mapNullable<SupportToken | undefined>(rsp =>
+            getValueOrElse(rsp, undefined)
+          )
+          .getOrElse(undefined);
+
+        // Store/remove and log the support token only if is a new assistance request.
+        if (type === BugReporting.reportType.bug) {
+          // log on instabug the support token
+          if (supportToken) {
+            instabugLog(
+              JSON.stringify(supportToken),
+              TypeLogs.INFO,
+              "support-token"
+            );
+          }
+          // set or remove the support token as instabug user attribute
+          setInstabugSupportTokenAttribute(supportToken);
+        }
+
         switch (type) {
           case BugReporting.reportType.bug:
-            openInstabugQuestionReport();
+            openInstabugQuestionReport(this.props.reportAttachmentTypes);
             break;
           case BugReporting.reportType.question:
             openInstabugReplies();
@@ -179,6 +212,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       goBack,
       headerBody,
       headerTitle,
+      headerBackgroundColor,
       primary,
       isSearchAvailable,
       searchType,
@@ -227,6 +261,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           dark={dark}
           goBack={goBack}
           headerTitle={headerTitle}
+          backgroundColor={headerBackgroundColor}
           onShowHelp={
             contextualHelp || contextualHelpMarkdown ? this.showHelp : undefined
           }

@@ -10,6 +10,8 @@ import {
 import { onboardingBancomatAbiSelectedSelector } from "../../store/reducers/abiSelected";
 import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import AddBancomatScreen from "../add-pans/AddBancomatScreen";
+import { isTimeoutError } from "../../../../../../utils/errors";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import BancomatKoNotFound from "./BancomatKoNotFound";
 import BancomatKoSingleBankNotFound from "./BancomatKoSingleBankNotFound";
 import BancomatKoTimeout from "./BancomatKoTimeout";
@@ -39,31 +41,33 @@ const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props 
 
   // The user choose a specific bank to search and no results are found
   if (props.abiSelected && noBancomatFound) {
-    return <BancomatKoSingleBankNotFound />;
+    return (
+      <BancomatKoSingleBankNotFound contextualHelp={emptyContextualHelp} />
+    );
   }
   if (noBancomatFound) {
     // check if all services respond without error (success or not found)
     if (
       isReady(pans) &&
       pans.value.messages.every(
-        m => m.code && servicesSuccessCodes.includes(m.code)
+        m => m.code !== undefined && servicesSuccessCodes.includes(m.code)
       )
     ) {
       // The user doesn't have a bancomat
-      return <BancomatKoNotFound />;
+      return <BancomatKoNotFound contextualHelp={emptyContextualHelp} />;
     }
     // One of the ca returned with error, the user could have a bancomat
     // and he should try to search for a single bank
-    return <BancomatKoServicesError />;
+    return <BancomatKoServicesError contextualHelp={emptyContextualHelp} />;
   }
-  if (isError(pans) && pans.error.kind === "timeout") {
-    return <BancomatKoTimeout />;
+  if (isError(pans) && isTimeoutError(pans.error)) {
+    return <BancomatKoTimeout contextualHelp={emptyContextualHelp} />;
   }
   if (isLoading(pans) || isError(pans)) {
     return <LoadBancomatSearch />;
   }
   // success! The user can now optionally add found bancomat to the wallet
-  return <AddBancomatScreen />;
+  return <AddBancomatScreen contextualHelp={emptyContextualHelp} />;
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({});

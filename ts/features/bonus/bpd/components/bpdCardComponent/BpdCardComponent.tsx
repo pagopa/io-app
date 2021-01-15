@@ -1,19 +1,12 @@
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
-import {
-  Image,
-  ImageBackground,
-  Platform,
-  StyleProp,
-  StyleSheet,
-  ViewStyle
-} from "react-native";
+import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
-import { format } from "../../../../../utils/dates";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { BpdAmount } from "../../store/actions/amount";
+import { BpdAmount } from "../../saga/networking/amount";
 import { BpdPeriod, BpdPeriodStatus } from "../../store/actions/periods";
 import { H4 } from "../../../../../components/core/typography/H4";
 import I18n from "../../../../../i18n";
@@ -23,6 +16,7 @@ import bpdCardBgPreview from "../../../../../../img/bonus/bpd/bonus_preview_bg.p
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import { localeDateFormat } from "../../../../../utils/locale";
 
 type Props = {
   period: BpdPeriod;
@@ -45,7 +39,8 @@ const styles = StyleSheet.create({
   paddedContentFull: {
     paddingLeft: 16,
     paddingTop: 24,
-    paddingRight: 20
+    paddingRight: 20,
+    paddingBottom: 16
   },
   paddedContentPreview: {
     paddingLeft: 18,
@@ -75,6 +70,7 @@ const styles = StyleSheet.create({
   },
   badgeBase: {
     alignSelf: "flex-end",
+    backgroundColor: IOColors.white,
     height: 18,
     marginTop: 9
   },
@@ -85,7 +81,7 @@ const styles = StyleSheet.create({
   },
   imageFull: {
     resizeMode: "stretch",
-    height: 192
+    height: "100%"
   },
   imagePreview: {
     resizeMode: "stretch",
@@ -136,26 +132,49 @@ const styles = StyleSheet.create({
 });
 
 type BadgeDefinition = {
-  style: StyleProp<ViewStyle>;
   label: string;
 };
+
+type IconType = "io-locker-closed" | "io-locker-open" | "io-fireworks";
 
 type GraphicalState = {
   amount: ReadonlyArray<string>;
   isInGracePeriod: boolean;
-  showLock: boolean;
+  iconName: IconType;
   statusBadge: BadgeDefinition;
 };
 
 const initialGraphicalState: GraphicalState = {
   amount: ["0", "00"],
   isInGracePeriod: false,
-  showLock: false,
+  iconName: "io-locker-closed",
   statusBadge: {
-    style: {
-      backgroundColor: IOColors.white
-    },
     label: "-"
+  }
+};
+
+/**
+ * Closed lock must be shown if period is Inactive or the transactionNumber didn't reach the minimum target
+ * Open lock must be shown if period is Closed or Active and the transactionNumber reach the minimum target
+ * Fireworks must be shown if period is Closed or Active and the totalCashback reach the maxAmount
+ *
+ * @param period
+ * @param totalAmount
+ */
+const iconHandler = (period: BpdPeriod, totalAmount: BpdAmount): IconType => {
+  const reachMinTransaction =
+    totalAmount.transactionNumber >= period.minTransactionNumber;
+  const reachMaxAmount = totalAmount.totalCashback >= period.maxPeriodCashback;
+  switch (period.status) {
+    case "Active":
+    case "Closed":
+      return reachMinTransaction && reachMaxAmount
+        ? "io-fireworks"
+        : reachMinTransaction
+        ? "io-locker-open"
+        : "io-locker-closed";
+    default:
+      return "io-locker-closed";
   }
 };
 
@@ -172,7 +191,6 @@ const statusClosedHandler = (props: Props): GraphicalState => {
 
   return {
     ...initialGraphicalState,
-    showLock: totalAmount.transactionNumber < period.minTransactionNumber,
     amount:
       totalAmount.transactionNumber < period.minTransactionNumber &&
       !isInGracePeriod
@@ -181,50 +199,34 @@ const statusClosedHandler = (props: Props): GraphicalState => {
             I18n.t("global.localization.decimalSeparator")
           ),
     isInGracePeriod,
+    iconName: iconHandler(props.period, props.totalAmount),
     // TODO: Add supercashback business logic
     statusBadge: isInGracePeriod
       ? {
-          style: {
-            backgroundColor: IOColors.white
-          },
           label: I18n.t("profile.preferences.list.wip")
         }
       : {
-          style: {
-            backgroundColor: IOColors.black
-          },
           label: I18n.t("bonus.bpd.details.card.status.closed")
         }
   };
 };
 
-const statusActiveHandler = (props: Props): GraphicalState => {
-  const { period, totalAmount } = props;
-
-  return {
-    ...initialGraphicalState,
-    statusBadge: {
-      style: {
-        backgroundColor: IOColors.white
-      },
-      label: I18n.t("bonus.bpd.details.card.status.active")
-    },
-    showLock: totalAmount.transactionNumber < period.minTransactionNumber,
-    amount: formatNumberAmount(props.totalAmount.totalCashback).split(
-      I18n.t("global.localization.decimalSeparator")
-    )
-  };
-};
+const statusActiveHandler = (props: Props): GraphicalState => ({
+  ...initialGraphicalState,
+  statusBadge: {
+    label: I18n.t("bonus.bpd.details.card.status.active")
+  },
+  amount: formatNumberAmount(props.totalAmount.totalCashback).split(
+    I18n.t("global.localization.decimalSeparator")
+  ),
+  iconName: iconHandler(props.period, props.totalAmount)
+});
 
 const statusInactiveHandler = (props: Props): GraphicalState => ({
   ...initialGraphicalState,
   statusBadge: {
-    style: {
-      backgroundColor: IOColors.aqua
-    },
     label: I18n.t("bonus.bpd.details.card.status.inactive")
   },
-  showLock: true,
   amount: formatNumberAmount(props.totalAmount.totalCashback).split(
     I18n.t("global.localization.decimalSeparator")
   )
@@ -243,8 +245,6 @@ const statusHandlersMap = new Map<
  * if the period is Closed we must check if minimum number of transactions has been reached
  * Unless we'll show a Zero amount value
  *
- * Lock must be shown only if period is Inactive or the transactionNumber didn't reach the minimum target
- *
  * GracePeriod: check if we are in the grace period to show an alert instead of the value
  * grace period is given adding the gracePeriod value of days to period.endDate
  */
@@ -259,47 +259,59 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
   const {
     amount,
     isInGracePeriod,
-    showLock,
+    iconName,
     statusBadge
   } = calculateGraphicalState(props);
 
-  const isPeriodClosed = props.period.status === "Closed";
+  const isPeriodClosed = props.period.status === "Closed" && !isInGracePeriod;
+  const isPeriodInactive = props.period.status === "Inactive";
 
   const FullCard = () => (
-    <View style={[styles.row, styles.spaced]}>
+    <View
+      style={[
+        styles.row,
+        styles.spaced,
+        styles.paddedContentFull,
+        { height: "100%" }
+      ]}
+    >
       <View style={[styles.column, styles.flex2, styles.spaced]}>
-        <H2 weight={"Bold"} color={"white"}>
-          {I18n.t("bonus.bpd.title")}
-        </H2>
-        <H4 color={"white"} weight={"Regular"}>
-          {format(props.period.startDate, "DD MMM YYYY")} -{" "}
-          {format(props.period.endDate, "DD MMM YYYY")}
-        </H4>
-        <View spacer={true} large />
-        <View style={[styles.row, { alignItems: "center" }]}>
-          <Text bold={true} white={true} style={[styles.amountTextBaseFull]}>
-            {"€ "}
-            <Text white={true} style={styles.amountTextUpperFull}>
-              {`${amount[0]}${I18n.t("global.localization.decimalSeparator")}`}
-            </Text>
-            {amount[1]}
-          </Text>
-          <View hspacer={true} small={true} />
-          {showLock && (
-            <IconFont name="io-lucchetto" size={22} color={IOColors.white} />
-          )}
+        <View>
+          <H2 weight={"Bold"} color={"white"}>
+            {I18n.t("bonus.bpd.title")}
+          </H2>
+          <H4 color={"white"} weight={"Regular"}>
+            {`${localeDateFormat(
+              props.period.startDate,
+              I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
+            )} - ${localeDateFormat(
+              props.period.endDate,
+              I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
+            )}`}
+          </H4>
         </View>
-        <H5 color={"white"} weight={"Regular"}>
-          {I18n.t("bonus.bpd.earned")}
-        </H5>
+        <View>
+          <View style={[styles.row, { alignItems: "center" }]}>
+            <Text bold={true} white={true} style={[styles.amountTextBaseFull]}>
+              {"€ "}
+              <Text white={true} style={styles.amountTextUpperFull}>
+                {`${amount[0]}${I18n.t(
+                  "global.localization.decimalSeparator"
+                )}`}
+              </Text>
+              {amount[1]}
+            </Text>
+            <View hspacer={true} small={true} />
+            <IconFont name={iconName} size={16} color={IOColors.white} />
+          </View>
+          <H5 color={"white"} weight={"Regular"}>
+            {I18n.t("bonus.bpd.earned")}
+          </H5>
+        </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
-        <Badge style={[statusBadge.style, styles.badgeBase]}>
-          <Text
-            semibold={true}
-            style={styles.badgeTextBase}
-            dark={!isPeriodClosed}
-          >
+        <Badge style={[styles.badgeBase]}>
+          <Text semibold={true} style={styles.badgeTextBase} dark={true}>
             {statusBadge.label}
           </Text>
         </Badge>
@@ -310,36 +322,33 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
 
   const PreviewCard = () => (
     <TouchableDefaultOpacity
-      style={[styles.row, styles.spaced]}
+      style={[styles.row, styles.spaced, styles.paddedContentPreview]}
       onPress={props.onPress}
     >
-      <View style={styles.column}>
-        <View style={[styles.row, styles.alignItemsCenter]}>
+      <View style={[styles.column, { width: widthPercentageToDP("60%") }]}>
+        <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>
           <H5
             color={"white"}
             weight={"Regular"}
             style={{ textTransform: "capitalize" }}
           >
-            {format(props.period.startDate, "MMMM")} -{" "}
-            {format(props.period.endDate, "MMMM YYYY")}
+            {`${localeDateFormat(
+              props.period.startDate,
+              I18n.t("global.dateFormats.dayFullMonth")
+            )} - ${localeDateFormat(
+              props.period.endDate,
+              I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+            )}`}
           </H5>
           <View hspacer={true} small={true} />
           {isPeriodClosed && (
             <IconFont name="io-tick-big" size={20} color={IOColors.white} />
           )}
         </View>
-        <View
-          style={[
-            styles.row,
-            styles.spaced,
-            styles.alignItemsCenter,
-            styles.justifyContentCenter
-          ]}
-        >
+        <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>
           <H2 weight={"Bold"} color={"white"}>
             {I18n.t("bonus.bpd.name")}
           </H2>
-          <View hspacer={true} extralarge={true} />
           <View
             style={[
               styles.row,
@@ -347,21 +356,19 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               styles.justifyContentCenter
             ]}
           >
-            {showLock && (
-              <IconFont name="io-lucchetto" size={16} color={IOColors.white} />
-            )}
+            <IconFont name={iconName} size={16} color={IOColors.white} />
             <View hspacer={true} small={true} />
-            {isInGracePeriod ? (
+            {isInGracePeriod || isPeriodInactive ? (
               <Badge style={styles.badgePreview}>
                 <Text semibold={true} style={styles.badgeTextBase} dark={true}>
-                  {I18n.t("profile.preferences.list.wip")}
+                  {statusBadge.label}
                 </Text>
               </Badge>
             ) : (
               <Text
                 bold={true}
                 white={true}
-                style={styles.amountTextBasePreview}
+                style={[styles.amountTextBasePreview, { textAlign: "right" }]}
               >
                 {"€ "}
                 <Text white={true} style={styles.amountTextUpperPreview}>
@@ -387,15 +394,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         style={[props.preview ? styles.preview : styles.container]}
         imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
       >
-        <View
-          style={
-            props.preview
-              ? styles.paddedContentPreview
-              : styles.paddedContentFull
-          }
-        >
-          {props.preview ? <PreviewCard /> : <FullCard />}
-        </View>
+        {props.preview ? <PreviewCard /> : <FullCard />}
       </ImageBackground>
       {Platform.OS === "android" && !props.preview && (
         <View style={styles.bottomShadowBox} />

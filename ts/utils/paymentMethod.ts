@@ -1,8 +1,9 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import { ImageSourcePropType } from "react-native";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import bPayImage from "../../img/wallet/cards-icons/bPay.png";
-import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
 import satispayImage from "../../img/wallet/cards-icons/satispay.png";
+import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
 import {
   cardIcons,
   getCardIconFromBrandLogo
@@ -11,15 +12,24 @@ import I18n from "../i18n";
 import { IndexedById } from "../store/helpers/indexer";
 import {
   BancomatPaymentMethod,
+  BPayPaymentMethod,
   isRawBancomat,
   isRawBPay,
   isRawCreditCard,
   isRawSatispay,
   PaymentMethod,
   RawBancomatPaymentMethod,
+  RawBPayPaymentMethod,
   RawCreditCardPaymentMethod,
-  RawPaymentMethod
+  RawPaymentMethod,
+  RawSatispayPaymentMethod,
+  SatispayPaymentMethod
 } from "../types/pagopa";
+import { contentRepoUrl } from "../config";
+import {
+  Card,
+  ValidityStateEnum
+} from "../../definitions/pagopa/walletv2/Card";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
 
 export const getPaymentMethodHash = (
@@ -43,11 +53,16 @@ export const getPaymentMethodHash = (
 export const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
   `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
 
+export const getBancomatAbiIconUrl = (abi: string) =>
+  `${contentRepoUrl}/logos/abi/${abi}.png`;
+
 /**
  * Choose an image to represent a {@link RawPaymentMethod}
  * @param paymentMethod
  */
-export const getImageFromPaymentMethod = (paymentMethod: RawPaymentMethod) => {
+export const getImageFromPaymentMethod = (
+  paymentMethod: RawPaymentMethod
+): ImageSourcePropType => {
   if (isRawCreditCard(paymentMethod)) {
     return getCardIconFromBrandLogo(paymentMethod.info);
   }
@@ -72,6 +87,8 @@ export const getTitleFromBancomat = (
     .chain(abi => fromNullable(abi.name))
     .getOrElse(I18n.t("wallet.methods.bancomat.name"));
 
+export const getTitleForSatispay = () => I18n.t("wallet.methods.satispay.name");
+
 /**
  * Choose a textual representation for a {@link PatchedWalletV2}
  * @param paymentMethod
@@ -88,13 +105,16 @@ export const getTitleFromPaymentMethod = (
     return getTitleFromBancomat(paymentMethod, abiList);
   }
   if (isRawSatispay(paymentMethod)) {
-    return I18n.t("wallet.methods.satispay.name");
+    return getTitleForSatispay();
   }
   if (isRawBPay(paymentMethod)) {
     return (
-      paymentMethod.info.numberObfuscated?.replace(/\*/g, "●") ??
+      fromNullable(paymentMethod.info.instituteCode)
+        .chain(abiCode => fromNullable(abiList[abiCode]))
+        .chain(abi => fromNullable(abi.name))
+        .toUndefined() ??
       paymentMethod.info.bankName ??
-      FOUR_UNICODE_CIRCLES
+      I18n.t("wallet.methods.bancomatPay.name")
     );
   }
   return FOUR_UNICODE_CIRCLES;
@@ -112,6 +132,30 @@ export const enhanceBancomat = (
   icon: getImageFromPaymentMethod(bancomat)
 });
 
+export const enhanceSatispay = (
+  raw: RawSatispayPaymentMethod
+): SatispayPaymentMethod => ({
+  ...raw,
+  caption: getTitleForSatispay(),
+  icon: getImageFromPaymentMethod(raw)
+});
+
+export const enhanceBPay = (
+  rawBPay: RawBPayPaymentMethod,
+  abiList: IndexedById<Abi>
+): BPayPaymentMethod => ({
+  ...rawBPay,
+  info: {
+    ...rawBPay.info,
+    numberObfuscated: rawBPay.info.numberObfuscated?.replace(/\*/g, "●")
+  },
+  abiInfo: rawBPay.info.instituteCode
+    ? abiList[rawBPay.info.instituteCode]
+    : undefined,
+  caption: getTitleFromPaymentMethod(rawBPay, abiList),
+  icon: getImageFromPaymentMethod(rawBPay)
+});
+
 export const enhancePaymentMethod = (
   pm: RawPaymentMethod,
   abiList: IndexedById<Abi>
@@ -120,8 +164,9 @@ export const enhancePaymentMethod = (
     // bancomat need a special handling, we need to include the abi
     case "Bancomat":
       return enhanceBancomat(pm, abiList);
-    case "CreditCard":
     case "BPay":
+      return enhanceBPay(pm, abiList);
+    case "CreditCard":
     case "Satispay":
       return {
         ...pm,
@@ -130,3 +175,6 @@ export const enhancePaymentMethod = (
       };
   }
 };
+
+export const isBancomatBlocked = (pan: Card) =>
+  pan.validityState === ValidityStateEnum.BR;
