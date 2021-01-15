@@ -2,8 +2,10 @@ import { getType } from "typesafe-actions";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { NetworkError } from "../../../../../../utils/errors";
 import {
   isError,
+  isReady,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -11,7 +13,6 @@ import {
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { searchUserBPay } from "../actions";
-import { NetworkError } from "../../../../../../utils/errors";
 
 export type RemoteBPay = RemoteValue<ReadonlyArray<BPay>, NetworkError>;
 
@@ -30,10 +31,27 @@ const foundBpayReducer = (
   return state;
 };
 
+/**
+ * Return {@link RemoteBPay}, a list of BPay accounts to be viewed by the user.
+ * Remove from the list the disabled accounts
+ * @param state
+ */
 export const onboardingBPayFoundAccountsSelector = (
   state: GlobalState
-): RemoteBPay => state.wallet.onboarding.bPay.foundBPay;
+): RemoteBPay =>
+  isReady(state.wallet.onboarding.bPay.foundBPay)
+    ? remoteReady(
+        state.wallet.onboarding.bPay.foundBPay.value.filter(
+          // Remove from the found accounts the disabled (serviceState === "DIS")
+          bPay => bPay.serviceState !== "DIS"
+        )
+      )
+    : state.wallet.onboarding.bPay.foundBPay;
 
+/**
+ * The search BPay account APi have an error
+ * @param state
+ */
 export const onboardingBpayFoundAccountsIsError = (
   state: GlobalState
 ): boolean => isError(state.wallet.onboarding.bPay.foundBPay);
