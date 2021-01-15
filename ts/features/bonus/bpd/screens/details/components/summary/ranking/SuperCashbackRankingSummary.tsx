@@ -151,7 +151,7 @@ const SuperCashbackRankingSummary = (props: Props): React.ReactElement =>
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  rankingRemoteEnabled: configSelector("bpd_ranking")(state)
+  rankingRemoteEnabled: configSelector("bpd_ranking_v2")(state)
 });
 
 export default connect(
