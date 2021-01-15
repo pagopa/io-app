@@ -725,8 +725,8 @@ payment:
         copy: copy
         help: Contact support
       title: Payment Detail
-      enteCreditore: Creditor
-      causaleVersamento: Causal
+      enteCreditore: Payee institution
+      causaleVersamento: Payment description
       dateAndTime: Date and time
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
@@ -981,12 +981,11 @@ wallet:
     object: Reason
     date: Date and Time
     iuv: IUV code
-    entityCode: Creditor Entity Fiscal Code
+    entityCode: Institution Fiscal Code
     fee: Fee
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
-    updateInfo: 'The pagoPa system updates automatically the amount to ensure you
-      pay the exact amount and to avoid you arrears or additional interests '
+    updateInfo: 'pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests'
     loadingMessage:
       activation: I'm alerting the entity, wait a few seconds..
       verification: I am checking the status and the amount of your notice..
