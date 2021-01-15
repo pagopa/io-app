@@ -1,26 +1,25 @@
+import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
-import { View } from "native-base";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
-import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { H3 } from "../../../../../components/core/typography/H3";
-import I18n from "../../../../../i18n";
-import Markdown from "../../../../../components/ui/Markdown";
+import { H4 } from "../../../../../components/core/typography/H4";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
+import Markdown from "../../../../../components/ui/Markdown";
+import I18n from "../../../../../i18n";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
+import { localeDateFormat } from "../../../../../utils/locale";
+import { formatNumberWithNoDigits } from "../../../../../utils/stringBuilder";
 import {
   BpdPeriodWithInfo,
   isBpdRankingReady
 } from "../../store/reducers/details/periods";
-import { localeDateFormat } from "../../../../../utils/locale";
-import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
-import { formatNumberWithNoDigits } from "../../../../../utils/stringBuilder";
-import { H4 } from "../../../../../components/core/typography/H4";
+import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import { isInGracePeriod } from "../../utils/dates";
-import { FirstPositionItem } from "./FirstPositionItem";
 import { LastPositionItem } from "./LastPositionItem";
-import UserPositionItem from "./UserPositionItem";
 import SuperCashbackHeader from "./SuperCashbackHeader";
+import UserPositionItem from "./UserPositionItem";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
@@ -30,14 +29,6 @@ const RankingItems: React.FunctionComponent<Props> = (props: Props) => {
       number,
       React.ReactNode
     >([
-      [
-        1,
-        <FirstPositionItem
-          key={"item-1"}
-          superCashbackAmount={props.selectedPeriod.superCashbackAmount}
-          transactionsNumber={props.selectedPeriod.ranking.maxTransactionNumber}
-        />
-      ],
       [
         props.selectedPeriod.minPosition,
         <LastPositionItem
@@ -137,4 +128,4 @@ const SuperCashbackRanking = connect(mapStateToProps)(SuperCashbackBottomSheet);
 export default SuperCashbackRanking;
 
 export const useSuperCashbackRankingBottomSheet = () =>
-  useIOBottomSheet(<SuperCashbackRanking />, <SuperCashbackHeader />, 520);
+  useIOBottomSheet(<SuperCashbackRanking />, <SuperCashbackHeader />, 470);
