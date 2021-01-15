@@ -106,7 +106,7 @@ export function* bpdStartOnboardingWorker() {
  */
 export function* handleBpdStartOnboardingSaga(): SagaIterator {
   const { cancelAction } = yield race({
-    onboarding: call(bpdStartOnboardingWorker),
+    activation: call(bpdStartOnboardingWorker),
     cancelAction: take(bpdOnboardingCancel)
   });
   if (cancelAction) {

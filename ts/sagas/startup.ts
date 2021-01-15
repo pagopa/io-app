@@ -24,6 +24,7 @@ import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
   bpdEnabled,
+  cgnEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
@@ -61,6 +62,7 @@ import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import I18n from "../i18n";
+import { watchBonusCgnSaga } from "../features/bonus/cgn/store/sagas";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -311,6 +313,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (bpdEnabled) {
     // Start watching for actions about bonus bpd
     yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
+  }
+
+  if (cgnEnabled) {
+    // Start watching for actions about bonus bpd
+    yield fork(watchBonusCgnSaga);
   }
 
   // Load the user metadata

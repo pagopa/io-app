@@ -7,13 +7,28 @@ import { BonusesAvailable } from "../../../../../../definitions/content/BonusesA
 import { clearCache } from "../../../../../store/actions/profile";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { availableBonuses } from "../../data/availableBonuses";
-import { ID_BONUS_VACANZE_TYPE } from "../../utils/bonus";
+import {
+  ID_BONUS_VACANZE_TYPE,
+  ID_BPD_TYPE,
+  ID_CGN_TYPE
+} from "../../utils/bonus";
 import { loadAvailableBonuses } from "../actions/bonusVacanze";
+import {
+  bonusVacanzeEnabled,
+  bpdEnabled,
+  cgnEnabled
+} from "../../../../../config";
+import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
 
 export type AvailableBonusTypesState = pot.Pot<BonusesAvailable, Error>;
 
 const INITIAL_STATE: AvailableBonusTypesState = pot.none;
+
+const mapBonusIdFeatureFlag = new Map<number, boolean>([
+  [ID_BONUS_VACANZE_TYPE, bonusVacanzeEnabled],
+  [ID_BPD_TYPE, bpdEnabled],
+  [ID_CGN_TYPE, cgnEnabled]
+]);
 
 const reducer = (
   state: AvailableBonusTypesState = INITIAL_STATE,
@@ -26,11 +41,7 @@ const reducer = (
     case getType(loadAvailableBonuses.success):
       return pot.some(action.payload);
     case getType(loadAvailableBonuses.failure):
-      // if there are some errors and no data into the store -> return hardcoded fallback data
-      return pot.toError(
-        pot.isNone(state) ? pot.some(availableBonuses) : state,
-        action.payload
-      );
+      return pot.toError(state, action.payload);
     case getType(clearCache):
       return INITIAL_STATE;
   }
@@ -41,6 +52,34 @@ const reducer = (
 export const availableBonusTypesSelector = (
   state: GlobalState
 ): AvailableBonusTypesState => state.bonus.availableBonusTypes;
+
+/**
+ * return the bonuses that can be showed based on the 'visibility' bonus attribute.
+ * if 'hidden' or unavailable bonus is hidden
+ * if 'visible' bonus item is shown
+ * if 'experimental' it visibility would depend on the related Feature Flag.
+ * @param idBonusType
+ */
+export const visibleAvailableBonusSelector = createSelector(
+  availableBonusTypesSelector,
+  (availableBonusesState: AvailableBonusTypesState): BonusesAvailable =>
+    pot.getOrElse(
+      pot.map(availableBonusesState, bonuses =>
+        bonuses.filter(b => {
+          const isExperimentalEnabled =
+            fromNullable(mapBonusIdFeatureFlag.get(b.id_type)).getOrElse(
+              false
+            ) && b.visibility === BonusVisibilityEnum.experimental;
+
+          return (
+            isExperimentalEnabled ||
+            b.visibility === BonusVisibilityEnum.visible
+          );
+        })
+      ),
+      []
+    )
+);
 
 /**
  * return the bonus type corresponding to the given idBonusType

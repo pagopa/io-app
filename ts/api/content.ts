@@ -13,7 +13,7 @@ import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ServicesByScope } from "../../definitions/content/ServicesByScope";
-import { bpdEnabled, contentRepoUrl } from "../config";
+import { contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
@@ -93,10 +93,7 @@ type GetBonusListT = IGetApiRequestType<
 
 const getAvailableBonusesT: GetBonusListT = {
   method: "get",
-  url: () =>
-    bpdEnabled
-      ? "/bonus/bonus_available_v2.json"
-      : "/bonus/bonus_available_v1.json",
+  url: () => "/bonus/bonus_available_v2.json",
   query: _ => ({}),
   headers: () => ({}),
   response_decoder: basicResponseDecoder(BonusesAvailable)
