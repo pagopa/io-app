@@ -22,7 +22,7 @@ const CgnInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
     <>
       {props.bonus ? (
         <BonusInformationComponent
-          primaryCtaText={I18n.t("bonus.bpd.cta.activeBonus")}
+          primaryCtaText={I18n.t("bonus.cgn.cta.activeBonus")}
           bonus={props.bonus}
           onConfirm={onConfirm}
           onCancel={props.onCancel}

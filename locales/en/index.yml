@@ -2088,6 +2088,9 @@ bonus:
             active: "**The ranking changes every day.** The final one will be displayed on {{endDate}}."
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
+  cgn:
+    cta:
+      activeBonus: Attiva la tua Carta Giovani
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
