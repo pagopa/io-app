@@ -92,10 +92,6 @@ export function* getWalletsV2(
       throw Error(readablePrivacyReport(getResponse.value));
     }
   } catch (error) {
-    if (isTimeoutError(getNetworkError(error))) {
-      yield put(checkCurrentSession.request());
-    }
-
     yield put(fetchWalletsFailure(error));
     return left<Error, ReadonlyArray<Wallet>>(error);
   }
