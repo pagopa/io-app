@@ -60,11 +60,18 @@ const CancelBadge = () => (
 const Table = (props: Props) => (
   <View>
     <View style={styles.rowId}>
-      <H5 weight={"Regular"} color={"bluegrey"}>
-        {I18n.t("payment.details.info.dateAndTime")}
+      <H5 weight={"Regular"} color={"bluegrey"} testID="dateLabel">
+        {(props.transaction.trxDate.getHours() === 0 && props.transaction.trxDate.getMinutes() === 0) ?
+          I18n.t("payment.details.info.onlyDate") : 
+          I18n.t("payment.details.info.dateAndTime")}
       </H5>
-      <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {localeDateFormat(
+      <H4 weight={"SemiBold"} color={"bluegreyDark"} testID="dateValue">
+        { (props.transaction.trxDate.getHours() === 0 && props.transaction.trxDate.getMinutes() === 0) ?
+          localeDateFormat(
+            props.transaction.trxDate,
+            I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithoutTime"))
+            :
+          localeDateFormat(
           props.transaction.trxDate,
           I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
         )}

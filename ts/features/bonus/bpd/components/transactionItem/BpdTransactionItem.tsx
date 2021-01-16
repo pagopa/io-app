@@ -24,7 +24,13 @@ type Props = {
  * TODO: move the get subtitle in the combiner and remove this component?
  * @param transaction
  */
-const getSubtitle = (transaction: BpdTransaction) =>
+export const getSubtitle = (transaction: BpdTransaction) =>
+  (transaction.trxDate.getHours() === 0 && transaction.trxDate.getMinutes() === 0) ? 
+    `${localeDateFormat(
+    transaction.trxDate,
+    I18n.t("global.dateFormats.dayMonthWithoutTime")
+  )} · € ${formatNumberAmount(transaction.amount)} `
+  :
   `${localeDateFormat(
     transaction.trxDate,
     I18n.t("global.dateFormats.dayMonthWithTime")
