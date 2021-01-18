@@ -86,6 +86,7 @@ const reducer = (
         },
         {} as MessagesStatus
       );
+    // clear state if the current profile is different from the previous one
     case getType(differentProfileLoggedIn):
       return INITIAL_STATE;
     default:

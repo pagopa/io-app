@@ -6,11 +6,10 @@
 
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { getType } from "typesafe-actions";
-
-import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
 import { paymentCompletedSuccess } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
+import { differentProfileLoggedIn } from "../../actions/crossSessions";
 
 export type PaidReason = Readonly<
   | {
@@ -51,8 +50,8 @@ export const paymentByRptIdReducer = (
                 kind: "DUPLICATED"
               }
       };
-
-    case getType(clearCache):
+    // clear state if the current profile is different from the previous one
+    case getType(differentProfileLoggedIn):
       return INITIAL_STATE;
 
     default:
