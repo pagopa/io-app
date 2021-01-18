@@ -10,6 +10,7 @@ import {
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
+import {isDifferentFiscalCodeSelector} from "../../crossSessions";
 
 export type MessageStatus = {
   isRead: boolean;
@@ -86,6 +87,7 @@ const reducer = (
         },
         {} as MessagesStatus
       );
+      case getType(isDifferentFiscalCodeSelector)
     case getType(clearCache):
       return INITIAL_STATE;
     default:
