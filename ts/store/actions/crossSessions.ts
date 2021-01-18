@@ -15,10 +15,10 @@ export const setProfileHashedFiscalCode = createStandardAction(
 /**
  * inform that the current profile fiscal code is different from the previous one
  */
-export const newProfileLoggedIn = createStandardAction(
+export const differentProfileLoggedIn = createStandardAction(
   "CROSS_SESSION_NEW_PROFILE_LOGGED_ID"
 )<void>();
 
 export type CrossSessionsActions =
   | ActionType<typeof setProfileHashedFiscalCode>
-  | ActionType<typeof newProfileLoggedIn>;
+  | ActionType<typeof differentProfileLoggedIn>;
