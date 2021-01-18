@@ -11,11 +11,6 @@ export const navigateToCgnOnboardingInformationTos = () =>
     routeName: CGN_ROUTES.ACTIVATION.INFORMATION_TOS
   });
 
-export const navigateToCgnOnboardingLoadActivate = () =>
-  NavigationActions.navigate({
-    routeName: CGN_ROUTES.ACTIVATION.LOAD_ACTIVATE
-  });
-
 // Details
 export const navigateToCgnDetails = () =>
   NavigationActions.navigate({
