@@ -47,7 +47,7 @@ import {
   getLocalePrimaryWithFallback
 } from "../utils/locale";
 import {
-  newProfileLoggedIn,
+  differentProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
 import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
@@ -331,7 +331,7 @@ function* checkStoreHashedFiscalCode(
   );
   // the current logged user has a different fiscal code from the stored hashed one
   if (checkIsDifferentFiscalCode) {
-    yield put(newProfileLoggedIn());
+    yield put(differentProfileLoggedIn());
   }
   yield put(
     setProfileHashedFiscalCode(profileLoadSuccessAction.payload.fiscal_code)
