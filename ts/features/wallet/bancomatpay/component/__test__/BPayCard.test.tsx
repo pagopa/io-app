@@ -9,7 +9,7 @@ import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResiz
 import BPayCard from "../BPayCard";
 import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
 
-jest.mock("../../../onboarding/bancomat/screens/hooks/useImageResize");
+jest.mock("../../../activation/bancomat/screens/hooks/useImageResize");
 
 const profile: InitializedProfile = {
   family_name: "Rossi",

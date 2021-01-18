@@ -72,13 +72,13 @@ describe("email profile selector", () => {
     ).toStrictEqual(false);
   });
 
-  it("should return true when the user is in his first onboarding", () => {
+  it("should return true when the user is in his first activation", () => {
     expect(
       isProfileFirstOnBoarding({ ...potProfile.value, version: 0 as Version })
     ).toStrictEqual(true);
   });
 
-  it("should return false when the user is not in his first onboarding", () => {
+  it("should return false when the user is not in his first activation", () => {
     expect(isProfileFirstOnBoarding(potProfile.value)).toStrictEqual(false);
   });
 });

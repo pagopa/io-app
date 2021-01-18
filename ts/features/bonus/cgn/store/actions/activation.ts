@@ -10,7 +10,7 @@ export const cgnActivationStart = createStandardAction("CGN_ACTIVATION_START")<
 >();
 
 /**
- * Cancel the onboarding workflow
+ * Cancel the activation workflow
  */
 export const cgnActivationCancel = createStandardAction(
   "CGN_ACTIVATION_CANCEL"

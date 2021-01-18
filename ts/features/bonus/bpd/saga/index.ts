@@ -94,7 +94,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     bpdBackendClient
   );
 
-  // First step of the onboarding workflow; check if the user is enrolled to the bpd program
+  // First step of the activation workflow; check if the user is enrolled to the bpd program
   yield takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);
 
   // The user accepts the declaration, enroll the user to the bpd program

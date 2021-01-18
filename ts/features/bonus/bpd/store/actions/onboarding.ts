@@ -32,7 +32,7 @@ export const bpdUnsubscribeCompleted = createStandardAction(
 )<void>();
 
 /**
- * Start the onboarding workflow
+ * Start the activation workflow
  */
 export const bpdOnboardingStart = createStandardAction("BPD_ONBOARDING_START")<
   void
@@ -46,14 +46,14 @@ export const bpdUserActivate = createStandardAction(
 )<void>();
 
 /**
- * Cancel the onboarding workflow
+ * Cancel the activation workflow
  */
 export const bpdOnboardingCancel = createStandardAction(
   "BPD_ONBOARDING_CANCEL"
 )<void>();
 
 /**
- * The user completed the final step of the onboarding (choose to add iban)
+ * The user completed the final step of the activation (choose to add iban)
  */
 export const bpdOnboardingCompleted = createStandardAction(
   "BPD_ONBOARDING_COMPLETED"

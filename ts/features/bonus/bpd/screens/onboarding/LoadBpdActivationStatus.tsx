@@ -16,7 +16,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * This screen is displayed when the user start the onboarding flow but the application does not know yet if the user
+ * This screen is displayed when the user start the activation flow but the application does not know yet if the user
  * is already registered to the bpd service
  * @constructor
  */

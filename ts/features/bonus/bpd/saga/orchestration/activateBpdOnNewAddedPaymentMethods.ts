@@ -34,10 +34,10 @@ export function* activateBpdOnNewPaymentMethods(
     yield put(navigateToWalletHome());
   } else {
     if (isBpdEnabledResponse.value) {
-      // navigate to onboarding new bancomat
+      // navigate to activation new bancomat
       yield put(navigateToActivateNewMethods);
     } else {
-      // navigate to "ask if u want to start bpd onboarding"
+      // navigate to "ask if u want to start bpd activation"
       yield put(navigateToSuggestBpdActivation());
     }
   }

@@ -654,7 +654,7 @@ email:
     validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
 onboarding:
   contextualHelpTitle: How does the biometric recognition work
-  contextualHelpContent: !include onboarding/onboarding_fingerprint.md
+  contextualHelpContent: !include activation/onboarding_fingerprint.md
   tos:
     headerTitle: Activation
     accept: Accept
@@ -672,7 +672,7 @@ onboarding:
     reset: Change the code
     confirmInvalid: The two pins do not match
     contextualHelpTitle: What your unlock code is
-    contextualHelpContent: !include onboarding/onboarding_pin.md
+    contextualHelpContent: !include activation/onboarding_pin.md
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
@@ -680,12 +680,12 @@ onboarding:
     headerTitle: Activation
     title: Biometric authentication
     body:
-      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
+      enrolledText: !include activation/tos_fingerprint_enrolled.md
       enrolledType:
         fingerprint: your fingerprint
         faceId: Face ID
         touchId: Touch ID
-      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+      notEnrolledText: !include activation/tos_fingerprint_not_enrolled.md
 forms:
   validators:
     required: Required value
@@ -1432,7 +1432,7 @@ identification:
   unlock_screen:
     help:
       title: Access with unlock code
-      content: !include onboarding/onboarding_pin.md
+      content: !include activation/onboarding_pin.md
   forgetCode:
     confirmTitle: Did you forget the unlock code?
     confirmMsg: To be able to choose a new unlock code you will need to log in again.
@@ -1650,7 +1650,7 @@ faq:
     title: "How to delete all my personal data associated to IO?"
     content: !include faq/faq56.md
   57:
-    title: "Did you have problems during a payment or onboarding a payment instrument?"
+    title: "Did you have problems during a payment or activation a payment instrument?"
     content: !include faq/faq57.md
   58:
     title: "How do I claim the Bonus Vacanze?"

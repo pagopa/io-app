@@ -252,7 +252,7 @@ function mapStateToProps(state: GlobalState) {
       pot.map(
         potProfile,
         p =>
-          !isProfileFirstOnBoarding(p) && // it's not the first onboarding
+          !isProfileFirstOnBoarding(p) && // it's not the first activation
           p.accepted_tos_version !== undefined &&
           p.accepted_tos_version < tosVersion
       ),

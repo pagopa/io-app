@@ -15,10 +15,10 @@ const addedBPayReducer = (
   action: Action
 ): ReadonlyArray<RawBPayPaymentMethod> => {
   switch (action.type) {
-    // Register a new BPay account added in the current onboarding session
+    // Register a new BPay account added in the current activation session
     case getType(addBPayToWallet.success):
       return [...state, action.payload];
-    // Reset the state when starting a new BPay onboarding workflow
+    // Reset the state when starting a new BPay activation workflow
     case getType(walletAddBPayStart):
       return [];
   }

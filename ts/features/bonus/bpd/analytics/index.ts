@@ -32,7 +32,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
   switch (action.type) {
-    // onboarding
+    // activation
     case getType(bpdEnrollUserToProgram.request):
     case getType(bpdDeleteUserFromProgram.success):
     case getType(bpdDeleteUserFromProgram.request):

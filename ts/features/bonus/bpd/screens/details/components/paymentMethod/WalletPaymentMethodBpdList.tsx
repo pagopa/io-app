@@ -53,7 +53,7 @@ const UpdateLabel = (props: Props & { caption: string }) =>
   );
 
 /**
- * Start the onboarding of a new payment method
+ * Start the activation of a new payment method
  * @param props
  * @constructor
  */

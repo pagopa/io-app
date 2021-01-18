@@ -15,6 +15,8 @@ export function* cgnStartActivationWorker() {
   // HERE WILL BE IMPLEMENTED THE ACTIVATION LOGIC
   // WIP remove this instruction when the activation flow will be implemented
   yield take(cgnActivationStatus.request);
+
+  yield;
 }
 
 /**

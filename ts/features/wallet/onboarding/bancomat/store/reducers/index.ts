@@ -16,13 +16,13 @@ const onboardingBancomatReducer = combineReducers<
   OnboardingBancomatState,
   Action
 >({
-  // the bancomat pans found for the user during the onboarding phase of a new bancomat
+  // the bancomat pans found for the user during the activation phase of a new bancomat
   foundPans: pansReducer,
   // the bancomat pan that user is adding to his wallet
   addingPans: addingPansReducer,
-  // the bancomat pan that user add to his wallet (during the last bancomat onboarding workflow)
+  // the bancomat pan that user add to his wallet (during the last bancomat activation workflow)
   addedPans: addedPansReducer,
-  // the bank (abi) chosen by the user during the onboarding phase. Can be null (the user skip the bank selection)
+  // the bank (abi) chosen by the user during the activation phase. Can be null (the user skip the bank selection)
   abiSelected: abiSelectedReducer
 });
 

@@ -1,6 +1,6 @@
 /**
  * Main navigator, handling the navigation within
- * the app *after* the login and onboarding have
+ * the app *after* the login and activation have
  * occurred. This takes care of displaying a tab
  * navigator with the appropriate icons
  */

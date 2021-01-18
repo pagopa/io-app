@@ -49,7 +49,7 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
 
   private handleForcedClose = () => {
     // due a known bug (see https://github.com/react-navigation/react-navigation/issues/4867)
-    // when the user is in onboarding phase and he asks to go to insert email screen
+    // when the user is in activation phase and he asks to go to insert email screen
     // the navigation is forced reset
     const resetAction = StackActions.reset({
       index: 0,
@@ -111,7 +111,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 /**
  * A HOC to display the WrappedComponent when the email is validated, otherwise the RemindEmailValidationOverlay will be displayed
  *
- * TODO: fix workaround introduced to solve bug on navigation during the onboarding (https://github.com/react-navigation/react-navigation/issues/4867)
+ * TODO: fix workaround introduced to solve bug on navigation during the activation (https://github.com/react-navigation/react-navigation/issues/4867)
  *       If the didFocus and the blur related events are not fired, at forward navigation the hideModal is dispatched manually
  */
 export function withValidatedEmail<P>(

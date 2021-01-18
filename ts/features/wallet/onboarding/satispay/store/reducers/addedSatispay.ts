@@ -14,10 +14,10 @@ export const addedSatispayReducer = (
   action: Action
 ): RawSatispayPaymentMethod | null => {
   switch (action.type) {
-    // Register a Satispay account added in the current onboarding session
+    // Register a Satispay account added in the current activation session
     case getType(addSatispayToWallet.success):
       return action.payload;
-    // Reset the state when starting a new satispay onboarding
+    // Reset the state when starting a new satispay activation
     case getType(walletAddSatispayStart):
       return null;
   }

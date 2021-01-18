@@ -53,7 +53,7 @@ const ListEmptyComponent = (
 );
 
 /**
- * This screen shows all attempts of onboarding payment instruments
+ * This screen shows all attempts of activation payment instruments
  */
 class CreditCardOnboardingAttemptsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {

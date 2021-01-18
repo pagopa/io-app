@@ -14,7 +14,7 @@ import {
 /**
  * Launch email saga that consists of:
  * If user have an existing email:
- * - acknowledgement screen if the email address is validated (eg SPID login) and this if the first onboarding
+ * - acknowledgement screen if the email address is validated (eg SPID login) and this if the first activation
  * - if the email address is not validated, promt a screen to inform and remember about validation
  * - if the user has not an email address (eg CIE login), a screen will be prompt to insert his own email address
  */
@@ -27,7 +27,7 @@ export function* checkAcknowledgedEmailSaga(
       isProfileFirstOnBoarding(userProfile) ||
       !isProfileEmailValidated(userProfile)
     ) {
-      // The user profile is just created (first onboarding), the conditional
+      // The user profile is just created (first activation), the conditional
       // view displays the screen to show the user's email used in app
       // OR
       // An email exists on the user's profile but it is not validated, the conditional
@@ -39,8 +39,8 @@ export function* checkAcknowledgedEmailSaga(
     }
   } else {
     // the profile has no email address, user must insert it
-    // EmailInsertScreen knows if the user comes from onboarding or not
-    // if he comes from onboarding, on email inserted the navigation will focus EmailReadScreen to remember the user
+    // EmailInsertScreen knows if the user comes from activation or not
+    // if he comes from activation, on email inserted the navigation will focus EmailReadScreen to remember the user
     // to validate it
     yield put(navigateToEmailInsertScreen());
   }

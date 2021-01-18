@@ -43,7 +43,7 @@ const loadLocales = () => ({
 const disclaimerLink = "https://io.italia.it/app-content/privacy_satispay.html";
 
 /**
- * Entrypoint for the satispay onboarding. The user can choose to start the search or
+ * Entrypoint for the satispay activation. The user can choose to start the search or
  * cancel and return back.
  * @constructor
  */

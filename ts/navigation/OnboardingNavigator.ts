@@ -8,7 +8,7 @@ import TosScreen from "../screens/onboarding/TosScreen";
 import ROUTES from "./routes";
 
 /**
- * The onboarding related stack of screens of the application.
+ * The activation related stack of screens of the application.
  */
 const navigator = createStackNavigator(
   {

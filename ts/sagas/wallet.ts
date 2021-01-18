@@ -221,7 +221,7 @@ function* startOrResumeAddCreditCardSaga(
     // First step: add the credit card to the user wallets
     //
     // Note that the new wallet will not be visibile to the user until all the
-    // card onboarding steps have been completed.
+    // card activation steps have been completed.
     //
 
     if (pot.isNone(state.creditCardAddWallet)) {
