@@ -10,6 +10,7 @@ import {
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { differentProfileLoggedIn } from "../../../actions/crossSessions";
+import { isTestEnv } from "../../../../utils/environment";
 
 export type MessageStatus = {
   isRead: boolean;
@@ -171,4 +172,7 @@ export const isMessageRead = (
     .map(ms => ms.isRead)
     .getOrElse(false);
 
+export const testableMessageStatusReducer = isTestEnv
+  ? { initial_state: INITIAL_STATE }
+  : undefined;
 export default reducer;

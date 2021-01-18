@@ -11,8 +11,10 @@ import {
 import { Action } from "../../../actions/types";
 import reducer, {
   EMPTY_MESSAGE_STATUS,
-  MessagesStatus
+  MessagesStatus,
+  testableMessageStatusReducer
 } from "../messages/messagesStatus";
+import { differentProfileLoggedIn } from "../../../actions/crossSessions";
 
 export const dymmyAction = createStandardAction("DUMMY")();
 
@@ -34,7 +36,7 @@ const messageWithContent = {
   } as MessageContent
 } as CreatedMessageWithContent;
 
-describe("messagesStatus reducer", () => {
+describe("paymentByRptIdReducer reducer", () => {
   it("should return the initial state", () => {
     expect(reducer(undefined, (dymmyAction as unknown) as Action)).toEqual({});
   });
@@ -82,6 +84,16 @@ describe("messagesStatus reducer", () => {
     ).toEqual({
       [messageWithContent.id]: { ...EMPTY_MESSAGE_STATUS, isArchived: true }
     });
+  });
+
+  it("should return the initial state", () => {
+    const notEmptyState = reducer(
+      undefined,
+      loadMessage.success(messageWithContent)
+    );
+    expect(reducer(notEmptyState, differentProfileLoggedIn())).toEqual(
+      testableMessageStatusReducer?.initial_state
+    );
   });
 
   it("should return the loaded message with isArchived state to false", () => {
