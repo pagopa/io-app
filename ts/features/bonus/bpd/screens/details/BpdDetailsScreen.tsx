@@ -104,7 +104,13 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
         contextualHelp={emptyContextualHelp}
         footerContent={
           canRenderButton && (
-            <GoToTransactions goToTransactions={props.goToTransactions} />
+            <GoToTransactions
+              goToTransactions={() =>
+                // if the transactions state is in pot.isError state
+                // on press request a refresh
+                props.goToTransactions(pot.isError(props.transactions))
+              }
+            />
           )
         }
         footerFullWidth={<SectionStatusComponent sectionKey={"cashback"} />}
@@ -126,7 +132,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(bpdUnsubscribeCompleted());
     dispatch(NavigationActions.back());
   },
-  goToTransactions: () => dispatch(navigateToBpdTransactions()),
+  goToTransactions: (reloadTransactions: boolean) => {
+    if (reloadTransactions) {
+      dispatch(bpdAllData.request());
+    }
+    dispatch(navigateToBpdTransactions());
+  },
   goBack: () => dispatch(navigateBack())
 });
 
