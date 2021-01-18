@@ -36,18 +36,18 @@ function initializeInstabugSDKDismissalListener(): EventChannel<unknown> {
   // This event is fired when chat or bug screen is dismissed
 
   return eventChannel(emitter => {
-    BugReporting.onSDKDismissedHandler((dismiss: dismissType): void =>
-      emitter({ dismiss })
+    BugReporting.onSDKDismissedHandler((how: dismissType): void =>
+      emitter({ how })
     );
 
     return () => null;
   });
 }
 
-function* instabugSDKDismissalWorker({ how }: InstabugDismiss) {
+function* instabugSDKDismissalWorker(payload: InstabugDismiss) {
   const type = yield select(instabugReportingTypeSelector);
 
-  yield put(instabugReportClosed({ type, how }));
+  yield put(instabugReportClosed({ type, how: payload.how }));
   // when user dismisses instabug report (chat or bug) we update the unread messages counter.
   // This is because user could have read or reply to some messages
   yield put(updateInstabugUnreadMessages());

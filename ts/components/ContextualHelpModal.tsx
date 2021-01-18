@@ -21,6 +21,7 @@ import {
   FAQType,
   getFAQsFromCategories
 } from "../utils/faq";
+import { instabugReportOpened } from "../store/actions/debug";
 import Markdown from "./ui/Markdown";
 import SendSupportRequestOptions, {
   SupportRequestOptions
@@ -167,11 +168,17 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
    * @param options Contains the checkboxes' values, @todo handle screenshot attachment request.
    */
   const handleContinue = (options: SupportRequestOptions) => {
+    const { supportToken, openBugReport } = props;
+
+    // See comment at line 232 to learn why this is not
+    // called "openQuestionReport"
+    openBugReport();
+
     setShowSendPersonalInfo(false);
     fromNullable(supportType).map(st => {
       props.onRequestAssistance(
         st,
-        options.sendPersonalInfo ? props.supportToken : remoteUndefined
+        options.sendPersonalInfo ? supportToken : remoteUndefined
       );
     });
   };
@@ -222,7 +229,11 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadContextualHelpData: () => dispatch(loadContextualHelpData.request()),
-  loadSupportToken: () => dispatch(loadSupportToken.request())
+  loadSupportToken: () => dispatch(loadSupportToken.request()),
+  // Before this, user will be prompted to select the "question type" by
+  // IB SDK. But the question eventually leads to reporting a bug.
+  openBugReport: () =>
+    dispatch(instabugReportOpened({ type: BugReporting.reportType.bug }))
 });
 
 export default connect(
