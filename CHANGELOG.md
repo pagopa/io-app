@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0-rc.3](https://github.com/pagopa/io-app/compare/1.18.0-rc.2...1.18.0-rc.3) (2021-01-15)
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176516558](https://www.pivotaltracker.com/story/show/176516558)] Missing integer formatting for transactions number & ranking ([#2731](https://github.com/pagopa/io-app/issues/2731)) ([26ebc27](https://github.com/pagopa/io-app/commit/26ebc273c4f21fbb76460f311a288d45262090e8))
+
+## [1.18.0-rc.2](https://github.com/pagopa/io-app/compare/1.18.0-rc.1...1.18.0-rc.2) (2021-01-15)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176457237](https://www.pivotaltracker.com/story/show/176457237)] Remove disabled account from BPay found list ([#2720](https://github.com/pagopa/io-app/issues/2720)) ([d147418](https://github.com/pagopa/io-app/commit/d14741817c6d31847e7db4a0f22e3d8db37c051a))
+* [[#176176848](https://www.pivotaltracker.com/story/show/176176848)] Added explanatory bottom sheet for in-app payments card section ([#2709](https://github.com/pagopa/io-app/issues/2709)) ([3894150](https://github.com/pagopa/io-app/commit/389415068a8f3eb2223f5a508412e93bfa802472))
+* [[#176479978](https://www.pivotaltracker.com/story/show/176479978)] Add react native bundle visualizer as dev dependency ([#2719](https://github.com/pagopa/io-app/issues/2719)) ([e2eced4](https://github.com/pagopa/io-app/commit/e2eced4b4ba0f76c7812c5158c9c846db5936047))
+* **Bonus Pagamenti Digitali:** [[#176484406](https://www.pivotaltracker.com/story/show/176484406)] Remove first place from supercashback ranking ([#2725](https://github.com/pagopa/io-app/issues/2725)) ([6067156](https://github.com/pagopa/io-app/commit/60671563ccbcb06b94026336042bd7b7531e8e74))
+* **Bonus Vacanze:** [[#176309802](https://www.pivotaltracker.com/story/show/176309802)] Remove bonus vacanze cta [#2711](https://github.com/pagopa/io-app/issues/2711) ([c313b37](https://github.com/pagopa/io-app/commit/c313b3771c4af331ec7cbeb8489c8fc2648fe2ff))
+* **Carta Giovani Nazionale:** [[#176442968](https://www.pivotaltracker.com/story/show/176442968)] Adds CGN Feature Flag [#2714](https://github.com/pagopa/io-app/issues/2714) ([5f9edcb](https://github.com/pagopa/io-app/commit/5f9edcb0374c3e2d60c46f1a0489365bb7c71fd3))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176496182](https://www.pivotaltracker.com/story/show/176496182)] SuggestBpdActivationScreen displays always a "pagoBANCOMAT" title [#2724](https://github.com/pagopa/io-app/issues/2724) ([a70a75f](https://github.com/pagopa/io-app/commit/a70a75f284b24da8331788e5b010e3fd9b1e5dd8))
+* [[#176225603](https://www.pivotaltracker.com/story/show/176225603)] PSP Icon removal ([#2690](https://github.com/pagopa/io-app/issues/2690)) ([fe949e5](https://github.com/pagopa/io-app/commit/fe949e5deccc3846deddec74399a7f69ec9efc84))
+* [[#176290749](https://www.pivotaltracker.com/story/show/176290749)] Fiscal-code fac-simile entries are not readable on some Xiaomi devices ([#2713](https://github.com/pagopa/io-app/issues/2713)) ([83cada8](https://github.com/pagopa/io-app/commit/83cada83d89d04bcab579db7ff0ab99f96287ae2))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#176436807](https://www.pivotaltracker.com/story/show/176436807)] Improve and fix backoff delay reducer ([#2706](https://github.com/pagopa/io-app/issues/2706)) ([390c4e6](https://github.com/pagopa/io-app/commit/390c4e637eef5a433a14a28c5ac75ff5e6b1f410)), closes [#175890963](https://www.pivotaltracker.com/story/show/175890963) [#175890963](https://www.pivotaltracker.com/story/show/175890963) [#175890963](https://www.pivotaltracker.com/story/show/175890963)
+* **Bonus Pagamenti Digitali:** [[#176498731](https://www.pivotaltracker.com/story/show/176498731)] Add new bpd ranking config flag ([#2726](https://github.com/pagopa/io-app/issues/2726)) ([2967024](https://github.com/pagopa/io-app/commit/296702436fff70ec6ac33502b12fc1844a2273ef))
+* **Bonus Vacanze:** [[#176459696](https://www.pivotaltracker.com/story/show/176459696)] Remove API handlers and saga of start/get eligibilityCheck  ([#2715](https://github.com/pagopa/io-app/issues/2715)) ([93616c7](https://github.com/pagopa/io-app/commit/93616c779d06cf3b0910566dc126e78bd9642288))
+
 ## [1.18.0-rc.1](https://github.com/pagopa/io-app/compare/1.18.0-rc.0...1.18.0-rc.1) (2021-01-11)
 
 

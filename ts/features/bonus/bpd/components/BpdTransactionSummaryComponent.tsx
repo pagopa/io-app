@@ -13,7 +13,10 @@ import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import {
+  formatIntegerNumber,
+  formatNumberAmount
+} from "../../../../utils/stringBuilder";
 import { BpdAmount } from "../saga/networking/amount";
 import { BpdPeriod } from "../store/actions/periods";
 import { Link } from "../../../../components/core/typography/Link";
@@ -129,9 +132,16 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
           {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text3", {
             defaultValue: I18n.t(
               "bonus.bpd.details.transaction.detail.summary.body.text3.other",
-              { count: props.totalAmount.transactionNumber }
+              {
+                transactions: formatIntegerNumber(
+                  props.totalAmount.transactionNumber
+                )
+              }
             ),
-            count: props.totalAmount.transactionNumber
+            count: props.totalAmount.transactionNumber,
+            transactions: formatIntegerNumber(
+              props.totalAmount.transactionNumber
+            )
           })}
         </H4>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text4")}
