@@ -4,7 +4,7 @@
 import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
 import { isActionOf } from "typesafe-actions";
 import { createSelector } from "reselect";
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import sha from "sha.js";
 import { Action } from "../actions/types";
 import { setProfileHashedFiscalCode } from "../actions/crossSessions";
@@ -41,8 +41,8 @@ export const hashedProfileFiscalCodeSelector = (
 ): HashedFiscalCode => state.crossSessions.hashedFiscalCode;
 
 /**
- * return true if the given fiscal code is different from the hashed stored one
- * if there is no stored hashed fiscal code it returns false (cant say if they are different)
+ * return some(true) if the given fiscal code is different from the hashed stored one, some(false) otherwise
+ * if there is no stored hashed fiscal code it returns none (cant say if they are different)
  */
 export const isDifferentFiscalCodeSelector = (
   state: GlobalState,
@@ -50,10 +50,8 @@ export const isDifferentFiscalCodeSelector = (
 ) =>
   createSelector(
     hashedProfileFiscalCodeSelector,
-    (hashedProfile: HashedFiscalCode): boolean =>
-      fromNullable(hashedProfile)
-        .map(hp => hp !== hash(fiscalCode))
-        .getOrElse(false)
+    (hashedProfile: HashedFiscalCode): Option<boolean> =>
+      fromNullable(hashedProfile).map(hp => hp !== hash(fiscalCode))
   )(state);
 
 export default reducer;

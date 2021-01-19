@@ -1,5 +1,6 @@
 import { FiscalCode } from "italia-ts-commons/lib/strings";
 import sha from "sha.js";
+import { none, some } from "fp-ts/lib/Option";
 import { appReducer } from "../index";
 import { GlobalState } from "../types";
 import { setProfileHashedFiscalCode } from "../../actions/crossSessions";
@@ -19,6 +20,7 @@ jest.mock("react-native-share", () => ({
 const hash = (value: string): string =>
   sha("sha256").update(value).digest("hex");
 const fiscalCode = "TAMMRA80A41H501Y" as FiscalCode;
+const fiscalCode2 = "TAMMRA80A41H501X" as FiscalCode;
 const hashedFiscalCode = hash(fiscalCode);
 
 describe("cross sessions status reducer/selectors", () => {
@@ -47,7 +49,9 @@ describe("cross sessions status reducer/selectors", () => {
       undefined,
       setProfileHashedFiscalCode(fiscalCode)
     );
-    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode)).toBeFalsy();
+    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode)).toEqual(
+      some(false)
+    );
     // empty state
     expect(
       isDifferentFiscalCodeSelector(
@@ -57,6 +61,16 @@ describe("cross sessions status reducer/selectors", () => {
         },
         fiscalCode
       )
-    ).toBeFalsy();
+    ).toEqual(none);
+  });
+
+  it("should be different", () => {
+    const globalState: GlobalState = appReducer(
+      undefined,
+      setProfileHashedFiscalCode(fiscalCode)
+    );
+    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode2)).toEqual(
+      some(true)
+    );
   });
 });
