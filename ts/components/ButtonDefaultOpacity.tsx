@@ -18,7 +18,7 @@ type CustomProps = {
 };
 type Props = NativeBase.Button & React.Props<Button> & CustomProps;
 
-const SlopsBySize = {
+const slopsBySize: Record<"small" | "xsmall" | "default", number> = {
   small: calculateSlop(customVariables.btnSmallHeight),
   xsmall: calculateSlop(customVariables.btnXSmallHeight),
   default: calculateSlop(customVariables.btnHeight)
@@ -30,7 +30,7 @@ const SlopsBySize = {
  */
 const getSlopForCurrentButton = (props: Props): Insets => {
   const slop =
-    SlopsBySize[props.small ? "small" : props.xsmall ? "xsmall" : "default"];
+    slopsBySize[props.small ? "small" : props.xsmall ? "xsmall" : "default"];
 
   // We've applied a vertical-only hitSlop so far, we don't want to break any existing button
   const result = {
