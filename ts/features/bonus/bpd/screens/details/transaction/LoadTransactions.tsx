@@ -1,0 +1,29 @@
+import { View } from "native-base";
+import * as React from "react";
+import { ActivityIndicator } from "react-native";
+import { InfoScreenComponent } from "../../../../../../components/infoScreen/InfoScreenComponent";
+import I18n from "../../../../../../i18n";
+
+/**
+ * This screen is displayed when loading the list of transactions
+ * @constructor
+ */
+const LoadTransactions: React.FunctionComponent = () => {
+  return (
+    <View accessible={true} style={{ flex: 1 }}>
+      <InfoScreenComponent
+        image={
+          <ActivityIndicator
+            color={"black"}
+            accessible={false}
+            importantForAccessibility={"no-hide-descendants"}
+            accessibilityElementsHidden={true}
+          />
+        }
+        title={I18n.t("bonus.bpd.details.transaction.loading")}
+      />
+    </View>
+  );
+};
+
+export default LoadTransactions;

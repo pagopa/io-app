@@ -13,29 +13,29 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { InfoBox } from "../../../../../../../components/box/InfoBox";
-import { H1 } from "../../../../../../../components/core/typography/H1";
-import { H4 } from "../../../../../../../components/core/typography/H4";
-import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../../../../i18n";
-import { GlobalState } from "../../../../../../../store/reducers/types";
-import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
-import { localeDateFormat } from "../../../../../../../utils/locale";
-import BaseDailyTransactionHeader from "../../../../components/BaseDailyTransactionHeader";
-import BpdTransactionSummaryComponent from "../../../../components/BpdTransactionSummaryComponent";
+import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { H1 } from "../../../../../../components/core/typography/H1";
+import { H4 } from "../../../../../../components/core/typography/H4";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../../i18n";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
+import { localeDateFormat } from "../../../../../../utils/locale";
+import BaseDailyTransactionHeader from "../../../components/BaseDailyTransactionHeader";
+import BpdTransactionSummaryComponent from "../../../components/BpdTransactionSummaryComponent";
 import {
   BpdTransactionItem,
   EnhancedBpdTransaction
-} from "../../../../components/transactionItem/BpdTransactionItem";
+} from "../../../components/transactionItem/BpdTransactionItem";
 import {
   atLeastOnePaymentMethodHasBpdEnabledSelector,
   bpdDisplayTransactionsSelector,
   paymentMethodsWithActivationStatusSelector
-} from "../../../../store/reducers/details/combiner";
-import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
-import BpdCashbackMilestoneComponent from "../BpdCashbackMilestoneComponent";
-import BpdEmptyTransactionsList from "../BpdEmptyTransactionsList";
+} from "../../../store/reducers/details/combiner";
+import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
+import BpdCashbackMilestoneComponent from "./BpdCashbackMilestoneComponent";
+import BpdEmptyTransactionsList from "./BpdEmptyTransactionsList";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
