@@ -830,18 +830,6 @@ wallet:
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
         warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente."
         blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
-      bpd:
-        suggestActivation:
-          title: "Vuoi attivare il Cashback?"
-          body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri e dal Ministero dell’Economia e delle Finanze, allo scopo di incentivare un maggiore utilizzo di moneta elettronica nel Paese.\n\n
-                 Puoi ricevere un rimborso sugli acquisti effettuati con carte, bancomat e app di pagamento.\n\n"
-          skip: "No, grazie"
-          confirm: "Info e attivazione"
-        activateNew:
-          title: "Vuoi attivare il Cashback?"
-          body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
-          body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
-          skip: "Non ora"
     bPay:
       headerTitle: "Aggiungi BANCOMAT Pay"
       loadingSearch: "Stiamo recuperando i tuoi dati BANCOMAT Pay\n\nAttendi qualche secondo"
@@ -1086,6 +1074,9 @@ wallet:
         active: Attivo
         arriving: In arrivo
         incompatible: Non compatibile
+        bottomSheetTitle: Cosa sono i pagamenti in app?
+        bottomSheetBody: IO ti permette di pagare tutti gli avvisi pagoPA, anche quelli cartacei. Quando effettui un pagamento in app, ti verrà chiesto di autorizzarlo tramite riconoscimento biometrico o codice di sblocco.
+        bottomSheetCTA: Scopri di più
     bonus:
       name: Sconto, bonus e altri servizi
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
@@ -1261,15 +1252,11 @@ messages:
       addMemo:
         block1: Aggiungi un promemoria per il
         block2: alle
-      expiringAlert:
-        block1: Questo avviso scade il giorno
-        block2: alle ore
+      expiringOrValidAlert:
+        block1: Puoi pagare questo avviso entro il
       expiredAlert:
-        expirable:
-          block1: L'avviso è scaduto alle ore
-          block2: del
-        unexpirable:
-          block: L'avviso è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad aggiornare l'importo.
+        block1: L'avviso di pagamento è scaduto alle
+        block2: del
     prescription:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
@@ -1280,6 +1267,7 @@ messages:
     pay: Paga € {{amount}}
     onlyPay: Paga
     paid: Pagato
+    seeNotice: Vedi Avviso
     reminder: Promemoria
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
@@ -1954,6 +1942,17 @@ bonus:
         title: "Ci siamo quasi, attiva il Cashback sui tuoi metodi di pagamento!"
         body: "Abilita il Cashback sui metodi già presenti nel tuo portafoglio o aggiungine di nuovi."
         cta: "Attiva i metodi di pagamento"
+    suggestActivation:
+      title: "Vuoi attivare il Cashback?"
+      body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri e dal Ministero dell’Economia e delle Finanze, allo scopo di incentivare un maggiore utilizzo di moneta elettronica nel Paese.\n\n
+             Puoi ricevere un rimborso sugli acquisti effettuati con carte, bancomat e app di pagamento.\n\n"
+      skip: "No, grazie"
+      confirm: "Info e attivazione"
+    activateOnNewMethods:
+      title: "Vuoi attivare il Cashback?"
+      body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
+      body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
+      skip: "Non ora"
     iban:
       cta:
         bpdNotActiveTitle: "attenzione"
@@ -2014,7 +2013,7 @@ bonus:
           inactivePeriodBody: "Potrai iniziare a collezionare transazioni valide a partire dal {{date}}"
           label:
             one: "1 transazione valida"
-            other: "{{count}} transazioni valide"
+            other: "{{transactions}} transazioni valide"
         ranking:
           title: "La tua posizione"
           notReady:
@@ -2025,7 +2024,7 @@ bonus:
       transaction:
         label:
           one: "1 transazione"
-          other: "{{count}} transazioni"
+          other: "{{transactions}} transazioni"
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
         noPaymentMethod:
@@ -2039,7 +2038,8 @@ bonus:
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
-              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- I pagamenti effettuati con Google Pay, Apple Pay e Samsung Pay non sono ancora supportati. Stiamo lavorando con la tua banca per ricevere anche questo tipo di transazioni.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
+              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- I pagamenti effettuati con Google Pay, Apple Pay e Samsung Pay non sono ancora supportati. Stiamo lavorando con la tua banca per ricevere anche questo tipo di transazioni.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.**"
+              readMore: "Leggi di più"
             calendarBlock:
               text1: "Ti informiamo che prima che tu veda la transazione su IO,"
               text2: "possono passare in media 3 giorni lavorativi"
@@ -2051,7 +2051,7 @@ bonus:
               text2: "hai totalizzato "
               text3:
                 one: "1 transazione valida "
-                other: "{{count}} transazioni valide "
+                other: "{{transactions}} transazioni valide "
               text4: "e accumulato "
               text5: "un Cashback di "
             milestone:
@@ -2115,6 +2115,9 @@ bonus:
             active: "**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
+  cgn:
+    cta:
+      activeBonus: Attiva la tua Carta Giovani
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
