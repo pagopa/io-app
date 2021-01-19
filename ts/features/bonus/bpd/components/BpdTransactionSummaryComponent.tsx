@@ -43,10 +43,13 @@ body {
 `;
 
 const readMoreLink = "https://io.italia.it/cashback/acquirer/";
-export const bottomSheetBpdTransactionsBody = () => {
+const SHOW_CTA_DELAY = 500;
+
+export const BottomSheetBpdTransactionsBody: React.FunctionComponent = () => {
   const [CTAVisibility, setCTAVisibility] = React.useState(false);
 
-  const setCTAVisible = () => setCTAVisibility(true);
+  const setCTAVisible = () =>
+    setTimeout(() => setCTAVisibility(true), SHOW_CTA_DELAY);
 
   return (
     <>
@@ -94,7 +97,8 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
         </H4>
       </InfoBox>
       <View spacer={true} large={true} />
-      {bottomSheetBpdTransactionsBody()}
+
+      <BottomSheetBpdTransactionsBody />
     </>,
     I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.title"),
     600
