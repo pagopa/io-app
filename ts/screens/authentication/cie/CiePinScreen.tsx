@@ -57,8 +57,6 @@ const styles = StyleSheet.create({
   bsLinkButton: {
     paddingRight: 0,
     paddingLeft: 0,
-    marginVertical: 20,
-    height: 60,
     backgroundColor: IOColors.white
   }
 });
@@ -96,11 +94,11 @@ const CiePinScreen: React.FC<Props> = props => {
         style={styles.bsLinkButton}
         onPressWithGestureHandler={true}
       >
-        <Link>{I18n.t("bottomSheets.ciePin.title")}</Link>
+        <Link>{I18n.t("authentication.cie.pin.bottomSheetCTA")}</Link>
       </ButtonDefaultOpacity>
     </View>,
     I18n.t("bottomSheets.ciePin.title"),
-    300
+    320
   );
 
   const onProceedToCardReaderScreen = async (url: string) => {

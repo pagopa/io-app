@@ -830,18 +830,6 @@ wallet:
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
         warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente."
         blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
-      bpd:
-        suggestActivation:
-          title: "Vuoi attivare il Cashback?"
-          body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri e dal Ministero dell’Economia e delle Finanze, allo scopo di incentivare un maggiore utilizzo di moneta elettronica nel Paese.\n\n
-                 Puoi ricevere un rimborso sugli acquisti effettuati con carte, bancomat e app di pagamento.\n\n"
-          skip: "No, grazie"
-          confirm: "Info e attivazione"
-        activateNew:
-          title: "Vuoi attivare il Cashback?"
-          body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
-          body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
-          skip: "Non ora"
     bPay:
       headerTitle: "Aggiungi BANCOMAT Pay"
       loadingSearch: "Stiamo recuperando i tuoi dati BANCOMAT Pay\n\nAttendi qualche secondo"
@@ -1086,6 +1074,9 @@ wallet:
         active: Attivo
         arriving: In arrivo
         incompatible: Non compatibile
+        bottomSheetTitle: Cosa sono i pagamenti in app?
+        bottomSheetBody: IO ti permette di pagare tutti gli avvisi pagoPA, anche quelli cartacei. Quando effettui un pagamento in app, ti verrà chiesto di autorizzarlo tramite riconoscimento biometrico o codice di sblocco.
+        bottomSheetCTA: Scopri di più
     bonus:
       name: Sconto, bonus e altri servizi
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
@@ -1954,6 +1945,17 @@ bonus:
         title: "Ci siamo quasi, attiva il Cashback sui tuoi metodi di pagamento!"
         body: "Abilita il Cashback sui metodi già presenti nel tuo portafoglio o aggiungine di nuovi."
         cta: "Attiva i metodi di pagamento"
+    suggestActivation:
+      title: "Vuoi attivare il Cashback?"
+      body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri e dal Ministero dell’Economia e delle Finanze, allo scopo di incentivare un maggiore utilizzo di moneta elettronica nel Paese.\n\n
+             Puoi ricevere un rimborso sugli acquisti effettuati con carte, bancomat e app di pagamento.\n\n"
+      skip: "No, grazie"
+      confirm: "Info e attivazione"
+    activateOnNewMethods:
+      title: "Vuoi attivare il Cashback?"
+      body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
+      body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
+      skip: "Non ora"
     iban:
       cta:
         bpdNotActiveTitle: "attenzione"
@@ -2014,7 +2016,7 @@ bonus:
           inactivePeriodBody: "Potrai iniziare a collezionare transazioni valide a partire dal {{date}}"
           label:
             one: "1 transazione valida"
-            other: "{{count}} transazioni valide"
+            other: "{{transactions}} transazioni valide"
         ranking:
           title: "La tua posizione"
           notReady:
@@ -2025,7 +2027,7 @@ bonus:
       transaction:
         label:
           one: "1 transazione"
-          other: "{{count}} transazioni"
+          other: "{{transactions}} transazioni"
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
         noPaymentMethod:
@@ -2052,7 +2054,7 @@ bonus:
               text2: "hai totalizzato "
               text3:
                 one: "1 transazione valida "
-                other: "{{count}} transazioni valide "
+                other: "{{transactions}} transazioni valide "
               text4: "e accumulato "
               text5: "un Cashback di "
             milestone:

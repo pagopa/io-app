@@ -8,6 +8,7 @@ import { IOStyles } from "../../../../../../../components/core/variables/IOStyle
 import I18n from "../../../../../../../i18n";
 import { Dispatch } from "../../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import { formatIntegerNumber } from "../../../../../../../utils/stringBuilder";
 import { navigateToBpdTransactions } from "../../../../navigation/actions";
 import { BpdPeriod } from "../../../../store/actions/periods";
 import { BpdBaseShadowBoxLayout } from "./base/BpdBaseShadowBoxLayout";
@@ -48,9 +49,9 @@ export const PercentageTransactionsSummary = (props: Props) => {
       row2={
         <H2 style={styles.title}>
           <H2 testID={"percentageTransactions.transactions"} color={"blue"}>
-            {props.transactions}
+            {formatIntegerNumber(props.transactions)}
           </H2>{" "}
-          {of} {props.minTransactions}
+          {of} {formatIntegerNumber(props.minTransactions)}
         </H2>
       }
       row3={
@@ -81,7 +82,7 @@ const TextualTransactionsSummary = (props: Props) => {
           color={"blue"}
           style={styles.title}
         >
-          {props.transactions}
+          {formatIntegerNumber(props.transactions)}
         </H2>
       }
       row3={
@@ -90,7 +91,7 @@ const TextualTransactionsSummary = (props: Props) => {
           color={"bluegrey"}
           style={styles.title}
         >
-          {of} {props.minTransactions}
+          {of} {formatIntegerNumber(props.minTransactions)}
         </H5>
       }
     />
