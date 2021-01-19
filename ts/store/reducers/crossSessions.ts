@@ -19,8 +19,8 @@ const INITIAL_STATE: CrossSessionsState = {
   hashedFiscalCode: undefined
 };
 
-const hash = (value: string): string =>
-  sha("sha256").update(value).digest("hex");
+const hash = (value: FiscalCode): NonEmptyString =>
+  sha("sha256").update(value).digest("hex") as NonEmptyString;
 
 const reducer = (
   state: CrossSessionsState = INITIAL_STATE,
@@ -29,7 +29,7 @@ const reducer = (
   if (isActionOf(setProfileHashedFiscalCode, action)) {
     return {
       ...state,
-      hashedFiscalCode: hash(action.payload) as NonEmptyString
+      hashedFiscalCode: hash(action.payload)
     };
   }
   return state;

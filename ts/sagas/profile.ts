@@ -266,7 +266,6 @@ function* checkPreferredLanguage(
   }
 }
 
-// store the profile fiscal code as sha256 hashed string
 function* handleLoadBonusBeforeRemoveAccount() {
   const bpdActive: ReturnType<typeof bpdEnabledSelector> = yield select(
     bpdEnabledSelector
@@ -372,6 +371,7 @@ export function* watchProfile(
   yield takeLatest(removeAccountMotivation, handleRemoveAccount);
 }
 
+// to ensure right code encapsulation we export functions/variables just for tests purposes
 export const profileSagaTestable = isTestEnv
   ? {
       startEmailValidationProcessSaga,
