@@ -1,6 +1,5 @@
 import { FiscalCode } from "italia-ts-commons/lib/strings";
 import sha from "sha.js";
-import { none, some } from "fp-ts/lib/Option";
 import { appReducer } from "../index";
 import { GlobalState } from "../types";
 import { setProfileHashedFiscalCode } from "../../actions/crossSessions";
@@ -49,9 +48,7 @@ describe("cross sessions status reducer/selectors", () => {
       undefined,
       setProfileHashedFiscalCode(fiscalCode)
     );
-    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode)).toEqual(
-      some(false)
-    );
+    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode)).toBe(false);
     // empty state
     expect(
       isDifferentFiscalCodeSelector(
@@ -61,7 +58,7 @@ describe("cross sessions status reducer/selectors", () => {
         },
         fiscalCode
       )
-    ).toEqual(none);
+    ).toBeUndefined();
   });
 
   it("should be different", () => {
@@ -69,8 +66,6 @@ describe("cross sessions status reducer/selectors", () => {
       undefined,
       setProfileHashedFiscalCode(fiscalCode)
     );
-    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode2)).toEqual(
-      some(true)
-    );
+    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode2)).toBe(true);
   });
 });
