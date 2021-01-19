@@ -3,32 +3,57 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
-import LoadTransactions from "./detail/LoadTransactions";
+import { bpdLastUpdateSelector } from "../../../store/reducers/details/lastUpdate";
+import BpdAvailableTransactionsScreen from "./BpdAvailableTransactionsScreen";
+import LoadTransactions from "./LoadTransactions";
+import TransactionsUnavailable from "./TransactionsUnavailable";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * Display all the transactions for a specific period
+ * Associate at every state of the pot transactions status the right screen to show
+ * @param transactions
+ */
+const handleTransactionsStatus = (
+  transactions: pot.Pot<ReadonlyArray<EnhancedBpdTransaction>, Error>
+) =>
+  pot.fold(
+    transactions,
+    () => <BpdAvailableTransactionsScreen />,
+    () => <LoadTransactions />,
+    _ => <LoadTransactions />,
+    _ => <TransactionsUnavailable />,
+    _ => <BpdAvailableTransactionsScreen />,
+    _ => <LoadTransactions />,
+    _ => <LoadTransactions />,
+    _ => <TransactionsUnavailable />
+  );
+
+/**
+ * Display all the transactions for a specific period if available, in other case show a loading or an error screen.
+ * First check the whole bpd status than if is some check the transactions status.
  * @constructor
  */
 const BpdTransactionsScreen: React.FunctionComponent<Props> = props =>
   pot.fold(
-    props.transactionForSelectedPeriod,
+    props.bpdLastUpdate,
+    () => <TransactionsUnavailable />,
     () => <LoadTransactions />,
-    () => <LoadTransactions />,
+    _ => <LoadTransactions />,
+    _ => <TransactionsUnavailable />,
+    _ => handleTransactionsStatus(props.transactionForSelectedPeriod),
     _ => <LoadTransactions />,
     _ => <LoadTransactions />,
-    _ => <LoadTransactions />,
-    _ => <LoadTransactions />,
-    _ => <LoadTransactions />,
-    _ => <LoadTransactions />
+    _ => <TransactionsUnavailable />
   );
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  transactionForSelectedPeriod: bpdDisplayTransactionsSelector(state)
+  transactionForSelectedPeriod: bpdDisplayTransactionsSelector(state),
+  bpdLastUpdate: bpdLastUpdateSelector(state)
 });
 
 export default connect(
