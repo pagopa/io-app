@@ -1987,7 +1987,7 @@ bonus:
           inactivePeriodBody: "You will be able to start collecting valid transactions starting from {{date}}"
           label:
             one: "1 valid transaction" 
-            other: "{{count}} valid transactions"
+            other: "{{transactions}} valid transactions"
         ranking:
           title: "Your position"
           notReady:
@@ -1999,7 +1999,7 @@ bonus:
       transaction:
         label:
           one: "1 transaction"
-          other: "{{counter}} transactions"
+          other: "{{transactions}} transactions"
         title: "Your transactions"
         goToButton: "Transactions detail"
         noPaymentMethod:
@@ -2026,7 +2026,7 @@ bonus:
               text2: "you have totalized "
               text3:
                 one: "1 valid transaction "
-                other: "{{count}} valid transactions "
+                other: "{{transactions}} valid transactions "
               text4: "and collected "
               text5: "a cashback of "
             milestone:
