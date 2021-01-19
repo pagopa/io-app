@@ -20,7 +20,7 @@ describe("Test how the transaction subtitle changes with different timestamps", 
       circuitType: "Mastercard"
     };
 
-    expect(getSubtitle(myTransaction)).toMatch("17 Dec · € 87.79 ");
+    expect(getSubtitle(myTransaction)).toMatch("€ 87.79 · 17 Dec ");
   });
 
   it("Subtitle should contain hours and minutes when the transaction has a timestamp 00:00", () => {
@@ -39,6 +39,6 @@ describe("Test how the transaction subtitle changes with different timestamps", 
       circuitType: "Mastercard"
     };
 
-    expect(getSubtitle(myTransaction)).toMatch("19 Dec, 12:39 · € 100,000.79 ");
+    expect(getSubtitle(myTransaction)).toMatch("€ 100,000.79 · 19 Dec, 12:39 ");
   });
 });
