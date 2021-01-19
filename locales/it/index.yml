@@ -673,7 +673,7 @@ email:
     validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
 onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
-  contextualHelpContent: !include activation/onboarding_fingerprint.md
+  contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Attivazione
     accept: Accetta
@@ -691,7 +691,7 @@ onboarding:
     reset: Modifica il codice
     confirmInvalid: I due codici non coincidono
     contextualHelpTitle: Qual è il tuo codice di sblocco
-    contextualHelpContent: !include activation/onboarding_pin.md
+    contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
@@ -699,12 +699,12 @@ onboarding:
     headerTitle: Attivazione
     title: Autenticazione biometrica
     body:
-      enrolledText: !include activation/tos_fingerprint_enrolled.md
+      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
         fingerprint: la tua impronta digitale
         faceId: Face ID
         touchId: Touch ID
-      notEnrolledText: !include activation/tos_fingerprint_not_enrolled.md
+      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
 forms:
   validators:
     required: Valore richiesto
@@ -1464,7 +1464,7 @@ identification:
   unlock_screen:
     help:
       title: Accesso con codice di sblocco
-      content: !include activation/onboarding_pin.md
+      content: !include onboarding/onboarding_pin.md
   forgetCode:
     confirmTitle: Hai dimenticato il codice di sblocco?
     confirmMsg: Per poter scegliere un nuovo codice di sblocco dovrai accedere nuovamente.
