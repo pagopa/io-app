@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0-rc.0](https://github.com/pagopa/io-app/compare/1.18.0-rc.3...1.19.0-rc.0) (2021-01-19)
+
+
+### Bug Fixes
+
+* [[#175501909](https://www.pivotaltracker.com/story/show/175501909)] Move Contextual Help "Why A Fee" to ConfirmPaymentMethodScreen ([#2430](https://github.com/pagopa/io-app/issues/2430)) ([8df4587](https://github.com/pagopa/io-app/commit/8df45875610dc9f699837572a9f3d608f3a7abe7))
+
 ## [1.18.0-rc.3](https://github.com/pagopa/io-app/compare/1.18.0-rc.2...1.18.0-rc.3) (2021-01-15)
 
 
