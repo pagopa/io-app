@@ -324,12 +324,12 @@ function* handleRemoveAccount() {
 function* checkStoreHashedFiscalCode(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ) {
-  const checkIsDifferentFiscalCode: boolean = yield select(
+  const checkIsDifferentFiscalCode: Option<boolean> = yield select(
     isDifferentFiscalCodeSelector,
     profileLoadSuccessAction.payload.fiscal_code
   );
   // the current logged user has a different fiscal code from the stored hashed one
-  if (checkIsDifferentFiscalCode) {
+  if (checkIsDifferentFiscalCode.getOrElse(false)) {
     yield put(differentProfileLoggedIn());
   }
   yield put(
