@@ -57,65 +57,73 @@ const CancelBadge = () => (
   </Badge>
 );
 
-const Table = (props: Props) => (
-  <View>
-    <View style={styles.rowId}>
-      <H5 weight={"Regular"} color={"bluegrey"} testID="dateLabel">
-        {(props.transaction.trxDate.getHours() === 0 && props.transaction.trxDate.getMinutes() === 0) ?
-          I18n.t("payment.details.info.onlyDate") : 
-          I18n.t("payment.details.info.dateAndTime")}
-      </H5>
-      <H4 weight={"SemiBold"} color={"bluegreyDark"} testID="dateValue">
-        { (props.transaction.trxDate.getHours() === 0 && props.transaction.trxDate.getMinutes() === 0) ?
-          localeDateFormat(
-            props.transaction.trxDate,
-            I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithoutTime"))
-            :
-          localeDateFormat(
-          props.transaction.trxDate,
-          I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
-        )}
-      </H4>
-    </View>
-    <View spacer={true} small={true} />
-    <View style={styles.rowId}>
-      <H5 weight={"Regular"} color={"bluegrey"}>
-        {I18n.t("bonus.bpd.details.transaction.detail.paymentCircuit")}
-      </H5>
-      <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {props.transaction.circuitType === "Unknown"
-          ? I18n.t("global.unknown")
-          : props.transaction.circuitType}
-      </H4>
-    </View>
-    <View spacer={true} small={true} />
-    <View style={styles.rowId}>
-      <H5 weight={"Regular"} color={"bluegrey"}>
-        {I18n.t("bonus.bpd.details.transaction.detail.transactionAmount")}
-      </H5>
+const Table = (props: Props) => {
+  const isMidNight =
+    props.transaction.trxDate.getHours() +
+      props.transaction.trxDate.getMinutes() ===
+    0;
+  return (
+    <View>
       <View style={styles.rowId}>
-        {props.transaction.amount < 0 && (
-          <>
-            <CancelBadge />
-            <View hspacer={true} />
-          </>
-        )}
+        <H5 weight={"Regular"} color={"bluegrey"} testID="dateLabel">
+          {isMidNight
+            ? I18n.t("payment.details.info.onlyDate")
+            : I18n.t("payment.details.info.dateAndTime")}
+        </H5>
+        <H4 weight={"SemiBold"} color={"bluegreyDark"} testID="dateValue">
+          {isMidNight
+            ? localeDateFormat(
+                props.transaction.trxDate,
+                I18n.t(
+                  "global.dateFormats.fullFormatShortMonthLiteralWithoutTime"
+                )
+              )
+            : localeDateFormat(
+                props.transaction.trxDate,
+                I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
+              )}
+        </H4>
+      </View>
+      <View spacer={true} small={true} />
+      <View style={styles.rowId}>
+        <H5 weight={"Regular"} color={"bluegrey"}>
+          {I18n.t("bonus.bpd.details.transaction.detail.paymentCircuit")}
+        </H5>
         <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-          {formatNumberAmount(props.transaction.amount, true)}
+          {props.transaction.circuitType === "Unknown"
+            ? I18n.t("global.unknown")
+            : props.transaction.circuitType}
+        </H4>
+      </View>
+      <View spacer={true} small={true} />
+      <View style={styles.rowId}>
+        <H5 weight={"Regular"} color={"bluegrey"}>
+          {I18n.t("bonus.bpd.details.transaction.detail.transactionAmount")}
+        </H5>
+        <View style={styles.rowId}>
+          {props.transaction.amount < 0 && (
+            <>
+              <CancelBadge />
+              <View hspacer={true} />
+            </>
+          )}
+          <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+            {formatNumberAmount(props.transaction.amount, true)}
+          </H4>
+        </View>
+      </View>
+      <View spacer={true} small={true} />
+      <View style={styles.rowId}>
+        <H5 weight={"Regular"} color={"bluegrey"}>
+          {I18n.t("bonus.bpd.details.transaction.detail.cashbackAmount")}
+        </H5>
+        <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+          {formatNumberAmount(props.transaction.cashback, true)}
         </H4>
       </View>
     </View>
-    <View spacer={true} small={true} />
-    <View style={styles.rowId}>
-      <H5 weight={"Regular"} color={"bluegrey"}>
-        {I18n.t("bonus.bpd.details.transaction.detail.cashbackAmount")}
-      </H5>
-      <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {formatNumberAmount(props.transaction.cashback, true)}
-      </H4>
-    </View>
-  </View>
-);
+  );
+};
 
 const IdBlock = (props: IdBlockProps) => (
   <View>
