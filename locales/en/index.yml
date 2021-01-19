@@ -2089,7 +2089,7 @@ bonus:
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
     cta:
-      activeBonus: Attiva la tua Carta Giovani
+      activeBonus: Activate your Carta Giovani
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
