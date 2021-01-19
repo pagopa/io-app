@@ -177,12 +177,12 @@ const calculatePaymentStatus = (
   payment: PaidReason | undefined,
   message: CreatedMessageWithContent
 ): PaymentStatus => {
-  if (isPaymentExpired(message)) {
+  if (paid(payment)) {
+    return "paid";
+  } else if (isPaymentExpired(message)) {
     return "expired";
   } else if (isPaymentExpiring(message)) {
     return "expiring";
-  } else if (paid(payment)) {
-    return "paid";
   } else {
     return "valid";
   }
