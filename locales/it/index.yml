@@ -2118,6 +2118,9 @@ bonus:
             active: "**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
+  cgn:
+    cta:
+      activeBonus: Attiva la tua Carta Giovani
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
