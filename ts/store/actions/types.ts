@@ -85,7 +85,7 @@ export type Action =
   | AbiActions
   | BPayActions
   | SatispayActions
-  | CrossSessionsActions;
+  | CrossSessionsActions
   | CgnActions;
 
 export type Dispatch = DispatchAPI<Action>;
