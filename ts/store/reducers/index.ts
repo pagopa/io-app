@@ -36,6 +36,7 @@ import paymentsReducer from "./payments";
 import persistedPreferencesReducer from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
+import crossSessionsReducer from "./crossSessions";
 import searchReducer from "./search";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
@@ -126,7 +127,8 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   installation: installationReducer,
   payments: paymentsReducer,
   content: contentReducer,
-  emailValidation: emailValidationReducer
+  emailValidation: emailValidationReducer,
+  crossSessions: crossSessionsReducer
 });
 
 export function createRootReducer(
