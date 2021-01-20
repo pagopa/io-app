@@ -1,9 +1,11 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { connect } from "react-redux";
+import reactotron from "reactotron-react-native";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
+import { bpdAllData } from "../../../store/actions/details";
 import { bpdDisplayTransactionsSelector } from "../../../store/reducers/details/combiner";
 import { bpdLastUpdateSelector } from "../../../store/reducers/details/lastUpdate";
 import BpdAvailableTransactionsScreen from "./BpdAvailableTransactionsScreen";
@@ -37,8 +39,17 @@ const handleTransactionsStatus = (
  * First check the whole bpd status than if is some check the transactions status.
  * @constructor
  */
-const BpdTransactionsScreen: React.FunctionComponent<Props> = props =>
-  pot.fold(
+const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
+  React.useEffect(() => {
+    if (
+      pot.isError(props.bpdLastUpdate) ||
+      pot.isError(props.transactionForSelectedPeriod)
+    ) {
+      props.loadTransactions();
+    }
+  }, []);
+
+  return pot.fold(
     props.bpdLastUpdate,
     () => <TransactionsUnavailable />,
     () => <LoadTransactions />,
@@ -49,7 +60,10 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props =>
     _ => <LoadTransactions />,
     _ => <TransactionsUnavailable />
   );
-const mapDispatchToProps = (_: Dispatch) => ({});
+};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadTransactions: () => dispatch(bpdAllData.request())
+});
 
 const mapStateToProps = (state: GlobalState) => ({
   transactionForSelectedPeriod: bpdDisplayTransactionsSelector(state),

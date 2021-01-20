@@ -108,7 +108,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
               goToTransactions={() =>
                 // if the transactions state is in pot.isError state
                 // on press request a refresh
-                props.goToTransactions(pot.isError(props.transactions))
+                props.goToTransactions()
               }
             />
           )
@@ -132,10 +132,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(bpdUnsubscribeCompleted());
     dispatch(NavigationActions.back());
   },
-  goToTransactions: (reloadTransactions: boolean) => {
-    if (reloadTransactions) {
-      dispatch(bpdAllData.request());
-    }
+  goToTransactions: () => {
     dispatch(navigateToBpdTransactions());
   },
   goBack: () => dispatch(navigateBack())
