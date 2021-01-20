@@ -8,6 +8,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { ContextualHelp } from "../../../components/ContextualHelp";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
@@ -18,6 +19,7 @@ import BaseScreenComponent, {
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
+import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import { shufflePinPadOnPayment } from "../../../config";
@@ -53,7 +55,7 @@ import {
 } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
 
-type NavigationParams = Readonly<{
+export type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
@@ -116,6 +118,15 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
+  private showHelp = () => {
+    this.props.showModal(
+      <ContextualHelp
+        onClose={this.props.hideModal}
+        title={I18n.t("wallet.whyAFee.title")}
+        body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
+      />
+    );
+  };
   public render(): React.ReactNode {
     const verifica: PaymentRequestsGetResponse = this.props.navigation.getParam(
       "verifica"
@@ -150,7 +161,6 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               wallet={wallet}
               hideMenu={true}
               hideFavoriteIcon={true}
-              showPsp={true}
             />
             <View spacer={true} />
             {wallet.psp === undefined ? (
@@ -166,8 +176,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 {I18n.t("payment.changePsp")}
               </Text>
             </TouchableDefaultOpacity>
+            <View spacer={true} large={true} />
+            <TouchableDefaultOpacity testID="why-a-fee" onPress={this.showHelp}>
+              <Text link={true}>{I18n.t("wallet.whyAFee.title")}</Text>
+            </TouchableDefaultOpacity>
           </View>
-          <View spacer={true} large={true} />
         </Content>
 
         <View style={styles.alert}>
