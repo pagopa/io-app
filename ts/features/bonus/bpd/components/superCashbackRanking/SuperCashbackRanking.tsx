@@ -10,7 +10,10 @@ import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import { localeDateFormat } from "../../../../../utils/locale";
-import { formatNumberWithNoDigits } from "../../../../../utils/stringBuilder";
+import {
+  formatIntegerNumber,
+  formatNumberWithNoDigits
+} from "../../../../../utils/stringBuilder";
 import {
   BpdPeriodWithInfo,
   isBpdRankingReady
@@ -89,7 +92,7 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
       <>
         <Markdown cssStyle={CSS_STYLE}>
           {I18n.t("bonus.bpd.details.superCashback.howItWorks.body", {
-            citizens: props.selectedPeriod.minPosition,
+            citizens: formatIntegerNumber(props.selectedPeriod.minPosition),
             amount: formatNumberWithNoDigits(
               props.selectedPeriod.superCashbackAmount
             )
