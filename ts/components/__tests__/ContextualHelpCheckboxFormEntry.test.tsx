@@ -1,6 +1,9 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
-import { CheckBoxFormItem, CheckboxIDs } from "../SendSupportRequestOptions";
+import {
+  ContextualHelpCheckboxFormEntry,
+  CheckboxIDs
+} from "../SendSupportRequestOptions";
 
 describe("Checkbox+Label component for the SendSupportRequestOptions form", () => {
   // We don't really need a guard-for-in here
@@ -10,7 +13,7 @@ describe("Checkbox+Label component for the SendSupportRequestOptions form", () =
       const mockedToggler = jest.fn();
 
       const { getByTestId } = render(
-        <CheckBoxFormItem
+        <ContextualHelpCheckboxFormEntry
           isChecked={true}
           onToggle={mockedToggler}
           target={id as CheckboxIDs}
@@ -18,7 +21,7 @@ describe("Checkbox+Label component for the SendSupportRequestOptions form", () =
       );
 
       const rawCheckBox = getByTestId("RawCheckbox");
-      const label = getByTestId("CheckboxFormItemLabel");
+      const label = getByTestId("ContextualHelpCheckboxFormEntryLabel");
 
       fireEvent.press(rawCheckBox);
       fireEvent.press(label);

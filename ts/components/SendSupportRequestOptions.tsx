@@ -37,7 +37,7 @@ export enum CheckboxIDs {
  * Checkbox+Label+Optional Accordion component
  */
 
-type CheckboxFormItemProps = {
+type ContextualHelpCheckboxFormEntryProps = {
   target: CheckboxIDs;
   isChecked?: boolean;
   onToggle: () => void;
@@ -66,17 +66,17 @@ const CheckboxLabelKeys: CheckboxLabelMap = {
   }
 };
 
-export const CheckBoxFormItem: React.FC<CheckboxFormItemProps> = ({
+export const ContextualHelpCheckboxFormEntry: React.FC<ContextualHelpCheckboxFormEntryProps> = ({
   target,
   isChecked,
   onToggle
-}: CheckboxFormItemProps) => (
+}: ContextualHelpCheckboxFormEntryProps) => (
   <View style={checkboxStyle.container}>
     <RawCheckBox checked={isChecked} onPress={onToggle} />
     <View hspacer />
     <View style={IOStyles.flex}>
       <Label
-        testID="CheckboxFormItemLabel"
+        testID="ContextualHelpCheckboxFormEntryLabel"
         color={"bluegrey"}
         weight={"Regular"}
         onPress={onToggle}
@@ -170,13 +170,13 @@ const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
             {I18n.t("contextualHelp.sendPersonalInfo.description")}
           </Markdown>
         </View>
-        <CheckBoxFormItem
+        <ContextualHelpCheckboxFormEntry
           target={CheckboxIDs.sendPersonalInfo}
           isChecked={sendPersonalInfo}
           onToggle={toggleSendPersonalInfo}
         />
         {shouldAskForScreenshotWithInitialValue !== undefined && (
-          <CheckBoxFormItem
+          <ContextualHelpCheckboxFormEntry
             target={CheckboxIDs.sendScreenshot}
             isChecked={sendScreenshot}
             onToggle={toggleSendScreenshot}
