@@ -4,19 +4,38 @@ import { NavigationActions } from "react-navigation";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import {
   cgnActivationCancel,
-  cgnActivationStatus
+  cgnActivationStatus,
+  cgnRequestActivation
 } from "../../actions/activation";
-import { navigateToCgnOnboardingInformationTos } from "../../../navigation/actions";
+import {
+  navigateToCgnActivationCompleted,
+  navigateToCgnActivationInformationTos,
+  navigateToCgnActivationLoading
+} from "../../../navigation/actions";
+import { CgnActivationProgressEnum } from "../../reducers/activation";
 
 export function* cgnStartActivationWorker() {
-  yield put(navigateToCgnOnboardingInformationTos());
+  yield put(navigateToCgnActivationInformationTos());
   yield put(navigationHistoryPop(1));
 
-  // HERE WILL BE IMPLEMENTED THE ACTIVATION LOGIC
-  // WIP remove this instruction when the activation flow will be implemented
-  yield take(cgnActivationStatus.request);
+  yield take(cgnRequestActivation.request);
 
-  yield;
+  yield put(navigateToCgnActivationLoading());
+  yield put(navigationHistoryPop(1));
+
+  yield take(cgnRequestActivation.success);
+  yield put(cgnActivationStatus.request());
+
+  // PLACEHOLDER here we should handle the polling for activation status with a dedicated function
+  const result: ReturnType<typeof cgnActivationStatus.success> = yield take(
+    cgnActivationStatus.success
+  );
+
+  switch (result.payload.status) {
+    case CgnActivationProgressEnum.SUCCESS:
+      yield put(navigateToCgnActivationCompleted());
+      break;
+  }
 }
 
 /**

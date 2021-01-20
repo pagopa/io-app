@@ -13,14 +13,10 @@ type Props = ReturnType<typeof mapStateToProps> &
  * and it took too long to get an answer from the server
  * (the user will be notified when the activation is completed by a message)
  */
-const CgnActivationTimeoutScreen = (_: Props): React.ReactElement => (
-  // PLACEHOLDER for activation timeout screen
+const CgnActivationCompletedScreen = (_: Props): React.ReactElement => (
+  // PLACEHOLDER for activation completed screen
   <View>
-    <H1>
-      {
-        "It took too long to verify the activation, we will notify you once completed"
-      }
-    </H1>
+    <H1>{"Congrats, activation completed"}</H1>
   </View>
 );
 
@@ -31,4 +27,4 @@ const mapDispatchToProps = (_: Dispatch) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CgnActivationTimeoutScreen);
+)(CgnActivationCompletedScreen);
