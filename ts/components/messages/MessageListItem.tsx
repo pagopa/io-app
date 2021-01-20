@@ -14,7 +14,6 @@ import {
 } from "../../utils/convertDateToWordDistance";
 import {
   hasPrescriptionData,
-  isExpired,
   messageNeedsCTABar,
   paymentExpirationInfo
 } from "../../utils/messages";
@@ -50,9 +49,7 @@ class MessageListItem extends React.PureComponent<Props> {
   get paid(): boolean {
     return this.props.payment !== undefined;
   }
-  get isPaymentExpired() {
-    return this.paymentExpirationInfo.fold(false, isExpired);
-  }
+
   private handlePress = () => {
     this.props.onPress(this.props.message.id);
   };
@@ -107,7 +104,6 @@ class MessageListItem extends React.PureComponent<Props> {
         isSelectionModeEnabled={isSelectionModeEnabled}
         isItemSelected={isSelected}
         isPaid={this.paid}
-        isExpired={this.isPaymentExpired && !this.paid}
         accessible={true}
         accessibilityLabel={this.announceMessage({
           isRead,
