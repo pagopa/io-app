@@ -172,6 +172,7 @@ export const isMessageRead = (
     .map(ms => ms.isRead)
     .getOrElse(false);
 
+// to keep solid code encapsulation
 export const testableMessageStatusReducer = isTestEnv
   ? { initial_state: INITIAL_STATE }
   : undefined;

@@ -65,6 +65,7 @@ export const paymentByRptIdReducer = (
 export const paymentsByRptIdSelector = (state: GlobalState) =>
   state.entities.paymentByRptId;
 
+// to keep solid code encapsulation
 export const testablepaymentByRptIdReducer = isTestEnv
   ? { initial_state: INITIAL_STATE }
   : undefined;
