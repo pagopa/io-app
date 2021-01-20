@@ -247,13 +247,9 @@ class TransactionsScreen extends React.Component<Props> {
 }
 
 const show_bottom = (id) => {
-  const { present } = React.useRef(useRemovePaymentMethodBottomSheet({
-    icon: null,
-    caption: I18n.t("wallet.methods.bancomat.name")
-  }))
-  // alert(id)
 
-  return present;
+  alert(id)
+
 }
 
 
