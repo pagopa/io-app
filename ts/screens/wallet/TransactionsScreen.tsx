@@ -3,7 +3,7 @@
  * from a specific credit card
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Text, View } from "native-base";
+import { Content, Text, View , Button } from "native-base";
 import * as React from "react";
 import { RefreshControl, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
@@ -48,6 +48,21 @@ import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { handleSetFavourite } from "../../utils/wallet";
+import { IOColors } from "../../components/core/variables/IOColors";
+import { Label } from "../../components/core/typography/Label";
+// import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
+
+//my import
+import { BottomSheetContent } from "../../components/bottomSheet/BottomSheetContent";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { PaymentMethodRepresentationComponent } from "../../features/bonus/bpd/components/paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
+import { Body } from "../../components/core/typography/Body";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
+import { useRemovePaymentMethodBottomSheet } from "../../features/wallet/component/RemovePaymentMethod";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -67,7 +82,7 @@ const styles = StyleSheet.create({
 
   noBottomPadding: {
     padding: variables.contentPadding,
-    paddingBottom: 0
+    paddingBottom: 30
   },
 
   whiteBg: {
@@ -76,13 +91,39 @@ const styles = StyleSheet.create({
 
   brandDarkGray: {
     color: variables.brandDarkGray
+  },
+
+  cardContainer: {
+    height: 235,
+    width: "100%",
+    position: "absolute",
+    top: 16,
+    zIndex: 7,
+    elevation: 7,
+    alignItems: "center"
+  },
+  headerSpacer: {
+    height: 172
+  },
+  cancelButton: {
+    borderColor: IOColors.red,
+    width: '90%',
+    marginHorizontal: variables.contentPadding,
+    marginBottom:30,
   }
 });
+
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.walletCardTransaction.contextualHelpTitle",
   body: "wallet.walletCardTransaction.contextualHelpContent"
 };
+
+const UnsubscribeButton = (props: { onPress?: () => void }) => (
+  <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
+    <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
+  </Button>
+);
 
 const ListEmptyComponent = (
   <Content
@@ -100,6 +141,7 @@ const ListEmptyComponent = (
 const HEADER_HEIGHT = 250;
 
 class TransactionsScreen extends React.Component<Props> {
+  
   private headerContent(
     selectedWallet: Wallet,
     isFavorite: pot.Pot<boolean, Error>
@@ -126,9 +168,11 @@ class TransactionsScreen extends React.Component<Props> {
   private handleLoadMoreTransactions = () => {
     this.props.loadTransactions(this.props.transactionsLoadedLength);
   };
+  
 
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
+
     const transactions = pot.map(this.props.transactions, tsx =>
       tsx
         .filter(t => t.idWallet === selectedWallet.idWallet)
@@ -193,10 +237,25 @@ class TransactionsScreen extends React.Component<Props> {
           readTransactions={this.props.readTransactions}
           ListEmptyComponent={ListEmptyComponent}
         />
+        <UnsubscribeButton
+          // onPress={() => present(() => this.props.deleteWallet(selectedWallet.idWallet))}
+          onPress={() => show_bottom(selectedWallet.idWallet)}
+        />
       </WalletLayout>
     );
   }
 }
+
+const show_bottom = (id) => {
+  const { present } = React.useRef(useRemovePaymentMethodBottomSheet({
+    icon: null,
+    caption: I18n.t("wallet.methods.bancomat.name")
+  }))
+  // alert(id)
+
+  return present;
+}
+
 
 const mapStateToProps = (state: GlobalState) => ({
   transactions: getTransactions(state),

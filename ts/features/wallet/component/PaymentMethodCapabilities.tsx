@@ -69,7 +69,7 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
         <IconFont
           name={"io-preferenze"}
           size={20}
-          color={IOColors.bluegreyDark}
+          color={IOColors.bluegreyDark} 
           style={styles.icon}
         />
         <View hspacer={true} />

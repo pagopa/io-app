@@ -109,6 +109,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
     super(props);
     this.state = { showFullReason: false };
   }
+  
 
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
