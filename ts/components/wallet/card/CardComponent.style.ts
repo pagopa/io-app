@@ -3,6 +3,22 @@ import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
 
 export default StyleSheet.create({
+  cardHeader:{
+    backgroundColor: variables.brandGray,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1.5,
+    elevation: -7,
+    zIndex: -7,
+    marginTop: -20,
+    borderRadius: 8,
+    marginLeft: 12,
+    marginRight: 12,
+    paddingBottom: 10,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+  },
   card: {
     // iOS and Andorid card shadow
     shadowColor: "#000",
