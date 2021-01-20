@@ -266,7 +266,6 @@ function* checkPreferredLanguage(
   }
 }
 
-// store the profile fiscal code as sha256 hashed string
 function* handleLoadBonusBeforeRemoveAccount() {
   const bpdActive: ReturnType<typeof bpdEnabledSelector> = yield select(
     bpdEnabledSelector
@@ -325,12 +324,12 @@ function* handleRemoveAccount() {
 function* checkStoreHashedFiscalCode(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ) {
-  const checkIsDifferentFiscalCode: boolean = yield select(
+  const checkIsDifferentFiscalCode: boolean | undefined = yield select(
     isDifferentFiscalCodeSelector,
     profileLoadSuccessAction.payload.fiscal_code
   );
   // the current logged user has a different fiscal code from the stored hashed one
-  if (checkIsDifferentFiscalCode) {
+  if (checkIsDifferentFiscalCode === true) {
     yield put(differentProfileLoggedIn());
   }
   yield put(
@@ -372,6 +371,7 @@ export function* watchProfile(
   yield takeLatest(removeAccountMotivation, handleRemoveAccount);
 }
 
+// to ensure right code encapsulation we export functions/variables just for tests purposes
 export const profileSagaTestable = isTestEnv
   ? {
       startEmailValidationProcessSaga,

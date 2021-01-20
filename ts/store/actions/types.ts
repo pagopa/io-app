@@ -14,6 +14,7 @@ import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/acti
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
+import { CgnActions } from "../../features/bonus/cgn/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -84,7 +85,8 @@ export type Action =
   | AbiActions
   | BPayActions
   | SatispayActions
-  | CrossSessionsActions;
+  | CrossSessionsActions
+  | CgnActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

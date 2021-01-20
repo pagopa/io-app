@@ -49,7 +49,6 @@ const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  // display the error with the retry only in case of networking errors
   bonus: availableBonusTypesSelectorFromId(ID_BPD_TYPE)(state),
   bpdActiveBonus: bpdEnabledSelector(state)
 });

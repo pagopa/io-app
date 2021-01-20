@@ -19,8 +19,8 @@ const INITIAL_STATE: CrossSessionsState = {
   hashedFiscalCode: undefined
 };
 
-const hash = (value: string): string =>
-  sha("sha256").update(value).digest("hex");
+const hash = (value: FiscalCode): NonEmptyString =>
+  sha("sha256").update(value).digest("hex") as NonEmptyString;
 
 const reducer = (
   state: CrossSessionsState = INITIAL_STATE,
@@ -29,7 +29,7 @@ const reducer = (
   if (isActionOf(setProfileHashedFiscalCode, action)) {
     return {
       ...state,
-      hashedFiscalCode: hash(action.payload) as NonEmptyString
+      hashedFiscalCode: hash(action.payload)
     };
   }
   return state;
@@ -41,8 +41,8 @@ export const hashedProfileFiscalCodeSelector = (
 ): HashedFiscalCode => state.crossSessions.hashedFiscalCode;
 
 /**
- * return true if the given fiscal code is different from the hashed stored one
- * if there is no stored hashed fiscal code it returns false (cant say if they are different)
+ * return true if the given fiscal code is different from the hashed stored one, false otherwise
+ * if there is no stored hashed fiscal code it returns undefined (cant say if they are different)
  */
 export const isDifferentFiscalCodeSelector = (
   state: GlobalState,
@@ -50,10 +50,10 @@ export const isDifferentFiscalCodeSelector = (
 ) =>
   createSelector(
     hashedProfileFiscalCodeSelector,
-    (hashedProfile: HashedFiscalCode): boolean =>
+    (hashedProfile: HashedFiscalCode): boolean | undefined =>
       fromNullable(hashedProfile)
-        .map(hp => hp !== hash(fiscalCode))
-        .getOrElse(false)
+        .map<boolean | undefined>(hp => hp !== hash(fiscalCode))
+        .getOrElse(undefined)
   )(state);
 
 export default reducer;

@@ -108,11 +108,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
           small={true}
           month={capitalize(formatDateAsMonth(dueDate.value))}
           day={formatDateAsDay(dueDate.value)}
-          backgroundColor={
-            this.isPaymentExpiring
-              ? customVariables.brandDanger
-              : customVariables.brandDarkGray
-          }
+          backgroundColor={customVariables.brandDarkGray}
           textColor={customVariables.colorWhite}
         />
       );

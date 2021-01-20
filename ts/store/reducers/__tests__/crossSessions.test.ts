@@ -19,6 +19,7 @@ jest.mock("react-native-share", () => ({
 const hash = (value: string): string =>
   sha("sha256").update(value).digest("hex");
 const fiscalCode = "TAMMRA80A41H501Y" as FiscalCode;
+const fiscalCode2 = "TAMMRA80A41H501X" as FiscalCode;
 const hashedFiscalCode = hash(fiscalCode);
 
 describe("cross sessions status reducer/selectors", () => {
@@ -47,7 +48,7 @@ describe("cross sessions status reducer/selectors", () => {
       undefined,
       setProfileHashedFiscalCode(fiscalCode)
     );
-    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode)).toBeFalsy();
+    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode)).toBe(false);
     // empty state
     expect(
       isDifferentFiscalCodeSelector(
@@ -57,6 +58,14 @@ describe("cross sessions status reducer/selectors", () => {
         },
         fiscalCode
       )
-    ).toBeFalsy();
+    ).toBeUndefined();
+  });
+
+  it("should be different", () => {
+    const globalState: GlobalState = appReducer(
+      undefined,
+      setProfileHashedFiscalCode(fiscalCode)
+    );
+    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode2)).toBe(true);
   });
 });
