@@ -10,6 +10,7 @@ import { Action } from "../../actions/types";
 import { paymentCompletedSuccess } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
+import { isTestEnv } from "../../../utils/environment";
 
 export type PaidReason = Readonly<
   | {
@@ -63,3 +64,7 @@ export const paymentByRptIdReducer = (
 
 export const paymentsByRptIdSelector = (state: GlobalState) =>
   state.entities.paymentByRptId;
+
+export const testablepaymentByRptIdReducer = isTestEnv
+  ? { initial_state: INITIAL_STATE }
+  : undefined;

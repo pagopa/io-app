@@ -36,7 +36,7 @@ const messageWithContent = {
   } as MessageContent
 } as CreatedMessageWithContent;
 
-describe("paymentByRptIdReducer reducer", () => {
+describe("messagesStatus reducer", () => {
   it("should return the initial state", () => {
     expect(reducer(undefined, (dymmyAction as unknown) as Action)).toEqual({});
   });
