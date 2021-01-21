@@ -99,8 +99,9 @@ const styles = StyleSheet.create({
   cancelButton: {
     borderColor: IOColors.red,
     width: '90%',
+    height: variables.btnHeight + 10,
     marginHorizontal: variables.contentPadding,
-    marginBottom: 30,
+    marginTop: 16,
   }
 });
 
@@ -125,7 +126,6 @@ const ListEmptyComponent = (
     <View spacer={true} />
     <Text>{I18n.t("wallet.noTransactionsInTransactionsScreen")}</Text>
     <View spacer={true} large={true} />
-    <EdgeBorderComponent />
   </Content>
 );
 
@@ -235,6 +235,7 @@ const TransactionsScreen: React.FunctionComponent<Props> = (props: Props) => {
       <UnsubscribeButton
         onPress={() => present(() => props.deleteWallet(selectedWallet.idWallet))}
       />
+      <EdgeBorderComponent />
     </WalletLayout>
   );
 }
