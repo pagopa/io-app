@@ -3,9 +3,8 @@
  * from a specific credit card
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -18,15 +17,10 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
 import I18n from "../../i18n";
 import {
-  navigateToTransactionDetailsScreen,
   navigateToWalletHome,
   navigateToWalletList
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import {
-  fetchTransactionsRequest,
-  readTransaction
-} from "../../store/actions/wallet/transactions";
 import {
   deleteWalletRequest,
   setFavouriteWalletRequest
@@ -36,8 +30,7 @@ import {
   getFavoriteWalletId,
   paymentMethodsSelector
 } from "../../store/reducers/wallet/wallets";
-import variables from "../../theme/variables";
-import { Transaction, Wallet } from "../../types/pagopa";
+import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { handleSetFavourite } from "../../utils/wallet";
 
@@ -51,26 +44,6 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
-
-const styles = StyleSheet.create({
-  walletBannerText: {
-    alignItems: "flex-end",
-    flexDirection: "row"
-  },
-
-  noBottomPadding: {
-    padding: variables.contentPadding,
-    paddingBottom: 0
-  },
-
-  whiteBg: {
-    backgroundColor: variables.colorWhite
-  },
-
-  brandDarkGray: {
-    color: variables.brandDarkGray
-  }
-});
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.walletCardTransaction.contextualHelpTitle",
@@ -153,17 +126,6 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadTransactions: (start: number) =>
-    dispatch(fetchTransactionsRequest({ start })),
-  navigateToTransactionDetailsScreen: (transaction: Transaction) => {
-    dispatch(readTransaction(transaction));
-    dispatch(
-      navigateToTransactionDetailsScreen({
-        transaction,
-        isPaymentCompletedTransaction: false
-      })
-    );
-  },
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
   deleteWallet: (walletId: number) =>
