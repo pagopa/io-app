@@ -5,7 +5,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View , Button } from "native-base";
 import * as React from "react";
-import { RefreshControl, StyleSheet } from "react-native";
+import { RefreshControl, StyleSheet, Alert } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -238,8 +238,26 @@ class TransactionsScreen extends React.Component<Props> {
           ListEmptyComponent={ListEmptyComponent}
         />
         <UnsubscribeButton
-          // onPress={() => present(() => this.props.deleteWallet(selectedWallet.idWallet))}
-          onPress={() => show_bottom(selectedWallet.idWallet)}
+          //we need to call custom hooks here
+          // onPress={() => this.props.deleteWallet(selectedWallet.idWallet)}
+          //for now we handle it with an alert
+          onPress={
+            () => {
+              Alert.alert(
+                I18n.t("cardComponent.deleteTitle"),
+                I18n.t("cardComponent.deleteMsg"),
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "Delete", onPress: () => this.props.deleteWallet(selectedWallet.idWallet) }
+                ],
+                { cancelable: false }
+              );
+            }
+          }
         />
       </WalletLayout>
     );
@@ -247,7 +265,6 @@ class TransactionsScreen extends React.Component<Props> {
 }
 
 const show_bottom = (id) => {
-
   alert(id)
 
 }
