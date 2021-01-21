@@ -12,7 +12,7 @@ export type Props = Pick<
   "contextualHelp"
 >;
 
-export const loadLocales = () => ({
+const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.details.transaction.goToButton"),
   title: I18n.t("bonus.bpd.details.transaction.error.title"),
   body: I18n.t("bonus.bpd.details.transaction.error.body")

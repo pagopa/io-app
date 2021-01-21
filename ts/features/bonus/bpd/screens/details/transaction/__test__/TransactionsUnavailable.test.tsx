@@ -4,9 +4,7 @@ import * as React from "react";
 import { Provider } from "react-redux";
 import { Store } from "redux";
 import I18n from "../../../../../../../i18n";
-import TransactionsUnavailable, {
-  loadLocales
-} from "../TransactionsUnavailable";
+import TransactionsUnavailable from "../TransactionsUnavailable";
 
 jest.mock("react-navigation", () => ({
   NavigationEvents: "mockNavigationEvents",
@@ -50,13 +48,20 @@ describe("TransactionsUnavailable component", () => {
     });
   });
   it("should use the right string as header, title and body", () => {
-    const { headerTitle, title, body } = loadLocales();
-
-    expect(headerTitle).toEqual(
+    const component = getComponent(store);
+    const headerTitle = component.getByText(
       I18n.t("bonus.bpd.details.transaction.goToButton")
     );
-    expect(title).toEqual(I18n.t("bonus.bpd.details.transaction.error.title"));
-    expect(body).toEqual(I18n.t("bonus.bpd.details.transaction.error.body"));
+    const title = component.getByText(
+      I18n.t("bonus.bpd.details.transaction.error.title")
+    );
+    const body = component.getByText(
+      I18n.t("bonus.bpd.details.transaction.error.body")
+    );
+
+    expect(headerTitle).not.toBeEmpty();
+    expect(title).not.toBeEmpty();
+    expect(body).not.toBeEmpty();
   });
 });
 const getComponent = (store: Store<unknown>) =>
