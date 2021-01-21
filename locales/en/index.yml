@@ -1223,15 +1223,11 @@ messages:
       addMemo: 
           block1: Add a reminder for the 
           block2: at
-      expiringAlert:
-        block1: This payment notice will expire on
-        block2: at
+      expiringOrValidAlert:
+        block1: You can pay this notice by
       expiredAlert:
-        expirable:
-          block1: The payment notice expired at 
-          block2: "on"
-        unexpirable:
-          block: Your payment notice is overdue. You can still pay; IO app will update the amount if needed.
+        block1: The payment notice expired at
+        block2: on
     prescription:  
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
@@ -1241,6 +1237,7 @@ messages:
     pay: Pay € {{amount}}
     onlyPay: Pay
     paid: Paid
+    seeNotice: See Notice
     reminder: Reminder
     reminderShort: Memo
     reminderCalendarSelect: In which calendar you want to add the reminder?
