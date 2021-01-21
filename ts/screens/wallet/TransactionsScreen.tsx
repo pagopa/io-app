@@ -64,7 +64,7 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  Readonly<{ isLoading: boolean; loadingCaption?: string | undefined; loadingOpacity?: number | undefined; onCancel?: any; }>;
+  Readonly<{ isLoading: boolean; loadingCaption?: string | undefined; loadingOpacity?: number | undefined; onCancel?: any }>;
   
 const styles = StyleSheet.create({
   walletBannerText: {
