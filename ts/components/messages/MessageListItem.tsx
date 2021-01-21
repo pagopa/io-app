@@ -2,7 +2,6 @@
  * A component to display the list item in the MessagesHomeScreen
  */
 import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
 import React from "react";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
