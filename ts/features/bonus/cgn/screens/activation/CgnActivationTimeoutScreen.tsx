@@ -4,6 +4,7 @@ import { View } from "native-base";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import { H1 } from "../../../../../components/core/typography/H1";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -15,13 +16,15 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 const CgnActivationTimeoutScreen = (_: Props): React.ReactElement => (
   // PLACEHOLDER for activation timeout screen
-  <View>
-    <H1>
-      {
-        "It took too long to verify the activation, we will notify you once completed"
-      }
-    </H1>
-  </View>
+  <BaseScreenComponent>
+    <View>
+      <H1>
+        {
+          "It took too long to verify the activation, we will notify you once completed"
+        }
+      </H1>
+    </View>
+  </BaseScreenComponent>
 );
 
 const mapStateToProps = (_: GlobalState) => ({});

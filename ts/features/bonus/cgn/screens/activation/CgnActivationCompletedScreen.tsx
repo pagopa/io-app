@@ -4,6 +4,7 @@ import { View } from "native-base";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import { H1 } from "../../../../../components/core/typography/H1";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -15,9 +16,11 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 const CgnActivationCompletedScreen = (_: Props): React.ReactElement => (
   // PLACEHOLDER for activation completed screen
-  <View>
-    <H1>{"Congrats, activation completed"}</H1>
-  </View>
+  <BaseScreenComponent>
+    <View>
+      <H1>{"Congrats, activation completed"}</H1>
+    </View>
+  </BaseScreenComponent>
 );
 
 const mapStateToProps = (_: GlobalState) => ({});

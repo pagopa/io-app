@@ -5,6 +5,7 @@ import { cgnActivationStatus } from "../actions/activation";
 
 export enum CgnActivationProgressEnum {
   "UNDEFINED" = "UNDEFINED",
+  "TIMEOUT" = "TIMEOUT", // number of polling exceeded
   "PROGRESS" = "PROGRESS", // The request is started
   "PENDING" = "PENDING", // Polling time exceeded
   "ERROR" = "ERROR", // The request is started

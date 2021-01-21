@@ -1,10 +1,9 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, race, take } from "redux-saga/effects";
+import { call, delay, put, race, take } from "redux-saga/effects";
 import { NavigationActions } from "react-navigation";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import {
   cgnActivationCancel,
-  cgnActivationStatus,
   cgnRequestActivation
 } from "../../actions/activation";
 import {
@@ -12,7 +11,6 @@ import {
   navigateToCgnActivationInformationTos,
   navigateToCgnActivationLoading
 } from "../../../navigation/actions";
-import { CgnActivationProgressEnum } from "../../reducers/activation";
 
 export function* cgnStartActivationWorker() {
   yield put(navigateToCgnActivationInformationTos());
@@ -23,19 +21,14 @@ export function* cgnStartActivationWorker() {
   yield put(navigateToCgnActivationLoading());
   yield put(navigationHistoryPop(1));
 
-  yield take(cgnRequestActivation.success);
-  yield put(cgnActivationStatus.request());
+  // UNCOMMENT when api implementation has been completed
+  // yield take(cgnRequestActivation.success);
+  // yield put(cgnActivationStatus.request());
 
-  // PLACEHOLDER here we should handle the polling for activation status with a dedicated function
-  const result: ReturnType<typeof cgnActivationStatus.success> = yield take(
-    cgnActivationStatus.success
-  );
+  yield delay(1000);
 
-  switch (result.payload.status) {
-    case CgnActivationProgressEnum.SUCCESS:
-      yield put(navigateToCgnActivationCompleted());
-      break;
-  }
+  yield put(navigateToCgnActivationCompleted());
+  yield put(navigationHistoryPop(1));
 }
 
 /**

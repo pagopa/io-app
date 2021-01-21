@@ -4,6 +4,7 @@ import { View } from "native-base";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import { H1 } from "../../../../../components/core/typography/H1";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -13,9 +14,11 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 const CgnActivationLoadingScreen = (_: Props): React.ReactElement => (
   // PLACEHOLDER for the loading error component screen
-  <View>
-    <H1>{"Activation is loading"}</H1>
-  </View>
+  <BaseScreenComponent>
+    <View>
+      <H1>{"Activation is loading"}</H1>
+    </View>
+  </BaseScreenComponent>
 );
 
 const mapStateToProps = (_: GlobalState) => ({});
