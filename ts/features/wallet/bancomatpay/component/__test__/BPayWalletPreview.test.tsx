@@ -10,7 +10,6 @@ import BPayWalletPreview from "../BPayWalletPreview";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import ROUTES from "../../../../../navigation/routes";
 
-jest.mock("../../../activation/bancomat/screens/hooks/useImageResize");
 describe("BPayWalletPreview component", () => {
   const mockStore = configureMockStore();
   // eslint-disable-next-line functional/no-let
