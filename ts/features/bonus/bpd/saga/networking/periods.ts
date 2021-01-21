@@ -30,7 +30,7 @@ const convertPeriod = (
 ): BpdPeriod => ({
   ...networkPeriod,
   awardPeriodId: networkPeriod.awardPeriodId as AwardPeriodId,
-  superCashbackAmount: 0, // this field isn't yet present in AwardPeriodResource
+  superCashbackAmount: networkPeriod.maxAmount,
   status: fromNullable(periodStatusMap.get(networkPeriod.status)).getOrElse(
     statusFallback
   )

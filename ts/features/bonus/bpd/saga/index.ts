@@ -3,10 +3,7 @@ import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { bpdApiUrlPrefix } from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
-import {
-  bpdDetailsLoadAll,
-  bpdLoadActivationStatus
-} from "../store/actions/details";
+import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
 import {
   bpdDeleteUserFromProgram,
@@ -21,15 +18,13 @@ import {
 import { bpdPeriodsAmountLoad } from "../store/actions/periods";
 import { bpdTransactionsLoad } from "../store/actions/transactions";
 import { deleteCitizen, getCitizen, putEnrollCitizen } from "./networking";
+import { loadBpdData } from "./networking/loadBpdData";
+import { loadPeriodsWithInfo } from "./networking/loadPeriodsWithInfo";
 import { patchCitizenIban } from "./networking/patchCitizenIban";
 import {
   bpdLoadPaymentMethodActivationSaga,
   bpdUpdatePaymentMethodActivationSaga
 } from "./networking/paymentMethod";
-import {
-  loadPeriodsAmount,
-  prefetchBpdData
-} from "./networking/prefetchBpdDetails";
 import { bpdLoadTransactionsSaga } from "./networking/transactions";
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
@@ -83,7 +78,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   );
 
   // prefetch all the bpd data
-  yield takeEvery(bpdDetailsLoadAll, prefetchBpdData);
+  yield takeEvery(bpdAllData.request, loadBpdData);
 
   // load bpd transactions for a period
   yield takeEvery(
@@ -95,7 +90,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   // Load bpd periods with amount
   yield takeEvery(
     bpdPeriodsAmountLoad.request,
-    loadPeriodsAmount,
+    loadPeriodsWithInfo,
     bpdBackendClient
   );
 

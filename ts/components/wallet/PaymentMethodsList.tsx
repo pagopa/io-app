@@ -20,13 +20,13 @@ import { withLightModalContext } from "../helpers/withLightModalContext";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 import I18n from "../../i18n";
-import { BackendStatus, SectionStatusKey } from "../../api/backendPublic";
 import { GlobalState } from "../../store/reducers/types";
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
 import {
   getSectionMessageLocale,
   statusColorMap
 } from "../SectionStatusComponent";
+import { BackendStatus, SectionStatusKey } from "../../types/backendStatus";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;

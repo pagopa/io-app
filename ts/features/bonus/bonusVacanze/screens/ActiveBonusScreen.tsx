@@ -13,7 +13,6 @@ import {
 import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
@@ -64,7 +63,7 @@ import {
 } from "../utils/bonus";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import { bottomSheetContent } from "../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -277,7 +276,6 @@ const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
-  const { present, dismiss } = useBottomSheetModal();
   const bonusFromNav = props.navigation.getParam("bonus");
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
   const screenShotRef = React.createRef<ViewShot>();
@@ -399,28 +397,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   };
 
-  const openModalBox = async () => {
-    const modalBox = (
-      <QrModalBox
-        codeToDisplay={getBonusCodeFormatted(bonus)}
-        codeToCopy={bonus.id}
-        onClose={dismiss}
-        qrCode={qrCode[QR_CODE_MIME_TYPE]}
-        logo={props.logo}
-      />
-    );
-
-    const bottomSheetProps = await bottomSheetContent(
-      modalBox,
-      I18n.t("bonus.bonusVacanze.name"),
-      466,
-      dismiss
-    );
-
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
+  const { present: openModalBox } = useIOBottomSheet(
+    <QrModalBox
+      codeToDisplay={getBonusCodeFormatted(bonus)}
+      codeToCopy={bonus.id}
+      qrCode={qrCode[QR_CODE_MIME_TYPE]}
+      logo={props.logo}
+    />,
+    I18n.t("bonus.bonusVacanze.name"),
+    466
+  );
 
   const handleShare = () =>
     shareQR(

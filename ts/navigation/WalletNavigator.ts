@@ -1,13 +1,16 @@
 import { createStackNavigator } from "react-navigation";
-import { bonusVacanzeEnabled, bpdEnabled } from "../config";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
+import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
+import PaymentMethodOnboardingBPayNavigator from "../features/wallet/onboarding/bancomatPay/navigation/navigator";
+import WALLET_ONBOARDING_BPAY_ROUTES from "../features/wallet/onboarding/bancomatPay/navigation/routes";
 import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
 import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
@@ -30,6 +33,8 @@ import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
+import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
+import CgnNavigator from "../features/bonus/cgn/navigation/navigator";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -53,6 +58,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_SATISPAY_DETAIL]: {
     screen: SatispayDetailScreen
+  },
+  [ROUTES.WALLET_BPAY_DETAIL]: {
+    screen: BPayDetailScreen
   },
   [ROUTES.WALLET_ADD_CARD]: {
     screen: AddCardScreen
@@ -119,6 +127,17 @@ const bpdConfigMap = bpdEnabled
       },
       [WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN]: {
         screen: PaymentMethodOnboardingSatispayNavigator
+      },
+      [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: {
+        screen: PaymentMethodOnboardingBPayNavigator
+      }
+    }
+  : {};
+
+const cgnConfigMap = cgnEnabled
+  ? {
+      [CGN_ROUTES.MAIN]: {
+        screen: CgnNavigator
       }
     }
   : {};
@@ -126,7 +145,8 @@ const bpdConfigMap = bpdEnabled
 const routeConfig = {
   ...baseRouteConfigMap,
   ...bonusVacanzeConfigMap,
-  ...bpdConfigMap
+  ...bpdConfigMap,
+  ...cgnConfigMap
 };
 
 /**

@@ -1,39 +1,30 @@
 import { reverse } from "fp-ts/lib/Array";
+import { constUndefined } from "fp-ts/lib/function";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
-import { constUndefined } from "fp-ts/lib/function";
-import { getValue } from "../../bonus/bpd/model/RemoteValue";
-import {
-  ID_BONUS_VACANZE_TYPE,
-  ID_BPD_TYPE
-} from "../../bonus/bonusVacanze/utils/bonus";
-import { getLocalePrimaryWithFallback } from "../../../utils/locale";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { H3 } from "../../../components/core/typography/H3";
-import I18n from "../../../i18n";
-import { GlobalState } from "../../../store/reducers/types";
-import { Dispatch } from "../../../store/actions/types";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../../config";
-import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
-import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
 import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
-import { navigateToBonusRequestInformation } from "../../bonus/bonusVacanze/navigation/action";
-import { availableBonusTypesSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
-import bonusVacanzeLogo from "../../../../img/bonus/bonusVacanze/logo_bonusvacanze_blue.png";
 import cashbackLogo from "../../../../img/bonus/bpd/logo_cashback_blue.png";
+import { H3 } from "../../../components/core/typography/H3";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { bpdEnabled } from "../../../config";
+import I18n from "../../../i18n";
+import { Dispatch } from "../../../store/actions/types";
+import { GlobalState } from "../../../store/reducers/types";
+import { availableBonusTypesSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { ID_BPD_TYPE } from "../../bonus/bonusVacanze/utils/bonus";
+import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
+import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
 import FeaturedCard from "./FeaturedCard";
 
-type Props = {
-  bvActive: boolean;
-} & ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type BonusUtils = {
-  logo?: typeof bonusVacanzeLogo | typeof cashbackLogo;
+  logo?: typeof cashbackLogo;
   handler: (bonus: BonusAvailable) => void;
 };
 
@@ -50,15 +41,8 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
       handler: _ => props.startBpdOnboarding()
     });
   }
-  if (bonusVacanzeEnabled) {
-    bonusMap.set(ID_BONUS_VACANZE_TYPE, {
-      logo: bonusVacanzeLogo,
-      handler: bonus => props.navigateToBonusRequest(bonus)
-    });
-  }
 
-  const anyBonusNotActive =
-    !props.bvActive || getValue(props.bpdActiveBonus) === false;
+  const anyBonusNotActive = !pot.getOrElse(props.bpdActiveBonus, false);
   return anyBonusNotActive ? (
     <View style={styles.container}>
       <View style={[IOStyles.horizontalContentPadding]}>
@@ -82,21 +66,9 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
             bu => bu.logo
           );
           switch (b.id_type) {
-            case ID_BONUS_VACANZE_TYPE:
-              return (
-                !props.bvActive && (
-                  <FeaturedCard
-                    key={`featured_bonus_${i}`}
-                    title={b[getLocalePrimaryWithFallback()].name}
-                    image={logo}
-                    isNew={false}
-                    onPress={() => handler(b)}
-                  />
-                )
-              );
             case ID_BPD_TYPE:
               return (
-                getValue(props.bpdActiveBonus) === false && (
+                !pot.getOrElse(props.bpdActiveBonus, false) && (
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={I18n.t("bonus.bpd.name")}
@@ -121,10 +93,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  startBpdOnboarding: () => dispatch(bpdOnboardingStart()),
-  navigateToBonusRequest: (bonusItem: BonusAvailable) => {
-    dispatch(navigateToBonusRequestInformation({ bonusItem }));
-  }
+  startBpdOnboarding: () => dispatch(bpdOnboardingStart())
 });
 
 export default connect(

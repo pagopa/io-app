@@ -12,7 +12,7 @@ import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { showToast } from "../../../../../utils/showToast";
 import { isError, isLoading, isReady } from "../../model/RemoteValue";
-import { bpdDetailsLoadAll } from "../../store/actions/details";
+import { bpdAllData } from "../../store/actions/details";
 import { bpdUnsubscribeCompleted } from "../../store/actions/onboarding";
 import { bpdUnsubscriptionSelector } from "../../store/reducers/details/activation";
 import { bpdTransactionsForSelectedPeriod } from "../../store/reducers/details/transactions";
@@ -22,6 +22,7 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
+import BpdLastUpdateComponent from "../../components/BpdLastUpdateComponent";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
@@ -87,7 +88,6 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
         return true;
     }
   });
-
   return (
     <LoadingSpinnerOverlay
       isLoading={loading}
@@ -113,6 +113,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
           <BpdPeriodSelector />
         </View>
         <View style={styles.selectorSpacer} />
+        <BpdLastUpdateComponent />
         <BpdPeriodDetail />
       </DarkLayout>
     </LoadingSpinnerOverlay>
@@ -120,9 +121,9 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  load: () => dispatch(bpdDetailsLoadAll()),
+  load: () => dispatch(bpdAllData.request()),
   completeUnsubscription: () => {
-    dispatch(bpdDetailsLoadAll());
+    dispatch(bpdAllData.request());
     dispatch(bpdUnsubscribeCompleted());
     dispatch(NavigationActions.back());
   },
