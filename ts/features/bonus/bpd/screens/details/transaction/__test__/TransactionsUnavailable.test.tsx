@@ -3,7 +3,10 @@ import configureMockStore from "redux-mock-store";
 import * as React from "react";
 import { Provider } from "react-redux";
 import { Store } from "redux";
-import TransactionsUnavailable from "../TransactionsUnavailable";
+import I18n from "../../../../../../../i18n";
+import TransactionsUnavailable, {
+  loadLocales
+} from "../TransactionsUnavailable";
 
 jest.mock("react-navigation", () => ({
   NavigationEvents: "mockNavigationEvents",
@@ -45,6 +48,15 @@ describe("TransactionsUnavailable component", () => {
     expect(rasterImageComponent).toHaveProp("source", {
       testUri: paymentUnavailableIconPath
     });
+  });
+  it("should use the right string as header, title and body", () => {
+    const { headerTitle, title, body } = loadLocales();
+
+    expect(headerTitle).toEqual(
+      I18n.t("bonus.bpd.details.transaction.goToButton")
+    );
+    expect(title).toEqual(I18n.t("bonus.bpd.details.transaction.error.title"));
+    expect(body).toEqual(I18n.t("bonus.bpd.details.transaction.error.body"));
   });
 });
 const getComponent = (store: Store<unknown>) =>
