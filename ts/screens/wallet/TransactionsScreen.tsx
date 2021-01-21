@@ -158,8 +158,6 @@ const TransactionsScreen: React.FunctionComponent<Props> = (props: Props) => {
     props.loadTransactions(props.transactionsLoadedLength);
   };
 
-  //=================
-
   const selectedWallet = props.navigation.getParam("selectedWallet");
 
   const transactions = pot.map(props.transactions, tsx =>
@@ -238,7 +236,7 @@ const TransactionsScreen: React.FunctionComponent<Props> = (props: Props) => {
       <EdgeBorderComponent />
     </WalletLayout>
   );
-}
+};
 
 const mapStateToProps = (state: GlobalState) => ({
   transactions: getTransactions(state),
