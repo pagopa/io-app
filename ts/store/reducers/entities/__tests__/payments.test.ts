@@ -1,8 +1,5 @@
 import { IPatternStringTag } from "italia-ts-commons/lib/strings";
-import {
-  paymentByRptIdReducer,
-  testablepaymentByRptIdReducer
-} from "../payments";
+import { paymentByRptIdReducer, INITIAL_STATE } from "../payments";
 import { paymentCompletedSuccess } from "../../../actions/wallet/payment";
 import { Transaction } from "../../../../types/pagopa";
 import { myRptId } from "../../../../utils/testFaker";
@@ -58,6 +55,6 @@ describe("paymentByRptIdReducer reducer", () => {
     expect(Object.keys(newState).length).toEqual(0);
     expect(
       paymentByRptIdReducer(notEmptyState, differentProfileLoggedIn())
-    ).toEqual(testablepaymentByRptIdReducer?.initial_state);
+    ).toEqual(INITIAL_STATE);
   });
 });
