@@ -149,7 +149,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
       ) : null;
     const content =
       nestedCTA ||
-      (isPaymentStillValid && (
+      (isPaymentStillValid && (calendarIcon || calendarEventButton) && (
         <>
           {calendarIcon}
           {calendarIcon && <View hspacer={true} small={true} />}
@@ -157,15 +157,21 @@ class MessageListCTABar extends React.PureComponent<Props> {
           {calendarEventButton && <View hspacer={true} small={true} />}
         </>
       ));
+    if (!content) {
+      return null;
+    }
     return (
-      <View
-        style={[styles.topContainer, this.paid && styles.topContainerPaid]}
-        accessible={false}
-        accessibilityElementsHidden={true}
-        importantForAccessibility={"no-hide-descendants"}
-      >
-        {content}
-      </View>
+      <>
+        <View spacer={true} large={true} />
+        <View
+          style={[styles.topContainer, this.paid && styles.topContainerPaid]}
+          accessible={false}
+          accessibilityElementsHidden={true}
+          importantForAccessibility={"no-hide-descendants"}
+        >
+          {content}
+        </View>
+      </>
     );
   }
 }

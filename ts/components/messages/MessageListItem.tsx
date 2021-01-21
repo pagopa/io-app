@@ -2,7 +2,7 @@
  * A component to display the list item in the MessagesHomeScreen
  */
 import { fromNullable } from "fp-ts/lib/Option";
-import { View } from "native-base";
+import { Text, View } from "native-base";
 import React from "react";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -113,7 +113,6 @@ class MessageListItem extends React.PureComponent<Props> {
       >
         {!hasPrescriptionData(message) && messageNeedsCTABar(message) && (
           <React.Fragment>
-            <View spacer={true} large={true} />
             <MessageListCTABar
               message={message}
               service={service}
