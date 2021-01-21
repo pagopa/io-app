@@ -1,7 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { connect } from "react-redux";
-import reactotron from "reactotron-react-native";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
