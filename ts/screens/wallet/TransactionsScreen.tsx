@@ -5,7 +5,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View, Button } from "native-base";
 import * as React from "react";
-import { RefreshControl, StyleSheet, Alert } from "react-native";
+import { RefreshControl, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { IOStyles } from "../../components/core/variables/IOStyles";
