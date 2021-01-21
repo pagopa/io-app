@@ -10,7 +10,7 @@ import I18n from "../../../../../../i18n";
  * @constructor
  */
 const LoadTransactions: React.FunctionComponent = () => (
-  <View accessible={true} style={IOStyles.flex}>
+  <View accessible={true} style={IOStyles.flex} testID={"LoadTransactions"}>
     <InfoScreenComponent
       image={
         <ActivityIndicator

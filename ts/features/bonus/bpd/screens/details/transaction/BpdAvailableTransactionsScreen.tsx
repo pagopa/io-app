@@ -240,7 +240,10 @@ const BpdAvailableTransactionsScreen: React.FunctionComponent<Props> = props => 
       headerTitle={I18n.t("bonus.bpd.title")}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID={"BpdAvailableTransactionsScreen"}
+      >
         <View spacer={true} />
         <View style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
