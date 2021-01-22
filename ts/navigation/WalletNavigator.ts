@@ -35,6 +35,7 @@ import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import CgnNavigator from "../features/bonus/cgn/navigation/navigator";
+import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -61,6 +62,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_BPAY_DETAIL]: {
     screen: BPayDetailScreen
+  },
+  [ROUTES.WALLET_COBADGE_DETAIL]: {
+    screen: CobadgeDetailScreen
   },
   [ROUTES.WALLET_ADD_CARD]: {
     screen: AddCardScreen
