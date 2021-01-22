@@ -42,7 +42,7 @@ export const onboardingCoBadgeFoundAccountsSelector = (
 ): RemoteCoBadge => state.wallet.onboarding.coBadge.foundCoBadge;
 
 /**
- * The search CoBadge card APi have an error
+ * The search CoBadge API have an error
  * @param state
  */
 export const onboardingCoBadgeFoundIsError = (state: GlobalState): boolean =>

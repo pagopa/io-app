@@ -2,33 +2,38 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import {
-  BPayPaymentMethod,
-  RawBPayPaymentMethod
+  CreditCardPaymentMethod,
+  RawCreditCardPaymentMethod
 } from "../../../../../../types/pagopa";
-import { enhanceBPay } from "../../../../../../utils/paymentMethod";
+import { enhanceCreditCard } from "../../../../../../utils/paymentMethod";
 import { getValueOrElse } from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../store/abi";
-import { addBPayToWallet, walletAddBPayStart } from "../actions";
+import {
+  addCoBadgeToWallet,
+  walletAddCoBadgeFromBancomatStart,
+  walletAddCoBadgeStart
+} from "../actions";
 
-const addedBPayReducer = (
-  state: ReadonlyArray<RawBPayPaymentMethod> = [],
+const addedCoBadgeReducer = (
+  state: ReadonlyArray<RawCreditCardPaymentMethod> = [],
   action: Action
-): ReadonlyArray<RawBPayPaymentMethod> => {
+): ReadonlyArray<RawCreditCardPaymentMethod> => {
   switch (action.type) {
-    // Register a new BPay account added in the current onboarding session
-    case getType(addBPayToWallet.success):
+    // Register a new Cobadge added in the current onboarding session
+    case getType(addCoBadgeToWallet.success):
       return [...state, action.payload];
-    // Reset the state when starting a new BPay onboarding workflow
-    case getType(walletAddBPayStart):
+    // Reset the state when starting a new Cobadge onboarding workflow
+    case getType(walletAddCoBadgeStart):
+    case getType(walletAddCoBadgeFromBancomatStart):
       return [];
   }
   return state;
 };
 
-export const onboardingBPayAddedAccountSelector = createSelector(
-  [state => state.wallet.onboarding.bPay.addedBPay, abiSelector],
-  (addedPans, remoteAbi): ReadonlyArray<BPayPaymentMethod> =>
-    addedPans.map(p => enhanceBPay(p, getValueOrElse(remoteAbi, {})))
+export const onboardingCoBadgeAddedAccountSelector = createSelector(
+  [state => state.wallet.onboarding.coBadge.addedCoBadge, abiSelector],
+  (addedCoBadge, remoteAbi): ReadonlyArray<CreditCardPaymentMethod> =>
+    addedCoBadge.map(p => enhanceCreditCard(p, getValueOrElse(remoteAbi, {})))
 );
 
-export default addedBPayReducer;
+export default addedCoBadgeReducer;

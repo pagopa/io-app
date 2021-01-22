@@ -1,8 +1,8 @@
 import { getType } from "typesafe-actions";
-import { BPay } from "../../../../../../../definitions/pagopa/BPay";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { RawBPayPaymentMethod } from "../../../../../../types/pagopa";
+import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
+import { NetworkError } from "../../../../../../utils/errors";
 import {
   remoteError,
   remoteLoading,
@@ -10,34 +10,33 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { addBPayToWallet } from "../actions";
-import { NetworkError } from "../../../../../../utils/errors";
+import { addCoBadgeToWallet, CoBadgeResponse } from "../actions";
 
-export type AddingBPayState = {
-  addingResult: RemoteValue<RawBPayPaymentMethod, NetworkError>;
-  selectedBPay?: BPay;
+export type AddingCoBadgeState = {
+  addingResult: RemoteValue<RawCreditCardPaymentMethod, NetworkError>;
+  selectedCoBadge?: CoBadgeResponse;
 };
 
-const initialState: AddingBPayState = {
+const initialState: AddingCoBadgeState = {
   addingResult: remoteUndefined
 };
 
-const addingBPayReducer = (
-  state: AddingBPayState = initialState,
+const addingCoBadgeReducer = (
+  state: AddingCoBadgeState = initialState,
   action: Action
-): AddingBPayState => {
+): AddingCoBadgeState => {
   switch (action.type) {
-    case getType(addBPayToWallet.request):
+    case getType(addCoBadgeToWallet.request):
       return {
-        selectedBPay: action.payload,
+        selectedCoBadge: action.payload,
         addingResult: remoteLoading
       };
-    case getType(addBPayToWallet.success):
+    case getType(addCoBadgeToWallet.success):
       return {
         ...state,
         addingResult: remoteReady(action.payload)
       };
-    case getType(addBPayToWallet.failure):
+    case getType(addCoBadgeToWallet.failure):
       return {
         ...state,
         addingResult: remoteError(action.payload)
@@ -46,13 +45,14 @@ const addingBPayReducer = (
   return state;
 };
 
-export const onboardingBPayChosenPanSelector = (
+export const onboardingCobadgeChosenPanSelector = (
   state: GlobalState
-): BPay | undefined => state.wallet.onboarding.bPay.addingBPay.selectedBPay;
+): CoBadgeResponse | undefined =>
+  state.wallet.onboarding.coBadge.addingCoBadge.selectedCoBadge;
 
-export const onboardingBPayAddingResultSelector = (
+export const onboardingCobadgeAddingResultSelector = (
   state: GlobalState
-): RemoteValue<RawBPayPaymentMethod, NetworkError> =>
-  state.wallet.onboarding.bPay.addingBPay.addingResult;
+): RemoteValue<RawCreditCardPaymentMethod, NetworkError> =>
+  state.wallet.onboarding.coBadge.addingCoBadge.addingResult;
 
-export default addingBPayReducer;
+export default addingCoBadgeReducer;

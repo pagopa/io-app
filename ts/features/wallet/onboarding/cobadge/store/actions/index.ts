@@ -1,11 +1,14 @@
+import { IUnitTag } from "italia-ts-commons/lib/units";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { BPay } from "../../../../../../../definitions/pagopa/BPay";
-import { RawBPayPaymentMethod } from "../../../../../../types/pagopa";
+import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
+
+// TODO: replace with the response remote model
+export type CoBadgeResponse = IUnitTag<"CoBadgeResponse">;
 
 /**
  * Search for user's cobadge cards
@@ -14,7 +17,7 @@ export const searchUserCoBadge = createAsyncAction(
   "WALLET_ONBOARDING_COBADGE_SEARCH_REQUEST",
   "WALLET_ONBOARDING_COBADGE_SEARCH_SUCCESS",
   "WALLET_ONBOARDING_COBADGE_SEARCH_FAILURE"
-)<string | undefined, ReadonlyArray<BPay>, NetworkError>();
+)<string | undefined, ReadonlyArray<CoBadgeResponse>, NetworkError>();
 
 /**
  * The user add a specific cobadge card to the wallet
@@ -23,12 +26,20 @@ export const addCoBadgeToWallet = createAsyncAction(
   "WALLET_ONBOARDING_COBADGE_ADD_REQUEST",
   "WALLET_ONBOARDING_COBADGE_ADD_SUCCESS",
   "WALLET_ONBOARDING_COBADGE_ADD_FAILURE"
-)<BPay, RawBPayPaymentMethod, NetworkError>();
+)<CoBadgeResponse, RawCreditCardPaymentMethod, NetworkError>();
 
 /**
  * The user choose to start the workflow to add a new cobadge to the wallet
  */
 export const walletAddCoBadgeStart = createStandardAction(
+  "WALLET_ONBOARDING_COBADGE_START"
+)<void>();
+
+/**
+ * The user choose to start the workflow to add a new cobadge from a bancomat (have a special handling)
+ * TODO: keep this event ?
+ */
+export const walletAddCoBadgeFromBancomatStart = createStandardAction(
   "WALLET_ONBOARDING_COBADGE_START"
 )<void>();
 
