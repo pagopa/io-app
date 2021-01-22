@@ -1,9 +1,8 @@
-import { View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import DarkLayout from "../../../../components/screens/DarkLayout";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 
@@ -16,24 +15,14 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   NavigationInjectedProps<NavigationParams>;
 
 /**
- * Detail screen for a Bancomat Pay
+ * Detail screen for a cobadge card
  * @constructor
  */
-const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
-  const cobadge: CreditCardPaymentMethod = props.navigation.getParam("cobadge");
-
-  return (
-    <DarkLayout
-      bounces={false}
-      faqCategories={["wallet_methods"]}
-      allowGoBack={true}
-      gradientHeader={true}
-      hideHeader={true}
-    >
-      {cobadge.idWallet}
-    </DarkLayout>
-  );
-};
+const CobadgeDetailScreen: React.FunctionComponent<Props> = _ => (
+  <View>
+    <Text>{"Entra"}</Text>
+  </View>
+);
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
