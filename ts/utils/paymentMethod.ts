@@ -161,13 +161,9 @@ export const enhanceCreditCard = (
   rawCreditCard: RawCreditCardPaymentMethod,
   abiList: IndexedById<Abi>
 ): CreditCardPaymentMethod => ({
-  ...rawBPay,
-  info: {
-    ...rawBPay.info,
-    numberObfuscated: rawBPay.info.numberObfuscated?.replace(/\*/g, "●")
-  },
-  abiInfo: rawBPay.info.instituteCode
-    ? abiList[rawBPay.info.instituteCode]
+  ...rawCreditCard,
+  abiInfo: rawCreditCard.info.issuerAbiCode
+    ? abiList[rawCreditCard.info.issuerAbiCode]
     : undefined,
   caption: getTitleFromPaymentMethod(rawCreditCard, abiList),
   icon: getImageFromPaymentMethod(rawCreditCard)
@@ -184,6 +180,7 @@ export const enhancePaymentMethod = (
     case "BPay":
       return enhanceBPay(pm, abiList);
     case "CreditCard":
+      return enhanceCreditCard(pm, abiList);
     case "Satispay":
       return {
         ...pm,
