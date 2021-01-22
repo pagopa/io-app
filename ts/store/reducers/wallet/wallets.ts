@@ -269,7 +269,7 @@ export const bPayListVisibleInWalletSelector = createSelector(
 /**
  * Return a CoBadge list visible in the wallet
  */
-export const coBadgeListVisibleInWalletSelector = createSelector(
+export const cobadgeListVisibleInWalletSelector = createSelector(
   [creditCardListVisibleInWalletSelector],
   (creditCardListPot): pot.Pot<ReadonlyArray<CreditCardPaymentMethod>, Error> =>
     pot.map(creditCardListPot, creditCardList =>

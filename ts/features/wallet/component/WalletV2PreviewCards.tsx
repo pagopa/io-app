@@ -6,7 +6,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
-  coBadgeListVisibleInWalletSelector,
+  cobadgeListVisibleInWalletSelector,
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
 import BancomatWalletPreview from "../bancomat/component/BancomatWalletPreview";
@@ -80,7 +80,7 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatList: bancomatListVisibleInWalletSelector(state),
   bPayList: bPayListVisibleInWalletSelector(state),
   satispayList: satispayListVisibleInWalletSelector(state),
-  cobadgeList: coBadgeListVisibleInWalletSelector(state)
+  cobadgeList: cobadgeListVisibleInWalletSelector(state)
 });
 
 export default connect(
