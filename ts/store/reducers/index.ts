@@ -170,7 +170,8 @@ export function createRootReducer(
                 transactionsRead: state.entities.transactionsRead
               },
               // backend status must be kept
-              backendStatus: state.backendStatus
+              backendStatus: state.backendStatus,
+              crossSessions: state.crossSessions
             } as GlobalState)
           : state;
     }
