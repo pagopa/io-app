@@ -13,15 +13,15 @@ import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 import { getResourceNameFromUrl } from "../../../../utils/url";
 const cardMapIcon: { [key in string]: any } = {
-  carta_mc: require("../../../../img/wallet/cards-icons/mastercard.png"),
-  carta_visa: require("../../../../img/wallet/cards-icons/visa.png"),
-  carta_amex: require("../../../../img/wallet/cards-icons/amex.png"),
-  carta_diners: require("../../../../img/wallet/cards-icons/diners.png"),
-  carta_visaelectron: require("../../../../img/wallet/cards-icons/visa-electron.png"),
-  carta_poste: require("../../../../img/wallet/cards-icons/postepay.png"),
-  carta_maestro: require("../../../../img/wallet/cards-icons/maestro.png")
+  carta_mc: require("../../../../../img/wallet/cards-icons/mastercard.png"),
+  carta_visa: require("../../../../../img/wallet/cards-icons/visa.png"),
+  carta_amex: require("../../../../../img/wallet/cards-icons/amex.png"),
+  carta_diners: require("../../../../../img/wallet/cards-icons/diners.png"),
+  carta_visaelectron: require("../../../../../img/wallet/cards-icons/visa-electron.png"),
+  carta_poste: require("../../../../../img/wallet/cards-icons/postepay.png"),
+  carta_maestro: require("../../../../../img/wallet/cards-icons/maestro.png")
 };
-import defaultCardIcon from "../../../../img/wallet/cards-icons/unknown.png";
+import defaultCardIcon from "../../../../../img/wallet/cards-icons/unknown.png";
 
 type OwnProps = {
   cobadge: CreditCardPaymentMethod;
