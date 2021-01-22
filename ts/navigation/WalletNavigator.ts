@@ -1,5 +1,5 @@
 import { createStackNavigator } from "react-navigation";
-import { bonusVacanzeEnabled, bpdEnabled } from "../config";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
@@ -33,6 +33,8 @@ import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
+import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
+import CgnNavigator from "../features/bonus/cgn/navigation/navigator";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -132,10 +134,19 @@ const bpdConfigMap = bpdEnabled
     }
   : {};
 
+const cgnConfigMap = cgnEnabled
+  ? {
+      [CGN_ROUTES.MAIN]: {
+        screen: CgnNavigator
+      }
+    }
+  : {};
+
 const routeConfig = {
   ...baseRouteConfigMap,
   ...bonusVacanzeConfigMap,
-  ...bpdConfigMap
+  ...bpdConfigMap,
+  ...cgnConfigMap
 };
 
 /**

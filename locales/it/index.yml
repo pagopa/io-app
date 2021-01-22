@@ -1255,15 +1255,11 @@ messages:
       addMemo:
         block1: Aggiungi un promemoria per il
         block2: alle
-      expiringAlert:
-        block1: Questo avviso scade il giorno
-        block2: alle ore
+      expiringOrValidAlert:
+        block1: Puoi pagare questo avviso entro il
       expiredAlert:
-        expirable:
-          block1: L'avviso è scaduto alle ore
-          block2: del
-        unexpirable:
-          block: L'avviso è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad aggiornare l'importo.
+        block1: L'avviso di pagamento è scaduto alle
+        block2: del
     prescription:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
@@ -1274,6 +1270,7 @@ messages:
     pay: Paga € {{amount}}
     onlyPay: Paga
     paid: Pagato
+    seeNotice: Vedi Avviso
     reminder: Promemoria
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
@@ -2121,6 +2118,9 @@ bonus:
             active: "**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
+  cgn:
+    cta:
+      activeBonus: Attiva la tua Carta Giovani
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

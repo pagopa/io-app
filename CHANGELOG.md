@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0-rc.2](https://github.com/pagopa/io-app/compare/1.19.0-rc.1...1.19.0-rc.2) (2021-01-22)
+
+
+### Bug Fixes
+
+* [[#176607041](https://www.pivotaltracker.com/story/show/176607041)] Hashed CF is reset on logout [#2745](https://github.com/pagopa/io-app/issues/2745) ([f8dbaf9](https://github.com/pagopa/io-app/commit/f8dbaf9b6a6d73ae9d6e4f2eda50eb4035afa765))
+
+## [1.19.0-rc.1](https://github.com/pagopa/io-app/compare/1.19.0-rc.0...1.19.0-rc.1) (2021-01-21)
+
+
+### Features
+
+* **Carta Giovani Nazionale:** [[#176443044](https://www.pivotaltracker.com/story/show/176443044)] Adds directories skeleton for CGN implementation ([#2718](https://github.com/pagopa/io-app/issues/2718)) ([5bc6f7b](https://github.com/pagopa/io-app/commit/5bc6f7b3a95863d42cdc2d3e636513b6c0880513))
+* **Payments:** [[#176409411](https://www.pivotaltracker.com/story/show/176409411)] Update message detail info ([#2729](https://github.com/pagopa/io-app/issues/2729)) ([b9faf1a](https://github.com/pagopa/io-app/commit/b9faf1a7b2cdf417b7f7cc611acffa21441f6f8a))
+* [[#176434157](https://www.pivotaltracker.com/story/show/176434157)] Remove payment CTA and expired badge ([#2741](https://github.com/pagopa/io-app/issues/2741)) ([fa4efed](https://github.com/pagopa/io-app/commit/fa4efed5e11325d1aaf8d70a35a668e067a839c5))
+
+
+### Bug Fixes
+
+* **Payments:** [[#175857824](https://www.pivotaltracker.com/story/show/175857824)] dispatched sessionExpired on getWallets failure ([#2481](https://github.com/pagopa/io-app/issues/2481)) ([24f09f5](https://github.com/pagopa/io-app/commit/24f09f53c2342db93d425195abe0523aac5659a5))
+* [[#176455315](https://www.pivotaltracker.com/story/show/176455315),[#176417779](https://www.pivotaltracker.com/story/show/176417779)] Persist payment/message status  ([#2736](https://github.com/pagopa/io-app/issues/2736)) ([e97c483](https://github.com/pagopa/io-app/commit/e97c483d720d0764e92c17674902b8446f338bad)), closes [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587)
+
+
+### Chores
+
+* [[#176497587](https://www.pivotaltracker.com/story/show/176497587)] Store hashed fiscal code ([#2732](https://github.com/pagopa/io-app/issues/2732)) ([dd266a5](https://github.com/pagopa/io-app/commit/dd266a55658df22842a0834b2b0c218a1b6ee815))
+
+## [1.19.0-rc.0](https://github.com/pagopa/io-app/compare/1.18.0-rc.3...1.19.0-rc.0) (2021-01-19)
+
+
+### Bug Fixes
+
+* [[#175501909](https://www.pivotaltracker.com/story/show/175501909)] Move Contextual Help "Why A Fee" to ConfirmPaymentMethodScreen ([#2430](https://github.com/pagopa/io-app/issues/2430)) ([8df4587](https://github.com/pagopa/io-app/commit/8df45875610dc9f699837572a9f3d608f3a7abe7))
+
 ## [1.18.0-rc.3](https://github.com/pagopa/io-app/compare/1.18.0-rc.2...1.18.0-rc.3) (2021-01-15)
 
 
