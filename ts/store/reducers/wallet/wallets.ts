@@ -267,6 +267,17 @@ export const bPayListVisibleInWalletSelector = createSelector(
 );
 
 /**
+ * Return a CoBadge list visible in the wallet
+ */
+export const coBadgeListVisibleInWalletSelector = createSelector(
+  [creditCardListVisibleInWalletSelector],
+  (creditCardListPot): pot.Pot<ReadonlyArray<CreditCardPaymentMethod>, Error> =>
+    pot.map(creditCardListPot, creditCardList =>
+      creditCardList.filter(cc => cc.pagoPA === false)
+    )
+);
+
+/**
  * Get the list of credit cards using the info contained in v2 (Walletv2) to distinguish
  */
 export const creditCardWalletV1Selector = createSelector(
