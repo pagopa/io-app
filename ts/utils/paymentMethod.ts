@@ -13,6 +13,7 @@ import { IndexedById } from "../store/helpers/indexer";
 import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
+  CreditCardPaymentMethod,
   isRawBancomat,
   isRawBPay,
   isRawCreditCard,
@@ -154,6 +155,22 @@ export const enhanceBPay = (
     : undefined,
   caption: getTitleFromPaymentMethod(rawBPay, abiList),
   icon: getImageFromPaymentMethod(rawBPay)
+});
+
+export const enhanceCreditCard = (
+  rawCreditCard: RawCreditCardPaymentMethod,
+  abiList: IndexedById<Abi>
+): CreditCardPaymentMethod => ({
+  ...rawBPay,
+  info: {
+    ...rawBPay.info,
+    numberObfuscated: rawBPay.info.numberObfuscated?.replace(/\*/g, "●")
+  },
+  abiInfo: rawBPay.info.instituteCode
+    ? abiList[rawBPay.info.instituteCode]
+    : undefined,
+  caption: getTitleFromPaymentMethod(rawCreditCard, abiList),
+  icon: getImageFromPaymentMethod(rawCreditCard)
 });
 
 export const enhancePaymentMethod = (
