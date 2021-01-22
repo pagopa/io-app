@@ -3,12 +3,11 @@ import { Image, ImageStyle, StyleProp } from "react-native";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CardPreview } from "../../component/CardPreview";
-import { navigateToBPayDetailScreen } from "../../../../store/actions/navigation";
+import { navigateToCobadgeDetailScreen } from "../../../../store/actions/navigation";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 import { getResourceNameFromUrl } from "../../../../utils/url";
@@ -46,6 +45,7 @@ const renderLeft = (props: Props, size: Option<[number, number]>) =>
     </Body>,
     imgDim => {
       const imageUrl = props.cobadge.abiInfo?.logoUrl;
+
       const imageStyle: StyleProp<ImageStyle> = {
         width: imgDim[0],
         height: imgDim[1],
@@ -62,7 +62,7 @@ const renderLeft = (props: Props, size: Option<[number, number]>) =>
   );
 
 const getBrandLogo = (cobadge: CreditCardPaymentMethod) => {
-  const brandLogo = cobadge.info?.brandLogo;
+  const brandLogo = cobadge.info.brandLogo;
 
   return fromNullable(brandLogo).fold(defaultCardIcon, bL => {
     const imageName = getResourceNameFromUrl(bL);
@@ -81,7 +81,6 @@ const BPayWalletPreview: React.FunctionComponent<Props> = props => {
     BASE_IMG_H,
     props.cobadge.abiInfo?.logoUrl
   );
-
   return (
     <CardPreview
       left={renderLeft(props, imgDimensions)}
@@ -93,8 +92,7 @@ const BPayWalletPreview: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToCobadgeDetails: (cobadge: CreditCardPaymentMethod) =>
-    // dispatch(navigateToCobadgeDetailScreen(cobadge))
-    true
+    dispatch(navigateToCobadgeDetailScreen(cobadge))
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
