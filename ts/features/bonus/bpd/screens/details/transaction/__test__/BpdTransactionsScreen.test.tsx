@@ -4,12 +4,14 @@ import * as pot from "italia-ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
 import { Store } from "redux";
-import BpdTransactionsScreen from "../BpdTransactionsScreen";
+import * as BpdTransactionsScreen from "../BpdTransactionsScreen";
 import * as transactionsReducer from "../../../../store/reducers/details/combiner";
 import * as lastUpdateReducer from "../../../../store/reducers/details/lastUpdate";
 import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
 import * as LoadTransactions from "../LoadTransactions";
 import * as TransactionsUnavailable from "../TransactionsUnavailable";
+import * as BpdAvailableTransactionsScreen from "../BpdAvailableTransactionsScreen";
+
 jest.mock("react-navigation", () => ({
   NavigationEvents: "mockNavigationEvents",
   StackActions: {
@@ -68,6 +70,27 @@ describe("BpdTransactionsScreen", () => {
     }
   );
   it.each`
+    bpdDisplayTransactions
+    ${pot.noneLoading}
+    ${pot.noneUpdating({})}
+    ${pot.someLoading({})}
+    ${pot.someUpdating({}, {})}
+  `(
+    "should show loading screen if $bpdDisplayTransactions is pot.loading or pot.updating and bpdLastUpdate is pot.Some",
+    ({ bpdDisplayTransactions }) => {
+      jest
+        .spyOn(lastUpdateReducer, "bpdLastUpdateSelector")
+        .mockReturnValue(pot.some({} as Date));
+      jest
+        .spyOn(transactionsReducer, "bpdDisplayTransactionsSelector")
+        .mockReturnValue(bpdDisplayTransactions);
+      const myspy = jest.spyOn(LoadTransactions, "default");
+
+      getComponent(store);
+      expect(myspy).toHaveBeenCalled();
+    }
+  );
+  it.each`
     bpdLastUpdate
     ${pot.none}
     ${pot.noneError({})}
@@ -89,11 +112,54 @@ describe("BpdTransactionsScreen", () => {
       expect(myspy).toHaveBeenCalled();
     }
   );
+  it.each`
+    bpdDisplayTransactions
+    ${pot.noneError({})}
+    ${pot.someError({}, {} as Error)}
+  `(
+    "should show unavailable screen if $bpdDisplayTransactions is pot.Error and bpdLastUpdateSelector is pot.Some",
+    ({ bpdDisplayTransactions }) => {
+      jest
+        .spyOn(lastUpdateReducer, "bpdLastUpdateSelector")
+        .mockReturnValue(pot.some({} as Date));
+      jest
+        .spyOn(transactionsReducer, "bpdDisplayTransactionsSelector")
+        .mockReturnValue(bpdDisplayTransactions);
+
+      const myspy = jest.spyOn(TransactionsUnavailable, "default");
+
+      getComponent(store);
+
+      expect(myspy).toHaveBeenCalled();
+    }
+  );
+
+  it.each`
+    bpdDisplayTransactions
+    ${pot.none}
+    ${pot.some({})}
+  `(
+    "should show unavailable screen if $bpdDisplayTransactions is pot.Error and bpdLastUpdateSelector is pot.Some",
+    ({ bpdDisplayTransactions }) => {
+      jest
+        .spyOn(lastUpdateReducer, "bpdLastUpdateSelector")
+        .mockReturnValue(pot.some({} as Date));
+      jest
+        .spyOn(transactionsReducer, "bpdDisplayTransactionsSelector")
+        .mockReturnValue(bpdDisplayTransactions);
+
+      const myspy = jest.spyOn(BpdAvailableTransactionsScreen, "default");
+
+      getComponent(store);
+
+      expect(myspy).toHaveBeenCalled();
+    }
+  );
 });
 
 const getComponent = (store: Store<unknown>) =>
   render(
     <Provider store={store}>
-      <BpdTransactionsScreen />
+      <BpdTransactionsScreen.default />
     </Provider>
   );
