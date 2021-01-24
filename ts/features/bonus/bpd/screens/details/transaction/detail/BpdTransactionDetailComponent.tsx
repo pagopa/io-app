@@ -60,7 +60,8 @@ const CancelBadge = () => (
 const Table = (props: Props) => {
   const isMidNight =
     props.transaction.trxDate.getHours() +
-      props.transaction.trxDate.getMinutes() ===
+      props.transaction.trxDate.getMinutes() +
+      props.transaction.trxDate.getSeconds() ===
     0;
   return (
     <View>

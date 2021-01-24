@@ -26,7 +26,10 @@ type Props = {
  */
 export const getSubtitle = (transaction: BpdTransaction) => {
   const isMidNight =
-    transaction.trxDate.getHours() + transaction.trxDate.getMinutes() === 0;
+    transaction.trxDate.getHours() +
+      transaction.trxDate.getMinutes() +
+      transaction.trxDate.getSeconds() ===
+    0;
   return isMidNight
     ? `€ ${formatNumberAmount(transaction.amount)} · ${localeDateFormat(
         transaction.trxDate,
