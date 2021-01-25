@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { cgnActivationStart } from "../actions/activation";
+import { cgnActivationStart } from "../store/actions/activation";
 import { handleCgnStartActivationSaga } from "./activation/activationSaga";
 
 export function* watchBonusCgnSaga(): SagaIterator {

@@ -1,12 +1,12 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, race, take } from "redux-saga/effects";
 import { NavigationActions } from "react-navigation";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
+import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import {
   cgnActivationCancel,
   cgnActivationStatus
-} from "../../actions/activation";
-import { navigateToCgnOnboardingInformationTos } from "../../../navigation/actions";
+} from "../../store/actions/activation";
+import { navigateToCgnOnboardingInformationTos } from "../../navigation/actions";
 
 export function* cgnStartActivationWorker() {
   yield put(navigateToCgnOnboardingInformationTos());

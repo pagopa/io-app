@@ -62,7 +62,7 @@ import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import I18n from "../i18n";
-import { watchBonusCgnSaga } from "../features/bonus/cgn/store/sagas";
+import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
