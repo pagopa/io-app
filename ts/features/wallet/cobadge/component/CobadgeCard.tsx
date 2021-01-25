@@ -10,9 +10,9 @@ import { View } from "native-base";
 import I18n from "../../../../i18n";
 import BaseCardComponent from "../../component/BaseCardComponent";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
-import { H3 } from "../../../../components/core/typography/H3";
 import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
+import abiLogoFallback from "../../../../../img/wallet/cards-icons/abiLogoFallback.png";
 
 type Props = {
   caption?: string;
@@ -23,7 +23,12 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  bpayLogo: {
+  abiLogoFallback: {
+    width: 40,
+    height: 40,
+    resizeMode: "contain"
+  },
+  brandLogo: {
     width: 80,
     height: 40,
     resizeMode: "contain"
@@ -57,9 +62,11 @@ const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
               testID={"abiLogo"}
             />
           ) : (
-            <H3 style={styles.bankName} testID={"bankName"}>
-              {props.bankName}
-            </H3>
+            <Image
+              source={abiLogoFallback}
+              style={styles.abiLogoFallback}
+              testID={"abiLogoFallback"}
+            />
           )}
           {props.expireMonth && props.expireYear && (
             <>
@@ -90,7 +97,7 @@ const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
       }
       bottomRightCorner={
         <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
-          <Image style={styles.bpayLogo} source={props.brandLogo} />
+          <Image style={styles.brandLogo} source={props.brandLogo} />
         </View>
       }
     />

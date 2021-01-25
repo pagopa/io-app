@@ -18,7 +18,6 @@ import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
 import defaultCardIcon from "../../../../../img/wallet/cards-icons/unknown.png";
 import CobadgeCard from "../component/CobadgeCard";
-import reactotron from "reactotron-react-native";
 
 type NavigationParams = Readonly<{
   cobadge: CreditCardPaymentMethod;
@@ -67,7 +66,6 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
     caption: I18n.t("wallet.methods.bancomatPay.name")
   });
 
-  reactotron.log(brandLogo);
   return (
     <DarkLayout
       bounces={false}
