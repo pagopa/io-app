@@ -20,7 +20,7 @@ export const searchUserCoBadge = createAsyncAction(
 )<string | undefined, ReadonlyArray<CoBadgeResponse>, NetworkError>();
 
 /**
- * The user add a specific cobadge card to the wallet
+ * The user adds a specific cobadge card to the wallet
  */
 export const addCoBadgeToWallet = createAsyncAction(
   "WALLET_ONBOARDING_COBADGE_ADD_REQUEST",
@@ -29,14 +29,14 @@ export const addCoBadgeToWallet = createAsyncAction(
 )<CoBadgeResponse, RawCreditCardPaymentMethod, NetworkError>();
 
 /**
- * The user choose to start the workflow to add a new cobadge to the wallet
+ * The user chooses to start the workflow to add a new cobadge to the wallet
  */
 export const walletAddCoBadgeStart = createStandardAction(
   "WALLET_ONBOARDING_COBADGE_START"
 )<void>();
 
 /**
- * The user choose to start the workflow to add a new cobadge from a bancomat (have a special handling)
+ * The user chooses to start the workflow to add a new cobadge from a bancomat (have a special handling)
  * TODO: keep this event ?
  */
 export const walletAddCoBadgeFromBancomatStart = createStandardAction(
@@ -44,7 +44,7 @@ export const walletAddCoBadgeFromBancomatStart = createStandardAction(
 )<void>();
 
 /**
- * The user complete the workflow to add a new cobadge card to the wallet
+ * The user completes the workflow to add a new cobadge card to the wallet
  * (at least one cobadge has been added)
  */
 export const walletAddCoBadgeCompleted = createStandardAction(
@@ -52,14 +52,14 @@ export const walletAddCoBadgeCompleted = createStandardAction(
 )<void>();
 
 /**
- * The user choose to cancel the addition of a cobadge to the wallet (no cobadge has been added)
+ * The user chooses to cancel the addition of a cobadge to the wallet (no cobadge has been added)
  */
 export const walletAddCoBadgeCancel = createStandardAction(
   "WALLET_ONBOARDING_COBADGE_CANCEL"
 )<void>();
 
 /**
- * The user choose `back` from the first screen
+ * The user chooses `back` from the first screen
  */
 export const walletAddCoBadgeBack = createStandardAction(
   "WALLET_ONBOARDING_COBADGE_BACK"
