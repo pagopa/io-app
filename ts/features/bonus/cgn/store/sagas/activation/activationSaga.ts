@@ -12,7 +12,7 @@ export function* cgnStartActivationWorker() {
   yield put(navigateToCgnOnboardingInformationTos());
   yield put(navigationHistoryPop(1));
 
-  // HERE WILL BE IMPLEMENTED THE ACTIVATION LOGIC
+  // TODO :HERE WILL BE IMPLEMENTED THE ACTIVATION LOGIC
   // WIP remove this instruction when the activation flow will be implemented
   yield take(cgnActivationStatus.request);
 }
