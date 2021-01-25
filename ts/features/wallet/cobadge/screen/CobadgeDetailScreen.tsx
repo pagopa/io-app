@@ -11,6 +11,8 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 
 type NavigationParams = Readonly<{
   cobadge: CreditCardPaymentMethod;
@@ -55,7 +57,16 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
       topContent={<View style={styles.headerSpacer} />}
       gradientHeader={true}
       hideHeader={true}
-    ></DarkLayout>
+    >
+      <View style={styles.cardContainer}></View>
+      <View spacer={true} extralarge={true} />
+      <View style={IOStyles.horizontalContentPadding}>
+        <PaymentMethodCapabilities paymentMethod={cobadge} />
+        <View spacer={true} />
+        <View spacer={true} large={true} />
+      </View>
+      <View spacer={true} extralarge={true} />
+    </DarkLayout>
   );
 };
 const mapDispatchToProps = (_: Dispatch) => ({});
