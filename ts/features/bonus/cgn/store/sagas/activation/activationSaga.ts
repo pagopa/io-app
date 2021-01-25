@@ -1,18 +1,49 @@
 import { SagaIterator } from "redux-saga";
-import { call, delay, put, race, take } from "redux-saga/effects";
+import { call, put, race, take } from "redux-saga/effects";
 import { NavigationActions } from "react-navigation";
+import { ActionType, isActionOf } from "typesafe-actions";
+import { fromNullable } from "fp-ts/lib/Option";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import {
   cgnActivationCancel,
+  cgnActivationComplete,
+  cgnActivationStatus,
   cgnRequestActivation
 } from "../../actions/activation";
 import {
   navigateToCgnActivationCompleted,
+  navigateToCgnActivationIneligible,
   navigateToCgnActivationInformationTos,
-  navigateToCgnActivationLoading
+  navigateToCgnActivationLoading,
+  navigateToCgnActivationPending,
+  navigateToCgnActivationTimeout
 } from "../../../navigation/actions";
+import { CgnActivationProgressEnum } from "../../reducers/activation";
+import { cgnActivationSaga } from "./getBonusActivationSaga";
 
-export function* cgnStartActivationWorker() {
+const mapEnumToNavigation = new Map([
+  [CgnActivationProgressEnum.SUCCESS, navigateToCgnActivationCompleted],
+  [CgnActivationProgressEnum.PENDING, navigateToCgnActivationPending],
+  [CgnActivationProgressEnum.TIMEOUT, navigateToCgnActivationTimeout],
+  [CgnActivationProgressEnum.INELIGIBLE, navigateToCgnActivationIneligible],
+  [CgnActivationProgressEnum.EXISTS, navigateToCgnActivationCompleted]
+]);
+
+type CgnActivationType = ReturnType<typeof cgnActivationSaga>;
+
+// Get the next activation steps from the saga call function based on status ENUM
+const getNextNavigationStep = (
+  action: ActionType<typeof cgnActivationStatus>
+) =>
+  isActionOf(cgnActivationStatus.success, action)
+    ? fromNullable(mapEnumToNavigation.get(action.payload.status)).getOrElse(
+        navigateToCgnActivationLoading
+      )
+    : navigateToCgnActivationLoading;
+
+export function* cgnStartActivationWorker(
+  cgnActivationSaga: CgnActivationType
+) {
   yield put(navigateToCgnActivationInformationTos());
   yield put(navigationHistoryPop(1));
 
@@ -21,22 +52,26 @@ export function* cgnStartActivationWorker() {
   yield put(navigateToCgnActivationLoading());
   yield put(navigationHistoryPop(1));
 
-  // UNCOMMENT when api implementation has been completed
-  // yield take(cgnRequestActivation.success);
-  // yield put(cgnActivationStatus.request());
+  const progress = yield call(cgnActivationSaga);
+  yield put(progress);
 
-  yield delay(1000);
+  const nextNavigationStep = getNextNavigationStep(progress);
+  if (nextNavigationStep !== navigateToCgnActivationLoading) {
+    yield put(nextNavigationStep());
+    yield put(navigationHistoryPop(1));
+  }
 
-  yield put(navigateToCgnActivationCompleted());
-  yield put(navigationHistoryPop(1));
+  yield take(cgnActivationComplete);
 }
 
 /**
  * This saga handles the CGN activation workflow
  */
-export function* handleCgnStartActivationSaga(): SagaIterator {
+export function* handleCgnStartActivationSaga(
+  cgnActivationSaga: CgnActivationType
+): SagaIterator {
   const { cancelAction } = yield race({
-    activation: call(cgnStartActivationWorker),
+    activation: call(cgnStartActivationWorker, cgnActivationSaga),
     cancelAction: take(cgnActivationCancel)
   });
   if (cancelAction) {

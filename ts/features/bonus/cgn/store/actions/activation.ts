@@ -5,15 +5,23 @@ import {
 } from "typesafe-actions";
 import { NullType } from "io-ts";
 import { CgnActivationProgressEnum } from "../reducers/activation";
+import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
 
 type ActivationStatus = {
   status: CgnActivationProgressEnum;
-  activation: any; // Replace when API spec is correctly linked and defined
+  activation?: CgnStatus; // Replace when API spec is correctly linked and defined
 };
 
 export const cgnActivationStart = createStandardAction("CGN_ACTIVATION_START")<
   void
 >();
+
+/**
+ * Completed the activation workflow
+ */
+export const cgnActivationComplete = createStandardAction(
+  "CGN_ACTIVATION_COMPLETED"
+)<void>();
 
 /**
  * Cancel the activation workflow
@@ -44,4 +52,5 @@ export type CgnActivationActions =
   | ActionType<typeof cgnActivationStatus>
   | ActionType<typeof cgnRequestActivation>
   | ActionType<typeof cgnActivationStart>
+  | ActionType<typeof cgnActivationComplete>
   | ActionType<typeof cgnActivationCancel>;
