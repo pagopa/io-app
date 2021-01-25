@@ -58,7 +58,6 @@ export const availableBonusTypesSelector = (
  * if 'hidden' or unavailable bonus is hidden
  * if 'visible' bonus item is shown
  * if 'experimental' it visibility would depend on the related Feature Flag.
- * @param idBonusType
  */
 export const visibleAvailableBonusSelector = createSelector(
   availableBonusTypesSelector,
