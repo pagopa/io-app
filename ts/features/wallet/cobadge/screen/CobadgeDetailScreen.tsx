@@ -1,7 +1,7 @@
-import { Text, View } from "native-base";
+import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
@@ -13,6 +13,11 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
+import { Label } from "../../../../components/core/typography/Label";
+import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
+import { showToast } from "../../../../utils/showToast";
+import defaultCardIcon from "../../../../../img/wallet/cards-icons/unknown.png";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 
 type NavigationParams = Readonly<{
   cobadge: CreditCardPaymentMethod;
@@ -40,6 +45,13 @@ const styles = StyleSheet.create({
     width: "100%"
   }
 });
+
+const UnsubscribeButton = (props: { onPress?: () => void }) => (
+  <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
+    <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
+  </Button>
+);
+
 /**
  * Detail screen for a cobadge card
  * @constructor
@@ -47,6 +59,10 @@ const styles = StyleSheet.create({
 const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
   const cobadge: CreditCardPaymentMethod = props.navigation.getParam("cobadge");
 
+  const { present } = useRemovePaymentMethodBottomSheet({
+    icon: defaultCardIcon,
+    caption: I18n.t("wallet.methods.bancomatPay.name")
+  });
   return (
     <DarkLayout
       bounces={false}
@@ -64,12 +80,29 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
         <PaymentMethodCapabilities paymentMethod={cobadge} />
         <View spacer={true} />
         <View spacer={true} large={true} />
+        <UnsubscribeButton
+          onPress={() => present(() => props.deleteWallet(cobadge.idWallet))}
+        />
       </View>
       <View spacer={true} extralarge={true} />
     </DarkLayout>
   );
 };
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  deleteWallet: (walletId: number) =>
+    dispatch(
+      deleteWalletRequest({
+        walletId,
+        onSuccess: _ => {
+          showToast(I18n.t("wallet.delete.bPay.successful"), "success");
+          dispatch(NavigationActions.back());
+        },
+        onFailure: _ => {
+          showToast(I18n.t("wallet.delete.bPay.failed"), "danger");
+        }
+      })
+    )
+});
 
 const mapStateToProps = (_: GlobalState) => ({});
 
