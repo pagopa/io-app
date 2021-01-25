@@ -1,6 +1,6 @@
 import { Button, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { ImageSourcePropType, StyleSheet } from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -22,6 +22,7 @@ import reactotron from "reactotron-react-native";
 
 type NavigationParams = Readonly<{
   cobadge: CreditCardPaymentMethod;
+  brandLogo: ImageSourcePropType;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -59,13 +60,14 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  */
 const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
   const cobadge: CreditCardPaymentMethod = props.navigation.getParam("cobadge");
+  const brandLogo: ImageSourcePropType = props.navigation.getParam("brandLogo");
 
   const { present } = useRemovePaymentMethodBottomSheet({
     icon: defaultCardIcon,
     caption: I18n.t("wallet.methods.bancomatPay.name")
   });
 
-  reactotron.log(cobadge);
+  reactotron.log(brandLogo);
   return (
     <DarkLayout
       bounces={false}
@@ -84,6 +86,7 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
           caption={cobadge.caption}
           bankName={cobadge.caption}
           abiLogo={cobadge.abiInfo?.logoUrl}
+          brandLogo={brandLogo}
         />
       </View>
       <View spacer={true} extralarge={true} />

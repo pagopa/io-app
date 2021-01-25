@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
+import {
+  Image,
+  ImageSourcePropType,
+  ImageStyle,
+  StyleProp,
+  StyleSheet
+} from "react-native";
 import { View } from "native-base";
 import I18n from "../../../../i18n";
 import BaseCardComponent from "../../component/BaseCardComponent";
@@ -15,6 +21,7 @@ type Props = {
   expireYear?: string;
   bankName: string;
   abiLogo?: string;
+  brandLogo: ImageSourcePropType;
 };
 
 const styles = StyleSheet.create({
@@ -85,7 +92,7 @@ const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
       }
       bottomRightCorner={
         <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
-          <Image style={styles.bpayLogo} source={bancomatLogoMin} />
+          <Image style={styles.bpayLogo} source={props.brandLogo} />
         </View>
       }
     />

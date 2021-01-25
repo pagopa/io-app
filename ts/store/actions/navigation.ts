@@ -1,3 +1,4 @@
+import { ImageSourcePropType } from "react-native";
 import {
   NavigationAction,
   NavigationActions,
@@ -246,11 +247,12 @@ export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
   });
 
 export const navigateToCobadgeDetailScreen = (
-  cobadge: CreditCardPaymentMethod
+  cobadge: CreditCardPaymentMethod,
+  brandLogo: ImageSourcePropType
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_COBADGE_DETAIL,
-    params: { cobadge }
+    params: { cobadge, brandLogo }
   });
 
 export const navigateToPaymentPickPspScreen = (
