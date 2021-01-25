@@ -46,6 +46,7 @@ import { ServicesActions } from "./services";
 import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
+import { CrossSessionsActions } from "./crossSessions";
 
 export type Action =
   | AnalyticsActions
@@ -84,6 +85,7 @@ export type Action =
   | AbiActions
   | BPayActions
   | SatispayActions
+  | CrossSessionsActions
   | CgnActions;
 
 export type Dispatch = DispatchAPI<Action>;
