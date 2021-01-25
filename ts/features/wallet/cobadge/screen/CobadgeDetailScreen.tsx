@@ -17,7 +17,8 @@ import { Label } from "../../../../components/core/typography/Label";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
 import defaultCardIcon from "../../../../../img/wallet/cards-icons/unknown.png";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import CobadgeCard from "../component/CobadgeCard";
+import reactotron from "reactotron-react-native";
 
 type NavigationParams = Readonly<{
   cobadge: CreditCardPaymentMethod;
@@ -63,6 +64,8 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
     icon: defaultCardIcon,
     caption: I18n.t("wallet.methods.bancomatPay.name")
   });
+
+  reactotron.log(cobadge);
   return (
     <DarkLayout
       bounces={false}
@@ -74,7 +77,15 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
       gradientHeader={true}
       hideHeader={true}
     >
-      <View style={styles.cardContainer}></View>
+      <View style={styles.cardContainer}>
+        <CobadgeCard
+          expireMonth={cobadge.info.expireMonth}
+          expireYear={cobadge.info.expireYear}
+          caption={cobadge.caption}
+          bankName={cobadge.caption}
+          abiLogo={cobadge.abiInfo?.logoUrl}
+        />
+      </View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
         <PaymentMethodCapabilities paymentMethod={cobadge} />
