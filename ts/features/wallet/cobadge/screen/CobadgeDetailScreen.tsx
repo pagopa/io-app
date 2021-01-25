@@ -84,7 +84,6 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
           expireMonth={cobadge.info.expireMonth}
           expireYear={cobadge.info.expireYear}
           caption={cobadge.caption}
-          bankName={cobadge.caption}
           abiLogo={cobadge.abiInfo?.logoUrl}
           brandLogo={brandLogo}
         />

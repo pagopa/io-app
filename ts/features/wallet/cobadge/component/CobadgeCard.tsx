@@ -9,7 +9,6 @@ import {
 import { View } from "native-base";
 import I18n from "../../../../i18n";
 import BaseCardComponent from "../../component/BaseCardComponent";
-import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -19,7 +18,6 @@ type Props = {
   caption?: string;
   expireMonth?: string;
   expireYear?: string;
-  bankName: string;
   abiLogo?: string;
   brandLogo: ImageSourcePropType;
 };
