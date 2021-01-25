@@ -136,7 +136,12 @@ describe("CobadgeWalletPreview component", () => {
     const expectedPayload = {
       type: NavigationActions.NAVIGATE,
       routeName: ROUTES.WALLET_COBADGE_DETAIL,
-      params: { cobadge: aCobadgeCard }
+      params: {
+        cobadge: aCobadgeCard,
+        brandLogo: {
+          testUri: "../../../img/wallet/cards-icons/maestro.png"
+        }
+      }
     };
     if (cardComponent) {
       fireEvent.press(cardComponent);
