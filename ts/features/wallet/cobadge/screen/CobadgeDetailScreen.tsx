@@ -16,7 +16,6 @@ import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities
 import { Label } from "../../../../components/core/typography/Label";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
-import defaultCardIcon from "../../../../../img/wallet/cards-icons/unknown.png";
 import CobadgeCard from "../component/CobadgeCard";
 
 type NavigationParams = Readonly<{
@@ -62,15 +61,15 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
   const brandLogo: ImageSourcePropType = props.navigation.getParam("brandLogo");
 
   const { present } = useRemovePaymentMethodBottomSheet({
-    icon: defaultCardIcon,
-    caption: I18n.t("wallet.methods.bancomatPay.name")
+    icon: brandLogo,
+    caption: cobadge.caption
   });
 
   return (
     <DarkLayout
       bounces={false}
       contextualHelp={emptyContextualHelp}
-      title={I18n.t("wallet.methods.bancomatPay.name")}
+      title={I18n.t("wallet.creditCard.details.header")}
       faqCategories={["wallet_methods"]}
       allowGoBack={true}
       topContent={<View style={styles.headerSpacer} />}
@@ -105,11 +104,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       deleteWalletRequest({
         walletId,
         onSuccess: _ => {
-          showToast(I18n.t("wallet.delete.bPay.successful"), "success");
+          showToast(I18n.t("wallet.delete.successful"), "success");
           dispatch(NavigationActions.back());
         },
         onFailure: _ => {
-          showToast(I18n.t("wallet.delete.bPay.failed"), "danger");
+          showToast(I18n.t("wallet.delete.failed"), "danger");
         }
       })
     )

@@ -779,6 +779,8 @@ wallet:
       dateTime: Data e ora
       detailTitle: Dettaglio
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
+    details:
+      header: Dettaglio Metodo
   searchAbi:
     header: Aggiungi {{methodName}}
     bancomat:

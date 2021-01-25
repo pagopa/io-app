@@ -13,6 +13,7 @@ import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImage
 import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
 import abiLogoFallback from "../../../../../img/wallet/cards-icons/abiLogoFallback.png";
+import reactotron from "reactotron-react-native";
 
 type Props = {
   caption?: string;
@@ -50,7 +51,6 @@ const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
       resizeMode: "contain"
     })
   );
-
   return (
     <BaseCardComponent
       topLeftCorner={

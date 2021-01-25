@@ -759,6 +759,8 @@ wallet:
       dateTime: Date and time
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
+    details:
+      header: Method detail
   searchAbi:
     header: "Add {{methodName}}"
     bancomat:
