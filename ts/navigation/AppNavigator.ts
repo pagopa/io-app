@@ -62,7 +62,7 @@ const navigator = createStackNavigator(
       screen: OnboardingNavigator
     },
     [ROUTES.MAIN]: {
-      // The navigator used for authenticated users on onboardibg completed
+      // The navigator used for authenticated users on onboarding completed
       screen: MainNavigator
     }
   },

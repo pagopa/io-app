@@ -259,7 +259,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     backendClient.getSupportToken
   );
 
-  // Start watching for requests of abort the activation
+  // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
 
   if (!previousSessionToken || isNone(maybeStoredPin)) {
