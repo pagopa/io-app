@@ -1166,7 +1166,7 @@ wallet:
   cobadge:
     details:
       card:
-        validUntil: "Valid until {{expireMonth}} / {{expireYear}}"
+        validUntil: "Valid until {{expireMonth}}/{{expireYear}}"
   newRemove:
     title: "Delete this payment method?"
     body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
