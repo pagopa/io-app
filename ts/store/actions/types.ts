@@ -12,6 +12,7 @@ import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bo
 import { BpdActions } from "../../features/bonus/bpd/store/actions";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
+import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
 import { CgnActions } from "../../features/bonus/cgn/store/actions";
@@ -84,6 +85,7 @@ export type Action =
   | BpdActions
   | AbiActions
   | BPayActions
+  | CoBadgeActions
   | SatispayActions
   | CrossSessionsActions
   | CgnActions;
