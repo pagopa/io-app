@@ -24,7 +24,6 @@ import {
 import ExtractedCTABar from "../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
-import PaymentButton from "./PaymentButton";
 
 type OwnProps = {
   message: CreatedMessageWithContent;
@@ -130,25 +129,6 @@ class MessageListCTABar extends React.PureComponent<Props> {
           message={this.props.message}
         />
       ));
-  // Render a button to display details of the payment related to the message
-  private renderPaymentButton() {
-    // The button is displayed if the payment has an expiration date in the future or if is valid also after due date.
-    return this.paymentExpirationInfo.fold(undefined, pei => {
-      const { message, service, disabled } = this.props;
-      const { paid } = this;
-      return (
-        <PaymentButton
-          paid={paid}
-          messagePaymentExpirationInfo={pei}
-          small={true}
-          disabled={disabled}
-          service={service}
-          message={message}
-          enableAlertStyle={false}
-        />
-      );
-    });
-  }
 
   public render() {
     const calendarIcon = this.renderCalendarIcon();
@@ -169,24 +149,29 @@ class MessageListCTABar extends React.PureComponent<Props> {
       ) : null;
     const content =
       nestedCTA ||
-      (isPaymentStillValid && (
+      (isPaymentStillValid && (calendarIcon || calendarEventButton) && (
         <>
           {calendarIcon}
           {calendarIcon && <View hspacer={true} small={true} />}
           {calendarEventButton}
           {calendarEventButton && <View hspacer={true} small={true} />}
-          {this.renderPaymentButton()}
         </>
       ));
+    if (!content) {
+      return null;
+    }
     return (
-      <View
-        style={[styles.topContainer, this.paid && styles.topContainerPaid]}
-        accessible={false}
-        accessibilityElementsHidden={true}
-        importantForAccessibility={"no-hide-descendants"}
-      >
-        {content}
-      </View>
+      <>
+        <View spacer={true} large={true} />
+        <View
+          style={[styles.topContainer, this.paid && styles.topContainerPaid]}
+          accessible={false}
+          accessibilityElementsHidden={true}
+          importantForAccessibility={"no-hide-descendants"}
+        >
+          {content}
+        </View>
+      </>
     );
   }
 }
