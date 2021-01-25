@@ -57,6 +57,14 @@ import {
   walletAddBPayStart
 } from "../features/wallet/onboarding/bancomatPay/store/actions";
 import {
+  handleAddCoBadgeToWallet,
+  handleSearchUserCoBadge
+} from "../features/wallet/onboarding/cobadge/saga/networking";
+import {
+  addCoBadgeToWallet,
+  searchUserCoBadge
+} from "../features/wallet/onboarding/cobadge/store/actions";
+import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
 } from "../features/wallet/onboarding/satispay/saga/networking";
@@ -911,6 +919,11 @@ export function* watchWalletSaga(
       paymentManagerClient.addBPayToWallet,
       pmSessionManager
     );
+
+    // watch for CoBadge search request
+    yield takeLatest(searchUserCoBadge.request, handleSearchUserCoBadge);
+    // watch for add CoBadge to the user's wallet
+    yield takeLatest(addCoBadgeToWallet.request, handleAddCoBadgeToWallet);
   }
 
   yield fork(paymentsDeleteUncompletedSaga);
