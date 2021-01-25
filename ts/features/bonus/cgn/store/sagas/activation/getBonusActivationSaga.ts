@@ -41,7 +41,7 @@ export const cgnActivationSaga = (
         // 202 -> still processing
         if (status === 202) {
           return cgnActivationStatus.success({
-            status: CgnActivationProgressEnum.TIMEOUT
+            status: CgnActivationProgressEnum.PENDING
           });
         }
         // 409 -> Cannot activate a new cgn because another card related to this user was found.
