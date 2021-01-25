@@ -1,5 +1,5 @@
 import { createStackNavigator } from "react-navigation";
-import ActivateBpdOnNewCoBadgeScreen from "../screens/ActivateBpdOnNewBPayScreen";
+import ActivateBpdOnNewCoBadgeScreen from "../screens/ActivateBpdOnNewCoBadgeScreen";
 import AddCoBadgeScreen from "../screens/add-account/AddCoBadgeScreen";
 import SearchAvailableCoBadgeScreen from "../screens/search/SearchAvailableCoBadgeScreen";
 import CoBadgeStartSingleBankScreen from "../screens/start/CoBadgeStartSingleBankScreen";
