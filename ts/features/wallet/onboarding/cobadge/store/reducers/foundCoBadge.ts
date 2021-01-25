@@ -37,7 +37,7 @@ const foundCoBadgeReducer = (
  * Remove from the list the disabled accounts
  * @param state
  */
-export const onboardingCoBadgeFoundAccountsSelector = (
+export const onboardingCoBadgeFoundSelector = (
   state: GlobalState
 ): RemoteCoBadge => state.wallet.onboarding.coBadge.foundCoBadge;
 
