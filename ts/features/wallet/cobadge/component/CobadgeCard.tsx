@@ -71,7 +71,11 @@ const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
           {props.expireMonth && props.expireYear && (
             <>
               <View spacer={true} />
-              <H5 weight={"Regular"} color={"bluegrey"}>
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"expirationDate"}
+              >
                 {I18n.t("wallet.cobadge.details.card.validUntil", {
                   expireMonth: props.expireMonth,
                   expireYear: props.expireYear
