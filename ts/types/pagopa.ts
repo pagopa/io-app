@@ -220,7 +220,8 @@ export type BancomatPaymentMethod = RawBancomatPaymentMethod &
   WithAbi;
 
 export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
-  PaymentMethodRepresentation;
+  PaymentMethodRepresentation &
+  WithAbi;
 
 export type BPayPaymentMethod = RawBPayPaymentMethod &
   PaymentMethodRepresentation &
