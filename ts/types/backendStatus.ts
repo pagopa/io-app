@@ -47,8 +47,7 @@ const Sections = t.interface({
   messages: SectionStatus,
   satispay: SectionStatus,
   services: SectionStatus,
-  wallets: SectionStatus,
-  loyalty: SectionStatus
+  wallets: SectionStatus
 });
 export type Sections = t.TypeOf<typeof Sections>;
 
