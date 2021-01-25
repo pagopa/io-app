@@ -1650,7 +1650,7 @@ faq:
     title: "How to delete all my personal data associated to IO?"
     content: !include faq/faq56.md
   57:
-    title: "Did you have problems during a payment or activation a payment instrument?"
+    title: "Did you have problems during a payment or onboarding a payment instrument?"
     content: !include faq/faq57.md
   58:
     title: "How do I claim the Bonus Vacanze?"

@@ -58,11 +58,11 @@ const navigator = createStackNavigator(
       screen: AuthenticationNavigator
     },
     [ROUTES.ONBOARDING]: {
-      // The navigator user during activation for authenticated users
+      // The navigator user during onboarding for authenticated users
       screen: OnboardingNavigator
     },
     [ROUTES.MAIN]: {
-      // The navigator used for authenticated users on activation completed
+      // The navigator used for authenticated users on onboardibg completed
       screen: MainNavigator
     }
   },

@@ -12,6 +12,6 @@ export function* watchAbortOnboardingSaga(): Iterator<Effect> {
   yield call(deletePin);
   // invalidate the session
   yield put(sessionInvalid());
-  // initialize the app from scratch (forcing an activation flow)
+  // initialize the app from scratch (forcing an onboarding flow)
   yield put(startApplicationInitialization());
 }

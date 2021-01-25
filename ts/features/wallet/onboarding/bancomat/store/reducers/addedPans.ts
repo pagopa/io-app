@@ -15,10 +15,10 @@ const addedPansReducer = (
   action: Action
 ): ReadonlyArray<RawBancomatPaymentMethod> => {
   switch (action.type) {
-    // Register a new Bancomat added in the current activation session
+    // Register a new Bancomat added in the current onboarding session
     case getType(addBancomatToWallet.success):
       return [...state, action.payload];
-    // Reset the state when starting a new activation bancomat workflow
+    // Reset the state when starting a new onboarding bancomat workflow
     case getType(walletAddBancomatStart):
       return [];
   }

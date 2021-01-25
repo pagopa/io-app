@@ -13,13 +13,13 @@ export type OnboardingBPayState = {
 };
 
 const onboardingBPayReducer = combineReducers<OnboardingBPayState, Action>({
-  // the BPay account found for the user during the activation phase
+  // the BPay account found for the user during the onboarding phase
   foundBPay: foundBpayReducer,
   // the BPay account that user is adding to his wallet
   addingBPay: addingBPayReducer,
-  // the BPay account that user added to his wallet (during the last BPay activation workflow)
+  // the BPay account that user added to his wallet (during the last BPay onboarding workflow)
   addedBPay: addedBPayReducer,
-  // the bank (abi) chosen by the user during the activation phase. Can be null (the user skip the bank selection)
+  // the bank (abi) chosen by the user during the onboarding phase. Can be null (the user skip the bank selection)
   abiSelected: abiSelectedReducer
 });
 

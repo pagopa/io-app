@@ -162,7 +162,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       </SafeAreaView>
     );
 
-    // shown when any steps of credit card activation are in error state
+    // shown when any steps of credit card onboarding are in error state
     const creditCardErrorContent = (
       <LoadingErrorComponent
         isLoading={false}
@@ -173,7 +173,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         onAbort={this.goBack}
       />
     );
-    // this component is shown only in error case (wallet || credit card activation)
+    // this component is shown only in error case (wallet || credit card onboarding)
     const errorContent = this.props.areWalletsInError
       ? walletsInErrorContent
       : creditCardErrorContent;

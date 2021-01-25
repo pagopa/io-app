@@ -15,7 +15,7 @@ export type OnboardSatispayState = {
 
 const onboardingSatispayReducer = combineReducers<OnboardSatispayState, Action>(
   {
-    // the satispay account found for the user during the activation phase
+    // the satispay account found for the user during the onboarding phase
     foundSatispay: foundSatispayReducer,
     // the user is trying to add the satispay account to the wallet
     addingSatispay: addingSatispayReducer,

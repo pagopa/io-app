@@ -102,11 +102,11 @@ export function* bpdStartOnboardingWorker() {
 }
 
 /**
- * This saga check if the bpd is active for the user and choose if start the activation or go directly to the bpd details
+ * This saga check if the bpd is active for the user and choose if start the onboarding or go directly to the bpd details
  */
 export function* handleBpdStartOnboardingSaga(): SagaIterator {
   const { cancelAction } = yield race({
-    activation: call(bpdStartOnboardingWorker),
+    onboarding: call(bpdStartOnboardingWorker),
     cancelAction: take(bpdOnboardingCancel)
   });
   if (cancelAction) {

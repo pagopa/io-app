@@ -9,7 +9,7 @@ import {
 } from "../../actions/onboarding";
 
 /**
- * This reducers is used to know if a current activation is ongoing
+ * This reducers is used to know if a current onboarding is ongoing
  * @param state
  * @param action
  */

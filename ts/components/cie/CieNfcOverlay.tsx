@@ -30,7 +30,7 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
     await openNFCSettings();
   };
 
-  // FIX ME: the same alert is displayed during all the activation
+  // FIX ME: the same alert is displayed during all the onboarding
   private handleGoBack = () =>
     Alert.alert(
       I18n.t("onboarding.alert.title"),

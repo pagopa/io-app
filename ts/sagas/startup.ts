@@ -113,7 +113,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // 2. FIXME: as a workaround for iOS only. Below iOS version 12.3 Keychain is
   //           not cleared between one installation and another, so it is
   //           needed to manually clear previous installation user info in
-  //           order to force the user to choose unlock code and run through activation
+  //           order to force the user to choose unlock code and run through onboarding
   //           every new installation.
 
   yield call(previousInstallationDataDeleteSaga);
@@ -234,7 +234,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     // Delete the current unlock code from the Keychain
     // eslint-disable-next-line
     yield call(deletePin);
-    // Delete all activation data
+    // Delete all onboarding data
     yield put(clearOnboarding());
     yield put(clearCache());
   }
@@ -265,7 +265,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (!previousSessionToken || isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
     // reason, he was logged in but there is no unlock code set, thus we need
-    // to pass through the activation process.
+    // to pass through the onboarding process.
 
     // Ask to accept ToS if it is the first access on IO or if there is a new available version of ToS
     yield call(checkAcceptedTosSaga, userProfile);
@@ -281,7 +281,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   } else {
     storedPin = maybeStoredPin.value;
     if (!isSessionRefreshed) {
-      // The user was previously logged in, so no activation is needed
+      // The user was previously logged in, so no onboarding is needed
       // The session was valid so the user didn't event had to do a full login,
       // in this case we ask the user to identify using the unlock code.
       const identificationResult: SagaCallReturnType<typeof startAndReturnIdentificationResult> = yield call(

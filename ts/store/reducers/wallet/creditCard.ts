@@ -162,7 +162,7 @@ export default reducer;
 const creditCardAttemptions = (state: GlobalState) =>
   state.payments.creditCardInsertion;
 
-// return the list of credit card activation attempts
+// return the list of credit card onboarding attempts
 export const creditCardAttemptionsSelector = createSelector(
   creditCardAttemptions,
   (ca: CreditCardInsertionState): CreditCardInsertionState => ca
