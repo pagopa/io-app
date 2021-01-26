@@ -11,6 +11,7 @@ import { bonusVacanzeStyle } from "../Styles";
 export type LoadingErrorProps = {
   isLoading: boolean;
   loadingCaption: string;
+  loadingSubtitle?: string;
   errorText?: string;
   errorSubText?: string;
   onRetry: () => void;
@@ -30,7 +31,7 @@ const renderError = (props: LoadingErrorProps) => (
   />
 );
 
-const renderLoading = (loadingCaption: string) => (
+const renderLoading = (loadingCaption: string, loadingSubtitle?: string) => (
   <View accessible={true} ref={loadingRef} style={{ flex: 1 }}>
     <InfoScreenComponent
       image={
@@ -42,6 +43,7 @@ const renderLoading = (loadingCaption: string) => (
         />
       }
       title={loadingCaption}
+      body={loadingSubtitle}
     />
   </View>
 );
@@ -66,7 +68,7 @@ export const LoadingErrorComponent: React.FunctionComponent<LoadingErrorProps> =
   return (
     <SafeAreaView style={bonusVacanzeStyle.flex}>
       {props.isLoading
-        ? renderLoading(props.loadingCaption)
+        ? renderLoading(props.loadingCaption, props.loadingSubtitle)
         : renderError(props)}
     </SafeAreaView>
   );

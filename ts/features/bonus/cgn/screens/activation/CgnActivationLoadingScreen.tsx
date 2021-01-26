@@ -5,7 +5,7 @@ import { Dispatch } from "../../../../../store/actions/types";
 import { isCgnActivationLoading } from "../../store/reducers/activation";
 import {
   cgnActivationCancel,
-  cgnActivationStart
+  cgnRequestActivation
 } from "../../store/actions/activation";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 
@@ -29,7 +29,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onRetry: () => dispatch(cgnActivationStart()),
+  onRetry: () => dispatch(cgnRequestActivation.request()),
   onCancel: () => dispatch(cgnActivationCancel())
 });
 
