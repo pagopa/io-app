@@ -1,16 +1,12 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/CoBadgeService";
 import { Action } from "../../../../../../store/actions/types";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { loadCoBadgeAbiConfiguration } from "../actions";
 
-export type AbiConfigurationState = pot.Pot<
-  IndexedById<AbiConfiguration>,
-  Error
->;
-
-export type AbiConfiguration = "Enabled" | "Disabled" | "Unavailable";
+export type AbiConfigurationState = pot.Pot<IndexedById<StatusEnum>, Error>;
 
 const abiConfigurationReducer = (
   state: AbiConfigurationState = pot.none,
@@ -23,16 +19,16 @@ const abiConfigurationReducer = (
       // TODO: check for performance and compare with immutable-js if needed
       // First layer: key: serviceid, values: abi list and activation state
       const abiConfiguration = Object.keys(action.payload).reduce<
-        IndexedById<AbiConfiguration>
+        IndexedById<StatusEnum>
       >((acc, val) => {
         // foreach service, generate the mapping abi: state
-        const serviceState = action.payload[val].active;
+        const serviceState = action.payload[val].status;
         const serviceAbiWithConfiguration = action.payload[val].issuers.reduce<
-          IndexedById<AbiConfiguration>
+          IndexedById<StatusEnum>
         >(
           (acc, val) => ({
             ...acc,
-            [val.abi]: serviceState ? "Enabled" : "Unavailable"
+            [val.abi]: serviceState
           }),
           {}
         );
@@ -54,10 +50,10 @@ const abiConfigurationReducer = (
 export const getCoBadgeAbiConfiguration = (
   state: GlobalState,
   abiId: string
-): pot.Pot<AbiConfiguration, Error> =>
+): pot.Pot<StatusEnum, Error> =>
   pot.map(
     state.wallet.onboarding.coBadge.abiConfiguration,
-    abiConfigById => abiConfigById[abiId] ?? "Disabled"
+    abiConfigById => abiConfigById[abiId] ?? StatusEnum.disabled
   );
 
 export default abiConfigurationReducer;
