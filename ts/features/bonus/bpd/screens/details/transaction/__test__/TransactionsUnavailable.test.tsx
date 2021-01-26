@@ -38,7 +38,7 @@ describe("TransactionsUnavailable component", () => {
     });
   });
 
-  it("should show the payment-unavailable-icon.png", async () => {
+  it("should show the payment-unavailable-icon.png", () => {
     const component = getComponent(store);
     const rasterImageComponent = component.queryByTestId("rasterImage");
     const paymentUnavailableIconPath =
@@ -48,7 +48,7 @@ describe("TransactionsUnavailable component", () => {
       testUri: paymentUnavailableIconPath
     });
   });
-  it("should use the right string as header, title and body", async () => {
+  it("should use the right string as header, title and body", () => {
     const component = getComponent(store);
     const headerTitle = component.getByText(
       I18n.t("bonus.bpd.details.transaction.goToButton")
