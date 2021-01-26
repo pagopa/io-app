@@ -62,6 +62,10 @@ import { deletePin, getPin } from "../utils/keychain";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import I18n from "../i18n";
 import {
+  CrossSessionProfileIdentity,
+  isDifferentProfileSelector
+} from "../store/reducers/crossSessions";
+import {
   startAndReturnIdentificationResult,
   watchIdentification
 } from "./identification";
@@ -113,7 +117,6 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   //           needed to manually clear previous installation user info in
   //           order to force the user to choose unlock code and run through onboarding
   //           every new installation.
-
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
 
@@ -229,9 +232,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     lastLoggedInProfileState.value.fiscal_code !== userProfile.fiscal_code
   ) {
     // Delete all data while keeping current session:
-    // Delete the current unlock code from the Keychain
     // eslint-disable-next-line
-    yield call(deletePin);
     // Delete all onboarding data
     yield put(clearOnboarding());
     yield put(clearCache());
@@ -243,7 +244,6 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
-
   // eslint-disable-next-line
   let storedPin: PinString;
 
@@ -268,7 +268,23 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     // Ask to accept ToS if it is the first access on IO or if there is a new available version of ToS
     yield call(checkAcceptedTosSaga, userProfile);
 
-    storedPin = yield call(checkConfiguredPinSaga);
+    if (isNone(maybeStoredPin)) {
+      storedPin = yield call(checkConfiguredPinSaga);
+    } else {
+      const isDifferentProfile: CrossSessionProfileIdentity = yield select(
+        isDifferentProfileSelector
+      );
+
+      if (
+        isDifferentProfile === CrossSessionProfileIdentity.DifferentIdentity ||
+        isDifferentProfile === CrossSessionProfileIdentity.Unknown
+      ) {
+        yield call(deletePin);
+        storedPin = yield call(checkConfiguredPinSaga);
+      } else {
+        storedPin = maybeStoredPin.value;
+      }
+    }
 
     yield call(checkAcknowledgedFingerprintSaga);
 

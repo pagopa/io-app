@@ -80,7 +80,7 @@ describe("watchProfile", () => {
     undefined,
     setProfileHashedFiscalCode(mockedProfile.fiscal_code)
   );
-  it("checkStoreHashedFiscalCode should not dispatch newProfileLoggedIn action", () =>
+  it("checkStoreHashedFiscalCode should not dispatch differentProfileLogIn action", () =>
     expectSaga(
       profileSagaTestable!.checkStoreHashedFiscalCode,
       profileLoadSuccess(mockedProfile)
@@ -91,7 +91,7 @@ describe("watchProfile", () => {
       .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
       .run());
 
-  it("checkStoreHashedFiscalCode should not dispatch newProfileLoggedIn action - empty store", () =>
+  it("checkStoreHashedFiscalCode should not dispatch differentProfileLogIn action - empty store", () =>
     expectSaga(
       profileSagaTestable!.checkStoreHashedFiscalCode,
       profileLoadSuccess(mockedProfile)
@@ -105,7 +105,7 @@ describe("watchProfile", () => {
       .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
       .run());
 
-  it("checkStoreHashedFiscalCode should dispatch newProfileLoggedIn action", () =>
+  it("checkStoreHashedFiscalCode should dispatch differentProfileLogIn action", () =>
     expectSaga(
       profileSagaTestable!.checkStoreHashedFiscalCode,
       profileLoadSuccess(mockedProfile)

@@ -48,6 +48,7 @@ import {
 } from "../utils/locale";
 import {
   differentProfileLoggedIn,
+  sameProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
 import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
@@ -328,13 +329,17 @@ function* checkStoreHashedFiscalCode(
     isDifferentFiscalCodeSelector,
     profileLoadSuccessAction.payload.fiscal_code
   );
-  // the current logged user has a different fiscal code from the stored hashed one
-  if (checkIsDifferentFiscalCode === true) {
-    yield put(differentProfileLoggedIn());
-  }
+
   yield put(
     setProfileHashedFiscalCode(profileLoadSuccessAction.payload.fiscal_code)
   );
+
+  if (checkIsDifferentFiscalCode === true) {
+    // The current logged user has a different fiscal code from the stored hashed one
+    yield put(differentProfileLoggedIn());
+  } else {
+    yield put(sameProfileLoggedIn());
+  }
 }
 
 // make some check after the profile is loaded successfully

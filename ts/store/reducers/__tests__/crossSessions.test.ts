@@ -4,6 +4,7 @@ import { appReducer } from "../index";
 import { GlobalState } from "../types";
 import { setProfileHashedFiscalCode } from "../../actions/crossSessions";
 import {
+  CrossSessionProfileIdentity,
   hashedProfileFiscalCodeSelector,
   isDifferentFiscalCodeSelector
 } from "../crossSessions";
@@ -54,7 +55,10 @@ describe("cross sessions status reducer/selectors", () => {
       isDifferentFiscalCodeSelector(
         {
           ...globalState,
-          crossSessions: { hashedFiscalCode: undefined }
+          crossSessions: {
+            hashedFiscalCode: undefined,
+            isDifferentProfile: CrossSessionProfileIdentity.SameIdentity
+          }
         },
         fiscalCode
       )
