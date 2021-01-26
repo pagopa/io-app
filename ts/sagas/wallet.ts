@@ -62,6 +62,7 @@ import {
 } from "../features/wallet/onboarding/cobadge/saga/networking";
 import {
   addCoBadgeToWallet,
+  loadCoBadgeAbiConfiguration,
   searchUserCoBadge
 } from "../features/wallet/onboarding/cobadge/store/actions";
 import {
@@ -924,6 +925,11 @@ export function* watchWalletSaga(
     yield takeLatest(searchUserCoBadge.request, handleSearchUserCoBadge);
     // watch for add CoBadge to the user's wallet
     yield takeLatest(addCoBadgeToWallet.request, handleAddCoBadgeToWallet);
+    // watch for CoBadge configuration request
+    yield takeLatest(
+      loadCoBadgeAbiConfiguration.request,
+      handleAddCoBadgeToWallet
+    );
   }
 
   yield fork(paymentsDeleteUncompletedSaga);

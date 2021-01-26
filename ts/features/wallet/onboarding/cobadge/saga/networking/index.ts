@@ -1,6 +1,10 @@
 import { put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { addCoBadgeToWallet, searchUserCoBadge } from "../../store/actions";
+import {
+  addCoBadgeToWallet,
+  loadCoBadgeAbiConfiguration,
+  searchUserCoBadge
+} from "../../store/actions";
 
 /**
  * Load the user Cobadge
@@ -20,4 +24,18 @@ export function* handleAddCoBadgeToWallet(
   _: ActionType<typeof addCoBadgeToWallet.request>
 ) {
   yield put(addCoBadgeToWallet.failure({ kind: "timeout" }));
+}
+
+/**
+ * Load CoBadge configuration
+ * TODO: add networking logic
+ */
+export function* handleLoadCoBadgeConfiguration(
+  _: ActionType<typeof loadCoBadgeAbiConfiguration.request>
+) {
+  yield put(
+    loadCoBadgeAbiConfiguration.success({
+      ICCREA: { active: true, issuers: [{ abi: "1", name: "" }] }
+    })
+  );
 }
