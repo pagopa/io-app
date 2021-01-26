@@ -4,6 +4,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { CoBadgeServices } from "../../../../../../../definitions/pagopa/cobadge/CoBadgeServices";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
 
@@ -27,6 +28,15 @@ export const addCoBadgeToWallet = createAsyncAction(
   "WALLET_ONBOARDING_COBADGE_ADD_SUCCESS",
   "WALLET_ONBOARDING_COBADGE_ADD_FAILURE"
 )<CoBadgeResponse, RawCreditCardPaymentMethod, NetworkError>();
+
+/**
+ * Load the Abi configuration for the cobadge services (the list of abi supported and the operational state)
+ */
+export const loadCoBadgeAbiConfiguration = createAsyncAction(
+  "WALLET_ONBOARDING_COBADGE_LOAD_ABI_CONFIG_REQUEST",
+  "WALLET_ONBOARDING_COBADGE_LOAD_ABI_CONFIG_SUCCESS",
+  "WALLET_ONBOARDING_COBADGE_LOAD_ABI_CONFIG_FAILURE"
+)<void, CoBadgeServices, Error>();
 
 /**
  * The user chooses to start the workflow to add a new cobadge to the wallet
@@ -68,6 +78,7 @@ export const walletAddCoBadgeBack = createStandardAction(
 export type CoBadgeActions =
   | ActionType<typeof searchUserCoBadge>
   | ActionType<typeof addCoBadgeToWallet>
+  | ActionType<typeof loadCoBadgeAbiConfiguration>
   | ActionType<typeof walletAddCoBadgeStart>
   | ActionType<typeof walletAddCoBadgeCompleted>
   | ActionType<typeof walletAddCoBadgeCancel>
