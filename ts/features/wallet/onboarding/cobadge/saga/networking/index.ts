@@ -1,5 +1,6 @@
 import { put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
+import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/CoBadgeService";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
@@ -35,7 +36,7 @@ export function* handleLoadCoBadgeConfiguration(
 ) {
   yield put(
     loadCoBadgeAbiConfiguration.success({
-      ICCREA: { active: true, issuers: [{ abi: "1", name: "" }] }
+      ICCREA: { status: StatusEnum.active, issuers: [{ abi: "1", name: "" }] }
     })
   );
 }
