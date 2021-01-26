@@ -5,8 +5,12 @@ import { Action } from "../../../../../../store/actions/types";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { loadCoBadgeAbiConfiguration } from "../actions";
+import { NetworkError } from "../../../../../../utils/errors";
 
-export type AbiConfigurationState = pot.Pot<IndexedById<StatusEnum>, Error>;
+export type AbiConfigurationState = pot.Pot<
+  IndexedById<StatusEnum>,
+  NetworkError
+>;
 
 const abiConfigurationReducer = (
   state: AbiConfigurationState = pot.none,
@@ -50,7 +54,7 @@ const abiConfigurationReducer = (
 export const getCoBadgeAbiConfiguration = (
   state: GlobalState,
   abiId: string
-): pot.Pot<StatusEnum, Error> =>
+): pot.Pot<StatusEnum, NetworkError> =>
   pot.map(
     state.wallet.onboarding.coBadge.abiConfiguration,
     abiConfigById => abiConfigById[abiId] ?? StatusEnum.disabled
