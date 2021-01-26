@@ -139,18 +139,18 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private handleGoBack = () => {
-    // goback if the activation is completed
+    // goback if the onboarding is completed
     if (this.props.isOnboardingCompleted) {
       this.props.navigation.goBack();
     }
-    // if the activation is not completed and the email is set, force goback with a reset (user could edit his email and go back without saving)
+    // if the onboarding is not completed and the email is set, force goback with a reset (user could edit his email and go back without saving)
     // see https://www.pivotaltracker.com/story/show/171424350
     else if (this.props.optionEmail.isSome()) {
       this.setState({ isMounted: false }, () => {
         this.navigateToEmailReadScreen();
       });
     } else {
-      // if the user is in activation phase, go back has to
+      // if the user is in onboarding phase, go back has to
       // abort login (an user with no email can't access the home)
       Alert.alert(
         I18n.t("onboarding.alert.title"),
@@ -195,8 +195,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         // display a toast with error
         showToast(I18n.t("email.edit.upsert_ko"), "danger");
       } else if (pot.isSome(this.props.profile)) {
-        // user is inserting his email from activation phase
-        // he comes from checkAcknowledgedEmailSaga if activation is not finished yet
+        // user is inserting his email from onboarding phase
+        // he comes from checkAcknowledgedEmailSaga if onboarding is not finished yet
         // and he has not an email
         if (
           !this.props.isOnboardingCompleted &&

@@ -40,7 +40,7 @@ describe("checkAcceptedTosSaga", () => {
         .run());
   });
 
-  describe("when user is on his first activation and he has an email and it is validated", () => {
+  describe("when user is on his first onboarding and he has an email and it is validated", () => {
     const profileEmailValidatedFirstOnboarding: InitializedProfile = {
       ...userProfileWithEmailAndValidated,
       version: 0

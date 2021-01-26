@@ -867,7 +867,7 @@ Example of use:
 ```javascript
 <TextWithIcon danger>
   <IconFont name="io-back" />
-  <Text>{I18n.t('activation.pin.confirmInvalid')}</Text>
+  <Text>{I18n.t('onboarding.pin.confirmInvalid')}</Text>
 </TextWithIcon>
 ```
 

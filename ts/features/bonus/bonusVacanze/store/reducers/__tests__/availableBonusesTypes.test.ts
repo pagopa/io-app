@@ -3,9 +3,14 @@ import { visibleAvailableBonusSelector } from "../availableBonusesTypes";
 import {
   availableBonuses,
   contentBonusVacanzeIT
-} from "../../../mock/availableBonuses";
+} from "../../../__mock__/availableBonuses";
 import { BonusesAvailable } from "../../../../../../../definitions/content/BonusesAvailable";
 import { BonusVisibilityEnum } from "../../../../../../../definitions/content/BonusVisibility";
+import {
+  ID_BONUS_VACANZE_TYPE,
+  ID_BPD_TYPE,
+  ID_CGN_TYPE
+} from "../../../utils/bonus";
 
 const bonusMockContent = {
   name: "Bonus Vacanze",
@@ -27,7 +32,8 @@ const mockBonus = {
 };
 
 jest.mock("../../../../../../config", () => ({
-  cgnEnabled: "YES"
+  cgnEnabled: true,
+  bonusVacanzeEnabled: true
 }));
 
 describe("availableBonusesTypes with FF enabled", () => {
@@ -75,5 +81,46 @@ describe("availableBonusesTypes with FF enabled", () => {
     expect(
       visibleAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
     ).toBe(2);
+  });
+
+  it("should return the experimental bonus where the FF is ON", () => {
+    const visibility = BonusVisibilityEnum.experimental;
+    const bonuses: BonusesAvailable = [
+      { ...mockBonus, id_type: ID_BONUS_VACANZE_TYPE, visibility },
+      { ...mockBonus, id_type: ID_BONUS_VACANZE_TYPE, visibility },
+      { ...mockBonus, id_type: ID_BPD_TYPE, visibility }
+    ];
+    const result = visibleAvailableBonusSelector.resultFunc(pot.some(bonuses));
+    expect(result.length).toBe(2);
+    expect(result).toEqual([bonuses[0], bonuses[1]]);
+  });
+
+  it("should return the experimental bonus where the FF is ON", () => {
+    const visibility = BonusVisibilityEnum.experimental;
+    const bonuses: BonusesAvailable = [
+      {
+        ...mockBonus,
+        id_type: ID_BONUS_VACANZE_TYPE,
+        visibility
+      },
+      {
+        ...mockBonus,
+        id_type: ID_BPD_TYPE,
+        visibility
+      },
+      {
+        ...mockBonus,
+        id_type: ID_CGN_TYPE,
+        visibility
+      },
+      {
+        ...mockBonus,
+        id_type: -1,
+        visibility
+      }
+    ];
+    const result = visibleAvailableBonusSelector.resultFunc(pot.some(bonuses));
+    expect(result.length).toBe(2);
+    expect(result).toEqual([bonuses[0], bonuses[2]]);
   });
 });

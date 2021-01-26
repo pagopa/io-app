@@ -26,9 +26,9 @@ export type WalletState = Readonly<{
   wallets: PersistedWalletsState;
   payment: PaymentState;
   pspsById: PspStateById;
-  // List of banks (abi) found. This data is used atm in the bancomat activation
+  // List of banks (abi) found. This data is used atm in the bancomat onboarding
   abi: AbiState;
-  // section used for the activation of a new payment method. Each payment have a sub-section
+  // section used for the onboarding of a new payment method. Each payment have a sub-section
   onboarding: PaymentMethodOnboardingState;
   lastRequestError: LastRequestErrorState;
 }>;

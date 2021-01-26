@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0-rc.2](https://github.com/pagopa/io-app/compare/1.19.0-rc.1...1.19.0-rc.2) (2021-01-22)
+
+
+### Bug Fixes
+
+* [[#176607041](https://www.pivotaltracker.com/story/show/176607041)] Hashed CF is reset on logout [#2745](https://github.com/pagopa/io-app/issues/2745) ([f8dbaf9](https://github.com/pagopa/io-app/commit/f8dbaf9b6a6d73ae9d6e4f2eda50eb4035afa765))
+
 ## [1.19.0-rc.1](https://github.com/pagopa/io-app/compare/1.19.0-rc.0...1.19.0-rc.1) (2021-01-21)
 
 

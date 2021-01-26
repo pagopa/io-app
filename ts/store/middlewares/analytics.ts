@@ -336,7 +336,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(identificationFailure):
     case getType(identificationPinReset):
     case getType(identificationForceLogout):
-    // activation
+    // onboarding
     case getType(analyticsOnboardingStarted):
     case getType(createPinSuccess):
     case getType(updatePin):

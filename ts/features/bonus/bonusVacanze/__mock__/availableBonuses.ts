@@ -108,7 +108,7 @@ export const availableBonuses: BonusesAvailable = [
   {
     id_type: ID_BPD_TYPE,
     it: {
-      name: "Bonus Vacanze",
+      name: "Cashback",
       description:
         "Fino a 500€ a nucleo familiare per andare in vacanza in Italia",
       subtitle:
@@ -118,7 +118,7 @@ export const availableBonuses: BonusesAvailable = [
       tos_url: "https://io.italia.it/app-content/bonus_vacanze_tos.html"
     },
     en: {
-      name: "Bonus Vacanze",
+      name: "Cashback",
       description: "Up to € 500 per family to go on holiday in Italy",
       subtitle:
         "The incentive established to support tourism after the lockdown due to the Coronavirus emergency.",
@@ -141,7 +141,7 @@ export const availableBonuses: BonusesAvailable = [
   {
     id_type: ID_CGN_TYPE,
     it: {
-      name: "Bonus Vacanze",
+      name: "Carta Giovani Nazionale",
       description:
         "Fino a 500€ a nucleo familiare per andare in vacanza in Italia",
       subtitle:
@@ -151,7 +151,7 @@ export const availableBonuses: BonusesAvailable = [
       tos_url: "https://io.italia.it/app-content/bonus_vacanze_tos.html"
     },
     en: {
-      name: "Bonus Vacanze",
+      name: "Carta Giovani Nazionale",
       description: "Up to € 500 per family to go on holiday in Italy",
       subtitle:
         "The incentive established to support tourism after the lockdown due to the Coronavirus emergency.",

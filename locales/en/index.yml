@@ -97,11 +97,13 @@ global:
     shortFormat: "%d/%m/%Y"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
     fullFormatFullMonthLiteral: "%d %B %Y"
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
     numericMonthYear: "%m/%Y"
     dayMonthWithTime: "%d %b, %H:%M"
+    dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
@@ -728,6 +730,7 @@ payment:
       enteCreditore: Payee institution
       causaleVersamento: Payment description
       dateAndTime: Date and time
+      onlyDate: Date
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
       transactionCode: Transaction identification code
@@ -1647,7 +1650,7 @@ faq:
     title: "How to delete all my personal data associated to IO?"
     content: !include faq/faq56.md
   57:
-    title: "Did you have problems during a payment or activation a payment instrument?"
+    title: "Did you have problems during a payment or onboarding a payment instrument?"
     content: !include faq/faq57.md
   58:
     title: "How do I claim the Bonus Vacanze?"

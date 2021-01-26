@@ -63,7 +63,7 @@ const renderRow = (label: string, value: string) => (
 );
 const instabugTag = "credit-card-support";
 /**
- * This screen shows credit card activation attempt details and allows the user
+ * This screen shows credit card onboarding attempt details and allows the user
  * to ask assistance about this attempts
  */
 const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (

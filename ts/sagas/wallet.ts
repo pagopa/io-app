@@ -57,6 +57,14 @@ import {
   walletAddBPayStart
 } from "../features/wallet/onboarding/bancomatPay/store/actions";
 import {
+  handleAddCoBadgeToWallet,
+  handleSearchUserCoBadge
+} from "../features/wallet/onboarding/cobadge/saga/networking";
+import {
+  addCoBadgeToWallet,
+  searchUserCoBadge
+} from "../features/wallet/onboarding/cobadge/store/actions";
+import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
 } from "../features/wallet/onboarding/satispay/saga/networking";
@@ -221,7 +229,7 @@ function* startOrResumeAddCreditCardSaga(
     // First step: add the credit card to the user wallets
     //
     // Note that the new wallet will not be visibile to the user until all the
-    // card activation steps have been completed.
+    // card onboarding steps have been completed.
     //
 
     if (pot.isNone(state.creditCardAddWallet)) {
@@ -911,6 +919,11 @@ export function* watchWalletSaga(
       paymentManagerClient.addBPayToWallet,
       pmSessionManager
     );
+
+    // watch for CoBadge search request
+    yield takeLatest(searchUserCoBadge.request, handleSearchUserCoBadge);
+    // watch for add CoBadge to the user's wallet
+    yield takeLatest(addCoBadgeToWallet.request, handleAddCoBadgeToWallet);
   }
 
   yield fork(paymentsDeleteUncompletedSaga);

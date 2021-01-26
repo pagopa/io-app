@@ -1,7 +1,7 @@
 import { NavigationActions } from "react-navigation";
 import CGN_ROUTES from "./routes";
 
-export const navigateToCgnOnboardingLoadActivationStatus = () =>
+export const navigateToCgnActivationLoadActivationStatus = () =>
   NavigationActions.navigate({
     routeName: CGN_ROUTES.ACTIVATION.LOAD_CHECK_ACTIVATION_STATUS
   });
