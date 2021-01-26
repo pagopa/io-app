@@ -1,8 +1,10 @@
 // bonus reducer
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { Action } from "../../../../../store/actions/types";
 import { cgnActivationStatus } from "../actions/activation";
 import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export enum CgnActivationProgressEnum {
   "UNDEFINED" = "UNDEFINED",
@@ -48,5 +50,18 @@ const reducer = (
   }
   return state;
 };
+
+// Selectors
+export const activationSelector = (state: GlobalState): ActivationState =>
+  state.bonus.cgn.activation;
+
+export const isCgnActivationLoading = createSelector<
+  GlobalState,
+  ActivationState,
+  boolean
+>(
+  activationSelector,
+  activation => activation.status !== CgnActivationProgressEnum.ERROR
+);
 
 export default reducer;
