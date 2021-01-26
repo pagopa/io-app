@@ -11,7 +11,7 @@
   "io_bpd_winning_transactions": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/winning_transactions.json",
   "pagopa_api": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/pm/spec.json",
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/pm/walletv2.json",
-  "model_pagopa_cobadge": "https://raw.githubusercontent.com/pagopa/io-services-metadata/e1fc97e212bd19b3e65eeac66e8e8fad961ddd29/pagopa/cobadge/abi_definitions.yml",
+  "model_pagopa_cobadge": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/cobadge/abi_definitions.yml",
   "private": true,
   "scripts": {
     "start": "react-native start",
