@@ -65,10 +65,12 @@ import {
   handleLoadCoBadgeConfiguration,
   handleSearchUserCoBadge
 } from "../features/wallet/onboarding/cobadge/saga/networking";
+import { addCoBadgeToWalletAndActivateBpd } from "../features/wallet/onboarding/cobadge/saga/orchestration/addCoBadgeToWallet";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
-  searchUserCoBadge
+  searchUserCoBadge,
+  walletAddCoBadgeFromBancomatStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
 import {
   handleAddUserSatispayToWallet,
@@ -930,6 +932,12 @@ export function* watchWalletSaga(
     yield takeLatest(
       loadCoBadgeAbiConfiguration.request,
       handleLoadCoBadgeConfiguration
+    );
+
+    // watch for add co-badge to Wallet workflow
+    yield takeLatest(
+      walletAddCoBadgeFromBancomatStart,
+      addCoBadgeToWalletAndActivateBpd
     );
   }
 
