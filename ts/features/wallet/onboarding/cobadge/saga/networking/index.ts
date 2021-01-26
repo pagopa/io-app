@@ -1,11 +1,14 @@
-import { put } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/CoBadgeService";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
   searchUserCoBadge
 } from "../../store/actions";
+import { ContentClient } from "../../../../../../api/content";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { getNetworkError } from "../../../../../../utils/errors";
 
 /**
  * Load the user Cobadge
@@ -32,11 +35,29 @@ export function* handleAddCoBadgeToWallet(
  * TODO: add networking logic
  */
 export function* handleLoadCoBadgeConfiguration(
+  getCobadgeServices: ReturnType<typeof ContentClient>["getCobadgeServices"],
   _: ActionType<typeof loadCoBadgeAbiConfiguration.request>
 ) {
-  yield put(
-    loadCoBadgeAbiConfiguration.success({
-      ICCREA: { status: StatusEnum.active, issuers: [{ abi: "1", name: "" }] }
-    })
-  );
+  try {
+    const getCobadgeServicesResult: SagaCallReturnType<typeof getCobadgeServices> = yield call(
+      getCobadgeServices
+    );
+    if (getCobadgeServicesResult.isRight()) {
+      if (getCobadgeServicesResult.value.status === 200) {
+        yield put(
+          loadCoBadgeAbiConfiguration.success(
+            getCobadgeServicesResult.value.value
+          )
+        );
+      } else {
+        throw new Error(
+          `response status ${getCobadgeServicesResult.value.status}`
+        );
+      }
+    } else {
+      throw new Error(readableReport(getCobadgeServicesResult.value));
+    }
+  } catch (e) {
+    yield put(loadCoBadgeAbiConfiguration.failure(getNetworkError(e)));
+  }
 }

@@ -929,7 +929,8 @@ export function* watchWalletSaga(
     // watch for CoBadge configuration request
     yield takeLatest(
       loadCoBadgeAbiConfiguration.request,
-      handleLoadCoBadgeConfiguration
+      handleLoadCoBadgeConfiguration,
+      contentClient.getCobadgeServices
     );
   }
 

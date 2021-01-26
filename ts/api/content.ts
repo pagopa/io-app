@@ -18,6 +18,7 @@ import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
+import { CoBadgeServices } from "../../definitions/pagopa/cobadge/CoBadgeServices";
 
 type GetServiceT = IGetApiRequestType<
   {
@@ -100,7 +101,7 @@ const getAvailableBonusesT: GetBonusListT = {
 };
 
 type GetAbisListT = IGetApiRequestType<
-  Record<string, unknown>,
+  void,
   never,
   never,
   BasicResponseType<AbiListResponse>
@@ -112,6 +113,20 @@ const getAbisListT: GetAbisListT = {
   query: _ => ({}),
   headers: () => ({}),
   response_decoder: basicResponseDecoder(AbiListResponse)
+};
+
+type GetCoBadgeServicesT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<CoBadgeServices>
+>;
+const getCobadgeServicesT: GetCoBadgeServicesT = {
+  method: "get",
+  url: () => "/status/cobadgeServices.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(CoBadgeServices)
 };
 
 /**
@@ -129,6 +144,7 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
     getMunicipality: createFetchRequestForApi(getMunicipalityT, options),
     getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options),
     getContextualHelp: createFetchRequestForApi(getContextualHelpT, options),
-    getAbiList: createFetchRequestForApi(getAbisListT, options)
+    getAbiList: createFetchRequestForApi(getAbisListT, options),
+    getCobadgeServices: createFetchRequestForApi(getCobadgeServicesT, options)
   };
 }
