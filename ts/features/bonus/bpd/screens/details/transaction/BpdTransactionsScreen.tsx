@@ -38,7 +38,7 @@ const handleTransactionsStatus = (
  * First check the whole bpd status than if is some check the transactions status.
  * @constructor
  */
-const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
+const BpdTransactionsScreen: React.FC<Props> = (props: Props) => {
   React.useEffect(() => {
     if (
       pot.isError(props.bpdLastUpdate) ||
@@ -47,7 +47,6 @@ const BpdTransactionsScreen: React.FunctionComponent<Props> = props => {
       props.loadTransactions();
     }
   }, []);
-
   return pot.fold(
     props.bpdLastUpdate,
     () => <TransactionsUnavailable />,
