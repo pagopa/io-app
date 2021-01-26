@@ -7,7 +7,7 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { availableBonusTypesSelectorFromId } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
 import BonusInformationComponent from "../../../common/components/BonusInformationComponent";
-import { navigateBack } from "../../../../../store/actions/navigation";
+import { cgnActivationCancel } from "../../store/actions/activation";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -40,7 +40,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   userActivateCgn: () => null,
-  onCancel: () => dispatch(navigateBack())
+  onCancel: () => dispatch(cgnActivationCancel())
 });
 
 export default connect(
