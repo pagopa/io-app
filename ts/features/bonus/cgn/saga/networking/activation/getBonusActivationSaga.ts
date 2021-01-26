@@ -1,13 +1,13 @@
 import { call, Effect } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { SagaCallReturnType } from "../../../../../types/utils";
-import { BackendCGN } from "../../api/backendCgn";
-import { cgnActivationStatus } from "../../store/actions/activation";
-import { CgnActivationProgressEnum } from "../../store/reducers/activation";
-import { startTimer } from "../../../../../utils/timer";
-import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { CgnActivatedStatus } from "../../../../../../definitions/cgn/CgnActivatedStatus";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { BackendCGN } from "../../../api/backendCgn";
+import { cgnActivationStatus } from "../../../store/actions/activation";
+import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
+import { startTimer } from "../../../../../../utils/timer";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
+import { CgnActivatedStatus } from "../../../../../../../definitions/cgn/CgnActivatedStatus";
 
 // wait time between requests
 const cgnResultPolling = 1000 as Millisecond;

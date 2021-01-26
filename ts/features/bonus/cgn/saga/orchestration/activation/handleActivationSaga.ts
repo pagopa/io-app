@@ -1,25 +1,25 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, race, take } from "redux-saga/effects";
+import { call, put, race, select, take } from "redux-saga/effects";
 import { NavigationActions } from "react-navigation";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { fromNullable } from "fp-ts/lib/Option";
-import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
+import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import {
   cgnActivationCancel,
   cgnActivationComplete,
-  cgnActivationStatus,
-  cgnRequestActivation
-} from "../../store/actions/activation";
+  cgnActivationStatus
+} from "../../../store/actions/activation";
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationIneligible,
-  navigateToCgnActivationInformationTos,
   navigateToCgnActivationLoading,
   navigateToCgnActivationPending,
   navigateToCgnActivationTimeout
-} from "../../navigation/actions";
-import { CgnActivationProgressEnum } from "../../store/reducers/activation";
-import { cgnActivationSaga } from "./getBonusActivationSaga";
+} from "../../../navigation/actions";
+import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
+import CGN_ROUTES from "../../../navigation/routes";
+import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
+import { cgnActivationSaga } from "../../networking/activation/getBonusActivationSaga";
 
 const mapEnumToNavigation = new Map([
   [CgnActivationProgressEnum.SUCCESS, navigateToCgnActivationCompleted],
@@ -30,6 +30,9 @@ const mapEnumToNavigation = new Map([
 ]);
 
 type CgnActivationType = ReturnType<typeof cgnActivationSaga>;
+type NavigationCurrentRouteSelectorType = ReturnType<
+  typeof navigationCurrentRouteSelector
+>;
 
 // Get the next activation steps from the saga call function based on status ENUM
 const getNextNavigationStep = (
@@ -41,16 +44,18 @@ const getNextNavigationStep = (
       )
     : navigateToCgnActivationLoading;
 
-export function* cgnStartActivationWorker(
-  cgnActivationSaga: CgnActivationType
-) {
-  yield put(navigateToCgnActivationInformationTos());
-  yield put(navigationHistoryPop(1));
+export const isLoadingScreen = (screenName: string) =>
+  screenName === CGN_ROUTES.ACTIVATION.LOADING;
 
-  yield take(cgnRequestActivation.request);
-
-  yield put(navigateToCgnActivationLoading());
-  yield put(navigationHistoryPop(1));
+export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
+  const currentRoute: NavigationCurrentRouteSelectorType = yield select(
+    navigationCurrentRouteSelector
+  );
+  if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
+    // show the loading page for the CGN activation
+    yield put(navigateToCgnActivationLoading());
+    yield put(navigationHistoryPop(1));
+  }
 
   const progress = yield call(cgnActivationSaga);
   yield put(progress);
@@ -65,13 +70,13 @@ export function* cgnStartActivationWorker(
 }
 
 /**
- * This saga handles the CGN activation workflow
+ * This saga handles the CGN activation polling
  */
-export function* handleCgnStartActivationSaga(
+export function* handleCgnActivationSaga(
   cgnActivationSaga: CgnActivationType
 ): SagaIterator {
   const { cancelAction } = yield race({
-    activation: call(cgnStartActivationWorker, cgnActivationSaga),
+    activation: call(cgnActivationWorker, cgnActivationSaga),
     cancelAction: take(cgnActivationCancel)
   });
   if (cancelAction) {
