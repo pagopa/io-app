@@ -1,11 +1,11 @@
 import { put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/CoBadgeService";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
   searchUserCoBadge
 } from "../../store/actions";
+import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
 
 /**
  * Load the user Cobadge

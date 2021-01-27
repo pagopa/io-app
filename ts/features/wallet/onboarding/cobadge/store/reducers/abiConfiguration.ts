@@ -1,10 +1,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/CoBadgeService";
 import { Action } from "../../../../../../store/actions/types";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { loadCoBadgeAbiConfiguration } from "../actions";
+import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
 
 export type AbiConfigurationState = pot.Pot<IndexedById<StatusEnum>, Error>;
 

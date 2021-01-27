@@ -4,9 +4,9 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { CoBadgeServices } from "../../../../../../../definitions/pagopa/cobadge/CoBadgeServices";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
+import { CoBadgeServices } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
 
 // TODO: replace with the response remote model
 export type CoBadgeResponse = IUnitTag<"CoBadgeResponse">;
