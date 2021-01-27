@@ -97,11 +97,13 @@ global:
     shortFormat: "%d/%m/%Y"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
     fullFormatFullMonthLiteral: "%d %B %Y"
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
     numericMonthYear: "%m/%Y"
     dayMonthWithTime: "%d %b, %H:%M"
+    dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
@@ -728,6 +730,7 @@ payment:
       enteCreditore: Payee institution
       causaleVersamento: Payment description
       dateAndTime: Date and time
+      onlyDate: Date
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
       transactionCode: Transaction identification code
@@ -1223,15 +1226,11 @@ messages:
       addMemo: 
           block1: Add a reminder for the 
           block2: at
-      expiringAlert:
-        block1: This payment notice will expire on
-        block2: at
+      expiringOrValidAlert:
+        block1: You can pay this notice by
       expiredAlert:
-        expirable:
-          block1: The payment notice expired at 
-          block2: "on"
-        unexpirable:
-          block: Your payment notice is overdue. You can still pay; IO app will update the amount if needed.
+        block1: The payment notice expired at
+        block2: on
     prescription:  
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
@@ -1241,6 +1240,7 @@ messages:
     pay: Pay € {{amount}}
     onlyPay: Pay
     paid: Paid
+    seeNotice: See Notice
     reminder: Reminder
     reminderShort: Memo
     reminderCalendarSelect: In which calendar you want to add the reminder?
@@ -2087,6 +2087,9 @@ bonus:
             active: "**The ranking changes every day.** The final one will be displayed on {{endDate}}."
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
+  cgn:
+    cta:
+      activeBonus: Activate your Carta Giovani
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

@@ -19,7 +19,7 @@ import BaseScreenComponent, {
 } from "../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { bpdEnabled } from "../../../../config";
+import { bpdEnabled, cgnEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../store/actions/navigationHistory";
@@ -30,14 +30,21 @@ import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
 import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
 import { AvailableBonusItem } from "../components/AvailableBonusItem";
 import { bonusVacanzeStyle } from "../components/Styles";
-import { availableBonuses } from "../data/availableBonuses";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
-import { availableBonusTypesSelector } from "../store/reducers/availableBonusesTypes";
-import { ID_BONUS_VACANZE_TYPE, ID_BPD_TYPE } from "../utils/bonus";
+import {
+  availableBonusTypesSelector,
+  visibleAvailableBonusSelector
+} from "../store/reducers/availableBonusesTypes";
+import {
+  ID_BONUS_VACANZE_TYPE,
+  ID_BPD_TYPE,
+  ID_CGN_TYPE
+} from "../utils/bonus";
 import { actionWithAlert } from "../components/alert/ActionWithAlert";
 import { storeUrl } from "../../../../utils/appVersion";
 import { showToast } from "../../../../utils/showToast";
+import { cgnActivationStart } from "../../cgn/store/actions/activation";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -74,10 +81,6 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   private renderListItem = (info: ListRenderItemInfo<BonusAvailable>) => {
     const item = info.item;
 
-    if (item.hidden === true) {
-      return undefined;
-    }
-
     // only bonus vacanze tap is handled
     const handlersMap: Map<number, (bonus: BonusAvailable) => void> = new Map<
       number,
@@ -88,6 +91,10 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 
     if (bpdEnabled) {
       handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
+    }
+
+    if (cgnEnabled) {
+      handlersMap.set(ID_CGN_TYPE, _ => this.props.startCgnActivation());
     }
 
     /**
@@ -186,9 +193,7 @@ const mapStateToProps = (state: GlobalState) => {
   const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
     // fallback to hardcode data if pot is none
-    availableBonusesList: pot
-      .getOrElse(potAvailableBonuses, availableBonuses)
-      .filter(aB => aB.hidden !== true),
+    availableBonusesList: visibleAvailableBonusSelector(state),
     isLoading: pot.isLoading(potAvailableBonuses),
     // show error only when we have an error and no data to show
     isError: pot.isNone(potAvailableBonuses) && pot.isError(potAvailableBonuses)
@@ -203,7 +208,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToBonusRequestInformation({ bonusItem }));
     dispatch(navigationHistoryPop(1));
   },
-  startBpdOnboarding: () => dispatch(bpdOnboardingStart())
+  startBpdOnboarding: () => dispatch(bpdOnboardingStart()),
+  startCgnActivation: () => dispatch(cgnActivationStart())
 });
 
 export default connect(
