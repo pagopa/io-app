@@ -1,15 +1,13 @@
-import { IUnitTag } from "italia-ts-commons/lib/units";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { CobadgeResponse } from "../../../../../../../definitions/pagopa/cobadge/CobadgeResponse";
+import { PaymentInstrument } from "../../../../../../../definitions/pagopa/cobadge/PaymentInstrument";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
 import { CoBadgeServices } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
-
-// TODO: replace with the response remote model
-export type CoBadgeResponse = IUnitTag<"CoBadgeResponse">;
 
 /**
  * Search for user's cobadge cards
@@ -18,7 +16,7 @@ export const searchUserCoBadge = createAsyncAction(
   "WALLET_ONBOARDING_COBADGE_SEARCH_REQUEST",
   "WALLET_ONBOARDING_COBADGE_SEARCH_SUCCESS",
   "WALLET_ONBOARDING_COBADGE_SEARCH_FAILURE"
-)<string | undefined, ReadonlyArray<CoBadgeResponse>, NetworkError>();
+)<string | undefined, CobadgeResponse, NetworkError>();
 
 /**
  * The user adds a specific cobadge card to the wallet
@@ -27,7 +25,7 @@ export const addCoBadgeToWallet = createAsyncAction(
   "WALLET_ONBOARDING_COBADGE_ADD_REQUEST",
   "WALLET_ONBOARDING_COBADGE_ADD_SUCCESS",
   "WALLET_ONBOARDING_COBADGE_ADD_FAILURE"
-)<CoBadgeResponse, RawCreditCardPaymentMethod, NetworkError>();
+)<PaymentInstrument, RawCreditCardPaymentMethod, NetworkError>();
 
 /**
  * Load the Abi configuration for the cobadge services (the list of abi supported and the operational state)
