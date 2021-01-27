@@ -8,6 +8,7 @@ import {
   cgnRequestActivation
 } from "../../store/actions/activation";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -19,7 +20,8 @@ const CgnActivationLoadingScreen = (props: Props): React.ReactElement => (
   <LoadingErrorComponent
     isLoading={props.isLoading}
     onRetry={props.onRetry}
-    loadingCaption={"Activation loading"}
+    loadingCaption={I18n.t("bonus.cgn.activation.loading.caption")}
+    loadingSubtitle={I18n.t("bonus.cgn.activation.loading.subCaption")}
     onAbort={props.onCancel}
   />
 );

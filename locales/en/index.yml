@@ -2088,6 +2088,13 @@ bonus:
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
+    activation:
+      loading:
+        caption: "We're activating your Carta Giovani Nazionale"
+        subCaption: "Please wait."
+      ineligible:
+        title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionali."
+        body: "The Carta Giovani Nazionali is available only to Italian and European citizens residing in Italy, aged 18 to 35."
     cta:
       activeBonus: Activate your Carta Giovani
 webView:
