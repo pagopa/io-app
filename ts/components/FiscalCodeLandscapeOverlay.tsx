@@ -107,24 +107,22 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
 
     const myBright = myBrightF();
 
-    const mySetBrightF = async () =>
-      await setBrightness(HIGH_BRIGHTNESS)
-        .fold(
-          () => alert("Can't set High Brightness"),
-          _ => _
-        )
-        .run();
+    const mySetBrightF = async () => await setBrightness(HIGH_BRIGHTNESS).run();
 
     void mySetBrightF();
 
     return () => {
-      const restoreDeviceBrightnessF = async () =>
-        await setBrightness(await myBright)
-          .fold(
-            () => alert("Can't restore brightness"),
-            _ => _
-          )
-          .run();
+      const restoreDeviceBrightnessF = async () => {
+        const deviceB = await myBright;
+        if (deviceB) {
+          await setBrightness(await myBright)
+            .fold(
+              () => alert("Can't restore brightness"),
+              _ => _
+            )
+            .run();
+        }
+      };
       void restoreDeviceBrightnessF();
     };
   }, []);
