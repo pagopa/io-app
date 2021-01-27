@@ -8,11 +8,11 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * The co-badge workflow is not yet available for the selected bank
+ * The co-badge service is remotely disabled for the selected bank
  * @param _
  * @constructor
  */
-const CoBadgeStartKoNotAvailable = (_: Props): React.ReactElement => <View />;
+const CoBadgeStartKoDisabled = (_: Props): React.ReactElement => <View />;
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
@@ -21,4 +21,4 @@ const mapStateToProps = (_: GlobalState) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CoBadgeStartKoNotAvailable);
+)(CoBadgeStartKoDisabled);
