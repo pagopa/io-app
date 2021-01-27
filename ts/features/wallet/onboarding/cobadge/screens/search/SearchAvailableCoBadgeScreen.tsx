@@ -25,7 +25,8 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const SearchAvailableCoBadgeScreen = (props: Props): React.ReactElement => {
   const coBadgeFound = props.coBadgeFound;
   const noCoBadgeFound =
-    isReady(coBadgeFound) && coBadgeFound.value.length === 0;
+    isReady(coBadgeFound) &&
+    coBadgeFound.value.payload?.paymentInstruments?.length === 0;
 
   if (noCoBadgeFound) {
     // The user doesn't have a co-badge cards
