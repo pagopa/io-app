@@ -2095,6 +2095,9 @@ bonus:
       ineligible:
         title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionali."
         body: "The Carta Giovani Nazionali is available only to Italian and European citizens residing in Italy, aged 18 to 35."
+      timeout:
+        title: "We're processing your request."
+        body: "We will send you an in-app message when your Carta Giovani will be activated."
     cta:
       activeBonus: Activate your Carta Giovani
 webView:
