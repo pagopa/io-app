@@ -34,7 +34,7 @@ const BASE_IMG_W = 160;
 const BASE_IMG_H = 20;
 /**
  * Render the image (if available) or the bank name (if available)
- * or the generic bancomatPay string (final fallback).
+ * or the generic CreditCardPaymentMethod caption (final fallback).
  * @param props
  * @param size
  */
@@ -71,11 +71,11 @@ const getBrandLogo = (cobadge: CreditCardPaymentMethod) => {
   });
 };
 /**
- * A card preview for a bancomat card
+ * A card preview for a cobadge card
  * @param props
  * @constructor
  */
-const BPayWalletPreview: React.FunctionComponent<Props> = props => {
+const CobadgeWalletPreview: React.FunctionComponent<Props> = props => {
   const imgDimensions = useImageResize(
     BASE_IMG_W,
     BASE_IMG_H,
@@ -97,4 +97,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(BPayWalletPreview);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CobadgeWalletPreview);
