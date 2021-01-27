@@ -1,10 +1,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
 import { Action } from "../../../../../../store/actions/types";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { loadCoBadgeAbiConfiguration } from "../actions";
-import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
 
 export type AbiConfigurationState = pot.Pot<IndexedById<StatusEnum>, Error>;
 
@@ -42,12 +42,17 @@ const abiConfigurationReducer = (
   return state;
 };
 
+export const coBadgeAbiConfigurationSelector = (
+  state: GlobalState
+): pot.Pot<IndexedById<StatusEnum>, Error> =>
+  state.wallet.onboarding.coBadge.abiConfiguration;
+
 /**
  * Return the co-badge configuration for a specific AbiId
  * @param state
  * @param abiId
  */
-export const getCoBadgeAbiConfiguration = (
+export const getCoBadgeAbiConfigurationSelector = (
   state: GlobalState,
   abiId: string
 ): pot.Pot<StatusEnum, Error> =>
