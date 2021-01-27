@@ -1,10 +1,12 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { loadCoBadgeAbiConfiguration } from "../../store/actions";
 import { getCoBadgeAbiConfigurationSelector } from "../../store/reducers/abiConfiguration";
 import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSelected";
 import CoBadgeAllBanksScreen from "./CoBadgeAllBanksScreen";
@@ -23,10 +25,24 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const CoBadgeStartScreen = (props: Props): React.ReactElement => {
   // TODO: add loading
+
   if (props.maybeAbiSelected === undefined) {
     return <CoBadgeAllBanksScreen />;
   }
-
+  useEffect(() => {
+    const loadAbiConfig = pot.fold(
+      props.abiSelectedConfiguration,
+      () => props.loadAbiConfig,
+      () => undefined,
+      _ => undefined,
+      _ => props.loadAbiConfig,
+      _ => undefined,
+      _ => undefined,
+      () => undefined,
+      _ => props.loadAbiConfig
+    );
+    loadAbiConfig?.();
+  }, []);
   if (props.abiSelectedConfiguration.kind !== "PotSome") {
     return <LoadAbiConfiguration />;
   }
@@ -38,10 +54,11 @@ const CoBadgeStartScreen = (props: Props): React.ReactElement => {
     case StatusEnum.unavailable:
       return <CoBadgeStartKoUnavailable />;
   }
-  // ALL Abi
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadAbiConfig: () => dispatch(loadCoBadgeAbiConfiguration.request())
+});
 
 const mapStateToProps = (state: GlobalState) => {
   const maybeAbiSelected = onboardingCoBadgeAbiSelectedSelector(state);
