@@ -19,16 +19,16 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * The orchestration screen
+ * The entry screen that orchestrate the different screens
  * @constructor
  * @param props
  */
 const CoBadgeStartScreen = (props: Props): React.ReactElement => {
-  // TODO: add loading
-
+  // All ABI selected
   if (props.maybeAbiSelected === undefined) {
     return <CoBadgeAllBanksScreen />;
   }
+  // If a single ABI is selected, we should check the abiConfiguration
   useEffect(() => {
     const loadAbiConfig = pot.fold(
       props.abiSelectedConfiguration,
@@ -43,15 +43,20 @@ const CoBadgeStartScreen = (props: Props): React.ReactElement => {
     );
     loadAbiConfig?.();
   }, []);
+
+  // The ABI configuration is loading
   if (props.abiSelectedConfiguration.kind !== "PotSome") {
     return <LoadAbiConfiguration />;
   }
   switch (props.abiSelectedConfiguration.value) {
     case StatusEnum.active:
+      // Single ABI (bank) screen that allow to start the search
       return <CoBadgeSingleBankScreen />;
     case StatusEnum.disabled:
+      // The chosen ABI is disabled (not yet available)
       return <CoBadgeStartKoDisabled />;
     case StatusEnum.unavailable:
+      // THe chosen ABI is unavailable (technical problems)
       return <CoBadgeStartKoUnavailable />;
   }
 };
