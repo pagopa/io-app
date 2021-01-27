@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { Option } from "fp-ts/lib/Option";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body } from "../../../../components/core/typography/Body";
@@ -10,17 +10,7 @@ import { CardPreview } from "../../component/CardPreview";
 import { navigateToCobadgeDetailScreen } from "../../../../store/actions/navigation";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
-import { getResourceNameFromUrl } from "../../../../utils/url";
-const cardMapIcon: { [key in string]: any } = {
-  carta_mc: require("../../../../../img/wallet/cards-icons/mastercard.png"),
-  carta_visa: require("../../../../../img/wallet/cards-icons/visa.png"),
-  carta_amex: require("../../../../../img/wallet/cards-icons/amex.png"),
-  carta_diners: require("../../../../../img/wallet/cards-icons/diners.png"),
-  carta_visaelectron: require("../../../../../img/wallet/cards-icons/visa-electron.png"),
-  carta_poste: require("../../../../../img/wallet/cards-icons/postepay.png"),
-  carta_maestro: require("../../../../../img/wallet/cards-icons/maestro.png")
-};
-import defaultCardIcon from "../../../../../img/wallet/cards-icons/unknown.png";
+import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
 
 type OwnProps = {
   cobadge: CreditCardPaymentMethod;
@@ -61,15 +51,6 @@ const renderLeft = (props: Props, size: Option<[number, number]>) =>
     }
   );
 
-const getBrandLogo = (cobadge: CreditCardPaymentMethod) => {
-  const brandLogo = cobadge.info.brandLogo;
-
-  return fromNullable(brandLogo).fold(defaultCardIcon, bL => {
-    const imageName = getResourceNameFromUrl(bL);
-
-    return cardMapIcon[imageName] ?? defaultCardIcon;
-  });
-};
 /**
  * A card preview for a cobadge card
  * @param props
@@ -84,7 +65,7 @@ const CobadgeWalletPreview: React.FunctionComponent<Props> = props => {
   return (
     <CardPreview
       left={renderLeft(props, imgDimensions)}
-      image={getBrandLogo(props.cobadge)}
+      image={getCardIconFromBrandLogo(props.cobadge.info)}
       onPress={() => props.navigateToCobadgeDetails(props.cobadge)}
     />
   );
