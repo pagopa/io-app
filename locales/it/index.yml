@@ -798,8 +798,7 @@ wallet:
     cobadge:
       title: Ricerca delle tue carte con circuito internazionale
       description:
-        text1SingleBank: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso {{bankName}}."
-        text1AllBank: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso "
+        text1: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso "
         text2: le banche aderenti al servizio
         text3: "Proseguendo accetti l'"
         text4: informativa sul trattamento dei dati personali.
@@ -1127,6 +1126,8 @@ wallet:
       name: Paypal
     bancomat:
       name: PagoBANCOMAT
+    cobadge:
+      name: circuito internazionale
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
