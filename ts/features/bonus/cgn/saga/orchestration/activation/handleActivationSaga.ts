@@ -6,7 +6,6 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import {
   cgnActivationCancel,
-  cgnActivationComplete,
   cgnActivationStatus
 } from "../../../store/actions/activation";
 import {
@@ -55,6 +54,7 @@ export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
     // show the loading page for the CGN activation
     yield put(navigateToCgnActivationLoading());
+    yield put(navigationHistoryPop(1));
   }
 
   const progress = yield call(cgnActivationSaga);
@@ -65,8 +65,6 @@ export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
     yield put(nextNavigationStep());
     yield put(navigationHistoryPop(1));
   }
-
-  yield take(cgnActivationComplete);
 }
 
 /**
