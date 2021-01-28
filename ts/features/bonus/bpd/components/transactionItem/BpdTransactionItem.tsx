@@ -24,11 +24,22 @@ type Props = {
  * TODO: move the get subtitle in the combiner and remove this component?
  * @param transaction
  */
-const getSubtitle = (transaction: BpdTransaction) =>
-  `${localeDateFormat(
-    transaction.trxDate,
-    I18n.t("global.dateFormats.dayMonthWithTime")
-  )} · € ${formatNumberAmount(transaction.amount)} `;
+export const getSubtitle = (transaction: BpdTransaction) => {
+  const isMidNight =
+    transaction.trxDate.getHours() +
+      transaction.trxDate.getMinutes() +
+      transaction.trxDate.getSeconds() ===
+    0;
+  return isMidNight
+    ? `€ ${formatNumberAmount(transaction.amount)} · ${localeDateFormat(
+        transaction.trxDate,
+        I18n.t("global.dateFormats.dayMonthWithoutTime")
+      )} `
+    : `€ ${formatNumberAmount(transaction.amount)} · ${localeDateFormat(
+        transaction.trxDate,
+        I18n.t("global.dateFormats.dayMonthWithTime")
+      )} `;
+};
 
 export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
   const { present: openBottomSheet } = useIOBottomSheet(
