@@ -53,7 +53,7 @@ type CheckboxLabelMap = {
   };
 };
 
-const CheckboxLabelKeys: CheckboxLabelMap = {
+const checkboxLabelMapFactory = (): CheckboxLabelMap => ({
   sendScreenshot: {
     cta: I18n.t("contextualHelp.sendScreenshot.cta")
   },
@@ -64,34 +64,38 @@ const CheckboxLabelKeys: CheckboxLabelMap = {
       content: I18n.t("contextualHelp.sendPersonalInfo.informativeDescription")
     }
   }
-};
+});
 
 export const ContextualHelpCheckboxFormEntry: React.FC<ContextualHelpCheckboxFormEntryProps> = ({
   target,
   isChecked,
   onToggle
-}: ContextualHelpCheckboxFormEntryProps) => (
-  <View style={checkboxStyle.container}>
-    <RawCheckBox checked={isChecked} onPress={onToggle} />
-    <View hspacer />
-    <View style={IOStyles.flex}>
-      <Label
-        testID="ContextualHelpCheckboxFormEntryLabel"
-        color={"bluegrey"}
-        weight={"Regular"}
-        onPress={onToggle}
-      >
-        {CheckboxLabelKeys[target].cta}
-      </Label>
-      {"accordion" in CheckboxLabelKeys[target] && (
-        <Accordion
-          title={CheckboxLabelKeys[target].accordion?.title || ""}
-          content={CheckboxLabelKeys[target].accordion?.content || ""}
-        />
-      )}
+}: ContextualHelpCheckboxFormEntryProps) => {
+  const checkboxLabelKeys = checkboxLabelMapFactory();
+
+  return (
+    <View style={checkboxStyle.container}>
+      <RawCheckBox checked={isChecked} onPress={onToggle} />
+      <View hspacer />
+      <View style={IOStyles.flex}>
+        <Label
+          testID="ContextualHelpCheckboxFormEntryLabel"
+          color={"bluegrey"}
+          weight={"Regular"}
+          onPress={onToggle}
+        >
+          {checkboxLabelKeys[target].cta}
+        </Label>
+        {"accordion" in checkboxLabelKeys[target] && (
+          <Accordion
+            title={checkboxLabelKeys[target].accordion?.title || ""}
+            content={checkboxLabelKeys[target].accordion?.content || ""}
+          />
+        )}
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 export type SupportRequestOptions = {
   sendPersonalInfo: boolean;

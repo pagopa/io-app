@@ -37,7 +37,8 @@ type OwnProps = Readonly<{
   close: () => void;
   onRequestAssistance: (
     type: BugReporting.reportType,
-    supportToken: SupportTokenState
+    supportToken: SupportTokenState,
+    shouldSendScreenshot?: boolean | undefined
   ) => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   shouldAskForScreenshotWithInitialValue?: boolean;
@@ -172,7 +173,8 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
     fromNullable(supportType).map(st => {
       props.onRequestAssistance(
         st,
-        options.sendPersonalInfo ? props.supportToken : remoteUndefined
+        options.sendPersonalInfo ? props.supportToken : remoteUndefined,
+        options.sendScreenshot
       );
     });
   };
