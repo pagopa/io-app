@@ -2092,6 +2092,9 @@ bonus:
       loading:
         caption: "We're activating your Carta Giovani Nazionale"
         subCaption: "Please wait."
+      error:
+        title: "The Carta Giovani Nazionale service is not available at the moment."
+        body: "We apologize for the issue.\nWe invite you to retry again later."
       ineligible:
         title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionali."
         body: "The Carta Giovani Nazionali is available only to Italian and European citizens residing in Italy, aged 18 to 35."

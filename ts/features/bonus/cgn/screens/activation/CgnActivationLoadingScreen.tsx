@@ -22,6 +22,8 @@ const CgnActivationLoadingScreen = (props: Props): React.ReactElement => (
     onRetry={props.onRetry}
     loadingCaption={I18n.t("bonus.cgn.activation.loading.caption")}
     loadingSubtitle={I18n.t("bonus.cgn.activation.loading.subCaption")}
+    errorText={I18n.t("bonus.cgn.activation.error.title")}
+    errorSubText={I18n.t("bonus.cgn.activation.error.body")}
     onAbort={props.onCancel}
   />
 );
