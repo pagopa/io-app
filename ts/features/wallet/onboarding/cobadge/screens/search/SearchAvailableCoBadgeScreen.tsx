@@ -1,7 +1,14 @@
+import * as t from "io-ts";
 import * as React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { CobadgeResponse } from "../../../../../../../definitions/pagopa/cobadge/CobadgeResponse";
+import { PaymentInstrument } from "../../../../../../../definitions/pagopa/cobadge/PaymentInstrument";
+import {
+  ExecutionStatusEnum,
+  SearchRequestMetadata
+} from "../../../../../../../definitions/pagopa/cobadge/SearchRequestMetadata";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { isTimeoutError } from "../../../../../../utils/errors";
@@ -15,6 +22,7 @@ import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSe
 import { onboardingCoBadgeFoundSelector } from "../../store/reducers/foundCoBadge";
 import AddCoBadgeScreen from "../add-account/AddCoBadgeScreen";
 import CoBadgeKoNotFound from "./ko/CoBadgeKoNotFound";
+import CoBadgeKoServiceError from "./ko/CoBadgeKoServiceError";
 import CoBadgeKoSingleBankNotFound from "./ko/CoBadgeKoSingleBankNotFound";
 import CoBadgeKoTimeout from "./ko/CoBadgeKoTimeout";
 import LoadCoBadgeSearch from "./LoadCoBadgeSearch";
@@ -22,28 +30,76 @@ import LoadCoBadgeSearch from "./LoadCoBadgeSearch";
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+const CoBadgePayload = t.type({
+  paymentInstruments: t.readonlyArray(
+    PaymentInstrument,
+    "array of PaymentInstrument"
+  ),
+  searchRequestMetadata: t.readonlyArray(
+    SearchRequestMetadata,
+    "array of SearchRequestMetadata"
+  )
+});
+
+type CoBadgePayload = t.TypeOf<typeof CoBadgePayload>;
+
+const decodePayload = (cobadge: CobadgeResponse) =>
+  CoBadgePayload.decode(cobadge.payload);
+
+const CobadgePayloadRight = (p: {
+  payload: CoBadgePayload;
+  props: Props;
+}): React.ReactElement => {
+  const { props, payload } = p;
+  const anyPendingRequest = payload.searchRequestMetadata.some(
+    m => m.executionStatus === ExecutionStatusEnum.PENDING
+  );
+
+  // with a pending request we show the timeout screen and the user will retry with the response token
+  if (anyPendingRequest) {
+    return <CoBadgeKoTimeout contextualHelp={emptyContextualHelp} />;
+  }
+
+  const anyServiceError = payload.searchRequestMetadata.some(
+    m => m.executionStatus === ExecutionStatusEnum.KO
+  );
+
+  // not all the services replied with success
+  if (anyServiceError) {
+    return <CoBadgeKoServiceError contextualHelp={emptyContextualHelp} />;
+  }
+
+  const noCoBadgeFound = payload.paymentInstruments.length === 0;
+  if (noCoBadgeFound) {
+    // No results with a single Abi
+    return props.abiSelected !== undefined ? (
+      <CoBadgeKoSingleBankNotFound contextualHelp={emptyContextualHelp} />
+    ) : (
+      // No results with global research
+      <CoBadgeKoNotFound contextualHelp={emptyContextualHelp} />
+    );
+  }
+  // success! payload.paymentInstruments.length > 0, the user can now choose to add to the wallet
+  return <AddCoBadgeScreen contextualHelp={emptyContextualHelp} />;
+};
+
 /**
  * This screen handle the errors and loading for the co-badge.
  * @constructor
  */
-const SearchAvailableCoBadgeScreen = (props: Props): React.ReactElement => {
+const SearchAvailableCoBadgeScreen = (
+  props: Props
+): React.ReactElement | null => {
   useEffect(() => {
     props.search(props.abiSelected);
   }, []);
   const coBadgeFound = props.coBadgeFound;
-  const noCoBadgeFound =
-    isReady(coBadgeFound) &&
-    // if the payload is missing the optional fields, it is treated as an array with zero elements
-    (coBadgeFound.value.payload?.paymentInstruments?.length ?? 0) === 0;
 
-  console.log(noCoBadgeFound);
-
-  if (noCoBadgeFound) {
-    // The user doesn't have a co-badge cards
-    return props.abiSelected !== undefined ? (
-      <CoBadgeKoSingleBankNotFound contextualHelp={emptyContextualHelp} />
-    ) : (
-      <CoBadgeKoNotFound contextualHelp={emptyContextualHelp} />
+  if (isReady(coBadgeFound)) {
+    const payload = decodePayload(coBadgeFound.value);
+    return payload.fold(
+      _ => <CoBadgeKoTimeout contextualHelp={emptyContextualHelp} />,
+      val => <CobadgePayloadRight props={props} payload={val} />
     );
   }
 
@@ -54,10 +110,7 @@ const SearchAvailableCoBadgeScreen = (props: Props): React.ReactElement => {
     return <LoadCoBadgeSearch />;
   }
 
-  // TODO: add CoBadgeKoSingleBankNotFound and CoBadgeKoServicesError
-
-  // success! The user can now optionally add found co-badge cards to the wallet
-  return <AddCoBadgeScreen contextualHelp={emptyContextualHelp} />;
+  return null;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
