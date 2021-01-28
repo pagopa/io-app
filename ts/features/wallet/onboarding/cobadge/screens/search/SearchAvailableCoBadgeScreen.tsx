@@ -12,11 +12,7 @@ import {
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { isTimeoutError } from "../../../../../../utils/errors";
-import {
-  isError,
-  isLoading,
-  isReady
-} from "../../../../../bonus/bpd/model/RemoteValue";
+import { isError, isReady } from "../../../../../bonus/bpd/model/RemoteValue";
 import { searchUserCoBadge } from "../../store/actions";
 import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSelected";
 import { onboardingCoBadgeFoundSelector } from "../../store/reducers/foundCoBadge";
@@ -106,11 +102,11 @@ const SearchAvailableCoBadgeScreen = (
   if (isError(coBadgeFound) && isTimeoutError(coBadgeFound.error)) {
     return <CoBadgeKoTimeout contextualHelp={emptyContextualHelp} />;
   }
-  if (isLoading(coBadgeFound) || isError(coBadgeFound)) {
-    return <LoadCoBadgeSearch />;
-  }
+  // if (isLoading(coBadgeFound) || isError(coBadgeFound)) {
+  //   return <LoadCoBadgeSearch />;
+  // }
 
-  return null;
+  return <LoadCoBadgeSearch />;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

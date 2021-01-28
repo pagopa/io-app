@@ -1,4 +1,4 @@
-import { put } from "redux-saga/effects";
+import { put, delay } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import {
   addCoBadgeToWallet,
@@ -14,7 +14,12 @@ import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/conf
 export function* handleSearchUserCoBadge(
   _: ActionType<typeof searchUserCoBadge.request>
 ) {
-  yield put(searchUserCoBadge.success({ payload: { paymentInstruments: [] } }));
+  yield delay(1500);
+  yield put(
+    searchUserCoBadge.success({
+      payload: { paymentInstruments: [{}], searchRequestMetadata: [{}] }
+    })
+  );
 }
 
 /**
@@ -24,6 +29,7 @@ export function* handleSearchUserCoBadge(
 export function* handleAddCoBadgeToWallet(
   _: ActionType<typeof addCoBadgeToWallet.request>
 ) {
+  yield delay(1500);
   yield put(addCoBadgeToWallet.failure({ kind: "timeout" }));
 }
 
