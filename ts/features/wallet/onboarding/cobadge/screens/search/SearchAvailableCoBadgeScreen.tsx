@@ -36,8 +36,6 @@ const SearchAvailableCoBadgeScreen = (props: Props): React.ReactElement => {
     // if the payload is missing the optional fields, it is treated as an array with zero elements
     (coBadgeFound.value.payload?.paymentInstruments?.length ?? 0) === 0;
 
-  console.log(noCoBadgeFound);
-
   if (noCoBadgeFound) {
     // The user doesn't have a co-badge cards
     return props.abiSelected !== undefined ? (
