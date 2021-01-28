@@ -844,6 +844,17 @@ wallet:
       koNotFound:
         title: "Sorry, we do not know that you have activated Satispay yet"
         body: "Contact Satispay for activation"
+    coBadge:
+      headerTitle: "Add international circuit"
+      start:
+        title: "TMP Start Title"
+      search:
+        koTimeout:
+          title: "TMP KO Timeout add"
+        koNotFound:
+          title: "TMP KO Timeout add"
+      add:
+        title: "TMP Add title"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1227,9 +1238,9 @@ messages:
           block1: Add a reminder for the 
           block2: at
       expiringOrValidAlert:
-        block1: You can pay this notice by
+        block1: This notice will expire on
       expiredAlert:
-        block1: The payment notice expired at
+        block1: This notice expired at
         block2: on
     prescription:  
       addMemo: This prescription expires the
