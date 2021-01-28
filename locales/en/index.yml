@@ -775,6 +775,14 @@ wallet:
         text2: information on the processing of personal data.
         text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
         text4: by searching among those available
+    cobadge:
+      title: "Search for your international circuit cards"
+      description:
+        text1SingleBank: "IO will search for all BANCOMAT Pay accounts associated with you.\nBy continuing you accept the "
+        text1AllBank: information on the processing of personal data.
+        text2: io
+        text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
+        text4: by searching among those available
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...

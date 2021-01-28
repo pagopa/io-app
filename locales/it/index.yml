@@ -795,6 +795,14 @@ wallet:
         text2: informativa sul trattamento dei dati personali.
         text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
         text4: cercando fra quelle disponibili
+    cobadge:
+      title: Ricerca delle tue carte con circuito internazionale
+      description:
+        text1SingleBank: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso {{bankName}}."
+        text1AllBank: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso "
+        text2: le banche aderenti al servizio
+        text3: "Proseguendo accetti l'"
+        text4: informativa sul trattamento dei dati personali.
     bankName: Denominazione della banca
     noName: Nome non disponibile
     loading: Carico la lista delle banche...
