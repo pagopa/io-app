@@ -81,8 +81,6 @@ import { isUpdateNeeded } from "../../utils/appVersion";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import searchCoBadgeRequestId from "../../features/wallet/onboarding/cobadge/store/reducers/searchCoBadgeRequestId";
-import { searchUserCoBadge } from "../../features/wallet/onboarding/cobadge/store/actions";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -604,8 +602,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  navigateToPaymentScanQrCode: () =>
-    dispatch(searchUserCoBadge.request(undefined)),
+  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(
