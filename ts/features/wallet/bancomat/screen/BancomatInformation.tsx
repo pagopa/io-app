@@ -14,7 +14,6 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import { walletAddCoBadgeFromBancomatStart } from "../../onboarding/cobadge/store/actions";
 
 type OwnProps = {
   onAddPaymentMethod?: () => void;
@@ -79,7 +78,6 @@ const BancomatInformation: React.FunctionComponent<Props> = props => (
       bordered={true}
       onPress={() => {
         props.onAddPaymentMethod?.();
-        props.addPaymentMethod();
       }}
       onPressWithGestureHandler={true}
     >
@@ -88,9 +86,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => (
   </View>
 );
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addPaymentMethod: () => dispatch(walletAddCoBadgeFromBancomatStart())
-});
+const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (_: GlobalState) => ({});
 

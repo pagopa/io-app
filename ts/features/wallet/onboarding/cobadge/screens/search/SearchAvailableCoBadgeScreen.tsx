@@ -9,6 +9,7 @@ import {
   isLoading,
   isReady
 } from "../../../../../bonus/bpd/model/RemoteValue";
+import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSelected";
 import { onboardingCoBadgeFoundSelector } from "../../store/reducers/foundCoBadge";
 import AddCoBadgeScreen from "../add-account/AddCoBadgeScreen";
 import CoBadgeKoNotFound from "./ko/CoBadgeKoNotFound";
@@ -25,7 +26,8 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const SearchAvailableCoBadgeScreen = (props: Props): React.ReactElement => {
   const coBadgeFound = props.coBadgeFound;
   const noCoBadgeFound =
-    isReady(coBadgeFound) && coBadgeFound.value.length === 0;
+    isReady(coBadgeFound) &&
+    coBadgeFound.value.payload?.paymentInstruments?.length === 0;
 
   if (noCoBadgeFound) {
     // The user doesn't have a co-badge cards
@@ -48,6 +50,7 @@ const SearchAvailableCoBadgeScreen = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
+  abiSelected: onboardingCoBadgeAbiSelectedSelector(state),
   coBadgeFound: onboardingCoBadgeFoundSelector(state)
 });
 
