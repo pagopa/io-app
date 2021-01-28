@@ -55,7 +55,6 @@ export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
     // show the loading page for the CGN activation
     yield put(navigateToCgnActivationLoading());
-    yield put(navigationHistoryPop(1));
   }
 
   const progress = yield call(cgnActivationSaga);
