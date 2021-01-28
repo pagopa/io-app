@@ -19,8 +19,8 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const loadLocales = () => ({
   // TODO: replace locales
   headerTitle: "TMP header title",
-  title: "TMP title",
-  body: "TMP Body"
+  title: "TMP KOServiceError title",
+  body: "TMP KOServiceError Body"
 });
 
 /**

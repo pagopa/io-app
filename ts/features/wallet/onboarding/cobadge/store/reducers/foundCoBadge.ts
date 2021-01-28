@@ -32,7 +32,6 @@ const foundCoBadgeReducer = (
 
 /**
  * Return {@link RemoteCoBadge}, a list of Cobadge cards to be viewed by the user.
- * Remove from the list the disabled accounts
  * @param state
  */
 export const onboardingCoBadgeFoundSelector = (
