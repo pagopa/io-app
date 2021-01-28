@@ -170,6 +170,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         const { reportAttachmentTypes } = this.props;
         const { shouldAttachScreenshotToIBRequest } = this.state;
 
+        // Do not ignore reportAttachmentTypes, but overwrite
+        // the screenshot variable if the form featured the checkbox
         const attachmentConfig = {
           screenshot:
             shouldAttachScreenshotToIBRequest !== undefined
