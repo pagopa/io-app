@@ -91,6 +91,7 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
             methodType={props.methodType}
             bankName={props.bankName}
             openPartecipatingBanksModal={props.handlePartecipatingBanksModal}
+            showCircuitLogo={props.methodType === "cobadge"}
           />
         </Content>
         <SectionStatusComponent sectionKey={getSectionName(props.methodType)} />
