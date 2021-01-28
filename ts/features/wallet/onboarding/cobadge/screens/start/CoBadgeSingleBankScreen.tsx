@@ -20,6 +20,8 @@ type Props = OwnProps &
 
 const tos_url =
   "https://io.italia.it/app-content/privacy_circuiti_internazionali.html";
+
+// TODO: Modify url accordingly to https://www.pivotaltracker.com/story/show/176704106
 const partecipatingBank_url =
   "https://io.italia.it/app-content/privacy_circuiti_internazionali.html";
 /**
