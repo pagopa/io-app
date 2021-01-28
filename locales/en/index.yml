@@ -2101,6 +2101,12 @@ bonus:
       alreadyActive:
         title: "Your Carta Giovani Nazionale is already active!"
         body: "You can find more details inside the Wallet section."
+      pending:
+        title: "Your Carta Giovani Nazionale's activation is in progress."
+        body: "You will receive a message when it has been activated."
+      success:
+        title: "Congratulation!"
+        body: "Your Carta Giovani Nazionale is active"
     cta:
       activeBonus: Activate your Carta Giovani
       goToDetail: View your Carta Giovani
