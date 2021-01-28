@@ -1,5 +1,7 @@
 import { put, delay } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
+import { WalletTypeEnum } from "../../../../../../../definitions/pagopa/WalletV2";
+import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
@@ -30,7 +32,16 @@ export function* handleAddCoBadgeToWallet(
   _: ActionType<typeof addCoBadgeToWallet.request>
 ) {
   yield delay(1500);
-  yield put(addCoBadgeToWallet.failure({ kind: "timeout" }));
+  yield put(
+    addCoBadgeToWallet.success({
+      kind: "CreditCard",
+      info: {},
+      walletType: WalletTypeEnum.Card,
+      idWallet: 1,
+      pagoPA: false,
+      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+    })
+  );
 }
 
 /**
@@ -44,7 +55,7 @@ export function* handleLoadCoBadgeConfiguration(
     loadCoBadgeAbiConfiguration.success({
       ICCREA: {
         status: StatusEnum.enabled,
-        issuers: [{ abi: "05048", name: "" }]
+        issuers: [{ abi: "03078", name: "" }]
       }
     })
   );
