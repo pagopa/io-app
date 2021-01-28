@@ -84,6 +84,12 @@ import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
 import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayRequest";
 import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
+import {
+  getCobadgePansDefaultDecoder,
+  GetCobadgePansT,
+  searchCobadgePansDefaultDecoder,
+  SearchCobadgePansT
+} from "../../definitions/pagopa/cobadge/requestTypes";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -506,6 +512,27 @@ const searchBPay: GetBpayListUsingGETT = {
   response_decoder: getBpayListUsingGETDefaultDecoder()
 };
 
+const getCobadgePans: GetCobadgePansT = {
+  method: "get",
+  url: ({ abiCode }) => {
+    const abiParameter = fromNullable(abiCode)
+      .map(a => `?abiCode=${a}`)
+      .getOrElse("");
+    return `/v1/cobadge/pans${abiParameter}`;
+  },
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getCobadgePansDefaultDecoder()
+};
+
+const searchCobadgePans: SearchCobadgePansT = {
+  method: "get",
+  url: ({ searchRequestId }) => `/v1/cobadge/search/${searchRequestId}`,
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: searchCobadgePansDefaultDecoder()
+};
+
 export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
   { readonly Bearer: string; readonly bPayRequest: BPayRequest },
   "Content-Type" | "Authorization",
@@ -727,7 +754,19 @@ export function PaymentManagerClient(
         withPaymentManagerToken(
           createFetchRequestForApi(addBPayToWallet, altOptions)
         )
-      )({ bPayRequest })
+      )({ bPayRequest }),
+    getCobadgePans: (abiCode: string | undefined) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(getCobadgePans, altOptions)
+        )
+      )({ abiCode }),
+    searchCobadgePans: (searchRequestId: string) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(searchCobadgePans, altOptions)
+        )
+      )({ searchRequestId })
   };
 }
 
