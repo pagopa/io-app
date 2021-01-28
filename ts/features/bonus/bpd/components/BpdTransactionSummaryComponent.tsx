@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
 });
 
 const readMoreLink = "https://io.italia.it/cashback/acquirer/";
-const SHOW_CTA_DELAY = 500;
 
 const CSS_STYLE = `
 body {
@@ -49,8 +48,7 @@ body {
 export const BottomSheetBpdTransactionsBody: React.FunctionComponent = () => {
   const [CTAVisibility, setCTAVisibility] = React.useState(false);
 
-  const setCTAVisible = () =>
-    setTimeout(() => setCTAVisibility(true), SHOW_CTA_DELAY);
+  const setCTAVisible = () => setCTAVisibility(true);
 
   return (
     <>
