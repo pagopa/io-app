@@ -9,6 +9,7 @@ import {
   isLoading,
   isReady
 } from "../../../../../bonus/bpd/model/RemoteValue";
+import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSelected";
 import { onboardingCoBadgeFoundSelector } from "../../store/reducers/foundCoBadge";
 import AddCoBadgeScreen from "../add-account/AddCoBadgeScreen";
 import CoBadgeKoNotFound from "./ko/CoBadgeKoNotFound";
@@ -49,6 +50,7 @@ const SearchAvailableCoBadgeScreen = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
+  abiSelected: onboardingCoBadgeAbiSelectedSelector(state),
   coBadgeFound: onboardingCoBadgeFoundSelector(state)
 });
 
