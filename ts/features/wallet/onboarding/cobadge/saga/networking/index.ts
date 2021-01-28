@@ -14,7 +14,7 @@ import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/conf
 export function* handleSearchUserCoBadge(
   _: ActionType<typeof searchUserCoBadge.request>
 ) {
-  yield put(searchUserCoBadge.success([]));
+  yield put(searchUserCoBadge.success({ payload: { paymentInstruments: [] } }));
 }
 
 /**
