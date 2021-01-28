@@ -864,6 +864,17 @@ wallet:
       koNotFound:
         title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
         body: "Contatta Satispay per l’attivazione"
+    coBadge:
+      headerTitle: "Aggiungi circuito internazionale"
+      start:
+        title: "TMP Start Title"
+      search:
+        koTimeout:
+          title: "TMP KO Timeout add"
+        koNotFound:
+          title: "TMP KO Timeout add"
+      add:
+        title: "TMP Add title"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
