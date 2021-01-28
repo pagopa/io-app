@@ -103,7 +103,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   private handleOnRequestAssistance = (
     type: BugReporting.reportType,
     supportToken: SupportTokenState,
-    shouldAttachScreenshotToIBRequest: boolean
+    shouldAttachScreenshotToIBRequest?: boolean
   ) => {
     // don't close modal if the report isn't a bug (bug brings a screenshot)
     if (type !== BugReporting.reportType.bug) {
