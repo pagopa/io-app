@@ -39,7 +39,7 @@ export default (): Theme => ({
     },
     "UIComponent.IconFont": {
       fontSize: variables.btnXSmallIconSize,
-      paddingRight: 8
+      paddingRight: 4
     }
   },
 

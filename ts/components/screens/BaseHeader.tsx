@@ -26,6 +26,18 @@ type HelpButtonProps = {
   onShowHelp: () => void;
 };
 
+const styles = StyleSheet.create({
+  noLeft: {
+    marginLeft: variables.contentPadding - variables.appHeaderPaddingHorizontal
+  },
+  body: {
+    alignItems: "center"
+  },
+  helpButton: {
+    padding: 8
+  }
+});
+
 const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
   <ButtonDefaultOpacity
     hasFullHitSlop
@@ -34,20 +46,12 @@ const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
     accessibilityLabel={I18n.t(
       "global.accessibility.contextualHelp.open.label"
     )}
+    style={styles.helpButton}
     accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")}
   >
     <IconFont name={"io-question"} />
   </ButtonDefaultOpacity>
 );
-
-const styles = StyleSheet.create({
-  noLeft: {
-    marginLeft: variables.contentPadding - variables.appHeaderPaddingHorizontal
-  },
-  body: {
-    alignItems: "center"
-  }
-});
 
 export type AccessibilityEvents = {
   avoidNavigationEventsUsage?: boolean; // if true NavigationEvents won't be included and the focus will be done on componentDidMount
