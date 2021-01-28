@@ -87,6 +87,8 @@ import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 import {
   getCobadgePansDefaultDecoder,
   GetCobadgePansT,
+  postAddCobadgeWalletDefaultDecoder,
+  PostAddCobadgeWalletT,
   searchCobadgePansDefaultDecoder,
   SearchCobadgePansT
 } from "../../definitions/pagopa/cobadge/requestTypes";
@@ -531,6 +533,15 @@ const searchCobadgePans: SearchCobadgePansT = {
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: searchCobadgePansDefaultDecoder()
+};
+
+const addCobadgeToWallet: PostAddCobadgeWalletT = {
+  method: "post",
+  url: () => `/v1/cobadge/add-wallet`,
+  query: () => ({}),
+  body: ({ cobadgeResponse }) => JSON.stringify(cobadgeResponse),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: postAddCobadgeWalletDefaultDecoder()
 };
 
 export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
