@@ -2098,8 +2098,12 @@ bonus:
       timeout:
         title: "We're processing your request."
         body: "We will send you an in-app message when your Carta Giovani will be activated."
+      alreadyActive:
+        title: "Your Carta Giovani Nazionale is already active!"
+        body: "You can find more details inside the Wallet section."
     cta:
       activeBonus: Activate your Carta Giovani
+      goToDetail: View your Carta Giovani
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

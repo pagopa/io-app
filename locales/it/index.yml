@@ -2129,8 +2129,12 @@ bonus:
       timeout:
         title: "Stiamo processando la tua richiesta."
         body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
+      alreadyActive:
+        title: "La tua Carta Giovani Nazionale è già attiva!"
+        body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
     cta:
       activeBonus: Attiva la tua Carta Giovani
+      goToDetail: Visualizza la Carta Giovani
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

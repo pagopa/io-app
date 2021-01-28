@@ -14,7 +14,8 @@ import {
   navigateToCgnActivationIneligible,
   navigateToCgnActivationLoading,
   navigateToCgnActivationPending,
-  navigateToCgnActivationTimeout
+  navigateToCgnActivationTimeout,
+  navigateToCgnAlreadyActive
 } from "../../../navigation/actions";
 import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
 import CGN_ROUTES from "../../../navigation/routes";
@@ -26,7 +27,7 @@ const mapEnumToNavigation = new Map([
   [CgnActivationProgressEnum.PENDING, navigateToCgnActivationPending],
   [CgnActivationProgressEnum.TIMEOUT, navigateToCgnActivationTimeout],
   [CgnActivationProgressEnum.INELIGIBLE, navigateToCgnActivationIneligible],
-  [CgnActivationProgressEnum.EXISTS, navigateToCgnActivationCompleted]
+  [CgnActivationProgressEnum.EXISTS, navigateToCgnAlreadyActive]
 ]);
 
 type CgnActivationType = ReturnType<typeof cgnActivationSaga>;
