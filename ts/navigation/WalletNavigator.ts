@@ -8,6 +8,7 @@ import CgnNavigator from "../features/bonus/cgn/navigation/navigator";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
 import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
+import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
 import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
@@ -37,9 +38,6 @@ import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
-import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
-import CgnNavigator from "../features/bonus/cgn/navigation/navigator";
-import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
