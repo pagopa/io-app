@@ -29,6 +29,7 @@ import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
+  CreditCardPaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
@@ -242,6 +243,14 @@ export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_BPAY_DETAIL,
     params: { bPay }
+  });
+
+export const navigateToCobadgeDetailScreen = (
+  cobadge: CreditCardPaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_COBADGE_DETAIL,
+    params: { cobadge }
   });
 
 export const navigateToPaymentPickPspScreen = (
