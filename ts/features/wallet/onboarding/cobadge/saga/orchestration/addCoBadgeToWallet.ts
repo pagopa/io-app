@@ -25,7 +25,7 @@ import { onboardingCoBadgeAddedSelector } from "../../store/reducers/addedCoBadg
  * Define the workflow that allows the user to add a co-badge card to the wallet.
  * The workflow ends when:
  * - The user add at least one owned co-badge card to the wallet {@link walletAddCoBadgeCompleted}
- * - The user abort the insertion of a co-badge {@link walletAddCoBadgeCancel}
+ * - The user aborts the insertion of a co-badge {@link walletAddCoBadgeCancel}
  * - The user chooses back from the first screen {@link walletAddCoBadgeBack}
  */
 function* coBadgeWorkUnit() {
