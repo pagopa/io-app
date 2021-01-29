@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { PaymentInstrument } from "../../../../../../../definitions/pagopa/cobadge/PaymentInstrument";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
