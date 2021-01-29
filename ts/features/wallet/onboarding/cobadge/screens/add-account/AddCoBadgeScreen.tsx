@@ -6,7 +6,6 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { PaymentInstrument } from "../../../../../../../definitions/pagopa/cobadge/PaymentInstrument";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { profileSelector } from "../../../../../../store/reducers/profile";
@@ -27,6 +26,7 @@ import {
   onboardingCobadgeChosenSelector
 } from "../../store/reducers/addingCoBadge";
 import { onboardingCoBadgeFoundSelector } from "../../store/reducers/foundCoBadge";
+import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import LoadAddCoBadgeComponent from "./LoadAddCoBadgeComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &

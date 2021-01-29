@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { PaymentInstrument } from "../../../../../../../definitions/pagopa/cobadge/PaymentInstrument";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
@@ -12,6 +11,7 @@ import {
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { addCoBadgeToWallet } from "../actions";
+import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 
 export type AddingCoBadgeState = {
   addingResult: RemoteValue<RawCreditCardPaymentMethod, NetworkError>;
