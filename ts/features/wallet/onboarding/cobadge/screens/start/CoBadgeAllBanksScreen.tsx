@@ -6,9 +6,16 @@ import { Dispatch } from "redux";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { navigateToOnboardingCoBadgeSearchAvailable } from "../../navigation/action";
+import { walletAddCoBadgeCancel } from "../../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -18,7 +25,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @param _
  * @constructor
  */
-const CoBadgeAllBanksScreen = (_: Props): React.ReactElement => (
+const CoBadgeAllBanksScreen = (props: Props): React.ReactElement => (
   <BaseScreenComponent
     goBack={true}
     headerTitle={I18n.t("wallet.onboarding.coBadge.headerTitle")}
@@ -28,11 +35,19 @@ const CoBadgeAllBanksScreen = (_: Props): React.ReactElement => (
       <Content style={IOStyles.flex}>
         <H1>CoBadgeAllBanksScreen</H1>
       </Content>
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        leftButton={cancelButtonProps(props.cancel)}
+        rightButton={confirmButtonProps(props.startSearch)}
+      />
     </SafeAreaView>
   </BaseScreenComponent>
 );
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  cancel: () => dispatch(walletAddCoBadgeCancel()),
+  startSearch: () => dispatch(navigateToOnboardingCoBadgeSearchAvailable())
+});
 
 const mapStateToProps = (_: GlobalState) => ({});
 

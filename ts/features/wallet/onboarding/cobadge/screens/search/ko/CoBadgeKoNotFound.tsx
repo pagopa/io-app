@@ -19,8 +19,8 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const loadLocales = () => ({
   // TODO: replace with locales
   headerTitle: "TMP Cobadge header title",
-  title: "TMP Cobadge title",
-  body: "TMP Cobadge body"
+  title: "TMP KONotFound title",
+  body: "TMP KONotFound body"
 });
 
 /**

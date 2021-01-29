@@ -45,10 +45,11 @@ export const walletAddCoBadgeStart = createStandardAction(
 
 /**
  * The user chooses to start the workflow to add a new cobadge from a bancomat (have a special handling)
+ * TODO: Remove
  */
 export const walletAddCoBadgeFromBancomatStart = createStandardAction(
   "WALLET_ONBOARDING_COBADGE_START_FROM_BANCOMAT"
-)<string>();
+)<string | undefined>();
 
 /**
  * The user completes the workflow to add a new cobadge card to the wallet
