@@ -40,7 +40,9 @@ export function* handleSearchUserCoBadge(
       getCobadgePans(searchAction.payload)
     );
 
-    const getPansWithRefreshResult: SagaCallReturnType<typeof getPansWithRefresh> = yield call(
+    const getPansWithRefreshResult:
+      | SagaCallReturnType<typeof getPansWithRefresh>
+      | SagaCallReturnType<typeof searchCobadgePans> = yield call(
       onboardingCoBadgeSearchRequest
         ? sessionManager.withRefresh(
             searchCobadgePans(onboardingCoBadgeSearchRequest)

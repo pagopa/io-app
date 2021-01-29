@@ -1,7 +1,11 @@
 import { getType } from "typesafe-actions";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Action } from "../../../../../../store/actions/types";
-import { searchUserCoBadge, walletAddCoBadgeStart } from "../actions";
+import {
+  searchUserCoBadge,
+  walletAddCoBadgeFromBancomatStart,
+  walletAddCoBadgeStart
+} from "../actions";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import { ExecutionStatusEnum } from "../../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
@@ -27,6 +31,7 @@ const reducer = (
         : null;
     // reset at the start
     case getType(walletAddCoBadgeStart):
+    case getType(walletAddCoBadgeFromBancomatStart):
       return null;
   }
   return state;
