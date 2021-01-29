@@ -82,7 +82,11 @@ export const CardPreview: React.FunctionComponent<Props> = props => (
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
             {props.left}
-            <Image source={props.image} style={styles.cardLogo} />
+            <Image
+              source={props.image}
+              style={styles.cardLogo}
+              testID={"cardImage"}
+            />
           </View>
           <View spacer={true} />
         </View>
