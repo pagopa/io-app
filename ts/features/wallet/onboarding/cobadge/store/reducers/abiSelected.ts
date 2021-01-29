@@ -16,9 +16,10 @@ const abiSelectedReducer = (
   switch (action.type) {
     case getType(searchUserCoBadge.request):
       return action.payload ?? null;
+    case getType(walletAddCoBadgeFromBancomatStart):
+      return action.payload ?? null;
     // reset at the start
     case getType(walletAddCoBadgeStart):
-    case getType(walletAddCoBadgeFromBancomatStart):
       return null;
   }
   return state;

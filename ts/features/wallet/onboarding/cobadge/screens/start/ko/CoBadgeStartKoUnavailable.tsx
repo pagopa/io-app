@@ -14,11 +14,11 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * The co-badge workflow is not yet available for the selected bank
+ * The co-badge service is remotely disabled for the selected bank
  * @param _
  * @constructor
  */
-const CoBadgeStartKoDisabled = (_: Props): React.ReactElement => (
+const CoBadgeStartKoUnavailable = (_: Props): React.ReactElement => (
   <BaseScreenComponent
     goBack={true}
     headerTitle={I18n.t("wallet.onboarding.coBadge.headerTitle")}
@@ -26,7 +26,7 @@ const CoBadgeStartKoDisabled = (_: Props): React.ReactElement => (
   >
     <SafeAreaView style={IOStyles.flex}>
       <Content style={IOStyles.flex}>
-        <H1>CoBadgeStartKoDisabled</H1>
+        <H1>CoBadgeStartKoUnavailable</H1>
       </Content>
     </SafeAreaView>
   </BaseScreenComponent>
@@ -39,4 +39,4 @@ const mapStateToProps = (_: GlobalState) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CoBadgeStartKoDisabled);
+)(CoBadgeStartKoUnavailable);

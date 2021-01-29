@@ -51,6 +51,7 @@ export const RawCheckBox: React.FunctionComponent<OwnProps> = props => {
   return (
     <TouchableDefaultOpacity
       disabled={props.disabled}
+      testID="RawCheckbox"
       onPress={props.onPress}
       hitSlop={{ bottom: slop, left: slop, right: slop, top: slop }}
       style={[styles.checkBox, { borderColor: getBorderColor(checked) }]}
