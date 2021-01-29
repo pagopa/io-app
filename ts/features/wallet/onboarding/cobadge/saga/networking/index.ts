@@ -157,7 +157,7 @@ export function* handleLoadCoBadgeConfiguration(
     loadCoBadgeAbiConfiguration.success({
       ICCREA: {
         status: StatusEnum.enabled,
-        issuers: [{ abi: "03078", name: "" }]
+        issuers: [{ abi: "08277", name: "" }]
       }
     })
   );
