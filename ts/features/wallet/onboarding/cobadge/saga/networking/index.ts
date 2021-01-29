@@ -1,14 +1,16 @@
-import { call, put } from "redux-saga/effects";
-import { ActionType } from "typesafe-actions";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import { call, delay, put } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
+import { WalletTypeEnum } from "../../../../../../../definitions/pagopa/WalletV2";
+import { ContentClient } from "../../../../../../api/content";
+import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { getNetworkError } from "../../../../../../utils/errors";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
   searchUserCoBadge
 } from "../../store/actions";
-import { ContentClient } from "../../../../../../api/content";
-import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getNetworkError } from "../../../../../../utils/errors";
 
 /**
  * Load the user Cobadge
@@ -47,7 +49,6 @@ export function* handleAddCoBadgeToWallet(
 
 /**
  * Load CoBadge configuration
- * TODO: add networking logic
  */
 export function* handleLoadCoBadgeConfiguration(
   getCobadgeServices: ReturnType<typeof ContentClient>["getCobadgeServices"],
