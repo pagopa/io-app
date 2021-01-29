@@ -7,30 +7,111 @@ import themeVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { H1 } from "./core/typography/H1";
 import { BaseHeader } from "./screens/BaseHeader";
-import Accordion from "./ui/Accordion";
 import Markdown from "./ui/Markdown";
 import IconFont from "./ui/IconFont";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import { Label } from "./core/typography/Label";
-import { RawCheckBox } from "./core/selection/RawCheckBox";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import { IOStyles } from "./core/variables/IOStyles";
+import { RawCheckBox } from "./core/selection/RawCheckBox";
+import { Label } from "./core/typography/Label";
+import Accordion from "./ui/Accordion";
+
+const checkboxStyle = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-evenly"
+  }
+});
+
+/**
+ * Checkboxes we need as of now
+ */
+
+export enum CheckboxIDs {
+  sendScreenshot = "sendScreenshot",
+  sendPersonalInfo = "sendPersonalInfo"
+}
+
+/**
+ * Checkbox+Label+Optional Accordion component
+ */
+
+type ContextualHelpCheckboxFormEntryProps = {
+  target: CheckboxIDs;
+  isChecked?: boolean;
+  onToggle: () => void;
+};
+
+type CheckboxLabelMap = {
+  [key in CheckboxIDs]: {
+    cta: string;
+    accordion?: {
+      title: string;
+      content: string;
+    };
+  };
+};
+
+const checkboxLabelMapFactory = (): CheckboxLabelMap => ({
+  sendScreenshot: {
+    cta: I18n.t("contextualHelp.sendScreenshot.cta")
+  },
+  sendPersonalInfo: {
+    cta: I18n.t("contextualHelp.sendPersonalInfo.cta"),
+    accordion: {
+      title: I18n.t("contextualHelp.sendPersonalInfo.informativeTitle"),
+      content: I18n.t("contextualHelp.sendPersonalInfo.informativeDescription")
+    }
+  }
+});
+
+export const ContextualHelpCheckboxFormEntry: React.FC<ContextualHelpCheckboxFormEntryProps> = ({
+  target,
+  isChecked,
+  onToggle
+}: ContextualHelpCheckboxFormEntryProps) => {
+  const checkboxLabelKeys = checkboxLabelMapFactory();
+
+  return (
+    <View style={checkboxStyle.container}>
+      <RawCheckBox checked={isChecked} onPress={onToggle} />
+      <View hspacer />
+      <View style={IOStyles.flex}>
+        <Label
+          testID="ContextualHelpCheckboxFormEntryLabel"
+          color={"bluegrey"}
+          weight={"Regular"}
+          onPress={onToggle}
+        >
+          {checkboxLabelKeys[target].cta}
+        </Label>
+        {"accordion" in checkboxLabelKeys[target] && (
+          <Accordion
+            title={checkboxLabelKeys[target].accordion?.title || ""}
+            content={checkboxLabelKeys[target].accordion?.content || ""}
+          />
+        )}
+      </View>
+    </View>
+  );
+};
+
+export type SupportRequestOptions = {
+  sendPersonalInfo: boolean;
+  sendScreenshot?: boolean;
+};
 
 type Props = {
   onClose: () => void;
   onGoBack: () => void;
   onContinue: (options: SupportRequestOptions) => void;
-  initialScreenshotCheckboxValue?: boolean;
+  shouldAskForScreenshotWithInitialValue?: boolean;
 };
 
 const styles = StyleSheet.create({
   contentContainer: {
     padding: themeVariables.contentPadding
-  },
-  checkBoxContainer: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-evenly"
   }
 });
 const continueButtonProps = (onContinue: () => void) => ({
@@ -52,22 +133,19 @@ const CustomGoBackButton: React.FunctionComponent<{
   </ButtonDefaultOpacity>
 );
 
-export type SupportRequestOptions = {
-  sendPersonalInfo: boolean;
-  sendScreenshot?: boolean;
-};
-
 const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
   onClose,
   onGoBack,
   onContinue,
-  initialScreenshotCheckboxValue
+  shouldAskForScreenshotWithInitialValue
 }) => {
   const [sendPersonalInfo, setSendPersonalInfo] = React.useState(false);
-
   const [sendScreenshot, setSendScreenshot] = React.useState(
-    initialScreenshotCheckboxValue
+    shouldAskForScreenshotWithInitialValue as boolean
   );
+  const toggleSendScreenshot = () => setSendScreenshot(oldValue => !oldValue);
+  const toggleSendPersonalInfo = () =>
+    setSendPersonalInfo(oldValue => !oldValue);
 
   return (
     <SafeAreaView style={IOStyles.flex}>
@@ -96,45 +174,17 @@ const SendSupportRequestOptions: React.FunctionComponent<Props> = ({
             {I18n.t("contextualHelp.sendPersonalInfo.description")}
           </Markdown>
         </View>
-        <View style={styles.checkBoxContainer}>
-          <RawCheckBox
-            checked={sendPersonalInfo}
-            onPress={() => setSendPersonalInfo(ov => !ov)}
+        <ContextualHelpCheckboxFormEntry
+          target={CheckboxIDs.sendPersonalInfo}
+          isChecked={sendPersonalInfo}
+          onToggle={toggleSendPersonalInfo}
+        />
+        {shouldAskForScreenshotWithInitialValue !== undefined && (
+          <ContextualHelpCheckboxFormEntry
+            target={CheckboxIDs.sendScreenshot}
+            isChecked={sendScreenshot}
+            onToggle={toggleSendScreenshot}
           />
-          <View hspacer={true} />
-          <View style={IOStyles.flex}>
-            <Label
-              color={"bluegrey"}
-              weight={"Regular"}
-              onPress={() => setSendPersonalInfo(ov => !ov)}
-            >
-              {I18n.t("contextualHelp.sendPersonalInfo.cta")}
-            </Label>
-            <Accordion
-              title={I18n.t("contextualHelp.sendPersonalInfo.informativeTitle")}
-              content={I18n.t(
-                "contextualHelp.sendPersonalInfo.informativeDescription"
-              )}
-            />
-          </View>
-        </View>
-        {initialScreenshotCheckboxValue !== undefined && (
-          <View style={styles.checkBoxContainer}>
-            <RawCheckBox
-              checked={sendScreenshot}
-              onPress={() => setSendScreenshot(ov => !ov)}
-            />
-            <View hspacer={true} />
-            <View style={IOStyles.flex}>
-              <Label
-                color={"bluegrey"}
-                weight={"Regular"}
-                onPress={() => setSendScreenshot(ov => !ov)}
-              >
-                {I18n.t("contextualHelp.sendScreenshot.cta")}
-              </Label>
-            </View>
-          </View>
         )}
         <EdgeBorderComponent />
       </Content>
