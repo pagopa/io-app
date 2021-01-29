@@ -21,9 +21,8 @@ import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
 import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 
 /**
- * Load the user Cobadge onboardingCoBadgeSearchRequest is found then it will be used
+ * Load the user's cobadge cards. if a previous stored SearchRequestId is found then it will be used
  * within the search searchCobadgePans API, otherwise getCobadgePans will be used
- * if a previous stored
  */
 export function* handleSearchUserCoBadge(
   getCobadgePans: ReturnType<typeof PaymentManagerClient>["getCobadgePans"],
