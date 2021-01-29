@@ -21,9 +21,8 @@ type Props = OwnProps &
 const tos_url =
   "https://io.italia.it/app-content/privacy_circuiti_internazionali.html";
 
-// TODO: Modify url accordingly to https://www.pivotaltracker.com/story/show/176704106
 const partecipatingBank_url =
-  "https://io.italia.it/cashback/carta-non-abilitata-pagamenti-online.html";
+  "https://io.italia.it/cashback/carta-non-abilitata-pagamenti-online";
 /**
  * The initial screen of the co-badge workflow (starting with a specific ABI, eg. from BANCOMAT screen)
  * The user can see the selected bank and can start the search for all the co-badge for the specific bank.
