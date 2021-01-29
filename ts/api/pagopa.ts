@@ -90,6 +90,7 @@ import { fixWalletPspTagsValues } from "../utils/wallet";
 import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayRequest";
 import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
+import { format } from "../utils/dates";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -547,12 +548,25 @@ export type AddWalletsCobadge = r.IPostApiRequestType<
   | r.IResponseType<404, undefined>
 >;
 
+const cobadgeInstrumentReplacer = (key: string | number, value: any) => {
+  if (key !== "expiringDate") {
+    return value;
+  }
+  const date = new Date(value);
+  if (isNaN(date.getTime())) {
+    return value;
+  }
+  return format(date, "YYYY-MM-DD");
+};
+
 const addCobadgeToWallet: AddWalletsCobadge = {
   method: "post",
   url: () => `/v1/cobadge/add-wallets`,
   query: () => ({}),
   body: ({ cobadegPaymentInstrumentsRequest }) =>
-    JSON.stringify(cobadegPaymentInstrumentsRequest),
+    // request payload must have 'expiringDate' field with a specific format
+    // see https://www.pivotaltracker.com/story/show/176720702
+    JSON.stringify(cobadegPaymentInstrumentsRequest, cobadgeInstrumentReplacer),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder(
     PatchedWalletV2ListResponse
