@@ -17,7 +17,12 @@ import { getNetworkError } from "../../../../../../utils/errors";
 export function* handleSearchUserCoBadge(
   _: ActionType<typeof searchUserCoBadge.request>
 ) {
-  yield put(searchUserCoBadge.success([]));
+  yield delay(1500);
+  yield put(
+    searchUserCoBadge.success({
+      payload: { paymentInstruments: [{}], searchRequestMetadata: [{}] }
+    })
+  );
 }
 
 /**
@@ -27,7 +32,17 @@ export function* handleSearchUserCoBadge(
 export function* handleAddCoBadgeToWallet(
   _: ActionType<typeof addCoBadgeToWallet.request>
 ) {
-  yield put(addCoBadgeToWallet.failure({ kind: "timeout" }));
+  yield delay(1500);
+  yield put(
+    addCoBadgeToWallet.success({
+      kind: "CreditCard",
+      info: {},
+      walletType: WalletTypeEnum.Card,
+      idWallet: 1,
+      pagoPA: false,
+      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+    })
+  );
 }
 
 /**

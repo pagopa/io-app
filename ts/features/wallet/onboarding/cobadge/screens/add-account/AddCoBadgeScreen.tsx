@@ -6,6 +6,7 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { PaymentInstrument } from "../../../../../../../definitions/pagopa/cobadge/PaymentInstrument";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { profileSelector } from "../../../../../../store/reducers/profile";
@@ -18,13 +19,12 @@ import {
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import {
   addCoBadgeToWallet,
-  CoBadgeResponse,
   walletAddCoBadgeCancel,
   walletAddCoBadgeCompleted
 } from "../../store/actions";
 import {
   onboardingCobadgeAddingResultSelector,
-  onboardingCobadgeChosenPanSelector
+  onboardingCobadgeChosenSelector
 } from "../../store/reducers/addingCoBadge";
 import { onboardingCoBadgeFoundSelector } from "../../store/reducers/foundCoBadge";
 import LoadAddCoBadgeComponent from "./LoadAddCoBadgeComponent";
@@ -92,24 +92,29 @@ const AddCoBadgeScreen = (props: Props): React.ReactElement | null => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addCoBadge: (coBadge: CoBadgeResponse) =>
+  addCoBadge: (coBadge: PaymentInstrument) =>
     dispatch(addCoBadgeToWallet.request(coBadge)),
   onCompleted: () => dispatch(walletAddCoBadgeCompleted()),
   onCancel: () => dispatch(walletAddCoBadgeCancel()),
-  onRetry: (coBadge: CoBadgeResponse) =>
+  onRetry: (coBadge: PaymentInstrument) =>
     dispatch(addCoBadgeToWallet.request(coBadge))
 });
 
 const mapStateToProps = (state: GlobalState) => {
   const remoteCoBadge = onboardingCoBadgeFoundSelector(state);
   const addingResult = onboardingCobadgeAddingResultSelector(state);
-  const coBadgeList = getValueOrElse(remoteCoBadge, []);
+  const coBadgeList: ReadonlyArray<PaymentInstrument> = fromNullable(
+    getValueOrElse(remoteCoBadge, undefined)
+  )
+    .chain(response => fromNullable(response.payload))
+    .map(payload => payload.paymentInstruments ?? [])
+    .getOrElse([]);
   return {
     isAddingReady: isReady(addingResult),
     loading: isLoading(addingResult),
     isAddingResultError: isError(addingResult),
     remoteCoBadge,
-    selectedCoBadge: onboardingCobadgeChosenPanSelector(state),
+    selectedCoBadge: onboardingCobadgeChosenSelector(state),
     coBadgeList,
     profile: pot.toUndefined(profileSelector(state))
   };
