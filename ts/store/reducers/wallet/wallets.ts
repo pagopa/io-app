@@ -273,7 +273,9 @@ export const cobadgeListVisibleInWalletSelector = createSelector(
   [creditCardListVisibleInWalletSelector],
   (creditCardListPot): pot.Pot<ReadonlyArray<CreditCardPaymentMethod>, Error> =>
     pot.map(creditCardListPot, creditCardList =>
-      creditCardList.filter(cc => cc.pagoPA === false)
+      creditCardList.filter(
+        cc => cc.pagoPA === false && cc.info.issuerAbiCode !== undefined
+      )
     )
 );
 

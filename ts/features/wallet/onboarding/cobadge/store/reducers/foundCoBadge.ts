@@ -34,10 +34,9 @@ const foundCoBadgeReducer = (
 
 /**
  * Return {@link RemoteCoBadge}, a list of Cobadge cards to be viewed by the user.
- * Remove from the list the disabled accounts
  * @param state
  */
-export const onboardingCoBadgeFoundAccountsSelector = (
+export const onboardingCoBadgeFoundSelector = (
   state: GlobalState
 ): RemoteCoBadge => state.wallet.onboarding.coBadge.foundCoBadge;
 
