@@ -3,12 +3,12 @@ import * as React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { CobadgeResponse } from "../../../../../../../definitions/pagopa/cobadge/CobadgeResponse";
-import { PaymentInstrument } from "../../../../../../../definitions/pagopa/cobadge/PaymentInstrument";
+import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
+import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import {
   ExecutionStatusEnum,
   SearchRequestMetadata
-} from "../../../../../../../definitions/pagopa/cobadge/SearchRequestMetadata";
+} from "../../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { isTimeoutError } from "../../../../../../utils/errors";
