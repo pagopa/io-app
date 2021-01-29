@@ -3,11 +3,11 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { CobadgeResponse } from "../../../../../../../definitions/pagopa/cobadge/CobadgeResponse";
-import { PaymentInstrument } from "../../../../../../../definitions/pagopa/cobadge/PaymentInstrument";
+import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
 import { CoBadgeServices } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
+import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 
 /**
  * Search for user's cobadge cards

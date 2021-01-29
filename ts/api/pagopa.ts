@@ -27,10 +27,15 @@ import {
   AddWalletSatispayUsingPOSTT,
   addWalletsBancomatCardUsingPOSTDecoder,
   addWalletsBPayUsingPOSTDecoder,
+  addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder,
   getAbiListUsingGETDefaultDecoder,
   GetAbiListUsingGETT,
   getBpayListUsingGETDefaultDecoder,
   GetBpayListUsingGETT,
+  getCobadgeByRequestIdUsingGETDefaultDecoder,
+  GetCobadgeByRequestIdUsingGETT,
+  getCobadgesUsingGETDefaultDecoder,
+  GetCobadgesUsingGETT,
   GetConsumerUsingGETT,
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT,
@@ -84,6 +89,7 @@ import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { fixWalletPspTagsValues } from "../utils/wallet";
 import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayRequest";
 import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
+import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -506,6 +512,53 @@ const searchBPay: GetBpayListUsingGETT = {
   response_decoder: getBpayListUsingGETDefaultDecoder()
 };
 
+const getCobadgePans: GetCobadgesUsingGETT = {
+  method: "get",
+  url: ({ abiCode }) => {
+    const abiParameter = fromNullable(abiCode)
+      .map(a => `?abiCode=${a}`)
+      .getOrElse("");
+    return `/v1/cobadge/pans${abiParameter}`;
+  },
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getCobadgesUsingGETDefaultDecoder()
+};
+
+const searchCobadgePans: GetCobadgeByRequestIdUsingGETT = {
+  method: "get",
+  url: ({ searchRequestId }) => `/v1/cobadge/search/${searchRequestId}`,
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getCobadgeByRequestIdUsingGETDefaultDecoder()
+};
+
+export type AddWalletsCobadge = r.IPostApiRequestType<
+  {
+    readonly Bearer: string;
+    readonly cobadegPaymentInstrumentsRequest: CobadegPaymentInstrumentsRequest;
+  },
+  "Content-Type" | "Authorization",
+  never,
+  | r.IResponseType<200, PatchedWalletV2ListResponse>
+  | r.IResponseType<201, undefined>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
+>;
+
+const addCobadgeToWallet: AddWalletsCobadge = {
+  method: "post",
+  url: () => `/v1/cobadge/add-wallets`,
+  query: () => ({}),
+  body: ({ cobadegPaymentInstrumentsRequest }) =>
+    JSON.stringify(cobadegPaymentInstrumentsRequest),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder(
+    PatchedWalletV2ListResponse
+  )
+};
+
 export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
   { readonly Bearer: string; readonly bPayRequest: BPayRequest },
   "Content-Type" | "Authorization",
@@ -727,7 +780,27 @@ export function PaymentManagerClient(
         withPaymentManagerToken(
           createFetchRequestForApi(addBPayToWallet, altOptions)
         )
-      )({ bPayRequest })
+      )({ bPayRequest }),
+    getCobadgePans: (abiCode: string | undefined) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(getCobadgePans, altOptions)
+        )
+      )({ abiCode }),
+    searchCobadgePans: (searchRequestId: string) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(searchCobadgePans, altOptions)
+        )
+      )({ searchRequestId }),
+    addCobadgeToWallet: (
+      cobadegPaymentInstrumentsRequest: CobadegPaymentInstrumentsRequest
+    ) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(addCobadgeToWallet, altOptions)
+        )
+      )({ cobadegPaymentInstrumentsRequest })
   };
 }
 

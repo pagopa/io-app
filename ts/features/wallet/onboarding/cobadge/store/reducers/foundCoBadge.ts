@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { CobadgeResponse } from "../../../../../../../definitions/pagopa/cobadge/CobadgeResponse";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
@@ -12,6 +11,7 @@ import {
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { searchUserCoBadge } from "../actions";
+import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 
 export type RemoteCoBadge = RemoteValue<CobadgeResponse, NetworkError>;
 

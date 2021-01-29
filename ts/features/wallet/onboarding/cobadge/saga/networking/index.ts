@@ -1,47 +1,150 @@
-import { put, delay } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { WalletTypeEnum } from "../../../../../../../definitions/pagopa/WalletV2";
-import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
+import { readableReport } from "italia-ts-commons/lib/reporters";
+import { fromNullable } from "fp-ts/lib/Option";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
   searchUserCoBadge
 } from "../../store/actions";
 import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { PaymentManagerClient } from "../../../../../../api/pagopa";
+import { SessionManager } from "../../../../../../utils/SessionManager";
+import {
+  isRawCreditCard,
+  PaymentManagerToken
+} from "../../../../../../types/pagopa";
+import { getNetworkError } from "../../../../../../utils/errors";
+import { onboardingCoBadgeSearchRequestId } from "../../store/reducers/searchCoBadgeRequestId";
+import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
+import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 
 /**
- * Load the user Cobadge
- *  * TODO: add networking logic
+ * Load the user's cobadge cards. if a previous stored SearchRequestId is found then it will be used
+ * within the search searchCobadgePans API, otherwise getCobadgePans will be used
  */
 export function* handleSearchUserCoBadge(
-  _: ActionType<typeof searchUserCoBadge.request>
+  getCobadgePans: ReturnType<typeof PaymentManagerClient>["getCobadgePans"],
+  searchCobadgePans: ReturnType<
+    typeof PaymentManagerClient
+  >["searchCobadgePans"],
+  sessionManager: SessionManager<PaymentManagerToken>,
+  searchAction: ActionType<typeof searchUserCoBadge.request>
 ) {
-  yield delay(1500);
-  yield put(
-    searchUserCoBadge.success({
-      payload: { paymentInstruments: [{}], searchRequestMetadata: [{}] }
-    })
-  );
+  try {
+    const onboardingCoBadgeSearchRequest: ReturnType<typeof onboardingCoBadgeSearchRequestId> = yield select(
+      onboardingCoBadgeSearchRequestId
+    );
+    const getPansWithRefresh = sessionManager.withRefresh(
+      getCobadgePans(searchAction.payload)
+    );
+
+    const getPansWithRefreshResult:
+      | SagaCallReturnType<typeof getPansWithRefresh>
+      | SagaCallReturnType<typeof searchCobadgePans> = yield call(
+      onboardingCoBadgeSearchRequest
+        ? sessionManager.withRefresh(
+            searchCobadgePans(onboardingCoBadgeSearchRequest)
+          )
+        : getPansWithRefresh
+    );
+    if (getPansWithRefreshResult.isRight()) {
+      if (getPansWithRefreshResult.value.status === 200) {
+        if (getPansWithRefreshResult.value.value.data) {
+          return yield put(
+            searchUserCoBadge.success(getPansWithRefreshResult.value.value.data)
+          );
+        } else {
+          // it should not never happen
+          return yield put(
+            searchUserCoBadge.failure({
+              kind: "generic",
+              value: new Error(`data is undefined`)
+            })
+          );
+        }
+      } else {
+        return yield put(
+          searchUserCoBadge.failure({
+            kind: "generic",
+            value: new Error(
+              `response status ${getPansWithRefreshResult.value.status}`
+            )
+          })
+        );
+      }
+    } else {
+      return yield put(
+        searchUserCoBadge.failure({
+          kind: "generic",
+          value: new Error(readableReport(getPansWithRefreshResult.value))
+        })
+      );
+    }
+  } catch (e) {
+    return yield put(searchUserCoBadge.failure(getNetworkError(e)));
+  }
 }
 
 /**
  * Add Cobadge to wallet
- * TODO: add networking logic
  */
 export function* handleAddCoBadgeToWallet(
-  _: ActionType<typeof addCoBadgeToWallet.request>
+  addCobadgeToWallet: ReturnType<
+    typeof PaymentManagerClient
+  >["addCobadgeToWallet"],
+  sessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof addCoBadgeToWallet.request>
 ) {
-  yield delay(1500);
-  yield put(
-    addCoBadgeToWallet.success({
-      kind: "CreditCard",
-      info: {},
-      walletType: WalletTypeEnum.Card,
-      idWallet: 1,
-      pagoPA: false,
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
-    })
-  );
+  try {
+    const cobadgePaymentInstrument = action.payload;
+    const addCobadgeToWalletWithRefresh = sessionManager.withRefresh(
+      addCobadgeToWallet({
+        data: { payload: { paymentInstruments: [cobadgePaymentInstrument] } }
+      })
+    );
+    const addCobadgeToWalletWithRefreshResult: SagaCallReturnType<typeof addCobadgeToWalletWithRefresh> = yield call(
+      addCobadgeToWalletWithRefresh
+    );
+    if (addCobadgeToWalletWithRefreshResult.isRight()) {
+      if (addCobadgeToWalletWithRefreshResult.value.status === 200) {
+        const wallets = (
+          addCobadgeToWalletWithRefreshResult.value.value.data ?? []
+        ).map(convertWalletV2toWalletV1);
+        // search for the added cobadge.
+        const maybeWallet = fromNullable(
+          wallets.find(
+            w =>
+              w.paymentMethod &&
+              getPaymentMethodHash(w.paymentMethod) ===
+                cobadgePaymentInstrument.hpan
+          )
+        );
+        if (
+          maybeWallet.isSome() &&
+          isRawCreditCard(maybeWallet.value.paymentMethod)
+        ) {
+          yield put(
+            // success
+            addCoBadgeToWallet.success(maybeWallet.value.paymentMethod)
+          );
+        } else {
+          throw new Error(`cannot find added cobadge in wallets list response`);
+        }
+      } else {
+        throw new Error(
+          `response status ${addCobadgeToWalletWithRefreshResult.value.status}`
+        );
+      }
+    } else {
+      throw new Error(
+        readableReport(addCobadgeToWalletWithRefreshResult.value)
+      );
+    }
+  } catch (e) {
+    yield put(addCoBadgeToWallet.failure(getNetworkError(e)));
+  }
 }
 
 /**
@@ -55,7 +158,7 @@ export function* handleLoadCoBadgeConfiguration(
     loadCoBadgeAbiConfiguration.success({
       ICCREA: {
         status: StatusEnum.enabled,
-        issuers: [{ abi: "03078", name: "" }]
+        issuers: [{ abi: "08277", name: "" }]
       }
     })
   );
