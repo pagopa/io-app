@@ -64,7 +64,6 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
     icon: brandLogo,
     caption: cobadge.caption
   });
-
   return (
     <DarkLayout
       bounces={false}
