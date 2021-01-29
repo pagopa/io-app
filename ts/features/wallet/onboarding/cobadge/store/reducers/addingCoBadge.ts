@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { PaymentInstrument } from "../../../../../../../definitions/pagopa/cobadge/PaymentInstrument";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
@@ -10,11 +11,15 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { addCoBadgeToWallet, CoBadgeResponse } from "../actions";
+import {
+  addCoBadgeToWallet,
+  walletAddCoBadgeFromBancomatStart,
+  walletAddCoBadgeStart
+} from "../actions";
 
 export type AddingCoBadgeState = {
   addingResult: RemoteValue<RawCreditCardPaymentMethod, NetworkError>;
-  selectedCoBadge?: CoBadgeResponse;
+  selectedCoBadge?: PaymentInstrument;
 };
 
 const initialState: AddingCoBadgeState = {
@@ -41,13 +46,16 @@ const addingCoBadgeReducer = (
         ...state,
         addingResult: remoteError(action.payload)
       };
+    case getType(walletAddCoBadgeStart):
+    case getType(walletAddCoBadgeFromBancomatStart):
+      return initialState;
   }
   return state;
 };
 
-export const onboardingCobadgeChosenPanSelector = (
+export const onboardingCobadgeChosenSelector = (
   state: GlobalState
-): CoBadgeResponse | undefined =>
+): PaymentInstrument | undefined =>
   state.wallet.onboarding.coBadge.addingCoBadge.selectedCoBadge;
 
 export const onboardingCobadgeAddingResultSelector = (
