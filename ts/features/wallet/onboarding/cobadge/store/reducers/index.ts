@@ -7,6 +7,9 @@ import abiSelectedReducer, { AbiSelected } from "./abiSelected";
 import addedCoBadgeReducer from "./addedCoBadge";
 import addingCoBadgeReducer, { AddingCoBadgeState } from "./addingCoBadge";
 import foundCoBadgeReducer, { RemoteCoBadge } from "./foundCoBadge";
+import searchRequestIdReducer, {
+  SearchCoBadgeRequestIdState
+} from "./searchCoBadgeRequestId";
 
 export type OnboardingCoBadgeState = {
   foundCoBadge: RemoteCoBadge;
@@ -14,8 +17,7 @@ export type OnboardingCoBadgeState = {
   addedCoBadge: ReadonlyArray<RawCreditCardPaymentMethod>;
   abiSelected: AbiSelected;
   abiConfiguration: AbiConfigurationState;
-  // TODO: fields to add
-  // requestId: string with request id;
+  searchCoBadgeRequestId: SearchCoBadgeRequestIdState;
 };
 
 const onboardingCoBadgeReducer = combineReducers<
@@ -31,7 +33,9 @@ const onboardingCoBadgeReducer = combineReducers<
   // the bank (abi) chosen by the user during the onboarding phase. Can be null (the user skip the bank selection)
   abiSelected: abiSelectedReducer,
   // A list of abi for which it is allowed to use the co-badge search service
-  abiConfiguration: abiConfigurationReducer
+  abiConfiguration: abiConfigurationReducer,
+  // the search id used to follow up the cobadge search
+  searchCoBadgeRequestId: searchRequestIdReducer
 });
 
 export default onboardingCoBadgeReducer;
