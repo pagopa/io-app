@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { CobadgeResponse } from "../../../../../../../definitions/pagopa/cobadge/CobadgeResponse";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
@@ -10,12 +11,9 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { CoBadgeResponse, searchUserCoBadge } from "../actions";
+import { searchUserCoBadge } from "../actions";
 
-export type RemoteCoBadge = RemoteValue<
-  ReadonlyArray<CoBadgeResponse>,
-  NetworkError
->;
+export type RemoteCoBadge = RemoteValue<CobadgeResponse, NetworkError>;
 
 const foundCoBadgeReducer = (
   state: RemoteCoBadge = remoteUndefined,

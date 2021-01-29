@@ -7,7 +7,7 @@ import { renderInfoRasterImage } from "../../../../../../../components/infoScree
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
-import image from "../../../../../../../img/servicesStatus/error-detail-icon.png";
+import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { cancelButtonProps } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { walletAddCoBadgeCancel } from "../../../store/actions";
@@ -19,8 +19,8 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const loadLocales = () => ({
   // TODO: replace locales
   headerTitle: "TMP header title",
-  title: "TMP title",
-  body: "TMP Body"
+  title: "TMP KOServiceError title",
+  body: "TMP KOServiceError Body"
 });
 
 /**

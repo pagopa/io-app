@@ -10,7 +10,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { addBancomatToWallet } from "../actions";
+import { addBancomatToWallet, walletAddBancomatStart } from "../actions";
 
 export type AddingPansState = {
   addingResult: RemoteValue<RawBancomatPaymentMethod, Error>;
@@ -41,6 +41,8 @@ const addingPansReducer = (
         ...state,
         addingResult: remoteError(action.payload)
       };
+    case getType(walletAddBancomatStart):
+      return initialState;
   }
   return state;
 };

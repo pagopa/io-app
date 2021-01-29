@@ -50,6 +50,10 @@ import {
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
+import {
+  handleAddpayToWallet,
+  handleSearchUserBPay
+} from "../features/wallet/onboarding/bancomatPay/saga/networking";
 import { addBPayToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
 import {
   addBPayToWallet,
@@ -58,11 +62,15 @@ import {
 } from "../features/wallet/onboarding/bancomatPay/store/actions";
 import {
   handleAddCoBadgeToWallet,
+  handleLoadCoBadgeConfiguration,
   handleSearchUserCoBadge
 } from "../features/wallet/onboarding/cobadge/saga/networking";
+import { addCoBadgeToWalletAndActivateBpd } from "../features/wallet/onboarding/cobadge/saga/orchestration/addCoBadgeToWallet";
 import {
   addCoBadgeToWallet,
-  searchUserCoBadge
+  loadCoBadgeAbiConfiguration,
+  searchUserCoBadge,
+  walletAddCoBadgeFromBancomatStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
 import {
   handleAddUserSatispayToWallet,
@@ -146,6 +154,7 @@ import { SessionToken } from "../types/SessionToken";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
 import { getTitleFromCard } from "../utils/paymentMethod";
+import { backoffWait } from "../utils/saga";
 import { SessionManager } from "../utils/SessionManager";
 import { hasFunctionEnabled } from "../utils/walletv2";
 import { paymentsDeleteUncompletedSaga } from "./payments";
@@ -168,11 +177,6 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { backoffWait } from "../utils/saga";
-import {
-  handleSearchUserBPay,
-  handleAddpayToWallet
-} from "../features/wallet/onboarding/bancomatPay/saga/networking";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -924,6 +928,17 @@ export function* watchWalletSaga(
     yield takeLatest(searchUserCoBadge.request, handleSearchUserCoBadge);
     // watch for add CoBadge to the user's wallet
     yield takeLatest(addCoBadgeToWallet.request, handleAddCoBadgeToWallet);
+    // watch for CoBadge configuration request
+    yield takeLatest(
+      loadCoBadgeAbiConfiguration.request,
+      handleLoadCoBadgeConfiguration
+    );
+
+    // watch for add co-badge to Wallet workflow
+    yield takeLatest(
+      walletAddCoBadgeFromBancomatStart,
+      addCoBadgeToWalletAndActivateBpd
+    );
   }
 
   yield fork(paymentsDeleteUncompletedSaga);
