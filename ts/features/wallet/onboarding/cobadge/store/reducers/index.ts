@@ -1,5 +1,8 @@
 import { Action, combineReducers } from "redux";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
+import abiConfigurationReducer, {
+  AbiConfigurationState
+} from "./abiConfiguration";
 import abiSelectedReducer, { AbiSelected } from "./abiSelected";
 import addedCoBadgeReducer from "./addedCoBadge";
 import addingCoBadgeReducer, { AddingCoBadgeState } from "./addingCoBadge";
@@ -10,8 +13,8 @@ export type OnboardingCoBadgeState = {
   addingCoBadge: AddingCoBadgeState;
   addedCoBadge: ReadonlyArray<RawCreditCardPaymentMethod>;
   abiSelected: AbiSelected;
+  abiConfiguration: AbiConfigurationState;
   // TODO: fields to add
-  // allowedAbi: list of abi allowed;
   // requestId: string with request id;
 };
 
@@ -26,7 +29,9 @@ const onboardingCoBadgeReducer = combineReducers<
   // the CoBadge that user added to his wallet (during the last CoBadge onboarding workflow)
   addedCoBadge: addedCoBadgeReducer,
   // the bank (abi) chosen by the user during the onboarding phase. Can be null (the user skip the bank selection)
-  abiSelected: abiSelectedReducer
+  abiSelected: abiSelectedReducer,
+  // A list of abi for which it is allowed to use the co-badge search service
+  abiConfiguration: abiConfigurationReducer
 });
 
 export default onboardingCoBadgeReducer;

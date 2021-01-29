@@ -10,7 +10,7 @@ import BaseScreenComponent from "../../../../../../../components/screens/BaseScr
 import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
 
 import I18n from "../../../../../../../i18n";
-import image from "../../../../../../../img/servicesStatus/error-detail-icon.png";
+import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import {
   cancelButtonProps,
@@ -28,9 +28,9 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const loadLocales = () => ({
   // TODO: replace locales
   headerTitle: I18n.t("wallet.onboarding.coBadge.headerTitle"),
-  title: "TMP Title",
+  title: "TMP KOSingleBank not Found Title",
   body: "TMP Body",
-  chooseAnother: "TMP chooseAnother"
+  searchAll: "TMP search all bank"
 });
 
 /**
@@ -39,9 +39,9 @@ const loadLocales = () => ({
  * @constructor
  */
 const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
-  const { headerTitle, title, body, chooseAnother } = loadLocales();
+  const { headerTitle, title, body, searchAll } = loadLocales();
 
-  const onChooseAnother = () => props.searchPans();
+  const onSearchAll = () => props.searchAll();
   return (
     <BaseScreenComponent
       goBack={true}
@@ -57,7 +57,7 @@ const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(props.cancel)}
-          rightButton={confirmButtonProps(onChooseAnother, chooseAnother)}
+          rightButton={confirmButtonProps(onSearchAll, searchAll)}
         />
       </SafeAreaView>
     </BaseScreenComponent>
@@ -67,9 +67,7 @@ const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddCoBadgeCancel()),
   back: () => dispatch(NavigationActions.back()),
-  searchPans: (abi?: string) => {
-    dispatch(searchUserCoBadge.request(abi));
-  }
+  searchAll: () => dispatch(searchUserCoBadge.request(undefined))
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

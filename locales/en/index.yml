@@ -1238,9 +1238,9 @@ messages:
           block1: Add a reminder for the 
           block2: at
       expiringOrValidAlert:
-        block1: You can pay this notice by
+        block1: This notice will expire on
       expiredAlert:
-        block1: The payment notice expired at
+        block1: This notice expired at
         block2: on
     prescription:  
       addMemo: This prescription expires the

@@ -10,7 +10,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { addBPayToWallet } from "../actions";
+import { addBPayToWallet, walletAddBPayStart } from "../actions";
 import { NetworkError } from "../../../../../../utils/errors";
 
 export type AddingBPayState = {
@@ -42,6 +42,8 @@ const addingBPayReducer = (
         ...state,
         addingResult: remoteError(action.payload)
       };
+    case getType(walletAddBPayStart):
+      return initialState;
   }
   return state;
 };
