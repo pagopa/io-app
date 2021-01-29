@@ -10,8 +10,11 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { addCoBadgeToWallet } from "../actions";
-import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
+import {
+  addCoBadgeToWallet,
+  walletAddCoBadgeFromBancomatStart,
+  walletAddCoBadgeStart
+} from "../actions";
 
 export type AddingCoBadgeState = {
   addingResult: RemoteValue<RawCreditCardPaymentMethod, NetworkError>;
@@ -42,6 +45,9 @@ const addingCoBadgeReducer = (
         ...state,
         addingResult: remoteError(action.payload)
       };
+    case getType(walletAddCoBadgeStart):
+    case getType(walletAddCoBadgeFromBancomatStart):
+      return initialState;
   }
   return state;
 };

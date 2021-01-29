@@ -155,7 +155,10 @@ export function* handleLoadCoBadgeConfiguration(
 ) {
   yield put(
     loadCoBadgeAbiConfiguration.success({
-      ICCREA: { status: StatusEnum.enabled, issuers: [{ abi: "1", name: "" }] }
+      ICCREA: {
+        status: StatusEnum.enabled,
+        issuers: [{ abi: "03078", name: "" }]
+      }
     })
   );
 }
