@@ -106,8 +106,7 @@ const mapStateToProps = (state: GlobalState) => {
   const coBadgeList: ReadonlyArray<PaymentInstrument> = fromNullable(
     getValueOrElse(remoteCoBadge, undefined)
   )
-    .chain(response => fromNullable(response.payload))
-    .map(payload => payload.paymentInstruments ?? [])
+    .mapNullable(response => response.payload?.paymentInstruments)
     .getOrElse([]);
   return {
     isAddingReady: isReady(addingResult),
