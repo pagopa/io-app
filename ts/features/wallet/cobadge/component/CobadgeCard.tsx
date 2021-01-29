@@ -50,8 +50,6 @@ const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
       resizeMode: "contain"
     })
   );
-  console.log("asd");
-  console.log(props.abiLogo && imageStyle);
   return (
     <BaseCardComponent
       topLeftCorner={
