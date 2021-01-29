@@ -19,7 +19,7 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
-describe("bpdStartOnboardingWorker", () => {
+describe("cgnActivationWorker", () => {
   const cgnActivationSaga = jest.fn();
 
   it("should activate user's CGN", () => {
@@ -48,7 +48,7 @@ describe("bpdStartOnboardingWorker", () => {
 
   it("should activate user's CGN already on loading screen ", () => {
     const returnedAction = cgnActivationStatus.success({
-      status: CgnActivationProgressEnum.TIMEOUT
+      status: CgnActivationProgressEnum.SUCCESS
     });
 
     testSaga(cgnActivationWorker, cgnActivationSaga)
