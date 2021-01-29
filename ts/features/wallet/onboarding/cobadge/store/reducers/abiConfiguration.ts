@@ -48,7 +48,7 @@ const abiConfigurationReducer = (
 
 export const coBadgeAbiConfigurationSelector = (
   state: GlobalState
-): pot.Pot<IndexedById<StatusEnum>, Error> =>
+): pot.Pot<IndexedById<StatusEnum>, NetworkError> =>
   state.wallet.onboarding.coBadge.abiConfiguration;
 
 /**

@@ -13,12 +13,12 @@ import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ServicesByScope } from "../../definitions/content/ServicesByScope";
+import { CoBadgeServices } from "../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
 import { contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
-import { CoBadgeServices } from "../../definitions/pagopa/cobadge/CoBadgeServices";
 
 type GetServiceT = IGetApiRequestType<
   {
