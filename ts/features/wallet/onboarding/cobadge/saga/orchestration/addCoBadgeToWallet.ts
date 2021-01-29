@@ -39,7 +39,7 @@ function* coBadgeWorkUnit() {
 }
 
 /**
- * A saga that invokes the addition of a co-badge workflow {@link coBadgeWorkUnit} and return
+ * A saga that invokes the addition of a co-badge workflow {@link coBadgeWorkUnit} and returns
  * to the wallet after the insertion.
  */
 export function* addCoBadgeToWalletGeneric() {
