@@ -22,6 +22,7 @@ import {
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
+import _ from "lodash";
 import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
 import {
   AddWalletSatispayUsingPOSTT,
@@ -553,7 +554,7 @@ const cobadgeInstrumentReplacer = (key: string | number, value: any) => {
     return value;
   }
   const date = new Date(value);
-  if (isNaN(date.getTime())) {
+  if (!_.isDate(date)) {
     return value;
   }
   return format(date, "YYYY-MM-DD");
