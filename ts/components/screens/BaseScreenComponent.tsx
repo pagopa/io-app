@@ -59,6 +59,10 @@ interface OwnProps {
   isSearchAvailable?: boolean;
   searchType?: SearchType;
   reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
+
+  // As of now, the following prop is propagated through 4 levels
+  // to finally display a checkbox in SendSupportRequestOptions
+  shouldAskForScreenshotWithInitialValue?: boolean;
 }
 
 type Props = OwnProps &
@@ -66,6 +70,7 @@ type Props = OwnProps &
   Pick<React.ComponentProps<typeof ContextualHelpModal>, "faqCategories">;
 
 interface State {
+  shouldAttachScreenshotToIBRequest: boolean | undefined;
   isHelpVisible: boolean;
   requestReport: Option<BugReporting.reportType>;
   supportToken?: SupportTokenState;
@@ -83,6 +88,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      shouldAttachScreenshotToIBRequest: undefined,
       contextualHelpModalAnimation: "slide",
       isHelpVisible: false,
       requestReport: none,
@@ -96,7 +102,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
   private handleOnRequestAssistance = (
     type: BugReporting.reportType,
-    supportToken: SupportTokenState
+    supportToken: SupportTokenState,
+    shouldAttachScreenshotToIBRequest?: boolean
   ) => {
     // don't close modal if the report isn't a bug (bug brings a screenshot)
     if (type !== BugReporting.reportType.bug) {
@@ -114,17 +121,24 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     });
     this.setState({ contextualHelpModalAnimation }, () => {
       this.setState({ isHelpVisible: false }, () => {
-        this.setState({ requestReport: some(type), supportToken }, () => {
-          // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
-          // we force handling here. The timeout is due to wait until the modal is completely hidden
-          // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
-          // TODO: To complete the porting to 0.63.x, both iOS and Android will use the timeout. https://www.pivotaltracker.com/story/show/174195300
-          setTimeout(
-            this.handleOnContextualHelpDismissed,
-            ANDROID_OPEN_REPORT_DELAY
-          );
-          this.setState({ contextualHelpModalAnimation: "slide" });
-        });
+        this.setState(
+          {
+            requestReport: some(type),
+            supportToken,
+            shouldAttachScreenshotToIBRequest
+          },
+          () => {
+            // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
+            // we force handling here. The timeout is due to wait until the modal is completely hidden
+            // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
+            // TODO: To complete the porting to 0.63.x, both iOS and Android will use the timeout. https://www.pivotaltracker.com/story/show/174195300
+            setTimeout(
+              this.handleOnContextualHelpDismissed,
+              ANDROID_OPEN_REPORT_DELAY
+            );
+            this.setState({ contextualHelpModalAnimation: "slide" });
+          }
+        );
       });
     });
   };
@@ -153,9 +167,26 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           setInstabugSupportTokenAttribute(supportToken);
         }
 
+        const { reportAttachmentTypes } = this.props;
+        const { shouldAttachScreenshotToIBRequest } = this.state;
+
+        // Do not ignore reportAttachmentTypes, but overwrite
+        // the screenshot variable if the form featured the checkbox
+        const attachmentConfig = {
+          screenshot:
+            shouldAttachScreenshotToIBRequest !== undefined
+              ? shouldAttachScreenshotToIBRequest
+              : Boolean(reportAttachmentTypes?.screenshot),
+          ...(reportAttachmentTypes || {
+            extraScreenshot: false,
+            galleryImage: false,
+            screenRecording: false
+          })
+        };
+
         switch (type) {
           case BugReporting.reportType.bug:
-            openInstabugQuestionReport(this.props.reportAttachmentTypes);
+            openInstabugQuestionReport(attachmentConfig);
             break;
           case BugReporting.reportType.question:
             openInstabugReplies();
@@ -221,7 +252,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       onAccessibilityNavigationHeaderFocus,
       showInstabugChat,
       children,
-      faqCategories
+      faqCategories,
+      shouldAskForScreenshotWithInitialValue
     } = this.props;
 
     const {
@@ -275,6 +307,9 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         {children}
         {ch && (
           <ContextualHelpModal
+            shouldAskForScreenshotWithInitialValue={
+              shouldAskForScreenshotWithInitialValue
+            }
             title={ch.title}
             onLinkClicked={this.handleOnLinkClicked}
             body={ch.body}
