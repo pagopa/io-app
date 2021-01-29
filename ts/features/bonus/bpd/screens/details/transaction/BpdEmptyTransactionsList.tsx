@@ -4,7 +4,7 @@ import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
-import { bottomSheetBpdTransactionsBody } from "../../../components/BpdTransactionSummaryComponent";
+import { BottomSheetBpdTransactionsBody } from "../../../components/BpdTransactionSummaryComponent";
 
 const BpdEmptyTransactionsList: React.FunctionComponent = () => (
   <>
@@ -30,7 +30,7 @@ const BpdEmptyTransactionsList: React.FunctionComponent = () => (
       </H4>
     </InfoBox>
     <View spacer={true} large={true} />
-    {bottomSheetBpdTransactionsBody()}
+    <BottomSheetBpdTransactionsBody />
   </>
 );
 
