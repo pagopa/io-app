@@ -12,7 +12,10 @@ import { ExecutionStatusEnum } from "../../../../../../../definitions/pagopa/wal
 
 export type SearchCoBadgeRequestIdState = string | null;
 
-// return true if every executionStatus in search request metadata is OK
+/**
+ * Return true if there is at least one request pending
+ * @param cobadgeResponse
+ */
 const isCobadgeResponsePending = (cobadgeResponse: CobadgeResponse): boolean =>
   fromNullable(cobadgeResponse.payload)
     .mapNullable(p => p.searchRequestMetadata)
