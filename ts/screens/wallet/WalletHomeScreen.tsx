@@ -232,6 +232,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     // https://www.pivotaltracker.com/story/show/168836972
 
     // FIXME restore loadWallets and loadTransactions see https://www.pivotaltracker.com/story/show/176051000
+    if (pot.isNone(this.props.potWallets)) {
+      this.props.loadWallets();
+    }
     // this.props.loadWallets();
     // this.props.loadTransactions(this.props.transactionsLoadedLength);
 
