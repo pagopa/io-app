@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
     resizeMode: "contain"
   },
   brandLogo: {
-    width: 80,
-    height: 40,
+    width: 48,
+    height: 31,
     resizeMode: "contain"
   },
   bankName: { textTransform: "capitalize" }
