@@ -58,12 +58,14 @@ const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
             <Image
               source={{ uri: props.abiLogo }}
               style={imageStyle}
+              key={"abiLogo"}
               testID={"abiLogo"}
             />
           ) : (
             <Image
               source={abiLogoFallback}
               style={styles.abiLogoFallback}
+              key={"abiLogoFallback"}
               testID={"abiLogoFallback"}
             />
           )}
