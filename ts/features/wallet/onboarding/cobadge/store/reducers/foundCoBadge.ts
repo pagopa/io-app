@@ -10,12 +10,10 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { CoBadgeResponse, searchUserCoBadge } from "../actions";
+import { searchUserCoBadge } from "../actions";
+import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 
-export type RemoteCoBadge = RemoteValue<
-  ReadonlyArray<CoBadgeResponse>,
-  NetworkError
->;
+export type RemoteCoBadge = RemoteValue<CobadgeResponse, NetworkError>;
 
 const foundCoBadgeReducer = (
   state: RemoteCoBadge = remoteUndefined,
