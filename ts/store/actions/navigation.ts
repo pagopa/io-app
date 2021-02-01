@@ -247,12 +247,11 @@ export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
   });
 
 export const navigateToCobadgeDetailScreen = (
-  cobadge: CreditCardPaymentMethod,
-  brandLogo: ImageSourcePropType
+  cobadge: CreditCardPaymentMethod
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_COBADGE_DETAIL,
-    params: { cobadge, brandLogo }
+    params: { cobadge }
   });
 
 export const navigateToPaymentPickPspScreen = (

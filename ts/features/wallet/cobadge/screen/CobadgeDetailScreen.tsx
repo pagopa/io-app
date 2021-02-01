@@ -17,6 +17,7 @@ import { Label } from "../../../../components/core/typography/Label";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
 import CobadgeCard from "../component/CobadgeCard";
+import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
 
 type NavigationParams = Readonly<{
   cobadge: CreditCardPaymentMethod;
@@ -58,8 +59,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  */
 const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
   const cobadge: CreditCardPaymentMethod = props.navigation.getParam("cobadge");
-  const brandLogo: ImageSourcePropType = props.navigation.getParam("brandLogo");
-
+  const brandLogo = getCardIconFromBrandLogo(cobadge.info);
   const { present } = useRemovePaymentMethodBottomSheet({
     icon: brandLogo,
     caption: cobadge.caption

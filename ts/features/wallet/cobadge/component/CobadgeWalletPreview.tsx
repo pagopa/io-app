@@ -1,11 +1,6 @@
 import { Option } from "fp-ts/lib/Option";
 import * as React from "react";
-import {
-  Image,
-  ImageSourcePropType,
-  ImageStyle,
-  StyleProp
-} from "react-native";
+import { Image, ImageStyle, StyleProp } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body } from "../../../../components/core/typography/Body";
@@ -73,16 +68,14 @@ const CobadgeWalletPreview: React.FunctionComponent<Props> = props => {
     <CardPreview
       left={renderLeft(props, imgDimensions)}
       image={brandLogo}
-      onPress={() => props.navigateToCobadgeDetails(props.cobadge, brandLogo)}
+      onPress={() => props.navigateToCobadgeDetails(props.cobadge)}
     />
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToCobadgeDetails: (
-    cobadge: CreditCardPaymentMethod,
-    brandLogo: ImageSourcePropType
-  ) => dispatch(navigateToCobadgeDetailScreen(cobadge, brandLogo))
+  navigateToCobadgeDetails: (cobadge: CreditCardPaymentMethod) =>
+    dispatch(navigateToCobadgeDetailScreen(cobadge))
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
