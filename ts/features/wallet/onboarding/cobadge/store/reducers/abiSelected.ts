@@ -1,11 +1,7 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import {
-  searchUserCoBadge,
-  walletAddCoBadgeFromBancomatStart,
-  walletAddCoBadgeStart
-} from "../actions";
+import { searchUserCoBadge, walletAddCoBadgeStart } from "../actions";
 
 export type AbiSelected = string | null;
 
@@ -16,11 +12,8 @@ const abiSelectedReducer = (
   switch (action.type) {
     case getType(searchUserCoBadge.request):
       return action.payload ?? null;
-    case getType(walletAddCoBadgeFromBancomatStart):
-      return action.payload ?? null;
-    // reset at the start
     case getType(walletAddCoBadgeStart):
-      return null;
+      return action.payload ?? null;
   }
   return state;
 };

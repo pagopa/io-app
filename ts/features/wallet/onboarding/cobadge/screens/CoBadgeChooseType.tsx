@@ -13,14 +13,8 @@ import I18n from "../../../../../i18n";
 import { navigateToWalletAddCreditCard } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import {
-  walletAddCoBadgeFromBancomatStart,
-  walletAddCoBadgeStart
-} from "../store/actions";
+import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { walletAddCoBadgeStart } from "../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -57,12 +51,11 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => (
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(NavigationActions.back()),
-  addCoBadge: () => dispatch(walletAddCoBadgeFromBancomatStart()),
+  addCoBadge: () => dispatch(walletAddCoBadgeStart(undefined)),
   addCreditCard: () =>
     dispatch(
       navigateToWalletAddCreditCard({
-        inPayment: none,
-        keyFrom: "WALLET_HOME_SCREEN"
+        inPayment: none
       })
     )
 });
