@@ -83,7 +83,7 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
     name: I18n.t("wallet.methods.loyalty.name"),
     description: I18n.t("wallet.methods.loyalty.description"),
     status: "incoming",
-    section: "cashback",
+    section: "loyalty",
   },
   {
     name: I18n.t("wallet.methods.bonus.name"),
