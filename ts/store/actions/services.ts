@@ -45,6 +45,11 @@ export const loadServiceDetail = createAsyncAction(
   "LOAD_SERVICE_DETAIL_SUCCESS",
   "LOAD_SERVICE_DETAIL_FAILURE"
 )<string, ServicePublic, ServiceLoadFailurePayload>();
+
+export const loadServicesDetail = createStandardAction(
+  "LOAD_SERVICES_DETAIL_REQUEST"
+)<ReadonlyArray<string>>();
+
 //
 //  mark service as read
 //
