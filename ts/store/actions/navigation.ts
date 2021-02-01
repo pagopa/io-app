@@ -1,4 +1,3 @@
-import { ImageSourcePropType } from "react-native";
 import {
   NavigationAction,
   NavigationActions,
