@@ -65,7 +65,7 @@ import I18n from "../i18n";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import {
   CrossSessionProfileIdentity,
-  isDifferentProfileSelector
+  isDifferentFiscalCodeSelector
 } from "../store/reducers/crossSessions";
 import {
   startAndReturnIdentificationResult,
@@ -270,11 +270,14 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     // Ask to accept ToS if it is the first access on IO or if there is a new available version of ToS
     yield call(checkAcceptedTosSaga, userProfile);
 
+    console.log(userProfile.fiscal_code);
+
     if (isNone(maybeStoredPin)) {
       storedPin = yield call(checkConfiguredPinSaga);
     } else {
       const isDifferentProfile: CrossSessionProfileIdentity = yield select(
-        isDifferentProfileSelector
+        isDifferentFiscalCodeSelector,
+        userProfile.fiscal_code
       );
 
       if (

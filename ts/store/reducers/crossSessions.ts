@@ -2,19 +2,16 @@
  * this state / reducer represents and handles all those data should be kept across multiple users sessions
  */
 import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
-import { getType } from "typesafe-actions";
+import { isActionOf } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { fromNullable } from "fp-ts/lib/Option";
 import sha from "sha.js";
 import { Action } from "../actions/types";
-import {
-  differentProfileLoggedIn,
-  sameProfileLoggedIn,
-  setProfileHashedFiscalCode
-} from "../actions/crossSessions";
+import { setProfileHashedFiscalCode } from "../actions/crossSessions";
 import { GlobalState } from "./types";
 
 type HashedFiscalCode = NonEmptyString | undefined;
+
 export enum CrossSessionProfileIdentity {
   Unknown = "UNKNOWN",
   SameIdentity = "SAME_IDENTITY",
@@ -23,12 +20,10 @@ export enum CrossSessionProfileIdentity {
 
 export type CrossSessionsState = {
   hashedFiscalCode: HashedFiscalCode;
-  isDifferentProfile: CrossSessionProfileIdentity;
 };
 
 const INITIAL_STATE: CrossSessionsState = {
-  hashedFiscalCode: undefined,
-  isDifferentProfile: CrossSessionProfileIdentity.Unknown
+  hashedFiscalCode: undefined
 };
 
 const hash = (value: FiscalCode): NonEmptyString =>
@@ -38,25 +33,14 @@ const reducer = (
   state: CrossSessionsState = INITIAL_STATE,
   action: Action
 ): CrossSessionsState => {
-  switch (action.type) {
-    case getType(setProfileHashedFiscalCode):
-      return {
-        ...state,
-        hashedFiscalCode: hash(action.payload)
-      };
-    case getType(differentProfileLoggedIn):
-      return {
-        ...state,
-        isDifferentProfile: CrossSessionProfileIdentity.DifferentIdentity
-      };
-    case getType(sameProfileLoggedIn):
-      return {
-        ...state,
-        isDifferentProfile: CrossSessionProfileIdentity.SameIdentity
-      };
-    default:
-      return state;
+  if (isActionOf(setProfileHashedFiscalCode, action)) {
+    return {
+      ...state,
+      hashedFiscalCode: hash(action.payload)
+    };
   }
+
+  return state;
 };
 
 // return the stored hashed fiscal code
@@ -74,14 +58,14 @@ export const isDifferentFiscalCodeSelector = (
 ) =>
   createSelector(
     hashedProfileFiscalCodeSelector,
-    (hashedProfile: HashedFiscalCode): boolean | undefined =>
+    (hashedProfile: HashedFiscalCode): CrossSessionProfileIdentity =>
       fromNullable(hashedProfile)
-        .map<boolean | undefined>(hp => hp !== hash(fiscalCode))
-        .getOrElse(undefined)
+        .map<CrossSessionProfileIdentity>(hp =>
+          hp !== hash(fiscalCode)
+            ? CrossSessionProfileIdentity.DifferentIdentity
+            : CrossSessionProfileIdentity.SameIdentity
+        )
+        .getOrElse(CrossSessionProfileIdentity.Unknown)
   )(state);
-
-export const isDifferentProfileSelector = (
-  state: GlobalState
-): CrossSessionProfileIdentity => state.crossSessions.isDifferentProfile;
 
 export default reducer;

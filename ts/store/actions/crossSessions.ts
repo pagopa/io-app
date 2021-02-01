@@ -19,11 +19,6 @@ export const differentProfileLoggedIn = createStandardAction(
   "CROSS_SESSION_DIFFERENT_PROFILE_LOGGED_ID"
 )<void>();
 
-export const sameProfileLoggedIn = createStandardAction(
-  "CROSS_SESSION_SAME_PROFILE_LOGGED_ID"
-)<void>();
-
 export type CrossSessionsActions =
   | ActionType<typeof setProfileHashedFiscalCode>
-  | ActionType<typeof differentProfileLoggedIn>
-  | ActionType<typeof sameProfileLoggedIn>;
+  | ActionType<typeof differentProfileLoggedIn>;
