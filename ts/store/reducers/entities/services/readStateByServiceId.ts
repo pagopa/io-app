@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { clearCache } from "../../../actions/profile";
 import {
   markServiceAsRead,
   showServiceDetails
@@ -36,9 +35,6 @@ export function readServicesByIdReducer(
         ...state,
         [action.payload]: true
       };
-
-    case getType(clearCache):
-      return INITIAL_STATE;
 
     default:
       return state;
