@@ -30,18 +30,7 @@ const CoBadgeStartScreen = (props: Props): React.ReactElement => {
   }
   // If a single ABI is selected, we should check the abiConfiguration
   useEffect(() => {
-    const loadAbiConfig = pot.fold(
-      props.abiSelectedConfiguration,
-      () => props.loadAbiConfig,
-      () => undefined,
-      _ => undefined,
-      _ => props.loadAbiConfig,
-      _ => undefined,
-      _ => undefined,
-      () => undefined,
-      _ => props.loadAbiConfig
-    );
-    loadAbiConfig?.();
+    props.loadAbiConfig();
   }, []);
 
   // The ABI configuration is loading

@@ -1,24 +1,25 @@
-import { call, put, select } from "redux-saga/effects";
-import { ActionType } from "typesafe-actions";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { fromNullable } from "fp-ts/lib/Option";
+import { readableReport } from "italia-ts-commons/lib/reporters";
+import { select } from "redux-saga-test-plan/matchers";
+import { call, put } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
+import { ContentClient } from "../../../../../../api/content";
+import { PaymentManagerClient } from "../../../../../../api/pagopa";
+import {
+  isRawCreditCard,
+  PaymentManagerToken
+} from "../../../../../../types/pagopa";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { getNetworkError } from "../../../../../../utils/errors";
+import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
+import { SessionManager } from "../../../../../../utils/SessionManager";
+import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
   searchUserCoBadge
 } from "../../store/actions";
-import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
-import { SagaCallReturnType } from "../../../../../../types/utils";
-import { PaymentManagerClient } from "../../../../../../api/pagopa";
-import { SessionManager } from "../../../../../../utils/SessionManager";
-import {
-  isRawCreditCard,
-  PaymentManagerToken
-} from "../../../../../../types/pagopa";
-import { getNetworkError } from "../../../../../../utils/errors";
 import { onboardingCoBadgeSearchRequestId } from "../../store/reducers/searchCoBadgeRequestId";
-import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
-import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 
 /**
  * Load the user's cobadge cards. if a previous stored SearchRequestId is found then it will be used
@@ -149,17 +150,31 @@ export function* handleAddCoBadgeToWallet(
 
 /**
  * Load CoBadge configuration
- * TODO: add networking logic
  */
 export function* handleLoadCoBadgeConfiguration(
+  getCobadgeServices: ReturnType<typeof ContentClient>["getCobadgeServices"],
   _: ActionType<typeof loadCoBadgeAbiConfiguration.request>
 ) {
-  yield put(
-    loadCoBadgeAbiConfiguration.success({
-      ICCREA: {
-        status: StatusEnum.enabled,
-        issuers: [{ abi: "08277", name: "" }]
+  try {
+    const getCobadgeServicesResult: SagaCallReturnType<typeof getCobadgeServices> = yield call(
+      getCobadgeServices
+    );
+    if (getCobadgeServicesResult.isRight()) {
+      if (getCobadgeServicesResult.value.status === 200) {
+        yield put(
+          loadCoBadgeAbiConfiguration.success(
+            getCobadgeServicesResult.value.value
+          )
+        );
+      } else {
+        throw new Error(
+          `response status ${getCobadgeServicesResult.value.status}`
+        );
       }
-    })
-  );
+    } else {
+      throw new Error(readableReport(getCobadgeServicesResult.value));
+    }
+  } catch (e) {
+    yield put(loadCoBadgeAbiConfiguration.failure(getNetworkError(e)));
+  }
 }
