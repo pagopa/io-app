@@ -89,7 +89,8 @@ export function* watchServicesDetailLoadSaga(
   }
 
   while (true) {
-    // Take the loadService request action and put back in the channel
+    // Take the loadServicesDetail action and for each service id
+    // put back a loadServiceDetail.request in the channel
     // to be processed by the handlers.
     const action: ActionType<typeof loadServicesDetail> = yield take(
       getType(loadServicesDetail)
