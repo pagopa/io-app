@@ -8,7 +8,10 @@ import { PaginatedServiceTupleCollection } from "../../../../definitions/backend
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceName } from "../../../../definitions/backend/ServiceName";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { loadServiceDetail } from "../../../store/actions/services";
+import {
+  loadServiceDetail,
+  loadServicesDetail
+} from "../../../store/actions/services";
 import {
   servicesByIdSelector,
   ServicesByIdState
@@ -37,7 +40,7 @@ describe("refreshStoredServices", () => {
       .next()
       .select(servicesByIdSelector)
       .next(mockedServicesById)
-      .all([put(loadServiceDetail.request(mockedService.service_id))])
+      .put(loadServicesDetail([mockedService.service_id]))
       .next()
       .isDone();
   });
