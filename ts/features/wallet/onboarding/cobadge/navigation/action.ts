@@ -1,6 +1,11 @@
 import { NavigationActions } from "react-navigation";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "./routes";
 
+export const navigateToOnboardingCoBadgeChooseTypeStartScreen = () =>
+  NavigationActions.navigate({
+    routeName: WALLET_ONBOARDING_COBADGE_ROUTES.CHOOSE_TYPE
+  });
+
 export const navigateToOnboardingCoBadgeSearchStartScreen = () =>
   NavigationActions.navigate({
     routeName: WALLET_ONBOARDING_COBADGE_ROUTES.START
