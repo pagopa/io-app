@@ -28,6 +28,7 @@ const CoBadgeStartScreen = (props: Props): React.ReactElement => {
   if (props.maybeAbiSelected === undefined) {
     return <CoBadgeAllBanksScreen />;
   }
+
   // If a single ABI is selected, we should check the abiConfiguration
   useEffect(() => {
     props.loadAbiConfig();

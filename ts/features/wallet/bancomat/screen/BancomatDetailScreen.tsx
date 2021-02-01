@@ -132,7 +132,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     ),
   addCoBadge: (abi: string) =>
-    dispatch(navigateToOnboardingCoBadgeChooseTypeStartScreen())
+    dispatch(navigateToOnboardingCoBadgeChooseTypeStartScreen({ abi }))
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
