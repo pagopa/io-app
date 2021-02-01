@@ -30,7 +30,7 @@ const addedCoBadgeReducer = (
   return state;
 };
 
-export const onboardingCoBadgeAddedAccountSelector = createSelector(
+export const onboardingCoBadgeAddedSelector = createSelector(
   [state => state.wallet.onboarding.coBadge.addedCoBadge, abiSelector],
   (addedCoBadge, remoteAbi): ReadonlyArray<CreditCardPaymentMethod> =>
     addedCoBadge.map(p => enhanceCreditCard(p, getValueOrElse(remoteAbi, {})))
