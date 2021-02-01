@@ -75,7 +75,11 @@ import {
   removeAccountMotivation
 } from "../actions/profile";
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
-import { loadServiceDetail, loadVisibleServices } from "../actions/services";
+import {
+  loadServiceDetail,
+  loadServicesDetail,
+  loadVisibleServices
+} from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   deleteUserDataProcessing,
@@ -306,7 +310,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload.message
       });
-
+    // load multiple services details
+    case getType(loadServicesDetail):
+      return mp.track(action.type, {
+        count: action.payload.length
+      });
     // track when a missing municipality is detected
     case getType(contentMunicipalityLoad.failure):
       return mp.track(action.type, {

@@ -75,6 +75,7 @@ export type ServicesActions =
   | ActionType<typeof firstServiceLoadSuccess>
   | ActionType<typeof loadVisibleServices>
   | ActionType<typeof loadServiceDetail>
+  | ActionType<typeof loadServicesDetail>
   | ActionType<typeof markServiceAsRead>
   | ActionType<typeof removeServiceTuples>
   | ActionType<typeof showServiceDetails>;
