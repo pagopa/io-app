@@ -69,7 +69,7 @@ function* handleServiceLoadRequest(
 
 /**
  * create an event channel to buffer all services detail loading requests
- * it watch for loadServicesDetail (multiple services id) and for each of them, it puts a
+ * it watches for loadServicesDetail (multiple services id) and for each of them, it puts a
  * loadServiceDetail.request event into that channel
  * The workers (the handlers) will consume the channel data
  * @param getService
