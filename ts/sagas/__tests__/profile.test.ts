@@ -19,7 +19,10 @@ import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../../store/actions/crossSessions";
-import { isDifferentFiscalCodeSelector } from "../../store/reducers/crossSessions";
+import {
+  CrossSessionProfileIdentity,
+  isDifferentFiscalCodeSelector
+} from "../../store/reducers/crossSessions";
 import { GlobalState } from "../../store/reducers/types";
 import { appReducer } from "../../store/reducers";
 
@@ -98,10 +101,12 @@ describe("watchProfile", () => {
     )
       .withState({
         ...globalState,
-        crossSessions: { hashedFiscalCode: undefined }
+        crossSessions: {
+          hashedFiscalCode: undefined,
+          isDifferentProfile: CrossSessionProfileIdentity.Unknown
+        }
       })
       .select(isDifferentFiscalCodeSelector, mockedProfile.fiscal_code)
-      .not.put(differentProfileLoggedIn())
       .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
       .run());
 
@@ -113,7 +118,8 @@ describe("watchProfile", () => {
       .withState({
         ...globalState,
         crossSessions: {
-          hashedFiscalCode: hash(`${mockedProfile.fiscal_code}xxx`)
+          hashedFiscalCode: hash(`${mockedProfile.fiscal_code}xxx`),
+          isDifferentProfile: CrossSessionProfileIdentity.DifferentIdentity
         }
       })
       .select(isDifferentFiscalCodeSelector, mockedProfile.fiscal_code)

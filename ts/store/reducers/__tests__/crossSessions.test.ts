@@ -49,7 +49,9 @@ describe("cross sessions status reducer/selectors", () => {
       undefined,
       setProfileHashedFiscalCode(fiscalCode)
     );
-    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode)).toBe(false);
+    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode)).toBe(
+      CrossSessionProfileIdentity.SameIdentity
+    );
     // empty state
     expect(
       isDifferentFiscalCodeSelector(
@@ -62,7 +64,7 @@ describe("cross sessions status reducer/selectors", () => {
         },
         fiscalCode
       )
-    ).toBeUndefined();
+    ).toBe(CrossSessionProfileIdentity.Unknown);
   });
 
   it("should be different", () => {
@@ -70,6 +72,8 @@ describe("cross sessions status reducer/selectors", () => {
       undefined,
       setProfileHashedFiscalCode(fiscalCode)
     );
-    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode2)).toBe(true);
+    expect(isDifferentFiscalCodeSelector(globalState, fiscalCode2)).toBe(
+      CrossSessionProfileIdentity.DifferentIdentity
+    );
   });
 });

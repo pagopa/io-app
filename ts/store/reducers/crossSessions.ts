@@ -65,8 +65,13 @@ export const hashedProfileFiscalCodeSelector = (
 ): HashedFiscalCode => state.crossSessions.hashedFiscalCode;
 
 /**
- * return true if the given fiscal code is different from the hashed stored one, false otherwise
- * if there is no stored hashed fiscal code it returns undefined (cant say if they are different)
+ * Returns a value describing equality or difference between
+ * the persisted hashed fiscal code and the input argument.
+ *
+ * @returns
+ *  1. Unknown: Could be a fresh app install where no fiscal code is persisted
+ *  2. SameIdentity: The fiscal codes are a match
+ *  3. DifferentIdentity: The fiscal codes do not match, it is a different account
  */
 export const isDifferentFiscalCodeSelector = (
   state: GlobalState,
@@ -74,10 +79,14 @@ export const isDifferentFiscalCodeSelector = (
 ) =>
   createSelector(
     hashedProfileFiscalCodeSelector,
-    (hashedProfile: HashedFiscalCode): boolean | undefined =>
+    (hashedProfile: HashedFiscalCode): CrossSessionProfileIdentity =>
       fromNullable(hashedProfile)
-        .map<boolean | undefined>(hp => hp !== hash(fiscalCode))
-        .getOrElse(undefined)
+        .map<CrossSessionProfileIdentity>(hp =>
+          hp !== hash(fiscalCode)
+            ? CrossSessionProfileIdentity.DifferentIdentity
+            : CrossSessionProfileIdentity.SameIdentity
+        )
+        .getOrElse(CrossSessionProfileIdentity.Unknown)
   )(state);
 
 export const isDifferentProfileSelector = (
