@@ -82,6 +82,7 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
   {
     name: I18n.t("wallet.methods.loyalty.name"),
     description: I18n.t("wallet.methods.loyalty.description"),
+    onPress: () => {},
     status: "incoming",
     section: "loyalty",
   },
