@@ -2075,8 +2075,8 @@ bonus:
               text4: "e accumulato "
               text5: "un Cashback di "
             milestone:
-              title: "Complimenti, hai ottenuto {{cashbackValue}}"
-              body: "Hai raggiunto il rimborso massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
+              title: "Complimenti, hai raggiunto {{cashbackValue}}"
+              body: "Hai raggiunto l'importo massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
           title: "Dettaglio della transazione"
           paymentCircuit: "Circuito di pagamento"
           transactionAmount: "Importo transazione"
