@@ -1267,9 +1267,9 @@ messages:
         block1: Aggiungi un promemoria per il
         block2: alle
       expiringOrValidAlert:
-        block1: Puoi pagare questo avviso entro il
+        block1: Questo avviso scade il giorno
       expiredAlert:
-        block1: L'avviso di pagamento è scaduto alle
+        block1: L'avviso è scaduto alle
         block2: del
     prescription:
       addMemo: Questa ricetta scade il
@@ -2069,8 +2069,8 @@ bonus:
               text4: "e accumulato "
               text5: "un Cashback di "
             milestone:
-              title: "Complimenti, hai ottenuto {{cashbackValue}}"
-              body: "Hai raggiunto il rimborso massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
+              title: "Complimenti, hai raggiunto {{cashbackValue}}"
+              body: "Hai raggiunto l'importo massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
           title: "Dettaglio della transazione"
           paymentCircuit: "Circuito di pagamento"
           transactionAmount: "Importo transazione"

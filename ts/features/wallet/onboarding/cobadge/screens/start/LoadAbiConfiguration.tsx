@@ -1,21 +1,24 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { searchUserCoBadge, walletAddCoBadgeCancel } from "../../store/actions";
-import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSelected";
-import { onboardingCoBadgeFoundIsError } from "../../store/reducers/foundCoBadge";
+import {
+  loadCoBadgeAbiConfiguration,
+  walletAddCoBadgeCancel
+} from "../../store/actions";
+import { coBadgeAbiConfigurationSelector } from "../../store/reducers/abiConfiguration";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * This screen is displayed when searching for co-badge
+ * This screen is displayed when loading co-badge configuration
  * @constructor
  */
-const LoadCoBadgeSearch = (props: Props): React.ReactElement => {
+const LoadAbiConfiguration = (props: Props): React.ReactElement => {
   useHardwareBackButton(() => {
     if (!props.isLoading) {
       props.cancel();
@@ -26,22 +29,23 @@ const LoadCoBadgeSearch = (props: Props): React.ReactElement => {
     <LoadingErrorComponent
       {...props}
       // TODO: replace with locale
-      loadingCaption={"TMP Loading"}
+      loadingCaption={"TMP Loading ABI Config"}
       onAbort={props.cancel}
-      onRetry={() => props.retry(props.abiSelected)}
+      onRetry={props.retry}
     />
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddCoBadgeCancel()),
-  retry: (abiSelected: string | undefined) =>
-    dispatch(searchUserCoBadge.request(abiSelected))
+  retry: () => dispatch(loadCoBadgeAbiConfiguration.request())
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  abiSelected: onboardingCoBadgeAbiSelectedSelector(state),
-  isLoading: !onboardingCoBadgeFoundIsError(state)
+  isLoading: pot.isLoading(coBadgeAbiConfigurationSelector(state))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoadCoBadgeSearch);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoadAbiConfiguration);
