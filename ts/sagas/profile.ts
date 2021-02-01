@@ -48,12 +48,10 @@ import {
 } from "../utils/locale";
 import {
   differentProfileLoggedIn,
+  sameProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
-import {
-  CrossSessionProfileIdentity,
-  isDifferentFiscalCodeSelector
-} from "../store/reducers/crossSessions";
+import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
 import { isTestEnv } from "../utils/environment";
 
 // A saga to load the Profile.
@@ -327,7 +325,7 @@ function* handleRemoveAccount() {
 function* checkStoreHashedFiscalCode(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ) {
-  const isDifferentIdentity = yield select(
+  const checkIsDifferentFiscalCode: boolean | undefined = yield select(
     isDifferentFiscalCodeSelector,
     profileLoadSuccessAction.payload.fiscal_code
   );
@@ -336,9 +334,11 @@ function* checkStoreHashedFiscalCode(
     setProfileHashedFiscalCode(profileLoadSuccessAction.payload.fiscal_code)
   );
 
-  if (isDifferentIdentity === CrossSessionProfileIdentity.DifferentIdentity) {
+  if (checkIsDifferentFiscalCode === true) {
     // The current logged user has a different fiscal code from the stored hashed one
     yield put(differentProfileLoggedIn());
+  } else {
+    yield put(sameProfileLoggedIn());
   }
 }
 
