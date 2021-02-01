@@ -10,12 +10,14 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
+import { mixpanelTrack } from "../../../../mixpanel";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
+import { walletAddCoBadgeFromBancomatStart } from "../../onboarding/cobadge/store/actions";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -55,6 +57,22 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
 );
 
 /**
+ * Start the cobadge onboarding, if the abi is defined
+ * @param props
+ */
+const startCoBadge = (props: Props) => {
+  const bancomat = props.navigation.getParam("bancomat");
+  if (bancomat.abiInfo?.abi) {
+    props.addCoBadge(bancomat.abiInfo.abi);
+  } else {
+    showToast(I18n.t("global.genericError"), "danger");
+    void mixpanelTrack("BANCOMAT_DETAIL_NO_ABI_ERROR", {
+      issuerAbiCode: bancomat.info.issuerAbiCode
+    });
+  }
+};
+
+/**
  * Detail screen for a bancomat
  * @constructor
  */
@@ -86,7 +104,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
-        <BancomatInformation />
+        <BancomatInformation onAddPaymentMethod={() => startCoBadge(props)} />
         <View spacer={true} />
         <UnsubscribeButton
           onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
@@ -112,7 +130,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
           showToast(I18n.t("wallet.delete.bancomat.failed"), "danger");
         }
       })
-    )
+    ),
+  addCoBadge: (abi: string) => dispatch(walletAddCoBadgeFromBancomatStart(abi))
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
