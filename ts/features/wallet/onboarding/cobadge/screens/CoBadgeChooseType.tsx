@@ -22,6 +22,9 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 export type CoBadgeChooseTypeNavigationProps = {
   abi?: string;
+  // Added for backward compatibility, in order to return back after add credit card workflow.
+  // Number of screens that need to be removed from the stack
+  legacyAddCreditCardBack?: number;
 };
 
 /**
@@ -31,6 +34,9 @@ export type CoBadgeChooseTypeNavigationProps = {
  */
 const CoBadgeChooseType = (props: Props): React.ReactElement => {
   const abi = props.navigation.getParam("abi");
+  const legacyAddCreditCardBack = props.navigation.getParam(
+    "legacyAddCreditCardBack"
+  );
   return (
     <BaseScreenComponent
       goBack={true}
@@ -40,7 +46,7 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
       <SafeAreaView style={IOStyles.flex}>
         <Content style={IOStyles.flex}>
           <H1>TMP CoBadgeChooseType</H1>
-          <Button onPress={props.addCreditCard}>
+          <Button onPress={() => props.addCreditCard(legacyAddCreditCardBack)}>
             <H1>TMP Add Credit Card</H1>
           </Button>
           <View spacer={true} />
@@ -57,11 +63,20 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
   );
 };
 
+const navigateBack = (n: number, dispatch: Dispatch) => {
+  if (n <= 0) {
+    return;
+  }
+  dispatch(NavigationActions.back());
+  navigateBack(n - 1, dispatch);
+};
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(NavigationActions.back()),
   addCoBadge: (abi: string | undefined) => dispatch(walletAddCoBadgeStart(abi)),
-  addCreditCard: () => {
-    dispatch(NavigationActions.back());
+  addCreditCard: (popScreenNumber: number = 0) => {
+    navigateBack(popScreenNumber, dispatch);
+
     dispatch(
       navigateToWalletAddCreditCard({
         inPayment: none
