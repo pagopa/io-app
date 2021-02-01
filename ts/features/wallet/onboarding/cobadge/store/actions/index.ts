@@ -3,11 +3,11 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { CoBadgeServices } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
+import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
-import { CoBadgeServices } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
-import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 
 /**
  * Search for user's cobadge cards
@@ -40,14 +40,6 @@ export const loadCoBadgeAbiConfiguration = createAsyncAction(
  * The user chooses to start the workflow to add a new cobadge to the wallet
  */
 export const walletAddCoBadgeStart = createStandardAction(
-  "WALLET_ONBOARDING_COBADGE_START"
-)<void>();
-
-/**
- * The user chooses to start the workflow to add a new cobadge from a bancomat (have a special handling)
- * TODO: Remove
- */
-export const walletAddCoBadgeFromBancomatStart = createStandardAction(
   "WALLET_ONBOARDING_COBADGE_START_FROM_BANCOMAT"
 )<string | undefined>();
 
@@ -78,7 +70,6 @@ export type CoBadgeActions =
   | ActionType<typeof addCoBadgeToWallet>
   | ActionType<typeof loadCoBadgeAbiConfiguration>
   | ActionType<typeof walletAddCoBadgeStart>
-  | ActionType<typeof walletAddCoBadgeFromBancomatStart>
   | ActionType<typeof walletAddCoBadgeCompleted>
   | ActionType<typeof walletAddCoBadgeCancel>
   | ActionType<typeof walletAddCoBadgeBack>;
