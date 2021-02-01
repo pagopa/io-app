@@ -304,8 +304,6 @@ export default function content(
     case getType(clearCache):
       return {
         ...state,
-        // keep servicesMetadata
-        servicesMetadata: { ...state.servicesMetadata },
         municipality: { ...initialContentState.municipality },
         contextualHelp: { ...initialContentState.contextualHelp }
       };

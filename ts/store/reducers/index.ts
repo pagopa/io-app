@@ -176,6 +176,7 @@ export function createRootReducer(
               // backend status must be kept
               backendStatus: state.backendStatus,
               crossSessions: state.crossSessions,
+              // keep servicesMetadata from content section
               content: {
                 ...contentInitialContentState,
                 servicesMetadata: state.content.servicesMetadata
