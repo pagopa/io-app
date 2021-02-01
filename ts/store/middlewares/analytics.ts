@@ -190,8 +190,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         total: action.payload.total.getOrElse(-1)
       });
     //
-    // Wallet actions (with properties)
+    // wallets success / services load requests
     //
+    case getType(loadServicesDetail):
     case getType(fetchWalletsSuccess):
       return mp.track(action.type, {
         count: action.payload.length
@@ -309,11 +310,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(activateBonusVacanze.failure):
       return mp.track(action.type, {
         reason: action.payload.message
-      });
-    // load multiple services details
-    case getType(loadServicesDetail):
-      return mp.track(action.type, {
-        count: action.payload.length
       });
     // track when a missing municipality is detected
     case getType(contentMunicipalityLoad.failure):
