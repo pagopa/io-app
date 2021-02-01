@@ -17,7 +17,7 @@ const anAbiLogo = "http://127.0.0.1:3000/static_contents/logos/abi/03069.png";
 const aBrandLogo = defaultCardIcon;
 const anExpireMonth = "6";
 const anExpireYear = "2021";
-describe("BPayWalletPreview component", () => {
+describe("CoBadgeWalletPreview component", () => {
   const mockStore = configureMockStore();
   // eslint-disable-next-line functional/no-let
   let store: ReturnType<typeof mockStore>;
