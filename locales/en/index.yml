@@ -2047,8 +2047,8 @@ bonus:
               text4: "and collected "
               text5: "a cashback of "
             milestone:
-              title: "Congratulation, you earned {{cashbackValue}}"
-              body: "You have reached the maximum refund for this phase. Keep collecting valid transactions to climb the ranking!"
+              title: "Congratulation, you reached {{cashbackValue}}"
+              body: "You have reached the maximum amount for this phase. Keep collecting valid transactions to climb the ranking!"
           title: "Transaction details"
           paymentCircuit: "Payment circuit"
           transactionAmount: "Transaction amount"
