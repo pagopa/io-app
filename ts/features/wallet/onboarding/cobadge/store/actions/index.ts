@@ -40,7 +40,7 @@ export const loadCoBadgeAbiConfiguration = createAsyncAction(
  * The user chooses to start the workflow to add a new cobadge to the wallet
  */
 export const walletAddCoBadgeStart = createStandardAction(
-  "WALLET_ONBOARDING_COBADGE_START_FROM_BANCOMAT"
+  "WALLET_ONBOARDING_COBADGE_START"
 )<string | undefined>();
 
 /**

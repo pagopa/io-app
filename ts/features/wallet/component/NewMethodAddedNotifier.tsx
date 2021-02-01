@@ -67,7 +67,9 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   startCoBadgeOnboarding: () =>
-    dispatch(navigateToOnboardingCoBadgeChooseTypeStartScreen())
+    dispatch(
+      navigateToOnboardingCoBadgeChooseTypeStartScreen({ abi: undefined })
+    )
 });
 
 const mapStateToProps = (state: GlobalState) => ({
