@@ -23,7 +23,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const loadLocales = () => ({
   // TODO: replace locales
   headerTitle: "TMP header title",
-  title: "TMP title",
+  title: "TMP KOTIMEOUT title",
   body: "TMP body",
   cancel: I18n.t("global.buttons.cancel"),
   retry: I18n.t("global.buttons.retry")

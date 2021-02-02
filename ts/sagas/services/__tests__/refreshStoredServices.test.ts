@@ -1,14 +1,13 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
-import { put } from "redux-saga/effects";
 import { DepartmentName } from "../../../../definitions/backend/DepartmentName";
 import { OrganizationName } from "../../../../definitions/backend/OrganizationName";
 import { PaginatedServiceTupleCollection } from "../../../../definitions/backend/PaginatedServiceTupleCollection";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceName } from "../../../../definitions/backend/ServiceName";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { loadServiceDetail } from "../../../store/actions/services";
+import { loadServicesDetail } from "../../../store/actions/services";
 import {
   servicesByIdSelector,
   ServicesByIdState
@@ -37,7 +36,7 @@ describe("refreshStoredServices", () => {
       .next()
       .select(servicesByIdSelector)
       .next(mockedServicesById)
-      .all([put(loadServiceDetail.request(mockedService.service_id))])
+      .put(loadServicesDetail([mockedService.service_id]))
       .next()
       .isDone();
   });
@@ -51,7 +50,7 @@ describe("refreshStoredServices", () => {
       .next()
       .select(servicesByIdSelector)
       .next({})
-      .all([put(loadServiceDetail.request(mockedService.service_id))])
+      .put(loadServicesDetail([mockedService.service_id]))
       .next()
       .isDone();
   });
