@@ -4,7 +4,6 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
-import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
@@ -18,12 +17,10 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import PreviewBancomatCard from "../../../../bancomat/component/bancomatCard/PreviewBancomatCard";
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import { isBancomatBlocked } from "../../../../../../utils/paymentMethod";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
+import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
 
 type Props = {
   pan: PaymentInstrument;
@@ -85,6 +82,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
               })}
             </H4>
             <View spacer={true} large={true} />
+            <PreviewCoBadgeCard coBadge={props.pan} abi={abiInfo} />
             <View spacer={true} large={true} />
 
             <InfoBox>
