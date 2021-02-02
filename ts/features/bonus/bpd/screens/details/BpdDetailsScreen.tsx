@@ -132,9 +132,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(bpdUnsubscribeCompleted());
     dispatch(NavigationActions.back());
   },
-  goToTransactions: () => {
-    dispatch(navigateToBpdTransactions());
-  },
+  goToTransactions: () => dispatch(navigateToBpdTransactions()),
   goBack: () => dispatch(navigateBack())
 });
 
