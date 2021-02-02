@@ -13,7 +13,7 @@ type Props = ReturnType<typeof mapStateToProps> &
  * Screen to display all the information about the active CGN
  */
 const CgnDetailScreen = (_: Props): React.ReactElement => (
-  // PLACEHOLDER for activation completed screen
+  // TODO PLACEHOLDER for CGN detail screen
   <BaseScreenComponent>
     <View>
       <H1>{"CGN DETAIL"}</H1>
