@@ -81,6 +81,7 @@ import {
   searchUserSatispay,
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
+import { mixpanelTrack } from "../mixpanel";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
@@ -311,16 +312,30 @@ export function* startOrResumeAddCreditCardSaga(
         pmSessionManager.getNewToken
       );
       if (pot.isNone(state.creditCardCheckout3ds)) {
-        if (urlCheckout3ds !== undefined && pagoPaToken.isSome()) {
-          yield put(
-            creditCardCheckout3dsRequest({
-              urlCheckout3ds,
-              paymentManagerToken: pagoPaToken.value
-            })
-          );
-          yield take(getType(creditCardCheckout3dsSuccess));
-          // all is ok, continue to the next step
-          continue;
+        if (urlCheckout3ds !== undefined) {
+          if (pagoPaToken.isSome()) {
+            yield put(
+              creditCardCheckout3dsRequest({
+                urlCheckout3ds,
+                paymentManagerToken: pagoPaToken.value
+              })
+            );
+            yield take(getType(creditCardCheckout3dsSuccess));
+            // all is ok, continue to the next step
+            continue;
+          } else {
+            if (action.payload.onFailure) {
+              yield call(
+                mixpanelTrack,
+                getType(addWalletNewCreditCardFailure),
+                {
+                  reason: "cannot refresh wallet token"
+                }
+              );
+              action.payload.onFailure();
+            }
+            return;
+          }
         } else {
           // if there is no need for a 3ds checkout, simulate a success checkout
           // to proceed to the next step
