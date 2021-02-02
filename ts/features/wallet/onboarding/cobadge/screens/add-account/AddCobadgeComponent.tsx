@@ -21,6 +21,8 @@ import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { isCoBadgeBlocked } from "../../../../../../utils/paymentMethod";
 
 type Props = {
   pan: PaymentInstrument;
@@ -40,9 +42,22 @@ const styles = StyleSheet.create({
   flexStart: { alignSelf: "flex-start" }
 });
 
+const loadLocales = (props: Props) => ({
+  headerTitle: I18n.t("wallet.onboarding.coBadge.headerTitle"),
+  screenTitle: I18n.t("wallet.onboarding.coBadge.add.screenTitle"),
+  label: I18n.t("wallet.onboarding.coBadge.add.label", {
+    current: props.currentIndex + 1,
+    length: props.pansNumber
+  }),
+  blockedCard: I18n.t("wallet.onboarding.coBadge.add.blocked"),
+  warning: I18n.t("wallet.onboarding.coBadge.add.warning")
+});
+
 const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiInfo, setAbiInfo] = React.useState<Abi>({});
-
+  const { headerTitle, screenTitle, label, blockedCard, warning } = loadLocales(
+    props
+  );
   React.useEffect(() => {
     const abi: Abi | undefined = props.abiList.find(
       elem => elem.abi === props.pan.abiCode
@@ -53,12 +68,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <BaseScreenComponent
       customGoBack={<View hspacer={true} spacer={true} />}
-      headerTitle={I18n.t("wallet.onboarding.bancomat.add.title")}
-      // TODO Replace with right CH texts
-      contextualHelpMarkdown={{
-        title: "wallet.walletCardTransaction.contextualHelpTitle",
-        body: "wallet.walletCardTransaction.contextualHelpContent"
-      }}
+      headerTitle={headerTitle}
       contextualHelp={props.contextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
@@ -71,38 +81,47 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
               IOStyles.horizontalContentPadding
             ]}
           >
-            <H1 style={styles.title}>
-              {I18n.t("wallet.onboarding.bancomat.add.screenTitle")}
-            </H1>
+            <H1 style={styles.title}>{screenTitle}</H1>
             <View spacer small />
             <H4 weight={"Regular"} style={styles.flexStart}>
-              {I18n.t("wallet.onboarding.bancomat.add.label", {
-                current: props.currentIndex + 1,
-                length: props.pansNumber
-              })}
+              {label}
             </H4>
             <View spacer={true} large={true} />
             <PreviewCoBadgeCard coBadge={props.pan} abi={abiInfo} />
             <View spacer={true} large={true} />
-
-            <InfoBox>
-              <Body>{I18n.t("wallet.onboarding.bancomat.add.warning")}</Body>
-            </InfoBox>
+            {isCoBadgeBlocked(props.pan) ? (
+              <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
+                <Body>{blockedCard}</Body>
+              </InfoBox>
+            ) : (
+              <InfoBox>
+                <Body>{warning}</Body>
+              </InfoBox>
+            )}
           </View>
           <View spacer />
         </ScrollView>
-
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps(
-            props.handleSkip,
-            I18n.t("global.buttons.skip")
-          )}
-          rightButton={confirmButtonProps(
-            props.handleContinue,
-            I18n.t("global.buttons.add")
-          )}
-        />
+        {isCoBadgeBlocked(props.pan) ? (
+          <FooterWithButtons
+            type={"SingleButton"}
+            leftButton={confirmButtonProps(
+              props.handleSkip,
+              I18n.t("global.buttons.continue")
+            )}
+          />
+        ) : (
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={cancelButtonProps(
+              props.handleSkip,
+              I18n.t("global.buttons.skip")
+            )}
+            rightButton={confirmButtonProps(
+              props.handleContinue,
+              I18n.t("global.buttons.add")
+            )}
+          />
+        )}
       </SafeAreaView>
     </BaseScreenComponent>
   );

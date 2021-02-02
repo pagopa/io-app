@@ -856,7 +856,10 @@ wallet:
         koNotFound:
           title: "TMP KO Timeout add"
       add:
-        title: "TMP Add title"
+        screenTitle: "Do you want to add this card?"
+        label: "International circuit card {{current}} of {{length}}"
+        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
+        warning: "Check that the card number matches the one on your physical card."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
