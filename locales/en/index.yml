@@ -759,6 +759,8 @@ wallet:
       dateTime: Date and time
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
+    details:
+      header: Method detail
   searchAbi:
     header: "Add {{methodName}}"
     bancomat:
@@ -1174,6 +1176,10 @@ wallet:
         one: "Satispay"
         two: " can't be used yet to make payments through IO"
         three: ": this feature will be enabled on future app version release."
+  cobadge:
+    details:
+      card:
+        validUntil: "Valid until {{expireMonth}}/{{expireYear}}"
   newRemove:
     title: "Delete this payment method?"
     body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."

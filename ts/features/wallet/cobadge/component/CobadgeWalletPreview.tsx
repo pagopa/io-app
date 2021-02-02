@@ -1,16 +1,16 @@
+import { Option } from "fp-ts/lib/Option";
 import * as React from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
-import { Option } from "fp-ts/lib/Option";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { GlobalState } from "../../../../store/reducers/types";
-import { CardPreview } from "../../component/CardPreview";
-import { navigateToCobadgeDetailScreen } from "../../../../store/actions/navigation";
-import { CreditCardPaymentMethod } from "../../../../types/pagopa";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
+import { navigateToCobadgeDetailScreen } from "../../../../store/actions/navigation";
+import { GlobalState } from "../../../../store/reducers/types";
+import { CreditCardPaymentMethod } from "../../../../types/pagopa";
+import { CardPreview } from "../../component/CardPreview";
+import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type OwnProps = {
   cobadge: CreditCardPaymentMethod;
@@ -62,10 +62,12 @@ const CobadgeWalletPreview: React.FunctionComponent<Props> = props => {
     BASE_IMG_H,
     props.cobadge.abiInfo?.logoUrl
   );
+
+  const brandLogo = getCardIconFromBrandLogo(props.cobadge.info);
   return (
     <CardPreview
       left={renderLeft(props, imgDimensions)}
-      image={getCardIconFromBrandLogo(props.cobadge.info)}
+      image={brandLogo}
       onPress={() => props.navigateToCobadgeDetails(props.cobadge)}
     />
   );

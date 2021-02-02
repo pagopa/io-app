@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^1.4.1",
-    "@pagopa/react-native-cie": "0.3.3",
+    "@pagopa/react-native-cie": "^1.0.3",
     "@react-native-community/async-storage": "^1.6.1",
     "@react-native-community/cameraroll": "^4.0.0",
     "@react-native-community/clipboard": "^1.5.0",
