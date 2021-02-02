@@ -3,7 +3,7 @@
  * from a specific credit card
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Text, View, Button } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { RefreshControl, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
