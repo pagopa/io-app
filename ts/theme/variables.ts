@@ -17,7 +17,7 @@ export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 
 // eslint-disable-next-line
 const customVariables = Object.assign(materialVariables, {
-  minTouchableHeight: 48,
+  minTouchableAreaSize: 48,
 
   // Android
   buttonUppercaseAndroidText: false,
