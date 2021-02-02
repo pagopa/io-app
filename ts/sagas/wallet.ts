@@ -136,12 +136,12 @@ import {
   payCreditCardVerificationWithBackoffRetryRequest,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
-  setWalletSessionEnabled,
-  walletsSelector
+  setWalletSessionEnabled
 } from "../store/actions/wallet/wallets";
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
+import { getAllWallets } from "../store/reducers/wallet/wallets";
 
 import {
   EnableableFunctionsTypeEnum,
@@ -225,9 +225,7 @@ export function* startOrResumeAddCreditCardSaga(
   while (true) {
     // before each step we select the updated payment state to know what has
     // been already done.
-    const state: ReturnType<typeof walletsSelector> = yield select(
-      walletsSelector
-    );
+    const state: ReturnType<typeof getAllWallets> = yield select(getAllWallets);
     //
     // First step: add the credit card to the user wallets
     //

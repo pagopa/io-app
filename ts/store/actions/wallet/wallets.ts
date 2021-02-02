@@ -10,12 +10,6 @@ import {
   WalletResponse
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
-import { GlobalState } from "../../reducers/types";
-import { WalletsState } from "../../reducers/wallet/wallets";
-
-// Selectors
-export const walletsSelector = (state: GlobalState): WalletsState =>
-  state.wallet.wallets;
 
 // this action load wallets following a backoff retry strategy
 export const fetchWalletsRequestWithExpBackoff = createStandardAction(

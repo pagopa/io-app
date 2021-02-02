@@ -22,9 +22,9 @@ import {
   payCreditCardVerificationSuccess,
   payCreditCardVerificationWithBackoffRetryRequest,
   runStartOrResumeAddCreditCardSaga,
-  setFavouriteWalletRequest,
-  walletsSelector
+  setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
+import { getAllWallets } from "../../store/reducers/wallet/wallets";
 import {
   NullableWallet,
   PaymentManagerToken,
@@ -122,7 +122,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
     testSaga(startOrResumeAddCreditCardSaga, aPmSessionManager, anAction)
       // Step 1
       .next()
-      .select(walletsSelector)
+      .select(getAllWallets)
       .next(walletState)
       .put(
         addWalletCreditCardWithBackoffRetryRequest({
@@ -136,7 +136,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
       ])
       .next(getType(addWalletCreditCardSuccess))
       // Step 2
-      .select(walletsSelector)
+      .select(getAllWallets)
       .next(walletStateCardAdded)
       .put(
         payCreditCardVerificationWithBackoffRetryRequest({
@@ -151,7 +151,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
       ])
       .next(getType(payCreditCardVerificationSuccess))
       // Step 3
-      .select(walletsSelector)
+      .select(getAllWallets)
       .next(walletStateCardVerified)
       .call(aPmSessionManager.getNewToken())
       .next(some(aNewPMToken))
@@ -165,7 +165,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
       .take(getType(creditCardCheckout3dsSuccess))
       .next(getType(creditCardCheckout3dsSuccess))
       // Step 4
-      .select(walletsSelector)
+      .select(getAllWallets)
       .next(walletStateCardCheckout3ds)
       .call(aPmSessionManager.getNewToken())
       .next()
