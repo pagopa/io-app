@@ -27,6 +27,7 @@ import {
   onboardingCobadgeChosenSelector
 } from "../../store/reducers/addingCoBadge";
 import { onboardingCoBadgeFoundSelector } from "../../store/reducers/foundCoBadge";
+import AddCobadgeComponent from "./AddCobadgeComponent";
 import LoadAddCoBadgeComponent from "./LoadAddCoBadgeComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -82,12 +83,14 @@ const AddCoBadgeScreen = (props: Props): React.ReactElement | null => {
       onRetry={() => fromNullable(props.selectedCoBadge).map(props.onRetry)}
     />
   ) : currentPan.isSome() ? (
-    // TODO replace with iterative component
-    <SafeAreaView>
-      <Button onPress={handleOnContinue}>
-        <H1>TMP Add</H1>
-      </Button>
-    </SafeAreaView>
+    <AddCobadgeComponent
+      pan={currentPan.value}
+      pansNumber={props.coBadgeList.length}
+      currentIndex={currentIndex}
+      handleContinue={handleOnContinue}
+      handleSkip={() => nextPan(true)}
+      contextualHelp={props.contextualHelp}
+    />
   ) : null; // this should not happen
 };
 
