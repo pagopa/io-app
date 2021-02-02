@@ -32,6 +32,10 @@ import {
   ValidityStateEnum
 } from "../../definitions/pagopa/walletv2/Card";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
+import {
+  PaymentInstrument,
+  ValidityStatusEnum
+} from "../../definitions/pagopa/walletv2/PaymentInstrument";
 
 export const getPaymentMethodHash = (
   pm: RawPaymentMethod
@@ -50,6 +54,9 @@ export const getPaymentMethodHash = (
   }
   return undefined;
 };
+export const getTitleFromPaymentInstrument = (
+  paymentInstrument: PaymentInstrument
+) => `${FOUR_UNICODE_CIRCLES} ${paymentInstrument.panPartialNumber}`;
 
 export const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
   `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
@@ -192,3 +199,6 @@ export const enhancePaymentMethod = (
 
 export const isBancomatBlocked = (pan: Card) =>
   pan.validityState === ValidityStateEnum.BR;
+
+export const isCoBadgeBlocked = (pan: PaymentInstrument) =>
+  pan.validityStatus === ValidityStatusEnum.BLOCK_REVERSIBLE;
