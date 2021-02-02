@@ -1,5 +1,4 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import reactotron from "reactotron-react-native";
 import { BrandEnum } from "../../definitions/pagopa/walletv2/PaymentInstrument";
 import defaultCardIcon from "../../img/wallet/cards-icons/unknown.png";
 export const cardIcons: { [key in BrandEnum]: any } = {
@@ -11,6 +10,5 @@ export const cardIcons: { [key in BrandEnum]: any } = {
 };
 
 export const getCardIconFromBrand = (brand: BrandEnum | undefined) => {
-  reactotron.log(brand);
   return fromNullable(brand).fold(defaultCardIcon, b => cardIcons[b]);
 };
