@@ -851,6 +851,7 @@ wallet:
       headerTitle: "Add international circuit"
       start:
         title: "TMP Start Title"
+        loading: "We are loading the settings\n\nPlease wait"
         koDisabled:
           title: "Your bank does not yet offer this functionality"
           body: "We are working to allow you to add your international circuit card soon."
