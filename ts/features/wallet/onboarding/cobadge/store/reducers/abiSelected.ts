@@ -11,7 +11,6 @@ const abiSelectedReducer = (
 ): AbiSelected => {
   switch (action.type) {
     case getType(searchUserCoBadge.request):
-      return action.payload ?? null;
     case getType(walletAddCoBadgeStart):
       return action.payload ?? null;
   }
