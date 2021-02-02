@@ -1,5 +1,4 @@
 import * as React from "react";
-import reactotron from "reactotron-react-native";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import BaseCoBadgeCard from "./BaseCoBadgeCard";
@@ -24,7 +23,6 @@ const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
  * @constructor
  */
 const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
-  reactotron.log(props.enhancedCoBadge);
   const brandLogo = getCardIconFromBrandLogo(props.enhancedCoBadge.info);
   return (
     <BaseCoBadgeCard
