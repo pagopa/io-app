@@ -144,6 +144,7 @@ global:
     deactivate: "Deactivate"
     show: "Show"
     update: "Update"
+    findOutMore: "Find out more"
   navigator:
     messages: messages
     wallet: wallet
@@ -850,6 +851,12 @@ wallet:
       headerTitle: "Add international circuit"
       start:
         title: "TMP Start Title"
+        koDisabled:
+          title: "Your bank does not yet offer this functionality"
+          body: "We are working to allow you to add your international circuit card soon."
+        koUnavailable:
+          title: "We can't contact your bank"
+          body: "We are working to solve the problem."
       search:
         koTimeout:
           title: "TMP KO Timeout add"
