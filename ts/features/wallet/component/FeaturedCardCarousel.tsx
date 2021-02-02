@@ -19,6 +19,7 @@ import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
 import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
+import { bpdEnabled, cgnEnabled } from "../../../config";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -34,23 +35,22 @@ const styles = StyleSheet.create({
   scrollViewPadding: { paddingVertical: 15 }
 });
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
-  const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([
-    [
-      ID_BPD_TYPE,
-      {
-        logo: cashbackLogo,
-        handler: _ => props.startBpdOnboarding()
-      }
-    ],
-    [
-      ID_CGN_TYPE,
-      {
-        // FIXME Replace the loco when it has been approved
-        logo: cashbackLogo,
-        handler: _ => props.startCgnActivation()
-      }
-    ]
-  ]);
+  const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
+
+  if (bpdEnabled) {
+    bonusMap.set(ID_BPD_TYPE, {
+      logo: cashbackLogo,
+      handler: _ => props.startBpdOnboarding()
+    });
+  }
+
+  if (cgnEnabled) {
+    bonusMap.set(ID_CGN_TYPE, {
+      // FIXME Replace the loco when it has been approved
+      logo: cashbackLogo,
+      handler: _ => props.startCgnActivation()
+    });
+  }
 
   const anyBonusNotActive = !pot.getOrElse(props.bpdActiveBonus, false);
   return anyBonusNotActive ? (
