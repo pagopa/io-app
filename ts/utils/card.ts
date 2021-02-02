@@ -9,6 +9,5 @@ export const cardIcons: { [key in BrandEnum]: any } = {
   VPAY: require("../../img/wallet/cards-icons/vPay.png")
 };
 
-export const getCardIconFromBrand = (brand: BrandEnum | undefined) => {
-  return fromNullable(brand).fold(defaultCardIcon, b => cardIcons[b]);
-};
+export const getCardIconFromBrand = (brand: BrandEnum | undefined) =>
+  fromNullable(brand).fold(defaultCardIcon, b => cardIcons[b]);

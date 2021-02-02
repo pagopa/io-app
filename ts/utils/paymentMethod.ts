@@ -26,16 +26,16 @@ import {
   RawSatispayPaymentMethod,
   SatispayPaymentMethod
 } from "../types/pagopa";
+import {
+  PaymentInstrument,
+  ValidityStatusEnum
+} from "../../definitions/pagopa/walletv2/PaymentInstrument";
 import { contentRepoUrl } from "../config";
 import {
   Card,
   ValidityStateEnum
 } from "../../definitions/pagopa/walletv2/Card";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
-import {
-  PaymentInstrument,
-  ValidityStatusEnum
-} from "../../definitions/pagopa/walletv2/PaymentInstrument";
 
 export const getPaymentMethodHash = (
   pm: RawPaymentMethod
