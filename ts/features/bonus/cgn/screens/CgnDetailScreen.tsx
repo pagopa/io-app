@@ -12,7 +12,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 /**
  * Screen to display all the information about the active CGN
  */
-const CgnActivationCompletedScreen = (_: Props): React.ReactElement => (
+const CgnDetailScreen = (_: Props): React.ReactElement => (
   // PLACEHOLDER for activation completed screen
   <BaseScreenComponent>
     <View>
@@ -25,7 +25,4 @@ const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CgnActivationCompletedScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
