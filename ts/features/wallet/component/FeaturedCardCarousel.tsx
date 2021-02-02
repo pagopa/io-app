@@ -10,14 +10,15 @@ import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
 import cashbackLogo from "../../../../img/bonus/bpd/logo_cashback_blue.png";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { bpdEnabled } from "../../../config";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import { availableBonusTypesSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_BPD_TYPE } from "../../bonus/bonusVacanze/utils/bonus";
+import { ID_BPD_TYPE, ID_CGN_TYPE } from "../../bonus/bonusVacanze/utils/bonus";
 import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
 import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
+import { getLocalePrimaryWithFallback } from "../../../utils/locale";
+import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -33,14 +34,23 @@ const styles = StyleSheet.create({
   scrollViewPadding: { paddingVertical: 15 }
 });
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
-  const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
-
-  if (bpdEnabled) {
-    bonusMap.set(ID_BPD_TYPE, {
-      logo: cashbackLogo,
-      handler: _ => props.startBpdOnboarding()
-    });
-  }
+  const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([
+    [
+      ID_BPD_TYPE,
+      {
+        logo: cashbackLogo,
+        handler: _ => props.startBpdOnboarding()
+      }
+    ],
+    [
+      ID_CGN_TYPE,
+      {
+        // FIXME Replace the loco when it has been approved
+        logo: cashbackLogo,
+        handler: _ => props.startCgnActivation()
+      }
+    ]
+  ]);
 
   const anyBonusNotActive = !pot.getOrElse(props.bpdActiveBonus, false);
   return anyBonusNotActive ? (
@@ -65,6 +75,8 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
             undefined,
             bu => bu.logo
           );
+          const currentLocale = getLocalePrimaryWithFallback();
+
           switch (b.id_type) {
             case ID_BPD_TYPE:
               return (
@@ -72,6 +84,18 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={I18n.t("bonus.bpd.name")}
+                    image={logo}
+                    isNew={true}
+                    onPress={() => handler(b)}
+                  />
+                )
+              );
+            case ID_CGN_TYPE:
+              return (
+                !props.cgnActiveBonus && (
+                  <FeaturedCard
+                    key={`featured_bonus_${i}`}
+                    title={b[currentLocale].name}
                     image={logo}
                     isNew={true}
                     onPress={() => handler(b)}
@@ -89,11 +113,14 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => ({
   bpdActiveBonus: bpdEnabledSelector(state),
+  // FIXME replace with Selector when the API implementation is completed.
+  cgnActiveBonus: false,
   availableBonusesList: pot.getOrElse(availableBonusTypesSelector(state), [])
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  startBpdOnboarding: () => dispatch(bpdOnboardingStart())
+  startBpdOnboarding: () => dispatch(bpdOnboardingStart()),
+  startCgnActivation: () => dispatch(cgnActivationStart())
 });
 
 export default connect(
