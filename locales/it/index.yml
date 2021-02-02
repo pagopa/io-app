@@ -779,6 +779,8 @@ wallet:
       dateTime: Data e ora
       detailTitle: Dettaglio
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
+    details:
+      header: Dettaglio Metodo
   searchAbi:
     header: Aggiungi {{methodName}}
     bancomat:
@@ -1201,6 +1203,10 @@ wallet:
         one: "Satispay"
         two: " non consente ancora di pagare tramite IO"
         three: ": questa funzione verrà abilitata con le prossime versioni dell’app."
+  cobadge:
+    details:
+      card:
+        validUntil: "Valida fino al {{expireMonth}}/{{expireYear}}"
   newRemove:
     title: "Vuoi eliminare questo metodo?"
     body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
