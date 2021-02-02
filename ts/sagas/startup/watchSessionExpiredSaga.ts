@@ -9,7 +9,6 @@ import { clearCache } from "../../store/actions/profile";
  */
 export function* watchSessionExpiredSaga(): IterableIterator<Effect> {
   yield takeLatest(getType(sessionExpired), function* () {
-    // delete saved pin
     yield put(clearCache());
     // start again the application
     yield put(startApplicationInitialization());
