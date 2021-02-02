@@ -52,8 +52,8 @@ import { IOColors } from "../../components/core/variables/IOColors";
 import { Label } from "../../components/core/typography/Label";
 
 import amex from "../../../img/wallet/cards-icons/form/amex.png";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { useRemovePaymentMethodBottomSheet } from "../../features/wallet/component/RemovePaymentMethod";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -113,9 +113,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const UnsubscribeButton = (props: { onPress?: () => void }) => (
-  <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
+  <ButtonDefaultOpacity bordered={true} style={styles.cancelButton} onPress={props.onPress}>
     <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
-  </Button>
+  </ButtonDefaultOpacity>
 );
 
 const ListEmptyComponent = (
@@ -285,4 +285,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLoadingSpinner(TransactionsScreen));
+)(TransactionsScreen);
