@@ -5,7 +5,6 @@ import {
 } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
-import crossSessions from "../../crossSessions";
 import { differentProfileLoggedIn } from "../../../actions/crossSessions";
 
 export type ReadStateByServicesId = Readonly<{
