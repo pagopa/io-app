@@ -1,4 +1,3 @@
-import { none } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
@@ -14,7 +13,6 @@ import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
-import { navigateToWalletAddPaymentMethod } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 
 type OwnProps = {
@@ -80,7 +78,6 @@ const BancomatInformation: React.FunctionComponent<Props> = props => (
       bordered={true}
       onPress={() => {
         props.onAddPaymentMethod?.();
-        props.addPaymentMethod();
       }}
       onPressWithGestureHandler={true}
     >
@@ -89,10 +86,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => (
   </View>
 );
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addPaymentMethod: () =>
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none }))
-});
+const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (_: GlobalState) => ({});
 

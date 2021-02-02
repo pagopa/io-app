@@ -11,11 +11,12 @@ import {
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
 import BancomatInformation from "../bancomat/screen/BancomatInformation";
 import { onboardingBancomatAddedPansSelector } from "../onboarding/bancomat/store/reducers/addedPans";
+import { walletAddCoBadgeFromBancomatStart } from "../onboarding/cobadge/store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const newBancomatBottomSheet = () => {
+const newBancomatBottomSheet = (onAdd?: () => void) => {
   const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(
     385,
     bottomSheetContent
@@ -24,7 +25,10 @@ const newBancomatBottomSheet = () => {
     present: () =>
       openBottomSheet(
         <BancomatInformation
-          onAddPaymentMethod={dismiss}
+          onAddPaymentMethod={() => {
+            onAdd?.();
+            dismiss();
+          }}
           hideCobrandTitle={true}
         />,
         I18n.t("wallet.bancomat.details.debit.title")
@@ -44,7 +48,7 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
     string
   >("");
 
-  const { present } = newBancomatBottomSheet();
+  const { present } = newBancomatBottomSheet(props.startCoBadgeOnboarding);
 
   useActionOnFocus(() => {
     const lastAddedHash = props.addedBancomat.reduce(
@@ -61,7 +65,10 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
   return null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  startCoBadgeOnboarding: () =>
+    dispatch(walletAddCoBadgeFromBancomatStart(undefined))
+});
 
 const mapStateToProps = (state: GlobalState) => ({
   addedBancomat: onboardingBancomatAddedPansSelector(state)

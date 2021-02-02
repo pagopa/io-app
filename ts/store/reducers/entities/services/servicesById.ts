@@ -6,7 +6,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { clearCache } from "../../../actions/profile";
 import {
   loadServiceDetail,
   removeServiceTuples
@@ -67,9 +66,6 @@ const reducer = (
       serviceTuples.forEach(_ => delete newState[_.e1]);
       return newState;
     }
-
-    case getType(clearCache):
-      return INITIAL_STATE;
 
     default:
       return state;
