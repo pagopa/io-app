@@ -46,7 +46,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 
   if (cgnEnabled) {
     bonusMap.set(ID_CGN_TYPE, {
-      // FIXME Replace the loco when it has been approved
+      // FIXME Replace the logo when it has been approved
       logo: cashbackLogo,
       handler: _ => props.startCgnActivation()
     });
