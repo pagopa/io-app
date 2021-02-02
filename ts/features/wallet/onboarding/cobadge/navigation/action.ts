@@ -1,5 +1,14 @@
 import { NavigationActions } from "react-navigation";
+import { CoBadgeChooseTypeNavigationProps } from "../screens/CoBadgeChooseType";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "./routes";
+
+export const navigateToOnboardingCoBadgeChooseTypeStartScreen = (
+  navigationParams: CoBadgeChooseTypeNavigationProps
+) =>
+  NavigationActions.navigate({
+    routeName: WALLET_ONBOARDING_COBADGE_ROUTES.CHOOSE_TYPE,
+    params: navigationParams
+  });
 
 export const navigateToOnboardingCoBadgeSearchStartScreen = () =>
   NavigationActions.navigate({

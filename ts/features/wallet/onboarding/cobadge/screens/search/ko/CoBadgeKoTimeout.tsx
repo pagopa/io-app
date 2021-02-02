@@ -7,8 +7,10 @@ import { IOStyles } from "../../../../../../../components/core/variables/IOStyle
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
+import View from "../../../../../../../components/ui/TextWithIcon";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import {
   searchUserCoBadge,
@@ -35,9 +37,12 @@ const loadLocales = () => ({
  */
 const CoBadgeKoTimeout = (props: Props): React.ReactElement => {
   const { headerTitle, title, body, cancel, retry } = loadLocales();
+  // disable hardware back
+  useHardwareBackButton(() => true);
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={false}
+      customGoBack={<View />}
       headerTitle={headerTitle}
       contextualHelp={props.contextualHelp}
     >

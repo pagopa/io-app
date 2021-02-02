@@ -11,7 +11,7 @@ import {
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
 import BancomatInformation from "../bancomat/screen/BancomatInformation";
 import { onboardingBancomatAddedPansSelector } from "../onboarding/bancomat/store/reducers/addedPans";
-import { walletAddCoBadgeFromBancomatStart } from "../onboarding/cobadge/store/actions";
+import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../onboarding/cobadge/navigation/action";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -67,7 +67,9 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   startCoBadgeOnboarding: () =>
-    dispatch(walletAddCoBadgeFromBancomatStart(undefined))
+    dispatch(
+      navigateToOnboardingCoBadgeChooseTypeStartScreen({ abi: undefined })
+    )
 });
 
 const mapStateToProps = (state: GlobalState) => ({
