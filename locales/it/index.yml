@@ -1206,7 +1206,7 @@ wallet:
   cobadge:
     details:
       card:
-        validUntil: "Valida fino al {{expireMonth}}/{{expireYear}}"
+        validUntil: "Valida fino al {{expiryDate}}"
   newRemove:
     title: "Vuoi eliminare questo metodo?"
     body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."

@@ -107,10 +107,12 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
                 color={"bluegrey"}
                 testID={"expirationDate"}
               >
-                {`${I18n.t("cardComponent.expiresOn")} ${localeDateFormat(
-                  props.expiringDate,
-                  I18n.t("global.dateFormats.numericMonthYear")
-                )}`}
+                {I18n.t("wallet.cobadge.details.card.validUntil", {
+                  expiryDate: localeDateFormat(
+                    props.expiringDate,
+                    I18n.t("global.dateFormats.numericMonthYear")
+                  )
+                })}
               </H5>
             </>
           )}
