@@ -1,13 +1,10 @@
 import { index } from "fp-ts/lib/Array";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
-import { H1 } from "../../../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { profileSelector } from "../../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../../store/reducers/types";
