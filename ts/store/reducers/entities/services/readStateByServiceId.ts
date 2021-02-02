@@ -5,6 +5,8 @@ import {
 } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
+import crossSessions from "../../crossSessions";
+import { differentProfileLoggedIn } from "../../../actions/crossSessions";
 
 export type ReadStateByServicesId = Readonly<{
   [key: string]: boolean | undefined;
@@ -35,6 +37,9 @@ export function readServicesByIdReducer(
         ...state,
         [action.payload]: true
       };
+    // reset reading state if current profile is different from the previous one
+    case getType(differentProfileLoggedIn):
+      return INITIAL_STATE;
 
     default:
       return state;
