@@ -96,7 +96,7 @@ describe("isPaymentMethodSupported", () => {
 
     expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("arriving");
   });
-  it("should return not_available if pagoPa is false", () => {
+  it("should return not_available if is a cobadge card, pagoPa is false", () => {
     const aMaestroCreditCard = {
       kind: "CreditCard",
       info: {
