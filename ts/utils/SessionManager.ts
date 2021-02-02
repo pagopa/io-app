@@ -92,7 +92,7 @@ export class SessionManager<T> {
     let count = 0;
     while (count <= this.maxRetries) {
       count += 1;
-      this.exclusiveTokenUpdate(true);
+      await this.exclusiveTokenUpdate(true);
       if (this.token === undefined) {
         const waitSeconds = (Math.ceil(Math.random() * 100) +
           50) as Millisecond;
