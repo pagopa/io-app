@@ -6,20 +6,23 @@ import {
   StyleProp,
   StyleSheet
 } from "react-native";
-import { View } from "native-base";
+import { Badge, View } from "native-base";
 import I18n from "../../../../i18n";
 import BaseCardComponent from "../../component/BaseCardComponent";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
 import abiLogoFallback from "../../../../../img/wallet/cards-icons/abiLogoFallback.png";
+import { Abi } from "../../../../../definitions/pagopa/walletv2/Abi";
+import { localeDateFormat } from "../../../../utils/locale";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type Props = {
   caption?: string;
-  expireMonth?: string;
-  expireYear?: string;
-  abiLogo?: string;
+  expiringDate?: Date;
+  abi: Abi;
   brandLogo: ImageSourcePropType;
+  blocked?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -33,14 +36,28 @@ const styles = StyleSheet.create({
     height: 31,
     resizeMode: "contain"
   },
-  bankName: { textTransform: "capitalize" }
+  bankName: { textTransform: "capitalize" },
+  badgeInfo: {
+    borderWidth: 1,
+    borderStyle: "solid",
+    height: 25,
+    flexDirection: "row"
+  },
+  badgeInfoExpired: {
+    backgroundColor: IOColors.white,
+    borderColor: IOColors.red
+  }
 });
 
 const BASE_IMG_W = 160;
 const BASE_IMG_H = 40;
 
-const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
-  const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, props.abiLogo);
+const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
+  const imgDimensions = useImageResize(
+    BASE_IMG_W,
+    BASE_IMG_H,
+    props.abi?.logoUrl
+  );
 
   const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
     undefined,
@@ -54,22 +71,35 @@ const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
     <BaseCardComponent
       topLeftCorner={
         <>
-          {props.abiLogo && imageStyle ? (
-            <Image
-              source={{ uri: props.abiLogo }}
-              style={imageStyle}
-              key={"abiLogo"}
-              testID={"abiLogo"}
-            />
-          ) : (
-            <Image
-              source={abiLogoFallback}
-              style={styles.abiLogoFallback}
-              key={"abiLogoFallback"}
-              testID={"abiLogoFallback"}
-            />
-          )}
-          {props.expireMonth && props.expireYear && (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between"
+            }}
+          >
+            {props.abi.logoUrl && imageStyle ? (
+              <Image
+                source={{ uri: props.abi.logoUrl }}
+                style={imageStyle}
+                key={"abiLogo"}
+                testID={"abiLogo"}
+              />
+            ) : (
+              <Image
+                source={abiLogoFallback}
+                style={styles.abiLogoFallback}
+                key={"abiLogoFallback"}
+                testID={"abiLogoFallback"}
+              />
+            )}
+            {props.blocked && (
+              <Badge style={[styles.badgeInfo, styles.badgeInfoExpired]}>
+                <H5 color="red">{I18n.t("global.badges.blocked")}</H5>
+              </Badge>
+            )}
+          </View>
+          {props.expiringDate && (
             <>
               <View spacer={true} />
               <H5
@@ -77,10 +107,10 @@ const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
                 color={"bluegrey"}
                 testID={"expirationDate"}
               >
-                {I18n.t("wallet.cobadge.details.card.validUntil", {
-                  expireMonth: props.expireMonth,
-                  expireYear: props.expireYear
-                })}
+                {`${I18n.t("cardComponent.expiresOn")} ${localeDateFormat(
+                  props.expiringDate,
+                  I18n.t("global.dateFormats.numericMonthYear")
+                )}`}
               </H5>
             </>
           )}
@@ -109,4 +139,4 @@ const CobadgeCard: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-export default CobadgeCard;
+export default BaseCoBadgeCard;
