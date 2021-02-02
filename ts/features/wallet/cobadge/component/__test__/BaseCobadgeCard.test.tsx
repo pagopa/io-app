@@ -7,7 +7,7 @@ import configureMockStore from "redux-mock-store";
 // import { pot } from "italia-ts-commons";
 import { none, some } from "fp-ts/lib/Option";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
-import CobadgeCard from "../CobadgeCard";
+import CobadgeCard from "../BaseCoBadgeCard";
 import defaultCardIcon from "../../../../../../img/wallet/cards-icons/unknown.png";
 
 jest.mock("../../../onboarding/bancomat/screens/hooks/useImageResize");
