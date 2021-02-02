@@ -88,7 +88,7 @@ export class SessionManager<T> {
   /**
    * Returns a new token
    */
-  public getNewToken = () => async () => {
+  public getNewToken = async (): Promise<Option<T>> => {
     let count = 0;
     while (count <= this.maxRetries) {
       count += 1;

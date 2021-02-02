@@ -3,8 +3,7 @@
 /**
  * A saga that manages the Wallet.
  */
-
-import { none, some } from "fp-ts/lib/Option";
+import { none, some, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
@@ -308,7 +307,9 @@ export function* startOrResumeAddCreditCardSaga(
     try {
       // Request a new token to the PM. This prevent expired token during the webview navigation.
       // If the request for the new token fails a new Error is catched, the step fails and we exit the flow.
-      const pagoPaToken = yield call(pmSessionManager.getNewToken());
+      const pagoPaToken: Option<PaymentManagerToken> = yield call(
+        pmSessionManager.getNewToken
+      );
       if (pot.isNone(state.creditCardCheckout3ds)) {
         if (urlCheckout3ds !== undefined && pagoPaToken.isSome()) {
           yield put(

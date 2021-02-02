@@ -87,7 +87,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
     const aNewPMToken = "5678" as PaymentManagerToken;
     jest
       .spyOn(aPmSessionManager, "getNewToken")
-      .mockReturnValue(() => Promise.resolve(some(aNewPMToken)));
+      .mockReturnValue(Promise.resolve(some(aNewPMToken)));
     const anIdWallet = 123456;
 
     const aPayRequest: PayRequest = {
@@ -153,7 +153,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
       // Step 3
       .select(getAllWallets)
       .next(walletStateCardVerified)
-      .call(aPmSessionManager.getNewToken())
+      .call(aPmSessionManager.getNewToken)
       .next(some(aNewPMToken))
       .put(
         creditCardCheckout3dsRequest({
@@ -167,7 +167,7 @@ describe("startOrResumeAddCreditCardSaga", () => {
       // Step 4
       .select(getAllWallets)
       .next(walletStateCardCheckout3ds)
-      .call(aPmSessionManager.getNewToken())
+      .call(aPmSessionManager.getNewToken)
       .next()
       .put(fetchWalletsRequest())
       .next()
