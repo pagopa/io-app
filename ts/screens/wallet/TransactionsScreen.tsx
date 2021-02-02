@@ -21,8 +21,7 @@ import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMe
 import I18n from "../../i18n";
 import {
   navigateToTransactionDetailsScreen,
-  navigateToWalletHome,
-  navigateToWalletList
+  navigateToWalletHome
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -267,13 +266,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       deleteWalletRequest({
         walletId,
-        onSuccess: action => {
+        onSuccess: _ => {
           showToast(I18n.t("wallet.delete.successful"), "success");
-          if (action.payload.length > 0) {
-            dispatch(navigateToWalletList());
-          } else {
-            dispatch(navigateToWalletHome());
-          }
+          dispatch(navigateToWalletHome());
         },
         onFailure: _ => {
           showToast(I18n.t("wallet.delete.failed"), "danger");
