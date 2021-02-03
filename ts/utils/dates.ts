@@ -1,4 +1,4 @@
-import { compareAsc, endOfMonth, format as dateFnsFormat } from "date-fns";
+import { compareDesc, endOfMonth, format as dateFnsFormat } from "date-fns";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
 import * as t from "io-ts";
@@ -69,7 +69,11 @@ export function format(
 }
 
 export function isExpired(expireMonth: number, expireYear: number): boolean {
-  return compareAsc(endOfMonth(`${expireYear}/${expireMonth}`), new Date()) < 1;
+  // Handle both shortened years and long years, we pass the first day
+  // but endOfMonth() returns a Date object representing the last day
+  // of the target month.
+  const date = endOfMonth(`${expireMonth}/01/${expireYear}`);
+  return compareDesc(date, new Date()) > 0;
 }
 
 /**

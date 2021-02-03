@@ -16,7 +16,7 @@ export const isExpiredCard = (creditCard: CreditCard) => {
 
   // In case the date is not valid, this call will return -1
   // thus considering the card as expired
-  return isExpired(Number(expireYear), Number(expireMonth));
+  return isExpired(Number(expireMonth), Number(expireYear));
 };
 
 /**

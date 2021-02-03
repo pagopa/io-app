@@ -119,14 +119,12 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
             <BancomatInformation
               onAddPaymentMethod={() => startCoBadge(props)}
             />
-            <View spacer={true} />
-            <UnsubscribeButton
-              onPress={() =>
-                present(() => props.deleteWallet(bancomat.idWallet))
-              }
-            />
           </>
         )}
+        <View spacer={true} />
+        <UnsubscribeButton
+          onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
+        />
       </View>
       <View spacer={true} extralarge={true} />
     </DarkLayout>
