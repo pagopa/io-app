@@ -1073,6 +1073,9 @@ wallet:
     digital:
       name: App and digital payment tools
       description: Use your favourite mobile payment apps in IO
+    loyalty:
+      name: Supermarket Loyalty Card
+      description: The payment card issued by your supermarket, used to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
       description: The card with the PagoBANCOMAT logo typically used to withdraw cash or pay in stores
