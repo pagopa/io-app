@@ -1,15 +1,24 @@
 import { none } from "fp-ts/lib/Option";
-import { Button, Content, View } from "native-base";
+import { Content, ListItem, View } from "native-base";
 import * as React from "react";
-import { FlatList, SafeAreaView } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  SafeAreaView,
+  StyleSheet
+} from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
+import { H5 } from "../../../../../components/core/typography/H5";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import { navigateToWalletAddCreditCard } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -28,21 +37,51 @@ export type CoBadgeChooseTypeNavigationProps = {
   legacyAddCreditCardBack?: number;
 };
 
+const styles = StyleSheet.create({
+  flexColumn: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    flex: 1
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  descriptionPadding: { paddingRight: 24 }
+});
 type CardOnlinePurchase = "enabled" | "disabled" | "unknown";
 
 type IAddCardPath = Readonly<{
   path: CardOnlinePurchase;
   title: string;
   description: string;
+  onPress: () => void;
 }>;
 
-const addCardPath: ReadonlyArray<IAddCardPath> = [
-  { path: "enabled", title: "titol1", description: "desc 1" },
-  { path: "disabled", title: "titol 2", description: "desc 2" },
-  { path: "unknown", title: "titol 3", description: "desc 3" }
-];
-
-const renderListItem;
+const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
+  <ListItem
+    onPress={cardPathItem.item.onPress}
+    first={cardPathItem.index === 0}
+  >
+    <View style={styles.flexColumn}>
+      <View style={styles.row}>
+        <View>
+          <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+            {cardPathItem.item.title}
+          </H3>
+        </View>
+        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+      </View>
+      <H5
+        color={"bluegrey"}
+        weight={"Regular"}
+        style={styles.descriptionPadding}
+      >
+        {cardPathItem.item.description}
+      </H5>
+    </View>
+  </ListItem>
+);
 /**
  * This screen allows the user to choose the exact type of card he intends to add
  * @param props
@@ -53,6 +92,32 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
   const legacyAddCreditCardBack = props.navigation.getParam(
     "legacyAddCreditCardBack"
   );
+  const addCardPath: ReadonlyArray<IAddCardPath> = [
+    {
+      path: "enabled",
+      title: I18n.t("wallet.onboarding.coBadge.chooseType.path.enabled.title"),
+      description: I18n.t(
+        "wallet.onboarding.coBadge.chooseType.path.enabled.description"
+      ),
+      onPress: () => props.addCreditCard(legacyAddCreditCardBack)
+    },
+    {
+      path: "disabled",
+      title: I18n.t("wallet.onboarding.coBadge.chooseType.path.disabled.title"),
+      description: I18n.t(
+        "wallet.onboarding.coBadge.chooseType.path.disabled.description"
+      ),
+      onPress: () => props.addCoBadge(abi)
+    },
+    {
+      path: "unknown",
+      title: I18n.t("wallet.onboarding.coBadge.chooseType.path.unknown.title"),
+      description: I18n.t(
+        "wallet.onboarding.coBadge.chooseType.path.unknown.description"
+      ),
+      onPress: () => props.addCoBadge(abi)
+    }
+  ];
   return (
     <BaseScreenComponent
       goBack={true}
@@ -61,32 +126,19 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <Content style={IOStyles.flex}>
-          <H1>TMP CoBadgeChooseType</H1>
+          <H1>{I18n.t("wallet.onboarding.coBadge.chooseType.title")}</H1>
           <View spacer={true} />
-          <H4 weight={"Regular"} color={"bluegreyDark"}></H4>
+          <H4 weight={"Regular"} color={"bluegreyDark"}>
+            {I18n.t("wallet.onboarding.coBadge.chooseType.description")}
+          </H4>
+          <View spacer={true} />
           <FlatList
             removeClippedSubviews={false}
             data={addCardPath}
             keyExtractor={item => item.path}
             ListFooterComponent={<View spacer />}
-            renderItem={i =>
-              renderListItem(
-                i,
-                props.paymentMethods.filter(
-                  pm => pm.status !== "notImplemented"
-                ).length - 1,
-                props.sectionStatus
-              )
-            }
+            renderItem={i => renderListItem(i)}
           />
-
-          <Button onPress={() => props.addCreditCard(legacyAddCreditCardBack)}>
-            <H1>TMP Add Credit Card</H1>
-          </Button>
-          <View spacer={true} />
-          <Button onPress={() => props.addCoBadge(abi)}>
-            <H1>TMP Add Co-Badge</H1>
-          </Button>
         </Content>
         <FooterWithButtons
           type={"SingleButton"}
