@@ -97,30 +97,42 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
 
   // Brightness effect manager
   React.useEffect(() => {
-    const myBrightF = async () =>
-      await getBrightness()
+    // eslint-disable-next-line functional/no-let
+    let myBrightness: number | undefined;
+
+    const myBrightF = async () => {
+      myBrightness = await getBrightness()
         .fold(
-          () => 0.5, // If fails, resort to a default value
+          () => undefined,
           _ => _
         )
         .run();
+    };
 
-    const myBright = myBrightF();
+    const mySetBrightF = async () => {
+      await myBrightF();
+      if (myBrightness) {
+        alert("CIAO LAGO" + myBrightness?.toString());
 
-    const mySetBrightF = async () => await setBrightness(HIGH_BRIGHTNESS).run();
+        await setBrightness(HIGH_BRIGHTNESS).run();
+      }
+    };
 
-    void mySetBrightF();
+    const finishedSet = mySetBrightF();
 
     return () => {
       const restoreDeviceBrightnessF = async () => {
-        const deviceB = await myBright;
-        if (deviceB) {
-          await setBrightness(await myBright)
+        await finishedSet;
+        if (myBrightness) {
+          alert("CIAO FIUME" + myBrightness.toString());
+          await setBrightness(myBrightness)
             .fold(
-              () => alert("Can't restore brightness"),
+              () => undefined,
               _ => _
             )
             .run();
+        } else {
+          alert("CIAO MARE");
         }
       };
       void restoreDeviceBrightnessF();
