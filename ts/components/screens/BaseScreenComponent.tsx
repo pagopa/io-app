@@ -171,7 +171,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         const { reportAttachmentTypes } = this.props;
         const { shouldAttachScreenshotToIBRequest } = this.state;
 
-        // if reportAttachmentTypes is undefined use the default config
+        // if reportAttachmentTypes is undefined use the default attachment config
         const attachmentConfig: DefaultReportAttachmentTypeConfiguration = {
           ...(reportAttachmentTypes ?? defaultAttachmentTypeConfiguration),
           screenshot: shouldAttachScreenshotToIBRequest ?? true
