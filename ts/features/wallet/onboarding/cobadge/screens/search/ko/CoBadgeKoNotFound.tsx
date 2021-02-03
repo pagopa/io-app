@@ -23,7 +23,8 @@ import TosBonusComponent from "../../../../../../bonus/bonusVacanze/components/T
 import { walletAddCoBadgeCancel } from "../../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.coBadge.headerTitle"),
