@@ -97,11 +97,13 @@ global:
     shortFormat: "%d/%m/%Y"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
     fullFormatFullMonthLiteral: "%d %B %Y"
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
     numericMonthYear: "%m/%Y"
     dayMonthWithTime: "%d %b, %H:%M"
+    dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
@@ -728,6 +730,7 @@ payment:
       enteCreditore: Payee institution
       causaleVersamento: Payment description
       dateAndTime: Date and time
+      onlyDate: Date
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
       transactionCode: Transaction identification code
@@ -756,6 +759,8 @@ wallet:
       dateTime: Date and time
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
+    details:
+      header: Method detail
   searchAbi:
     header: "Add {{methodName}}"
     bancomat:
@@ -841,6 +846,17 @@ wallet:
       koNotFound:
         title: "Sorry, we do not know that you have activated Satispay yet"
         body: "Contact Satispay for activation"
+    coBadge:
+      headerTitle: "Add international circuit"
+      start:
+        title: "TMP Start Title"
+      search:
+        koTimeout:
+          title: "TMP KO Timeout add"
+        koNotFound:
+          title: "TMP KO Timeout add"
+      add:
+        title: "TMP Add title"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1057,6 +1073,9 @@ wallet:
     digital:
       name: App and digital payment tools
       description: Use your favourite mobile payment apps in IO
+    loyalty:
+      name: Supermarket Loyalty Card
+      description: The payment card issued by your supermarket, used to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
       description: The card with the PagoBANCOMAT logo typically used to withdraw cash or pay in stores
@@ -1160,6 +1179,10 @@ wallet:
         one: "Satispay"
         two: " can't be used yet to make payments through IO"
         three: ": this feature will be enabled on future app version release."
+  cobadge:
+    details:
+      card:
+        validUntil: "Valid until {{expireMonth}}/{{expireYear}}"
   newRemove:
     title: "Delete this payment method?"
     body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
@@ -1224,9 +1247,9 @@ messages:
           block1: Add a reminder for the 
           block2: at
       expiringOrValidAlert:
-        block1: You can pay this notice by
+        block1: This notice will expire on
       expiredAlert:
-        block1: The payment notice expired at
+        block1: This notice expired at
         block2: on
     prescription:  
       addMemo: This prescription expires the
@@ -2024,8 +2047,8 @@ bonus:
               text4: "and collected "
               text5: "a cashback of "
             milestone:
-              title: "Congratulation, you earned {{cashbackValue}}"
-              body: "You have reached the maximum refund for this phase. Keep collecting valid transactions to climb the ranking!"
+              title: "Congratulation, you reached {{cashbackValue}}"
+              body: "You have reached the maximum amount for this phase. Keep collecting valid transactions to climb the ranking!"
           title: "Transaction details"
           paymentCircuit: "Payment circuit"
           transactionAmount: "Transaction amount"

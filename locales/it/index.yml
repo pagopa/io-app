@@ -97,10 +97,12 @@ global:
     shortFormat: "%d/%m/%Y"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
     fullFormatFullMonthLiteral: "%d %B %Y"
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
     dayMonthWithTime: "%d %b, %H:%M"
+    dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
     numericMonthYear: "%m/%Y"
     monthYear: "MMMM YYYY"
@@ -748,6 +750,7 @@ payment:
       enteCreditore: Ente creditore
       causaleVersamento: Causale
       dateAndTime: Data e ora
+      onlyDate: Data
       paymentAmount: Importo pagamento
       transactionCosts: Costi di transazione
       transactionCode: Codice identificativo della transazione
@@ -776,6 +779,8 @@ wallet:
       dateTime: Data e ora
       detailTitle: Dettaglio
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
+    details:
+      header: Dettaglio Metodo
   searchAbi:
     header: Aggiungi {{methodName}}
     bancomat:
@@ -861,6 +866,17 @@ wallet:
       koNotFound:
         title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
         body: "Contatta Satispay per l’attivazione"
+    coBadge:
+      headerTitle: "Aggiungi circuito internazionale"
+      start:
+        title: "TMP Start Title"
+      search:
+        koTimeout:
+          title: "TMP KO Timeout add"
+        koNotFound:
+          title: "TMP KO Timeout add"
+      add:
+        title: "TMP Add title"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1083,6 +1099,9 @@ wallet:
     digital:
       name: App e strumenti di pagamento digitali
       description: I tuoi strumenti digitali preferiti su IO
+    loyalty:
+      name: Carta di pagamento supermercati
+      description: Le carte emesse dalle catene di supermercati che usi per pagare la spesa
     pagobancomat:
       name: Carta PagoBANCOMAT
       description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
@@ -1187,6 +1206,10 @@ wallet:
         one: "Satispay"
         two: " non consente ancora di pagare tramite IO"
         three: ": questa funzione verrà abilitata con le prossime versioni dell’app."
+  cobadge:
+    details:
+      card:
+        validUntil: "Valida fino al {{expireMonth}}/{{expireYear}}"
   newRemove:
     title: "Vuoi eliminare questo metodo?"
     body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
@@ -1253,9 +1276,9 @@ messages:
         block1: Aggiungi un promemoria per il
         block2: alle
       expiringOrValidAlert:
-        block1: Puoi pagare questo avviso entro il
+        block1: Questo avviso scade il giorno
       expiredAlert:
-        block1: L'avviso di pagamento è scaduto alle
+        block1: L'avviso è scaduto alle
         block2: del
     prescription:
       addMemo: Questa ricetta scade il
@@ -2055,8 +2078,8 @@ bonus:
               text4: "e accumulato "
               text5: "un Cashback di "
             milestone:
-              title: "Complimenti, hai ottenuto {{cashbackValue}}"
-              body: "Hai raggiunto il rimborso massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
+              title: "Complimenti, hai raggiunto {{cashbackValue}}"
+              body: "Hai raggiunto l'importo massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
           title: "Dettaglio della transazione"
           paymentCircuit: "Circuito di pagamento"
           transactionAmount: "Importo transazione"
