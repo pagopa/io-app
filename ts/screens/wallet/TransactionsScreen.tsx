@@ -36,6 +36,7 @@ import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { handleSetFavourite } from "../../utils/wallet";
 import variables from "../../theme/variables";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
   cardBox: {
     height: 152,
     paddingTop: 20,
+    width: widthPercentageToDP("88%"),
     paddingBottom: 22,
     flexDirection: "column",
     justifyContent: "space-between",
