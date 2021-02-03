@@ -5,12 +5,6 @@ import variables from "../../../theme/variables";
 export default StyleSheet.create({
   cardHeader:{
     backgroundColor: variables.brandGray,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1.5,
-    elevation: -7,
-    zIndex: -7,
     marginTop: -20,
     borderRadius: 8,
     marginLeft: 12,
@@ -19,14 +13,16 @@ export default StyleSheet.create({
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
   },
-  card: {
-    // iOS and Andorid card shadow
+  cardShadow: {
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
-    elevation: -7,
-    zIndex: -7,
+    elevation: Platform.OS === "android" ? -2 : 25,
+    zIndex: Platform.OS === "android" ? -2 : 25
+  },
+  card: {
+    // iOS and Andorid card shadow
     backgroundColor: variables.brandGray,
     borderRadius: 8,
     marginLeft: 0,

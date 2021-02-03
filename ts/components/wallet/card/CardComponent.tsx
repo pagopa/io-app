@@ -278,7 +278,7 @@ export default class CardComponent extends React.Component<Props> {
 
     return wallet.creditCard === undefined ? null : (
       <View
-        style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined , isHeader && styles.cardHeader]}
+        style={[styles.card, styles.cardShadow, hasFlatBottom ? styles.flatBottom : undefined , isHeader && styles.cardHeader]}
       >
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
