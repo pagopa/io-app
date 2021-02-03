@@ -655,6 +655,7 @@ email:
     validated: Email validated!
     validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
 onboarding:
+  addNewCard: Add a new card
   contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
@@ -743,6 +744,7 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   wallet: Wallet
+  expiredCard: This payment method has expired. If you already have the new card, please add it to the wallet.
   refreshWallet: Refresh the Wallet
   incoming:
     title: "Upcoming"
@@ -790,6 +792,10 @@ wallet:
   onboarding:
     bancomat:
       headerTitle: "Add PagoBANCOMAT card"
+      pleaseWaitDialog: 
+        title: "If you can't find your new PagoBANCOMAT card, please wait a few days."
+        body: "In some cases, we might not get your card info immediately."
+        confirm: "Ok, I understand"
       koTimeout:
         title: "We're unable to retrieve your PagoBANCOMAT cards"
         body: "Please retry"
@@ -1197,7 +1203,7 @@ saveCard:
 cardComponent:
   validUntil: Valid until
   expiresOn: Expires on
-  expiredCard: CARD EXPIRED ON
+  expiredCard: Card expired on
   actions: Actions
   setFavourite: Set as favourite
   unsetFavourite: Remove from favourites

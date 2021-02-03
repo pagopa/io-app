@@ -14,6 +14,7 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import WalletLayout from "../../components/wallet/WalletLayout";
+import ExpiredCardAdvice from "../../features/wallet/component/ExpiredCardAdvice";
 import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
 import I18n from "../../i18n";
 import {
@@ -32,8 +33,7 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
-import { handleSetFavourite } from "../../utils/wallet";
-
+import { handleSetFavourite, isExpiredCard } from "../../utils/wallet";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -92,6 +92,10 @@ class TransactionsScreen extends React.Component<Props> {
       undefined
     );
 
+    const cardIsExpired = selectedWallet.creditCard
+      ? isExpiredCard(selectedWallet.creditCard)
+      : false;
+
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
@@ -107,13 +111,18 @@ class TransactionsScreen extends React.Component<Props> {
           <>
             <View style={IOStyles.horizontalContentPadding}>
               <View spacer={true} extralarge={true} />
-              <PaymentMethodCapabilities paymentMethod={pm} />
-              <View spacer={true} />
-              <ItemSeparatorComponent noPadded={true} />
+              {cardIsExpired ? (
+                <ExpiredCardAdvice />
+              ) : (
+                <>
+                  <PaymentMethodCapabilities paymentMethod={pm} />
+                  <View spacer={true} />
+                  <ItemSeparatorComponent noPadded={true} />
+                </>
+              )}
             </View>
             <EdgeBorderComponent />
           </>
-
         )}
       </WalletLayout>
     );

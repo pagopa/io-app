@@ -21,6 +21,8 @@ import { walletAddCoBadgeFromBancomatStart } from "../../onboarding/cobadge/stor
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { isExpired } from "../../../../utils/dates";
+import ExpiredCardAdvice from "../../component/ExpiredCardAdvice";
 import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
@@ -82,6 +84,12 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
     icon: pagoBancomatImage,
     caption: bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")
   });
+
+  const { expireMonth, expireYear } = bancomat.info;
+  const cardIsExpired = bancomat
+    ? isExpired(Number(expireMonth), Number(expireYear))
+    : false;
+
   return (
     <DarkLayout
       bounces={false}
@@ -100,15 +108,25 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       <View spacer={true} />
 
       <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={bancomat} />
-        <View spacer={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} />
-        <BancomatInformation onAddPaymentMethod={() => startCoBadge(props)} />
-        <View spacer={true} />
-        <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
-        />
+        {cardIsExpired ? (
+          <ExpiredCardAdvice forBancomat />
+        ) : (
+          <>
+            <PaymentMethodCapabilities paymentMethod={bancomat} />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} />
+            <BancomatInformation
+              onAddPaymentMethod={() => startCoBadge(props)}
+            />
+            <View spacer={true} />
+            <UnsubscribeButton
+              onPress={() =>
+                present(() => props.deleteWallet(bancomat.idWallet))
+              }
+            />
+          </>
+        )}
       </View>
       <View spacer={true} extralarge={true} />
     </DarkLayout>
