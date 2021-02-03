@@ -8,6 +8,7 @@ import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 
@@ -36,7 +37,7 @@ import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { handleSetFavourite } from "../../utils/wallet";
 import variables from "../../theme/variables";
-import { widthPercentageToDP } from "react-native-responsive-screen";
+
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
