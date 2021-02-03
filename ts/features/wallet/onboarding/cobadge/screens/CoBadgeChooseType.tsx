@@ -1,11 +1,12 @@
 import { none } from "fp-ts/lib/Option";
 import { Button, Content, View } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { H4 } from "../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
@@ -27,6 +28,21 @@ export type CoBadgeChooseTypeNavigationProps = {
   legacyAddCreditCardBack?: number;
 };
 
+type CardOnlinePurchase = "enabled" | "disabled" | "unknown";
+
+type IAddCardPath = Readonly<{
+  path: CardOnlinePurchase;
+  title: string;
+  description: string;
+}>;
+
+const addCardPath: ReadonlyArray<IAddCardPath> = [
+  { path: "enabled", title: "titol1", description: "desc 1" },
+  { path: "disabled", title: "titol 2", description: "desc 2" },
+  { path: "unknown", title: "titol 3", description: "desc 3" }
+];
+
+const renderListItem;
 /**
  * This screen allows the user to choose the exact type of card he intends to add
  * @param props
@@ -46,6 +62,24 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
       <SafeAreaView style={IOStyles.flex}>
         <Content style={IOStyles.flex}>
           <H1>TMP CoBadgeChooseType</H1>
+          <View spacer={true} />
+          <H4 weight={"Regular"} color={"bluegreyDark"}></H4>
+          <FlatList
+            removeClippedSubviews={false}
+            data={addCardPath}
+            keyExtractor={item => item.path}
+            ListFooterComponent={<View spacer />}
+            renderItem={i =>
+              renderListItem(
+                i,
+                props.paymentMethods.filter(
+                  pm => pm.status !== "notImplemented"
+                ).length - 1,
+                props.sectionStatus
+              )
+            }
+          />
+
           <Button onPress={() => props.addCreditCard(legacyAddCreditCardBack)}>
             <H1>TMP Add Credit Card</H1>
           </Button>
