@@ -10,6 +10,7 @@ import BaseScreenComponent from "../../../../../../../components/screens/BaseScr
 import View from "../../../../../../../components/ui/TextWithIcon";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
 import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import {
@@ -19,14 +20,12 @@ import {
 import { onboardingCoBadgeAbiSelectedSelector } from "../../../store/reducers/abiSelected";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
+  ReturnType<typeof mapStateToProps>;
 
 const loadLocales = () => ({
-  // TODO: replace locales
-  headerTitle: "TMP header title",
-  title: "TMP KOTIMEOUT title",
-  body: "TMP body",
+  headerTitle: I18n.t("wallet.onboarding.coBadge.headerTitle"),
+  title: I18n.t("wallet.onboarding.coBadge.search.koTimeout.title"),
+  body: I18n.t("wallet.onboarding.coBadge.search.koTimeout.body"),
   cancel: I18n.t("global.buttons.cancel"),
   retry: I18n.t("global.buttons.retry")
 });
@@ -44,7 +43,7 @@ const CoBadgeKoTimeout = (props: Props): React.ReactElement => {
       goBack={false}
       customGoBack={<View />}
       headerTitle={headerTitle}
-      contextualHelp={props.contextualHelp}
+      contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent

@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native";
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
@@ -11,8 +12,8 @@ import FooterWithButtons from "../../../../../../../components/ui/FooterWithButt
 import View from "../../../../../../../components/ui/TextWithIcon";
 
 import I18n from "../../../../../../../i18n";
-import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -24,15 +25,13 @@ import {
 } from "../../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
+  ReturnType<typeof mapStateToProps>;
 
 const loadLocales = () => ({
-  // TODO: replace locales
   headerTitle: I18n.t("wallet.onboarding.coBadge.headerTitle"),
-  title: "TMP KOSingleBank not Found Title",
-  body: "TMP Body",
-  searchAll: "TMP search all bank"
+  title: I18n.t("wallet.onboarding.coBadge.search.koSingleBankNotFound.title"),
+  body: I18n.t("wallet.onboarding.coBadge.search.koSingleBankNotFound.body"),
+  continueStr: I18n.t("global.buttons.continue")
 });
 
 /**
@@ -41,7 +40,7 @@ const loadLocales = () => ({
  * @constructor
  */
 const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
-  const { headerTitle, title, body, searchAll } = loadLocales();
+  const { headerTitle, title, body, continueStr } = loadLocales();
 
   const onSearchAll = () => props.searchAll();
 
@@ -53,7 +52,7 @@ const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
       goBack={false}
       customGoBack={<View />}
       headerTitle={headerTitle}
-      contextualHelp={props.contextualHelp}
+      contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
@@ -64,7 +63,7 @@ const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps(props.cancel)}
-          rightButton={confirmButtonProps(onSearchAll, searchAll)}
+          rightButton={confirmButtonProps(onSearchAll, continueStr)}
         />
       </SafeAreaView>
     </BaseScreenComponent>

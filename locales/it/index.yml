@@ -870,7 +870,6 @@ wallet:
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
-        title: "TMP Start Title"
         loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
         koDisabled:
           title: "La tua banca non offre ancora questa funzionalità"
@@ -879,10 +878,19 @@ wallet:
           title: "Non riusciamo a contattare la tua banca"
           body: "Siamo al lavoro per risolvere il problema."
       search:
+        loading: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo"
         koTimeout:
-          title: "TMP KO Timeout add"
+          title: "Al momento è impossibile recuperare le tue carte"
+          body: "Ripova per favore"
         koNotFound:
-          title: "TMP KO Timeout add"
+          title: "Spiacenti, non abbiamo trovato nessuna carta tra le banche aderenti al servizio"
+          body: "Non risultano carte con circuito internazionale intestate a te: contatta la tua Banca per ulteriori informazioni"
+        koSingleBankNotFound:
+          title: "Spiacenti, non abbiamo trovato nessuna carta su questa banca"
+          body: "Non risultano carte con circuito internazionale intestate a te. Se lo desideri, IO può effettuare una ricerca tra tutte le banche aderenti."
+        koServiceError:
+          title: "Al momento è impossibile recuperare le tue carte"
+          body: "Ripova più tardi per favore"
       add:
         title: "TMP Add title"
   alert:

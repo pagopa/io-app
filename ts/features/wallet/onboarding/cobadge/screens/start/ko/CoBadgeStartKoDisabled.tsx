@@ -33,8 +33,8 @@ const loadLocales = () => ({
   findOutMore: I18n.t("global.buttons.findOutMore")
 });
 
-// TODO: unify with the link used in CoBadgeSingleBankScreen
-const partecipatingBankUrl =
+// TODO: unify with the link used in CoBadgeSingleBankScreen https://www.pivotaltracker.com/story/show/176780396
+const participatingBankUrl =
   "https://io.italia.it/cashback/carta-non-abilitata-pagamenti-online";
 
 /**
@@ -49,7 +49,7 @@ const CoBadgeStartKoDisabled = (props: Props): React.ReactElement => {
   const { showModal, hideModal } = useContext(LightModalContext);
   const openCardsNotEnabledModal = () => {
     showModal(
-      <TosBonusComponent tos_url={partecipatingBankUrl} onClose={hideModal} />
+      <TosBonusComponent tos_url={participatingBankUrl} onClose={hideModal} />
     );
   };
   return (

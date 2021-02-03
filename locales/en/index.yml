@@ -850,7 +850,6 @@ wallet:
     coBadge:
       headerTitle: "Add international circuit"
       start:
-        title: "TMP Start Title"
         loading: "We are loading the settings\n\nPlease wait"
         koDisabled:
           title: "Your bank does not yet offer this functionality"
@@ -859,10 +858,19 @@ wallet:
           title: "We can't contact your bank"
           body: "We are working to solve the problem."
       search:
+        loading: "We are retrieving your card list\n\nPlease wait a few seconds"
         koTimeout:
-          title: "TMP KO Timeout add"
+          title: "At the moment it is impossible to recover your cards"
+          body: "Ripova please"
         koNotFound:
-          title: "TMP KO Timeout add"
+          title: "Sorry, we haven't found any cards among the banks participating in the service"
+          body: "There are no cards with an international circuit in your name: contact your bank for further information"
+        koSingleBankNotFound:
+          title: "Sorry, we couldn't find any cards on this bank"
+          body: "There are no cards with an international circuit in your name. If you wish, IO can search among all participating banks."
+        koServiceError:
+          title: "At the moment it is impossible to recover your cards"
+          body: "Please wait again later"
       add:
         title: "TMP Add title"
   alert:
