@@ -112,8 +112,6 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
     const mySetBrightF = async () => {
       await myBrightF();
       if (myBrightness) {
-        alert("CIAO LAGO" + myBrightness?.toString());
-
         await setBrightness(HIGH_BRIGHTNESS).run();
       }
     };
@@ -124,15 +122,12 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
       const restoreDeviceBrightnessF = async () => {
         await finishedSet;
         if (myBrightness) {
-          alert("CIAO FIUME" + myBrightness.toString());
           await setBrightness(myBrightness)
             .fold(
               () => undefined,
               _ => _
             )
             .run();
-        } else {
-          alert("CIAO MARE");
         }
       };
       void restoreDeviceBrightnessF();
