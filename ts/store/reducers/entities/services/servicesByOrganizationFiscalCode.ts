@@ -6,7 +6,6 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { clearCache } from "../../../actions/profile";
 import {
   loadServiceDetail,
   removeServiceTuples
@@ -78,9 +77,6 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
         ...stateUpdate
       };
     }
-
-    case getType(clearCache):
-      return INITIAL_STATE;
 
     default:
       return state;

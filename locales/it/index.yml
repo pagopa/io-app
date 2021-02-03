@@ -1099,6 +1099,9 @@ wallet:
     digital:
       name: App e strumenti di pagamento digitali
       description: I tuoi strumenti digitali preferiti su IO
+    loyalty:
+      name: Carta di pagamento supermercati
+      description: Le carte emesse dalle catene di supermercati che usi per pagare la spesa
     pagobancomat:
       name: Carta PagoBANCOMAT
       description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
