@@ -19,7 +19,8 @@ import {
   DefaultReportAttachmentTypeConfiguration,
   setInstabugSupportTokenAttribute,
   TypeLogs,
-  instabugLog
+  instabugLog,
+  defaultAttachmentTypeConfiguration
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -170,18 +171,10 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         const { reportAttachmentTypes } = this.props;
         const { shouldAttachScreenshotToIBRequest } = this.state;
 
-        // Do not ignore reportAttachmentTypes, but overwrite
-        // the screenshot variable if the form featured the checkbox
-        const attachmentConfig = {
-          screenshot:
-            shouldAttachScreenshotToIBRequest !== undefined
-              ? shouldAttachScreenshotToIBRequest
-              : Boolean(reportAttachmentTypes?.screenshot),
-          ...(reportAttachmentTypes || {
-            extraScreenshot: false,
-            galleryImage: false,
-            screenRecording: false
-          })
+        // if reportAttachmentTypes is undefined use the default config
+        const attachmentConfig: DefaultReportAttachmentTypeConfiguration = {
+          ...(reportAttachmentTypes ?? defaultAttachmentTypeConfiguration),
+          screenshot: shouldAttachScreenshotToIBRequest ?? true
         };
 
         switch (type) {
