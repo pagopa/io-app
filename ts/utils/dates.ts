@@ -69,7 +69,6 @@ export function format(
 }
 
 export function isExpired(expireMonth: number, expireYear: number): boolean {
-  console.log(expireMonth, expireYear);
   return compareAsc(endOfMonth(`${expireYear}/${expireMonth}`), new Date()) < 1;
 }
 
