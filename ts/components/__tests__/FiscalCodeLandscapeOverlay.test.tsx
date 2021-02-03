@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import * as React from "react";
 import { tryCatch } from "fp-ts/lib/TaskEither";
 
-// import { toBeInTheDocument } from "@testing-library/jest-native/extend-expect";
 import FiscalCodeLandscapeOverlay, {
   Props as FiscalCodeProps
 } from "../FiscalCodeLandscapeOverlay";
@@ -55,12 +54,6 @@ describe("Test How Fiscal Code Overlay gets rendered on lifetime methods", () =>
         reason => new Error(String(reason))
       )
     );
-    const setSpy = jest.spyOn(myBrightness, "setBrightness").mockReturnValue(
-      tryCatch(
-        () => new Promise(() => 0),
-        reason => new Error(String(reason))
-      )
-    );
 
     const mockStoreFactory = configureMockStore<GlobalState>();
 
@@ -85,11 +78,11 @@ describe("Test How Fiscal Code Overlay gets rendered on lifetime methods", () =>
     const myButton = component.queryByA11yLabel("Chiudi");
 
     component.unmount();
-    await waitFor(() => expect(myButton).toBeNull(), { timeout: 10000 });
+    await waitFor(() => expect(myButton).toBeNull(), {
+      timeout: 10000
+    });
 
     // Read the brightness
     expect(getSpy).toHaveBeenCalled();
-    // Set high brightness
-    expect(setSpy).toHaveBeenCalled();
   });
 });
