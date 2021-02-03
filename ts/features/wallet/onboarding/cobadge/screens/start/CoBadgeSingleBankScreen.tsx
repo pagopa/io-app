@@ -59,10 +59,7 @@ const CoBadgeSingleBankScreen = (props: Props): React.ReactElement => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(walletAddCoBadgeCancel()),
-  searchAccounts: (abi?: string) => {
-    dispatch(searchUserCoBadge.request(abi));
-    dispatch(navigateToOnboardingCoBadgeSearchAvailable());
-  }
+  searchAccounts: () => dispatch(navigateToOnboardingCoBadgeSearchAvailable())
 });
 
 const mapStateToProps = (state: GlobalState) => ({
