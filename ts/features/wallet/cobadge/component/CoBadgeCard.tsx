@@ -18,7 +18,7 @@ const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
 };
 
 /**
- * Render a bancomat already added to the wallet
+ * Render a Co-badge card already added to the wallet
  * @param props
  * @constructor
  */

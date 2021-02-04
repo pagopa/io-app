@@ -4,6 +4,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
+import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
@@ -19,7 +20,6 @@ import {
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
-import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { isCoBadgeBlocked } from "../../../../../../utils/paymentMethod";

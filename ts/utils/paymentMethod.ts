@@ -1,6 +1,10 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { ImageSourcePropType } from "react-native";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
+import {
+  PaymentInstrument,
+  ValidityStatusEnum
+} from "../../definitions/pagopa/walletv2/PaymentInstrument";
 import bPayImage from "../../img/wallet/cards-icons/bPay.png";
 import satispayImage from "../../img/wallet/cards-icons/satispay.png";
 import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
@@ -26,10 +30,6 @@ import {
   RawSatispayPaymentMethod,
   SatispayPaymentMethod
 } from "../types/pagopa";
-import {
-  PaymentInstrument,
-  ValidityStatusEnum
-} from "../../definitions/pagopa/walletv2/PaymentInstrument";
 import { contentRepoUrl } from "../config";
 import {
   Card,

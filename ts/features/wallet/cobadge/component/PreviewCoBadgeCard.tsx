@@ -1,7 +1,7 @@
 import * as React from "react";
-import { PaymentInstrument } from "../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { Abi } from "../../../../../definitions/pagopa/walletv2/Abi";
-import { getCardIconFromBrand } from "../../../../utils/card";
+import { PaymentInstrument } from "../../../../../definitions/pagopa/walletv2/PaymentInstrument";
+import { getCardIconFromPaymentNetwork } from "../../../../utils/card";
 import {
   getTitleFromPaymentInstrument,
   isCoBadgeBlocked
@@ -15,7 +15,7 @@ type Props = { coBadge: PaymentInstrument; abi: Abi };
  * @constructor
  */
 const PreviewCoBadgeCard: React.FunctionComponent<Props> = props => {
-  const brandLogo = getCardIconFromBrand(props.coBadge.brand);
+  const brandLogo = getCardIconFromPaymentNetwork(props.coBadge.paymentNetwork);
   return (
     <BaseCoBadgeCard
       abi={props.abi}
