@@ -63,14 +63,10 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
     };
   }
 
-  private checkInstabugChats = () => {
+  public componentDidMount() {
     Replies.hasChats(hasChats => {
       this.setState({ hasChats });
     });
-  };
-
-  public componentDidMount() {
-    this.checkInstabugChats();
   }
 
   private handleIBChatPress = () => {

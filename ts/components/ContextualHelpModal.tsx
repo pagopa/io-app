@@ -170,7 +170,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   const handleContinue = (options: SupportRequestOptions) => {
     const { supportToken, openBugReport } = props;
 
-    // See comment at line 232 to learn why this is not
+    // See comment below to know why this is not
     // called "openQuestionReport"
     openBugReport();
 
