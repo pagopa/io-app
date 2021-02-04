@@ -797,6 +797,13 @@ wallet:
         text2: informativa sul trattamento dei dati personali.
         text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
         text4: cercando fra quelle disponibili
+    cobadge:
+      title: Ricerca delle tue carte con circuito internazionale
+      description:
+        text1: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso "
+        text2: le banche aderenti al servizio
+        text3: "Proseguendo accetti l'"
+        text4: informativa sul trattamento dei dati personali.
     bankName: Denominazione della banca
     noName: Nome non disponibile
     loading: Carico la lista delle banche...
@@ -1124,6 +1131,8 @@ wallet:
       name: Paypal
     bancomat:
       name: PagoBANCOMAT
+    cobadge:
+      name: circuito internazionale
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
@@ -2026,7 +2035,7 @@ bonus:
             one: "Devi aver fatto almeno"
             two: " {{transactions}} transazioni"
             three: " per sbloccare il Cashback che hai accumulato!"
-          currentPeriodUnlockBody: "Complimenti {{name}}! Hai superato la soglia di {{transactions}} transazioni e sbloccato il Cashback!!"
+          currentPeriodUnlockBody: "Complimenti {{name}}! Hai superato la soglia di {{transactions}} transazioni e sbloccato il Cashback!"
           currentPeriodMaxAmount: "Complimenti {{name}}! Hai raggiunto l’importo massimo previsto!"
           currentPeriodSuperCashback: "In questo momento avresti diritto al Super Cashback di {{superCashbackAmount}} €! Continua così per rimanere in classifica."
           gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere le ultime transazioni, per calcolare i rimborsi. Entro il {{endGracePeriodDate}} potrai vedere il calcolo definitivo."
@@ -2092,7 +2101,7 @@ bonus:
           canceled: "Storno"
       paymentMethods:
         add:
-          cta: "Aggiungi un metodo al cashback"
+          cta: "Aggiungi un metodo al Cashback"
           alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare transazioni valide"
         noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per collezionare transazioni valide"
