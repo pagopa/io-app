@@ -868,7 +868,7 @@ wallet:
         loading: "We are retrieving your card list\n\nPlease wait a few seconds"
         koTimeout:
           title: "Sorry, we're unable to retrieve your cards"
-          body: "Ripova please"
+          body: "Please try again"
         koNotFound:
           title: "Sorry, we haven't found any cards among the banks participating in the service"
           body: "There are no cards with an international circuit in your name: contact your bank for further information"
