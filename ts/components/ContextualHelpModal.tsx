@@ -170,7 +170,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
    * @param options Contains the checkboxes' values, @todo handle screenshot attachment request.
    */
   const handleContinue = (options: SupportRequestOptions) => {
-    const { supportToken, openBugReport } = props;
+    const { openBugReport } = props;
 
     // See comment below to know why this is not
     // called "openQuestionReport"
