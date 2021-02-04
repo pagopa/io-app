@@ -4,7 +4,6 @@ import variables from "../../../theme/variables";
 
 export default StyleSheet.create({
   cardHeader:{
-    backgroundColor: variables.brandGray,
     marginTop: -20,
     borderRadius: 8,
     marginLeft: 12,
