@@ -860,7 +860,7 @@ wallet:
         loading: "We are loading the settings\n\nPlease wait"
         koDisabled:
           title: "Your bank does not offer this feature yet"
-          body: "We are working to allow you to add your international circuit card soon."
+          body: "We are working to let you to add your international circuit card soon."
         koUnavailable:
           title: "We can't contact your bank"
           body: "We are working to solve the problem."
