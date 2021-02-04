@@ -6,7 +6,7 @@ import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/compone
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { searchUserCoBadge, walletAddCoBadgeCancel } from "../../store/actions";
 import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSelected";
-import { onboardingCoBadgeFoundSelector } from "../../store/reducers/foundCoBadge";
+import { onboardingCoBadgeFoundIsError } from "../../store/reducers/foundCoBadge";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -25,7 +25,7 @@ const LoadCoBadgeSearch = (props: Props): React.ReactElement => {
   return (
     <LoadingErrorComponent
       {...props}
-      // TODO: replace with localeso
+      // TODO: replace with locale
       loadingCaption={"TMP Loading"}
       onAbort={props.cancel}
       onRetry={() => props.retry(props.abiSelected)}
@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   abiSelected: onboardingCoBadgeAbiSelectedSelector(state),
-  isLoading: !onboardingCoBadgeFoundSelector(state)
+  isLoading: !onboardingCoBadgeFoundIsError(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoadCoBadgeSearch);
