@@ -777,6 +777,13 @@ wallet:
         text2: information on the processing of personal data.
         text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
         text4: by searching among those available
+    cobadge:
+      title: "Search for your international circuit cards"
+      description:
+        text1: "IO will search for all Maestro, Mastercard, V-Pay and Visa cards associated with you at "
+        text2: the banks participating in the service
+        text3: "By continuing you accept the "
+        text4: information on the processing of personal data.
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
@@ -1098,6 +1105,8 @@ wallet:
       name: Paypal
     bancomat:
       name: PagoBANCOMAT
+    cobadge:
+      name: international circuit
     notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
