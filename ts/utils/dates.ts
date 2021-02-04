@@ -69,9 +69,8 @@ export function format(
 }
 
 export function isExpired(expireMonth: number, expireYear: number): boolean {
-  // Handle both shortened years and long years, we pass the first day
-  // but endOfMonth() returns a Date object representing the last day
-  // of the target month.
+  // We pass the first day of the month, but endOfMonth() returns a Date object
+  // representing the last day of the target month.
   const date = endOfMonth(`${expireMonth}/01/${expireYear}`);
   return compareDesc(date, new Date()) > 0;
 }
