@@ -304,8 +304,6 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             <View spacer={true} />
           )}
 
-          <View spacer={true} large={true} />
-
           {/** Transaction id */}
           <View>
             <Text>
