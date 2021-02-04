@@ -883,7 +883,11 @@ wallet:
         koNotFound:
           title: "TMP KO Timeout add"
       add:
-        title: "TMP Add title"
+        screenTitle: "Vuoi aggiungere questa carta?"
+        label: "Carta con circuito internazionale {{current}} di {{length}}"
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
+        warning: "Controlla che il numero della carta corrisponda a quello riportato sulla tua carta fisica."
+        loading: "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1218,7 +1222,7 @@ wallet:
   cobadge:
     details:
       card:
-        validUntil: "Valida fino al {{expireMonth}}/{{expireYear}}"
+        validUntil: "Valida fino al {{expiryDate}}"
   newRemove:
     title: "Vuoi eliminare questo metodo?"
     body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."

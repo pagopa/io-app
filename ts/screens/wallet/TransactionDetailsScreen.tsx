@@ -304,22 +304,6 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             <View spacer={true} />
           )}
 
-          {/** psp logo */}
-          {psp && (
-            <View style={[styles.row, styles.centered]}>
-              <Text>{I18n.t("wallet.psp")}</Text>
-              {psp.logoPSP && psp.logoPSP.length > 0 ? (
-                <Image style={styles.pspLogo} source={{ uri: psp.logoPSP }} />
-              ) : psp.businessName ? (
-                <Text>{psp.businessName}</Text>
-              ) : undefined}
-            </View>
-          )}
-
-          <View spacer={true} large={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
-
           {/** Transaction id */}
           <View>
             <Text>
