@@ -68,7 +68,9 @@ const FORGOT_PIN_PAGE_URL =
 const getContextualHelp = () => ({
   title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
   body: () => (
-    <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
+    <Markdown avoidTextSelection>
+      {I18n.t("authentication.cie.pin.contextualHelpBody")}
+    </Markdown>
   )
 });
 const onOpenForgotPinPage = () => openWebUrl(FORGOT_PIN_PAGE_URL);
