@@ -1,4 +1,5 @@
 import * as React from "react";
+import I18n from "../../../../../../i18n";
 import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 
@@ -23,8 +24,7 @@ const LoadAddCoBadgeComponent = (props: Props): React.ReactElement => {
   return (
     <LoadingErrorComponent
       {...props}
-      // TODO: add caption
-      loadingCaption={"TMP Load"}
+      loadingCaption={I18n.t("wallet.onboarding.coBadge.add.loading")}
       onAbort={props.onCancel}
       onRetry={props.onRetry}
     />
