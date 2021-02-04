@@ -897,7 +897,7 @@ wallet:
           body: "Non risultano carte con circuito internazionale intestate a te. Se lo desideri, IO può effettuare una ricerca tra tutte le banche aderenti."
         koServiceError:
           title: "Non riusciamo a recuperare le tue carte"
-          body: "Ripova più tardi per favore"
+          body: "Riprova più tardi per favore"
       add:
         screenTitle: "Vuoi aggiungere questa carta?"
         label: "Carta con circuito internazionale {{current}} di {{length}}"
