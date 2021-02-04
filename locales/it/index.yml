@@ -888,7 +888,7 @@ wallet:
         loading: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo"
         koTimeout:
           title: "Al momento è impossibile recuperare le tue carte"
-          body: "Ripova per favore"
+          body: "Riprova per favore"
         koNotFound:
           title: "Spiacenti, non abbiamo trovato nessuna carta tra le banche aderenti al servizio"
           body: "Non risultano carte con circuito internazionale intestate a te: contatta la tua Banca per ulteriori informazioni"
