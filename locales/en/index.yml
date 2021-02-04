@@ -877,7 +877,7 @@ wallet:
           body: "There are no cards with an international circuit registered to you. If you'd like, IO can search among all the participating banks."
         koServiceError:
           title: "Sorry, we're unable to retrieve your cards"
-          body: "Please wait again later"
+          body: "Please try again later."
       add:
         screenTitle: "Do you want to add this card?"
         label: "International circuit card {{current}} of {{length}}"
