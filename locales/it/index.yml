@@ -887,7 +887,7 @@ wallet:
       search:
         loading: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo"
         koTimeout:
-          title: "Al momento è impossibile recuperare le tue carte"
+          title: "Non riusciamo a recuperare le tue carte"
           body: "Riprova per favore"
         koNotFound:
           title: "Spiacenti, non abbiamo trovato nessuna carta tra le banche aderenti al servizio"
