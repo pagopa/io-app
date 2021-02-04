@@ -1,13 +1,10 @@
 import { index } from "fp-ts/lib/Array";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
-import { H1 } from "../../../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { profileSelector } from "../../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -27,6 +24,7 @@ import {
   onboardingCobadgeChosenSelector
 } from "../../store/reducers/addingCoBadge";
 import { onboardingCoBadgeFoundSelector } from "../../store/reducers/foundCoBadge";
+import AddCobadgeComponent from "./AddCobadgeComponent";
 import LoadAddCoBadgeComponent from "./LoadAddCoBadgeComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -82,12 +80,14 @@ const AddCoBadgeScreen = (props: Props): React.ReactElement | null => {
       onRetry={() => fromNullable(props.selectedCoBadge).map(props.onRetry)}
     />
   ) : currentPan.isSome() ? (
-    // TODO replace with iterative component
-    <SafeAreaView>
-      <Button onPress={handleOnContinue}>
-        <H1>TMP Add</H1>
-      </Button>
-    </SafeAreaView>
+    <AddCobadgeComponent
+      pan={currentPan.value}
+      pansNumber={props.coBadgeList.length}
+      currentIndex={currentIndex}
+      handleContinue={handleOnContinue}
+      handleSkip={() => nextPan(true)}
+      contextualHelp={props.contextualHelp}
+    />
   ) : null; // this should not happen
 };
 
