@@ -891,7 +891,7 @@ wallet:
           body: "Riprova per favore"
         koNotFound:
           title: "Spiacenti, non abbiamo trovato nessuna carta tra le banche aderenti al servizio"
-          body: "Non risultano carte con circuito internazionale intestate a te: contatta la tua Banca per ulteriori informazioni"
+          body: "Non risultano carte con circuito internazionale intestate a te: contatta la tua Banca per ulteriori informazioni."
         koSingleBankNotFound:
           title: "Spiacenti, non abbiamo trovato nessuna carta su questa banca"
           body: "Non risultano carte con circuito internazionale intestate a te. Se lo desideri, IO può effettuare una ricerca tra tutte le banche aderenti."
