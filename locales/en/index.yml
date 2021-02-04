@@ -876,7 +876,7 @@ wallet:
           title: "Sorry, we couldn't find any card on this bank"
           body: "There are no cards with an international circuit registered to you. If you'd like, IO can search among all the participating banks."
         koServiceError:
-          title: "At the moment it is impossible to recover your cards"
+          title: "Sorry, we're unable to retrieve your cards"
           body: "Please wait again later"
       add:
         screenTitle: "Do you want to add this card?"
