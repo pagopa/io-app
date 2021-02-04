@@ -22,7 +22,7 @@ export default StyleSheet.create({
     zIndex: Platform.OS === "android" ? -2 : 25
   },
   card: {
-    // iOS and Andorid card shadow
+    // iOS and Android card shadow
     backgroundColor: variables.brandGray,
     borderRadius: 8,
     marginLeft: 0,
