@@ -870,7 +870,7 @@ wallet:
           title: "Sorry, we're unable to retrieve your cards"
           body: "Please try again"
         koNotFound:
-          title: "Sorry, we haven't found any cards among the banks participating in the service"
+          title: "Sorry, we haven't found any card among the participating banks"
           body: "There are no cards with an international circuit in your name: contact your bank for further information"
         koSingleBankNotFound:
           title: "Sorry, we couldn't find any card on this bank"
