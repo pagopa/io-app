@@ -16,6 +16,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
+import UnsubscribeButton from "../../component/UnsubscribeButton";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import { walletAddCoBadgeFromBancomatStart } from "../../onboarding/cobadge/store/actions";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
@@ -49,12 +50,6 @@ const styles = StyleSheet.create({
     width: "100%"
   }
 });
-
-const UnsubscribeButton = (props: { onPress?: () => void }) => (
-  <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
-    <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
-  </Button>
-);
 
 /**
  * Start the cobadge onboarding, if the abi is defined

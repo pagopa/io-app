@@ -3,7 +3,7 @@
  * from a specific credit card
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
@@ -15,25 +15,40 @@ import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import CardComponent from "../../components/wallet/card/CardComponent";
+import H5 from "../../components/ui/H5";
 import WalletLayout from "../../components/wallet/WalletLayout";
+import TransactionsList from "../../components/wallet/TransactionsList";
+import { useRemovePaymentMethodBottomSheet } from "../../features/wallet/component/RemovePaymentMethod";
 import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
+import UnsubscribeButton from "../../features/wallet/component/UnsubscribeButton";
+import amex from "../../../img/wallet/cards-icons/form/amex.png";
 import I18n from "../../i18n";
 
 import {
-  navigateToWalletHome,
-  navigateToWalletList
+  navigateToTransactionDetailsScreen,
+  navigateToWalletHome
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import {
+  areMoreTransactionsAvailable,
+  getTransactions,
+  getTransactionsLoadedLength
+} from "../../store/reducers/wallet/transactions";
+import {
+  fetchTransactionsRequest,
+  readTransaction
+} from "../../store/actions/wallet/transactions";
 import {
   deleteWalletRequest,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
+import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { GlobalState } from "../../store/reducers/types";
 import {
   getFavoriteWalletId,
   paymentMethodsSelector
 } from "../../store/reducers/wallet/wallets";
-import { Wallet } from "../../types/pagopa";
+import { Transaction, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { handleSetFavourite } from "../../utils/wallet";
 import variables from "../../theme/variables";
@@ -86,7 +101,7 @@ const styles = StyleSheet.create({
     elevation: Platform.OS === "android" ? 35 : 7
   },
 });
- 
+
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.walletCardTransaction.contextualHelpTitle",
@@ -95,11 +110,23 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const HEADER_HEIGHT = 250;
 
-class TransactionsScreen extends React.Component<Props> {
-  private headerContent(
+const ListEmptyComponent = (
+  <Content
+    scrollEnabled={false}
+    style={[styles.noBottomPadding, styles.whiteBg]}
+  >
+    <H5 style={styles.brandDarkGray}>{I18n.t("wallet.noneTransactions")}</H5>
+    <View spacer={true} />
+    <Text>{I18n.t("wallet.noTransactionsInTransactionsScreen")}</Text>
+    <View spacer={true} large={true} />
+  </Content>
+);
+
+const TransactionsScreen: React.FunctionComponent<Props> = (props: Props) => {
+  const headerContent = (
     selectedWallet: Wallet,
     isFavorite: pot.Pot<boolean, Error>
-  ) {
+  ) => {
     return (
       <React.Fragment>
         <View style={styles.cardBox}>
@@ -111,79 +138,120 @@ class TransactionsScreen extends React.Component<Props> {
             isFavorite={isFavorite}
             onSetFavorite={(willBeFavorite: boolean) =>
               handleSetFavourite(willBeFavorite, () =>
-                this.props.setFavoriteWallet(selectedWallet.idWallet)
+                props.setFavoriteWallet(selectedWallet.idWallet)
               )
             }
-            onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
+            onDelete={() => props.deleteWallet(selectedWallet.idWallet)}
           />
         </View>
       </React.Fragment>
     );
   }
 
-  public render(): React.ReactNode {
-    const selectedWallet = this.props.navigation.getParam("selectedWallet");
+  const handleLoadMoreTransactions = () => {
+    props.loadTransactions(props.transactionsLoadedLength);
+  };
 
-    const isFavorite = pot.map(
-      this.props.favoriteWallet,
-      _ => _ === selectedWallet.idWallet
-    );
+  const selectedWallet = props.navigation.getParam("selectedWallet");
 
-    // to retro-compatibility purpose
-    const pm = pot.getOrElse(
-      pot.map(this.props.paymentMethods, pms =>
-        pms.find(pm => pm.idWallet === selectedWallet.idWallet)
-      ),
-      undefined
-    );
+  const transactions = pot.map(props.transactions, tsx =>
+    tsx
+      .filter(t => t.idWallet === selectedWallet.idWallet)
+      .sort((a, b) => b.created.getTime() - a.created.getTime())
+  );
 
-    return (
-      <WalletLayout
-        title={I18n.t("wallet.paymentMethod")}
-        allowGoBack={true}
-        topContent={this.headerContent(selectedWallet, isFavorite)}
-        hideHeader={true}
-        hasDynamicSubHeader={true}
-        topContentHeight={HEADER_HEIGHT}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_transaction"]}
-      >
-        {pm && (
-          <>
-            <View style={IOStyles.horizontalContentPadding}>
-              <View spacer={true} extralarge={true} />
-              <PaymentMethodCapabilities paymentMethod={pm} />
-              <View spacer={true} />
-              <ItemSeparatorComponent noPadded={true} />
-            </View>
-            <EdgeBorderComponent />
-          </>
+  const isFavorite = pot.map(
+    props.favoriteWallet,
+    _ => _ === selectedWallet.idWallet
+  );
 
-        )}
-      </WalletLayout>
-    );
-  }
+  // to retro-compatibility purpose
+  const pm = pot.getOrElse(
+    pot.map(props.paymentMethods, pms =>
+      pms.find(pm => pm.idWallet === selectedWallet.idWallet)
+    ),
+    undefined
+  );
+
+  const { present } = useRemovePaymentMethodBottomSheet({
+    icon: amex,
+    caption: I18n.t("wallet.methods.card.name")
+  });
+
+  return (
+    <WalletLayout
+      title={I18n.t("wallet.paymentMethod")}
+      allowGoBack={true}
+      topContent={headerContent(selectedWallet, isFavorite)}
+      hideHeader={true}
+      hasDynamicSubHeader={true}
+      topContentHeight={HEADER_HEIGHT}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["wallet_transaction"]}
+    >
+      {pm && (
+        <>
+          <View style={IOStyles.horizontalContentPadding}>
+            <View spacer={true} extralarge={true} />
+            <PaymentMethodCapabilities paymentMethod={pm} />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+          </View>
+        </>
+      )}
+      <TransactionsList
+        title={I18n.t("wallet.transactions")}
+        amount={I18n.t("wallet.amount")}
+        transactions={transactions}
+        areMoreTransactionsAvailable={props.areMoreTransactionsAvailable}
+        onLoadMoreTransactions={handleLoadMoreTransactions}
+        navigateToTransactionDetails={
+          props.navigateToTransactionDetailsScreen
+        }
+        readTransactions={props.readTransactions}
+        ListEmptyComponent={ListEmptyComponent}
+      />
+      <View style={{marginHorizontal: variables.contentPadding, marginTop: 40 }}>
+      <UnsubscribeButton
+        onPress={() => present(() => props.deleteWallet(selectedWallet.idWallet))}
+      />
+    </View>
+    <EdgeBorderComponent />
+    </WalletLayout>
+  );
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  transactions: getTransactions(state),
+  potPayments: paymentsHistorySelector(state),
+  transactionsLoadedLength: getTransactionsLoadedLength(state),
   favoriteWallet: getFavoriteWalletId(state),
+  readTransactions: state.entities.transactionsRead,
+  areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
   paymentMethods: paymentMethodsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadTransactions: (start: number) =>
+    dispatch(fetchTransactionsRequest({ start })),
+  navigateToTransactionDetailsScreen: (transaction: Transaction) => {
+    dispatch(readTransaction(transaction));
+    dispatch(
+      navigateToTransactionDetailsScreen({
+        transaction,
+        isPaymentCompletedTransaction: false
+      })
+    );
+  },
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
   deleteWallet: (walletId: number) =>
     dispatch(
       deleteWalletRequest({
         walletId,
-        onSuccess: action => {
+        onSuccess: _ => {
           showToast(I18n.t("wallet.delete.successful"), "success");
-          if (action.payload.length > 0) {
-            dispatch(navigateToWalletList());
-          } else {
-            dispatch(navigateToWalletHome());
-          }
+          dispatch(navigateToWalletHome());
         },
         onFailure: _ => {
           showToast(I18n.t("wallet.delete.failed"), "danger");
