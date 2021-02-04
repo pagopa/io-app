@@ -859,7 +859,7 @@ wallet:
       start:
         loading: "We are loading the settings\n\nPlease wait"
         koDisabled:
-          title: "Your bank does not yet offer this functionality"
+          title: "Your bank does not offer this feature yet"
           body: "We are working to allow you to add your international circuit card soon."
         koUnavailable:
           title: "We can't contact your bank"
