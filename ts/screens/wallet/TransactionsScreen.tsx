@@ -126,8 +126,7 @@ const TransactionsScreen: React.FunctionComponent<Props> = (props: Props) => {
   const headerContent = (
     selectedWallet: Wallet,
     isFavorite: pot.Pot<boolean, Error>
-  ) => {
-    return (
+  ) => (
       <React.Fragment>
         <View style={styles.cardBox}>
           <CardComponent
@@ -145,9 +144,7 @@ const TransactionsScreen: React.FunctionComponent<Props> = (props: Props) => {
           />
         </View>
       </React.Fragment>
-    );
-  }
-
+  );
   const handleLoadMoreTransactions = () => {
     props.loadTransactions(props.transactionsLoadedLength);
   };
@@ -219,7 +216,7 @@ const TransactionsScreen: React.FunctionComponent<Props> = (props: Props) => {
     <EdgeBorderComponent />
     </WalletLayout>
   );
-}
+};
 
 const mapStateToProps = (state: GlobalState) => ({
   transactions: getTransactions(state),
