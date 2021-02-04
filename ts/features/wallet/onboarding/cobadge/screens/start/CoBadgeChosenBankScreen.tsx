@@ -9,7 +9,7 @@ import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosB
 import SearchStartScreen from "../../../common/searchBank/SearchStartScreen";
 import { abiListSelector } from "../../../store/abi";
 import { navigateToOnboardingCoBadgeSearchAvailable } from "../../navigation/action";
-import { searchUserCoBadge, walletAddCoBadgeCancel } from "../../store/actions";
+import { walletAddCoBadgeCancel } from "../../store/actions";
 
 type OwnProps = {
   abi?: string;
