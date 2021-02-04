@@ -16,8 +16,8 @@ import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePayment
 import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
 import SatispayCard from "../SatispayCard";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import SatispayInformation from "./SatispayInformation";
 import UnsubscribeButton from "../../component/UnsubscribeButton";
+import SatispayInformation from "./SatispayInformation";
 
 type NavigationParams = Readonly<{
   satispay: SatispayPaymentMethod;

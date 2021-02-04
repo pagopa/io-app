@@ -7,7 +7,7 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import customVariables from "../../../theme/variables";
 
 type Props = {
-  onPress?: () => void
+  onPress?: () => void;
 };
 
 const styles = StyleSheet.create({
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
+
 const UnsubscribeButton: React.FunctionComponent<Props> = (props: Props) => (
   <ButtonDefaultOpacity bordered={true} style={styles.cancelButton} onPress={props.onPress}>
     <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>

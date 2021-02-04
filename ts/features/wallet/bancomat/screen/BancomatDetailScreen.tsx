@@ -19,8 +19,8 @@ import { walletAddCoBadgeFromBancomatStart } from "../../onboarding/cobadge/stor
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import BancomatInformation from "./BancomatInformation";
 import UnsubscribeButton from "../../component/UnsubscribeButton";
+import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
