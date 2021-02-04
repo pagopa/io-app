@@ -1,17 +1,14 @@
 import { View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import maestro from "../../../../../img/wallet/cards-icons/maestro.png";
-import mastercard from "../../../../../img/wallet/cards-icons/mastercard.png";
-import visaElectron from "../../../../../img/wallet/cards-icons/visa-electron.png";
-import visa from "../../../../../img/wallet/cards-icons/visa.png";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import Markdown from "../../../../components/ui/Markdown";
+import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconBar";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 
@@ -44,18 +41,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const BrandIconsBar = () => (
-  <View style={styles.row}>
-    <Image source={visa} style={styles.brandLogo} />
-    <View hspacer={true} />
-    <Image source={mastercard} style={styles.brandLogo} />
-    <View hspacer={true} />
-    <Image source={maestro} style={styles.brandLogo} />
-    <View hspacer={true} />
-    <Image source={visaElectron} style={styles.brandLogo} />
-  </View>
-);
-
 /**
  * Display generic information on bancomat and a cta to start the onboarding of a new
  * payment method.
@@ -69,7 +54,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => (
       <H4>{I18n.t("wallet.bancomat.details.debit.title")}</H4>
     )}
     <View spacer={true} />
-    <BrandIconsBar />
+    <InternationalCircuitIconsBar />
     <View spacer={true} />
     <Markdown>{I18n.t("wallet.bancomat.details.debit.body")}</Markdown>
     <View spacer={true} />
