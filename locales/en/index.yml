@@ -871,7 +871,7 @@ wallet:
           body: "Please try again"
         koNotFound:
           title: "Sorry, we haven't found any card among the participating banks"
-          body: "There are no cards with an international circuit in your name: contact your bank for further information"
+          body: "There are no cards with an international circuit registered to you: contact your bank for further information."
         koSingleBankNotFound:
           title: "Sorry, we couldn't find any card on this bank"
           body: "There are no cards with an international circuit registered to you. If you'd like, IO can search among all the participating banks."
