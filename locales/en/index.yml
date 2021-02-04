@@ -777,6 +777,13 @@ wallet:
         text2: information on the processing of personal data.
         text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
         text4: by searching among those available
+    cobadge:
+      title: "Search for your international circuit cards"
+      description:
+        text1: "IO will search for all Maestro, Mastercard, V-Pay and Visa cards associated with you at "
+        text2: the banks participating in the service
+        text3: "By continuing you accept the "
+        text4: information on the processing of personal data.
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
@@ -1102,6 +1109,8 @@ wallet:
       name: Paypal
     bancomat:
       name: PagoBANCOMAT
+    cobadge:
+      name: international circuit
     notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
@@ -1998,7 +2007,7 @@ bonus:
             one: "You must have reached at least"
             two: " {{transactions}} transactions"
             three: " to unlock the cashback collected so far!"
-          currentPeriodUnlockBody: "Congratulations {{name}}! You have exceeded the threshold of {{transactions}} transactions and unlocked the Cashback !!"
+          currentPeriodUnlockBody: "Congratulations {{name}}! You have reached the threshold of {{transactions}} transactions and unlocked your Cashback!"
           currentPeriodMaxAmount: "Congratulations {{name}}! You have reached the maximum amount expected!"
           currentPeriodSuperCashback: "Right now you would be eligible for {{superCashbackAmount}} € Super Cashback! Keep up the good work to stay on the leaderboard."
           gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. By {{endGracePeriodDate}} you will be able to see the final calculation."
@@ -2065,7 +2074,7 @@ bonus:
           canceled: "Refund"
       paymentMethods:
         add:
-          cta: "Add a method to cashback"
+          cta: "Add a method to Cashback"
           alertBody: "The payment method you are adding will be saved in the IO app wallet and, if compatible, can also be used for any payments within the app."
         noPaymentMethods: "You must add at least one payment method to start collecting valid transactions"
         noActiveMethod: "You must have activated at least one payment method to collect valid transactions"
