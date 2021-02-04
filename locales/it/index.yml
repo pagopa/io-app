@@ -896,7 +896,7 @@ wallet:
           title: "Spiacenti, non abbiamo trovato nessuna carta su questa banca"
           body: "Non risultano carte con circuito internazionale intestate a te. Se lo desideri, IO può effettuare una ricerca tra tutte le banche aderenti."
         koServiceError:
-          title: "Al momento è impossibile recuperare le tue carte"
+          title: "Non riusciamo a recuperare le tue carte"
           body: "Ripova più tardi per favore"
       add:
         screenTitle: "Vuoi aggiungere questa carta?"
