@@ -82,6 +82,7 @@ import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
+import CgnCardInWalletContainer from "../../features/bonus/cgn/components/CgnCardInWalletComponent";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -376,6 +377,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           />
         )}
         {bpdEnabled && <BpdCardsInWalletContainer />}
+        {cgnEnabled && <CgnCardInWalletContainer />}
       </View>
     );
   }
