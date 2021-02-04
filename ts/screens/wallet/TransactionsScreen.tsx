@@ -47,12 +47,10 @@ import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { handleSetFavourite } from "../../utils/wallet";
-import { IOColors } from "../../components/core/variables/IOColors";
-import { Label } from "../../components/core/typography/Label";
 
 import amex from "../../../img/wallet/cards-icons/form/amex.png";
 import { useRemovePaymentMethodBottomSheet } from "../../features/wallet/component/RemovePaymentMethod";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import UnsubscribeButton from "../../features/wallet/component/UnsubscribeButton";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -96,13 +94,6 @@ const styles = StyleSheet.create({
   headerSpacer: {
     height: 172
   },
-  cancelButton: {
-    borderColor: IOColors.red,
-    width: '90%',
-    height: variables.btnHeight + 10,
-    marginHorizontal: variables.contentPadding,
-    marginTop: 16,
-  }
 });
 
 
@@ -110,12 +101,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.walletCardTransaction.contextualHelpTitle",
   body: "wallet.walletCardTransaction.contextualHelpContent"
 };
-
-const UnsubscribeButton = (props: { onPress?: () => void }) => (
-  <ButtonDefaultOpacity bordered={true} style={styles.cancelButton} onPress={props.onPress}>
-    <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
-  </ButtonDefaultOpacity>
-);
 
 const ListEmptyComponent = (
   <Content
@@ -230,9 +215,11 @@ const TransactionsScreen: React.FunctionComponent<Props> = (props: Props) => {
         readTransactions={props.readTransactions}
         ListEmptyComponent={ListEmptyComponent}
       />
-      <UnsubscribeButton
-        onPress={() => present(() => props.deleteWallet(selectedWallet.idWallet))}
-      />
+      <View style={{marginHorizontal: variables.contentPadding,marginTop:16}}>
+        <UnsubscribeButton
+          onPress={() => present(() => props.deleteWallet(selectedWallet.idWallet))}
+        />
+      </View>
       <EdgeBorderComponent />
     </WalletLayout>
   );

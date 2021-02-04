@@ -1,11 +1,9 @@
-import { Button, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Label } from "../../../../components/core/typography/Label";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
@@ -18,6 +16,7 @@ import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePayment
 import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import BPayCard from "../component/BPayCard";
+import UnsubscribeButton from "../../component/UnsubscribeButton";
 
 type NavigationParams = Readonly<{
   bPay: BPayPaymentMethod;
@@ -40,17 +39,7 @@ const styles = StyleSheet.create({
   headerSpacer: {
     height: 172
   },
-  cancelButton: {
-    borderColor: IOColors.red,
-    width: "100%"
-  }
 });
-
-const UnsubscribeButton = (props: { onPress?: () => void }) => (
-  <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
-    <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
-  </Button>
-);
 
 /**
  * Detail screen for a Bancomat Pay

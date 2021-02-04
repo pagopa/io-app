@@ -1,11 +1,10 @@
-import { Button, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { ImageSourcePropType, StyleSheet } from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
@@ -13,11 +12,11 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
-import { Label } from "../../../../components/core/typography/Label";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
 import CobadgeCard from "../component/CobadgeCard";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
+import UnsubscribeButton from "../../component/UnsubscribeButton";
 
 type NavigationParams = Readonly<{
   cobadge: CreditCardPaymentMethod;
@@ -41,17 +40,7 @@ const styles = StyleSheet.create({
   headerSpacer: {
     height: 172
   },
-  cancelButton: {
-    borderColor: IOColors.red,
-    width: "100%"
-  }
 });
-
-const UnsubscribeButton = (props: { onPress?: () => void }) => (
-  <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
-    <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
-  </Button>
-);
 
 /**
  * Detail screen for a cobadge card

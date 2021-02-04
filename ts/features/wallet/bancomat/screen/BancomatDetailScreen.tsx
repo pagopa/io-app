@@ -1,11 +1,9 @@
-import { Button, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Label } from "../../../../components/core/typography/Label";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import DarkLayout from "../../../../components/screens/DarkLayout";
@@ -22,6 +20,7 @@ import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import BancomatInformation from "./BancomatInformation";
+import UnsubscribeButton from "../../component/UnsubscribeButton";
 
 type NavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
@@ -39,22 +38,12 @@ const styles = StyleSheet.create({
     top: 16,
     zIndex: 7,
     elevation: 7,
-    alignItems: "center"
+    alignItems: "center",
   },
   headerSpacer: {
-    height: 172
+    height: 172,
   },
-  cancelButton: {
-    borderColor: IOColors.red,
-    width: "100%"
-  }
 });
-
-const UnsubscribeButton = (props: { onPress?: () => void }) => (
-  <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
-    <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
-  </Button>
-);
 
 /**
  * Start the cobadge onboarding, if the abi is defined
