@@ -41,7 +41,7 @@ const CoBadgeStartScreen = (props: Props): React.ReactElement => {
   switch (props.abiSelectedConfiguration.value) {
     case StatusEnum.enabled:
       // Single ABI (bank) screen that allow to start the search
-      return <CoBadgeSingleBankScreen />;
+      return <CoBadgeSingleBankScreen abi={props.maybeAbiSelected} />;
     case StatusEnum.disabled:
       // The chosen ABI is disabled (not yet available)
       return <CoBadgeStartKoDisabled />;
