@@ -43,8 +43,10 @@ const participatingBankUrl =
  * @param props
  */
 const CoBadgeStartKoDisabled = (props: Props): React.ReactElement => {
-  // disable hardware back
-  useHardwareBackButton(() => true);
+  useHardwareBackButton(() => {
+    props.cancel();
+    return true;
+  });
   const { headerTitle, title, body, close, findOutMore } = loadLocales();
   const { showModal, hideModal } = useContext(LightModalContext);
   const openCardsNotEnabledModal = () => {

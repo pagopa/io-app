@@ -45,8 +45,10 @@ const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
 
   const onSearchAll = () => props.searchAll();
 
-  // disable hardware back
-  useHardwareBackButton(() => true);
+  useHardwareBackButton(() => {
+    props.cancel();
+    return true;
+  });
 
   return (
     <BaseScreenComponent

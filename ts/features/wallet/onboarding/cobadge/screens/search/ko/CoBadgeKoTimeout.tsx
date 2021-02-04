@@ -37,8 +37,11 @@ const loadLocales = () => ({
  */
 const CoBadgeKoTimeout = (props: Props): React.ReactElement => {
   const { headerTitle, title, body, cancel, retry } = loadLocales();
-  // disable hardware back
-  useHardwareBackButton(() => true);
+
+  useHardwareBackButton(() => {
+    props.cancel();
+    return true;
+  });
   return (
     <BaseScreenComponent
       goBack={false}

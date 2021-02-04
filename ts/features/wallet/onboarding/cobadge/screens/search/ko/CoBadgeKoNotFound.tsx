@@ -44,8 +44,11 @@ const participatingBankUrl =
  */
 const CoBadgeKoNotFound = (props: Props): React.ReactElement => {
   const { headerTitle, title, body, close, findOutMore } = loadLocales();
-  // disable hardware back
-  useHardwareBackButton(() => true);
+
+  useHardwareBackButton(() => {
+    props.cancel();
+    return true;
+  });
   const { showModal, hideModal } = useContext(LightModalContext);
   const openCardsNotEnabledModal = () => {
     showModal(

@@ -34,8 +34,11 @@ const loadLocales = () => ({
  */
 const CoBadgeKoServiceError: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body, close } = loadLocales();
-  // disable hardware back
-  useHardwareBackButton(() => true);
+
+  useHardwareBackButton(() => {
+    props.cancel();
+    return true;
+  });
   return (
     <BaseScreenComponent
       goBack={false}
