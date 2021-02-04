@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Alert, StyleSheet } from "react-native";
-import { Text } from "native-base";
+import { Text, View } from "native-base";
 import { connect } from "react-redux";
 import { none } from "fp-ts/lib/Option";
 import AdviceComponent from "../../../components/AdviceComponent";
@@ -15,7 +15,7 @@ import I18n from "../../../i18n";
 const styles = StyleSheet.create({
   icon: {
     color: customVariables.brandPrimaryInverted,
-    lineHeight: 24
+    height: 24
   },
   button: {
     justifyContent: "center",
@@ -59,7 +59,8 @@ type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 const ExpiredCardAdvice: FC<Props> = ({ navigateToAddCard }) => (
   <>
-    <AdviceComponent text={I18n.t("wallet.expiredCard")} />
+    <AdviceComponent iconSize={30} text={I18n.t("wallet.expiredCard")} />
+    <View spacer />
     <ButtonDefaultOpacity
       small={true}
       primary={true}

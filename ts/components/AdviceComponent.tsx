@@ -7,6 +7,7 @@ import IconFont from "./ui/IconFont";
 type Props = {
   text: string;
   iconName?: string;
+  iconSize?: number;
   iconColor?: string;
 };
 const styles = StyleSheet.create({
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const iconSize = 18;
+const defaultIconSize = 18;
 /**
  * This component displays an info icon on top-left and a text message
  * @constructor
@@ -33,7 +34,7 @@ const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => (
     <IconFont
       style={styles.icon}
       name={props.iconName || "io-notice"}
-      size={iconSize}
+      size={props.iconSize || defaultIconSize}
       color={props.iconColor || themeVariables.brandPrimary}
     />
     <Text style={styles.text}>{props.text}</Text>
