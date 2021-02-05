@@ -5,8 +5,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
+import { Platform, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 
@@ -17,6 +19,7 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import ExpiredCardAdvice from "../../features/wallet/component/ExpiredCardAdvice";
 import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
 import I18n from "../../i18n";
+
 import {
   navigateToWalletHome,
   navigateToWalletList
@@ -34,6 +37,7 @@ import {
 import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { handleSetFavourite, isExpiredCard } from "../../utils/wallet";
+import variables from "../../theme/variables";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -44,6 +48,45 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
+
+const styles = StyleSheet.create({
+  walletBannerText: {
+    alignItems: "flex-end",
+    flexDirection: "row"
+  },
+
+  noBottomPadding: {
+    padding: variables.contentPadding,
+    paddingBottom: 0
+  },
+
+  whiteBg: {
+    backgroundColor: variables.colorWhite
+  },
+
+  brandDarkGray: {
+    color: variables.brandDarkGray
+  },
+  cardBox: {
+    height: 152,
+    paddingTop: 20,
+    width: widthPercentageToDP("88%"),
+    paddingBottom: 22,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 4.65,
+    zIndex: Platform.OS === "android" ? 35 : 7,
+    elevation: Platform.OS === "android" ? 35 : 7
+  },
+});
+ 
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.walletCardTransaction.contextualHelpTitle",
@@ -59,19 +102,21 @@ class TransactionsScreen extends React.Component<Props> {
   ) {
     return (
       <React.Fragment>
-        <CardComponent
-          type={"Header"}
-          wallet={selectedWallet}
-          hideFavoriteIcon={false}
-          hideMenu={false}
-          isFavorite={isFavorite}
-          onSetFavorite={(willBeFavorite: boolean) =>
-            handleSetFavourite(willBeFavorite, () =>
-              this.props.setFavoriteWallet(selectedWallet.idWallet)
-            )
-          }
-          onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
-        />
+        <View style={styles.cardBox}>
+          <CardComponent
+            type={"Header"}
+            wallet={selectedWallet}
+            hideFavoriteIcon={false}
+            hideMenu={false}
+            isFavorite={isFavorite}
+            onSetFavorite={(willBeFavorite: boolean) =>
+              handleSetFavourite(willBeFavorite, () =>
+                this.props.setFavoriteWallet(selectedWallet.idWallet)
+              )
+            }
+            onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
+          />
+        </View>
       </React.Fragment>
     );
   }

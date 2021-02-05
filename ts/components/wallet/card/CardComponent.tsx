@@ -274,9 +274,11 @@ export default class CardComponent extends React.Component<Props> {
     const hasFlatBottom =
       this.props.type === "Preview" || this.props.type === "Header";
 
+    const isHeader = this.props.type === "Header";
+
     return wallet.creditCard === undefined ? null : (
       <View
-        style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
+        style={[styles.card, styles.cardShadow, hasFlatBottom ? styles.flatBottom : undefined , isHeader && styles.cardHeader]}
       >
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
@@ -291,6 +293,7 @@ export default class CardComponent extends React.Component<Props> {
             <View>{this.renderTopRightCorner()}</View>
           </View>
           {hasFlatBottom && <View spacer={true} />}
+          {isHeader && <View style={{paddingTop:20}}/> }
           {this.renderBody(wallet.creditCard)}
         </View>
         {this.renderFooterRow()}
