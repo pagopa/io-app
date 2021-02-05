@@ -1,4 +1,3 @@
-// import { fromNullable } from "fp-ts/lib/Option";
 import { some } from "fp-ts/lib/Option";
 import { pot } from "italia-ts-commons";
 import { none } from "italia-ts-commons/lib/pot";
@@ -8,7 +7,6 @@ import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import {
   addWalletCreditCardFailure,
-  // addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
   addWalletCreditCardWithBackoffRetryRequest,
   addWalletNewCreditCardSuccess,
@@ -18,7 +16,6 @@ import {
   fetchWalletsRequest,
   fetchWalletsSuccess,
   payCreditCardVerificationFailure,
-  // payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
   payCreditCardVerificationWithBackoffRetryRequest,
   runStartOrResumeAddCreditCardSaga,
@@ -37,7 +34,7 @@ import {
   CreditCardPan
 } from "../../utils/input";
 import { SessionManager } from "../../utils/SessionManager";
-import { startOrResumeAddCreditCardSaga } from "../wallet";
+import { testableWalletsSaga } from "../wallet";
 
 jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
@@ -117,9 +114,11 @@ describe("startOrResumeAddCreditCardSaga", () => {
       ...walletStateCardVerified,
       creditCardCheckout3ds: pot.some("1234")
     };
-
-    // eslint-disable-next-line
-    testSaga(startOrResumeAddCreditCardSaga, aPmSessionManager, anAction)
+    testSaga(
+      testableWalletsSaga!.startOrResumeAddCreditCardSaga,
+      aPmSessionManager,
+      anAction
+    )
       // Step 1
       .next()
       .select(getAllWallets)

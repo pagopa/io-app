@@ -2,7 +2,7 @@
 
 import { Mutex } from "async-mutex";
 import { Function1, Lazy } from "fp-ts/lib/function";
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { IResponseType } from "italia-ts-commons/lib/requests";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -94,17 +94,12 @@ export class SessionManager<T> {
       count += 1;
       await this.exclusiveTokenUpdate(true);
       if (this.token === undefined) {
-        const waitSeconds = (Math.ceil(Math.random() * 100) +
-          50) as Millisecond;
-
-        await delayAsync(waitSeconds);
-
+        await delayAsync(waitRetry);
         continue;
       }
       return fromNullable(this.token);
     }
-    // max retries reached, reject the promise
-    throw new Error("max-retries");
+    return none;
   };
 
   /**

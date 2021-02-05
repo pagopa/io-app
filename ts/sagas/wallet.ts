@@ -178,6 +178,7 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
+import { isTestEnv } from "../utils/environment";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -201,15 +202,14 @@ const POLL_TRANSACTION_DELAY_MILLIS = 500;
  * 3) if required, complete the 3DS checkout for the payment in step (2)
  *
  * This saga updates a state for each step, thus it can be run multiple times
- * to resume the flow from the last succesful step (retry behavior).
+ * to resume the flow from the last successful step (retry behavior).
  *
  * This saga gets run from ConfirmCardDetailsScreen that is also responsible
  * for showing relevant error and loading states to the user based on the
  * potential state of the flow substates (see GlobalState.wallet.wallets).
  *
  */
-// eslint-disable-next-line
-export function* startOrResumeAddCreditCardSaga(
+function* startOrResumeAddCreditCardSaga(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof runStartOrResumeAddCreditCardSaga>
 ) {
@@ -306,13 +306,13 @@ export function* startOrResumeAddCreditCardSaga(
     const urlCheckout3ds =
       state.creditCardVerification.value.data.urlCheckout3ds;
     try {
-      // Request a new token to the PM. This prevent expired token during the webview navigation.
-      // If the request for the new token fails a new Error is catched, the step fails and we exit the flow.
-      const pagoPaToken: Option<PaymentManagerToken> = yield call(
-        pmSessionManager.getNewToken
-      );
       if (pot.isNone(state.creditCardCheckout3ds)) {
         if (urlCheckout3ds !== undefined) {
+          // Request a new token to the PM. This prevent expired token during the webview navigation.
+          // If the request for the new token fails a new Error is catched, the step fails and we exit the flow.
+          const pagoPaToken: Option<PaymentManagerToken> = yield call(
+            pmSessionManager.getNewToken
+          );
           if (pagoPaToken.isSome()) {
             yield put(
               creditCardCheckout3dsRequest({
@@ -1046,3 +1046,8 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
     }
   });
 }
+
+// to keep solid code encapsulation
+export const testableWalletsSaga = isTestEnv
+  ? { startOrResumeAddCreditCardSaga }
+  : undefined;
