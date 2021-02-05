@@ -61,7 +61,7 @@ export function* addCoBadgeToWalletAndActivateBpd() {
     coBadgeWorkUnit
   );
   if (res !== "back") {
-    // If the addition starts from "WALLET_ADD_DIGITAL_PAYMENT_METHOD", remove from stack
+    // If the addition starts from "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
     const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
       navigationCurrentRouteSelector
@@ -69,9 +69,12 @@ export function* addCoBadgeToWalletAndActivateBpd() {
 
     if (
       currentRoute.isSome() &&
-      currentRoute.value === "WALLET_BANCOMAT_DETAIL"
+      currentRoute.value === "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE"
     ) {
       yield put(NavigationActions.back());
+      if (res === "completed") {
+        yield put(NavigationActions.back());
+      }
     }
   }
 
