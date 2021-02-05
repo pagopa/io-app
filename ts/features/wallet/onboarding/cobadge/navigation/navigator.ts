@@ -1,12 +1,16 @@
 import { createStackNavigator } from "react-navigation";
 import ActivateBpdOnNewCoBadgeScreen from "../screens/ActivateBpdOnNewCoBadgeScreen";
 import AddCoBadgeScreen from "../screens/add-account/AddCoBadgeScreen";
+import CoBadgeChooseType from "../screens/CoBadgeChooseType";
 import SearchAvailableCoBadgeScreen from "../screens/search/SearchAvailableCoBadgeScreen";
 import CoBadgeStartScreen from "../screens/start/CoBadgeStartScreen";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "./routes";
 
 const PaymentMethodOnboardingCoBadgeNavigator = createStackNavigator(
   {
+    [WALLET_ONBOARDING_COBADGE_ROUTES.CHOOSE_TYPE]: {
+      screen: CoBadgeChooseType
+    },
     [WALLET_ONBOARDING_COBADGE_ROUTES.START]: {
       screen: CoBadgeStartScreen
     },
